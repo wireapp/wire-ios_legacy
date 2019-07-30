@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "To vam pomaga pri povezovanju z drugimi. Vse informacije anonimiziramo in ne delimo z drugimi. Dovolite dostop preko Nastavitve > Zasebnost > Stiki.";
 
 "self.settings.privacy_security.lock_app" = "Zakleni z geslom";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Potrebna posodobitev";
 "force.update.message" = "Zamujate nove funkcije na Wire.\nPrenesite najnovejšo različico na App Store.";
 "force.update.ok_button" = "Pojdi na App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · preko giphy.com";

@@ -187,12 +187,12 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
-"notifications.shared_a_photo" = "поделился(лась) картинкой";
-"notifications.pinged" = "отправил(а) пинг";
-"notifications.sent_file" = "поделился(лась) файлом";
-"notifications.sent_location" = "поделился(лась) местоположением";
-"notifications.sent_video" = "поделился(лась) видео";
-"notifications.sent_audio" = "поделился(лась) аудио";
+"notifications.shared_a_photo" = "поделился(-лась) картинкой";
+"notifications.pinged" = "отправил(-а) пинг";
+"notifications.sent_file" = "поделился(-лась) файлом";
+"notifications.sent_location" = "поделился(-лась) местоположением";
+"notifications.sent_video" = "поделился(-лась) видео";
+"notifications.sent_audio" = "поделился(-лась) аудио";
 "notifications.in_conversation" = "%@ - %@";
 "notifications.this_conversation" = "%@ в этом разговоре";
 
@@ -212,35 +212,35 @@
 "conversation.status.typing.group" = "%@: печатает сообщение…";
 "conversation.status.silenced" = "Без звука";
 "conversation.status.poor_connection" = "Плохое подключение";
-"conversation.status.blocked" = "Заблокирован(а)";
+"conversation.status.blocked" = "Заблокирован(-а)";
 "conversation.status.incoming_call" = "%@ вызывает…";
 "conversation.status.incoming_call.unknown" = "Вызов…";
 
 "conversation.status.message.text" = "%@";
-"conversation.status.message.link" = "Поделился(лась) ссылкой";
-"conversation.status.message.image" = "Поделился(лась) картинкой";
-"conversation.status.message.location" = "Поделился(лась) местоположением";
-"conversation.status.message.audio" = "Поделился(лась) аудиосообщением";
-"conversation.status.message.video" = "Поделился(лась) видео";
-"conversation.status.message.file" = "Поделился(лась) файлом";
-"conversation.status.message.knock" = "Отправил(а) пинг";
+"conversation.status.message.link" = "Поделился(-лась) ссылкой";
+"conversation.status.message.image" = "Поделился(-лась) картинкой";
+"conversation.status.message.location" = "Поделился(-лась) местоположением";
+"conversation.status.message.audio" = "Поделился(-лась) аудиосообщением";
+"conversation.status.message.video" = "Поделился(-лась) видео";
+"conversation.status.message.file" = "Поделился(-лась) файлом";
+"conversation.status.message.knock" = "Отправил(-а) пинг";
 "conversation.status.message.missedcall" = "Пропущенный вызов";
 "conversation.status.message.missedcall.groups" = "Пропущенный вызов от %@";
 "conversation.status.message.mention" = "%@";
 "conversation.status.message.reply" = "%@";
-"conversation.status.message.ephemeral" = "Отправил(а) сообщение";
+"conversation.status.message.ephemeral" = "Отправил(-а) сообщение";
 "conversation.status.message.ephemeral.group" = "Кто-то прислал сообщение";
 "conversation.status.message.ephemeral.mention" = "Вас упомянули";
 "conversation.status.message.ephemeral.mention.group" = "Вас упомянули";
-"conversation.status.message.ephemeral.reply" = "Ответил(а) на ваше сообщение";
+"conversation.status.message.ephemeral.reply" = "Ответил(-а) на ваше сообщение";
 "conversation.status.message.ephemeral.reply.group" = "Кто-то ответил на ваше сообщение";
-"conversation.status.message.ephemeral.knock" = "Отправил(а) пинг";
+"conversation.status.message.ephemeral.knock" = "Отправил(-а) пинг";
 "conversation.status.message.ephemeral.knock.group" = "Кто-то отправил пинг";
 
 "conversation.status.unsent" = "⚠️ Неотправленное сообщение";
 "conversation.status.you" = "Вы";
 "conversation.status.someone" = "Кто-то";
-"conversation.status.you_was_added" = "%@ добавил(а) вас";
+"conversation.status.you_was_added" = "%@ добавил(-а) вас";
 "conversation.status.you_were_removed" = "Вы были удалены";
 "conversation.status.you_left" = "Вы покинули";
 "conversation.status.started_conversation" = "%@ начал разговор";
@@ -384,12 +384,12 @@
 "content.system.you_started_conversation" = "Вы начали разговор с %@";
 
 "content.system.you_added_participant" = "Вы добавили %@";
-"content.system.other_added_participant" = "%@ добавил(а) %@";
-"content.system.other_added_you" = "%@ добавил(а) вас";
+"content.system.other_added_participant" = "%@ добавил(-а) %@";
+"content.system.other_added_you" = "%@ добавил(-а) вас";
 
 "content.system.participants_you" = "Вы";
 "content.system.participants_1_other" = "%@ и %@";
-"content.system.other_left" = "%@ покинул(а) разговор";
+"content.system.other_left" = "%@ покинул(-а) разговор";
 "content.system.you_left" = "Вы покинули";
 "content.system.other_removed_other" = "%@ удалил %@";
 "content.system.other_removed_you" = "%@ удалил вас";
@@ -408,7 +408,7 @@
 "content.system.conversation.other.started" = "%@ начал беседу с %@";
 "content.system.conversation.other.added" = "%@ добавил(a) %@";
 "content.system.conversation.other.removed" = "%@ удалил %@";
-"content.system.conversation.other.left" = "%@ покинул(а) разговор";
+"content.system.conversation.other.left" = "%@ покинул(-а) разговор";
 
 "content.system.conversation.you.started" = "%@ начал разговор с %@";
 "content.system.conversation.you.added" = "%@ добавили %@";
@@ -420,7 +420,7 @@
 "content.system.conversation.invite.title" = "Сервисы и пользователи не из вашей команды могут присоединиться к этой беседе.";
 "content.system.conversation.invite.button" = "Пригласить участников";
 
-"content.system.other_renamed_conv_to_nothing" = "%@ удалил(а) название разговора";
+"content.system.other_renamed_conv_to_nothing" = "%@ удалил(-а) название разговора";
 "content.system.you_renamed_conv_to_nothing" = "Вы удалили название разговора";
 "content.system.pending_message_timestamp" = "Отправка...";
 "content.system.message_sent_timestamp" = "Отправлено";
@@ -433,17 +433,17 @@
 "content.system.deleted_message_prefix_timestamp" = "Удалено: %@";
 "content.system.edited_message_prefix_timestamp" = "Изменено: %@";
 "content.system.connecting_to" = "Подключение к %@.\nНачните разговор";
-"content.system.connected_to" = "Добавил(а) %@.\nНачните разговор";
-"content.system.other_wanted_to_talk" = "%@ звонил(а)";
+"content.system.connected_to" = "Добавил(-а) %@.\nНачните разговор";
+"content.system.other_wanted_to_talk" = "%@ звонил(-а)";
 "content.system.you_wanted_to_talk" = "Вы звонили";
-"content.system.ephemeral_time_remaining" = "%@ покинул(а)";
+"content.system.ephemeral_time_remaining" = "%@ покинул(-а)";
 
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
 
 "content.system.call.you" = "Вы";
 "content.system.call.called" = "%@ звонили";
-"content.system.call.called-you" = "%@ звонил(а)";
+"content.system.call.called-you" = "%@ звонил(-а)";
 
 "content.system.renamed_conv.title" = "%@ переименовал разговор";
 "content.system.renamed_conv.title-you" = "%@ переименовали разговор";
@@ -462,10 +462,10 @@
 
 // read receipt
 
-"content.system.message_read_receipt_on" = "%@ включил(а) отчеты о прочтении для всех";
+"content.system.message_read_receipt_on" = "%@ включил(-а) отчеты о прочтении для всех";
 "content.system.message_read_receipt_on-you" = "%@ включили отчеты о прочтении для всех";
 
-"content.system.message_read_receipt_off" = "%@ отключил(а) отчеты о прочтении для всех";
+"content.system.message_read_receipt_off" = "%@ отключил(-а) отчеты о прочтении для всех";
 "content.system.message_read_receipt_off-you" = "%@ отключили отчеты о прочтении для всех";
 
 "content.system.message_read_receipt_on_add_to_group" = "Отчеты о прочтении включены";
@@ -482,7 +482,7 @@
 "content.system.reactivated_device" = "Вы снова начали использовать %@. Сообщения, отправленные ранее, не будут отображаться здесь.";
 
 "content.system.new_device" = "новое устройство";
-"content.system.started_using" = "начал(а) использовать";
+"content.system.started_using" = "начал(-а) использовать";
 "content.system.is_verified" = "Все отпечатки верифицированы";
 
 "content.system.new_users" = "Присоединился новый участник.";
@@ -554,7 +554,7 @@
 
 "content.file.too_big" = "Вы можете отправлять файлы до %@";
 // Someone pinged
-"content.ping.text" = "%@ отправил(а) пинг";
+"content.ping.text" = "%@ отправил(-а) пинг";
 "content.ping.text-you" = "%@ отправили пинг";
 
 // Current user pinged
@@ -589,7 +589,7 @@
 "voice.status.cbr" = "Постоянный битрейт";
 "voice.network_error.body" = "Вы должны быть онлайн, чтобы позвонить. Проверьте подключение и повторите попытку.";
 "voice.degradation.new_self_device" = "Вы начали использовать новое устройство.";
-"voice.degradation.new_user_device" = "%@ начал(а) использовать новое устройство.";
+"voice.degradation.new_user_device" = "%@ начал(-а) использовать новое устройство.";
 "voice.degradation_outgoing.prompt" = "Вы действительно хотите позвонить?";
 "voice.degradation_incoming.prompt" = "Вы действительно хотите принять вызов?";
 "voice.accept_button.title" = "Принять";
@@ -640,8 +640,8 @@
 
 "call.degraded.alert.title" = "Новое устройство";
 "call.degraded.alert.message.self" = "Вы начали использовать новое устройство.";
-"call.degraded.alert.message.user" = "%@ начал(а) использовать новое устройство.";
-"call.degraded.alert.message.unknown" = "Кто-то начал(а) использовать новое устройство.";
+"call.degraded.alert.message.user" = "%@ начал(-а) использовать новое устройство.";
+"call.degraded.alert.message.unknown" = "Кто-то начал(-а) использовать новое устройство.";
 "call.degraded.alert.action.continue" = "Все равно позвонить";
 
 "call.alert.ongoing.alert_title" = "Это действие завершит другой ваш вызов.";
@@ -726,9 +726,9 @@
 "meta.leave_conversation_button_leave_and_delete" = "Покинуть и удалить контент";
 
 // Conversation Degraded (security level lowered)
-"meta.degraded.degradation_reason_message.singular" = "%@ начал(а) использовать новое устройство.";
-"meta.degraded.degradation_reason_message.plural" = "%@ начал(а) использовать новые устройства.";
-"meta.degraded.degradation_reason_message.someone" = "Кто-то начал(а) использовать новое устройство.";
+"meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
+"meta.degraded.degradation_reason_message.plural" = "%@ начал(-а) использовать новые устройства.";
+"meta.degraded.degradation_reason_message.someone" = "Кто-то начал(-а) использовать новое устройство.";
 "meta.degraded.dialog_message" = "Вы все еще хотите отправить свое сообщение?";
 "meta.degraded.verify_devices_button" = "Верифицируйте устройства…";
 "meta.degraded.send_anyway_button" = "Отправить в любом случае";
@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Это поможет найти людей, которых вы знаете. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще. Разрешите доступ в Настройки > Конфиденциальность > Контакты.";
 
 "self.settings.privacy_security.lock_app" = "Блокировка кодом доступа";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокировать Wire через 10 секунд после перехода в фоновый режим.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокировать Wire через %@ после перехода в фоновый режим.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Разблокируйте с помощью Touch ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Разблокируйте с помощью Face ID или введите свой код доступа.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Необходимо обновление";
 "force.update.message" = "Вы упускаете новые возможности.\nПолучите последнюю версию Wire в App Store.";
 "force.update.ok_button" = "Перейти в App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
