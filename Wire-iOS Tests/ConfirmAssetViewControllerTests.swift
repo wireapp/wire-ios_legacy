@@ -55,7 +55,7 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         sut = ConfirmAssetViewController()
 
         accentColor = .vividRed
-        sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(withFactor: 0.5);
+        sut.image = image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(with: 0.5);
         sut.previewTitle = "Sea Food"
         verifyInAllIPhoneSizes(view: sut.view)
     }
