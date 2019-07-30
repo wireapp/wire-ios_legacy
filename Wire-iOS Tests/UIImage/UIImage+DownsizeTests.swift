@@ -21,6 +21,7 @@ import XCTest
 
 final class UIImageDownsizeTests: XCTestCase {
     var sut: UIImage!
+    let targetLength: CGFloat = 320
 
     override func tearDown() {
         sut = nil
@@ -30,14 +31,13 @@ final class UIImageDownsizeTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+
+        // the image size is 2459 x 3673 px
+        sut = image(inTestBundleNamed: "unsplash_burger.jpg")
     }
 
     func testDownsizeWithMaxLength() {
         // GIVEN
-
-        // the image size is 2459 x 3673 px
-        sut = image(inTestBundleNamed: "unsplash_burger.jpg")
-        let targetLength: CGFloat = 1024
 
         // WHEN
         let downsizedImage = sut.downsized(maxLength: targetLength)
@@ -48,10 +48,6 @@ final class UIImageDownsizeTests: XCTestCase {
 
     func testDownsizeWithShorterSizeLength() {
         // GIVEN
-
-        // the image size is 2459 x 3673 px
-        sut = image(inTestBundleNamed: "unsplash_burger.jpg")
-        let targetLength: CGFloat = 1024
 
         // WHEN
         let downsizedImage = sut.downsized(shorterSizeLength: targetLength)
