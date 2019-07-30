@@ -249,7 +249,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Chamada Perdida</string>
+        <string>Chamada não atendida</string>
         <key>other</key>
         <string>Chamadas Perdidas</string>
       </dict>

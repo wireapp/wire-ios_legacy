@@ -27,11 +27,11 @@
 "general.edit" = "編輯";
 "general.done" = "完成";
 "general.confirm" = "確認";
-"general.skip" = "Not Now";
+"general.skip" = "現在略過";
 "general.accept" = "同意";
 "general.decline" = "不了，謝謝";
 "general.failure" = "出了點問題";
-"general.failure.try_again" = "Please try again.";
+"general.failure.try_again" = "請再試一次。";
 "general.service" = "服務";
 "general.off" = "關閉";
 "general.on" = "開啟";
@@ -810,16 +810,16 @@
 "device.verified" = "已驗證";
 "device.not_verified" = "未驗證";
 
-"device.class.legalhold" = "Legal Hold";
+"device.class.legalhold" = "合法保留";
 "device.class.desktop" = "桌面";
 "device.class.tablet" = "平板電腦";
 "device.class.phone" = "手機";
-"device.class.unknown" = "Unknown";
+"device.class.unknown" = "未知";
 
 "device.type.permanent" = "永久設備";
 "device.type.temporary" = "Temporary";
-"device.type.legalhold" = "Legal Hold";
-"device.type.unknown" = "Unknown";
+"device.type.legalhold" = "合法保留";
+"device.type.unknown" = "未知";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服務";
@@ -837,7 +837,7 @@
 // Legal hold details
 
 "legalhold.participants.section.title" = "Legal hold subjects";
-"legalhold.header.title" = "Legal Hold";
+"legalhold.header.title" = "合法保留";
 "legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
 "legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Legal hold details";
@@ -894,7 +894,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "新增帳號";
 "self.settings.add_account.title" = "新增帳號";
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
@@ -1034,7 +1034,7 @@
 "self.settings.popular_demand.title" = "推薦選項";
 "self.settings.popular_demand.send_button.title" = "發送按鍵";
 "self.settings.popular_demand.send_button.footer" = "停用按輸入鍵發送信息功能。";
-"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+"self.settings.popular_demand.dark_mode.footer" = "切換暗或亮畫面主題";
 
 // Open in
 "self.settings.external_apps.header" = "開啟";
@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "分享您的通訊錄將幫助您找到其他連絡人。我們將您的資料匿名處理並且不與任何人分享。您可透過手機「設定」 > 隱私 > 聯絡資訊來開啟權限。";
 
 "self.settings.privacy_security.lock_app" = "使用Passcode鎖定";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "在背景10秒後鎖定Wire。";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用Touch ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "輸入密碼解鎖。";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "必要更新";
 "force.update.message" = "您錯過了些新功能。\n快到App Store中下載最新版的Wire吧。";
 "force.update.ok_button" = "到App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 來自giphy.com";

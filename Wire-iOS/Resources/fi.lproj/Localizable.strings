@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tämä auttaa sinua löytämään tuttuja. Me anonymisoimme kaiken tiedon ja emme jaa sitä kenellekään muulle. Anna lupa Asetuksista > Yksityisyys > Yhteystiedot.";
 
 "self.settings.privacy_security.lock_app" = "Lukitse Salasanalla";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Päivitys on välttämätön";
 "force.update.message" = "Jäät vaille uusista ominaisuuksista.\nHanki uusin versio Wirestä App Storesta.";
 "force.update.ok_button" = "Siirry App Storeen";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · giphy.com:in kautta";

@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "See lubab sul teistega ühenduda. Me muudame kõik info anonüümseks ja ei jaga seda kellegi teisega. Mine Seaded > Privaatsus > Kontaktid, et lubada ligipääs.";
 
 "self.settings.privacy_security.lock_app" = "Lukusta koodiga";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lukusta Wire, kui see äpp on üle 10 sekundi kinni olnud.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Tee lukust Touch ID või parooliga lahti.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Tee lukust Face ID või parooliga lahti.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Tee lukusta parooliga lahti.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Uuendamine vajalik";
 "force.update.message" = "Sa jääd teistest maha.\nTõmba uusim Wire App Store’st.";
 "force.update.ok_button" = "Mine App Store’i";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
