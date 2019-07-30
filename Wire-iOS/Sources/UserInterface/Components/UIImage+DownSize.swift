@@ -52,10 +52,9 @@ extension UIImage {
     func downsized(maxLength: CGFloat = CGFloat.Image.maxSupportedLength) -> UIImage? {
         let longestLength = size.longestLength
 
-        let maxImageLength = maxLength
-        guard longestLength > maxImageLength else { return self }
+        guard longestLength > maxLength else { return self }
 
-        let ratio = (maxImageLength / UIScreen.main.scale) / longestLength
+        let ratio = maxLength / longestLength / UIScreen.main.scale
         return imageScaled(with: ratio)
     }
 
@@ -64,9 +63,11 @@ extension UIImage {
     /// - Parameter shorterSizeLength: The target shorter size of the resized image
     /// - Returns: an image with shorter side length equal to shorterSizeLength, return nil if fail to scale the image
     func downsized(shorterSizeLength: CGFloat) -> UIImage? {
-        guard size.shortestLength < shorterSizeLength else { return self }
+        let shortestLength = size.shortestLength
 
-        let ratio = shorterSizeLength * UIScreen.main.scale / size.shortestLength
+        guard shortestLength > shorterSizeLength else { return self }
+
+        let ratio = shorterSizeLength / shortestLength / UIScreen.main.scale
         return imageScaled(with: ratio)
     }
 }
