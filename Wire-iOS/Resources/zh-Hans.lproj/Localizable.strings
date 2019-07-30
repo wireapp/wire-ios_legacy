@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "这将帮助您找到其他好友。 我们将您的所有信息匿名处理并且不会泄漏给任何第三方。请通过设置 > 隐私 > 联系人来授权通讯录访问权限。";
 
 "self.settings.privacy_security.lock_app" = "通过Passcode锁定";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "必要更新";
 "force.update.message" = "您错过了些新功能。快到App Store中下载最新版本的Wire呀。";
 "force.update.ok_button" = "到App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 来源 giphy.com";

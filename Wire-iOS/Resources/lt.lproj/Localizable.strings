@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tai padeda jums susisiekti su kitais. Mes nuasmeniname visą informaciją ir nesidaliname su niekuo. Leiskite prisijungti per „Nustatymai“ > „Privatumas“ > „Kontaktai“.";
 
 "self.settings.privacy_security.lock_app" = "Užrakinti su slaptuoju kodu";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Užrakinkite „Wire“ po 10 sekundžių fone.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Atrakinkite naudodami „Touch ID“ arba įrašę savo „Passcode“.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Atrakinkite naudodami „Face ID“ arba įrašę savo „Passcode“.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Atrakinkite naudodami „Passcode“.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Naujinti būtina";
 "force.update.message" = "Negalite naudotis naujausiomis galimybėmis.\nAtsisiųskite naujausią „Wire“ versiją iš „App Store“.";
 "force.update.ok_button" = "Eiti į „App Store“";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · iš giphy.com";

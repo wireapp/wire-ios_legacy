@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Compartir tus contactos permite a Wire encontrar amigos que ya son usuarios de Wire. Toda la información es anónima y no la compartimos con nadie. Permite acceder a Wire en Ajustes > Privacidad > Contactos.";
 
 "self.settings.privacy_security.lock_app" = "Bloquear aplicación";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Actualización necesaria";
 "force.update.message" = "Te estás perdiendo nuevas características.\nObtén la última versión de Wire en la App Store.";
 "force.update.ok_button" = "Ir a la App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · vía giphy.com";

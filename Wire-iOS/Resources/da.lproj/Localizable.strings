@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dette hjælper dig med at oprette forbindelse med andre. Vi anonymiserer alle informationer og deler ikke med andre. Tillad adgang via Indstillinger > Privatliv > Kontakter.";
 
 "self.settings.privacy_security.lock_app" = "Lås med adgangskode";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Opdatering nødvendig";
 "force.update.message" = "Du går glip af nye funktioner.\nHent den seneste version af Wire i App Store.";
 "force.update.ok_button" = "Gå til App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

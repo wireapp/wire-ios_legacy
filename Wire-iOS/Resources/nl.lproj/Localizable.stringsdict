@@ -249,7 +249,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Gemiste oproep</string>
         <key>other</key>
         <string>Missed calls</string>
       </dict>
