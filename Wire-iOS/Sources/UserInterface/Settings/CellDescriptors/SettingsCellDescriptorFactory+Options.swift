@@ -204,7 +204,7 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLock.rules.timeout)
+        let timeout = TimeInterval(AppLock.rules.appLockTimeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {

@@ -102,14 +102,14 @@ final public class AppLock {
 public struct AppLockRules: Decodable {
     
     public let forceAppLock: Bool
-    public let timeout: UInt
+    public let appLockTimeout: UInt
     
     public static func fromBundle() -> AppLockRules {
-        if let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json"),
+        if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
             let fileData = try? Data(contentsOf: fileURL) {
             return fromData(fileData)
         } else {
-            fatalError("appLock.json not exist")
+            fatalError("session_manager.json not exist")
         }
     }
     

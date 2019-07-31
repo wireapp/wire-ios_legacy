@@ -27,11 +27,11 @@ final class AppLockTests: XCTestCase {
     func testThatForcedAppLockDoesntAffectSettings() {
 
         //given
-        AppLock.rules = AppLockRules(forceAppLock: true, timeout: 900)
+        AppLock.rules = AppLockRules(forceAppLock: true, appLockTimeout: 900)
         
         //when
         XCTAssertTrue(AppLock.rules.forceAppLock)
-        XCTAssertEqual(AppLock.rules.timeout, 900)
+        XCTAssertEqual(AppLock.rules.appLockTimeout, 900)
         
         //then
         XCTAssertTrue(AppLock.isActive)
@@ -44,11 +44,11 @@ final class AppLockTests: XCTestCase {
     func testThatAppLockAffectsSettings() {
         
         //given
-        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 10)
+        AppLock.rules = AppLockRules(forceAppLock: false, appLockTimeout: 10)
         
         //when
         XCTAssertFalse(AppLock.rules.forceAppLock)
-        XCTAssertEqual(AppLock.rules.timeout, 10)
+        XCTAssertEqual(AppLock.rules.appLockTimeout, 10)
         
         //then
         AppLock.isActive = false
@@ -61,9 +61,9 @@ final class AppLockTests: XCTestCase {
     func testThatCustomTimeoutRequiresAuthenticationAfterExpiration() {
         
         //given
-        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 900)
+        AppLock.rules = AppLockRules(forceAppLock: false, appLockTimeout: 900)
         AppLock.isActive = true
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -Double(AppLock.rules.timeout)-100)
+        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -Double(AppLock.rules.appLockTimeout)-100)
         
         let appLockVC = AppLockViewController.shared
         
@@ -85,7 +85,7 @@ final class AppLockTests: XCTestCase {
     func testThatCustomTimeoutDoesntRequireAuthenticationBeforeExpiration() {
         
         //given
-        AppLock.rules = AppLockRules(forceAppLock: false, timeout: 900)
+        AppLock.rules = AppLockRules(forceAppLock: false, appLockTimeout: 900)
         AppLock.isActive = true
         AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -10)
         
@@ -105,12 +105,12 @@ final class AppLockTests: XCTestCase {
     
     func testThatAppLockRulesObjectIsDecodedCorrectly() {
         //given
-        let json = "{\"forceAppLock\":true,\"timeout\":900}"
+        let json = "{\"forceAppLock\":true,\"appLockTimeout\":900}"
         //when
         let sut = AppLockRules.fromData(json.data(using: .utf8)!)
         //then
         XCTAssertTrue(sut.forceAppLock)
-        XCTAssertEqual(sut.timeout, 900)
+        XCTAssertEqual(sut.appLockTimeout, 900)
     }
 
 }
