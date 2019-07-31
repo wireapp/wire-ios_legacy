@@ -20,11 +20,11 @@ import Foundation
 import WireDataModel
 import LocalAuthentication
 
-public class AppLock {
+final public class AppLock {
     // Returns true if user enabled the app lock feature.
     
     public static var rules = AppLockRules.fromBundle()
-    
+
     public static var isActive: Bool {
         get {
             guard !rules.forceAppLock else { return true }
