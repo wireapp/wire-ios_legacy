@@ -105,9 +105,12 @@ public struct AppLockRules: Decodable {
     public let timeout: UInt
     
     public static func fromBundle() -> AppLockRules {
-        let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json")!
-        let fileData = try! Data(contentsOf: fileURL)
-        return fromData(fileData)
+        if let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json"),
+            let fileData = try? Data(contentsOf: fileURL) {
+            return fromData(fileData)
+        } else {
+            fatalError("appLock.json not exist")
+        }
     }
     
     public static func fromData(_ data: Data) -> AppLockRules {
