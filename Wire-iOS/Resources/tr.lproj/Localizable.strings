@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Kişilerinizi paylaşmak, başkalarına bağlanmanızı kolaylaştırır. Biz size ait tüm bilgileri gizler ve başkalarıyla paylaşmayız. Ayarlar > Gizlilik > Kişiler'den bu erişimi aktifleştirebilirsiniz.";
 
 "self.settings.privacy_security.lock_app" = "Sistem şifresi ile kilitle";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "10 saniye sonra Wire'ı arka planda kilitleyin.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Kabloyu arka planda %@ işaretinden sonra kilitleyin.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Parmak iziyle kilidi açın veya şifrenizi girin.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Yüz tanımayla kilidi açın veya şifrenizi girin.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Şifreni girerek şifreyi aç.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "Güncelleme gerekli";
 "force.update.message" = "Yeni özellikleri kaçırıyorsun.\nApp Store'dan Wire'ın en güncel versiyonunu indir.";
 "force.update.ok_button" = "App Store'a git";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · giphy.com aracılığıyla";

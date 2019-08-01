@@ -171,6 +171,10 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
+    func sessionManagerDidWipeJailbrokenDevice() {
+        // TODO see db wipe PR
+    }
+    
     func sessionManagerWillMigrateAccount(_ account: Account) {
         guard account == loadingAccount else { return }
         

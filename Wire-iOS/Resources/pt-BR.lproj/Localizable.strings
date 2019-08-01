@@ -27,11 +27,11 @@
 "general.edit" = "Editar";
 "general.done" = "Pronto";
 "general.confirm" = "OK";
-"general.skip" = "Not Now";
+"general.skip" = "Agora não";
 "general.accept" = "Aceitar";
 "general.decline" = "Não, obrigado";
 "general.failure" = "Algo deu errado";
-"general.failure.try_again" = "Please try again.";
+"general.failure.try_again" = "Por favor, tente novamente.";
 "general.service" = "Serviço";
 "general.off" = "Desligar";
 "general.on" = "Ligado";
@@ -309,7 +309,7 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Não é possível gravar um vídeo durante uma chamada.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Não é possível tirar uma foto durante a chamada.";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 "conversation.guests_present" = "Os convidados estão presentes";
 "conversation.services_present" = "Serviços estão ativos";
@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Isso ajuda a você se conectar com outros. Nós tornamos secretas todas as informações e não compartilhamos com ninguém. Permita o acesso em Ajustes > Privacidade > Contatos.";
 
 "self.settings.privacy_security.lock_app" = "Bloquear Com Código";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Trave o Wire após 10 segundos no fundo.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Bloqueie o Wire após %@ no fundo.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Debloqueie com o Touch ID ou digite sua senha.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Debloqueie com o Face ID ou digite sua senha.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Desbloquear digitando sua senha.";
@@ -1097,8 +1097,8 @@
 
 "self.settings.advanced.title" = "Avançado";
 "self.settings.advanced.troubleshooting.title" = "Solução de problemas";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Relatório de depuração";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Essas informações ajudam o Suporte Wire a diagnosticar problemas de chamadas e melhorar a experiência geral do aplicativo.";
 "self.settings.advanced.reset_push_token.title" = "Redefinir Token de Notificações Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Se você tiver problemas com notificações, o Suporte do Wire pode solicitar que você redefinir esse token.";
 "self.settings.advanced.reset_push_token_alert.title" = "Token de notificações foi redefinido";
@@ -1111,7 +1111,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Relatório Técnico";
 "self.settings.technical_report.send_report" = "Enviar relatório para o Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Relatório de depuração Wire";
 "self.settings.technical_report.include_log" = "Incluir o log detalhado";
 "self.settings.technical_report.privacy_warning" = "Registros detalhados podem conter dados pessoais";
 "self.settings.technical_report.no_mail_alert" = "Nenhum cliente de e-mail detectado. Toque em \"OK\" e envie os registros manualmente para: ";
@@ -1509,6 +1509,10 @@
 "force.update.message" = "Você está perdendo novas funcionalidades. \nObtenha a última versão do Wire na App Store.";
 "force.update.ok_button" = "Vá para a App Store";
 
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1659,13 +1663,13 @@
 "share_extension.voiceover.conversation_secure_with_ignored" = "Nem todos os clientes foram verificados.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
-"legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.button.accessibility" = "Aprovação pendente.";
+"legalhold_request.alert.title" = "Retenção legal solicitada";
+"legalhold_request.alert.detail" = "Todas as mensagens futuras serão gravadas pelo dispositivo com impressão digital:\n\n%@\n\nIsso inclui mensagens excluídas, editadas e cronometradas em todas as conversas.";
+"legalhold_request.alert.detail.enter_password" = "Digite sua senha para confirmar.";
 "legalhold_request.alert.error_wrong_password" = "Senha incorreta";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.title" = "A retenção legal está ativa";
 "legalhold_active.alert.learn_more" = "Saiba Mais";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "A retenção legal foi ativada para sua conta. Todas as mensagens serão preservadas para acesso futuro, incluindo mensagens excluídas, editadas e cronometradas.\n\nSeus parceiros de conversação estarão cientes da gravação.";

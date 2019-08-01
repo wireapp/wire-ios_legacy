@@ -114,7 +114,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>и еще один</string>
+        <string>и еще кто-то</string>
         <key>few</key>
         <string>и %d других</string>
         <key>many</key>

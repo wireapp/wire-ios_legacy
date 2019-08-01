@@ -309,7 +309,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Zgrešen klic</string>
         <key>two</key>
         <string>Missed calls</string>
         <key>few</key>

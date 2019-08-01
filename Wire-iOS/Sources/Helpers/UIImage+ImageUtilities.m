@@ -25,20 +25,6 @@
 
 @implementation UIImage (ImageUtilities)
 
-- (UIImage *)imageScaledWithFactor:(CGFloat)scaleFactor
-{
-    CGSize size = CGSizeApplyAffineTransform(self.size, CGAffineTransformMakeScale(scaleFactor, scaleFactor));
-    CGFloat scale = 0; // Automatically use scale factor of main screens
-    BOOL hasAlpha = NO;
-    
-    UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale);
-    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return scaledImage;
-}
-
 - (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation
 {
     CIImage *i = [CIImage imageWithCGImage:[self CGImage]];

@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
 "self.settings.privacy_security.lock_app" = "قفل برمز المرور";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "تأمين Wire بعد عشر ثوانٍ من البقاء في الخلفية.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "فتح بـTouch ID أو أدخل رمز الدخول.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "فتح بـFace ID أو أدخل رمز الدخول.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "فتح باستخدام رمز الدخول.";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "مطلوب التحديث";
 "force.update.message" = "أنت تفتقد مميزات جديدة.\nاحصل على آخر إصدار من Wire من خلال App Store.";
 "force.update.ok_button" = "اذهب لـApp Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · عبر giphy.com";

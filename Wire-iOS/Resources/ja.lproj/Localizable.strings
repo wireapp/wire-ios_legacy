@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "これはあなたが友人とつながるを容易にします。私たちはすべての情報を匿名化し、他の第三者と共有することはしません。アクセスを許可するためには、設定>プライバシー>連絡先で設定します。";
 
 "self.settings.privacy_security.lock_app" = "コードでロック";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "10 秒後にバックグラウンドで Wire をロックします。";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Touch ID または、パスコードでロック解除します。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Face ID または、パスコードでロック解除します。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "パスコードを入力してロック解除します。";
@@ -1508,6 +1508,10 @@
 "force.update.title" = "アップデートが必要です。";
 "force.update.message" = "新しい機能を利用できていないようです。\n最新バージョンのWireをApp Storeでダウンロードしてください。";
 "force.update.ok_button" = "App Storeに行く";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ giphy.comから";

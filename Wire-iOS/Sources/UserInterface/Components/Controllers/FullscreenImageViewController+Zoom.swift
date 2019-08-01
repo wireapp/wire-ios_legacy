@@ -33,12 +33,6 @@ extension CGSize {
         return minZoom
     }
 
-
-    /// returns the longest length among width and height
-    var longestLength: CGFloat {
-        return width > height ? width : height
-    }
-
     /// returns true if both with and height are longer than otherSize
     ///
     /// - Parameter otherSize: other CGSize to compare

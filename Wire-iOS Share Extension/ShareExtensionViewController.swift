@@ -318,12 +318,20 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     /// Fetches the preview image for the given website.
     private func fetchWebsitePreview(for url: URL) {
         sharingSession?.downloadLinkPreviews(inText: url.absoluteString, excluding: []) { previews in
-            if let imageData = previews.first?.imageData.first {
-                let image = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.preview?.displayMode = .link
-                    self.preview?.image = image
-                }
+            let previewImage: UIImage?
+
+            /// size the image to fill the image view
+            if let imageData = previews.first?.imageData.first,
+               let image = UIImage(data: imageData),
+               let requiredSize = self.preview?.frame.size.shortestLength {
+                previewImage = image.downsized(shorterSizeLength: requiredSize)
+            } else {
+                previewImage = nil
+            }
+
+            DispatchQueue.main.async {
+                self.preview?.displayMode = .link
+                self.preview?.image = previewImage
             }
         }
     }
