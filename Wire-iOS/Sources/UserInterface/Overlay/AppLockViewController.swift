@@ -180,10 +180,6 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        if !AppLockViewController.becameActive {
-            AppLockViewController.becameActive = true
-        }
-
         showUnlockIfNeeded()
     }
 }
