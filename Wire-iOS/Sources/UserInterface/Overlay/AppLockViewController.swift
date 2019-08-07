@@ -43,6 +43,9 @@ extension Notification.Name {
         return shared.dimContents
     }
 
+     /// flag to identify the app is just launched. the value is false until applicationDidBecomeActive is called
+    static var becameActive: Bool = false
+
     convenience init() {
         self.init(nibName:nil, bundle:nil)
         
@@ -177,6 +180,13 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        self.showUnlockIfNeeded()
+        if !AppLockViewController.becameActive {
+            AppLockViewController.becameActive = true
+
+            /// invlidate lastUnlockedDate to shwo the app lock
+            AppLock.lastUnlockedDate = Date.init(timeIntervalSince1970: 0)
+        }
+
+        showUnlockIfNeeded()
     }
 }

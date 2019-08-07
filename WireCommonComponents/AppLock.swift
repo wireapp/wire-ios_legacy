@@ -44,19 +44,8 @@ final public class AppLock {
         }
     }
     
-    // Returns the time since last lock happened as number of seconds since the reference date.
-    private static var lastUnlockDateAsInt: UInt32 = 0
-    
     // Returns the time since last lock happened.
-    public static var lastUnlockedDate: Date {
-        get {
-            return Date(timeIntervalSinceReferenceDate: TimeInterval(self.lastUnlockDateAsInt))
-        }
-        
-        set {
-            lastUnlockDateAsInt = UInt32(newValue.timeIntervalSinceReferenceDate)
-        }
-    }
+    public static var lastUnlockedDate: Date = Date(timeIntervalSince1970: 0)
     
     public enum AuthenticationResult {
         /// User sucessfully authenticated
