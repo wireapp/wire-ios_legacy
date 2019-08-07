@@ -78,8 +78,7 @@ public enum SettingsPropertyName: String, CustomStringConvertible {
     case enableBatchCollections = "EnableBatchCollections"
 
     case lockApp = "lockApp"
-    case lockAppLastDate = "lockAppLastDate"
-    
+
     case readReceiptsEnabled = "readReceiptsEnabled"
     
     public var changeNotificationName: String {
