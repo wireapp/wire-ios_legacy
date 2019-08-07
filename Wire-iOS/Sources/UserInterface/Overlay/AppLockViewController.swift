@@ -110,7 +110,7 @@ extension Notification.Name {
             } else {
                 self.lockView.showReauth = false
                 self.requireLocalAuthenticationIfNeeded { grantedOptional in
-                    self.updateGranted(grantedOptional: grantedOptional)
+                    self.updateForLocalAuthentication(grantedOptional: grantedOptional)
                 }
             }
         }
@@ -183,10 +183,10 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        /// if this is the first time became active, i.e. when app launch, show the look screen if forceAppLock is true
-        if !AppLockViewController.becameActive, AppLock.rules.forceAppLock {
+        /// if this is the first time became active, i.e. when app launch, always require for local authentication
+        if !AppLockViewController.becameActive {
             requireLocalAuthentication { grantedOptional in
-                self.updateGranted(grantedOptional: grantedOptional)
+                self.updateForLocalAuthentication(grantedOptional: grantedOptional)
             }
         } else {
             showUnlockIfNeeded()
@@ -195,7 +195,11 @@ extension AppLockViewController {
         AppLockViewController.becameActive = true
     }
 
-    private func updateGranted(grantedOptional: Bool?) {
+
+    /// Update state for Local Authentication granted or not
+    ///
+    /// - Parameter grantedOptional: optional value of granted or not. 
+    private func updateForLocalAuthentication(grantedOptional: Bool?) {
         let granted = grantedOptional ?? true
 
         dimContents = !granted
