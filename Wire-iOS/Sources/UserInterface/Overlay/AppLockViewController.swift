@@ -43,6 +43,8 @@ extension Notification.Name {
         return shared.dimContents
     }
 
+    static var becameActive: Bool = false
+
     convenience init() {
         self.init(nibName:nil, bundle:nil)
         
@@ -103,16 +105,10 @@ extension Notification.Name {
         
             if self.localAuthenticationCancelled {
                 self.lockView.showReauth = true
-            }
-            else {
+            } else {
                 self.lockView.showReauth = false
                 self.requireLocalAuthenticationIfNeeded { grantedOptional in
-                    
-                    let granted = grantedOptional ?? true
-                    
-                    self.dimContents = !granted
-                    self.localAuthenticationCancelled = !granted
-                    self.localAuthenticationNeeded = !granted
+                    self.updateGranted(grantedOptional: grantedOptional)
                 }
             }
         }
@@ -133,11 +129,19 @@ extension Notification.Name {
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
+        if timeSinceAuth >= 0 &&
+           timeSinceAuth < Double(AppLock.rules.appLockTimeout ) {
             callback(true)
             return
         }
-        
+
+        requireLocalAuthentication(with: callback)
+    }
+
+    /// require Local Authentication action
+    ///
+    /// - Parameter callback: the callback after requireLocalAuthentication is done
+    private func requireLocalAuthentication(with callback: @escaping (Bool?)->()) {
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
             DispatchQueue.main.async {
                 callback(success)
@@ -177,6 +181,23 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        self.showUnlockIfNeeded()
+        /// if this is the first time became active, i.e. when app launch, show the look screen if forceAppLock is true
+        if !AppLockViewController.becameActive, AppLock.rules.forceAppLock {
+            requireLocalAuthentication { grantedOptional in
+                self.updateGranted(grantedOptional: grantedOptional)
+            }
+        } else {
+            showUnlockIfNeeded()
+        }
+
+        AppLockViewController.becameActive = true
+    }
+
+    private func updateGranted(grantedOptional: Bool?) {
+        let granted = grantedOptional ?? true
+
+        dimContents = !granted
+        localAuthenticationCancelled = !granted
+        localAuthenticationNeeded = !granted
     }
 }
