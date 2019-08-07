@@ -43,6 +43,8 @@ extension Notification.Name {
         return shared.dimContents
     }
 
+
+    /// flag to identify the app is just launched. the value is false until applicationDidBecomeActive is called
     static var becameActive: Bool = false
 
     convenience init() {
