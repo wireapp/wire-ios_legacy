@@ -43,10 +43,6 @@ extension Notification.Name {
         return shared.dimContents
     }
 
-
-    /// flag to identify the app is just launched. the value is false until applicationDidBecomeActive is called
-    static var becameActive: Bool = false
-
     convenience init() {
         self.init(nibName:nil, bundle:nil)
         
@@ -107,10 +103,20 @@ extension Notification.Name {
         
             if self.localAuthenticationCancelled {
                 self.lockView.showReauth = true
-            } else {
+            }
+            else {
                 self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { grantedOptional in
-                    self.updateForLocalAuthentication(grantedOptional: grantedOptional)
+                self.requireLocalAuthenticationIfNeeded { result in
+                    
+                    let granted = result == .granted
+                    
+                    self.dimContents = !granted
+                    self.localAuthenticationCancelled = !granted
+                    self.localAuthenticationNeeded = !granted
+                    
+                    if case .unavailable = result {
+                        self.lockView.showReauth = true
+                    }
                 }
             }
         }
@@ -121,38 +127,26 @@ extension Notification.Name {
     }
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (AppLock.AuthenticationResult)->()) {
         guard AppLock.isActive else {
-            callback(.none)
-            return
+            return callback(.granted)
         }
         
         let lastAuthDate = AppLock.lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 &&
-           timeSinceAuth < Double(AppLock.rules.appLockTimeout ) {
-            callback(true)
+        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
+            callback(.granted)
             return
         }
-
-        requireLocalAuthentication(with: callback)
-    }
-
-    /// require Local Authentication action
-    ///
-    /// - Parameter callback: the callback after requireLocalAuthentication is done
-    private func requireLocalAuthentication(with callback: @escaping (Bool?)->()) {
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
+        
+        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
-                callback(success)
-                if let success = success, success {
+                callback(result)
+                if case .granted = result {
                     AppLock.lastUnlockedDate = Date()
                     NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
-
-                } else {
-                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
             }
         }
@@ -183,27 +177,6 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        /// if this is the first time became active, i.e. when app launch, always require for local authentication
-        if !AppLockViewController.becameActive {
-            requireLocalAuthentication { grantedOptional in
-                self.updateForLocalAuthentication(grantedOptional: grantedOptional)
-            }
-        } else {
-            showUnlockIfNeeded()
-        }
-
-        AppLockViewController.becameActive = true
-    }
-
-
-    /// Update state for Local Authentication granted or not
-    ///
-    /// - Parameter grantedOptional: optional value of granted or not. 
-    private func updateForLocalAuthentication(grantedOptional: Bool?) {
-        let granted = grantedOptional ?? true
-
-        dimContents = !granted
-        localAuthenticationCancelled = !granted
-        localAuthenticationNeeded = !granted
+        self.showUnlockIfNeeded()
     }
 }

@@ -247,8 +247,6 @@ extension SettingsPropertyName {
             return "Use AssetCollectionBatched"
         case .lockApp:
             return "self.settings.privacy_security.lock_app".localized
-        case .lockAppLastDate:
-            return "Last app lock date"
         case .callingConstantBitRate:
             return "self.settings.vbr.title".localized
         case .disableLinkPreviews:
