@@ -183,7 +183,7 @@ extension AppLockViewController {
         if !AppLockViewController.becameActive {
             AppLockViewController.becameActive = true
 
-            /// invlidate lastUnlockedDate to shwo the app lock
+            /// invlidate lastUnlockedDate, app lock will show since the timeout is reached
             AppLock.lastUnlockedDate = Date.init(timeIntervalSince1970: 0)
         }
 
