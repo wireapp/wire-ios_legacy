@@ -106,13 +106,17 @@ extension Notification.Name {
             }
             else {
                 self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { grantedOptional in
+                self.requireLocalAuthenticationIfNeeded { result in
                     
-                    let granted = grantedOptional ?? true
+                    let granted = result == .granted
                     
                     self.dimContents = !granted
                     self.localAuthenticationCancelled = !granted
                     self.localAuthenticationNeeded = !granted
+                    
+                    if case .unavailable = result {
+                        self.lockView.showReauth = true
+                    }
                 }
             }
         }
@@ -123,10 +127,9 @@ extension Notification.Name {
     }
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (AppLock.AuthenticationResult)->()) {
         guard AppLock.isActive else {
-            callback(.none)
-            return
+            return callback(.granted)
         }
         
         let lastAuthDate = AppLock.lastUnlockedDate
@@ -134,19 +137,16 @@ extension Notification.Name {
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
         if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
-            callback(true)
+            callback(.granted)
             return
         }
         
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
+        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
-                callback(success)
-                if let success = success, success {
+                callback(result)
+                if case .granted = result {
                     AppLock.lastUnlockedDate = Date()
                     NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
-
-                } else {
-                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
             }
         }

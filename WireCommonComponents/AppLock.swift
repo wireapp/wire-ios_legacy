@@ -20,6 +20,8 @@ import Foundation
 import WireDataModel
 import LocalAuthentication
 
+private let zmLog = ZMSLog(tag: "UI")
+
 final public class AppLock {
     // Returns true if user enabled the app lock feature.
     
@@ -79,20 +81,29 @@ final public class AppLock {
         }
     }
     
+    public enum AuthenticationResult {
+        /// User sucessfully authenticated
+        case granted
+        /// User failed to authenticate or cancelled the request
+        case denied
+        /// There's no authenticated method available (no passcode is set)
+        case unavailable
+    }
+    
     // Creates a new LAContext and evaluates the authentication settings of the user.
-    public static func evaluateAuthentication(description: String, with callback: @escaping (Bool?, Error?)->()) {
+    public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
     
         let context: LAContext = LAContext()
         var error: NSError?
     
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication,
-                                   localizedReason: description,
-                                   reply: { (success, error) -> Void in
-                callback(success, error)
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
+                callback(success ? .granted : .denied)
             })
         } else {
-            callback(.none, error)
+            // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
+            callback(rules.forceAppLock ? .unavailable : .granted)
+            zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }
     

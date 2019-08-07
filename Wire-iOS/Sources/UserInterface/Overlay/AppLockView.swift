@@ -77,8 +77,10 @@ final class AppLockView: UIView {
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
         case .faceID:
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_face_id".localized
-        case .none:
+        case .passcode:
             self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode".localized
+        case .unavailable:
+            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
         }
 
         self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)

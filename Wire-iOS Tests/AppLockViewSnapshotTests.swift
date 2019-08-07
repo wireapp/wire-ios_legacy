@@ -53,9 +53,19 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForReauthUI_Password() {
-        sut = AppLockView(authenticationType: .none)
+        sut = AppLockView(authenticationType: .passcode)
         sut.showReauth = true
 
+        verifyInAllDeviceSizes(view: sut) { _, isPad in
+            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
+            self.sut.toggleConstraints()
+        }
+    }
+    
+    func testForReauthUI_Unvailable() {
+        sut = AppLockView(authenticationType: .unavailable)
+        sut.showReauth = true
+        
         verifyInAllDeviceSizes(view: sut) { _, isPad in
             self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
             self.sut.toggleConstraints()
