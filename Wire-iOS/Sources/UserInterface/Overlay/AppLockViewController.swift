@@ -34,6 +34,12 @@ extension Notification.Name {
     fileprivate var dimContents: Bool = false {
         didSet {
             self.view.isHidden = !self.dimContents
+                        
+            if dimContents {
+                AppDelegate.shared().notificationsWindow?.makeKey()
+            } else {
+                AppDelegate.shared().window.makeKey()
+            }
         }
     }
     
@@ -83,18 +89,6 @@ extension Notification.Name {
         }
         
         self.dimContents = false
-    }
-    
-    fileprivate func resignKeyboardIfNeeded() {
-        if self.dimContents {
-            self.resignKeyboard()
-        }
-    }
-    
-    fileprivate func resignKeyboard() {
-        delay(1) {
-            UIApplication.shared.keyWindow?.endEditing(true)
-        }
     }
     
     fileprivate func showUnlockIfNeeded() {
@@ -158,7 +152,6 @@ extension Notification.Name {
 extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
-            self.resignKeyboard()
             self.dimContents = true
         }
     }
