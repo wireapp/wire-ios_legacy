@@ -24,6 +24,13 @@ final class AppLockTests: XCTestCase {
 
     let decoder = JSONDecoder()
     
+    override func tearDown() {
+        super.tearDown()
+        
+        AppLock.isActive = false
+        AppDelegate.shared().window.makeKey()
+    }
+    
     func testThatForcedAppLockDoesntAffectSettings() {
 
         //given
