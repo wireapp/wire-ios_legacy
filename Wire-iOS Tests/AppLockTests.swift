@@ -94,8 +94,7 @@ final class AppLockTests: XCTestCase {
         //when
         let exp = expectation(description: "App lock authentication")
         appLockVC.requireLocalAuthenticationIfNeeded { (result) in
-            guard let result = result else { XCTFail(); return }
-            XCTAssertTrue(result)
+            XCTAssertEqual(result, .granted)
             exp.fulfill()
         }
         
