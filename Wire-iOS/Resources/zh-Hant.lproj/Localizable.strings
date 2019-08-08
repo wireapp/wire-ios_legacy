@@ -214,7 +214,7 @@
 "conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
 "conversation.status.incoming_call" = "%@呼叫中...";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "來電中…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享一條連結";
@@ -309,7 +309,7 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "在通話時不能錄製視像訊息。";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "在通話時不能拍攝相片。";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "此訊息已刪除。";
 
 "conversation.guests_present" = "訪客在對話中";
 "conversation.services_present" = "服務已啟動";
@@ -731,7 +731,7 @@
 "meta.degraded.degradation_reason_message.someone" = "某人開始使用了新設備。";
 "meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
 "meta.degraded.verify_devices_button" = "驗證設備…";
-"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.send_anyway_button" = "仍然要寄送";
 "meta.degraded.cancel_sending_button" = "取消";
 "meta.legalhold.info_button" = "What Is Legal Hold?";
 "meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
@@ -817,7 +817,7 @@
 "device.class.unknown" = "未知";
 
 "device.type.permanent" = "永久設備";
-"device.type.temporary" = "Temporary";
+"device.type.temporary" = "臨時";
 "device.type.legalhold" = "合法保留";
 "device.type.unknown" = "未知";
 
@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "分享您的通訊錄將幫助您找到其他連絡人。我們將您的資料匿名處理並且不與任何人分享。您可透過手機「設定」 > 隱私 > 聯絡資訊來開啟權限。";
 
 "self.settings.privacy_security.lock_app" = "使用Passcode鎖定";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "在背景%@後鎖定Wire。";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用Touch ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "輸入密碼解鎖。";
@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
 "self.settings.privacy_security.lock_cancelled.action" = "解鎖";
 
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
@@ -1111,7 +1112,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "技術報告";
 "self.settings.technical_report.send_report" = "傳送報告到Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Wire除錯報告";
 "self.settings.technical_report.include_log" = "包含詳細日誌";
 "self.settings.technical_report.privacy_warning" = "詳細日誌可能包含個人資料";
 "self.settings.technical_report.no_mail_alert" = "沒有電郵程式。點擊「確定」並手動將日誌發送到：";
@@ -1175,7 +1176,7 @@
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.title" = "連接到「%@」";
 "landing.custom_backend.more_info.button.title" = "顯示更多";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
@@ -1284,7 +1285,7 @@
 "registration.alert.account_exists.title" = "帳戶已存在";
 "registration.alert.account_exists.message_phone" = "您註冊的電話號碼已連結到帳戶。\n\n請使用其他電話號碼，或者如果您擁有此帳戶，請嘗試登錄。";
 "registration.alert.account_exists.message_email" = "您註冊的電郵地址已連結到帳戶。\n\n請使用其他電郵地址，或者如果您擁有此帳戶，請嘗試登錄。";
-"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_email_action" = "使用另一電郵註冊";
 "registration.alert.change_phone_action" = "使用另一手機號碼註冊";
 "registration.alert.change_signin_action" = "登入";
 
@@ -1560,7 +1561,7 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "設定狀態";
-"availability.accessibility_label.change_status" = "Change Status";
+"availability.accessibility_label.change_status" = "更改狀態";
 "availability.accessibility_label.status" = "狀態";
 
 "availability.none" = "沒有狀態";

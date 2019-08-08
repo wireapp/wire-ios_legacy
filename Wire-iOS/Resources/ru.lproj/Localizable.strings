@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокировать Wire с помощью Touch ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Разблокировать Wire с помощью кода доступа";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";
@@ -1510,8 +1511,8 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbroken device";
-"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+"jailbrokendevice.alert.title" = "Устройство с джейлбрейком";
+"jailbrokendevice.alert.message" = "На этом устройстве установлен джейлбрейк. Из соображений безопасности Wire нельзя установить на устройства с джейлбрейком.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";

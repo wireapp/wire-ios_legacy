@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
 "self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط";
