@@ -1085,7 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Déverrouillez Wire avec Face ID ou votre Code";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Déverrouillez Wire avec Touch ID ou votre Code";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Déverrouillez Wire avec votre Code";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
