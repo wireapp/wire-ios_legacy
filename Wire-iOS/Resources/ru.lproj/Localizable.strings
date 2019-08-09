@@ -1085,7 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокировать Wire с помощью Touch ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Разблокировать Wire с помощью кода доступа";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Для разблокировки Wire включите код доступа в настройках вашего устройства";
 "self.settings.privacy_security.lock_cancelled.action" = "Разблокировать";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерировать предпросмотр для ссылок";

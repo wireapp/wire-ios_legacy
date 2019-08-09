@@ -1085,7 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Turn on passcode in your phone settings to unlock Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "解鎖";
 
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
