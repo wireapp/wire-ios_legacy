@@ -11,10 +11,11 @@ platform :ios do
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else
-	      configuration_path = options[:configuration_path]
-	      if configuration_path.nil? 
-			configuration_path = "wire-ios-build-assets/CI\ configuration"
-		end
+            configuration_path = options[:configuration_path]
+            if configuration_path.nil? 
+                configuration_path = "wire-ios-build-assets/CI\ configuration"
+            end
+            
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
@@ -136,10 +137,10 @@ platform :ios do
             )
         end
 	  
-	   hockey_app_id = options[:hockey_app_id]
-	   if hockey_app_id.nil? 
-		hockey_app_id = build.hockey_app_id
-	   end
+        hockey_app_id = options[:hockey_app_id]
+        if hockey_app_id.nil? 
+            hockey_app_id = build.hockey_app_id
+        end
 
 
         hockey(
