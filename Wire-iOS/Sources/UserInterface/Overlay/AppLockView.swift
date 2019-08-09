@@ -48,10 +48,17 @@ final class AppLockView: UIView {
             self.authenticateButton.isHidden = !showReauth
         }
     }
+    
+    public var authenticationType: AuthenticationType {
+        didSet {
+            updateAuthenticationCopy()
+        }
+    }
 
     init(authenticationType: AuthenticationType = .current) {
         let blurEffect = UIBlurEffect(style: .dark)
         self.blurView = UIVisualEffectView(effect: blurEffect)
+        self.authenticationType = authenticationType
         
         super.init(frame: .zero)
         
@@ -72,23 +79,28 @@ final class AppLockView: UIView {
         contentContainerView.addSubview(authenticateLabel)
         contentContainerView.addSubview(authenticateButton)
 
-        switch authenticationType {
-        case .touchID:
-            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
-        case .faceID:
-            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_face_id".localized
-        case .passcode:
-            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode".localized
-        case .unavailable:
-            self.authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
-        }
-
-        self.authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
-        self.authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
-
+        updateAuthenticationCopy()
+        
         createConstraints(nibView: nibView)
 
         toggleConstraints()
+    }
+    
+    private func updateAuthenticationCopy() {
+        switch authenticationType {
+        case .touchID:
+            authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_touch_id".localized
+        case .faceID:
+            authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_face_id".localized
+        case .passcode:
+            authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode".localized
+        case .unavailable:
+            authenticateLabel.text = "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable".localized
+        }
+        
+        authenticateButton.setTitle("self.settings.privacy_security.lock_cancelled.action".localized, for: .normal)
+        authenticateButton.addTarget(self, action: #selector(AppLockView.onReauthenticatePressed(_:)), for: .touchUpInside)
+        authenticateButton.isEnabled = authenticationType != .unavailable
     }
 
     private func createConstraints(nibView: UIView) {
