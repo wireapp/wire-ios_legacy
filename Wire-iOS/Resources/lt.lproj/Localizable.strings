@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Atrakinti";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Rodyti svetainių vaizdą";

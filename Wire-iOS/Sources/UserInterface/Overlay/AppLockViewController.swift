@@ -96,6 +96,7 @@ extension Notification.Name {
             self.dimContents = true
         
             if self.localAuthenticationCancelled {
+                self.lockView.authenticationType = .current
                 self.lockView.showReauth = true
             }
             else {
@@ -109,6 +110,7 @@ extension Notification.Name {
                     self.localAuthenticationNeeded = !granted
                     
                     if case .unavailable = result {
+                        self.lockView.authenticationType = .current
                         self.lockView.showReauth = true
                     }
                 }

@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Desbloqueie o Wire com o Face ID ou Código";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Desbloqueie o Wire com o Touch ID ou Código";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Desbloquear Wire com senha";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Para desbloquear o Wire, ative o código de acesso nas configurações do dispositivo";
 "self.settings.privacy_security.lock_cancelled.action" = "Desbloquear";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Criar pré-visualizações de links";
@@ -1510,8 +1511,8 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbroken device";
-"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+"jailbrokendevice.alert.title" = "Dispositivo Jailbroken (desbloqueado)";
+"jailbrokendevice.alert.message" = "O jailbreak está instalado neste dispositivo. Por motivos de segurança, o Wire deve ser instalado em dispositivos sem jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
