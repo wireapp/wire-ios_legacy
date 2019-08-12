@@ -75,7 +75,7 @@ extension UIFont {
         return FontSpec(.normal, .semibold).font!
     }
 
-    class var normalTeamIniitialFont: UIFont {
+    class var normalTeamInitialFont: UIFont {
         return FontSpec(.medium, .light, .largeTitle).font!
     }
 

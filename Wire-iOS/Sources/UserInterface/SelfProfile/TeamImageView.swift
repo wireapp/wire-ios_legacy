@@ -60,7 +60,7 @@ final class TeamImageView: UIImageView {
         case .small:
             initialLabel.font = .smallSemiboldFont
         case .big:
-            initialLabel.font = .normalTeamIniitialFont
+            initialLabel.font = .normalTeamInitialFont
         }
 
         initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
