@@ -76,7 +76,7 @@ extension UIFont {
     }
 
     class var normalTeamIniitialFont: UIFont {
-        return FontSpec(.normal, .light, .largeTitle).font!
+        return FontSpec(.medium, .light, .largeTitle).font!
     }
 
     // MARK: - Medium
