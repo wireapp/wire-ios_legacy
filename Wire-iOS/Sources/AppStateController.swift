@@ -51,6 +51,7 @@ final class AppStateController : NSObject {
     public weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
+    fileprivate var isJailbroken = false
     fileprivate var hasEnteredForeground = false
     fileprivate var isMigrating = false
     fileprivate var loadingAccount : Account?
@@ -84,7 +85,11 @@ final class AppStateController : NSObject {
         }
         
         if isBlacklisted {
-            return .blacklisted
+            return .blacklisted(jailbroken: false)
+        }
+        
+        if isJailbroken {
+            return .blacklisted(jailbroken: true)
         }
         
         if let account = loadingAccount {
@@ -128,10 +133,6 @@ final class AppStateController : NSObject {
 }
 
 extension AppStateController : SessionManagerDelegate {
-    func sessionManagerDidBlacklistJailbrokenDevice() {
-        ///TODO: Nicola, merge this after related PR is merged.
-    }
-
     
     func sessionManagerWillLogout(error: Error?, userSessionCanBeTornDown: (() -> Void)?) {
         authenticationError = error as NSError?
@@ -164,9 +165,18 @@ extension AppStateController : SessionManagerDelegate {
         updateAppState()
     }
     
+    func sessionManagerDidBlacklistJailbrokenDevice() {
+        isJailbroken = true
+        updateAppState()
+    }
+    
     func sessionManagerWillMigrateLegacyAccount() {
         isMigrating = true
         updateAppState()
+    }
+    
+    func sessionManagerDidWipeJailbrokenDevice() {
+        // TODO see db wipe PR
     }
     
     func sessionManagerWillMigrateAccount(_ account: Account) {

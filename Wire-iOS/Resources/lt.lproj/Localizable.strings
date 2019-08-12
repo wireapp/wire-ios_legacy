@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Tai padeda jums susisiekti su kitais. Mes nuasmeniname visą informaciją ir nesidaliname su niekuo. Leiskite prisijungti per „Nustatymai“ > „Privatumas“ > „Kontaktai“.";
 
 "self.settings.privacy_security.lock_app" = "Užrakinti su slaptuoju kodu";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Užrakinkite „Wire“ po 10 sekundžių fone.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Atrakinkite naudodami „Touch ID“ arba įrašę savo „Passcode“.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Atrakinkite naudodami „Face ID“ arba įrašę savo „Passcode“.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Atrakinkite naudodami „Passcode“.";
@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Atrakinti „Wire“ naudojant „Face ID“ arba slaptąjį kodą";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Atrakinti „Wire“ naudojant „Touch ID“ arba slaptąjį kodą";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Atrakinti „Wire“ naudojant slaptąjį kodą";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Atrakinti";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Rodyti svetainių vaizdą";
@@ -1508,6 +1509,10 @@
 "force.update.title" = "Naujinti būtina";
 "force.update.message" = "Negalite naudotis naujausiomis galimybėmis.\nAtsisiųskite naujausią „Wire“ versiją iš „App Store“.";
 "force.update.ok_button" = "Eiti į „App Store“";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · iš giphy.com";

@@ -34,6 +34,12 @@ extension Notification.Name {
     fileprivate var dimContents: Bool = false {
         didSet {
             self.view.isHidden = !self.dimContents
+                        
+            if dimContents {
+                AppDelegate.shared().notificationsWindow?.makeKey()
+            } else {
+                AppDelegate.shared().window.makeKey()
+            }
         }
     }
     
@@ -85,18 +91,6 @@ extension Notification.Name {
         self.dimContents = false
     }
     
-    fileprivate func resignKeyboardIfNeeded() {
-        if self.dimContents {
-            self.resignKeyboard()
-        }
-    }
-    
-    fileprivate func resignKeyboard() {
-        delay(1) {
-            UIApplication.shared.keyWindow?.endEditing(true)
-        }
-    }
-    
     fileprivate func showUnlockIfNeeded() {
         if AppLock.isActive && self.localAuthenticationNeeded {
             self.dimContents = true
@@ -106,13 +100,17 @@ extension Notification.Name {
             }
             else {
                 self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { grantedOptional in
+                self.requireLocalAuthenticationIfNeeded { result in
                     
-                    let granted = grantedOptional ?? true
+                    let granted = result == .granted
                     
                     self.dimContents = !granted
                     self.localAuthenticationCancelled = !granted
                     self.localAuthenticationNeeded = !granted
+                    
+                    if case .unavailable = result {
+                        self.lockView.showReauth = true
+                    }
                 }
             }
         }
@@ -123,30 +121,26 @@ extension Notification.Name {
     }
 
     /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (Bool?)->()) {
+    func requireLocalAuthenticationIfNeeded(with callback: @escaping (AppLock.AuthenticationResult)->()) {
         guard AppLock.isActive else {
-            callback(.none)
-            return
+            return callback(.granted)
         }
         
         let lastAuthDate = AppLock.lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.timeout) {
-            callback(true)
+        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
+            callback(.granted)
             return
         }
         
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { (success, error) in
+        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
-                callback(success)
-                if let success = success, success {
+                callback(result)
+                if case .granted = result {
                     AppLock.lastUnlockedDate = Date()
                     NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
-
-                } else {
-                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
             }
         }
@@ -158,7 +152,6 @@ extension Notification.Name {
 extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
-            self.resignKeyboard()
             self.dimContents = true
         }
     }
@@ -177,6 +170,6 @@ extension AppLockViewController {
     }
     
     @objc func applicationDidBecomeActive() {
-        self.showUnlockIfNeeded()
+        showUnlockIfNeeded()
     }
 }

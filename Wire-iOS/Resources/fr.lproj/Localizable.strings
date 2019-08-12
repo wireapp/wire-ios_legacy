@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter à d'autres personnes. Nous anonymisons toutes les informations et ne les partageons avec personne d'autre. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
 "self.settings.privacy_security.lock_app" = "Verrouiller avec un code";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Verrouiller Wire après 10 secondes à l'arrière-plan.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Déverrouiller avec Touch ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Déverrouiller avec Face ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Déverrouiller en saisissant le code.";
@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Déverrouillez Wire avec Face ID ou votre Code";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Déverrouillez Wire avec Touch ID ou votre Code";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Déverrouillez Wire avec votre Code";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
@@ -1508,6 +1509,10 @@
 "force.update.title" = "Mise à jour nécessaire";
 "force.update.message" = "Il vous manque de nouvelles fonctionnalités. Téléchargez la dernière version de Wire dans l’App Store.";
 "force.update.ok_button" = "Aller sur l'App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

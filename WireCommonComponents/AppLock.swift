@@ -20,11 +20,13 @@ import Foundation
 import WireDataModel
 import LocalAuthentication
 
-public class AppLock {
+private let zmLog = ZMSLog(tag: "UI")
+
+final public class AppLock {
     // Returns true if user enabled the app lock feature.
     
     public static var rules = AppLockRules.fromBundle()
-    
+
     public static var isActive: Bool {
         get {
             guard !rules.forceAppLock else { return true }
@@ -42,57 +44,32 @@ public class AppLock {
         }
     }
     
-    // Returns the time since last lock happened as number of seconds since the reference date.
-    public static var lastUnlockDateAsInt: UInt32 {
-        get {
-            guard let data = ZMKeychain.data(forAccount: SettingsPropertyName.lockAppLastDate.rawValue),
-                data.count != 0 else {
-                    return 0
-            }
-            
-            let intBits = data.withUnsafeBytes({(bytePointer: UnsafeRawBufferPointer) -> UInt32 in
-                bytePointer.bindMemory(to: UInt8.self).baseAddress!.withMemoryRebound(to: UInt32.self, capacity: 4) { pointer in
-                    return pointer.pointee
-                }
-            })
-            
-            return UInt32(littleEndian: intBits)
-        }
-        set {
-            var value: UInt32 = newValue
-            let data = withUnsafePointer(to: &value) {
-                Data(bytes: UnsafePointer($0), count: MemoryLayout.size(ofValue: newValue))
-            }
-            
-            ZMKeychain.setData(data, forAccount: SettingsPropertyName.lockAppLastDate.rawValue)
-        }
-    }
-    
     // Returns the time since last lock happened.
-    public static var lastUnlockedDate: Date {
-        get {
-            return Date(timeIntervalSinceReferenceDate: TimeInterval(self.lastUnlockDateAsInt))
-        }
-        
-        set {
-            self.lastUnlockDateAsInt = UInt32(newValue.timeIntervalSinceReferenceDate)
-        }
+    public static var lastUnlockedDate: Date = Date(timeIntervalSince1970: 0)
+    
+    public enum AuthenticationResult {
+        /// User sucessfully authenticated
+        case granted
+        /// User failed to authenticate or cancelled the request
+        case denied
+        /// There's no authenticated method available (no passcode is set)
+        case unavailable
     }
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
-    public static func evaluateAuthentication(description: String, with callback: @escaping (Bool?, Error?)->()) {
+    public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
     
         let context: LAContext = LAContext()
         var error: NSError?
     
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication,
-                                   localizedReason: description,
-                                   reply: { (success, error) -> Void in
-                callback(success, error)
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
+                callback(success ? .granted : .denied)
             })
         } else {
-            callback(.none, error)
+            // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
+            callback(rules.forceAppLock ? .unavailable : .granted)
+            zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }
     
@@ -102,12 +79,15 @@ public class AppLock {
 public struct AppLockRules: Decodable {
     
     public let forceAppLock: Bool
-    public let timeout: UInt
+    public let appLockTimeout: UInt
     
     public static func fromBundle() -> AppLockRules {
-        let fileURL = Bundle.main.url(forResource: "applock", withExtension: "json")!
-        let fileData = try! Data(contentsOf: fileURL)
-        return fromData(fileData)
+        if let fileURL = Bundle.main.url(forResource: "session_manager", withExtension: "json"),
+            let fileData = try? Data(contentsOf: fileURL) {
+            return fromData(fileData)
+        } else {
+            fatalError("session_manager.json not exist")
+        }
     }
     
     public static func fromData(_ data: Data) -> AppLockRules {

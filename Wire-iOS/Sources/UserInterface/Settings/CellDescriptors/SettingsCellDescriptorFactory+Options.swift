@@ -204,14 +204,14 @@ extension SettingsCellDescriptorFactory {
     }
     
     private var appLockSectionSubtitle: String {
-        let timeout = TimeInterval(AppLock.rules.timeout)
+        let timeout = TimeInterval(AppLock.rules.appLockTimeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
         let typeKey: String = {
             switch AuthenticationType.current {
-            case .none: return "self.settings.privacy_security.lock_app.subtitle.none"
             case .touchID: return "self.settings.privacy_security.lock_app.subtitle.touch_id"
             case .faceID: return "self.settings.privacy_security.lock_app.subtitle.face_id"
+            default: return "self.settings.privacy_security.lock_app.subtitle.none"
             }
         }()
         

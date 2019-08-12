@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам встановити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
 "self.settings.privacy_security.lock_app" = "Заблокувати кодом допуску";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокувати Wire після 10 секунд в згорнотому стані.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Розблокуйте з Touch ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Розблокуйте з Face ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Розблокуйте, ввівши свій код.";
@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Розблокувати Wire за допомогою Face ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Розблокувати Wire за допомогою коду допуску";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
@@ -1508,6 +1509,10 @@
 "force.update.title" = "Необхідне оновлення";
 "force.update.message" = "Не пропустіть нові функції.\nОтримайте найновішу версію Wire з App Store.";
 "force.update.ok_button" = "Перейти в App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken device";
+"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";

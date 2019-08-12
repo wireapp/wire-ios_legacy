@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,12 +18,18 @@
 
 import Foundation
 
-enum AppState : Equatable {
-    
-    case headless
-    case authenticated(completedRegistration: Bool)
-    case unauthenticated(error : NSError?)
-    case blacklisted(jailbroken: Bool)
-    case migrating
-    case loading(account: Account, from: Account?)
+extension UIImage {
+    @objc(imageScaledWithFactor:)
+    func imageScaled(with scaleFactor: CGFloat) -> UIImage? {
+        let size = self.size.applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
+        let scale: CGFloat = 0 // Automatically use scale factor of main screens
+        let hasAlpha = false
+
+        UIGraphicsBeginImageContextWithOptions(size, _: !hasAlpha, _: scale)
+        draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return scaledImage
+    }
 }

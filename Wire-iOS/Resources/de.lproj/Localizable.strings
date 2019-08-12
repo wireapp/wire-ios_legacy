@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
 "self.settings.privacy_security.lock_app" = "Mit Passwort sperren";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Sperre Wire nach 10 Sekunden im Hintergrund.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Wire nach %@ im Hintergrund sperren.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Entsperre mit Touch ID oder deinem Passwort.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Entsperre mit Face ID oder deinem Passwort.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Entsperre mit deinem Passwort.";
@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
@@ -1508,6 +1509,10 @@
 "force.update.title" = "Update ist notwendig";
 "force.update.message" = "Du verpasst neue Funktionen von Wire.\nHol dir die neueste Version im App Store.";
 "force.update.ok_button" = "Zum App Store";
+
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbroken Gerät";
+"jailbrokendevice.alert.message" = "Jailbreak ist auf diesem Gerät installiert. Aus Sicherheitsgründen muss Wire auf Geräten ohne Jailbreak installiert werden.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
