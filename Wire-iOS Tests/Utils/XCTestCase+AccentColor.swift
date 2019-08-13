@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +16,25 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@import WireCommonComponents;
+import XCTest
 
-@interface WireStyleKit (Additions)
-+ (UIBezierPath *)pathForTeamSelection;
-@end
+extension XCTestCase {
+    /// If this is set the accent color will be overriden for the tests
+    static var accentColor: ZMAccentColor {
+        set {
+            UIColor.setAccentOverride(newValue)
+        }
+        get {
+            return UIColor.accentOverrideColor()
+        }
+    }
+
+    var accentColor: ZMAccentColor {
+        set {
+            XCTestCase.accentColor = newValue
+        }
+        get {
+            return XCTestCase.accentColor
+        }
+    }
+}

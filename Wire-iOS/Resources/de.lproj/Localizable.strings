@@ -1085,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
@@ -1510,8 +1511,8 @@
 "force.update.ok_button" = "Zum App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbroken device";
-"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+"jailbrokendevice.alert.title" = "Jailbroken Gerät";
+"jailbrokendevice.alert.message" = "Jailbreak ist auf diesem Gerät installiert. Aus Sicherheitsgründen muss Wire auf Geräten ohne Jailbreak installiert werden.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";

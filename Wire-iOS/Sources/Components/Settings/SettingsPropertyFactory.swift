@@ -304,19 +304,6 @@ class SettingsPropertyFactory {
                     default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
             })
-        case .lockAppLastDate:
-            return SettingsBlockProperty(
-                propertyName: propertyName,
-                getAction: { _ in
-                    return SettingsPropertyValue(AppLock.lastUnlockDateAsInt)
-            },
-                setAction: { _, value in
-                    switch value {
-                    case .number(value: let lockAppLastDate):
-                        AppLock.lastUnlockDateAsInt = lockAppLastDate.uint32Value
-                    default: throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
-                    }
-            })
         
         case .callingConstantBitRate:
             return SettingsBlockProperty(

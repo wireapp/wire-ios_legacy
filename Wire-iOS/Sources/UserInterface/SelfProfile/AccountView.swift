@@ -29,7 +29,7 @@ open class LayerHostView<LayerType: CALayer>: UIView {
 }
 
 
-class ShapeView: LayerHostView<CAShapeLayer> {
+final class ShapeView: LayerHostView<CAShapeLayer> {
     public var pathGenerator: ((CGSize) -> (UIBezierPath))? {
         didSet {
             self.updatePath()
@@ -63,10 +63,12 @@ public protocol AccountViewType {
     var onTap: ((Account?) -> ())? { get set }
     func update()
     var account: Account { get }
+
+    func createDotConstraints()
 }
 
-public enum AccountViewFactory {
-    public static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
+enum AccountViewFactory {
+    static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
         return TeamAccountView(account: account, user: user) ?? PersonalAccountView(account: account, user: user)!
     }
 }
@@ -80,13 +82,18 @@ public enum AccountUnreadCountStyle {
     case others
 }
 
-public class BaseAccountView: UIView, AccountViewType {
+typealias AccountView = BaseAccountView & AccountViewType
+
+
+/// The subclasses of BaseAccountView must conform to AccountViewType,
+/// otherwise `init?(account: Account, user: ZMUser? = nil)` returns nil
+class BaseAccountView: UIView {
     public var autoUpdateSelection: Bool = true
     
     let imageViewContainer = UIView()
     fileprivate let outlineView = UIView()
-    fileprivate let dotView : DotView
-    fileprivate let selectionView = ShapeView()
+    let dotView : DotView
+    let selectionView = ShapeView()
     fileprivate var unreadCountToken : Any?
     fileprivate var selfUserObserver: NSObjectProtocol!
     public let account: Account
@@ -121,7 +128,6 @@ public class BaseAccountView: UIView, AccountViewType {
     }
     
     func updateAppearance() {
-        
         selectionView.isHidden = !selected || collapsed
         dotView.hasUnreadMessages = hasUnreadMessages
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
@@ -142,7 +148,11 @@ public class BaseAccountView: UIView, AccountViewType {
         dotView.hasUnreadMessages = account.unreadConversationCount > 0
         
         super.init(frame: .zero)
-        
+
+        guard let accountView = self as? AccountViewType else {
+            return nil
+        }
+
         if let userSession = SessionManager.shared?.activeUserSession {
             selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
         }
@@ -157,16 +167,8 @@ public class BaseAccountView: UIView, AccountViewType {
             selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
-        let dotSize: CGFloat = 9
+        accountView.createDotConstraints()
 
-        constrain(imageViewContainer, dotView) { imageViewContainer, dotView in
-            dotView.centerX == imageViewContainer.trailing - 3
-            dotView.centerY == imageViewContainer.centerY - 6
-            
-            dotView.width == dotView.height
-            dotView.height == dotSize
-        }
-        
         let containerInset: CGFloat = 6
         
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
@@ -194,7 +196,7 @@ public class BaseAccountView: UIView, AccountViewType {
         
         updateAppearance()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -228,7 +230,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-@objcMembers public final class PersonalAccountView: BaseAccountView {
+final class PersonalAccountView: AccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
@@ -289,6 +291,20 @@ extension BaseAccountView: ZMUserObserver {
             userImageView.avatar = .text(personName.initials)
         }
     }
+
+    func createDotConstraints() {
+        let dotSize: CGFloat = 9
+
+        [dotView, imageViewContainer].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+
+        NSLayoutConstraint.activate([ dotView.centerXAnchor.constraint(equalTo: imageViewContainer.trailingAnchor, constant: -3),
+                                      dotView.centerYAnchor.constraint(equalTo: imageViewContainer.centerYAnchor, constant: -6),
+                                      dotView.widthAnchor.constraint(equalTo: dotView.heightAnchor),
+                                      dotView.widthAnchor.constraint(equalToConstant: dotSize)
+            ])
+    }
 }
 
 extension PersonalAccountView {
@@ -300,172 +316,18 @@ extension PersonalAccountView {
     }
 }
 
-@objcMembers public final class TeamImageView: UIImageView {
-    public enum TeamImageViewStyle {
-        case small
-        case big
-    }
-
-    public enum Content {
-        case teamImage(Data)
-        case teamName(String)
+extension TeamType {
+    
+    var teamImageViewContent: TeamImageView.Content? {
+        return TeamImageView.Content(imageData: imageData, name: name)
     }
     
-    private let content: Content
-
-    private var lastLayoutBounds: CGRect = .zero
-    private let maskLayer = CALayer()
-    internal let initialLabel = UILabel()
-    public var style: TeamImageViewStyle = .small {
-        didSet {
-            switch (self.style) {
-            case .big:
-                initialLabel.font = .largeThinFont
-            case .small:
-                applySmallStyle()
-            }
-        }
-    }
-
-    func applySmallStyle() {
-        initialLabel.font = .smallSemiboldFont
-        initialLabel.textColor = .from(scheme: .textForeground, variant: .light)
-        backgroundColor = .from(scheme: .background, variant: .light)
-    }
-    
-    init(content: Content) {
-        self.content = content
-        super.init(frame: .zero)
-        layer.mask = maskLayer
-        
-        initialLabel.textAlignment = .center
-        self.addSubview(self.initialLabel)
-        self.accessibilityElements = [initialLabel]
-        
-        constrain(self, initialLabel) { selfView, initialLabel in
-            initialLabel.centerY == selfView.centerY
-            initialLabel.centerX == selfView.centerX
-        }
-        
-        maskLayer.contentsScale = UIScreen.main.scale
-        maskLayer.contentsGravity = .center
-        self.updateClippingLayer()
-        self.updateImage()
-
-        applySmallStyle()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func updateClippingLayer() {
-        guard bounds.size.height != 0 && bounds.size.width != 0 else {
-            return
-        }
-        
-        UIGraphicsBeginImageContextWithOptions(bounds.size, false, maskLayer.contentsScale)
-        WireStyleKit.drawSpace(frame: bounds, resizing: .aspectFit, color: .black)
-        
-        if let image = UIGraphicsGetImageFromCurrentImageContext() {
-            UIGraphicsEndImageContext()
-            
-            maskLayer.frame = layer.bounds
-            maskLayer.contents = image.cgImage
-        }
-    }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        
-        if !bounds.equalTo(lastLayoutBounds) {
-            updateClippingLayer()
-            lastLayoutBounds = self.bounds
-        }
-    }
-    
-    fileprivate func updateImage() {
-        switch content {
-        case .teamImage(let data):
-            image = UIImage(data: data)
-            initialLabel.text = ""
-        case .teamName(let name):
-            image = nil
-            initialLabel.text = name.first.map(String.init)
-        }
-    }
 }
 
-@objcMembers internal class TeamAccountView: BaseAccountView {
+extension Account {
     
-    public override var collapsed: Bool {
-        didSet {
-            self.imageView.isHidden = collapsed
-        }
+    var teamImageViewContent: TeamImageView.Content? {
+        return TeamImageView.Content(imageData: teamImageData, name: teamName)
     }
     
-    
-    private let imageView: TeamImageView
-    
-    private var teamObserver: NSObjectProtocol!
-    private var conversationListObserver: NSObjectProtocol!
-    
-    override init?(account: Account, user: ZMUser? = nil) {
-        if let teamImageData = account.teamImageData {
-            imageView = TeamImageView(content: .teamImage(teamImageData))
-        } else if let teamName = account.teamName ?? user?.teamName, !teamName.isEmpty {
-            imageView = TeamImageView(content: .teamName(teamName))
-        } else {
-            return nil
-        }
-
-        super.init(account: account, user: user)
-        
-        isAccessibilityElement = true
-        accessibilityTraits = .button
-        shouldGroupAccessibilityChildren = true
-        
-        imageView.contentMode = .scaleAspectFill
-        
-        imageViewContainer.addSubview(imageView)
-        
-        self.selectionView.pathGenerator = { size in
-            
-            let path = WireStyleKit.pathForTeamSelection()!
-            let scale = (size.width - 3) / path.bounds.width
-            path.apply(CGAffineTransform(scaleX: scale, y: scale))
-            return path
-        }
-        
-        constrain(imageViewContainer, imageView) { imageViewContainer, imageView in
-            imageView.edges == inset(imageViewContainer.edges, 2, 2)
-        }
-
-        update()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
-        addGestureRecognizer(tapGesture)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func update() {
-        super.update()
-        imageView.updateImage()
-        accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
-        accessibilityIdentifier = "\(self.account.teamName ?? "") team"
-    }
-    
-    
-    static let ciContext: CIContext = {
-        return CIContext()
-    }()
-}
-
-extension TeamAccountView: TeamObserver {
-    func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        self.update()
-    }
 }

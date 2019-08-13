@@ -85,6 +85,10 @@ extension UIFont {
         return FontSpec(.medium, .semibold).font!
     }
 
+    class var mediumLightLargeTitleFont: UIFont {
+        return FontSpec(.medium, .light, .largeTitle).font!
+    }
+
     // MARK: - Large
     
     class var largeThinFont: UIFont {
@@ -106,5 +110,6 @@ extension UIFont {
     class var largeSemiboldFont: UIFont {
         return FontSpec(.large, .semibold).font!
     }
+
     
 }

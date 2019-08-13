@@ -24,6 +24,13 @@ final class AppLockTests: XCTestCase {
 
     let decoder = JSONDecoder()
     
+    override func tearDown() {
+        super.tearDown()
+        
+        AppLock.isActive = false
+        AppDelegate.shared().window.makeKey()
+    }
+    
     func testThatForcedAppLockDoesntAffectSettings() {
 
         //given
@@ -94,8 +101,7 @@ final class AppLockTests: XCTestCase {
         //when
         let exp = expectation(description: "App lock authentication")
         appLockVC.requireLocalAuthenticationIfNeeded { (result) in
-            guard let result = result else { XCTFail(); return }
-            XCTAssertTrue(result)
+            XCTAssertEqual(result, .granted)
             exp.fulfill()
         }
         
