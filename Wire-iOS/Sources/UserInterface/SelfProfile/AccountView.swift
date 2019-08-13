@@ -63,6 +63,8 @@ public protocol AccountViewType {
     var onTap: ((Account?) -> ())? { get set }
     func update()
     var account: Account { get }
+
+    func createDotConstraints()
 }
 
 enum AccountViewFactory {
@@ -80,11 +82,12 @@ public enum AccountUnreadCountStyle {
     case others
 }
 
-protocol DotViewContainer {
-    func createDotConstraints()
-}
+typealias AccountView = BaseAccountView & AccountViewType
 
-class BaseAccountView: UIView, AccountViewType {
+
+/// The subclasses of BaseAccountView must conform to AccountViewType,
+/// otherwise `init?(account: Account, user: ZMUser? = nil)` returns nil
+class BaseAccountView: UIView {
     public var autoUpdateSelection: Bool = true
     
     let imageViewContainer = UIView()
@@ -145,7 +148,11 @@ class BaseAccountView: UIView, AccountViewType {
         dotView.hasUnreadMessages = account.unreadConversationCount > 0
         
         super.init(frame: .zero)
-        
+
+        guard let accountView = self as? AccountViewType else {
+            return nil
+        }
+
         if let userSession = SessionManager.shared?.activeUserSession {
             selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
         }
@@ -160,7 +167,7 @@ class BaseAccountView: UIView, AccountViewType {
             selectionView.edges == inset(imageViewContainer.edges, -1, -1)
         }
 
-        (self as? DotViewContainer)?.createDotConstraints()
+        accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
         
@@ -223,7 +230,7 @@ extension BaseAccountView: ZMUserObserver {
     }
 }
 
-final class PersonalAccountView: BaseAccountView {
+final class PersonalAccountView: AccountView {
     internal let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
@@ -284,9 +291,7 @@ final class PersonalAccountView: BaseAccountView {
             userImageView.avatar = .text(personName.initials)
         }
     }
-}
 
-extension PersonalAccountView: DotViewContainer {
     func createDotConstraints() {
         let dotSize: CGFloat = 9
 

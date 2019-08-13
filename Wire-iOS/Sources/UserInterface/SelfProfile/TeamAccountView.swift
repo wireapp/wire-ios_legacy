@@ -18,7 +18,7 @@
 
 import UIKit
 
-final class TeamAccountView: BaseAccountView {
+final class TeamAccountView: AccountView {
 
     public override var collapsed: Bool {
         didSet {
@@ -94,9 +94,6 @@ final class TeamAccountView: BaseAccountView {
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"
     }
 
-}
-
-extension TeamAccountView: DotViewContainer {
     func createDotConstraints() {
         let dotSize: CGFloat = 9
         let dotInset: CGFloat = 2
