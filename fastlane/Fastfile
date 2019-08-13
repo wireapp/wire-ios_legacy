@@ -136,9 +136,15 @@ platform :ios do
                 pretty: "* [%an] %s",
             )
         end
+
+        hockey_app_id = options[:hockey_app_id]
+        if hockey_app_id.nil? 
+            hockey_app_id = build.hockey_app_id
+        end
+        
         hockey(
           api_token: ENV["HOCKEY_APP_TOKEN"],
-          public_identifier: build.hockey_app_id,
+          public_identifier: hockey_app_id,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
           notes: changelog,
           notify: "0"
