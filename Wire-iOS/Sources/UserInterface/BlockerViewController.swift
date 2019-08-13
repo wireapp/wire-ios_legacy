@@ -21,7 +21,6 @@ import Foundation
 enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
-    case wipedByJailbreak
 }
 
 class BlockerViewController : LaunchImageViewController {
@@ -47,33 +46,17 @@ class BlockerViewController : LaunchImageViewController {
             showBlacklistMessage()
         case .jailbroken:
             showJailbrokenMessage()
-        case .wipedByJailbreak:
-            showWipedByJailbreakMessage()
         }
     }
     
     func showBlacklistMessage() {
-        let alertController = UIAlertController(title: "force.update.title".localized, message: "force.update.message".localized, preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "force.update.ok_button".localized, style: .default) { (_) in
+        presentAlertWithOKButton(title: "force.update.title".localized, message: "force.update.message".localized) { _ in
             UIApplication.shared.open(URL.wr_wireAppOnItunes)
         }
-        
-        alertController.addAction(alertAction)
-        present(alertController, animated: true, completion: nil)
     }
     
     func showJailbrokenMessage() {
-        // TODO change copy
-        let alertController = UIAlertController(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized, preferredStyle: .alert)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    func showWipedByJailbreakMessage() {
-        // TODO change copy
-        let alertController = UIAlertController(title: "Jailbroken device", message: "Wiped database", preferredStyle: .alert)
-        
-        present(alertController, animated: true, completion: nil)
+        presentAlertWithOKButton(title: "jailbrokendevice.alert.title".localized, message: "jailbrokendevice.alert.message".localized)
     }
     
 }

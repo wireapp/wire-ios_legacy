@@ -208,8 +208,6 @@ final class AppRootViewController: UIViewController {
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
-        case .wipedByJailbreak:
-            viewController = BlockerViewController(context: .wipedByJailbreak)
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
@@ -340,8 +338,13 @@ final class AppRootViewController: UIViewController {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
+        
+        if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
+           let reason = error?.userInfo[ZMAccountDeletedReasonKey] as? ZMAccountDeletedReason {
+            presentAlertForDeletedAccount(reason)
+        }
     }
-
+    
     func configureMediaManager() {
         self.mediaManagerLoader.send(message: .appStart)
     }
@@ -517,6 +520,22 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
     func sessionManagerDestroyedUserSession(for accountId: UUID) {
         soundEventListeners[accountId] = nil
     }
+}
+
+// MARK: - Account Deleted Alert
+
+extension AppRootViewController {
+    
+    fileprivate func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
+        switch reason {
+        case .sessionExpired:
+            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized, message: "account_deleted_session_expired_alert.message".localized)
+        default:
+            break
+            
+        }
+    }
+    
 }
 
 // MARK: - Audio Permissions granted
