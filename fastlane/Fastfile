@@ -22,11 +22,16 @@ platform :ios do
                 config_repo = "https://github.com/wireapp/wire-ios-build-configuration.git"
             end
 
+
+            config_branch = options[:config_branch]
+            if config_branch.nil? 
+                config_branch = "master"
+            end
+
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
-            ###TODO: also set config path
-            sh "cd .. && ./setup.sh -c #{config_repo} -o wire-ios-build-assets/#{config_folder}/#{build_type}"
+            sh "cd .. && ./setup.sh -c #{config_repo} -b #{config_branch} -o wire-ios-build-assets/#{config_folder}/#{build_type}"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
         end

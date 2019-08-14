@@ -26,12 +26,14 @@ cd $DIR/..
 CONFIGURATION_LOCATION=Configuration
 PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
 REPO_URL=$PUBLIC_CONFIGURATION_REPO
+BRANCH=master
 
 OVERRIDES_DIR=
 
 usage()
 {
-    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-c <repo_url> -o <path>] | [-h]]"
+    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-c <repo_url> -b <repo branch> -o <path>] | [-h]]"
+    echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b master -o Configuration"
 }
 
 
@@ -58,6 +60,10 @@ while [ "$1" != "" ]; do
                                 OVERRIDES_DIR=$1
                                 echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
                                 ;;
+        -b)                     shift
+                                BRANCH=$1
+                                echo "Using custom configuration repository's branch: ${BRANCH}"
+                                ;;
         * )                     usage
                                 exit 1
     esac
@@ -80,8 +86,8 @@ else
         exit -1
     fi 
 
-    echo "Cloning assets from ${REPO_URL}"
-    git clone --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
+    echo "Cloning assets from ${REPO_URL} to path ${CONFIGURATION_LOCATION}"
+    git clone --branch ${BRANCH} --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
 
 if [ ! -z "${OVERRIDES_DIR}" ]; then
