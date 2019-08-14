@@ -31,7 +31,7 @@ OVERRIDES_DIR=
 
 usage()
 {
-    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-h]]"
+    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-c <repo_url> -o <path>] | [-h]]"
 }
 
 
@@ -49,6 +49,14 @@ while [ "$1" != "" ]; do
                                 ;;
         -h | --help )           usage
                                 exit
+                                ;;
+        -c)                     shift
+                                REPO_URL=$1
+                                echo "Using custom configuration repository: ${REPO_URL}"
+                                ;;
+        -o)                     shift
+                                OVERRIDES_DIR=$1
+                                echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
                                 ;;
         * )                     usage
                                 exit 1
