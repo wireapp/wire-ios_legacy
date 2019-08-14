@@ -34,35 +34,35 @@ usage()
 {
     echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-c <repo_url> -b <repo branch> -o <path>] | [-h]]"
     echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b master -o Configuration"
+    echo "         \$ download-assets.sh --configuration_repo https://github.com/wireapp/wire-ios-build-configuration.git"
+
 }
 
 
 while [ "$1" != "" ]; do
-    case $1 in
-        --configuration_repo )  shift
-                                echo "Using custom configuration repository: $@"
+    OPTION=$1
+    shift
+
+    case $OPTION in
+        --configuration_repo )  echo "Using custom configuration repository: $@"
                                 REPO_URL=$@
                                 break
                                 ;;
-        --override_with )       shift
-                                echo "Overriding with configuration files in $@"
+        --override_with )       echo "Overriding with configuration files in $@"
                                 OVERRIDES_DIR=$@
                                 break
                                 ;;
-        -h | --help )           usage
-                                exit
-                                ;;
-        -c)                     shift
-                                REPO_URL=$1
+        -c)                     REPO_URL=$1
                                 echo "Using custom configuration repository: ${REPO_URL}"
                                 ;;
-        -o)                     shift
-                                OVERRIDES_DIR=$1
+        -o)                     OVERRIDES_DIR=$1
                                 echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
                                 ;;
-        -b)                     shift
-                                BRANCH=$1
+        -b)                     BRANCH=$1
                                 echo "Using custom configuration repository's branch: ${BRANCH}"
+                                ;;
+        -h | --help )           usage
+                                exit
                                 ;;
         * )                     usage
                                 exit 1
