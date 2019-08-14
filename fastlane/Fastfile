@@ -11,15 +11,22 @@ platform :ios do
         if build_type.nil? 
             sh "cd .. && ./setup.sh"
         else
-            config_folder = options[:config_folder]
-            if config_folder.nil? 
-                config_folder = "CI\ configuration"
+            override_folder = options[:override_folder]
+            if override_folder.nil? 
+                override_folder = "CI\ configuration"
+            end
+
+
+            config_repo = options[:config_repo]
+            if config_repo.nil? 
+                config_repo = "https://github.com/wireapp/wire-ios-build-configuration.git"
             end
 
             build = Build.new(options: options)
             # We need to update the AVS version before running setup script
             build.update_avs_version()
-            sh "cd .. && ./setup.sh --override_with wire-ios-build-assets/#{config_folder}/#{build_type}"
+            ###TODO: also set config path
+            sh "cd .. && ./setup.sh -c #{config_repo} -o wire-ios-build-assets/#{config_folder}/#{build_type}"
             # Adding extra information to the icon must be done after we check them out in setup script
             build.process_icon()
         end
