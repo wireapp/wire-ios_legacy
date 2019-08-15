@@ -32,7 +32,7 @@ OVERRIDES_DIR=
 
 usage()
 {
-    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-c <repo_url> -b <repo branch> -o <path>] | [-h]]"
+    echo "usage: download_assets.sh [[-c | --configuration_repo repo_url] | [-o | --override_with path] | [-b | --branch <repo branch>] | [-h | --help]]"
     echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b master -o Configuration"
     echo "         \$ download-assets.sh --configuration_repo https://github.com/wireapp/wire-ios-build-configuration.git"
 
@@ -44,28 +44,20 @@ while [ "$1" != "" ]; do
     shift
 
     case $OPTION in
-        --configuration_repo )  echo "Using custom configuration repository: $@"
-                                REPO_URL=$@
-                                break
-                                ;;
-        --override_with )       echo "Overriding with configuration files in $@"
-                                OVERRIDES_DIR=$@
-                                break
-                                ;;
-        -c)                     REPO_URL=$1
-                                echo "Using custom configuration repository: ${REPO_URL}"
-                                ;;
-        -o)                     OVERRIDES_DIR=$1
-                                echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
-                                ;;
-        -b)                     BRANCH=$1
-                                echo "Using custom configuration repository's branch: ${BRANCH}"
-                                ;;
-        -h | --help )           usage
-                                exit
-                                ;;
-        * )                     usage
-                                exit 1
+        -c | --configuration_repo ) REPO_URL=$1
+                                    echo "Using custom configuration repository: ${REPO_URL}"
+                                    ;;
+        -o | --override_with)       OVERRIDES_DIR=$1
+                                    echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
+                                    ;;
+        -b | --branch)              BRANCH=$1
+                                    echo "Using custom branch: ${BRANCH}"
+                                    ;;
+        -h | --help )               usage
+                                    exit
+                                    ;;
+        * )                         usage
+                                    exit 1
     esac
     shift
 done
