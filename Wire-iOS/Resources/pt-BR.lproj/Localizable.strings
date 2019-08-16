@@ -1511,8 +1511,8 @@
 "force.update.ok_button" = "Vá para a App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Dispositivo Jailbroken (desbloqueado)";
-"jailbrokendevice.alert.message" = "O jailbreak está instalado neste dispositivo. Por motivos de segurança, o Wire deve ser instalado em dispositivos sem jailbreak.";
+"jailbrokendevice.alert.title" = "Jailbreak detectado";
+"jailbrokendevice.alert.message" = "Por motivos de segurança, o Wire não pode ser usado neste dispositivo. Todos os dados existentes do Wire foram apagados.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1674,3 +1674,7 @@
 "legalhold_active.alert.title" = "A retenção legal está ativa";
 "legalhold_active.alert.learn_more" = "Saiba Mais";
 "legalhold_active.alert.message" = "A retenção legal foi ativada para sua conta. Todas as mensagens serão preservadas para acesso futuro, incluindo mensagens excluídas, editadas e cronometradas.\n\nSeus parceiros de conversação estarão cientes da gravação.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Sua sessão expirou";
+"account_deleted_session_expired_alert.message" = "O aplicativo não se comunicou com o servidor por um longo período ou sua sessão foi invalidada remotamente.";

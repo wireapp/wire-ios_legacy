@@ -27,11 +27,11 @@
 "general.edit" = "Редагувати";
 "general.done" = "Готово";
 "general.confirm" = "OK";
-"general.skip" = "Not Now";
+"general.skip" = "Не зараз";
 "general.accept" = "Прийняти";
 "general.decline" = "Ні, дякую";
 "general.failure" = "Щось пішло не так";
-"general.failure.try_again" = "Please try again.";
+"general.failure.try_again" = "Будь ласка, спробуйте ще раз.";
 "general.service" = "Сервіс";
 "general.off" = "Вимкнений";
 "general.on" = "Увімк.";
@@ -309,7 +309,7 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Ви не можете записувати відео під час дзвінка.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Ви не можете фотографувати під час дзвінка.";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "Повідомлення було видалене.";
 
 "conversation.guests_present" = "Присутні гості";
 "conversation.services_present" = "Сервіси активовані";
@@ -1075,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Це допоможе вам встановити зв'язки з іншими людьми. Ми анонімізуємо всю інформацію та не поширюємо її. Дозвольте доступ через Налаштування > Приватність > Контакти.";
 
 "self.settings.privacy_security.lock_app" = "Заблокувати кодом допуску";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Блокувати Wire після %@ перебування в фоновому режимі.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Розблокуйте з Touch ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Розблокуйте з Face ID або введіть ваш код.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Розблокуйте, ввівши свій код.";
@@ -1085,7 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Розблокувати Wire за допомогою Face ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Розблокувати Wire за допомогою Touch ID або коду допуску";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Розблокувати Wire за допомогою коду допуску";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Увімкніть Код допуску в налаштуваннях пристрою, щоб роблокувати Wire";
 "self.settings.privacy_security.lock_cancelled.action" = "Розблокувати";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Генерувати попередній перегляд для посилань";
@@ -1098,8 +1098,8 @@
 
 "self.settings.advanced.title" = "Розширені налаштування";
 "self.settings.advanced.troubleshooting.title" = "Усунення неполадок";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Відлагоджувальний звіт";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Дана інформація допоможе службі технічної підтримки Wire діагностувати проблеми із дзвінками та покращити загальний досвід користування додатком.";
 "self.settings.advanced.reset_push_token.title" = "Оновити Push-токен для сповіщень";
 "self.settings.advanced.reset_push_token.subtitle" = "Якщо у вас виникли проблеми з push-сповіщеннями, команда підтримки Wire може попросити вас виконати скидання цього токену.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push-токен був оновлений";
@@ -1112,7 +1112,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Технічний звіт";
 "self.settings.technical_report.send_report" = "Надіслати звіт до Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Відлагоджувальний звіт Wire";
 "self.settings.technical_report.include_log" = "Включити детальний журнал логів";
 "self.settings.technical_report.privacy_warning" = "Детальні логи можуть містити персональні дані";
 "self.settings.technical_report.no_mail_alert" = "Не виявлено жодного поштового клієнту. Натисніть \"ОК\" та надішліть логи вручну на: ";
@@ -1511,8 +1511,8 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbroken device";
-"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+"jailbrokendevice.alert.title" = "Виявлено jailbreak";
+"jailbrokendevice.alert.message" = "З причин безпеки, Wire не може використовуватися на даному пристрої. Всі наявні дані Wire було видалено.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
@@ -1654,8 +1654,8 @@
 "registration.password.rules.with_requirements" = "Використовувати %@, включно з %@.";
 
 // Legal Hold Deactivation
-"legal_hold.deactivated.title" = "Legal Hold Deactivated";
-"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+"legal_hold.deactivated.title" = "Правовий захист деактивовано";
+"legal_hold.deactivated.message" = "Майбутні повідомлення будуть записані.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
@@ -1664,13 +1664,17 @@
 "share_extension.voiceover.conversation_secure_with_ignored" = "Не всі учасники були верифіковані.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
-"legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.button.accessibility" = "Очікує підтвердження.";
+"legalhold_request.alert.title" = "Отримано запит на правовий захист";
+"legalhold_request.alert.detail" = "Усі майбутні повідомлення будуть записані пристроєм з ідентифікатором:\n\n%@\n\nВ тому числі видалені, відредаговані та тимчасові повідомлення в усіх розмовах.";
+"legalhold_request.alert.detail.enter_password" = "Введіть ваш пароль для підтвердження.";
 "legalhold_request.alert.error_wrong_password" = "Невірний пароль";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.title" = "Правовий захист активний";
 "legalhold_active.alert.learn_more" = "Дізнатися більше";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "Правовий захист було активовано для вашого акаунту.\nВсі повідомлення будуть збережені для доступу в майбутньому, включно з видаленими та тимчасованими повідомленнями.\n\nВаші співрозмовники будуть повідомлені про це.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
+"account_deleted_session_expired_alert.message" = "Додаток не зв'язувався із сервером впродовж тривалого періоду часу, або ваша сесія була анульована.";

@@ -1511,8 +1511,8 @@
 "force.update.ok_button" = "App Store'a git";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbroken device";
-"jailbrokendevice.alert.message" = "Jailbreak is installed on this device. For security reasons, Wire must be installed on devices without jailbreak.";
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · giphy.com aracılığıyla";
@@ -1674,3 +1674,7 @@
 "legalhold_active.alert.title" = "Kanuni Durdurma Etkin";
 "legalhold_active.alert.learn_more" = "Daha Fazla";
 "legalhold_active.alert.message" = "Hesabınız için Yasal Tutma etkinleştirildi.\nSilinen, düzenlenmiş ve zamanlanmış mesajlar dahil olmak üzere tüm mesajlar ileride erişilebilecek şekilde korunur.\nKonuşma ortaklarınız kaydın farkında olacak.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";

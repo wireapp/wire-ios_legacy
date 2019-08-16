@@ -1511,8 +1511,8 @@
 "force.update.ok_button" = "Перейти в App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Устройство с джейлбрейком";
-"jailbrokendevice.alert.message" = "На этом устройстве установлен джейлбрейк. Из соображений безопасности Wire нельзя установить на устройства с джейлбрейком.";
+"jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
+"jailbrokendevice.alert.message" = "Из соображений безопасности, Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
@@ -1674,3 +1674,7 @@
 "legalhold_active.alert.title" = "Правовая защита активна";
 "legalhold_active.alert.learn_more" = "Подробнее";
 "legalhold_active.alert.message" = "Для вашей учетной записи активирована правовая защита.\nВсе сообщения будут сохранены для последующего доступа, включая удаленные, отредактированные и просроченные.\n\nВаши собеседники будут уведомлены об этом.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Ваша сессия истекла";
+"account_deleted_session_expired_alert.message" = "Приложение не связывалось с сервером в течение длительного периода времени, или ваша сессия была аннулирована удаленно.";
