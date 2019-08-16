@@ -21,9 +21,13 @@
 
 /// Shows a confirmation dialog after picking an image in UIImagePickerController. If the user accepts
 /// the image the imagePickedBlock is called.
-@interface ImagePickerConfirmationController : NSObject <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ImagePickerConfirmationController : NSObject <UINavigationControllerDelegate>
 
 @property (nonatomic, copy) NSString *previewTitle;
 @property (nonatomic, copy) void (^imagePickedBlock)(NSData *imageData);
+
+///TODO: private
+/// We need to store this reference to close the @c SketchViewController
+@property (nonatomic) UIImagePickerController *presentingPickerController;
 
 @end

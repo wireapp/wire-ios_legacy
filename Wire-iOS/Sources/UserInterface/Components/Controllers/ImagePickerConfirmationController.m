@@ -36,65 +36,12 @@
 
 @interface ImagePickerConfirmationController ()
 
-/// We need to store this reference to close the @c SketchViewController
-@property (nonatomic) UIImagePickerController *presentingPickerController;
-
 @end
 
 @interface ImagePickerConfirmationController (CanvasViewControllerDelegate)
 @end
 
 @implementation ImagePickerConfirmationController
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    self.presentingPickerController = picker;
-    
-    void (^setImageBlock)(void) = ^{
-        [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-            if (imageData != nil) {
-                self.imagePickedBlock(imageData);
-            }
-        }];
-    };
-    
-    [self assetPreviewFromMediaInfo:info resultBlock:^(id image) {
-        ZM_WEAK(self);
-    
-        // Other source type (camera) is alread showing the confirmation dialogue.
-        if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-            ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
-            confirmImageViewController.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-            confirmImageViewController.image = image;
-            confirmImageViewController.previewTitle = self.previewTitle;
-            
-            if (IS_IPAD_FULLSCREEN) {
-                [confirmImageViewController.view setPopoverBorderEnabled:YES];
-            }
-            
-            confirmImageViewController.onCancel = ^{
-                [picker dismissViewControllerAnimated:YES completion:nil];
-            };
-            
-            confirmImageViewController.onConfirm = ^(UIImage *editedImage){
-                ZM_STRONG(self);
-                
-                if (editedImage != nil) {
-                    self.imagePickedBlock(UIImagePNGRepresentation(editedImage));
-                } else {
-                    setImageBlock();
-                }
-            };
-            
-            [picker presentViewController:confirmImageViewController animated:YES completion:nil];
-            [picker setNeedsStatusBarAppearanceUpdate];
-        }
-        else if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-            [picker dismissViewControllerAnimated:YES completion:nil];
-            setImageBlock();
-        }
-    }];
-}
 
 - (void)assetPreviewFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(id media))resultBlock
 {
