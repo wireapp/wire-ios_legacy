@@ -32,7 +32,6 @@
 #import "ZMConversation+Additions.h"
 #import "ZMUser+Additions.h"
 #import "Constants.h"
-#import "UIView+PopoverBorder.h"
 #import "UIViewController+WR_Invite.h"
 #import "Wire-Swift.h"
 

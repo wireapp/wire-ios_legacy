@@ -29,7 +29,8 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
         }
 
         switch picker.sourceType {
-        case .photoLibrary:
+        case .photoLibrary,
+             .savedPhotosAlbum:
 
             let confirmImageViewController = ConfirmAssetViewController()
             confirmImageViewController.modalPresentationStyle = .fullScreen

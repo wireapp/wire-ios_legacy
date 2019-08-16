@@ -24,7 +24,6 @@
 
 #import "Constants.h"
 #import "ConfirmAssetViewController.h"
-#import "UIView+PopoverBorder.h"
 @import FLAnimatedImage;
 
 #import "MediaAsset.h"

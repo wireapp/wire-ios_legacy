@@ -517,7 +517,6 @@
 		871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20A1D34F8F800DF0793 /* UIScrollView+Zeta.m */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
 		871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */; };
-		871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */; };
 		871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */; };
 		871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2171D34F8F800DF0793 /* UIView+WR_Snapshot.m */; };
 		871BC2941D34F8F800DF0793 /* UIView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2191D34F8F800DF0793 /* UIView+Zeta.m */; };
@@ -2119,8 +2118,6 @@
 		871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RowCount.h"; sourceTree = "<group>"; };
 		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RowCount.m"; sourceTree = "<group>"; };
 		871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reuse.swift"; sourceTree = "<group>"; };
-		871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PopoverBorder.h"; sourceTree = "<group>"; };
-		871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PopoverBorder.m"; sourceTree = "<group>"; };
 		871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_ExtendedBlockAnimations.h"; sourceTree = "<group>"; };
 		871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WR_ExtendedBlockAnimations.m"; sourceTree = "<group>"; };
 		871BC2161D34F8F800DF0793 /* UIView+WR_Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_Snapshot.h"; sourceTree = "<group>"; };
@@ -4556,8 +4553,6 @@
 				871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */,
 				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */,
 				871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */,
-				871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */,
-				871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */,
 				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
 				5E52376A20E7F99500649241 /* EasingFunction.swift */,
 				871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */,
@@ -8143,7 +8138,6 @@
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
-				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
 				EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */,
