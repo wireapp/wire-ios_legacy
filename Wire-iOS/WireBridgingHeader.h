@@ -156,7 +156,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "LinkAttachmentPresenter.h"
-#import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
 #import "UIResponder+FirstResponder.h"

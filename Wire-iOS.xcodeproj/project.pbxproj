@@ -513,7 +513,6 @@
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
 		871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */; };
 		871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2041D34F8F800DF0793 /* UIImage+Transform.m */; };
-		871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */; };
 		871BC28B1D34F8F800DF0793 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */; };
 		871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20A1D34F8F800DF0793 /* UIScrollView+Zeta.m */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
@@ -2113,8 +2112,6 @@
 		871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Dotted.swift"; sourceTree = "<group>"; };
 		871BC2031D34F8F800DF0793 /* UIImage+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Transform.h"; sourceTree = "<group>"; };
 		871BC2041D34F8F800DF0793 /* UIImage+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Transform.m"; sourceTree = "<group>"; };
-		871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+GetImage.h"; sourceTree = "<group>"; };
-		871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+GetImage.m"; sourceTree = "<group>"; };
 		871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
 		871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
 		871BC2091D34F8F800DF0793 /* UIScrollView+Zeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Zeta.h"; sourceTree = "<group>"; };
@@ -4550,8 +4547,6 @@
 				16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */,
 				871BC2031D34F8F800DF0793 /* UIImage+Transform.h */,
 				871BC2041D34F8F800DF0793 /* UIImage+Transform.m */,
-				871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */,
-				871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */,
 				EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */,
 				EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */,
 				871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */,
@@ -7367,7 +7362,6 @@
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
 				5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */,
-				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				F15650EB21DD1A0C00210504 /* ColorScheme.swift in Sources */,
 				5EA73D8220D900A10001D106 /* GroupDetailsRenameCell.swift in Sources */,

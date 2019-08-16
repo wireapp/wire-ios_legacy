@@ -25,7 +25,6 @@
 #import "Constants.h"
 #import "ConfirmAssetViewController.h"
 #import "UIView+PopoverBorder.h"
-#import "UIImagePickerController+GetImage.h"
 @import FLAnimatedImage;
 
 #import "MediaAsset.h"
@@ -43,26 +42,26 @@
 
 @implementation ImagePickerConfirmationController
 
-- (void)assetPreviewFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(id media))resultBlock
-{
-    NSString *assetUTI = [self UTIFromAssetURL:info[UIImagePickerControllerReferenceURL]];
-    
-    if ([assetUTI isEqualToString:(id)kUTTypeGIF]) {
-        [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
-            resultBlock([[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData]);
-        }];
-    } else {
-        [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
-            resultBlock(image);
-        }];
-    }
-}
+//- (void)assetPreviewFromMediaInfo:(NSDictionary *)info resultBlock:(void (^)(id media))resultBlock
+//{
+//    NSString *assetUTI = [self UTIFromAssetURL:info[UIImagePickerControllerReferenceURL]];
+//
+//    if ([assetUTI isEqualToString:(id)kUTTypeGIF]) {
+//        [UIImagePickerController imageDataFromMediaInfo:info resultBlock:^(NSData *imageData) {
+//            resultBlock([[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData]);
+//        }];
+//    } else {
+//        [UIImagePickerController imageFromMediaInfo:info resultBlock:^(UIImage *image) {
+//            resultBlock(image);
+//        }];
+//    }
+//}
 
-- (NSString *)UTIFromAssetURL:(NSURL *)assetURL
-{
-    NSString *extension = [assetURL pathExtension];
-    return (NSString *)CFBridgingRelease(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
-}
+//- (NSString *)UTIFromAssetURL:(NSURL *)assetURL
+//{
+//    NSString *extension = [assetURL pathExtension];
+//    return (NSString *)CFBridgingRelease(UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,(__bridge CFStringRef)extension , NULL));
+//}
 
 
 @end
