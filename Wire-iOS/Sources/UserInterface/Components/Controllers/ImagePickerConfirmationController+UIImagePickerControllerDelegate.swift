@@ -18,15 +18,26 @@
 
 import Foundation
 
+private extension UIImage {
+
+    /// Fix the pngData method ignores orientation issue
+    var flattened: UIImage {
+        if imageOrientation == .up { return self }
+
+        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { _ in draw(at: .zero) }
+    }
+}
 extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
 
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         presentingPickerController = picker
 
-        guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
+        guard let imageFromInfo = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
             picker.dismiss(animated: true)
             return
         }
+
+        let image = imageFromInfo.flattened
 
         switch picker.sourceType {
         case .photoLibrary,
@@ -43,7 +54,7 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
             }
 
             confirmImageViewController.onConfirm = { [weak self] editedImage in
-                if let editedImage = editedImage { ///TODO:
+                if let editedImage = editedImage {
                     self?.imagePickedBlock(editedImage.pngData())
                 } else {
                     self?.imagePickedBlock(image.pngData())
