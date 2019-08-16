@@ -487,7 +487,6 @@
 		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
-		871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */; };
 		871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */; };
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
 		871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */; };
@@ -1056,6 +1055,7 @@
 		EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */; };
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
 		EF19EF382306DE0600696D95 /* ImagePickerConfirmationController+UIImagePickerControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19EF372306DE0600696D95 /* ImagePickerConfirmationController+UIImagePickerControllerDelegate.swift */; };
+		EF19EF3A230701CF00696D95 /* ImagePickerConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */; };
 		EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */; };
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
@@ -2063,8 +2063,6 @@
 		871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FullscreenImageViewController+PullToDismiss.m"; sourceTree = "<group>"; };
 		871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenImageViewController.h; sourceTree = "<group>"; };
 		871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenImageViewController.m; sourceTree = "<group>"; };
-		871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerConfirmationController.h; sourceTree = "<group>"; };
-		871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerConfirmationController.m; sourceTree = "<group>"; };
 		871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationAwareNavigationController.swift; sourceTree = "<group>"; };
 		871BC1451D34F8F800DF0793 /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
 		871BC1461D34F8F800DF0793 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
@@ -2862,6 +2860,7 @@
 		EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsideDownTableView.swift; sourceTree = "<group>"; };
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
 		EF19EF372306DE0600696D95 /* ImagePickerConfirmationController+UIImagePickerControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePickerConfirmationController+UIImagePickerControllerDelegate.swift"; sourceTree = "<group>"; };
+		EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerConfirmationController.swift; sourceTree = "<group>"; };
 		EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
@@ -4394,8 +4393,7 @@
 				EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */,
 				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */,
 				EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */,
-				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
-				871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */,
+				EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */,
 				EF19EF372306DE0600696D95 /* ImagePickerConfirmationController+UIImagePickerControllerDelegate.swift */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
 				871BC1451D34F8F800DF0793 /* SplitViewController.h */,
@@ -7533,6 +7531,7 @@
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
+				EF19EF3A230701CF00696D95 /* ImagePickerConfirmationController.swift in Sources */,
 				EF21CAA8220C832800D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
@@ -8043,7 +8042,6 @@
 				F14FB864214941160012A131 /* MentionsTextAttachment.swift in Sources */,
 				EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */,
 				5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */,
-				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
 				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,

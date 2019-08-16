@@ -127,8 +127,6 @@
 
 #import "PermissionDeniedViewController+Internal.h"
 
-#import "ImagePickerConfirmationController.h"
-
 // Helper objects
 #import "PushTransition.h"
 #import "PopTransition.h"
