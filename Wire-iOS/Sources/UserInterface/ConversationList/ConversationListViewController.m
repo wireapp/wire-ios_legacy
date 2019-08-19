@@ -579,10 +579,6 @@
         case ConversationListButtonTypeStartUI:
             [self presentPeoplePicker];
             break;
-            
-        case ConversationListButtonTypeCamera:
-            [self showCameraPicker];
-            break;
     }
 }
 
