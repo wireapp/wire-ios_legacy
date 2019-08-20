@@ -36,7 +36,7 @@ public protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-open final class CameraKeyboardViewController: UIViewController {
+open class CameraKeyboardViewController: UIViewController {
     
     fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero
