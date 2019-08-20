@@ -58,12 +58,13 @@ extension ConversationInputBarViewController {
 
         let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
         documentPickerViewController.modalPresentationStyle = isIPadRegular() ? .popover : .fullScreen
-
-        documentPickerViewController.delegate = self
-
-        if let sourceView = parent?.view, let pointToView = sender.imageView {
+        if isIPadRegular(),
+            let sourceView = parent?.view,
+            let pointToView = sender.imageView {
             configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
         }
+
+        documentPickerViewController.delegate = self
 
         parent?.present(documentPickerViewController, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
