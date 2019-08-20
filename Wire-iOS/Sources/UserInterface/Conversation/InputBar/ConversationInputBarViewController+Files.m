@@ -33,94 +33,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController (Files)
 
-/*
-- (void)docUploadPressed:(IconButton *)sender
-{    
-    self.mode = ConversationInputBarViewControllerModeTextInput;
-    [self.inputBar.textView resignFirstResponder];
-
-    UIDocumentMenuViewController *docController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(NSString *)kUTTypeItem]
-
-//    UIDocumentPickerViewController *docController = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[(NSString *)kUTTypeItem]
-                                                                                                       inMode:UIDocumentPickerModeImport];
-    docController.modalPresentationStyle = UIModalPresentationPopover;
-    docController.delegate = self;
-    
-#if (TARGET_OS_SIMULATOR)
-    [docController addOptionWithTitle:NSLocalizedString(@"CountryCodes.plist", nil) image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            NSURL *sourceLocation = [[NSBundle bundleForClass:self.class] URLForResource:@"CountryCodes" withExtension:@"plist"];
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            
-            
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:sourceLocation.lastPathComponent];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            [[NSFileManager defaultManager] copyItemAtURL:sourceLocation toURL:destLocation error:nil];
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];    
-    [self appendUploadTestOptionTo:docController
-                              size:(NSUInteger)[[ZMUserSession sharedSession] maxUploadFileSize] + 1
-                             title:NSLocalizedString(@"Big file", nil)
-                          fileName:@"BigFile.bin"];
-    
-    [self appendUploadTestOptionTo:docController size:20*1024*1024 title:NSLocalizedString(@"20 MB file", nil) fileName:@"20MBFile.bin"];
-    [self appendUploadTestOptionTo:docController size:40*1024*1024 title:NSLocalizedString(@"40 MB file", nil) fileName:@"40MBFile.bin"];
-    
-    if([[ZMUser selfUser] hasTeam]) {
-        [self appendUploadTestOptionTo:docController size:80*1024*1024 title:NSLocalizedString(@"80 MB file", nil) fileName:@"80MBFile.bin"];
-        [self appendUploadTestOptionTo:docController size:120*1024*1024 title:NSLocalizedString(@"120 MB file", nil) fileName:@"120MBFile.bin"];
-    }
-    
-#endif
-    
-    [docController addOptionWithTitle:NSLocalizedString(@"content.file.upload_video", @"")
-                                image:[UIImage imageForIcon:WRStyleKitIconMovie size:24 color:[UIColor darkGrayColor]]
-                                order:UIDocumentMenuOrderFirst
-                              handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary mediaTypes:@[(id)kUTTypeMovie] allowsEditing:true pointToView:self.videoButton.imageView];
-                              }];
-    
-    [docController addOptionWithTitle:NSLocalizedString(@"content.file.take_video", @"")
-                                image:[UIImage imageForIcon:WRStyleKitIconCameraShutter size:24 color:[UIColor darkGrayColor]]
-                                order:UIDocumentMenuOrderFirst
-                              handler:^{
-                                  [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera mediaTypes:@[(id)kUTTypeMovie] allowsEditing:false pointToView:self.videoButton.imageView];
-                              }];
-
-    [self configPopoverWithDocController:docController
-                              sourceView:self.parentViewController.view
-                                delegate:self
-                             pointToView:sender.imageView];
-
-    [self.parentViewController presentViewController:docController animated:YES completion:^() {
-        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-    }];
-}
-*/
-- (void)appendUploadTestOptionTo:(UIDocumentMenuViewController*)controller
-                            size:(NSUInteger)size
-                           title:(NSString*)title
-                        fileName:(NSString*)fileName {
-    [controller addOptionWithTitle:title image:nil order:UIDocumentMenuOrderFirst handler:^{
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString *basePath = paths.firstObject;
-            NSString *destLocationString = [basePath stringByAppendingPathComponent:fileName];
-            NSURL *destLocation = [NSURL fileURLWithPath:destLocationString];
-            
-            NSData *randomData = [NSData secureRandomDataOfLength:size];
-            [randomData writeToURL:destLocation atomically:YES];
-            
-            [self uploadFileAtURL:destLocation];
-        }];
-    }];
-}
-
 - (void)executeWithVideoPermissions:(dispatch_block_t)toExecute {
     [UIApplication wr_requestOrWarnAboutVideoAccess:^(BOOL granted) {
         if (granted) {
@@ -333,26 +245,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }];
 }
 
-#pragma mark - UIDocumentMenuDelegate
-
-- (void)documentMenu:(UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(UIDocumentPickerViewController *)documentPicker
-{
-    documentPicker.delegate = self;
-    [self.parentViewController presentViewController:documentPicker animated:YES completion:nil];
-}
-
 #pragma mark - UIAdaptivePresentationControllerDelegate
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
 {
     return UIModalPresentationNone;
-}
-
-#pragma mark - UIDocumentPickerDelegate
-
-- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url
-{
-    [self uploadItemAtURL:url];
 }
 
 @end

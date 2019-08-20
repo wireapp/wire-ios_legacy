@@ -19,6 +19,23 @@
 import Foundation
 import MobileCoreServices
 
+extension ConversationInputBarViewController: UIDocumentPickerDelegate {
+
+    @available(iOS 11.0, *)
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else { return }
+
+        uploadItem(at: url)
+    }
+
+
+    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Implement documentPicker:didPickDocumentsAtURLs: instead")
+    public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        uploadItem(at: url)
+    }
+
+}
+
 extension ConversationInputBarViewController {
 
     func configPopover(docController: UIDocumentPickerViewController,
@@ -40,25 +57,9 @@ extension ConversationInputBarViewController {
         inputBar.textView.resignFirstResponder()
 
         let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
-        documentPickerViewController.modalPresentationStyle = .popover
+        documentPickerViewController.modalPresentationStyle = isIPadRegular() ? .popover : .fullScreen
+
         documentPickerViewController.delegate = self
-
-        //TODO:    #if (TARGET_OS_SIMULATOR)
-
-//        let movieMediaTypes = [kUTTypeMovie as String]
-
-//        documentPickerViewController.addOption(withTitle: "content.file.upload_video".localized,
-//                                image: UIImage.imageForIcon(.movie, size: 24, color: .darkGray), order: .first,
-//                                handler: {
-//            self.presentImagePicker(with: UIImagePickerController.SourceType.photoLibrary, mediaTypes: movieMediaTypes, allowsEditing: true, pointToView: self.videoButton.imageView)
-//        })
-//
-//        docController.addOption(withTitle: "content.file.take_video".localized,
-//                                image: UIImage.imageForIcon(.cameraShutter, size: 24, color: .darkGray),
-//                                order: .first,
-//                                handler: {
-//            self.presentImagePicker(with: UIImagePickerController.SourceType.camera, mediaTypes: movieMediaTypes, allowsEditing: false, pointToView: self.videoButton.imageView)
-//        })
 
         if let sourceView = parent?.view, let pointToView = sender.imageView {
             configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
