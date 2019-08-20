@@ -21,15 +21,10 @@ import MobileCoreServices
 
 extension ConversationInputBarViewController {
 
-    func configPopover(docController: UIDocumentMenuViewController,
-                             sourceView: UIView,
-                             delegate: UIPopoverPresentationControllerDelegate,
-                             pointToView: UIView) {
-//    @objc
-//    func configPopover(docController: UIDocumentPickerViewController,
-//                       sourceView: UIView,
-//                       delegate: UIPopoverPresentationControllerDelegate,
-//                       pointToView: UIView) {
+    func configPopover(docController: UIDocumentPickerViewController,
+                       sourceView: UIView,
+                       delegate: UIPopoverPresentationControllerDelegate,
+                       pointToView: UIView) {
 
         guard let popover = docController.popoverPresentationController else { return }
 
@@ -44,32 +39,32 @@ extension ConversationInputBarViewController {
         mode = ConversationInputBarViewControllerMode.textInput
         inputBar.textView.resignFirstResponder()
 
-        let docController = UIDocumentMenuViewController(documentTypes: [kUTTypeItem as String], in: .import)
-        docController.modalPresentationStyle = .popover
-        docController.delegate = self
+        let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
+        documentPickerViewController.modalPresentationStyle = .popover
+        documentPickerViewController.delegate = self
 
         //TODO:    #if (TARGET_OS_SIMULATOR)
 
-        let movieMediaTypes = [kUTTypeMovie as String]
+//        let movieMediaTypes = [kUTTypeMovie as String]
 
-        docController.addOption(withTitle: "content.file.upload_video".localized,
-                                image: UIImage.imageForIcon(.movie, size: 24, color: .darkGray), order: .first,
-                                handler: {
-            self.presentImagePicker(with: UIImagePickerController.SourceType.photoLibrary, mediaTypes: movieMediaTypes, allowsEditing: true, pointToView: self.videoButton.imageView)
-        })
-
-        docController.addOption(withTitle: "content.file.take_video".localized,
-                                image: UIImage.imageForIcon(.cameraShutter, size: 24, color: .darkGray),
-                                order: .first,
-                                handler: {
-            self.presentImagePicker(with: UIImagePickerController.SourceType.camera, mediaTypes: movieMediaTypes, allowsEditing: false, pointToView: self.videoButton.imageView)
-        })
+//        documentPickerViewController.addOption(withTitle: "content.file.upload_video".localized,
+//                                image: UIImage.imageForIcon(.movie, size: 24, color: .darkGray), order: .first,
+//                                handler: {
+//            self.presentImagePicker(with: UIImagePickerController.SourceType.photoLibrary, mediaTypes: movieMediaTypes, allowsEditing: true, pointToView: self.videoButton.imageView)
+//        })
+//
+//        docController.addOption(withTitle: "content.file.take_video".localized,
+//                                image: UIImage.imageForIcon(.cameraShutter, size: 24, color: .darkGray),
+//                                order: .first,
+//                                handler: {
+//            self.presentImagePicker(with: UIImagePickerController.SourceType.camera, mediaTypes: movieMediaTypes, allowsEditing: false, pointToView: self.videoButton.imageView)
+//        })
 
         if let sourceView = parent?.view, let pointToView = sender.imageView {
-            configPopover(docController: docController, sourceView: sourceView, delegate: self, pointToView: pointToView)
+            configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
         }
 
-        parent?.present(docController, animated: true) {
+        parent?.present(documentPickerViewController, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }
