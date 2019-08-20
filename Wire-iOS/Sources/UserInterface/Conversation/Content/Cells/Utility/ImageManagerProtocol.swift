@@ -29,6 +29,12 @@ protocol ImageManagerProtocol {
 
     @discardableResult
     func requestExportSession(forVideo asset: PHAsset, options: PHVideoRequestOptions?, exportPreset: String, resultHandler: @escaping (AVAssetExportSession?, [AnyHashable : Any]?) -> Void) -> PHImageRequestID
+
+    static var `default`: ImageManagerProtocol { get }
 }
 
-extension PHImageManager: ImageManagerProtocol {}
+extension PHImageManager: ImageManagerProtocol {
+    static var `default`: ImageManagerProtocol {
+        return PHImageManager.default()
+    }
+}
