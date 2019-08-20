@@ -33,12 +33,15 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController (Files)
 
+/*
 - (void)docUploadPressed:(IconButton *)sender
 {    
     self.mode = ConversationInputBarViewControllerModeTextInput;
     [self.inputBar.textView resignFirstResponder];
-    
+
     UIDocumentMenuViewController *docController = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[(NSString *)kUTTypeItem]
+
+//    UIDocumentPickerViewController *docController = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[(NSString *)kUTTypeItem]
                                                                                                        inMode:UIDocumentPickerModeImport];
     docController.modalPresentationStyle = UIModalPresentationPopover;
     docController.delegate = self;
@@ -97,7 +100,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
     }];
 }
-
+*/
 - (void)appendUploadTestOptionTo:(UIDocumentMenuViewController*)controller
                             size:(NSUInteger)size
                            title:(NSString*)title

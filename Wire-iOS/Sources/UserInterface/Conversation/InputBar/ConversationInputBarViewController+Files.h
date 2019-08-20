@@ -21,7 +21,7 @@
 
 @interface ConversationInputBarViewController (Files) <UIDocumentMenuDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (void)docUploadPressed:(IconButton *)sender;
+//- (void)docUploadPressed:(IconButton *)sender;
 - (void)uploadFileAtURL:(NSURL *)URL;
 - (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
 @end
