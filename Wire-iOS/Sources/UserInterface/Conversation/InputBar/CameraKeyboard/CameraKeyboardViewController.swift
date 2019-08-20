@@ -36,7 +36,7 @@ public protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-open class CameraKeyboardViewController: UIViewController {
+open final class CameraKeyboardViewController: UIViewController {
     
     fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero
@@ -75,8 +75,7 @@ open class CameraKeyboardViewController: UIViewController {
     
     init(splitLayoutObservable: SplitLayoutObservable,
          assetLibrary: AssetLibrary = AssetLibrary(),
-//         imageManager: ImageManagerProtocol = PHImageManager.default(), ///TODO: inject class instead
-        imageManagerType: ImageManagerProtocol.Type,
+         imageManagerType: ImageManagerProtocol.Type = PHImageManager.self,
          permissions: PhotoPermissionsController = PhotoPermissionsControllerStrategy()) {
         self.splitLayoutObservable = splitLayoutObservable
         self.assetLibrary = assetLibrary
@@ -242,7 +241,7 @@ open class CameraKeyboardViewController: UIViewController {
             options.resizeMode = .exact
             options.isSynchronous = false
 
-            imageManagerType.default.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+            imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                 if let image = image {
                     let data = image.jpegData(compressionQuality: 0.9)
                     completeBlock(data, info?["PHImageFileUTIKey"] as? String)
@@ -252,7 +251,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = true
                     })
 
-                    self.imageManagerType.default.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
+                    self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
                             self.showLoadingView = false
                         })
@@ -273,7 +272,7 @@ open class CameraKeyboardViewController: UIViewController {
             options.isNetworkAccessAllowed = false
             options.isSynchronous = false
 
-            imageManagerType.default.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+            imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
 
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
@@ -281,7 +280,7 @@ open class CameraKeyboardViewController: UIViewController {
                         self.showLoadingView = true
                     })
 
-                    self.imageManagerType.default.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
+                    self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
                         DispatchQueue.main.async(execute: {
                             self.showLoadingView = false
                         })
@@ -309,7 +308,7 @@ open class CameraKeyboardViewController: UIViewController {
 
         self.showLoadingView = true
 
-        imageManagerType.default.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
+        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
             
             DispatchQueue.main.async(execute: {
             
@@ -419,7 +418,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
 
-            cell.manager = imageManagerType.default
+            cell.manager = imageManagerType.defaultInstance
 
             if let asset = try? assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row)) {
                 cell.asset = asset
