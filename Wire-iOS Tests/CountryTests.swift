@@ -20,26 +20,12 @@ import XCTest
 @testable import Wire
 
 final class CountryTests: XCTestCase {
-    
-    var sut: Country!
-    
-    override func setUp() {
-        super.setUp()
-        sut = Country()
-    }
-    
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
 
     func testThatCountryFromDeviceGivesCurrentCountry(){
         // GIVEN
         let countryFromDevice = Country.countryFromDevice()!
 
-        // WHEN
-
-        // THEN
+        // WHEN & THEN
         XCTAssertEqual(countryFromDevice.iso, "us")
     }
 }
