@@ -31,7 +31,7 @@ extension Country {
         let carrier: CTCarrier?
         if #available(iOS 12, *) {
             /// Get the carrier from first cellular provider which has isoCountryCode
-            carrier = networkInfo.serviceSubscriberCellularProviders?.values.filter{$0.isoCountryCode != nil}.first
+            carrier = networkInfo.serviceSubscriberCellularProviders?.values.first(where: { $0.isoCountryCode != nil })
         } else {
             carrier = networkInfo.subscriberCellularProvider
         }
@@ -45,7 +45,7 @@ extension Country {
 
     private class func countryWithISO(iso: String?) -> Country? {
         guard let iso = iso else { return nil }
-        
+
         for country in allCountries() {
             if let country = country as? Country,
                 country.iso == iso {
