@@ -53,17 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
     return country;
 }
 
-+ (nullable instancetype)countryWithISO:(NSString * __nullable)ISO
-{
-    for (Country *country in [self allCountries]) {
-        if ([country.ISO isEqualToString:ISO]) {
-            return country;
-        }
-    }
-    
-    return nil;
-}
-
 + (nullable instancetype)detectCountryFromCode:(NSUInteger)e164;
 {
     return [self detectCountryWithMatcher:^(Country *country) {

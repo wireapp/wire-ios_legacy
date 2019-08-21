@@ -30,17 +30,31 @@ extension Country {
 
         let carrier: CTCarrier?
         if #available(iOS 12, *) {
-            /// Get the carrier from first cellular provider
-            carrier = networkInfo.serviceSubscriberCellularProviders?.values.first
+            /// Get the carrier from first cellular provider which has isoCountryCode
+            carrier = networkInfo.serviceSubscriberCellularProviders?.values.filter{$0.isoCountryCode != nil}.first
         } else {
             carrier = networkInfo.subscriberCellularProvider
         }
         
         if let isoCountryCode = carrier?.isoCountryCode {
-            return Country(iso: isoCountryCode)
+            return Country.countryWithISO(iso: isoCountryCode)
         } else {
-            return Country(iso: NSLocale.current.regionCode?.lowercased())
+            return Country.countryWithISO(iso: NSLocale.current.regionCode?.lowercased())
         }
     }
+
+    private class func countryWithISO(iso: String?) -> Country? {
+        guard let iso = iso else { return nil }
+        
+        for country in allCountries() {
+            if let country = country as? Country,
+                country.iso == iso {
+                return country
+            }
+        }
+
+        return nil
+    }
+
 }
 
