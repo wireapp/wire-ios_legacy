@@ -70,6 +70,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "Details"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -111,6 +112,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "DeliveryStatus"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -245,6 +247,12 @@ final class MessageToolboxView: UIView {
         reloadContent(animated: animated)
     }
 
+    private func hideAndCleanStatusLabel() {
+        statusLabel.isHidden = true
+        statusLabel.accessibilityLabel = nil
+        statusLabel.attributedText = nil
+    }
+
     private func reloadContent(animated: Bool) {
         guard let dataSource = self.dataSource else { return }
 
@@ -260,7 +268,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = callListString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 0
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
@@ -272,7 +280,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = reactionsString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 1
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
@@ -285,7 +293,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = detailsString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 1
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = false
                 self.deleteButton.isHidden = false
                 self.resendButton.isHidden = false
@@ -299,6 +307,10 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.isHidden = timestamp == nil
                 self.detailsLabel.numberOfLines = 1
                 self.statusLabel.attributedText = status
+                //override accessibilityLabel if the attributed string has customized accessibilityLabel
+                if let accessibilityLabel = status?.accessibilityLabel {
+                    self.statusLabel.accessibilityLabel = accessibilityLabel
+                }
                 self.statusLabel.isHidden = status == nil
                 self.timestampSeparatorLabel.isHidden = timestamp == nil || status == nil
                 self.deleteButton.isHidden = true

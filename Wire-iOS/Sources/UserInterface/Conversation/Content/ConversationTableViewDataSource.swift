@@ -211,7 +211,12 @@ final class ConversationTableViewDataSource: NSObject {
     
     public func loadMessages(near message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
-            fatal("conversation.managedObjectContext == nil or serverTimestamp == nil")
+            if message.hasBeenDeleted {
+                completion?(nil)
+                return
+            } else {
+                fatal("conversation.managedObjectContext == nil or serverTimestamp == nil")
+            }
         }
         
         let fetchRequest = NSFetchRequest<ZMMessage>(entityName: ZMMessage.entityName())

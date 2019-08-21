@@ -43,6 +43,7 @@ final class ConnectRequestsCell : UICollectionViewCell {
         }
 
         setNeedsUpdateConstraints()
+        accessibilityIdentifier = "conversation_list_cell"
     }
 
     override func updateConstraints() {
@@ -110,4 +111,3 @@ extension ConnectRequestsCell: ZMConversationListObserver {
         updateAppearance()
     }
 }
-

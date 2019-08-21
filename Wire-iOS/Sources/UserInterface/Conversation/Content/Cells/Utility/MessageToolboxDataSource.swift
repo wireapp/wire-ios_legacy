@@ -249,6 +249,12 @@ class MessageToolboxDataSource {
         return NSAttributedString(string: deliveryStateString) && attributes
     }
 
+    private func seenTextAttachment() -> NSTextAttachment {
+        let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
+        imageIcon.accessibilityLabel = "seen"
+        return imageIcon
+    }
+
     /// Creates the status for the read receipts.
     fileprivate func selfStatusForReadDeliveryState(for message: ZMConversationMessage) -> NSAttributedString? {
         guard let conversationType = message.conversation?.conversationType else {return nil}
@@ -260,16 +266,23 @@ class MessageToolboxDataSource {
                 .foregroundColor: statusTextColor
             ]
 
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
-            return NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)" && attributes
+            let imageIcon = seenTextAttachment()
+            let attributedString = NSAttributedString(attachment: imageIcon) + " \(message.readReceipts.count)" && attributes
+            attributedString.accessibilityLabel = (imageIcon.accessibilityLabel ?? "") + " \(message.readReceipts.count)"
+            return attributedString
 
         case .oneOnOne:
             guard let timestamp = message.readReceipts.first?.serverTimestamp else {
                 return nil
             }
 
-            let imageIcon = NSTextAttachment.textAttachment(for: .eye, with: statusTextColor, verticalCorrection: -1)
-            return NSAttributedString(attachment: imageIcon) + " " + message.formattedDate(timestamp) && attributes
+            let imageIcon = seenTextAttachment()
+
+            let timestampString = message.formattedDate(timestamp)
+            let attributedString = NSAttributedString(attachment: imageIcon) + " " + timestampString && attributes
+            attributedString.accessibilityLabel = (imageIcon.accessibilityLabel ?? "") + " " + timestampString
+            return attributedString
+
 
         default:
             return nil

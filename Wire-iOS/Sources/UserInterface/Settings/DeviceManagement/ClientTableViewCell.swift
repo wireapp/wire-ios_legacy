@@ -29,7 +29,7 @@ class ClientTableViewCell: UITableViewCell {
     let activationLabel = UILabel(frame: CGRect.zero)
     let fingerprintLabel = UILabel(frame: CGRect.zero)
     let verifiedLabel = UILabel(frame: CGRect.zero)
-    
+
     private let activationLabelFont = UIFont.smallLightFont
     private let activationLabelDateFont = UIFont.smallSemiboldFont
     
@@ -66,6 +66,8 @@ class ClientTableViewCell: UITableViewCell {
             guard let userClient = self.userClient else { return }
             if let userClientModel = userClient.model {
                 nameLabel.text = userClientModel
+            } else if userClient.isLegalHoldDevice {
+                nameLabel.text = "device.class.legalhold".localized
             }
             
             self.updateLabel()
@@ -114,7 +116,8 @@ class ClientTableViewCell: UITableViewCell {
         activationLabel.accessibilityIdentifier = "device activation date"
         fingerprintLabel.accessibilityIdentifier = "device fingerprint"
         verifiedLabel.accessibilityIdentifier = "device verification status"
-        
+        verifiedLabel.isAccessibilityElement = true
+
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         [self.nameLabel, self.labelLabel, self.activationLabel, self.fingerprintLabel, self.verifiedLabel].forEach(self.contentView.addSubview)

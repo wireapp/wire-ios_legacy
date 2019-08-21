@@ -292,9 +292,16 @@ private extension AVCaptureVideoOrientation {
     static var current: AVCaptureVideoOrientation {
         let device = DeviceOrientationObserver.sharedInstance().deviceOrientation
         let ui = UIApplication.shared.statusBarOrientation
-        return self.init(deviceOrientation: device) ?? self.init(uiOrientation: ui) ?? .portrait
+
+        let deviceOrientation = self.init(deviceOrientation: device)
+        let uiOrientation = self.init(uiOrientation: ui)
+        return uiOrientation ?? deviceOrientation ?? .portrait
     }
 
+
+    /// convert UIDeviceOrientation to AVCaptureVideoOrientation except face up/down
+    ///
+    /// - Parameter deviceOrientation: a UIDeviceOrientation
     init?(deviceOrientation: UIDeviceOrientation) {
         switch deviceOrientation {
         case .landscapeLeft:        self = .landscapeRight

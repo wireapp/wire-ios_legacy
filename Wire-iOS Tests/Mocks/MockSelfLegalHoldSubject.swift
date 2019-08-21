@@ -27,6 +27,7 @@ class MockLegalHoldDataSource: NSObject {
 
 extension MockUser: SelfLegalHoldSubject {
 
+
     public var needsToAcknowledgeLegalHoldStatus: Bool {
         return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
     }
@@ -52,6 +53,15 @@ extension MockUser: SelfLegalHoldSubject {
 
     public func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
         legalHoldDataSource.legalHoldRequest = request
+    }
+    
+    public func legalHoldRequestWasCancelled() {
+        legalHoldDataSource.legalHoldRequest = nil
+    }
+
+    func requestLegalHold() {
+        let prekey = LegalHoldRequest.Prekey(id: 65535, key: Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!)
+        legalHoldDataSource.legalHoldRequest = LegalHoldRequest(target: UUID(), requester: UUID(), clientIdentifier: "eca3c87cfe28be49", lastPrekey: prekey)
     }
 
 }

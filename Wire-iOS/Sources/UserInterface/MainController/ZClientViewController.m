@@ -111,6 +111,7 @@
                 
         [self setupAppearance];
 
+        [self createLegalHoldDisclosureController];
         [self setupConversationListViewController];
     }
     return self;
@@ -160,7 +161,7 @@
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:NSNotification.colorSchemeControllerDidApplyColorSchemeChange object:nil];
-    
+
     if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];

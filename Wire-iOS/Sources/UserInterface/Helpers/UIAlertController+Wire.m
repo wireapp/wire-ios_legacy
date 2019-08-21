@@ -39,9 +39,4 @@
     return alertController;
 }
 
-- (void)presentTopmost
-{
-    [[UIApplication.sharedApplication wr_topmostViewController] presentViewController:self animated:YES completion:nil];
-}
-
 @end

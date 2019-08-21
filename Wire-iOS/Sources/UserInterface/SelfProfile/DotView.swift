@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-class DotView: UIView {
+final class DotView: UIView {
     
     fileprivate let circleView = ShapeView()
     fileprivate let centerView = ShapeView()

@@ -27,6 +27,7 @@
 @import WireUtilities;
 @import WireSyncEngine;
 #import "KeyValueObserver.h"
+#import "Wire-Swift.h"
 
 static NSString* EmptyStringIfNil(NSString *string) {
     return string == nil ? @"" : string;

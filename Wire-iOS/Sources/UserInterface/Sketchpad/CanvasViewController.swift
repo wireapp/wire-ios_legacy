@@ -29,7 +29,8 @@ import Cartography
     case emoji
 }
 
-@objcMembers class CanvasViewController: UIViewController, UINavigationControllerDelegate {
+@objcMembers
+final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
     var canvas = Canvas()
@@ -375,14 +376,18 @@ extension CanvasViewController : UIImagePickerControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
-        UIImagePickerController.image(fromMediaInfo: info) { image in
-            if let image = image, let cgImage = image.cgImage {
-                self.canvas.referenceImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)
-                self.canvas.mode = .draw
-                self.updateButtonSelection()
-            }
+        defer {
             picker.dismiss(animated: true, completion: nil)
         }
+
+        guard let image = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
+
+            return
+        }
+
+        canvas.referenceImage = image
+        canvas.mode = .draw
+        updateButtonSelection()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

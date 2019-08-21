@@ -22,51 +22,24 @@ extension ConversationListItemView {
     static let minHeight: CGFloat = 64
 
     @objc func createConstraints() {
-        guard let labelsContainerSuperview = labelsContainer.superview,
-        let lineViewSuperview = lineView.superview else { return }
+        contentStack.translatesAutoresizingMaskIntoConstraints = false
+        lineView.translatesAutoresizingMaskIntoConstraints = false
 
-        [labelsContainer, titleField, avatarContainer, avatarView, lineView, subtitleField].forEach{
-            $0?.translatesAutoresizingMaskIntoConstraints = false
-        }
+        NSLayoutConstraint.activate([
+            // height
+            heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight),
 
-        let leftMargin: CGFloat = 64.0
+            // avatar
+            contentStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            contentStack.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            contentStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            contentStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
 
-        var constraints: [NSLayoutConstraint] = []
-        constraints += [heightAnchor.constraint(greaterThanOrEqualToConstant: ConversationListItemView.minHeight)]
-
-        
-        avatarContainer.fitInSuperview(exclude: [.trailing])
-        constraints += [avatarContainer.trailingAnchor.constraint(equalTo: titleField.leadingAnchor)]
-        constraints += avatarView.centerInSuperview(activate: false)
-
-        titleField.fitInSuperview(exclude: [.bottom])
-        constraints += [subtitleField.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 2)]
-        subtitleField.fitInSuperview(exclude: [.top])
-
-        constraints +=
-            [labelsContainer.topAnchor.constraint(greaterThanOrEqualTo: labelsContainerSuperview.topAnchor, constant: 8),
-             labelsContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: leftMargin),
-             labelsContainer.trailingAnchor.constraint(equalTo: rightAccessory.leadingAnchor, constant: -8),
-             labelsContainer.bottomAnchor.constraint(lessThanOrEqualTo: labelsContainerSuperview.bottomAnchor, constant: -8)]
-
-        titleOneLineConstraint =
-            titleField.centerYAnchor.constraint(equalTo:centerYAnchor)
-        constraints += [titleOneLineConstraint]
-
-        constraints += [
-            rightAccessory.centerYAnchor.constraint(equalTo:centerYAnchor),
-            rightAccessory.trailingAnchor.constraint(equalTo:trailingAnchor, constant: -16),
-
+            // lineView
             lineView.heightAnchor.constraint(equalToConstant: UIScreen.hairline),
-            lineView.bottomAnchor.constraint(equalTo: lineViewSuperview.bottomAnchor),
+            lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
             lineView.trailingAnchor.constraint(equalTo: trailingAnchor),
             lineView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor)
-        ]
-
-        NSLayoutConstraint.activate(constraints)
-
-
-        // inactive constraints
-        titleTwoLineConstraint = labelsContainer.centerYAnchor.constraint(equalTo: labelsContainerSuperview.centerYAnchor)
+        ])
     }
 }

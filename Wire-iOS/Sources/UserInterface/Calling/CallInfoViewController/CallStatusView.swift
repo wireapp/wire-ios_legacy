@@ -100,6 +100,7 @@ final class CallStatusView: UIView {
         bitrateLabel.text = "call.status.constant_bitrate".localized(uppercased: true)
         bitrateLabel.font = FontSpec(.small, .semibold).font
         bitrateLabel.alpha = 0.64
+        bitrateLabel.accessibilityIdentifier = "bitrate-indicator"
     }
     
     private func createConstraints() {
@@ -122,8 +123,6 @@ final class CallStatusView: UIView {
         [titleLabel, subtitleLabel, bitrateLabel].forEach {
             $0.textColor = UIColor.from(scheme: .textForeground, variant: configuration.effectiveColorVariant)
         }
-
-        accessibilityLabel = stackView.arrangedSubviews.compactMap { $0.accessibilityLabel }.joined(separator: "\n")
     }
     
 }

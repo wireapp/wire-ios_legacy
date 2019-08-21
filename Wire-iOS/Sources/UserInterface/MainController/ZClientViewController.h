@@ -27,6 +27,7 @@
 @class ZMUser;
 @class MediaPlaybackManager;
 @class ProximityMonitorManager;
+@class LegalHoldDisclosureController;
 
 @protocol ZMConversationMessage;
 
@@ -53,6 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
 
 @property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
+
+@property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
 
 + (__nullable instancetype)sharedZClientViewController;
 

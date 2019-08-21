@@ -16,10 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper  {
+    var coreDataFixture: CoreDataFixture!
     
     var sut: ConversationViewController!
 
@@ -28,6 +30,7 @@ final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+        coreDataFixture = CoreDataFixture()
 
         mockConversation = createTeamGroupConversation()
 
@@ -41,10 +44,12 @@ final class ConversationViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     override func tearDown() {
         sut = nil
+        coreDataFixture = nil
+        
         super.tearDown()
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }

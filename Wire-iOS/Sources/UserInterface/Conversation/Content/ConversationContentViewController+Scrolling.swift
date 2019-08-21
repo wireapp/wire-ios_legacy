@@ -23,20 +23,25 @@ extension ConversationContentViewController {
     @objc(scrollToMessage:completion:)
     public func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
         if let message = message {
-            dataSource.loadMessages(near: message) { index in
-                
-                guard message.conversation == self.conversation else {
-                    fatal("Message from the wrong conversation")
-                }
-                
-                guard let indexToShow = index else {
-                    return
-                }
-                
-                self.tableView.scrollToRow(at: indexToShow, at: .top, animated: false)
-                
-                if let cell = self.tableView.cellForRow(at: indexToShow) {
-                    completion?(cell)
+
+            if message.hasBeenDeleted {
+                presentAlertWithOKButton(message: "conversation.alert.message_deleted".localized)
+            } else {
+                dataSource.loadMessages(near: message) { index in
+
+                    guard message.conversation == self.conversation else {
+                        fatal("Message from the wrong conversation")
+                    }
+
+                    guard let indexToShow = index else {
+                        return
+                    }
+
+                    self.tableView.scrollToRow(at: indexToShow, at: .top, animated: false)
+
+                    if let cell = self.tableView.cellForRow(at: indexToShow) {
+                        completion?(cell)
+                    }
                 }
             }
         } else {

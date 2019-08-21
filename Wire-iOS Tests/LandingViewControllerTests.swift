@@ -34,17 +34,17 @@ extension NSLayoutConstraint.Axis : CustomStringConvertible {
 final class LandingViewControllerTests: XCTestCase {
     
     var sut: LandingViewController!
-    var mockParentViewControler: UIViewController! = UIViewController()
+    var mockParentViewController: UIViewController! = UIViewController()
 
     override func setUp() {
         super.setUp()
         sut = LandingViewController()
-        mockParentViewControler.addChild(sut)
+        mockParentViewController.addChild(sut)
     }
     
     override func tearDown() {
         sut = nil
-        mockParentViewControler = nil
+        mockParentViewController = nil
         super.tearDown()
     }
     
@@ -53,13 +53,13 @@ final class LandingViewControllerTests: XCTestCase {
         sut.loadViewIfNeeded()
         
         var traitCollection = UITraitCollection(horizontalSizeClass: .regular)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
+        mockParentViewController.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
         XCTAssertEqual(sut.buttonStackView.axis, .horizontal, "buttonStackView.axis is \(sut.buttonStackView.axis)")
         
         // WHEN
         traitCollection = UITraitCollection(horizontalSizeClass: .compact)
-        mockParentViewControler.setOverrideTraitCollection(traitCollection, forChild: sut)
+        mockParentViewController.setOverrideTraitCollection(traitCollection, forChild: sut)
         sut.traitCollectionDidChange(nil)
         
         // THEN

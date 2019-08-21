@@ -105,6 +105,7 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
+#import "ConversationListViewController+StartUI.h"
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
@@ -158,7 +159,6 @@
 #import "UIImagePickerController+GetImage.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "WireStyleKit+Additions.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"

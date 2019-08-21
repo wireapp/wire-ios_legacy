@@ -18,7 +18,6 @@
 
 
 import UIKit
-import Cartography
 
 extension ConversationListViewController: NetworkStatusBarDelegate {
     var bottomMargin: CGFloat {
@@ -58,3 +57,10 @@ extension ConversationListViewController {
         self.addToSelf(networkStatusViewController)
     }
 }
+
+extension CGFloat {
+    enum ConversationListHeader {
+        static let iconWidth: CGFloat = 32
+    }
+}
+

@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "ShareContactsViewController.h"
+
 @class IconButton;
 @class SearchHeaderViewController;
 @class TransformLabel;
 @class ContactsEmptyResultView;
-
-@protocol ShareContactsViewControllerDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 

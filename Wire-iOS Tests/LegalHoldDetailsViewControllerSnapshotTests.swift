@@ -16,44 +16,60 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+import SnapshotTesting
 @testable import Wire
 
-class LegalHoldDetailsViewControllerSnapshotTests: ZMSnapshotTestCase {
-    
-    
+final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
+
+    var sut: LegalHoldDetailsViewController!
+    var wrappedInVC: UINavigationController!
+
     override func setUp() {
         super.setUp()
     }
-    
-    var sut: LegalHoldDetailsViewController!
-    
+
+    override func tearDown() {
+        sut = nil
+        wrappedInVC = nil
+
+        super.tearDown()
+    }
+
+    private func verifyInColorThemes(conversation: MockConversation,
+                                     file: StaticString = #file,
+                                     testName: String = #function,
+                                     line: UInt = #line) {
+        ColorScheme.default.variant = .dark
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        wrappedInVC = sut.wrapInNavigationController()
+        verify(matching: wrappedInVC, named: "DarkTheme", file: file, testName: testName, line: line)
+
+        ColorScheme.default.variant = .light
+        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        wrappedInVC = sut.wrapInNavigationController()
+        verify(matching: wrappedInVC, named: "LightTheme", file: file, testName: testName, line: line)
+    }
+
     func testSelfUserUnderLegalHold() {
-        
         let conversation = MockConversation.groupConversation()
         let selfUser = MockUser.mockSelf()
         selfUser?.isUnderLegalHold = true
-        
-        ColorScheme.default.variant = .dark
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-        verify(view: sut.view, identifier: "DarkTheme")
-        
-        ColorScheme.default.variant = .light
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-        verify(view: sut.view, identifier: "LightTheme")
+
+        verifyInColorThemes(conversation: conversation)
     }
     
     func testOtherUserUnderLegalHold() {
-        
         let conversation = MockConversation.groupConversation()
-        
-        ColorScheme.default.variant = .dark
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-        verify(view: sut.view, identifier: "DarkTheme")
-     
-        ColorScheme.default.variant = .light
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
-        verify(view: sut.view, identifier: "LightTheme")
+        conversation.sortedActiveParticipants.forEach({ user in
+            let mockUser = user as? MockUser
+
+            if mockUser?.isSelfUser == false {
+                mockUser?.isUnderLegalHold = true
+            }
+        })
+
+        verifyInColorThemes(conversation: conversation)
     }
-    
+
 }

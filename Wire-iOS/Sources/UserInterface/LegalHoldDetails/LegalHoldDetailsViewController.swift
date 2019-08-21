@@ -18,14 +18,13 @@
 
 import UIKit
 
-
-class LegalHoldDetailsViewController: UIViewController {
+final class LegalHoldDetailsViewController: UIViewController {
     
-    fileprivate let collectionView = UICollectionView(forUserList: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     
-    convenience init?(user: ZMUser) {
+    convenience init?(user: UserType) {
         guard let conversation = user.oneToOneConversation else { return nil }
         self.init(conversation: conversation)
     }
@@ -40,10 +39,29 @@ class LegalHoldDetailsViewController: UIViewController {
         setupViews()
         createConstraints()
         collectionViewController.sections = computeVisibleSections()
+        collectionView.accessibilityIdentifier = "list.legalhold"
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
+    @discardableResult
+    static func present(in parentViewController: UIViewController, user: ZMUser) -> UINavigationController? {
+        guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user) else { return nil }
+
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)
+    }
+
+    @discardableResult
+    static func present(in parentViewController: UIViewController, conversation: ZMConversation) -> UINavigationController {
+        let legalHoldDetailsViewController = LegalHoldDetailsViewController(conversation: conversation)
+
+        return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)
     }
     
     override func viewDidLoad() {
@@ -57,6 +75,13 @@ class LegalHoldDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        updateStatusBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        conversation.verifyLegalHoldSubjects()
     }
     
     fileprivate func setupViews() {
@@ -81,7 +106,7 @@ class LegalHoldDetailsViewController: UIViewController {
     
     fileprivate func computeVisibleSections() -> [CollectionViewSectionController] {
         let headerSection = SingleViewSectionController(view: LegalHoldHeaderView(frame: .zero))
-        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(participants: conversation.sortedActiveParticipants, conversation: conversation)
+        let legalHoldParticipantsSection = LegalHoldParticipantsSectionController(conversation: conversation)
         legalHoldParticipantsSection.delegate = self
         
         return [headerSection, legalHoldParticipantsSection]

@@ -22,7 +22,7 @@ import Foundation
 class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     fileprivate let headerView: ParticipantDeviceHeaderView
-    fileprivate let collectionView = UICollectionView(forUserList: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate var clients: [UserClientType]
     fileprivate var tokens: [Any?] = []
     fileprivate var user: ZMUser
@@ -37,7 +37,7 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
     
     init(user: ZMUser) {
         self.user = user
-        self.clients = user.allClients.sortedByRelevance()
+        self.clients = UserClientListViewController.clientsSortedByRelevance(for: user)
         self.headerView = ParticipantDeviceHeaderView(userName: user.displayName)
         
         super.init(nibName: nil, bundle: nil)
@@ -92,6 +92,10 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
         ])
     }
     
+    fileprivate static func clientsSortedByRelevance(for user: ZMUser) -> [UserClientType] {
+        return user.allClients.sortedByRelevance().filter({ !$0.isSelfClient() })
+    }
+    
     // MARK: - UICollectionViewDelegateFlowLayout & UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -144,7 +148,7 @@ extension UserClientListViewController: ZMUserObserver {
         guard changeInfo.clientsChanged || changeInfo.trustLevelChanged else { return }
         
         headerView.showUnencryptedLabel = user.clients.count == 0
-        clients = user.allClients.sortedByRelevance()
+        clients = UserClientListViewController.clientsSortedByRelevance(for: user)
         collectionView.reloadData()
     }
     

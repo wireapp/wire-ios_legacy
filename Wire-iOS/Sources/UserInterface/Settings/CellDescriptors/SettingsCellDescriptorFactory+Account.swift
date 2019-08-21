@@ -267,7 +267,7 @@ extension SettingsCellDescriptorFactory {
                     let actionCancel = UIAlertAction(title: "general.ok".localized, style: .cancel, handler: nil)
                     alert.addAction(actionCancel)
 
-                    guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return nil }
+                    guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return nil }
 
                     controller.present(alert, animated: true)
                     return nil

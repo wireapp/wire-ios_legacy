@@ -71,7 +71,7 @@ class SettingsCellDescriptorFactory {
                 SessionManager.shared?.addAccount()
             }
             else {
-                if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+                if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
                     let alert = UIAlertController(
                         title: "self.settings.add_account.error.title".localized,
                         message: "self.settings.add_account.error.message".localized,
@@ -265,7 +265,7 @@ class SettingsCellDescriptorFactory {
     }
     
     func requestNumber(_ callback: @escaping (Int)->()) {
-        guard let controllerToPresentOver = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controllerToPresentOver = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
         
         let controller = UIAlertController(
@@ -439,7 +439,7 @@ class SettingsCellDescriptorFactory {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnread()!
         
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
 
         let uiMOC = userSession.managedObjectContext
@@ -465,7 +465,7 @@ class SettingsCellDescriptorFactory {
     
     private static func recalculateBadgeCount(_ type: SettingsCellDescriptorType) {
         guard let userSession = ZMUserSession.shared() else { return }
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         
         var conversations: [ZMConversation]? = nil
         userSession.syncManagedObjectContext.performGroupedBlock {
@@ -487,7 +487,7 @@ class SettingsCellDescriptorFactory {
         guard let userSession = ZMUserSession.shared() else { return }
         let predicate = ZMConversation.predicateForConversationConsideredUnreadExcludingSilenced()!
         
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
         let alert = UIAlertController(title: nil, message: "", preferredStyle: .alert)
         
         if let convo = (ZMConversationList.conversations(inUserSession: userSession) as! [ZMConversation])
@@ -536,7 +536,7 @@ class SettingsCellDescriptorFactory {
     }
 
     private static func resetCallQualitySurveyMuteFilter(_ type: SettingsCellDescriptorType) {
-        guard let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) else { return }
+        guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) else { return }
 
         CallQualityController.resetSurveyMuteFilter()
 

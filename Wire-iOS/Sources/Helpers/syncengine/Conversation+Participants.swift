@@ -26,7 +26,7 @@ extension ZMConversation {
     
     @objc static let maxVideoCallParticipants: Int = 4
     
-    @objc static let maxParticipants: Int = 300
+    @objc static let maxParticipants: Int = 500
     
     @objc static var maxParticipantsExcludingSelf: Int {
         return maxParticipants - 1
@@ -91,7 +91,7 @@ extension ZMConversation {
                                                 message: message,
                                                 cancelButtonTitle: "general.ok".localized)
         
-        UIApplication.shared.wr_topmostController(onlyFullScreen: false)?.present(alertController, animated: true)
+        UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }
     
     private func showAlertForAdding(for error: Error) {

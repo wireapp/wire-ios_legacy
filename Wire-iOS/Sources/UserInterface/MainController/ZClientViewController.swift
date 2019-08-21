@@ -133,6 +133,13 @@ extension ZClientViewController {
             }
         }
     }
+
+    @objc
+    func createLegalHoldDisclosureController() {
+        legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { viewController, animated, completion in
+            viewController.presentTopmost(animated: animated, completion: completion)
+        })
+    }
     
     @objc func createTopViewConstraints() {
         topOverlayContainer = UIView()

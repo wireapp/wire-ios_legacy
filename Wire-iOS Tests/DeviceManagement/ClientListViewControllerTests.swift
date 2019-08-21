@@ -26,6 +26,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     var client: UserClient!
     var selfClient: UserClient!
 
+    weak var clientRemovalObserver: ClientRemovalObserver!
+
     override func setUp() {
         super.setUp()
 
@@ -69,6 +71,19 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
                                        variant: variant)
 
         sut.showLoadingView = false
+    }
+
+    func testThatObserverIsNonRetained(){
+        prepareSut(variant: nil)
+
+        let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")
+        sut.deleteUserClient(client, credentials: emailCredentials)
+
+        clientRemovalObserver = sut.removalObserver
+        XCTAssertNotNil(clientRemovalObserver)
+
+        sut.viewDidDisappear(false)
+        XCTAssertNil(clientRemovalObserver)
     }
 
     func testForTransparentBackground(){

@@ -38,7 +38,7 @@ extension ViewImageConfig: Hashable {
 /// MARK: - snapshoting all iPhone sizes
 extension XCTestCase {
     /// snapshot file name suffixs
-    static let phoneConfigNames: [SnapshotTesting.ViewImageConfig:String] = [
+    static let phoneConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
         .iPhoneSe: "iPhone-4_0_Inch",
         .iPhone8: "iPhone-4_7_Inch",
         .iPhone8Plus: "iPhone-5_5_Inch",
@@ -81,12 +81,16 @@ extension XCTestCase {
     }
 
     func verify(matching value: UIViewController,
+                named name: String? = nil,
+                record recording: Bool = false,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
 
         let failure = verifySnapshot(matching: value,
                                      as: .image,
+                                     named: name,
+                                     record: recording,
                                      snapshotDirectory: snapshotDirectory(file: file),
                                      file: file, testName: testName, line: line)
 
@@ -105,7 +109,6 @@ extension XCTestCase {
 
         XCTAssertNil(failure, file: file, line: line)
     }
-
 
     func verify<Value, Format>(matching value: Value,
                                as snapshotting: Snapshotting<Value, Format>,

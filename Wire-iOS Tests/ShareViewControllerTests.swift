@@ -20,7 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-class ShareViewControllerTests: CoreDataSnapshotTestCase {
+final class ShareViewControllerTests: CoreDataSnapshotTestCase {
     
     var groupConversation: ZMConversation!
     var sut: ShareViewController<ZMConversation, ZMMessage>!
@@ -80,21 +80,9 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         self.groupConversation.append(imageFromData: img.data()!)
-        
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
-        let oneToOneConversation = self.createGroupConversation()
-        
-        guard let message = groupConversation.lastMessage else {
-            XCTFail("Cannot add test message to the group conversation")
-            return
-        }
-        
-        sut = ShareViewController<ZMConversation, ZMMessage>(
-            shareable: message,
-            destinations: [groupConversation, oneToOneConversation],
-            showPreview: true
-        )
-        
+
+        createSut()
+
         _ = sut.view // make sure view is loaded
         
         XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
@@ -113,19 +101,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let img = urlForResource(inTestBundleNamed: "unsplash_matterhorn.jpg")
         self.groupConversation.append(imageAtURL: img)
 
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
-        let oneToOneConversation = self.createGroupConversation()
-
-        guard let message = groupConversation.lastMessage else {
-            XCTFail("Cannot add test message to the group conversation")
-            return
-        }
-
-        sut = ShareViewController<ZMConversation, ZMMessage>(
-            shareable: message,
-            destinations: [groupConversation, oneToOneConversation],
-            showPreview: true
-        )
+        createSut()
 
         _ = sut.view // make sure view is loaded
 
@@ -140,19 +116,7 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         let file = ZMFileMetadata(fileURL: videoURL, thumbnail: thumbnail)
         self.groupConversation.append(file: file)
 
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
-        let oneToOneConversation = self.createGroupConversation()
-
-        guard let message = groupConversation.lastMessage else {
-            XCTFail("Cannot add test message to the group conversation")
-            return
-        }
-
-        sut = ShareViewController<ZMConversation, ZMMessage>(
-            shareable: message,
-            destinations: [groupConversation, oneToOneConversation],
-            showPreview: true
-        )
+        createSut()
 
         _ = sut.view // make sure view is loaded
 
@@ -173,25 +137,29 @@ class ShareViewControllerTests: CoreDataSnapshotTestCase {
         groupConversation.append(location: location)
         makeTestForShareViewController()
     }
-    
-    func makeTestForShareViewController() {
-        
-        groupConversation.internalAddParticipants(Set([self.createUser(name: "John Appleseed")]))
-        
-        let oneToOneConversation = self.createGroupConversation()
-        
+
+    private func createSut() {
+        groupConversation.internalAddParticipants([self.createUser(name: "John Appleseed")])
+        let oneToOneConversation = otherUserConversation!
+
         guard let message = groupConversation.lastMessage else {
             XCTFail("Cannot add test message to the group conversation")
             return
         }
-    
+
         sut = ShareViewController<ZMConversation, ZMMessage>(
             shareable: message,
             destinations: [groupConversation, oneToOneConversation],
             showPreview: true
         )
-        
-        self.verifyInAllDeviceSizes(view: sut.view)
+    }
+
+    /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
+    private func makeTestForShareViewController(file: StaticString = #file,
+                                        line: UInt = #line) {
+        createSut()
+
+        verifyInAllDeviceSizes(view: sut.view, file:file, line:line)
     }
 
 }

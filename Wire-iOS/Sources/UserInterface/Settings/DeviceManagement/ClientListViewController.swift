@@ -28,6 +28,8 @@ final class ClientListViewController: UIViewController,
                                 UITableViewDataSource,
                                 ZMClientUpdateObserver,
                                 ClientColorVariantProtocol {
+    var removalObserver: ClientRemovalObserver?
+
     var clientsTableView: UITableView?
     let topSeparator = OverflowSeparatorView()
     weak var delegate: ClientListViewControllerDelegate?
@@ -185,6 +187,9 @@ final class ClientListViewController: UIViewController,
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         showLoadingView = false
+
+        ///prevent more then one removalObserver in self and SettingsClientViewController
+        removalObserver = nil
     }
 
     func openDetailsOfClient(_ client: UserClient) {
@@ -244,7 +249,16 @@ final class ClientListViewController: UIViewController,
     }
 
     func deleteUserClient(_ userClient: UserClient, credentials: ZMEmailCredentials?) {
-        userClient.remove(over: self, credentials: self.credentials)
+        removalObserver = nil
+
+        removalObserver = ClientRemovalObserver(userClientToDelete: userClient,
+                                                    controller: self,
+                                                    credentials: credentials)
+
+        removalObserver?.userClientToDelete = userClient
+        removalObserver?.credentials = credentials
+        removalObserver?.startRemoval()
+
         delegate?.finishedDeleting(self)
     }
     
@@ -261,7 +275,7 @@ final class ClientListViewController: UIViewController,
         
         zmLog.error("Clients request failed: \(error.localizedDescription)")
         
-        self.displayError(NSLocalizedString("error.user.unkown_error", comment: ""))
+        presentAlertWithOKButton(message: "error.user.unkown_error".localized)
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]) {

@@ -19,7 +19,6 @@
 import UIKit
 import Down
 
-
 class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
 

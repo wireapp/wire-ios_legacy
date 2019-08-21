@@ -248,3 +248,32 @@ extension CoreDataFixture {
     }
 }
 
+
+protocol CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture! { get }
+    var otherUser: ZMUser! { get }
+    var selfUser: ZMUser! { get }
+
+    func createGroupConversation() -> ZMConversation
+    func createTeamGroupConversation() -> ZMConversation
+}
+
+
+// MARK: - default implementation for migrating CoreDataSnapshotTestCase to XCTestCase
+extension CoreDataFixtureTestHelper {
+    var otherUser: ZMUser! {
+        return coreDataFixture.otherUser
+    }
+
+    var selfUser: ZMUser! {
+        return coreDataFixture.selfUser
+    }
+
+    func createGroupConversation() -> ZMConversation {
+        return coreDataFixture.createGroupConversation()
+    }
+
+    func createTeamGroupConversation() -> ZMConversation {
+        return coreDataFixture.createTeamGroupConversation()
+    }
+}

@@ -26,32 +26,38 @@ cd $DIR/..
 CONFIGURATION_LOCATION=Configuration
 PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
 REPO_URL=$PUBLIC_CONFIGURATION_REPO
+BRANCH=master
 
 OVERRIDES_DIR=
 
 usage()
 {
-    echo "usage: download_assets.sh [[--configuration_repo repo_url] | [--override_with path] | [-h]]"
+    echo "usage: download_assets.sh [[-c | --configuration_repo repo_url] | [-o | --override_with path] | [-b | --branch <repo branch>] | [-h | --help]]"
+    echo "Example: \$ download-assets.sh -c https://github.com/wireapp/wire-ios-build-configuration.git -b master -o Configuration"
+    echo "         \$ download-assets.sh --configuration_repo https://github.com/wireapp/wire-ios-build-configuration.git"
+
 }
 
 
 while [ "$1" != "" ]; do
-    case $1 in
-        --configuration_repo )  shift
-                                echo "Using custom configuration repository: $@"
-                                REPO_URL=$@
-                                break
-                                ;;
-        --override_with )       shift
-                                echo "Overriding with configuration files in $@"
-                                OVERRIDES_DIR=$@
-                                break
-                                ;;
-        -h | --help )           usage
-                                exit
-                                ;;
-        * )                     usage
-                                exit 1
+    OPTION=$1
+    shift
+
+    case $OPTION in
+        -c | --configuration_repo ) REPO_URL=$1
+                                    echo "Using custom configuration repository: ${REPO_URL}"
+                                    ;;
+        -o | --override_with)       OVERRIDES_DIR=$1
+                                    echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
+                                    ;;
+        -b | --branch)              BRANCH=$1
+                                    echo "Using custom branch: ${BRANCH}"
+                                    ;;
+        -h | --help )               usage
+                                    exit
+                                    ;;
+        * )                         usage
+                                    exit 1
     esac
     shift
 done
@@ -68,18 +74,18 @@ if [ -e "${CONFIGURATION_LOCATION}" ]; then
 else
     git ls-remote "${REPO_URL}" &> /dev/null
     if [ "$?" -ne 0 ]; then
-        echo "Cannot access configuration repository!"
+        echo "❌ Cannot access configuration repository!"
         exit -1
     fi 
 
-    echo "Cloning assets from ${REPO_URL}"
-    git clone --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
+    echo "✅ Cloning assets from ${REPO_URL} to path ${CONFIGURATION_LOCATION}"
+    git clone --branch ${BRANCH} --depth 1 ${REPO_URL} ${CONFIGURATION_LOCATION}
 fi
 
 if [ ! -z "${OVERRIDES_DIR}" ]; then
     # Add trailing slash if not present so that cp would copy contents of directory
     [[ "${OVERRIDES_DIR}" != */ ]] && OVERRIDES_DIR="${OVERRIDES_DIR}/"
-    echo "Copying '${OVERRIDES_DIR}' over to '${CONFIGURATION_LOCATION}'"
+    echo "✅ Copying '${OVERRIDES_DIR}' over to '${CONFIGURATION_LOCATION}'"
     cp -R "${OVERRIDES_DIR}" "${CONFIGURATION_LOCATION}"
 fi
 

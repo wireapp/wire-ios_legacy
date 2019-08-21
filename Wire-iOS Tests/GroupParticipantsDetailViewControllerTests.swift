@@ -31,7 +31,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(Set(users))
+        conversation.internalAddParticipants(users)
         
         // when
         let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
@@ -47,7 +47,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(Set(users))
+        conversation.internalAddParticipants(users)
         
         // when
         let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)

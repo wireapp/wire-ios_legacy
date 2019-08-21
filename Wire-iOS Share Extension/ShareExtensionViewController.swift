@@ -318,12 +318,20 @@ class ShareExtensionViewController: SLComposeServiceViewController {
     /// Fetches the preview image for the given website.
     private func fetchWebsitePreview(for url: URL) {
         sharingSession?.downloadLinkPreviews(inText: url.absoluteString, excluding: []) { previews in
-            if let imageData = previews.first?.imageData.first {
-                let image = UIImage(data: imageData)
-                DispatchQueue.main.async {
-                    self.preview?.displayMode = .link
-                    self.preview?.image = image
-                }
+            let previewImage: UIImage?
+
+            /// size the image to fill the image view
+            if let imageData = previews.first?.imageData.first,
+               let image = UIImage(data: imageData),
+               let requiredSize = self.preview?.frame.size.shortestLength {
+                previewImage = image.downsized(shorterSizeLength: requiredSize)
+            } else {
+                previewImage = nil
+            }
+
+            DispatchQueue.main.async {
+                self.preview?.displayMode = .link
+                self.preview?.image = previewImage
             }
         }
     }
@@ -459,13 +467,12 @@ class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
         
-        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { [weak self] (success, error) in
+        AppLock.evaluateAuthentication(description: "share_extension.privacy_security.lock_app.description".localized) { [weak self] (result) in
             DispatchQueue.main.async {
-                if let success = success, success {
+                if case .granted = result {
                     self?.localAuthenticationStatus = .granted
                 } else {
                     self?.localAuthenticationStatus = .denied
-                    zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
                 }
                 callback(self?.localAuthenticationStatus)
             }

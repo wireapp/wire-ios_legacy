@@ -306,7 +306,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             }
             else {
                 [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:NO];
+                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:NO uti: mediaType];
                 }];
             }
             

@@ -63,7 +63,8 @@ import Cartography
     }
 
     func createSubviews() {
-        let collectionView = UICollectionView(forUserList: ())
+        let collectionView = UICollectionView(forGroupedSections: ())
+        collectionView.accessibilityIdentifier = "group_details.list"
 
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
@@ -194,9 +195,7 @@ extension GroupDetailsViewController {
     }
     
     func presentLegalHoldDetails() {
-        let viewController = LegalHoldDetailsViewController(conversation: conversation)
-        
-        present(viewController.wrapInNavigationController(), animated: true)
+        LegalHoldDetailsViewController.present(in: self, conversation: conversation)
     }
     
 }

@@ -49,6 +49,15 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
 
         return imageView
     }()
+    
+    private let legalHoldIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.setIcon(.legalholdactive, size: .tiny, color: .vividRed)
+        imageView.accessibilityIdentifier = "legalHoldIcon"
+        imageView.isAccessibilityElement = true
+        
+        return imageView
+    }()
 
     var allowsMultipleSelection: Bool = true {
         didSet {
@@ -64,6 +73,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
             self.titleLabel.text = destination.displayName
             self.shieldView.isHidden = destination.securityLevel != .secure
             self.guestUserIcon.isHidden = !destination.showsGuestIcon
+            self.legalHoldIcon.isHidden = !destination.isUnderLegalHold
 
             if let avatarView = destination.avatarView {
                 avatarView.frame = CGRect(x: 0, y: 0, width: avatarSize, height: avatarSize)
@@ -79,6 +89,7 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         UIView.performWithoutAnimation {
             self.avatarView?.removeFromSuperview()
             self.guestUserIcon.isHidden = true
+            self.legalHoldIcon.isHidden = true
             self.shieldView.isHidden = true
             self.checkImageView.isHidden = true
         }
@@ -125,6 +136,13 @@ final class ShareDestinationCell<D: ShareDestination>: UITableViewCell {
         constrain(self.guestUserIcon) { guestUserIcon in
             guestUserIcon.width == self.shieldSize
             guestUserIcon.height == self.shieldSize
+        }
+        
+        self.stackView.addArrangedSubview(self.legalHoldIcon)
+        
+        constrain(self.legalHoldIcon) { legalHoldIcon in
+            legalHoldIcon.width == self.shieldSize
+            legalHoldIcon.height == self.shieldSize
         }
         
         self.checkImageView.layer.borderColor = UIColor.white.cgColor

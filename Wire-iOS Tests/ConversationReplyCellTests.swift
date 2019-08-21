@@ -20,7 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-class ConversationReplyCellTests: CoreDataSnapshotTestCase {
+final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     override func tearDown() {
         super.tearDown()
@@ -290,6 +290,21 @@ class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let url = "https://apple.com/de/apple-pay"
         let message = MockMessageFactory.textMessage(withText: "There you go! https://apple.com/de/apple-pay")!
         message.backingTextMessageData?.backingLinkPreview = LinkMetadata(originalURLString: url, permanentURLString: url, resolvedURLString: url, offset: 14)
+        message.sender = otherUser
+        message.conversation = otherUserConversation
+
+        // WHEN
+        let cell = makeCell(for: message)
+
+        // THEN
+        verifyInAllPhoneWidths(view: cell)
+        verifyAccessibilityIdentifiers(cell, message)
+    }
+
+    func testThatItDisplaysNullImage() {
+        // GIVEN
+        let image = UIImage()
+        let message = MockMessageFactory.imageMessage(with: image)!
         message.sender = otherUser
         message.conversation = otherUserConversation
 

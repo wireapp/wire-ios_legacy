@@ -134,6 +134,10 @@ final class AppRootViewController: UIViewController {
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
         let analytics = Analytics.shared()
+        let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
+        let configuration = SessionManagerConfiguration.load(from: url)!
+        let jailbreakDetector = JailbreakDetector()
+        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -144,7 +148,8 @@ final class AppRootViewController: UIViewController {
             delegate: appStateController,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
-            blacklistDownloadInterval: Settings.shared().blacklistDownloadInterval) { sessionManager in
+            configuration: configuration,
+            detector: jailbreakDetector) { sessionManager in
             self.sessionManager = sessionManager
             self.sessionManagerCreatedSessionObserverToken = sessionManager.addSessionManagerCreatedSessionObserver(self)
             self.sessionManagerDestroyedSessionObserverToken = sessionManager.addSessionManagerDestroyedSessionObserver(self)
@@ -201,8 +206,8 @@ final class AppRootViewController: UIViewController {
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
         switch appState {
-        case .blacklisted:
-            viewController = BlacklistViewController()
+        case .blacklisted(jailbroken: let jailbroken):
+            viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
         case .migrating:
             let launchImageViewController = LaunchImageViewController()
             launchImageViewController.showLoadingScreen()
@@ -212,7 +217,9 @@ final class AppRootViewController: UIViewController {
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow
-            guard authenticationCoordinator == nil || error?.userSessionErrorCode == .addAccountRequested else {
+            guard authenticationCoordinator == nil ||
+                  error?.userSessionErrorCode == .addAccountRequested ||
+                  error?.userSessionErrorCode == .accountDeleted else {
                 break
             }
 
@@ -231,6 +238,7 @@ final class AppRootViewController: UIViewController {
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
+
             let clientViewController = ZClientViewController()
             clientViewController.isComingFromRegistration = completedRegistration
 
@@ -330,9 +338,15 @@ final class AppRootViewController: UIViewController {
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
+            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+        }
+        
+        if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
+           let reason = error?.userInfo[ZMAccountDeletedReasonKey] as? ZMAccountDeletedReason {
+            presentAlertForDeletedAccount(reason)
         }
     }
-
+    
     func configureMediaManager() {
         self.mediaManagerLoader.send(message: .appStart)
     }
@@ -510,6 +524,22 @@ extension AppRootViewController: SessionManagerCreatedSessionObserver, SessionMa
     }
 }
 
+// MARK: - Account Deleted Alert
+
+extension AppRootViewController {
+    
+    fileprivate func presentAlertForDeletedAccount(_ reason: ZMAccountDeletedReason) {
+        switch reason {
+        case .sessionExpired:
+            presentAlertWithOKButton(title: "account_deleted_session_expired_alert.title".localized, message: "account_deleted_session_expired_alert.message".localized)
+        default:
+            break
+            
+        }
+    }
+    
+}
+
 // MARK: - Audio Permissions granted
 
 extension AppRootViewController {
@@ -526,7 +556,7 @@ extension AppRootViewController: SessionManagerSwitchingDelegate {
     func confirmSwitchingAccount(completion: @escaping (Bool) -> Void) {
         
         guard let session = ZMUserSession.shared(), session.isCallOngoing else { return completion(true) }
-        guard let topmostController = UIApplication.shared.wr_topmostController() else { return completion(false) }
+        guard let topmostController = UIApplication.shared.topmostViewController() else { return completion(false) }
         
         let alert = UIAlertController(title: "call.alert.ongoing.alert_title".localized,
                                       message: "self.settings.switch_account.message".localized,
@@ -657,7 +687,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
                 self.present(alert, animated: true)
             }
 
-            if let topmostViewController = UIApplication.shared.wr_topmostController() as? SFSafariViewController {
+            if let topmostViewController = UIApplication.shared.topmostViewController() as? SFSafariViewController {
                 topmostViewController.dismiss(animated: true, completion: presentAlert)
             } else {
                 presentAlert()
@@ -743,7 +773,7 @@ extension AppRootViewController: SessionManagerURLHandlerDelegate {
             callback(false)
 
         case .showDismissableAlert(let title, let message, let allowStartingFlow):
-            if let controller = UIApplication.shared.wr_topmostController(onlyFullScreen: false) {
+            if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
                 let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
                 alert.addAction(okAction)

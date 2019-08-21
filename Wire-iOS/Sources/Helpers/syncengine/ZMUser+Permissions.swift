@@ -51,14 +51,6 @@ extension UserType {
     
 }
 
-extension UserType {
-
-    /// Returns whether the current user (viewer) can see the devices list of another user.
-    func canSeeDevices(of otherUser: UserType) -> Bool {
-        return otherUser.isConnected || self.canAccessCompanyInformation(of: otherUser) || otherUser.isWirelessUser
-    }
-}
-
 /// Conform to this protocol to mark an object as being restricted. This
 /// indicates that the self user permissions need to be checked in order
 /// to use the object. By defining `requiredPermissions`, the rest of the

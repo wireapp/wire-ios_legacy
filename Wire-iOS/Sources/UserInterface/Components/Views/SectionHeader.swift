@@ -44,6 +44,7 @@ final class SectionHeaderView: UIView, Themeable {
         titleLabel.font = FontSpec(.small, .semibold).font!
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
+        titleLabel.accessibilityTraits.insert(.header)
         addSubview(titleLabel)
     }
     
@@ -108,15 +109,24 @@ class SectionTableHeader: UITableViewHeaderFooterView, Themeable {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.fitInSuperview()
+        createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubview(headerView)
+        contentView.addSubview(headerView)
+        createConstraints()
+    }
+
+    private func createConstraints() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.fitInSuperview()
+
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            headerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            headerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            headerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
     }
 
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {

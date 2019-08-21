@@ -371,7 +371,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>مكالمة فائتة</string>
         <key>two</key>
         <string>Missed calls</string>
         <key>few</key>

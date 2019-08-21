@@ -61,11 +61,11 @@ extension ProfileViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
 
-        if let fullUser = self.fullUser(), context != .profileViewer, viewer.canSeeDevices(of: bareUser) {
+        if let fullUser = self.fullUser(), context != .search && context != .profileViewer {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
-
+        
         tabsController = TabBarController(viewControllers: viewControllers)
         tabsController.delegate = self
         
@@ -201,7 +201,24 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         alert.popoverPresentationController?.permittedArrowDirections = .down
         present(alert, animated: true)
     }
-
+    
+    
+    // MARK: Legal Hold
+    
+    @objc
+    var legalholdItem: UIBarButtonItem {
+        let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
+        item.setLegalHoldAccessibility()
+        item.tintColor = .vividRed
+        return item
+    }
+    
+    @objc
+    func presentLegalHoldDetails() {
+        guard let user = fullUser() else { return }
+        LegalHoldDetailsViewController.present(in: self, user: user)
+    }
+    
     // MARK: - Action Handlers
 
     private func archiveConversation() {

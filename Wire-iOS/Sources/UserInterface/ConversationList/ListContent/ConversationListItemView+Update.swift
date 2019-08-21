@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import FormatterKit
 
 extension ConversationListItemView {
     @objc public func configureFont() {
@@ -26,16 +27,23 @@ extension ConversationListItemView {
     @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
-        self.accessibilityContentsDidChange()
     }
-    
-    @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
+
+
+    /// configure without a conversation, i.e. when displaying a pending user
+    ///
+    /// - Parameters:
+    ///   - title: title of the cell
+    ///   - subtitle: subtitle of the cell
+    ///   - users: the pending user(s) waiting for self user to accept connection request
+    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
-        self.avatarView.conversation = .none
-        self.avatarView.users = users
-        self.accessibilityContentsDidChange()
+        avatarView.configure(context: .connect(users: users))
+        
+        labelsStack.accessibilityLabel = title?.string
+        labelsStack.accessibilityValue = rightAccessory.accessibilityValue
     }
     
     @objc(updateForConversation:)
@@ -46,18 +54,37 @@ extension ConversationListItemView {
             self.configure(with: nil, subtitle: nil)
             return
         }
-        
+
+        let status = conversation.status
+
+        // Configure the subtitle
+        var statusComponents: [String] = []
+        let subtitle = status.description(for: conversation)
+        let subtitleString = subtitle.string
+
+        if !subtitleString.isEmpty {
+            statusComponents.append(subtitleString)
+        }
+
+        // Configure the title and status
         let title: NSAttributedString?
-        
+
         if ZMUser.selfUser().isTeamMember, let connectedUser = conversation.connectedUser {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
+
+            if connectedUser.availability != .none {
+                statusComponents.append(connectedUser.availability.localizedName)
+            }
+            labelsStack.accessibilityLabel = title?.string
         } else {
             title = conversation.displayName.attributedString
+            labelsStack.accessibilityLabel = conversation.displayName
         }
-        
-        self.avatarView.conversation = conversation
-        
-        let status = conversation.status
+
+        // Configure the avatar
+        avatarView.configure(context: .conversation(conversation: conversation))
+
+        // Configure the accessory
         let statusIcon: ConversationStatusIcon?
         if let player = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
@@ -69,6 +96,11 @@ extension ConversationListItemView {
         }
         self.rightAccessory.icon = statusIcon
 
+        if let statusIconAccessibilityValue = rightAccessory.accessibilityValue {
+            statusComponents.append(statusIconAccessibilityValue)
+        }
+
+        labelsStack.accessibilityValue = FormattedText.list(from: statusComponents)
         self.configure(with: title, subtitle: status.description(for: conversation))
     }
 }

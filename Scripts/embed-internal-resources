@@ -3,11 +3,7 @@
 if [ $IS_INTERNAL_BUILD == '1' ]; then
     for(( i=0; i < $SCRIPT_INPUT_FILE_COUNT; i++ )); do
         INPUT_FILE="SCRIPT_INPUT_FILE_$i"
+        echo "Copying internal build file: ${!INPUT_FILE}"
         cp -Ra "${!INPUT_FILE}" "$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/"
-    done
-else
-    for(( i=0; i < $SCRIPT_OUTPUT_FILE_COUNT; i++ )); do
-        OUTPUT_FILE="SCRIPT_INPUT_FILE_$i"
-        rm -rf "${!OUTPUT_FILE}"
     done
 fi
