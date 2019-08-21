@@ -30,7 +30,15 @@ extension CLLocationCoordinate2D {
 extension CLPlacemark {
     
     func formattedAddress(_ includeCountry: Bool) -> String? {
-        let lines = addressDictionary?["FormattedAddressLines"] as? [String]
+        let lines: [String]?
+        
+        if #available(iOS 11.0, *) {
+            lines = [subThoroughfare, thoroughfare, locality, subLocality, administrativeArea, postalCode, country].compactMap { $0 }
+            
+        } else {
+            lines = addressDictionary?["FormattedAddressLines"] as? [String]
+        }
+        
         return includeCountry ? lines?.joined(separator: ", ") : lines?.dropLast().joined(separator: ", ")
     }
     
