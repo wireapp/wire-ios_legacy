@@ -20,12 +20,23 @@ import Foundation
 import CoreTelephony
 
 extension Country {
+
+    ///  Return a Country form country code of carrier. If carrier not exists, get the country from current locale
+    ///
+    /// - Returns: a Country object
     @objc
     class func countryFromDevice() -> Country? {
         let networkInfo = CTTelephonyNetworkInfo()
-        guard let carrier = networkInfo.subscriberCellularProvider else { return nil }///TODO: dict
+
+        let carrier: CTCarrier?
+        if #available(iOS 12, *) {
+            /// Get the carrier from first cellular provider
+            carrier = networkInfo.serviceSubscriberCellularProviders?.values.first
+        } else {
+            carrier = networkInfo.subscriberCellularProvider
+        }
         
-        if let isoCountryCode = carrier.isoCountryCode {
+        if let isoCountryCode = carrier?.isoCountryCode {
             return Country(iso: isoCountryCode)
         } else {
             return Country(iso: NSLocale.current.regionCode?.lowercased())
