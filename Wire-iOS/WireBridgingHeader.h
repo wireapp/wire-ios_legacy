@@ -164,7 +164,6 @@
 #import "AVSLogObserver.h"
 #import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
-#import "NetworkConditionHelper.h"
 #import "SoundEventRulesWatchDog.h"
 #import "KeyboardFrameObserver.h"
 #import "UIColor+Mixing.h"
