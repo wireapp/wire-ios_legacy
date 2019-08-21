@@ -37,23 +37,16 @@ extension Country {
         }
         
         if let isoCountryCode = carrier?.isoCountryCode {
-            return Country.countryWithISO(iso: isoCountryCode)
+            return Country.country(with: isoCountryCode)
         } else {
-            return Country.countryWithISO(iso: NSLocale.current.regionCode?.lowercased())
+            return Country.country(with: NSLocale.current.regionCode?.lowercased())
         }
     }
 
-    private class func countryWithISO(iso: String?) -> Country? {
+    private class func country(with iso: String?) -> Country? {
         guard let iso = iso else { return nil }
 
-        for country in allCountries() {
-            if let country = country as? Country,
-                country.iso == iso {
-                return country
-            }
-        }
-
-        return nil
+        return (allCountries() as? [Country])?.first(where: { $0.iso == iso })
     }
 
 }
