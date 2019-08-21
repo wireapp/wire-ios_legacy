@@ -24,8 +24,6 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
         switch (buttonType) {
         case .archive:
             self.archiveButtonTapCount += 1
-        case .camera:
-            self.cameraButtonTapCount += 1
         case .startUI:
             self.startUIButtonCallCount += 1
         }
@@ -33,7 +31,6 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
 
     var startUIButtonCallCount: Int = 0
     var archiveButtonTapCount: Int = 0
-    var cameraButtonTapCount: Int = 0
 }
 
 final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
@@ -108,7 +105,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         // then
         XCTAssertEqual(mockDelegate.startUIButtonCallCount, 1)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.cameraButtonTapCount, 0)
     }
 
     func testThatItCallsTheDelegateWhenTheArchivedButtonIsTapped() {
@@ -118,17 +114,5 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         // then
         XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
-        XCTAssertEqual(mockDelegate.cameraButtonTapCount, 0)
     }
-
-    func testThatItCallsTheDelegateWhenTheCameraButtonIsTapped() {
-        // when
-        sut.cameraButton.sendActions(for: .touchUpInside)
-
-        // then
-        XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
-        XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
-        XCTAssertEqual(mockDelegate.cameraButtonTapCount, 1)
-    }
-
 }
