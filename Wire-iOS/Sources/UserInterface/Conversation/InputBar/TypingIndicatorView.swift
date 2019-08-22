@@ -17,10 +17,8 @@
 //
 
 import UIKit
-import Cartography
 
-
-class AnimatedPenView : UIView {
+final class AnimatedPenView : UIView {
     
     private let WritingAnimationKey = "writing"
     private let dots = UIImageView()
@@ -71,17 +69,18 @@ class AnimatedPenView : UIView {
     }
     
     func setupConstraints() {
-        constrain(self, dots, pen) { container, dots, pen in
-            distribute(by: 2, horizontally: dots, pen)
-            
-            dots.left == container.left
-            dots.top == container.top
-            dots.bottom == container.bottom
-            
-            pen.right == container.right
-            pen.top == container.top
-            pen.bottom == container.bottom
-        }
+        dots.translatesAutoresizingMaskIntoConstraints = false
+        pen.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([dots.rightAnchor.constraint(equalTo: pen.leftAnchor, constant: 2),
+
+                                     dots.leftAnchor.constraint(equalTo: leftAnchor),
+                                     dots.topAnchor.constraint(equalTo: topAnchor),
+                                     dots.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+                                     pen.rightAnchor.constraint(equalTo: rightAnchor),
+                                     pen.topAnchor.constraint(equalTo: topAnchor),
+                                     pen.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
     
     func startWritingAnimation() {
@@ -108,7 +107,7 @@ class AnimatedPenView : UIView {
 
 }
 
-@objcMembers class TypingIndicatorView: UIView {
+final class TypingIndicatorView: UIView {
     
     public let nameLabel: UILabel = {
         let label = UILabel()
@@ -160,23 +159,34 @@ class AnimatedPenView : UIView {
         container.layer.cornerRadius = container.bounds.size.height / 2
     }
     
-    func setupConstraints() {
-        constrain(self, container, nameLabel, animatedPen, expandingLine) { view, container, nameLabel, animatedPen, expandingLine in
-            container.edges == view.edges
-            
-            distribute(by: 4, horizontally: animatedPen, nameLabel)
-            
-            animatedPen.left == container.left + 8
-            animatedPen.centerY == container.centerY
-            
-            nameLabel.top == container.top + 4
-            nameLabel.bottom == container.bottom - 4
-            nameLabel.right == container.right - 8
-            
-            expandingLine.center == view.center
-            expandingLine.height == 1
-            expandingLineWidth = expandingLine.width == 0
+    func setupConstraints() {///TODO: broken layout 1?
+
+        [self, container, nameLabel, animatedPen, expandingLine].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
+
+        expandingLineWidth = expandingLine.widthAnchor.constraint(equalToConstant: 0)
+
+        NSLayoutConstraint.activate([
+            container.leadingAnchor.constraint(equalTo: leadingAnchor),
+            container.topAnchor.constraint(equalTo: topAnchor),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            animatedPen.rightAnchor.constraint(equalTo: nameLabel.leftAnchor, constant: 4),
+
+            animatedPen.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 8),
+            animatedPen.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+
+            nameLabel.topAnchor.constraint(equalTo: container.topAnchor, constant: 4),
+            nameLabel.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -4),
+            nameLabel.rightAnchor.constraint(equalTo: container.rightAnchor, constant: -8),
+
+            expandingLine.centerXAnchor.constraint(equalTo: expandingLine.centerXAnchor),
+            expandingLine.centerYAnchor.constraint(equalTo: expandingLine.centerYAnchor),
+            expandingLine.heightAnchor.constraint(equalToConstant: 1),
+            expandingLineWidth!
+            ])
     }
     
     func updateNameLabel() {
