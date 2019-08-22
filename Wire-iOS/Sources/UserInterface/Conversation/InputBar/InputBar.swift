@@ -102,12 +102,12 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-@objcMembers public final class InputBar: UIView {
+public final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
     public static let rightIconSize: CGFloat = 32
 
-
+    @objc
     let textView = MarkdownTextView(with: DownStyle.compact)
     public let leftAccessoryView  = UIView()
     public let rightAccessoryStackView: UIStackView = {
@@ -132,6 +132,7 @@ private struct InputBarConstants {
     
     public let buttonsView: InputBarButtonsView
     public let editingView = InputBarEditView()
+    @objc
     public let markdownView = MarkdownBarView()
     
     public var editingBackgroundColor = UIColor.brightYellow
@@ -140,6 +141,8 @@ private struct InputBarConstants {
     public var ephemeralColor: UIColor {
         return .accent()
     }
+
+    @objc
     public var placeholderColor: UIColor? = .from(scheme: .textPlaceholder)
     public var textColor: UIColor? = .from(scheme: .textForeground)
 
@@ -158,6 +161,7 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
+    @objc
     var isMarkingDown: Bool {
         return inputBarState.isMarkingDown
     }
@@ -173,12 +177,14 @@ private struct InputBarConstants {
         inputBarState.changeEphemeralState(to: newState)
     }
 
+    @objc
     public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
+    @objc
     public var availabilityPlaceholder : NSAttributedString? {
         didSet {
             updatePlaceholder()
@@ -266,7 +272,7 @@ private struct InputBarConstants {
     }
     
     fileprivate func createConstraints() {
-        
+        ///TODO: broken constraint 2?
         constrain(buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryStackView) { buttonContainer, textView, buttonRowSeparator, leftAccessoryView, rightAccessoryView in
             leftAccessoryView.leading == leftAccessoryView.superview!.leading
             leftAccessoryView.top == leftAccessoryView.superview!.top
@@ -338,7 +344,8 @@ private struct InputBarConstants {
         guard gestureRecognizer.state == .recognized else { return }
         buttonsView.showRow(0, animated: true)
     }
-    
+
+    @objc
     public func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
         textView.reloadInputViews()
@@ -434,6 +441,7 @@ private struct InputBarConstants {
         }
     }
 
+    @objc
     public func updateEphemeralState() {
         guard inputBarState.isWriting else { return }
         updateColors()
