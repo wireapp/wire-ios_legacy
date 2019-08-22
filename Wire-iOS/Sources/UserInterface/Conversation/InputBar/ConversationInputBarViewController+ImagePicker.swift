@@ -90,7 +90,8 @@ extension ConversationInputBarViewController {
             return
         }
 
-        let videoTempURL = URL(fileURLWithPath: URL(fileURLWithPath: URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(String.filenameForSelfUser()).absoluteString).appendingPathExtension(videoURL.pathExtension).absoluteString)
+        let videoTempURL = URL(fileURLWithPath: NSTemporaryDirectory(),
+            isDirectory: true).appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)
 
         if FileManager.default.fileExists(atPath: videoTempURL.path) {
             do {
@@ -101,10 +102,11 @@ extension ConversationInputBarViewController {
         }
 
         do {
-            try FileManager.default.moveItem(at: videoURL, to: videoTempURL)
-        } catch let moveError {
-            zmLog.error("Cannot move video from \(videoURL) to \(videoTempURL): \(moveError)")
-        } ///TODO: error here?
+            try FileManager.default.copyItem(at: videoURL, to: videoTempURL)
+        } catch let error {
+            zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
+            return
+        }
 
         if picker.sourceType == UIImagePickerController.SourceType.camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path) {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
