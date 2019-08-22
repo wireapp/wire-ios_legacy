@@ -68,7 +68,7 @@ final class AnimatedPenView : UIView {
         startWritingAnimation()
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         dots.translatesAutoresizingMaskIntoConstraints = false
         pen.translatesAutoresizingMaskIntoConstraints = false
 
@@ -159,7 +159,7 @@ final class TypingIndicatorView: UIView {
         container.layer.cornerRadius = container.bounds.size.height / 2
     }
     
-    func setupConstraints() {///TODO: broken layout 1?
+    private func setupConstraints() {
 
         [self, container, nameLabel, animatedPen, expandingLine].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
