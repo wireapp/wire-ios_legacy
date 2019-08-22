@@ -248,44 +248,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     NSString* mediaType = info[UIImagePickerControllerMediaType];
     if ([mediaType isEqual:(id)kUTTypeMovie]) {
-        NSURL* videoURL = info[UIImagePickerControllerMediaURL];
-        
-        if (videoURL == nil) {
-            [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-            ZMLogError(@"Video not provided form %@: info %@", picker, info);
-            return;
-        }
-        
-        NSURL *videoTempURL = [NSURL fileURLWithPath:[[NSTemporaryDirectory() stringByAppendingPathComponent:[NSString filenameForSelfUser]] stringByAppendingPathExtension:videoURL.pathExtension]];
-        
-        if ([[NSFileManager defaultManager] fileExistsAtPath:videoTempURL.path]) {
-            NSError *deleteError = nil;
-            [[NSFileManager defaultManager] removeItemAtURL:videoTempURL error:&deleteError];
-            if (deleteError != nil) {
-                ZMLogError(@"Cannot delete old tmp video at %@: %@", videoTempURL, deleteError);
-            }
-        }
-        
-        NSError *moveError = nil;
-        [[NSFileManager defaultManager] moveItemAtURL:videoURL toURL:videoTempURL error:&moveError];
-        if (moveError != nil) {
-            ZMLogError(@"Cannot move video from %@ to %@: %@", videoURL, videoTempURL, moveError);
-        }
-        
-        if (picker.sourceType == UIImagePickerControllerSourceTypeCamera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path)) {
-            UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, @selector(video:didFinishSavingWithError:contextInfo:), NULL);
-        }
-        
-        picker.showLoadingView = YES;
-        [AVAsset wr_convertVideoAtURL:videoTempURL toUploadFormatWithCompletion:^(NSURL *resultURL, AVAsset *asset, NSError *error) {
-            if (error == nil && resultURL != nil) {
-                [self uploadFileAtURL:resultURL];
-            }
-            
-            [self.parentViewController dismissViewControllerAnimated:YES completion:^() {
-                picker.showLoadingView = NO;
-            }];
-        }];
+        [self processVideoWithInfo: info picker:picker];
     }
     else if ([mediaType isEqual:(id)kUTTypeImage]) {
         UIImage *image = info[UIImagePickerControllerEditedImage];

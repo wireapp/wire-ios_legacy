@@ -62,9 +62,10 @@ open class CameraKeyboardViewController: UIViewController {
     
     let assetLibrary: AssetLibrary
     let imageManagerType: ImageManagerProtocol.Type
-    internal var collectionView: UICollectionView!
-    internal let goBackButton = IconButton()
-    internal let cameraRollButton = IconButton()
+
+    var collectionView: UICollectionView!
+    let goBackButton = IconButton()
+    let cameraRollButton = IconButton()
     
     public let splitLayoutObservable: SplitLayoutObservable
     open weak var delegate: CameraKeyboardViewControllerDelegate?
