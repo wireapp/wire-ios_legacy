@@ -79,7 +79,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+            ])
     }
 
     // MARK: – ConversationOptionsViewModelDelegate
@@ -105,9 +105,11 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         present(UIAlertController.confirmRevokingLink(completion), animated: true)
     }
     
-    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String) {
+    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView? = nil) {
         let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
         present(activityController, animated: true)
+
+        activityController.configPopover(pointToView: sourceView ?? view)
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource
@@ -133,7 +135,23 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.state.rows[indexPath.row].action?()
+        let cell = tableView.cellForRow(at: indexPath)
+        viewModel.state.rows[indexPath.row].action?(cell)
     }
 
+}
+
+extension UIActivityViewController {
+
+    /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
+    ///
+    /// - Parameter pointToView: the view which the popover points to
+    func configPopover(pointToView: UIView) {
+        guard let popover = popoverPresentationController,
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+        popover.config(from: rootViewController,
+                       pointToView: pointToView,
+                       sourceView: rootViewController.view)
+    }
 }

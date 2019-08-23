@@ -23,13 +23,13 @@ protocol CellConfigurationConfigurable: Reusable {
 }
 
 enum CellConfiguration {
-    typealias Action = () -> Void
+    typealias Action = (UIView?) -> Void
     case toggle(title: String, subtitle: String, identifier: String, get: () -> Bool, set: (Bool) -> Void)
     case linkHeader
-    case leadingButton(title: String, identifier: String, action: () -> Void)
+    case leadingButton(title: String, identifier: String, action: Action)
     case loading
     case text(String)
-    case iconAction(title: String, icon: StyleKitIcon, color: UIColor?, action: () -> Void)
+    case iconAction(title: String, icon: StyleKitIcon, color: UIColor?, action: Action)
     
     var cellType: CellConfigurationConfigurable.Type {
         switch self {
