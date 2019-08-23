@@ -31,7 +31,7 @@ extension CellConfiguration {
         )
     }
     
-    static func createLinkButton(action: @escaping () -> Void) -> CellConfiguration {
+    static func createLinkButton(action: @escaping Action) -> CellConfiguration {
         return .leadingButton(
             title: "guest_room.link.button.title".localized,
             identifier: "",
@@ -39,7 +39,7 @@ extension CellConfiguration {
         )
     }
     
-    static func copyLink(action: @escaping () -> Void) -> CellConfiguration {
+    static func copyLink(action: @escaping Action) -> CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.copy_link".localized,
             icon: .copy,
@@ -52,10 +52,10 @@ extension CellConfiguration {
             title: "guest_room.actions.copied_link".localized,
             icon: .checkmark,
             color: nil,
-            action: {}
+            action: {_ in }
         )
     
-    static func shareLink(action: @escaping () -> Void) -> CellConfiguration {
+    static func shareLink(action: @escaping Action) -> CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.share_link".localized,
             icon: .export,
@@ -64,7 +64,7 @@ extension CellConfiguration {
         )
     }
     
-    static func revokeLink(action: @escaping () -> Void) -> CellConfiguration {
+    static func revokeLink(action: @escaping Action) -> CellConfiguration {
         return .iconAction(
             title: "guest_room.actions.revoke_link".localized,
             icon: .cross,

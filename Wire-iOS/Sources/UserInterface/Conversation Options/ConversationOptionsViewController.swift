@@ -105,9 +105,20 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         present(UIAlertController.confirmRevokingLink(completion), animated: true)
     }
     
-    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String) {
+    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView? = nil) {
         let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
         present(activityController, animated: true)
+
+        ///TODO: UIActivityViewController extension
+
+        if let popover = activityController.popoverPresentationController,
+            let pointToView = sourceView ?? view,
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController{
+            popover.config(from: rootViewController,
+                pointToView: pointToView,
+                sourceView: rootViewController.view)
+        }
+
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource
@@ -133,7 +144,8 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.state.rows[indexPath.row].action?()
+        let cell = tableView.cellForRow(at: indexPath)
+        viewModel.state.rows[indexPath.row].action?(cell)
     }
 
 }
