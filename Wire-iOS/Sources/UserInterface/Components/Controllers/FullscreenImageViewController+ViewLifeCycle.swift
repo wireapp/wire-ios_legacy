@@ -33,4 +33,8 @@ extension FullscreenImageViewController {
         return ColorScheme.default.statusBarStyle
     }
 
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+
 }

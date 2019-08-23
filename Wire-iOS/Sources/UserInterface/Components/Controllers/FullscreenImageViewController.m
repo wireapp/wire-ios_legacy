@@ -322,7 +322,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
          */
         [self.view.window makeKeyWindow];
         [self.view.window becomeFirstResponder];
-        [self.view becomeFirstResponder];
+        [self becomeFirstResponder];
         
         UIMenuController *menuController = UIMenuController.sharedMenuController;
         menuController.menuItems = ConversationMessageActionController.allMessageActions;
@@ -332,7 +332,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self setSelectedByMenu:YES animated:YES];
     }
 }
-
 
 #pragma mark - Actions
 
