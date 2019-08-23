@@ -79,7 +79,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+            ])
     }
 
     // MARK: – ConversationOptionsViewModelDelegate
@@ -109,16 +109,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         let activityController = TintCorrectedActivityViewController(activityItems: [message], applicationActivities: nil)
         present(activityController, animated: true)
 
-        ///TODO: UIActivityViewController extension
-
-        if let popover = activityController.popoverPresentationController,
-            let pointToView = sourceView ?? view,
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController{
-            popover.config(from: rootViewController,
-                pointToView: pointToView,
-                sourceView: rootViewController.view)
-        }
-
+        activityController.configPopover(pointToView: sourceView ?? view)
     }
 
     // MARK: – UITableViewDelegate & UITableViewDataSource
@@ -148,4 +139,19 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
         viewModel.state.rows[indexPath.row].action?(cell)
     }
 
+}
+
+extension UIActivityViewController {
+
+    /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
+    ///
+    /// - Parameter pointToView: the view which the popover points to
+    func configPopover(pointToView: UIView) {
+        guard let popover = popoverPresentationController,
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+        popover.config(from: rootViewController,
+                       pointToView: pointToView,
+                       sourceView: rootViewController.view)
+    }
 }
