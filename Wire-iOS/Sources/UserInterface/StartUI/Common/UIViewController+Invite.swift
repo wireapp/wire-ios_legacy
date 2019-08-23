@@ -18,16 +18,15 @@
 
 import Foundation
 
-extension StartUIViewController: ContactsViewControllerDelegate {
+extension UIViewController {
+    func presentInviteActivityViewController(with sourceView: UIView) {
+        let shareItemProvider = ShareItemProvider(placeholderItem: "")
+        let activityController = UIActivityViewController(activityItems: [shareItemProvider], applicationActivities: nil)
 
-    public func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
-        dismiss(animated: true)
+        activityController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+
+        activityController.configPopover(pointToView: sourceView)
+
+        present(activityController, animated: true)
     }
-
-    public func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
-        dismiss(animated: true) {
-            UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
-        }
-    }
-
 }
