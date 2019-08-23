@@ -61,9 +61,9 @@ final public class ConversationCreationValues {
     
 }
 
-@objcMembers public final class ConversationCreationController: UIViewController {
+@objcMembers
+public final class ConversationCreationController: UIViewController {
 
-    static let mainViewHeight: CGFloat = 56
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
     
     private let collectionViewController = SectionCollectionViewController()
