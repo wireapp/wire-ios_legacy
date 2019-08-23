@@ -45,25 +45,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface FirstReponderView : UIView
-@end
-
-
-@implementation FirstReponderView
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (BOOL)becomeFirstResponder
-{
-    BOOL result = [super becomeFirstResponder];
-    return result;
-}
-
-@end
-
 @interface FullscreenImageViewController (MessageObserver) <ZMMessageObserver>
 
 @end
@@ -115,10 +96,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 
     return self;
-}
-
-- (void)loadView {
-    self.view = [[FirstReponderView alloc] init];
 }
 
 - (void)dismissWithCompletion:(dispatch_block_t)completion
