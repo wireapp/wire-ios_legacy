@@ -28,7 +28,6 @@
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIViewController+WR_Invite.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "Wire-Swift.h"
