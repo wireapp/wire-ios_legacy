@@ -22,7 +22,7 @@ import Cartography
 // Acts as a container for InputBarEditView & MarkdownBarView, however
 // only one of the views will be in the view hierarchy at a time.
 //
-public class InputBarSecondaryButtonsView: UIView {
+public final class InputBarSecondaryButtonsView: UIView {
     
     public let editBarView: InputBarEditView
     public let markdownBarView: MarkdownBarView
