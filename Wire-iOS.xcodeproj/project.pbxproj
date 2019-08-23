@@ -709,10 +709,8 @@
 		87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF49A1D34E9E600BB420F /* NSUserDefaults+Location.swift */; };
 		87DCF4E01D34EA4500BB420F /* TopPeopleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */; };
 		87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */; };
-		87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B81D34EA4500BB420F /* UIActivityViewController+Invite.m */; };
 		87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4BC1D34EA4500BB420F /* ProfilePresenter.m */; };
 		87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4CC1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m */; };
-		87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4D31D34EA4500BB420F /* UIViewController+WR_Invite.m */; };
 		87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */; };
 		87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */; };
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
@@ -1059,6 +1057,7 @@
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
+		EF1ABCA623100E3F00496A1B /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */; };
 		EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */; };
 		EF1C2E4D2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */; };
 		EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1CB6F422B39CBF004CB458 /* CoreDataFixture.swift */; };
@@ -2385,15 +2384,11 @@
 		87DCF4A81D34EA4500BB420F /* TopPeopleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPeopleCell.m; sourceTree = "<group>"; };
 		87DCF4B51D34EA4500BB420F /* ShareItemProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareItemProvider.h; sourceTree = "<group>"; };
 		87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareItemProvider.m; sourceTree = "<group>"; };
-		87DCF4B71D34EA4500BB420F /* UIActivityViewController+Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActivityViewController+Invite.h"; sourceTree = "<group>"; };
-		87DCF4B81D34EA4500BB420F /* UIActivityViewController+Invite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActivityViewController+Invite.m"; sourceTree = "<group>"; };
 		87DCF4BB1D34EA4500BB420F /* ProfilePresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePresenter.h; sourceTree = "<group>"; };
 		87DCF4BC1D34EA4500BB420F /* ProfilePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePresenter.m; sourceTree = "<group>"; };
 		87DCF4C91D34EA4500BB420F /* CollectionViewContainerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewContainerCell.swift; sourceTree = "<group>"; };
 		87DCF4CB1D34EA4500BB420F /* TopPeopleLineCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPeopleLineCollectionViewController.h; sourceTree = "<group>"; };
 		87DCF4CC1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPeopleLineCollectionViewController.m; sourceTree = "<group>"; };
-		87DCF4D21D34EA4500BB420F /* UIViewController+WR_Invite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+WR_Invite.h"; sourceTree = "<group>"; };
-		87DCF4D31D34EA4500BB420F /* UIViewController+WR_Invite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+WR_Invite.m"; sourceTree = "<group>"; };
 		87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUIInviteActionBar.swift; sourceTree = "<group>"; };
 		87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUIViewController.h; sourceTree = "<group>"; };
 		87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIViewController.m; sourceTree = "<group>"; };
@@ -2870,6 +2865,7 @@
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
+		EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Invite.swift"; sourceTree = "<group>"; };
 		EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+Constraints.swift"; sourceTree = "<group>"; };
 		EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF1CB6F422B39CBF004CB458 /* CoreDataFixture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataFixture.swift; path = "Wire-iOS Tests/SwiftSnapshotTesting/CoreDataFixture.swift"; sourceTree = SOURCE_ROOT; };
@@ -4948,6 +4944,7 @@
 				87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */,
 				EF297DDC213209220002983A /* ContactsViewController+Internal.h */,
 				87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */,
+				EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */,
 				EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */,
 				EF297DDB213209220002983A /* ContactsViewController+Style.swift */,
 				EF6DAD692150F2C400D9BA70 /* ContactsViewController+SearchHeader.swift */,
@@ -4989,8 +4986,6 @@
 				164C29AC1ED446660026562A /* UserSelection.swift */,
 				87DCF4BC1D34EA4500BB420F /* ProfilePresenter.m */,
 				87DCF4BD1D34EA4500BB420F /* SectionControllers */,
-				87DCF4D21D34EA4500BB420F /* UIViewController+WR_Invite.h */,
-				87DCF4D31D34EA4500BB420F /* UIViewController+WR_Invite.m */,
 				875753D0211DC61C00A80F5E /* EmptySearchResultsView.swift */,
 			);
 			path = Common;
@@ -5014,8 +5009,6 @@
 			children = (
 				87DCF4B51D34EA4500BB420F /* ShareItemProvider.h */,
 				87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */,
-				87DCF4B71D34EA4500BB420F /* UIActivityViewController+Invite.h */,
-				87DCF4B81D34EA4500BB420F /* UIActivityViewController+Invite.m */,
 			);
 			path = InviteActionSheet;
 			sourceTree = "<group>";
@@ -7420,7 +7413,6 @@
 				EF1D80E02228175800BCA8D3 /* CountryCodeTableViewController+StatusBar.swift in Sources */,
 				F15650DD21DD10DD00210504 /* ThreeDotsLoadingView.swift in Sources */,
 				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
-				87DCF4F11D34EA4500BB420F /* UIViewController+WR_Invite.m in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
@@ -7735,6 +7727,7 @@
 				EF1DF675230E8D2000128BB8 /* ConversationListContentController+ActiveMediaPlayerObserver.swift in Sources */,
 				5E8DA762211B286900360979 /* AuthenticationBackupReadyEventHandler.swift in Sources */,
 				876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */,
+				EF1ABCA623100E3F00496A1B /* ContactsViewController+Invite.swift in Sources */,
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
 				5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */,
@@ -8136,7 +8129,6 @@
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */,
 				EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */,
-				87DCF4E71D34EA4500BB420F /* UIActivityViewController+Invite.m in Sources */,
 				EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */,
 				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,
 				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,

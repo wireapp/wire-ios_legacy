@@ -208,11 +208,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)sendIndirectInvite:(UIView *)sender
-{
-    [self wr_presentInviteActivityViewControllerWithSourceView:self.inviteOthersButton logicalContext:GenericInviteContextInvitesSearch];
-}
-
 - (void)keyboardFrameDidChange:(NSNotification *)notification
 {
     [UIView animateWithKeyboardNotification:notification

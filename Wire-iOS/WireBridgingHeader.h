@@ -114,8 +114,6 @@
 #import "KeyboardAvoidingViewController.h"
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
-#import "UIViewController+WR_Invite.h"
-#import "UIActivityViewController+Invite.h"
 #import "ContactsDataSource.h"
 #import "StartUIViewController.h"
 #import "Button.h"
@@ -184,3 +182,6 @@
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
+
+// Invite
+#import "ShareItemProvider.h"

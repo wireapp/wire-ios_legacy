@@ -141,17 +141,3 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
 
 }
 
-extension UIActivityViewController {
-
-    /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
-    ///
-    /// - Parameter pointToView: the view which the popover points to
-    func configPopover(pointToView: UIView) {
-        guard let popover = popoverPresentationController,
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
-
-        popover.config(from: rootViewController,
-                       pointToView: pointToView,
-                       sourceView: rootViewController.view)
-    }
-}
