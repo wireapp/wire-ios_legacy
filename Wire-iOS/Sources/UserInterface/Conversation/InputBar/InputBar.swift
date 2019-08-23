@@ -226,10 +226,10 @@ public final class InputBar: UIView {
         [buttonsView, secondaryButtonsView].forEach(buttonInnerContainer.addSubview)
         
 
+        createConstraints()
         setupViews()
         updateRightAccessoryStackViewLayoutMargins()
-        createConstraints()
-        
+
         notificationCenter.addObserver(markdownView, selector: #selector(markdownView.textViewDidChangeActiveMarkdown), name: Notification.Name.MarkdownTextViewDidChangeActiveMarkdown, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewTextDidChange), name: UITextView.textDidChangeNotification, object: textView)
         notificationCenter.addObserver(self, selector: #selector(textViewDidBeginEditing), name: UITextView.textDidBeginEditingNotification, object: nil)
@@ -354,7 +354,7 @@ public final class InputBar: UIView {
     func updatePlaceholder() {
         textView.attributedPlaceholder = placeholderText(for: inputBarState)
         textView.setNeedsLayout()
-        textView.layoutIfNeeded()
+//        textView.layoutIfNeeded()
     }
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
@@ -435,7 +435,8 @@ public final class InputBar: UIView {
                 completion()
             }
         } else {
-            layoutIfNeeded()
+            setNeedsLayout()
+//            layoutIfNeeded()
             textViewChanges()
             completion()
         }
