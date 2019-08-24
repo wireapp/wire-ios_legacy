@@ -206,4 +206,25 @@ extension ProfileSelfPictureViewController {
         }
     }
 
+    @objc
+    func cameraButtonTapped(_ sender: Any?) {
+        if !UIImagePickerController.isSourceTypeAvailable(.camera) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
+            return
+        }
+        
+        if ZMUserSession.shared()?.isCallOngoing == true {
+            CameraAccess.displayCameraAlertForOngoingCall(at: CameraAccessFeature.takePhoto, from: self)
+            return
+        }
+        
+        let picker = UIImagePickerController()
+        
+        picker.sourceType = .camera
+        picker.delegate = imagePickerConfirmationController
+        picker.allowsEditing = true
+        picker.cameraDevice = .front
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.modalTransitionStyle = .coverVertical
+        present(picker, animated: true)
+    }
 }
