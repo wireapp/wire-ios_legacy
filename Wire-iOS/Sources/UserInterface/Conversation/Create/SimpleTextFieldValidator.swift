@@ -42,10 +42,10 @@ final class SimpleTextFieldValidator: NSObject {
             return .empty
         }
         
-        var validatedString: AnyObject? = stringToValidate as AnyObject
+        var validatedString: Any? = stringToValidate as Any
         
         do {
-            try StringLengthValidator.validateValue(&validatedString,
+            _ = try StringLengthValidator.validateValue(&validatedString,
                                                     minimumStringLength: 1,
                                                     maximumStringLength: 64,
                                                     maximumByteLength: 256)
@@ -53,7 +53,7 @@ final class SimpleTextFieldValidator: NSObject {
         catch let stringValidationError as NSError {
             
             switch stringValidationError.code {
-            case Int(ZMManagedObjectValidationErrorCode.objectValidationErrorCodeStringTooLong.rawValue):
+            case Int(ZMManagedObjectValidationErrorCode.tooLong.rawValue):
                 return .tooLong
             default: break
             }
