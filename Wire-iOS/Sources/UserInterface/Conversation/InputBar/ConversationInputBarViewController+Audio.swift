@@ -88,8 +88,8 @@ extension ConversationInputBarViewController {
     }
     
     private func displayAudioMessageAlertIfNeeded() -> Bool {
-        guard ZMUserSession.shared()?.isCallOngoing ?? false else { return false }
-        CameraAccess.displayCameraAlertForOngoingCall(at: .recordAudioMessage, from: self)
+        guard !CameraAccess.displayAlertIfOngoingCall(at:.recordAudioMessage , from:self) else { return false }
+
         return true
     }
     

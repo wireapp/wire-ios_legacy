@@ -27,7 +27,6 @@
 @property (nonatomic) UIImageView *selfUserImageView;
 @property (nonatomic) ImagePickerConfirmationController *imagePickerConfirmationController;
 
-- (void)cameraButtonTapped:(id)sender;
 - (void)closeButtonTapped:(id)sender;
 
 @end

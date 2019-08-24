@@ -26,11 +26,20 @@ import UIKit
 
 final class CameraAccess: NSObject {
 
-    static func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
+    static func displayAlertIfOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) -> Bool {
+        if ZMUserSession.shared()?.isCallOngoing == true {
+            CameraAccess.displayCameraAlertForOngoingCall(at: feature, from: viewController)
+            return true
+        }
+        
+        return false
+    }
+    
+    static private func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
         let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
                                       message: feature.message.localized,
                                       cancelButtonTitle: "general.ok".localized)
-        viewController.present(alert, animated: true, completion: nil)
+        viewController.present(alert, animated: true)
     }
 }
 

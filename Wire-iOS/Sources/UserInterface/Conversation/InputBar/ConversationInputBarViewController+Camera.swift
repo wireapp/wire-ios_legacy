@@ -288,10 +288,8 @@ extension ConversationInputBarViewController {
 
     @objc
     func videoButtonPressed(_ sender: IconButton?) {
-        if ZMUserSession.shared()?.isCallOngoing == true {
-            CameraAccess.displayCameraAlertForOngoingCall(at: .recordVideo, from: self)
-            return
-        }
+        guard !CameraAccess.displayAlertIfOngoingCall(at: .recordVideo, from: self) else { return }
+        
         
         presentImagePicker(with: UIImagePickerController.SourceType.camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
     }    

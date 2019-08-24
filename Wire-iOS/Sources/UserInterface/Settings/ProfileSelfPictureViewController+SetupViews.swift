@@ -212,10 +212,7 @@ extension ProfileSelfPictureViewController {
             return
         }
         
-        if ZMUserSession.shared()?.isCallOngoing == true {
-            CameraAccess.displayCameraAlertForOngoingCall(at: CameraAccessFeature.takePhoto, from: self)
-            return
-        }
+        guard !CameraAccess.displayAlertIfOngoingCall(at:.takePhoto, from: self) else { return }
         
         let picker = UIImagePickerController()
         
