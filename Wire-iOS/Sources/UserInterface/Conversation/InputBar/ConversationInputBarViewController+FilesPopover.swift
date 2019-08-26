@@ -56,19 +56,36 @@ extension ConversationInputBarViewController {
         mode = ConversationInputBarViewControllerMode.textInput
         inputBar.textView.resignFirstResponder()
 
-        let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
-        documentPickerViewController.modalPresentationStyle = isIPadRegular() ? .popover : .fullScreen
-        if isIPadRegular(),
-            let sourceView = parent?.view,
-            let pointToView = sender.imageView {
-            configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        controller.addAction(UIAlertAction(icon: .movie, title: "content.file.upload_video".localized, tintColor: view.tintColor))
+        controller.addAction(UIAlertAction(icon: .cameraShutter, title: "content.file.take_video".localized, tintColor: view.tintColor))
+
+
+        let handler: ((UIAlertAction) -> Void) = { _ in
+            let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
+            documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
+            if self.isIPadRegular(),
+                let sourceView = self.parent?.view,
+                let pointToView = sender.imageView {
+                self.configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
+            }
+
+            documentPickerViewController.delegate = self
+
+            self.parent?.present(documentPickerViewController, animated: true) {
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+            }
         }
 
-        documentPickerViewController.delegate = self
+        controller.addAction(UIAlertAction(icon: .ellipsis,
+                                           title: "content.file.browse".localized, tintColor: view.tintColor,
+                                           handler: handler))
 
-        parent?.present(documentPickerViewController, animated: true) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
+        controller.addAction(.cancel())
+
+        present(controller, animated: true)
+
     }
 
 }
