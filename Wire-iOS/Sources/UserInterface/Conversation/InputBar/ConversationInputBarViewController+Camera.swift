@@ -54,7 +54,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     
     @objc public func createCameraKeyboardViewController() {
         guard let splitViewController = ZClientViewController.shared()?.splitViewController else { return }
-        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController)
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
         cameraKeyboardViewController.delegate = self
         
         self.cameraKeyboardViewController = cameraKeyboardViewController

@@ -17,18 +17,28 @@
 //
 
 
-public extension UIActivityViewController {
+extension UIActivityViewController {
 
-    @objc convenience init?(message: ZMConversationMessage, from view: UIView) {
+    convenience init?(message: ZMConversationMessage, from view: UIView) {
         guard let fileMessageData = message.fileMessageData, message.isFileDownloaded() == true, let fileURL = fileMessageData.fileURL else { return nil }
         self.init(
             activityItems: [fileURL],
             applicationActivities: nil
         )
 
-        if let popoverPresentationController = popoverPresentationController {
-            popoverPresentationController.sourceView = view
-        }
+        configPopover(pointToView: view)
     }
     
+
+    /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
+    ///
+    /// - Parameter pointToView: the view which the popover points to
+    func configPopover(pointToView: UIView) {
+        guard let popover = popoverPresentationController,
+            let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+        popover.config(from: rootViewController,
+                       pointToView: pointToView,
+                       sourceView: rootViewController.view)
+    }
 }

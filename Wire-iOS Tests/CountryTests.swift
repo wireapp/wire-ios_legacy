@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,25 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension FullscreenImageViewController {
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+final class CountryTests: XCTestCase {
 
-        if parent != nil {
-            updateZoom()
-        }
+    func testThatCountryFromDeviceGivesCurrentCountry(){
+        // GIVEN
+        let countryFromDevice = Country.countryFromDevice()!
 
-        updateStatusBar()
+        // WHEN & THEN
+        XCTAssertEqual(countryFromDevice.iso, "us")
     }
-
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
-    override open var canBecomeFirstResponder: Bool {
-        return true
-    }
-
 }

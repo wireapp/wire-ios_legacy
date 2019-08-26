@@ -32,7 +32,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, readonly) Country *defaultCountry NS_SWIFT_NAME(default);
 
 + (nullable instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164;
-+ (nullable instancetype)countryFromDevice;
 
 + (nullable instancetype)detectCountryFromCode:(NSUInteger)e164;
 

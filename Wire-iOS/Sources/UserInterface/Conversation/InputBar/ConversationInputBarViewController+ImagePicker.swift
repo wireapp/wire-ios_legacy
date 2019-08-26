@@ -18,6 +18,8 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "ConversationInputBarViewController - Image Picker")
+
 extension ConversationInputBarViewController {
 
     @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:pointToView:)
@@ -51,7 +53,7 @@ extension ConversationInputBarViewController {
             pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
 
             if let popover = pickerController.popoverPresentationController,
-               let imageView = pointToView {
+                let imageView = pointToView {
                 popover.config(from: rootViewController,
                                pointToView: imageView,
                                sourceView: rootViewController.view)
@@ -78,4 +80,48 @@ extension ConversationInputBarViewController {
             presentController()
         }
     }
+
+    @objc
+    func processVideo(info: [UIImagePickerController.InfoKey: Any],
+                      picker: UIImagePickerController) {
+        guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
+            parent?.dismiss(animated: true)
+            zmLog.error("Video not provided form \(picker): info \(info)")
+            return
+        }
+
+        let videoTempURL = URL(fileURLWithPath: NSTemporaryDirectory(),
+            isDirectory: true).appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)
+
+        if FileManager.default.fileExists(atPath: videoTempURL.path) {
+            do {
+                try FileManager.default.removeItem(at: videoTempURL)
+            } catch let deleteError {
+                zmLog.error("Cannot delete old tmp video at \(videoTempURL): \(deleteError)")
+            }
+        }
+
+        do {
+            try FileManager.default.copyItem(at: videoURL, to: videoTempURL)
+        } catch let error {
+            zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
+            return
+        }
+
+        if picker.sourceType == UIImagePickerController.SourceType.camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path) {
+            UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
+
+        picker.showLoadingView = true
+        AVAsset.wr_convertVideo(at: videoTempURL, toUploadFormatWithCompletion: { resultURL, asset, error in
+            if error == nil && resultURL != nil {
+                self.uploadFile(at: resultURL)
+            }
+
+            self.parent?.dismiss(animated: true) {
+                picker.showLoadingView = false
+            }
+        })
+    }
+
 }

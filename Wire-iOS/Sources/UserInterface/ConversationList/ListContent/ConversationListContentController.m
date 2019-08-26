@@ -391,19 +391,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
     return result;
 }
 
-#pragma mark - ActiveMediaPlayer observer
-
-- (void)activeMediaPlayerChanged:(NSDictionary *)change
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        for (ConversationListCell *cell in self.collectionView.visibleCells) {
-            [cell updateAppearance];
-        }
-    });
-}
-
 @end
-
 
 
 @implementation ConversationListContentController (UICollectionViewDataSource)

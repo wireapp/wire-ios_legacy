@@ -21,8 +21,9 @@ import UIKit
 import Cartography
 
 
-@objc enum ConversationListButtonType: UInt {
-    case archive, camera, startUI
+@objc
+enum ConversationListButtonType: UInt {
+    case archive, startUI
 }
 
 @objc protocol ConversationListBottomBarControllerDelegate: class {
@@ -30,13 +31,13 @@ import Cartography
 }
 
 
-@objcMembers final class ConversationListBottomBarController: UIViewController {
+@objcMembers
+final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
     let startUIButton  = IconButton()
     let archivedButton = IconButton()
-    let cameraButton   = IconButton()
 
     let separator = UIView()
     private let heightConstant: CGFloat = 56
@@ -85,13 +86,7 @@ import Cartography
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
 
-        cameraButton.setIcon(.cameraLens, size: .tiny, for: .normal)
-        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
-        cameraButton.accessibilityIdentifier = "bottomBarCameraButton"
-        cameraButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.camera_button.label".localized
-        cameraButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.camera_button.hint".localized
-
-        [archivedButton, startUIButton, cameraButton].forEach { button in
+        [archivedButton, startUIButton].forEach { button in
             button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
         }
 
@@ -116,7 +111,7 @@ import Cartography
             separator.top == view.top
         }
 
-        constrain(view, cameraButton, startUIButton, archivedButton) { view, cameraButton, startUIButton, archivedButton in
+        constrain(view, startUIButton, archivedButton) { view, startUIButton, archivedButton in
             startUIButton.centerY == view.centerY
             archivedButton.centerY == view.centerY
             archivedButton.trailing == view.trailing - xInset
@@ -152,11 +147,6 @@ import Cartography
     @objc private dynamic func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
-
-    @objc private dynamic func cameraButtonTapped(_ sender: IconButton) {
-        delegate?.conversationListBottomBar(self, didTapButtonWithType: .camera)
-    }
-
 }
 
 // MARK: - Helper

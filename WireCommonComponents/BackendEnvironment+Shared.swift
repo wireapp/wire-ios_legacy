@@ -18,7 +18,6 @@
 
 import Foundation
 import WireTransport
-import WireUtilities
 
 extension BackendEnvironment {
     
@@ -26,11 +25,11 @@ extension BackendEnvironment {
     
     public static var shared: BackendEnvironment = {
         let bundle = Bundle.backendBundle
-        guard let environment = BackendEnvironment(userDefaults: .shared(), configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
+        guard let environment = BackendEnvironment(userDefaults: .standard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
         return environment
         }() {
         didSet {
-            shared.save(in: .shared())
+            shared.save(in: .standard)
             NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
     }

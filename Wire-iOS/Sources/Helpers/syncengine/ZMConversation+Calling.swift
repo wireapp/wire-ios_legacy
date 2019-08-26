@@ -84,7 +84,7 @@ extension ZMConversation {
     }
     
     func warnAboutSlowConnection(handler : @escaping (_ abortCall : Bool) -> Void) {
-        if NetworkConditionHelper.sharedInstance().qualityType() == .type2G {
+        if NetworkConditionHelper.shared.qualityType() == .type2G {
             let badConnectionController = UIAlertController(title: "error.call.slow_connection.title".localized, message: "error.call.slow_connection".localized, preferredStyle: .alert)
             
             badConnectionController.addAction(UIAlertAction(title: "error.call.slow_connection.call_anyway".localized, style: .default, handler: { (_) in

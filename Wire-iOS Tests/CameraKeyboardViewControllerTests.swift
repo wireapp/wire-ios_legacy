@@ -21,7 +21,7 @@ import AVFoundation
 import Photos
 @testable import Wire
 
-class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDelegate {
+final class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControllerDelegate {
     
     var cameraKeyboardWantsToOpenCameraRollHitCount: UInt = 0
     @objc func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
@@ -59,6 +59,7 @@ private final class MockAssetLibrary: AssetLibrary {
 }
 
 private final class MockImageManager: ImageManagerProtocol {
+
     func cancelImageRequest(_ requestID: PHImageRequestID) {
         // no op
     }
@@ -74,6 +75,8 @@ private final class MockImageManager: ImageManagerProtocol {
     func requestExportSession(forVideo asset: PHAsset, options: PHVideoRequestOptions?, exportPreset: String, resultHandler: @escaping (AVAssetExportSession?, [AnyHashable : Any]?) -> Void) -> PHImageRequestID {
         return 0
     }
+
+    static var defaultInstance: ImageManagerProtocol = MockImageManager()
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
@@ -135,7 +138,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
     private func setupSut(permissions: PhotoPermissionsController) {
         sut = CameraKeyboardViewController(splitLayoutObservable: splitView,
                                            assetLibrary: mockAssetLibrary,
-                                           imageManager: mockImageManager,
+                                           imageManagerType: MockImageManager.self,
                                            permissions: permissions)
     }
 
@@ -143,7 +146,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         let permissions = MockPhotoPermissionsController(camera: true, library: true)
         sut = CallingMockCameraKeyboardViewController(splitLayoutObservable: splitView,
                                                       assetLibrary: mockAssetLibrary,
-                                                      imageManager: mockImageManager,
+                                                      imageManagerType: MockImageManager.self,
                                                       permissions: permissions)
 
         verify(view: prepareForSnapshot())
