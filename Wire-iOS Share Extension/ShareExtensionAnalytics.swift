@@ -25,6 +25,7 @@ enum AttachmentType {
     case image
     case video
     case url
+    case fileUrl
     case rawFile
     case walletPass
 }
@@ -126,6 +127,10 @@ extension NSItemProvider {
 
     var hasURL: Bool {
         return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1 
+    }
+
+    var hasFileURL: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeFileURL as String)
     }
 
     var hasVideo: Bool {
