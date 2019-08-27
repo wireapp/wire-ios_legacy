@@ -367,19 +367,6 @@
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (BOOL)displaysMessage:(id<ZMConversationMessage>)message
-{
-    NSInteger index = [self.dataSource indexOfMessage:(id)message];
-
-    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
-        if (indexPath.section == index) {
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
 - (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];

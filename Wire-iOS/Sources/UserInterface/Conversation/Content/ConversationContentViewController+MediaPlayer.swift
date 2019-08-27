@@ -23,10 +23,10 @@ extension ConversationContentViewController {
     func activeMediaPlayerChanged(_ change: NSDictionary) {
         let mediaPlayingMessage = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
 
-        if mediaPlayingMessage != nil,
-            mediaPlayingMessage?.conversation == conversation,
+        if let mediaPlayingMessage = mediaPlayingMessage,
+            mediaPlayingMessage.conversation == conversation,
             !displaysMessage(mediaPlayingMessage),
-            mediaPlayingMessage?.isVideo == false {
+            !mediaPlayingMessage.isVideo {
             DispatchQueue.main.async(execute: {
                 self.delegate.conversationContentViewController(self, didEndDisplayingActiveMediaPlayerFor: mediaPlayingMessage)
             })
@@ -36,4 +36,20 @@ extension ConversationContentViewController {
             })
         }
     }
+
+    private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
+        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
+
+        let index = dataSource?.indexOfMessage(message)
+
+        for indexPath in indexPathsForVisibleRows {
+            if indexPath.section == index {
+                return true
+            }
+        }
+
+        return false
+    }
+
+
 }
