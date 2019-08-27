@@ -51,18 +51,37 @@ extension ConversationInputBarViewController {
         popover.permittedArrowDirections = .down
     }
 
-    @objc
+    @objc ///TODO: snapshot test
     func docUploadPressed(_ sender: IconButton) {
         mode = ConversationInputBarViewControllerMode.textInput
         inputBar.textView.resignFirstResponder()
 
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        controller.addAction(UIAlertAction(icon: .movie, title: "content.file.upload_video".localized, tintColor: view.tintColor))
-        controller.addAction(UIAlertAction(icon: .cameraShutter, title: "content.file.take_video".localized, tintColor: view.tintColor))
+        let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
+            self.presentImagePicker(with: .photoLibrary,
+                                    mediaTypes: [kUTTypeMovie as String], allowsEditing: true,
+                                    pointToView: self.videoButton.imageView)
+        }
+
+        controller.addAction(UIAlertAction(icon: .movie,
+                                           title: "content.file.upload_video".localized,
+                                           tintColor: view.tintColor,
+                                           handler: uploadVideoHandler))
+
+        let takeVideoHandler: ((UIAlertAction) -> Void) = { _ in
+            self.presentImagePicker(with: .camera,
+                                    mediaTypes: [kUTTypeMovie as String], allowsEditing: false,
+                                    pointToView: self.videoButton.imageView)
+        }
+
+        controller.addAction(UIAlertAction(icon: .cameraShutter,
+                                           title: "content.file.take_video".localized,
+                                           tintColor: view.tintColor,
+                                           handler: takeVideoHandler))
 
 
-        let handler: ((UIAlertAction) -> Void) = { _ in
+        let browseHandler: ((UIAlertAction) -> Void) = { _ in
             let documentPickerViewController = UIDocumentPickerViewController(documentTypes: [kUTTypeItem as String], in: .import)
             documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
             if self.isIPadRegular(),
@@ -80,7 +99,7 @@ extension ConversationInputBarViewController {
 
         controller.addAction(UIAlertAction(icon: .ellipsis,
                                            title: "content.file.browse".localized, tintColor: view.tintColor,
-                                           handler: handler))
+                                           handler: browseHandler))
 
         controller.addAction(.cancel())
 
@@ -88,4 +107,5 @@ extension ConversationInputBarViewController {
 
     }
 
+    
 }
