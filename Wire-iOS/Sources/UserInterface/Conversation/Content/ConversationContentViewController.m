@@ -358,6 +358,9 @@
 
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
+
+    /// update media bar visiblity
+    [self updateMediaBar];
 }
 
 #pragma mark - Custom UI, utilities

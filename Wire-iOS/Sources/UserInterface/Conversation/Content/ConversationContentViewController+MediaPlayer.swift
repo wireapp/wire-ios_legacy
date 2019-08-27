@@ -21,6 +21,11 @@ import Foundation
 extension ConversationContentViewController {
     @objc
     func activeMediaPlayerChanged(_ change: NSDictionary) {
+        updateMediaBar()
+    }
+
+    @objc
+    func updateMediaBar() {
         let mediaPlayingMessage = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
 
         if let mediaPlayingMessage = mediaPlayingMessage,
@@ -50,6 +55,4 @@ extension ConversationContentViewController {
 
         return false
     }
-
-
 }
