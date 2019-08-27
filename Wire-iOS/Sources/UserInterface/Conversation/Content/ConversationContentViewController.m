@@ -372,7 +372,7 @@
     NSInteger index = [self.dataSource indexOfMessage:(id)message];
 
     for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
-        if (indexPath.row == index) {
+        if (indexPath.section == index) {
             return YES;
         }
     }
