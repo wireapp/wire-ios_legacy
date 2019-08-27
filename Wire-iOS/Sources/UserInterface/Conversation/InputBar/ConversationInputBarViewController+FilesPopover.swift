@@ -70,9 +70,7 @@ extension ConversationInputBarViewController {
                                            handler: uploadVideoHandler))
 
         let takeVideoHandler: ((UIAlertAction) -> Void) = { _ in
-            self.presentImagePicker(with: .camera,
-                                    mediaTypes: [kUTTypeMovie as String], allowsEditing: false,
-                                    pointToView: self.videoButton.imageView)
+            self.recordVideo()
         }
 
         controller.addAction(UIAlertAction(icon: .cameraShutter,
@@ -107,5 +105,17 @@ extension ConversationInputBarViewController {
 
     }
 
-    
+    @objc
+    func videoButtonPressed(_ sender: IconButton) {
+        recordVideo()
+    }
+
+    private func recordVideo() {
+        if ZMUserSession.shared()?.isCallOngoing == true {
+            CameraAccess.displayCameraAlertForOngoingCall(at: CameraAccessFeature.recordVideo, from: self)
+            return
+        }
+
+        presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
+    }
 }
