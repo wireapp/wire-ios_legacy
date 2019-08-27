@@ -149,7 +149,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addSubview:self.inputBarController.view];
     [self.inputBarController didMoveToParentViewController:self];
 
-    [self addChildViewController:self.conversationBarController];///TODO: it has no child 
+    [self addChildViewController:self.conversationBarController]; 
     [self.view addSubview:self.conversationBarController.view];
     [self.conversationBarController didMoveToParentViewController:self];
 
@@ -221,7 +221,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)createMediaBarViewController
 {
-    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager]; ///TODO: parent?
+    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager];
     [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
 }
     
