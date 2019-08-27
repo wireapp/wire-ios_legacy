@@ -164,7 +164,6 @@ extension ConversationInputBarViewControllerTests {
 extension ConversationInputBarViewControllerTests {
 
     func testUploadFileActionSheet() {
-        recordMode = true
         let alert: UIAlertController = sut.createDocUploadActionSheet()
 
         verifyAlertController(alert)
