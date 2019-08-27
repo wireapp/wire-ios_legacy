@@ -51,10 +51,10 @@ extension ConversationInputBarViewController {
         popover.permittedArrowDirections = .down
     }
 
-    func createDocUploadActionSheet(sender: IconButton) -> UIAlertController {
+    func createDocUploadActionSheet(sender: IconButton? = nil) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        /// items for debugging
+        /// alert actions  for debugging
         #if targetEnvironment(simulator)
         let plistHandler: ((UIAlertAction) -> Void) = { _ in
             ZMUserSession.shared()?.enqueueChanges({
@@ -74,12 +74,11 @@ extension ConversationInputBarViewController {
             })
         }
 
-        controller.addAction(UIAlertAction(icon: nil,
-                                           title: "CountryCodes.plist",
-                                           tintColor: view.tintColor,
+        controller.addAction(UIAlertAction(title: "CountryCodes.plist",
+                                           style: .default,
                                            handler: plistHandler))
 
-        controller.addAction(UIAlertAction(size: (ZMUserSession.shared()!.maxUploadFileSize())! + 1, title: "Big file", fileName: "BigFile.bin"))
+        controller.addAction(uploadTestAlertAction(size: (ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1, title: "Big file", fileName: "BigFile.bin"))
         #endif
 
         let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
@@ -108,7 +107,7 @@ extension ConversationInputBarViewController {
             documentPickerViewController.modalPresentationStyle = self.isIPadRegular() ? .popover : .fullScreen
             if self.isIPadRegular(),
                 let sourceView = self.parent?.view,
-                let pointToView = sender.imageView {
+                let pointToView = sender?.imageView {
                 self.configPopover(docController: documentPickerViewController, sourceView: sourceView, delegate: self, pointToView: pointToView)
             }
 
@@ -119,7 +118,7 @@ extension ConversationInputBarViewController {
             }
         }
 
-        controller.addAction(uploadTestAlertAction(icon: .ellipsis,
+        controller.addAction(UIAlertAction(icon: .ellipsis,
                                            title: "content.file.browse".localized, tintColor: view.tintColor,
                                            handler: browseHandler))
 
@@ -153,8 +152,8 @@ extension ConversationInputBarViewController {
     }
 
     #if targetEnvironment(simulator)
-    func uploadTestAlertAction(size: UInt, title: String, fileName: String) -> UIAlertAction {
-        self.init(title: title, style: .default, handler: {_ in
+    func uploadTestAlertAction(size: UInt64, title: String, fileName: String) -> UIAlertAction {
+        return UIAlertAction(title: title, style: .default, handler: {_ in
             ZMUserSession.shared()?.enqueueChanges({
 
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
@@ -162,7 +161,7 @@ extension ConversationInputBarViewController {
                 let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(fileName).absoluteString
                 let destLocation = URL(fileURLWithPath: destLocationString)
 
-                let randomData = Data.secureRandomData(length: size)
+                let randomData = Data.secureRandomData(length: UInt(size))
 
                 try? randomData.write(to: destLocation)
 

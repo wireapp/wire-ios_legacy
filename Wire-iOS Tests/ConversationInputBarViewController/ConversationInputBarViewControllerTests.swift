@@ -159,25 +159,14 @@ extension ConversationInputBarViewControllerTests {
     }
 }
 
-import SnapshotTesting
+// MARK: - file action sheet
 
-final class ConversationInputBarViewControllerSnapshotTests: XCTestCase {
-    var sut: ConversationInputBarViewController!
-
-    override func setUp() {
-        super.setUp()
-        sut = ConversationInputBarViewController(conversation: otherUserConversation)
-//        sut.loadViewIfNeeded()
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-    }
+extension ConversationInputBarViewControllerTests {
 
     func testUploadFileActionSheet() {
-        let alert = sut.createDocUploadActionSheet()
+        recordMode = true
+        let alert: UIAlertController = sut.createDocUploadActionSheet()
 
-        verify(matching: alert)
+        verifyAlertController(alert)
     }
 }

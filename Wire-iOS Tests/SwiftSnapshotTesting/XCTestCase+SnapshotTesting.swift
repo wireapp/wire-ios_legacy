@@ -67,6 +67,9 @@ extension XCTestCase {
         return path
     }
 
+
+    /// verify for a UIAlertController
+    /// NOTICE: UIAlertController actionSheet not work may crash for fatal error
     func verify(matching value: UIAlertController,
                 file: StaticString = #file,
                 testName: String = #function,
