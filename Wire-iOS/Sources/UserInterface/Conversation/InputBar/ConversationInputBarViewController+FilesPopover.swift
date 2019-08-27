@@ -58,6 +58,32 @@ extension ConversationInputBarViewController {
 
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
+        /// items for debugging
+        #if targetEnvironment(simulator)
+        let plistHandler: ((UIAlertAction) -> Void) = { _ in
+            ZMUserSession.shared()?.enqueueChanges({
+                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+                guard let basePath = paths.first,
+                let sourceLocation = Bundle(for: type(of: self)).url(forResource: "CountryCodes", withExtension: "plist") else { return }
+
+
+                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent).absoluteString
+                let destLocation = URL(fileURLWithPath: destLocationString)
+
+                do {
+                        try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
+                } catch {
+                }
+                self.uploadFile(at: destLocation)
+            })
+        }
+
+        controller.addAction(UIAlertAction(icon: nil,
+                                           title: "CountryCodes.plist",
+                                           tintColor: view.tintColor,
+                                           handler: plistHandler))
+        #endif
+
         let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
             self.presentImagePicker(with: .photoLibrary,
                                     mediaTypes: [kUTTypeMovie as String], allowsEditing: true,
