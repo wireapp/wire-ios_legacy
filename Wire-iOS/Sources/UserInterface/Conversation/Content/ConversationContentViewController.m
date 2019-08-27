@@ -380,22 +380,6 @@
     return NO;
 }
 
-#pragma mark - ActiveMediaPlayer observer
-
-- (void)activeMediaPlayerChanged:(NSDictionary *)change
-{
-    dispatch_async(dispatch_get_main_queue(), ^{        
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-        
-        if (mediaPlayingMessage && [mediaPlayingMessage.conversation isEqual:self.conversation] && ! [self displaysMessage:mediaPlayingMessage]) {
-            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:nil];
-        } else {
-            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:nil];
-        }
-    });
-}
-
 - (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
 {
     ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
