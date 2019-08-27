@@ -51,11 +51,7 @@ extension ConversationInputBarViewController {
         popover.permittedArrowDirections = .down
     }
 
-    @objc ///TODO: snapshot test
-    func docUploadPressed(_ sender: IconButton) {
-        mode = ConversationInputBarViewControllerMode.textInput
-        inputBar.textView.resignFirstResponder()
-
+    func createDocUploadActionSheet(sender: IconButton) -> UIAlertController {
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
         /// items for debugging
@@ -64,14 +60,14 @@ extension ConversationInputBarViewController {
             ZMUserSession.shared()?.enqueueChanges({
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 guard let basePath = paths.first,
-                let sourceLocation = Bundle(for: type(of: self)).url(forResource: "CountryCodes", withExtension: "plist") else { return }
+                    let sourceLocation = Bundle(for: type(of: self)).url(forResource: "CountryCodes", withExtension: "plist") else { return }
 
 
                 let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent).absoluteString
                 let destLocation = URL(fileURLWithPath: destLocationString)
 
                 do {
-                        try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
+                    try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
                 } catch {
                 }
                 self.uploadFile(at: destLocation)
@@ -82,6 +78,8 @@ extension ConversationInputBarViewController {
                                            title: "CountryCodes.plist",
                                            tintColor: view.tintColor,
                                            handler: plistHandler))
+
+        controller.addAction(UIAlertAction(size: (ZMUserSession.shared()!.maxUploadFileSize())! + 1, title: "Big file", fileName: "BigFile.bin"))
         #endif
 
         let uploadVideoHandler: ((UIAlertAction) -> Void) = { _ in
@@ -121,14 +119,23 @@ extension ConversationInputBarViewController {
             }
         }
 
-        controller.addAction(UIAlertAction(icon: .ellipsis,
+        controller.addAction(uploadTestAlertAction(icon: .ellipsis,
                                            title: "content.file.browse".localized, tintColor: view.tintColor,
                                            handler: browseHandler))
 
         controller.addAction(.cancel())
 
-        present(controller, animated: true)
+        return controller
+    }
 
+    @objc
+    func docUploadPressed(_ sender: IconButton) {
+        mode = ConversationInputBarViewControllerMode.textInput
+        inputBar.textView.resignFirstResponder()
+
+        let controller = createDocUploadActionSheet(sender: sender)
+
+        present(controller, animated: true)
     }
 
     @objc
@@ -144,4 +151,24 @@ extension ConversationInputBarViewController {
 
         presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
     }
+
+    #if targetEnvironment(simulator)
+    func uploadTestAlertAction(size: UInt, title: String, fileName: String) -> UIAlertAction {
+        self.init(title: title, style: .default, handler: {_ in
+            ZMUserSession.shared()?.enqueueChanges({
+
+                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+                let basePath = paths.first!
+                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(fileName).absoluteString
+                let destLocation = URL(fileURLWithPath: destLocationString)
+
+                let randomData = Data.secureRandomData(length: size)
+
+                try? randomData.write(to: destLocation)
+
+                self.uploadFile(at: destLocation)
+            })
+        })
+    }
+    #endif
 }

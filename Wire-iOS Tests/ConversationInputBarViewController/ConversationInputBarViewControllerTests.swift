@@ -158,3 +158,26 @@ extension ConversationInputBarViewControllerTests {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
+
+import SnapshotTesting
+
+final class ConversationInputBarViewControllerSnapshotTests: XCTestCase {
+    var sut: ConversationInputBarViewController!
+
+    override func setUp() {
+        super.setUp()
+        sut = ConversationInputBarViewController(conversation: otherUserConversation)
+//        sut.loadViewIfNeeded()
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testUploadFileActionSheet() {
+        let alert = sut.createDocUploadActionSheet()
+
+        verify(matching: alert)
+    }
+}
