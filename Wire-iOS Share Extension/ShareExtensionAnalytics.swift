@@ -21,13 +21,17 @@ import WireCommonComponents
 import MobileCoreServices
 import WireDataModel
 
-enum AttachmentType {
-    case image
+enum AttachmentType:Int, CaseIterable, Comparable {
+    static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+
+    case walletPass = 1
     case video
+    case image
+    case rawFile
     case url
     case fileUrl
-    case rawFile
-    case walletPass
 }
 
 class ExtensionActivity {

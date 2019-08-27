@@ -75,18 +75,10 @@ extension Dictionary where Key == AttachmentType, Value == [NSItemProvider] {
     var main: (AttachmentType, NSItemProvider)? {
         let sortedAttachments = self
 
-        if let passItem = sortedAttachments[.walletPass]?.first {
-            return (.walletPass, passItem)
-        } else if let videoItem = sortedAttachments[.video]?.first {
-            return (.video, videoItem)
-        } else if let photoItem = sortedAttachments[.image]?.first {
-            return (.image, photoItem)
-        } else if let fileItem = sortedAttachments[.rawFile]?.first {
-            return (.rawFile, fileItem)
-        } else if let urlItem = sortedAttachments[.url]?.first {
-            return (.url, urlItem)
-        } else if let fileUrlItem = sortedAttachments[.fileUrl]?.first {
-            return (.fileUrl, fileUrlItem)
+        for attachmentType in AttachmentType.allCases.sorted() {
+            if let item = sortedAttachments[attachmentType]?.first {
+                return (attachmentType, item)
+            }
         }
 
         return nil
