@@ -127,6 +127,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         self.postContent = PostContent(attachments: extensionContext?.attachments ?? [])
         self.setupNavigationBar()
         self.appendTextToEditor()
+        appendFileTextToEditor()
         self.updatePreview()
         self.placeholder = "share_extension.input.placeholder".localized
     }
@@ -212,6 +213,26 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                 self.textView.delegate?.textViewDidChange?(self.textView)
             }
         }
+    }
+
+    private func appendFileTextToEditor() {
+        guard let urlItems = extensionActivity?.attachments[.fileUrl] else {
+            return
+        }
+
+        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, urlCompletionHandler: { (url, error) in
+            error?.log(message: "Unable to fetch URL for type URL")
+            guard let url = url, url.isFileURL else { return }
+
+            let filename = url.lastPathComponent
+            let separator = self.textView.text.isEmpty ? "" : "\n"
+
+            DispatchQueue.main.async {
+                self.textView.text = self.textView.text + separator + filename
+                self.textView.delegate?.textViewDidChange?(self.textView)
+            }
+
+        })
     }
 
     /// Invoked when the user wants to post.
