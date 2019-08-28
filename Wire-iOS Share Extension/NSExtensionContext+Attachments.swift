@@ -75,7 +75,7 @@ extension Dictionary where Key == AttachmentType, Value == [NSItemProvider] {
     var main: (AttachmentType, NSItemProvider)? {
         let sortedAttachments = self
 
-        for attachmentType in AttachmentType.allCases.sorted() {
+        for attachmentType in AttachmentType.allCases {
             if let item = sortedAttachments[attachmentType]?.first {
                 return (attachmentType, item)
             }

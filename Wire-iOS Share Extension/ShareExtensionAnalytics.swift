@@ -21,7 +21,7 @@ import WireCommonComponents
 import MobileCoreServices
 import WireDataModel
 
-enum AttachmentType:Int, CaseIterable, Comparable {
+enum AttachmentType:Int, CaseIterable {
     static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
         return lhs.rawValue < rhs.rawValue
     }
