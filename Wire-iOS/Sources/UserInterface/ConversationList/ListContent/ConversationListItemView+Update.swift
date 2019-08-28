@@ -41,6 +41,9 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
+        
+        labelsStack.accessibilityLabel = title?.string
+        labelsStack.accessibilityValue = rightAccessory.accessibilityValue
     }
     
     @objc(updateForConversation:)
@@ -72,10 +75,10 @@ extension ConversationListItemView {
             if connectedUser.availability != .none {
                 statusComponents.append(connectedUser.availability.localizedName)
             }
-            accessibilityLabel = title?.string
+            labelsStack.accessibilityLabel = title?.string
         } else {
             title = conversation.displayName.attributedString
-            accessibilityLabel = conversation.displayName
+            labelsStack.accessibilityLabel = conversation.displayName
         }
 
         // Configure the avatar
@@ -97,7 +100,7 @@ extension ConversationListItemView {
             statusComponents.append(statusIconAccessibilityValue)
         }
 
-        accessibilityValue = FormattedText.list(from: statusComponents)
+        labelsStack.accessibilityValue = FormattedText.list(from: statusComponents)
         self.configure(with: title, subtitle: status.description(for: conversation))
     }
 }

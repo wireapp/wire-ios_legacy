@@ -55,7 +55,6 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 - (void)updateTableViewHeaderView;
-- (BOOL)displaysMessage:(id<ZMConversationMessage>)message;
 - (void)highlightMessage:(id<ZMConversationMessage>)message;
 
 @end

@@ -119,14 +119,14 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
 }
 
 extension StartUIViewController: ConversationCreationControllerDelegate {
-    func dismiss(controller: ConversationCreationController) {
+    func dismiss(controller: ConversationCreationController, completion: (() -> Void)? = nil) {
         if traitCollection.horizontalSizeClass == .compact {
             navigationController?.popToRootViewController(animated: true) {
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                completion?()
             }
-        }
-        else {
-            controller.navigationController?.dismiss(animated: true)
+        } else {
+            controller.navigationController?.dismiss(animated: true, completion: completion)
         }
     }
     
@@ -135,8 +135,9 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                         participants: Set<ZMUser>,
                                         allowGuests: Bool,
                                         enableReceipts: Bool) {
-        dismiss(controller: controller)
-        delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        dismiss(controller: controller) {
+            self.delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        }
     }
     
 }

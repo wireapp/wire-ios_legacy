@@ -31,6 +31,7 @@
 "general.accept" = "同意";
 "general.decline" = "不了，謝謝";
 "general.failure" = "出了點問題";
+"general.failure.try_again" = "請再試一次。";
 "general.service" = "服務";
 "general.off" = "關閉";
 "general.on" = "開啟";
@@ -41,6 +42,9 @@
 "general.space_between_words" = "\U200B";
 
 "general.guest-room-name" = "訪客聊天室";
+
+// User Cell
+"user_cell.title.you_suffix" = "（你）";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "關閉封存";
 
 "conversation.voiceover.verified" = "已驗證";
+"conversation.voiceover.legalhold" = "合法保留";
+"conversation.voiceover.value.active" = "啟動";
+"conversation.voiceover.value.disabled" = "已停用";
 
 "conversation.status.typing" = "輸入訊息中...";
 "conversation.status.typing.group" = "%@：輸入訊息中…";
@@ -207,7 +214,7 @@
 "conversation.status.poor_connection" = "連線品質不佳";
 "conversation.status.blocked" = "已封鎖";
 "conversation.status.incoming_call" = "%@呼叫中...";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "來電中…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "分享一條連結";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "在通話時不能錄製語音訊息。";
 "conversation.input_bar.ongoing_call_alert.video.message" = "在通話時不能錄製視像訊息。";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "在通話時不能拍攝相片。";
+
+"conversation.alert.message_deleted" = "此訊息已刪除。";
 
 "conversation.guests_present" = "訪客在對話中";
 "conversation.services_present" = "服務已啟動";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "傳送讀取已啓用";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "瞭解詳情";
+
+//
 
 "content.system.reactivated_device" = "您重新使用%@，在沒有使用期間的訊息不會顯示出來。";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";
 "meta.degraded.degradation_reason_message.plural" = "%@開始使用新設備。";
+"meta.degraded.degradation_reason_message.someone" = "某人開始使用了新設備。";
 "meta.degraded.dialog_message" = "您仍然要發送您的訊息嗎？";
-"meta.degraded.show_device_button" = "顯示設備";
-"meta.degraded.send_anyway_button" = "確定發送";
+"meta.degraded.verify_devices_button" = "驗證設備…";
+"meta.degraded.send_anyway_button" = "仍然要寄送";
 "meta.degraded.cancel_sending_button" = "取消";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "確定移除？";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "驗證此設備指紋符合%@設備上的指紋。";
 "profile.devices.detail.verify_message.link" = "我該怎麼做？";
 "profile.devices.detail.show_my_device.title" = "顯示我的設備指紋";
+"profile.devices.detail.reset_session.title" = "重設工作階段";
 "device.verified" = "已驗證";
 "device.not_verified" = "未驗證";
+
+"device.class.legalhold" = "合法保留";
 "device.class.desktop" = "桌面";
 "device.class.tablet" = "平板電腦";
 "device.class.phone" = "手機";
-"profile.devices.detail.reset_session.title" = "重設工作階段";
+"device.class.unknown" = "未知";
+
+"device.type.permanent" = "永久設備";
+"device.type.temporary" = "臨時";
+"device.type.legalhold" = "合法保留";
+"device.type.unknown" = "未知";
 
 // Bot
 "participants.services.remove_integration.button" = "移除服務";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
 "group_details.receipt_options_cell.title" = "讀取回條";
 "group_details.receipt_options_cell.description" = "當這啓用時, 參與者可以看到他們在此對話中的消息何時已閱讀。";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "合法保留";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -857,7 +894,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "建立團隊";
 "self.settings.manage_team.title" = "管理團隊";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "新增帳號";
 "self.settings.add_account.title" = "新增帳號";
 
 "self.settings.add_account.error.title" = "已啓動三個賬號";
@@ -997,7 +1034,7 @@
 "self.settings.popular_demand.title" = "推薦選項";
 "self.settings.popular_demand.send_button.title" = "發送按鍵";
 "self.settings.popular_demand.send_button.footer" = "停用按輸入鍵發送信息功能。";
-"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+"self.settings.popular_demand.dark_mode.footer" = "切換暗或亮畫面主題";
 
 // Open in
 "self.settings.external_apps.header" = "開啟";
@@ -1038,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "分享您的通訊錄將幫助您找到其他連絡人。我們將您的資料匿名處理並且不與任何人分享。您可透過手機「設定」 > 隱私 > 聯絡資訊來開啟權限。";
 
 "self.settings.privacy_security.lock_app" = "使用Passcode鎖定";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "在背景10秒後鎖定Wire。";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "在背景%@後鎖定Wire。";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "使用Touch ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "使用Face ID解鎖或輸入你的密碼。";
 "self.settings.privacy_security.lock_app.subtitle.none" = "輸入密碼解鎖。";
@@ -1048,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "解鎖";
 
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
@@ -1060,8 +1098,8 @@
 
 "self.settings.advanced.title" = "進階";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "提交通話除錯報告";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "這些資料將幫助Wire診斷通話問題。";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
 "self.settings.advanced.reset_push_token_alert.title" = "推送token 已被重設";
@@ -1074,7 +1112,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "技術報告";
 "self.settings.technical_report.send_report" = "傳送報告到Wire";
-"self.settings.technical_report.mail.subject" = "Wire通話報告";
+"self.settings.technical_report.mail.subject" = "Wire除錯報告";
 "self.settings.technical_report.include_log" = "包含詳細日誌";
 "self.settings.technical_report.privacy_warning" = "詳細日誌可能包含個人資料";
 "self.settings.technical_report.no_mail_alert" = "沒有電郵程式。點擊「確定」並手動將日誌發送到：";
@@ -1138,8 +1176,8 @@
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
-"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.title" = "連接到「%@」";
+"landing.custom_backend.more_info.button.title" = "顯示更多";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
@@ -1247,7 +1285,7 @@
 "registration.alert.account_exists.title" = "帳戶已存在";
 "registration.alert.account_exists.message_phone" = "您註冊的電話號碼已連結到帳戶。\n\n請使用其他電話號碼，或者如果您擁有此帳戶，請嘗試登錄。";
 "registration.alert.account_exists.message_email" = "您註冊的電郵地址已連結到帳戶。\n\n請使用其他電郵地址，或者如果您擁有此帳戶，請嘗試登錄。";
-"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_email_action" = "使用另一電郵註冊";
 "registration.alert.change_phone_action" = "使用另一手機號碼註冊";
 "registration.alert.change_signin_action" = "登入";
 
@@ -1472,6 +1510,10 @@
 "force.update.message" = "您錯過了些新功能。\n快到App Store中下載最新版的Wire吧。";
 "force.update.ok_button" = "到App Store";
 
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · 來自giphy.com";
 "giphy.conversation.random_message" = "來自giphy.com";
@@ -1519,8 +1561,8 @@
 
 "availability.message.cancel" = "取消";
 "availability.message.set_status" = "設定狀態";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
+"availability.accessibility_label.change_status" = "更改狀態";
+"availability.accessibility_label.status" = "狀態";
 
 "availability.none" = "沒有狀態";
 "availability.available" = "在線";
@@ -1610,3 +1652,29 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "使用%@。";
 "registration.password.rules.with_requirements" = "使用%@，與%@。";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "密碼錯誤";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "瞭解更多";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";

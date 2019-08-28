@@ -109,6 +109,8 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.labelsStack.axis = UILayoutConstraintAxisVertical;
     self.labelsStack.alignment = UIStackViewAlignmentLeading;
     self.labelsStack.distribution = UIStackViewDistributionFill;
+    self.labelsStack.isAccessibilityElement = true;
+    self.labelsStack.accessibilityIdentifier = @"title";
 }
 
 - (void)createContentStack
@@ -133,7 +135,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
 {
     self.subtitleField = [[UILabel alloc] init];
     self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityIdentifier = @"Conversation status";
+    self.subtitleField.accessibilityIdentifier = @"subtitle";
     self.subtitleField.numberOfLines = 1;
     [self.labelsStack addArrangedSubview:self.subtitleField];
 }

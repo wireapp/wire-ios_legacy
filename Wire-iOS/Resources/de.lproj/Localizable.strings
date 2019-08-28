@@ -31,6 +31,7 @@
 "general.accept" = "Annehmen";
 "general.decline" = "Nein, danke";
 "general.failure" = "Ein Fehler ist aufgetreten";
+"general.failure.try_again" = "Bitte erneut versuchen.";
 "general.service" = "Dienst";
 "general.off" = "Aus";
 "general.on" = "An";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "Gästebereich";
+
+// User Cell
+"user_cell.title.you_suffix" = " (Sie)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "Archiv schliessen";
 
 "conversation.voiceover.verified" = "Überprüft";
+"conversation.voiceover.legalhold" = "gesetzliche Aufbewahrung";
+"conversation.voiceover.value.active" = "aktiv";
+"conversation.voiceover.value.disabled" = "deaktiviert";
 
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "Audionachrichten können während eines Anrufs nicht aufgenommen werden.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "Videonachrichten können während eines Anrufs nicht aufgenommen werden.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Bilder können während eines Anrufs nicht aufgenommen werden.";
+
+"conversation.alert.message_deleted" = "Die Nachricht ist gelöscht.";
 
 "conversation.guests_present" = "Gäste anwesend";
 "conversation.services_present" = "Dienste aktiv";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Lesebestätigungen aktiv";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "Diese Unterhaltung unterliegt der gesetzlichen Aufbewahrung";
+"content.system.message_legal_hold.disabled" = "Die gesetzliche Aufbewahrung wurde für diese Unterhaltung deaktiviert";
+
+"content.system.message_legal_hold.learn_more" = "Erfahre mehr";
+
+//
 
 "content.system.reactivated_device" = "Du hast %@ eine Weile nicht benutzt. Nachrichten, die in der Zwischenzeit gesendet wurden, werden nicht angezeigt.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
 "meta.degraded.degradation_reason_message.plural" = "%@ haben neue Geräte hinzugefügt.";
+"meta.degraded.degradation_reason_message.someone" = "Jemand verwendet ein neues Gerät.";
 "meta.degraded.dialog_message" = "Möchtest du die Nachricht noch senden?";
-"meta.degraded.show_device_button" = "Gerät anzeigen";
+"meta.degraded.verify_devices_button" = "Geräte überprüfen…";
 "meta.degraded.send_anyway_button" = "Trotzdem senden";
 "meta.degraded.cancel_sending_button" = "Abbrechen";
+"meta.legalhold.info_button" = "Was ist gesetzliche Aufbewahrung?";
+"meta.legalhold.send_alert_title" = "Die Unterhaltung unterliegt der gesetzlichen Aufbewahrung.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Entfernen?";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "Überprüfe, ob dieser Fingerabdruck mit dem auf %@s Gerät übereinstimmt.";
 "profile.devices.detail.verify_message.link" = "Wie mache ich das?";
 "profile.devices.detail.show_my_device.title" = "Zeige den Fingerabdruck meines Geräts";
+"profile.devices.detail.reset_session.title" = "Session zurücksetzen";
 "device.verified" = "Überprüft";
 "device.not_verified" = "Nicht überprüft";
+
+"device.class.legalhold" = "Gesetzliche Aufbewahrung";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Handy";
-"profile.devices.detail.reset_session.title" = "Session zurücksetzen";
+"device.class.unknown" = "Unbekannt";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporär";
+"device.type.legalhold" = "Gesetzliche Aufbewahrung";
+"device.type.unknown" = "Unbekannt";
 
 // Bot
 "participants.services.remove_integration.button" = "Integration entfernen";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine deiner Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
 "group_details.receipt_options_cell.description" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Personen, die der gesetzlichen Aufbewahrung unterliegen";
+"legalhold.header.title" = "Gesetzliche Aufbewahrung";
+"legalhold.header.other_description" = "Die gesetzlichen Aufbewahrung wurde für mindestens eine Person dieser Unterhaltung aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.";
+"legalhold.header.self_description" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert.\nAlle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+"legalhold.accessibility" = "Details zur gesetzlichen Aufbewahrung";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1038,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Wir verwenden deine Kontaktdaten, um Kontakte für dich zu erstellen. Wir anonymisieren alle Informationen und geben sie nicht weiter.";
 
 "self.settings.privacy_security.lock_app" = "Mit Passwort sperren";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Sperre Wire nach 10 Sekunden im Hintergrund.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Wire nach %@ im Hintergrund sperren.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Entsperre mit Touch ID oder deinem Passwort.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Entsperre mit Face ID oder deinem Passwort.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Entsperre mit deinem Passwort.";
@@ -1048,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Wire mit Passwort entsperren";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Um Wire zu entsperren, bitte den Code in den Geräteeinstellungen aktivieren";
 "self.settings.privacy_security.lock_cancelled.action" = "Entsperren";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Link-Vorschau erstellen";
@@ -1060,8 +1098,8 @@
 
 "self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Anruf-Fehlerbericht senden";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Diese Information hilft uns Probleme zu erkennen.\nWenn beim Anrufen Probleme auftraten, beschreibe mit welchen Schritten das Problem reproduzierbar ist und sende uns gegebenenfalls Bildschirmfotos mit dieser Email.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Die Informationen helfen dem Support bei der Diagnose von Anrufproblemen und die App zu verbessern.";
 "self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
 "self.settings.advanced.reset_push_token_alert.title" = "Der Benachrichtigungs-Token wurde zurückgesetzt";
@@ -1074,7 +1112,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Technische Logs";
 "self.settings.technical_report.send_report" = "Logs an Wire senden";
-"self.settings.technical_report.mail.subject" = "Anruf-Fehlerbericht";
+"self.settings.technical_report.mail.subject" = "Fehlerbericht";
 "self.settings.technical_report.include_log" = "Detaillierten Verlauf hinzufügen";
 "self.settings.technical_report.privacy_warning" = "Detaillierte Logs können personenbezogene Daten enthalten.";
 "self.settings.technical_report.no_mail_alert" = "Kein Mail-Client erkannt. Tippen Sie auf \"OK\" und senden Sie manuell an: ";
@@ -1472,6 +1510,10 @@
 "force.update.message" = "Du verpasst neue Funktionen von Wire.\nHol dir die neueste Version im App Store.";
 "force.update.ok_button" = "Zum App Store";
 
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak erkannt";
+"jailbrokendevice.alert.message" = "Aus Sicherheitsgründen kann Wire auf diesem Gerät nicht verwendet werden. Alle vorhandenen Wire-Daten wurden gelöscht.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1610,3 +1652,29 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Bitte %@ verwenden.";
 "registration.password.rules.with_requirements" = "Bitte %@ verwenden, %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Gesetzliche Aufbewahrung wurde deaktiviert";
+"legal_hold.deactivated.message" = "Künftige Nachrichten werden nicht aufgezeichnet.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Unterliegt der gesetzlichen Aufbewahrung.";
+"share_extension.voiceover.conversation_secure" = "Alle Geräte überprüft.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Nicht alle Geräte sind überprüft.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Genehmigung ausstehend.";
+"legalhold_request.alert.title" = "Gesetzliche Aufbewahrung ersucht";
+"legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und temporärer Nachrichten in allen Unterhaltungen.";
+"legalhold_request.alert.detail.enter_password" = "Bitte zur Bestätigung das Passwort eingeben.";
+"legalhold_request.alert.error_wrong_password" = "Ungültiges Passwort";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Gesetzliche Aufbewahrung ist aktiv";
+"legalhold_active.alert.learn_more" = "Mehr erfahren";
+"legalhold_active.alert.message" = "Die gesetzliche Aufbewahrung wurde für dieses Konto aktiviert. Alle Nachrichten werden für den künftigen Zugriff aufbewahrt, einschließlich gelöschter, bearbeiteter und temporärer Nachrichten.\n\nAlle Gesprächspartner werden über die Aufnahme in Kenntnis gesetzt.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
+"account_deleted_session_expired_alert.message" = "Die App hat über einen längeren Zeitraum nicht mit dem Server kommuniziert oder die Session wurde per Fernzugriff für ungültig erklärt.";

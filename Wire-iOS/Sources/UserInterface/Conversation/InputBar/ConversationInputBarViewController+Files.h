@@ -19,9 +19,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ConversationInputBarViewController (Files) <UIDocumentMenuDelegate, UIDocumentPickerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ConversationInputBarViewController (Files) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
-- (void)docUploadPressed:(IconButton *)sender;
 - (void)uploadFileAtURL:(NSURL *)URL;
 - (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
+- (void)uploadItemAtURL:(NSURL *)itemURL;
 @end

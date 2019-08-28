@@ -309,7 +309,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call</string>
+        <string>Nieodebrane połączenie</string>
         <key>few</key>
         <string>Missed calls</string>
         <key>many</key>

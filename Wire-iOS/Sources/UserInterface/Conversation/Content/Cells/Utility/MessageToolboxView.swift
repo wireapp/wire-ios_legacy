@@ -247,6 +247,12 @@ final class MessageToolboxView: UIView {
         reloadContent(animated: animated)
     }
 
+    private func hideAndCleanStatusLabel() {
+        statusLabel.isHidden = true
+        statusLabel.accessibilityLabel = nil
+        statusLabel.attributedText = nil
+    }
+
     private func reloadContent(animated: Bool) {
         guard let dataSource = self.dataSource else { return }
 
@@ -262,7 +268,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = callListString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 0
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
@@ -274,7 +280,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = reactionsString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 1
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = true
                 self.deleteButton.isHidden = true
                 self.resendButton.isHidden = true
@@ -287,7 +293,7 @@ final class MessageToolboxView: UIView {
                 self.detailsLabel.attributedText = detailsString
                 self.detailsLabel.isHidden = false
                 self.detailsLabel.numberOfLines = 1
-                self.statusLabel.isHidden = true
+                self.hideAndCleanStatusLabel()
                 self.timestampSeparatorLabel.isHidden = false
                 self.deleteButton.isHidden = false
                 self.resendButton.isHidden = false

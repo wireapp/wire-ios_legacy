@@ -79,6 +79,7 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
     self.canOpenDrawer = NO;
     self.clipsToBounds = YES;
+    self.accessibilityIdentifier = @"conversation_list_cell";
 
     self.itemView = [[ConversationListItemView alloc] init];
     
@@ -93,8 +94,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     [self setNeedsUpdateConstraints];
      
     [AVSMediaManagerClientChangeNotification addObserver:self];
-
-    [self setupAccessbilityWithAccessibilityIdentifier: @"conversation_name"];
 }
 
 - (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate

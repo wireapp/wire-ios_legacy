@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Upload cancelled";
 "content.file.upload_video" = "Videos";
 "content.file.take_video" = "Record a video";
+"content.file.browse" = "Browse";
 
 "content.file.save_video" = "Save";
 "content.file.save_audio" = "Save";
@@ -1075,7 +1076,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "This helps you connect with others. We anonymize all the information and do not share it with anyone else. Allow access via Settings > Privacy > Contacts.";
 
 "self.settings.privacy_security.lock_app" = "Lock With Passcode";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after 10 seconds in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
@@ -1085,6 +1086,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Unlock";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Create Link Previews";
@@ -1509,6 +1511,10 @@
 "force.update.message" = "You are missing out on new features.\nGet the latest version of Wire in the App Store.";
 "force.update.ok_button" = "Go to App Store";
 
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
 "giphy.conversation.random_message" = "via giphy.com";
@@ -1669,3 +1675,8 @@
 "legalhold_active.alert.title" = "Legal Hold is Active";
 "legalhold_active.alert.learn_more" = "Learn More";
 "legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+

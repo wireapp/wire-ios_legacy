@@ -64,7 +64,7 @@ extension EmptySearchResultsViewTestState: CustomStringConvertible {
 }
 
 extension ColorSchemeVariant: CaseIterable {
-    static var allCases: [ColorSchemeVariant] {
+    public static var allCases: [ColorSchemeVariant] {
         return [.light, .dark]
     }
 }

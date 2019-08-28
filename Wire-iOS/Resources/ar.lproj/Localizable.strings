@@ -27,10 +27,11 @@
 "general.edit" = "تعديل";
 "general.done" = "تـم";
 "general.confirm" = "موافق";
-"general.skip" = "ليس الآن";
+"general.skip" = "Not Now";
 "general.accept" = "قبول";
 "general.decline" = "لا، شكرًا";
 "general.failure" = "حدث خطأ";
+"general.failure.try_again" = "Please try again.";
 "general.service" = "Service";
 "general.off" = "غير مفعل";
 "general.on" = "مفعل";
@@ -41,6 +42,9 @@
 "general.space_between_words" = " ";
 
 "general.guest-room-name" = "غرفة الضيوف";
+
+// User Cell
+"user_cell.title.you_suffix" = " (You)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,6 +204,9 @@
 "list.archived_conversations_close" = "إغلاق الأرشيف";
 
 "conversation.voiceover.verified" = "موثّق";
+"conversation.voiceover.legalhold" = "legal hold";
+"conversation.voiceover.value.active" = "active";
+"conversation.voiceover.value.disabled" = "disabled";
 
 "conversation.status.typing" = "يكتب رسالة…";
 "conversation.status.typing.group" = "%@: يكتب رسالة…";
@@ -301,6 +308,8 @@
 "conversation.input_bar.ongoing_call_alert.audio.message" = "You can’t record an audio message during a call.";
 "conversation.input_bar.ongoing_call_alert.video.message" = "You can’t record a video during a call.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "You can’t take a picture during a call.";
+
+"conversation.alert.message_deleted" = "The message is deleted.";
 
 "conversation.guests_present" = "يتواجد ضيوف";
 "conversation.services_present" = "Services are active";
@@ -461,6 +470,14 @@
 
 "content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
 
+// legal hold
+
+"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
+"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+
+"content.system.message_legal_hold.learn_more" = "معرفة المزيد";
+
+//
 
 "content.system.reactivated_device" = "بدأت استخدام %@ مرة أخرى. الرسائل المُرسلة في ذاك الحين لن تُعرض هنا.";
 
@@ -711,10 +728,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
 "meta.degraded.degradation_reason_message.plural" = "%@ بدأ باستخدام جهاز جديد.";
+"meta.degraded.degradation_reason_message.someone" = "بدأ شخص ما باستخدام جهاز جديد.";
 "meta.degraded.dialog_message" = "ألا زلت تريد إرسال رسالتك؟";
-"meta.degraded.show_device_button" = "اعرض الجهاز";
-"meta.degraded.send_anyway_button" = "أرسل على أي حال";
+"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "إلغاء";
+"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "إزالة؟";
@@ -786,12 +806,20 @@
 "profile.devices.detail.verify_message" = "تحقق أن هذه البصمة تتطابق مع المعروضة على جهاز %@.";
 "profile.devices.detail.verify_message.link" = "كيف أفعل ذلك؟";
 "profile.devices.detail.show_my_device.title" = "اعرض بصمة جهازي";
+"profile.devices.detail.reset_session.title" = "إعادة تعيين الجلسة";
 "device.verified" = "تم التحقق";
 "device.not_verified" = "لم يتم التحقق منه";
+
+"device.class.legalhold" = "Legal Hold";
 "device.class.desktop" = "سطح المكتب";
 "device.class.tablet" = "الجهاز اللوحي";
 "device.class.phone" = "الهاتف";
-"profile.devices.detail.reset_session.title" = "إعادة تعيين الجلسة";
+"device.class.unknown" = "Unknown";
+
+"device.type.permanent" = "Permanent";
+"device.type.temporary" = "Temporary";
+"device.type.legalhold" = "Legal Hold";
+"device.type.unknown" = "Unknown";
 
 // Bot
 "participants.services.remove_integration.button" = "إلغاء التكامل";
@@ -805,6 +833,15 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+// Legal hold details
+
+"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.header.title" = "Legal Hold";
+"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
+"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
+"legalhold.accessibility" = "Legal hold details";
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Self profile
@@ -1038,7 +1075,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "يُساعدك هذا بالاتصال بالآخرين. نقوم بتمهية كل المعلومات ولا نشاركها مع أحد. اسمح بالوصول عبر الإعدادات > الخصوصية > جهات الاتصال.";
 
 "self.settings.privacy_security.lock_app" = "قفل برمز المرور";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "تأمين Wire بعد عشر ثوانٍ من البقاء في الخلفية.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "فتح بـTouch ID أو أدخل رمز الدخول.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "فتح بـFace ID أو أدخل رمز الدخول.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "فتح باستخدام رمز الدخول.";
@@ -1048,6 +1085,7 @@
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "فتح القفل";
 
 "self.settings.privacy_security.disable_link_previews.title" = "إنشاء معاينات للروابط";
@@ -1060,8 +1098,8 @@
 
 "self.settings.advanced.title" = "متقدم";
 "self.settings.advanced.troubleshooting.title" = "اكتشاف الأخطاء وإصلاحها";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Calling Debug تقرير";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "هذه المعلومات تساعد Wire Support في تشخيص مشاكل الاتصال.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "إعادة تعيين أذون تدفق الإشعارات";
 "self.settings.advanced.reset_push_token.subtitle" = "في حال وجود مشكلة في تدفق الإشعارات، من المحتمل أن يخبرك Wire Support بإعادة تعيين هذه الأذون.";
 "self.settings.advanced.reset_push_token_alert.title" = "تم إعادة تعيين أذون التدفق";
@@ -1074,7 +1112,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "تقرير فني";
 "self.settings.technical_report.send_report" = "أرسل تقرير لـWire";
-"self.settings.technical_report.mail.subject" = "تقرير اتصال Wire";
+"self.settings.technical_report.mail.subject" = "Wire Debug Report";
 "self.settings.technical_report.include_log" = "تضمين سجل مُفصّل";
 "self.settings.technical_report.privacy_warning" = "السّجلات المفصّلة قد تضمّن بيانات شخصيّة";
 "self.settings.technical_report.no_mail_alert" = "No mail client detected. Tap \"OK\" and send logs manually to: ";
@@ -1472,6 +1510,10 @@
 "force.update.message" = "أنت تفتقد مميزات جديدة.\nاحصل على آخر إصدار من Wire من خلال App Store.";
 "force.update.ok_button" = "اذهب لـApp Store";
 
+//Jailbroken alert
+"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+
 // Third Party
 "giphy.conversation.message" = "%@ · عبر giphy.com";
 "giphy.conversation.random_message" = "عبر giphy.com";
@@ -1610,3 +1652,29 @@
 // Password Rules
 "registration.password.rules.no_requirements" = "Use %@.";
 "registration.password.rules.with_requirements" = "Use %@, with %@.";
+
+// Legal Hold Deactivation
+"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Share Extension
+"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+
+// Legal hold - alert
+"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.alert.title" = "Legal Hold Requested";
+"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.error_wrong_password" = "Wrong Password";
+
+// Legal hold activated
+"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.learn_more" = "معرفة المزيد";
+"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+
+// Account deleted alert
+"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";

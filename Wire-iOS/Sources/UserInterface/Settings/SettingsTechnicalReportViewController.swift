@@ -18,12 +18,11 @@
 
 import UIKit
 import MessageUI
-import Cartography
 import WireSystem
 
 typealias TechnicalReport = [String: String]
 
-class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+final class SettingsTechnicalReportViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     
     static private let technicalReportTitle = "TechnicalReportTitleKey"
     static private let technicalReportData = "TechnicalReportDataKey"
@@ -63,16 +62,21 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        updateStatusBar()
+    }
     
-    
-    func sendReport() {
+    func sendReport(sourceView: UIView? = nil) {
         let mailRecipient = "calling-ios@wire.com"
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self, sourceView: sourceView)
             return
         }
-    
+
         let mailComposeViewController = MFMailComposeViewController()
         mailComposeViewController.mailComposeDelegate = self
         mailComposeViewController.setToRecipients([mailRecipient])
@@ -86,7 +90,7 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
                 mailComposeViewController.addAttachmentData(previousLog, mimeType: "text/plain", fileName: previousPath.lastPathComponent)
             }
         }
-        mailComposeViewController.setMessageBody("Calling report", isHTML: false)
+        mailComposeViewController.setMessageBody("Debug report", isHTML: false)
         self.present(mailComposeViewController, animated: true, completion: nil)
     }
     
@@ -122,11 +126,13 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         let container = UIView()
         container.addSubview(label)
         container.layoutMargins = UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 18)
-        
-        constrain(label, container) { label, container in
-            label.edges == container.edgesWithinMargins
-        }
-        
+        container.backgroundColor = .clear
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([label.topAnchor.constraint(equalTo: container.layoutMarginsGuide.topAnchor),
+                                     label.bottomAnchor.constraint(equalTo: container.layoutMarginsGuide.bottomAnchor),
+                                     label.leadingAnchor.constraint(equalTo: container.layoutMarginsGuide.leadingAnchor),
+                                     label.trailingAnchor.constraint(equalTo: container.layoutMarginsGuide.trailingAnchor)])
         return container
     }
     
@@ -138,7 +144,8 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
         if indexPath.row == 0 {
             includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .none ? .checkmark : .none
         } else {
-            sendReport()
+            let cell = tableView.cellForRow(at: indexPath)
+            sendReport(sourceView: cell)
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
@@ -147,5 +154,9 @@ class SettingsTechnicalReportViewController: UITableViewController, MFMailCompos
     // MARK: Mail Delegate
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.presentingViewController?.dismiss(animated: true, completion: nil)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

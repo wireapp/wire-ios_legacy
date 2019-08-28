@@ -49,13 +49,8 @@ func ==<T>(lhs: WritableKeyPathApplicator<T>, rhs: WritableKeyPathApplicator<T>)
     return lhs.keyPath == rhs.keyPath
 }
 
-// Available in Swift 4.2 out of the box.
-protocol CaseIterable {
-    static var allCases: [Self] { get }
-}
-
 extension Bool: CaseIterable {
-    static var allCases: [Bool] {
+    public static var allCases: [Bool] {
         return [true, false]
     }
 }
@@ -73,7 +68,7 @@ class VariantsBuilder<Type: Copyable> {
     }
     
     func add<ValueType: CaseIterable>(keyPath: WritableKeyPath<Type, ValueType>) {
-        possibleValuesForKeyPath[WritableKeyPathApplicator(keyPath)] = ValueType.allCases
+        possibleValuesForKeyPath[WritableKeyPathApplicator(keyPath)] = ValueType.allCases as? [Any]
     }
     
     var possibleValuesForKeyPath: [WritableKeyPathApplicator<Type>: [Any]] = [:]

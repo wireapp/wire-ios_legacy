@@ -46,7 +46,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface ConversationInputBarViewController (CameraViewController)
 - (void)cameraButtonPressed:(id)sender;
-- (void)videoButtonPressed:(id)sender;
 @end
 
 @interface ConversationInputBarViewController (Ping)
@@ -637,19 +636,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             }];
         }];
     }
-}
-
-- (void)videoButtonPressed:(IconButton *)sender
-{
-    if([[ZMUserSession sharedSession] isCallOngoing]) {
-        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureRecordVideo from:self];
-        return;
-    }
-    
-    [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera
-                                mediaTypes:@[(id)kUTTypeMovie]
-                             allowsEditing:false
-                               pointToView:self.videoButton.imageView];
 }
 
 @end

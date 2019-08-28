@@ -48,6 +48,8 @@ extension Array where Element == NSItemProvider {
                 attachments[.rawFile, default: []].append(attachment)
             } else if attachment.hasURL {
                 attachments[.url, default: []].append(attachment)
+            } else if attachment.hasFileURL {
+                attachments[.fileUrl, default: []].append(attachment)
             }
         }
 
@@ -73,16 +75,10 @@ extension Dictionary where Key == AttachmentType, Value == [NSItemProvider] {
     var main: (AttachmentType, NSItemProvider)? {
         let sortedAttachments = self
 
-        if let passItem = sortedAttachments[.walletPass]?.first {
-            return (.walletPass, passItem)
-        } else if let videoItem = sortedAttachments[.video]?.first {
-            return (.video, videoItem)
-        } else if let photoItem = sortedAttachments[.image]?.first {
-            return (.image, photoItem)
-        } else if let fileItem = sortedAttachments[.rawFile]?.first {
-            return (.rawFile, fileItem)
-        } else if let urlItem = sortedAttachments[.url]?.first {
-            return (.url, urlItem)
+        for attachmentType in AttachmentType.allCases {
+            if let item = sortedAttachments[attachmentType]?.first {
+                return (attachmentType, item)
+            }
         }
 
         return nil

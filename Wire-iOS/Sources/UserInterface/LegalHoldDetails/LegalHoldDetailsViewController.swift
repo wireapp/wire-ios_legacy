@@ -46,6 +46,9 @@ final class LegalHoldDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
 
     @discardableResult
     static func present(in parentViewController: UIViewController, user: ZMUser) -> UINavigationController? {
@@ -72,6 +75,7 @@ final class LegalHoldDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
+        updateStatusBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {

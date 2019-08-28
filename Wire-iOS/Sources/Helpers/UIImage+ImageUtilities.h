@@ -23,8 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (ImageUtilities)
 
-- (UIImage *)imageScaledWithFactor:(CGFloat)scaleFactor;
-
 - (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation;
 
 - (instancetype)imageWithColor:(UIColor *)color;
