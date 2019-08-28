@@ -215,6 +215,8 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         }
     }
 
+
+    /// If there is a File URL attachment, copy the filename of the URL attachment into the text field
     private func appendFileTextToEditor() {
         guard let urlItems = extensionActivity?.attachments[.fileUrl] else {
             return
