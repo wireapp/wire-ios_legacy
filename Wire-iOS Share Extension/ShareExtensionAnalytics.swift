@@ -34,7 +34,7 @@ enum AttachmentType:Int, CaseIterable {
     case fileUrl
 }
 
-class ExtensionActivity {
+final class ExtensionActivity {
 
     static private var openedEventName = "share_extension_opened"
     static private var sentEventName = "share_extension_sent"

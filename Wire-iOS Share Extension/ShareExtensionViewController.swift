@@ -36,7 +36,7 @@ private enum LocalAuthenticationStatus {
     case granted
 }
 
-class ShareExtensionViewController: SLComposeServiceViewController {
+final class ShareExtensionViewController: SLComposeServiceViewController {
 
     // MARK: - Elements
 
