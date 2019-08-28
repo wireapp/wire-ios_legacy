@@ -19,7 +19,6 @@
 import UIKit
 import Social
 import WireShareEngine
-import Cartography
 import MobileCoreServices
 import WireDataModel
 import WireCommonComponents

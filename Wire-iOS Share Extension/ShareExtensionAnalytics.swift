@@ -106,6 +106,9 @@ final class ExtensionActivity {
 }
 
 extension NSItemProvider {
+    var hasGifImage: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeGIF as String)
+    }
 
     var hasImage: Bool {
         return hasItemConformingToTypeIdentifier(kUTTypeImage as String)
