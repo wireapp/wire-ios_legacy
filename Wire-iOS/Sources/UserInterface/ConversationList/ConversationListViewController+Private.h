@@ -45,8 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
-@property (nonatomic) BOOL viewDidAppearCalled;
-
 - (void)removeUserProfileObserver;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 

@@ -26,5 +26,6 @@
 @property (nonatomic, nonnull) UILabel *noConversationLabel;
 @property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 @property (nonatomic, nullable) ConversationActionController *actionsController;
+@property (nonatomic) BOOL viewDidAppearCalled;
 
 @end
