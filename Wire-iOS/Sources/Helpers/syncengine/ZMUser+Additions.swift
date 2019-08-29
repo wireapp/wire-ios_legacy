@@ -24,7 +24,7 @@ extension ZMUser {
         return self.isSelfUser ? .secondPerson : .thirdPerson
     }
     
-    @objc var canManageTeam: Bool {
+    @objc var canManageTeam: Bool { // TODO jacob move to data model
         return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
     }
     

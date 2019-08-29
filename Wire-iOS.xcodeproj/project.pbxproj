@@ -993,7 +993,6 @@
 		EE571C032175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */; };
 		EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */; };
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
-		EE89BD0621EE1F80004C9A8E /* ZMUser+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE89BD0521EE1F80004C9A8E /* ZMUser+Permissions.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
 		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
 		EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */; };
@@ -2804,7 +2803,6 @@
 		EE571C022175ED7B0011B59C /* GroupDetailsNotificationOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsNotificationOptionsCell.swift; sourceTree = "<group>"; };
 		EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextStorageTests.swift; sourceTree = "<group>"; };
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
-		EE89BD0521EE1F80004C9A8E /* ZMUser+Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Permissions.swift"; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
 		EE8E926D2024F085000F4752 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
 		EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateErrorCell.swift; sourceTree = "<group>"; };
@@ -5361,7 +5359,6 @@
 				8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */,
 				8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */,
 				EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */,
-				EE89BD0521EE1F80004C9A8E /* ZMUser+Permissions.swift */,
 				8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */,
 				8FC85132199245760008B66B /* ZMUserSession+iOS.h */,
 				8FC85133199245760008B66B /* ZMUserSession+iOS.m */,
@@ -8018,7 +8015,6 @@
 				EF1FDC7C21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift in Sources */,
 				877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
-				EE89BD0621EE1F80004C9A8E /* ZMUser+Permissions.swift in Sources */,
 				EF17B0D3223A6A36006252A8 /* LaunchImageViewController.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
