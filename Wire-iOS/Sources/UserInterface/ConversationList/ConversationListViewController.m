@@ -101,8 +101,6 @@
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 /// for data usage dialog
-@property (nonatomic) BOOL viewDidAppearCalled;
-
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated;
@@ -199,29 +197,6 @@
     [self requestSuggestedHandlesIfNeeded];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    if (! IS_IPAD_FULLSCREEN) {
-        [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
-    }
-    
-    _state = ConversationListStateConversationList;
-    
-    [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
-    [self closePushPermissionDialogIfNotNeeded];
-
-    self.shouldAnimateNetworkStatusView = YES;
-
-    if (! self.viewDidAppearCalled) {
-        self.viewDidAppearCalled = YES;
-
-        [self showDataUsagePermissionDialogIfNeeded];
-        [self showAvailabilityBehaviourChangeAlertIfNeeded];
-    }
-}
-
 - (void)requestSuggestedHandlesIfNeeded
 {
     if (nil == ZMUser.selfUser.handle &&
@@ -305,6 +280,11 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
+}
+
+- (void)setStateValue: (ConversationListState)newState
+{
+    _state = newState; ///TODO: set init value in init
 }
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated

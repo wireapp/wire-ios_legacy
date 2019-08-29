@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationListViewController {
     
-    @objc func showAvailabilityBehaviourChangeAlertIfNeeded() {
+    func showAvailabilityBehaviourChangeAlertIfNeeded() {
         
         guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
               let availability = ZMUser.selfUser()?.availability else { return }

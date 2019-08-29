@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc func showDataUsagePermissionDialogIfNeeded() {
+extension ZClientViewController {
+    func showDataUsagePermissionDialogIfNeeded() {
         
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
         
@@ -44,7 +44,7 @@ extension ConversationListViewController {
             TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         }))
 
-        ZClientViewController.shared()?.present(alertController, animated: true) { [weak self] in
+        present(alertController, animated: true) { [weak self] in
             self?.dataUsagePermissionDialogDisplayed = true
         }
     }

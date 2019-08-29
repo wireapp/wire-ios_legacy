@@ -44,9 +44,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
-@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
+
+@property (nonatomic) BOOL viewDidAppearCalled;
 
 - (void)removeUserProfileObserver;
+- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
+
+///TODO: retire after converted to Swift
+- (void)setStateValue: (ConversationListState)newState;
+
 @end
 
 NS_ASSUME_NONNULL_END

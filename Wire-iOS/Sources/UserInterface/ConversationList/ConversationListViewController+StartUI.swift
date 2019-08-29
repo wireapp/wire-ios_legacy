@@ -25,4 +25,28 @@ extension ConversationListViewController {
         startUIViewController.delegate = self
         return startUIViewController
     }
+
+    ///TODO: new file
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !isIPadRegular() {
+            Settings.shared().lastViewedScreen = SettingsLastScreen.list
+        }
+
+        setStateValue(.conversationList)
+
+        updateBottomBarSeparatorVisibility(with: listContentController)
+        closePushPermissionDialogIfNotNeeded()
+
+        shouldAnimateNetworkStatusView = true
+
+        if !viewDidAppearCalled {
+            viewDidAppearCalled = true
+
+            ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+            showAvailabilityBehaviourChangeAlertIfNeeded()
+        }
+    }
+
 }

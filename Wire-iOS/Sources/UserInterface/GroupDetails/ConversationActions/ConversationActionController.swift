@@ -100,7 +100,8 @@ struct PresentationContext {
     }
 }
 
-@objcMembers final class ConversationActionController: NSObject, ActionController {
+@objcMembers
+final class ConversationActionController: NSObject, ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController

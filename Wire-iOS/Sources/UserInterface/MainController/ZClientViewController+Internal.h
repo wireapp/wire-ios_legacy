@@ -58,6 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSLayoutConstraint *contentTopRegularConstraint;
 @property (nonatomic) NSLayoutConstraint *contentTopCompactConstraint;
 
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 @end
 
