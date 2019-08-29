@@ -91,6 +91,7 @@
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
+        self.dataUsagePermissionDialogDisplayed = NO;
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
