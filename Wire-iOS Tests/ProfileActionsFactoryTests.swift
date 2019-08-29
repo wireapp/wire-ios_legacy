@@ -116,6 +116,8 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_OneToOne_PartnerToTeam() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canCreateConversation = false
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
 
         let conversation = MockConversation.oneOnOneConversation()
@@ -132,6 +134,8 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_OneToOne_PartnerToPartner() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canCreateConversation = false
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.teamRole = .partner
 
@@ -149,6 +153,8 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_OneToOne_PartnerToGuest() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canCreateConversation = false
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
 
@@ -167,6 +173,8 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_OneToOne_PartnerToGuestFromOtherTeam() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canCreateConversation = false
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
 
@@ -292,7 +300,6 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_TeamToTeam() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, otherUser]
 
@@ -417,6 +424,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToTeam() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
 
         let conversation = MockConversation.groupConversation()
@@ -431,6 +439,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToPartner() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.teamRole = .partner
 
@@ -446,6 +455,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToGuest_Connected() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
 
@@ -462,6 +472,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToGuestFromOtherTeam_Connected() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
 
@@ -478,6 +489,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToGuest_NotConnected() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
         otherUser.isConnected = false
@@ -495,6 +507,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToGuest_PendingRequestFromSelf() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
         otherUser.isConnected = false
@@ -512,6 +525,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
     func test_Group_PartnerToGuest_Wireless() {
         // GIVEN
         selfUser.teamRole = .partner
+        selfUser.canRemoveUserFromConversation = false
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
         otherUser.isWirelessUser = true
@@ -533,6 +547,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -552,6 +567,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -569,6 +585,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -587,6 +604,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -623,6 +641,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -643,6 +662,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -662,6 +682,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -680,6 +701,7 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeam)
         guest.isGuestInConversation = true
+        guest.canRemoveUserFromConversation = false
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, guest, otherUser]

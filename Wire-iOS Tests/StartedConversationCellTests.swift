@@ -228,6 +228,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         conversation?.allowGuests = allowGuests
         conversation?.teamRemoteIdentifier = .create()
         conversation?.remoteIdentifier = .create()
+        conversation?.teamRemoteIdentifier = team?.remoteIdentifier
         message.visibleInConversation = conversation
         
         return message

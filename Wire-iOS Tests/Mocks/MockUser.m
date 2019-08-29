@@ -32,6 +32,9 @@ static id<UserType> mockSelfUser = nil;
     if (self) {
         _clients = [NSSet set];
         _legalHoldDataSource = [[NSClassFromString(@"MockLegalHoldDataSource") alloc] init];
+        _canCreateConversation = YES;
+        _canAddUserToConversation = YES;
+        _canRemoveUserFromConversation = YES;
     }
     return self;
 }
@@ -207,16 +210,13 @@ static id<UserType> mockSelfUser = nil;
     }
 }
 
-
 - (BOOL)isGuestIn:(ZMConversation * _Nonnull)conversation {
     return self.isGuestInConversation;
 }
 
-
 - (void)requestCompleteProfileImage {
     
 }
-
 
 - (void)requestPreviewProfileImage {
     
@@ -293,23 +293,39 @@ static id<UserType> mockSelfUser = nil;
     return NO;
 }
 
-- (BOOL)canCreateConversation
+- (BOOL)canModifyTitleInConversation:(ZMConversation *)conversation
 {
-    return YES;
+    return self.canModifyTitleInConversation;
+}
+
+- (BOOL)canModifyEphemeralSettingsInConversation:(ZMConversation *)conversation
+{
+    return self.canModifyEphemeralSettingsInConversation;
+}
+
+- (BOOL)canModifyReadReceiptSettingsInConversation:(ZMConversation *)conversation
+{
+    return self.canModifyReadReceiptSettingsInConversation;
+}
+
+- (BOOL)canModifyNotificationSettingsInConversation:(ZMConversation *)conversation
+{
+    return self.canModifyNotificationSettingsInConversation;
+}
+
+- (BOOL)canModifyAccessControlSettingsInConversation:(ZMConversation *)conversation
+{
+    return self.canModifyNotificationSettingsInConversation;
 }
 
 - (BOOL)canAddUserToConversation:(ZMConversation * _Nonnull)conversation
 {
-    if (self.isGuestInConversation || !conversation.isSelfAnActiveMember) {
-        return NO;
-    }
-
-    return self.teamRole != TeamRoleNone && self.teamRole != TeamRolePartner;
+    return self.canAddUserToConversation;
 }
 
 - (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
 {
-    return [self canAddUserToConversation:conversation];
+    return self.canRemoveUserFromConversation;
 }
 
 @synthesize richProfile;

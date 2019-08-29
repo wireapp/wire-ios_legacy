@@ -45,6 +45,14 @@
 @property (nonatomic, readwrite) BOOL isConnected;
 @property (nonatomic, readwrite) BOOL isExpired;
 @property (nonatomic, readwrite) BOOL canBeConnected;
+@property (nonatomic, readwrite) BOOL canCreateConversation;
+@property (nonatomic, readwrite) BOOL canModifyTitleInConversation;
+@property (nonatomic, readwrite) BOOL canModifyEphemeralSettingsInConversation;
+@property (nonatomic, readwrite) BOOL canModifyReadReceiptSettingsInConversation;
+@property (nonatomic, readwrite) BOOL canModifyNotificationSettingsInConversation;
+@property (nonatomic, readwrite) BOOL canModifyAccessControlSettingsInConversation;
+@property (nonatomic, readwrite) BOOL canAddUserToConversation;
+@property (nonatomic, readwrite) BOOL canRemoveUserFromConversation;
 @property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) BOOL trusted;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;

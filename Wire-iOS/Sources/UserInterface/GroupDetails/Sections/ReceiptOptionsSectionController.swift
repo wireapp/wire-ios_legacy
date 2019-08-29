@@ -18,11 +18,8 @@
 
 import Foundation
 
-class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted {
+class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
-    var requiredPermissions: Permissions {
-        return .member
-    }
     
     private let emptySectionHeaderHeight: CGFloat = 24
 
@@ -37,7 +34,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController, Restricted
     private weak var presentingViewController: UIViewController?
     
     override var isHidden: Bool {
-        return !selfUserIsAuthorized
+        return !(ZMUser.selfUser()?.canModifyReadReceiptSettings(in: conversation) ?? false)
     }
 
     init(conversation: ZMConversation,

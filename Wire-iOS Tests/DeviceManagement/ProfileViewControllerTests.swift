@@ -69,6 +69,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextOneToOneConversation() {
         selfUser.teamRole = .member
+        selfUser.canCreateConversation = true
         mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
@@ -105,6 +106,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         mockUser.canBeConnected = true
         mockUser.isPendingApprovalBySelfUser = true
         mockUser.emailAddress = nil
+        mockUser.teamIdentifier = nil;
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, mockUser]
