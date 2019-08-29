@@ -48,7 +48,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeUserProfileObserver;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 
-///TODO: retire after converted to Swift
 - (void)setStateValue: (ConversationListState)newState;
 
 @end

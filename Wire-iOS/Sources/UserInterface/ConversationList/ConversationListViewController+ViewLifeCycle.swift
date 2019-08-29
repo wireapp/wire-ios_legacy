@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,10 +19,24 @@
 import Foundation
 
 extension ConversationListViewController {
-    @objc
-    func createPeoplePickerController() -> StartUIViewController {
-        let startUIViewController = StartUIViewController()
-        startUIViewController.delegate = self
-        return startUIViewController
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !isIPadRegular() {
+            Settings.shared().lastViewedScreen = SettingsLastScreen.list
+        }
+        
+        setStateValue(.conversationList)
+        
+        updateBottomBarSeparatorVisibility(with: listContentController)
+        closePushPermissionDialogIfNotNeeded()
+        
+        shouldAnimateNetworkStatusView = true
+        
+        if !viewDidAppearCalled {
+            viewDidAppearCalled = true
+            ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+            ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
+        }
     }
 }

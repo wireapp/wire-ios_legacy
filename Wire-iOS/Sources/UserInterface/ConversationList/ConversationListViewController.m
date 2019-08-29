@@ -284,7 +284,7 @@
 
 - (void)setStateValue: (ConversationListState)newState
 {
-    _state = newState; ///TODO: set init value in init
+    _state = newState;
 }
 
 - (void)setState:(ConversationListState)state animated:(BOOL)animated
