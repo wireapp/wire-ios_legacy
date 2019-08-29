@@ -24,13 +24,14 @@ import WireSyncEngine
     case services
 }
 
-extension SearchGroup: Restricted {
-    var requiredPermissions: Permissions {
+extension SearchGroup {
+    
+    var accessible: Bool {
         switch self {
         case .people:
-            return []
+            return true
         case .services:
-            return .member
+            return ZMUser.selfUser().canCreateService
         }
     }
 
@@ -39,7 +40,7 @@ extension SearchGroup: Restricted {
     static let all: [SearchGroup] = [.people]
 #else
     static var all: [SearchGroup] {
-        return [.people, .services].filter { $0.selfUserIsAuthorized }
+        return [.people, .services].filter { $0.accessible }
     }
 #endif
 

@@ -83,6 +83,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     func testForContextOneToOneConversationForPartnerRole() {
         selfUser.teamRole = .partner
+        selfUser.canCreateConversation = false
         mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()

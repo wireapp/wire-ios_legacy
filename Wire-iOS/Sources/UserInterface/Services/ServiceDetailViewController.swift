@@ -66,7 +66,7 @@ final class ServiceDetailViewController: UIViewController {
     public weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
-    private let actionButton: RestrictedButton
+    private let actionButton: Button
     private let actionType: ActionType
 
     /// init method with ServiceUser, destination conversation and customized UI.
@@ -86,15 +86,15 @@ final class ServiceDetailViewController: UIViewController {
 
         switch actionType {
         case let .addService(conversation):
-            actionButton = RestrictedButton.createAddServiceButton()
-            actionButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+            actionButton = Button.createAddServiceButton()
+            actionButton.isHidden = !ZMUser.selfUser().canAddService(to: conversation)
         case let .removeService(conversation):
-            actionButton = RestrictedButton.createDestructiveServiceButton()
-            actionButton.isHidden = ZMUser.selfUser().isGuest(in: conversation)
+            actionButton = Button.createDestructiveServiceButton()
+            actionButton.isHidden = !ZMUser.selfUser().canRemoveService(from: conversation)
         case .openConversation:
-            actionButton = RestrictedButton.openServiceConversationButton()
+            actionButton = Button.openServiceConversationButton()
+            actionButton.isHidden = !ZMUser.selfUser().canCreateService
         }
-        actionButton.requiredPermissions = .member
 
         self.variant = variant
         self.actionType = actionType
@@ -209,22 +209,22 @@ final class ServiceDetailViewController: UIViewController {
     }
 }
 
-fileprivate extension RestrictedButton {
+fileprivate extension Button {
 
-    static func openServiceConversationButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
+    static func openServiceConversationButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.open_conversation.item".localized)
     }
 
-    static func createAddServiceButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.add_service.button".localized)
+    static func createAddServiceButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
     }
 
-    static func createServiceConversationButton() -> RestrictedButton {
-        return RestrictedButton(style: .full, title: "peoplepicker.services.create_conversation.item".localized)
+    static func createServiceConversationButton() -> Button {
+        return Button(style: .full, title: "peoplepicker.services.create_conversation.item".localized)
     }
 
-    static func createDestructiveServiceButton() -> RestrictedButton {
-        let button = RestrictedButton(style: .full, title: "participants.services.remove_integration.button".localized)
+    static func createDestructiveServiceButton() -> Button {
+        let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
         button.setBackgroundImageColor(.vividRed, for: .normal)
         return button
     }
