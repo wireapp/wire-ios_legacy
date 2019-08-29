@@ -40,7 +40,6 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 @property (nonatomic) UserNameTakeOverViewController *usernameTakeoverViewController;
 @property (nonatomic) BOOL isComingFromRegistration;
 @property (nonatomic) BOOL isComingFromSetUsername;
-@property (nonatomic) BOOL needToShowDataUsagePermissionDialog;
 @property (nonatomic, readonly) UIView *contentContainer;
 @property (nonatomic) id startCallToken;
 @property (nonatomic) Account *account;

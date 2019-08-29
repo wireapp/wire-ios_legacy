@@ -259,7 +259,7 @@
     self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
 
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
+    self.needToShowDataUsagePermissionDialog = NO;
 }
 
 #pragma mark - Public API
@@ -459,16 +459,6 @@
     _isComingFromRegistration = isComingFromRegistration;
 
     self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-}
-
-- (BOOL)needToShowDataUsagePermissionDialog
-{
-    return self.conversationListViewController.needToShowDataUsagePermissionDialog;
-}
-
-- (void)setNeedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
-{
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog;
 }
 
 - (BOOL)isConversationViewVisible
