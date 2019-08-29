@@ -39,16 +39,24 @@ final class ZClientViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForAlert() {
+    func testForShowDataUsagePermissionDialogIfNeeded() {
         /// GIVEN
         sut.needToShowDataUsagePermissionDialog = true
         sut.isComingFromRegistration = true
 
-        /// WHEN
-        let alert = sut.showDataUsagePermissionDialogIfNeeded()!
+        if let alert = sut.showDataUsagePermissionDialogIfNeeded() {
+            /// THEN
+            verify(matching: alert)
+        } else {
+            XCTFail("alert is not created")
+        }
 
-        /// THEN
-        verify(matching: alert)
+        /// WHEN
+
+        /// should not show alert for the second time
+        if let _ = sut.showDataUsagePermissionDialogIfNeeded() {
+            XCTFail("alert should not be shown for the second time")
+        }
     }
 
 }

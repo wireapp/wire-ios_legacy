@@ -19,6 +19,7 @@
 import Foundation
 
 extension ZClientViewController {
+    @discardableResult
     func showDataUsagePermissionDialogIfNeeded() -> UIAlertController? {
         
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return nil }
@@ -44,9 +45,9 @@ extension ZClientViewController {
             TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         }))
 
-        present(alertController, animated: true) { [weak self] in
-            self?.dataUsagePermissionDialogDisplayed = true
-        }
+        present(alertController, animated: true)
+
+        dataUsagePermissionDialogDisplayed = true
 
         return alertController
     }
