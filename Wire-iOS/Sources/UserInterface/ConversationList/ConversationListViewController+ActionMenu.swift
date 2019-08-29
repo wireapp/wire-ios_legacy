@@ -19,6 +19,7 @@
 import Foundation
 
 extension ConversationListViewController {
+    @objc(showActionMenuForConversation:fromView:)
     func showActionMenu(for conversation: ZMConversation!, from view: UIView!) {
         actionsController = ConversationActionController(conversation: conversation, target: self)
         actionsController?.presentMenu(from: view)

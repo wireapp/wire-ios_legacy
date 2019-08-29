@@ -18,14 +18,14 @@
 
 import Foundation
 
-extension ConversationListViewController {
+extension ZClientViewController {
     
     func showAvailabilityBehaviourChangeAlertIfNeeded() {
         
         guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
               let availability = ZMUser.selfUser()?.availability else { return }
                 
-        ZClientViewController.shared()?.present(UIAlertController.availabilityExplanation(availability), animated: true)
+        present(UIAlertController.availabilityExplanation(availability), animated: true)
         
         ZMUserSession.shared()?.performChanges {
             notify.remove(.alert)

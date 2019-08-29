@@ -43,9 +43,8 @@ extension ConversationListViewController {
 
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
-
             ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
-            showAvailabilityBehaviourChangeAlertIfNeeded()
+            ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
     }
 
