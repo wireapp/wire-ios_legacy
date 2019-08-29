@@ -61,6 +61,8 @@ NS_ASSUME_NONNULL_BEGIN
 // init value = false which set to true, set to false after data usage permission dialog is displayed
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
+@property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
+
 @end
 
 NS_ASSUME_NONNULL_END

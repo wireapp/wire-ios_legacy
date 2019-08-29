@@ -19,20 +19,20 @@
 import Foundation
 
 extension ZClientViewController {
-    func showDataUsagePermissionDialogIfNeeded() {
+    func showDataUsagePermissionDialogIfNeeded() -> UIAlertController? {
         
-        guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+        guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return nil }
         
-        guard !dataCollectionDisabled else { return }
+        guard !dataCollectionDisabled else { return nil }
 
         // If the usage dialog was already displayed in this run, do not show it again
-        guard !dataUsagePermissionDialogDisplayed else { return }
+        guard !dataUsagePermissionDialogDisplayed else { return nil }
 
         // Check if the app state requires showing the alert
-        guard needToShowDataUsagePermissionDialog else { return }
+        guard needToShowDataUsagePermissionDialog else { return nil }
 
         // If the user registers, show the alert.
-        guard isComingFromRegistration else { return }
+        guard isComingFromRegistration else { return nil }
 
         let alertController = UIAlertController(title: "conversation_list.data_usage_permission_alert.title".localized, message: "conversation_list.data_usage_permission_alert.message".localized, preferredStyle: .alert)
 
@@ -47,6 +47,8 @@ extension ZClientViewController {
         present(alertController, animated: true) { [weak self] in
             self?.dataUsagePermissionDialogDisplayed = true
         }
+
+        return alertController
     }
     
     private var dataCollectionDisabled: Bool {

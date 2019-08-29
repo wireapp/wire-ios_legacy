@@ -60,7 +60,6 @@
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
 @property (nonatomic) BackgroundViewController *backgroundViewController;
-@property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
@@ -87,6 +86,11 @@
 
 - (instancetype)init
 {
+    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount];
+}
+
+- (instancetype)initWithAccount:(Account *)account
+{
     self = [super init];
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
@@ -98,11 +102,13 @@
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
-        NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
-                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
-        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
-        
+        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
+        if (ZMUser.selfUser.remoteIdentifier != nil) {
+            NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
+                                          URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
+            self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
+        }
+
         self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
@@ -113,7 +119,7 @@
         [self setupAppearance];
 
         [self createLegalHoldDisclosureController];
-        [self setupConversationListViewController];
+        [self setupConversationListViewControllerWithAccount:account];
     }
     return self;
 }
@@ -249,16 +255,6 @@
     [self updateSplitViewTopConstraint];
     [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES onlyFullScreen:NO];
     [self.view setNeedsLayout];
-}
-
-#pragma mark - Setup methods
-
-- (void)setupConversationListViewController
-{
-    self.conversationListViewController = [[ConversationListViewController alloc] init];
-    self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
-
-    self.needToShowDataUsagePermissionDialog = NO;
 }
 
 #pragma mark - Public API

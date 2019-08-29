@@ -21,6 +21,16 @@ import Foundation
 
 extension ZClientViewController {
 
+    // MARK: - Setup methods
+
+    @objc
+    func setupConversationListViewController(account: Account) {
+        conversationListViewController = ConversationListViewController()
+        conversationListViewController.account = account
+
+        needToShowDataUsagePermissionDialog = false
+    }
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
