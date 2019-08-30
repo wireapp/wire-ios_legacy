@@ -31,6 +31,7 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
 }
 
 extension ConversationListViewController {
+
     @objc func createTopBar() {
         self.topBarViewController = ConversationListTopBarViewController(account: account)
         addChild(topBarViewController)
