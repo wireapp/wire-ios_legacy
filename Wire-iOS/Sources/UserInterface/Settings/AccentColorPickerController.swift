@@ -26,7 +26,7 @@ public protocol ColorPickerControllerDelegate {
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-@objcMembers open class ColorPickerController: UIViewController {
+public class ColorPickerController: UIViewController {
     public let overlayView = UIView()
     public let contentView = UIView()
     public let tableView = UITableView()
@@ -37,8 +37,8 @@ public protocol ColorPickerControllerDelegate {
     static fileprivate let rowHeight: CGFloat = 44
     
     public let colors: [UIColor]
-    open var currentColor: UIColor?
-    open var delegate: ColorPickerControllerDelegate?
+    public var currentColor: UIColor?
+    public var delegate: ColorPickerControllerDelegate?
     
     public init(colors: [UIColor]) {
         self.colors = colors
@@ -51,13 +51,13 @@ public protocol ColorPickerControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override open var title: String? {
+    override public var title: String? {
         didSet {
             self.titleLabel.text = self.title
         }
     }
     
-    override open func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(self.contentView)
@@ -114,13 +114,13 @@ public protocol ColorPickerControllerDelegate {
         self.tableView.separatorStyle = .none
     }
     
-    override open var prefersStatusBarHidden: Bool {
+    override public var prefersStatusBarHidden: Bool {
         get {
             return false
         }
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             return .lightContent
         }
@@ -169,7 +169,7 @@ public protocol ColorPickerControllerDelegate {
         
     }
     
-    @objc open func didPressDismiss(_ sender: AnyObject?) {
+    @objc public func didPressDismiss(_ sender: AnyObject?) {
         self.delegate?.colorPickerWantsToDismiss(self)
     }
 }
@@ -205,7 +205,6 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
 
 final class AccentColorPickerController: ColorPickerController {
     fileprivate let allAccentColors: [AccentColor]
-    
     
     public init() {
         self.allAccentColors = AccentColor.allSelectable()
