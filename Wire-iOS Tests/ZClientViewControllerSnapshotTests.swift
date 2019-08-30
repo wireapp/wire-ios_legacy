@@ -17,46 +17,42 @@
 //
 
 import XCTest
-import SnapshotTesting
 @testable import Wire
 
 final class ZClientViewControllerSnapshotTests: XCTestCase {
     var sut: ZClientViewController!
-    var coreDataFixture: CoreDataFixture!
+    /// mocks self user for ConversationListTopBarViewController
+    let coreDataFixture = CoreDataFixture()
 
     override func setUp() {
         super.setUp()
 
-        /// mocks self user for ConversationListTopBarViewController
-        coreDataFixture = CoreDataFixture()
         sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData))
     }
 
     override func tearDown() {
         sut = nil
-        coreDataFixture = nil
-        
+
         super.tearDown()
     }
 
     func testForShowDataUsagePermissionDialogIfNeeded() {
+        /// alert is not shown before the flags are set
+        var alert = sut.showDataUsagePermissionDialogIfNeeded()
+        XCTAssertNil(alert)
+
         /// GIVEN
         sut.needToShowDataUsagePermissionDialog = true
         sut.isComingFromRegistration = true
 
-        if let alert = sut.showDataUsagePermissionDialogIfNeeded() {
-            /// THEN
-            verify(matching: alert)
-        } else {
-            XCTFail("alert is not created")
-        }
+        alert = sut.showDataUsagePermissionDialogIfNeeded()
+        XCTAssertNotNil(alert)
 
         /// WHEN
 
         /// should not show alert for the second time
-        if let _ = sut.showDataUsagePermissionDialogIfNeeded() {
-            XCTFail("alert should not be shown for the second time")
-        }
+        alert = sut.showDataUsagePermissionDialogIfNeeded()
+        XCTAssertNil(alert)
     }
 
 }

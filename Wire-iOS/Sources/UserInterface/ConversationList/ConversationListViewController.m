@@ -196,29 +196,6 @@
     [self requestSuggestedHandlesIfNeeded];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    if (! IS_IPAD_FULLSCREEN) {
-        [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
-    }
-    
-    _state = ConversationListStateConversationList;
-    
-    [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
-    [self closePushPermissionDialogIfNotNeeded];
-
-    self.shouldAnimateNetworkStatusView = YES;
-
-    if (! self.viewDidAppearCalled) {
-        self.viewDidAppearCalled = YES;
-
-        [self showDataUsagePermissionDialogIfNeeded];
-        [self showAvailabilityBehaviourChangeAlertIfNeeded];
-    }
-}
-
 - (void)requestSuggestedHandlesIfNeeded
 {
     if (nil == ZMUser.selfUser.handle &&
