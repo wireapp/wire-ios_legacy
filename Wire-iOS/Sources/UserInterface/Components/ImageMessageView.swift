@@ -21,7 +21,7 @@ import Cartography
 import WireDataModel
 import FLAnimatedImage
 
-@objcMembers public class ImageMessageView: UIView {
+final public class ImageMessageView: UIView {
     
     private let imageView = FLAnimatedImageView()
     private let userImageView = UserImageView(size: .tiny)

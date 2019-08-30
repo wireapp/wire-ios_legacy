@@ -24,7 +24,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-@objcMembers class MarkdownTextView: NextResponderTextView {
+final class MarkdownTextView: NextResponderTextView {
     
     enum ListType {
         case number, bullet

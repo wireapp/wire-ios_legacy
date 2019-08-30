@@ -37,7 +37,7 @@ protocol SettingsCellType: class {
     var icon: StyleKitIcon? {get set}
 }
 
-@objcMembers class SettingsTableCell: UITableViewCell, SettingsCellType {
+class SettingsTableCell: UITableViewCell, SettingsCellType {
     let iconImageView = UIImageView()
     public let cellNameLabel: UILabel = {
         let label = UILabel()
