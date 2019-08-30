@@ -104,8 +104,6 @@
 
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
-- (void)setState:(ConversationListState)state animated:(BOOL)animated;
-
 @end
 
 
@@ -304,11 +302,6 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated
-{
-    [self setState:state animated:animated completion:nil];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

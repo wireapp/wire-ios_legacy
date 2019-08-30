@@ -20,6 +20,11 @@ import Foundation
 
 extension ConversationListViewController {
     @objc
+    func setState(_ state: ConversationListState, animated: Bool) {
+        setState(state, animated: animated, completion: nil)
+    }
+
+    @objc
     func setState(_ state: ConversationListState, animated: Bool, completion: (() -> ())?) {
         if self.state == state {
             completion?()
