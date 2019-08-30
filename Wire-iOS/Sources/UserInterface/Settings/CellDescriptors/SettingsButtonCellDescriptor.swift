@@ -19,47 +19,6 @@
 
 import Foundation
 
-class SettingsInfoCellDescriptor: SettingsCellDescriptorType {
-    static let cellType: SettingsTableCell.Type = SettingsTableCell.self
-    var visible: Bool {
-        get {
-            return true
-        }
-    }
-    var title: String
-    var identifier: String?
-    weak var group: SettingsGroupCellDescriptorType?
-    var previewGenerator: PreviewGeneratorType?
-    
-    init(title: String, previewGenerator: PreviewGeneratorType? = .none) {
-        self.title = title
-        self.identifier = .none
-        self.previewGenerator = previewGenerator
-    }
-    
-    func featureCell(_ cell: SettingsCellType) {
-        cell.titleText = self.title
-        if let previewGenerator = self.previewGenerator {
-            cell.preview = previewGenerator(self)
-        }
-    }
-    
-    func select(_ value: SettingsPropertyValue?) {
-        guard let previewGenerator = self.previewGenerator else {
-            return
-        }
-        
-        let preview = previewGenerator(self)
-        
-        switch preview {
-        case .text(let previewString):
-            let pasteBoard = UIPasteboard.general
-            pasteBoard.string = previewString
-        default: break
-        }
-    }
-}
-
 /**
  * @abstract Generates the cell that displays one button
  */

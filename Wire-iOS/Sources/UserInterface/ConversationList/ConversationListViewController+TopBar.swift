@@ -31,19 +31,6 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
 }
 
 extension ConversationListViewController {
-    
-    func currentAccountView() -> BaseAccountView {
-        guard let currentAccount = self.account else {
-            fatal("No account available")
-        }
-
-        let session = ZMUserSession.shared() ?? nil
-        let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
-        let currentAccountView = AccountViewFactory.viewFor(account: currentAccount,
-                                                            user: user)
-        currentAccountView.unreadCountStyle = .others
-        return currentAccountView
-    }
 
     @objc func createTopBar() {
         self.topBarViewController = ConversationListTopBarViewController(account: account)

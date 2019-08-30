@@ -73,7 +73,6 @@
 @interface ConversationListViewController ()
 
 @property (nonatomic) ZMConversation *selectedConversation;
-@property (nonatomic) ConversationListState state;
 
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
@@ -100,7 +99,10 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-- (void)setState:(ConversationListState)state animated:(BOOL)animated;
+/// for data usage dialog
+@property (nonatomic) BOOL viewDidAppearCalled;
+
+@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 @end
 
@@ -128,6 +130,7 @@
 {
     [super viewDidLoad];
     self.viewDidAppearCalled = NO;
+    self.dataUsagePermissionDialogDisplayed = NO;
 
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
@@ -191,6 +194,29 @@
     }];
 
     [self requestSuggestedHandlesIfNeeded];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+
+    if (! IS_IPAD_FULLSCREEN) {
+        [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
+    }
+    
+    _state = ConversationListStateConversationList;
+    
+    [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
+    [self closePushPermissionDialogIfNotNeeded];
+
+    self.shouldAnimateNetworkStatusView = YES;
+
+    if (! self.viewDidAppearCalled) {
+        self.viewDidAppearCalled = YES;
+
+        [self showDataUsagePermissionDialogIfNeeded];
+        [self showAvailabilityBehaviourChangeAlertIfNeeded];
+    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -276,77 +302,6 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
-}
-
-- (void)setStateValue: (ConversationListState)newState
-{
-    _state = newState;
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated
-{
-    [self setState:state animated:animated completion:nil];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    if (_state == state) {
-        if (completion) {
-            completion();
-        }
-        return;
-    }
-    self.state = state;
-
-    switch (state) {
-        case ConversationListStateConversationList: {
-            self.view.alpha = 1;
-            
-            if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
-            }
-            else {
-                if (completion) {
-                    completion();
-                }
-            }
-        }
-            break;
-        case ConversationListStatePeoplePicker: {
-            StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgroundNavigationController class]];
-            
-            [self showViewController:navigationWrapper animated:YES completion:^{
-                [startUIViewController showKeyboardIfNeeded];
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        case ConversationListStateArchived: {
-            [self showViewController:self.createArchivedListViewController animated:animated completion:^{
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    viewController.transitioningDelegate = self;
-    viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    
-    [self presentViewController:viewController animated:animated completion:^{
-        if (completion) {
-            completion();
-        }
-    }];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

@@ -17,14 +17,11 @@
 //
 
 
-@class ConversationActionController;
 @class ProfileFooterView;
 @class IncomingRequestFooterView;
 @class UserNameDetailView;
 @class ProfileTitleView;
 @class TabBarController;
-
-@protocol ActionController;
 
 @import WireSyncEngine;
 
