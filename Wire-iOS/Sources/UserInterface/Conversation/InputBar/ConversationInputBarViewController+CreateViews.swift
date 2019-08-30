@@ -124,9 +124,8 @@ extension ConversationInputBarViewController {
     private func createTypingIndicatorView() {
         let typingIndicatorView = TypingIndicatorView()
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"
-        if let typingUsers = typingUsers,
-            let typingUsersArray = Array(typingUsers) as? [ZMUser] {
-            typingIndicatorView.typingUsers = typingUsersArray
+        if let typingUsers = typingUsers {
+            typingIndicatorView.typingUsers = Array(typingUsers)
         } else {
             typingIndicatorView.typingUsers = []
         }
