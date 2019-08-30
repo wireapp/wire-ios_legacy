@@ -23,10 +23,8 @@ extension ConversationListViewController: ConversationListContentDelegate {
         setSelectedConversation(conversation)
     }
 
-    public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {
-        if isIPadRegular() && UIApplication.shared.statusBarOrientation.isPortrait {
-            ZClientViewController.shared()?.transitionToList(animated: true, completion: nil)
-        }
+    public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToListIfPossible()
+
     }
 
     public func conversationListDidScroll(_ controller: ConversationListContentController!) {

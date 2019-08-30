@@ -174,7 +174,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self.view addSubview:self.rightView];
     
     [self setupInitialConstraints];
-    [self updateLayoutSizeForTraitCollection:self.traitCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:self.traitCollection];
     [self updateConstraintsForSize:self.view.bounds.size];
     [self updateActiveConstraints];
     
@@ -208,7 +208,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     self.futureTraitCollection = newCollection;
-    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:newCollection];
 
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     
@@ -220,9 +220,9 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)updateForSize:(CGSize)size
 {
     if (nil != self.futureTraitCollection) {
-        [self updateLayoutSizeForTraitCollection:self.futureTraitCollection size:size];
+        [self updateLayoutSizeForTraitCollection:self.futureTraitCollection];
     } else {
-        [self updateLayoutSizeForTraitCollection:self.traitCollection size:size];
+        [self updateLayoutSizeForTraitCollection:self.traitCollection];
     }
     
     [self updateConstraintsForSize:size];
@@ -260,7 +260,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)updateLayoutSizeAndLeftViewVisibility
 {
-    [self updateLayoutSizeForTraitCollection:self.traitCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:self.traitCollection];
     [self updateLeftViewVisibility];
 }
 

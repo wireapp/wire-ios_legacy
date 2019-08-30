@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,13 +29,14 @@ extension SplitViewController {
             return true
         }
     }
-}
 
-extension SplitViewController {
-
-    @objc(updateLayoutSizeForTraitCollection:size:)
-    func updateLayoutSize(for traitCollection: UITraitCollection?, size: CGSize) {
-        if traitCollection?.horizontalSizeClass == .compact {
+    /// Update layoutSize for the change of traitCollection and the current orientation
+    ///
+    /// - Parameters:
+    ///   - traitCollection: the new traitCollection
+    @objc(updateLayoutSizeForTraitCollection:)
+    func updateLayoutSize(for traitCollection: UITraitCollection) {
+        if traitCollection.horizontalSizeClass == .compact {
             layoutSize = .compact
         } else if isIPadRegular(), UIApplication.shared.statusBarOrientation.isPortrait {
             layoutSize = .regularPortrait
