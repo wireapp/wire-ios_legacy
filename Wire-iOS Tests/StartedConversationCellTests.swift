@@ -184,8 +184,8 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {
         teamTest {
-            selfUser.membership!.setTeamRole(.partner)
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
+            selfUser.membership!.setTeamRole(.partner)
             verify(message: message)
         }
     }
@@ -193,6 +193,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersNewConversationCell_SelfIsGuest_AllowGuests() {
         nonTeamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
+            message.conversation?.teamRemoteIdentifier = .create()
             verify(message: message)
         }
     }
@@ -226,7 +227,6 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         let users = Array(message.users).filter { $0 != selfUser }
         let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
         conversation?.allowGuests = allowGuests
-        conversation?.teamRemoteIdentifier = .create()
         conversation?.remoteIdentifier = .create()
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier
         message.visibleInConversation = conversation
