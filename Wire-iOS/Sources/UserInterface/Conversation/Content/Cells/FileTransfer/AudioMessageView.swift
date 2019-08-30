@@ -21,7 +21,7 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers final class AudioMessageView: UIView, TransferView {
+final class AudioMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     private var _audioTrackPlayer: AudioTrackPlayer?

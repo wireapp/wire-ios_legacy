@@ -22,7 +22,7 @@ import UIKit
  * A title view subclass that displays the availability of the user.
  */
 
-class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
+final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     /// The available options for this view.
     struct Options: OptionSet {

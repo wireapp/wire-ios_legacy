@@ -19,11 +19,10 @@
 import Foundation
 import SafariServices
 
-@objcMembers
 final class BrowserViewController: SFSafariViewController {
 
-    @objc var completion: (() -> Void)?
-    @objc var onDismiss: (() -> Void)?
+    var completion: (() -> Void)?
+    var onDismiss: (() -> Void)?
 
     // MARK: - Tint Color
 
