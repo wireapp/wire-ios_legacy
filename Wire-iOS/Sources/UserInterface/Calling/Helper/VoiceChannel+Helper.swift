@@ -19,7 +19,8 @@
 extension VoiceChannel {
 
     func toggleMuteState(userSession: ZMUserSession) {
-        mute(!AVSMediaManager.sharedInstance().isMicrophoneMuted, userSession: userSession)
+        let toggled = !muted
+        mute(toggled, userSession: userSession)
     }
 
 }

@@ -28,7 +28,6 @@
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
 #import "WireSyncEngine+iOS.h"
-#import "UIViewController+WR_Invite.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "Wire-Swift.h"
@@ -206,11 +205,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidCancel:)]) {
         [self.delegate contactsViewControllerDidCancel:self];
     }
-}
-
-- (void)sendIndirectInvite:(UIView *)sender
-{
-    [self wr_presentInviteActivityViewControllerWithSourceView:self.inviteOthersButton logicalContext:GenericInviteContextInvitesSearch];
 }
 
 - (void)keyboardFrameDidChange:(NSNotification *)notification

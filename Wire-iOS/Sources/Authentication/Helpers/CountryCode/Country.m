@@ -18,6 +18,7 @@
 
 
 #import "Country.h"
+#import "Wire-Swift.h"
 
 @import CoreTelephony;
 
@@ -43,26 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
     return defaultCountry;
 }
 
-+ (nullable instancetype)countryFromDevice
-{
-    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-    CTCarrier *carrier = networkInfo.subscriberCellularProvider;
-    
-    if (nil != carrier.isoCountryCode) {
-        return [Country countryWithISO:carrier.isoCountryCode];
-    } else {
-        NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
-        NSString *ISO;
-        NSRange underscore = [localeIdentifier rangeOfString:@"_"];
-        if (underscore.location != NSNotFound) {
-            ISO = [localeIdentifier substringFromIndex:underscore.location + 1];
-        } else {
-            ISO = localeIdentifier;
-        }
-        return [Country countryWithISO:ISO.lowercaseString];
-    }
-}
-
 + (nullable instancetype)countryWithISO:(NSString *)ISO e164:(NSNumber *)e164
 {
     Country *country = [[Country alloc] init];
@@ -70,17 +51,6 @@ NS_ASSUME_NONNULL_BEGIN
     country.e164 = e164;
     
     return country;
-}
-
-+ (nullable instancetype)countryWithISO:(NSString *)ISO
-{
-    for (Country *country in [self allCountries]) {
-        if ([country.ISO isEqualToString:ISO]) {
-            return country;
-        }
-    }
-    
-    return nil;
 }
 
 + (nullable instancetype)detectCountryFromCode:(NSUInteger)e164;

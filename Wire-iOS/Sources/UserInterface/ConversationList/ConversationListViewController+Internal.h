@@ -16,15 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "StartUIViewController.h"
-
 @class PermissionDeniedViewController;
 @class ConversationActionController;
+@class ArchivedListViewController;
 
 @interface ConversationListViewController ()
 
 @property (nonatomic, nonnull) UILabel *noConversationLabel;
 @property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
 @property (nonatomic, nullable) ConversationActionController *actionsController;
+
+- (ArchivedListViewController *)createArchivedListViewController;
 
 @end

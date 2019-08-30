@@ -69,11 +69,11 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         updateStatusBar()
     }
     
-    func sendReport() {
+    func sendReport(sourceView: UIView? = nil) {
         let mailRecipient = "calling-ios@wire.com"
 
         guard MFMailComposeViewController.canSendMail() else {
-            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self)
+            DebugAlert.displayFallbackActivityController(logPaths: ZMSLog.pathsForExistingLogs, email: mailRecipient, from: self, sourceView: sourceView)
             return
         }
 
@@ -144,7 +144,8 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         if indexPath.row == 0 {
             includedVoiceLogCell.accessoryType = includedVoiceLogCell.accessoryType == .none ? .checkmark : .none
         } else {
-            sendReport()
+            let cell = tableView.cellForRow(at: indexPath)
+            sendReport(sourceView: cell)
         }
 
         tableView.deselectRow(at: indexPath, animated: true)
