@@ -67,7 +67,6 @@
 @interface ConversationListViewController ()
 
 @property (nonatomic) ZMConversation *selectedConversation;
-@property (nonatomic) ConversationListState state;
 
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
@@ -98,8 +97,6 @@
 @property (nonatomic) BOOL viewDidAppearCalled;
 
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated;
 
 @end
 
@@ -304,72 +301,6 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated
-{
-    [self setState:state animated:animated completion:nil];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    if (_state == state) {
-        if (completion) {
-            completion();
-        }
-        return;
-    }
-    self.state = state;
-
-    switch (state) {
-        case ConversationListStateConversationList: {
-            self.view.alpha = 1;
-            
-            if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
-            }
-            else {
-                if (completion) {
-                    completion();
-                }
-            }
-        }
-            break;
-        case ConversationListStatePeoplePicker: {
-            StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgroundNavigationController class]];
-            
-            [self showViewController:navigationWrapper animated:YES completion:^{
-                [startUIViewController showKeyboardIfNeeded];
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        case ConversationListStateArchived: {
-            [self showViewController:self.createArchivedListViewController animated:animated completion:^{
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    viewController.transitioningDelegate = self;
-    viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    
-    [self presentViewController:viewController animated:animated completion:^{
-        if (completion) {
-            completion();
-        }
-    }];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator

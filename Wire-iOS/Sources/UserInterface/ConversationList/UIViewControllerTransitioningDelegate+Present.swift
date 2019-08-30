@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,10 +18,12 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    func createPeoplePickerController() -> StartUIViewController {
-        let startUIViewController = StartUIViewController()
-        startUIViewController.delegate = self
-        return startUIViewController
+extension UIViewControllerTransitioningDelegate where Self: UIViewController {
+    func show(_ viewController: UIViewController,
+              animated: Bool, completion: (() -> ())?) {
+        viewController.transitioningDelegate = self
+        viewController.modalPresentationStyle = .currentContext
+
+        present(viewController, animated: animated, completion: completion)
     }
 }

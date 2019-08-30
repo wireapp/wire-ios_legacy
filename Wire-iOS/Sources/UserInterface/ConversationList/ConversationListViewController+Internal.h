@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "StartUIViewController.h"
-
 @class PermissionDeniedViewController;
 @class ConversationActionController;
+@class ArchivedListViewController;
 
 @interface ConversationListViewController ()
 
@@ -29,5 +28,6 @@
 
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
 - (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;
+- (ArchivedListViewController *)createArchivedListViewController;
 
 @end
