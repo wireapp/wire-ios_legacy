@@ -105,6 +105,16 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return mockNetworkQuality
     }
     
+    var mockMuted = false
+    var muted: Bool {
+        get {
+            return mockMuted
+        }
+        set {
+            mockMuted = newValue
+        }
+    }
+    
     func setVideoCaptureDevice(_ device: CaptureDevice) throws {}
     
     func mute(_ muted: Bool, userSession: ZMUserSession) {}

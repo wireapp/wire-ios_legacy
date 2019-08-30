@@ -40,20 +40,18 @@ usage()
 
 
 while [ "$1" != "" ]; do
-    OPTION=$1    
+    OPTION=$1
     shift
-    
-    echo "🔘 OPTION: ${OPTION}"
 
     case $OPTION in
         -c | --configuration_repo ) REPO_URL=$1
-                                    echo "🔘 Using custom configuration repository: ${REPO_URL}"
+                                    echo "Using custom configuration repository: ${REPO_URL}"
                                     ;;
         -o | --override_with)       OVERRIDES_DIR=$1
-                                    echo "🔘 Overriding with configuration files in: ${OVERRIDES_DIR}"
+                                    echo "Overriding with configuration files in: ${OVERRIDES_DIR}"
                                     ;;
         -b | --branch)              BRANCH=$1
-                                    echo "🔘 Using custom branch: ${BRANCH}"
+                                    echo "Using custom branch: ${BRANCH}"
                                     ;;
         -h | --help )               usage
                                     exit

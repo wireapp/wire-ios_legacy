@@ -21,15 +21,20 @@ import WireCommonComponents
 import MobileCoreServices
 import WireDataModel
 
-enum AttachmentType {
-    case image
+enum AttachmentType:Int, CaseIterable {
+    static func < (lhs: AttachmentType, rhs: AttachmentType) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+
+    case walletPass = 1
     case video
-    case url
+    case image
     case rawFile
-    case walletPass
+    case url
+    case fileUrl
 }
 
-class ExtensionActivity {
+final class ExtensionActivity {
 
     static private var openedEventName = "share_extension_opened"
     static private var sentEventName = "share_extension_sent"
@@ -101,6 +106,9 @@ class ExtensionActivity {
 }
 
 extension NSItemProvider {
+    var hasGifImage: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeGIF as String)
+    }
 
     var hasImage: Bool {
         return hasItemConformingToTypeIdentifier(kUTTypeImage as String)
@@ -126,6 +134,10 @@ extension NSItemProvider {
 
     var hasURL: Bool {
         return hasItemConformingToTypeIdentifier(kUTTypeURL as String) && registeredTypeIdentifiers.count == 1 
+    }
+
+    var hasFileURL: Bool {
+        return hasItemConformingToTypeIdentifier(kUTTypeFileURL as String)
     }
 
     var hasVideo: Bool {

@@ -26,8 +26,7 @@ extension StartUIViewController: ContactsViewControllerDelegate {
 
     public func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
         dismiss(animated: true) {
-            UIApplication.shared.topmostViewController()?.wr_presentInviteActivityViewController(withSourceView: self.quickActionsBar,
-                                                                                                logicalContext: GenericInviteContext.startUIBanner)
+            UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
         }
     }
 

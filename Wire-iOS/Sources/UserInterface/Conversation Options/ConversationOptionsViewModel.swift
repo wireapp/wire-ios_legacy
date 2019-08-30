@@ -35,7 +35,7 @@ protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, didReceiveError error: Error)
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRemovingGuests completion: @escaping (Bool) -> Void) -> UIAlertController?
     func viewModel(_ viewModel: ConversationOptionsViewModel, confirmRevokingLink completion: @escaping (Bool) -> Void)
-    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String)
+    func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
 class ConversationOptionsViewModel {
@@ -110,11 +110,12 @@ class ConversationOptionsViewModel {
                 // Check if we have a link already
                 if let link = link {
                     rows.append(.text(link))
-                    rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] in self?.copyLink() })
-                    rows.append(.shareLink { [weak self] in self?.shareLink() })
-                    rows.append(.revokeLink { [weak self] in self?.revokeLink() })
+                    rows.append(copyInProgress ? .copiedLink : .copyLink { [weak self] _ in self?.copyLink() })
+                    rows.append(.shareLink { [weak self] view in self?.shareLink(view: view) })
+                    rows.append(.revokeLink { [weak self] _ in self?.revokeLink() })
                 } else {
-                    rows.append(.createLinkButton { [weak self] in self?.createLink() })
+                    rows.append(.createLinkButton { [weak self] _ in 
+                        self?.createLink() })
                 }
             }
         }
@@ -146,12 +147,16 @@ class ConversationOptionsViewModel {
             }
         })
     }
-    
-    private func shareLink() {
+
+
+    /// share a conversation link
+    ///
+    /// - Parameter view: the source view which triggers shareLink action
+    private func shareLink(view: UIView? = nil) {
         guard let link = link else { return }
         GuestLinkEvent.shared.track()
         let message = "guest_room.share.message".localized(args: link)
-        delegate?.viewModel(self, wantsToShareMessage: message)
+        delegate?.viewModel(self, wantsToShareMessage: message, sourceView: view)
     }
     
     private func copyLink() {

@@ -358,6 +358,9 @@
 
         [self.conversation markMessagesAsReadUntil:lastVisibleMessage];
     }
+
+    /// update media bar visiblity
+    [self updateMediaBar];
 }
 
 #pragma mark - Custom UI, utilities
@@ -365,35 +368,6 @@
 - (void)removeHighlightsAndMenu
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
-}
-
-- (BOOL)displaysMessage:(id<ZMConversationMessage>)message
-{
-    NSInteger index = [self.dataSource indexOfMessage:(id)message];
-
-    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
-        if (indexPath.row == index) {
-            return YES;
-        }
-    }
-    
-    return NO;
-}
-
-#pragma mark - ActiveMediaPlayer observer
-
-- (void)activeMediaPlayerChanged:(NSDictionary *)change
-{
-    dispatch_async(dispatch_get_main_queue(), ^{        
-        MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-        id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-        
-        if (mediaPlayingMessage && [mediaPlayingMessage.conversation isEqual:self.conversation] && ! [self displaysMessage:mediaPlayingMessage]) {
-            [self.delegate conversationContentViewController:self didEndDisplayingActiveMediaPlayerForMessage:nil];
-        } else {
-            [self.delegate conversationContentViewController:self willDisplayActiveMediaPlayerForMessage:nil];
-        }
-    });
 }
 
 - (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView

@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Upload cancelled";
 "content.file.upload_video" = "Videos";
 "content.file.take_video" = "Record a video";
+"content.file.browse" = "Browse";
 
 "content.file.save_video" = "Save";
 "content.file.save_audio" = "Save";

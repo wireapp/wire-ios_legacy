@@ -217,7 +217,9 @@ final class AppRootViewController: UIViewController {
             AccessoryTextField.appearance(whenContainedInInstancesOf: [AuthenticationStepController.self]).tintColor = UIColor.Team.activeButton
 
             // Only execute handle events if there is no current flow
-            guard authenticationCoordinator == nil || error?.userSessionErrorCode == .addAccountRequested else {
+            guard authenticationCoordinator == nil ||
+                  error?.userSessionErrorCode == .addAccountRequested ||
+                  error?.userSessionErrorCode == .accountDeleted else {
                 break
             }
 

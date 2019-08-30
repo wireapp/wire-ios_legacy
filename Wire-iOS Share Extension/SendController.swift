@@ -45,7 +45,7 @@ enum SendingState {
 /// During the sending procress the current state of the operation is reported through the passed in
 /// `SendingCallState` in the `send` method. In comparison to the `PostContent` class, the `SendController`
 /// itself has no knowledge about conversation degradation.
-class SendController {
+final class SendController {
 
     private var observer: SendableBatchObserver? = nil
     private var isCancelled = false
@@ -63,7 +63,9 @@ class SendController {
         var linkAttachment : NSItemProvider?
         
         var sendables: [UnsentSendable] = attachments.compactMap {
-            if $0.hasImage {
+            if $0.hasGifImage {
+                return UnsentGifImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
+            } else if $0.hasImage {
                 return UnsentImageSendable(conversation: conversation, sharingSession: sharingSession, attachment: $0)
             } else if $0.hasURL {
                 linkAttachment = $0

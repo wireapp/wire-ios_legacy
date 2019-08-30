@@ -106,9 +106,8 @@ class UnsentTextSendable: UnsentSendableBase, UnsentSendable {
     }
 }
 
-
 /// `UnsentSendable` implementation to send image messages
-class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
+final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
 
     private let attachment: NSItemProvider
     private var imageData: Data?
