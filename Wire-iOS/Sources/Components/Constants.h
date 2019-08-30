@@ -19,13 +19,6 @@
 
 #pragma mark - Unsorted stuff
 
-#define IS_IPHONE ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone)
-#define IS_IPHONE_4 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 960.0f)
-#define IS_IPHONE_5 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 1136.0f)
-#define IS_IPHONE_6 (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height == 1334.0)
-#define IS_IPHONE_6_PLUS_OR_BIGGER (IS_IPHONE && [[UIScreen mainScreen] nativeBounds].size.height >= 1920.0f)
-
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IPAD_FULLSCREEN (IS_IPAD && [UIApplication sharedApplication].keyWindow.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular)
 #define IS_IPAD_LANDSCAPE_LAYOUT (IS_IPAD_FULLSCREEN && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))
-#define IS_IPAD_PORTRAIT_LAYOUT (IS_IPAD_FULLSCREEN && UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation))

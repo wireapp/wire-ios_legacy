@@ -52,7 +52,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
-        cell.configure(for: conversation)
+        cell.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyTitle(in: conversation) ?? false)
         cell.titleTextField.textFieldDelegate = self
         renameCell = cell
         return cell
@@ -86,7 +86,7 @@ extension RenameGroupSectionController : ZMConversationObserver {
     func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
         guard changeInfo.securityLevelChanged || changeInfo.nameChanged else { return }
         
-        renameCell?.configure(for: conversation)
+        renameCell?.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyTitle(in: conversation) ?? false)
     }
     
 }

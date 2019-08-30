@@ -48,12 +48,6 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationListViewController (Content) <ConversationListContentDelegate>
-
-- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
-
-@end
-
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
 @end
 
@@ -119,6 +113,11 @@
 {
     self.view = [[PassthroughTouchesView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.view.backgroundColor = [UIColor clearColor];
+}
+
+- (void)setSelectedConversation:(ZMConversation *)conversation
+{
+    _selectedConversation = conversation;
 }
 
 - (void)viewDidLoad
@@ -413,12 +412,6 @@
     return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
 }
 
-@end
-
-
-
-@implementation ConversationListViewController (Content)
-
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller
 {
     CGFloat controllerHeight = CGRectGetHeight(controller.view.bounds);
@@ -429,30 +422,6 @@
     if (self.bottomBarController.showSeparator != showSeparator) {
         self.bottomBarController.showSeparator = showSeparator;
     }
-}
-
-- (void)conversationListDidScroll:(ConversationListContentController *)controller
-{
-    [self updateBottomBarSeparatorVisibilityWithContentController:controller];
-    
-    [self.topBarViewController scrollViewDidScroll:controller.collectionView];
-}
-
-- (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
-{
-    _selectedConversation = conversation;
-}
-
-- (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv
-{
-    if (IS_IPAD_PORTRAIT_LAYOUT) {
-        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
-    }
-}
-
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView
-{
-    [self showActionMenuForConversation:conversation fromView:sourceView];
 }
 
 @end

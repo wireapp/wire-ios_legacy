@@ -28,5 +28,7 @@
 @property (nonatomic) BOOL viewDidAppearCalled;
 
 - (ArchivedListViewController * _Nonnull)createArchivedListViewController;
+- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
+- (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;
 
 @end

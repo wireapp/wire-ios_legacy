@@ -26,20 +26,20 @@ protocol GroupOptionsSectionControllerDelegate: class {
 
 final class GroupOptionsSectionController: GroupDetailsSectionController {
 
-    private enum Option: Int, CaseIterable, Restricted {
+    private enum Option: Int, CaseIterable {
 
         fileprivate static let count = Option.allCases.count
 
         case notifications = 0, guests, timeout
         
-        var requiredPermissions: Permissions {
+        func accessible(in conversation: ZMConversation, by user: ZMUser) -> Bool {
             switch self {
-            case .notifications: return .partner
-            case .guests:        return .member
-            case .timeout:       return .member
+            case .notifications: return user.canModifyNotificationSettings(in: conversation)
+            case .guests:        return user.canModifyAccessControlSettings(in: conversation)
+            case .timeout:       return user.canModifyEphemeralSettings(in: conversation)
             }
         }
-
+        
         var cellReuseIdentifier: String {
             switch self {
             case .guests: return GroupDetailsGuestOptionsCell.zm_reuseIdentifier
@@ -65,29 +65,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted
-        var options = [Option]()
-        
-        let selfIsGuest = ZMUser.selfUser().isGuest(in: conversation)
-        
-        if ZMUser.selfUserIsTeamMember {
-            Option.notifications.authorizeSelfUser {
-                options.append(.notifications)
-            }
-        }
-        
-        if conversation.canManageAccess {
-            Option.guests.authorizeSelfUser {
-                options.append(.guests)
-            }
-        }
-        
-        if !selfIsGuest {
-            Option.timeout.authorizeSelfUser {
-                options.append(.timeout)
-            }
-        }
-        
-        self.options = options
+        self.options = Option.allCases.filter({ $0.accessible(in: conversation, by: ZMUser.selfUser()) })
     }
 
     // MARK: - Collection View
