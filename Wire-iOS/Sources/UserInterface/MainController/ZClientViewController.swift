@@ -27,8 +27,6 @@ extension ZClientViewController {
     func setupConversationListViewController(account: Account) {
         conversationListViewController = ConversationListViewController()
         conversationListViewController.account = account
-
-        needToShowDataUsagePermissionDialog = false
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
