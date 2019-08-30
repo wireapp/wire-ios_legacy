@@ -27,7 +27,7 @@ extension UITraitEnvironment {
         return device.userInterfaceIdiom == .pad && isHorizontalSizeClassRegular
     }
 
-    func isIPadRegularPortrait(device: DeviceProtocol, application: ApplicationProtocol) -> Bool {
+    func isIPadRegularPortrait(device: DeviceProtocol = UIDevice.current, application: ApplicationProtocol = UIApplication.shared) -> Bool {
         return isIPadRegular(device: device) && application.statusBarOrientation.isPortrait
     }
 }

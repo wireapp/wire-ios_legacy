@@ -38,7 +38,7 @@ extension SplitViewController {
     func updateLayoutSize(for traitCollection: UITraitCollection) {
         if traitCollection.horizontalSizeClass == .compact {
             layoutSize = .compact
-        } else if isIPadRegular(), UIApplication.shared.statusBarOrientation.isPortrait {
+        } else if isIPadRegularPortrait() {
             layoutSize = .regularPortrait
         } else {
             layoutSize = .regularLandscape
