@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
+@property (nonatomic) ConversationListState state;
+
 - (void)removeUserProfileObserver;
 @end
 
