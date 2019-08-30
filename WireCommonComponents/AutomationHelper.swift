@@ -20,7 +20,7 @@
 import Foundation
 import WireSystem
 
-@objcMembers public class AutomationEmailCredentials: NSObject {
+final public class AutomationEmailCredentials: NSObject {
     public var email: String
     public var password: String
     

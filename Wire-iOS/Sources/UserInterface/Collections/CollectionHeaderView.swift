@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers final public class CollectionHeaderView: UICollectionReusableView {
+final public class CollectionHeaderView: UICollectionReusableView {
     
     public var section: CollectionsSectionSet = .none {
         didSet {
