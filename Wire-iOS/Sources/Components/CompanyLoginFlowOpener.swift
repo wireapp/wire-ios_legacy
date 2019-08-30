@@ -18,6 +18,7 @@
 
 import Foundation
 import SafariServices
+import AuthenticationServices
 
 protocol CompanyLoginFlowHandlerDelegate: class {
     /// Called when the user cancels the company login flow.
@@ -92,16 +93,29 @@ class CompanyLoginFlowHandler {
 
     @available(iOS 11, *)
     private func openSafariAuthenticationSession(at url: URL) {
-        let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
-            if let url = url {
-                SessionManager.shared?.urlHandler.openURL(url, options: [:])
+        if #available(iOS 12, *) {
+            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
+                if let url = url {
+                    SessionManager.shared?.urlHandler.openURL(url, options: [:])
+                }
+                
+                self.currentAuthenticationSession = nil
             }
 
-            self.currentAuthenticationSession = nil
-        }
+            currentAuthenticationSession = session
+            session.start()
+        } else {
+            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
+                if let url = url {
+                    SessionManager.shared?.urlHandler.openURL(url, options: [:])
+                }
+                
+                self.currentAuthenticationSession = nil
+            }
 
-        currentAuthenticationSession = session
-        session.start()
+            currentAuthenticationSession = session
+            session.start()
+        }
     }
 
     private func openSafariEmbed(at url: URL) {

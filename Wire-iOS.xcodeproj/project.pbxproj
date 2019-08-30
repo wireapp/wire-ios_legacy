@@ -485,7 +485,6 @@
 		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
-		871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */; };
 		871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */; };
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
 		871BC2391D34F8F800DF0793 /* KeyboardAvoidingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC15F1D34F8F800DF0793 /* KeyboardAvoidingViewController.m */; };
@@ -511,12 +510,10 @@
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
 		871BC2881D34F8F800DF0793 /* UIImage+Dotted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */; };
 		871BC2891D34F8F800DF0793 /* UIImage+Transform.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2041D34F8F800DF0793 /* UIImage+Transform.m */; };
-		871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */; };
 		871BC28B1D34F8F800DF0793 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */; };
 		871BC28C1D34F8F800DF0793 /* UIScrollView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20A1D34F8F800DF0793 /* UIScrollView+Zeta.m */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
 		871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */; };
-		871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */; };
 		871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */; };
 		871BC2931D34F8F800DF0793 /* UIView+WR_Snapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2171D34F8F800DF0793 /* UIView+WR_Snapshot.m */; };
 		871BC2941D34F8F800DF0793 /* UIView+Zeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2191D34F8F800DF0793 /* UIView+Zeta.m */; };
@@ -1050,6 +1047,7 @@
 		EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */; };
 		EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */; };
 		EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */; };
+		EF19EF3A230701CF00696D95 /* ImagePickerConfirmationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */; };
 		EF1A461821AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */; };
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
@@ -2068,8 +2066,6 @@
 		871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FullscreenImageViewController+PullToDismiss.m"; sourceTree = "<group>"; };
 		871BC1401D34F8F800DF0793 /* FullscreenImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullscreenImageViewController.h; sourceTree = "<group>"; };
 		871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullscreenImageViewController.m; sourceTree = "<group>"; };
-		871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagePickerConfirmationController.h; sourceTree = "<group>"; };
-		871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagePickerConfirmationController.m; sourceTree = "<group>"; };
 		871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationAwareNavigationController.swift; sourceTree = "<group>"; };
 		871BC1451D34F8F800DF0793 /* SplitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplitViewController.h; sourceTree = "<group>"; };
 		871BC1461D34F8F800DF0793 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
@@ -2116,8 +2112,6 @@
 		871BC2021D34F8F800DF0793 /* UIImage+Dotted.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Dotted.swift"; sourceTree = "<group>"; };
 		871BC2031D34F8F800DF0793 /* UIImage+Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Transform.h"; sourceTree = "<group>"; };
 		871BC2041D34F8F800DF0793 /* UIImage+Transform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Transform.m"; sourceTree = "<group>"; };
-		871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImagePickerController+GetImage.h"; sourceTree = "<group>"; };
-		871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImagePickerController+GetImage.m"; sourceTree = "<group>"; };
 		871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
 		871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
 		871BC2091D34F8F800DF0793 /* UIScrollView+Zeta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Zeta.h"; sourceTree = "<group>"; };
@@ -2125,8 +2119,6 @@
 		871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RowCount.h"; sourceTree = "<group>"; };
 		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RowCount.m"; sourceTree = "<group>"; };
 		871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reuse.swift"; sourceTree = "<group>"; };
-		871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+PopoverBorder.h"; sourceTree = "<group>"; };
-		871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PopoverBorder.m"; sourceTree = "<group>"; };
 		871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_ExtendedBlockAnimations.h"; sourceTree = "<group>"; };
 		871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WR_ExtendedBlockAnimations.m"; sourceTree = "<group>"; };
 		871BC2161D34F8F800DF0793 /* UIView+WR_Snapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_Snapshot.h"; sourceTree = "<group>"; };
@@ -2862,6 +2854,7 @@
 		EF18C7E31F9E4DA00085A832 /* NSString+FileNameForZMUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSString+FileNameForZMUser.swift"; sourceTree = "<group>"; };
 		EF18D7C72102345B005B51A1 /* UpsideDownTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsideDownTableView.swift; sourceTree = "<group>"; };
 		EF19209C20C6E4F700E4B92D /* XCTestCase+DayFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DayFormatter.swift"; sourceTree = "<group>"; };
+		EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerConfirmationController.swift; sourceTree = "<group>"; };
 		EF1A461721AD5A270009B6B9 /* GroupDetailsReceiptOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupDetailsReceiptOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
@@ -4405,8 +4398,7 @@
 				EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */,
 				EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */,
 				EF6ACA7E21318A640064047B /* FullscreenImageViewController+Style.swift */,
-				871BC1421D34F8F800DF0793 /* ImagePickerConfirmationController.h */,
-				871BC1431D34F8F800DF0793 /* ImagePickerConfirmationController.m */,
+				EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
 				871BC1451D34F8F800DF0793 /* SplitViewController.h */,
 				EF60FC4220652F9F0017D083 /* SplitViewController+internal.h */,
@@ -4554,8 +4546,6 @@
 				16626503217DAE7400300F45 /* UIView+ArrangeSubviews.swift */,
 				871BC2031D34F8F800DF0793 /* UIImage+Transform.h */,
 				871BC2041D34F8F800DF0793 /* UIImage+Transform.m */,
-				871BC2051D34F8F800DF0793 /* UIImagePickerController+GetImage.h */,
-				871BC2061D34F8F800DF0793 /* UIImagePickerController+GetImage.m */,
 				EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */,
 				EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */,
 				871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */,
@@ -4565,8 +4555,6 @@
 				871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */,
 				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */,
 				871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */,
-				871BC2101D34F8F800DF0793 /* UIView+PopoverBorder.h */,
-				871BC2111D34F8F800DF0793 /* UIView+PopoverBorder.m */,
 				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
 				5E52376A20E7F99500649241 /* EasingFunction.swift */,
 				871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */,
@@ -7376,7 +7364,6 @@
 				8736F1C21E4DCEB8001CBA62 /* AppLockViewController.swift in Sources */,
 				EFA820AE2019075400FED370 /* UIViewController+addViewController.swift in Sources */,
 				5E8DA774211B452100360979 /* AuthenticationFlowStep+ClientsDeletion.swift in Sources */,
-				871BC28A1D34F8F800DF0793 /* UIImagePickerController+GetImage.m in Sources */,
 				87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */,
 				F15650EB21DD1A0C00210504 /* ColorScheme.swift in Sources */,
 				5EA73D8220D900A10001D106 /* GroupDetailsRenameCell.swift in Sources */,
@@ -7551,6 +7538,7 @@
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
+				EF19EF3A230701CF00696D95 /* ImagePickerConfirmationController.swift in Sources */,
 				EF21CAA8220C832800D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				D5168F282008ED0700F8222A /* KeyboardBlockObserver.swift in Sources */,
@@ -8067,7 +8055,6 @@
 				F14FB864214941160012A131 /* MentionsTextAttachment.swift in Sources */,
 				EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */,
 				5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */,
-				871BC22C1D34F8F800DF0793 /* ImagePickerConfirmationController.m in Sources */,
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
 				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
@@ -8161,7 +8148,6 @@
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
-				871BC2901D34F8F800DF0793 /* UIView+PopoverBorder.m in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
 				EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */,
