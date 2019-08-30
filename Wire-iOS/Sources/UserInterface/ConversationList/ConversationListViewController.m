@@ -99,11 +99,6 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-/// for data usage dialog
-@property (nonatomic) BOOL viewDidAppearCalled;
-
-@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
-
 @end
 
 
@@ -130,7 +125,6 @@
 {
     [super viewDidLoad];
     self.viewDidAppearCalled = NO;
-    self.dataUsagePermissionDialogDisplayed = NO;
 
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;

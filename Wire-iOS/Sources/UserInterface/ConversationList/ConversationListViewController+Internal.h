@@ -27,6 +27,6 @@
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 @property (nonatomic) BOOL viewDidAppearCalled;
 
-- (ArchivedListViewController *)createArchivedListViewController;
+- (ArchivedListViewController * _Nonnull)createArchivedListViewController;
 
 @end
