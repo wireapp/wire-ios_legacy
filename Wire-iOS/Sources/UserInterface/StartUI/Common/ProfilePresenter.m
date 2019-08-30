@@ -22,7 +22,6 @@
 // ui
 #import "ProfileViewController.h"
 #import "ZClientViewController.h"
-#import "UIView+PopoverBorder.h"
 #import "Constants.h"
 #import "ZoomTransition.h"
 #import "Wire-Swift.h"
