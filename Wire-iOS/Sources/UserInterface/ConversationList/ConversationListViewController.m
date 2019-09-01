@@ -67,6 +67,7 @@
 @interface ConversationListViewController ()
 
 @property (nonatomic) ZMConversation *selectedConversation;
+@property (nonatomic) ConversationListState state;
 
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
