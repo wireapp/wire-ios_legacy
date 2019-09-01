@@ -19,12 +19,12 @@
 import Foundation
 
 extension ConversationListViewController {
-    @objc(setState:animated:)
+    @objc
     func setState(_ state: ConversationListState, animated: Bool) {
         setState(state, animated: animated, completion: nil)
     }
 
-    @objc(setState:animated:completion:)
+    @objc
     func setState(_ state: ConversationListState,
                   animated: Bool,
                   completion: (() -> ())?) {
