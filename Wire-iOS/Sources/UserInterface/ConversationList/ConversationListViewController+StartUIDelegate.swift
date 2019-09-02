@@ -71,7 +71,7 @@ extension ConversationListViewController {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
         
-        dismissPeoplePicker(with: {
+        dismissPeoplePicker(completionBlock: {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
