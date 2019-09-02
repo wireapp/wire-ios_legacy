@@ -25,52 +25,6 @@ extension ConversationListViewController {
         view.backgroundColor = .clear
     }
 
-//    override open func viewDidLoad() {
-//        super.viewDidLoad()
-//        viewDidAppearCalled = false
-//
-//        contentControllerBottomInset = 16
-//        shouldAnimateNetworkStatusView = false
-//
-//        contentContainer = UIView()
-//        contentContainer.backgroundColor = UIColor.clear
-//        view.addSubview(contentContainer)
-//
-//        userProfile = ZMUserSession.shared()?.userProfile
-//        if let userSession = ZMUserSession.shared() {
-//            userObserverToken = UserChangeInfo.addObserver(self, forUser: ZMUser.selfUser(), userSession: userSession)
-//            initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-//        }
-//
-//        onboardingHint = ConversationListOnboardingHint()
-//        contentContainer.addSubview(onboardingHint)
-//
-//        conversationListContainer = UIView()
-//        conversationListContainer.backgroundColor = UIColor.clear
-//        contentContainer.addSubview(conversationListContainer)
-//
-//        createNoConversationLabel()
-//        createListContentController()
-//        createBottomBarController()
-//        createTopBar()
-//        createNetworkStatusBar()
-//
-//        createViewConstraints()
-//        listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
-//
-//        topBarViewController.didMove(toParent: self)
-//
-//        hideNoContactLabel(animated: false)
-//        updateNoConversationVisibility()
-//        updateArchiveButtonVisibility()
-//
-//        updateObserverTokensForActiveTeam()
-//        showPushPermissionDeniedDialogIfNeeded()
-//
-//        setupStyle()
-//    }
-
-
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 

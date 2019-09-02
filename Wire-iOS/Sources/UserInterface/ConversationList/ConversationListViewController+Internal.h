@@ -29,6 +29,11 @@
 
 @property (readwrite, nonatomic, nonnull) UIView *contentContainer;
 
+@property (nonatomic, nonnull) id userObserverToken;
+@property (nonatomic, nonnull) id allConversationsObserverToken;
+@property (nonatomic, nonnull) id connectionRequestsObserverToken;
+@property (nonatomic, nonnull) id initialSyncObserverToken;
+
 - (ArchivedListViewController * _Nonnull)createArchivedListViewController;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
 - (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;

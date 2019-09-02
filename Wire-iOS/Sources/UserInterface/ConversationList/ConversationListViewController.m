@@ -62,10 +62,6 @@
 
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
-@property (nonatomic) id userObserverToken;
-//@property (nonatomic) id allConversationsObserverToken;
-//@property (nonatomic) id connectionRequestsObserverToken;
-//@property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
