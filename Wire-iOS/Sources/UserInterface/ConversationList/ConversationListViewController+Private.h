@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
 @property (nonatomic) id initialSyncObserverToken;
-@property (nonatomic) id userObserverToken;
+@property (nonatomic, nullable) id userObserverToken;
 
 
 - (void)removeUserProfileObserver;

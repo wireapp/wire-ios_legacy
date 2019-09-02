@@ -125,11 +125,6 @@
 
     self.userProfile = ZMUserSession.sharedSession.userProfile;
 
-    if ([ZMUserSession sharedSession] != nil) {
-        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
-        self.initialSyncObserverToken = [ZMUserSession addInitialSyncCompletionObserver:self userSession:[ZMUserSession sharedSession]];///TODO
-    }
-
     [self setupObservers];
 
     self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
