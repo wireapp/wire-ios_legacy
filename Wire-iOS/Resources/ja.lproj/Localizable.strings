@@ -691,7 +691,7 @@
 "meta.menu.leave" = "グループを退出...";
 "meta.menu.archive" = "アーカイブ";
 "meta.menu.unarchive" = "解答する";
-"meta.menu.delete" = "コンテンツ削除...";
+"meta.menu.clear_content" = "コンテンツ削除...";
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";

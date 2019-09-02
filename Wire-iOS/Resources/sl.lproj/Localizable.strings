@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Arhiviraj";
 "meta.menu.unarchive" = "Dearhiviraj";
-"meta.menu.delete" = "Delete Content…";
+"meta.menu.clear_content" = "Delete Content…";
 "meta.menu.silence.mute" = "Utišaj";
 "meta.menu.silence.unmute" = "Povrni glasnost";
 "meta.menu.cancel" = "Prekliči";

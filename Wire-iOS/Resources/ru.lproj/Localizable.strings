@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Покинуть группу…";
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
-"meta.menu.delete" = "Удалить контент…";
+"meta.menu.clear_content" = "Удалить контент…";
 "meta.menu.silence.mute" = "Отключить уведомления";
 "meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отмена";

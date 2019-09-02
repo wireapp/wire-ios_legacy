@@ -114,7 +114,7 @@ extension ZMConversation.Action {
     private var localizationKey: String {
         switch self {
         case .remove: return "profile.remove_dialog_button_remove"
-        case .clearContent: return "meta.menu.delete"
+        case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"

@@ -42,7 +42,7 @@ enum ProfileAction: Equatable {
         case .mute(let isMuted): return isMuted ? "meta.menu.silence.unmute".localized : "meta.menu.silence.mute".localized
         case .manageNotifications: return "meta.menu.configure_notifications".localized
         case .archive: return "meta.menu.archive".localized
-        case .deleteContents: return "meta.menu.delete".localized
+        case .deleteContents: return "meta.menu.clear_content".localized
         case .block(let isBlocked): return isBlocked ? "profile.unblock_button_title".localized : "profile.block_button_title".localized
         case .openOneToOne: return "profile.open_conversation_button_title".localized
         case .removeFromGroup: return "profile.remove_dialog_button_remove".localized

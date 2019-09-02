@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Quitter le groupe…";
 "meta.menu.archive" = "Archiver";
 "meta.menu.unarchive" = "Restaurer";
-"meta.menu.delete" = "Supprimer le contenu…";
+"meta.menu.clear_content" = "Supprimer le contenu…";
 "meta.menu.silence.mute" = "Mettre en sourdine";
 "meta.menu.silence.unmute" = "Désactiver la sourdine";
 "meta.menu.cancel" = "Annuler";

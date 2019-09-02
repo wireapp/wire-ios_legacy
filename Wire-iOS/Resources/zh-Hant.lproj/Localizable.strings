@@ -691,7 +691,7 @@
 "meta.menu.leave" = "離開群組";
 "meta.menu.archive" = "封存";
 "meta.menu.unarchive" = "解除封存";
-"meta.menu.delete" = "刪除內容...";
+"meta.menu.clear_content" = "刪除內容...";
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";

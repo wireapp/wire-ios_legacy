@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Išeiti iš grupės…";
 "meta.menu.archive" = "Archyvuoti";
 "meta.menu.unarchive" = "Išarchyvuoti";
-"meta.menu.delete" = "Trinti turinį…";
+"meta.menu.clear_content" = "Trinti turinį…";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";

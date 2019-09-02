@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Abbandona il gruppo…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
-"meta.menu.delete" = "Elimina contenuti…";
+"meta.menu.clear_content" = "Elimina contenuti…";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";

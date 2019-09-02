@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Verlaat groep…";
 "meta.menu.archive" = "Archiveren";
 "meta.menu.unarchive" = "Terugzetten";
-"meta.menu.delete" = "Inhoud Verwijderen…";
+"meta.menu.clear_content" = "Inhoud Verwijderen…";
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
