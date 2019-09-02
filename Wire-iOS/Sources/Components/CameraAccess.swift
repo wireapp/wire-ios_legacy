@@ -26,6 +26,13 @@ import UIKit
 
 final class CameraAccess: NSObject {
 
+
+    /// if there is an on going call, show a alert and return true
+    ///
+    /// - Parameters:
+    ///   - feature: a CameraAccessFeature for alert's message
+    ///   - viewController: the viewController to present the alert
+    /// - Returns: true is there is an on going call
     static func displayAlertIfOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) -> Bool {
         if ZMUserSession.shared()?.isCallOngoing == true {
             CameraAccess.displayCameraAlertForOngoingCall(at: feature, from: viewController)
@@ -36,9 +43,9 @@ final class CameraAccess: NSObject {
     }
     
     static private func displayCameraAlertForOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) {
-        let alert = UIAlertController(title: "conversation.input_bar.ongoing_call_alert.title".localized,
-                                      message: feature.message.localized,
-                                      cancelButtonTitle: "general.ok".localized)
+        let alert = UIAlertController.alertWithOKButton(title: "conversation.input_bar.ongoing_call_alert.title".localized,
+                                            message: feature.message.localized)
+
         viewController.present(alert, animated: true)
     }
 }

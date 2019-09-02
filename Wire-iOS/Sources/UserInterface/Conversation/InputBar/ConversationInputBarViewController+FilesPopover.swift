@@ -151,10 +151,7 @@ extension ConversationInputBarViewController {
     }
 
     private func recordVideo() {
-        if ZMUserSession.shared()?.isCallOngoing == true {
-            CameraAccess.displayCameraAlertForOngoingCall(at: CameraAccessFeature.recordVideo, from: self)
-            return
-        }
+        guard !displayAlertIfOngoingCall(at: CameraAccessFeature.recordVideo, from: self) else { return }
 
         presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
     }
