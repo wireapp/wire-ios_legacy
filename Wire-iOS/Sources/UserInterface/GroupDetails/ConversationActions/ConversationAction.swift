@@ -20,7 +20,7 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
-        case delete
+        case clearContent
         case leave
         case configureNotifications
         case silence(isSilenced: Bool)
@@ -44,7 +44,7 @@ extension ZMConversation {
         precondition(conversationType == .oneOnOne)
         var actions = [Action]()
         actions.append(contentsOf: availableStandardActions())
-        actions.append(.delete)
+        actions.append(.clearContent)
         if teamRemoteIdentifier == nil, let connectedUser = connectedUser {
             actions.append(.block(isBlocked: connectedUser.isBlocked))
         }
@@ -58,7 +58,7 @@ extension ZMConversation {
     
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
-        actions.append(.delete)
+        actions.append(.clearContent)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
@@ -114,7 +114,7 @@ extension ZMConversation.Action {
     private var localizationKey: String {
         switch self {
         case .remove: return "profile.remove_dialog_button_remove"
-        case .delete: return "meta.menu.delete"
+        case .clearContent: return "meta.menu.delete"
         case .leave: return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"

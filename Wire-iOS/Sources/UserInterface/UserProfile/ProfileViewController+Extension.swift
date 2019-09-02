@@ -309,12 +309,12 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
     private func presentDeleteConfirmationPrompt(from targetView: UIView) {
         guard let conversation = self.conversation else { return }
-        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
-        DeleteResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
+        let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
+        ClearContentResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
 
-    func handleDeleteResult(_ result: DeleteResult) {
+    func handleDeleteResult(_ result: ClearContentResult) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
             self.conversation?.clearMessageHistory()

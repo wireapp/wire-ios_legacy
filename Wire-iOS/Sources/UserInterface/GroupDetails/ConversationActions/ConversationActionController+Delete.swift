@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum DeleteResult {
+enum ClearContentResult {
     case delete(leave: Bool), cancel
     
     var title: String {
@@ -38,7 +38,7 @@ enum DeleteResult {
         return .cancel
     }
     
-    func action(_ handler: @escaping (DeleteResult) -> Void) -> UIAlertAction {
+    func action(_ handler: @escaping (ClearContentResult) -> Void) -> UIAlertAction {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
@@ -46,7 +46,7 @@ enum DeleteResult {
         return "meta.menu.delete_content.dialog_message".localized
     }
     
-    static func options(for conversation: ZMConversation) -> [DeleteResult] {
+    static func options(for conversation: ZMConversation) -> [ClearContentResult] {
         if conversation.conversationType == .oneOnOne || !conversation.isSelfAnActiveMember {
             return [.delete(leave: false), .cancel]
         } else {
@@ -57,13 +57,13 @@ enum DeleteResult {
 
 extension ConversationActionController {
     
-    func requestDeleteResult(for conversation: ZMConversation, handler: @escaping (DeleteResult) -> Void) {
-        let controller = UIAlertController(title: DeleteResult.title, message: nil, preferredStyle: .actionSheet)
-        DeleteResult.options(for: conversation) .map { $0.action(handler) }.forEach(controller.addAction)
+    func requestClearContentResult(for conversation: ZMConversation, handler: @escaping (ClearContentResult) -> Void) {
+        let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
+        ClearContentResult.options(for: conversation) .map { $0.action(handler) }.forEach(controller.addAction)
         present(controller)
     }
     
-    func handleDeleteResult(_ result: DeleteResult, for conversation: ZMConversation) {
+    func handleClearContentResult(_ result: ClearContentResult, for conversation: ZMConversation) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
             conversation.clearMessageHistory()

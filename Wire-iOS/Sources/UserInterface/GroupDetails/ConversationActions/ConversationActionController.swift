@@ -105,8 +105,8 @@ struct PresentationContext {
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
             }
-        case .delete: self.requestDeleteResult(for: self.conversation) { result in
-            self.handleDeleteResult(result, for: self.conversation)
+        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
+            self.handleClearContentResult(result, for: self.conversation)
             }
         case .cancelRequest:
             guard let user = self.conversation.connectedUser else { return }
