@@ -283,14 +283,3 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
     }
     
 }
-
-extension ConversationInputBarViewController {
-
-    @objc
-    func videoButtonPressed(_ sender: IconButton?) {
-        guard !CameraAccess.displayAlertIfOngoingCall(at: .recordVideo, from: self) else { return }
-        
-        
-        presentImagePicker(with: UIImagePickerController.SourceType.camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
-    }    
-}

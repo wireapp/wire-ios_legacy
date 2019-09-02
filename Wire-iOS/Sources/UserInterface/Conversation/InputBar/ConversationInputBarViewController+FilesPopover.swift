@@ -151,7 +151,7 @@ extension ConversationInputBarViewController {
     }
 
     private func recordVideo() {
-        guard !CameraAccess.displayAlertIfOngoingCall(at: CameraAccessFeature.recordVideo, from: self) else { return }
+        guard !CameraAccess.displayAlertIfOngoingCall(at: .recordVideo, from: self) else { return }
 
         presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
     }
