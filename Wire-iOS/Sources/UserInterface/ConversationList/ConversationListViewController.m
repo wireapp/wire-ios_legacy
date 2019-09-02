@@ -453,13 +453,3 @@
 }
 
 @end
-
-
-@implementation ConversationListViewController (InitialSyncObserver)
-
-- (void)initialSyncCompleted
-{
-    [self requestSuggestedHandlesIfNeeded];
-}
-
-@end
