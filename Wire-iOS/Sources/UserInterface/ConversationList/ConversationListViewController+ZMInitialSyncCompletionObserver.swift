@@ -18,14 +18,8 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc
-    func setupObservers() {
-        if let userSession = ZMUserSession.shared(),
-            let selfUser = ZMUser.selfUser() {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession)
-
-            initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-        }
+extension ConversationListViewController: ZMInitialSyncCompletionObserver {
+    public func initialSyncCompleted() {
+        requestSuggestedHandlesIfNeeded()
     }
 }
