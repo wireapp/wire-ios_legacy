@@ -58,5 +58,6 @@
 - (void)reload;
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
+- (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 @end
