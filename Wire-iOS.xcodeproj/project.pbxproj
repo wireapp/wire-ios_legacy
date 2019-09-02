@@ -1216,6 +1216,7 @@
 		EF6E9FE423193439000B7785 /* ConversationListViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */; };
 		EF6E9FE623193478000B7785 /* UIViewControllerTransitioningDelegate+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */; };
 		EF6E9FE8231960B3000B7785 /* SplitViewController+LayoutSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */; };
+		EF6E9FEA231D30AE000B7785 /* ConversationListViewController+CreateUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */; };
 		EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */; };
 		EF701A32223BE005007165E4 /* DummyComponentsVersions.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */; };
 		EF701A33223BE3D5007165E4 /* VersionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.swift */; };
@@ -3034,6 +3035,7 @@
 		EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+State.swift"; sourceTree = "<group>"; };
 		EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControllerTransitioningDelegate+Present.swift"; sourceTree = "<group>"; };
 		EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+LayoutSize.swift"; sourceTree = "<group>"; };
+		EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CreateUI.swift"; sourceTree = "<group>"; };
 		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
 		EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = DummyComponentsVersions.plist; sourceTree = "<group>"; };
 		EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+CreateView.swift"; sourceTree = "<group>"; };
@@ -5601,6 +5603,7 @@
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
 				EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
+				EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */,
 				EF3243502317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift */,
 				EF29CDC122D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift */,
 				EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */,
@@ -7555,6 +7558,7 @@
 				D5168F572010F25400F8222A /* Token.m in Sources */,
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,
 				166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */,
+				EF6E9FEA231D30AE000B7785 /* ConversationListViewController+CreateUI.swift in Sources */,
 				EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */,
 				8742C2EA1E5309FC00329FB6 /* NSAttributedString+Highlight.swift in Sources */,
 				876113E41DD1DD6B007F5969 /* SketchToolbar.swift in Sources */,

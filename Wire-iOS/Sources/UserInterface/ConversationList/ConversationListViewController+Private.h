@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class ConversationListContentController;
 @class ConversationListOnboardingHint;
 
+
+@protocol UserProfile;
+
 @interface ConversationListViewController (Private)
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic) ConversationListContentController *listContentController;
@@ -46,10 +49,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic) ConversationListState state;
+@property (nonatomic) CGFloat contentControllerBottomInset;
+
+@property (nonatomic) id initialSyncObserverToken;
+@property (nonatomic) id userObserverToken;
+
 
 - (void)removeUserProfileObserver;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 - (void)setStateValue: (ConversationListState)newState;
+
+- (void)createNoConversationLabel;
+
 @end
 
 NS_ASSUME_NONNULL_END

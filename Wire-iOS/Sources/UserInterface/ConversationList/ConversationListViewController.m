@@ -85,7 +85,6 @@
 /// for NetworkStatusViewDelegate
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
-@property (nonatomic) UIView *contentContainer;
 @property (nonatomic, nullable) UIView *conversationListContainer;
 @property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 
@@ -108,12 +107,6 @@
 - (void)removeUserProfileObserver
 {
     self.userProfileObserverToken = nil;
-}
-
-- (void)loadView
-{
-    self.view = [[PassthroughTouchesView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.view.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setSelectedConversation:(ZMConversation *)conversation
@@ -184,17 +177,6 @@
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        [self.selectedConversation savePendingLastRead];
-    }];
-
-    [self requestSuggestedHandlesIfNeeded];
-}
-
 - (void)requestSuggestedHandlesIfNeeded
 {
     if (nil == ZMUser.selfUser.handle &&
@@ -206,21 +188,6 @@
     }
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return YES;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    if (self.presentedViewController != nil) {
-        if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
-            return self.presentedViewController.preferredStatusBarStyle;
-        }
-    }
-
-    return UIStatusBarStyleLightContent;
-}
 
 - (void)createNoConversationLabel;
 {
@@ -280,32 +247,6 @@
     [self.listContentController didMoveToParentViewController:self];
 }
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-{
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
-        // orientation
-        [self.listContentController reload];
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-    }];
-    
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (BOOL)definesPresentationContext
-{
-    return YES;
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
 
 - (void)setBackgroundColorPreference:(UIColor *)color
 {
