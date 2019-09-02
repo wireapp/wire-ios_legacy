@@ -18,7 +18,11 @@
 
 import Foundation
 
-extension ConversationListViewController: PermissionDeniedViewControllerDelegate {}
+extension ConversationListViewController: PermissionDeniedViewControllerDelegate {
+    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController!) {
+        closePushPermissionDeniedDialog()
+    }
+}
 
 extension Settings {
     var pushAlertHappenedMoreThan1DayBefore: Bool {

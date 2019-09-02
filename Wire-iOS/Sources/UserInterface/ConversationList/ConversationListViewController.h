@@ -49,17 +49,10 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 - (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
 - (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
 
-- (void)selectInboxAndFocusOnView:(BOOL)focus;
-
 /**
  * Scroll to the current selection
  */
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
-
-- (void)hideArchivedConversations;
-
-- (void)presentPeoplePickerAnimated:(BOOL)animated;
-- (void)dismissPeoplePickerWithCompletionBlock:(dispatch_block_t)block;
 
 - (void)updateNoConversationVisibility;
 
