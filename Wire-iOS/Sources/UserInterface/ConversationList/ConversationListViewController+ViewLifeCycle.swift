@@ -74,24 +74,13 @@ extension ConversationListViewController {
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
             self.listContentController.reload()
-        }) { context in
-        }
-
+        })
+        
         super.viewWillTransition(to: size, with: coordinator)
     }
 
     override open var shouldAutorotate: Bool {
         return true
-    }
-
-    override open var definesPresentationContext: Bool {
-        get {
-            return true
-        }
-
-        set {
-            super.definesPresentationContext = newValue
-        }
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
