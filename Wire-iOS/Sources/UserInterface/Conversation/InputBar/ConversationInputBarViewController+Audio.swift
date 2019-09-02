@@ -95,7 +95,7 @@ extension ConversationInputBarViewController {
         guard self.mode != .audioRecord, !displayAudioMessageAlertIfNeeded() else {
             return
         }
-        
+
         type(of: self).cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideInlineAudioRecordViewController), object: nil)
         
         switch sender.state {

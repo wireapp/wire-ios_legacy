@@ -19,6 +19,22 @@
 import Foundation
 
 extension ConversationListViewController {
+
+    override open func loadView() {
+        view = PassthroughTouchesView(frame: UIScreen.main.bounds)
+        view.backgroundColor = .clear
+    }
+
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        ZMUserSession.shared()?.enqueueChanges({
+            self.selectedConversation?.savePendingLastRead()
+        })
+
+        requestSuggestedHandlesIfNeeded()
+    }
+
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -39,4 +55,47 @@ extension ConversationListViewController {
             ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
     }
+
+    override open var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        if let presentedViewController = presentedViewController,
+            presentedViewController is UIAlertController {
+            return presentedViewController.preferredStatusBarStyle
+        }
+
+        return .lightContent
+    }
+
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { context in
+            // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
+            // orientation
+            self.listContentController.reload()
+        }) { context in
+        }
+
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+
+    override open var shouldAutorotate: Bool {
+        return true
+    }
+
+    override open var definesPresentationContext: Bool {
+        get {
+            return true
+        }
+
+        set {
+            super.definesPresentationContext = newValue
+        }
+    }
+
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
 }
