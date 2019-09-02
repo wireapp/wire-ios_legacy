@@ -32,7 +32,7 @@ final class CameraAccess: NSObject {
     /// - Parameters:
     ///   - feature: a CameraAccessFeature for alert's message
     ///   - viewController: the viewController to present the alert
-    /// - Returns: true is there is an on going call
+    /// - Returns: true is there is an on going call and a alert is shown
     static func displayAlertIfOngoingCall(at feature: CameraAccessFeature, from viewController: UIViewController) -> Bool {
         if ZMUserSession.shared()?.isCallOngoing == true {
             CameraAccess.displayCameraAlertForOngoingCall(at: feature, from: viewController)
