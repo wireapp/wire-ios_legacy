@@ -92,11 +92,7 @@ extension ConversationInputBarViewController {
     }
     
     @objc func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
-        guard self.mode != .audioRecord else {
-            return
-        }
-        
-        if displayAudioMessageAlertIfNeeded() {
+        guard self.mode != .audioRecord, !displayAudioMessageAlertIfNeeded() else {
             return
         }
         
