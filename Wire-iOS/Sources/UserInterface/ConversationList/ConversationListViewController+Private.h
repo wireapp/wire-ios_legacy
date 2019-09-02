@@ -54,12 +54,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) id initialSyncObserverToken;
 @property (nonatomic, nullable) id userObserverToken;
 
+@property (nonatomic) id allConversationsObserverToken;
+@property (nonatomic) id connectionRequestsObserverToken;
+
 
 - (void)removeUserProfileObserver;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 - (void)setStateValue: (ConversationListState)newState;
 
 - (void)createNoConversationLabel;
+- (BOOL)hasArchivedConversations;
 
 @end
 

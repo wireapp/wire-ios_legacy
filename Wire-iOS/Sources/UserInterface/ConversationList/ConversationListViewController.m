@@ -54,12 +54,6 @@
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
-@interface ConversationListViewController (ConversationListObserver) <ZMConversationListObserver>
-
-- (void)updateArchiveButtonVisibility;
-
-@end
-
 
 @interface ConversationListViewController ()
 
@@ -69,9 +63,9 @@
 @property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
 @property (nonatomic) id userObserverToken;
-@property (nonatomic) id allConversationsObserverToken;
-@property (nonatomic) id connectionRequestsObserverToken;
-@property (nonatomic) id initialSyncObserverToken;
+//@property (nonatomic) id allConversationsObserverToken;
+//@property (nonatomic) id connectionRequestsObserverToken;
+//@property (nonatomic) id initialSyncObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
 @property (nonatomic) ConversationListBottomBarController *bottomBarController;
@@ -158,18 +152,6 @@
 - (void)setStateValue: (ConversationListState)newState
 {
     _state = newState;
-}
-
-- (void)updateObserverTokensForActiveTeam
-{
-    if ([ZMUserSession sharedSession] != nil) {
-        self.allConversationsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                             forList:[ZMConversationList conversationsIncludingArchivedInUserSession:[ZMUserSession sharedSession]]
-                                                                         userSession:[ZMUserSession sharedSession]];
-        self.connectionRequestsObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                               forList:[ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]
-                                                                           userSession:[ZMUserSession sharedSession]];
-    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -420,31 +402,6 @@
             [self.listContentController selectConversation:conversation scrollToMessage:nil focusOnView:YES animated:YES];
         }];
     }];
-}
-
-@end
-
-@implementation ConversationListViewController (ConversationListObserver)
-
-- (void)conversationListDidChange:(ConversationListChangeInfo *)changeInfo
-{
-    [self updateNoConversationVisibility];
-    [self updateArchiveButtonVisibility];
-}
-
-- (void)updateArchiveButtonVisibility
-{
-    BOOL showArchived = self.hasArchivedConversations;
-    if (showArchived == self.bottomBarController.showArchived) {
-        return;
-    }
-
-    [UIView transitionWithView:self.bottomBarController.view
-                      duration:0.35
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        self.bottomBarController.showArchived = showArchived;
-                    } completion:nil];
 }
 
 @end

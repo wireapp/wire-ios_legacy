@@ -1218,6 +1218,7 @@
 		EF6E9FE8231960B3000B7785 /* SplitViewController+LayoutSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */; };
 		EF6E9FEA231D30AE000B7785 /* ConversationListViewController+CreateUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */; };
 		EF6E9FEC231D401D000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */; };
+		EF6E9FEE231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */; };
 		EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */; };
 		EF701A32223BE005007165E4 /* DummyComponentsVersions.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */; };
 		EF701A33223BE3D5007165E4 /* VersionInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C1A7BA1D8FDFD8002630BB /* VersionInfoViewController.swift */; };
@@ -3038,6 +3039,7 @@
 		EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+LayoutSize.swift"; sourceTree = "<group>"; };
 		EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+CreateUI.swift"; sourceTree = "<group>"; };
 		EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ZMInitialSyncCompletionObserver.swift"; sourceTree = "<group>"; };
+		EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ZMConversationListObserver.swift"; sourceTree = "<group>"; };
 		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
 		EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = DummyComponentsVersions.plist; sourceTree = "<group>"; };
 		EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+CreateView.swift"; sourceTree = "<group>"; };
@@ -5605,6 +5607,7 @@
 				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
 				EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
+				EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */,
 				EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */,
 				EF29CDC122D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift */,
 				EF6E9FE9231D30AE000B7785 /* ConversationListViewController+CreateUI.swift */,
@@ -7776,6 +7779,7 @@
 				8742F2EB2191DCDF00D2E40F /* Message.swift in Sources */,
 				F15650EF21DD1B4100210504 /* UIColor+Hex.swift in Sources */,
 				8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */,
+				EF6E9FEE231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
 				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
