@@ -48,12 +48,6 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationListViewController (Content) <ConversationListContentDelegate>
-
-- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
-
-@end
-
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
 @end
 
@@ -100,13 +94,6 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-/// for data usage dialog
-@property (nonatomic) BOOL viewDidAppearCalled;
-
-@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated;
-
 @end
 
 
@@ -129,11 +116,15 @@
     self.view.backgroundColor = [UIColor clearColor];
 }
 
+- (void)setSelectedConversation:(ZMConversation *)conversation
+{
+    _selectedConversation = conversation;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.viewDidAppearCalled = NO;
-    self.dataUsagePermissionDialogDisplayed = NO;
 
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
@@ -176,6 +167,11 @@
     [self setupStyle];
 }
 
+- (void)setStateValue: (ConversationListState)newState
+{
+    _state = newState;
+}
+
 - (void)updateObserverTokensForActiveTeam
 {
     if ([ZMUserSession sharedSession] != nil) {
@@ -197,29 +193,6 @@
     }];
 
     [self requestSuggestedHandlesIfNeeded];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    if (! IS_IPAD_FULLSCREEN) {
-        [Settings sharedSettings].lastViewedScreen = SettingsLastScreenList;
-    }
-    
-    _state = ConversationListStateConversationList;
-    
-    [self updateBottomBarSeparatorVisibilityWithContentController:self.listContentController];
-    [self closePushPermissionDialogIfNotNeeded];
-
-    self.shouldAnimateNetworkStatusView = YES;
-
-    if (! self.viewDidAppearCalled) {
-        self.viewDidAppearCalled = YES;
-
-        [self showDataUsagePermissionDialogIfNeeded];
-        [self showAvailabilityBehaviourChangeAlertIfNeeded];
-    }
 }
 
 - (void)requestSuggestedHandlesIfNeeded
@@ -305,72 +278,6 @@
     [self addChildViewController:self.listContentController];
     [self.conversationListContainer addSubview:self.listContentController.view];
     [self.listContentController didMoveToParentViewController:self];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated
-{
-    [self setState:state animated:animated completion:nil];
-}
-
-- (void)setState:(ConversationListState)state animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    if (_state == state) {
-        if (completion) {
-            completion();
-        }
-        return;
-    }
-    self.state = state;
-
-    switch (state) {
-        case ConversationListStateConversationList: {
-            self.view.alpha = 1;
-            
-            if (self.presentedViewController != nil) {
-                [self.presentedViewController dismissViewControllerAnimated:YES completion:completion];
-            }
-            else {
-                if (completion) {
-                    completion();
-                }
-            }
-        }
-            break;
-        case ConversationListStatePeoplePicker: {
-            StartUIViewController *startUIViewController = self.createPeoplePickerController;
-            UINavigationController *navigationWrapper = [startUIViewController wrapInNavigationController:[ClearBackgroundNavigationController class]];
-            
-            [self showViewController:navigationWrapper animated:YES completion:^{
-                [startUIViewController showKeyboardIfNeeded];
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        case ConversationListStateArchived: {
-            [self showViewController:self.createArchivedListViewController animated:animated completion:^{
-                if (completion) {
-                    completion();
-                }
-            }];
-        }
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)showViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    viewController.transitioningDelegate = self;
-    viewController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    
-    [self presentViewController:viewController animated:animated completion:^{
-        if (completion) {
-            completion();
-        }
-    }];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -511,12 +418,6 @@
     return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
 }
 
-@end
-
-
-
-@implementation ConversationListViewController (Content)
-
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller
 {
     CGFloat controllerHeight = CGRectGetHeight(controller.view.bounds);
@@ -527,30 +428,6 @@
     if (self.bottomBarController.showSeparator != showSeparator) {
         self.bottomBarController.showSeparator = showSeparator;
     }
-}
-
-- (void)conversationListDidScroll:(ConversationListContentController *)controller
-{
-    [self updateBottomBarSeparatorVisibilityWithContentController:controller];
-    
-    [self.topBarViewController scrollViewDidScroll:controller.collectionView];
-}
-
-- (void)conversationList:(ConversationListViewController *)controller didSelectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus
-{
-    _selectedConversation = conversation;
-}
-
-- (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv
-{
-    if (IS_IPAD_PORTRAIT_LAYOUT) {
-        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
-    }
-}
-
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView
-{
-    [self showActionMenuForConversation:conversation fromView:sourceView];
 }
 
 @end

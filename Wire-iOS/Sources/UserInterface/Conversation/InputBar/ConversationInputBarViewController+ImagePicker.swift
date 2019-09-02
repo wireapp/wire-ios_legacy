@@ -22,7 +22,6 @@ private let zmLog = ZMSLog(tag: "ConversationInputBarViewController - Image Pick
 
 extension ConversationInputBarViewController {
 
-    @objc(presentImagePickerWithSourceType:mediaTypes:allowsEditing:pointToView:)
     func presentImagePicker(with sourceType: UIImagePickerController.SourceType,
                             mediaTypes: [String],
                             allowsEditing: Bool,

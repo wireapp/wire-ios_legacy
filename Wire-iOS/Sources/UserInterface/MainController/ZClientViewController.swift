@@ -21,8 +21,22 @@ import Foundation
 
 extension ZClientViewController {
 
+    // MARK: - Setup methods
+
+    @objc
+    func setupConversationListViewController(account: Account) {
+        conversationListViewController = ConversationListViewController()
+        conversationListViewController.account = account
+    }
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
+    }
+
+    func transitionToListIfPossible() {
+        guard splitViewController.layoutSize == .regularPortrait else { return }
+
+        transitionToList(animated: true, completion: nil)
     }
 
     @objc(transitionToListAnimated:completion:)

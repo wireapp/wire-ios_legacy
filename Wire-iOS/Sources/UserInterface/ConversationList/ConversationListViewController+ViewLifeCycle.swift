@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,27 +18,25 @@
 
 import Foundation
 
-final class RestrictedButton: Button, Restricted {
-    var requiredPermissions: Permissions = [] {
-        didSet {
-            if shouldHide {
-                isHidden = true
-            }
+extension ConversationListViewController {
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !isIPadRegular() {
+            Settings.shared().lastViewedScreen = SettingsLastScreen.list
         }
-    }
-
-    override public var isHidden: Bool {
-        get {
-            return shouldHide || super.isHidden
-        }
-
-        set {
-            if shouldHide {
-                super.isHidden = true
-            } else {
-                super.isHidden = newValue
-            }
+        
+        setStateValue(.conversationList)
+        
+        updateBottomBarSeparatorVisibility(with: listContentController)
+        closePushPermissionDialogIfNotNeeded()
+        
+        shouldAnimateNetworkStatusView = true
+        
+        if !viewDidAppearCalled {
+            viewDidAppearCalled = true
+            ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+            ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
     }
 }
-

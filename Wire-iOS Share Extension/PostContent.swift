@@ -23,7 +23,7 @@ import MobileCoreServices
 
 
 /// Content that is shared on a share extension post attempt
-class PostContent {
+final class PostContent {
     
     /// Conversation to post to
     var target: Conversation? = nil

@@ -88,7 +88,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
         perform(action)
 
         // show data usage dialog after user name take over screen
-        showDataUsagePermissionDialogIfNeeded()
+        ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
     }
 
     private func perform(_ action: UserNameTakeOverViewControllerAction) {

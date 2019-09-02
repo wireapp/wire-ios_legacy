@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,23 +18,19 @@
 
 import Foundation
 
-/**
- * Create an event handler for registration success.
- */
-
-class RegistrationSuccessEventHandler: AuthenticationEventHandler {
-
-    weak var statusProvider: AuthenticationStatusProvider?
-
-    func handleEvent(currentStep: AuthenticationFlowStep, context: Void) -> [AuthenticationCoordinatorAction]? {
-        // Only handle registration success
-        guard case let .createUser(unregisteredUser) = currentStep else {
-            return nil
+extension ZClientViewController {
+    
+    func showAvailabilityBehaviourChangeAlertIfNeeded() {
+        
+        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
+              let availability = ZMUser.selfUser()?.availability else { return }
+                
+        present(UIAlertController.availabilityExplanation(availability), animated: true)
+        
+        ZMUserSession.shared()?.performChanges {
+            notify.remove(.alert)
+            ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
         }
-
-        // Send the marketing consent value.
-        let marketingConsentValue = unregisteredUser.marketingConsent ?? false
-        return [.hideLoadingView, .setMarketingConsent(marketingConsentValue)]
     }
-
+    
 }

@@ -28,6 +28,7 @@
 @class MediaPlaybackManager;
 @class ProximityMonitorManager;
 @class LegalHoldDisclosureController;
+@class Account;
 
 @protocol ZMConversationMessage;
 
@@ -56,6 +57,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
 
 @property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
+
+
+/**
+ init method for testing allows injecting an Account object
+
+ @param account an Account object
+ @return a ZClientViewController instance
+ */
+- (instancetype)initWithAccount:(Account *)account;
 
 + (__nullable instancetype)sharedZClientViewController;
 

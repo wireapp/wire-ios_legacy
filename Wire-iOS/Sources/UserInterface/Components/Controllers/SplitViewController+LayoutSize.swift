@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,6 +27,22 @@ extension SplitViewController {
             return !isLeftViewControllerRevealed
         case .regularLandscape:
             return true
+        }
+    }
+
+    /// Update layoutSize for the change of traitCollection and the current orientation
+    ///
+    /// - Parameters:
+    ///   - traitCollection: the new traitCollection
+    @objc(updateLayoutSizeForTraitCollection:)
+    func updateLayoutSize(for traitCollection: UITraitCollection) {
+        switch (traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
+        case (.regular, true):
+            layoutSize = .regularPortrait
+        case (.regular, false):
+            layoutSize = .regularLandscape
+        default:
+            layoutSize = .compact
         }
     }
 }

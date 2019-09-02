@@ -23,11 +23,7 @@ extension ZMUser {
     @objc var pov: PointOfView {
         return self.isSelfUser ? .secondPerson : .thirdPerson
     }
-    
-    @objc var canManageTeam: Bool {
-        return self.membership?.permissions.contains(.owner) ?? false || self.membership?.permissions.contains(.admin) ?? false
-    }
-    
+        
     @objc var hasUntrustedClients: Bool {
         return nil != self.clients.first { !$0.verified }
     }

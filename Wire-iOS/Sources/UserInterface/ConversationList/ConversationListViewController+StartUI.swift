@@ -19,7 +19,6 @@
 import Foundation
 
 extension ConversationListViewController {
-    @objc
     func createPeoplePickerController() -> StartUIViewController {
         let startUIViewController = StartUIViewController()
         startUIViewController.delegate = self

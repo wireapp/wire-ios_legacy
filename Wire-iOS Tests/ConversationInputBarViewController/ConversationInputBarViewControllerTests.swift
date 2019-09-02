@@ -158,3 +158,14 @@ extension ConversationInputBarViewControllerTests {
         self.verifyInAllPhoneWidths(view: sut.view)
     }
 }
+
+// MARK: - file action sheet
+
+extension ConversationInputBarViewControllerTests {
+
+    func testUploadFileActionSheet() {
+        let alert: UIAlertController = sut.createDocUploadActionSheet()
+
+        verifyAlertController(alert)
+    }
+}

@@ -26,7 +26,17 @@ extension UIAlertController {
                                       preferredStyle: .alert)
         let viewAction = UIAlertAction(title: "registration.terms_of_use.terms.view".localized, style: .default) { [weak controller] action in
             let url = URL.wr_termsOfServicesURL(forTeamAccount: forTeamAccount).appendingLocaleParameter
-            let webViewController = BrowserViewController(url: url, entersReaderIfAvailable: true)
+            
+            let webViewController: BrowserViewController
+            if #available(iOS 11.0, *) {
+                let configuration = SFSafariViewController.Configuration()
+                configuration.entersReaderIfAvailable = true
+                webViewController = BrowserViewController(url: url,
+                                                              configuration: configuration)
+            } else {
+                webViewController = BrowserViewController(url: url,
+                                                          entersReaderIfAvailable: true)
+            }
             webViewController.completion = { [weak controller] in
                 if let controller = controller {
                     UIAlertController.requestTOSApproval(over: controller, forTeamAccount: forTeamAccount, completion: completion)

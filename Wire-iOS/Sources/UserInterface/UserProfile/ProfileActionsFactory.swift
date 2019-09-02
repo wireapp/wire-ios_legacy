@@ -159,8 +159,7 @@ final class ProfileActionsFactory: NSObject {
         switch (context, conversation?.conversationType) {
         case (_, .oneOnOne?):
 
-            // All viewers except partners can start conversations
-            if viewer.teamRole != .partner {
+            if viewer.canCreateConversation {
                 actions.append(.createGroup)
             }
 
@@ -194,8 +193,7 @@ final class ProfileActionsFactory: NSObject {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if let conversation = conversation,
-                !viewer.isGuest(in: conversation) && viewer.teamRole != .partner {
+            if let conversation = conversation, viewer.canRemoveUser(from: conversation) {
                 actions.append(.removeFromGroup)
             }
 

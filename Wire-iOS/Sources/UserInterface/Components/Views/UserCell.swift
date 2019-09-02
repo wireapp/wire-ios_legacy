@@ -21,10 +21,6 @@ import UIKit
 
 class UserCell: SeparatorCollectionViewCell {
 
-    enum AccessoryIcon {
-        case none, disclosure, connect
-    }
-    
     var hidesSubtitle: Bool = false
     
     let avatarSpacer = UIView()

@@ -26,7 +26,6 @@
 #import "WireSyncEngine+iOS.h"
 
 
-#import "ImagePickerConfirmationController.h"
 #import "Analytics.h"
 #import "Constants.h"
 #import "AppDelegate.h"

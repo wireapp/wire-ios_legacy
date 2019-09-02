@@ -105,7 +105,6 @@ final class CoreDataFixture {
         setupTestObjects()
 
         MockUser.setMockSelf(selfUser)
-
     }
 
     deinit {
@@ -251,8 +250,12 @@ extension CoreDataFixture {
 
 protocol CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture! { get }
+
+    /// with default implementation
     var otherUser: ZMUser! { get }
     var selfUser: ZMUser! { get }
+
+    var otherUserConversation: ZMConversation! { get }
 
     func createGroupConversation() -> ZMConversation
     func createTeamGroupConversation() -> ZMConversation
@@ -267,6 +270,10 @@ extension CoreDataFixtureTestHelper {
 
     var selfUser: ZMUser! {
         return coreDataFixture.selfUser
+    }
+
+    var otherUserConversation: ZMConversation! {
+        return coreDataFixture.otherUserConversation
     }
 
     func createGroupConversation() -> ZMConversation {
