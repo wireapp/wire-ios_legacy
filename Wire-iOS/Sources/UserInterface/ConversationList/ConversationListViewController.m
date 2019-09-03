@@ -45,15 +45,6 @@
 #import "AppDelegate.h"
 #import "Wire-Swift.h"
 
-@interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
-@end
-
-@interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
-@end
-
-
-
-
 @implementation ConversationListViewController
 
 - (void)dealloc
