@@ -18,7 +18,6 @@
 
 
 #import "ConversationListViewController.h"
-#import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
 
 #import "Settings.h"

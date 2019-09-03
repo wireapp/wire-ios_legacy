@@ -1677,7 +1677,6 @@
 		16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
 		1E05C2411B6F7E0600616A66 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
-		1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListViewController+Private.h"; sourceTree = "<group>"; };
 		1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmoticonSubstitutionConfiguration+Tests.h"; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
 		1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-02.json"; sourceTree = "<group>"; };
@@ -5609,7 +5608,6 @@
 			children = (
 				8F8913E91A9F287E0056AB0C /* ListContent */,
 				875D48A51A6D087F00BB17B5 /* ConversationListViewController.h */,
-				1E0737C31BD787D100D781EF /* ConversationListViewController+Private.h */,
 				EFAFCA8B21342A1E002B31A6 /* ConversationListViewController+Internal.h */,
 				875D48A61A6D087F00BB17B5 /* ConversationListViewController.m */,
 				EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */,

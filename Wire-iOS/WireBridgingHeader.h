@@ -103,7 +103,6 @@
 #import "SketchColorPickerController+Internal.h"
 
 #import "ConversationListViewController.h"
-#import "ConversationListViewController+Private.h"
 #import "ConversationListViewController+Internal.h"
 
 #import "FullscreenImageViewController.h"
