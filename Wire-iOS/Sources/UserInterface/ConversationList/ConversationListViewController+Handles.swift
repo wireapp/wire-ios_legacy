@@ -29,7 +29,7 @@ extension ConversationListViewController {
     func showUsernameTakeover(with handle: String) {
         guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
         guard nil == usernameTakeoverViewController else { return }
-        usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
+        let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
         usernameTakeoverViewController.delegate = self
 
         addChild(usernameTakeoverViewController)
@@ -40,6 +40,8 @@ extension ConversationListViewController {
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
             takeover.edges == view.edges
         }
+
+        self.usernameTakeoverViewController = usernameTakeoverViewController
 
         guard traitCollection.userInterfaceIdiom == .pad else { return }
         ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
@@ -90,7 +92,7 @@ extension ConversationListViewController {
             session.hasCompletedInitialSync == true,
             session.isPendingHotFixChanges == false {
 
-            userProfileObserverToken = userProfile.add(observer: self) as? NSObject
+            userProfileObserverToken = userProfile?.add(observer: self) as? NSObject
             userProfile.suggestHandles()
         }
     }

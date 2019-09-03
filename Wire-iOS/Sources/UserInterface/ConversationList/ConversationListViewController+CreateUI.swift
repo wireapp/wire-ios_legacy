@@ -19,7 +19,6 @@
 import Foundation
 
 extension ConversationListViewController {
-    @objc
     func setupObservers() {
         if let userSession = ZMUserSession.shared(),
             let selfUser = ZMUser.selfUser() {
@@ -29,7 +28,6 @@ extension ConversationListViewController {
         }
     }
 
-    @objc
     func createNoConversationLabel() {
         noConversationLabel = UILabel()
         noConversationLabel.attributedText = NSAttributedString.attributedTextForNoConversationLabel
@@ -37,7 +35,6 @@ extension ConversationListViewController {
         contentContainer.addSubview(noConversationLabel)
     }
 
-    @objc
     func createBottomBarController() {
         bottomBarController = ConversationListBottomBarController(delegate: self)
         bottomBarController.showArchived = true
@@ -46,7 +43,6 @@ extension ConversationListViewController {
         bottomBarController.didMove(toParent: self)
     }
 
-    @objc
     func createListContentController() {
         listContentController = ConversationListContentController()
         listContentController.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: contentControllerBottomInset, right: 0)
@@ -80,7 +76,6 @@ extension ConversationListViewController {
         }
     }
 
-    @objc(hideNoContactLabelAnimated:)
     func hideNoContactLabel(animated: Bool) {
         UIView.animate(withDuration: animated ? 0.20 : 0.0, animations: {
             self.noConversationLabel.alpha = 0.0
@@ -88,7 +83,6 @@ extension ConversationListViewController {
         })
     }
 
-    @objc
     func updateNoConversationVisibility() {
         if !hasConversations {
             showNoContactLabel()

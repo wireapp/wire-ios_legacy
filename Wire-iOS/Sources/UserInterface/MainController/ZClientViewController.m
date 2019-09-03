@@ -24,7 +24,6 @@
 
 #import "AppDelegate.h"
 
-#import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
 #import "ProfileViewController.h"

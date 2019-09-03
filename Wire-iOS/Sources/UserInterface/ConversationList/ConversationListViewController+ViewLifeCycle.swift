@@ -20,12 +20,12 @@ import Foundation
 
 extension ConversationListViewController {
 
-    override open func loadView() {
+    override func loadView() {
         view = PassthroughTouchesView(frame: UIScreen.main.bounds)
         view.backgroundColor = .clear
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         viewDidAppearCalled = false
         definesPresentationContext = true
@@ -72,7 +72,7 @@ extension ConversationListViewController {
     }
 
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         ZMUserSession.shared()?.enqueueChanges({
@@ -82,7 +82,7 @@ extension ConversationListViewController {
         requestSuggestedHandlesIfNeeded()
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         if !isIPadRegular() {
@@ -103,11 +103,11 @@ extension ConversationListViewController {
         }
     }
 
-    override open var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return true
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         if let presentedViewController = presentedViewController,
             presentedViewController is UIAlertController {
             return presentedViewController.preferredStatusBarStyle
@@ -116,7 +116,7 @@ extension ConversationListViewController {
         return .lightContent
     }
 
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { context in
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
@@ -126,11 +126,11 @@ extension ConversationListViewController {
         super.viewWillTransition(to: size, with: coordinator)
     }
 
-    override open var shouldAutorotate: Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
 }

@@ -37,7 +37,7 @@ extension ConversationListViewController {
          contentContainer,
          noConversationLabel,
          onboardingHint,
-         listContent].forEach() { $0.translatesAutoresizingMaskIntoConstraints = false }
+         listContent].forEach() { $0?.translatesAutoresizingMaskIntoConstraints = false }
 
         bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
 
