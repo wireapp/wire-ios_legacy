@@ -110,6 +110,22 @@ final class ConversationListViewController: UIViewController {
         topBarViewController = ConversationListTopBarViewController(account: account)
 
         super.init(nibName:nil, bundle:nil)
+
+        definesPresentationContext = true
+
+        /// setup UI
+        view.addSubview(contentContainer)
+
+        contentContainer.addSubview(onboardingHint)
+        contentContainer.addSubview(conversationListContainer)
+
+        setupNoConversationLabel()
+        setupListContentController()
+        setupBottomBarController()
+        setupTopBar()
+        setupNetworkStatusBar()
+
+        createViewConstraints()
     }
 
     @available(*, unavailable)
@@ -128,23 +144,8 @@ final class ConversationListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        definesPresentationContext = true
 
-        /// setup UI
-        view.addSubview(contentContainer)
-
-        contentContainer.addSubview(onboardingHint)
-        contentContainer.addSubview(conversationListContainer)
-
-        setupNoConversationLabel()
-        setupListContentController()
-        setupBottomBarController()
-        setupTopBar()
-        setupNetworkStatusBar()
-
-        createViewConstraints()
-
-        /// update 
+        /// update
         hideNoContactLabel(animated: false)
         updateNoConversationVisibility()
         updateArchiveButtonVisibility()
@@ -154,7 +155,6 @@ final class ConversationListViewController: UIViewController {
         setupObservers()
 
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
