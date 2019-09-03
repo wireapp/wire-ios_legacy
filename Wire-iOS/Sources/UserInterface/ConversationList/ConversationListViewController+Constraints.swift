@@ -20,7 +20,6 @@ import Foundation
 
 extension ConversationListViewController {
 
-    @objc
     func createViewConstraints() {
         guard let conversationListContainer = conversationListContainer,
               let onboardingHint = onboardingHint,
@@ -39,7 +38,7 @@ extension ConversationListViewController {
          onboardingHint,
          listContent].forEach() { $0?.translatesAutoresizingMaskIntoConstraints = false }
 
-        bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
+        let bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
 
         let constraints: [NSLayoutConstraint] = [
             conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
@@ -74,6 +73,8 @@ extension ConversationListViewController {
             listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
         ]
 
+        self.bottomBarBottomOffset = bottomBarBottomOffset
+        
         ///TODO: merge this method and activate the constraints in a batch
         networkStatusViewController.createConstraintsInParentController(bottomView: topBarViewController.view, controller: self)
 

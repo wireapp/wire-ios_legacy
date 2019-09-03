@@ -87,12 +87,14 @@ extension ConversationListViewController {
     }
 
     func requestSuggestedHandlesIfNeeded() {
-        guard let session = ZMUserSession.shared() else { return }
+        guard let session = ZMUserSession.shared(),
+              let userProfile = userProfile else { return }
+
         if nil == ZMUser.selfUser()?.handle,
             session.hasCompletedInitialSync == true,
             session.isPendingHotFixChanges == false {
 
-            userProfileObserverToken = userProfile?.add(observer: self) as? NSObject
+            userProfileObserverToken = userProfile.add(observer: self) as? NSObject
             userProfile.suggestHandles()
         }
     }

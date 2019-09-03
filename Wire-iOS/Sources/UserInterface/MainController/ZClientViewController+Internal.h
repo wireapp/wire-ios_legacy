@@ -23,6 +23,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class ZMConversation;
+@class BackgroundViewController;
 
 /**
  * Protected methods for zclientviewcontroller.
@@ -62,6 +63,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
 
 @property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
+
+@property (nonatomic) BackgroundViewController *backgroundViewController;
 
 @end
 

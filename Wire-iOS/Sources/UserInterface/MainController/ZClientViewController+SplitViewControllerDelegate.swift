@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,8 +18,9 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc func setupStyle() {
-        noConversationLabel.backgroundColor = .clear
+extension ZClientViewController: SplitViewControllerDelegate {
+    public func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool {
+        return splitViewController.rightViewController != nil && splitViewController.leftViewController == backgroundViewController && conversationListViewController.state == .conversationList && (conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == false)
+
     }
 }

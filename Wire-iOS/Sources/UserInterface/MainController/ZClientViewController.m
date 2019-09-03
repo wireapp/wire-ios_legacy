@@ -41,7 +41,7 @@
 
 #import "StartUIViewController.h"
 
-@interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
+@interface ZClientViewController (InitialState)
 
 - (void)restoreStartupState;
 - (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
@@ -58,7 +58,6 @@
 
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic) BackgroundViewController *backgroundViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
@@ -602,7 +601,7 @@
         [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
-
+/*
 #pragma mark - SplitViewControllerDelegate
 
 - (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
@@ -612,7 +611,7 @@
            self.conversationListViewController.state == ConversationListStateConversationList &&
            (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
 }
-
+*/
 @end
 
 

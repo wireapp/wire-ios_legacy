@@ -25,15 +25,15 @@ enum ConversationListState {
 }
 
 final class ConversationListViewController: UIViewController {
-    private(set) var selectedConversation: ZMConversation?
-    var usernameTakeoverViewController: UserNameTakeOverViewController?
+    ///internal
+    var state: ConversationListState?
+
+    var selectedConversation: ZMConversation? ///TODO: private
     var isComingFromSetUsername = false
     var startCallToken: Any?
-    var account: Account?
-    private(set) var state: ConversationListState?
+    var account: Account! ///TODO: optional?
 
     var noConversationLabel: UILabel!
-    var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var actionsController: ConversationActionController?
     var viewDidAppearCalled = false
     //@property (readwrite, nonatomic, nonnull) UIView *contentContainer; ///TODO: private set
@@ -47,11 +47,13 @@ final class ConversationListViewController: UIViewController {
 
     weak var userProfile: UserProfile?
 
+    var pushPermissionDeniedViewController: PermissionDeniedViewController?
+    var usernameTakeoverViewController: UserNameTakeOverViewController?
     ///TODO: non-optional
     var contentContainer: UIView!
     var listContentController: ConversationListContentController!
     var bottomBarController: ConversationListBottomBarController!
-    private(set) var topBarViewController: ConversationListTopBarViewController!
+    var topBarViewController: ConversationListTopBarViewController!
     var networkStatusViewController: NetworkStatusViewController!
 
     /// for NetworkStatusViewDelegate
@@ -64,9 +66,12 @@ final class ConversationListViewController: UIViewController {
     var onboardingHint: ConversationListOnboardingHint?
 
     func setSelectedConversation(_ conversation: ZMConversation) {
+        selectedConversation = conversation
     }
 
+    ///TODO: rm
     func setStateValue(_ newState: ConversationListState) {
+        state = newState
     }
 
     deinit {

@@ -68,7 +68,7 @@ extension ConversationListViewController {
         updateObserverTokensForActiveTeam()
         showPushPermissionDeniedDialogIfNeeded()
 
-        setupStyle()
+        noConversationLabel.backgroundColor = .clear
     }
 
 
