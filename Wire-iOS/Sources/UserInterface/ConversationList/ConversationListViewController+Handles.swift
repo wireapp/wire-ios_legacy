@@ -78,6 +78,16 @@ extension ConversationListViewController {
         userProfile?.requestSettingHandle(handle: handle)
     }
 
+    func requestSuggestedHandlesIfNeeded() {
+        guard let session = ZMUserSession.shared() else { return }
+        if nil == ZMUser.selfUser()?.handle,
+            session.hasCompletedInitialSync == true,
+            session.isPendingHotFixChanges == false {
+
+            userProfileObserverToken = userProfile.add(observer: self) as? NSObject
+            userProfile.suggestHandles()
+        }
+    }
 }
 
 

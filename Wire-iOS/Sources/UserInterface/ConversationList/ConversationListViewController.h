@@ -45,6 +45,4 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 
 @property (nonatomic, readonly) ConversationListState state;
 
-- (void)updateNoConversationVisibility;
-
 @end

@@ -111,77 +111,77 @@
     _state = newState;
 }
 
-- (void)requestSuggestedHandlesIfNeeded
-{
-    if (nil == ZMUser.selfUser.handle &&
-        ZMUserSession.sharedSession.hasCompletedInitialSync &&
-        !ZMUserSession.sharedSession.isPendingHotFixChanges) {
-        
-        self.userProfileObserverToken = [self.userProfile addObserver:self];
-        [self.userProfile suggestHandles];
-    }
-}
+//- (void)requestSuggestedHandlesIfNeeded
+//{
+//    if (nil == ZMUser.selfUser.handle &&
+//        ZMUserSession.sharedSession.hasCompletedInitialSync &&
+//        !ZMUserSession.sharedSession.isPendingHotFixChanges) {
+//        
+//        self.userProfileObserverToken = [self.userProfile addObserver:self];
+//        [self.userProfile suggestHandles];
+//    }
+//}
+//
+//- (void)setBackgroundColorPreference:(UIColor *)color
+//{
+//    [UIView animateWithDuration:0.4 animations:^{
+//        self.view.backgroundColor = color;
+//        self.listContentController.view.backgroundColor = color;
+//    }];
+//}
+//
+//- (void)showNoContactLabel;
+//{
+//    if (self.state == ConversationListStateConversationList) {
+//        [UIView animateWithDuration:0.20
+//                         animations:^{
+//                             self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0f : 0.0f;
+//                             self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0f : 1.0f;
+//                         }];
+//    }
+//}
+//
+//- (void)hideNoContactLabelAnimated:(BOOL)animated;
+//{
+//    [UIView animateWithDuration:animated ? 0.20 : 0.0
+//                     animations:^{
+//                         self.noConversationLabel.alpha = 0.0f;
+//                         self.onboardingHint.alpha = 0.0f;
+//                     }];
+//}
+//
+//- (void)updateNoConversationVisibility;
+//{
+//    if (!self.hasConversations) {
+//        [self showNoContactLabel];
+//    } else {
+//        [self hideNoContactLabelAnimated:YES];
+//    }
+//}
 
-- (void)setBackgroundColorPreference:(UIColor *)color
-{
-    [UIView animateWithDuration:0.4 animations:^{
-        self.view.backgroundColor = color;
-        self.listContentController.view.backgroundColor = color;
-    }];
-}
-
-- (void)showNoContactLabel;
-{
-    if (self.state == ConversationListStateConversationList) {
-        [UIView animateWithDuration:0.20
-                         animations:^{
-                             self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0f : 0.0f;
-                             self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0f : 1.0f;
-                         }];
-    }
-}
-
-- (void)hideNoContactLabelAnimated:(BOOL)animated;
-{
-    [UIView animateWithDuration:animated ? 0.20 : 0.0
-                     animations:^{
-                         self.noConversationLabel.alpha = 0.0f;
-                         self.onboardingHint.alpha = 0.0f;
-                     }];
-}
-
-- (void)updateNoConversationVisibility;
-{
-    if (!self.hasConversations) {
-        [self showNoContactLabel];
-    } else {
-        [self hideNoContactLabelAnimated:YES];
-    }
-}
-
-- (BOOL)hasConversations
-{
-    ZMUserSession *session = ZMUserSession.sharedSession;
-    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
-    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
-    return conversationsCount > 0;
-}
-
-- (BOOL)hasArchivedConversations
-{
-    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
-}
-
-- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller
-{
-    CGFloat controllerHeight = CGRectGetHeight(controller.view.bounds);
-    CGFloat contentHeight = controller.collectionView.contentSize.height;
-    CGFloat offsetY = controller.collectionView.contentOffset.y;
-    BOOL showSeparator = contentHeight - offsetY + self.contentControllerBottomInset > controllerHeight;
-    
-    if (self.bottomBarController.showSeparator != showSeparator) {
-        self.bottomBarController.showSeparator = showSeparator;
-    }
-}
+//- (BOOL)hasConversations
+//{
+//    ZMUserSession *session = ZMUserSession.sharedSession;
+//    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
+//    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
+//    return conversationsCount > 0;
+//}
+//
+//- (BOOL)hasArchivedConversations
+//{
+//    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
+//}
+//
+//- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller
+//{
+//    CGFloat controllerHeight = CGRectGetHeight(controller.view.bounds);
+//    CGFloat contentHeight = controller.collectionView.contentSize.height;
+//    CGFloat offsetY = controller.collectionView.contentOffset.y;
+//    BOOL showSeparator = contentHeight - offsetY + self.contentControllerBottomInset > controllerHeight;
+//    
+//    if (self.bottomBarController.showSeparator != showSeparator) {
+//        self.bottomBarController.showSeparator = showSeparator;
+//    }
+//}
 
 @end
