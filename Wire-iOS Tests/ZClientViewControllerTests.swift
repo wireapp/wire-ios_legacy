@@ -19,15 +19,19 @@
 import XCTest
 @testable import Wire
 
-final class ZClientViewControllerSnapshotTests: XCTestCase {
+final class ZClientViewControllerTests: XCTestCase {
     var sut: ZClientViewController!
-    /// mocks self user for ConversationListTopBarViewController
-    let coreDataFixture = CoreDataFixture()
 
     override func setUp() {
         super.setUp()
 
-        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData))
+        /// mocks self user for ConversationListTopBarViewController
+        let _ = CoreDataFixture()
+
+        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData),
+                                    selfUser: MockUser.selfUser
+        )
+        
     }
 
     override func tearDown() {

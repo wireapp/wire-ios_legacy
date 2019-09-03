@@ -23,9 +23,10 @@ extension ZClientViewController {
 
     // MARK: - Setup methods
 
+    ///TODO: caller to Swift
     @objc
-    func setupConversationListViewController(account: Account) {
-        conversationListViewController = ConversationListViewController(account: account)
+    func setupConversationListViewController(account: Account, selfUser: UserType) {
+        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser as! SelfUserType)
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {

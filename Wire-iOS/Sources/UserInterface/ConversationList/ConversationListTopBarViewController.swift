@@ -37,7 +37,8 @@ final class ConversationListTopBarViewController: UIViewController {
     /// - Parameters:
     ///   - account: the Account of the user
     ///   - selfUser: the self user object. Allow to inject a mock self user for testing
-    init(account: Account, selfUser: SelfUserType = ZMUser.selfUser()) {
+    init(account: Account,
+         selfUser: SelfUserType = ZMUser.selfUser()) {
         self.account = account
         self.selfUser = selfUser
         

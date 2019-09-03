@@ -84,10 +84,10 @@
 
 - (instancetype)init
 {
-    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount];
+    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount selfUser:ZMUser.selfUser];
 }
 
-- (instancetype)initWithAccount:(Account *)account
+- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser
 {
     self = [super init];
     if (self) {
@@ -118,7 +118,7 @@
         [self setupAppearance];
 
         [self createLegalHoldDisclosureController];
-        [self setupConversationListViewControllerWithAccount:account];
+        [self setupConversationListViewControllerWithAccount:account selfUser: selfUser];
     }
     return self;
 }

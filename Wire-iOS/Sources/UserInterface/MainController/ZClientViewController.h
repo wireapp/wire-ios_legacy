@@ -31,6 +31,7 @@
 @class Account;
 
 @protocol ZMConversationMessage;
+@protocol UserType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -65,7 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param account an Account object
  @return a ZClientViewController instance
  */
-- (instancetype)initWithAccount:(Account *)account;
+//- (instancetype)initWithAccount:(Account *)account;
+- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser;
 
 + (__nullable instancetype)sharedZClientViewController;
 

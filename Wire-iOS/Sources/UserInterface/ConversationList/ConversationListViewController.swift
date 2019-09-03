@@ -105,9 +105,10 @@ final class ConversationListViewController: UIViewController {
         return conversationListOnboardingHint
     }()
 
-    required init(account: Account) {
+    required init(account: Account,
+                  selfUser: SelfUserType = ZMUser.selfUser()) {
         self.account = account
-        topBarViewController = ConversationListTopBarViewController(account: account)
+        topBarViewController = ConversationListTopBarViewController(account: account, selfUser: selfUser)
 
         super.init(nibName:nil, bundle:nil)
 
