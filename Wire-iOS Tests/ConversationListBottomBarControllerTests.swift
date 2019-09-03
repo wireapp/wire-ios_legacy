@@ -45,7 +45,8 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         accentColor = .brightYellow
         mockDelegate = MockConversationListBottomBarDelegate()
         UIView.performWithoutAnimation({
-            self.sut = ConversationListBottomBarController(delegate: self.mockDelegate)
+            self.sut = ConversationListBottomBarController()
+            self.sut.delegate = self.mockDelegate
 
             ///SUT has a priority 750 height constraint. fix its height first
             NSLayoutConstraint.activate([
