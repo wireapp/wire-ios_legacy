@@ -25,14 +25,17 @@ enum ConversationListState {
 }
 
 final class ConversationListViewController: UIViewController {
-    /// internal
+    /// internal View Model
     var state: ConversationListState?
+    var selectedConversation: ZMConversation?
 
     /// private
     private var viewDidAppearCalled = false
     private let contentControllerBottomInset: CGFloat = 16
 
-    var selectedConversation: ZMConversation? ///TODO: private
+    /// for NetworkStatusViewDelegate
+    var shouldAnimateNetworkStatusView = false
+
     var isComingFromSetUsername = false
     var startCallToken: Any?
     var account: Account! ///TODO: optional?
@@ -48,7 +51,7 @@ final class ConversationListViewController: UIViewController {
     var initialSyncObserverToken: Any?
     var userProfileObserverToken: NSObject?
 
-    weak var userProfile: UserProfile?
+    weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
@@ -59,17 +62,11 @@ final class ConversationListViewController: UIViewController {
     var topBarViewController: ConversationListTopBarViewController!
     var networkStatusViewController: NetworkStatusViewController!
 
-    /// for NetworkStatusViewDelegate
-    var shouldAnimateNetworkStatusView = false
     var conversationListContainer: UIView?
     var bottomBarBottomOffset: NSLayoutConstraint?
     var bottomBarToolTipConstraint: NSLayoutConstraint?
 
     var onboardingHint: ConversationListOnboardingHint?
-
-    func setSelectedConversation(_ conversation: ZMConversation) {
-        selectedConversation = conversation
-    }
 
     ///TODO: rm
     func setStateValue(_ newState: ConversationListState) {
@@ -89,13 +86,9 @@ final class ConversationListViewController: UIViewController {
         super.viewDidLoad()
         definesPresentationContext = true
 
-        shouldAnimateNetworkStatusView = false
-
         contentContainer = UIView()
         contentContainer.backgroundColor = .clear
         view.addSubview(contentContainer)
-
-        userProfile = ZMUserSession.shared()?.userProfile
 
         let onboardingHint = ConversationListOnboardingHint()
         contentContainer.addSubview(onboardingHint)
