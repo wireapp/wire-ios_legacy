@@ -45,14 +45,14 @@ struct PresentationContext {
     let rect: CGRect
 }
 
-@objcMembers final class ConversationActionController: NSObject, ActionController {
+final class ConversationActionController: NSObject, ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    @objc init(conversation: ZMConversation, target: UIViewController) {
+    init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
         super.init()

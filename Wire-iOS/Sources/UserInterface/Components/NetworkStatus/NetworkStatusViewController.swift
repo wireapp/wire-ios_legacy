@@ -31,10 +31,9 @@ protocol NetworkStatusViewControllerDelegate: class {
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool
 }
 
-@objc
-class NetworkStatusViewController : UIViewController {
+final class NetworkStatusViewController : UIViewController {
 
-    public weak var delegate: NetworkStatusBarDelegate? {
+    weak var delegate: NetworkStatusBarDelegate? {
         didSet {
             networkStatusView.delegate = delegate
         }
@@ -110,7 +109,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    @objc public func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
+    func createConstraintsInParentController(bottomView: UIView, controller: UIViewController) {
         constrain(bottomView, controller.view, view) { bottomView, containerView, networkStatusViewControllerView in
             networkStatusViewControllerView.leading == containerView.leading
             networkStatusViewControllerView.trailing == containerView.trailing
@@ -141,7 +140,7 @@ class NetworkStatusViewController : UIViewController {
         }
     }
 
-    @objc internal func tappedOnNetworkStatusBar() {
+    @objc func tappedOnNetworkStatusBar() {
         switch networkStatusView.state {
         case .offlineExpanded:
             showOfflineAlert()
@@ -210,7 +209,7 @@ extension NetworkStatusViewController {
         }
     }
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         updateStateForIPad()

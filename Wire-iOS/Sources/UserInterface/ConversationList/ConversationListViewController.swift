@@ -43,10 +43,10 @@ final class ConversationListViewController: UIViewController {
     var actionsController: ConversationActionController?
 
     /// observer tokens which are assigned when viewDidLoad
-    var userObserverToken: Any?
+    fileprivate var userObserverToken: Any?
+    fileprivate var initialSyncObserverToken: Any?
     var allConversationsObserverToken: Any?
     var connectionRequestsObserverToken: Any?
-    var initialSyncObserverToken: Any?
     var userProfileObserverToken: Any?
 
     weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
@@ -54,7 +54,7 @@ final class ConversationListViewController: UIViewController {
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
 
-    private let noConversationLabel: UILabel = {
+    fileprivate let noConversationLabel: UILabel = {
         let label = UILabel()
         label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
         label.numberOfLines = 0
@@ -97,10 +97,7 @@ final class ConversationListViewController: UIViewController {
         return view
     }()
 
-    var bottomBarBottomOffset: NSLayoutConstraint?
-    var bottomBarToolTipConstraint: NSLayoutConstraint?
-
-    let onboardingHint: ConversationListOnboardingHint = {
+    fileprivate let onboardingHint: ConversationListOnboardingHint = {
         let conversationListOnboardingHint = ConversationListOnboardingHint()
         return conversationListOnboardingHint
     }()
@@ -309,8 +306,6 @@ final class ConversationListViewController: UIViewController {
             listContent.trailingAnchor.constraint(equalTo: listContent.superview!.trailingAnchor),
             listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
         ]
-        
-        self.bottomBarBottomOffset = bottomBarBottomOffset
         
         ///TODO: merge this method and activate the constraints in a batch
         networkStatusViewController.createConstraintsInParentController(bottomView: topBarView, controller: self)
