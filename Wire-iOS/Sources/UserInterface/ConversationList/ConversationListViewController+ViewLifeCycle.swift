@@ -75,7 +75,7 @@ extension ConversationListViewController {
             // orientation
             self.listContentController.reload()
         })
-        
+
         super.viewWillTransition(to: size, with: coordinator)
     }
 

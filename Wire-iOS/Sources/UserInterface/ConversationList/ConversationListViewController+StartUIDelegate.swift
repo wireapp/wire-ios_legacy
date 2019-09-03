@@ -42,7 +42,7 @@ extension ConversationListViewController: StartUIDelegate {
     }
 
     public func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
-        dismissPeoplePicker(completionBlock: {
+        dismissPeoplePicker(with: {
             ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
         })
     }
@@ -71,7 +71,7 @@ extension ConversationListViewController {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
         
-        dismissPeoplePicker(completionBlock: {
+        dismissPeoplePicker(with: {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil

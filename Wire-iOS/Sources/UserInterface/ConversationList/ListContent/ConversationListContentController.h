@@ -53,11 +53,11 @@
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
-- (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 - (void)deselectAll;
 - (void)reload;
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
+- (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 @end

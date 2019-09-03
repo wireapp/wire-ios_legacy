@@ -169,11 +169,6 @@
     }];
 }
 
-- (void)hideArchivedConversations
-{
-    [self setState:ConversationListStateConversationList animated:YES];
-}
-
 #pragma mark - Selection
 
 - (void)selectConversation:(ZMConversation *)conversation
@@ -197,12 +192,6 @@
     }];
 }
 
-- (void)selectInboxAndFocusOnView:(BOOL)focus
-{
-    [self setState:ConversationListStateConversationList animated:NO];
-    [self.listContentController selectInboxAndFocusOnView:focus];
-}
-
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated
 {
     [self.listContentController scrollToCurrentSelectionAnimated:animated];
@@ -218,16 +207,6 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return YES;
-}
-
-- (void)presentPeoplePickerAnimated:(BOOL)animated
-{
-    [self setState:ConversationListStatePeoplePicker animated:animated];
-}
-
-- (void)dismissPeoplePickerWithCompletionBlock:(dispatch_block_t)block
-{
-    [self setState:ConversationListStateConversationList animated:YES completion:block];
 }
 
 - (void)showNoContactLabel;
@@ -282,62 +261,6 @@
     if (self.bottomBarController.showSeparator != showSeparator) {
         self.bottomBarController.showSeparator = showSeparator;
     }
-}
-
-@end
-
-
-@implementation ConversationListViewController (PermissionDenied)
-
-- (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController
-{
-    [self closePushPermissionDeniedDialog];
-}
-
-@end
-
-#pragma mark - ConversationListBottomBarDelegate
-
-@implementation ConversationListViewController (BottomBarDelegate)
-
-- (void)conversationListBottomBar:(ConversationListBottomBarController *)bar didTapButtonWithType:(enum ConversationListButtonType)buttonType
-{
-    switch (buttonType) {
-        case ConversationListButtonTypeArchive:
-            [self setState:ConversationListStateArchived animated:YES];
-            break;
-
-        case ConversationListButtonTypeStartUI:
-            [self presentPeoplePicker];
-            break;
-    }
-}
-
-- (void)presentPeoplePicker
-{
-    [self setState:ConversationListStatePeoplePicker animated:YES completion:nil];
-}
-
-@end
-
-@implementation ConversationListViewController (Archive)
-
-- (void)archivedListViewControllerWantsToDismiss:(ArchivedListViewController *)controller
-{
-    [self setState:ConversationListStateConversationList animated:YES];
-}
-
-- (void)archivedListViewController:(ArchivedListViewController *)controller didSelectConversation:(ZMConversation *)conversation
-{
-    ZM_WEAK(self);
-    [ZMUserSession.sharedSession enqueueChanges:^{
-        conversation.isArchived = NO;
-    } completionHandler:^{
-        [self setState:ConversationListStateConversationList animated:YES completion:^{
-            ZM_STRONG(self);
-            [self.listContentController selectConversation:conversation scrollToMessage:nil focusOnView:YES animated:YES];
-        }];
-    }];
 }
 
 @end
