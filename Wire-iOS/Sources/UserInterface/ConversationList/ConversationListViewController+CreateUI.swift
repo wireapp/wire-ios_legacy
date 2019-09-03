@@ -23,7 +23,7 @@ extension ConversationListViewController {
     func setupObservers() {
         if let userSession = ZMUserSession.shared(),
             let selfUser = ZMUser.selfUser() {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
 
             initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }

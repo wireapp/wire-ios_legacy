@@ -74,8 +74,7 @@ extension ConversationListViewController {
             // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
             // orientation
             self.listContentController.reload()
-        }) { context in
-        }
+        })
 
         super.viewWillTransition(to: size, with: coordinator)
     }
