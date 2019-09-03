@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, ConversationListState) {
 @property (nonatomic, readonly) ZMConversation *selectedConversation;
 @property (nonatomic) UserNameTakeOverViewController *usernameTakeoverViewController;
 @property (nonatomic) BOOL isComingFromSetUsername;
-@property (nonatomic, readonly) UIView *contentContainer;
+@property (nonatomic) UIView *contentContainer;
 @property (nonatomic) id startCallToken;
 @property (nonatomic) Account *account;
 

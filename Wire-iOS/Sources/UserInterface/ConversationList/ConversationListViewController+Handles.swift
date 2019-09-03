@@ -59,6 +59,12 @@ extension ConversationListViewController {
         }
     }
 
+    @objc
+    func removeUserProfileObserver() {
+        userProfileObserverToken = nil
+    }
+
+
     fileprivate func openChangeHandleViewController(with handle: String) {
         // We need to ensure we are currently showing the takeover as this
         // callback will also get invoked when changing the handle from the settings view controller.

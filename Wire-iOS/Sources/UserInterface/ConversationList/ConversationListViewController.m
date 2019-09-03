@@ -20,9 +20,6 @@
 #import "ConversationListViewController.h"
 #import "ConversationListViewController+Internal.h"
 
-#import "Settings.h"
-#import "UIScrollView+Zeta.h"
-
 #import "ZClientViewController.h"
 #import "ZClientViewController+Internal.h"
 
@@ -51,137 +48,14 @@
     [self removeUserProfileObserver];
 }
 
-- (void)removeUserProfileObserver
-{
-    self.userProfileObserverToken = nil;
-}
-
 - (void)setSelectedConversation:(ZMConversation *)conversation
 {
     _selectedConversation = conversation;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.viewDidAppearCalled = NO;
-    self.definesPresentationContext = YES;
-
-    self.contentControllerBottomInset = 16;
-    self.shouldAnimateNetworkStatusView = NO;
-    
-    self.contentContainer = [[UIView alloc] init];
-    self.contentContainer.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.contentContainer];
-
-    self.userProfile = ZMUserSession.sharedSession.userProfile;
-
-    [self setupObservers];
-
-    self.onboardingHint = [[ConversationListOnboardingHint alloc] init];
-    [self.contentContainer addSubview:self.onboardingHint];
-
-    self.conversationListContainer = [[UIView alloc] init];
-    self.conversationListContainer.backgroundColor = [UIColor clearColor];
-    [self.contentContainer addSubview:self.conversationListContainer];
-
-    [self createNoConversationLabel];
-    [self createListContentController];
-    [self createBottomBarController];
-    [self createTopBar];
-    [self createNetworkStatusBar];
-
-    [self createViewConstraints];
-    [self.listContentController.collectionView scrollRectToVisible:CGRectMake(0, 0, self.view.bounds.size.width, 1) animated:NO];
-    
-    [self.topBarViewController didMoveToParentViewController:self];
-    
-    [self hideNoContactLabelAnimated:NO];
-    [self updateNoConversationVisibility];
-    [self updateArchiveButtonVisibility];
-    
-    [self updateObserverTokensForActiveTeam];
-    [self showPushPermissionDeniedDialogIfNeeded];
-
-    [self setupStyle];
-}
 
 - (void)setStateValue: (ConversationListState)newState
 {
     _state = newState;
 }
-
-//- (void)requestSuggestedHandlesIfNeeded
-//{
-//    if (nil == ZMUser.selfUser.handle &&
-//        ZMUserSession.sharedSession.hasCompletedInitialSync &&
-//        !ZMUserSession.sharedSession.isPendingHotFixChanges) {
-//        
-//        self.userProfileObserverToken = [self.userProfile addObserver:self];
-//        [self.userProfile suggestHandles];
-//    }
-//}
-//
-//- (void)setBackgroundColorPreference:(UIColor *)color
-//{
-//    [UIView animateWithDuration:0.4 animations:^{
-//        self.view.backgroundColor = color;
-//        self.listContentController.view.backgroundColor = color;
-//    }];
-//}
-//
-//- (void)showNoContactLabel;
-//{
-//    if (self.state == ConversationListStateConversationList) {
-//        [UIView animateWithDuration:0.20
-//                         animations:^{
-//                             self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0f : 0.0f;
-//                             self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0f : 1.0f;
-//                         }];
-//    }
-//}
-//
-//- (void)hideNoContactLabelAnimated:(BOOL)animated;
-//{
-//    [UIView animateWithDuration:animated ? 0.20 : 0.0
-//                     animations:^{
-//                         self.noConversationLabel.alpha = 0.0f;
-//                         self.onboardingHint.alpha = 0.0f;
-//                     }];
-//}
-//
-//- (void)updateNoConversationVisibility;
-//{
-//    if (!self.hasConversations) {
-//        [self showNoContactLabel];
-//    } else {
-//        [self hideNoContactLabelAnimated:YES];
-//    }
-//}
-
-//- (BOOL)hasConversations
-//{
-//    ZMUserSession *session = ZMUserSession.sharedSession;
-//    NSUInteger conversationsCount = [ZMConversationList conversationsInUserSession:session].count +
-//    [ZMConversationList pendingConnectionConversationsInUserSession:session].count;
-//    return conversationsCount > 0;
-//}
-//
-//- (BOOL)hasArchivedConversations
-//{
-//    return [ZMConversationList archivedConversationsInUserSession:ZMUserSession.sharedSession].count > 0;
-//}
-//
-//- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller
-//{
-//    CGFloat controllerHeight = CGRectGetHeight(controller.view.bounds);
-//    CGFloat contentHeight = controller.collectionView.contentSize.height;
-//    CGFloat offsetY = controller.collectionView.contentOffset.y;
-//    BOOL showSeparator = contentHeight - offsetY + self.contentControllerBottomInset > controllerHeight;
-//    
-//    if (self.bottomBarController.showSeparator != showSeparator) {
-//        self.bottomBarController.showSeparator = showSeparator;
-//    }
-//}
-
 @end

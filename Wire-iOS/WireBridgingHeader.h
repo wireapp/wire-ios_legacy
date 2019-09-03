@@ -131,7 +131,6 @@
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "PassthroughWindow.h"
-#import "PassthroughTouchesView.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
 #import "AuthenticationCoordinatedViewController.h"

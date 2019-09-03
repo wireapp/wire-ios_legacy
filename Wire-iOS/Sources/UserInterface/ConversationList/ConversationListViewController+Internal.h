@@ -38,7 +38,7 @@
 @property (nonatomic, nullable) ConversationActionController *actionsController;
 @property (nonatomic) BOOL viewDidAppearCalled;
 
-@property (readwrite, nonatomic, nonnull) UIView *contentContainer;
+//@property (readwrite, nonatomic, nonnull) UIView *contentContainer; ///TODO: private set
 
 /// oberser Tokens which are assigned when viewDidLoad
 @property (nonatomic, nullable) id userObserverToken;
@@ -49,7 +49,7 @@
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
 
-@property (nonatomic, weak) id<UserProfile> userProfile; ///TODO: private set
+@property (nonatomic, weak) id<UserProfile> userProfile;
 @property (nonatomic) NSObject *userProfileObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
@@ -74,7 +74,6 @@
 @property (nonatomic, nullable) SearchViewController *searchViewController;
 @property (nonatomic, nullable) ConversationListOnboardingHint *onboardingHint;
 
-- (void)removeUserProfileObserver;
 - (void)setStateValue: (ConversationListState)newState;
 
 @end

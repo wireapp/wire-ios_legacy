@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-class ConversationListOnboardingHint : UIView {
+final class ConversationListOnboardingHint : UIView {
     
     let messageLabel : UILabel = UILabel()
     let arrowView : UIImageView = UIImageView()

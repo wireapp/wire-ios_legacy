@@ -25,6 +25,53 @@ extension ConversationListViewController {
         view.backgroundColor = .clear
     }
 
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        viewDidAppearCalled = false
+        definesPresentationContext = true
+
+        contentControllerBottomInset = 16
+        shouldAnimateNetworkStatusView = false
+
+        contentContainer = UIView()
+        contentContainer.backgroundColor = .clear
+        view.addSubview(contentContainer)
+
+        userProfile = ZMUserSession.shared()?.userProfile
+
+        setupObservers()
+
+        let onboardingHint = ConversationListOnboardingHint()
+        contentContainer.addSubview(onboardingHint)
+        self.onboardingHint = onboardingHint
+
+        let conversationListContainer = UIView()
+        conversationListContainer.backgroundColor = .clear
+        contentContainer.addSubview(conversationListContainer)
+        self.conversationListContainer = conversationListContainer
+
+        createNoConversationLabel()
+        createListContentController()
+        createBottomBarController()
+        createTopBar()
+        createNetworkStatusBar()
+
+        createViewConstraints()
+        listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
+
+        topBarViewController.didMove(toParent: self)
+
+        hideNoContactLabel(animated: false)
+        updateNoConversationVisibility()
+        updateArchiveButtonVisibility()
+
+        updateObserverTokensForActiveTeam()
+        showPushPermissionDeniedDialogIfNeeded()
+
+        setupStyle()
+    }
+
+
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
