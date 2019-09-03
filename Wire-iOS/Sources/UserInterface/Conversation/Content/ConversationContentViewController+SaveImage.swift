@@ -39,7 +39,7 @@ extension ConversationContentViewController {
             savableImage.saveToLibrary { success in
                 guard nil != self.view.window, success else { return }
                 snapshot?.translatesAutoresizingMaskIntoConstraints = true
-                self.delegate.conversationContentViewController(self, performImageSaveAnimation: snapshot, sourceRect: sourceRect)
+                self.delegate?.conversationContentViewController(self, performImageSaveAnimation: snapshot, sourceRect: sourceRect)
             }
         } else {
             savableImage.saveToLibrary()
