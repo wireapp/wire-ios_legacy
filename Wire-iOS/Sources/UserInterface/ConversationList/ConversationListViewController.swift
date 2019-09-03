@@ -49,14 +49,20 @@ final class ConversationListViewController: UIViewController {
     var allConversationsObserverToken: Any?
     var connectionRequestsObserverToken: Any?
     var initialSyncObserverToken: Any?
-    var userProfileObserverToken: NSObject?
+    var userProfileObserverToken: Any?
 
     weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
     ///TODO: non-optional
-    var contentContainer: UIView!
+    let contentContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+
+        return view
+    }()
+
     var listContentController: ConversationListContentController!
     var bottomBarController: ConversationListBottomBarController!
     var topBarViewController: ConversationListTopBarViewController!
@@ -67,6 +73,17 @@ final class ConversationListViewController: UIViewController {
     var bottomBarToolTipConstraint: NSLayoutConstraint?
 
     var onboardingHint: ConversationListOnboardingHint?
+
+//    convenience init() {
+//        self.init(nibName:nil, bundle:nil)
+//
+//        self.init(n)
+//    }
+//
+//    @available(*, unavailable)
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
     deinit {
         removeUserProfileObserver()
@@ -81,8 +98,6 @@ final class ConversationListViewController: UIViewController {
         super.viewDidLoad()
         definesPresentationContext = true
 
-        contentContainer = UIView()
-        contentContainer.backgroundColor = .clear
         view.addSubview(contentContainer)
 
         let onboardingHint = ConversationListOnboardingHint()

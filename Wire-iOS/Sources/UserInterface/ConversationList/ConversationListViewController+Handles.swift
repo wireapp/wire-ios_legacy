@@ -94,7 +94,7 @@ extension ConversationListViewController {
             session.hasCompletedInitialSync == true,
             session.isPendingHotFixChanges == false {
 
-            userProfileObserverToken = userProfile.add(observer: self) as? NSObject
+            userProfileObserverToken = userProfile.add(observer: self)
             userProfile.suggestHandles()
         }
     }
