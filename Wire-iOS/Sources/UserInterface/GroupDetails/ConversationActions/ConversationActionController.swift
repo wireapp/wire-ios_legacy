@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc protocol ActionController: NSObjectProtocol {
+protocol ActionController {
     var alertController: UIAlertController? {get}
     func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
 }
@@ -45,7 +45,7 @@ struct PresentationContext {
     let rect: CGRect
 }
 
-final class ConversationActionController: NSObject, ActionController {
+final class ConversationActionController: ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
@@ -55,7 +55,6 @@ final class ConversationActionController: NSObject, ActionController {
     init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
-        super.init()
     }
 
     func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
