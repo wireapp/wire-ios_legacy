@@ -68,7 +68,6 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-- (ArchivedListViewController * _Nonnull)createArchivedListViewController;
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
 - (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;
 - (void)requestSuggestedHandlesIfNeeded;

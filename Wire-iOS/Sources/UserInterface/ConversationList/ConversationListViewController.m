@@ -130,18 +130,6 @@
     }];
 }
 
-#pragma mark - Conversation Collection Vertical Pan Gesture Handling
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return NO;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
 - (void)showNoContactLabel;
 {
     if (self.state == ConversationListStateConversationList) {

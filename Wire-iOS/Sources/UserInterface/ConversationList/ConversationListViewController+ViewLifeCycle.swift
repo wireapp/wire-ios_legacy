@@ -86,5 +86,4 @@ extension ConversationListViewController {
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-
 }
