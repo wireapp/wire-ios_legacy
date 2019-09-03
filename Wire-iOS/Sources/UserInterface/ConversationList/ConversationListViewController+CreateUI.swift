@@ -42,7 +42,7 @@ extension ConversationListViewController {
         bottomBarController = ConversationListBottomBarController(delegate: self)
         bottomBarController.showArchived = true
         addChild(bottomBarController)
-        conversationListContainer.addSubview(bottomBarController.view)
+        conversationListContainer?.addSubview(bottomBarController.view)
         bottomBarController.didMove(toParent: self)
     }
 
@@ -53,7 +53,7 @@ extension ConversationListViewController {
         listContentController.contentDelegate = self
 
         addChild(listContentController)
-        conversationListContainer.addSubview(listContentController.view)
+        conversationListContainer?.addSubview(listContentController.view)
         listContentController.didMove(toParent: self)
     }
 

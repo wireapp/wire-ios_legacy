@@ -49,11 +49,11 @@
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;
 
-@property (nonatomic, weak) id<UserProfile> userProfile;
+@property (nonatomic, weak) id<UserProfile> userProfile; ///TODO: private set
 @property (nonatomic) NSObject *userProfileObserverToken;
 
 @property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) ConversationListBottomBarController *bottomBarController;
+@property (nonatomic) ConversationListBottomBarController *bottomBarController; ///TODO: private set
 
 @property (nonatomic) ConversationListTopBarViewController *topBarViewController;
 @property (nonatomic) NetworkStatusViewController *networkStatusViewController;
@@ -62,7 +62,6 @@
 @property (nonatomic) BOOL shouldAnimateNetworkStatusView;
 
 @property (nonatomic, nullable) UIView *conversationListContainer;
-@property (nonatomic) ConversationListOnboardingHint *onboardingHint;
 
 @property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
 @property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
@@ -76,26 +75,9 @@
 
 ///TODO: private
 @property (nonatomic, nullable) SearchViewController *searchViewController;
-@property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic, weak, readonly) id<UserProfile> userProfile;
-@property (nonatomic) ConversationListTopBarViewController *topBarViewController;
-@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-@property (nonatomic, readonly) ConversationListBottomBarController *bottomBarController;
-@property (nonatomic, nullable) UIView *conversationListContainer;
 @property (nonatomic, nullable) ConversationListOnboardingHint *onboardingHint;
 
-@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
-@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
-
-/// for NetworkStatusViewDelegate
-@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
-
-@property (nonatomic) ConversationListState state;
-@property (nonatomic) CGFloat contentControllerBottomInset;
-
-
 - (void)removeUserProfileObserver;
-- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 - (void)setStateValue: (ConversationListState)newState;
 
 - (BOOL)hasArchivedConversations;
