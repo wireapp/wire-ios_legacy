@@ -61,7 +61,6 @@ extension ConversationListViewController {
         }
     }
 
-    @objc
     func removeUserProfileObserver() {
         userProfileObserverToken = nil
     }
