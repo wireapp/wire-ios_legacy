@@ -56,7 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController *)controller;
 - (void)setStateValue: (ConversationListState)newState;
 
-- (void)createNoConversationLabel;
 - (BOOL)hasArchivedConversations;
 
 @end
