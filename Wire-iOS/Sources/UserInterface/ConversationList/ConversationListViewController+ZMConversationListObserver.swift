@@ -37,7 +37,7 @@ extension ConversationListViewController {
 
     @objc
     func updateArchiveButtonVisibility() {
-        let showArchived = hasArchivedConversations()
+        let showArchived = hasArchivedConversations
         if showArchived == bottomBarController.showArchived {
             return
         }

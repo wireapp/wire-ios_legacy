@@ -68,9 +68,7 @@
 
 @property (nonatomic) CGFloat contentControllerBottomInset;
 
-- (void)updateBottomBarSeparatorVisibilityWithContentController:(ConversationListContentController * _Nonnull)controller;
 - (void)setSelectedConversation:(ZMConversation * _Nonnull)conversation;
-- (void)requestSuggestedHandlesIfNeeded;
 
 ///TODO: private
 @property (nonatomic, nullable) SearchViewController *searchViewController;
@@ -78,7 +76,5 @@
 
 - (void)removeUserProfileObserver;
 - (void)setStateValue: (ConversationListState)newState;
-
-- (BOOL)hasArchivedConversations;
 
 @end

@@ -57,7 +57,6 @@ extension ConversationListViewController {
         listContentController.didMove(toParent: self)
     }
 
-    ///TODO: lazy var
     func createArchivedListViewController() -> ArchivedListViewController {
         let archivedViewController = ArchivedListViewController()
         archivedViewController.delegate = self
