@@ -25,9 +25,6 @@ final class ZClientViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        /// mocks self user for ConversationListTopBarViewController
-        let _ = CoreDataFixture()
-
         sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData),
                                     selfUser: MockUser.selfUser
         )

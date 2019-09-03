@@ -196,7 +196,8 @@ final class ConversationListTopBarViewController: UIViewController {
         LegalHoldDetailsViewController.present(in: self, user: ZMUser.selfUser())
     }
 
-    @objc func presentLegalHoldRequest() {
+    @objc
+    func presentLegalHoldRequest() {
         guard case .pending = selfUser.legalHoldStatus else {
             return
         }
@@ -220,7 +221,6 @@ final class ConversationListTopBarViewController: UIViewController {
         }
     }
 
-    @objc
     func createSettingsViewController() -> UIViewController {
         let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
         return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
@@ -261,14 +261,13 @@ extension ConversationListTopBarViewController: ZMUserObserver {
 }
 
 extension ConversationListTopBarViewController {
-    @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
         topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
         topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 
-open class TopBar: UIView {
+final class TopBar: UIView {
     public var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
@@ -369,7 +368,7 @@ open class TopBar: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 44)
     }
 }
