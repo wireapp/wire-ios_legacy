@@ -29,10 +29,11 @@
 
 @property (readwrite, nonatomic, nonnull) UIView *contentContainer;
 
-@property (nonatomic, nonnull) id userObserverToken;
-@property (nonatomic, nonnull) id allConversationsObserverToken;
-@property (nonatomic, nonnull) id connectionRequestsObserverToken;
-@property (nonatomic, nonnull) id initialSyncObserverToken;
+/// oberser Tokens which are assigned when viewDidLoad
+@property (nonatomic, nullable) id userObserverToken;
+@property (nonatomic, nullable) id allConversationsObserverToken;
+@property (nonatomic, nullable) id connectionRequestsObserverToken;
+@property (nonatomic, nullable) id initialSyncObserverToken;
 
 @property (nonatomic) ZMConversation *selectedConversation;
 @property (nonatomic) ConversationListState state;

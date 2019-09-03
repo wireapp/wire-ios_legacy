@@ -75,6 +75,7 @@
 {
     [super viewDidLoad];
     self.viewDidAppearCalled = NO;
+    self.definesPresentationContext = YES;
 
     self.contentControllerBottomInset = 16;
     self.shouldAnimateNetworkStatusView = NO;
