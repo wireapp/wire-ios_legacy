@@ -239,4 +239,19 @@ extension ZClientViewController {
             present(viewController, animated: true)
         }
     }
+
+    ///MARK: - select conversation
+
+    @objc(selectConversation:conversation:focusOnView:animated:completion:)
+    func select(_ conversation: ZMConversation, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: @escaping Completion) {
+        dismissAllModalControllers(callback: { [weak self] in
+            self?.conversationListViewController.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+        })
+    }
+
+    @objc(selectConversation:)
+    func select(_ conversation: ZMConversation) {
+        conversationListViewController.select(conversation)
+    }
+
 }

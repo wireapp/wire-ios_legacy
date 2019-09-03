@@ -76,11 +76,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
 - (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (void)selectConversation:(ZMConversation *)conversation
-           scrollToMessage:(__nullable id<ZMConversationMessage>)message
-               focusOnView:(BOOL)focus
-                  animated:(BOOL)animated
-                completion:(__nullable dispatch_block_t)completion;
+//- (void)selectConversation:(ZMConversation *)conversation
+//           scrollToMessage:(__nullable id<ZMConversationMessage>)message
+//               focusOnView:(BOOL)focus
+//                  animated:(BOOL)animated
+//                completion:(__nullable dispatch_block_t)completion;
 
 /**
  * Open the user clients detail screen

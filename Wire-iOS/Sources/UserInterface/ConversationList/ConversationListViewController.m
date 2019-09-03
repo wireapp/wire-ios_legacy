@@ -43,8 +43,6 @@
 
 // Transitions
 #import "AppDelegate.h"
-#import "PassthroughTouchesView.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationListViewController (BottomBarDelegate) <ConversationListBottomBarControllerDelegate>
@@ -53,33 +51,6 @@
 @interface ConversationListViewController (Archive) <ArchivedListViewControllerDelegate>
 @end
 
-
-@interface ConversationListViewController ()
-
-@property (nonatomic) ZMConversation *selectedConversation;
-@property (nonatomic) ConversationListState state;
-
-@property (nonatomic, weak) id<UserProfile> userProfile;
-@property (nonatomic) NSObject *userProfileObserverToken;
-
-@property (nonatomic) ConversationListContentController *listContentController;
-@property (nonatomic) ConversationListBottomBarController *bottomBarController;
-
-@property (nonatomic) ConversationListTopBarViewController *topBarViewController;
-@property (nonatomic) NetworkStatusViewController *networkStatusViewController;
-
-/// for NetworkStatusViewDelegate
-@property (nonatomic) BOOL shouldAnimateNetworkStatusView;
-
-@property (nonatomic, nullable) UIView *conversationListContainer;
-@property (nonatomic) ConversationListOnboardingHint *onboardingHint;
-
-@property (nonatomic) NSLayoutConstraint *bottomBarBottomOffset;
-@property (nonatomic) NSLayoutConstraint *bottomBarToolTipConstraint;
-
-@property (nonatomic) CGFloat contentControllerBottomInset;
-
-@end
 
 
 
@@ -226,34 +197,6 @@
         self.view.backgroundColor = color;
         self.listContentController.view.backgroundColor = color;
     }];
-}
-
-#pragma mark - Selection
-
-- (void)selectConversation:(ZMConversation *)conversation
-{
-    [self selectConversation:conversation scrollToMessage:nil focusOnView:NO animated:NO];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
-{
-    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    self.selectedConversation = conversation;
-    
-    ZM_WEAK(self);
-    [self dismissPeoplePickerWithCompletionBlock:^{
-        ZM_STRONG(self);
-        [self.listContentController selectConversation:self.selectedConversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
-    }];
-}
-
-- (void)scrollToCurrentSelectionAnimated:(BOOL)animated
-{
-    [self.listContentController scrollToCurrentSelectionAnimated:animated];
 }
 
 #pragma mark - Conversation Collection Vertical Pan Gesture Handling

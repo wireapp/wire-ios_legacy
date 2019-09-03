@@ -272,7 +272,7 @@
     
     return nil;
 }
-
+/*
 - (void)selectConversation:(ZMConversation *)conversation
 {
     [self.conversationListViewController selectConversation:conversation
@@ -280,7 +280,7 @@
                                                 focusOnView:NO
                                                    animated:NO];
 }
-
+*/
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     [self selectConversation:conversation scrollToMessage:nil focusOnView:focus animated:animated completion:nil];
@@ -291,12 +291,13 @@
     [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }
 
+/*
 - (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
     [self dismissAllModalControllersWithCallback:^{
         [self.conversationListViewController selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
     }];
-}
+}*/
 
 - (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
 {
