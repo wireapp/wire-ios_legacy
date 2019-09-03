@@ -40,18 +40,9 @@ final class ConversationListViewController: UIViewController {
     var isComingFromSetUsername = false
     var startCallToken: Any?
 
-    let noConversationLabel: UILabel = {
-        let label = UILabel()
-        label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
-        label.numberOfLines = 0
-        label.backgroundColor = .clear
-
-        return label
-    }()
-
     var actionsController: ConversationActionController?
 
-    /// oberser Tokens which are assigned when viewDidLoad
+    /// observer tokens which are assigned when viewDidLoad
     var userObserverToken: Any?
     var allConversationsObserverToken: Any?
     var connectionRequestsObserverToken: Any?
@@ -62,6 +53,15 @@ final class ConversationListViewController: UIViewController {
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
+
+    private let noConversationLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
+        label.numberOfLines = 0
+        label.backgroundColor = .clear
+        
+        return label
+    }()
 
     let contentContainer: UIView = {
         let view = UIView()
@@ -222,7 +222,7 @@ final class ConversationListViewController: UIViewController {
 
     // MARK: - setup UI
 
-    func setupObservers() {
+    fileprivate func setupObservers() {
         if let userSession = ZMUserSession.shared(),
             let selfUser = ZMUser.selfUser() {
             userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
@@ -231,23 +231,91 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    func setupNoConversationLabel() {
+    fileprivate func setupNoConversationLabel() {
         contentContainer.addSubview(noConversationLabel)
     }
 
-    func setupBottomBarController() {
+    fileprivate func setupBottomBarController() {
         bottomBarController.delegate = self
         addChild(bottomBarController)
         conversationListContainer.addSubview(bottomBarController.view)
         bottomBarController.didMove(toParent: self)
     }
 
-    func setupListContentController() {
+    fileprivate func setupListContentController() {
         listContentController.contentDelegate = self
 
         addChild(listContentController)
         conversationListContainer.addSubview(listContentController.view)
         listContentController.didMove(toParent: self)
+    }
+    
+    fileprivate func setupTopBar() {
+        addChild(topBarViewController)
+        contentContainer.addSubview(topBarViewController.view)
+        topBarViewController.didMove(toParent: self)
+    }
+    
+    fileprivate func setupNetworkStatusBar() {
+        networkStatusViewController.delegate = self
+        addToSelf(networkStatusViewController)
+    }
+
+    fileprivate func createViewConstraints() {
+        guard let bottomBar = bottomBarController.view,
+            let listContent = listContentController.view,
+            let topBarView = topBarViewController.view else { return }
+        
+        [conversationListContainer,
+         bottomBar,
+         networkStatusViewController.view,
+         topBarView,
+         contentContainer,
+         noConversationLabel,
+         onboardingHint,
+         listContent].forEach() { $0?.translatesAutoresizingMaskIntoConstraints = false }
+        
+        let bottomBarBottomOffset = bottomBar.bottomAnchor.constraint(equalTo: bottomBar.superview!.bottomAnchor)
+        
+        let constraints: [NSLayoutConstraint] = [
+            conversationListContainer.bottomAnchor.constraint(equalTo: conversationListContainer.superview!.bottomAnchor),
+            conversationListContainer.leadingAnchor.constraint(equalTo: conversationListContainer.superview!.leadingAnchor),
+            conversationListContainer.trailingAnchor.constraint(equalTo: conversationListContainer.superview!.trailingAnchor),
+            
+            bottomBar.leftAnchor.constraint(equalTo: bottomBar.superview!.leftAnchor),
+            bottomBar.rightAnchor.constraint(equalTo: bottomBar.superview!.rightAnchor),
+            bottomBarBottomOffset,
+            
+            topBarView.leftAnchor.constraint(equalTo: topBarView.superview!.leftAnchor),
+            topBarView.rightAnchor.constraint(equalTo: topBarView.superview!.rightAnchor),
+            topBarView.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
+            
+            contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+            contentContainer.topAnchor.constraint(equalTo: safeTopAnchor),
+            contentContainer.leadingAnchor.constraint(equalTo: view.safeLeadingAnchor),
+            contentContainer.trailingAnchor.constraint(equalTo: view.safeTrailingAnchor),
+            
+            noConversationLabel.centerXAnchor.constraint(equalTo: noConversationLabel.superview!.centerXAnchor),
+            noConversationLabel.centerYAnchor.constraint(equalTo: noConversationLabel.superview!.centerYAnchor),
+            noConversationLabel.heightAnchor.constraint(equalToConstant: 120),
+            noConversationLabel.widthAnchor.constraint(equalToConstant: 240),
+            
+            onboardingHint.bottomAnchor.constraint(equalTo: bottomBar.topAnchor),
+            onboardingHint.leftAnchor.constraint(equalTo: onboardingHint.superview!.leftAnchor),
+            onboardingHint.rightAnchor.constraint(equalTo: onboardingHint.superview!.rightAnchor),
+            
+            listContent.topAnchor.constraint(equalTo: listContent.superview!.topAnchor),
+            listContent.leadingAnchor.constraint(equalTo: listContent.superview!.leadingAnchor),
+            listContent.trailingAnchor.constraint(equalTo: listContent.superview!.trailingAnchor),
+            listContent.bottomAnchor.constraint(equalTo: bottomBar.topAnchor)
+        ]
+        
+        self.bottomBarBottomOffset = bottomBarBottomOffset
+        
+        ///TODO: merge this method and activate the constraints in a batch
+        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView, controller: self)
+        
+        NSLayoutConstraint.activate(constraints)
     }
 
     func createArchivedListViewController() -> ArchivedListViewController {
@@ -266,8 +334,8 @@ final class ConversationListViewController: UIViewController {
     func showNoContactLabel() {
         if state == .conversationList {
             UIView.animate(withDuration: 0.20, animations: {
-                self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0 : 0.0
-                self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0 : 1.0
+                self.noConversationLabel.alpha = ZMConversationList.hasArchivedConversations ? 1.0 : 0.0
+                self.onboardingHint.alpha = ZMConversationList.hasArchivedConversations ? 0.0 : 1.0
             })
         }
     }
@@ -280,24 +348,11 @@ final class ConversationListViewController: UIViewController {
     }
 
     func updateNoConversationVisibility() {
-        if !hasConversations {
+        if !ZMConversationList.hasConversations {
             showNoContactLabel()
         } else {
             hideNoContactLabel(animated: true)
         }
-    }
-
-    var hasConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-
-        let conversationsCount = ZMConversationList.conversations(inUserSession: session).count + ZMConversationList.pendingConnectionConversations(inUserSession: session).count
-        return conversationsCount > 0
-    }
-
-    var hasArchivedConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-
-        return ZMConversationList.archivedConversations(inUserSession: session).count > 0
     }
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
@@ -311,4 +366,42 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
+}
+
+extension ZMConversationList {
+    static var hasConversations: Bool {
+        guard let session = ZMUserSession.shared() else { return false }
+        
+        let conversationsCount = ZMConversationList.conversations(inUserSession: session).count + ZMConversationList.pendingConnectionConversations(inUserSession: session).count
+        return conversationsCount > 0
+    }
+    
+    static var hasArchivedConversations: Bool {
+        guard let session = ZMUserSession.shared() else { return false }
+        
+        return ZMConversationList.archivedConversations(inUserSession: session).count > 0
+    }
+
+}
+
+fileprivate extension NSAttributedString {
+    static var attributedTextForNoConversationLabel: NSAttributedString? {
+        guard let paragraphStyle = NSParagraphStyle.default as? NSMutableParagraphStyle else { return nil }
+        paragraphStyle.paragraphSpacing = 10
+        paragraphStyle.alignment = .center
+        
+        let titleAttributes: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.smallMediumFont,
+            NSAttributedString.Key.paragraphStyle: paragraphStyle
+        ]
+        
+        paragraphStyle.paragraphSpacing = 4
+        
+        let titleString = "conversation_list.empty.all_archived.message".localized
+        
+        let attributedString = NSAttributedString(string: titleString.uppercased(), attributes: titleAttributes)
+        
+        return attributedString
+    }
 }
