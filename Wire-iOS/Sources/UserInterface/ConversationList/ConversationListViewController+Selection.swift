@@ -43,7 +43,7 @@ extension ConversationListViewController {
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not
-    @objc
+    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         listContentController.scrollToCurrentSelection(animated: animated)
     }
