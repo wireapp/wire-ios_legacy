@@ -26,7 +26,7 @@ enum ConversationListState {
 
 final class ConversationListViewController: UIViewController {
     /// internal View Model
-    var state: ConversationListState?
+    var state: ConversationListState = .conversationList
     var selectedConversation: ZMConversation?
 
     /// private
@@ -67,11 +67,6 @@ final class ConversationListViewController: UIViewController {
     var bottomBarToolTipConstraint: NSLayoutConstraint?
 
     var onboardingHint: ConversationListOnboardingHint?
-
-    ///TODO: rm
-    func setStateValue(_ newState: ConversationListState) {
-        state = newState
-    }
 
     deinit {
         removeUserProfileObserver()
@@ -139,7 +134,7 @@ final class ConversationListViewController: UIViewController {
             Settings.shared().lastViewedScreen = SettingsLastScreen.list
         }
 
-        setStateValue(.conversationList)
+        state = .conversationList
 
         updateBottomBarSeparatorVisibility(with: listContentController)
         closePushPermissionDialogIfNotNeeded()
