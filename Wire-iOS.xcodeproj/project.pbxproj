@@ -1154,7 +1154,6 @@
 		EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */; };
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
 		EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */; };
-		EF3243512317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3243502317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift */; };
 		EF3243532317F0070043F147 /* ZClientViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3243522317F0060043F147 /* ZClientViewControllerSnapshotTests.swift */; };
 		EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */; };
 		EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */; };
@@ -2966,7 +2965,6 @@
 		EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EF30524A2088927D00613C45 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		EF31DC792092008100A4F09F /* UIViewController+iPhoneSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+iPhoneSize.swift"; sourceTree = "<group>"; };
-		EF3243502317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ViewLifeCycle.swift"; sourceTree = "<group>"; };
 		EF3243522317F0060043F147 /* ZClientViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZClientViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MessageToolBox.swift"; sourceTree = "<group>"; };
 		EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerViewController+StatusBarAndNotification.swift"; sourceTree = "<group>"; };
@@ -5606,7 +5604,6 @@
 			children = (
 				8F8913E91A9F287E0056AB0C /* ListContent */,
 				EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */,
-				EF3243502317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift */,
 				EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */,
 				EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */,
 				EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */,
@@ -7792,7 +7789,6 @@
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				BF5C37981C0E0D9C00EA11E3 /* ParticipantDeviceHeaderView.m in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
-				EF3243512317EA770043F147 /* ConversationListViewController+ViewLifeCycle.swift in Sources */,
 				870A8C6B1CF719C400874B16 /* RecordingDotView.swift in Sources */,
 				EF71BFD420EBC39000894A7C /* ConversationInputBarViewController+Location.swift in Sources */,
 				BFBB03081D61AF8D0065AF4F /* InputBarEditView.swift in Sources */,

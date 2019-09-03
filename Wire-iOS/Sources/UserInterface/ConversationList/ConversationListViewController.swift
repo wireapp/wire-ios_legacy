@@ -77,4 +77,118 @@ final class ConversationListViewController: UIViewController {
     deinit {
         removeUserProfileObserver()
     }
+
+    override func loadView() {
+        view = PassthroughTouchesView(frame: UIScreen.main.bounds)
+        view.backgroundColor = .clear
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewDidAppearCalled = false
+        definesPresentationContext = true
+
+        contentControllerBottomInset = 16
+        shouldAnimateNetworkStatusView = false
+
+        contentContainer = UIView()
+        contentContainer.backgroundColor = .clear
+        view.addSubview(contentContainer)
+
+        userProfile = ZMUserSession.shared()?.userProfile
+
+        let onboardingHint = ConversationListOnboardingHint()
+        contentContainer.addSubview(onboardingHint)
+        self.onboardingHint = onboardingHint
+
+        let conversationListContainer = UIView()
+        conversationListContainer.backgroundColor = .clear
+        contentContainer.addSubview(conversationListContainer)
+        self.conversationListContainer = conversationListContainer
+
+        createNoConversationLabel()
+        createListContentController()
+        createBottomBarController()
+        createTopBar()
+        createNetworkStatusBar()
+
+        createViewConstraints()
+        listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
+
+        topBarViewController.didMove(toParent: self)
+
+        hideNoContactLabel(animated: false)
+        updateNoConversationVisibility()
+        updateArchiveButtonVisibility()
+
+        updateObserverTokensForActiveTeam()
+        showPushPermissionDeniedDialogIfNeeded()
+
+        noConversationLabel.backgroundColor = .clear
+
+        setupObservers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        ZMUserSession.shared()?.enqueueChanges({
+            self.selectedConversation?.savePendingLastRead()
+        })
+
+        requestSuggestedHandlesIfNeeded()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !isIPadRegular() {
+            Settings.shared().lastViewedScreen = SettingsLastScreen.list
+        }
+
+        setStateValue(.conversationList)
+
+        updateBottomBarSeparatorVisibility(with: listContentController)
+        closePushPermissionDialogIfNotNeeded()
+
+        shouldAnimateNetworkStatusView = true
+
+        if !viewDidAppearCalled {
+            viewDidAppearCalled = true
+            ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+            ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
+        }
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if let presentedViewController = presentedViewController,
+            presentedViewController is UIAlertController {
+            return presentedViewController.preferredStatusBarStyle
+        }
+
+        return .lightContent
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { context in
+            // we reload on rotation to make sure that the list cells lay themselves out correctly for the new
+            // orientation
+            self.listContentController.reload()
+        })
+
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
 }

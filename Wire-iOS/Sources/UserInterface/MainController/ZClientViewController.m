@@ -601,17 +601,6 @@
         [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
-/*
-#pragma mark - SplitViewControllerDelegate
-
-- (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
-{
-    return splitViewController.rightViewController != nil &&
-           splitViewController.leftViewController == self.backgroundViewController &&
-           self.conversationListViewController.state == ConversationListStateConversationList &&
-           (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
-}
-*/
 @end
 
 
