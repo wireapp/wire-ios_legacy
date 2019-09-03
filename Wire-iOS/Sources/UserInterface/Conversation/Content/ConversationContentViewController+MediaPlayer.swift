@@ -33,11 +33,11 @@ extension ConversationContentViewController {
             !displaysMessage(mediaPlayingMessage),
             !mediaPlayingMessage.isVideo {
             DispatchQueue.main.async(execute: {
-                self.delegate.conversationContentViewController(self, didEndDisplayingActiveMediaPlayerFor: mediaPlayingMessage)
+                self.delegate?.conversationContentViewController(self, didEndDisplayingActiveMediaPlayerFor: mediaPlayingMessage)
             })
         } else {
             DispatchQueue.main.async(execute: {
-                self.delegate.conversationContentViewController(self, willDisplayActiveMediaPlayerFor: mediaPlayingMessage)
+                self.delegate?.conversationContentViewController(self, willDisplayActiveMediaPlayerFor: mediaPlayingMessage)
             })
         }
     }

@@ -32,7 +32,8 @@ extension ConversationContentViewController {
         let isImage = Message.isImage(message)
         let isLocation = Message.isLocation(message)
 
-        guard isFile || isImage || isLocation else {
+        guard isFile || isImage || isLocation,
+            let dataSource = dataSource else {
             return
         }
 
@@ -98,7 +99,7 @@ extension ConversationContentViewController {
             }
         case .edit:
             dataSource?.editingMessage = message
-            delegate.conversationContentViewController(self, didTriggerEditing: message)
+            delegate?.conversationContentViewController(self, didTriggerEditing: message)
         case .sketchDraw:
             openSketch(for: message, in: .draw)
         case .sketchEmoji:
@@ -143,7 +144,7 @@ extension ConversationContentViewController {
                 message.fileMessageData?.requestFileDownload()
             })
         case .reply:
-            delegate.conversationContentViewController(self, didTriggerReplyingTo: message)
+            delegate?.conversationContentViewController(self, didTriggerReplyingTo: message)
 
         case .openQuote:
             if let quote = message.textMessageData?.quote {
