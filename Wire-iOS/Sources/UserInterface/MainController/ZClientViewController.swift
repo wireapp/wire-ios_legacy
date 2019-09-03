@@ -242,12 +242,21 @@ extension ZClientViewController {
 
     ///MARK: - select conversation
 
+    
+    /// Select a conversation and move the focus to the conversation view.
+    ///
+    /// - Parameters:
+    ///   - conversation: the conversation to select
+    ///   - message: scroll to  this message
+    ///   - focus: focus on the view or not
+    ///   - animated: perform animation or not
+    ///   - completion: the completion block
     @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
     func select(_ conversation: ZMConversation,
                 scrollTo message: ZMConversationMessage?,
                 focusOnView focus: Bool,
                 animated: Bool,
-                completion: @escaping Completion) {
+                completion: Completion?) {
         dismissAllModalControllers(callback: { [weak self] in
             self?.conversationListViewController.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
