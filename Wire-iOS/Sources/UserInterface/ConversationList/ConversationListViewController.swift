@@ -25,8 +25,12 @@ enum ConversationListState {
 }
 
 final class ConversationListViewController: UIViewController {
-    ///internal
+    /// internal
     var state: ConversationListState?
+
+    /// private
+    private var viewDidAppearCalled = false
+    private let contentControllerBottomInset: CGFloat = 16
 
     var selectedConversation: ZMConversation? ///TODO: private
     var isComingFromSetUsername = false
@@ -35,7 +39,6 @@ final class ConversationListViewController: UIViewController {
 
     var noConversationLabel: UILabel!
     var actionsController: ConversationActionController?
-    var viewDidAppearCalled = false
     //@property (readwrite, nonatomic, nonnull) UIView *contentContainer; ///TODO: private set
 
     /// oberser Tokens which are assigned when viewDidLoad
@@ -61,7 +64,6 @@ final class ConversationListViewController: UIViewController {
     var conversationListContainer: UIView?
     var bottomBarBottomOffset: NSLayoutConstraint?
     var bottomBarToolTipConstraint: NSLayoutConstraint?
-    var contentControllerBottomInset: CGFloat = 0.0
 
     var onboardingHint: ConversationListOnboardingHint?
 
@@ -85,10 +87,8 @@ final class ConversationListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewDidAppearCalled = false
         definesPresentationContext = true
 
-        contentControllerBottomInset = 16
         shouldAnimateNetworkStatusView = false
 
         contentContainer = UIView()
@@ -189,6 +189,103 @@ final class ConversationListViewController: UIViewController {
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+
+    // MARK: - setup UI
+
+    func setupObservers() {
+        if let userSession = ZMUserSession.shared(),
+            let selfUser = ZMUser.selfUser() {
+            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
+
+            initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+        }
+    }
+
+    func createNoConversationLabel() {
+        noConversationLabel = UILabel()
+        noConversationLabel.attributedText = NSAttributedString.attributedTextForNoConversationLabel
+        noConversationLabel.numberOfLines = 0
+        contentContainer.addSubview(noConversationLabel)
+    }
+
+    func createBottomBarController() {
+        bottomBarController = ConversationListBottomBarController(delegate: self)
+        bottomBarController.showArchived = true
+        addChild(bottomBarController)
+        conversationListContainer?.addSubview(bottomBarController.view)
+        bottomBarController.didMove(toParent: self)
+    }
+
+    func createListContentController() {
+        listContentController = ConversationListContentController()
+        listContentController.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: contentControllerBottomInset, right: 0)
+        listContentController.contentDelegate = self
+
+        addChild(listContentController)
+        conversationListContainer?.addSubview(listContentController.view)
+        listContentController.didMove(toParent: self)
+    }
+
+    func createArchivedListViewController() -> ArchivedListViewController {
+        let archivedViewController = ArchivedListViewController()
+        archivedViewController.delegate = self
+        return archivedViewController
+    }
+
+    func setBackgroundColorPreference(_ color: UIColor?) {
+        UIView.animate(withDuration: 0.4, animations: {
+            self.view.backgroundColor = color
+            self.listContentController.view.backgroundColor = color
+        })
+    }
+
+    func showNoContactLabel() {
+        if state == .conversationList {
+            UIView.animate(withDuration: 0.20, animations: {
+                self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0 : 0.0
+                self.onboardingHint?.alpha = self.hasArchivedConversations ? 0.0 : 1.0
+            })
+        }
+    }
+
+    func hideNoContactLabel(animated: Bool) {
+        UIView.animate(withDuration: animated ? 0.20 : 0.0, animations: {
+            self.noConversationLabel.alpha = 0.0
+            self.onboardingHint?.alpha = 0.0
+        })
+    }
+
+    func updateNoConversationVisibility() {
+        if !hasConversations {
+            showNoContactLabel()
+        } else {
+            hideNoContactLabel(animated: true)
+        }
+    }
+
+    var hasConversations: Bool {
+        guard let session = ZMUserSession.shared() else { return false }
+
+        let conversationsCount = ZMConversationList.conversations(inUserSession: session).count + ZMConversationList.pendingConnectionConversations(inUserSession: session).count
+        return conversationsCount > 0
+    }
+
+    var hasArchivedConversations: Bool {
+        guard let session = ZMUserSession.shared() else { return false }
+
+        return ZMConversationList.archivedConversations(inUserSession: session).count > 0
+    }
+
+    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
+        let controllerHeight = controller.view.bounds.height
+        let contentHeight = controller.collectionView.contentSize.height
+        let offsetY = controller.collectionView.contentOffset.y
+        let showSeparator = contentHeight - offsetY + contentControllerBottomInset > controllerHeight
+
+        if bottomBarController.showSeparator != showSeparator {
+            bottomBarController.showSeparator = showSeparator
+        }
     }
 
 }
