@@ -47,7 +47,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
         if conversation.conversationType == .group || conversation.conversationType == .oneOnOne {
-            self.delegate.startUI?(self, didSelect: conversation)
+            self.delegate.startUI(self, didSelect: conversation)
         }
     }
     
@@ -61,7 +61,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             if let result = result {
                 switch result {
                 case .success(let conversation):
-                    self.delegate.startUI?(self, didSelect: conversation)
+                    self.delegate.startUI(self, didSelect: conversation)
                 case .failure(let error):
                     error.displayAddBotError(in: self)
                 }
@@ -113,7 +113,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                                                       name: "general.guest-room-name".localized,
                                                                       in: ZMUser.selfUser().team,
                                                                       allowGuests: true)
-            self.delegate.startUI?(self, didSelect: conversation)
+            self.delegate.startUI(self, didSelect: conversation)
         }
     }
 }
