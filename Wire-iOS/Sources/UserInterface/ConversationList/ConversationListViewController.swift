@@ -28,21 +28,28 @@ final class ConversationListViewController: UIViewController {
     /// internal View Model
     var state: ConversationListState = .conversationList
     var selectedConversation: ZMConversation?
+    let account: Account
 
     /// private
     private var viewDidAppearCalled = false
-    private let contentControllerBottomInset: CGFloat = 16
+    private static let contentControllerBottomInset: CGFloat = 16
 
     /// for NetworkStatusViewDelegate
     var shouldAnimateNetworkStatusView = false
 
     var isComingFromSetUsername = false
     var startCallToken: Any?
-    var account: Account! ///TODO: optional?
 
-    var noConversationLabel: UILabel!
+    let noConversationLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = NSAttributedString.attributedTextForNoConversationLabel
+        label.numberOfLines = 0
+        label.backgroundColor = .clear
+
+        return label
+    }()
+
     var actionsController: ConversationActionController?
-    //@property (readwrite, nonatomic, nonnull) UIView *contentContainer; ///TODO: private set
 
     /// oberser Tokens which are assigned when viewDidLoad
     var userObserverToken: Any?
@@ -55,7 +62,7 @@ final class ConversationListViewController: UIViewController {
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
-    ///TODO: non-optional
+
     let contentContainer: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -63,18 +70,45 @@ final class ConversationListViewController: UIViewController {
         return view
     }()
 
-    var listContentController: ConversationListContentController!
-    var bottomBarController: ConversationListBottomBarController!
-    var topBarViewController: ConversationListTopBarViewController?
-    var networkStatusViewController: NetworkStatusViewController!
+    let listContentController: ConversationListContentController = {
+        let conversationListContentController = ConversationListContentController()
+        conversationListContentController.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: ConversationListViewController.contentControllerBottomInset, right: 0)
 
-    var conversationListContainer: UIView?
+        return conversationListContentController
+    }()
+
+    let bottomBarController: ConversationListBottomBarController = {
+        let conversationListBottomBarController = ConversationListBottomBarController()
+        conversationListBottomBarController.showArchived = true
+
+        return conversationListBottomBarController
+    }()
+
+    let topBarViewController: ConversationListTopBarViewController
+    let networkStatusViewController: NetworkStatusViewController = {
+        let viewController = NetworkStatusViewController()
+        return viewController
+    }()
+
+    let conversationListContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+
+        return view
+    }()
+
     var bottomBarBottomOffset: NSLayoutConstraint?
     var bottomBarToolTipConstraint: NSLayoutConstraint?
 
-    var onboardingHint: ConversationListOnboardingHint?
+    let onboardingHint: ConversationListOnboardingHint = {
+        let conversationListOnboardingHint = ConversationListOnboardingHint()
+        return conversationListOnboardingHint
+    }()
 
-    init() {
+    required init(account: Account) {
+        self.account = account
+        topBarViewController = ConversationListTopBarViewController(account: account)
+
         super.init(nibName:nil, bundle:nil)
     }
 
@@ -96,38 +130,31 @@ final class ConversationListViewController: UIViewController {
         super.viewDidLoad()
         definesPresentationContext = true
 
+        /// setup UI
         view.addSubview(contentContainer)
 
-        let onboardingHint = ConversationListOnboardingHint()
         contentContainer.addSubview(onboardingHint)
-        self.onboardingHint = onboardingHint
-
-        let conversationListContainer = UIView()
-        conversationListContainer.backgroundColor = .clear
         contentContainer.addSubview(conversationListContainer)
-        self.conversationListContainer = conversationListContainer
 
-        createNoConversationLabel()
-        createListContentController()
-        createBottomBarController()
-        createTopBar()
-        createNetworkStatusBar()
+        setupNoConversationLabel()
+        setupListContentController()
+        setupBottomBarController()
+        setupTopBar()
+        setupNetworkStatusBar()
 
         createViewConstraints()
-        listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
 
-        topBarViewController?.didMove(toParent: self)
-
+        /// update 
         hideNoContactLabel(animated: false)
         updateNoConversationVisibility()
         updateArchiveButtonVisibility()
-
         updateObserverTokensForActiveTeam()
         showPushPermissionDeniedDialogIfNeeded()
 
-        noConversationLabel.backgroundColor = .clear
-
         setupObservers()
+
+        listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -203,28 +230,22 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    func createNoConversationLabel() {
-        noConversationLabel = UILabel()
-        noConversationLabel.attributedText = NSAttributedString.attributedTextForNoConversationLabel
-        noConversationLabel.numberOfLines = 0
+    func setupNoConversationLabel() {
         contentContainer.addSubview(noConversationLabel)
     }
 
-    func createBottomBarController() {
-        bottomBarController = ConversationListBottomBarController(delegate: self)
-        bottomBarController.showArchived = true
+    func setupBottomBarController() {
+        bottomBarController.delegate = self
         addChild(bottomBarController)
-        conversationListContainer?.addSubview(bottomBarController.view)
+        conversationListContainer.addSubview(bottomBarController.view)
         bottomBarController.didMove(toParent: self)
     }
 
-    func createListContentController() {
-        listContentController = ConversationListContentController()
-        listContentController.collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: contentControllerBottomInset, right: 0)
+    func setupListContentController() {
         listContentController.contentDelegate = self
 
         addChild(listContentController)
-        conversationListContainer?.addSubview(listContentController.view)
+        conversationListContainer.addSubview(listContentController.view)
         listContentController.didMove(toParent: self)
     }
 
@@ -245,7 +266,7 @@ final class ConversationListViewController: UIViewController {
         if state == .conversationList {
             UIView.animate(withDuration: 0.20, animations: {
                 self.noConversationLabel.alpha = self.hasArchivedConversations ? 1.0 : 0.0
-                self.onboardingHint?.alpha = self.hasArchivedConversations ? 0.0 : 1.0
+                self.onboardingHint.alpha = self.hasArchivedConversations ? 0.0 : 1.0
             })
         }
     }
@@ -253,7 +274,7 @@ final class ConversationListViewController: UIViewController {
     func hideNoContactLabel(animated: Bool) {
         UIView.animate(withDuration: animated ? 0.20 : 0.0, animations: {
             self.noConversationLabel.alpha = 0.0
-            self.onboardingHint?.alpha = 0.0
+            self.onboardingHint.alpha = 0.0
         })
     }
 
@@ -282,7 +303,7 @@ final class ConversationListViewController: UIViewController {
         let controllerHeight = controller.view.bounds.height
         let contentHeight = controller.collectionView.contentSize.height
         let offsetY = controller.collectionView.contentOffset.y
-        let showSeparator = contentHeight - offsetY + contentControllerBottomInset > controllerHeight
+        let showSeparator = contentHeight - offsetY + ConversationListViewController.contentControllerBottomInset > controllerHeight
 
         if bottomBarController.showSeparator != showSeparator {
             bottomBarController.showSeparator = showSeparator

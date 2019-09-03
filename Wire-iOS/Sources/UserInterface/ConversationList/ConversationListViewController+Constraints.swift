@@ -21,12 +21,10 @@ import Foundation
 extension ConversationListViewController {
 
     func createViewConstraints() {
-        guard let conversationListContainer = conversationListContainer,
-              let onboardingHint = onboardingHint,
-              let bottomBar = bottomBarController.view,
+        guard let bottomBar = bottomBarController.view,
               let listContent = listContentController.view,
-              let topBarView = topBarViewController?.view else { return }
-
+              let topBarView = topBarViewController.view else { return }        
+        
         [conversationListContainer,
          bottomBar,
          networkStatusViewController.view,

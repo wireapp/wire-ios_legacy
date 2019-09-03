@@ -32,18 +32,15 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
 
 extension ConversationListViewController {
 
-    func createTopBar() {
-        let topBarViewController = ConversationListTopBarViewController(account: account)
+    func setupTopBar() {
         addChild(topBarViewController)
         contentContainer.addSubview(topBarViewController.view)
-
-        self.topBarViewController = topBarViewController
+        topBarViewController.didMove(toParent: self)
     }
 
-    func createNetworkStatusBar() {
-        self.networkStatusViewController = NetworkStatusViewController()
+    func setupNetworkStatusBar() {
         networkStatusViewController.delegate = self
-        self.addToSelf(networkStatusViewController)
+        addToSelf(networkStatusViewController)
     }
 }
 
