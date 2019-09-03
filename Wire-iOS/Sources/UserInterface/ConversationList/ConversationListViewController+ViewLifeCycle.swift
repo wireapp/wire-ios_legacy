@@ -84,16 +84,6 @@ extension ConversationListViewController {
         return true
     }
 
-    override open var definesPresentationContext: Bool {
-        get {
-            return true
-        }
-
-        set {
-            super.definesPresentationContext = newValue
-        }
-    }
-
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
