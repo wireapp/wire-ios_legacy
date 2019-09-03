@@ -65,7 +65,7 @@ final class ConversationListViewController: UIViewController {
 
     var listContentController: ConversationListContentController!
     var bottomBarController: ConversationListBottomBarController!
-    var topBarViewController: ConversationListTopBarViewController!
+    var topBarViewController: ConversationListTopBarViewController?
     var networkStatusViewController: NetworkStatusViewController!
 
     var conversationListContainer: UIView?
@@ -74,16 +74,14 @@ final class ConversationListViewController: UIViewController {
 
     var onboardingHint: ConversationListOnboardingHint?
 
-//    convenience init() {
-//        self.init(nibName:nil, bundle:nil)
-//
-//        self.init(n)
-//    }
-//
-//    @available(*, unavailable)
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+    init() {
+        super.init(nibName:nil, bundle:nil)
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     deinit {
         removeUserProfileObserver()
@@ -118,7 +116,7 @@ final class ConversationListViewController: UIViewController {
         createViewConstraints()
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
 
-        topBarViewController.didMove(toParent: self)
+        topBarViewController?.didMove(toParent: self)
 
         hideNoContactLabel(animated: false)
         updateNoConversationVisibility()

@@ -24,15 +24,13 @@ extension ConversationListViewController {
         guard let conversationListContainer = conversationListContainer,
               let onboardingHint = onboardingHint,
               let bottomBar = bottomBarController.view,
-              let listContent = listContentController.view else { return }
-
-
-
+              let listContent = listContentController.view,
+              let topBarView = topBarViewController?.view else { return }
 
         [conversationListContainer,
          bottomBar,
          networkStatusViewController.view,
-         topBarViewController.view,
+         topBarView,
          contentContainer,
          noConversationLabel,
          onboardingHint,
@@ -49,9 +47,9 @@ extension ConversationListViewController {
             bottomBar.rightAnchor.constraint(equalTo: bottomBar.superview!.rightAnchor),
             bottomBarBottomOffset,
 
-            topBarViewController.view.leftAnchor.constraint(equalTo: topBarViewController.view.superview!.leftAnchor),
-            topBarViewController.view.rightAnchor.constraint(equalTo: topBarViewController.view.superview!.rightAnchor),
-            topBarViewController.view.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
+            topBarView.leftAnchor.constraint(equalTo: topBarView.superview!.leftAnchor),
+            topBarView.rightAnchor.constraint(equalTo: topBarView.superview!.rightAnchor),
+            topBarView.bottomAnchor.constraint(equalTo: conversationListContainer.topAnchor),
 
             contentContainer.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             contentContainer.topAnchor.constraint(equalTo: safeTopAnchor),
@@ -76,7 +74,7 @@ extension ConversationListViewController {
         self.bottomBarBottomOffset = bottomBarBottomOffset
         
         ///TODO: merge this method and activate the constraints in a batch
-        networkStatusViewController.createConstraintsInParentController(bottomView: topBarViewController.view, controller: self)
+        networkStatusViewController.createConstraintsInParentController(bottomView: topBarView, controller: self)
 
         NSLayoutConstraint.activate(constraints)
     }
