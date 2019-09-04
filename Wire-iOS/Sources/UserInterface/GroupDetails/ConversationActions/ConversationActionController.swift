@@ -88,12 +88,15 @@ final class ConversationActionController: ActionController {
         switch action {
         case .delete:
             guard let userSession = ZMUserSession.shared() else { return }
-            ///TODO: alert
-            transitionToListAndEnqueue {
-                self.conversation.delete(in: userSession) { (result) in
-                    print("result: \(result)") ///TODO: go to list?
+
+            requestDeleteGroupResult() { result in
+                self.transitionToListAndEnqueue {
+                    self.conversation.delete(in: userSession) { (result) in
+                        print("result: \(result)") ///TODO: go to list?
+                    }
                 }
             }
+
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }
@@ -138,5 +141,21 @@ final class ConversationActionController: ActionController {
         present(controller,
                 currentContext: currentContext,
                 target: target)
+    }
+}
+
+//MARK: - delete group
+
+extension ConversationActionController {
+
+    func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
+        let controller = UIAlertController(title: "conversation.delete_request_dialog.title".localized,
+                                           message: "conversation.delete_request_dialog.message".localized,
+                                           preferredStyle: .actionSheet)
+
+        controller.addAction(ZMConversation.Action.delete.alertAction { completion(true) })
+        controller.addAction(.cancel { completion(false) })
+
+        present(controller)
     }
 }
