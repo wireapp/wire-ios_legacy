@@ -24,7 +24,6 @@
 
 #import "AppDelegate.h"
 
-#import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
 #import "ProfileViewController.h"
@@ -42,7 +41,7 @@
 
 #import "StartUIViewController.h"
 
-@interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
+@interface ZClientViewController (InitialState)
 
 - (void)restoreStartupState;
 - (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
@@ -59,7 +58,6 @@
 
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic) BackgroundViewController *backgroundViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
@@ -86,10 +84,10 @@
 
 - (instancetype)init
 {
-    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount];
+    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount selfUser:ZMUser.selfUser];
 }
 
-- (instancetype)initWithAccount:(Account *)account
+- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser
 {
     self = [super init];
     if (self) {
@@ -120,7 +118,7 @@
         [self setupAppearance];
 
         [self createLegalHoldDisclosureController];
-        [self setupConversationListViewControllerWithAccount:account];
+        [self setupConversationListViewControllerWithAccount:account selfUser: selfUser];
     }
     return self;
 }
@@ -273,29 +271,9 @@
     return nil;
 }
 
-- (void)selectConversation:(ZMConversation *)conversation
-{
-    [self.conversationListViewController selectConversation:conversation
-                                            scrollToMessage:nil
-                                                focusOnView:NO
-                                                   animated:NO];
-}
-
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     [self selectConversation:conversation scrollToMessage:nil focusOnView:focus animated:animated completion:nil];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
-{
-    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    [self dismissAllModalControllersWithCallback:^{
-        [self.conversationListViewController selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
-    }];
 }
 
 - (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
@@ -623,17 +601,6 @@
         [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
-
-#pragma mark - SplitViewControllerDelegate
-
-- (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
-{
-    return splitViewController.rightViewController != nil &&
-           splitViewController.leftViewController == self.backgroundViewController &&
-           self.conversationListViewController.state == ConversationListStateConversationList &&
-           (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
-}
-
 @end
 
 

@@ -30,8 +30,6 @@ enum ConversationListButtonType: UInt {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
 }
 
-
-@objcMembers
 final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
@@ -59,9 +57,8 @@ final class ConversationListBottomBarController: UIViewController {
         get { return !separator.isHidden }
     }
 
-    required init(delegate: ConversationListBottomBarControllerDelegate? = nil) {
+    required init() {
         super.init(nibName: nil, bundle: nil)
-        self.delegate = delegate
         self.view.backgroundColor = UIColor.clear
         createViews()
     }

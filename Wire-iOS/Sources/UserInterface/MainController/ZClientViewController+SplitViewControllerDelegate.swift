@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,17 +18,9 @@
 
 import Foundation
 
-extension ConversationContentViewController: UIScrollViewDelegate {
-    
-    public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        removeHighlightsAndMenu()
-    }
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dataSource?.didScroll(tableView: scrollView as! UITableView)
-    }
-    
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        dataSource?.scrollViewDidEndDecelerating(scrollView)
+extension ZClientViewController: SplitViewControllerDelegate {
+    public func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool {
+        return splitViewController.rightViewController != nil && splitViewController.leftViewController == backgroundViewController && conversationListViewController.state == .conversationList && (conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == false)
+
     }
 }

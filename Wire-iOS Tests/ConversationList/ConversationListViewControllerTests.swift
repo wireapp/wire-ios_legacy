@@ -27,9 +27,8 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
         super.setUp()
 
         MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
-
-        sut = ConversationListViewController()
-        sut.account = Account.mockAccount(imageData: mockImageData)
+        let account = Account.mockAccount(imageData: mockImageData)
+        sut = ConversationListViewController(account: account)
 
         sut.view.backgroundColor = .black
     }

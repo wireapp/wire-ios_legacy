@@ -18,7 +18,11 @@
 
 import Foundation
 
-extension ConversationListViewController: PermissionDeniedViewControllerDelegate {}
+extension ConversationListViewController: PermissionDeniedViewControllerDelegate {
+    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController!) {
+        closePushPermissionDeniedDialog()
+    }
+}
 
 extension Settings {
     var pushAlertHappenedMoreThan1DayBefore: Bool {
@@ -32,7 +36,7 @@ extension Settings {
 
 extension ConversationListViewController {
 
-    @objc func closePushPermissionDialogIfNotNeeded() {
+    func closePushPermissionDialogIfNotNeeded() {
         UNUserNotificationCenter.current().checkPushesDisabled({ pushesDisabled in
             if !pushesDisabled,
                 let _ = self.pushPermissionDeniedViewController {
@@ -43,7 +47,7 @@ extension ConversationListViewController {
         })
     }
 
-    @objc func closePushPermissionDeniedDialog() {
+    func closePushPermissionDeniedDialog() {
         pushPermissionDeniedViewController?.willMove(toParent: nil)
         pushPermissionDeniedViewController?.view.removeFromSuperview()
         pushPermissionDeniedViewController?.removeFromParent()
@@ -56,7 +60,6 @@ extension ConversationListViewController {
         return ZClientViewController.shared()?.isComingFromRegistration ?? false
     }
 
-    @objc
     func showPushPermissionDeniedDialogIfNeeded() {
         // We only want to present the notification takeover when the user already has a handle
         // and is not coming from the registration flow (where we alreday ask for permissions).

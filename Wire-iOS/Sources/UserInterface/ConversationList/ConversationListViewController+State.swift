@@ -18,16 +18,12 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc
-    func setState(_ state: ConversationListState, animated: Bool) {
-        setState(state, animated: animated, completion: nil)
-    }
+typealias Completion = ()->()
 
-    @objc
+extension ConversationListViewController {
     func setState(_ state: ConversationListState,
                   animated: Bool,
-                  completion: (() -> ())?) {
+                  completion: Completion? = nil) {
         if self.state == state {
             completion?()
             return
@@ -56,6 +52,17 @@ extension ConversationListViewController {
         @unknown default:
             break
         }
+    }
+
+    @objc(dismissPeoplePickerWithCompletionBlock:)
+    func dismissPeoplePicker(with block: @escaping Completion) {
+        setState(.conversationList, animated:true, completion:block)
+    }
+
+    @objc(selectInboxAndFocusOnView:)
+    func selectInboxAndFocusOnView(focus: Bool) {
+        setState(.conversationList, animated:false)
+        listContentController.selectInboxAndFocus(onView: focus)
     }
 
 }

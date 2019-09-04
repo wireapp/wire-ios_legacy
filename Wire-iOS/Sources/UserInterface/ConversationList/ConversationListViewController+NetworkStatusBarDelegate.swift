@@ -30,21 +30,6 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
     }
 }
 
-extension ConversationListViewController {
-
-    @objc func createTopBar() {
-        self.topBarViewController = ConversationListTopBarViewController(account: account)
-        addChild(topBarViewController)
-        self.contentContainer.addSubview(self.topBarViewController.view)
-    }
-
-    @objc func createNetworkStatusBar() {
-        self.networkStatusViewController = NetworkStatusViewController()
-        networkStatusViewController.delegate = self
-        self.addToSelf(networkStatusViewController)
-    }
-}
-
 extension CGFloat {
     enum ConversationListHeader {
         static let iconWidth: CGFloat = 32

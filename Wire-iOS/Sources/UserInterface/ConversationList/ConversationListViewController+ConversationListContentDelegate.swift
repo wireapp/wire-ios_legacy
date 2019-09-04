@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationListViewController: ConversationListContentDelegate {
     public func conversationList(_ controller: ConversationListContentController!, didSelect conversation: ZMConversation!, focusOnView focus: Bool) {
-        setSelectedConversation(conversation)
+        selectedConversation = conversation
     }
 
     public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToListIfPossible()
