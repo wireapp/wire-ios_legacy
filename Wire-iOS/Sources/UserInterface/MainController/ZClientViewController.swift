@@ -21,8 +21,22 @@ import Foundation
 
 extension ZClientViewController {
 
+    // MARK: - Setup methods
+
+    ///TODO: caller to Swift
+    @objc
+    func setupConversationListViewController(account: Account, selfUser: UserType) {
+        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser as! SelfUserType)
+    }
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
+    }
+
+    func transitionToListIfPossible() {
+        guard splitViewController.layoutSize == .regularPortrait else { return }
+
+        transitionToList(animated: true, completion: nil)
     }
 
     @objc(transitionToListAnimated:completion:)
@@ -225,4 +239,32 @@ extension ZClientViewController {
             present(viewController, animated: true)
         }
     }
+
+    ///MARK: - select conversation
+
+    
+    /// Select a conversation and move the focus to the conversation view.
+    ///
+    /// - Parameters:
+    ///   - conversation: the conversation to select
+    ///   - message: scroll to  this message
+    ///   - focus: focus on the view or not
+    ///   - animated: perform animation or not
+    ///   - completion: the completion block
+    @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
+    func select(_ conversation: ZMConversation,
+                scrollTo message: ZMConversationMessage?,
+                focusOnView focus: Bool,
+                animated: Bool,
+                completion: Completion?) {
+        dismissAllModalControllers(callback: { [weak self] in
+            self?.conversationListViewController.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+        })
+    }
+
+    @objc(selectConversation:)
+    func select(_ conversation: ZMConversation) {
+        conversationListViewController.select(conversation)
+    }
+
 }

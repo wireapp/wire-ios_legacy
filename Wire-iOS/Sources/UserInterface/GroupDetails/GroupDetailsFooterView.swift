@@ -30,25 +30,8 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
         case more, invite
     }
     
-    init() {
-        super.init(mainButton: RestrictedIconButton(requiredPermissions: .member))
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func action(for button: IconButton) -> Action? {
-        switch button {
-        case rightButton: return .more
-        case leftButton: return .invite
-        default: return nil
-        }
-    }
-    
     func update(for conversation: ZMConversation) {
-        let selfUser = ZMUser.selfUser()!
-        leftButton.isHidden = selfUser.isGuest(in: conversation) || selfUser.teamRole == .partner
+        leftButton.isHidden = !(ZMUser.selfUser()?.canAddUser(to: conversation) ?? false)
         leftButton.isEnabled = conversation.freeParticipantSlots > 0
     }
     

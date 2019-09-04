@@ -33,7 +33,9 @@
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController
 
-@property (nonatomic, weak) id <ConversationContentViewControllerDelegate> delegate;
+NS_ASSUME_NONNULL_BEGIN
+
+@property (nonatomic, weak, nullable) id <ConversationContentViewControllerDelegate> delegate;
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic) CGFloat bottomMargin;
 @property (nonatomic, readonly) BOOL isScrolledToBottom;
@@ -42,17 +44,17 @@
 @property (nonatomic) UIView *bottomContainer;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
-@property (nonatomic) ConversationTableViewDataSource* dataSource;
+@property (nonatomic, nullable) ConversationTableViewDataSource* dataSource;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation
-                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
-                             session:(id<ZMUserSessionInterface>)session;
+                mediaPlaybackManager:(MediaPlaybackManager * _Nullable)mediaPlaybackManager
+                             session:(id<ZMUserSessionInterface> _Nullable)session;
 - (instancetype)initWithConversation:(ZMConversation *)conversation
                              message:(id<ZMConversationMessage>)message
                 mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>) session NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 - (void)updateTableViewHeaderView;
 - (void)highlightMessage:(id<ZMConversationMessage>)message;
@@ -62,5 +64,6 @@
 @interface ConversationContentViewController (EditMessages)
 
 - (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
+NS_ASSUME_NONNULL_END
 
 @end

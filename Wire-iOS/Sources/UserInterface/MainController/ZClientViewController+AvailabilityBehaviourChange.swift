@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,8 +18,19 @@
 
 import Foundation
 
-extension ConversationListViewController {
-    @objc func setupStyle() {
-        noConversationLabel.backgroundColor = .clear
+extension ZClientViewController {
+    
+    func showAvailabilityBehaviourChangeAlertIfNeeded() {
+        
+        guard var notify = ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange, notify.contains(.alert),
+              let availability = ZMUser.selfUser()?.availability else { return }
+                
+        present(UIAlertController.availabilityExplanation(availability), animated: true)
+        
+        ZMUserSession.shared()?.performChanges {
+            notify.remove(.alert)
+            ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
+        }
     }
+    
 }

@@ -52,14 +52,10 @@ class ConversationDetailFooterView: UIView {
             }
         }
     }
-    
-    override convenience init(frame: CGRect) {
-        self.init(mainButton: IconButton())
-    }
-    
-    internal init(mainButton: IconButton = IconButton()) {
+        
+    init() {
         self.variant = ColorScheme.default.variant
-        self.leftButton = mainButton
+        self.leftButton = IconButton()
         super.init(frame: .zero)
         setupViews()
         createConstraints()

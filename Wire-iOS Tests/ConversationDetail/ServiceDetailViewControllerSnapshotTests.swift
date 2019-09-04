@@ -50,6 +50,7 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     func testForTeamMemberWrappedInNavigationController() {
         teamTest {
+            groupConversation.teamRemoteIdentifier = team?.remoteIdentifier
             createSut()
             let navigationController = sut.wrapInNavigationController()
             verify(view: navigationController.view)
@@ -58,6 +59,7 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     func testForTeamPartner() {
         teamTest {
+            groupConversation.teamRemoteIdentifier = team?.remoteIdentifier
             selfUser.membership?.setTeamRole(.partner)
             createSut()
             verify(view: sut.view)

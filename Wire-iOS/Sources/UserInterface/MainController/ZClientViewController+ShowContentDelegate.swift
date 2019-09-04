@@ -48,7 +48,11 @@ extension ZClientViewController: ShowContentDelegate {
         case .connection:
             selectIncomingContactRequestsAndFocus(onView: true)
         case .group, .oneOnOne:
-            select(conversation, scrollTo: message, focusOnView: true, animated: true)
+            select(conversation,
+                   scrollTo: message,
+                   focusOnView: true,
+                   animated: true,
+                   completion: nil)
         default:
             break
         }

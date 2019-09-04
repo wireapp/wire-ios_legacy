@@ -24,14 +24,6 @@ enum PresentationStyle: Int {
     case navigation
 }
 
-class InviteCellDescriptor: SettingsExternalScreenCellDescriptor {
-    override func featureCell(_ cell: SettingsCellType) {
-        super.featureCell(cell)
-        
-        cell.cellColor = .accent()
-    }
-}
-
 enum AccessoryViewMode: Int {
     case `default`
     case alwaysShow

@@ -26,7 +26,6 @@
 #import "WireSyncEngine+iOS.h"
 
 
-#import "ImagePickerConfirmationController.h"
 #import "Analytics.h"
 #import "Constants.h"
 #import "AppDelegate.h"
@@ -77,29 +76,6 @@
 }
 
 #pragma mark - Button Handling
-
-- (void)cameraButtonTapped:(id)sender
-{
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
-        ![UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
-        return;
-    }
-    
-    if([[ZMUserSession sharedSession] isCallOngoing]) {
-        [CameraAccess displayCameraAlertForOngoingCallAt:CameraAccessFeatureTakePhoto from:self];
-        return;
-    }
-
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    
-    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    picker.delegate = self.imagePickerConfirmationController;
-    picker.allowsEditing = YES;
-    picker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-    picker.mediaTypes = @[(__bridge NSString *)kUTTypeImage];
-    picker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentViewController:picker animated:YES completion:nil];
-}
 
 - (void)closeButtonTapped:(id)sender
 {

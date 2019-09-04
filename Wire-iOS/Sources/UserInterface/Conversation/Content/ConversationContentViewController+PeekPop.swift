@@ -34,10 +34,9 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
               let cell = tableView.cellForRow(at: cellIndexPath) as? SelectableView & UIView else {
             return .none
         }
-        
-        let message = self.dataSource.messages[cellIndexPath.section]
 
-        guard message.isObfuscated == false else {
+        guard let message = self.dataSource?.messages[cellIndexPath.section],
+                message.isObfuscated == false else {
             return nil
         }
 

@@ -23,7 +23,8 @@ import UIKit
  * A view controller wrapping the message details.
  */
 
-@objc class MessageDetailsViewController: UIViewController, ModalTopBarDelegate {
+@objc
+final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate {
 
     /**
      * The collection of view controllers displaying the content.
@@ -217,6 +218,9 @@ import UIKit
         dismiss(animated: true, completion: nil)
     }
 
+    override var shouldAutorotate: Bool {
+        return false
+    }
 }
 
 // MARK: - MessageDetailsDataSourceObserver

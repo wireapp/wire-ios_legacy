@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc protocol ActionController: NSObjectProtocol {
+protocol ActionController {
     var alertController: UIAlertController? {get}
     func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
 }
@@ -45,72 +45,16 @@ struct PresentationContext {
     let rect: CGRect
 }
 
-@objcMembers final class RemoveUserActionController: NSObject, ActionController {
-
-    private let conversation: ZMConversation
-    private let participant: ZMUser
-    unowned let target: UIViewController
-    private var currentContext: PresentationContext?
-    weak var alertController: UIAlertController?
-    weak var dismisser: ViewControllerDismisser?
-
-    @objc init(conversation: ZMConversation,
-               participant: ZMUser,
-               dismisser: ViewControllerDismisser?,
-               target: UIViewController) {
-        self.conversation = conversation
-        self.target = target
-        self.participant = participant
-        self.dismisser = dismisser
-        super.init()
-    }
-
-    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
-        currentContext = sourceView.map {
-            .init(
-                view: target.view,
-                rect: target.view.convert($0.frame, from: $0.superview).insetBy(dx: 8, dy: 8)
-            )
-        }
-
-        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
-
-        let action = ZMConversation.Action.remove
-        let alertAction = ZMConversation.Action.remove.alertAction { [weak self] in
-            guard let `self` = self else { return }
-            self.handleAction(action)
-        }
-        controller.addAction(alertAction)
-
-        controller.addAction(.cancel())
-        present(controller,
-                currentContext: currentContext,
-                target: target)
-
-        alertController = controller
-    }
-
-    func handleAction(_ action: ZMConversation.Action) {
-        switch action {
-        case .remove:
-            target.presentRemoveDialogue(for: participant, from: conversation, dismisser: dismisser)
-        default:
-            break
-        }
-    }
-}
-
-@objcMembers final class ConversationActionController: NSObject, ActionController {
+final class ConversationActionController: ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    @objc init(conversation: ZMConversation, target: UIViewController) {
+    init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
-        super.init()
     }
 
     func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {

@@ -36,6 +36,5 @@
 @protocol StartUIDelegate <NSObject>
 - (void)startUI:(StartUIViewController *)startUI didSelectUsers:(NSSet<ZMUser *> *)users;
 - (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests enableReceipts:(BOOL)enableReceipts;
-@optional
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation;
 @end

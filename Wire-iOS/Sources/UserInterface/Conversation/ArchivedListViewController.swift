@@ -29,7 +29,7 @@ import Cartography
 
 // MARK: - ArchivedListViewController
 
-@objcMembers final class ArchivedListViewController: UIViewController {
+final class ArchivedListViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     

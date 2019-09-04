@@ -88,20 +88,14 @@ extension ConversationInputBarViewController {
     }
     
     private func displayAudioMessageAlertIfNeeded() -> Bool {
-        guard ZMUserSession.shared()?.isCallOngoing ?? false else { return false }
-        CameraAccess.displayCameraAlertForOngoingCall(at: .recordAudioMessage, from: self)
-        return true
+        return CameraAccess.displayAlertIfOngoingCall(at:.recordAudioMessage, from:self)
     }
     
     @objc func audioButtonLongPressed(_ sender: UILongPressGestureRecognizer) {
-        guard self.mode != .audioRecord else {
+        guard self.mode != .audioRecord, !displayAudioMessageAlertIfNeeded() else {
             return
         }
-        
-        if displayAudioMessageAlertIfNeeded() {
-            return
-        }
-        
+
         type(of: self).cancelPreviousPerformRequests(withTarget: self, selector: #selector(hideInlineAudioRecordViewController), object: nil)
         
         switch sender.state {

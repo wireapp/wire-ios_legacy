@@ -156,8 +156,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @property (nonatomic) UITraitCollection *futureTraitCollection;
 
-@property (nonatomic) SplitViewControllerLayoutSize layoutSize;
-
 @end
 
 @implementation SplitViewController
@@ -176,7 +174,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self.view addSubview:self.rightView];
     
     [self setupInitialConstraints];
-    [self updateLayoutSizeForTraitCollection:self.traitCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:self.traitCollection];
     [self updateConstraintsForSize:self.view.bounds.size];
     [self updateActiveConstraints];
     
@@ -210,7 +208,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)willTransitionToTraitCollection:(UITraitCollection *)newCollection withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     self.futureTraitCollection = newCollection;
-    [self updateLayoutSizeForTraitCollection:newCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:newCollection];
 
     [super willTransitionToTraitCollection:newCollection withTransitionCoordinator:coordinator];
     
@@ -222,9 +220,9 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)updateForSize:(CGSize)size
 {
     if (nil != self.futureTraitCollection) {
-        [self updateLayoutSizeForTraitCollection:self.futureTraitCollection size:size];
+        [self updateLayoutSizeForTraitCollection:self.futureTraitCollection];
     } else {
-        [self updateLayoutSizeForTraitCollection:self.traitCollection size:size];
+        [self updateLayoutSizeForTraitCollection:self.traitCollection];
     }
     
     [self updateConstraintsForSize:size];
@@ -234,19 +232,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
     // update right view constraits after size changes
     [self updateRightAndLeftEdgeConstraints: self.openPercentage];
-}
-
-- (void)updateLayoutSizeForTraitCollection:(UITraitCollection *)traitCollection size:(CGSize)size
-{
-    if (traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
-        self.layoutSize = SplitViewControllerLayoutSizeCompact;
-    }
-    else if (IS_IPAD_PORTRAIT_LAYOUT) {
-        self.layoutSize = SplitViewControllerLayoutSizeRegularPortrait;
-    }
-    else {
-        self.layoutSize = SplitViewControllerLayoutSizeRegularLandscape;
-    }
 }
 
 - (void)updateConstraintsForSize:(CGSize)size {
@@ -275,7 +260,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)updateLayoutSizeAndLeftViewVisibility
 {
-    [self updateLayoutSizeForTraitCollection:self.traitCollection size:self.view.bounds.size];
+    [self updateLayoutSizeForTraitCollection:self.traitCollection];
     [self updateLeftViewVisibility];
 }
 

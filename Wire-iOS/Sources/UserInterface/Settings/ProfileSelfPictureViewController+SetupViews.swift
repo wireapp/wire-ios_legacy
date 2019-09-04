@@ -206,4 +206,22 @@ extension ProfileSelfPictureViewController {
         }
     }
 
+    @objc
+    func cameraButtonTapped(_ sender: Any?) {
+        if !UIImagePickerController.isSourceTypeAvailable(.camera) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
+            return
+        }
+        
+        guard !CameraAccess.displayAlertIfOngoingCall(at:.takePhoto, from: self) else { return }
+        
+        let picker = UIImagePickerController()
+        
+        picker.sourceType = .camera
+        picker.delegate = imagePickerConfirmationController
+        picker.allowsEditing = true
+        picker.cameraDevice = .front
+        picker.mediaTypes = [kUTTypeImage as String]
+        picker.modalTransitionStyle = .coverVertical
+        present(picker, animated: true)
+    }
 }

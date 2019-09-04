@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,15 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "StartUIViewController.h"
+import Foundation
 
-@class PermissionDeniedViewController;
-@class ConversationActionController;
+extension ConversationListViewController: ConversationListBottomBarControllerDelegate {
 
-@interface ConversationListViewController ()
+    func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType) {
+        switch buttonType {
+        case .archive:
+            setState(.archived, animated: true)
+        case .startUI:
+            presentPeoplePicker()
+        default:
+            break
+        }
+    }
+}
 
-@property (nonatomic, nonnull) UILabel *noConversationLabel;
-@property (nonatomic, nullable) PermissionDeniedViewController *pushPermissionDeniedViewController;
-@property (nonatomic, nullable) ConversationActionController *actionsController;
-
-@end
+extension ConversationListViewController {
+    func presentPeoplePicker() {
+        setState(.peoplePicker, animated: true)
+    }
+}
