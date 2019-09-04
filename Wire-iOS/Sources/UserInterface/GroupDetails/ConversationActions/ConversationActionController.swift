@@ -88,11 +88,11 @@ final class ConversationActionController: ActionController {
         switch action {
         case .delete:
             guard let userSession = ZMUserSession.shared() else { return }
-            transitionToListAndEnqueue {
-                self.conversation.deletePermanently(in: userSession) { (result) in
-                    print("result: \(result)")
-                }
+
+            requestDeleteGroupResult() { result in
+                self.handleDeleteGroupResult(result, for: userSession)
             }
+
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }
@@ -137,5 +137,36 @@ final class ConversationActionController: ActionController {
         present(controller,
                 currentContext: currentContext,
                 target: target)
+    }
+}
+
+//MARK: - delete group
+
+extension ConversationActionController {
+
+    fileprivate func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
+        let alertController = UIAlertController.confirmController(
+            title: "conversation.delete_request_dialog.title".localized,
+            message: "conversation.delete_request_dialog.message".localized,
+            confirmAction: ZMConversation.Action.delete.alertAction { completion(true) },
+            completion: completion
+        )
+        present(alertController)
+    }
+
+    fileprivate func handleDeleteGroupResult(_ result: Bool, for userSession: ZMUserSession) {
+        guard result else { return }
+
+        transitionToListAndEnqueue { [weak self] in
+            self?.conversation.delete(in: userSession) { (result) in
+                switch result {
+                case .success:
+                    break
+                case .failure(_):
+                    let alert = UIAlertController.alertWithOKButton(message: "conversation.delete_request_error_dialog.title".localized)
+                    self?.present(alert)
+                }
+            }
+        }
     }
 }

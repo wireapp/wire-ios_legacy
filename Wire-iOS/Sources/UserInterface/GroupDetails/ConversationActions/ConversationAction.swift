@@ -35,9 +35,14 @@ extension ZMConversation {
     
     var actions: [Action] {
         switch conversationType {
-        case .connection: return availablePendingActions()
-        case .oneOnOne: return availableOneToOneActions()
-        default: return availableGroupActions()
+        case .connection:
+            return availablePendingActions()
+        case .oneOnOne:
+            return availableOneToOneActions()
+        case .self,
+             .group,
+             .invalid:
+            return availableGroupActions()
         }
     }
     
@@ -60,11 +65,15 @@ extension ZMConversation {
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
-        actions.append(.delete)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
+
+        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
+            actions.append(.delete)
+        }
+
         return actions
     }
     
@@ -104,7 +113,9 @@ extension ZMConversation.Action {
 
     fileprivate var isDestructive: Bool {
         switch self {
-        case .remove: return true
+        case .remove,
+             .delete:
+            return true
         default: return false
         }
     }

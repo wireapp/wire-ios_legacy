@@ -20,7 +20,6 @@ import Foundation
 
 
 extension UIAlertController {
-    @objc(controllerForAcceptingConnectionRequestForUser:completion:)
     static func acceptingConnectionRequest(for user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "profile.connection_request_dialog.message".localized(args: user.displayName),
