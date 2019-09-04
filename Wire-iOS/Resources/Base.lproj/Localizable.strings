@@ -769,6 +769,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
 "conversation.delete_request_dialog.message" = "This will delete the whole group from everyone's list and clear all the content on all member's devices. You would not able to restore any content from this group, and all group members will get notified of this action.";
+"conversation.delete_request_error_dialog.title" = "Error occurs when deleting a group conversation";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancel Request?";

@@ -47,14 +47,29 @@ extension UIAlertController {
         )
     }
     
-    static private func confirmController(title: String, confirmTitle: String, completion: @escaping (Bool) -> Void) -> UIAlertController {
-        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-        let removeAction = UIAlertAction(title: confirmTitle, style: .destructive) { _ in
-            completion(true)
-        }
-        controller.addAction(removeAction)
+    static func confirmController(title: String,
+                                  message: String? = nil,
+                                  confirmAction: UIAlertAction,
+                                  completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let controller = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+
+        controller.addAction(confirmAction)
         controller.addAction(.cancel { completion(false) })
         controller.view.tintColor = UIColor.from(scheme: .textForeground, variant: .light)
         return controller
+    }
+
+    static func confirmController(title: String,
+                                  message: String? = nil,
+                                  confirmTitle: String,
+                                  completion: @escaping (Bool) -> Void) -> UIAlertController {
+        let removeAction = UIAlertAction(title: confirmTitle, style: .destructive) { _ in
+            completion(true)
+        }
+
+        return UIAlertController.confirmController(title: title,
+                                                   message: message,
+                                                   confirmAction: removeAction,
+                                                   completion: completion)
     }
 }
