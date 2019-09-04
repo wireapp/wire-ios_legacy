@@ -90,11 +90,7 @@ final class ConversationActionController: ActionController {
             guard let userSession = ZMUserSession.shared() else { return }
 
             requestDeleteGroupResult() { result in
-                self.transitionToListAndEnqueue {
-                    self.conversation.delete(in: userSession) { (result) in
-                        print("result: \(result)") ///TODO: go to list?
-                    }
-                }
+                self.handleDeleteGroupResult(result, for: userSession)
             }
 
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
@@ -148,7 +144,7 @@ final class ConversationActionController: ActionController {
 
 extension ConversationActionController {
 
-    func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
+    fileprivate func requestDeleteGroupResult(completion: @escaping (Bool) -> Void) {
         let controller = UIAlertController(title: "conversation.delete_request_dialog.title".localized,
                                            message: "conversation.delete_request_dialog.message".localized,
                                            preferredStyle: .actionSheet)
@@ -157,5 +153,14 @@ extension ConversationActionController {
         controller.addAction(.cancel { completion(false) })
 
         present(controller)
+    }
+
+    fileprivate func handleDeleteGroupResult(_ result: Bool, for userSession: ZMUserSession) {
+        guard result else { return }
+
+        transitionToListAndEnqueue { [weak self] in
+            self?.conversation.delete(in: userSession) { (result) in
+            }
+        }
     }
 }
