@@ -42,9 +42,9 @@ class AuthenticationEmailLoginUnknownErrorHandler: AuthenticationEventHandler {
         // We try to validate the fields to detect an error
         var detectedError: NSError
 
-        if !ZMUser.isValid(emailAddress: credentials.email) {
+        if !ZMUser.isValidEmailAddress(credentials.email) {
             detectedError = NSError(domain: NSError.ZMUserSessionErrorDomain, code: Int(ZMUserSessionErrorCode.invalidEmail.rawValue), userInfo: nil)
-        } else if !ZMUser.isValid(password: credentials.password) {
+        } else if !ZMUser.isValidPassword( credentials.password) {
             detectedError = NSError(domain: NSError.ZMUserSessionErrorDomain, code: Int(ZMUserSessionErrorCode.invalidCredentials.rawValue), userInfo: nil)
         } else {
             detectedError = error

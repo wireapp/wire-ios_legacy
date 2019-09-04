@@ -45,7 +45,7 @@ final class SimpleTextFieldValidator: NSObject {
         var validatedString: Any? = stringToValidate as Any
         
         do {
-            _ = try StringLengthValidator.validateValue(&validatedString,
+            _ = try StringLengthValidator.validateStringValue(&validatedString,
                                                     minimumStringLength: 1,
                                                     maximumStringLength: 64,
                                                     maximumByteLength: 256)
