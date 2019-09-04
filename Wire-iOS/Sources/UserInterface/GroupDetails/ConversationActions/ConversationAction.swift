@@ -35,9 +35,16 @@ extension ZMConversation {
     
     var actions: [Action] {
         switch conversationType {
-        case .connection: return availablePendingActions()
-        case .oneOnOne: return availableOneToOneActions()
-        default: return availableGroupActions()
+        case .connection:
+            return availablePendingActions()
+        case .oneOnOne:
+            return availableOneToOneActions()
+        case .self:
+            return availableGroupActions()
+        case .group:
+            return availableGroupActions()
+        case .invalid:
+            return availableGroupActions()
         }
     }
     
@@ -60,11 +67,15 @@ extension ZMConversation {
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
-        actions.append(.delete)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
+
+        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
+            actions.append(.delete)
+        }
+
         return actions
     }
     
@@ -130,7 +141,14 @@ extension ZMConversation.Action {
     }
     
     func alertAction(handler: @escaping () -> Void) -> UIAlertAction {
-        return .init(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
+        let alertAction = UIAlertAction(title: title, style: isDestructive ? .destructive : .default) { _ in handler() }
+        switch self {
+        case .delete:
+            alertAction.setValue(UIColor.red, forKey: "titleTextColor")
+        default:
+            break
+        }
+        return alertAction
     }
 
     func previewAction(handler: @escaping () -> Void) -> UIPreviewAction {

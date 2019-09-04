@@ -88,9 +88,10 @@ final class ConversationActionController: ActionController {
         switch action {
         case .delete:
             guard let userSession = ZMUserSession.shared() else { return }
+            ///TODO: alert
             transitionToListAndEnqueue {
-                self.conversation.deletePermanently(in: userSession) { (result) in
-                    print("result: \(result)")
+                self.conversation.delete(in: userSession) { (result) in
+                    print("result: \(result)") ///TODO: go to list?
                 }
             }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
