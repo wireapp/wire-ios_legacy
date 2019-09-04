@@ -20,16 +20,13 @@ import Foundation
 
 extension UIView {
     
-    @objc class var conversationLayoutMargins: UIEdgeInsets {
-        var left: CGFloat = CGFloat.nan
-        var right: CGFloat = CGFloat.nan
+    class var conversationLayoutMargins: UIEdgeInsets {
+        let left: CGFloat
+        let right: CGFloat
         
         // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
-        switch (UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass) {
-        case (.compact?):
-            left = 56
-            right = 16
-        case (.regular?):
+        switch UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass {
+        case .regular?: ///TODO: check view's width ratio
             left = 96
             right = 96
         default:
@@ -40,7 +37,7 @@ extension UIView {
         return UIEdgeInsets(top: 0, left: left, bottom: 0, right: right)
     }
     
-    @objc public class var directionAwareConversationLayoutMargins: UIEdgeInsets {
+    class var directionAwareConversationLayoutMargins: UIEdgeInsets {
         let margins = conversationLayoutMargins
         
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
