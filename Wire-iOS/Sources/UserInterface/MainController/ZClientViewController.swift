@@ -267,4 +267,13 @@ extension ZClientViewController {
         conversationListViewController.select(conversation)
     }
 
+    @objc
+    var isConversationViewVisible: Bool {
+        return (isIPadRegular() && UIApplication.shared.statusBarOrientation.isLandscape) || !splitViewController.isLeftViewControllerRevealed
+    }
+
+    var isConversationListVisible: Bool {
+        return (isIPadRegular() && UIApplication.shared.statusBarOrientation.isLandscape) || (splitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
+    }
+
 }

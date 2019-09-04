@@ -21,4 +21,3 @@
 
 #define IS_IPAD ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
 #define IS_IPAD_FULLSCREEN (IS_IPAD && [UIApplication sharedApplication].keyWindow.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassRegular)
-#define IS_IPAD_LANDSCAPE_LAYOUT (IS_IPAD_FULLSCREEN && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation))

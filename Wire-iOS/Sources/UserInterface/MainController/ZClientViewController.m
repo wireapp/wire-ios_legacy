@@ -428,16 +428,6 @@
     }
 }
 
-- (BOOL)isConversationViewVisible
-{
-    return IS_IPAD_LANDSCAPE_LAYOUT || !self.splitViewController.leftViewControllerRevealed;
-}
-
-- (BOOL)isConversationListVisible
-{
-    return IS_IPAD_LANDSCAPE_LAYOUT || (self.splitViewController.leftViewControllerRevealed && self.conversationListViewController.presentedViewController == NULL);
-}
-
 - (ZMUserSession *)context
 {
     return [ZMUserSession sharedSession];
