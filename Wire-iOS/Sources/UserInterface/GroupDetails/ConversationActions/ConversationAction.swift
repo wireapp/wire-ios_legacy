@@ -39,11 +39,9 @@ extension ZMConversation {
             return availablePendingActions()
         case .oneOnOne:
             return availableOneToOneActions()
-        case .self:
-            return availableGroupActions()
-        case .group:
-            return availableGroupActions()
-        case .invalid:
+        case .self,
+             .group,
+             .invalid:
             return availableGroupActions()
         }
     }
