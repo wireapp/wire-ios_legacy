@@ -269,7 +269,7 @@ extension ZClientViewController {
 
     @objc
     var isConversationViewVisible: Bool {
-        return (isIPadRegular() && UIApplication.shared.statusBarOrientation.isLandscape) || !splitViewController.isLeftViewControllerRevealed
+        return splitViewController.isConversationViewVisible
     }
 
     var isConversationListVisible: Bool {

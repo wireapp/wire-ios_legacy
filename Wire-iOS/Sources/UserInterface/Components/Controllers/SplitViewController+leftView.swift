@@ -19,6 +19,10 @@
 import Foundation
 
 extension SplitViewController {
+    @objc
+    var isConversationViewVisible: Bool {
+        return (isIPadRegular() && UIApplication.shared.statusBarOrientation.isLandscape) || !isLeftViewControllerRevealed
+    }
 
 
     /// update left view UI depends on isLeftViewControllerRevealed

@@ -500,7 +500,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
+    if (!self.isConversationViewVisible) {
         return;
     }
     
