@@ -87,6 +87,13 @@ struct PresentationContext {
 
     func handleAction(_ action: ZMConversation.Action) {
         switch action {
+        case .delete:
+            guard let userSession = ZMUserSession.shared() else { return }
+            transitionToListAndEnqueue {
+                self.conversation.deletePermanently(in: userSession) { (result) in
+                    print("result: \(result)")
+                }
+            }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }

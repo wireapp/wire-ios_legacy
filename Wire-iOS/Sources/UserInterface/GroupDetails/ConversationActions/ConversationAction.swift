@@ -20,6 +20,7 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
+        case delete
         case clearContent
         case leave
         case configureNotifications
@@ -59,6 +60,7 @@ extension ZMConversation {
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
+        actions.append(.delete)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
@@ -113,6 +115,7 @@ extension ZMConversation.Action {
     
     private var localizationKey: String {
         switch self {
+        case .delete: return "meta.menu.delete"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"
