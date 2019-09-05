@@ -33,14 +33,15 @@ extension ConversationActionController {
     func handleDeleteGroupResult(_ result: Bool, conversation: ZMConversation, in userSession: ZMUserSession) {
         guard result else { return }
         
-        transitionToListAndEnqueue { [weak self] in
+        transitionToListAndEnqueue {
             conversation.delete(in: userSession) { (result) in
                 switch result {
                 case .success:
                     break
                 case .failure(_):
-                    let alert = UIAlertController.alertWithOKButton(message: "conversation.delete_request_error_dialog.title".localized(args: conversation.displayName))
-                    self?.present(alert)
+                    let alert = UIAlertController.alertWithOKButton(title: "error.conversation.title".localized,
+                                                                    message: "conversation.delete_request_error_dialog.title".localized(args: conversation.displayName))
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)
                 }
             }
         }
