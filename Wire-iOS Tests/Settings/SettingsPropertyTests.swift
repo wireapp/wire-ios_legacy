@@ -31,7 +31,6 @@ import XCTest
     }
     
     static func validate(name: inout String?) throws -> Bool {
-        // no-op
         return false
     }
     
