@@ -43,8 +43,8 @@ extension UITraitEnvironment {
         let userInterfaceSizeClass: UIUserInterfaceSizeClass
 
         /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
-        if let viewWidth = ZClientViewController.shared()?.splitViewController.rightView.frame.width,
-            viewWidth <= 400 {
+        if let windowWidth = UIApplication.shared.keyWindow?.frame.width,
+            windowWidth <= CGFloat.SplitView.IPadMarginLimit {
             userInterfaceSizeClass = .compact
         } else {
             userInterfaceSizeClass = .regular

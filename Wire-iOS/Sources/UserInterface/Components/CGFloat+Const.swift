@@ -22,7 +22,12 @@ extension CGFloat {
     enum StartUI {
         static public let CellHeight: CGFloat = 56
     }
+    
     enum SplitView {
         static public let LeftViewWidth: CGFloat = 336
+
+        /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
+        /// when the window is small then or equal to (396 + LeftViewWidth = 732), use compact mode margin
+        static public let IPadMarginLimit: CGFloat = 732
     }
 }
