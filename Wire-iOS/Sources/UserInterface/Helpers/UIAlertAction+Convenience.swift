@@ -17,16 +17,15 @@
 //
 
 extension UIAlertAction {
-    @objc(cancelActionWithCompletion:)
-    static func cancel(_ completion: (() -> Void)? = nil) -> UIAlertAction {
+    static func cancel(cancelButtonTitle: String? = "general.cancel".localized,
+                       _ completion: (() -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
-            title: "general.cancel".localized,
+            title: cancelButtonTitle,
             style: .cancel,
             handler: { _ in completion?() }
         )
     }
     
-    @objc(okActionWithCompletion:)
     static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction.ok(style: .default, handler: completion)
     }

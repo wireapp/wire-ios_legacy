@@ -127,11 +127,9 @@ private let log = ZMSLog(tag: "SavableImage")
     private func warnAboutError(_ error: Error) {
         log.error("error saving image: \(error)")
 
-        let alert = UIAlertController(
+        let alert = UIAlertController.alertWithOKButton(
             title: "library.alert.permission_warning.title".localized,
-            message: (error as NSError).localizedDescription,
-            cancelButtonTitle: "general.ok".localized
-        )
+            message: (error as NSError).localizedDescription)
 
         AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true)
     }

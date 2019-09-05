@@ -216,11 +216,9 @@ fileprivate extension BackupViewController {
     }
     
     private func presentAlert(for error: Error) {
-        let alert = UIAlertController(
+        let alert = UIAlertController.alertWithOKButton(
             title: "self.settings.history_backup.error.title".localized,
-            message: error.localizedDescription,
-            cancelButtonTitle: "general.ok".localized
-        )
+            message: error.localizedDescription)
         present(alert, animated: true)
     }
     

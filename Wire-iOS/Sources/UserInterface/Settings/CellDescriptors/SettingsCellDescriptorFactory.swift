@@ -476,7 +476,7 @@ class SettingsCellDescriptorFactory {
             userSession.syncManagedObjectContext.saveOrRollback()
         }
         
-        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", cancelButtonTitle: "OK")
+        let alertController = UIAlertController.alertWithOKButton(title: "Updated", message: "Badge count has been re-calculated")
         controller.show(alertController, sender: nil)
     }
     
@@ -538,9 +538,8 @@ class SettingsCellDescriptorFactory {
 
         CallQualityController.resetSurveyMuteFilter()
 
-        let alert = UIAlertController(title: "Success",
-                                      message: "The call quality survey will be displayed after the next call.",
-                                      cancelButtonTitle: "OK")
+        let alert = UIAlertController.alertWithOKButton(title: "Success",
+                                      message: "The call quality survey will be displayed after the next call.")
 
         controller.present(alert, animated: true)
     }

@@ -87,9 +87,8 @@ extension ZMConversation {
     }
     
     private func showErrorAlert(message: String) {
-        let alertController = UIAlertController(title: "error.conversation.title".localized,
-                                                message: message,
-                                                cancelButtonTitle: "general.ok".localized)
+        let alertController = UIAlertController.alertWithOKButton(title: "error.conversation.title".localized,
+                                                message: message)
         
         UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alertController, animated: true)
     }

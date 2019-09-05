@@ -24,7 +24,13 @@ extension UIAlertController {
     @objc
     static func alertWithCancelButton(title: String,
                                       message: String) -> UIAlertController {
-        let cancelAction =  UIAlertAction.cancel()
+        return UIAlertController.alert(title: title, message: message, alertAction: .cancel())
+    }
+
+    static func alertWithCancelButton(title: String,
+                                      message: String,
+                                      cancelButtonTitle: String? = "general.cancel".localized) -> UIAlertController {
+        let cancelAction =  UIAlertAction.cancel(cancelButtonTitle: cancelButtonTitle)
 
         return UIAlertController.alert(title: title, message: message, alertAction: cancelAction)
     }

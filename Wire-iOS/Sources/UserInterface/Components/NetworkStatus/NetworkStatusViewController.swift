@@ -120,7 +120,7 @@ final class NetworkStatusViewController : UIViewController {
     }
 
     func showOfflineAlert() {
-        let offlineAlert = UIAlertController.init(title: "system_status_bar.no_internet.title".localized,
+        let offlineAlert = UIAlertController.alertWithCancelButton(title: "system_status_bar.no_internet.title".localized,
                                                   message: "system_status_bar.no_internet.explanation".localized,
                                                   cancelButtonTitle: "general.confirm".localized)
         offlineAlert.presentTopmost()
