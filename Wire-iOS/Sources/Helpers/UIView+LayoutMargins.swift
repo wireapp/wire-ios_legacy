@@ -36,13 +36,21 @@ struct HorizontalMargins {
 
 extension UITraitEnvironment {
     var conversationHorizontalMargins: HorizontalMargins {
-        if traitCollection.horizontalSizeClass == .regular,
-            let viewWidth = ZClientViewController.shared()?.splitViewController.rightView.frame.width,
-            viewWidth <= 386 {
+        guard traitCollection.horizontalSizeClass == .regular else {
             return HorizontalMargins(userInterfaceSizeClass: .compact)
         }
 
-        return HorizontalMargins(userInterfaceSizeClass:traitCollection.horizontalSizeClass)
+        let userInterfaceSizeClass: UIUserInterfaceSizeClass
+
+        /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
+        if let viewWidth = ZClientViewController.shared()?.splitViewController.rightView.frame.width,
+            viewWidth <= 400 {
+            userInterfaceSizeClass = .compact
+        } else {
+            userInterfaceSizeClass = .regular
+        }
+
+        return HorizontalMargins(userInterfaceSizeClass: userInterfaceSizeClass)
     }
 }
 
