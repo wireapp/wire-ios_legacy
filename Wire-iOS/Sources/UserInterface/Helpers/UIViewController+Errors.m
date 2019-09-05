@@ -19,6 +19,7 @@
 
 #import "UIViewController+Errors.h"
 #import "WireSyncEngine+iOS.h"
+#import <WireUtilities/WireUtilities.h>
 
 @implementation UIViewController (Errors)
 
@@ -32,18 +33,18 @@
     NSString *message = @"";
     NSString *title = @"";
     
-    if ([error.domain isEqualToString:ZMObjectValidationErrorDomain]) {
+    if ([error.domain isEqualToString:ZMManagedObjectValidationErrorCodeDomain]) {
         switch (error.code) {
-            case ZMObjectValidationErrorCodeStringTooLong:
+            case ZMManagedObjectValidationErrorCodeTooLong:
                 message = NSLocalizedString(@"error.input.too_long", @"");
                 break;
-            case ZMObjectValidationErrorCodeStringTooShort:
+            case ZMManagedObjectValidationErrorCodeTooShort:
                 message = NSLocalizedString(@"error.input.too_short", @"");
                 break;
-            case ZMObjectValidationErrorCodeEmailAddressIsInvalid:
+            case ZMManagedObjectValidationErrorCodeEmailAddressIsInvalid:
                 message = NSLocalizedString(@"error.email.invalid", @"");
                 break;
-            case ZMObjectValidationErrorCodePhoneNumberContainsInvalidCharacters:
+            case ZMManagedObjectValidationErrorCodePhoneNumberContainsInvalidCharacters:
                 message = NSLocalizedString(@"error.phone.invalid", @"");
                 break;
         }
