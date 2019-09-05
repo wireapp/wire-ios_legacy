@@ -21,11 +21,9 @@ import UIKit
 extension UIAlertController {
 
     static func historyImportWarning(completion: @escaping () -> Void) -> UIAlertController {
-        let controller = UIAlertController(
+        let controller = UIAlertController.alertWithCancelButton(
             title: "registration.no_history.restore_backup_warning.title".localized,
-            message: "registration.no_history.restore_backup_warning.message".localized,
-            cancelButtonTitle: "general.cancel".localized
-        )
+            message: "registration.no_history.restore_backup_warning.message".localized)
         
         let proceedAction = UIAlertAction(
             title: "registration.no_history.restore_backup_warning.proceed".localized,

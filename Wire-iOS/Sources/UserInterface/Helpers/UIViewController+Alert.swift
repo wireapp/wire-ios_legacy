@@ -20,7 +20,23 @@ import Foundation
 private let zmLog = ZMSLog(tag: "Alert")
 
 extension UIAlertController {
-        
+
+    @objc
+    static func alertWithCancelButton(title: String,
+                                      message: String) -> UIAlertController {
+        let cancelAction =  UIAlertAction.cancel()
+
+        return UIAlertController.alert(title: title, message: message, alertAction: cancelAction)
+    }
+
+    @objc
+    static func alertWithOKButton(title: String,
+                                  message: String) -> UIAlertController {
+        return UIAlertController.alertWithOKButton(title: title,
+                                                   message: message,
+                                                   okActionHandler: nil)
+    }
+
     /// Create an alert with a OK button
     ///
     /// - Parameters:
@@ -31,12 +47,20 @@ extension UIAlertController {
     static func alertWithOKButton(title: String? = nil,
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+
+        let okAction =  UIAlertAction.ok(style: .cancel, handler: okActionHandler)
+
+        return UIAlertController.alert(title: title, message: message, alertAction: okAction)
+    }
+
+    static func alert(title: String? = nil,
+                      message: String,
+                      alertAction: UIAlertAction) -> UIAlertController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
 
-        let okAction =  UIAlertAction.ok(style: .cancel, handler: okActionHandler)
-        alert.addAction(okAction)
+        alert.addAction(alertAction)
 
         return alert
     }
@@ -60,8 +84,8 @@ extension UIViewController {
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
 
         let alert = UIAlertController.alertWithOKButton(title: title,
-                                         message: message,
-                                         okActionHandler: okActionHandler)
+                                                        message: message,
+                                                        okActionHandler: okActionHandler)
 
         present(alert, animated: animated, completion: nil)
 

@@ -72,11 +72,9 @@ class SettingsCellDescriptorFactory {
             }
             else {
                 if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
-                    let alert = UIAlertController(
+                    let alert = UIAlertController.alertWithOKButton(
                         title: "self.settings.add_account.error.title".localized,
-                        message: "self.settings.add_account.error.message".localized,
-                        cancelButtonTitle: "general.ok".localized
-                    )
+                        message: "self.settings.add_account.error.message".localized)
                     controller.present(alert, animated: true, completion: nil)
                 }
             }
