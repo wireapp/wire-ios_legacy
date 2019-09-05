@@ -183,13 +183,13 @@ open class CollectionCell: UICollectionViewCell {
         guard let menuConfigurationProperties = self.menuConfigurationProperties() else {
             return
         }
-        /**
-         *  The reason why we are touching the window here is to workaround a bug where,
-         *  After dismissing the webplayer, the window would fail to become the first responder,
-         *  preventing us to show the menu at all.
-         *  We now force the window to be the key window and to be the first responder to ensure that we can
-         *  show the menu controller.
-         */
+
+//           The reason why we are touching the window here is to workaround a bug where,
+//           After dismissing the webplayer, the window would fail to become the first responder,
+//           preventing us to show the menu at all.
+//           We now force the window to be the key window and to be the first responder to ensure that we can
+//           show the menu controller.
+
         self.window?.makeKey()
         self.window?.becomeFirstResponder()
         self.becomeFirstResponder()
@@ -212,19 +212,16 @@ open class CollectionCell: UICollectionViewCell {
         return actionController
     }
     
-    /// To be implemented in the subclass
+    // To be implemented in the subclass
     func updateForMessage(changeInfo: MessageChangeInfo?) {
         self.updateMessageVisibility()
         // no-op
     }
 
-    /**
-     * Copies the contents of the message.
-     * - parameter pasteboard: The pasteboard to copy the contents to.
-     * - note: The default implementation copies using the default implementation. Override it
-     * if you want to customize the behavior of the copy (ex: only copying parts of the message).
-     */
-
+    /// Copies the contents of the message.
+    /// note: The default implementation copies using the default implementation. Override it
+    /// if you want to customize the behavior of the copy (ex: only copying parts of the message).
+    /// - Parameter pasteboard: The pasteboard to copy the contents to.
     func copyDisplayedContent(in pasteboard: UIPasteboard) {
         message?.copy(in: pasteboard)
     }
