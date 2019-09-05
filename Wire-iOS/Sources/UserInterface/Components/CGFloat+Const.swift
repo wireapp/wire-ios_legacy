@@ -22,4 +22,7 @@ extension CGFloat {
     enum StartUI {
         static public let CellHeight: CGFloat = 56
     }
+    enum SplitView {
+        static public let LeftViewWidth: CGFloat = 336
+    }
 }

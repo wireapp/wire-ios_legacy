@@ -53,5 +53,27 @@ extension SplitViewController {
         NSLayoutConstraint.deactivate(constraintsInactiveForCurrentLayout)
         NSLayoutConstraint.activate(constraintsActiveForCurrentLayout)
     }
+
+    private func leftViewMinWidth(size: CGSize)-> CGFloat {
+        return min(size.width * 0.43, CGFloat.SplitView.LeftViewWidth)
+    }
+
+    @objc(updateConstraintsForSize:willMoveToEmptyView:)
+    func updateConstraints(for size: CGSize, willMoveToEmptyView toEmptyView: Bool) {
+        let isRightViewEmpty: Bool = rightViewController == nil || toEmptyView
+
+        switch (layoutSize, isRightViewEmpty) {
+        case (.compact, _):
+            leftViewWidthConstraint.constant = size.width
+            rightViewWidthConstraint.constant = size.width
+        case (.regularPortrait, true),
+             (.regularLandscape, _):
+            leftViewWidthConstraint.constant = leftViewMinWidth(size: size)
+            rightViewWidthConstraint.constant = size.width - leftViewWidthConstraint.constant
+        case (.regularPortrait, false):
+            leftViewWidthConstraint.constant = leftViewMinWidth(size: size)
+            rightViewWidthConstraint.constant = size.width
+        }
+    }
 }
 
