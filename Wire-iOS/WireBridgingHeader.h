@@ -145,7 +145,6 @@
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "LinkAttachmentPresenter.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
 #import "UIResponder+FirstResponder.h"
