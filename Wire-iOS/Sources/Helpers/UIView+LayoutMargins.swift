@@ -18,23 +18,42 @@
 
 import Foundation
 
-extension UIView {
-    
-    class var conversationLayoutMargins: UIEdgeInsets {
-        let left: CGFloat
-        let right: CGFloat
-        
-        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
-        switch UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass {
-        case .regular?: ///TODO: check view's width ratio
+struct HorizontalMargins {
+    var left: CGFloat
+    var right: CGFloat
+
+    init(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        switch userInterfaceSizeClass {
+        case .regular:
             left = 96
             right = 96
         default:
             left = 56
             right = 16
         }
-        
-        return UIEdgeInsets(top: 0, left: left, bottom: 0, right: right)
+    }
+}
+
+extension UITraitEnvironment {
+    var conversationHorizontalMargins: HorizontalMargins {
+        if traitCollection.horizontalSizeClass == .regular,
+            let viewWidth = ZClientViewController.shared()?.splitViewController.rightView.frame.width,
+            viewWidth <= 386 {
+            return HorizontalMargins(userInterfaceSizeClass: .compact)
+        }
+
+        return HorizontalMargins(userInterfaceSizeClass:traitCollection.horizontalSizeClass)
+    }
+}
+
+extension UIView {
+    
+    class var conversationLayoutMargins: UIEdgeInsets {
+
+        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
+        let horizontalMargins = UIApplication.shared.keyWindow?.conversationHorizontalMargins ?? HorizontalMargins(userInterfaceSizeClass: .compact)
+
+        return UIEdgeInsets(top: 0, left: horizontalMargins.left, bottom: 0, right: horizontalMargins.right)
     }
     
     class var directionAwareConversationLayoutMargins: UIEdgeInsets {
