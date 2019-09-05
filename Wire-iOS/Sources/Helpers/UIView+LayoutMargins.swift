@@ -36,6 +36,10 @@ struct HorizontalMargins {
 
 extension UITraitEnvironment {
     var conversationHorizontalMargins: HorizontalMargins {
+        return conversationHorizontalMargins()
+    }
+
+    func conversationHorizontalMargins(windowWidth: CGFloat? = UIApplication.shared.keyWindow?.frame.width) -> HorizontalMargins {
         guard traitCollection.horizontalSizeClass == .regular else {
             return HorizontalMargins(userInterfaceSizeClass: .compact)
         }
@@ -43,7 +47,7 @@ extension UITraitEnvironment {
         let userInterfaceSizeClass: UIUserInterfaceSizeClass
 
         /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
-        if let windowWidth = UIApplication.shared.keyWindow?.frame.width,
+        if let windowWidth = windowWidth,
             windowWidth <= CGFloat.SplitView.IPadMarginLimit {
             userInterfaceSizeClass = .compact
         } else {
