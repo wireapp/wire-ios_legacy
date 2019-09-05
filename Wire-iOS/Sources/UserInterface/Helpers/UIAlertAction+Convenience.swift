@@ -16,21 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+typealias AlertActionHandler = ((UIAlertAction) -> Void)
 extension UIAlertAction {
+
     static func cancel(cancelButtonTitle: String? = "general.cancel".localized,
-                       _ completion: (() -> Void)? = nil) -> UIAlertAction {
+                       completion: (() -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: cancelButtonTitle,
             style: .cancel,
             handler: { _ in completion?() }
         )
     }
-    
-    static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
-        return UIAlertAction.ok(style: .default, handler: completion)
-    }
 
-    static func ok(style: Style = .default, handler:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+    static func ok(style: Style = .default, _ handler:AlertActionHandler? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.ok".localized,
             style: style,

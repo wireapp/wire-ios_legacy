@@ -54,7 +54,7 @@ extension UIAlertController {
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
 
-        let okAction =  UIAlertAction.ok(style: .cancel, handler: okActionHandler)
+        let okAction =  UIAlertAction.ok(style: .cancel, okActionHandler)
 
         return UIAlertController.alert(title: title, message: message, alertAction: okAction)
     }
