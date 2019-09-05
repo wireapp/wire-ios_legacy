@@ -24,7 +24,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import "Analytics.h"
 #import "Analytics.h"
-#import "UIAlertController+Wire.h"
 #import "AppDelegate.h"
 #import "ZClientViewController.h"
 #import "UIApplication+Permissions.h"

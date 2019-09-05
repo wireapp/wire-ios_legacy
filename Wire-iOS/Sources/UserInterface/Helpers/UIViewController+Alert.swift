@@ -21,7 +21,7 @@ private let zmLog = ZMSLog(tag: "Alert")
 
 extension UIAlertController {
 
-    @objc
+    @objc(alertWithCancelButton:message:)
     static func alertWithCancelButton(title: String,
                                       message: String) -> UIAlertController {
         return UIAlertController.alert(title: title, message: message, alertAction: .cancel())
@@ -35,7 +35,7 @@ extension UIAlertController {
         return UIAlertController.alert(title: title, message: message, alertAction: cancelAction)
     }
 
-    @objc
+    @objc(alertWithOKButton:message:)
     static func alertWithOKButton(title: String,
                                   message: String) -> UIAlertController {
         return UIAlertController.alertWithOKButton(title: title,

@@ -19,8 +19,8 @@
 
 #import "UIApplication+Permissions.h"
 #import "AppDelegate.h"
-#import "UIAlertController+Wire.h"
 #import "UIResponder+FirstResponder.h"
+#import "Wire-Swift.h"
 
 @import Photos;
 #import <AVFoundation/AVFoundation.h>
@@ -132,9 +132,8 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 
 + (void)wr_warnAboutMicrophonePermission
 {
-    UIAlertController *noMicrophoneAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.microphone_warning.title", nil)
-                                                                               message:NSLocalizedString(@"voice.alert.microphone_warning.explanation", nil)
-                                                                     cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
+    UIAlertController *noMicrophoneAlert = [UIAlertController alertWithOKButton:NSLocalizedString(@"voice.alert.microphone_warning.title", nil)
+                                                                               message:NSLocalizedString(@"voice.alert.microphone_warning.explanation", nil)];
     
     [noMicrophoneAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
@@ -147,18 +146,16 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 
 + (void)wr_warnAboutPhotoLibraryRestricted
 {
-    UIAlertController *libraryRestrictedAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"library.alert.permission_warning.title", nil)
-                                                                                    message:NSLocalizedString(@"library.alert.permission_warning.restrictions.explaination", nil)
-                                                                          cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
+    UIAlertController *libraryRestrictedAlert = [UIAlertController alertWithOKButton:NSLocalizedString(@"library.alert.permission_warning.title", nil)
+                                                                                    message:NSLocalizedString(@"library.alert.permission_warning.restrictions.explaination", nil)];
 
     [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:libraryRestrictedAlert animated:YES completion:nil];
 }
 
 + (void)wr_warnAboutPhotoLibaryDenied
 {
-    UIAlertController *deniedAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"library.alert.permission_warning.title", nil)
-                                                                         message:NSLocalizedString(@"library.alert.permission_warning.not_allowed.explaination", nil)
-                                                               cancelButtonTitle:NSLocalizedString(@"general.cancel", nil)];
+    UIAlertController *deniedAlert = [UIAlertController alertWithCancelButton:NSLocalizedString(@"library.alert.permission_warning.title", nil)
+                                                                         message:NSLocalizedString(@"library.alert.permission_warning.not_allowed.explaination", nil)];
 
     [deniedAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
