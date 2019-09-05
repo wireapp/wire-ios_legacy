@@ -151,7 +151,6 @@
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
-#import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
 #import "KeyboardFrameObserver.h"
