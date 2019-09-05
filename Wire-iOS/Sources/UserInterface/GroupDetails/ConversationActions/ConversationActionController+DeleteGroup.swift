@@ -24,7 +24,7 @@ extension ConversationActionController {
         let alertController = UIAlertController.confirmController(
             title: "conversation.delete_request_dialog.title".localized,
             message: "conversation.delete_request_dialog.message".localized,
-            confirmAction: ZMConversation.Action.delete.alertAction { completion(true) },
+            confirmAction: ZMConversation.Action.deleteGroup.alertAction { completion(true) },
             completion: completion
         )
         present(alertController)
@@ -39,7 +39,7 @@ extension ConversationActionController {
                 case .success:
                     break
                 case .failure(_):
-                    let alert = UIAlertController.alertWithOKButton(message: "conversation.delete_request_error_dialog.title".localized)
+                    let alert = UIAlertController.alertWithOKButton(message: "conversation.delete_request_error_dialog.title".localized(args: conversation.displayName))
                     self?.present(alert)
                 }
             }
