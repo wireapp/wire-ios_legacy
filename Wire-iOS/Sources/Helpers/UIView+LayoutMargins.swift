@@ -55,7 +55,8 @@ extension UITraitEnvironment {
 }
 
 extension UIView {
-    
+
+    @available(*, deprecated, message: "Use UITraitEnvironment.conversationHorizontalMargins instead")
     class var conversationLayoutMargins: UIEdgeInsets {
 
         // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
