@@ -20,7 +20,7 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
-        case delete
+        case deleteGroup
         case clearContent
         case leave
         case configureNotifications
@@ -71,7 +71,7 @@ extension ZMConversation {
         }
 
         if ZMUser.selfUser()?.canDeleteConversation(self) == true {
-            actions.append(.delete)
+            actions.append(.deleteGroup)
         }
 
         return actions
@@ -114,7 +114,7 @@ extension ZMConversation.Action {
     fileprivate var isDestructive: Bool {
         switch self {
         case .remove,
-             .delete:
+             .deleteGroup:
             return true
         default: return false
         }
@@ -126,7 +126,7 @@ extension ZMConversation.Action {
     
     private var localizationKey: String {
         switch self {
-        case .delete: return "meta.menu.delete"
+        case .deleteGroup: return "meta.menu.delete"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"

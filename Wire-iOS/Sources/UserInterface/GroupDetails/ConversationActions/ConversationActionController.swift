@@ -86,7 +86,7 @@ final class ConversationActionController: ActionController {
 
     func handleAction(_ action: ZMConversation.Action) {
         switch action {
-        case .delete:
+        case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
 
             requestDeleteGroupResult() { result in
