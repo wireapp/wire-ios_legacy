@@ -61,11 +61,6 @@ extension ConversationListViewController {
         }
     }
 
-    func removeUserProfileObserver() {
-        userProfileObserverToken = nil
-    }
-
-
     fileprivate func openChangeHandleViewController(with handle: String) {
         // We need to ensure we are currently showing the takeover as this
         // callback will also get invoked when changing the handle from the settings view controller.
@@ -81,22 +76,6 @@ extension ConversationListViewController {
         parent?.present(navigationController, animated: true, completion: nil)
     }
 
-    fileprivate func setSuggested(handle: String) {
-        userProfile?.requestSettingHandle(handle: handle)
-    }
-
-    func requestSuggestedHandlesIfNeeded() {
-        guard let session = ZMUserSession.shared(),
-              let userProfile = userProfile else { return }
-
-        if nil == ZMUser.selfUser()?.handle,
-            session.hasCompletedInitialSync == true,
-            session.isPendingHotFixChanges == false {
-
-            userProfileObserverToken = userProfile.add(observer: self)
-            userProfile.suggestHandles()
-        }
-    }
 }
 
 
@@ -120,26 +99,26 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 }
 
 
-extension ConversationListViewController: UserProfileUpdateObserver {
+extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
 
     public func didFailToSetHandle() {
-        openChangeHandleViewController(with: "")
+        viewController.openChangeHandleViewController(with: "")
     }
 
     public func didFailToSetHandleBecauseExisting() {
-        openChangeHandleViewController(with: "")
+        viewController.openChangeHandleViewController(with: "")
     }
 
     public func didSetHandle() {
-        removeUsernameTakeover()
+        viewController.removeUsernameTakeover()
     }
 
     public func didFindHandleSuggestion(handle: String) {
-        showUsernameTakeover(with: handle)
+        viewController.showUsernameTakeover(with: handle)
         if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
             selfUser.fetchMarketingConsent(in: userSession, completion: { result in
                 switch result {
-                case .failure:
+                case .failure:///TODO: move to VC
                     UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
                         selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
                     }
@@ -150,15 +129,12 @@ extension ConversationListViewController: UserProfileUpdateObserver {
                 }
             })
         }
-
-        // When the user have to set user name, i.e. the user is a invited team user, show data usage permission dialog
-        self.isComingFromSetUsername = true
     }
 
 }
 
 
-extension ConversationListViewController: ZMUserObserver {
+extension ConversationListViewController.ViewModel: ZMUserObserver {
 
     public func userDidChange(_ note: UserChangeInfo) {
         if ZMUser.selfUser().handle != nil && note.handleChanged {

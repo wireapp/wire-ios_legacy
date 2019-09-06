@@ -27,12 +27,33 @@ enum ConversationListState {
 final class ConversationListViewController: UIViewController {
 
     final class ViewModel: NSObject {
+        unowned var viewController: ConversationListViewController!///TODO: protocol
+
         let account: Account
         var selectedConversation: ZMConversation?
-        unowned var viewController: ConversationListViewController!///TODO: protocol
+        
+        var userProfileObserverToken: Any?
+        weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
+
+        fileprivate var initialSyncObserverToken: Any?
+
+        fileprivate var userObserverToken: Any?
 
         init(account: Account) {
             self.account = account
+        }
+
+        deinit {
+            removeUserProfileObserver()
+        }
+
+        fileprivate func setupObservers() {
+            if let userSession = ZMUserSession.shared(),
+                let selfUser = ZMUser.selfUser() {
+                userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
+
+                initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+            }
         }
 
         func savePendingLastRead() {
@@ -60,6 +81,28 @@ final class ConversationListViewController: UIViewController {
                 self?.viewController.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
             })
         }
+
+        func removeUserProfileObserver() {
+            userProfileObserverToken = nil
+        }
+
+        func requestSuggestedHandlesIfNeeded() {
+            guard let session = ZMUserSession.shared(),
+                let userProfile = userProfile else { return }
+
+            if nil == ZMUser.selfUser()?.handle,
+                session.hasCompletedInitialSync == true,
+                session.isPendingHotFixChanges == false {
+
+                userProfileObserverToken = userProfile.add(observer: self)
+                userProfile.suggestHandles()
+            }
+        }
+
+        private func setSuggested(handle: String) {
+            userProfile?.requestSettingHandle(handle: handle)
+        }
+
     }
 
     let viewModel: ViewModel
@@ -73,19 +116,13 @@ final class ConversationListViewController: UIViewController {
     /// for NetworkStatusViewDelegate
     var shouldAnimateNetworkStatusView = false
 
-    var isComingFromSetUsername = false
     var startCallToken: Any?
 
     var actionsController: ConversationActionController?
 
     /// observer tokens which are assigned when viewDidLoad
-    fileprivate var userObserverToken: Any?
-    fileprivate var initialSyncObserverToken: Any?
     var allConversationsObserverToken: Any?
     var connectionRequestsObserverToken: Any?
-    var userProfileObserverToken: Any?
-
-    weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
@@ -168,10 +205,6 @@ final class ConversationListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        removeUserProfileObserver()
-    }
-
     override func loadView() {
         view = PassthroughTouchesView(frame: UIScreen.main.bounds)
         view.backgroundColor = .clear
@@ -187,7 +220,7 @@ final class ConversationListViewController: UIViewController {
         updateObserverTokensForActiveTeam()
         showPushPermissionDeniedDialogIfNeeded()
 
-        setupObservers()
+        viewModel.setupObservers()
 
         listContentController.collectionView.scrollRectToVisible(CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 1), animated: false)
     }
@@ -196,8 +229,7 @@ final class ConversationListViewController: UIViewController {
         super.viewWillAppear(animated)
 
         viewModel.savePendingLastRead()
-
-        requestSuggestedHandlesIfNeeded()///TODO: move to view model
+        viewModel.requestSuggestedHandlesIfNeeded()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -253,15 +285,6 @@ final class ConversationListViewController: UIViewController {
     }
 
     // MARK: - setup UI
-
-    fileprivate func setupObservers() {
-        if let userSession = ZMUserSession.shared(),
-            let selfUser = ZMUser.selfUser() {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
-
-            initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-        }
-    }
 
     fileprivate func setupNoConversationLabel() {
         contentContainer.addSubview(noConversationLabel)

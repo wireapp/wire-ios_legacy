@@ -18,8 +18,8 @@
 
 import Foundation
 
-extension ConversationListViewController: ZMInitialSyncCompletionObserver {
-    public func initialSyncCompleted() {
+extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObserver {
+    func initialSyncCompleted() {
         requestSuggestedHandlesIfNeeded()
     }
 }
