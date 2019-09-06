@@ -25,7 +25,7 @@ extension ConversationListViewController: ZMConversationListObserver {
     }
 }
 
-extension ConversationListViewController {
+extension ConversationListViewController {///TODO: VM
     func updateObserverTokensForActiveTeam() {
         if let userSession = ZMUserSession.shared() {
             allConversationsObserverToken = ConversationListChangeInfo.add(observer:self, for: ZMConversationList.conversationsIncludingArchived(inUserSession: userSession), userSession: userSession)
