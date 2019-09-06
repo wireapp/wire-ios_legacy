@@ -1113,7 +1113,7 @@
 		EF298BD1228D942A0078BE68 /* ImageManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF298BD0228D942A0078BE68 /* ImageManagerProtocol.swift */; };
 		EF298BD3228D9BB20078BE68 /* StartUIViewController+AddressBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF298BD2228D9BB20078BE68 /* StartUIViewController+AddressBook.swift */; };
 		EF298BD5228D9E830078BE68 /* ConversationListViewController+StartUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF298BD4228D9E830078BE68 /* ConversationListViewController+StartUI.swift */; };
-		EF29CDC222D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29CDC122D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift */; };
+		EF29CDC222D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */; };
 		EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */; };
 		EF29F1BB21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */; };
 		EF2A8DE7214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */; };
@@ -2912,7 +2912,7 @@
 		EF298BD0228D942A0078BE68 /* ImageManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManagerProtocol.swift; sourceTree = "<group>"; };
 		EF298BD2228D9BB20078BE68 /* StartUIViewController+AddressBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+AddressBook.swift"; sourceTree = "<group>"; };
 		EF298BD4228D9E830078BE68 /* ConversationListViewController+StartUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+StartUI.swift"; sourceTree = "<group>"; };
-		EF29CDC122D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ConversationListContentDelegate.swift"; sourceTree = "<group>"; };
+		EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewControllerViewModel+ConversationListContentDelegate.swift"; sourceTree = "<group>"; };
 		EF29E89B212302CD0023B80C /* AudioMessageViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMessageViewTests.swift; sourceTree = "<group>"; };
 		EF29F1BA21271A9A00BE94E6 /* GroupDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2A8DE6214A816D002C9058 /* StartUIViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -5567,22 +5567,8 @@
 		8FC851C0199245760008B66B /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
+				EFEE97CC2322A0EC007A4702 /* ConversationList */,
 				8F8913E91A9F287E0056AB0C /* ListContent */,
-				EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */,
-				EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */,
-				EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */,
-				EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */,
-				EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */,
-				EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */,
-				EF29CDC122D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift */,
-				EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */,
-				EF298BD4228D9E830078BE68 /* ConversationListViewController+StartUI.swift */,
-				EF587163216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift */,
-				EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */,
-				BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */,
-				BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */,
-				8784D4561E81832F007A6867 /* ConversationListViewController+NetworkStatusBarDelegate.swift */,
-				EF46ECCC231D5B4B00D425DA /* ConversationListViewController+StartUIDelegate.swift */,
 				8784D4541E817D13007A6867 /* ConversationListTopBarViewController.swift */,
 				BF606D6E1CAA8A78002BAC94 /* ConversationListBottomBar.swift */,
 				BF808B561DE71F3000718076 /* UserNameTakeOverViewController.swift */,
@@ -6406,6 +6392,28 @@
 			children = (
 				EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */,
 				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
+			);
+			path = ConversationList;
+			sourceTree = "<group>";
+		};
+		EFEE97CC2322A0EC007A4702 /* ConversationList */ = {
+			isa = PBXGroup;
+			children = (
+				EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */,
+				EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */,
+				EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */,
+				EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */,
+				EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */,
+				EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */,
+				EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */,
+				EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */,
+				EF298BD4228D9E830078BE68 /* ConversationListViewController+StartUI.swift */,
+				EF587163216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift */,
+				EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */,
+				BFAAB2381DEC6B2800CBC096 /* ConversationListViewController+Handles.swift */,
+				BFAAB2421DEDB21E00CBC096 /* ConversationListViewController+Transitions.swift */,
+				8784D4561E81832F007A6867 /* ConversationListViewController+NetworkStatusBarDelegate.swift */,
+				EF46ECCC231D5B4B00D425DA /* ConversationListViewController+StartUIDelegate.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -7498,7 +7506,7 @@
 				D550F57520444CF8009E09DD /* AlertResultConfiguration.swift in Sources */,
 				EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */,
 				5EFD914E21C9325B00080599 /* AuthenticationCredentialsCreationInputHandler.swift in Sources */,
-				EF29CDC222D3907000EB2380 /* ConversationListViewController+ConversationListContentDelegate.swift in Sources */,
+				EF29CDC222D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift in Sources */,
 				DB7FEC921B8729AD00BA72DE /* ConversationInputBarSendController.m in Sources */,
 				8744D5BE1C41D6C2000F8F93 /* SettingsClientViewController.swift in Sources */,
 				D54224C620513BFD00526A57 /* CellConfiguration+ConversationOptions.swift in Sources */,
