@@ -244,18 +244,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return attributedName;
 }
 
-#pragma mark - UIButtons
-
-- (void)closeButtonTapped:(id)sender
-{
-    [[UIMenuController sharedMenuController] setMenuVisible:NO];
-    
-    if (! IS_IPAD_FULLSCREEN) {
-        self.forcePortraitMode = YES;
-    }
-    [self dismissWithCompletion:nil];
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
