@@ -1290,7 +1290,7 @@
 		EFDAC64722DE2AD100D63025 /* TeamImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDAC64622DE2AD100D63025 /* TeamImageView.swift */; };
 		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
-		EFDB3135217F5E0300D2A7CE /* ConversationListCell+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3133217F5E0300D2A7CE /* ConversationListCell+Constraint.swift */; };
+		EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */; };
 		EFDB3138217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3136217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift */; };
 		EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */; };
 		EFDBA242229414E100874A15 /* Account+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA241229414E100874A15 /* Account+Mock.swift */; };
@@ -3090,7 +3090,7 @@
 		EFDAC64622DE2AD100D63025 /* TeamImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamImageView.swift; sourceTree = "<group>"; };
 		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
-		EFDB3133217F5E0300D2A7CE /* ConversationListCell+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListCell+Constraint.swift"; sourceTree = "<group>"; };
+		EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		EFDB3134217F5E0300D2A7CE /* ConversationListCell+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationListCell+Internal.h"; sourceTree = "<group>"; };
 		EFDB3136217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwipeMenuCollectionCell+Constraint.swift"; sourceTree = "<group>"; };
 		EFDB3137217F6BEF00D2A7CE /* SwipeMenuCollectionCell+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwipeMenuCollectionCell+Internal.h"; sourceTree = "<group>"; };
@@ -5123,7 +5123,7 @@
 				EFDB3134217F5E0300D2A7CE /* ConversationListCell+Internal.h */,
 				8F8913F11A9F287E0056AB0C /* ConversationListCell.h */,
 				8F8913F21A9F287E0056AB0C /* ConversationListCell.m */,
-				EFDB3133217F5E0300D2A7CE /* ConversationListCell+Constraint.swift */,
+				EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */,
 				8F8913F51A9F287E0056AB0C /* ConversationListItemView.h */,
 				EF6251D1213844D400943708 /* ConversationListItemView+Internal.h */,
 				8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */,
@@ -7767,7 +7767,7 @@
 				163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */,
 				87B48EBE20A050AA00DBAD9D /* ViewControllerDismisser.swift in Sources */,
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
-				EFDB3135217F5E0300D2A7CE /* ConversationListCell+Constraint.swift in Sources */,
+				EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,
 				5E769C5421AD89A900785EB7 /* UIViewController+Dismiss.swift in Sources */,
