@@ -43,6 +43,12 @@ import UIKit
     func configure() {
         tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        if #available(iOS 13.0, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.titleTextAttributes = titleTextAttributes
+            standardAppearance = appearance
+        }
+        
         configureBackground()
 
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
