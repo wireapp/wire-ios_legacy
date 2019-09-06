@@ -22,7 +22,7 @@
 
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
-#import "Constants.h"
+
 #import "UIColor+WAZExtensions.h"
 #import "UIImage+ImageUtilities.h"
 #import "Wire-Swift.h"

@@ -34,7 +34,7 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMUser+Additions.h"
 #import "avs+iOS.h"
-#import "Constants.h"
+
 #import "Settings.h"
 #import "ConversationInputBarSendController.h"
 @import FLAnimatedImage;

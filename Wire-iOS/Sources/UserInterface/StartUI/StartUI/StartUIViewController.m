@@ -31,19 +31,12 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMConversation+Additions.h"
 #import "ZMUser+Additions.h"
-#import "Constants.h"
+
 #import "Wire-Swift.h"
 
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-
-@interface StartUIViewController () <SearchHeaderViewControllerDelegate>
-
-@property (nonatomic) ProfilePresenter *profilePresenter;
-@property (nonatomic) EmptySearchResultsView *emptyResultView;
-
-@end
 
 @implementation StartUIViewController
 
@@ -223,29 +216,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     InviteContactsViewController *inviteContactsViewController = [[InviteContactsViewController alloc] init];
     inviteContactsViewController.delegate = self;
     [self.navigationController pushViewController:inviteContactsViewController animated:true];
-}
-
-- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-
-    UICollectionViewCell *cell = [self.searchResultsViewController.searchResultsView.collectionView cellForItemAtIndexPath:indexPath];
-    
-    [self.profilePresenter presentProfileViewControllerForUser:bareUser
-                                                  inController:self
-                                                      fromRect:[self.view convertRect:cell.bounds fromView:cell]
-                                                     onDismiss:^{
-        if (IS_IPAD_FULLSCREEN) {
-            [self.searchResultsViewController.searchResultsView.collectionView reloadItemsAtIndexPaths:self.searchResultsViewController.searchResultsView.collectionView.indexPathsForVisibleItems];
-        }
-        else {
-            if (self.profilePresenter.keyboardPersistedAfterOpeningProfile) {
-                [self.searchHeaderViewController.tokenField becomeFirstResponder];
-                self.profilePresenter.keyboardPersistedAfterOpeningProfile = NO;
-            }
-        }
-                                                     }
-                                                arrowDirection:UIPopoverArrowDirectionLeft];
 }
 
 #pragma mark - SearchHeaderViewControllerDelegate

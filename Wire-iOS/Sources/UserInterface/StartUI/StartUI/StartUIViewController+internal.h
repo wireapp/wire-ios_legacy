@@ -22,15 +22,17 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 @class SearchGroupSelector;
 @class SearchResultsViewController;
 @class StartUIInviteActionBar;
+@class ProfilePresenter;
+@class EmptySearchResultsView;
 
 @protocol UserType;
 @protocol AddressBookHelperProtocol;
+@protocol SearchHeaderViewControllerDelegate;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface StartUIViewController ()
 
-NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
 @property (nonatomic) SearchGroupSelector *groupSelector;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
@@ -40,8 +42,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(instancetype) init;
 
-- (void)presentProfileViewControllerForUser:(id<UserType>)bareUser atIndexPath:(NSIndexPath *)indexPath;
-NS_ASSUME_NONNULL_END
 
 @end
 
+@interface StartUIViewController () <SearchHeaderViewControllerDelegate>
+
+@property (nonatomic) ProfilePresenter *profilePresenter;
+@property (nonatomic) EmptySearchResultsView *emptyResultView;
+
+@end
+
+NS_ASSUME_NONNULL_END
