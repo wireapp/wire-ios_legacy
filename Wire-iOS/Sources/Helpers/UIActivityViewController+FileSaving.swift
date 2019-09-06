@@ -28,8 +28,9 @@ extension UIActivityViewController {
 
         configPopover(pointToView: view)
     }
-    
+}
 
+extension UIViewController {
     /// On iPad, UIActivityViewController must be presented in a popover and the popover's source view must be set
     ///
     /// - Parameter pointToView: the view which the popover points to

@@ -132,6 +132,7 @@ extension ConversationInputBarViewController {
 
         controller.addAction(.cancel())
 
+        controller.configPopover(pointToView: sender ?? view)
         return controller
     }
 
