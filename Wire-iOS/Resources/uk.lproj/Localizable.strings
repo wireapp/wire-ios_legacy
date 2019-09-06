@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Вийти з групи…";
 "meta.menu.archive" = "Архівувати";
 "meta.menu.unarchive" = "Розархівувати";
-"meta.menu.delete" = "Видалити вміст…";
+"meta.menu.clear_content" = "Видалити вміст…";
 "meta.menu.silence.mute" = "Вимкнути звук";
 "meta.menu.silence.unmute" = "Увімкнути звук";
 "meta.menu.cancel" = "Скасувати";

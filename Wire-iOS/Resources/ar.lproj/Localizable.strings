@@ -691,7 +691,7 @@
 "meta.menu.leave" = "مغادرة المجموعة…";
 "meta.menu.archive" = "حفظ في الأرشيف";
 "meta.menu.unarchive" = "إلغاء الأرشفة";
-"meta.menu.delete" = "حذف المحتوى…";
+"meta.menu.clear_content" = "حذف المحتوى…";
 "meta.menu.silence.mute" = "كتم الصوت";
 "meta.menu.silence.unmute" = "إلغاء كتم الصوت";
 "meta.menu.cancel" = "إلغاء";

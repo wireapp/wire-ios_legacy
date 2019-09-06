@@ -18,29 +18,58 @@
 
 import Foundation
 
-extension UIView {
-    
-    @objc class var conversationLayoutMargins: UIEdgeInsets {
-        var left: CGFloat = CGFloat.nan
-        var right: CGFloat = CGFloat.nan
-        
-        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
-        switch (UIApplication.shared.keyWindow?.traitCollection.horizontalSizeClass) {
-        case (.compact?):
-            left = 56
-            right = 16
-        case (.regular?):
+struct HorizontalMargins {
+    var left: CGFloat
+    var right: CGFloat
+
+    init(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
+        switch userInterfaceSizeClass {
+        case .regular:
             left = 96
             right = 96
         default:
             left = 56
             right = 16
         }
-        
-        return UIEdgeInsets(top: 0, left: left, bottom: 0, right: right)
+    }
+}
+
+extension UITraitEnvironment {
+    var conversationHorizontalMargins: HorizontalMargins {
+        return conversationHorizontalMargins()
+    }
+
+    func conversationHorizontalMargins(windowWidth: CGFloat? = UIApplication.shared.keyWindow?.frame.width) -> HorizontalMargins {
+        guard traitCollection.horizontalSizeClass == .regular else {
+            return HorizontalMargins(userInterfaceSizeClass: .compact)
+        }
+
+        let userInterfaceSizeClass: UIUserInterfaceSizeClass
+
+        /// on iPad 9.7 inch 2/3 mode, right view's width is  396pt, use the compact mode's narrower margin
+        if let windowWidth = windowWidth,
+            windowWidth <= CGFloat.SplitView.IPadMarginLimit {
+            userInterfaceSizeClass = .compact
+        } else {
+            userInterfaceSizeClass = .regular
+        }
+
+        return HorizontalMargins(userInterfaceSizeClass: userInterfaceSizeClass)
+    }
+}
+
+extension UIView {
+
+    @available(*, deprecated, message: "Use UITraitEnvironment.conversationHorizontalMargins instead")
+    class var conversationLayoutMargins: UIEdgeInsets {
+
+        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
+        let horizontalMargins = UIApplication.shared.keyWindow?.conversationHorizontalMargins ?? HorizontalMargins(userInterfaceSizeClass: .compact)
+
+        return UIEdgeInsets(top: 0, left: horizontalMargins.left, bottom: 0, right: horizontalMargins.right)
     }
     
-    @objc public class var directionAwareConversationLayoutMargins: UIEdgeInsets {
+    class var directionAwareConversationLayoutMargins: UIEdgeInsets {
         let margins = conversationLayoutMargins
         
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {

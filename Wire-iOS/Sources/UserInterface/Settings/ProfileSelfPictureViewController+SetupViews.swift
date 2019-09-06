@@ -166,7 +166,7 @@ extension ProfileSelfPictureViewController {
         view.addSubview(bottomOverlayView)
 
         var height: CGFloat
-        ///TODO: response to size class update
+        // TODO: response to size class update
         if traitCollection.horizontalSizeClass == .regular {
             height = 104
         } else {
@@ -200,7 +200,7 @@ extension ProfileSelfPictureViewController {
             popover?.backgroundColor = UIColor.white
         }
 
-        /// update status bar style for the top view controller (UIImagePickerController)
+        // update status bar style for the top view controller (UIImagePickerController)
         present(imagePickerController, animated: true) { [weak self] in
             self?.updateStatusBar()
         }

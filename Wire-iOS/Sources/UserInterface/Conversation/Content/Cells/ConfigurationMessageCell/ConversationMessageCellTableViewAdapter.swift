@@ -132,8 +132,10 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     }
 
     func configureConstraints(fullWidth: Bool) {
-        leading.constant = fullWidth ? 0 : UIView.conversationLayoutMargins.left
-        trailing.constant = fullWidth ? 0 : -UIView.conversationLayoutMargins.right
+        let margins = conversationHorizontalMargins
+
+        leading.constant = fullWidth ? 0 : margins.left
+        trailing.constant = fullWidth ? 0 : -margins.right
         ephemeralTop.constant = cellView.ephemeralTimerTopInset
     }
 

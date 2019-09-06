@@ -86,6 +86,12 @@ final class ConversationActionController: ActionController {
 
     func handleAction(_ action: ZMConversation.Action) {
         switch action {
+        case .deleteGroup:
+            guard let userSession = ZMUserSession.shared() else { return }
+
+            requestDeleteGroupResult() { result in
+                self.handleDeleteGroupResult(result, conversation: self.conversation, in: userSession)
+            }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }
@@ -104,8 +110,8 @@ final class ConversationActionController: ActionController {
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
             }
-        case .delete: self.requestDeleteResult(for: self.conversation) { result in
-            self.handleDeleteResult(result, for: self.conversation)
+        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
+            self.handleClearContentResult(result, for: self.conversation)
             }
         case .cancelRequest:
             guard let user = self.conversation.connectedUser else { return }

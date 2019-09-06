@@ -691,7 +691,7 @@
 "meta.menu.leave" = "退出群组";
 "meta.menu.archive" = "归档";
 "meta.menu.unarchive" = "取消归档";
-"meta.menu.delete" = "删除内容…";
+"meta.menu.clear_content" = "删除内容…";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";

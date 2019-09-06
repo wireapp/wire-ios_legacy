@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Lahku grupist…";
 "meta.menu.archive" = "Arhiveeri";
 "meta.menu.unarchive" = "Arhiivist tagasi";
-"meta.menu.delete" = "Kustuta sisu…";
+"meta.menu.clear_content" = "Kustuta sisu…";
 "meta.menu.silence.mute" = "Hääletu";
 "meta.menu.silence.unmute" = "Heli sisse";
 "meta.menu.cancel" = "Tühista";

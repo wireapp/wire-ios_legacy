@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Deixar Grupo…";
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
-"meta.menu.delete" = "Apagar Conteúdo…";
+"meta.menu.clear_content" = "Apagar Conteúdo…";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";

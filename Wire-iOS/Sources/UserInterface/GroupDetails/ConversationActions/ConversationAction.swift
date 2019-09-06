@@ -20,7 +20,8 @@ import Foundation
 
 extension ZMConversation {
     enum Action {
-        case delete
+        case deleteGroup
+        case clearContent
         case leave
         case configureNotifications
         case silence(isSilenced: Bool)
@@ -34,9 +35,14 @@ extension ZMConversation {
     
     var actions: [Action] {
         switch conversationType {
-        case .connection: return availablePendingActions()
-        case .oneOnOne: return availableOneToOneActions()
-        default: return availableGroupActions()
+        case .connection:
+            return availablePendingActions()
+        case .oneOnOne:
+            return availableOneToOneActions()
+        case .self,
+             .group,
+             .invalid:
+            return availableGroupActions()
         }
     }
     
@@ -44,7 +50,7 @@ extension ZMConversation {
         precondition(conversationType == .oneOnOne)
         var actions = [Action]()
         actions.append(contentsOf: availableStandardActions())
-        actions.append(.delete)
+        actions.append(.clearContent)
         if teamRemoteIdentifier == nil, let connectedUser = connectedUser {
             actions.append(.block(isBlocked: connectedUser.isBlocked))
         }
@@ -58,11 +64,16 @@ extension ZMConversation {
     
     private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
-        actions.append(.delete)
+        actions.append(.clearContent)
 
         if activeParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
+
+        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
+            actions.append(.deleteGroup)
+        }
+
         return actions
     }
     
@@ -102,7 +113,9 @@ extension ZMConversation.Action {
 
     fileprivate var isDestructive: Bool {
         switch self {
-        case .remove: return true
+        case .remove,
+             .deleteGroup:
+            return true
         default: return false
         }
     }
@@ -113,8 +126,9 @@ extension ZMConversation.Action {
     
     private var localizationKey: String {
         switch self {
+        case .deleteGroup: return "meta.menu.delete"
         case .remove: return "profile.remove_dialog_button_remove"
-        case .delete: return "meta.menu.delete"
+        case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"

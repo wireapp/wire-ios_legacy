@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Gruptan Ayrıl…";
 "meta.menu.archive" = "Arşivle";
 "meta.menu.unarchive" = "Arşivden kaldır";
-"meta.menu.delete" = "İçeriği Sil…";
+"meta.menu.clear_content" = "İçeriği Sil…";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";

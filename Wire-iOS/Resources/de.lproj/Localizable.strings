@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Gruppe verlassen…";
 "meta.menu.archive" = "Archivieren";
 "meta.menu.unarchive" = "Reaktivieren";
-"meta.menu.delete" = "Inhalt löschen…";
+"meta.menu.clear_content" = "Inhalt löschen…";
 "meta.menu.silence.mute" = "Stumm";
 "meta.menu.silence.unmute" = "Benachrichtigen";
 "meta.menu.cancel" = "Abbrechen";

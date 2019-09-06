@@ -691,7 +691,7 @@
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Arkiv";
 "meta.menu.unarchive" = "Fjern fra arkiv";
-"meta.menu.delete" = "Delete Content…";
+"meta.menu.clear_content" = "Delete Content…";
 "meta.menu.silence.mute" = "Lyd fra";
 "meta.menu.silence.unmute" = "Lyd til";
 "meta.menu.cancel" = "Annuller";

@@ -25,7 +25,7 @@ extension UIViewController {
     var wr_supportedInterfaceOrientations: UIInterfaceOrientationMask {
         switch (UIDevice.current.userInterfaceIdiom, traitCollection.horizontalSizeClass) {
         case (.pad, .regular),
-             /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (it is .regular in iOS11).
+             // Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (it is .regular in iOS11).
              (.pad, .unspecified):
             return .all
         default:
