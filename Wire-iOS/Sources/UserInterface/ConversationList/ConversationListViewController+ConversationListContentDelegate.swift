@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension ConversationListViewController: ConversationListContentDelegate {
+extension ConversationListViewController: ConversationListContentDelegate {///TODO: mv to VM
     public func conversationList(_ controller: ConversationListContentController!, didSelect conversation: ZMConversation!, focusOnView focus: Bool) {
-        selectedConversation = conversation
+        viewModel.selectedConversation = conversation
     }
 
     public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToListIfPossible()

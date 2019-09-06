@@ -25,10 +25,46 @@ enum ConversationListState {
 }
 
 final class ConversationListViewController: UIViewController {
+
+    final class ViewModel: NSObject {
+        let account: Account
+        var selectedConversation: ZMConversation?
+        unowned var viewController: ConversationListViewController!///TODO: protocol
+
+        init(account: Account) {
+            self.account = account
+        }
+
+        func savePendingLastRead() {
+            ZMUserSession.shared()?.enqueueChanges({
+                self.selectedConversation?.savePendingLastRead()
+            })
+        }
+
+
+        /// Select a conversation and move the focus to the conversation view.
+        ///
+        /// - Parameters:
+        ///   - conversation: the conversation to select
+        ///   - message: scroll to  this message
+        ///   - focus: focus on the view or not
+        ///   - animated: perform animation or not
+        ///   - completion: the completion block
+        func select(_ conversation: ZMConversation,
+                    scrollTo message: ZMConversationMessage? = nil, focusOnView focus: Bool = false,
+                    animated: Bool = false,
+                    completion: (() -> ())? = nil) {
+            selectedConversation = conversation
+
+            viewController.dismissPeoplePicker(with: { [weak self] in
+                self?.viewController.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            })
+        }
+    }
+
+    let viewModel: ViewModel
     /// internal View Model
     var state: ConversationListState = .conversationList
-    var selectedConversation: ZMConversation?
-    let account: Account
 
     /// private
     private var viewDidAppearCalled = false
@@ -102,10 +138,11 @@ final class ConversationListViewController: UIViewController {
         return conversationListOnboardingHint
     }()
 
-    required init(account: Account,
-                  selfUser: SelfUserType = ZMUser.selfUser()) {
-        self.account = account
-        topBarViewController = ConversationListTopBarViewController(account: account, selfUser: selfUser)
+    required init(selfUser: SelfUserType = ZMUser.selfUser(), viewModel: ViewModel) {
+
+        self.viewModel = viewModel
+
+        topBarViewController = ConversationListTopBarViewController(account: viewModel.account, selfUser: selfUser)
 
         super.init(nibName:nil, bundle:nil)
 
@@ -158,11 +195,9 @@ final class ConversationListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        ZMUserSession.shared()?.enqueueChanges({
-            self.selectedConversation?.savePendingLastRead()
-        })
+        viewModel.savePendingLastRead()
 
-        requestSuggestedHandlesIfNeeded()
+        requestSuggestedHandlesIfNeeded()///TODO: move to view model
     }
 
     override func viewDidAppear(_ animated: Bool) {

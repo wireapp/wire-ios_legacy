@@ -26,7 +26,9 @@ extension ZClientViewController {
     ///TODO: caller to Swift
     @objc
     func setupConversationListViewController(account: Account, selfUser: UserType) {
-        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser as! SelfUserType)
+        let viewModel = ConversationListViewController.ViewModel(account: account)
+        conversationListViewController = ConversationListViewController(selfUser: selfUser as! SelfUserType, viewModel: viewModel)
+        viewModel.viewController = conversationListViewController
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -258,7 +260,7 @@ extension ZClientViewController {
                 animated: Bool,
                 completion: Completion?) {
         dismissAllModalControllers(callback: { [weak self] in
-            self?.conversationListViewController.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            self?.conversationListViewController.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 

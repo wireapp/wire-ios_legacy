@@ -20,26 +20,6 @@ import Foundation
 
 extension ConversationListViewController {
 
-    /// Select a conversation and move the focus to the conversation view.
-    ///
-    /// - Parameters:
-    ///   - conversation: the conversation to select
-    ///   - message: scroll to  this message
-    ///   - focus: focus on the view or not
-    ///   - animated: perform animation or not
-    ///   - completion: the completion block
-    func select(_ conversation: ZMConversation,
-                scrollTo message: ZMConversationMessage? = nil, focusOnView focus: Bool = false,
-                animated: Bool = false,
-                completion: (() -> ())? = nil) {
-        selectedConversation = conversation
-
-        dismissPeoplePicker(with: { [weak self] in
-            self?.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
-        })
-    }
-
-
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not
