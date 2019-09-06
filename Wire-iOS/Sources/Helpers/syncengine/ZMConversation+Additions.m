@@ -30,7 +30,7 @@
 #import "UIApplication+Permissions.h"
 #import "Wire-Swift.h"
 #import "Settings.h"
-#import "Constants.h"
+
 #import "Wire-Swift.h"
 
 @implementation ZMConversation (Additions)

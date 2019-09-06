@@ -35,7 +35,7 @@
 // helpers
 #import "MessageAction.h"
 
-#import "Constants.h"
+
 
 #import "Analytics.h"
 
@@ -242,18 +242,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     NSAttributedString *attributedName = [[NSAttributedString alloc] initWithString:text attributes:attributes];
     
     return attributedName;
-}
-
-#pragma mark - UIButtons
-
-- (void)closeButtonTapped:(id)sender
-{
-    [[UIMenuController sharedMenuController] setMenuVisible:NO];
-    
-    if (! IS_IPAD_FULLSCREEN) {
-        self.forcePortraitMode = YES;
-    }
-    [self dismissWithCompletion:nil];
 }
 
 #pragma mark - UIScrollViewDelegate

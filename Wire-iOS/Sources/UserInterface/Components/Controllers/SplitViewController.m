@@ -23,7 +23,7 @@
 #import "SwizzleTransition.h"
 #import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "Constants.h"
+
 #import "Geometry.h"
 
 #import "Wire-Swift.h"

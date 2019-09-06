@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ConversationContentViewControllerDelegate.h"
-#import "Constants.h"
+
 
 @class ZMConversation;
 @class ConversationMediaController;

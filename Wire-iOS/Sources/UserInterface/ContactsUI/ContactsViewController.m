@@ -23,7 +23,7 @@
 #import "ContactsDataSource.h"
 #import "ContactsViewController+ShareContacts.h"
 #import "UIView+Zeta.h"
-#import "Constants.h"
+
 #import "ColorScheme.h"
 #import "UITableView+RowCount.h"
 #import "Analytics.h"

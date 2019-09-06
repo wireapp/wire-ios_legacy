@@ -19,7 +19,7 @@
 
 #import "TopPeopleCell.h"
 #import "TopPeopleCell+Internal.h"
-#import "Constants.h"
+
 #import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 

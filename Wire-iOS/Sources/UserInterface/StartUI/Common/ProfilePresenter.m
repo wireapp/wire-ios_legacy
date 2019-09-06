@@ -18,20 +18,18 @@
 
 
 #import "ProfilePresenter.h"
+#import "ProfilePresenter+Internal.h"
 
 // ui
 #import "ProfileViewController.h"
 #import "ZClientViewController.h"
-#import "Constants.h"
+
 #import "ZoomTransition.h"
 #import "Wire-Swift.h"
 
 // model
 #import "WireSyncEngine+iOS.h"
 
-@interface TransitionDelegate : NSObject <UIViewControllerTransitioningDelegate>
-
-@end
 
 @implementation TransitionDelegate
 
@@ -47,18 +45,6 @@
 
 @end
 
-@interface ProfilePresenter () <ViewControllerDismisser>
-@end
-
-@interface ProfilePresenter () <ProfileViewControllerDelegate>
-
-@property (nonatomic, assign) CGRect presentedFrame;
-@property (nonatomic, weak)   UIView *viewToPresentOn;
-@property (nonatomic, weak)   UIViewController *controllerToPresentOn;
-@property (nonatomic, copy)   dispatch_block_t onDismiss;
-@property (nonatomic) TransitionDelegate *transitionDelegate;
-
-@end
 
 @implementation ProfilePresenter
 
@@ -74,19 +60,6 @@
         _transitionDelegate = [[TransitionDelegate alloc] init];
     }
     return self;
-}
-
-- (void)deviceOrientationChanged:(NSNotification *)notification
-{
-    if (IS_IPAD_FULLSCREEN && self.controllerToPresentOn != nil) {
-        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:NO completion:nil];
-
-        if (self.viewToPresentOn != nil) {
-            
-            [self.controllerToPresentOn.presentedViewController.popoverPresentationController setSourceRect:self.presentedFrame];
-            [self.controllerToPresentOn.presentedViewController setPreferredContentSize:CGRectInset(self.controllerToPresentOn.presentedViewController.view.frame, -0.01, 0.0).size];
-        }
-    }
 }
 
 - (void)presentProfileViewControllerForUser:(id<UserType>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection
