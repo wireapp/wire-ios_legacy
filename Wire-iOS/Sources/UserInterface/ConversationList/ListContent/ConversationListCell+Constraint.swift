@@ -19,6 +19,25 @@
 import Foundation
 
 extension ConversationListCell {
+
+    override open var isSelected: Bool {
+        didSet {
+            if isIPadRegular() {
+                itemView.selected  = isSelected || isHighlighted
+            }
+        }
+    }
+
+    override open var isHighlighted: Bool {
+        didSet {
+            if isIPadRegular() {
+                itemView.selected  = isSelected || isHighlighted
+            } else {
+                itemView.selected  =  isHighlighted
+            }
+        }
+    }
+    
     override open func updateConstraints() {
         super.updateConstraints()
 
