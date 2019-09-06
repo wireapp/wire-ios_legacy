@@ -99,7 +99,7 @@ final class ConversationListViewController: UIViewController {
             }
         }
 
-        private func setSuggested(handle: String) {
+        func setSuggested(handle: String) {
             userProfile?.requestSettingHandle(handle: handle)
         }
 
@@ -395,7 +395,7 @@ final class ConversationListViewController: UIViewController {
         })
     }
 
-    func updateNoConversationVisibility() {
+    func updateNoConversationVisibility() {///TODO: move to VM
         if !ZMConversationList.hasConversations {
             showNoContactLabel()
         } else {

@@ -54,7 +54,6 @@ extension ConversationListViewController {
         takeover.removeFromParent()
         contentContainer.alpha = 1
         usernameTakeoverViewController = nil
-        removeUserProfileObserver()
 
         if parent?.presentedViewController is SettingsStyleNavigationController {
             parent?.presentedViewController?.dismiss(animated: true, completion: nil)
@@ -79,7 +78,7 @@ extension ConversationListViewController {
 }
 
 
-extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {
+extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {///TODO: move to VM?
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
 
@@ -92,7 +91,7 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
     private func perform(_ action: UserNameTakeOverViewControllerAction) {
         switch action {
         case .chooseOwn(let suggested): openChangeHandleViewController(with: suggested)
-        case .keepSuggestion(let suggested): setSuggested(handle: suggested)
+        case .keepSuggestion(let suggested): viewModel.setSuggested(handle: suggested)
         case .learnMore: URL.wr_usernameLearnMore.openInApp(above: self)
         }
     }
@@ -110,7 +109,7 @@ extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
     }
 
     public func didSetHandle() {
-        viewController.removeUsernameTakeover()
+        removeUsernameTakeover()
     }
 
     public func didFindHandleSuggestion(handle: String) {
@@ -119,7 +118,7 @@ extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
             selfUser.fetchMarketingConsent(in: userSession, completion: { result in
                 switch result {
                 case .failure:///TODO: move to VC
-                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self) { marketingConsent in
+                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self.viewController) { marketingConsent in
                         selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
                     }
 
@@ -140,7 +139,16 @@ extension ConversationListViewController.ViewModel: ZMUserObserver {
         if ZMUser.selfUser().handle != nil && note.handleChanged {
             removeUsernameTakeover()
         } else if note.teamsChanged {
-            updateNoConversationVisibility()
+            viewController.updateNoConversationVisibility()
         }
     }
 }
+
+extension ConversationListViewController.ViewModel {
+    func removeUsernameTakeover() {
+        viewController.removeUsernameTakeover()
+        removeUserProfileObserver()
+    }
+}
+
+
