@@ -156,8 +156,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             switch normalizedNumber {
             case .invalid(let errorCode):
                 switch errorCode {
-                case .objectValidationErrorCodeStringTooLong: return .tooLong(kind: .phoneNumber)
-                case .objectValidationErrorCodeStringTooShort: return .tooShort(kind: .phoneNumber)
+                case .tooLong: return .tooLong(kind: .phoneNumber)
+                case .tooShort: return .tooShort(kind: .phoneNumber)
                 default: return .invalidPhoneNumber
                 }
             case .unknownError:
