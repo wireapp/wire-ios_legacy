@@ -36,32 +36,6 @@
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
-static NSString * const CellReuseIdConversation = @"CellId";
-
-@interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
-
-@property (nonatomic, strong) ConversationListViewModel *listViewModel;
-
-@property (nonatomic) NSObject *activeMediaPlayerObserver;
-@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) BOOL focusOnNextSelection;
-@property (nonatomic) BOOL animateNextSelection;
-@property (nonatomic) id<ZMConversationMessage> scrollToMessageOnNextSelection;
-@property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
-@property (nonatomic) ConversationListCell *layoutCell;
-@property (nonatomic) ConversationCallController *startCallController;
-
-@property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
-@end
-
-@interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
-
-@end
-
-@interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
-
-@end
 
 @implementation ConversationListContentController
 
@@ -224,7 +198,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
                                                                          animated:self.animateNextSelection
                                                                        completion:self.selectConversationCompletion];
             self.selectConversationCompletion = nil;
-            
+
             [self.contentDelegate conversationList:self didSelectConversation:item focusOnView:! self.focusOnNextSelection];
         }
         else if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
@@ -485,28 +459,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
     else {
         return UIEdgeInsetsMake(0, 0, 0, 0);
     }
-}
-
-@end
-
-@implementation ConversationListContentController (ConversationListCellDelegate)
-
-- (void)conversationListCellOverscrolled:(ConversationListCell *)cell
-{
-    ZMConversation *conversation = cell.conversation;
-    if (! conversation) {
-        return;
-    }
-    
-    if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:fromSourceView:)]) {
-        [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation fromSourceView:cell];
-    }
-}
-    
-- (void)conversationListCellJoinCallButtonTapped:(ConversationListCell *)cell
-{
-    self.startCallController = [[ConversationCallController alloc] initWithConversation:cell.conversation target:self];
-    [self.startCallController joinCall];
 }
 
 @end

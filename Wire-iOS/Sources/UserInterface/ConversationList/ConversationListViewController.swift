@@ -269,23 +269,18 @@ final class ConversationListViewController: UIViewController {
 
     fileprivate func setupBottomBarController() {
         bottomBarController.delegate = self
-        addChild(bottomBarController)
-        conversationListContainer.addSubview(bottomBarController.view)
-        bottomBarController.didMove(toParent: self)
+        
+        add(bottomBarController, to: conversationListContainer)
     }
 
     fileprivate func setupListContentController() {
-        listContentController.contentDelegate = self
+        listContentController.contentDelegate = viewModel
 
-        addChild(listContentController)
-        conversationListContainer.addSubview(listContentController.view)
-        listContentController.didMove(toParent: self)
+        add(listContentController, to: conversationListContainer)
     }
     
     fileprivate func setupTopBar() {
-        addChild(topBarViewController)
-        contentContainer.addSubview(topBarViewController.view)
-        topBarViewController.didMove(toParent: self)
+        add(topBarViewController, to: contentContainer)
     }
     
     fileprivate func setupNetworkStatusBar() {

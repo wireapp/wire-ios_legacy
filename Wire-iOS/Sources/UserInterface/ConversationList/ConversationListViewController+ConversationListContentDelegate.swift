@@ -18,22 +18,24 @@
 
 import Foundation
 
-extension ConversationListViewController: ConversationListContentDelegate {///TODO: mv to VM
-    public func conversationList(_ controller: ConversationListContentController!, didSelect conversation: ZMConversation!, focusOnView focus: Bool) {
-        viewModel.selectedConversation = conversation
+extension ConversationListViewController.ViewModel: ConversationListContentDelegate {
+    func conversationList(_ controller: ConversationListContentController?, didSelect conversation: ZMConversation?, focusOnView focus: Bool) {
+        selectedConversation = conversation
     }
 
-    public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToListIfPossible()
-
+    func conversationList(_ controller: ConversationListContentController?, willSelectIndexPathAfterSelectionDeleted conv: IndexPath?) {
+        ZClientViewController.shared()?.transitionToListIfPossible()
     }
 
-    public func conversationListDidScroll(_ controller: ConversationListContentController!) {
-        updateBottomBarSeparatorVisibility(with: controller)
+    func conversationListDidScroll(_ controller: ConversationListContentController?) {
+        guard let controller = controller else { return }
+        ///TODO: move back to VC?
+        viewController.updateBottomBarSeparatorVisibility(with: controller)
 
-        topBarViewController.scrollViewDidScroll(scrollView: controller.collectionView)
+        viewController.topBarViewController.scrollViewDidScroll(scrollView: controller.collectionView)
     }
 
-    public func conversationListContentController(_ controller: ConversationListContentController!, wantsActionMenuFor conversation: ZMConversation!, fromSourceView sourceView: UIView!) {
-        showActionMenu(for: conversation, from: sourceView)
+    func conversationListContentController(_ controller: ConversationListContentController?, wantsActionMenuFor conversation: ZMConversation?, fromSourceView sourceView: UIView?) {
+        viewController.showActionMenu(for: conversation, from: sourceView)
     }
 }
