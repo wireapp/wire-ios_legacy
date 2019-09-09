@@ -54,7 +54,45 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
-final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCase {
+final class ConversationListViewControllerViewModelTests: XCTest {
+    var sut: ConversationListViewController.ViewModel!
+    fileprivate var mockViewController: MockViewController!
+
+    var mockConversation: ZMConversation!
+
+    override func setUp() {
+        super.setUp()
+
+
+        let account = Account.mockAccount(imageData: Data())
+        sut = ConversationListViewController.ViewModel(account: account)
+        mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
+    }
+
+    override func tearDown() {
+        sut = nil
+        mockViewController = nil
+
+        super.tearDown()
+    }
+
+    func testThatSelectAConversationCallsSelectOnListContentController() {
+        /// GIVEN
+        mockConversation = ZMConversation()
+
+        XCTAssertFalse(mockViewController.isSelectedOnListContentController)
+
+        /// WHEN
+        sut.select(mockConversation)
+
+        /// THEN
+        XCTAssertEqual(mockConversation, sut.selectedConversation)
+        XCTAssert(mockViewController.isSelectedOnListContentController)
+    }
+
+}
+
+final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ConversationListViewController.ViewModel!
     var mockView: UIView!
     fileprivate var mockViewController: MockViewController!
@@ -97,6 +135,8 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
 
 fileprivate final class MockViewController: UIViewController, ConversationListContainerViewModelDelegate {
 
+    var isSelectedOnListContentController = false
+
     init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel) {
         super.init(nibName:nil, bundle:nil)
     }
@@ -112,7 +152,7 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
 
     @discardableResult
     func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
-        //no-op
+        isSelectedOnListContentController = true
         return false
     }
 
@@ -120,7 +160,7 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
     }
 
     func dismissPeoplePicker(with block: @escaping Completion) {
-        //no-op
+        block()
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {

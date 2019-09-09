@@ -119,7 +119,8 @@ extension ConversationListViewController.ViewModel {
     ///   - animated: perform animation or not
     ///   - completion: the completion block
     func select(_ conversation: ZMConversation,
-                scrollTo message: ZMConversationMessage? = nil, focusOnView focus: Bool = false,
+                scrollTo message: ZMConversationMessage? = nil,
+                focusOnView focus: Bool = false,
                 animated: Bool = false,
                 completion: (() -> ())? = nil) {
         selectedConversation = conversation
