@@ -261,7 +261,7 @@ extension ConversationListTopBarViewController: ZMUserObserver {
 }
 
 extension ConversationListTopBarViewController {
-    public func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
         topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
         topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }

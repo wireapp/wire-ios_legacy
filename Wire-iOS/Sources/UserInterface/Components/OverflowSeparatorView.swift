@@ -18,12 +18,10 @@
 
 
 import Foundation
-import Cartography
 
+final class OverflowSeparatorView: UIView {
 
-@objcMembers public class OverflowSeparatorView: UIView {
-
-    @objc public var inverse: Bool = false
+    var inverse: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,13 +38,12 @@ import Cartography
         self.alpha = 0
     }
     
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         get {
             return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
         }
     }
     
-    @objc(scrollViewDidScroll:)
     public func scrollViewDidScroll(scrollView: UIScrollView!) {
         if inverse {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)

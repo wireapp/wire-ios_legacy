@@ -108,9 +108,9 @@ extension ConversationListViewController.ViewModel {
                                                            object: nil)
                     Settings.shared().lastPushAlertDate = Date()
 
-                    weakSelf.viewController.showPermissionDeniedViewController() ///TODO: move to VC
+                    weakSelf.viewController.showPermissionDeniedViewController()
 
-                    weakSelf.viewController.contentContainer.alpha = 0.0
+                    weakSelf.viewController.concealContentContainer()
                 }
             }
         })

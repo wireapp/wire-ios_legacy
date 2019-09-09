@@ -317,6 +317,14 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        guard let topBar = topBarViewController.topBar else { return }
+
+        topBar.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+    }
+
+
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not

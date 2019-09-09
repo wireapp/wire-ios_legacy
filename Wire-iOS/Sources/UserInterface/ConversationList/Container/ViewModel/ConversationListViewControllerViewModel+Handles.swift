@@ -37,7 +37,7 @@ extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
         if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
             selfUser.fetchMarketingConsent(in: userSession, completion: {[weak self] result in
                 switch result {
-                case .failure:                    
+                case .failure:
                     self?.viewController.showNewsletterSubscriptionDialogIfNeeded(completionHandler: { marketingConsent in
                         selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
                     })

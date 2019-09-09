@@ -59,13 +59,17 @@ extension ConversationListViewController {
         addChild(usernameTakeoverViewController)
         view.addSubview(usernameTakeoverViewController.view)
         usernameTakeoverViewController.didMove(toParent: self)
-        contentContainer.alpha = 0
+        concealContentContainer()
 
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
             takeover.edges == view.edges
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
+    }
+
+    func concealContentContainer() {
+        contentContainer.alpha = 0
     }
 
     func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler) {
