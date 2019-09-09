@@ -20,28 +20,27 @@ import Foundation
 
 extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
 
-    public func didFailToSetHandle() {
+    func didFailToSetHandle() {
         viewController.openChangeHandleViewController(with: "")
     }
 
-    public func didFailToSetHandleBecauseExisting() {
+    func didFailToSetHandleBecauseExisting() {
         viewController.openChangeHandleViewController(with: "")
     }
 
-    public func didSetHandle() {
+    func didSetHandle() {
         removeUsernameTakeover()
     }
 
-    public func didFindHandleSuggestion(handle: String) {
+    func didFindHandleSuggestion(handle: String) {
         showUsernameTakeover(with: handle)
         if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
-            selfUser.fetchMarketingConsent(in: userSession, completion: { result in
+            selfUser.fetchMarketingConsent(in: userSession, completion: {[weak self] result in
                 switch result {
-                case .failure:///TODO: move to VC
-                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self.viewController) { marketingConsent in
+                case .failure:                    
+                    self?.viewController.showNewsletterSubscriptionDialogIfNeeded(completionHandler: { marketingConsent in
                         selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
-                    }
-
+                    })
                 case .success:
                     // The user already gave a marketing consent, no need to ask for it again.
                     return
@@ -54,7 +53,7 @@ extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
 
 extension ConversationListViewController.ViewModel: ZMUserObserver {
 
-    public func userDidChange(_ note: UserChangeInfo) {
+    func userDidChange(_ note: UserChangeInfo) {
         if ZMUser.selfUser().handle != nil && note.handleChanged {
             removeUsernameTakeover()
         } else if note.teamsChanged {

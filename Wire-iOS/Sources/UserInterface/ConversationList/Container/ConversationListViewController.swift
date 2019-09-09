@@ -39,8 +39,6 @@ final class ConversationListViewController: UIViewController {
 
     var startCallToken: Any?
 
-    var actionsController: ConversationActionController?
-
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
 

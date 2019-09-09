@@ -50,9 +50,6 @@ extension ConversationListViewController {
         parent?.present(navigationController, animated: true, completion: nil)
     }
 
-}
-
-extension ConversationListViewController {
     func showUsernameTakeover(suggestedHandle: String, name: String) {
         guard nil == usernameTakeoverViewController else { return }
 
@@ -69,5 +66,9 @@ extension ConversationListViewController {
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
+    }
+
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler) {
+        UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self, completionHandler: completionHandler)        
     }
 }

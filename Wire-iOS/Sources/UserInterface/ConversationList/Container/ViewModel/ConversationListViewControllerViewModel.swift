@@ -139,14 +139,16 @@ extension ConversationListViewController {
         let account: Account
         var selectedConversation: ZMConversation?
 
-        var userProfileObserverToken: Any?
         weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
+        var userProfileObserverToken: Any?
         fileprivate var initialSyncObserverToken: Any?
         fileprivate var userObserverToken: Any?
         /// observer tokens which are assigned when viewDidLoad
         var allConversationsObserverToken: Any?
         var connectionRequestsObserverToken: Any?
+
+        var actionsController: ConversationActionController?
 
         init(account: Account) {
             self.account = account

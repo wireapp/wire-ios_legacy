@@ -6334,11 +6334,11 @@
 		EF471BE023265305008E11A5 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				EF471BE3232658A9008E11A5 /* ConversationListViewControllerViewModel.swift */,
 				EF6E9FED231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift */,
 				EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */,
 				EF46ECCC231D5B4B00D425DA /* ConversationListViewControllerViewModel+StartUIDelegate.swift */,
 				EF471BE1232654CE008E11A5 /* ConversationListViewControllerViewModel+Handles.swift */,
-				EF471BE3232658A9008E11A5 /* ConversationListViewControllerViewModel.swift */,
 				EF471BE52326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift */,
 			);
 			path = ViewModel;
