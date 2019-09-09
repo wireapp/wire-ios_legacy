@@ -29,7 +29,7 @@ extension ConversationListViewController.ViewModel: ConversationListContentDeleg
 
     func conversationListDidScroll(_ controller: ConversationListContentController?) {
         guard let controller = controller else { return }
-        viewController.updateBottomBarSeparatorVisibility(with: controller)
+        viewController?.updateBottomBarSeparatorVisibility(with: controller)
 
         viewController.scrollViewDidScroll(scrollView: controller.collectionView)
     }

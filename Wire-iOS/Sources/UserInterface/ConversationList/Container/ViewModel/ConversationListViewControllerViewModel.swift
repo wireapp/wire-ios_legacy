@@ -18,9 +18,18 @@
 
 import Foundation
 
+protocol ConversationListContainerViewModelDelegate: class {
+    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
+}
+
+extension ConversationListViewController: ConversationListContainerViewModelDelegate {
+
+}
+
 extension ConversationListViewController {
     final class ViewModel: NSObject {
-        unowned var viewController: ConversationListViewController! {///TODO: protocol
+        weak var viewController: ConversationListViewController! {
+//        weak var viewController: ConversationListContainerViewModelDelegate? {
             didSet {
                 guard let _ = viewController else { return }
 

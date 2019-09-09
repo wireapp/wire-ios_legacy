@@ -62,7 +62,6 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
     override func setUp() {
         super.setUp()
 
-        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
         let account = Account.mockAccount(imageData: mockImageData)
         sut = ConversationListViewController.ViewModel(account: account)
 
@@ -81,7 +80,7 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
     }
 
     //MARK: - Action menu
-    func testForActionMenu() { ///TODO: mv to VM test
+    func testForActionMenu() {
         teamTest {
             sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
             verifyAlertController((sut?.actionsController?.alertController)!)

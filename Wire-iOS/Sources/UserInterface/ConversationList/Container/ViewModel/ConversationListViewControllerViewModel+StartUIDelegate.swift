@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
-    public func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {
+    func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {
         guard users.count > 0 else {
             return
         }
@@ -31,21 +31,14 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         })
     }
     
-    public func startUI(_ startUI: StartUIViewController!, createConversationWith users: Set<ZMUser>?, name: String!, allowGuests: Bool, enableReceipts: Bool) {
+    func startUI(_ startUI: StartUIViewController!, createConversationWith users: Set<ZMUser>?, name: String!, allowGuests: Bool, enableReceipts: Bool) {
         let createConversationClosure = {
             self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
-
-        if viewController.presentedViewController != nil {
-            viewController.dismiss(animated: true) {
-                createConversationClosure()
-            }
-        } else {
-            createConversationClosure()
-        }
+        viewController.dismissIfNeeded(completion: createConversationClosure)
     }
 
-    public func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
+    func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
         viewController.dismissPeoplePicker(with: {
             ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
         })
