@@ -285,7 +285,7 @@ final class ConversationListViewController: UIViewController {
 
     func createArchivedListViewController() -> ArchivedListViewController {
         let archivedViewController = ArchivedListViewController()
-        archivedViewController.delegate = self
+        archivedViewController.delegate = viewModel
         return archivedViewController
     }
 

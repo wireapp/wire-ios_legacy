@@ -22,7 +22,7 @@ import Cartography
 
 // MARK: ArchivedListViewControllerDelegate
 
-@objc protocol ArchivedListViewControllerDelegate: class {
+protocol ArchivedListViewControllerDelegate: class {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
 }

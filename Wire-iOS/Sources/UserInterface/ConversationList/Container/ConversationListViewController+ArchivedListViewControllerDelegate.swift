@@ -18,18 +18,18 @@
 
 import Foundation
 
-extension ConversationListViewController: ArchivedListViewControllerDelegate {
+extension ConversationListViewController.ViewModel: ArchivedListViewControllerDelegate {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController) {
-        setState(.conversationList, animated: true)
+        viewController.setState(.conversationList, animated: true)
     }
 
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation) {
-        ZMUserSession.shared()?.enqueueChanges({ ///TODO: VM
+        ZMUserSession.shared()?.enqueueChanges({
             conversation.isArchived = false
         }, completionHandler: { [weak self] in
             
-            self?.setState(.conversationList, animated: true, completion:{
-                self?.listContentController.select(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            self?.viewController.setState(.conversationList, animated: true, completion:{
+                self?.viewController.listContentController.select(conversation, scrollTo: nil, focusOnView: true, animated: true)
             })
         })
     }
