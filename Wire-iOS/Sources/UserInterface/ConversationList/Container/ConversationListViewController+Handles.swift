@@ -90,7 +90,5 @@ extension ConversationListViewController {
         }
 
         self.usernameTakeoverViewController = usernameTakeoverViewController
-
-        guard traitCollection.userInterfaceIdiom == .pad else { return }
     }
 }

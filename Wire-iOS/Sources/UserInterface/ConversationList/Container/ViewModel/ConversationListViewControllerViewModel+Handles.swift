@@ -125,8 +125,12 @@ extension ConversationListViewController.ViewModel {
 
     func showUsernameTakeover(with handle: String) {
         guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
+
         viewController.showUsernameTakeover(suggestedHandle: handle, name: name)
-        ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
+
+        if ZClientViewController.shared()?.traitCollection.userInterfaceIdiom == .pad {
+            ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
+        }
     }
 
 }

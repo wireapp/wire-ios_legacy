@@ -88,14 +88,13 @@ extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObser
     }
 }
 
-final class ConversationListViewController: UIViewController {
-
+extension ConversationListViewController {
     final class ViewModel: NSObject {
         unowned var viewController: ConversationListViewController!///TODO: protocol
 
         let account: Account
         var selectedConversation: ZMConversation?
-        
+
         var userProfileObserverToken: Any?
         weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
@@ -111,6 +110,10 @@ final class ConversationListViewController: UIViewController {
             removeUserProfileObserver()
         }
     }
+}
+
+final class ConversationListViewController: UIViewController {
+
 
     let viewModel: ViewModel
     /// internal View Model
