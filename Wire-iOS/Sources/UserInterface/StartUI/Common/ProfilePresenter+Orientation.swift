@@ -22,15 +22,16 @@ extension ProfilePresenter {
 
     @objc
     func deviceOrientationChanged(_ notification: Notification?) {
-        if controllerToPresentOn.isIPadRegular() && controllerToPresentOn != nil {
-            ZClientViewController.shared()?.transitionToList(animated: false, completion: nil)
+        guard let controllerToPresentOn = controllerToPresentOn,
+            controllerToPresentOn.isIPadRegular() else { return }
 
-            if viewToPresentOn != nil,
-                let presentedViewController = controllerToPresentOn.presentedViewController{
+        ZClientViewController.shared()?.transitionToList(animated: false, completion: nil)
 
-                presentedViewController.popoverPresentationController?.sourceRect = presentedFrame
-                presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
-            }
+        if let _ = viewToPresentOn,
+            let presentedViewController = controllerToPresentOn.presentedViewController {
+
+            presentedViewController.popoverPresentationController?.sourceRect = presentedFrame
+            presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
         }
     }
 
