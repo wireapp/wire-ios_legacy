@@ -338,23 +338,15 @@ final class ConversationListViewController: UIViewController {
             self.bottomBarController.showArchived = showArchived
         })
     }
-}
 
-
-extension ZMConversationList {
-    static var hasConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-        
-        let conversationsCount = ZMConversationList.conversations(inUserSession: session).count + ZMConversationList.pendingConnectionConversations(inUserSession: session).count
-        return conversationsCount > 0
-    }
-    
-    static var hasArchivedConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-        
-        return ZMConversationList.archivedConversations(inUserSession: session).count > 0
+    @objc
+    func hideArchivedConversations() {
+        setState(.conversationList, animated:true)
     }
 
+    func presentPeoplePicker() {
+        setState(.peoplePicker, animated: true)
+    }
 }
 
 fileprivate extension NSAttributedString {

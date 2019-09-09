@@ -63,9 +63,30 @@ extension ConversationListViewController.ViewModel: ZMUserObserver {
     }
 }
 
+extension ConversationListViewController.ViewModel: UserNameTakeOverViewControllerDelegate {
+
+    func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
+
+        perform(action)
+
+        // show data usage dialog after user name take over screen
+        ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+    }
+}
+
+
 typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel {
+
+    private func perform(_ action: UserNameTakeOverViewControllerAction) {
+        switch action {
+        case .chooseOwn(let suggested): viewController.openChangeHandleViewController(with: suggested)
+        case .keepSuggestion(let suggested): setSuggested(handle: suggested)
+        case .learnMore: URL.wr_usernameLearnMore.openInApp(above: viewController)
+        }
+    }
+
     func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }

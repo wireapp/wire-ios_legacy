@@ -52,33 +52,12 @@ extension ConversationListViewController {
 
 }
 
-
-extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {
-
-    func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
-
-        perform(action)
-
-        // show data usage dialog after user name take over screen
-        ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
-    }
-
-    private func perform(_ action: UserNameTakeOverViewControllerAction) {
-        switch action {
-        case .chooseOwn(let suggested): openChangeHandleViewController(with: suggested)
-        case .keepSuggestion(let suggested): viewModel.setSuggested(handle: suggested)
-        case .learnMore: URL.wr_usernameLearnMore.openInApp(above: self)
-        }
-    }
-}
-
-
 extension ConversationListViewController {
     func showUsernameTakeover(suggestedHandle: String, name: String) {
         guard nil == usernameTakeoverViewController else { return }
 
         let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: suggestedHandle, name: name)
-        usernameTakeoverViewController.delegate = self
+        usernameTakeoverViewController.delegate = viewModel
 
         addChild(usernameTakeoverViewController)
         view.addSubview(usernameTakeoverViewController.view)

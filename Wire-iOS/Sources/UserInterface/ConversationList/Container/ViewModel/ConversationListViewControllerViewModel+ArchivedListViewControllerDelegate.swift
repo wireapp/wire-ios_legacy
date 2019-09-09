@@ -27,18 +27,11 @@ extension ConversationListViewController.ViewModel: ArchivedListViewControllerDe
         ZMUserSession.shared()?.enqueueChanges({
             conversation.isArchived = false
         }, completionHandler: { [weak self] in
-            
+
             self?.viewController.setState(.conversationList, animated: true, completion:{
                 self?.viewController.listContentController.select(conversation, scrollTo: nil, focusOnView: true, animated: true)
             })
         })
     }
 
-}
-
-extension ConversationListViewController {
-    @objc
-    func hideArchivedConversations() {
-        setState(.conversationList, animated:true)
-    }
 }

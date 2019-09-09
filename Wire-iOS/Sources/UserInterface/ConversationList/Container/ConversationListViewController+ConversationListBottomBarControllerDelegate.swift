@@ -31,9 +31,3 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
         }
     }
 }
-
-extension ConversationListViewController {
-    func presentPeoplePicker() {
-        setState(.peoplePicker, animated: true)
-    }
-}

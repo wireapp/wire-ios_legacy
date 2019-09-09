@@ -28,7 +28,9 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 
         MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
         let account = Account.mockAccount(imageData: mockImageData)
-        sut = ConversationListViewController(account: account)
+        let viewModel = ConversationListViewController.ViewModel(account: account)
+        sut = ConversationListViewController(viewModel: viewModel)
+        viewModel.viewController = sut
 
         sut.view.backgroundColor = .black
     }
@@ -52,16 +54,16 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     //MARK: - Action menu
-    func testForActionMenu() {
+    func testForActionMenu() { ///TODO: mv to VM test
         teamTest {
-            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            sut.viewModel.showActionMenu(for: otherUserConversation, from: sut.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
 
     func testForActionMenu_NoTeam() {
         nonTeamTest {
-            sut.showActionMenu(for: otherUserConversation, from: sut.view)
+            sut.viewModel.showActionMenu(for: otherUserConversation, from: sut.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
