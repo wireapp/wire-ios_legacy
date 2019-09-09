@@ -431,7 +431,7 @@ final class ConversationListViewController: UIViewController {
 
     func createPeoplePickerController() -> StartUIViewController {
         let startUIViewController = StartUIViewController()
-        startUIViewController.delegate = self
+        startUIViewController.delegate = viewModel
         return startUIViewController
     }
 }

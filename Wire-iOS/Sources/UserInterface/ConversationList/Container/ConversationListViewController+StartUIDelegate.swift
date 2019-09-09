@@ -18,13 +18,13 @@
 
 import Foundation
 
-extension ConversationListViewController: StartUIDelegate {
+extension ConversationListViewController.ViewModel: StartUIDelegate {
     public func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {///TODO: VM
         guard users.count > 0 else {
             return
         }
         
-        self.withConversationForUsers(users, callback: { conversation in
+        viewController.withConversationForUsers(users, callback: { conversation in
             if let conversation = conversation {
                 ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
             }
@@ -32,17 +32,17 @@ extension ConversationListViewController: StartUIDelegate {
     }
     
     public func startUI(_ startUI: StartUIViewController!, createConversationWith users: Set<ZMUser>?, name: String!, allowGuests: Bool, enableReceipts: Bool) {
-        if presentedViewController != nil {
-            dismiss(animated: true) {
-                self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        if viewController.presentedViewController != nil {
+            viewController.dismiss(animated: true) {
+                self.viewController.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
             }
         } else {
-            createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+            viewController.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
     }
 
     public func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
-        dismissPeoplePicker(with: {
+        viewController.dismissPeoplePicker(with: {
             ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
         })
     }
