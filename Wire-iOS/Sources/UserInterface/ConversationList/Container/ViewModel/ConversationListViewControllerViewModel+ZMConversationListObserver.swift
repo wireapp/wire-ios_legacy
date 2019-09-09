@@ -28,7 +28,7 @@ extension ConversationListViewController.ViewModel: ZMConversationListObserver {
 extension ConversationListViewController.ViewModel {
     func updateNoConversationVisibility() {
         if !ZMConversationList.hasConversations {
-            viewController.showNoContactLabel()
+            viewController?.showNoContactLabel()
         } else {
             viewController.hideNoContactLabel(animated: true)
         }

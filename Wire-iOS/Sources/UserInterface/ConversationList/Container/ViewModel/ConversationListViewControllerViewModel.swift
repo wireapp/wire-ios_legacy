@@ -26,6 +26,8 @@ extension ConversationListViewController.ViewModel {
 
             initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
+
+        updateObserverTokensForActiveTeam()
     }
 
     func savePendingLastRead() {
@@ -74,6 +76,46 @@ extension ConversationListViewController.ViewModel {
     func setSuggested(handle: String) {
         userProfile?.requestSettingHandle(handle: handle)
     }
+
+    private var isComingFromRegistration: Bool {
+        return ZClientViewController.shared()?.isComingFromRegistration ?? false
+    }
+
+    func showPushPermissionDeniedDialogIfNeeded() {
+        // We only want to present the notification takeover when the user already has a handle
+        // and is not coming from the registration flow (where we alreday ask for permissions).
+        if isComingFromRegistration || nil == ZMUser.selfUser().handle {
+            return
+        }
+
+        if AutomationHelper.sharedHelper.skipFirstLoginAlerts || viewController.usernameTakeoverViewController != nil {
+            return
+        }
+
+        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().pushAlertHappenedMoreThan1DayBefore
+
+        if !pushAlertHappenedMoreThan1DayBefore {
+            return
+        }
+
+        UNUserNotificationCenter.current().checkPushesDisabled({ [weak self] pushesDisabled in
+            DispatchQueue.main.async {
+                if pushesDisabled,
+                    let weakSelf = self {
+                    NotificationCenter.default.addObserver(weakSelf,
+                                                           selector: #selector(weakSelf.viewController.applicationDidBecomeActive(_:)),
+                                                           name: UIApplication.didBecomeActiveNotification,
+                                                           object: nil)
+                    Settings.shared().lastPushAlertDate = Date()
+
+                    weakSelf.viewController.showPermissionDeniedViewController() ///TODO: move to VC
+
+                    weakSelf.viewController.contentContainer.alpha = 0.0
+                }
+            }
+        })
+    }
+
 }
 
 extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObserver {
@@ -84,7 +126,15 @@ extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObser
 
 extension ConversationListViewController {
     final class ViewModel: NSObject {
-        unowned var viewController: ConversationListViewController!///TODO: protocol
+        unowned var viewController: ConversationListViewController! {///TODO: protocol
+            didSet {
+                guard let _ = viewController else { return }
+
+                updateNoConversationVisibility()
+                updateArchiveButtonVisibility()
+                showPushPermissionDeniedDialogIfNeeded()
+            }
+        }
 
         let account: Account
         var selectedConversation: ZMConversation?

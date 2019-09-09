@@ -132,10 +132,6 @@ final class ConversationListViewController: UIViewController {
 
         /// update
         hideNoContactLabel(animated: false)
-        viewModel.updateNoConversationVisibility()
-        viewModel.updateArchiveButtonVisibility()
-        viewModel.updateObserverTokensForActiveTeam()
-        showPushPermissionDeniedDialogIfNeeded()
 
         viewModel.setupObservers()
 
