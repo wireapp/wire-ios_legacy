@@ -52,18 +52,45 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 
         verify(view: sut.view)
     }
+}
+
+final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCase {
+    var sut: ConversationListViewController.ViewModel!
+    var mockView: UIView!
+    var mockViewController: ConversationListViewController! ///TODO: protocol
+
+    override func setUp() {
+        super.setUp()
+
+        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+        let account = Account.mockAccount(imageData: mockImageData)
+        sut = ConversationListViewController.ViewModel(account: account)
+
+        ///TODO: protocol
+        mockViewController = ConversationListViewController(viewModel: sut)
+
+        sut.viewController = mockViewController
+    }
+
+    override func tearDown() {
+        sut = nil
+        mockView = nil
+        mockViewController = nil
+
+        super.tearDown()
+    }
 
     //MARK: - Action menu
     func testForActionMenu() { ///TODO: mv to VM test
         teamTest {
-            sut.viewModel.showActionMenu(for: otherUserConversation, from: sut.view)
+            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
 
     func testForActionMenu_NoTeam() {
         nonTeamTest {
-            sut.viewModel.showActionMenu(for: otherUserConversation, from: sut.view)
+            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
