@@ -16,6 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+// ui
+#import "ProfileViewController.h"
+
 @protocol ViewControllerDismisser;
 @protocol ProfileViewControllerDelegate;
 
@@ -26,12 +29,13 @@
 
 @end
 
+
 @interface ProfilePresenter () <ProfileViewControllerDelegate>
 
 @property (nonatomic, assign) CGRect presentedFrame;
-@property (nonatomic, weak)   UIView *viewToPresentOn;
-@property (nonatomic, weak)   UIViewController *controllerToPresentOn;
-@property (nonatomic, copy)   dispatch_block_t onDismiss;
-@property (nonatomic) TransitionDelegate *transitionDelegate;
+@property (nonatomic, weak, nullable)   UIView *viewToPresentOn;
+@property (nonatomic, weak, nullable)   UIViewController *controllerToPresentOn;
+@property (nonatomic, copy, nullable)   dispatch_block_t onDismiss;
+@property (nonatomic, nonnull) TransitionDelegate *transitionDelegate;
 
 @end

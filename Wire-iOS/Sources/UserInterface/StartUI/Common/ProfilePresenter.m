@@ -21,7 +21,6 @@
 #import "ProfilePresenter+Internal.h"
 
 // ui
-#import "ProfileViewController.h"
 #import "ZClientViewController.h"
 
 #import "ZoomTransition.h"
