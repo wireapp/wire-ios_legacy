@@ -35,7 +35,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         let createConversationClosure = {
             self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
-        viewController.dismissIfNeeded(completion: createConversationClosure)
+        (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
 
     func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {

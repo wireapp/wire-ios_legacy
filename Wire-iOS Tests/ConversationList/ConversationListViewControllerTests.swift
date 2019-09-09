@@ -57,7 +57,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCase {
     var sut: ConversationListViewController.ViewModel!
     var mockView: UIView!
-    var mockViewController: ConversationListViewController! ///TODO: protocol
+    fileprivate var mockViewController: MockViewController!
 
     override func setUp() {
         super.setUp()
@@ -65,8 +65,7 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
         let account = Account.mockAccount(imageData: mockImageData)
         sut = ConversationListViewController.ViewModel(account: account)
 
-        ///TODO: protocol
-        mockViewController = ConversationListViewController(viewModel: sut)
+        mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
 
         sut.viewController = mockViewController
     }
@@ -93,4 +92,77 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
+}
+
+
+fileprivate final class MockViewController: UIViewController, ConversationListContainerViewModelDelegate {
+
+    init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel) {
+        listContentController = ConversationListContentController()
+        super.init(nibName:nil, bundle:nil)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
+        //no-op
+    }
+
+    func dismissPeoplePicker(with block: @escaping Completion) {
+        //no-op
+    }
+
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        //no-op
+    }
+
+    func setState(_ state: ConversationListState, animated: Bool, completion: Completion?) {
+        //no-op
+    }
+
+    func showNoContactLabel() {
+        //no-op
+    }
+
+    func hideNoContactLabel(animated: Bool) {
+        //no-op
+    }
+
+    func openChangeHandleViewController(with handle: String) {
+        //no-op
+    }
+
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler) {
+        //no-op
+    }
+
+    func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
+        //no-op
+    }
+
+    func removeUsernameTakeover() {
+        //no-op
+    }
+
+    func showUsernameTakeover(suggestedHandle: String, name: String) {
+        //no-op
+    }
+
+    func observeApplicationDidBecomeActive() {
+        //no-op
+    }
+
+    func concealContentContainer() {
+        //no-op
+    }
+
+    func showPermissionDeniedViewController() {
+        //no-op
+    }
+
+    var listContentController: ConversationListContentController
+
+    var usernameTakeoverViewController: UserNameTakeOverViewController?
 }

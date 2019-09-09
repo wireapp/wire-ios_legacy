@@ -22,6 +22,8 @@ typealias Completion = ()->()
 typealias CompletionHandler = (Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
+    init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel)
+
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
     func dismissPeoplePicker(with block: @escaping Completion)
     func scrollViewDidScroll(scrollView: UIScrollView!)
@@ -55,8 +57,7 @@ extension ConversationListViewController: ConversationListContainerViewModelDele
 
 extension ConversationListViewController {
     final class ViewModel: NSObject {
-//        weak var viewController: ConversationListViewController! {
-        weak var viewController: (ConversationListContainerViewModelDelegate & UIViewController)! {
+        weak var viewController: ConversationListContainerViewModelDelegate! {
             didSet {
                 guard let _ = viewController else { return }
 

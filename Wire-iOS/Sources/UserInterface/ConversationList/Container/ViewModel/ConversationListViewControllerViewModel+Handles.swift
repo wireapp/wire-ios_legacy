@@ -81,8 +81,12 @@ extension ConversationListViewController.ViewModel {
     private func perform(_ action: UserNameTakeOverViewControllerAction) {
         switch action {
         case .chooseOwn(let suggested): viewController.openChangeHandleViewController(with: suggested)
-        case .keepSuggestion(let suggested): setSuggested(handle: suggested)
-        case .learnMore: URL.wr_usernameLearnMore.openInApp(above: viewController)
+        case .keepSuggestion(let suggested):
+            setSuggested(handle: suggested)
+        case .learnMore:
+            if let viewController = viewController as? UIViewController {
+                URL.wr_usernameLearnMore.openInApp(above: viewController)
+            }
         }
     }
 
