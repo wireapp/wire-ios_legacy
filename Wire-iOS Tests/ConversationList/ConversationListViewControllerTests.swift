@@ -105,8 +105,14 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
         fatalError("init(coder:) has not been implemented")
     }
 
+    var hasUsernameTakeoverViewController: Bool {
+        //no-op
+        return false
+    }
+
     @discardableResult
     func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
+        //no-op
         return false
     }
 
@@ -164,6 +170,4 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
     func showPermissionDeniedViewController() {
         //no-op
     }
-
-    var usernameTakeoverViewController: UserNameTakeOverViewController?
 }

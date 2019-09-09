@@ -50,7 +50,7 @@ protocol ConversationListContainerViewModelDelegate: class {
     @discardableResult
     func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool
 
-    var usernameTakeoverViewController: UserNameTakeOverViewController? { get }
+    var hasUsernameTakeoverViewController: Bool { get }
 }
 
 extension ConversationListViewController: ConversationListContainerViewModelDelegate {}
@@ -161,7 +161,7 @@ extension ConversationListViewController.ViewModel {
             return
         }
 
-        if AutomationHelper.sharedHelper.skipFirstLoginAlerts || viewController.usernameTakeoverViewController != nil {
+        if AutomationHelper.sharedHelper.skipFirstLoginAlerts || viewController.hasUsernameTakeoverViewController {
             return
         }
 

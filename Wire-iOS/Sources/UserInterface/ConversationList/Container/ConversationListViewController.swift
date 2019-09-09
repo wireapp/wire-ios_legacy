@@ -365,6 +365,10 @@ final class ConversationListViewController: UIViewController {
                                      animated: animated,
                                      completion: completion)
     }
+
+    var hasUsernameTakeoverViewController: Bool {
+        return usernameTakeoverViewController != nil
+    }
 }
 
 fileprivate extension NSAttributedString {
