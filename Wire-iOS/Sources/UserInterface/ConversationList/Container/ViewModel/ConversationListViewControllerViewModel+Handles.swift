@@ -76,6 +76,10 @@ extension ConversationListViewController.ViewModel: UserNameTakeOverViewControll
 
 typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
+/// Debug flag to ensure the takeover screen is shown even though
+/// the selfUser already has a handle assigned.
+private let debugOverrideShowTakeover = false
+
 extension ConversationListViewController.ViewModel {
 
     private func perform(_ action: UserNameTakeOverViewControllerAction) {
@@ -135,13 +139,7 @@ extension ConversationListViewController.ViewModel {
             }
         })
     }
-}
 
-/// Debug flag to ensure the takeover screen is shown even though
-/// the selfUser already has a handle assigned.
-private let debugOverrideShowTakeover = false
-
-extension ConversationListViewController.ViewModel {
     func removeUsernameTakeover() {
         viewController.removeUsernameTakeover()
         removeUserProfileObserver()

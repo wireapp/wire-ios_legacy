@@ -33,5 +33,4 @@ extension ConversationListViewController.ViewModel: ArchivedListViewControllerDe
             })
         })
     }
-
 }
