@@ -58,7 +58,7 @@ extension ConversationListViewController.ViewModel: ZMUserObserver {
         if ZMUser.selfUser().handle != nil && note.handleChanged {
             removeUsernameTakeover()
         } else if note.teamsChanged {
-            viewController.updateNoConversationVisibility()
+            updateNoConversationVisibility()
         }
     }
 }

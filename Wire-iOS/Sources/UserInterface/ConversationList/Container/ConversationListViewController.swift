@@ -41,10 +41,6 @@ final class ConversationListViewController: UIViewController {
 
     var actionsController: ConversationActionController?
 
-    /// observer tokens which are assigned when viewDidLoad
-    var allConversationsObserverToken: Any?
-    var connectionRequestsObserverToken: Any?
-
     var pushPermissionDeniedViewController: PermissionDeniedViewController?
     var usernameTakeoverViewController: UserNameTakeOverViewController?
 
@@ -136,9 +132,9 @@ final class ConversationListViewController: UIViewController {
 
         /// update
         hideNoContactLabel(animated: false)
-        updateNoConversationVisibility()
-        updateArchiveButtonVisibility()
-        updateObserverTokensForActiveTeam()
+        viewModel.updateNoConversationVisibility()
+        viewModel.updateArchiveButtonVisibility()
+        viewModel.updateObserverTokensForActiveTeam()
         showPushPermissionDeniedDialogIfNeeded()
 
         viewModel.setupObservers()
@@ -316,14 +312,6 @@ final class ConversationListViewController: UIViewController {
         })
     }
 
-    func updateNoConversationVisibility() {///TODO: move to VM
-        if !ZMConversationList.hasConversations {
-            showNoContactLabel()
-        } else {
-            hideNoContactLabel(animated: true)
-        }
-    }
-
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
         let controllerHeight = controller.view.bounds.height
         let contentHeight = controller.collectionView.contentSize.height
@@ -348,7 +336,14 @@ final class ConversationListViewController: UIViewController {
         startUIViewController.delegate = viewModel
         return startUIViewController
     }
+
+    func updateArchiveButtonVisibility(showArchived: Bool) {
+        UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
+            self.bottomBarController.showArchived = showArchived
+        })
+    }
 }
+
 
 extension ZMConversationList {
     static var hasConversations: Bool {

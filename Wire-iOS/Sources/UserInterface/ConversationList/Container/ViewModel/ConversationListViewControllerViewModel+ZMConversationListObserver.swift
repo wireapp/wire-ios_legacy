@@ -18,14 +18,22 @@
 
 import Foundation
 
-extension ConversationListViewController: ZMConversationListObserver {
+extension ConversationListViewController.ViewModel: ZMConversationListObserver {
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         updateNoConversationVisibility()
         updateArchiveButtonVisibility()
     }
 }
 
-extension ConversationListViewController {///TODO: VM
+extension ConversationListViewController.ViewModel {
+    func updateNoConversationVisibility() {
+        if !ZMConversationList.hasConversations {
+            viewController.showNoContactLabel()
+        } else {
+            viewController.hideNoContactLabel(animated: true)
+        }
+    }
+
     func updateObserverTokensForActiveTeam() {
         if let userSession = ZMUserSession.shared() {
             allConversationsObserverToken = ConversationListChangeInfo.add(observer:self, for: ZMConversationList.conversationsIncludingArchived(inUserSession: userSession), userSession: userSession)
@@ -36,12 +44,10 @@ extension ConversationListViewController {///TODO: VM
 
     func updateArchiveButtonVisibility() {
         let showArchived = ZMConversationList.hasArchivedConversations
-        if showArchived == bottomBarController.showArchived {
+        if showArchived == viewController.bottomBarController.showArchived {
             return
         }
 
-        UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
-            self.bottomBarController.showArchived = showArchived
-        })
+        viewController.updateArchiveButtonVisibility(showArchived: showArchived)
     }
 }

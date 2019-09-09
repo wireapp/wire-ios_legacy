@@ -93,8 +93,10 @@ extension ConversationListViewController {
         weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
         fileprivate var initialSyncObserverToken: Any?
-
         fileprivate var userObserverToken: Any?
+        /// observer tokens which are assigned when viewDidLoad
+        var allConversationsObserverToken: Any?
+        var connectionRequestsObserverToken: Any?
 
         init(account: Account) {
             self.account = account
