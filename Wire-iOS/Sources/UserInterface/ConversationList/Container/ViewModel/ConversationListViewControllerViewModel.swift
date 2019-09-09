@@ -18,6 +18,42 @@
 
 import Foundation
 
+extension ConversationListViewController {
+    final class ViewModel: NSObject {
+        unowned var viewController: ConversationListViewController! {///TODO: protocol
+            didSet {
+                guard let _ = viewController else { return }
+
+                updateNoConversationVisibility()
+                updateArchiveButtonVisibility()
+                showPushPermissionDeniedDialogIfNeeded()
+            }
+        }
+
+        let account: Account
+        var selectedConversation: ZMConversation?
+
+        weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
+
+        var userProfileObserverToken: Any?
+        fileprivate var initialSyncObserverToken: Any?
+        fileprivate var userObserverToken: Any?
+        /// observer tokens which are assigned when viewDidLoad
+        var allConversationsObserverToken: Any?
+        var connectionRequestsObserverToken: Any?
+
+        var actionsController: ConversationActionController?
+
+        init(account: Account) {
+            self.account = account
+        }
+
+        deinit {
+            removeUserProfileObserver()
+        }
+    }
+}
+
 extension ConversationListViewController.ViewModel {
     func setupObservers() {
         if let userSession = ZMUserSession.shared(),
@@ -102,10 +138,8 @@ extension ConversationListViewController.ViewModel {
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    NotificationCenter.default.addObserver(weakSelf,
-                                                           selector: #selector(weakSelf.viewController.applicationDidBecomeActive(_:)),
-                                                           name: UIApplication.didBecomeActiveNotification,
-                                                           object: nil)
+                    weakSelf.viewController.observeApplicationDidBecomeActive()
+
                     Settings.shared().lastPushAlertDate = Date()
 
                     weakSelf.viewController.showPermissionDeniedViewController()
@@ -124,38 +158,12 @@ extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObser
     }
 }
 
-extension ConversationListViewController {
-    final class ViewModel: NSObject {
-        unowned var viewController: ConversationListViewController! {///TODO: protocol
-            didSet {
-                guard let _ = viewController else { return }
-
-                updateNoConversationVisibility()
-                updateArchiveButtonVisibility()
-                showPushPermissionDeniedDialogIfNeeded()
-            }
+extension Settings {
+    var pushAlertHappenedMoreThan1DayBefore: Bool {
+        guard let date = lastPushAlertDate else {
+            return true
         }
 
-        let account: Account
-        var selectedConversation: ZMConversation?
-
-        weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
-
-        var userProfileObserverToken: Any?
-        fileprivate var initialSyncObserverToken: Any?
-        fileprivate var userObserverToken: Any?
-        /// observer tokens which are assigned when viewDidLoad
-        var allConversationsObserverToken: Any?
-        var connectionRequestsObserverToken: Any?
-
-        var actionsController: ConversationActionController?
-
-        init(account: Account) {
-            self.account = account
-        }
-
-        deinit {
-            removeUserProfileObserver()
-        }
+        return date.timeIntervalSinceNow < -86400
     }
 }

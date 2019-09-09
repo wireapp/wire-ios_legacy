@@ -24,16 +24,6 @@ extension ConversationListViewController: PermissionDeniedViewControllerDelegate
     }
 }
 
-extension Settings {
-    var pushAlertHappenedMoreThan1DayBefore: Bool {
-        guard let date = self.lastPushAlertDate else {
-            return true
-        }
-
-        return date.timeIntervalSinceNow < -86400
-    }
-}
-
 extension ConversationListViewController {
 
     func closePushPermissionDialogIfNotNeeded() {
@@ -70,5 +60,13 @@ extension ConversationListViewController {
 
     @objc func applicationDidBecomeActive(_ notif: Notification) {
         closePushPermissionDialogIfNotNeeded()
+    }
+
+    func observeApplicationDidBecomeActive() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActive(_:)),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+
     }
 }
