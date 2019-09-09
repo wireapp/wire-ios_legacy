@@ -1130,7 +1130,6 @@
 		EF2C9545214983BB000E4960 /* video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = EF2C9544214983BB000E4960 /* video.mp4 */; };
 		EF2CF3202243C9D9003E16BC /* ProfileViewController+TabBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2CF31F2243C9D9003E16BC /* ProfileViewController+TabBarControllerDelegate.swift */; };
 		EF2CF3262243EBAC003E16BC /* AppDelegate+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2CF3252243EBAA003E16BC /* AppDelegate+URL.swift */; };
-		EF2D18DB231E5B360086B65E /* ConversationListViewController+Selection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */; };
 		EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */; };
 		EF2D6D3A228C507C00D8DBF4 /* SnapshotTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */; };
 		EF2D6D3B228C517F00D8DBF4 /* SnapshotTesting.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -1208,7 +1207,6 @@
 		EF6E9FE423193439000B7785 /* ConversationListViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */; };
 		EF6E9FE623193478000B7785 /* UIViewControllerTransitioningDelegate+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */; };
 		EF6E9FE8231960B3000B7785 /* SplitViewController+LayoutSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */; };
-		EF6E9FEC231D401D000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */; };
 		EF6E9FEE231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */; };
 		EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */; };
 		EF6E9FF2231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */; };
@@ -2930,7 +2928,6 @@
 		EF2C9544214983BB000E4960 /* video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = video.mp4; sourceTree = "<group>"; };
 		EF2CF31F2243C9D9003E16BC /* ProfileViewController+TabBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileViewController+TabBarControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF2CF3252243EBAA003E16BC /* AppDelegate+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+URL.swift"; sourceTree = "<group>"; };
-		EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+Selection.swift"; sourceTree = "<group>"; };
 		EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPhotoLibrary.swift; sourceTree = "<group>"; };
 		EF2D6D39228C507C00D8DBF4 /* SnapshotTesting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapshotTesting.framework; path = Carthage/Build/iOS/SnapshotTesting.framework; sourceTree = "<group>"; };
 		EF2D6D42228C741500D8DBF4 /* PhotoPermissionsControllerStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPermissionsControllerStrategy.swift; sourceTree = "<group>"; };
@@ -3013,7 +3010,6 @@
 		EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+State.swift"; sourceTree = "<group>"; };
 		EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControllerTransitioningDelegate+Present.swift"; sourceTree = "<group>"; };
 		EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+LayoutSize.swift"; sourceTree = "<group>"; };
-		EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ZMInitialSyncCompletionObserver.swift"; sourceTree = "<group>"; };
 		EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ZMConversationListObserver.swift"; sourceTree = "<group>"; };
 		EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ConversationListBottomBarControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ArchivedListViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -6405,13 +6401,11 @@
 		EFEE97CC2322A0EC007A4702 /* Container */ = {
 			isa = PBXGroup;
 			children = (
-				EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */,
 				EFA145F3231EA4980073BA5E /* ConversationListViewController.swift */,
-				EF2D18DA231E5B360086B65E /* ConversationListViewController+Selection.swift */,
+				EF29CDC122D3907000EB2380 /* ConversationListViewControllerViewModel+ConversationListContentDelegate.swift */,
 				EF6E9FF1231D51B7000B7785 /* ConversationListViewController+ArchivedListViewControllerDelegate.swift */,
 				EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */,
 				EF6E9FED231D4426000B7785 /* ConversationListViewController+ZMConversationListObserver.swift */,
-				EF6E9FEB231D401C000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift */,
 				EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */,
 				EF298BD4228D9E830078BE68 /* ConversationListViewController+StartUI.swift */,
 				EF587163216669FD00E47E73 /* ConversationListViewController+ActionMenu.swift */,
@@ -7859,7 +7853,6 @@
 				EF5396D521B03AC3004CF034 /* NSTextAttachment+Icon.swift in Sources */,
 				F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */,
 				EFB97F7022EF45D50092A620 /* UIImage+ImageUtilities.swift in Sources */,
-				EF2D18DB231E5B360086B65E /* ConversationListViewController+Selection.swift in Sources */,
 				D50892FB2056BD51004D3AE2 /* ZMUser+ExpirationTimeFormatting.swift in Sources */,
 				5502C6E222B7B729000684B7 /* LegalHoldAlertFactory.swift in Sources */,
 				EEAC0A1221AD875900BE5F5D /* ConversationCreateNameSectionController.swift in Sources */,
@@ -7927,7 +7920,6 @@
 				F112C58620497860007C1E8F /* Analytics+Guests.swift in Sources */,
 				875060731E5B3D9E005B21C7 /* FileBackupExcluder.swift in Sources */,
 				5EA73D8820D901000001D106 /* DetailsCollectionViewCell.swift in Sources */,
-				EF6E9FEC231D401D000B7785 /* ConversationListViewController+ZMInitialSyncCompletionObserver.swift in Sources */,
 				EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */,
 				5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */,
 				16519D8B232108EF00C9D76D /* ConversationActionController+DeleteGroup.swift in Sources */,

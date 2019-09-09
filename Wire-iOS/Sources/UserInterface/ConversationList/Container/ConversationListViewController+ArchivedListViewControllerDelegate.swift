@@ -24,7 +24,7 @@ extension ConversationListViewController: ArchivedListViewControllerDelegate {
     }
 
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation) {
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueueChanges({ ///TODO: VM
             conversation.isArchived = false
         }, completionHandler: { [weak self] in
             

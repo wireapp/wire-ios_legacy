@@ -24,6 +24,70 @@ enum ConversationListState {
     case archived
 }
 
+extension ConversationListViewController.ViewModel {
+    fileprivate func setupObservers() {
+        if let userSession = ZMUserSession.shared(),
+            let selfUser = ZMUser.selfUser() {
+            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
+
+            initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
+        }
+    }
+
+    func savePendingLastRead() {
+        ZMUserSession.shared()?.enqueueChanges({
+            self.selectedConversation?.savePendingLastRead()
+        })
+    }
+
+
+    /// Select a conversation and move the focus to the conversation view.
+    ///
+    /// - Parameters:
+    ///   - conversation: the conversation to select
+    ///   - message: scroll to  this message
+    ///   - focus: focus on the view or not
+    ///   - animated: perform animation or not
+    ///   - completion: the completion block
+    func select(_ conversation: ZMConversation,
+                scrollTo message: ZMConversationMessage? = nil, focusOnView focus: Bool = false,
+                animated: Bool = false,
+                completion: (() -> ())? = nil) {
+        selectedConversation = conversation
+
+        viewController.dismissPeoplePicker(with: { [weak self] in
+            self?.viewController.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+        })
+    }
+
+    func removeUserProfileObserver() {
+        userProfileObserverToken = nil
+    }
+
+    func requestSuggestedHandlesIfNeeded() {
+        guard let session = ZMUserSession.shared(),
+            let userProfile = userProfile else { return }
+
+        if nil == ZMUser.selfUser()?.handle,
+            session.hasCompletedInitialSync == true,
+            session.isPendingHotFixChanges == false {
+
+            userProfileObserverToken = userProfile.add(observer: self)
+            userProfile.suggestHandles()
+        }
+    }
+
+    func setSuggested(handle: String) {
+        userProfile?.requestSettingHandle(handle: handle)
+    }
+}
+
+extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObserver {
+    func initialSyncCompleted() {
+        requestSuggestedHandlesIfNeeded()
+    }
+}
+
 final class ConversationListViewController: UIViewController {
 
     final class ViewModel: NSObject {
@@ -46,63 +110,6 @@ final class ConversationListViewController: UIViewController {
         deinit {
             removeUserProfileObserver()
         }
-
-        fileprivate func setupObservers() {
-            if let userSession = ZMUserSession.shared(),
-                let selfUser = ZMUser.selfUser() {
-                userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: userSession) as Any
-
-                initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
-            }
-        }
-
-        func savePendingLastRead() {
-            ZMUserSession.shared()?.enqueueChanges({
-                self.selectedConversation?.savePendingLastRead()
-            })
-        }
-
-
-        /// Select a conversation and move the focus to the conversation view.
-        ///
-        /// - Parameters:
-        ///   - conversation: the conversation to select
-        ///   - message: scroll to  this message
-        ///   - focus: focus on the view or not
-        ///   - animated: perform animation or not
-        ///   - completion: the completion block
-        func select(_ conversation: ZMConversation,
-                    scrollTo message: ZMConversationMessage? = nil, focusOnView focus: Bool = false,
-                    animated: Bool = false,
-                    completion: (() -> ())? = nil) {
-            selectedConversation = conversation
-
-            viewController.dismissPeoplePicker(with: { [weak self] in
-                self?.viewController.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
-            })
-        }
-
-        func removeUserProfileObserver() {
-            userProfileObserverToken = nil
-        }
-
-        func requestSuggestedHandlesIfNeeded() {
-            guard let session = ZMUserSession.shared(),
-                let userProfile = userProfile else { return }
-
-            if nil == ZMUser.selfUser()?.handle,
-                session.hasCompletedInitialSync == true,
-                session.isPendingHotFixChanges == false {
-
-                userProfileObserverToken = userProfile.add(observer: self)
-                userProfile.suggestHandles()
-            }
-        }
-
-        func setSuggested(handle: String) {
-            userProfile?.requestSettingHandle(handle: handle)
-        }
-
     }
 
     let viewModel: ViewModel
@@ -414,6 +421,13 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
+    /// Scroll to the current selection
+    ///
+    /// - Parameter animated: perform animation or not
+    @objc(scrollToCurrentSelectionAnimated:)
+    func scrollToCurrentSelection(animated: Bool) {
+        listContentController.scrollToCurrentSelection(animated: animated)
+    }
 }
 
 extension ZMConversationList {
