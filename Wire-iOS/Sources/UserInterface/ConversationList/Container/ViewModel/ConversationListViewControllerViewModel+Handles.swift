@@ -18,46 +18,60 @@
 
 import Foundation
 
-extension ConversationListViewController.ViewModel: StartUIDelegate {
-    public func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {///TODO: VM
-        guard users.count > 0 else {
-            return
-        }
-        
-        viewController.withConversationForUsers(users, callback: { conversation in
-            if let conversation = conversation {
-                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
-            }
-        })
+extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
+
+    public func didFailToSetHandle() {
+        viewController.openChangeHandleViewController(with: "")
     }
-    
-    public func startUI(_ startUI: StartUIViewController!, createConversationWith users: Set<ZMUser>?, name: String!, allowGuests: Bool, enableReceipts: Bool) {
-        if viewController.presentedViewController != nil {
-            viewController.dismiss(animated: true) {
-                self.viewController.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
-            }
-        } else {
-            viewController.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+
+    public func didFailToSetHandleBecauseExisting() {
+        viewController.openChangeHandleViewController(with: "")
+    }
+
+    public func didSetHandle() {
+        removeUsernameTakeover()
+    }
+
+    public func didFindHandleSuggestion(handle: String) {
+        showUsernameTakeover(with: handle)
+        if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
+            selfUser.fetchMarketingConsent(in: userSession, completion: { result in
+                switch result {
+                case .failure:///TODO: move to VC
+                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self.viewController) { marketingConsent in
+                        selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
+                    }
+
+                case .success:
+                    // The user already gave a marketing consent, no need to ask for it again.
+                    return
+                }
+            })
         }
     }
 
-    public func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
-        viewController.dismissPeoplePicker(with: {
-            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
-        })
+}
+
+extension ConversationListViewController.ViewModel: ZMUserObserver {
+
+    public func userDidChange(_ note: UserChangeInfo) {
+        if ZMUser.selfUser().handle != nil && note.handleChanged {
+            removeUsernameTakeover()
+        } else if note.teamsChanged {
+            viewController.updateNoConversationVisibility()
+        }
     }
 }
 
-
 typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
-extension ConversationListViewController {
+extension ConversationListViewController.ViewModel {
     func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
-        
+
         var conversation: ZMConversation! = nil
-        
+
         userSession.enqueueChanges({
             conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
         }, completionHandler:{
@@ -65,13 +79,13 @@ extension ConversationListViewController {
             }
         })
     }
-    
+
     func withConversationForUsers(_ users: Set<ZMUser>?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
-        
+
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
-        
-        dismissPeoplePicker(with: {
+
+        viewController.dismissPeoplePicker(with: {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
@@ -84,10 +98,10 @@ extension ConversationListViewController {
                 })
             } else if users.count > 1 {
                 var conversation: ZMConversation? = nil
-                
+
                 userSession.enqueueChanges({
                     let team = ZMUser.selfUser().team
-                    
+
                     conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), in: team)
                 }, completionHandler: {
                     delay(0.3) {
@@ -98,3 +112,22 @@ extension ConversationListViewController {
         })
     }
 }
+
+/// Debug flag to ensure the takeover screen is shown even though
+/// the selfUser already has a handle assigned.
+private let debugOverrideShowTakeover = false
+
+extension ConversationListViewController.ViewModel {
+    func removeUsernameTakeover() {
+        viewController.removeUsernameTakeover()
+        removeUserProfileObserver()
+    }
+
+    func showUsernameTakeover(with handle: String) {
+        guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
+        viewController.showUsernameTakeover(suggestedHandle: handle, name: name)
+        ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
+    }
+
+}
+

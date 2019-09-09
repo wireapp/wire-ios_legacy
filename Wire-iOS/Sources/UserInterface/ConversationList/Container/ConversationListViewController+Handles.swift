@@ -20,32 +20,7 @@
 import UIKit
 import Cartography
 
-/// Debug flag to ensure the takeover screen is shown even though
-/// the selfUser already has a handle assigned.
-private let debugOverrideShowTakeover = false
-
 extension ConversationListViewController {
-
-    func showUsernameTakeover(with handle: String) {///TODO: VM
-        guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
-        guard nil == usernameTakeoverViewController else { return }
-        let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)
-        usernameTakeoverViewController.delegate = self
-
-        addChild(usernameTakeoverViewController)
-        view.addSubview(usernameTakeoverViewController.view)
-        usernameTakeoverViewController.didMove(toParent: self)
-        contentContainer.alpha = 0
-
-        constrain(view, usernameTakeoverViewController.view) { view, takeover in
-            takeover.edges == view.edges
-        }
-
-        self.usernameTakeoverViewController = usernameTakeoverViewController
-
-        guard traitCollection.userInterfaceIdiom == .pad else { return }
-        ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
-    }
 
     func removeUsernameTakeover() {
         guard let takeover = usernameTakeoverViewController else { return }
@@ -60,7 +35,7 @@ extension ConversationListViewController {
         }
     }
 
-    fileprivate func openChangeHandleViewController(with handle: String) {
+    func openChangeHandleViewController(with handle: String) {
         // We need to ensure we are currently showing the takeover as this
         // callback will also get invoked when changing the handle from the settings view controller.
         guard !(parent?.presentedViewController is SettingsStyleNavigationController) else { return }
@@ -78,7 +53,7 @@ extension ConversationListViewController {
 }
 
 
-extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {///TODO: move to VM?
+extension ConversationListViewController: UserNameTakeOverViewControllerDelegate {
 
     func takeOverViewController(_ viewController: UserNameTakeOverViewController, didPerformAction action: UserNameTakeOverViewControllerAction) {
 
@@ -98,57 +73,24 @@ extension ConversationListViewController: UserNameTakeOverViewControllerDelegate
 }
 
 
-extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
+extension ConversationListViewController {
+    func showUsernameTakeover(suggestedHandle: String, name: String) {
+        guard nil == usernameTakeoverViewController else { return }
 
-    public func didFailToSetHandle() {
-        viewController.openChangeHandleViewController(with: "")
-    }
+        let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: suggestedHandle, name: name)
+        usernameTakeoverViewController.delegate = self
 
-    public func didFailToSetHandleBecauseExisting() {
-        viewController.openChangeHandleViewController(with: "")
-    }
+        addChild(usernameTakeoverViewController)
+        view.addSubview(usernameTakeoverViewController.view)
+        usernameTakeoverViewController.didMove(toParent: self)
+        contentContainer.alpha = 0
 
-    public func didSetHandle() {
-        removeUsernameTakeover()
-    }
-
-    public func didFindHandleSuggestion(handle: String) {
-        viewController.showUsernameTakeover(with: handle)
-        if let userSession = ZMUserSession.shared(), let selfUser = ZMUser.selfUser() {
-            selfUser.fetchMarketingConsent(in: userSession, completion: { result in
-                switch result {
-                case .failure:///TODO: move to VC
-                    UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self.viewController) { marketingConsent in
-                        selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
-                    }
-
-                case .success:
-                    // The user already gave a marketing consent, no need to ask for it again.
-                    return
-                }
-            })
+        constrain(view, usernameTakeoverViewController.view) { view, takeover in
+            takeover.edges == view.edges
         }
-    }
 
-}
+        self.usernameTakeoverViewController = usernameTakeoverViewController
 
-
-extension ConversationListViewController.ViewModel: ZMUserObserver {
-
-    public func userDidChange(_ note: UserChangeInfo) {
-        if ZMUser.selfUser().handle != nil && note.handleChanged {
-            removeUsernameTakeover()
-        } else if note.teamsChanged {
-            viewController.updateNoConversationVisibility()
-        }
+        guard traitCollection.userInterfaceIdiom == .pad else { return }
     }
 }
-
-extension ConversationListViewController.ViewModel {
-    func removeUsernameTakeover() {
-        viewController.removeUsernameTakeover()
-        removeUserProfileObserver()
-    }
-}
-
-
