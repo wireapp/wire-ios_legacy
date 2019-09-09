@@ -357,6 +357,14 @@ final class ConversationListViewController: UIViewController {
     func presentPeoplePicker() {
         setState(.peoplePicker, animated: true)
     }
+
+    func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
+        return listContentController.select(conversation,
+                                     scrollTo: message,
+                                     focusOnView: focus,
+                                     animated: animated,
+                                     completion: completion)
+    }
 }
 
 fileprivate extension NSAttributedString {

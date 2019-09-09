@@ -47,13 +47,13 @@ protocol ConversationListContainerViewModelDelegate: class {
 
     func showPermissionDeniedViewController()
 
-    var listContentController: ConversationListContentController { get }
+    @discardableResult
+    func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool
+
     var usernameTakeoverViewController: UserNameTakeOverViewController? { get }
 }
 
-extension ConversationListViewController: ConversationListContainerViewModelDelegate {
-
-}
+extension ConversationListViewController: ConversationListContainerViewModelDelegate {}
 
 extension ConversationListViewController {
     final class ViewModel: NSObject {
@@ -125,7 +125,7 @@ extension ConversationListViewController.ViewModel {
         selectedConversation = conversation
 
         viewController.dismissPeoplePicker(with: { [weak self] in
-            self?.viewController.listContentController.select(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            self?.viewController.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 

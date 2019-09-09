@@ -26,8 +26,6 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
             setState(.archived, animated: true)
         case .startUI:
             presentPeoplePicker()
-        default:
-            break
         }
     }
 }

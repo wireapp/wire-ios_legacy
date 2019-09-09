@@ -20,13 +20,11 @@
 import UIKit
 import Cartography
 
-
-@objc
-enum ConversationListButtonType: UInt {
+enum ConversationListButtonType {
     case archive, startUI
 }
 
-@objc protocol ConversationListBottomBarControllerDelegate: class {
+protocol ConversationListBottomBarControllerDelegate: class {
     func conversationListBottomBar(_ bar: ConversationListBottomBarController, didTapButtonWithType buttonType: ConversationListButtonType)
 }
 

@@ -35,7 +35,7 @@
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (BOOL)selectConversation:( ZMConversation * _Nonnull )conversation scrollToMessage:(id<ZMConversationMessage> _Nullable)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t _Nullable)completion;
 
 - (void)deselectAll;
 - (void)reload;

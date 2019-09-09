@@ -29,7 +29,7 @@ extension ConversationListViewController.ViewModel: ArchivedListViewControllerDe
         }, completionHandler: { [weak self] in
 
             self?.viewController.setState(.conversationList, animated: true, completion:{
-                self?.viewController.listContentController.select(conversation, scrollTo: nil, focusOnView: true, animated: true)
+                self?.viewController.selectOnListContentController(conversation, scrollTo: nil, focusOnView: true, animated: true, completion: nil)
             })
         })
     }

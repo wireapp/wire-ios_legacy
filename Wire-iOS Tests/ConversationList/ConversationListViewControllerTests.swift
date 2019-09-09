@@ -62,7 +62,7 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
     override func setUp() {
         super.setUp()
 
-        let account = Account.mockAccount(imageData: mockImageData)
+        let account = Account.mockAccount(imageData: Data())
         sut = ConversationListViewController.ViewModel(account: account)
 
         mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
@@ -98,7 +98,6 @@ final class ConversationListViewControllerViewModelTests: CoreDataSnapshotTestCa
 fileprivate final class MockViewController: UIViewController, ConversationListContainerViewModelDelegate {
 
     init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel) {
-        listContentController = ConversationListContentController()
         super.init(nibName:nil, bundle:nil)
     }
 
@@ -106,8 +105,12 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
         fatalError("init(coder:) has not been implemented")
     }
 
+    @discardableResult
+    func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
+        return false
+    }
+
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
-        //no-op
     }
 
     func dismissPeoplePicker(with block: @escaping Completion) {
@@ -161,8 +164,6 @@ fileprivate final class MockViewController: UIViewController, ConversationListCo
     func showPermissionDeniedViewController() {
         //no-op
     }
-
-    var listContentController: ConversationListContentController
 
     var usernameTakeoverViewController: UserNameTakeOverViewController?
 }
