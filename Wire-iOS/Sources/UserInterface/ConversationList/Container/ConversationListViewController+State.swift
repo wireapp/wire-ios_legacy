@@ -49,8 +49,6 @@ extension ConversationListViewController {
             }
         case .archived:
             show(createArchivedListViewController(), animated: animated, completion: completion)
-        @unknown default:
-            break
         }
     }
 

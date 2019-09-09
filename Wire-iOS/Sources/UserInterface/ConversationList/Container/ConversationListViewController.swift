@@ -428,6 +428,12 @@ final class ConversationListViewController: UIViewController {
     func scrollToCurrentSelection(animated: Bool) {
         listContentController.scrollToCurrentSelection(animated: animated)
     }
+
+    func createPeoplePickerController() -> StartUIViewController {
+        let startUIViewController = StartUIViewController()
+        startUIViewController.delegate = self
+        return startUIViewController
+    }
 }
 
 extension ZMConversationList {

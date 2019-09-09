@@ -26,7 +26,7 @@ private let debugOverrideShowTakeover = false
 
 extension ConversationListViewController {
 
-    func showUsernameTakeover(with handle: String) {
+    func showUsernameTakeover(with handle: String) {///TODO: VM
         guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
         guard nil == usernameTakeoverViewController else { return }
         let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: handle, name: name)

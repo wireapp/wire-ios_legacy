@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListViewController: StartUIDelegate {
-    public func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {
+    public func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {///TODO: VM
         guard users.count > 0 else {
             return
         }
