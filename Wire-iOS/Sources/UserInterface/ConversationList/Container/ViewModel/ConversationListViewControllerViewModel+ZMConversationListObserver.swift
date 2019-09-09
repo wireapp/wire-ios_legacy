@@ -43,12 +43,7 @@ extension ConversationListViewController.ViewModel {
     }
 
     func updateArchiveButtonVisibility() {
-        let showArchived = ZMConversationList.hasArchivedConversations
-        if showArchived == viewController.bottomBarController.showArchived {
-            return
-        }
-
-        viewController.updateArchiveButtonVisibility(showArchived: showArchived)
+        viewController.updateArchiveButtonVisibilityIfNeeded(showArchived: ZMConversationList.hasArchivedConversations)
     }
 }
 

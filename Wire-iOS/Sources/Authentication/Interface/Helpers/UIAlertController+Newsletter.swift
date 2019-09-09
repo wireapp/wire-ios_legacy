@@ -18,8 +18,6 @@
 
 import Foundation
 
-typealias CompletionHandler = (Bool) -> Void
-
 extension UIAlertController {
 
     /// flag for preventing newsletter subscription dialog shows again in team creation workflow.

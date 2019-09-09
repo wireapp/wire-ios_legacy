@@ -18,8 +18,35 @@
 
 import Foundation
 
+typealias Completion = ()->()
+typealias CompletionHandler = (Bool) -> Void
+
 protocol ConversationListContainerViewModelDelegate: class {
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
+    func dismissPeoplePicker(with block: @escaping Completion)
+    func scrollViewDidScroll(scrollView: UIScrollView!)
+
+    func setState(_ state: ConversationListState,
+    animated: Bool,
+    completion: Completion?)
+
+    func showNoContactLabel()
+    func hideNoContactLabel(animated: Bool)
+
+    func openChangeHandleViewController(with handle: String)
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler)
+    func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool)
+
+    func removeUsernameTakeover()
+    func showUsernameTakeover(suggestedHandle: String, name: String)
+
+    func observeApplicationDidBecomeActive()
+    func concealContentContainer()
+
+    func showPermissionDeniedViewController()
+
+    var listContentController: ConversationListContentController { get }
+    var usernameTakeoverViewController: UserNameTakeOverViewController? { get }
 }
 
 extension ConversationListViewController: ConversationListContainerViewModelDelegate {
@@ -28,8 +55,8 @@ extension ConversationListViewController: ConversationListContainerViewModelDele
 
 extension ConversationListViewController {
     final class ViewModel: NSObject {
-        weak var viewController: ConversationListViewController! {
-//        weak var viewController: ConversationListContainerViewModelDelegate? {
+//        weak var viewController: ConversationListViewController! {
+        weak var viewController: (ConversationListContainerViewModelDelegate & UIViewController)! {
             didSet {
                 guard let _ = viewController else { return }
 

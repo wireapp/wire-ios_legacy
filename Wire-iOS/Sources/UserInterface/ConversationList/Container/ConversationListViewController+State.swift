@@ -18,7 +18,6 @@
 
 import Foundation
 
-typealias Completion = ()->()
 
 extension ConversationListViewController {
     func setState(_ state: ConversationListState,

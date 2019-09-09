@@ -339,7 +339,11 @@ final class ConversationListViewController: UIViewController {
         return startUIViewController
     }
 
-    func updateArchiveButtonVisibility(showArchived: Bool) {
+    func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
+        if showArchived == bottomBarController.showArchived {
+            return
+        }
+
         UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
             self.bottomBarController.showArchived = showArchived
         })
