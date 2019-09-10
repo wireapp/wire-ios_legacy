@@ -373,7 +373,9 @@ final class ConversationListViewController: UIViewController {
 
 fileprivate extension NSAttributedString {
     static var attributedTextForNoConversationLabel: NSAttributedString? {
-        guard let paragraphStyle = NSParagraphStyle.default as? NSMutableParagraphStyle else { return nil }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.setParagraphStyle(NSParagraphStyle.default)
+
         paragraphStyle.paragraphSpacing = 10
         paragraphStyle.alignment = .center
         
