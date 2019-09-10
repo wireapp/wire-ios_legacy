@@ -18,8 +18,8 @@
 
 import Foundation
 
-typealias Completion = ()->()
-typealias CompletionHandler = (Bool) -> Void
+typealias Completion = () -> ()
+typealias BoolResultHandler = (Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
     init(viewModel: ConversationListViewController.ViewModel)
@@ -29,20 +29,18 @@ protocol ConversationListContainerViewModelDelegate: class {
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
-    animated: Bool,
-    completion: Completion?)
+                    animated: Bool,
+                    completion: Completion?)
 
     func showNoContactLabel()
     func hideNoContactLabel(animated: Bool)
 
     func openChangeHandleViewController(with handle: String)
-    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler)
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping BoolResultHandler)
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool)
 
     func removeUsernameTakeover()
     func showUsernameTakeover(suggestedHandle: String, name: String)
-
-    func observeApplicationDidBecomeActive()
 
     func showPermissionDeniedViewController()
 
@@ -127,10 +125,6 @@ extension ConversationListViewController.ViewModel {
         })
     }
 
-    func removeUserProfileObserver() {
-        userProfileObserverToken = nil
-    }
-
     func requestSuggestedHandlesIfNeeded() {
         guard let session = ZMUserSession.shared(),
             let userProfile = userProfile else { return }
@@ -173,8 +167,6 @@ extension ConversationListViewController.ViewModel {
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    weakSelf.viewController?.observeApplicationDidBecomeActive()
-
                     Settings.shared().lastPushAlertDate = Date()
 
                     weakSelf.viewController?.showPermissionDeniedViewController()

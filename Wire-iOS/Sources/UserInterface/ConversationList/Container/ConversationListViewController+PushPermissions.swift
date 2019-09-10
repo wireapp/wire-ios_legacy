@@ -47,6 +47,8 @@ extension ConversationListViewController {
     }
 
     func showPermissionDeniedViewController() {
+        observeApplicationDidBecomeActive()
+
         if let permissions = PermissionDeniedViewController.push() {
             permissions.delegate = self
 
@@ -64,7 +66,7 @@ extension ConversationListViewController {
         closePushPermissionDialogIfNotNeeded()
     }
 
-    func observeApplicationDidBecomeActive() {
+    private func observeApplicationDidBecomeActive() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationDidBecomeActive(_:)),
                                                name: UIApplication.didBecomeActiveNotification,

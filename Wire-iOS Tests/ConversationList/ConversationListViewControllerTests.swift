@@ -164,10 +164,6 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
         //no-op
     }
 
-    func observeApplicationDidBecomeActive() {
-        //no-op
-    }
-
     func showPermissionDeniedViewController() {
         //no-op
     }

@@ -45,3 +45,19 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     }
 }
 
+extension ConversationListViewController.ViewModel {
+    private func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
+        guard let users = users,
+            let userSession = ZMUserSession.shared() else { return }
+
+        var conversation: ZMConversation! = nil
+
+        userSession.enqueueChanges({
+            conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
+        }, completionHandler:{
+            delay(0.3) {
+                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+            }
+        })
+    }
+}

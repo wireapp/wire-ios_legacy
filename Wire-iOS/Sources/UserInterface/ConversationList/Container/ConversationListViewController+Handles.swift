@@ -70,7 +70,7 @@ extension ConversationListViewController {
         contentContainer.alpha = 0
     }
 
-    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler) {
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping BoolResultHandler) {
         UIAlertController.showNewsletterSubscriptionDialogIfNeeded(presentViewController: self, completionHandler: completionHandler)        
     }
 }
