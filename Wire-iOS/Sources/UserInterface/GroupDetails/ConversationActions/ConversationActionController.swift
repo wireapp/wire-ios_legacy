@@ -16,36 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-protocol ActionController {
-    var alertController: UIAlertController? {get}
-    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
-}
-
-extension ActionController {
-    private func prepare(viewController: UIViewController, with context: PresentationContext) {
-        viewController.popoverPresentationController.apply {
-            $0.sourceView = context.view
-            $0.sourceRect = context.rect
-        }
+final class ConversationActionController {
+    
+    struct PresentationContext {
+        let view: UIView
+        let rect: CGRect
     }
-
-    func present(_ controller: UIViewController,
-                 currentContext: PresentationContext?,
-                 target: UIViewController) {
-        currentContext.apply {
-            prepare(viewController: controller, with: $0)
-        }
-        target.present(controller, animated: true, completion: nil)
+    
+    enum Context {
+        case list, details
     }
-
-}
-
-struct PresentationContext {
-    let view: UIView
-    let rect: CGRect
-}
-
-final class ConversationActionController: ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
@@ -57,7 +37,7 @@ final class ConversationActionController: ActionController {
         self.target = target
     }
 
-    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
+    func presentMenu(from sourceView: UIView?, context: Context) {
         currentContext = sourceView.map {
             .init(
                 view: target.view,
@@ -65,9 +45,17 @@ final class ConversationActionController: ActionController {
             )
         }
         
-        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
-        // TODO: we need to exclude the notification settings action if the menu is being presented from the conversation details.
-        conversation.actions.map(alertAction).forEach(controller.addAction)
+        let actions: [ZMConversation.Action]
+        switch context {
+        case .details:
+            actions = conversation.detailActions
+        case .list:
+            actions = conversation.listActions
+        }
+        
+        let title = context == .list ? conversation.displayName : nil
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)
 
@@ -137,4 +125,21 @@ final class ConversationActionController: ActionController {
                 currentContext: currentContext,
                 target: target)
     }
+    
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
+        }
+    }
+    
+    private func present(_ controller: UIViewController,
+                 currentContext: PresentationContext?,
+                 target: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
+    }
+    
 }

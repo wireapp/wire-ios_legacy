@@ -64,7 +64,7 @@ import Cartography
     // MARK: Preview Actions
 
     override var previewActionItems: [UIPreviewActionItem] {
-        return conversation.actions.map(makePreviewAction)
+        return conversation.listActions.map(makePreviewAction)
     }
 
     private func makePreviewAction(for action: ZMConversation.Action) -> UIPreviewAction {
