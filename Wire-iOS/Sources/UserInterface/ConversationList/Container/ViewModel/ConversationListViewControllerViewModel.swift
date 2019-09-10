@@ -31,7 +31,7 @@ protocol ConversationListContainerViewModelDelegate: class {
                     animated: Bool,
                     completion: Completion?)
 
-    func showNoContactLabel()
+    func showNoContactLabel(animated: Bool)
     func hideNoContactLabel(animated: Bool)
 
     func openChangeHandleViewController(with handle: String)
@@ -65,6 +65,8 @@ extension ConversationListViewController {
 
         let account: Account
         let selfUser: SelfUserType
+        let conversationListType: ConversationListType.Type
+
         var selectedConversation: ZMConversation?
 
         var userProfileObserverToken: Any?
@@ -76,9 +78,12 @@ extension ConversationListViewController {
 
         var actionsController: ConversationActionController?
 
-        init(account: Account, selfUser: SelfUserType) {
+        init(account: Account,
+             selfUser: SelfUserType,
+             conversationListType: ConversationListType.Type = ZMConversationList.self) {
             self.account = account
             self.selfUser = selfUser
+            self.conversationListType = conversationListType
         }
     }
 }

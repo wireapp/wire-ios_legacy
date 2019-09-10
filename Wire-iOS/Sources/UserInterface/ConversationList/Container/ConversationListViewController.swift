@@ -290,12 +290,19 @@ final class ConversationListViewController: UIViewController {
         })
     }
 
-    func showNoContactLabel() {
-        if state == .conversationList {
-            UIView.animate(withDuration: 0.20, animations: {
-                self.noConversationLabel.alpha = ZMConversationList.hasArchivedConversations ? 1.0 : 0.0
-                self.onboardingHint.alpha = ZMConversationList.hasArchivedConversations ? 0.0 : 1.0
-            })
+    func showNoContactLabel(animated: Bool = true) {
+        if state != .conversationList { return }
+
+        let closure = {
+            let hasArchivedConversations = self.viewModel.hasArchivedConversations
+            self.noConversationLabel.alpha = hasArchivedConversations ? 1.0 : 0.0
+            self.onboardingHint.alpha = hasArchivedConversations ? 0.0 : 1.0
+        }
+
+        if animated {
+            UIView.animate(withDuration: 0.20, animations: closure)
+        } else {
+            closure()
         }
     }
 
