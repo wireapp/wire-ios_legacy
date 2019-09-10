@@ -21,9 +21,7 @@ import XCTest
 import SnapshotTesting
 
 final class MockConversationList: ConversationListType {
-    static var hasArchivedConversations: Bool {
-        return true
-    }
+    static var hasArchivedConversations: Bool = false
 }
 
 final class ConversationListViewControllerTests: XCTestCase {
@@ -33,6 +31,7 @@ final class ConversationListViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
+        MockConversationList.hasArchivedConversations = false
         let mockSelf = MockUser.mockSelf()!
         mockSelf.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
         let account = Account.mockAccount(imageData: mockImageData)
@@ -56,6 +55,7 @@ final class ConversationListViewControllerTests: XCTestCase {
     }
 
     func testForEverythingArchived() {
+        MockConversationList.hasArchivedConversations = true
         sut.showNoContactLabel(animated: false)
         verify(matching: sut)
     }

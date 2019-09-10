@@ -57,7 +57,7 @@ extension ConversationListViewController {
             didSet {
                 guard let _ = viewController else { return }
 
-                updateNoConversationVisibility()
+                updateNoConversationVisibility(animated: false)
                 updateArchiveButtonVisibility()
                 showPushPermissionDeniedDialogIfNeeded()
             }
