@@ -57,7 +57,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ConversationListViewController.ViewModel!
     var mockView: UIView!
-    fileprivate var mockViewController: MockViewController!
+    fileprivate var mockViewController: MockConversationListContainer!
 
     override func setUp() {
         super.setUp()
@@ -65,7 +65,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         let account = Account.mockAccount(imageData: Data())
         sut = ConversationListViewController.ViewModel(account: account)
 
-        mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
+        mockViewController = MockConversationListContainer(selfUser: MockUser.mockSelf(), viewModel: sut)
 
         sut.viewController = mockViewController
     }
@@ -95,7 +95,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
 }
 
 
-fileprivate final class MockViewController: UIViewController, ConversationListContainerViewModelDelegate {
+final class MockConversationListContainer: UIViewController, ConversationListContainerViewModelDelegate {
 
     var isSelectedOnListContentController = false
 

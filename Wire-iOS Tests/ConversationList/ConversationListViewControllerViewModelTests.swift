@@ -21,7 +21,7 @@ import XCTest
 
 final class ConversationListViewControllerViewModelTests: XCTest {
     var sut: ConversationListViewController.ViewModel!
-    fileprivate var mockViewController: MockViewController!
+    fileprivate var mockViewController: MockConversationListContainer!
 
     var mockConversation: ZMConversation!
 
@@ -31,7 +31,7 @@ final class ConversationListViewControllerViewModelTests: XCTest {
 
         let account = Account.mockAccount(imageData: Data())
         sut = ConversationListViewController.ViewModel(account: account)
-        mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
+        mockViewController = MockConversationListContainer(selfUser: MockUser.mockSelf(), viewModel: sut)
     }
 
     override func tearDown() {
