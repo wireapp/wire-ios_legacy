@@ -99,7 +99,7 @@ extension ConversationListViewController.ViewModel {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
 
-        viewController?.dismissPeoplePicker(with: {
+        viewController?.setState(.conversationList, animated:true) {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
@@ -123,7 +123,7 @@ extension ConversationListViewController.ViewModel {
                     }
                 })
             }
-        })
+        }
     }
 
     func removeUsernameTakeover() {

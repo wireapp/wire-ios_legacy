@@ -124,10 +124,6 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
     }
 
-    func dismissPeoplePicker(with block: @escaping Completion) {
-        block()
-    }
-
     func scrollViewDidScroll(scrollView: UIScrollView!) {
         //no-op
     }

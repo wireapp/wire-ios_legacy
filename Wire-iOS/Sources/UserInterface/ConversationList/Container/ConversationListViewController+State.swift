@@ -51,11 +51,6 @@ extension ConversationListViewController {
         }
     }
 
-    @objc(dismissPeoplePickerWithCompletionBlock:)
-    func dismissPeoplePicker(with block: @escaping Completion) {
-        setState(.conversationList, animated:true, completion:block)
-    }
-
     @objc(selectInboxAndFocusOnView:)
     func selectInboxAndFocusOnView(focus: Bool) {
         setState(.conversationList, animated:false)

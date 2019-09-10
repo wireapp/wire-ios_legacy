@@ -25,7 +25,6 @@ protocol ConversationListContainerViewModelDelegate: class {
     init(viewModel: ConversationListViewController.ViewModel)
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
-    func dismissPeoplePicker(with block: @escaping Completion)
     func scrollViewDidScroll(scrollView: UIScrollView!)
 
     func setState(_ state: ConversationListState,
@@ -67,8 +66,6 @@ extension ConversationListViewController {
         let account: Account
         let selfUser: SelfUserType
         var selectedConversation: ZMConversation?
-
-        weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
 
         var userProfileObserverToken: Any?
         fileprivate var initialSyncObserverToken: Any?
@@ -120,9 +117,13 @@ extension ConversationListViewController.ViewModel {
                 completion: (() -> ())? = nil) {
         selectedConversation = conversation
 
-        viewController?.dismissPeoplePicker(with: { [weak self] in
+        viewController?.setState(.conversationList, animated:true) { [weak self] in
             self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
-        })
+        }
+    }
+
+    fileprivate var userProfile: UserProfile? {
+        return ZMUserSession.shared()?.userProfile
     }
 
     func requestSuggestedHandlesIfNeeded() {

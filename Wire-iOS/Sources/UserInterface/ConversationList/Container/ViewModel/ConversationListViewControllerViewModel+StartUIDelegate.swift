@@ -39,9 +39,9 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     }
 
     func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
-        viewController?.dismissPeoplePicker(with: {
+        viewController?.setState(.conversationList, animated:true) { 
             ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
-        })
+        }
     }
 }
 
