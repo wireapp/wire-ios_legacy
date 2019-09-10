@@ -20,7 +20,7 @@ import UIKit
 
 final class LegalHoldDetailsViewController: UIViewController {
     
-    fileprivate let collectionView = TraitAwarenessCollectionView(forGroupedSections: ())
+    fileprivate let collectionView = UICollectionView(forGroupedSections: ())
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
     

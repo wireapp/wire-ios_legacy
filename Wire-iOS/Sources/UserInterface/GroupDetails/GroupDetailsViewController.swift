@@ -43,6 +43,12 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         return ColorScheme.default.statusBarStyle
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+
     @objc
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -64,7 +70,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     }
 
     func createSubviews() {
-        let collectionView = TraitAwarenessCollectionView(forGroupedSections: ())
+        let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
         if #available(iOS 11.0, *) {

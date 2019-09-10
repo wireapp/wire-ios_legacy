@@ -61,7 +61,7 @@ final public class ConversationCreationValues {
     
 }
 
-@objcMembers public final class ConversationCreationController: UIViewController {
+final class ConversationCreationController: UIViewController {
 
     static let mainViewHeight: CGFloat = 56
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
@@ -117,7 +117,8 @@ final public class ConversationCreationValues {
 
     fileprivate var values = ConversationCreationValues()
     fileprivate let source: LinearGroupCreationFlowEvent.Source
-    
+
+    @objc
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: Set<ZMUser>?
     
@@ -171,7 +172,7 @@ final public class ConversationCreationValues {
     
     private func setupViews() {
         // TODO: if keyboard is open, it should scroll.
-        let collectionView = TraitAwarenessCollectionView(forGroupedSections: ())
+        let collectionView = UICollectionView(forGroupedSections: ())
         
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never

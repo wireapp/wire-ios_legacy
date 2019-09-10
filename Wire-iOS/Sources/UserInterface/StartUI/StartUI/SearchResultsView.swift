@@ -24,7 +24,7 @@ final class SearchResultsView : UIView {
     let emptyResultContainer = UIView()
 
     @objc
-    let collectionView : TraitAwarenessCollectionView
+    let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
     let accessoryContainer = UIView()
     var lastLayoutBounds : CGRect = CGRect.zero
@@ -38,7 +38,7 @@ final class SearchResultsView : UIView {
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        collectionView = TraitAwarenessCollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.allowsMultipleSelection = true
         collectionView.keyboardDismissMode = .onDrag
