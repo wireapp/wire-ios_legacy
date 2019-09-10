@@ -54,7 +54,7 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
         XCTAssert(mockViewController.isSelectedOnListContentController)
     }
 
-    func testShowPushPermissionDeniedDialogIfNeeded() {
+    func testThatShowPushPermissionDeniedDialogIfNeededReturnTrueWhenHandleExists() {
         /// GIVEN
         var result = sut.showPushPermissionDeniedDialogIfNeeded()
         XCTAssertFalse(result)
