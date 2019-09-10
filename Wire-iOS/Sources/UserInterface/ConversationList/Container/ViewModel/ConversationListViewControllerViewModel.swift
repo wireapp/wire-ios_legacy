@@ -158,19 +158,13 @@ extension ConversationListViewController.ViewModel {
     func showPushPermissionDeniedDialogIfNeeded() {
         // We only want to present the notification takeover when the user already has a handle
         // and is not coming from the registration flow (where we alreday ask for permissions).
-        if isComingFromRegistration || nil == ZMUser.selfUser().handle {
-            return
-        }
+        guard ZMUser.selfUser().handle != nil else { return }
+        guard !isComingFromRegistration else { return }
 
-        if AutomationHelper.sharedHelper.skipFirstLoginAlerts || viewController.hasUsernameTakeoverViewController {
-            return
-        }
+        guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return }
+        guard !viewController.hasUsernameTakeoverViewController else { return }
 
-        let pushAlertHappenedMoreThan1DayBefore: Bool = Settings.shared().pushAlertHappenedMoreThan1DayBefore
-
-        if !pushAlertHappenedMoreThan1DayBefore {
-            return
-        }
+        guard Settings.shared().pushAlertHappenedMoreThan1DayBefore else { return }
 
         UNUserNotificationCenter.current().checkPushesDisabled({ [weak self] pushesDisabled in
             DispatchQueue.main.async {
