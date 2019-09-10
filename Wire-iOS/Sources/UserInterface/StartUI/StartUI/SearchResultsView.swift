@@ -18,10 +18,12 @@
 
 import Foundation
 
-@objcMembers class SearchResultsView : UIView {
+final class SearchResultsView : UIView {
     
     let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
+
+    @objc
     let collectionView : UICollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
     let accessoryContainer = UIView()
@@ -98,7 +100,8 @@ import Foundation
         
         super.layoutSubviews()
     }
-    
+
+    @objc
     var accessoryView : UIView? {
         didSet {
             guard oldValue != accessoryView else { return }
@@ -124,7 +127,8 @@ import Foundation
             updateContentInset()
         }
     }
-    
+
+    @objc
     var emptyResultView : UIView? {
         didSet {
             guard oldValue != emptyResultView else { return }

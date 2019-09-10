@@ -692,7 +692,7 @@
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete Group";
+"meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
