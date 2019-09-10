@@ -38,14 +38,14 @@ final class ConversationListTopBarViewController: UIViewController {
     ///   - account: the Account of the user
     ///   - selfUser: the self user object. Allow to inject a mock self user for testing
     init(account: Account,
-         selfUser: SelfUserType = ZMUser.selfUser()) {
+         selfUser: SelfUserType) {
         self.account = account
         self.selfUser = selfUser
         
         super.init(nibName: nil, bundle: nil)
 
         if let sharedSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+            observerToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)
         }
         
         if #available(iOS 11.0, *) {
@@ -156,7 +156,7 @@ final class ConversationListTopBarViewController: UIViewController {
 
     func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
-        let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
+        let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)///TODO
         let accountView = AccountViewFactory.viewFor(account: account, user: user)
         
         accountView.unreadCountStyle = .others
@@ -171,12 +171,10 @@ final class ConversationListTopBarViewController: UIViewController {
         accountView.accessibilityLabel = "self.voiceover.label".localized
         accountView.accessibilityHint = "self.voiceover.hint".localized
         
-        if let user = ZMUser.selfUser() {
-            if user.clientsRequiringUserAttention.count > 0 {
-                accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
-            }
+        if (selfUser as? ZMUser)?.clientsRequiringUserAttention.count > 0 {
+            accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
         }
-        
+
         return accountView
     }
     
@@ -192,12 +190,12 @@ final class ConversationListTopBarViewController: UIViewController {
     }
 
     @objc
-    func presentLegalHoldInfo() {
-        LegalHoldDetailsViewController.present(in: self, user: ZMUser.selfUser())
+    private func presentLegalHoldInfo() {
+        LegalHoldDetailsViewController.present(in: self, user: selfUser)
     }
 
     @objc
-    func presentLegalHoldRequest() {
+    private func presentLegalHoldRequest() {
         guard case .pending = selfUser.legalHoldStatus else {
             return
         }

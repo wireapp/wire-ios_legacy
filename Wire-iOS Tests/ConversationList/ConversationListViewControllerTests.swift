@@ -18,17 +18,19 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
+final class ConversationListViewControllerTests: XCTestCase {
     
     var sut: ConversationListViewController!
     
     override func setUp() {
         super.setUp()
 
-        MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+        let mockSelf = MockUser.mockSelf()!
+        mockSelf.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
         let account = Account.mockAccount(imageData: mockImageData)
-        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: mockSelf)
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
 
@@ -38,19 +40,20 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     override func tearDown() {
         sut = nil
         super.tearDown()
+
     }
 
     //MARK: - View controller
 
     func testForNoConversations() {
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     //MARK: - PermissionDeniedViewController
     func testForPremissionDeniedViewController() {
         sut.showPermissionDeniedViewController()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
 
