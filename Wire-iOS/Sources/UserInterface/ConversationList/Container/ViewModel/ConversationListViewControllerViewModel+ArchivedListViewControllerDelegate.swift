@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationListViewController.ViewModel: ArchivedListViewControllerDelegate {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController) {
-        viewController.setState(.conversationList, animated: true, completion: nil)
+        viewController?.setState(.conversationList, animated: true, completion: nil)
     }
 
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation) {
@@ -28,8 +28,8 @@ extension ConversationListViewController.ViewModel: ArchivedListViewControllerDe
             conversation.isArchived = false
         }, completionHandler: { [weak self] in
 
-            self?.viewController.setState(.conversationList, animated: true, completion:{
-                self?.viewController.selectOnListContentController(conversation, scrollTo: nil, focusOnView: true, animated: true, completion: nil)
+            self?.viewController?.setState(.conversationList, animated: true, completion:{
+                self?.viewController?.selectOnListContentController(conversation, scrollTo: nil, focusOnView: true, animated: true, completion: nil)
             })
         })
     }

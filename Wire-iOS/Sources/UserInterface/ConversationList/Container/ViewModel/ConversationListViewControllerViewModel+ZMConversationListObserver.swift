@@ -30,7 +30,7 @@ extension ConversationListViewController.ViewModel {
         if !ZMConversationList.hasConversations {
             viewController?.showNoContactLabel()
         } else {
-            viewController.hideNoContactLabel(animated: true)
+            viewController?.hideNoContactLabel(animated: true)
         }
     }
 
@@ -43,7 +43,7 @@ extension ConversationListViewController.ViewModel {
     }
 
     func updateArchiveButtonVisibility() {
-        viewController.updateArchiveButtonVisibilityIfNeeded(showArchived: ZMConversationList.hasArchivedConversations)
+        viewController?.updateArchiveButtonVisibilityIfNeeded(showArchived: ZMConversationList.hasArchivedConversations)
     }
 }
 

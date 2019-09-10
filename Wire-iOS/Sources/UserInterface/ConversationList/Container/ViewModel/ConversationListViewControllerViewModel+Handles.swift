@@ -21,11 +21,11 @@ import Foundation
 extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
 
     func didFailToSetHandle() {
-        viewController.openChangeHandleViewController(with: "")
+        viewController?.openChangeHandleViewController(with: "")
     }
 
     func didFailToSetHandleBecauseExisting() {
-        viewController.openChangeHandleViewController(with: "")
+        viewController?.openChangeHandleViewController(with: "")
     }
 
     func didSetHandle() {
@@ -38,7 +38,7 @@ extension ConversationListViewController.ViewModel: UserProfileUpdateObserver {
             selfUser.fetchMarketingConsent(in: userSession, completion: {[weak self] result in
                 switch result {
                 case .failure:
-                    self?.viewController.showNewsletterSubscriptionDialogIfNeeded(completionHandler: { marketingConsent in
+                    self?.viewController?.showNewsletterSubscriptionDialogIfNeeded(completionHandler: { marketingConsent in
                         selfUser.setMarketingConsent(to: marketingConsent, in: userSession, completion: { _ in })
                     })
                 case .success:
@@ -84,7 +84,7 @@ extension ConversationListViewController.ViewModel {
 
     private func perform(_ action: UserNameTakeOverViewControllerAction) {
         switch action {
-        case .chooseOwn(let suggested): viewController.openChangeHandleViewController(with: suggested)
+        case .chooseOwn(let suggested): viewController?.openChangeHandleViewController(with: suggested)
         case .keepSuggestion(let suggested):
             setSuggested(handle: suggested)
         case .learnMore:
@@ -113,7 +113,7 @@ extension ConversationListViewController.ViewModel {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
 
-        viewController.dismissPeoplePicker(with: {
+        viewController?.dismissPeoplePicker(with: {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
@@ -141,14 +141,14 @@ extension ConversationListViewController.ViewModel {
     }
 
     func removeUsernameTakeover() {
-        viewController.removeUsernameTakeover()
+        viewController?.removeUsernameTakeover()
         removeUserProfileObserver()
     }
 
     func showUsernameTakeover(with handle: String) {
         guard let name = ZMUser.selfUser().name, nil == ZMUser.selfUser().handle || debugOverrideShowTakeover else { return }
 
-        viewController.showUsernameTakeover(suggestedHandle: handle, name: name)
+        viewController?.showUsernameTakeover(suggestedHandle: handle, name: name)
 
         if ZClientViewController.shared()?.traitCollection.userInterfaceIdiom == .pad {
             ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)

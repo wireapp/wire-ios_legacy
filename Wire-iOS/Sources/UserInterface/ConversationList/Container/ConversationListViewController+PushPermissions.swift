@@ -55,6 +55,8 @@ extension ConversationListViewController {
             permissions.view.translatesAutoresizingMaskIntoConstraints = false
             permissions.view.fitInSuperview()
             pushPermissionDeniedViewController = permissions
+
+            concealContentContainer()
         }
     }
 

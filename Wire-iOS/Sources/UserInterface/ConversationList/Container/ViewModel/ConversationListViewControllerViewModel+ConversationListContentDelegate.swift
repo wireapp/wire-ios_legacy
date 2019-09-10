@@ -31,7 +31,7 @@ extension ConversationListViewController.ViewModel: ConversationListContentDeleg
         guard let controller = controller else { return }
         viewController?.updateBottomBarSeparatorVisibility(with: controller)
 
-        viewController.scrollViewDidScroll(scrollView: controller.collectionView)
+        viewController?.scrollViewDidScroll(scrollView: controller.collectionView)
     }
 
     func conversationListContentController(_ controller: ConversationListContentController?, wantsActionMenuFor conversation: ZMConversation?, fromSourceView sourceView: UIView?) {

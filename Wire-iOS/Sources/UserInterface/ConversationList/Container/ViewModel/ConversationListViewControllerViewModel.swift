@@ -43,7 +43,6 @@ protocol ConversationListContainerViewModelDelegate: class {
     func showUsernameTakeover(suggestedHandle: String, name: String)
 
     func observeApplicationDidBecomeActive()
-    func concealContentContainer()
 
     func showPermissionDeniedViewController()
 
@@ -57,7 +56,7 @@ extension ConversationListViewController: ConversationListContainerViewModelDele
 
 extension ConversationListViewController {
     final class ViewModel: NSObject {
-        weak var viewController: ConversationListContainerViewModelDelegate! {
+        weak var viewController: ConversationListContainerViewModelDelegate? {
             didSet {
                 guard let _ = viewController else { return }
 
@@ -123,8 +122,8 @@ extension ConversationListViewController.ViewModel {
                 completion: (() -> ())? = nil) {
         selectedConversation = conversation
 
-        viewController.dismissPeoplePicker(with: { [weak self] in
-            self?.viewController.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+        viewController?.dismissPeoplePicker(with: { [weak self] in
+            self?.viewController?.selectOnListContentController(self?.selectedConversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 
@@ -166,7 +165,7 @@ extension ConversationListViewController.ViewModel {
         guard !isComingFromRegistration else { return false }
 
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return false }
-        guard !viewController.hasUsernameTakeoverViewController else { return false }
+        guard false == viewController?.hasUsernameTakeoverViewController else { return false }
 
         guard Settings.shared().pushAlertHappenedMoreThan1DayBefore else { return false }
 
@@ -174,13 +173,11 @@ extension ConversationListViewController.ViewModel {
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    weakSelf.viewController.observeApplicationDidBecomeActive()
+                    weakSelf.viewController?.observeApplicationDidBecomeActive()
 
                     Settings.shared().lastPushAlertDate = Date()
 
-                    weakSelf.viewController.showPermissionDeniedViewController()
-
-                    weakSelf.viewController.concealContentContainer()
+                    weakSelf.viewController?.showPermissionDeniedViewController()
                 }
             }
         })

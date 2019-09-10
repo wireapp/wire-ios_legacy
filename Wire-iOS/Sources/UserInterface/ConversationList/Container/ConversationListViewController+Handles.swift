@@ -56,9 +56,7 @@ extension ConversationListViewController {
         let usernameTakeoverViewController = UserNameTakeOverViewController(suggestedHandle: suggestedHandle, name: name)
         usernameTakeoverViewController.delegate = viewModel
 
-        addChild(usernameTakeoverViewController)
-        view.addSubview(usernameTakeoverViewController.view)
-        usernameTakeoverViewController.didMove(toParent: self)
+        addToSelf(usernameTakeoverViewController)
         concealContentContainer()
 
         constrain(view, usernameTakeoverViewController.view) { view, takeover in
