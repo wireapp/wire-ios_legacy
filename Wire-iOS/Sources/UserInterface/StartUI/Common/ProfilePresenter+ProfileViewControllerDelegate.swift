@@ -21,11 +21,7 @@ import Foundation
 extension ProfilePresenter: ProfileViewControllerDelegate {
     public func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(controller) {
-            if let clientViewController = ZClientViewController.shared() {
-                clientViewController.conversationListViewController.setState(.conversationList, animated: true) {
-                    clientViewController.select(conversation, focusOnView: true, animated: true)
-                }
-            }
+            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
         }
     }
 }
