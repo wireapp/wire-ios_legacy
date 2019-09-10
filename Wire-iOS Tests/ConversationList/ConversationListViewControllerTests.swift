@@ -28,7 +28,7 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
 
         MockUser.mockSelf()?.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
         let account = Account.mockAccount(imageData: mockImageData)
-        let viewModel = ConversationListViewController.ViewModel(account: account)
+        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
 
@@ -63,9 +63,9 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         super.setUp()
 
         let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account)
+        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
 
-        mockViewController = MockConversationListContainer(selfUser: MockUser.mockSelf(), viewModel: sut)
+        mockViewController = MockConversationListContainer(viewModel: sut)
 
         sut.viewController = mockViewController
     }
@@ -99,7 +99,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
 
     var isSelectedOnListContentController = false
 
-    init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel) {
+    init(viewModel: ConversationListViewController.ViewModel) {
         super.init(nibName:nil, bundle:nil)
     }
 

@@ -26,8 +26,8 @@ extension ZClientViewController {
     ///TODO: caller to Swift
     @objc
     func setupConversationListViewController(account: Account, selfUser: UserType) {
-        let viewModel = ConversationListViewController.ViewModel(account: account)
-        conversationListViewController = ConversationListViewController(selfUser: selfUser as! SelfUserType, viewModel: viewModel)
+        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser as! SelfUserType)
+        conversationListViewController = ConversationListViewController( viewModel: viewModel)
         viewModel.viewController = conversationListViewController
     }
 

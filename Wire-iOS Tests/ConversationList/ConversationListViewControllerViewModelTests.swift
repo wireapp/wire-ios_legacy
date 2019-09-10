@@ -29,8 +29,8 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
         super.setUp()
 
         let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account)
-        mockViewController = MockConversationListContainer(selfUser: MockUser.mockSelf(), viewModel: sut)
+        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        mockViewController = MockConversationListContainer(viewModel: sut)
         sut.viewController = mockViewController
     }
 
@@ -55,10 +55,15 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
     }
 
     func testShowPushPermissionDeniedDialogIfNeeded() {
+        /// GIVEN
         var result = sut.showPushPermissionDeniedDialogIfNeeded()
         XCTAssertFalse(result)
 
+        /// WHEN
+        MockUser.mockSelf().handle = "blah"
         result = sut.showPushPermissionDeniedDialogIfNeeded()
+
+        /// THEN
         XCTAssert(result)
     }
 

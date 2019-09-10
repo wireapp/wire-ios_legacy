@@ -22,7 +22,7 @@ typealias Completion = ()->()
 typealias CompletionHandler = (Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
-    init(selfUser: SelfUserType, viewModel: ConversationListViewController.ViewModel)
+    init(viewModel: ConversationListViewController.ViewModel)
 
     func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController)
     func dismissPeoplePicker(with block: @escaping Completion)
@@ -68,6 +68,7 @@ extension ConversationListViewController {
         }
 
         let account: Account
+        let selfUser: SelfUserType
         var selectedConversation: ZMConversation?
 
         weak var userProfile: UserProfile? = ZMUserSession.shared()?.userProfile
@@ -81,8 +82,9 @@ extension ConversationListViewController {
 
         var actionsController: ConversationActionController?
 
-        init(account: Account) {
+        init(account: Account, selfUser: SelfUserType) {
             self.account = account
+            self.selfUser = selfUser
         }
     }
 }
@@ -160,7 +162,7 @@ extension ConversationListViewController.ViewModel {
     func showPushPermissionDeniedDialogIfNeeded() -> Bool {
         // We only want to present the notification takeover when the user already has a handle
         // and is not coming from the registration flow (where we alreday ask for permissions).
-        guard ZMUser.selfUser().handle != nil else { return false }
+        guard selfUser.handle != nil else { return false }
         guard !isComingFromRegistration else { return false }
 
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return false }
