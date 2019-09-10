@@ -54,44 +54,6 @@ final class ConversationListViewControllerTests: CoreDataSnapshotTestCase {
     }
 }
 
-final class ConversationListViewControllerViewModelTests: XCTest {
-    var sut: ConversationListViewController.ViewModel!
-    fileprivate var mockViewController: MockViewController!
-
-    var mockConversation: ZMConversation!
-
-    override func setUp() {
-        super.setUp()
-
-
-        let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account)
-        mockViewController = MockViewController(selfUser: MockUser.mockSelf(), viewModel: sut)
-    }
-
-    override func tearDown() {
-        sut = nil
-        mockViewController = nil
-
-        super.tearDown()
-    }
-
-    func testThatSelectAConversationCallsSelectOnListContentController() {
-        /// GIVEN
-        mockConversation = ZMConversation()
-
-        XCTAssertFalse(mockViewController.isSelectedOnListContentController)
-
-        /// WHEN
-        sut.select(mockConversation)
-
-        /// THEN
-        XCTAssertEqual(mockConversation, sut.selectedConversation)
-        XCTAssert(mockViewController.isSelectedOnListContentController)
-    }
-
-}
-
 final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ConversationListViewController.ViewModel!
     var mockView: UIView!
