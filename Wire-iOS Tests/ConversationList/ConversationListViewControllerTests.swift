@@ -144,7 +144,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
         //no-op
     }
 
-    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping CompletionHandler) {
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping BoolResultHandler) {
         //no-op
     }
 

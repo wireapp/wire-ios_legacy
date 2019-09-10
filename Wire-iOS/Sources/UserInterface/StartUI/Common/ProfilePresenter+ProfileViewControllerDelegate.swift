@@ -18,20 +18,14 @@
 
 import Foundation
 
-extension ProfilePresenter {
-
-    @objc
-    func deviceOrientationChanged(_ notification: Notification?) {
-        guard let controllerToPresentOn = controllerToPresentOn,
-            controllerToPresentOn.isIPadRegular() else { return }
-
-        ZClientViewController.shared()?.transitionToList(animated: false, completion: nil)
-
-        if let _ = viewToPresentOn,
-            let presentedViewController = controllerToPresentOn.presentedViewController {
-
-            presentedViewController.popoverPresentationController?.sourceRect = presentedFrame
-            presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
+extension ProfilePresenter: ProfileViewControllerDelegate {
+    public func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        dismiss(controller) {
+            if let clientViewController = ZClientViewController.shared() {
+                clientViewController.conversationListViewController.setState(.conversationList, animated: true) {
+                    clientViewController.select(conversation, focusOnView: true, animated: true)
+                }
+            }
         }
     }
 }
