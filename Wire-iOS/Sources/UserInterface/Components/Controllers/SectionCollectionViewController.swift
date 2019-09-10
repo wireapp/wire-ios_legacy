@@ -26,9 +26,16 @@ protocol CollectionViewSectionController: UICollectionViewDataSource, UICollecti
     
 }
 
-class SectionCollectionViewController: NSObject {
+final class TraitAwarenessCollectionView: UICollectionView {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        reloadData()
+    }
+}
+
+final class SectionCollectionViewController: NSObject {
     
-    var collectionView : UICollectionView? = nil {
+    var collectionView : TraitAwarenessCollectionView? = nil {
         didSet {
             collectionView?.dataSource = self
             collectionView?.delegate = self
@@ -58,7 +65,6 @@ class SectionCollectionViewController: NSObject {
     init(sections : [CollectionViewSectionController] = []) {
         self.sections = sections
     }
-    
 }
 
 extension SectionCollectionViewController: UICollectionViewDelegate {

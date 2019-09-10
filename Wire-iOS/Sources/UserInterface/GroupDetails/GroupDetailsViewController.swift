@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-@objcMembers class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
+final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController
     fileprivate let conversation: ZMConversation
@@ -42,7 +42,8 @@ import Cartography
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-    
+
+    @objc
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
@@ -63,7 +64,7 @@ import Cartography
     }
 
     func createSubviews() {
-        let collectionView = UICollectionView(forGroupedSections: ())
+        let collectionView = TraitAwarenessCollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
 
         if #available(iOS 11.0, *) {
@@ -193,7 +194,8 @@ extension GroupDetailsViewController {
         item.tintColor = .vividRed
         return item
     }
-    
+
+    @objc
     func presentLegalHoldDetails() {
         LegalHoldDetailsViewController.present(in: self, conversation: conversation)
     }

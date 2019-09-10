@@ -18,11 +18,13 @@
 
 import Foundation
 
-@objcMembers class SearchResultsView : UIView {
+final class SearchResultsView : UIView {
     
     let accessoryViewMargin : CGFloat = 16.0
     let emptyResultContainer = UIView()
-    let collectionView : UICollectionView
+
+    @objc
+    let collectionView : TraitAwarenessCollectionView
     let collectionViewLayout : UICollectionViewFlowLayout
     let accessoryContainer = UIView()
     var lastLayoutBounds : CGRect = CGRect.zero
@@ -36,7 +38,7 @@ import Foundation
         collectionViewLayout.minimumInteritemSpacing = 12
         collectionViewLayout.minimumLineSpacing = 0
         
-        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
+        collectionView = TraitAwarenessCollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
         collectionView.backgroundColor = UIColor.clear
         collectionView.allowsMultipleSelection = true
         collectionView.keyboardDismissMode = .onDrag
@@ -98,7 +100,8 @@ import Foundation
         
         super.layoutSubviews()
     }
-    
+
+    @objc
     var accessoryView : UIView? {
         didSet {
             guard oldValue != accessoryView else { return }
@@ -124,7 +127,8 @@ import Foundation
             updateContentInset()
         }
     }
-    
+
+    @objc
     var emptyResultView : UIView? {
         didSet {
             guard oldValue != emptyResultView else { return }
