@@ -129,7 +129,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
     }
 
     func setState(_ state: ConversationListState, animated: Bool, completion: Completion?) {
-        //no-op
+        completion?()
     }
 
     func showNoContactLabel() {
