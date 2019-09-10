@@ -43,12 +43,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         return ColorScheme.default.statusBarStyle
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { (context) in
-            self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
-        })
-    }
-
     @objc
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -109,7 +103,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
     }
-    
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+
     func updateLegalHoldIndicator() {
         navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
