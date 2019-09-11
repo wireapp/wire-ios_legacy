@@ -94,7 +94,7 @@ class SenderCellComponent: UIView {
     }
     
     func createConstraints() {
-        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
+        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
         
         NSLayoutConstraint.activate([

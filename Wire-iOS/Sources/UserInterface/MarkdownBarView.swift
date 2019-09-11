@@ -45,7 +45,7 @@ public final class MarkdownBarView: UIView {
     public var activeModes = [Markdown]()
 
     private var buttonMargin: CGFloat {
-        return UIView.conversationLayoutMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
+        return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
     required public init() {

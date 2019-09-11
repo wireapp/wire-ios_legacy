@@ -124,7 +124,7 @@ public final class InputBarButtonsView: UIView {
     // MARK: - Button Layout
     
     fileprivate var buttonMargin: CGFloat {
-        return UIView.conversationLayoutMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
+        return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
     fileprivate func layoutAndConstrainButtonRows() {
@@ -221,7 +221,7 @@ public final class InputBarButtonsView: UIView {
     fileprivate func setupInsets(forButtons buttons: [UIButton], rowIsFull: Bool) {
         let firstButton = buttons.first!
         let firstButtonLabelSize = firstButton.titleLabel!.intrinsicContentSize
-        let firstTitleMargin = (UIView.conversationLayoutMargins.left / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
+        let firstTitleMargin = (conversationHorizontalMargins.left / 2) - constants.iconSize - (firstButtonLabelSize.width / 2)
         firstButton.contentHorizontalAlignment = .left
         firstButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: buttonMargin, bottom: 0, right: 0)
         firstButton.titleEdgeInsets = UIEdgeInsets(top: constants.iconSize + firstButtonLabelSize.height + constants.titleTopMargin, left: firstTitleMargin, bottom: 0, right: 0)
@@ -229,7 +229,7 @@ public final class InputBarButtonsView: UIView {
         if rowIsFull {
             let lastButton = buttons.last!
             let lastButtonLabelSize = lastButton.titleLabel!.intrinsicContentSize
-            let lastTitleMargin = UIView.conversationLayoutMargins.left / 2.0 - lastButtonLabelSize.width / 2.0
+            let lastTitleMargin = conversationHorizontalMargins.left / 2.0 - lastButtonLabelSize.width / 2.0
             lastButton.contentHorizontalAlignment = .right
             lastButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: buttonMargin - lastButtonLabelSize.width)
             lastButton.titleEdgeInsets = UIEdgeInsets(top: constants.iconSize + lastButtonLabelSize.height + constants.titleTopMargin, left: 0, bottom: 0, right: lastTitleMargin - 1)

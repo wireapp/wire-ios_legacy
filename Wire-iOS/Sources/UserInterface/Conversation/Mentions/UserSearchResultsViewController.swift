@@ -268,7 +268,7 @@ extension UserSearchResultsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.reuseIdentifier, for: indexPath) as! UserCell
         cell.configure(with: user)
         cell.showSeparator = false
-        cell.avatarSpacing = UIView.conversationLayoutMargins.left
+        cell.avatarSpacing = conversationHorizontalMargins.left
 
         // hightlight the lowest cell if keyboard is collapsed
         if isKeyboardCollapsed || UIDevice.current.userInterfaceIdiom == .pad {

@@ -60,15 +60,6 @@ extension UITraitEnvironment {
 
 extension UIView {
 
-    @available(*, deprecated, message: "Use UITraitEnvironment.conversationHorizontalMargins instead")
-    class var conversationLayoutMargins: UIEdgeInsets {
-
-        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
-        let horizontalMargins = UIApplication.shared.keyWindow?.conversationHorizontalMargins ?? HorizontalMargins(userInterfaceSizeClass: .compact)
-
-        return UIEdgeInsets(top: 0, left: horizontalMargins.left, bottom: 0, right: horizontalMargins.right)
-    }
-    
     class var directionAwareConversationLayoutMargins: UIEdgeInsets {
         let margins = conversationLayoutMargins
         
