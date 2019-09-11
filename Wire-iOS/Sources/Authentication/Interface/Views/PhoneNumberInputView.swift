@@ -267,7 +267,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             return shouldInsert(phoneNumber: updatedString)
         }
 
-        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
+        var number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
 
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
