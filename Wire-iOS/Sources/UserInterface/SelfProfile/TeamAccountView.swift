@@ -50,7 +50,7 @@ final class TeamAccountView: AccountView {
         imageViewContainer.addSubview(imageView)
 
         selectionView.pathGenerator = { size in
-            let radius = 6 ///TODO: size for convo list context
+            let radius = 6
             let radii = CGSize(width: radius, height: radius)
             let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
                                     byRoundingCorners: UIRectCorner.allCorners,

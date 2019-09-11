@@ -263,7 +263,7 @@ extension ConversationListTopBarViewController: ZMUserObserver {
 }
 
 final class TopBar: UIView {
-    var leftView: UIView? = .none { ///TODO: avatar icon leading margin
+    var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
             
