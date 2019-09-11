@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 typealias SelfUserType = UserType & SelfLegalHoldSubject
 
@@ -315,7 +314,7 @@ final class TopBar: UIView {
             NSLayoutConstraint.activate(constraints)
         }
     }
-    
+
     private let middleViewContainer = UIView()
     
     var middleView: UIView? = .none {
@@ -357,23 +356,35 @@ final class TopBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
-        
-        constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {
-            selfView, middleViewContainer, leftSeparatorLineView, rightSeparatorLineView in
-            
-            leftSeparatorLineView.leading == selfView.leading
-            leftSeparatorLineView.bottom == selfView.bottom
-            
-            rightSeparatorLineView.trailing == selfView.trailing
-            rightSeparatorLineView.bottom == selfView.bottom
-            
-            middleViewContainer.center == selfView.center
-            leftSeparatorLineView.trailing == selfView.centerX ~ 750.0
-            rightSeparatorLineView.leading == selfView.centerX ~ 750.0
-            self.leftSeparatorInsetConstraint = leftSeparatorLineView.trailing == middleViewContainer.leading - 7
-            self.rightSeparatorInsetConstraint = rightSeparatorLineView.leading == middleViewContainer.trailing + 7
+        let spacing: CGFloat = 7
+        [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach() {
+            addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
+
+        let leftTrailingConstraint = leftSeparatorLineView.trailingAnchor.constraint(equalTo: centerXAnchor)
+        leftTrailingConstraint.priority = .defaultHigh
+
+        let rightLeadingConstraint = rightSeparatorLineView.leadingAnchor.constraint(equalTo: centerXAnchor)
+        rightLeadingConstraint.priority = .defaultHigh
+
+        leftSeparatorInsetConstraint = leftSeparatorLineView.trailingAnchor.constraint(equalTo: middleViewContainer.leadingAnchor, constant: -spacing)
+        rightSeparatorInsetConstraint = rightSeparatorLineView.leadingAnchor.constraint(equalTo: middleViewContainer.trailingAnchor, constant: spacing)
+
+        NSLayoutConstraint.activate([leftSeparatorLineView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                     leftSeparatorLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+                                     rightSeparatorLineView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                                     rightSeparatorLineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+                                     middleViewContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
+                                     middleViewContainer.centerYAnchor.constraint(equalTo: centerYAnchor),
+
+                                     leftTrailingConstraint,
+                                     rightLeadingConstraint,
+
+                                     leftSeparatorInsetConstraint,
+                                     rightSeparatorInsetConstraint])
     }
     
     required init?(coder aDecoder: NSCoder) {
