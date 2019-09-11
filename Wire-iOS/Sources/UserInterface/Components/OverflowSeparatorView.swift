@@ -50,8 +50,7 @@ final class OverflowSeparatorView: UIView {
             let offsetY = scrollView.contentOffset.y
             let showSeparator = contentHeight - offsetY > height
             alpha = showSeparator ? 1 : 0
-        }
-        else {
+        } else {
             self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
         }
     }

@@ -268,7 +268,7 @@ extension ConversationListTopBarViewController {
 }
 
 final class TopBar: UIView {
-    var leftView: UIView? = .none { ///TODO: avatar icon
+    var leftView: UIView? = .none { ///TODO: avatar icon leading margin
         didSet {
             oldValue?.removeFromSuperview()
             
@@ -303,10 +303,16 @@ final class TopBar: UIView {
             addSubview(new)
 
             new.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
+
+            var constraints = [
                 new.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
+                new.centerYAnchor.constraint(equalTo: centerYAnchor)]
+
+            if let middleView = middleView {
+                constraints.append(new.leadingAnchor.constraint(greaterThanOrEqualTo: middleView.trailingAnchor))
+            }
+            
+            NSLayoutConstraint.activate(constraints)
         }
     }
     
