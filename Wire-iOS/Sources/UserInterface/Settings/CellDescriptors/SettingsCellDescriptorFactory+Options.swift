@@ -181,15 +181,13 @@ extension SettingsCellDescriptorFactory {
         
         cellDescriptors.append(byPopularDemandDarkThemeSection)
         
-        let context: LAContext = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
-            let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
-            lockApp.settingsProperty.enabled = !AppLock.rules.forceAppLock
-            let section = SettingsSectionDescriptor(cellDescriptors: [lockApp], footer: appLockSectionSubtitle)
-            cellDescriptors.append(section)
-        }
+        let lockApp = SettingsPropertyToggleCellDescriptor(settingsProperty: self.settingsPropertyFactory.property(.lockApp))
+        lockApp.settingsProperty.enabled = !AppLock.rules.forceAppLock
+        let section = SettingsSectionDescriptor(cellDescriptors: [lockApp],
+                                                headerGenerator: { return nil },
+                                                footerGenerator: { return SettingsCellDescriptorFactory.appLockSectionSubtitle },
+                                                visibilityAction: { _ in return LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: nil) })
+        cellDescriptors.append(section)
         
         let linkPreviewDescriptor = SettingsPropertyToggleCellDescriptor(settingsProperty: settingsPropertyFactory.property(.disableLinkPreviews), inverse: true)
         let linkPreviewSection = SettingsSectionDescriptor(
@@ -203,7 +201,7 @@ extension SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(items: cellDescriptors, title: "self.settings.options_menu.title".localized, icon: .settingsOptions)
     }
     
-    private var appLockSectionSubtitle: String {
+    private static var appLockSectionSubtitle: String {
         let timeout = TimeInterval(AppLock.rules.appLockTimeout)
         guard let amount = SettingsCellDescriptorFactory.appLockFormatter.string(from: timeout) else { return "" }
         let lockDescription = "self.settings.privacy_security.lock_app.subtitle.lock_description".localized(args: amount)
