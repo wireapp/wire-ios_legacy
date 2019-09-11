@@ -30,4 +30,18 @@ extension CGFloat {
         /// when the window is small then or equal to (396 + LeftViewWidth = 732), use compact mode margin
         static public let IPadMarginLimit: CGFloat = 732
     }
+
+    enum ConversationListHeader {
+        /// 75% of ConversationAvatarView.iconWidth
+        static let iconWidth: CGFloat = 24
+    }
+
+    enum ConversationAvatarView {
+        static let iconWidth: CGFloat = 32
+    }
+
+    enum AccountView {
+        static let iconWidth: CGFloat = 32
+    }
 }
+

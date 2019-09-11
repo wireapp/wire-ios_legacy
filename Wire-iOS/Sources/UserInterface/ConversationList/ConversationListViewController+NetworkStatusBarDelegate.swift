@@ -29,10 +29,3 @@ extension ConversationListViewController: NetworkStatusBarDelegate {
         return false
     }
 }
-
-extension CGFloat {
-    enum ConversationListHeader {
-        static let iconWidth: CGFloat = 32
-    }
-}
-
