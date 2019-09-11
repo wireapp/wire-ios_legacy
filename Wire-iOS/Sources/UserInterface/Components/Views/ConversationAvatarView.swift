@@ -229,7 +229,7 @@ final class ConversationAvatarView: UIView {
     }
     
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: CGFloat.ConversationAvatarView.iconWidth, height: CGFloat.ConversationAvatarView.iconWidth)
+        return CGSize(width: CGFloat.ConversationAvatarView.iconSize, height: CGFloat.ConversationAvatarView.iconSize)
     }
     
     let clippingView = UIView()

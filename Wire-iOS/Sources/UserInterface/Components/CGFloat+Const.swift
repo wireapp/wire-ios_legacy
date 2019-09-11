@@ -31,6 +31,10 @@ extension CGFloat {
         static public let IPadMarginLimit: CGFloat = 732
     }
 
+    enum ConversationList {
+        static let horizontalMargin: CGFloat = 16
+    }
+
     enum ConversationListHeader {
         static let iconWidth: CGFloat = 32
         /// 75% of ConversationAvatarView.iconWidth + TeamAccountView.imageInset * 2 = 24 + 2 * 2
@@ -40,7 +44,7 @@ extension CGFloat {
     }
 
     enum ConversationAvatarView {
-        static let iconWidth: CGFloat = 32
+        static let iconSize: CGFloat = 32
     }
 
     enum AccountView {

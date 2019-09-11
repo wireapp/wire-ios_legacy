@@ -61,7 +61,6 @@ final class ConversationListTopBarViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        topBar?.layoutMargins = UIEdgeInsets(top: 0, left: 9, bottom: 0, right: 16)
         topBar?.splitSeparator = false
         
         availabilityViewController?.didMove(toParent: self)
@@ -153,7 +152,7 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
     }
 
-    private func createAccountView() -> BaseAccountView {
+    private func createAccountView() -> UIView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
         let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
@@ -175,7 +174,18 @@ final class ConversationListTopBarViewController: UIViewController {
             accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
         }
 
-        return accountView
+        let container = UIView()
+
+        container.addSubview(accountView)
+
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
+            container.heightAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
+
+            container.centerYAnchor.constraint(equalTo: accountView.centerYAnchor),
+            container.centerXAnchor.constraint(equalTo: accountView.centerXAnchor)])
+
+        return container
     }
     
     func updateLegalHoldIndictor() {
@@ -262,7 +272,7 @@ extension ConversationListTopBarViewController: ZMUserObserver {
     }
 }
 
-final class TopBar: UIView {
+fileprivate final class TopBar: UIView {
     var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
@@ -275,12 +285,8 @@ final class TopBar: UIView {
 
             new.translatesAutoresizingMaskIntoConstraints = false
 
-            ///padding to align avatar to ConversationList's AvatarView
-            /// (CGFloat.ConversationAvatarView.iconWidth - CGFloat.ConversationListHeader.avatarSize) / 2 + leading margin difference
-            let padding: CGFloat = 3
-
             var constraints = [
-                new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: padding),
+                new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
                 new.centerYAnchor.constraint(equalTo: centerYAnchor)]
 
             if let middleView = middleView {
@@ -355,7 +361,7 @@ final class TopBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layoutMargins = UIEdgeInsets(top: 0, left: CGFloat.ConversationList.horizontalMargin, bottom: 0, right: CGFloat.ConversationList.horizontalMargin)
         let spacing: CGFloat = 7
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach() {
             addSubview($0)
