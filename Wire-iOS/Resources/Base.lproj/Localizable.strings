@@ -692,7 +692,7 @@
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Archive";
 "meta.menu.unarchive" = "Unarchive";
-"meta.menu.delete" = "Delete Group";
+"meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Delete Content…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
@@ -768,8 +768,8 @@
 
 // Delete group
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the whole group from everyone's list and clear all the content on all member's devices. You would not able to restore any content from this group, and all group members will get notified of this action.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying delete the group named: %@. Please try again.";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancel Request?";

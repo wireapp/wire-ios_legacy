@@ -22,7 +22,7 @@ import UIKit
  * Displays the list of users for a specified message detail content type.
  */
 
-class MessageDetailsContentViewController: UIViewController {
+final class MessageDetailsContentViewController: UIViewController {
 
     /// The type of the displayed content.
     enum ContentType {
@@ -93,6 +93,12 @@ class MessageDetailsContentViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.map(updateFooterPosition)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionView.collectionViewLayout.invalidateLayout()
+        })
     }
 
     private func configureSubviews() {

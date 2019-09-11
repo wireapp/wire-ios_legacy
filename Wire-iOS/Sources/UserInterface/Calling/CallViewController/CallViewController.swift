@@ -67,7 +67,11 @@ final class CallViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
         callInfoRootViewController.delegate = self
-        observerTokens += [voiceChannel.addCallStateObserver(self), voiceChannel.addParticipantObserver(self), voiceChannel.addConstantBitRateObserver(self), voiceChannel.addNetworkQualityObserver(self)]
+        observerTokens += [voiceChannel.addCallStateObserver(self),
+                           voiceChannel.addParticipantObserver(self),
+                           voiceChannel.addConstantBitRateObserver(self),
+                           voiceChannel.addNetworkQualityObserver(self),
+                           voiceChannel.addMuteStateObserver(self)]
         proximityMonitorManager?.stateChanged = { [weak self] raisedToEar in
             self?.proximityStateDidChange(raisedToEar)
         }
@@ -281,6 +285,14 @@ extension CallViewController: WireCallCenterCallParticipantObserver {
 extension CallViewController: AVSMediaManagerClientObserver {
     
     func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification!) {
+        updateConfiguration()
+    }
+    
+}
+
+extension CallViewController: MuteStateObserver {
+    
+    func callCenterDidChange(muted: Bool) {
         updateConfiguration()
     }
     
