@@ -271,12 +271,16 @@ final class TopBar: UIView {
                 return
             }
             
-            self.addSubview(new)
+            addSubview(new)
 
             new.translatesAutoresizingMaskIntoConstraints = false
 
+            ///padding to align avatar to ConversationList's AvatarView
+            /// (CGFloat.ConversationAvatarView.iconWidth - CGFloat.ConversationListHeader.avatarSize) / 2 + leading margin difference
+            let padding: CGFloat = 3
+
             var constraints = [
-                new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+                new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: padding),
                 new.centerYAnchor.constraint(equalTo: centerYAnchor)]
 
             if let middleView = middleView {
