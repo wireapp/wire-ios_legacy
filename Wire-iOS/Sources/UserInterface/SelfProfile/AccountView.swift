@@ -193,7 +193,7 @@ class BaseAccountView: UIView {
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
             
-            imageViewContainer.width ==  iconWidth
+            imageViewContainer.width == iconWidth
             imageViewContainer.height == imageViewContainer.width
             
             imageViewContainer.bottom == selfView.bottom - containerInset
