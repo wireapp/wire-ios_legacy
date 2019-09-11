@@ -52,7 +52,7 @@
 		163BB6141BEAA52A00606381 /* InviteContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 163BB6131BEAA52A00606381 /* InviteContactsViewController.m */; };
 		163BB8101EE1648100DF9384 /* ContactsDataSource+Searching.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */; };
 		163E8C7921E363FE0030BD8D /* ConversationGuestsAllowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163E8C7821E363FE0030BD8D /* ConversationGuestsAllowedCell.swift */; };
-		163FB98F20514DB700E74F83 /* UIView+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */; };
+		163FB98F20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB98E20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift */; };
 		163FB99120518BF400E74F83 /* UIFont+FontSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */; };
 		1642362621F0F8DE00D810B5 /* DifferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1642362521F0F8DE00D810B5 /* DifferenceKit.framework */; };
 		1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */; };
@@ -1558,7 +1558,7 @@
 		163BB6131BEAA52A00606381 /* InviteContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteContactsViewController.m; sourceTree = "<group>"; };
 		163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactsDataSource+Searching.swift"; sourceTree = "<group>"; };
 		163E8C7821E363FE0030BD8D /* ConversationGuestsAllowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationGuestsAllowedCell.swift; sourceTree = "<group>"; };
-		163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+LayoutMargins.swift"; sourceTree = "<group>"; };
+		163FB98E20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitEnvironment+LayoutMargins.swift"; sourceTree = "<group>"; };
 		163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+FontSpec.swift"; sourceTree = "<group>"; };
 		1642362521F0F8DE00D810B5 /* DifferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DifferenceKit.framework; path = Carthage/Build/iOS/DifferenceKit.framework; sourceTree = "<group>"; };
 		1648EEEC20498E1300CC6B37 /* SearchSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSectionController.swift; sourceTree = "<group>"; };
@@ -5280,7 +5280,7 @@
 				162836132016574D0027082D /* ProcessInfo+Tests.swift */,
 				7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */,
 				1682AEC420484B9B003A052A /* Themeable.swift */,
-				163FB98E20514DB700E74F83 /* UIView+LayoutMargins.swift */,
+				163FB98E20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift */,
 				BFB5972220E62EB6008720ED /* CancelableItem.swift */,
 				5E936E8E20B590530060E6AA /* UIDevice+Platform.swift */,
 				5E35F77B2182124E00D3F4FE /* PerformanceDebugger.swift */,
@@ -7417,7 +7417,7 @@
 				BFBB03061D5DF4CB0065AF4F /* InputBarButtonsView.swift in Sources */,
 				7C5836641FD5ABE7001CC843 /* AvailabilityTitleView.swift in Sources */,
 				5EDD25412140240B00C0E254 /* SettingsStaticTextCellDescriptor.swift in Sources */,
-				163FB98F20514DB700E74F83 /* UIView+LayoutMargins.swift in Sources */,
+				163FB98F20514DB700E74F83 /* UITraitEnvironment+LayoutMargins.swift in Sources */,
 				EF82E1C020EE79EC001B5196 /* ZMConversationMessage+CountDown.swift in Sources */,
 				D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */,
 				8FC853A5199245770008B66B /* main.m in Sources */,
