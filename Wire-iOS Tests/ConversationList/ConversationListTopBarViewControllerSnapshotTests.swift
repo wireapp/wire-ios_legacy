@@ -47,6 +47,9 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
         sut.view.backgroundColor = .black
     }
 
+
+    // MARK: - legal hold
+
     func testForLegalHoldEnabled() {
         mockSelfUser.isUnderLegalHold = true
         setupSut()
@@ -64,6 +67,19 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     func testForLegalHoldDisabled() {
         mockSelfUser.isUnderLegalHold = false
         setupSut()
+
+        verify(matching: sut)
+    }
+
+    // MARK: - use cases
+
+    func testForOverflowSeperatorIsShownWhenScrollViewScrollsDown() {
+        setupSut()
+
+        let mockScrollView = UIScrollView()
+        mockScrollView.contentOffset.y = 100
+
+        sut.scrollViewDidScroll(scrollView: mockScrollView)
 
         verify(matching: sut)
     }

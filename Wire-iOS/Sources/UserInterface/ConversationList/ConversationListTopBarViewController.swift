@@ -224,7 +224,11 @@ final class ConversationListTopBarViewController: UIViewController {
         let selfProfileViewController = SelfProfileViewController(selfUser: ZMUser.selfUser())
         return selfProfileViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
     }
-    
+
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
+        topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+    }
 }
 
 extension ConversationListTopBarViewController: UIViewControllerTransitioningDelegate {
@@ -256,13 +260,6 @@ extension ConversationListTopBarViewController: ZMUserObserver {
         if changeInfo.legalHoldStatusChanged {
             updateLegalHoldIndictor()
         }
-    }
-}
-
-extension ConversationListTopBarViewController {
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
-        topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-        topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 
