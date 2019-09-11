@@ -164,7 +164,7 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
     
 }
 
-class ListSkeletonView  : UIView {
+final class ListSkeletonView  : UIView {
     
     let titleItem: ListSkeletonCellNameItemView
     let accountView : BaseAccountView
@@ -173,7 +173,7 @@ class ListSkeletonView  : UIView {
 
     init(_ account: Account) {
         self.titleItem = ListSkeletonCellNameItemView()
-        self.accountView = AccountViewFactory.viewFor(account: account) as BaseAccountView
+        self.accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
         self.listContentView = ListSkeletonContentView()
         
         super.init(frame: CGRect.zero)
@@ -229,7 +229,7 @@ class ListSkeletonView  : UIView {
     
 }
 
-class SkeletonViewController: UIViewController {
+final class SkeletonViewController: UIViewController {
     
     let account : Account
     let backgroundImageView : UIImageView

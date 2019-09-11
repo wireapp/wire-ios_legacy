@@ -20,7 +20,7 @@ import UIKit
 
 final class TeamAccountView: AccountView {
 
-    public override var collapsed: Bool {
+    override var collapsed: Bool {
         didSet {
             self.imageView.isHidden = collapsed
         }
@@ -30,7 +30,8 @@ final class TeamAccountView: AccountView {
     private var teamObserver: NSObjectProtocol!
     private var conversationListObserver: NSObjectProtocol!
 
-    override init?(account: Account, user: ZMUser? = nil) {
+
+    override init?(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) {
 
         if let content = user?.team?.teamImageViewContent ?? account.teamImageViewContent {
             imageView = TeamImageView(content: content, style: .big)
@@ -38,7 +39,7 @@ final class TeamAccountView: AccountView {
             return nil
         }
 
-        super.init(account: account, user: user)
+        super.init(account: account, user: user, displayContext: displayContext)
 
         isAccessibilityElement = true
         accessibilityTraits = .button
@@ -49,7 +50,7 @@ final class TeamAccountView: AccountView {
         imageViewContainer.addSubview(imageView)
 
         selectionView.pathGenerator = { size in
-            let radius = 6
+            let radius = 6 ///TODO: size for convo list context
             let radii = CGSize(width: radius, height: radius)
             let path = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size),
                                     byRoundingCorners: UIRectCorner.allCorners,
@@ -71,10 +72,13 @@ final class TeamAccountView: AccountView {
     }
 
     private func createConstraints() {
-        let inset: CGFloat = 2
+        let inset: CGFloat = CGFloat.TeamAccountView.imageInset
         [imageView, imageViewContainer].forEach(){
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+
+//        avatarWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: avatarSize)
+//        avatarHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: avatarSize)
 
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
@@ -88,7 +92,7 @@ final class TeamAccountView: AccountView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func update() {
+    override func update() {
         super.update()
         accessibilityValue = String(format: "conversation_list.header.self_team.accessibility_value".localized, self.account.teamName ?? "") + " " + accessibilityState
         accessibilityIdentifier = "\(self.account.teamName ?? "") team"

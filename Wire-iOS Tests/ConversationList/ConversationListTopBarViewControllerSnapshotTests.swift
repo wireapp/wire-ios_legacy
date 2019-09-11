@@ -17,8 +17,8 @@
 //
 
 import XCTest
-@testable import Wire
 import SnapshotTesting
+@testable import Wire
 
 final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     

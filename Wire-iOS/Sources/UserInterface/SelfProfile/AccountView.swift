@@ -68,18 +68,25 @@ public protocol AccountViewType {
 }
 
 enum AccountViewFactory {
-    static func viewFor(account: Account, user: ZMUser? = nil) -> BaseAccountView {
-        return TeamAccountView(account: account, user: user) ?? PersonalAccountView(account: account, user: user)!
+    static func viewFor(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) -> BaseAccountView {
+        return TeamAccountView(account: account, user: user, displayContext: displayContext) ??
+               PersonalAccountView(account: account, user: user, displayContext: displayContext)!
     }
 }
 
-public enum AccountUnreadCountStyle {
+enum AccountUnreadCountStyle {
     /// Do not display an unread count.
     case none
     /// Display unread count only considering current account.
     case current
     /// Display unread count only considering other accounts.
     case others
+}
+
+/// For controlling size of BaseAccountView
+enum DisplayContext {
+    case conversationListHeader
+    case accountSelector
 }
 
 typealias AccountView = BaseAccountView & AccountViewType
@@ -141,7 +148,7 @@ class BaseAccountView: UIView {
                 (self.hasUnreadMessages ? (" " + "conversation_list.header.self_team.accessibility_value.has_new_messages".localized) : "")
     }
     
-    init?(account: Account, user: ZMUser? = nil) {
+    init?(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) {
         self.account = account
         
         dotView = DotView(user: user)
@@ -170,14 +177,23 @@ class BaseAccountView: UIView {
         accountView.createDotConstraints()
 
         let containerInset: CGFloat = 6
-        
+
+        let iconWidth: CGFloat
+
+        switch displayContext {
+        case .conversationListHeader:
+            iconWidth = CGFloat.ConversationListHeader.avatarSize
+        case .accountSelector:
+            iconWidth = CGFloat.AccountView.iconWidth
+        }
+
         constrain(self, imageViewContainer, dotView) { selfView, imageViewContainer, dotView in
             imageViewContainer.top == selfView.top + containerInset
             imageViewContainer.centerX == selfView.centerX
             selfView.width >= imageViewContainer.width
             selfView.trailing >= dotView.trailing
             
-            imageViewContainer.width == CGFloat.AccountView.iconWidth
+            imageViewContainer.width ==  iconWidth
             imageViewContainer.height == imageViewContainer.width
             
             imageViewContainer.bottom == selfView.bottom - containerInset
@@ -250,8 +266,8 @@ final class PersonalAccountView: AccountView {
         }
     }
     
-    override init?(account: Account, user: ZMUser? = nil) {
-        super.init(account: account, user: user)
+    override init?(account: Account, user: ZMUser? = nil, displayContext: DisplayContext) {
+        super.init(account: account, user: user, displayContext: displayContext)
         
         
         self.isAccessibilityElement = true

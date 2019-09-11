@@ -153,10 +153,10 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
     }
 
-    func createAccountView() -> BaseAccountView {///TODO: size
+    private func createAccountView() -> BaseAccountView {
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
-        let accountView = AccountViewFactory.viewFor(account: account, user: user)
+        let accountView = AccountViewFactory.viewFor(account: account, user: user, displayContext: .conversationListHeader)
         
         accountView.unreadCountStyle = .others
         accountView.selected = false
@@ -170,12 +170,11 @@ final class ConversationListTopBarViewController: UIViewController {
         accountView.accessibilityLabel = "self.voiceover.label".localized
         accountView.accessibilityHint = "self.voiceover.hint".localized
         
-        if let user = ZMUser.selfUser() {
-            if user.clientsRequiringUserAttention.count > 0 {
-                accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
-            }
+        if let selfUser = ZMUser.selfUser(),
+            selfUser.clientsRequiringUserAttention.count > 0 {
+            accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
         }
-        
+
         return accountView
     }
     
@@ -389,6 +388,6 @@ final class TopBar: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return CGSize(width: UIView.noIntrinsicMetric, height: 44)
+        return CGSize(width: UIView.noIntrinsicMetric, height: CGFloat.ConversationListHeader.barHeight)
     }
 }
