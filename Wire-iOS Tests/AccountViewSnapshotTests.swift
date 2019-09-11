@@ -167,5 +167,11 @@ final class AccountViewSnapshotTests: XCTestCase {
     }
 
     //MARK: - smaller icon for conversation list
-    ///TOD:
+    func testThatItShowsBasicAccount_Team_conversationListContext() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
+        let sut = TeamAccountView(account: account, displayContext: .conversationListHeader)!
+        // WHEN && THEN
+        verify(matching: sut)
+    }
 }
