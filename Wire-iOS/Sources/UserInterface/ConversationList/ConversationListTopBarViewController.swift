@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import Cartography
 
 typealias SelfUserType = UserType & SelfLegalHoldSubject
 
@@ -289,7 +290,7 @@ final class TopBar: UIView {
         }
     }
     
-    public var rightView: UIView? = .none {
+    var rightView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
             
@@ -297,18 +298,17 @@ final class TopBar: UIView {
                 return
             }
             
-            self.addSubview(new)
+            addSubview(new)
             
-            constrain(self, new) { selfView, new in
-                new.trailing == selfView.trailingMargin
-                new.centerY == selfView.centerY
-            }
+            NSLayoutConstraint.activate([
+                new.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
+                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
         }
     }
     
     private let middleViewContainer = UIView()
     
-    public var middleView: UIView? = .none {
+    var middleView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
             
@@ -316,12 +316,14 @@ final class TopBar: UIView {
                 return
             }
             
-            self.middleViewContainer.addSubview(new)
-            
-            constrain(middleViewContainer, new) { middleViewContainer, new in
-                new.center == middleViewContainer.center
-                middleViewContainer.size == new.size
-            }
+            middleViewContainer.addSubview(new)
+
+            NSLayoutConstraint.activate([
+                new.centerYAnchor.constraint(equalTo: middleViewContainer.centerYAnchor),
+                new.centerXAnchor.constraint(equalTo: middleViewContainer.centerXAnchor),
+
+                new.widthAnchor.constraint(equalTo: middleViewContainer.widthAnchor),
+                new.heightAnchor.constraint(equalTo: middleViewContainer.heightAnchor)])
         }
     }
     
