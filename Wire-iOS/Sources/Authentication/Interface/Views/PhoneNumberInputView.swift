@@ -350,10 +350,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     func submitValue() {
-        let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        var phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        let validationResult = phoneNumber.validate()
+        
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
 
-        if validationError == nil {
+        if validationError == nil && validationResult == .valid {
             delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: nil)
             delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
         }
