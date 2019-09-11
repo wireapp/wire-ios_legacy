@@ -230,13 +230,13 @@ final class ConversationListTopBarViewController: UIViewController {
 
 extension ConversationListTopBarViewController: UIViewControllerTransitioningDelegate {
     
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .vertical
         return transition
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let transition = SwizzleTransition()
         transition.direction = .vertical
         return transition
@@ -245,7 +245,7 @@ extension ConversationListTopBarViewController: UIViewControllerTransitioningDel
 
 extension ConversationListTopBarViewController: ZMUserObserver {
     
-    public func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.nameChanged {
             updateTitleView()
         }
@@ -261,14 +261,14 @@ extension ConversationListTopBarViewController: ZMUserObserver {
 }
 
 extension ConversationListTopBarViewController {
-    public func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
         topBar?.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
         topBar?.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
     }
 }
 
 final class TopBar: UIView {
-    var leftView: UIView? = .none {
+    var leftView: UIView? = .none { ///TODO: avatar icon
         didSet {
             oldValue?.removeFromSuperview()
             
@@ -279,7 +279,7 @@ final class TopBar: UIView {
             self.addSubview(new)
             
             NSLayoutConstraint.activate([
-                new.leadingAnchor.constraint(equalTo: leadingAnchor),
+                new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
                 new.centerYAnchor.constraint(equalTo: centerYAnchor)])
 
             if let middleView = middleView {
@@ -300,9 +300,13 @@ final class TopBar: UIView {
             
             addSubview(new)
             
-            NSLayoutConstraint.activate([
-                new.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
-                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
+            constrain(self, new) { selfView, new in
+                new.trailing == selfView.trailingMargin
+                new.centerY == selfView.centerY
+            }
+//            NSLayoutConstraint.activate([
+//                new.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+//                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
         }
     }
     
@@ -316,18 +320,16 @@ final class TopBar: UIView {
                 return
             }
             
-            middleViewContainer.addSubview(new)
-
-            NSLayoutConstraint.activate([
-                new.centerYAnchor.constraint(equalTo: middleViewContainer.centerYAnchor),
-                new.centerXAnchor.constraint(equalTo: middleViewContainer.centerXAnchor),
-
-                new.widthAnchor.constraint(equalTo: middleViewContainer.widthAnchor),
-                new.heightAnchor.constraint(equalTo: middleViewContainer.heightAnchor)])
+            self.middleViewContainer.addSubview(new)
+            
+            constrain(middleViewContainer, new) { middleViewContainer, new in
+                new.center == middleViewContainer.center
+                middleViewContainer.size == new.size
+            }
         }
     }
     
-    public var splitSeparator: Bool = true {
+    var splitSeparator: Bool = true {
         didSet {
             leftSeparatorInsetConstraint.isActive = splitSeparator
             rightSeparatorInsetConstraint.isActive = splitSeparator
@@ -335,8 +337,8 @@ final class TopBar: UIView {
         }
     }
     
-    public let leftSeparatorLineView = OverflowSeparatorView()
-    public let rightSeparatorLineView = OverflowSeparatorView()
+    let leftSeparatorLineView = OverflowSeparatorView()
+    let rightSeparatorLineView = OverflowSeparatorView()
     
     private var leftSeparatorInsetConstraint: NSLayoutConstraint!
     private var rightSeparatorInsetConstraint: NSLayoutConstraint!
@@ -364,7 +366,7 @@ final class TopBar: UIView {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
