@@ -170,7 +170,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             present(navigationController, animated: true)
         case .more:
             actionController = ConversationActionController(conversation: conversation, target: self)
-            actionController?.presentMenu(from: view, showConverationNameInMenuTitle: false)
+            actionController?.presentMenu(from: view, context: .details)
         }
     }
     
