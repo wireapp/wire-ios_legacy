@@ -73,6 +73,14 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
 
     // MARK: - use cases
 
+    func testForLongName() {
+        mockSelfUser.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+
+        setupSut()
+
+        verify(matching: sut)
+    }
+
     func testForOverflowSeperatorIsShownWhenScrollViewScrollsDown() {
         setupSut()
 
