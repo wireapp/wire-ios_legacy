@@ -441,9 +441,16 @@
 "content.system.you_started" = "You";
 "content.system.this_device" = "this device";
 
-"content.system.call.you" = "You";
 "content.system.call.called" = "%@ called";
 "content.system.call.called-you" = "%@ called";
+"content.system.call.called.you" = "You";
+
+"content.system.call.missed-call" = "Missed call";
+"content.system.call.missed-call-you" = "Missed call";;
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "You";
 
 "content.system.renamed_conv.title" = "%@ renamed the conversation";
 "content.system.renamed_conv.title-you" = "%@ renamed the conversation";
