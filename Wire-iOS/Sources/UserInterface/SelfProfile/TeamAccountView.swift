@@ -77,9 +77,6 @@ final class TeamAccountView: AccountView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-//        avatarWidthConstraint = imageView.widthAnchor.constraint(equalToConstant: avatarSize)
-//        avatarHeightConstraint = imageView.heightAnchor.constraint(equalToConstant: avatarSize)
-
         NSLayoutConstraint.activate([
             imageView.leadingAnchor.constraint(equalTo: imageViewContainer.leadingAnchor, constant: inset),
             imageView.topAnchor.constraint(equalTo: imageViewContainer.topAnchor, constant: inset),
