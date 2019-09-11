@@ -154,7 +154,7 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.leftView = createAccountView()
     }
 
-    func createAccountView() -> BaseAccountView {
+    func createAccountView() -> BaseAccountView {///TODO: size
         let session = ZMUserSession.shared() ?? nil
         let user = session == nil ? nil : ZMUser.selfUser(inUserSession: session!)
         let accountView = AccountViewFactory.viewFor(account: account, user: user)
@@ -277,16 +277,18 @@ final class TopBar: UIView {
             }
             
             self.addSubview(new)
-            
-            NSLayoutConstraint.activate([
+
+            new.translatesAutoresizingMaskIntoConstraints = false
+
+            var constraints = [
                 new.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
-                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
+                new.centerYAnchor.constraint(equalTo: centerYAnchor)]
 
             if let middleView = middleView {
-                NSLayoutConstraint.activate([
-                    new.trailingAnchor.constraint(lessThanOrEqualTo: middleView.leadingAnchor, constant: 0)
-                    ])
+                constraints.append(new.trailingAnchor.constraint(lessThanOrEqualTo: middleView.leadingAnchor))
             }
+
+            NSLayoutConstraint.activate(constraints)
         }
     }
     
@@ -299,14 +301,12 @@ final class TopBar: UIView {
             }
             
             addSubview(new)
+
+            new.translatesAutoresizingMaskIntoConstraints = false
             
-            constrain(self, new) { selfView, new in
-                new.trailing == selfView.trailingMargin
-                new.centerY == selfView.centerY
-            }
-//            NSLayoutConstraint.activate([
-//                new.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
-//                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
+            NSLayoutConstraint.activate([
+                new.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
         }
     }
     
@@ -320,12 +320,16 @@ final class TopBar: UIView {
                 return
             }
             
-            self.middleViewContainer.addSubview(new)
-            
-            constrain(middleViewContainer, new) { middleViewContainer, new in
-                new.center == middleViewContainer.center
-                middleViewContainer.size == new.size
-            }
+            middleViewContainer.addSubview(new)
+
+            new.translatesAutoresizingMaskIntoConstraints = false
+
+            NSLayoutConstraint.activate([
+                new.centerYAnchor.constraint(equalTo: middleViewContainer.centerYAnchor),
+                new.centerXAnchor.constraint(equalTo: middleViewContainer.centerXAnchor),
+
+                new.widthAnchor.constraint(equalTo: middleViewContainer.widthAnchor),
+                new.heightAnchor.constraint(equalTo: middleViewContainer.heightAnchor)])
         }
     }
     
@@ -346,7 +350,7 @@ final class TopBar: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         [leftSeparatorLineView, rightSeparatorLineView, middleViewContainer].forEach(self.addSubview)
         
         constrain(self, self.middleViewContainer, self.leftSeparatorLineView, self.rightSeparatorLineView) {

@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConversationListTopBarViewController!
     var mockAccount: Account!
@@ -50,20 +51,20 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
         mockSelfUser.isUnderLegalHold = true
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLegalHoldPending() {
         mockSelfUser.requestLegalHold()
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLegalHoldDisabled() {
         mockSelfUser.isUnderLegalHold = false
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
