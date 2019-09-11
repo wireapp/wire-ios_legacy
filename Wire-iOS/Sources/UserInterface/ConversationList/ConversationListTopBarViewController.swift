@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import Cartography
 
 typealias SelfUserType = UserType & SelfLegalHoldSubject
 
@@ -268,7 +267,7 @@ extension ConversationListTopBarViewController {
 }
 
 final class TopBar: UIView {
-    public var leftView: UIView? = .none {
+    var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()
             
@@ -278,10 +277,9 @@ final class TopBar: UIView {
             
             self.addSubview(new)
             
-            constrain(self, new) { selfView, new in
-                new.leading == selfView.leadingMargin
-                new.centerY == selfView.centerY
-            }
+            NSLayoutConstraint.activate([
+                new.leadingAnchor.constraint(equalTo: leadingAnchor),
+                new.centerYAnchor.constraint(equalTo: centerYAnchor)])
 
             if let middleView = middleView {
                 NSLayoutConstraint.activate([
