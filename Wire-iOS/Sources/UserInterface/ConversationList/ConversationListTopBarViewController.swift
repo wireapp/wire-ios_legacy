@@ -27,7 +27,7 @@ final class ConversationListTopBarViewController: UIViewController {
     private var account: Account
     private let selfUser: SelfUserType
     
-    var topBar: TopBar? {
+    fileprivate var topBar: TopBar? {
         return view as? TopBar
     }
 
