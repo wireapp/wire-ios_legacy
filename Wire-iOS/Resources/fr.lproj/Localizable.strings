@@ -300,7 +300,7 @@
 "conversation.create.options.title" = "Options";
 "conversation.create.options.subtitle" = "Invités et services : %@, Accusés de lecture : %@";
 "conversation.create.guests.title" = "Autoriser les invités et les services";
-"conversation.create.guests.subtitle" = "Rendre cette conversation accessible à des personnes et services étrangères à votre équipe.";
+"conversation.create.guests.subtitle" = "Rendre cette conversation accessible à des personnes et services étrangers à votre équipe.";
 "conversation.create.receipts.title" = "Accusés de lecture";
 "conversation.create.receipts.subtitle" = "Quand cette option est activée, les participants peuvent voir quand leurs messages ont été lus dans cette conversation.";
 
@@ -472,8 +472,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
-"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+"content.system.message_legal_hold.enabled" = "Cette conversation est conservée à des fins juridiques";
+"content.system.message_legal_hold.disabled" = "Conservation à des fins juridiques désactivé pour cette conversation";
 
 "content.system.message_legal_hold.learn_more" = "En savoir plus";
 
@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Envoi annulé";
 "content.file.upload_video" = "Vidéos";
 "content.file.take_video" = "Enregistrer une vidéo";
+"content.file.browse" = "Browse";
 
 "content.file.save_video" = "Enregistrer";
 "content.file.save_audio" = "Enregistrer";
@@ -534,7 +535,7 @@
 "content.message.open" = "Ouvrir";
 "content.message.copy" = "Copier";
 "content.message.download" = "Télécharger";
-"content.message.details" = "Détails";
+"content.message.details" = "Informations";
 
 // Reply
 "content.message.reply" = "Répondre";
@@ -691,7 +692,8 @@
 "meta.menu.leave" = "Quitter le groupe…";
 "meta.menu.archive" = "Archiver";
 "meta.menu.unarchive" = "Restaurer";
-"meta.menu.clear_content" = "Supprimer le contenu…";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Delete Content…";
 "meta.menu.silence.mute" = "Mettre en sourdine";
 "meta.menu.silence.unmute" = "Désactiver la sourdine";
 "meta.menu.cancel" = "Annuler";
@@ -764,6 +766,12 @@
 "profile.connection_request_dialog.button_cancel" = "Ignorer";
 "profile.connection_request_dialog.button_connect" = "Se connecter";
 
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annuler votre demande ?";
 "profile.cancel_connection_request_dialog.message" = "Supprimer votre demande de connexion à %@ ?";
@@ -810,16 +818,16 @@
 "device.verified" = "Vérifié";
 "device.not_verified" = "Non vérifié";
 
-"device.class.legalhold" = "Legal Hold";
+"device.class.legalhold" = "Conservation à des fins juridiques";
 "device.class.desktop" = "Ordinateur";
 "device.class.tablet" = "Tablette";
 "device.class.phone" = "Téléphone";
-"device.class.unknown" = "Unknown";
+"device.class.unknown" = "Inconnu";
 
 "device.type.permanent" = "Permanent";
 "device.type.temporary" = "Temporary";
-"device.type.legalhold" = "Legal Hold";
-"device.type.unknown" = "Unknown";
+"device.type.legalhold" = "Conservation à des fins juridiques";
+"device.type.unknown" = "Inconnu";
 
 // Bot
 "participants.services.remove_integration.button" = "supprimer le service";
@@ -837,7 +845,7 @@
 // Legal hold details
 
 "legalhold.participants.section.title" = "Legal hold subjects";
-"legalhold.header.title" = "Legal Hold";
+"legalhold.header.title" = "Conservation à des fins juridiques";
 "legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
 "legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
 "legalhold.accessibility" = "Legal hold details";
@@ -874,7 +882,7 @@
 "about.copyright.title" = "© Wire Swiss GmbH";
 
 // Licenses screen
-"about.license.project_header" = "Détails";
+"about.license.project_header" = "Informations";
 "about.license.open_project_button" = "Ouvrir la Page du Projet";
 "about.license.license_header" = "Crédits";
 
@@ -1264,7 +1272,7 @@
 "registration.close_phone_invitation_button.phone_title" = "Utiliser un autre téléphone";
 
 "registration.register_by_phone" = "Téléphone";
-"registration.register_by_email" = "E-mail";
+"registration.register_by_email" = "Email";
 
 "registration.enter_phone_number.title" = "Modifier le numéro de téléphone";
 "registration.enter_phone_number.placeholder" = "Numéro de téléphone";
@@ -1655,7 +1663,7 @@
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
-"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+"legal_hold.deactivated.message" = "Les messages futurs ne seront pas enregistrés.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
@@ -1667,7 +1675,7 @@
 "legalhold_request.button.accessibility" = "Pending approval.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
 "legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
 // Legal hold activated
