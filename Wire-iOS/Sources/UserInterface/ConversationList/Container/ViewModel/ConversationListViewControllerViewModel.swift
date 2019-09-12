@@ -19,7 +19,7 @@
 import Foundation
 
 typealias Completion = () -> ()
-typealias BoolResultHandler = (Bool) -> Void
+typealias ResultHandler = (_ succeeded: Bool) -> Void
 
 protocol ConversationListContainerViewModelDelegate: class {
     init(viewModel: ConversationListViewController.ViewModel)
@@ -35,7 +35,7 @@ protocol ConversationListContainerViewModelDelegate: class {
     func hideNoContactLabel(animated: Bool)
 
     func openChangeHandleViewController(with handle: String)
-    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping BoolResultHandler)
+    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping ResultHandler)
     func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool)
 
     func removeUsernameTakeover()

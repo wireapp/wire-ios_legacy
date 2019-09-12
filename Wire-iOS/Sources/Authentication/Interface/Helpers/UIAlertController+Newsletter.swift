@@ -25,7 +25,7 @@ extension UIAlertController {
     /// email regisration work flow: newsletter subscription dialog appears after conversation list is displayed.)
     static var newsletterSubscriptionDialogWasDisplayed = false
 
-    static func showNewsletterSubscriptionDialog(over viewController:UIViewController, completionHandler: @escaping BoolResultHandler) {
+    static func showNewsletterSubscriptionDialog(over viewController:UIViewController, completionHandler: @escaping ResultHandler) {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts && !dataCollectionDisabled else { return }
 
         let alertController = UIAlertController(title: "news_offers.consent.title".localized,
@@ -73,7 +73,7 @@ extension UIAlertController {
     }
 
     static func showNewsletterSubscriptionDialogIfNeeded(presentViewController: UIViewController,
-                                                         completionHandler: @escaping BoolResultHandler) {
+                                                         completionHandler: @escaping ResultHandler) {
         guard !UIAlertController.newsletterSubscriptionDialogWasDisplayed else { return }
 
         showNewsletterSubscriptionDialog(over: presentViewController, completionHandler: completionHandler)
