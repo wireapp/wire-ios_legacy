@@ -199,7 +199,7 @@ final class ListSkeletonView: UIView {
         [topBar,
          listContentView, buttonRowView].forEach(addSubview)
         
-        topBar.leftView = accountView
+        topBar.leftView = accountView.wrapInAvatarSizeContainer()
         
         createConstraints()
     }

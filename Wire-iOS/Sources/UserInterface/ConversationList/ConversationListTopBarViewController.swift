@@ -174,18 +174,7 @@ final class ConversationListTopBarViewController: UIViewController {
             accountView.accessibilityLabel = "self.new-device.voiceover.label".localized
         }
 
-        let container = UIView()
-
-        container.addSubview(accountView)
-
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
-            container.heightAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
-
-            container.centerYAnchor.constraint(equalTo: accountView.centerYAnchor),
-            container.centerXAnchor.constraint(equalTo: accountView.centerXAnchor)])
-
-        return container
+        return accountView.wrapInAvatarSizeContainer()
     }
     
     func updateLegalHoldIndictor() {
@@ -269,6 +258,24 @@ extension ConversationListTopBarViewController: ZMUserObserver {
         if changeInfo.legalHoldStatusChanged {
             updateLegalHoldIndictor()
         }
+    }
+}
+
+extension UIView {
+    func wrapInAvatarSizeContainer() -> UIView {
+        let container = UIView()
+        
+        container.addSubview(self)
+        
+        NSLayoutConstraint.activate([
+            container.widthAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
+            container.heightAnchor.constraint(equalToConstant: CGFloat.ConversationAvatarView.iconSize),
+            
+            container.centerYAnchor.constraint(equalTo: centerYAnchor),
+            container.centerXAnchor.constraint(equalTo: centerXAnchor)])
+        
+        return container
+
     }
 }
 
