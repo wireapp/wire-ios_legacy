@@ -53,7 +53,7 @@ final class MockConversationListContainer: UIViewController, ConversationListCon
         completion?()
     }
     
-    func showNoContactLabel() {
+    func showNoContactLabel(animated: Bool) {
         //no-op
     }
     
