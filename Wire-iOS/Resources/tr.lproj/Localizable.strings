@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Arşivle";
 "meta.menu.unarchive" = "Arşivden kaldır";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Profili Aç";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "İçerik silinsin?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Bu, tüm cihazlarınızdaki sohbet geçmişini temizler.";
 "meta.menu.delete_content.leave_as_well_message" = "Konuşmadan da ayrıl";
 "meta.menu.delete_content.button_cancel" = "İptal";
-"meta.menu.delete_content.button_delete" = "Sil";
-"meta.menu.delete_content.button_delete_and_leave" = "Sil ve Ayrıl";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Beni haberdar et:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Konuşmadan ayrıl?";
 "meta.leave_conversation_dialog_message" = "Katılımcılar bilgilendirilecek ve konuşma listenizden silinecektir.";
-"meta.leave_conversation.delete_content_as_well_message" = "İçeriği de sil";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "İptal";
 "meta.leave_conversation_button_leave" = "Ayrıl";
-"meta.leave_conversation_button_leave_and_delete" = "Ayrıl ve içeriği sil";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";

@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Arhiveeri";
 "meta.menu.unarchive" = "Arhiivist tagasi";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Hääletu";
 "meta.menu.silence.unmute" = "Heli sisse";
 "meta.menu.cancel" = "Tühista";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Kustuta sisu?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "See tühjendab vestlusajaloo sinu kõigis seadmetes.";
 "meta.menu.delete_content.leave_as_well_message" = "Lahku samuti vestlusest";
 "meta.menu.delete_content.button_cancel" = "Tühista";
-"meta.menu.delete_content.button_delete" = "Kustuta";
-"meta.menu.delete_content.button_delete_and_leave" = "Kustuta ja lahku";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Teavita mind:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Lahku vestlusest?";
 "meta.leave_conversation_dialog_message" = "Osalejaid teavitatakse ja vestlus eemaldatakse sinu nimekirjast.";
-"meta.leave_conversation.delete_content_as_well_message" = "Kustuta ka sisu";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Tühista";
 "meta.leave_conversation_button_leave" = "Lahku";
-"meta.leave_conversation_button_leave_and_delete" = "Lahku ja kustuta sisu";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hakkas kasutama uut seadet.";

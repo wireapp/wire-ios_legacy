@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Архівувати";
 "meta.menu.unarchive" = "Розархівувати";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Вимкнути звук";
 "meta.menu.silence.unmute" = "Увімкнути звук";
 "meta.menu.cancel" = "Скасувати";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Відкрити профіль";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Видалити вміст?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Це очистить історію розмови на всіх ваших пристроях.";
 "meta.menu.delete_content.leave_as_well_message" = "Також вийти з розмови";
 "meta.menu.delete_content.button_cancel" = "Скасувати";
-"meta.menu.delete_content.button_delete" = "Видалити";
-"meta.menu.delete_content.button_delete_and_leave" = "Видалити та вийти";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Повідомляти мене про:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Вийти з розмови?";
 "meta.leave_conversation_dialog_message" = "Учасники будуть повідомлені, і розмову буде видалено з вашого списку.";
-"meta.leave_conversation.delete_content_as_well_message" = "Також видалити вміст";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Скасувати";
 "meta.leave_conversation_button_leave" = "Вийти";
-"meta.leave_conversation_button_leave_and_delete" = "Вийти та видалити вміст";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ почав(-ла) використовувати новий пристрій.";

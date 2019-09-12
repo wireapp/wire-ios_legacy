@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Archyvuoti";
 "meta.menu.unarchive" = "Išarchyvuoti";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Atverti profilį";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Ištrinti turinį?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Tai išvalys bendravimo praeitį visuose jūsų įrenginiuose.";
 "meta.menu.delete_content.leave_as_well_message" = "Taip pat išeiti iš pokalbio";
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
-"meta.menu.delete_content.button_delete" = "Ištrinti";
-"meta.menu.delete_content.button_delete_and_leave" = "Ištrinti ir išeiti";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Pranešti apie:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Išeiti iš susirašinėjimo?";
 "meta.leave_conversation_dialog_message" = "Dalyviams bus pranešta ir susirašinėjimas bus pašalintas iš sąrašo.";
-"meta.leave_conversation.delete_content_as_well_message" = "Taip pat ištrinti turinį";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Atsisakyti";
 "meta.leave_conversation_button_leave" = "Išeiti";
-"meta.leave_conversation_button_leave_and_delete" = "Išeiti ir ištrinti turinį";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";

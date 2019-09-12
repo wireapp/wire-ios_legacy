@@ -693,7 +693,7 @@
 "meta.menu.archive" = "封存";
 "meta.menu.unarchive" = "解除封存";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "開啟個人資料";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "確定刪除內容？";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "這將清除你所有設備上的會話歷史。";
 "meta.menu.delete_content.leave_as_well_message" = "離開聊天室";
 "meta.menu.delete_content.button_cancel" = "取消";
-"meta.menu.delete_content.button_delete" = "刪除";
-"meta.menu.delete_content.button_delete_and_leave" = "刪除並離開";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "通知我關於：";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "確定離開聊天室？";
 "meta.leave_conversation_dialog_message" = "此聊天室將從您的對話清單被移除，參與者也將收到離開通知。";
-"meta.leave_conversation.delete_content_as_well_message" = "並且刪除內容";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "取消";
 "meta.leave_conversation_button_leave" = "離開";
-"meta.leave_conversation_button_leave_and_delete" = "離開並刪除內容";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";

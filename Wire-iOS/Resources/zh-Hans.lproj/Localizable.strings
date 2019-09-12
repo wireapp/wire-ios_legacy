@@ -693,7 +693,7 @@
 "meta.menu.archive" = "归档";
 "meta.menu.unarchive" = "取消归档";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "删除内容？";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "这将清除你所有设备上的会话历史。";
 "meta.menu.delete_content.leave_as_well_message" = "也退出聊天";
 "meta.menu.delete_content.button_cancel" = "取消";
-"meta.menu.delete_content.button_delete" = "删除";
-"meta.menu.delete_content.button_delete_and_leave" = "删除并离开";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "离开聊天室？";
 "meta.leave_conversation_dialog_message" = "其他成员将收到通知，聊天室将从您的列表中删除。";
-"meta.leave_conversation.delete_content_as_well_message" = "同时删除内容";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "取消";
 "meta.leave_conversation_button_leave" = "离开";
-"meta.leave_conversation_button_leave_and_delete" = "离开并删除内容";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ 开始使用新的设备。";
