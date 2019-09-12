@@ -57,6 +57,7 @@ final class ConversationListViewControllerTests: XCTestCase {
     func testForEverythingArchived() {
         MockConversationList.hasArchivedConversations = true
         sut.showNoContactLabel(animated: false)
+        
         verify(matching: sut)
     }
 
