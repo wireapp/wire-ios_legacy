@@ -29,7 +29,7 @@ final class SkeletonViewControllerTests: XCTestCase {
         
         mockAccount = Account.mockAccount(imageData: Data())
         
-        sut = SkeletonViewController(from: mockAccount, to: mockAccount)
+        sut = SkeletonViewController(from: mockAccount, to: mockAccount, randomizeDummyItem: false)
     }
     
     override func tearDown() {

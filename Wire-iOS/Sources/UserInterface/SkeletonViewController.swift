@@ -128,11 +128,14 @@ class ListSkeletonCell : UITableViewCell {
     
 }
 
-class ListSkeletonContentView : UITableView, UITableViewDataSource {
+final class ListSkeletonContentView : UITableView, UITableViewDataSource {
+    let randomizeDummyItem: Bool
     
-    init() {
+    init(randomizeDummyItem: Bool) {
+        self.randomizeDummyItem = randomizeDummyItem
+
         super.init(frame: CGRect.zero, style: .plain)
-        
+
         self.dataSource = self
         self.backgroundColor = .clear
         self.rowHeight = UITableView.automaticDimension
@@ -155,8 +158,9 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "ListSkeletonCell")
         
+        
         if let skeletonCell = cell as? ListSkeletonCell {
-            skeletonCell.lineInset =  Float(arc4random() % 200)
+            skeletonCell.lineInset =  randomizeDummyItem ? Float(arc4random() % 200) : 0
         }
         
         return cell!
@@ -164,17 +168,17 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
     
 }
 
-final class ListSkeletonView  : UIView {
+final class ListSkeletonView: UIView {
     
     let titleItem: ListSkeletonCellNameItemView
     let accountView : BaseAccountView
     let listContentView : ListSkeletonContentView
     var buttonRowView : UIStackView!
 
-    init(_ account: Account) {
+    init(_ account: Account, randomizeDummyItem: Bool) {
         self.titleItem = ListSkeletonCellNameItemView()
         self.accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
-        self.listContentView = ListSkeletonContentView()
+        self.listContentView = ListSkeletonContentView(randomizeDummyItem: randomizeDummyItem)
         
         super.init(frame: CGRect.zero)
         
@@ -237,7 +241,9 @@ final class SkeletonViewController: UIViewController {
     let listView : ListSkeletonView
     let customSplitViewController : SplitViewController
     
-    public init(from: Account?, to: Account) {
+    init(from: Account?,
+         to: Account,
+         randomizeDummyItem: Bool = true) {
 
         if let fromUnwrapped = from, to.imageData == nil, to.teamName == nil {
             account = fromUnwrapped
@@ -249,7 +255,7 @@ final class SkeletonViewController: UIViewController {
         self.blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         self.backgroundImageView = UIImageView()
         self.customSplitViewController = SplitViewController()
-        self.listView = ListSkeletonView(account)
+        self.listView = ListSkeletonView(account, randomizeDummyItem: randomizeDummyItem)
         
         super.init(nibName: nil, bundle: nil)
         
