@@ -222,15 +222,13 @@ final class ListSkeletonView: UIView {
         topBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            topBar.topAnchor.constraint(equalTo: topAnchor),
+            topBar.topAnchor.constraint(equalTo: safeTopAnchor),
             topBar.leftAnchor.constraint(equalTo: leftAnchor),
             topBar.rightAnchor.constraint(equalTo: rightAnchor),
             topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: 10)])
         
         constrain(self,
-                  topBar,
                   buttonRowView, listContentView) { (containerView,
-                    topBar,
                     buttonRowView, listContentView) in
                     
                     buttonRowView.left == containerView.left + 16
