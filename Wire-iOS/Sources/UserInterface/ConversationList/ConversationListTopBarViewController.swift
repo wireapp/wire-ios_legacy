@@ -27,7 +27,7 @@ final class ConversationListTopBarViewController: UIViewController {
     private var account: Account
     private let selfUser: SelfUserType
     
-    fileprivate var topBar: TopBar? {
+    var topBar: TopBar? {
         return view as? TopBar
     }
 
@@ -272,7 +272,7 @@ extension ConversationListTopBarViewController: ZMUserObserver {
     }
 }
 
-fileprivate final class TopBar: UIView {
+final class TopBar: UIView {
     var leftView: UIView? = .none {
         didSet {
             oldValue?.removeFromSuperview()

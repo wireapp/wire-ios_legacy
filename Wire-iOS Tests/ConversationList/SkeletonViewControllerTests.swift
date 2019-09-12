@@ -46,13 +46,28 @@ final class SkeletonViewControllerTests: XCTestCase {
     func testForAvatarPosition() {
         let _ = sut.view
         
-        let accountView = sut.listView.accountView
-        let frame = sut.listView.accountView.frame
+        let mockSelfUser = MockUser.createSelfUser(name: "James Hetfield", inTeam: nil)
+//        let reference = ConversationListTopBarViewController(account: mockAccount, selfUser: mockSelfUser)
         
-        let rootView = sut.view
-        let convertedFrame =  accountView.superview?.convert(accountView.frame, to:nil)
+        let account = Account.mockAccount(imageData: mockImageData)
+        let conversationListViewController = ConversationListViewController(account: account, selfUser: mockSelfUser)
+
         
-        XCTAssertEqual(frame, CGRect.zero)
-        XCTAssertEqual(convertedFrame, CGRect.zero)
+//        reference.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
+        
+        conversationListViewController.view.layoutIfNeeded()
+        
+        XCTAssertEqual(sut.listView.accountView.globalCenterPoint(rootView: sut.view), conversationListViewController.topBarViewController.topBar?.leftView?.globalCenterPoint(rootView: conversationListViewController.view))
+        
+//        XCTAssertEqual failed: ("Optional((38.0, 60.0))") is not equal to ("Optional((48.0, 32.0))")
+        
+        //XCTAssertEqual failed: ("Optional((38.0, 60.0))") is not equal to ("Optional((48.0, 28.0))")
+
+    }
+}
+
+extension UIView {
+    func globalCenterPoint(rootView: UIView) -> CGPoint? {
+        return convert(center, to: rootView)
     }
 }
