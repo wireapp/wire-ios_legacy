@@ -326,7 +326,12 @@ static NSString * const CellReuseIdConversation = @"CellId";
     NSArray *selectedIndexPaths = [self.collectionView indexPathsForSelectedItems];
     NSIndexPath *currentIndexPath = [self.listViewModel indexPathForItem:self.listViewModel.selectedItem];
     
-    if (! [selectedIndexPaths containsObject:currentIndexPath] && currentIndexPath != nil) {
+    if (currentIndexPath == nil) {
+        // Current selection is no longer available so we should unload the conversation view
+        [self.listViewModel selectItem:nil];
+        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:NO completion:nil];
+
+    } else if (![selectedIndexPaths containsObject:currentIndexPath]) {
         // This method doesn't trigger any delegate callbacks, so no worries about special handling
         [self.collectionView selectItemAtIndexPath:currentIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
