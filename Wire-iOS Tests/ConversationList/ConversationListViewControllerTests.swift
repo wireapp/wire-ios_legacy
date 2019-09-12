@@ -16,9 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
-import SnapshotTesting
 
 final class ConversationListViewControllerTests: XCTestCase {
     
@@ -54,113 +54,5 @@ final class ConversationListViewControllerTests: XCTestCase {
         sut.showPermissionDeniedViewController()
 
         verify(matching: sut)
-    }
-}
-
-final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapshotTestCase {
-    var sut: ConversationListViewController.ViewModel!
-    var mockView: UIView!
-    fileprivate var mockViewController: MockConversationListContainer!
-
-    override func setUp() {
-        super.setUp()
-
-        let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
-
-        mockViewController = MockConversationListContainer(viewModel: sut)
-
-        sut.viewController = mockViewController
-    }
-
-    override func tearDown() {
-        sut = nil
-        mockView = nil
-        mockViewController = nil
-
-        super.tearDown()
-    }
-
-    //MARK: - Action menu
-    func testForActionMenu() {
-        teamTest {
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
-    }
-
-    func testForActionMenu_NoTeam() {
-        nonTeamTest {
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
-    }
-}
-
-
-final class MockConversationListContainer: UIViewController, ConversationListContainerViewModelDelegate {
-
-    var isSelectedOnListContentController = false
-
-    init(viewModel: ConversationListViewController.ViewModel) {
-        super.init(nibName:nil, bundle:nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    var hasUsernameTakeoverViewController: Bool {
-        //no-op
-        return false
-    }
-
-    @discardableResult
-    func selectOnListContentController(_ conversation: ZMConversation!, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: (() -> Void)?) -> Bool {
-        isSelectedOnListContentController = true
-        return false
-    }
-
-    func updateBottomBarSeparatorVisibility(with controller: ConversationListContentController) {
-    }
-
-    func scrollViewDidScroll(scrollView: UIScrollView!) {
-        //no-op
-    }
-
-    func setState(_ state: ConversationListState, animated: Bool, completion: Completion?) {
-        completion?()
-    }
-
-    func showNoContactLabel() {
-        //no-op
-    }
-
-    func hideNoContactLabel(animated: Bool) {
-        //no-op
-    }
-
-    func openChangeHandleViewController(with handle: String) {
-        //no-op
-    }
-
-    func showNewsletterSubscriptionDialogIfNeeded(completionHandler: @escaping BoolResultHandler) {
-        //no-op
-    }
-
-    func updateArchiveButtonVisibilityIfNeeded(showArchived: Bool) {
-        //no-op
-    }
-
-    func removeUsernameTakeover() {
-        //no-op
-    }
-
-    func showUsernameTakeover(suggestedHandle: String, name: String) {
-        //no-op
-    }
-
-    func showPermissionDeniedViewController() {
-        //no-op
     }
 }
