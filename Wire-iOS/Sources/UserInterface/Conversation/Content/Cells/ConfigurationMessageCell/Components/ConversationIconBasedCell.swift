@@ -62,7 +62,7 @@ class ConversationIconBasedCell: UIView {
     }
     
     private var trailingTextMargin: CGFloat {
-        return -UIView.conversationLayoutMargins.right * 2
+        return -conversationHorizontalMargins.right * 2
     }
 
     override init(frame: CGRect) {
@@ -111,7 +111,7 @@ class ConversationIconBasedCell: UIView {
         lineView.translatesAutoresizingMaskIntoConstraints = false
 
         topContentViewTrailingConstraint = topContentView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: trailingTextMargin)
-        containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
+        containerWidthConstraint = imageContainer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         textLabelTrailingConstraint = textLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: trailingTextMargin)
         textLabelTopConstraint = textLabel.topAnchor.constraint(equalTo: topContentView.bottomAnchor)
         
@@ -160,7 +160,7 @@ class ConversationIconBasedCell: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        containerWidthConstraint.constant = UIView.conversationLayoutMargins.left
+        containerWidthConstraint.constant = conversationHorizontalMargins.left
         textLabelTrailingConstraint.constant = trailingTextMargin
         topContentViewTrailingConstraint.constant = trailingTextMargin
     }

@@ -70,7 +70,7 @@ class SenderNameCellComponent: UIView {
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         indicatorView.translatesAutoresizingMaskIntoConstraints = false
 
-        indicatorImageViewTrailing = indicatorView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
+        indicatorImageViewTrailing = indicatorView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: -conversationHorizontalMargins.right)
 
         NSLayoutConstraint.activate([
             // indicatorView
@@ -87,7 +87,7 @@ class SenderNameCellComponent: UIView {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        indicatorImageViewTrailing.constant = -UIView.conversationLayoutMargins.right
+        indicatorImageViewTrailing.constant = -conversationHorizontalMargins.right
     }
 
 }

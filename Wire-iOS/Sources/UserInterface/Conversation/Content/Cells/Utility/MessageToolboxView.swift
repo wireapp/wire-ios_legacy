@@ -178,7 +178,7 @@ final class MessageToolboxView: UIView {
         heightConstraint = heightAnchor.constraint(greaterThanOrEqualToConstant: 28)
         heightConstraint.priority = UILayoutPriority(999)
 
-        likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
+        likeButtonWidth = likeButtonContainer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
 
         NSLayoutConstraint.activate([
             heightConstraint,
@@ -193,7 +193,7 @@ final class MessageToolboxView: UIView {
 
             // statusTextView align vertically center
             contentStack.leadingAnchor.constraint(equalTo: likeButtonContainer.trailingAnchor),
-            contentStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right),
+            contentStack.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -conversationHorizontalMargins.right),
             contentStack.topAnchor.constraint(equalTo: topAnchor),
             contentStack.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
@@ -228,7 +228,7 @@ final class MessageToolboxView: UIView {
     // MARK: - Configuration
 
     private var contentWidth: CGFloat {
-        return bounds.width - UIView.conversationLayoutMargins.left - UIView.conversationLayoutMargins.right
+        return bounds.width - conversationHorizontalMargins.left - conversationHorizontalMargins.right
     }
 
     func configureForMessage(_ message: ZMConversationMessage, forceShowTimestamp: Bool, animated: Bool = false) {

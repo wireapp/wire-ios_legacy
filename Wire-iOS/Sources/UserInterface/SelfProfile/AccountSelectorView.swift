@@ -74,7 +74,7 @@ internal class LineView: UIView {
     }
 }
 
-final internal class AccountSelectorView: UIView {
+final class AccountSelectorView: UIView {
     public weak var delegate: AccountSelectorViewDelegate? = nil
     
     private var selfUserObserverToken: NSObjectProtocol!
@@ -86,7 +86,7 @@ final internal class AccountSelectorView: UIView {
                 return
             }
             
-            accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0) }) ?? []
+            accountViews = accounts?.map({ AccountViewFactory.viewFor(account: $0, displayContext: .accountSelector) }) ?? []
             
             accountViews.forEach { (accountView) in
                 

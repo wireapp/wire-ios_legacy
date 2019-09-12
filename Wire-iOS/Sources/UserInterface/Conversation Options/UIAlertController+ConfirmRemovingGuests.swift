@@ -63,13 +63,13 @@ extension UIAlertController {
                                   message: String? = nil,
                                   confirmTitle: String,
                                   completion: @escaping (Bool) -> Void) -> UIAlertController {
-        let removeAction = UIAlertAction(title: confirmTitle, style: .destructive) { _ in
+        let confirmAction = UIAlertAction(title: confirmTitle, style: .destructive) { _ in
             completion(true)
         }
 
         return UIAlertController.confirmController(title: title,
                                                    message: message,
-                                                   confirmAction: removeAction,
+                                                   confirmAction: confirmAction,
                                                    completion: completion)
     }
 }

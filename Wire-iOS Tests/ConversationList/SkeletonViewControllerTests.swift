@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -15,20 +16,30 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+import SnapshotTesting
+@testable import Wire
 
-extension ConversationListContentController: ConversationListCellDelegate {
-    func conversationListCellOverscrolled(_ cell: ConversationListCell?) {
-        guard let conversation = cell?.conversation else {
-            return
-        }
-
-        contentDelegate?.conversationListContentController(self, wantsActionMenuFor: conversation, fromSourceView: cell)
+final class SkeletonViewControllerTests: XCTestCase {
+    var sut: SkeletonViewController!
+    var mockAccount: Account!
+    
+    override func setUp() {
+        super.setUp()
+        
+        mockAccount = Account.mockAccount(imageData: Data())
+        
+        sut = SkeletonViewController(from: mockAccount, to: mockAccount, randomizeDummyItem: false)
     }
-
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell?) {
-        guard let conversation = cell?.conversation else { return }
-        startCallController = ConversationCallController(conversation: conversation, target: self)
-        startCallController.joinCall()
+    
+    override func tearDown() {
+        sut = nil
+        mockAccount = nil
+        
+        super.tearDown()
+    }
+    
+    func testForInitState() {
+        verify(matching: sut)
     }
 }

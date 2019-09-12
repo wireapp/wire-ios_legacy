@@ -41,7 +41,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccount_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
     }
@@ -49,7 +49,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountSelected_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN 
         sut.selected = true
         // THEN
@@ -59,7 +59,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountWithPicture_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
     }
@@ -67,7 +67,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountWithPictureSelected_Personal() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         // WHEN 
         sut.selected = true
         // THEN
@@ -77,7 +77,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccount_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
     }
@@ -85,7 +85,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN
         sut.selected = true
         // THEN
@@ -95,7 +95,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountWithPicture_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN && THEN
         verify(matching: sut)
     }
@@ -103,7 +103,7 @@ final class AccountViewSnapshotTests: XCTestCase {
     func testThatItShowsBasicAccountWithPictureSelected_Team() {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         // WHEN
         sut.selected = true
         // THEN
@@ -116,7 +116,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil, teamImageData: AccountViewSnapshotTests.imageData)
         account.unreadConversationCount = 100
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
 
         // WHEN
@@ -130,7 +130,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: AccountViewSnapshotTests.imageData)
         account.unreadConversationCount = 100
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
 
         // WHEN
@@ -144,7 +144,7 @@ final class AccountViewSnapshotTests: XCTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: nil, imageData: nil)
         account.unreadConversationCount = 100
-        let sut = PersonalAccountView(account: account)!
+        let sut = PersonalAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
 
         // WHEN
@@ -158,10 +158,19 @@ final class AccountViewSnapshotTests: XCTestCase {
         // GIVEN
         let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
         account.unreadConversationCount = 100
-        let sut = TeamAccountView(account: account)!
+        let sut = TeamAccountView(account: account, displayContext: .accountSelector)!
         sut.unreadCountStyle = .current
         sut.selected = true
 
+        // WHEN && THEN
+        verify(matching: sut)
+    }
+
+    //MARK: - smaller icon for conversation list
+    func testThatItShowsBasicAccount_Team_conversationListContext() {
+        // GIVEN
+        let account = Account(userName: "Iggy Pop", userIdentifier: UUID(), teamName: "Wire", imageData: nil)
+        let sut = TeamAccountView(account: account, displayContext: .conversationListHeader)!
         // WHEN && THEN
         verify(matching: sut)
     }

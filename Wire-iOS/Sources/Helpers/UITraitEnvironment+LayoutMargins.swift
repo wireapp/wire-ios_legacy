@@ -22,6 +22,11 @@ struct HorizontalMargins {
     var left: CGFloat
     var right: CGFloat
 
+    init(left: CGFloat, right: CGFloat) {
+        self.left = left
+        self.right = right
+    }
+
     init(userInterfaceSizeClass: UIUserInterfaceSizeClass) {
         switch userInterfaceSizeClass {
         case .regular:
@@ -56,27 +61,14 @@ extension UITraitEnvironment {
 
         return HorizontalMargins(userInterfaceSizeClass: userInterfaceSizeClass)
     }
-}
 
-extension UIView {
+    var directionAwareConversationLayoutMargins: HorizontalMargins {
+        let margins = conversationHorizontalMargins
 
-    @available(*, deprecated, message: "Use UITraitEnvironment.conversationHorizontalMargins instead")
-    class var conversationLayoutMargins: UIEdgeInsets {
-
-        // keyWindow can be nil, in case when running tests or the view is not added to view hierachy
-        let horizontalMargins = UIApplication.shared.keyWindow?.conversationHorizontalMargins ?? HorizontalMargins(userInterfaceSizeClass: .compact)
-
-        return UIEdgeInsets(top: 0, left: horizontalMargins.left, bottom: 0, right: horizontalMargins.right)
-    }
-    
-    class var directionAwareConversationLayoutMargins: UIEdgeInsets {
-        let margins = conversationLayoutMargins
-        
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
-            return UIEdgeInsets(top: margins.top, left: margins.right, bottom: margins.bottom, right: margins.left)
+            return HorizontalMargins(left: margins.right, right: margins.left)
         } else {
             return margins
         }
     }
-    
 }

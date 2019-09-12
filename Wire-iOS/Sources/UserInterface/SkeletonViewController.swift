@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 import WireUtilities
 
-class ListSkeletonCellNameItemView: UIView {
+final class ListSkeletonCellNameItemView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
@@ -35,7 +35,7 @@ class ListSkeletonCellNameItemView: UIView {
     }
 }
 
-class ListSkeletonCellView : UIView {
+final class ListSkeletonCellView : UIView {
     
     let avatarView : UIView
     let lineView : ListSkeletonCellNameItemView
@@ -93,7 +93,7 @@ class ListSkeletonCellView : UIView {
     
 }
 
-class ListSkeletonCell : UITableViewCell {
+final class ListSkeletonCell: UITableViewCell {
     
     static let estimatedHeight = 64.0
     
@@ -128,9 +128,12 @@ class ListSkeletonCell : UITableViewCell {
     
 }
 
-class ListSkeletonContentView : UITableView, UITableViewDataSource {
+final class ListSkeletonContentView : UITableView, UITableViewDataSource {
+    let randomizeDummyItem: Bool
     
-    init() {
+    init(randomizeDummyItem: Bool) {
+        self.randomizeDummyItem = randomizeDummyItem
+        
         super.init(frame: CGRect.zero, style: .plain)
         
         self.dataSource = self
@@ -155,8 +158,9 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = dequeueReusableCell(withIdentifier: "ListSkeletonCell")
         
+        
         if let skeletonCell = cell as? ListSkeletonCell {
-            skeletonCell.lineInset =  Float(arc4random() % 200)
+            skeletonCell.lineInset =  randomizeDummyItem ? Float(arc4random() % 200) : 0
         }
         
         return cell!
@@ -164,26 +168,38 @@ class ListSkeletonContentView : UITableView, UITableViewDataSource {
     
 }
 
-class ListSkeletonView  : UIView {
+final class ListSkeletonView: UIView {
     
-    let titleItem: ListSkeletonCellNameItemView
-    let accountView : BaseAccountView
+    let topBar: TopBar = {
+        let bar = TopBar()
+        let titleItem = ListSkeletonCellNameItemView()
+        
+        NSLayoutConstraint.activate([titleItem.widthAnchor.constraint(equalToConstant: 140),
+                                     titleItem.heightAnchor.constraint(equalToConstant: 14)])
+        
+        bar.middleView = titleItem
+        return bar
+    }()
+    
     let listContentView : ListSkeletonContentView
     var buttonRowView : UIStackView!
-
-    init(_ account: Account) {
-        self.titleItem = ListSkeletonCellNameItemView()
-        self.accountView = AccountViewFactory.viewFor(account: account) as BaseAccountView
-        self.listContentView = ListSkeletonContentView()
+    
+    init(_ account: Account, randomizeDummyItem: Bool) {
+        let accountView = AccountViewFactory.viewFor(account: account, displayContext: .conversationListHeader) as BaseAccountView
+        accountView.selected = false
+        
+        self.listContentView = ListSkeletonContentView(randomizeDummyItem: randomizeDummyItem)
         
         super.init(frame: CGRect.zero)
         
-        accountView.selected = false
         
         buttonRowView = UIStackView(arrangedSubviews: disabledButtons(with: [.person, .archive]))
         buttonRowView.distribution = .equalCentering
-
-        [accountView, titleItem, listContentView, buttonRowView].forEach(addSubview)
+        
+        [topBar,
+         listContentView, buttonRowView].forEach(addSubview)
+        
+        topBar.leftView = accountView.wrapInAvatarSizeContainer()
         
         createConstraints()
     }
@@ -203,33 +219,32 @@ class ListSkeletonView  : UIView {
     }
     
     func createConstraints() {
-        constrain(self, accountView, titleItem, buttonRowView, listContentView) { (containerView, accountView, titleItem, buttonRowView, listContentView) in
-            
-            accountView.left == containerView.left + 9
-            accountView.top == containerView.top + UIScreen.safeArea.top
-            
-            titleItem.centerY == accountView.centerY
-            titleItem.centerX == containerView.centerX
-            titleItem.left >= accountView.right
-            titleItem.right <= containerView.right
-            titleItem.width == 140.0
-            titleItem.height == CGFloat(14)
-            
-            buttonRowView.left == containerView.left + 16
-            buttonRowView.right == containerView.right - 16
-            buttonRowView.bottom == containerView.bottom - UIScreen.safeArea.bottom
-            buttonRowView.height == 55
-            
-            listContentView.top == accountView.bottom + 10
-            listContentView.left == containerView.left
-            listContentView.right == containerView.right
-            listContentView.bottom == buttonRowView.top
+        topBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            topBar.topAnchor.constraint(equalTo: safeTopAnchor),
+            topBar.leftAnchor.constraint(equalTo: leftAnchor),
+            topBar.rightAnchor.constraint(equalTo: rightAnchor),
+            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10)])
+        
+        constrain(self,
+                  buttonRowView, listContentView) { (containerView,
+                    buttonRowView, listContentView) in
+                    
+                    buttonRowView.left == containerView.left + 16
+                    buttonRowView.right == containerView.right - 16
+                    buttonRowView.bottom == containerView.bottom - UIScreen.safeArea.bottom
+                    buttonRowView.height == 55
+                    
+                    listContentView.left == containerView.left
+                    listContentView.right == containerView.right
+                    listContentView.bottom == buttonRowView.top
         }
     }
     
 }
 
-class SkeletonViewController: UIViewController {
+final class SkeletonViewController: UIViewController {
     
     let account : Account
     let backgroundImageView : UIImageView
@@ -237,19 +252,21 @@ class SkeletonViewController: UIViewController {
     let listView : ListSkeletonView
     let customSplitViewController : SplitViewController
     
-    public init(from: Account?, to: Account) {
-
+    init(from: Account?,
+         to: Account,
+         randomizeDummyItem: Bool = true) {
+        
         if let fromUnwrapped = from, to.imageData == nil, to.teamName == nil {
             account = fromUnwrapped
         }
         else {
             account = to
         }
-
+        
         self.blurEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
         self.backgroundImageView = UIImageView()
         self.customSplitViewController = SplitViewController()
-        self.listView = ListSkeletonView(account)
+        self.listView = ListSkeletonView(account, randomizeDummyItem: randomizeDummyItem)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -266,7 +283,7 @@ class SkeletonViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -275,7 +292,7 @@ class SkeletonViewController: UIViewController {
         addChild(customSplitViewController)
         
         [backgroundImageView, blurEffectView, customSplitViewController.view].forEach(self.view.addSubview)
-
+        
         createConstraints()
         
         customSplitViewController.didMove(toParent: self)

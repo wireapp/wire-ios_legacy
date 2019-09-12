@@ -181,7 +181,7 @@ extension ArchivedListViewController: ConversationListCellDelegate {
     
     func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
         actionController = ConversationActionController(conversation: cell.conversation, target: self)
-        actionController?.presentMenu(from: cell)
+        actionController?.presentMenu(from: cell, context: .list)
     }
 
 }

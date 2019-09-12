@@ -181,7 +181,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
     private func createConstraints() {
         let button = buttonOverlay.audioButton
-        let margin: CGFloat = (UIView.conversationLayoutMargins.left / 2) - (StyleKitIcon.Size.tiny.rawValue / 2)
+        let margin: CGFloat = (conversationHorizontalMargins.left / 2) - (StyleKitIcon.Size.tiny.rawValue / 2)
 
         [bottomContainerView,
          topContainerView,

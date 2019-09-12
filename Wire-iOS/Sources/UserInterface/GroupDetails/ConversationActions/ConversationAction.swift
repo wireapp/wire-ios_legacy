@@ -19,7 +19,8 @@
 import Foundation
 
 extension ZMConversation {
-    enum Action {
+    enum Action: Equatable {
+        
         case deleteGroup
         case clearContent
         case leave
@@ -33,7 +34,15 @@ extension ZMConversation {
         case remove
     }
     
-    var actions: [Action] {
+    var listActions: [Action] {
+        return actions.filter({ $0 != .deleteGroup })
+    }
+    
+    var detailActions: [Action] {
+        return actions.filter({ $0 != .configureNotifications})
+    }
+    
+    private var actions: [Action] {
         switch conversationType {
         case .connection:
             return availablePendingActions()

@@ -373,22 +373,24 @@ final class ConversationListViewController: UIViewController {
 
 fileprivate extension NSAttributedString {
     static var attributedTextForNoConversationLabel: NSAttributedString? {
-        guard let paragraphStyle = NSParagraphStyle.default as? NSMutableParagraphStyle else { return nil }
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.setParagraphStyle(NSParagraphStyle.default)
+
         paragraphStyle.paragraphSpacing = 10
         paragraphStyle.alignment = .center
-        
+
         let titleAttributes: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.foregroundColor: UIColor.white,
             NSAttributedString.Key.font: UIFont.smallMediumFont,
             NSAttributedString.Key.paragraphStyle: paragraphStyle
         ]
-        
+
         paragraphStyle.paragraphSpacing = 4
-        
+
         let titleString = "conversation_list.empty.all_archived.message".localized
-        
+
         let attributedString = NSAttributedString(string: titleString.uppercased(), attributes: titleAttributes)
-        
+
         return attributedString
     }
 }
