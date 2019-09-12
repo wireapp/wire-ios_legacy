@@ -47,7 +47,7 @@ struct PhoneNumber: Equatable {
     }
 
     let countryCode: UInt
-    let fullNumber: String
+    var fullNumber: String
     let numberWithoutCode: String
 
     var country: Country {
@@ -69,14 +69,17 @@ struct PhoneNumber: Equatable {
 
     }
 
-    func validate() -> ValidationResult {
+    mutating func validate() -> ValidationResult {
         
         var validatedNumber: String? = fullNumber
+        
         do {
             _ = try ZMUser.validate(phoneNumber: &validatedNumber)
         } catch let error {
             return ValidationResult(error: error)
         }
+        
+        fullNumber = validatedNumber ?? fullNumber
 
         return .valid
     }
