@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Archiver";
 "meta.menu.unarchive" = "Restaurer";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Mettre en sourdine";
 "meta.menu.silence.unmute" = "Désactiver la sourdine";
 "meta.menu.cancel" = "Annuler";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Ouvrir le Profil";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Supprimer le contenu ?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Ceci effacera la conversation sur tous vos appareils.";
 "meta.menu.delete_content.leave_as_well_message" = "Quitter aussi la conversation";
 "meta.menu.delete_content.button_cancel" = "Annuler";
-"meta.menu.delete_content.button_delete" = "Supprimer";
-"meta.menu.delete_content.button_delete_and_leave" = "Effacer et quitter";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Recevoir une notification :";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Quitter la conversation ?";
 "meta.leave_conversation_dialog_message" = "Les participants en seront notifiés et la conversation sera supprimée de votre liste.";
-"meta.leave_conversation.delete_content_as_well_message" = "Effacer également le contenu";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Annuler";
 "meta.leave_conversation_button_leave" = "Partir";
-"meta.leave_conversation_button_leave_and_delete" = "Quitter et effacer";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ utilise un nouvel appareil.";

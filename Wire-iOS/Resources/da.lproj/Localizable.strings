@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Arkiv";
 "meta.menu.unarchive" = "Fjern fra arkiv";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Lyd fra";
 "meta.menu.silence.unmute" = "Lyd til";
 "meta.menu.cancel" = "Annuller";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Slet indhold?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Dette vil fjerne samtaleoversigten på alle dine enheder.";
 "meta.menu.delete_content.leave_as_well_message" = "Forlad også samtalen";
 "meta.menu.delete_content.button_cancel" = "Annuller";
-"meta.menu.delete_content.button_delete" = "Slet";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Forlad samtalen?";
 "meta.leave_conversation_dialog_message" = "Deltagerne vil blive meddelt og samtalen vil blive fjernet fra din liste.";
-"meta.leave_conversation.delete_content_as_well_message" = "Slet også al indhold";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Annuller";
 "meta.leave_conversation_button_leave" = "Forlad";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ begyndte at bruge en ny enhed.";

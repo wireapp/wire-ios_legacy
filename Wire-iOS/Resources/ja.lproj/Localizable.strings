@@ -693,7 +693,7 @@
 "meta.menu.archive" = "アーカイブ";
 "meta.menu.unarchive" = "解答する";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "コンテンツ削除...";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "プロファイルを開く";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "コンテンツを削除しますか?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "あなたのすべてのデバイスから会話履歴をクリアします。";
 "meta.menu.delete_content.leave_as_well_message" = "会話からも退室する";
 "meta.menu.delete_content.button_cancel" = "キャンセル";
-"meta.menu.delete_content.button_delete" = "削除";
-"meta.menu.delete_content.button_delete_and_leave" = "削除して退出";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "私宛に通知する:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "会話から退室しますか？";
 "meta.leave_conversation_dialog_message" = "参加者に通知されたうえで、あなたのリストから会話が削除されます。";
-"meta.leave_conversation.delete_content_as_well_message" = "コンテンツも削除されます";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "キャンセル";
 "meta.leave_conversation_button_leave" = "離れる";
-"meta.leave_conversation_button_leave_and_delete" = "退出してアカウントを削除する";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@が新しいデバイスを使い始めました。";

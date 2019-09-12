@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Archiwum";
 "meta.menu.unarchive" = "Przywróć z archiwum";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Wyczyść zawartość…";
 "meta.menu.silence.mute" = "Wycisz";
 "meta.menu.silence.unmute" = "Wyłącz wyciszenie";
 "meta.menu.cancel" = "Anuluj";
@@ -709,8 +709,8 @@
 "meta.menu.delete_content.dialog_message" = "To wyczyści historię rozmowy na wszystkich Twoich urządzeniach.";
 "meta.menu.delete_content.leave_as_well_message" = "Również opuść konwersację";
 "meta.menu.delete_content.button_cancel" = "Anuluj";
-"meta.menu.delete_content.button_delete" = "Usuń";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete" = "Wyczyść";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Powiadom mnie o:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Opuścić konwersację?";
 "meta.leave_conversation_dialog_message" = "Uczestnicy zostaną powiadomieni, a rozmowa usunięta z listy.";
-"meta.leave_conversation.delete_content_as_well_message" = "Usuń także zawartość";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Anuluj";
 "meta.leave_conversation_button_leave" = "Opuść";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ rozpoczął korzystanie z nowego urządzenia.";

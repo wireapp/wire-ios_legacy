@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
 "meta.menu.delete" = "Excluir grupo…";
-"meta.menu.clear_content" = "Excluir conteúdo…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Abrir Perfil";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversas em todos os seus dispositivos.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
-"meta.menu.delete_content.button_delete" = "Apagar";
-"meta.menu.delete_content.button_delete_and_leave" = "Apagar e sair";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notifique-me sobre:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
 "meta.leave_conversation_dialog_message" = "Os participantes serão notificados e a conversa será removida da sua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Também excluir o conteúdo";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
-"meta.leave_conversation_button_leave_and_delete" = "Sair e excluir conteúdo";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";

@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Eliminare il contenuto?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "La cronologia delle conversazioni verrà cancellata da tutti i tuoi dispositivi.";
 "meta.menu.delete_content.leave_as_well_message" = "In aggiunta, abbandona la conversazione";
 "meta.menu.delete_content.button_cancel" = "Annulla";
-"meta.menu.delete_content.button_delete" = "Elimina";
-"meta.menu.delete_content.button_delete_and_leave" = "Elimina e abbandona";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notificami riguardo:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Abbandonare la conversazione?";
 "meta.leave_conversation_dialog_message" = "I partecipanti saranno informati e la conversazione verrà rimossa dalla tua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Elimina anche il contenuto";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Annulla";
 "meta.leave_conversation_button_leave" = "Abbandona";
-"meta.leave_conversation_button_leave_and_delete" = "Abbandona e cancella i contenuti";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ ha iniziato a usare un nuovo dispositivo.";

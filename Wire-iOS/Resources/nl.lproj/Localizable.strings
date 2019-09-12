@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Archiveren";
 "meta.menu.unarchive" = "Terugzetten";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Inhoud verwijderen?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Dit verwijdert de gesprek history van al je apparaten.";
 "meta.menu.delete_content.leave_as_well_message" = "Ook het gesprek verlaten";
 "meta.menu.delete_content.button_cancel" = "Annuleer";
-"meta.menu.delete_content.button_delete" = "Verwijderen";
-"meta.menu.delete_content.button_delete_and_leave" = "Verwijder en verlaat";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Gesprek verlaten?";
 "meta.leave_conversation_dialog_message" = "De deelnemers ontvangen een notificatie en het gesprek wordt uit je lijst verwijderd.";
-"meta.leave_conversation.delete_content_as_well_message" = "Verwijder de inhoud ook";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Annuleer";
 "meta.leave_conversation_button_leave" = "Verlaten";
-"meta.leave_conversation_button_leave_and_delete" = "Verlaat en verwijder inhoud";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";

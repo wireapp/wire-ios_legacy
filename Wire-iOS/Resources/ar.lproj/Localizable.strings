@@ -693,7 +693,7 @@
 "meta.menu.archive" = "حفظ في الأرشيف";
 "meta.menu.unarchive" = "إلغاء الأرشفة";
 "meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "كتم الصوت";
 "meta.menu.silence.unmute" = "إلغاء كتم الصوت";
 "meta.menu.cancel" = "إلغاء";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "حذف المحتوى؟";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "هذا سيمسح تاريخ المحادثة على كل أجهزتك.";
 "meta.menu.delete_content.leave_as_well_message" = "غادر المحادثة أيضا";
 "meta.menu.delete_content.button_cancel" = "إلغاء";
-"meta.menu.delete_content.button_delete" = "حذف";
-"meta.menu.delete_content.button_delete_and_leave" = "حذف ومغادرة";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "أشعرني لما:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "مُغادرة المُحادثة؟";
 "meta.leave_conversation_dialog_message" = "سيتم إبلاغ المشاركين وحذف المحادثة من قائمتك.";
-"meta.leave_conversation.delete_content_as_well_message" = "وحذف مُحتواها";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "إلغاء";
 "meta.leave_conversation_button_leave" = "غادر";
-"meta.leave_conversation_button_leave_and_delete" = "مغادرة وحذف المحتوى";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ بدأ باستخدام جهاز جديد.";
