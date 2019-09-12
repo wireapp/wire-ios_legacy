@@ -28,7 +28,7 @@ extension ConversationListViewController.ViewModel: ZMConversationListObserver {
 extension ConversationListViewController.ViewModel {
     func updateNoConversationVisibility() {
         if !ZMConversationList.hasConversations {
-            viewController?.showNoContactLabel()
+            viewController?.showNoContactLabel(animated: true)
         } else {
             viewController?.hideNoContactLabel(animated: true)
         }
@@ -45,20 +45,8 @@ extension ConversationListViewController.ViewModel {
     func updateArchiveButtonVisibility() {
         viewController?.updateArchiveButtonVisibilityIfNeeded(showArchived: ZMConversationList.hasArchivedConversations)
     }
-}
 
-extension ZMConversationList {
-    static var hasConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-
-        let conversationsCount = ZMConversationList.conversations(inUserSession: session).count + ZMConversationList.pendingConnectionConversations(inUserSession: session).count
-        return conversationsCount > 0
+    var hasArchivedConversations: Bool {
+        return conversationListType.hasArchivedConversations
     }
-
-    static var hasArchivedConversations: Bool {
-        guard let session = ZMUserSession.shared() else { return false }
-
-        return ZMConversationList.archivedConversations(inUserSession: session).count > 0
-    }
-
 }
