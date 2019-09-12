@@ -225,7 +225,7 @@ final class ListSkeletonView: UIView {
             topBar.topAnchor.constraint(equalTo: safeTopAnchor),
             topBar.leftAnchor.constraint(equalTo: leftAnchor),
             topBar.rightAnchor.constraint(equalTo: rightAnchor),
-            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: 10)])
+            topBar.bottomAnchor.constraint(equalTo: listContentView.topAnchor, constant: -10)])
         
         constrain(self,
                   buttonRowView, listContentView) { (containerView,
