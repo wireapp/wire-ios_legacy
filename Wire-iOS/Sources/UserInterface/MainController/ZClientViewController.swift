@@ -23,12 +23,12 @@ extension ZClientViewController {
 
     // MARK: - Setup methods
 
-    ///TODO: caller to Swift
+    ///TODO: caller to Swift and accept SelfUserType as paramenter
     @objc
     func setupConversationListViewController(account: Account, selfUser: UserType) {
-        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser as! SelfUserType)
-        conversationListViewController = ConversationListViewController( viewModel: viewModel)
-        viewModel.viewController = conversationListViewController
+        guard let selfUser = selfUser as? SelfUserType else { return }
+        
+        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {

@@ -90,6 +90,14 @@ final class ConversationListViewController: UIViewController {
         return conversationListOnboardingHint
     }()
 
+    convenience init(account: Account, selfUser: SelfUserType) {
+        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
+        
+        self.init(viewModel: viewModel)
+
+        viewModel.viewController = self
+    }
+    
     required init(viewModel: ViewModel) {
 
         self.viewModel = viewModel
