@@ -64,10 +64,7 @@ extension ConversationInputBarViewController {
 
                 let destLocation = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
 
-                do {
-                    try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
-                } catch {}
-
+                try? FileManager.default.copyItem(at: sourceLocation, to: destLocation)
                 self.uploadFile(at: destLocation)
             })
         }
