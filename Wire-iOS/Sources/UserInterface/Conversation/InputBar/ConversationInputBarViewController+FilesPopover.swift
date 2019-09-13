@@ -78,14 +78,16 @@ extension ConversationInputBarViewController {
                                            style: .default,
                                            handler: plistHandler))
 
-        controller.addAction(uploadTestAlertAction(size: UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1, title: "Big file", fileName: "BigFile.bin"))
+        let size = UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1
+        let humanReadableSize = size / 1024 / 1024
+        controller.addAction(uploadTestAlertAction(size: size, title: "Big file (size = \(humanReadableSize) MB)", fileName: "BigFile.bin"))
 
         controller.addAction(uploadTestAlertAction(size: 20971520, title: "20 MB file", fileName: "20MBFile.bin"))
         controller.addAction(uploadTestAlertAction(size: 41943040, title: "40 MB file", fileName: "40MBFile.bin"))
 
         if ZMUser.selfUser()?.hasTeam == true {
-            controller.addAction(uploadTestAlertAction(size: 83886080, title: "80 MB file", fileName: "80MBFile.bin"))
-            controller.addAction(uploadTestAlertAction(size:125829120, title: "120 MB file", fileName: "120MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 83886080,  title: "80 MB file",  fileName: "80MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 125829120, title: "120 MB file", fileName: "120MBFile.bin"))
         }
         #endif
 
