@@ -291,13 +291,6 @@ final class ConversationListViewController: UIViewController {
         return archivedViewController
     }
 
-    func setBackgroundColorPreference(_ color: UIColor?) {
-        UIView.animate(withDuration: 0.4, animations: {
-            self.view.backgroundColor = color
-            self.listContentController.view.backgroundColor = color
-        })
-    }
-
     func showNoContactLabel(animated: Bool = true) {
         if state != .conversationList { return }
 
@@ -333,12 +326,8 @@ final class ConversationListViewController: UIViewController {
     }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {
-        guard let topBar = topBarViewController.topBar else { return }
-
-        topBar.leftSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
-        topBar.rightSeparatorLineView.scrollViewDidScroll(scrollView: scrollView)
+        topBarViewController.scrollViewDidScroll(scrollView: scrollView)
     }
-
 
     /// Scroll to the current selection
     ///
