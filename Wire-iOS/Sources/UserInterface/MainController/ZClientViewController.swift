@@ -35,12 +35,6 @@ extension ZClientViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    func transitionToListIfPossible() {
-        guard splitViewController.layoutSize == .regularPortrait else { return }
-
-        transitionToList(animated: true, completion: nil)
-    }
-
     @objc(transitionToListAnimated:completion:)
     func transitionToList(animated: Bool, completion: (() -> ())?) {
         transitionToList(animated: animated,

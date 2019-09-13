@@ -73,9 +73,6 @@ extension ConversationListViewController.ViewModel: UserNameTakeOverViewControll
     }
 }
 
-
-typealias ConversationCreatedBlock = (ZMConversation?) -> Void
-
 /// Debug flag to ensure the takeover screen is shown even though
 /// the selfUser already has a handle assigned.
 private let debugOverrideShowTakeover = false
@@ -90,38 +87,6 @@ extension ConversationListViewController.ViewModel {
         case .learnMore:
             if let viewController = viewController as? UIViewController {
                 URL.wr_usernameLearnMore.openInApp(above: viewController)
-            }
-        }
-    }
-
-    func withConversationForUsers(_ users: Set<ZMUser>?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
-
-        guard let users = users,
-            let userSession = ZMUserSession.shared() else { return }
-
-        viewController?.setState(.conversationList, animated:true) {
-            if users.count == 1,
-                let user = users.first {
-                var oneToOneConversation: ZMConversation? = nil
-                userSession.enqueueChanges({
-                    oneToOneConversation = user.oneToOneConversation
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(oneToOneConversation)
-                    }
-                })
-            } else if users.count > 1 {
-                var conversation: ZMConversation? = nil
-
-                userSession.enqueueChanges({
-                    let team = ZMUser.selfUser().team
-
-                    conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), in: team)
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(conversation)
-                    }
-                })
             }
         }
     }
