@@ -38,17 +38,11 @@
 #import "Wire-Swift.h"
 
 
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
-static const NSTimeInterval OverscrollRatio = 2.5;
-
-
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
 @property (nonatomic) ConversationListItemView *itemView;
 
 @property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
-
-@property (nonatomic) NSDate *overscrollStartDate;
 
 @property (nonatomic) id typingObserverToken;
 @end
@@ -198,24 +192,6 @@ static CGSize cachedSize = {0, 0};
 }
 
 #pragma mark - DrawerOverrides
-
-- (void)drawerScrollingEndedWithOffset:(CGFloat)offset
-{
-    if (self.menuDotsView.progress >= 1) {
-        BOOL overscrolled = NO;
-        if (offset > (CGRectGetWidth(self.frame) / OverscrollRatio)) {
-            overscrolled = YES;
-        } else if (self.overscrollStartDate) {
-            NSTimeInterval diff = [[NSDate date] timeIntervalSinceDate:self.overscrollStartDate];
-            overscrolled = (diff > IgnoreOverscrollTimeInterval);
-        }
-
-        if (overscrolled) {
-            [self.delegate conversationListCellOverscrolled:self];
-        }
-    }
-    self.overscrollStartDate = nil;
-}
 
 - (void)drawerScrollingStarts
 {

@@ -506,4 +506,4 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self selectModelItem:previewViewController.conversation];
 }
 
-@end
+@end  

@@ -18,9 +18,13 @@
 
 @class AnimatedListMenuView;
 
+static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
+static const NSTimeInterval OverscrollRatio = 2.5;
+
 @interface ConversationListCell ()
 
 @property (nonatomic) BOOL hasCreatedInitialConstraints;
 @property (nonatomic) AnimatedListMenuView *menuDotsView;
+@property (nonatomic) NSDate *overscrollStartDate;
 
 @end

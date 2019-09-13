@@ -18,8 +18,23 @@
 
 import Foundation
 
-@objc
-protocol ConversationListCellDelegate: NSObjectProtocol {
-    func conversationListCellOverscrolled(_ cell: ConversationListCell)
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell)
+extension ConversationListCell {
+    override open func drawerScrollingEnded(withOffset offset: CGFloat) {
+        if menuDotsView.progress >= 1 {
+            var overscrolled = false
+            if offset > frame.width / CGFloat(OverscrollRatio) {
+                overscrolled = true
+            } else if let overscrollStartDate = overscrollStartDate {
+                let diff = Date().timeIntervalSince(overscrollStartDate)
+                overscrolled = diff > TimeInterval(IgnoreOverscrollTimeInterval)
+            }
+
+            if overscrolled {
+                delegate?.conversationListCellOverscrolled(self)
+            }
+        }
+        overscrollStartDate = nil
+    }
 }
+
+

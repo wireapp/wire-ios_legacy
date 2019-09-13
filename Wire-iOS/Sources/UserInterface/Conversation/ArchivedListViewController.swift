@@ -174,12 +174,12 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
 extension ArchivedListViewController: ConversationListCellDelegate {
 
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell!) {
+    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
         startCallController = ConversationCallController(conversation: cell.conversation, target: self)
         startCallController?.joinCall()
     }
     
-    func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
+    func conversationListCellOverscrolled(_ cell: ConversationListCell) {
         actionController = ConversationActionController(conversation: cell.conversation, target: self)
         actionController?.presentMenu(from: cell, context: .list)
     }
