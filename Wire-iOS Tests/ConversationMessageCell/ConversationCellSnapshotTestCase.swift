@@ -23,7 +23,7 @@ import XCTest
  * A base test class for section-based messages. Use the section property to build
  * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
  */
-class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
+final class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
 
     fileprivate var defaultContext: ConversationMessageContext!
 

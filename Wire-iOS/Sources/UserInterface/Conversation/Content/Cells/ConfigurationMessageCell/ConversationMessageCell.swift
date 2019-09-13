@@ -341,6 +341,10 @@ extension ConversationMessageCellDescription {
         return cellGenerator(tableView, indexPath)
     }
     
+    func makeView() -> UIView {
+        return viewGenerator()
+    }
+    
     func isConfigurationEqual(with description: AnyConversationMessageCellDescription) -> Bool {
         return isConfigurationEqualBlock(description)
     }
