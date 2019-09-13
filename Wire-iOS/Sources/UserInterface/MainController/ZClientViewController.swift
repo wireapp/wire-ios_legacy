@@ -241,7 +241,7 @@ extension ZClientViewController {
 
     @objc(selectConversation:)
     func select(_ conversation: ZMConversation) {
-        conversationListViewController.select(conversation)
+        conversationListViewController.viewModel.select(conversation)
     }
 
     @objc
