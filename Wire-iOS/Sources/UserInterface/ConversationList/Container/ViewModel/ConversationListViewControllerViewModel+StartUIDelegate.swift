@@ -18,6 +18,8 @@
 
 import Foundation
 
+fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
+
 extension ConversationListViewController.ViewModel: StartUIDelegate {
     func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {
         guard users.count > 0 else {
@@ -41,15 +43,45 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
         ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
     }
-}
-
-extension ConversationListViewController.ViewModel {
+    
+    private func withConversationForUsers(_ users: Set<ZMUser>?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
+        
+        guard let users = users,
+            let userSession = ZMUserSession.shared() else { return }
+        
+        viewController?.setState(.conversationList, animated:true) {
+            if users.count == 1,
+                let user = users.first {
+                var oneToOneConversation: ZMConversation? = nil
+                userSession.enqueueChanges({
+                    oneToOneConversation = user.oneToOneConversation
+                }, completionHandler: {
+                    delay(0.3) {
+                        onConversationCreated(oneToOneConversation)
+                    }
+                })
+            } else if users.count > 1 {
+                var conversation: ZMConversation? = nil
+                
+                userSession.enqueueChanges({
+                    let team = ZMUser.selfUser().team
+                    
+                    conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), in: team)
+                }, completionHandler: {
+                    delay(0.3) {
+                        onConversationCreated(conversation)
+                    }
+                })
+            }
+        }
+    }
+    
     private func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
-
+        
         var conversation: ZMConversation! = nil
-
+        
         userSession.enqueueChanges({
             conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
         }, completionHandler:{
