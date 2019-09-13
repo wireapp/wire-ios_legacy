@@ -62,13 +62,13 @@ extension ConversationInputBarViewController {
                 guard let basePath = paths.first,
                     let sourceLocation = Bundle.main.url(forResource: "CountryCodes", withExtension: "plist") else { return }
 
-                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
+                let destLocation = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
 
                 do {
-                    try FileManager.default.copyItem(at: sourceLocation, to: destLocationString)
+                    try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
                 } catch {}
 
-                self.uploadFile(at: destLocationString)
+                self.uploadFile(at: destLocation)
             })
         }
 
