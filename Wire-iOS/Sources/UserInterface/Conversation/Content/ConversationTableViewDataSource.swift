@@ -191,24 +191,7 @@ final class ConversationTableViewDataSource: NSObject {
         
         return sectionController(for: message, at: sectionIndex)
     }
-    
-    func previewableMessage(at indexPath: IndexPath, in tableView: UITableView) -> ZMConversationMessage? {
-        let message = messages[indexPath.section]
         
-        guard let sectionController = sectionControllers[message.objectIdentifier] else {
-            return nil
-        }
-        
-        let descriptions = sectionController.tableViewCellDescriptions
-        
-        guard descriptions.indices.contains(indexPath.row) else {
-            return nil
-        }
-        
-        let cellDescription = sectionController.tableViewCellDescriptions[indexPath.row]
-        return cellDescription.supportsActions ? message : nil
-    }
-    
     public func loadMessages(near message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             if message.hasBeenDeleted {

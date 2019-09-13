@@ -36,7 +36,7 @@ private let zmLog = ZMSLog(tag: "UI")
 }
 
 
-class StatusBarVideoEditorController: UIVideoEditorController {
+final class StatusBarVideoEditorController: UIVideoEditorController {
     override var prefersStatusBarHidden : Bool {
         return false
     }
