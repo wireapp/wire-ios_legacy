@@ -60,17 +60,15 @@ extension ConversationInputBarViewController {
             ZMUserSession.shared()?.enqueueChanges({
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 guard let basePath = paths.first,
-                    let sourceLocation = Bundle(for: type(of: self)).url(forResource: "CountryCodes", withExtension: "plist") else { return }
+                    let sourceLocation = Bundle.main.url(forResource: "CountryCodes", withExtension: "plist") else { return }
 
-
-                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent).absoluteString
-                let destLocation = URL(fileURLWithPath: destLocationString)
+                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
 
                 do {
-                    try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
-                } catch {
-                }
-                self.uploadFile(at: destLocation)
+                    try FileManager.default.copyItem(at: sourceLocation, to: destLocationString)
+                } catch {}
+
+                self.uploadFile(at: destLocationString)
             })
         }
 
