@@ -23,7 +23,7 @@ extension ConversationListViewController: ConversationListContentDelegate {
         selectedConversation = conversation
     }
 
-    public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToListIfPossible()
+    public func conversationList(_ controller: ConversationListContentController!, willSelectIndexPathAfterSelectionDeleted conv: IndexPath!) {                     ZClientViewController.shared()?.transitionToList(animated: true, completion: nil)
 
     }
 
