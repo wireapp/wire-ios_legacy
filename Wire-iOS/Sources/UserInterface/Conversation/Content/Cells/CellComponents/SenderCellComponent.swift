@@ -141,11 +141,6 @@ class SenderCellComponent: UIView {
         authorLabel.attributedText = attributedString
     }
     
-    func prepareForReuse() {
-        observerToken = nil
-        avatar.user = nil
-    }
-    
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {
         return NSAttributedString(string: string, attributes: [.foregroundColor : kind.color, .font : kind.font])
     }
