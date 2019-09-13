@@ -33,14 +33,6 @@ public extension NSURL {
 
 public extension URL {
 
-    func hasThirdPartyPreference() -> Bool {
-        if isTweet &&  TweetOpeningOption.storedPreference() != .none {
-            return true
-        }
-
-        return BrowserOpeningOption.storedPreference() != .safari
-    }
-
     @discardableResult func open() -> Bool {
         let opened = openAsTweet() || openAsLink()
         if opened {
