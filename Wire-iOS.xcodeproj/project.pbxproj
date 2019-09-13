@@ -606,7 +606,6 @@
 		877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */; };
 		877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */; };
 		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
-		877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */; };
 		8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */; };
 		8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6261D89448700AB71BD /* ProfileSelfPictureViewController.m */; };
 		8784B62A1D89448700AB71BD /* UIAlertController+NewSelfClients.m in Sources */ = {isa = PBXBuildFile; fileRef = 8784B6281D89448700AB71BD /* UIAlertController+NewSelfClients.m */; };
@@ -2226,7 +2225,6 @@
 		877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Update.swift"; sourceTree = "<group>"; };
 		877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewControllerTests.swift; sourceTree = "<group>"; };
-		877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Properties.swift"; sourceTree = "<group>"; };
 		8781C94E1E2687590024F3F6 /* MessageAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MessageAction.h; sourceTree = "<group>"; };
 		87831A961E69B5E600DDF3C3 /* ThreeDotsLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThreeDotsLoadingView.swift; sourceTree = "<group>"; };
 		8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaManagerLoader.swift; sourceTree = "<group>"; };
@@ -5331,7 +5329,6 @@
 				5E7315342191EADF00255A78 /* Message+Formatters.swift */,
 				8742F2EA2191DCDF00D2E40F /* Message.swift */,
 				EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */,
-				877B07811E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift */,
 				8F41CFC119926B7A00E3B032 /* ZMUser+Additions.h */,
 				8F41CFC219926B7A00E3B032 /* ZMUser+Additions.m */,
 				EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */,
@@ -7673,7 +7670,6 @@
 				16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */,
 				5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */,
 				EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */,
-				877B07821E3B4C4A0070A6F2 /* ZMConversationMessage+Properties.swift in Sources */,
 				5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,

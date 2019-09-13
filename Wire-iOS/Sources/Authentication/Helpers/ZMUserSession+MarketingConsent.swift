@@ -19,7 +19,7 @@
 import Foundation
 
 extension ZMUserSession {
-    @objc func submitMarketingConsent(with marketingConsent: Bool) {
+    func submitMarketingConsent(with marketingConsent: Bool) {
         ZMUser.selfUser().setMarketingConsent(to: marketingConsent, in: self, completion: { _ in })
     }
 }

@@ -27,8 +27,6 @@
 
 @property (nonatomic, readonly) UIColor *nameAccentColor;
 
-+ (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation;
-
 /// Blocks user if not already blocked and vice versa.
 - (void)toggleBlocked;
 

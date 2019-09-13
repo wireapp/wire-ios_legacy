@@ -40,12 +40,6 @@
     return [UIColor nameColorForZMAccentColor:self.accentColorValue variant:[[ColorScheme defaultColorScheme] variant]];
 }
 
-+ (BOOL)isSelfUserActiveParticipantOfConversation:(ZMConversation *)conversation
-{
-    ZMUser *selfUser = [self selfUser];
-    return [conversation.activeParticipants containsObject:selfUser];
-}
-
 - (BOOL)isPendingApproval
 {
     return (self.isPendingApprovalBySelfUser || self.isPendingApprovalByOtherUser);

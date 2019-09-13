@@ -20,7 +20,7 @@
 import Foundation
 
 
-public extension ZMConversationMessage {
+extension ZMConversationMessage {
 
     var canBeLiked: Bool {
         guard let conversation = self.conversation else {
@@ -71,7 +71,7 @@ public extension ZMConversationMessage {
 
 }
 
-public extension Message {
+extension Message {
 
     @objc static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
         return message.liked = liked
