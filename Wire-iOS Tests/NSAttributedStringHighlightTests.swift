@@ -21,7 +21,7 @@ import XCTest
 @testable import Wire
 
 // cutAndPrefixedWithEllipsis
-class NSAttributedStringHighlightTests: XCTestCase {
+final class NSAttributedStringHighlightTests: XCTestCase {
     func testThatItReturnsEmptyStringOnEmpty() {
         // GIVEN
         let sut = NSMutableAttributedString(string: "", attributes: [:])
@@ -96,7 +96,7 @@ class NSAttributedStringHighlightTests: XCTestCase {
 }
 
 // allRanges on String
-class StringAllRangesOfStringTests: XCTestCase {
+final class StringAllRangesOfStringTests: XCTestCase {
     func testThatItIgnoresEmptyString() {
         // GIVEN
         let sut = ""
@@ -162,7 +162,7 @@ class StringAllRangesOfStringTests: XCTestCase {
 }
 
 // rangeOfStrings on String
-class StringRangeOfStringTests: XCTestCase {
+final class StringRangeOfStringTests: XCTestCase {
     func testThatRangeOfStringsIgnoresEmptyStringNoQuery() {
         // GIVEN
         let string = ""
@@ -206,53 +206,5 @@ class StringRangeOfStringTests: XCTestCase {
         let result = string.range(of: ["alone", "android"])
         // THEN
         XCTAssertEqual(result, string.range(of: "android"))
-    }
-}
-
-// rangeOfStrings on NSString
-class NSStringRangeOfStringTests: XCTestCase {
-    func testThatRangeOfStringsIgnoresEmptyStringNoQuery() {
-        // GIVEN
-        let string = "" as NSString
-        // WHEN
-        let result = string.range(of: [])
-        // THEN
-        XCTAssertTrue(result == NSRange(location: NSNotFound, length: 0))
-    }
-    
-    func testThatRangeOfStringsIgnoresEmptyStringOneQuery() {
-        // GIVEN
-        let string = "" as NSString
-        // WHEN
-        let result = string.range(of: ["home"])
-        // THEN
-        XCTAssertTrue(result == NSRange(location: NSNotFound, length: 0))
-    }
-    
-    func testThatRangeOfStringsFindsOneStringOneQuery() {
-        // GIVEN
-        let string = "the android is not home alone" as NSString
-        // WHEN
-        let result = string.range(of: ["home"])
-        // THEN
-        XCTAssertTrue(result == (string as NSString).range(of: "home"))
-    }
-    
-    func testThatRangeOfStringsFindsFirstStringsTwoQuery() {
-        // GIVEN
-        let string = "the android is not home alone" as NSString
-        // WHEN
-        let result = string.range(of: ["home", "alone"])
-        // THEN
-        XCTAssertTrue(result == (string as NSString).range(of: "home"))
-    }
-    
-    func testThatRangeOfStringsFindsSecondStringTwoQuery() {
-        // GIVEN
-        let string = "the android is not home alone" as NSString
-        // WHEN
-        let result = string.range(of: ["alone", "android"])
-        // THEN
-        XCTAssertTrue(result == (string as NSString).range(of: "android"))
     }
 }
