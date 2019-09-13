@@ -229,14 +229,6 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
-    private func updateValidationError(_ error: TextFieldValidator.ValidationError?) {
-        if let error = error {
-            self.valueValidated(.error(error, showVisualFeedback: false))
-        } else {
-            self.valueValidated(nil)
-        }
-    }
-
     override func clearInputFields() {
         phoneInputView.text = nil
         emailInputField.text = nil

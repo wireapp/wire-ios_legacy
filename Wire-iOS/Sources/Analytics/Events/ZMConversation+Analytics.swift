@@ -48,11 +48,7 @@ extension ZMConversation {
     func analyticsTypeString() -> String? {
         return ConversationType.type(self)?.analyticsTypeString
     }
-    
-    class func analyticsTypeString(withConversationType conversationType: ConversationType) -> String {
-        return conversationType.analyticsTypeString
-    }
-    
+        
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
         guard self.activeParticipants.count == 2,
