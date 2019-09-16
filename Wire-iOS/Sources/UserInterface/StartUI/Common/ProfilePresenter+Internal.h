@@ -37,6 +37,6 @@
 @property (nonatomic, copy, nullable)   dispatch_block_t onDismiss;
 @property (nonatomic, nonnull) TransitionDelegate *transitionDelegate;
 
-- (void)dismissViewController:(UIViewController *)profileViewController completion:(dispatch_block_t)completion;
+- (void)dismissViewController:(UIViewController * _Nonnull)profileViewController completion:(dispatch_block_t _Nullable)completion;
 
 @end
