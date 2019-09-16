@@ -23,6 +23,8 @@
 static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
 static NSString * const CellReuseIdConversation = @"CellId";
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
@@ -42,3 +44,5 @@ static NSString * const CellReuseIdConversation = @"CellId";
 @interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
 
 @end
+
+NS_ASSUME_NONNULL_END

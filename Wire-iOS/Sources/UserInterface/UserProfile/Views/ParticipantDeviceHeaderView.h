@@ -21,6 +21,8 @@
 
 @protocol ParticipantDeviceHeaderViewDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ParticipantDeviceHeaderView : UIView
 
 - (instancetype)initWithUserName:(NSString *)userName;
@@ -37,3 +39,5 @@
 - (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView;
 
 @end
+
+NS_ASSUME_NONNULL_END
