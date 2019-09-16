@@ -27,8 +27,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-NSString *const MediaPlaybackManagerPlayerStateChangedNotification = @"MediaPlaybackManagerPlayerStateChangedNotification";
-
 
 @interface MediaPlaybackManager ()
 

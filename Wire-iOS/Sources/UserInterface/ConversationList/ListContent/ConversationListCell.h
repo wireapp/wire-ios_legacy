@@ -27,7 +27,7 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 
 @interface ConversationListCell : SwipeMenuCollectionCell
 
-@property (nonatomic) ZMConversation *conversation;
+@property (nonatomic, nullable) ZMConversation *conversation;
 @property (nonatomic, readonly) ConversationListItemView *itemView;
 @property (nonatomic, weak, nullable) id <ConversationListCellDelegate> delegate;
 - (void)updateAppearance;

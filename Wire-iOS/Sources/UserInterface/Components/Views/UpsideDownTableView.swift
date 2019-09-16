@@ -18,7 +18,7 @@
 
 import Foundation
 
-class UpsideDownTableView: UITableView {
+final class UpsideDownTableView: UITableView {
 
     /// The view that allow pan gesture to scroll the tableview
     @objc weak var pannableView: UIView?
