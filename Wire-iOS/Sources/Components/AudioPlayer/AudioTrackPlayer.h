@@ -23,6 +23,8 @@
 
 @protocol AudioTrack;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface AudioTrackPlayer : NSObject <MediaPlayer>
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler;
@@ -41,3 +43,5 @@
 - (void)pause;
 
 @end
+
+NS_ASSUME_NONNULL_END

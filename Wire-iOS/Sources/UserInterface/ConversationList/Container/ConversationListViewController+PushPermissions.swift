@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListViewController: PermissionDeniedViewControllerDelegate {
-    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController!) {
+    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
         closePushPermissionDeniedDialog()
     }
 }

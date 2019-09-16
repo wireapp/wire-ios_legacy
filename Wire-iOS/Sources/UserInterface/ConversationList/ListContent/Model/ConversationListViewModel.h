@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section;
 /// Delegate MUST call the updateBlock in appropriate place (e.g. collectionView performBatchUpdates:) to update the model.
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSection:(NSUInteger)section usingBlock:(dispatch_block_t)updateBlock withChangedIndexes:(ZMChangedIndexes *)changedIndexes;
-- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item;
+- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(_Nullable id)item;
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change;
 @end
 
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
 
-- (BOOL)selectItem:(id)itemToSelect;
+- (BOOL)selectItem:(_Nullable id)itemToSelect;
 
 - (void)updateSection:(SectionIndex)sectionIndex;
 - (void)updateConversationListAnimated;

@@ -21,7 +21,7 @@ import Foundation
 fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
-    func startUI(_ startUI: StartUIViewController!, didSelect users: Set<ZMUser>!) {
+    func startUI(_ startUI: StartUIViewController, didSelect users: Set<ZMUser>) {
         guard users.count > 0 else {
             return
         }
@@ -33,14 +33,14 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         })
     }
     
-    func startUI(_ startUI: StartUIViewController!, createConversationWith users: Set<ZMUser>?, name: String!, allowGuests: Bool, enableReceipts: Bool) {
+    func startUI(_ startUI: StartUIViewController, createConversationWith users: Set<ZMUser>, name: String, allowGuests: Bool, enableReceipts: Bool) {
         let createConversationClosure = {
             self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
         (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
 
-    func startUI(_ startUI: StartUIViewController!, didSelect conversation: ZMConversation!) {
+    func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation) {
         ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
     }
     

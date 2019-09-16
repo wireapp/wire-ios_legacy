@@ -403,8 +403,10 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func setupAudioPlayerObservers() {
-        audioPlayerProgressObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
-        audioPlayerStateObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+        guard let audioTrackPlayer = _audioTrackPlayer else { return }
+        
+        audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
+        audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
     }
 
     // MARK: - Actions

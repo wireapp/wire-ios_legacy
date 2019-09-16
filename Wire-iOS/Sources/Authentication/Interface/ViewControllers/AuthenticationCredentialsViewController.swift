@@ -297,7 +297,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         // no-op: handled by the input view directly
     }
 
-    func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
+    func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {
         phoneInputView.selectCountry(country)
         viewController.dismiss(animated: true)
     }
