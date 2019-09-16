@@ -166,6 +166,7 @@ final public class FileTransferView: UIView, TransferView {
         switch fileMessageData.transferState {
             
         case .uploading:
+            if fileMessageData.size == 0 { fallthrough }
             let statusText = "content.file.uploading".localized(uppercased: true) && labelFont && labelTextBlendedColor
             let firstLine = fileNameAttributed
             let secondLine = fileSizeAttributed + dot + statusText
