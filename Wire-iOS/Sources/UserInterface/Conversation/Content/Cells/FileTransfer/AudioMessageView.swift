@@ -3,16 +3,16 @@
 // Copyright (C) 2016 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
+// it under the terms of the GNU General License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 //
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
+// GNU General License for more details.
 //
-// You should have received a copy of the GNU General Public License
+// You should have received a copy of the GNU General License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
@@ -21,11 +21,11 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers final class AudioMessageView: UIView, TransferView {
-    public var fileMessage: ZMConversationMessage?
-    weak public var delegate: TransferViewDelegate?
+final class AudioMessageView: UIView, TransferView {
+    var fileMessage: ZMConversationMessage?
+    weak var delegate: TransferViewDelegate?
     private var _audioTrackPlayer: AudioTrackPlayer?
-    public var audioTrackPlayer: AudioTrackPlayer? {
+    var audioTrackPlayer: AudioTrackPlayer? {
         get {
             if _audioTrackPlayer == nil {
                 _audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
@@ -89,7 +89,7 @@ private let zmLog = ZMSLog(tag: "UI")
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall : Bool
 
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         isPausedForIncomingCall = false
 
         super.init(frame: frame)
@@ -130,11 +130,11 @@ private let zmLog = ZMSLog(tag: "UI")
         audioPlayerProgressObserver = nil
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
@@ -174,17 +174,17 @@ private let zmLog = ZMSLog(tag: "UI")
         
     }
     
-    public override var tintColor: UIColor! {
+    override var tintColor: UIColor! {
         didSet {
             self.downloadProgressView.tintColor = self.tintColor
         }
     }
     
-    public func stopProximitySensor() {
+    func stopProximitySensor() {
         self.proximityMonitorManager?.stopListening()
     }
     
-    public func configure(for message: ZMConversationMessage, isInitial: Bool) {
+    func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
         
         guard let fileMessageData = message.fileMessageData else {
@@ -214,7 +214,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    public func willDeleteMessage() {
+    func willDeleteMessage() {
         proximityMonitorManager?.stopListening()
         guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.stop()
@@ -328,12 +328,12 @@ private let zmLog = ZMSLog(tag: "UI")
         self.waveformProgressView.setProgress(progress, animated: animated)
     }
     
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
     
-    public func stopPlaying() {
+    func stopPlaying() {
         guard let player = self.audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.pause()
     }

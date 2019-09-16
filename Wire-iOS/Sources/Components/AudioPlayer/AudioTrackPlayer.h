@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface AudioTrackPlayer : NSObject <MediaPlayer>
 
-- (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler;
+- (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:( void(^ _Nullable )(BOOL loaded, NSError *error))completionHandler;
 
 @property (nonatomic, readonly) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic, readonly) CGFloat progress;
