@@ -50,7 +50,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         if !user.isConnected && !user.isTeamMember {
             self.presentProfileViewController(for: user, at: indexPath)
         } else if let unboxed = user.zmUser {
-            delegate.startUI(self, didSelect: [unboxed])
+            delegate?.startUI(self, didSelect: [unboxed])
         }
     }
     
@@ -62,13 +62,13 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             return
         }
         
-        self.delegate.startUI(self, didSelect: [unboxedUser])
+        delegate?.startUI(self, didSelect: [unboxedUser])
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
         if conversation.conversationType == .group || conversation.conversationType == .oneOnOne {
-            self.delegate.startUI(self, didSelect: conversation)
+            delegate?.startUI(self, didSelect: conversation)
         }
     }
     
@@ -82,7 +82,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             if let result = result {
                 switch result {
                 case .success(let conversation):
-                    self.delegate.startUI(self, didSelect: conversation)
+                    delegate?.startUI(self, didSelect: conversation)
                 case .failure(let error):
                     error.displayAddBotError(in: self)
                 }
@@ -134,7 +134,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                                                       name: "general.guest-room-name".localized,
                                                                       in: ZMUser.selfUser().team,
                                                                       allowGuests: true)
-            self.delegate.startUI(self, didSelect: conversation)
+            delegate?.startUI(self, didSelect: conversation)
         }
     }
 }
@@ -157,7 +157,7 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                         allowGuests: Bool,
                                         enableReceipts: Bool) {
         dismiss(controller: controller) {
-            self.delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+            delegate?.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
     }
     

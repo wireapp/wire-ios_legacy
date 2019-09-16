@@ -30,5 +30,5 @@
 @interface TopPeopleLineCollectionViewController : NSObject <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic) NSArray<ZMConversation *> *topPeople;
 @property (nonatomic) UserSelection *userSelection;
-@property (nonatomic, weak) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
 @end

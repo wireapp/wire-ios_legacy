@@ -38,6 +38,6 @@
 //! Shouldn't be used anywhere else.
 @interface TokenizedTextView : TextView
 
-@property (weak, nonatomic) id< TokenizedTextViewDelegate > delegate;
+@property (weak, nonatomic, nullable) id< TokenizedTextViewDelegate > delegate;
 
 @end

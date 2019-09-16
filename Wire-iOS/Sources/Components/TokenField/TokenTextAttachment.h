@@ -38,7 +38,7 @@
 @interface TokenTextAttachment : NSTextAttachment
 
 @property (strong, nonatomic) Token *token;
-@property (weak, nonatomic) TokenField *tokenField;
+@property (weak, nonatomic, nullable) TokenField *tokenField;
 @property (assign, nonatomic, getter=isSelected) BOOL selected;
 
 - (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField;

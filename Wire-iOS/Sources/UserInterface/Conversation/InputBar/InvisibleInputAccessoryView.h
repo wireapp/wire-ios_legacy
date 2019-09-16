@@ -36,7 +36,7 @@
 
 @interface InvisibleInputAccessoryView : UIView
 
-@property (nonatomic, weak) id<InvisibleInputAccessoryViewDelegate> delegate;
+@property (nonatomic, weak, nullable) id<InvisibleInputAccessoryViewDelegate> delegate;
 @property (nonatomic, assign, readwrite) CGSize intrinsicContentSize;
 
 @end

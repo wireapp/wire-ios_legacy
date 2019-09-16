@@ -32,7 +32,7 @@
 @property (nonatomic, readonly) CGFloat duration;
 @property (nonatomic, readonly) NSTimeInterval elapsedTime;
 @property (nonatomic, readonly, getter=isPlaying) BOOL playing;
-@property (nonatomic, weak) id<MediaPlayerDelegate> mediaPlayerDelegate;
+@property (nonatomic, weak, nullable) id<MediaPlayerDelegate> mediaPlayerDelegate;
 
 /// Start the currently loaded/paused track.
 - (void)play;

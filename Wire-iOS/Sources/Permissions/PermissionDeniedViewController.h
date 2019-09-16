@@ -33,6 +33,6 @@
 + (instancetype)pushDeniedViewController;
 
 @property (nonatomic) BOOL backgroundBlurDisabled;
-@property (nonatomic, weak) id<PermissionDeniedViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<PermissionDeniedViewControllerDelegate> delegate;
 
 @end

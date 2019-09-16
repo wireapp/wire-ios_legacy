@@ -19,5 +19,5 @@
 #import "ResizingTextView.h"
 
 @interface NextResponderTextView : ResizingTextView
-@property (nonatomic, weak) UIResponder *overrideNextResponder;
+@property (nonatomic, weak, nullable) UIResponder *overrideNextResponder;
 @end

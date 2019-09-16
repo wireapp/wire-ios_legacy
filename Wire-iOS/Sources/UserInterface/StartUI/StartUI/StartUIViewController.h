@@ -25,7 +25,7 @@
 
 @interface StartUIViewController : UIViewController
 
-@property (nonatomic, weak) id <StartUIDelegate> delegate;
+@property (nonatomic, weak, nullable) id <StartUIDelegate> delegate;
 @property (nonatomic, readonly) UIScrollView *scrollView;
 
 - (void)showKeyboardIfNeeded;

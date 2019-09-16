@@ -31,6 +31,6 @@
 
 @interface CountryCodeTableViewController : CountryCodeBaseTableViewController
 
-@property (nonatomic, weak) id<CountryCodeTableViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<CountryCodeTableViewControllerDelegate> delegate;
 
 @end

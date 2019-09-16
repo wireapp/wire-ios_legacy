@@ -25,7 +25,7 @@
 
 - (instancetype)initWithUserName:(NSString *)userName;
 
-@property (weak, nonatomic) id <ParticipantDeviceHeaderViewDelegate> delegate;
+@property (weak, nonatomic, nullable) id <ParticipantDeviceHeaderViewDelegate> delegate;
 @property (nonatomic, readonly) NSString *userName;
 @property (nonatomic) BOOL showUnencryptedLabel;
 
