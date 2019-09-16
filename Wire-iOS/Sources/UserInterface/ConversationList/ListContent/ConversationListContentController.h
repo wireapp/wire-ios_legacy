@@ -25,6 +25,8 @@
 @protocol ZMConversationMessage;
 @protocol ConversationListContentDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ConversationListContentController : UICollectionViewController
 
 @property (nonatomic, weak, nullable) id <ConversationListContentDelegate> contentDelegate;
@@ -44,3 +46,5 @@
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 @end
+
+NS_ASSUME_NONNULL_END

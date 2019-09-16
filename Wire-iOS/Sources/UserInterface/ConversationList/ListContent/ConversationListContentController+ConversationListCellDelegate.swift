@@ -28,7 +28,9 @@ extension ConversationListContentController: ConversationListCellDelegate {
     }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
-        startCallController = ConversationCallController(conversation: cell.conversation, target: self)
+        guard let conversation = cell.conversation else { return }
+        
+        startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController.joinCall()
     }
 }
