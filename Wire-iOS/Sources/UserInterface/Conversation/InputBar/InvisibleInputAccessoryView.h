@@ -19,6 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @class InvisibleInputAccessoryView;
 
@@ -31,6 +32,8 @@
 - (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view superviewFrameChanged:(CGRect)frame;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 
 

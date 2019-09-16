@@ -23,7 +23,7 @@
 
 @class TokenizedTextView;
 
-
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol TokenizedTextViewDelegate <UITextViewDelegate>
 
@@ -32,7 +32,7 @@
 
 @end
                           
-                          
+NS_ASSUME_NONNULL_END
                           
 //! Custom UITextView subclass to be used in TokenField.
 //! Shouldn't be used anywhere else.

@@ -20,8 +20,8 @@
 
 @protocol ConversationListViewModelDelegate;
 
-static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
-static NSString * const CellReuseIdConversation = @"CellId";
+static NSString * _Nullable const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
+static NSString * _Nullable const CellReuseIdConversation = @"CellId";
 
 NS_ASSUME_NONNULL_BEGIN
 

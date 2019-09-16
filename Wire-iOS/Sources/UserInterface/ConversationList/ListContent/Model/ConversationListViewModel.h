@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
     SectionIndexAll = INT_MAX,
 };
 
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ConversationListViewModelDelegate <NSObject>
 
@@ -86,3 +87,5 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (NSIndexPath *)itemAfterIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
 
 @end
+
+NS_ASSUME_NONNULL_END

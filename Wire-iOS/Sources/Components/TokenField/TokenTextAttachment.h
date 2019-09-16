@@ -25,6 +25,8 @@
 @class TokenField;
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TokenSeparatorAttachment : NSTextAttachment
 
 @property (nonatomic) Token *token;
@@ -45,3 +47,5 @@
 - (void)refreshImage;
 
 @end
+
+NS_ASSUME_NONNULL_END

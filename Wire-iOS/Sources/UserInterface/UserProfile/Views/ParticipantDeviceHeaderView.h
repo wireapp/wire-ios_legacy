@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ParticipantDeviceHeaderViewDelegate <NSObject>
 
-- (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView;
+- (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView * _Nonnull)headerView;
 
 @end
 
