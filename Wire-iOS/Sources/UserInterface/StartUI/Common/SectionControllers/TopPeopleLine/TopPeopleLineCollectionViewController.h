@@ -29,10 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
     
 @end
 
-NS_ASSUME_NONNULL_END
-
 @interface TopPeopleLineCollectionViewController : NSObject <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic) NSArray<ZMConversation *> *topPeople;
 @property (nonatomic) UserSelection *userSelection;
 @property (nonatomic, weak, nullable) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
 @end
+
+NS_ASSUME_NONNULL_END

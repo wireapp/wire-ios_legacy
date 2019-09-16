@@ -21,6 +21,8 @@
 
 @class PermissionDeniedViewController;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol PermissionDeniedViewControllerDelegate <NSObject>
 @optional
 - (void)continueWithoutPermission:(PermissionDeniedViewController *)viewController;
@@ -36,3 +38,5 @@
 @property (nonatomic, weak, nullable) id<PermissionDeniedViewControllerDelegate> delegate;
 
 @end
+
+NS_ASSUME_NONNULL_END
