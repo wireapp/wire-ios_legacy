@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSUInteger sectionCount;
 @property (nonatomic, readonly) ConversationListConnectRequestsItem *contactRequestsItem;
 
-@property (nonatomic, readonly) id selectedItem;
+@property (nonatomic, readonly, nullable) id selectedItem;
 
 @property (nonatomic, weak, nullable) id<ConversationListViewModelDelegate> delegate;
 
@@ -66,8 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
-
-- (BOOL)selectItem:(_Nullable id)itemToSelect;
 
 - (void)updateSection:(SectionIndex)sectionIndex;
 - (void)updateConversationListAnimated;
