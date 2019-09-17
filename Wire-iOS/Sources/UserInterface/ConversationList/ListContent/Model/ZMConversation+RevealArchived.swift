@@ -22,20 +22,19 @@ extension ZMConversation {
 
     @discardableResult
     func revealClearedOrArchived(userSession: (ZMUserSessionInterface & ZMManagedObjectContextProvider)? = ZMUserSession.shared(),
-                                 conversationListType: ConversationListType.Type = ZMConversationList.self,
                                  completionHandler: Completion?) -> Bool {
         var containedInOtherLists = false
 
         guard let userSession = userSession else { return containedInOtherLists }
 
-        if ZMConversationList.archivedConversations(inUserSession: userSession).contains(self) {
+        if userSession.archivedConversations.contains(self) {
             // Check if it's archived, this would mean that the archive is closed but we want to unarchive
             // and select the item
             containedInOtherLists = true
             userSession.enqueueChanges({
                 self.isArchived = false
             }, completionHandler: completionHandler)
-        } else if ZMConversationList.clearedConversations(inUserSession: userSession).contains(self) {
+        } else if userSession.clearedConversations.contains(self) {
             containedInOtherLists = true
             userSession.enqueueChanges({
                 self.revealClearedConversation()
@@ -45,5 +44,17 @@ extension ZMConversation {
         }
 
         return containedInOtherLists
+    }
+}
+
+extension ZMManagedObjectContextProvider {
+    
+    ///TODO: mv to DM for new interface
+    var archivedConversations: NSArray {
+        return ZMConversationList.archivedConversations(inUserSession: self)
+    }
+
+    var clearedConversations: NSArray {
+        return ZMConversationList.clearedConversations(inUserSession: self)
     }
 }
