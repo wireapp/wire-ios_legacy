@@ -19,12 +19,35 @@
 import Foundation
 
 @objc
-public protocol ZMUserSessionInterface: NSObjectProtocol {
+protocol ZMUserSessionInterface: NSObjectProtocol {
     func performChanges(_ block: @escaping () -> ())
     func enqueueChanges(_ block: @escaping () -> ())
     func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!)
 
     var isNotificationContentHidden : Bool { get set }
+    
+    func archivedConversationsContains(conversation: ZMConversation) -> Bool
+    func clearedConversationsContains(conversation: ZMConversation) -> Bool
 }
 
-extension ZMUserSession: ZMUserSessionInterface {}
+extension ZMUserSession: ZMUserSessionInterface {
+    func archivedConversationsContains(conversation: ZMConversation) -> Bool {
+        return archivedConversations.contains(conversation)
+    }
+    
+    func clearedConversationsContains(conversation: ZMConversation) -> Bool {
+        return clearedConversations.contains(conversation)
+    }
+}
+
+extension ZMManagedObjectContextProvider {
+    
+    ///TODO: mv to DM for new interface
+    var archivedConversations: NSArray {
+        return ZMConversationList.archivedConversations(inUserSession: self)
+    }
+    
+    var clearedConversations: NSArray {
+        return ZMConversationList.clearedConversations(inUserSession: self)
+    }
+}

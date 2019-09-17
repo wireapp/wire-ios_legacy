@@ -50,7 +50,7 @@ final class ZMConversationRevealTests: XCTestCase, CoreDataFixtureTestHelper {
 
         let expectation = self.expectation(description: "Wait for conversation is archived")
 
-        mockConversation.revealClearedOrArchived(userSession: mockUserSession, conversationListType: MockConversationList.self) {
+        mockConversation.revealClearedOrArchived(userSession: mockUserSession) {
             expectation.fulfill()
         }
 

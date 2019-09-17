@@ -34,14 +34,12 @@ final class MockZMUserSession: NSObject, ZMUserSessionInterface {
     }
 
     var isNotificationContentHidden: Bool = false
-}
 
-extension MockZMUserSession: ZMManagedObjectContextProvider {
-    var managedObjectContext: NSManagedObjectContext! {
-        return nil
+    func archivedConversationsContains(conversation: ZMConversation) -> Bool {
+        return true
     }
-
-    var syncManagedObjectContext: NSManagedObjectContext! {
-        return nil
+    
+    func clearedConversationsContains(conversation: ZMConversation) -> Bool {
+        return true
     }
 }
