@@ -67,4 +67,15 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
         XCTAssert(result)
     }
 
+    func testThatConversationIsUnArchivedAfterSelected() {
+        mockConversation = ZMConversation()
+
+        mockConversation.isArchived = true
+
+//        userSession.enqueueChanges({
+        let archivedListViewController = ArchivedListViewController()
+        sut.archivedListViewController(archivedListViewController, didSelectConversation: mockConversation)
+//        })
+    }
+
 }
