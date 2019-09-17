@@ -408,7 +408,7 @@
         dismissAction();
     }
     else {
-        [self minimizeCallOverlayWithCompletion:^{
+        [self minimizeCallOverlayWithAnimated:NO withCompletion:^{
             dismissAction();
         }];
     }

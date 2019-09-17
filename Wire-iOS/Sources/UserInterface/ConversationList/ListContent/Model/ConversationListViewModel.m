@@ -150,23 +150,8 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     // Couldn't find the item
     if (indexPath == nil && [itemToSelect isKindOfClass:[ZMConversation class]]) {
         ZMConversation *conversation = itemToSelect;
-        BOOL containedInOtherLists = NO;
-        
-        if ([[ZMConversationList archivedConversationsInUserSession:[ZMUserSession sharedSession]] containsObject:itemToSelect]) {
-            // Check if it's archived, this would mean that the archive is closed but we want to unarchive
-            // and select the item
-            containedInOtherLists = YES;
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                conversation.isArchived = NO;
-            } completionHandler:nil];
-        }
-        else if ([[ZMConversationList clearedConversationsInUserSession:[ZMUserSession sharedSession]] containsObject:itemToSelect]) {
-            containedInOtherLists = YES;
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [conversation revealClearedConversation];
-            } completionHandler:nil];
-        }
-        
+        BOOL containedInOtherLists = [conversation revealClearedOrArchivedWithCompletionHandler:nil];
+                
         if (containedInOtherLists) {
             self.selectedItem = itemToSelect;
             [self.delegate listViewModel:self didSelectItem:itemToSelect];
