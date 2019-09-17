@@ -20,6 +20,7 @@ import Foundation
 
 extension ZMConversation {
     @objc
+    @discardableResult
     func revealClearedOrArchived(completionHandler: Completion?) -> Bool {
         var containedInOtherLists = false
 
@@ -37,6 +38,8 @@ extension ZMConversation {
             userSession.enqueueChanges({
                 self.revealClearedConversation()
             }, completionHandler: completionHandler)
+        } else {
+            completionHandler?()
         }
 
         return containedInOtherLists
