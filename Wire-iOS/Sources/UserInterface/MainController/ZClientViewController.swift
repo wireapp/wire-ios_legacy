@@ -253,4 +253,10 @@ extension ZClientViewController {
         return (splitViewController.layoutSize == .regularLandscape) || (splitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
     }
 
+    @objc
+    func minimizeCallOverlay(animated: Bool,
+                             withCompletion completion: Completion?) {
+        AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+    }
+
 }
