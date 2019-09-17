@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Log out";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.password" = "Password";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Usage and Crash Reports";
