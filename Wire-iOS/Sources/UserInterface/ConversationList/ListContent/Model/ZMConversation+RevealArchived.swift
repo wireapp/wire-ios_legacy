@@ -19,12 +19,14 @@
 import Foundation
 
 extension ZMConversation {
-    @objc
+
     @discardableResult
-    func revealClearedOrArchived(completionHandler: Completion?) -> Bool {
+    func revealClearedOrArchived(userSession: (ZMUserSessionInterface & ZMManagedObjectContextProvider)? = ZMUserSession.shared(),
+                                 conversationListType: ConversationListType.Type = ZMConversationList.self,
+                                 completionHandler: Completion?) -> Bool {
         var containedInOtherLists = false
 
-        guard let userSession = ZMUserSession.shared() else { return containedInOtherLists }
+        guard let userSession = userSession else { return containedInOtherLists }
 
         if ZMConversationList.archivedConversations(inUserSession: userSession).contains(self) {
             // Check if it's archived, this would mean that the archive is closed but we want to unarchive

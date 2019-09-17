@@ -37,4 +37,6 @@ extension ZMConversationList: ConversationListType {
 
 protocol ConversationListType {
     static var hasArchivedConversations: Bool { get }
+    static func archivedConversations(inUserSession session: ZMManagedObjectContextProvider) -> ZMConversationList
+    static func clearedConversations(inUserSession session: ZMManagedObjectContextProvider) -> ZMConversationList
 }

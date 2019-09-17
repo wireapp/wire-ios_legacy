@@ -28,5 +28,20 @@ final class MockZMUserSession: NSObject, ZMUserSessionInterface {
         block()
     }
 
+    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!) {
+        block()
+        completionHandler()
+    }
+
     var isNotificationContentHidden: Bool = false
+}
+
+extension MockZMUserSession: ZMManagedObjectContextProvider {
+    var managedObjectContext: NSManagedObjectContext! {
+        return nil
+    }
+
+    var syncManagedObjectContext: NSManagedObjectContext! {
+        return nil
+    }
 }
