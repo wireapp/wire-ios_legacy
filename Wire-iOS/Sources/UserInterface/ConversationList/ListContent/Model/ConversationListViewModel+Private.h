@@ -16,6 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import "AggregateArray.h"
+
 @interface ConversationListViewModel ()
 @property (nonatomic) id<NSObject> selfUserObserver;
+@end
+
+@interface ConversationListViewModel () <ZMConversationListObserver, ZMConversationListReloadObserver>
+
+@property (nonatomic, strong) ConversationListConnectRequestsItem *contactRequestsItem;
+@property (nonatomic, strong) AggregateArray *aggregatedItems;
+@property (nonatomic, readwrite) id selectedItem;
+
+// Local copies of the lists.
+@property (nonatomic, copy) NSArray *inbox;
+@property (nonatomic, copy) NSArray *conversations;
+@property (nonatomic) id pendingConversationListObserverToken;
+@property (nonatomic) id conversationListObserverToken;
+@property (nonatomic) id clearedConversationListObserverToken;
+@property (nonatomic) id conversationListsReloadObserverToken;
+
 @end

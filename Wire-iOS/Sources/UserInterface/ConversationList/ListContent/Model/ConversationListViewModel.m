@@ -25,10 +25,8 @@
 void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 void debugLogUpdate (ConversationListChangeInfo *note);
 
-
-@implementation ConversationListConnectRequestsItem
+@implementation ConversationListConnectRequestsItem ///TODO: remove?
 @end
-
 
 
 @implementation ConversationListViewModel
