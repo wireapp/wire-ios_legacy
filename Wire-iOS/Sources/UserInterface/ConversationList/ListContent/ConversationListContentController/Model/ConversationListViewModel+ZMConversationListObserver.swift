@@ -81,9 +81,7 @@ extension ConversationListViewModel {
 
         ///TODO: use a dictionary instead of fix size array
         // Re-create the aggregate array
-        var sections = [Any](repeating: 0, count: 2) ///TODO: still need first section?
-        sections.append(inbox ?? [])
-        sections.append(conversations ?? [])
+        let sections: [Any] = [inbox, conversations]
 
         aggregatedItems = AggregateArray(sections: sections)
     }
