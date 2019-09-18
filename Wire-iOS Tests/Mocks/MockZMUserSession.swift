@@ -35,11 +35,14 @@ final class MockZMUserSession: NSObject, ZMUserSessionInterface {
 
     var isNotificationContentHidden: Bool = false
 
-    func archivedConversationsContains(conversation: ZMConversation) -> Bool {
-        return true
+    var mockArchivedConversations: [ZMConversation] = []
+    var mockClearedConversations: [ZMConversation] = []
+
+    var archivedConversations: [ZMConversation] {
+        return mockArchivedConversations
     }
-    
-    func clearedConversationsContains(conversation: ZMConversation) -> Bool {
-        return true
+
+    var clearedConversations: [ZMConversation] {
+        return mockClearedConversations
     }
 }
