@@ -27,14 +27,14 @@ extension ZMConversation {
 
         guard let userSession = userSession else { return containedInOtherLists }
 
-        if userSession.archivedConversationsContains(conversation: self) {
+        if userSession.archivedConversations.contains(self) {
             // Check if it's archived, this would mean that the archive is closed but we want to unarchive
             // and select the item
             containedInOtherLists = true
             userSession.enqueueChanges({
                 self.isArchived = false
             }, completionHandler: completionHandler)
-        } else if userSession.clearedConversationsContains(conversation: self) {
+        } else if userSession.clearedConversations.contains(self) {
             containedInOtherLists = true
             userSession.enqueueChanges({
                 self.revealClearedConversation()

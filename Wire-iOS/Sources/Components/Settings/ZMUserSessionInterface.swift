@@ -26,28 +26,18 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
 
     var isNotificationContentHidden : Bool { get set }
     
-    func archivedConversationsContains(conversation: ZMConversation) -> Bool
-    func clearedConversationsContains(conversation: ZMConversation) -> Bool
+    var archivedConversations: [ZMConversation] { get }
+    var clearedConversations: [ZMConversation] { get }
 }
 
+///TODO: mv to DM, refactor the logic and retire ZMConversationList.archivedConversations and similar methods
 extension ZMUserSession: ZMUserSessionInterface {
-    func archivedConversationsContains(conversation: ZMConversation) -> Bool {
-        return archivedConversations.contains(conversation)
-    }
-    
-    func clearedConversationsContains(conversation: ZMConversation) -> Bool {
-        return clearedConversations.contains(conversation)
-    }
-}
 
-extension ZMManagedObjectContextProvider {
-    
-    ///TODO: mv to DM for new interface
-    var archivedConversations: NSArray {
-        return ZMConversationList.archivedConversations(inUserSession: self)
+    var archivedConversations: [ZMConversation] {
+        return ZMConversationList.archivedConversations(inUserSession: self) as? [ZMConversation] ?? []
     }
-    
-    var clearedConversations: NSArray {
-        return ZMConversationList.clearedConversations(inUserSession: self)
+
+    var clearedConversations: [ZMConversation] {
+        return ZMConversationList.clearedConversations(inUserSession: self) as? [ZMConversation] ?? []
     }
 }
