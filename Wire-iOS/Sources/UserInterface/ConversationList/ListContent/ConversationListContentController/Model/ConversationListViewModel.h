@@ -61,8 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
 
-//- (void)updateSection:(SectionIndex)sectionIndex;
-- (void)updateConversationListAnimated;
 - (void)reloadConversationListViewModel;
 @end
 

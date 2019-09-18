@@ -23,14 +23,22 @@ enum SectionIndex: Int { ///TODO: with items as associated value, all has no ite
     case contactRequests = 0
 
      ///for self pending requests / conversations
-    case conversations = 1
+    case conversations = 2
 
     /// one on one conversations
-    case contactsConversations = 2
+    case contactsConversations = 1
 
-    case all = -1 ///TODO: invalid value
+    ///TODO:
+//    case customFolder(folder: FolderType)
+
+    case all = -1
 
     var uIntValue: UInt {
-        return UInt(self.rawValue)
+        switch self {
+        case .all:
+            return UInt.max
+        default:
+            return UInt(rawValue)
+        }
     }
 }

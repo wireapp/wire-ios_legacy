@@ -30,8 +30,12 @@
 @property (nonatomic, readwrite) id selectedItem;
 
 // Local copies of the lists.
+
+///TODO: [[Any]]
 @property (nonatomic, copy) NSArray *inbox;
 @property (nonatomic, copy) NSArray *conversations;
+@property (nonatomic, copy) NSArray *oneOnOneConversations;
+
 @property (nonatomic) id pendingConversationListObserverToken;
 @property (nonatomic) id conversationListObserverToken;
 @property (nonatomic) id clearedConversationListObserverToken;

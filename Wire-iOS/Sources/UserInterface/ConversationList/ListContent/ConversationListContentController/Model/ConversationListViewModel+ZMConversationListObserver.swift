@@ -34,7 +34,7 @@ extension ConversationListViewModel: ZMConversationListObserver {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
 
-            updateConversationListAnimated()
+            updateConversationListAnimated() ///TODO: update oneOneOne also
         } else if changeInfo.conversationList == ZMConversationList.pendingConnectionConversations(inUserSession: userSession) {
             log.info("RELOAD contact requests")
 
@@ -78,23 +78,27 @@ extension ConversationListViewModel {
             conversations = items ?? newConversationList()
         }
 
+        if sectionIndex == .contactsConversations {
+            oneOnOneConversations = items
+        }
+
 
         ///TODO: use a dictionary instead of fix size array
         // Re-create the aggregate array
-        let sections: [Any] = [inbox, conversations]
+        let sections: [Any] = [inbox ?? [],
+                               oneOnOneConversations ?? [],
+                               conversations ?? []]
 
         aggregatedItems = AggregateArray(sections: sections)
     }
 
     func updateConversationListAnimated() {
-        if numberOfItems(inSection: SectionIndex.conversations.uIntValue) == 0 {
+        if numberOfItems(inSection: SectionIndex.conversations.uIntValue) == 0 &&
+           numberOfItems(inSection: SectionIndex.contactsConversations.uIntValue) == 0 {
             reload()
         } else if let oldConversationList = aggregatedItems.section(at: SectionIndex.conversations.uIntValue) as? Array<AnyHashable>,
-            let newConversationList = newConversationList() as? Array<AnyHashable> {
-
-            if (oldConversationList == newConversationList) {
-                return
-            }
+            let newConversationList = newConversationList() as? Array<AnyHashable>,
+            oldConversationList != newConversationList {
 
             let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
             let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
@@ -114,8 +118,34 @@ extension ConversationListViewModel {
                     }
                 delegate?.listViewModel(self, didUpdateSection: SectionIndex.conversations.uIntValue, using: modelUpdates, with: changedIndexes)
             }
+        } else if let oldConversationList = aggregatedItems.section(at: SectionIndex.contactsConversations.uIntValue) as? [ZMConversation],
+            let newConversationList = newOneOnOneConversationList(),
+            oldConversationList != newConversationList {
+
+            let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
+            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
+            let updatedState = ZMOrderedSetState(orderedSet: [])
+
+            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return }
+
+            if changedIndexes.requiresReload == true {
+                reload()
+            } else {
+                // We need to capture the state of `newConversationList` to make sure that we are updating the value
+                // of the list to the exact new state.
+                // It is important to keep the data source of the collection view consistent, since
+                // any inconsistency in the delta update would make it throw an exception.
+                let modelUpdates = {
+                    self.updateSection(.contactsConversations, withItems: newConversationList)
+                }
+                delegate?.listViewModel(self, didUpdateSection: SectionIndex.contactsConversations.uIntValue, using: modelUpdates, with: changedIndexes)
+
+            }
         }
     }
 
+    func newOneOnOneConversationList() -> [ZMConversation]? {
+        return ZMUserSession.shared()?.oneOnOneConversations.map { $0 }
+    }
 
 }
