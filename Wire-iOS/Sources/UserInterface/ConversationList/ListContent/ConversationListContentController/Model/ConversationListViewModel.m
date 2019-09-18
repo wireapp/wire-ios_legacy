@@ -23,7 +23,6 @@
 #import "Wire-Swift.h"
 
 void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
-void debugLogUpdate (ConversationListChangeInfo *note);
 
 @implementation ConversationListConnectRequestsItem ///TODO: remove?
 @end
@@ -77,45 +76,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
                                                                             userSession:userSession];
 }
 
-/**
- * This updates a specific section in the model, by copying the contents locally.
- * Passing in a value of SectionIndexAll updates all sections. The reason why we need to keep
- * local copies of the lists is that we get separate notifications for each list, 
- * which means that an update to one can render the collection view out of sync with the datasource.
- */
-- (void)updateSection:(SectionIndex)sectionIndex
-{
-    [self updateSection:sectionIndex withItems:nil];
-}
-
-- (void)updateSection:(SectionIndex)sectionIndex withItems:(NSArray *)items
-{
-    if (sectionIndex == SectionIndexAll && items != nil) {
-        NSAssert(true, @"Update for all sections with proposed items is not allowed.");
-    }
-    
-    if (sectionIndex == SectionIndexContactRequests || sectionIndex == SectionIndexAll) {
-        if ([ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]].count > 0) {
-            self.inbox = items ?: @[self.contactRequestsItem];
-        }
-        else {
-            self.inbox = @[];
-        }
-    }
-
-    if (sectionIndex == SectionIndexConversations || sectionIndex == SectionIndexAll) {
-        // Make a new copy of the conversation list
-        self.conversations = items ? : [self newConversationList];
-    }
-    
-    
-    // Re-create the aggregate array
-    NSMutableArray *sections = [NSMutableArray arrayWithCapacity:2];
-    [sections addObject:self.inbox];
-    [sections addObject:self.conversations != nil ? self.conversations : @[]];
-    
-    self.aggregatedItems = [AggregateArray aggregateArrayWithSections:sections];
-}
 
 - (NSUInteger)sectionCount
 {
@@ -168,22 +128,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     return result;
 }
 
-- (void)conversationListDidChange:(ConversationListChangeInfo *)change
-{
-    debugLogUpdate(change);
-    
-    if (change.conversationList == [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]]) {
-        // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
-        // so we prefer to do the simple reload instead.
-
-        [self updateConversationListAnimated];
-    } else if (change.conversationList == [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]]) {
-        debugLog(@"RELOAD contact requests");
-        [self updateSection:SectionIndexContactRequests];
-        [self.delegate listViewModel:self didUpdateSectionForReload:SectionIndexContactRequests];
-    }
-}
-
 - (NSArray *)newConversationList
 {
     return [[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]] copy];
@@ -234,13 +178,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
 - (void)conversationListsDidReload
 {
     [self reloadConversationListViewModel];
-}
-
-- (void)conversationInsideList:(ZMConversationList *)list didChange:(ConversationChangeInfo *)changeInfo;
-{
-    if ([self.delegate respondsToSelector:@selector(listViewModel:didUpdateConversationWithChange:)]) {
-        [self.delegate listViewModel:self didUpdateConversationWithChange:changeInfo];
-    }
 }
 
 @end
@@ -344,27 +281,5 @@ void debugLog(NSString *format, ...)
         va_start(args, format);
         NSLogv(format, args);
         va_end(args);
-    }
-}
-
-void debugLogUpdate (ConversationListChangeInfo *change)
-{
-    if (DEBUG && 0) {
-        
-        NSUInteger __block movedCount = 0;
-        [change enumerateMovedIndexes:^(NSInteger from, NSInteger to) {
-            movedCount++;
-        }];
-        
-        debugLog(@"update for list %p (update=%p) (conv=%p, archive=%p, pending=%p), (delete=%lu, insert=%lu, move=%lu, upd=%lu)",
-                 change.conversationList,
-                 change,
-                 [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]],
-                 [ZMConversationList archivedConversationsInUserSession:[ZMUserSession sharedSession]],
-                 [ZMConversationList pendingConnectionConversationsInUserSession:[ZMUserSession sharedSession]],
-                 (unsigned long)change.deletedIndexes.count,
-                 (unsigned long)change.insertedIndexes.count,
-                 (unsigned long)movedCount,
-                 (unsigned long)change.updatedIndexes.count);
     }
 }

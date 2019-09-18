@@ -30,6 +30,7 @@ extension ConversationListViewModel {
     }
 
     @objc(selectItem:)
+    @discardableResult
     func select(itemToSelect: Any?) -> Bool {
         guard let itemToSelect = itemToSelect else {
             selectedItem = nil
@@ -61,7 +62,6 @@ extension ConversationListViewModel {
 
         return true
     }
-
 }
 
 

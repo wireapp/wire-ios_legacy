@@ -20,9 +20,10 @@
 
 @interface ConversationListViewModel ()
 @property (nonatomic) id<NSObject> selfUserObserver;
+- (NSArray *)newConversationList;
 @end
 
-@interface ConversationListViewModel () <ZMConversationListObserver, ZMConversationListReloadObserver>
+@interface ConversationListViewModel () <ZMConversationListReloadObserver>
 
 @property (nonatomic, strong) ConversationListConnectRequestsItem *contactRequestsItem;
 @property (nonatomic, strong) AggregateArray *aggregatedItems;

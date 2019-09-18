@@ -1101,6 +1101,8 @@
 		EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */; };
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */; };
+		EF26EBDB23324838001EB65A /* SectionIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF26EBDA23324838001EB65A /* SectionIndex.swift */; };
+		EF26EBDD23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF26EBDC23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift */; };
 		EF27CD9E20C161500077FE55 /* ProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9B20C161500077FE55 /* ProfileViewControllerTests.swift */; };
 		EF27CD9F20C161500077FE55 /* ProfileClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */; };
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
@@ -2900,6 +2902,8 @@
 		EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathLoadingBar.swift; sourceTree = "<group>"; };
+		EF26EBDA23324838001EB65A /* SectionIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionIndex.swift; sourceTree = "<group>"; };
+		EF26EBDC23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewModel+ZMConversationListObserver.swift"; sourceTree = "<group>"; };
 		EF27CD9B20C161500077FE55 /* ProfileViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerTests.swift; sourceTree = "<group>"; };
 		EF27CD9C20C161500077FE55 /* ProfileClientViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientListViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5126,7 +5130,7 @@
 		8F8913E91A9F287E0056AB0C /* ListContent */ = {
 			isa = PBXGroup;
 			children = (
-				8F8914061A9F287E0056AB0C /* Model */,
+				EF26EBD923322EAD001EB65A /* ConversationListContentController */,
 				8F8913EA1A9F287E0056AB0C /* ConnectRequestsCell.swift */,
 				EFDB3134217F5E0300D2A7CE /* ConversationListCell+Internal.h */,
 				8F8913F11A9F287E0056AB0C /* ConversationListCell.h */,
@@ -5141,10 +5145,6 @@
 				EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */,
 				877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */,
 				877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */,
-				8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */,
-				EFEE97CB23229EBC007A4702 /* ConversationListContentController+Internal.h */,
-				8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */,
-				EF1C7F0C232BC7A200F5DB5B /* ConversationListContentController+ConversationListCellDelegate.swift */,
 				EFEE97C523229768007A4702 /* ConversationListContentDelegate.swift */,
 				EF1DF674230E8D2000128BB8 /* ConversationListContentController+ActiveMediaPlayerObserver.swift */,
 				BAEF10F81B8C8849005BFA48 /* AnimatedListMenuView.h */,
@@ -5162,8 +5162,10 @@
 				8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */,
 				875F15C91ED5BDFC008E9A6D /* ConversationListViewModel+Private.h */,
 				8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */,
+				EF26EBDC23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift */,
 				870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */,
 				EF57D40523312DA600D354D0 /* ZMConversation+RevealArchived.swift */,
+				EF26EBDA23324838001EB65A /* SectionIndex.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6315,6 +6317,18 @@
 			path = NetworkStatusView;
 			sourceTree = "<group>";
 		};
+		EF26EBD923322EAD001EB65A /* ConversationListContentController */ = {
+			isa = PBXGroup;
+			children = (
+				8F8914061A9F287E0056AB0C /* Model */,
+				8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */,
+				EFEE97CB23229EBC007A4702 /* ConversationListContentController+Internal.h */,
+				8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */,
+				EF1C7F0C232BC7A200F5DB5B /* ConversationListContentController+ConversationListCellDelegate.swift */,
+			);
+			path = ConversationListContentController;
+			sourceTree = "<group>";
+		};
 		EF27CD9A20C161500077FE55 /* DeviceManagement */ = {
 			isa = PBXGroup;
 			children = (
@@ -7322,6 +7336,7 @@
 				1648EEF32049A6F800CC6B37 /* DirectorySectionController.swift in Sources */,
 				5E9E8A9D21621FEC0058D6E1 /* AuthenticationActioner.swift in Sources */,
 				BF8EE5561D62FBCD00B0D6D7 /* ConversationInputBarViewController+Editing.swift in Sources */,
+				EF26EBDB23324838001EB65A /* SectionIndex.swift in Sources */,
 				16A94AEF2099DFEC008A5718 /* CallParticipantsViewController.swift in Sources */,
 				F15650E121DD11CA00210504 /* SpinnerSubtitleView.swift in Sources */,
 				160D691C212AC94100096EAD /* ImageResource.swift in Sources */,
@@ -7879,6 +7894,7 @@
 				870815881BF4EAD100D321BC /* SettingsTableViewController.swift in Sources */,
 				5E21344B21E351D400273D0D /* LogInStepDescription.swift in Sources */,
 				EF3CB75521DD157B0030C3E8 /* ProfileViewController+Extension.swift in Sources */,
+				EF26EBDD23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift in Sources */,
 				F16426FE1FCC5A2C00D2ABFC /* AuthenticationStepDescription.swift in Sources */,
 				87D56DFA1E0046FE00DFF722 /* CollectionImageCell.swift in Sources */,
 				8750B1CB2124236200B807A9 /* InviteButton.swift in Sources */,

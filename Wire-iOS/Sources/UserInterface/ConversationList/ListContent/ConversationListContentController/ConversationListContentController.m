@@ -230,7 +230,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         [self updateCellForConversation:change.conversation];
     }
-}
+}///TODO: mv logic to VM
 
 - (void)updateVisibleCells
 {
@@ -253,7 +253,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
@@ -265,7 +265,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     // Tell the model to select the item
     return [self selectModelItem:conversation];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus
 {
@@ -378,13 +378,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     NSInteger sections = self.listViewModel.sectionCount;
-    return sections;
+    return sections;///2
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger c = [self.listViewModel numberOfItemsInSection:section];
-    return c;
+    return c;/// section 0 is 0, section 1 is 45
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath

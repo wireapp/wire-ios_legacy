@@ -24,12 +24,6 @@
 @class ConversationListViewModel;
 @class ConversationListConnectRequestsItem;
 
-typedef NS_ENUM(NSUInteger, SectionIndex) {
-    SectionIndexContactRequests = 0,
-    SectionIndexConversations = 1,
-    SectionIndexAll = INT_MAX,
-};
-
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ConversationListViewModelDelegate <NSObject>
@@ -67,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
 
-- (void)updateSection:(SectionIndex)sectionIndex;
+//- (void)updateSection:(SectionIndex)sectionIndex;
 - (void)updateConversationListAnimated;
 - (void)reloadConversationListViewModel;
 @end
