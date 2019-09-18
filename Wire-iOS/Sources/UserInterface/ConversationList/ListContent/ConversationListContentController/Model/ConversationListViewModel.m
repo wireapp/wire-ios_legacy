@@ -133,39 +133,6 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
     return [[ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]] copy];
 }
 
-- (void)updateConversationListAnimated
-{
-    if ([self numberOfItemsInSection:SectionIndexConversations] == 0) {
-        [self reloadConversationListViewModel];
-    } else {
-        NSArray *oldConversationList = [self.aggregatedItems sectionAtIndex:SectionIndexConversations];
-        NSArray *newConversationList = [self newConversationList];
-        if ([oldConversationList isEqualToArray:newConversationList]) {
-            return;
-        }
-        
-        ZMOrderedSetState *startState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:oldConversationList]];
-        ZMOrderedSetState *endState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSetWithArray:newConversationList]];
-        ZMOrderedSetState *updatedState = [[ZMOrderedSetState alloc] initWithOrderedSet:[NSOrderedSet orderedSet]];
-        
-        ZMChangedIndexes *changedIndexes = [[ZMChangedIndexes alloc] initWithStartState:startState
-                                                                               endState:endState
-                                                                           updatedState:updatedState
-                                                                               moveType:ZMSetChangeMoveTypeUICollectionView];
-        
-        if (changedIndexes.requiresReload) {
-            [self reloadConversationListViewModel];
-        } else {
-            // We need to capture the state of `newConversationList` to make sure that we are updating the value
-            // of the list to the exact new state.
-            // It is important to keep the data source of the collection view consistent, since
-            // any inconsistency in the delta update would make it throw an exception.
-            dispatch_block_t modelUpdates = ^{ [self updateSection:SectionIndexConversations
-                                                         withItems:newConversationList]; };
-            [self.delegate listViewModel:self didUpdateSection:SectionIndexConversations usingBlock:modelUpdates withChangedIndexes:changedIndexes];
-        }
-    }
-}
 
 - (void)reloadConversationListViewModel
 {

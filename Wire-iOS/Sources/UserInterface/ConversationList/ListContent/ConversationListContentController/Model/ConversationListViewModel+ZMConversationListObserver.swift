@@ -28,6 +28,8 @@ extension ConversationListViewModel: ZMConversationListObserver {
 
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         guard let userSession = ZMUserSession.shared() else { return }
+
+        ///TODO: check the info instead of compare the lists
         if changeInfo.conversationList == ZMConversationList.conversations(inUserSession: userSession) {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
@@ -35,8 +37,11 @@ extension ConversationListViewModel: ZMConversationListObserver {
             updateConversationListAnimated()
         } else if changeInfo.conversationList == ZMConversationList.pendingConnectionConversations(inUserSession: userSession) {
             log.info("RELOAD contact requests")
-            updateSection(.contactRequests)
-            delegate.listViewModel(self, didUpdateSectionForReload: UInt(.contactRequests))
+
+            let sectionIndex = .contactRequests
+            updateSection(sectionIndex)
+
+            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex.uIntValue)
         }
     }
 }
@@ -53,7 +58,7 @@ extension ConversationListViewModel {
         updateSection(sectionIndex, withItems: nil)
     }
 
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [AnyHashable]?) {
+    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]?) {
         if sectionIndex == .all && items != nil {
             assert(true, "Update for all sections with proposed items is not allowed.")
         }
@@ -81,4 +86,37 @@ extension ConversationListViewModel {
 
         aggregatedItems = AggregateArray(sections: sections)
     }
+
+    func updateConversationListAnimated() {
+        if numberOfItems(inSection: SectionIndex.conversations.uIntValue) == 0 {
+            reload()
+        } else if let oldConversationList = aggregatedItems.section(at: SectionIndex.conversations.uIntValue) as? Array<AnyHashable>,
+            let newConversationList = newConversationList() as? Array<AnyHashable> {
+
+            if (oldConversationList == newConversationList) {
+                return
+            }
+
+            let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
+            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
+            let updatedState = ZMOrderedSetState(orderedSet: [])
+
+            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return }
+
+            if changedIndexes.requiresReload == true {
+                reload()
+            } else {
+                // We need to capture the state of `newConversationList` to make sure that we are updating the value
+                // of the list to the exact new state.
+                // It is important to keep the data source of the collection view consistent, since
+                // any inconsistency in the delta update would make it throw an exception.
+                let modelUpdates = {
+                    self.updateSection(.conversations, withItems: newConversationList)
+                    }
+                delegate?.listViewModel(self, didUpdateSection: SectionIndex.conversations.uIntValue, using: modelUpdates, with: changedIndexes)
+            }
+        }
+    }
+
+
 }

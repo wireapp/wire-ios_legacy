@@ -29,4 +29,8 @@ enum SectionIndex: Int { ///TODO: with items as associated value, all has no ite
     case contactsConversations = 2
 
     case all = -1 ///TODO: invalid value
+
+    var uIntValue: UInt {
+        return UInt(self.rawValue)
+    }
 }
