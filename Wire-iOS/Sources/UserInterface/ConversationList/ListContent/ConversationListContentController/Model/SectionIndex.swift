@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum SectionIndex: Int { ///TODO: with items as associated value, all has no items
+enum SectionIndex: Int, CaseIterable { ///TODO: with items as associated value, all has no items
     ///for incoming requests
     case contactRequests = 0
 
@@ -31,12 +31,12 @@ enum SectionIndex: Int { ///TODO: with items as associated value, all has no ite
     ///TODO:
 //    case customFolder(folder: FolderType)
 
-    case all = -1
+//    case all = -1
 
     var uIntValue: UInt {
         switch self {
-        case .all:
-            return UInt.max
+//        case .all:
+//            return UInt.max
         default:
             return UInt(rawValue)
         }

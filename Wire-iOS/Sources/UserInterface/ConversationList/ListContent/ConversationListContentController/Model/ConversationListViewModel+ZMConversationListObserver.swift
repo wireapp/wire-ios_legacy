@@ -49,8 +49,13 @@ extension ConversationListViewModel: ZMConversationListObserver {
 
 extension ConversationListViewModel {
 
-    @objc func updateAllSections() {
-        updateSection(.all)
+    @objc
+    func updateAllSections() {
+        updateSection(sectionIndexs: SectionIndex.allCases)
+    }
+
+    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]? = nil) {
+        updateSection(sectionIndexs: [sectionIndex], withItems: items)
     }
 
     /// This updates a specific section in the model, by copying the contents locally.
@@ -59,27 +64,25 @@ extension ConversationListViewModel {
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
     /// - Parameter sectionIndex: the section to update
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]? = nil) {
-        if sectionIndex == .all && items != nil {
+    func updateSection(sectionIndexs: [SectionIndex], withItems items: [Any]? = nil) {
+        if sectionIndexs == SectionIndex.allCases && items != nil {
             assert(true, "Update for all sections with proposed items is not allowed.")
         }
 
-        ///TODO: switch
-        if sectionIndex == .contactRequests || sectionIndex == .all {
-            if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                inbox = items ?? [contactRequestsItem]
-            } else {
-                inbox = []
+        for sectionIndex in sectionIndexs {
+            switch sectionIndex {
+            case .contactRequests:
+                if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
+                    inbox = items ?? [self.contactRequestsItem]
+                } else {
+                    inbox = []
+                }
+            case .conversations:
+                // Make a new copy of the conversation list
+                conversations = items ?? newConversationList()
+            case .contactsConversations:
+                oneOnOneConversations = items ?? newOneOnOneConversationList()
             }
-        }
-
-        if sectionIndex == .conversations || sectionIndex == .all {
-            // Make a new copy of the conversation list
-            conversations = items ?? newConversationList()
-        }
-
-        if sectionIndex == .contactsConversations {
-            oneOnOneConversations = items
         }
 
 
