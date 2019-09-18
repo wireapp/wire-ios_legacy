@@ -36,7 +36,7 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
     if (self) {
         self.contactRequestsItem = [[ConversationListConnectRequestsItem alloc] init];
 
-        [self updateSection:SectionIndexAll];
+        [self updateAllSections];
         [self setupObserversForListReloading];
         [self setupObserversForActiveTeam];
         [self subscribeToTeamsUpdates];
@@ -136,7 +136,7 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 
 - (void)reloadConversationListViewModel
 {
-    [self updateSection:SectionIndexAll];
+    [self updateAllSections];
     [self setupObserversForActiveTeam];
     debugLog(@"RELOAD conversation list");
     [self.delegate listViewModelShouldBeReloaded];

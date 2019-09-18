@@ -38,7 +38,7 @@ extension ConversationListViewModel: ZMConversationListObserver {
         } else if changeInfo.conversationList == ZMConversationList.pendingConnectionConversations(inUserSession: userSession) {
             log.info("RELOAD contact requests")
 
-            let sectionIndex = .contactRequests
+            let sectionIndex = SectionIndex.contactRequests
             updateSection(sectionIndex)
 
             delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex.uIntValue)
@@ -48,17 +48,18 @@ extension ConversationListViewModel: ZMConversationListObserver {
 
 
 extension ConversationListViewModel {
+
+    @objc func updateAllSections() {
+        updateSection(.all)
+    }
+
     /// This updates a specific section in the model, by copying the contents locally.
     /// Passing in a value of SectionIndexAll updates all sections. The reason why we need to keep
     /// local copies of the lists is that we get separate notifications for each list,
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
     /// - Parameter sectionIndex: the section to update
-    func updateSection(_ sectionIndex: SectionIndex) {
-        updateSection(sectionIndex, withItems: nil)
-    }
-
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]?) {
+    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]? = nil) {
         if sectionIndex == .all && items != nil {
             assert(true, "Update for all sections with proposed items is not allowed.")
         }
