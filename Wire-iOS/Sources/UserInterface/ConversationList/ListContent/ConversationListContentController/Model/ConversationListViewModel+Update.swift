@@ -150,7 +150,7 @@ extension ConversationListViewModel {
             let containedInOtherLists = conversation.revealClearedOrArchived(userSession: ZMUserSession.shared(), completionHandler: nil)
 
             if containedInOtherLists {
-                selectedItem = itemToSelect as? UITabBarItem
+                selectedItem = itemToSelect
                 delegate?.listViewModel(self, didSelectItem: itemToSelect)
 
                 return true
