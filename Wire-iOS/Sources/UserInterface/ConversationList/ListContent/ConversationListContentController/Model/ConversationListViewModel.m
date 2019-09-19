@@ -34,6 +34,8 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 {
     self = [super init];
     if (self) {
+        self.isFolderEnable = true;
+
         self.contactRequestsItem = [[ConversationListConnectRequestsItem alloc] init];
 
         [self updateAllSections];
@@ -141,6 +143,8 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
     debugLog(@"RELOAD conversation list");
     [self.delegate listViewModelShouldBeReloaded];
 }
+
+
 
 - (void)conversationListsDidReload
 {

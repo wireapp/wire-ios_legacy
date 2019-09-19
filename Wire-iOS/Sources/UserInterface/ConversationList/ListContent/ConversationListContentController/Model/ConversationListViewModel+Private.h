@@ -20,6 +20,9 @@
 
 @interface ConversationListViewModel ()
 @property (nonatomic) id<NSObject> selfUserObserver;
+
+@property (nonatomic) Boolean isFolderEnable;
+
 - (NSArray *)newConversationList;
 @end
 

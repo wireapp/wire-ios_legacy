@@ -18,22 +18,30 @@
 
 import Foundation
 
-enum SectionIndex: Int, CaseIterable { ///TODO: with items as associated value, all has no items
+enum SectionIndex: CaseIterable { ///TODO: with items as associated value, all has no items
     ///for incoming requests
-    case contactRequests = 0
+    case contactRequests
 
      ///for self pending requests / conversations
-    case conversations = 2
+    case conversations
 
     /// one on one conversations
-    case contactsConversations = 1
+    case contactsConversations
 
     ///TODO: one more group convo
 
     ///TODO:
 //    case customFolder(folder: FolderType)
 
-    var uIntValue: UInt {
-        return UInt(rawValue)
+    func sectionNumber(isFolderEnable: Bool) -> UInt {
+        switch self {
+        case .contactRequests:
+            return 0
+        case .conversations:
+            return isFolderEnable ? 2 : 1 ///only section when no folder
+        case .contactsConversations:
+            /// not visible when folder disabled
+            return isFolderEnable ? 1 : UInt.max
+        }
     }
 }
