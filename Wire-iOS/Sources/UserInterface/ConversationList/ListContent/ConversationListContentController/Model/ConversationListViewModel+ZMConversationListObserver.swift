@@ -95,11 +95,9 @@ extension ConversationListViewModel {
         aggregatedItems = AggregateArray(sections: sections)
     }
 
-    func updateConversationListAnimated() {
-        if numberOfItems(inSection: SectionIndex.conversations.uIntValue) == 0 &&
-           numberOfItems(inSection: SectionIndex.contactsConversations.uIntValue) == 0 {
-            reload()
-        } else if let oldConversationList = aggregatedItems.section(at: SectionIndex.conversations.uIntValue) as? Array<AnyHashable>,
+    @discardableResult
+    func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
+        if let oldConversationList = aggregatedItems.section(at: sectionIndex.uIntValue) as? Array<AnyHashable>,
             let newConversationList = newConversationList() as? Array<AnyHashable>,
             oldConversationList != newConversationList {
 
@@ -107,7 +105,7 @@ extension ConversationListViewModel {
             let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
             let updatedState = ZMOrderedSetState(orderedSet: [])
 
-            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return }
+            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return true}
 
             if changedIndexes.requiresReload == true {
                 reload()
@@ -117,33 +115,23 @@ extension ConversationListViewModel {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(.conversations, withItems: newConversationList)
-                    }
-                delegate?.listViewModel(self, didUpdateSection: SectionIndex.conversations.uIntValue, using: modelUpdates, with: changedIndexes)
-            }
-        } else if let oldConversationList = aggregatedItems.section(at: SectionIndex.contactsConversations.uIntValue) as? [ZMConversation],
-            let newConversationList = newOneOnOneConversationList(),
-            oldConversationList != newConversationList {
-
-            let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
-            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
-            let updatedState = ZMOrderedSetState(orderedSet: [])
-
-            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return }
-
-            if changedIndexes.requiresReload == true {
-                reload()
-            } else {
-                // We need to capture the state of `newConversationList` to make sure that we are updating the value
-                // of the list to the exact new state.
-                // It is important to keep the data source of the collection view consistent, since
-                // any inconsistency in the delta update would make it throw an exception.
-                let modelUpdates = {
-                    self.updateSection(.contactsConversations, withItems: newConversationList)
+                    self.updateSection(sectionIndex, withItems: newConversationList)
                 }
-                delegate?.listViewModel(self, didUpdateSection: SectionIndex.contactsConversations.uIntValue, using: modelUpdates, with: changedIndexes)
-
+                delegate?.listViewModel(self, didUpdateSection: sectionIndex.uIntValue, using: modelUpdates, with: changedIndexes)
             }
+
+            return true
+        }
+
+        return false
+    }
+
+    func updateConversationListAnimated() {
+        if numberOfItems(inSection: SectionIndex.conversations.uIntValue) == 0 &&
+           numberOfItems(inSection: SectionIndex.contactsConversations.uIntValue) == 0 {
+            reload()
+        } else if !updateForConvoType(sectionIndex: .conversations) {
+            updateForConvoType(sectionIndex: .contactsConversations)
         }
     }
 

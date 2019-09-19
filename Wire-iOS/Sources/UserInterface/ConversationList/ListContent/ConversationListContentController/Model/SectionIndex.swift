@@ -28,17 +28,12 @@ enum SectionIndex: Int, CaseIterable { ///TODO: with items as associated value, 
     /// one on one conversations
     case contactsConversations = 1
 
+    ///TODO: one more group convo
+
     ///TODO:
 //    case customFolder(folder: FolderType)
 
-//    case all = -1
-
     var uIntValue: UInt {
-        switch self {
-//        case .all:
-//            return UInt.max
-        default:
-            return UInt(rawValue)
-        }
+        return UInt(rawValue)
     }
 }
