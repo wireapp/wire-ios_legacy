@@ -46,38 +46,6 @@ void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
     return self;
 }
 
-- (void)setupObserversForListReloading
-{
-    ZMUserSession *userSession = [ZMUserSession sharedSession];
-    
-    if (userSession == nil) {
-        return;
-    }
-    
-    self.conversationListsReloadObserverToken = [ConversationListChangeInfo addConversationListReloadObserver:self userSession:userSession];
-}
-
-- (void)setupObserversForActiveTeam
-{
-    ZMUserSession *userSession = [ZMUserSession sharedSession];
-    
-    if (userSession == nil) {
-        return;
-    }
-    
-    self.pendingConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList pendingConnectionConversationsInUserSession:userSession]
-                                                                            userSession:userSession];
-    
-    self.conversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                         forList:[ZMConversationList conversationsInUserSession:userSession]
-                                                                     userSession:userSession];
-    
-    self.clearedConversationListObserverToken = [ConversationListChangeInfo addObserver:self
-                                                                                forList:[ZMConversationList clearedConversationsInUserSession:userSession]
-                                                                            userSession:userSession];
-}
-
 
 - (NSUInteger)sectionCount
 {

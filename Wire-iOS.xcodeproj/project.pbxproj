@@ -1173,6 +1173,7 @@
 		EF4018C02059761D00CFBCB0 /* MockApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4018BF2059761D00CFBCB0 /* MockApplication.swift */; };
 		EF40353122609D6C001A3568 /* MarkDownSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF40353022609D6C001A3568 /* MarkDownSnapshotTests.swift */; };
 		EF4172AF210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */; };
+		EF4265892333BA7600DDAD0A /* ConversationListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4265882333BA7500DDAD0A /* ConversationListViewModel.swift */; };
 		EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */; };
 		EF4478522090BF8700BD9827 /* FullscreenImageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */; };
 		EF44C6A42215861F007C5CDC /* MockUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D553661C86F0450026573C /* MockUserClient.swift */; };
@@ -2978,6 +2979,7 @@
 		EF4018BF2059761D00CFBCB0 /* MockApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockApplication.swift; sourceTree = "<group>"; };
 		EF40353022609D6C001A3568 /* MarkDownSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkDownSnapshotTests.swift; sourceTree = "<group>"; };
 		EF4172AE210F5E9F00FF85C7 /* FullscreenImageViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		EF4265882333BA7500DDAD0A /* ConversationListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModel.swift; sourceTree = "<group>"; };
 		EF44784E20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+Zoom.swift"; sourceTree = "<group>"; };
 		EF4478502090BC1800BD9827 /* FullscreenImageViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+internal.h"; sourceTree = "<group>"; };
 		EF4478512090BF8700BD9827 /* FullscreenImageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewControllerTests.swift; sourceTree = "<group>"; };
@@ -5167,12 +5169,12 @@
 				8F89140B1A9F287E0056AB0C /* ConversationListViewModel.h */,
 				875F15C91ED5BDFC008E9A6D /* ConversationListViewModel+Private.h */,
 				8F89140C1A9F287E0056AB0C /* ConversationListViewModel.m */,
+				EF4265882333BA7500DDAD0A /* ConversationListViewModel.swift */,
 				EF2FF5E7233381C100F86A24 /* ConversationListViewModel+Update.swift */,
 				EF26EBDC23324CBB001EB65A /* ConversationListViewModel+ZMConversationListObserver.swift */,
-				870C926E1E8D1C7300A10995 /* ConversationListViewModel+ZMUserObserver.swift */,
 				EF57D40523312DA600D354D0 /* ZMConversation+RevealArchived.swift */,
 				EF26EBDA23324838001EB65A /* SectionIndex.swift */,
-				870C926E1E8D1C7300A10995 /* ConversationListViewModel+Teams.swift */,
+				870C926E1E8D1C7300A10995 /* ConversationListViewModel+ZMUserObserver.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -7316,6 +7318,7 @@
 				D5168F2A2008F3EF00F8222A /* UIEdgeInsets+Adjusting.swift in Sources */,
 				BFE4185D209B06D600503C7C /* AVSMediaManager+Helper.swift in Sources */,
 				5E4BC1CC218CA94D00A8682E /* ZMConversationMessage+Date.swift in Sources */,
+				EF4265892333BA7600DDAD0A /* ConversationListViewModel.swift in Sources */,
 				5E1D74C32266221800AD1F32 /* AccentColorProvider.swift in Sources */,
 				5E3FB06E206BC7B40075E910 /* Tab.swift in Sources */,
 				D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */,
