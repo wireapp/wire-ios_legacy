@@ -1,4 +1,4 @@
-//
+
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,16 +18,14 @@
 
 import Foundation
 
-@objc
-protocol ZMUserSessionInterface: NSObjectProtocol {
-    func performChanges(_ block: @escaping () -> ())
-    func enqueueChanges(_ block: @escaping () -> ())
-    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!)
+extension ZMConversation {
 
-    var isNotificationContentHidden : Bool { get set }
-    
-    var archivedConversations: [ZMConversation] { get }
-    var clearedConversations: [ZMConversation] { get }
+    func unarchive(userSession: ZMUserSessionInterface? = ZMUserSession.shared(),
+                                 completionHandler: Completion? = nil) {
+        guard let userSession = userSession else { return }
+
+        userSession.enqueueChanges({
+            self.isArchived = false
+        }, completionHandler: completionHandler)
+    }
 }
-
-extension ZMUserSession: ZMUserSessionInterface {}

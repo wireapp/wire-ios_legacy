@@ -55,8 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
 - (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
 
-- (id<NSObject>)itemForIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathForItem:(id<NSObject>)item;
+- (id<NSObject> _Nullable)itemForIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath * _Nullable)indexPathForItem:(id<NSObject>)item;
 
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
