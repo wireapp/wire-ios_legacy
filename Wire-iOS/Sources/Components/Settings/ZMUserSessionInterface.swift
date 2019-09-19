@@ -25,9 +25,6 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
     func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!)
 
     var isNotificationContentHidden : Bool { get set }
-    
-    var archivedConversations: [ZMConversation] { get }
-    var clearedConversations: [ZMConversation] { get }
 }
 
 extension ZMUserSession: ZMUserSessionInterface {}

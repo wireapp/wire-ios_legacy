@@ -141,25 +141,12 @@ extension ConversationListViewModel {
             return false
         }
 
-        let indexPath: IndexPath? = self.indexPath(forItem: itemToSelect as! NSObjectProtocol)
-
         // Couldn't find the item
-        if indexPath == nil,
-            let conversation = itemToSelect as? ZMConversation {
-
-            let containedInOtherLists = conversation.revealClearedOrArchived(userSession: ZMUserSession.shared(), completionHandler: nil)
-
-            if containedInOtherLists {
-                selectedItem = itemToSelect
-                delegate?.listViewModel(self, didSelectItem: itemToSelect)
-
-                return true
-            }
-
-            return false
+        if self.indexPath(forItem: itemToSelect as! NSObject) == nil {
+            (itemToSelect as? ZMConversation)?.unarchive()
         }
 
-        selectedItem = itemToSelect as? UITabBarItem
+        selectedItem = itemToSelect
         delegate?.listViewModel(self, didSelectItem: itemToSelect)
 
         return true
