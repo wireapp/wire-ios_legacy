@@ -65,14 +65,4 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-//@interface ConversationListViewModel (Convenience)
-//
-//// Search for previous items
-//- (NSIndexPath *)itemPreviousToIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
-//
-//// Search for next items
-//- (NSIndexPath *)itemAfterIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
-//
-//@end
-
 NS_ASSUME_NONNULL_END

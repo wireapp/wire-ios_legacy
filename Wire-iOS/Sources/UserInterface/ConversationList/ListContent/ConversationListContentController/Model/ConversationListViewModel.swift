@@ -105,7 +105,11 @@ extension ConversationListViewModel {
         reload()
     }
 
-    // Select the item at an index path
+    /// Select the item at an index path
+    ///
+    /// - Parameter indexPath: <#indexPath description#>
+    /// - Returns: <#return value description#>
+    @objc(selectItemAtIndexPath:)
     func selectItem(at indexPath: IndexPath?) -> Any? {
         let item = self.item(for: indexPath)
         select(itemToSelect: item)
@@ -119,6 +123,7 @@ extension ConversationListViewModel {
     ///   - index: <#index description#>
     ///   - sectionIndex: <#sectionIndex description#>
     /// - Returns: <#return value description#>
+    @objc(itemAfterIndex:section:)
     func item(after index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
@@ -162,6 +167,7 @@ extension ConversationListViewModel {
     ///   - index: <#index description#>
     ///   - sectionIndex: <#sectionIndex description#>
     /// - Returns: <#return value description#>
+    @objc(itemPreviousToIndex:section:)
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
@@ -170,13 +176,13 @@ extension ConversationListViewModel {
             return IndexPath(item: index - 1, section: Int(sectionIndex))
         } else if index == 0 {
             // select last item in previous section
-            return lastItemInSectionPrevious(to: sectionIndex)
+            return lastItemInSectionPrevious(to: Int(sectionIndex))
         }
 
         return nil
     }
 
-    func lastItemInSectionPrevious(to sectionIndex: UInt) -> IndexPath? {
+    func lastItemInSectionPrevious(to sectionIndex: Int) -> IndexPath? {
         let previousSectionIndex = sectionIndex - 1
 
         if previousSectionIndex < 0 {
@@ -184,7 +190,7 @@ extension ConversationListViewModel {
             return nil
         }
 
-        guard let section = self.section(at: previousSectionIndex) else { return nil }
+        guard let section = self.section(at: UInt(previousSectionIndex)) else { return nil }
 
         if section.count > 0 {
             return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
