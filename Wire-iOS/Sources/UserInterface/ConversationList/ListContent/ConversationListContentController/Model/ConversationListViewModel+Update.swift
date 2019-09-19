@@ -86,8 +86,8 @@ extension ConversationListViewModel {
     func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
         let sectionNumber = sectionIndex.sectionNumber(isFolderEnable: isFolderEnable)
 
-        if let oldConversationList = aggregatedItems.section(at: sectionNumber) as? Array<AnyHashable>,
-            let newConversationList = newConversationList() as? Array<AnyHashable>,
+        if let oldConversationList = aggregatedItems.section(at: sectionNumber) as? [ZMConversation],
+            let newConversationList = newConversationList(),
             oldConversationList != newConversationList {
 
             ///TODO: use diff kit and retire requiresReload
@@ -125,10 +125,6 @@ extension ConversationListViewModel {
         } else if !updateForConvoType(sectionIndex: .conversations) {
             updateForConvoType(sectionIndex: .contactsConversations)
         }
-    }
-
-    func newOneOnOneConversationList() -> [ZMConversation]? {
-        return ZMUserSession.shared()?.oneOnOneConversations.map { $0 }
     }
 
     @objc(selectItem:)

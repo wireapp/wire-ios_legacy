@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak, nullable) id<ConversationListViewModelDelegate> delegate;
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
-- (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
+//- (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
 
 - (id<NSObject> _Nullable)itemForIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath * _Nullable)indexPathForItem:(id<NSObject>)item;
@@ -65,17 +65,14 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface ConversationListViewModel (Convenience)
-
-// Select the item at an index path
-- (id)selectItemAtIndexPath:(NSIndexPath *)indexPath;
-
-// Search for previous items
-- (NSIndexPath *)itemPreviousToIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
-
-// Search for next items
-- (NSIndexPath *)itemAfterIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
-
-@end
+//@interface ConversationListViewModel (Convenience)
+//
+//// Search for previous items
+//- (NSIndexPath *)itemPreviousToIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
+//
+//// Search for next items
+//- (NSIndexPath *)itemAfterIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
+//
+//@end
 
 NS_ASSUME_NONNULL_END

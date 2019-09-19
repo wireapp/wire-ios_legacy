@@ -23,13 +23,12 @@
 
 @property (nonatomic) Boolean isFolderEnable;
 
-- (NSArray *)newConversationList;
 @end
 
 @interface ConversationListViewModel () <ZMConversationListReloadObserver>
 
 @property (nonatomic, strong) ConversationListConnectRequestsItem *contactRequestsItem;
-@property (nonatomic, strong) AggregateArray *aggregatedItems;
+@property (nonatomic, strong, nonnull) AggregateArray *aggregatedItems;
 @property (nonatomic, readwrite) id selectedItem;
 
 // Local copies of the lists.
