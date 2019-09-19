@@ -35,6 +35,8 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
     private var isFolderEnable = false
+
+    ///TODO: retire
     private var aggregatedItems: AggregateArray!
     // Local copies of the lists.
 
