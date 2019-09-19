@@ -19,12 +19,18 @@
 import Foundation
 
 // Placeholder for conversation requests item
+@objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
 final class ConversationListViewModel: NSObject {
+    @objc
     let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
+
     /// ZMConversaton or ConversationListConnectRequestsItem
+    @objc
     private(set) var selectedItem: Any?
+
+    @objc
     weak var delegate: ConversationListViewModelDelegate?
 
     private weak var selfUserObserver: NSObjectProtocol?
@@ -74,10 +80,12 @@ final class ConversationListViewModel: NSObject {
         clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
     }
 
+    @objc
     var sectionCount: UInt {
         return aggregatedItems.numberOfSections()
     }
 
+    @objc
     func numberOfItems(inSection sectionIndex: UInt) -> UInt {
         return aggregatedItems.numberOfItems(inSection: sectionIndex)
     }
@@ -90,10 +98,12 @@ final class ConversationListViewModel: NSObject {
         return aggregatedItems.section(at: sectionIndex)
     }
 
+    @objc(itemForIndexPath:)
     func item(for indexPath: IndexPath?) -> NSObjectProtocol? {
         return aggregatedItems.item(for: indexPath)
     }
 
+    @objc(indexPathForItem:)
     func indexPath(for item: NSObject) -> IndexPath? {
         return aggregatedItems.indexPath(forItem: item)
     }
