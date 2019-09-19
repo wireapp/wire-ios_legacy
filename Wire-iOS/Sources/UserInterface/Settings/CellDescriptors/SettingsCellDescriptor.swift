@@ -119,24 +119,28 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
         }
     }
     var visible: Bool {
-        get {
-            if let visibilityAction = self.visibilityAction {
-                return visibilityAction(self)
-            }
-            else {
-                return true
-            }
-        }
+        return visibilityAction?(self) ?? true
     }
     let visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))?
 
-    let header: String?
-    let footer: String?
+    var header: String? {
+        return headerGenerator()
+    }
+    var footer: String? {
+        return footerGenerator()
+    }
     
-    init(cellDescriptors: [SettingsCellDescriptorType], header: String? = .none, footer: String? = .none, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .none) {
+    let headerGenerator: () -> String?
+    let footerGenerator: () -> String?
+    
+    convenience init(cellDescriptors: [SettingsCellDescriptorType], header: String? = .none, footer: String? = .none, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .none) {
+        self.init(cellDescriptors: cellDescriptors, headerGenerator: { return header }, footerGenerator: { return footer}, visibilityAction: visibilityAction)
+    }
+    
+    init(cellDescriptors: [SettingsCellDescriptorType], headerGenerator: @escaping () -> String?, footerGenerator: @escaping () -> String?, visibilityAction: ((SettingsSectionDescriptorType) -> (Bool))? = .none) {
         self.cellDescriptors = cellDescriptors
-        self.header = header
-        self.footer = footer
+        self.headerGenerator = headerGenerator
+        self.footerGenerator = footerGenerator
         self.visibilityAction = visibilityAction
     }
 }
