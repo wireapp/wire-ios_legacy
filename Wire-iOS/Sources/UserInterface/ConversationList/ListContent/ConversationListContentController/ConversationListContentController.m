@@ -22,8 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 
-#import "ConversationListViewModel.h"
-
 #import "UIColor+WAZExtensions.h"
 
 #import "ProgressSpinner.h"

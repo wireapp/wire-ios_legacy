@@ -89,8 +89,6 @@
 
 #import "ConversationListContentController.h"
 #import "ConversationListContentController+Internal.h"
-#import "ConversationListViewModel.h"
-#import "ConversationListViewModel+Private.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
@@ -176,3 +174,6 @@
 
 // Invite
 #import "ShareItemProvider.h"
+
+///TODO: rm
+#import "AggregateArray.h"
