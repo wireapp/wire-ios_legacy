@@ -52,6 +52,11 @@ final class ConversationListViewModel: NSObject {
     private var folderEnabled = false
 
     // Local copies of the lists.
+    ///TODO: non optional
+    private var inbox: [AnyHashable]? = []
+    private var conversations: [AnyHashable]? = []
+    private var oneOnOneConversations: [AnyHashable]? = []
+
     private var folders: [Folder] = []
 
     private var pendingConversationListObserverToken: Any?
@@ -298,9 +303,9 @@ final class ConversationListViewModel: NSObject {
 
 
         ///TODO: non optional, store in folders directly
-        var inbox: [AnyHashable] = []
-        var conversations: [AnyHashable] = []
-        var oneOnOneConversations: [AnyHashable] = []
+//        var inbox: [AnyHashable] = []
+//        var conversations: [AnyHashable] = []
+//        var oneOnOneConversations: [AnyHashable] = []
 
         for sectionIndex in sectionIndexs {
             switch sectionIndex {
@@ -329,12 +334,12 @@ final class ConversationListViewModel: NSObject {
 
         // Re-create the folders
         if folderEnabled {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox),
-                       Folder(sectionIndex: .contacts, items: oneOnOneConversations),
-                       Folder(sectionIndex: .conversations, items: conversations)]
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
+                       Folder(sectionIndex: .contacts, items: oneOnOneConversations ?? []),
+                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
         } else {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox),
-                       Folder(sectionIndex: .conversations, items: conversations)]
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
+                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
         }
     }
 
