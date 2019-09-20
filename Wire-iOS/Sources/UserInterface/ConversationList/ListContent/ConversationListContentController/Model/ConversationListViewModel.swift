@@ -19,6 +19,7 @@
 import Foundation
 
 // Placeholder for conversation requests item
+///TODO: create a protocol, shared with ZMConversation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
@@ -485,5 +486,4 @@ extension ConversationListViewModel: ZMUserObserver {
             updateConversationListAnimated()
         }
     }
-
 }
