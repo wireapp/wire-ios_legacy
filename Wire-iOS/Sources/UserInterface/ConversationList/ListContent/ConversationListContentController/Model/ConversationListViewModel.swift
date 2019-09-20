@@ -97,7 +97,7 @@ final class ConversationListViewModel: NSObject {
         ///TODO:
 //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
 
-        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
+//        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
 
 
         pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
@@ -507,7 +507,7 @@ extension ConversationListViewModel: ZMConversationListObserver {
     }
 
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
-        return
+//        return
         ///TODO: no op
         guard let userSession = ZMUserSession.shared() else { return }
 

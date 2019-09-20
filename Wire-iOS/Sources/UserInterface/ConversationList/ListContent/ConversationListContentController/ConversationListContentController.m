@@ -216,6 +216,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.focusOnNextSelection = NO;
 }
 
+///TODO: mv the logic to VM
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change
 {
     if (change.isArchivedChanged ||
@@ -235,6 +236,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateCellForConversation:nil];
 }
 
+///TODO: mv logic to VM
 - (void)updateCellForConversation:(ZMConversation *)conversation
 {
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
