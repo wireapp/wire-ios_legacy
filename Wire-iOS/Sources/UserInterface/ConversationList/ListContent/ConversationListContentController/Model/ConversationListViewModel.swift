@@ -63,6 +63,7 @@ final class ConversationListViewModel: NSObject {
     // Local copies of the lists.
     private var folders: [Folder] = []
 
+    ///TODO: retire
     private var pendingConversationListObserverToken: Any?
     private var conversationListObserverToken: Any?
     private var clearedConversationListObserverToken: Any?
