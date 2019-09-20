@@ -28,3 +28,9 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
 }
 
 extension ZMUserSession: ZMUserSessionInterface {}
+
+extension ZMUserSession {
+    var oneToOneConversations: [ZMConversation]? {
+        return managedObjectContext.conversationListDirectory().oneToOneConversations as? [ZMConversation]
+    }
+}

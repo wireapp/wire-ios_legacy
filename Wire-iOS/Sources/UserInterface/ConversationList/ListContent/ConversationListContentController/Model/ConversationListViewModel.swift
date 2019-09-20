@@ -150,11 +150,6 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-//    func isConversation(at indexPath: IndexPath) -> Bool {
-//        let obj = item(for: indexPath)
-//        return obj is ZMConversation
-//    }
-
     ///TODO: new methods with SectionIndex as param
     func newConversationList() -> [ZMConversation] {
         guard let userSession = ZMUserSession.shared() else { return [] }
@@ -163,7 +158,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     func newOneOnOneConversationList() -> [ZMConversation] {
-        return ZMUserSession.shared()?.oneOnOneConversations.map { $0 } ?? []
+        return ZMUserSession.shared()?.oneToOneConversations.map { $0 } ?? []
     }
 
     private
