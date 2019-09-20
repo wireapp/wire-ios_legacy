@@ -26,7 +26,7 @@ enum SectionIndex: CaseIterable { ///TODO: with items as associated value, all h
     case conversations
 
     /// one on one conversations
-    case contactsConversations
+    case contacts
 
     ///TODO: one more group convo
 

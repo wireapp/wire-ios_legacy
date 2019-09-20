@@ -317,7 +317,7 @@ final class ConversationListViewModel: NSObject {
                 } else {
                     conversations = newConversationList()
                 }
-            case .contactsConversations:
+            case .contacts:
                 if let items = items {
                     oneOnOneConversations = items
                 } else {
@@ -330,7 +330,7 @@ final class ConversationListViewModel: NSObject {
         // Re-create the folders
         if folderEnabled {
             folders = [Folder(sectionIndex: .contactRequests, items: inbox),
-                       Folder(sectionIndex: .contactsConversations, items: oneOnOneConversations),
+                       Folder(sectionIndex: .contacts, items: oneOnOneConversations),
                        Folder(sectionIndex: .conversations, items: conversations)]
         } else {
             folders = [Folder(sectionIndex: .contactRequests, items: inbox),
@@ -352,7 +352,17 @@ final class ConversationListViewModel: NSObject {
     func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: sectionIndex) else { return false }
 
-        let newList = newConversationList()
+        ///TODO: mv to method
+        let newList: [ZMConversation]
+
+        switch sectionIndex {
+        case .contacts:
+            newList = newOneOnOneConversationList()
+        case .conversations:
+            newList = newConversationList()
+        default:
+            return false
+        }
 
         if let oldConversationList = section(at: UInt(sectionNumber)) as? [ZMConversation],
             oldConversationList != newList {
@@ -385,10 +395,10 @@ final class ConversationListViewModel: NSObject {
 
     private func updateConversationListAnimated() {
         if numberOfItems(in: .conversations) == 0 &&
-           numberOfItems(in: .contactsConversations) == 0 {
+           numberOfItems(in: .contacts) == 0 {
             reload()
         } else if !updateForConvoType(sectionIndex: .conversations) {
-            updateForConvoType(sectionIndex: .contactsConversations)
+            updateForConvoType(sectionIndex: .contacts)
         }
     }
 
