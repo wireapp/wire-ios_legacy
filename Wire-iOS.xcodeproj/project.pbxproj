@@ -1179,6 +1179,7 @@
 		EF471BE62326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF471BE52326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
+		EF4C5D4A23351CF00092CA38 /* ConversationListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */; };
 		EF4FFB3522830BD200B69851 /* String+WholeRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4FFB3422830BD200B69851 /* String+WholeRangeTests.swift */; };
 		EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */; };
 		EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */; };
@@ -2980,6 +2981,7 @@
 		EF471BE52326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+OpenFile.swift"; sourceTree = "<group>"; };
+		EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModelTests.swift; sourceTree = "<group>"; };
 		EF4FFB3422830BD200B69851 /* String+WholeRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+WholeRangeTests.swift"; sourceTree = "<group>"; };
 		EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+HEIF.swift"; sourceTree = "<group>"; };
 		EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IsVisible.swift"; sourceTree = "<group>"; };
@@ -5702,7 +5704,6 @@
 				EFDBA2402294016400874A15 /* ConversationList */,
 				EFC57A1121BABD4F0008DBE6 /* ConversationInputBarViewController */,
 				EF18140721B17F7A008F7DA8 /* ConversationOption */,
-				EF6A33D02192F47200970698 /* ConversationListCell */,
 				5E35F76F2180B8A500D3F4FE /* ConversationMessageCell */,
 				5E65A798212FF7A6008BFCC0 /* Authentication */,
 				879090782121A109006219B4 /* Utils */,
@@ -6359,6 +6360,25 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		EF4C5D4B23351D080092CA38 /* ConversationListViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */,
+			);
+			path = ConversationListViewModel;
+			sourceTree = "<group>";
+		};
+		EF4C5D4C23351D230092CA38 /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */,
+				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
+				A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */,
+				EF223F5C2327A1CF004480FA /* ConversationListViewControllerViewModelTests.swift */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
 		EF5C844B21F2386A002481DE /* ConversationDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -6420,12 +6440,11 @@
 		EFDBA2402294016400874A15 /* ConversationList */ = {
 			isa = PBXGroup;
 			children = (
+				EF4C5D4C23351D230092CA38 /* Container */,
+				EF4C5D4B23351D080092CA38 /* ConversationListViewModel */,
+				EF6A33D02192F47200970698 /* ConversationListCell */,
 				EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */,
-				EFAFCA8C213433D6002B31A6 /* ConversationListViewControllerTests.swift */,
-				A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */,
-				EF223F5C2327A1CF004480FA /* ConversationListViewControllerViewModelTests.swift */,
 				A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */,
-				A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -8285,6 +8304,7 @@
 				5E8FFC0621ECCC7C0052DF03 /* AuthenticationInterfaceBuilderTests.swift in Sources */,
 				5EE115E1204EEC7D002AD6C2 /* CallQualityControllerTests.swift in Sources */,
 				EFE043992149CE8D00BC3079 /* InviteContactsViewControllerSnapshotTests.swift in Sources */,
+				EF4C5D4A23351CF00092CA38 /* ConversationListViewModelTests.swift in Sources */,
 				1658C19820A1E55200148F6D /* CallInfoRootViewControllerTests.swift in Sources */,
 				EF68856820F611D50074CA0F /* CanvasViewControllerTests.swift in Sources */,
 				EF31DC7C2092020300A4F09F /* UIViewController+iPhoneSize.swift in Sources */,

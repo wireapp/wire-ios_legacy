@@ -51,7 +51,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private var folderEnabled = false {
+    private(set) var folderEnabled = false {
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -102,7 +102,6 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     var sectionCount: UInt {
-//        return aggregatedItems.numberOfSections()
         return UInt(folders.count)
     }
 
@@ -277,11 +276,9 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func updateAllSections() {
-        updateSection(sectionIndexs: SectionIndex.allCases)
-    }
-
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
-        updateSection(sectionIndexs: [sectionIndex], withItems: items)
+        for sectionIndex in SectionIndex.allCases {
+            updateSection(sectionIndex: sectionIndex)
+        }
     }
 
     /// This updates a specific section in the model, by copying the contents locally.
@@ -290,11 +287,7 @@ final class ConversationListViewModel: NSObject {
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
     /// - Parameter sectionIndex: the section to update
-    func updateSection(sectionIndexs: [SectionIndex], withItems items: [AnyHashable]? = nil) {
-        if sectionIndexs == SectionIndex.allCases && items != nil {
-            assert(true, "Update for all sections with proposed items is not allowed.")
-        }
-
+    func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
 
         ///TODO: non optional, store in folders directly
         var inbox = folderItems(for: .contactRequests)
@@ -302,27 +295,25 @@ final class ConversationListViewModel: NSObject {
         ///TODO: ignore this when folded not enabled
         var oneOnOneConversations = folderItems(for: .contacts)
 
-        for sectionIndex in sectionIndexs {
-            switch sectionIndex {
-            case .contactRequests:
-                if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                    inbox = items ?? [contactRequestsItem]
-                } else {
-                    inbox = []
-                }
-            case .conversations:
-                // Make a new copy of the conversation list
-                if let items = items {
-                    conversations = items
-                } else {
-                    conversations = newConversationList()
-                }
-            case .contacts:
-                if let items = items {
-                    oneOnOneConversations = items
-                } else {
-                    oneOnOneConversations = newOneOnOneConversationList()
-                }
+        switch sectionIndex {
+        case .contactRequests:
+            if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
+                inbox = items ?? [contactRequestsItem]
+            } else {
+                inbox = []
+            }
+        case .conversations:
+            // Make a new copy of the conversation list
+            if let items = items {
+                conversations = items
+            } else {
+                conversations = newConversationList()
+            }
+        case .contacts:
+            if let items = items {
+                oneOnOneConversations = items
+            } else {
+                oneOnOneConversations = newOneOnOneConversationList()
             }
         }
 
@@ -392,7 +383,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(sectionIndex, withItems: newList)
+                    self.updateSection(sectionIndex: sectionIndex, withItems: newList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -406,7 +397,7 @@ final class ConversationListViewModel: NSObject {
 
     private func updateConversationListAnimated() {
         if numberOfItems(in: .conversations) == 0 &&
-           numberOfItems(in: .contacts) == 0 {
+            numberOfItems(in: .contacts) == 0 {
             reload()
         } else if !updateForConvoType(sectionIndex: .conversations) {
             updateForConvoType(sectionIndex: .contacts)
@@ -463,7 +454,7 @@ extension ConversationListViewModel: ZMConversationListObserver {
             log.info("RELOAD contact requests")
 
             let sectionIndex = SectionIndex.contactRequests
-            updateSection(sectionIndex)
+            updateSection(sectionIndex: sectionIndex)
 
             if let sectionNumber = sectionNumber(for: sectionIndex) {
                 delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
