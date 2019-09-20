@@ -69,6 +69,8 @@ final class ConversationListViewModel: NSObject {
     private var clearedConversationListObserverToken: Any?
     private var conversationListsReloadObserverToken: Any?
 
+    private var conversationDirectoryToken: Any?
+
 
     override init() {
         super.init()
@@ -91,6 +93,12 @@ final class ConversationListViewModel: NSObject {
         guard let userSession = ZMUserSession.shared() else {
             return
         }
+
+        ///TODO:
+//        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
+
+        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
+
 
         pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
 
@@ -406,10 +414,13 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func updateConversationListAnimated() {
+        /// reload if all sections are empty
         if numberOfItems(in: .conversations) == 0 &&
            numberOfItems(in: .contacts) == 0 {
             reload()
-        } else if !updateForConvoType(sectionIndex: .conversations) {
+        } else {
+            ///TODO: loop for sections in folders
+            updateForConvoType(sectionIndex: .conversations)
             updateForConvoType(sectionIndex: .contacts)
         }
     }
@@ -445,13 +456,59 @@ final class ConversationListViewModel: NSObject {
 
 fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
 
+extension ConversationListViewModel: ZMConversationListReloadObserver {
+    func conversationListsDidReload() {
+        reload()
+    }
+}
+
+extension ConversationListViewModel: ZMUserObserver {
+
+    public func userDidChange(_ note: UserChangeInfo) {
+        if note.teamsChanged {
+            updateConversationListAnimated()
+        }
+    }
+}
+
+extension ConversationListViewModel: ConversationDirectoryObserver {
+    func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
+
+//        guard let userSession = ZMUserSession.shared() else { return }
+
+        ///TODO: check the info instead of compare the lists
+//        if changeInfo.reloaded {
+            if true {
+            // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
+            // so we prefer to do the simple reload instead.
+
+            updateConversationListAnimated() ///TODO: update oneOneOne also
+        } else {
+//            log.info("RELOAD section requests")
+//                let dir = userSession.managedObjectContext.
+//
+////            let sectionIndex = SectionIndex.contactRequests
+//            updateSection(sectionIndex)
+//
+//            if let sectionNumber = sectionNumber(for: sectionIndex) {
+//                delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+//            }
+        }
+
+    }
+}
+
+///TODO: retire
 extension ConversationListViewModel: ZMConversationListObserver {
 
+    ///TODO: still need to observe for single cell changes?
     public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         delegate?.listViewModel(self, didUpdateConversationWithChange: changeInfo)
     }
 
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+        return
+        ///TODO: no op
         guard let userSession = ZMUserSession.shared() else { return }
 
         ///TODO: check the info instead of compare the lists
@@ -469,21 +526,6 @@ extension ConversationListViewModel: ZMConversationListObserver {
             if let sectionNumber = sectionNumber(for: sectionIndex) {
                 delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             }
-        }
-    }
-}
-
-extension ConversationListViewModel: ZMConversationListReloadObserver {
-    func conversationListsDidReload() {
-        reload()
-    }
-}
-
-extension ConversationListViewModel: ZMUserObserver {
-
-    public func userDidChange(_ note: UserChangeInfo) {
-        if note.teamsChanged {
-            updateConversationListAnimated()
         }
     }
 }
