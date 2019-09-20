@@ -42,6 +42,7 @@ final class ConversationListViewModel: NSObject {
     let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
     /// ZMConversaton or ConversationListConnectRequestsItem
+    ///TODO: protocol
     @objc
     private(set) var selectedItem: Any?
 
@@ -50,7 +51,14 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private var folderEnabled = false
+    private var folderEnabled = false {
+        didSet {
+            guard folderEnabled != oldValue else { return }
+
+            updateAllSections()
+            delegate?.listViewModelShouldBeReloaded()
+        }
+    }
 
     // Local copies of the lists.
     private var folders: [Folder] = []
@@ -71,7 +79,7 @@ final class ConversationListViewModel: NSObject {
         subscribeToTeamsUpdates()
     }
 
-    func setupObserversForListReloading() {
+    private func setupObserversForListReloading() {
         guard let userSession = ZMUserSession.shared() else {
             return
         }
@@ -79,8 +87,7 @@ final class ConversationListViewModel: NSObject {
         conversationListsReloadObserverToken = ConversationListChangeInfo.add(observer: self, userSession: userSession)
     }
 
-    private
-    func setupObserversForActiveTeam() {
+    private func setupObserversForActiveTeam() {
         guard let userSession = ZMUserSession.shared() else {
             return
         }
@@ -266,9 +273,6 @@ final class ConversationListViewModel: NSObject {
     ///TODO: for debug
     func toggleSort() {
         folderEnabled = !folderEnabled
-
-        updateAllSections()
-        delegate?.listViewModelShouldBeReloaded()
     }
 
 
