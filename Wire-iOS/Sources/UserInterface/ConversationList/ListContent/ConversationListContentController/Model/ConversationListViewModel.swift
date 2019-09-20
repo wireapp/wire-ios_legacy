@@ -48,8 +48,8 @@ final class ConversationListViewModel: NSObject {
     weak var delegate: ConversationListViewModelDelegate?
 
     private weak var selfUserObserver: NSObjectProtocol?
-    private var isFolderEnable = false
 
+    private var isFolderEnable = false
     private var folders: [Folder] = []
 
     // Local copies of the lists.
@@ -108,6 +108,17 @@ final class ConversationListViewModel: NSObject {
         guard sectionIndex < sectionCount else { return 0 }
 
         return UInt(folders[Int(sectionIndex)].items.count)
+    }
+
+    private
+    func numberOfItems(in sectionIndex: SectionIndex) -> Int? {
+        for (folder) in folders {
+            if folder.sectionIndex == sectionIndex {
+                return folder.items.count
+            }
+        }
+
+        return nil
     }
 
     @objc(sectionAtIndex:)
@@ -315,12 +326,23 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
+    private func sectionNumber(for sectionIndex: SectionIndex) -> Int? {
+        for (index, folder) in folders.enumerated() {
+            if folder.sectionIndex == sectionIndex {
+                return index
+            }
+        }
+
+        return nil
+    }
+
     @discardableResult
     func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
-        let sectionNumber = sectionIndex.sectionNumber(isFolderEnable: isFolderEnable)
+        guard let sectionNumber = self.sectionNumber(for: sectionIndex) else { return false }
+
         let newList = newConversationList()
 
-        if let oldConversationList = section(at: sectionNumber) as? [ZMConversation],
+        if let oldConversationList = section(at: UInt(sectionNumber)) as? [ZMConversation],
             oldConversationList != newList {
 
             ///TODO: use diff kit and retire requiresReload
@@ -340,7 +362,7 @@ final class ConversationListViewModel: NSObject {
                 let modelUpdates = {
                     self.updateSection(sectionIndex, withItems: newList)
                 }
-                delegate?.listViewModel(self, didUpdateSection: sectionNumber, usingBlock: modelUpdates, with: changedIndexes)
+                delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
             }
 
             return true
@@ -350,9 +372,8 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func updateConversationListAnimated() {
-        if numberOfItems(inSection: SectionIndex.conversations.sectionNumber(isFolderEnable: isFolderEnable)) == 0 &&
-            numberOfItems(inSection: SectionIndex.contactsConversations.sectionNumber(isFolderEnable: isFolderEnable)) == 0 {
-
+        if numberOfItems(in: .conversations) == 0 &&
+           numberOfItems(in: .contactsConversations) == 0 {
             reload()
         } else if !updateForConvoType(sectionIndex: .conversations) {
             updateForConvoType(sectionIndex: .contactsConversations)
@@ -411,7 +432,9 @@ extension ConversationListViewModel: ZMConversationListObserver {
             let sectionIndex = SectionIndex.contactRequests
             updateSection(sectionIndex)
 
-            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex.sectionNumber(isFolderEnable: isFolderEnable))
+            if let sectionNumber = sectionNumber(for: sectionIndex) {
+                delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            }
         }
     }
 }
