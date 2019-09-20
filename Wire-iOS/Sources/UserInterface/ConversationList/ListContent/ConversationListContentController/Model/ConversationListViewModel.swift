@@ -52,11 +52,6 @@ final class ConversationListViewModel: NSObject {
     private var folderEnabled = false
 
     // Local copies of the lists.
-    ///TODO: non optional
-    private var inbox: [AnyHashable]? = []
-    private var conversations: [AnyHashable]? = []
-    private var oneOnOneConversations: [AnyHashable]? = []
-
     private var folders: [Folder] = []
 
     private var pendingConversationListObserverToken: Any?
@@ -303,9 +298,10 @@ final class ConversationListViewModel: NSObject {
 
 
         ///TODO: non optional, store in folders directly
-//        var inbox: [AnyHashable] = []
-//        var conversations: [AnyHashable] = []
-//        var oneOnOneConversations: [AnyHashable] = []
+        var inbox = folderItems(for: .contactRequests)
+        var conversations = folderItems(for: .conversations)
+        ///TODO: ignore this when folded not enabled
+        var oneOnOneConversations = folderItems(for: .contacts)
 
         for sectionIndex in sectionIndexs {
             switch sectionIndex {
@@ -343,6 +339,16 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
+    private func folderItems(for sectionIndex: SectionIndex) -> [AnyHashable]? {
+        for folder in folders {
+            if folder.sectionIndex == sectionIndex {
+                return folder.items
+            }
+        }
+
+        return nil
+    }
+
     private func sectionNumber(for sectionIndex: SectionIndex) -> Int? {
         for (index, folder) in folders.enumerated() {
             if folder.sectionIndex == sectionIndex {
@@ -369,7 +375,7 @@ final class ConversationListViewModel: NSObject {
             return false
         }
 
-        if let oldConversationList = section(at: UInt(sectionNumber)) as? [ZMConversation],
+        if let oldConversationList = folderItems(for: sectionIndex) as? [ZMConversation],
             oldConversationList != newList {
 
             ///TODO: use diff kit and retire requiresReload
