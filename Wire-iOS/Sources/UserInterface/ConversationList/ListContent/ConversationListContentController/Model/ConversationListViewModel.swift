@@ -71,7 +71,6 @@ final class ConversationListViewModel: NSObject {
 
     override init() {
         super.init()
-        folderEnabled = true
 
         updateAllSections()
         setupObserversForListReloading()
@@ -385,7 +384,7 @@ final class ConversationListViewModel: NSObject {
 
             guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return true}
 
-            if changedIndexes.requiresReload == true {
+            if changedIndexes.requiresReload {
                 reload()
             } else {
                 // We need to capture the state of `newConversationList` to make sure that we are updating the value
@@ -395,6 +394,7 @@ final class ConversationListViewModel: NSObject {
                 let modelUpdates = {
                     self.updateSection(sectionIndex, withItems: newList)
                 }
+                
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
             }
 
