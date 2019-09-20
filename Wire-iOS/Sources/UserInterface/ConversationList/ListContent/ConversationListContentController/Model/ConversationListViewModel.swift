@@ -22,7 +22,18 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
+
 final class ConversationListViewModel: NSObject {
+    struct Folder {
+        var sectionIndex: SectionIndex
+        var items: [AnyHashable]
+
+        ///TODO: ref to AggregateArray, we return the first found item
+        func index(for item: NSObject) -> Int? {
+            return items.firstIndex(of: item)
+        }
+    }
+
     @objc
     let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
@@ -37,14 +48,16 @@ final class ConversationListViewModel: NSObject {
     private var isFolderEnable = false
 
     ///TODO: retire
-    private var aggregatedItems: AggregateArray!
+//    private var aggregatedItems: AggregateArray!
+    private var folders: [Folder] = []
+
     // Local copies of the lists.
 
     ///TODO: [[Any]]
     ///TODO: non optional
-    private var inbox: [Any]? = []
-    private var conversations: [Any]? = []
-    private var oneOnOneConversations: [Any]? = []
+    private var inbox: [AnyHashable]? = []
+    private var conversations: [AnyHashable]? = []
+    private var oneOnOneConversations: [AnyHashable]? = []
 
     private var pendingConversationListObserverToken: Any?
     private var conversationListObserverToken: Any?
@@ -84,12 +97,18 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     var sectionCount: UInt {
-        return aggregatedItems.numberOfSections()
+//        return aggregatedItems.numberOfSections()
+        return UInt(folders.count)
     }
 
+    ///TODO: test for out of bound cases
+    ///TODO: convert all UInt to Int
     @objc
     func numberOfItems(inSection sectionIndex: UInt) -> UInt {
-        return aggregatedItems.numberOfItems(inSection: sectionIndex)
+//        return aggregatedItems.numberOfItems(inSection: sectionIndex)
+
+        guard sectionIndex < sectionCount else { return 0 }
+        return UInt(folders[Int(sectionIndex)].items.count)
     }
 
     @objc(sectionAtIndex:)
@@ -97,37 +116,50 @@ final class ConversationListViewModel: NSObject {
         if sectionIndex >= sectionCount {
             return nil
         }
-        return aggregatedItems.section(at: sectionIndex)
+//        return aggregatedItems.section(at: sectionIndex)
+        return folders[Int(sectionIndex)].items
     }
 
+    ///TODO: out of bound test
     @objc(itemForIndexPath:)
-    func item(for indexPath: IndexPath?) -> NSObjectProtocol? {
-        return aggregatedItems.item(for: indexPath)
+    func item(for indexPath: IndexPath) -> NSObject? {
+//        return aggregatedItems.item(for: indexPath)
+        return section(at: UInt(indexPath.section))?[indexPath.item] as? NSObject
     }
 
+    ///Question: we may have multiple items in folders now.
+    ///TODO: test
     @objc(indexPathForItem:)
-    func indexPath(for item: NSObject) -> IndexPath? {
-        return aggregatedItems.indexPath(forItem: item)
+    func indexPath(for item: NSObject?) -> IndexPath? {
+        guard let item = item else { return nil } 
+//        return aggregatedItems.indexPath(forItem: item)
+        for (folderIndex, folder) in folders.enumerated() {
+            if let index = folder.index(for: item) {
+                return IndexPath(item: index, section: folderIndex)
+            }
+        }
+
+        return nil
     }
 
-    func isConversation(at indexPath: IndexPath?) -> Bool {
+    func isConversation(at indexPath: IndexPath) -> Bool {
         let obj = item(for: indexPath)
         return obj is ZMConversation
     }
 
-    func indexPath(forConversation conversation: NSObject) -> IndexPath? {
-
-        var result: IndexPath? = nil
-        ///TODO: use dictionary instead of searching?
-        aggregatedItems.enumerateItems({ section, sectionIndex, item, itemIndex, stop in
-            if let itemObj = item as? NSObject, itemObj == conversation {
-                result = IndexPath(item: Int(itemIndex), section: Int(sectionIndex))
-                //                stop = true
-            }
-        })
-
-        return result
-    }
+//    func indexPath(forConversation conversation: NSObject) -> IndexPath? {
+//
+//        var result: IndexPath? = nil
+//        ///TODO: use dictionary instead of searching?
+//        aggregatedItems.enumerateItems({ section, sectionIndex, item, itemIndex, stop in
+//            if let itemObj = item as? NSObject, itemObj == conversation {
+//                result = IndexPath(item: Int(itemIndex), section: Int(sectionIndex))
+//                //                stop = true
+//            }
+//        })
+//
+//        return result
+//    }
 
     func newConversationList() -> [ZMConversation] {
         guard let userSession = ZMUserSession.shared() else { return [] }
@@ -149,9 +181,10 @@ final class ConversationListViewModel: NSObject {
     /// Select the item at an index path
     ///
     /// - Parameter indexPath: <#indexPath description#>
-    /// - Returns: <#return value description#>
+    /// - Returns: the item selected
     @objc(selectItemAtIndexPath:)
-    func selectItem(at indexPath: IndexPath?) -> Any? {
+    @discardableResult
+    func selectItem(at indexPath: IndexPath) -> Any? {
         let item = self.item(for: indexPath)
         select(itemToSelect: item)
         return item
@@ -274,33 +307,39 @@ final class ConversationListViewModel: NSObject {
             switch sectionIndex {
             case .contactRequests:
                 if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                    inbox = items ?? [contactRequestsItem]
+                    inbox = (items ?? [contactRequestsItem]) as? [AnyHashable]
                 } else {
                     inbox = []
                 }
             case .conversations:
                 // Make a new copy of the conversation list
-                conversations = items ?? newConversationList()
+                conversations = (items ?? newConversationList()) as? [AnyHashable]
             case .contactsConversations:
-                oneOnOneConversations = items ?? newOneOnOneConversationList()
+                oneOnOneConversations = (items ?? newOneOnOneConversationList()) as? [AnyHashable]
             }
         }
 
 
         ///TODO: use a dictionary instead of fix size array
         // Re-create the aggregate array
-        let sections: [Any]
+//        let sections: [Any]
 
         if isFolderEnable {
-            sections = [inbox ?? [],
-                        oneOnOneConversations ?? [],
-                        conversations ?? []]
+//            sections = [inbox ?? [],
+//                        oneOnOneConversations ?? [],
+//                        conversations ?? []]
+
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
+                       Folder(sectionIndex: .contactsConversations, items: oneOnOneConversations ?? []),
+                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
         } else {
-            sections = [inbox ?? [],
-                        conversations ?? []]
+//            sections = [inbox ?? [],
+//                        conversations ?? []]
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
+                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
         }
 
-        aggregatedItems = AggregateArray(sections: sections)
+//        aggregatedItems = AggregateArray(sections: sections)
     }
 
     @discardableResult
@@ -308,7 +347,7 @@ final class ConversationListViewModel: NSObject {
         let sectionNumber = sectionIndex.sectionNumber(isFolderEnable: isFolderEnable)
         let newList = newConversationList()
 
-        if let oldConversationList = aggregatedItems.section(at: sectionNumber) as? [ZMConversation],
+        if let oldConversationList = section(at: sectionNumber) as? [ZMConversation],
             oldConversationList != newList {
 
             ///TODO: use diff kit and retire requiresReload

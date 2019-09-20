@@ -515,7 +515,6 @@
 		871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21B1D34F8F800DF0793 /* UIViewController+Errors.m */; };
 		871BC2971D34F8F800DF0793 /* UIViewController+WR_Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21F1D34F8F800DF0793 /* UIViewController+WR_Additions.m */; };
 		871BC3511D34F94200DF0793 /* AccentColorChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31A1D34F94200DF0793 /* AccentColorChangeHandler.m */; };
-		871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC31C1D34F94200DF0793 /* AggregateArray.m */; };
 		871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */; };
 		871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3381D34F94200DF0793 /* SettingsProperty.swift */; };
 		871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */; };
@@ -8134,7 +8133,6 @@
 				EF23740E230D37EE006F53F3 /* NetworkConditionHelper.swift in Sources */,
 				5E8FFC3121F098E00052DF03 /* ConfirmationCodeCell.swift in Sources */,
 				EFF9A6622239503D00CCEC85 /* UIViewController+LoadingView.swift in Sources */,
-				871BC3521D34F94200DF0793 /* AggregateArray.m in Sources */,
 				873C5FE81C10426A00D5132A /* ClientTableViewCell.swift in Sources */,
 				87C39A8A206947A1008DA100 /* UIView+Constraints.swift in Sources */,
 				EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */,
