@@ -49,15 +49,10 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private var isFolderEnable = false
-    private var folders: [Folder] = []
+    private var folderEnabled = false
 
     // Local copies of the lists.
-
-    ///TODO: non optional
-    private var inbox: [AnyHashable]? = []
-    private var conversations: [AnyHashable]? = []
-    private var oneOnOneConversations: [AnyHashable]? = []
+    private var folders: [Folder] = []
 
     private var pendingConversationListObserverToken: Any?
     private var conversationListObserverToken: Any?
@@ -67,7 +62,7 @@ final class ConversationListViewModel: NSObject {
 
     override init() {
         super.init()
-        isFolderEnable = true
+        folderEnabled = true
 
         updateAllSections()
         setupObserversForListReloading()
@@ -83,6 +78,7 @@ final class ConversationListViewModel: NSObject {
         conversationListsReloadObserverToken = ConversationListChangeInfo.add(observer: self, userSession: userSession)
     }
 
+    private
     func setupObserversForActiveTeam() {
         guard let userSession = ZMUserSession.shared() else {
             return
@@ -93,6 +89,8 @@ final class ConversationListViewModel: NSObject {
         conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
 
         clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
+
+        ///TODO: oberve more lists?
     }
 
     @objc
@@ -271,7 +269,7 @@ final class ConversationListViewModel: NSObject {
 
     ///TODO: for debug
     func toggleSort() {
-        isFolderEnable = !isFolderEnable
+        folderEnabled = !folderEnabled
 
         updateAllSections()
         delegate?.listViewModelShouldBeReloaded()
@@ -283,7 +281,7 @@ final class ConversationListViewModel: NSObject {
         updateSection(sectionIndexs: SectionIndex.allCases)
     }
 
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [Any]? = nil) {
+    func updateSection(_ sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
         updateSection(sectionIndexs: [sectionIndex], withItems: items)
     }
 
@@ -293,36 +291,50 @@ final class ConversationListViewModel: NSObject {
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
     /// - Parameter sectionIndex: the section to update
-    func updateSection(sectionIndexs: [SectionIndex], withItems items: [Any]? = nil) {
+    func updateSection(sectionIndexs: [SectionIndex], withItems items: [AnyHashable]? = nil) {
         if sectionIndexs == SectionIndex.allCases && items != nil {
             assert(true, "Update for all sections with proposed items is not allowed.")
         }
+
+
+        ///TODO: non optional, store in folders directly
+        var inbox: [AnyHashable] = []
+        var conversations: [AnyHashable] = []
+        var oneOnOneConversations: [AnyHashable] = []
 
         for sectionIndex in sectionIndexs {
             switch sectionIndex {
             case .contactRequests:
                 if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                    inbox = (items ?? [contactRequestsItem]) as? [AnyHashable]
+                    inbox = items ?? [contactRequestsItem]
                 } else {
                     inbox = []
                 }
             case .conversations:
                 // Make a new copy of the conversation list
-                conversations = (items ?? newConversationList()) as? [AnyHashable]
+                if let items = items {
+                    conversations = items
+                } else {
+                    conversations = newConversationList()
+                }
             case .contactsConversations:
-                oneOnOneConversations = (items ?? newOneOnOneConversationList()) as? [AnyHashable]
+                if let items = items {
+                    oneOnOneConversations = items
+                } else {
+                    oneOnOneConversations = newOneOnOneConversationList()
+                }
             }
         }
 
 
         // Re-create the folders
-        if isFolderEnable {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
-                       Folder(sectionIndex: .contactsConversations, items: oneOnOneConversations ?? []),
-                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
+        if folderEnabled {
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox),
+                       Folder(sectionIndex: .contactsConversations, items: oneOnOneConversations),
+                       Folder(sectionIndex: .conversations, items: conversations)]
         } else {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
-                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
+            folders = [Folder(sectionIndex: .contactRequests, items: inbox),
+                       Folder(sectionIndex: .conversations, items: conversations)]
         }
     }
 
