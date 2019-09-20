@@ -34,15 +34,4 @@ final class MockZMUserSession: NSObject, ZMUserSessionInterface {
     }
 
     var isNotificationContentHidden: Bool = false
-
-    var mockArchivedConversations: [ZMConversation] = []
-    var mockClearedConversations: [ZMConversation] = []
-
-    var archivedConversations: [ZMConversation] {
-        return mockArchivedConversations
-    }
-
-    var clearedConversations: [ZMConversation] {
-        return mockClearedConversations
-    }
 }
