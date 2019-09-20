@@ -33,7 +33,20 @@ final class ConversationListViewModelTests: XCTestCase {
         super.tearDown()
     }
 
-    func testExample(){
-        sut.updateSection(sectionIndexs: <#T##[SectionIndex]#>, withItems: <#T##[AnyHashable]?#>)
+    func testForIndexPathOfItemAndItemForIndexPath(){
+        ///GIVEN
+        let mockConversation = ZMConversation()
+
+        sut.updateSection(sectionIndex: .conversations, withItems: [mockConversation])
+
+        sut.updateSection(sectionIndex: .contacts, withItems: [ZMConversation()])
+
+        ///WHEN
+        let indexPath = sut.indexPath(for: mockConversation)!
+
+        let item = sut.item(for: indexPath)
+
+        ///THEN
+        XCTAssertEqual(item, mockConversation)
     }
 }

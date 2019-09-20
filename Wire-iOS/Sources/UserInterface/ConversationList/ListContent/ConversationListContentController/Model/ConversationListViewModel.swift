@@ -289,7 +289,6 @@ final class ConversationListViewModel: NSObject {
     /// - Parameter sectionIndex: the section to update
     func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
 
-        ///TODO: non optional, store in folders directly
         var inbox = folderItems(for: .contactRequests)
         var conversations = folderItems(for: .conversations)
         ///TODO: ignore this when folded not enabled
