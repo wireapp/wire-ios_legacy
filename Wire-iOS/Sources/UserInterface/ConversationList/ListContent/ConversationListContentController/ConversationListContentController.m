@@ -376,13 +376,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     NSInteger sections = self.listViewModel.sectionCount;
-    return sections;///2
+    return sections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     NSInteger c = [self.listViewModel numberOfItemsInSection:section];
-    return c;/// section 0 is 0, section 1 is 45
+    return c;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
