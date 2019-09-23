@@ -51,7 +51,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private var folderEnabled = false {
+    private(set) var folderEnabled = false {
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -64,10 +64,10 @@ final class ConversationListViewModel: NSObject {
     private var folders: [Folder] = []
 
     ///TODO: retire
-//    private var pendingConversationListObserverToken: Any?
+    //    private var pendingConversationListObserverToken: Any?
     private var conversationListObserverToken: Any?
-//    private var clearedConversationListObserverToken: Any?
-//    private var conversationListsReloadObserverToken: Any?
+    //    private var clearedConversationListObserverToken: Any?
+    //    private var conversationListsReloadObserverToken: Any?
 
     private var conversationDirectoryToken: Any?
 
@@ -85,28 +85,18 @@ final class ConversationListViewModel: NSObject {
             return
         }
 
-//        conversationListsReloadObserverToken = ConversationListChangeInfo.add(observer: self, userSession: userSession)
-
         ///TODO:
-//        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
+        //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
 
         conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
 
 
-        ///TODO: retire
-//        pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
-//
         ///TODO: keep this for signal cell conversation update
-//        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
-//
-//        clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
-
-        ///TODO: oberve more lists?
+        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
     }
 
     @objc
     var sectionCount: UInt {
-//        return aggregatedItems.numberOfSections()
         return UInt(folders.count)
     }
 
@@ -281,11 +271,9 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func updateAllSections() {
-        updateSection(sectionIndexs: SectionIndex.allCases)
-    }
-
-    func updateSection(_ sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
-        updateSection(sectionIndexs: [sectionIndex], withItems: items)
+        for sectionIndex in SectionIndex.allCases {
+            updateSection(sectionIndex: sectionIndex)
+        }
     }
 
     /// This updates a specific section in the model, by copying the contents locally.
@@ -294,39 +282,32 @@ final class ConversationListViewModel: NSObject {
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
     /// - Parameter sectionIndex: the section to update
-    func updateSection(sectionIndexs: [SectionIndex], withItems items: [AnyHashable]? = nil) {
-        if sectionIndexs == SectionIndex.allCases && items != nil {
-            assert(true, "Update for all sections with proposed items is not allowed.")
-        }
+    func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
 
-
-        ///TODO: non optional, store in folders directly
         var inbox = folderItems(for: .contactRequests)
         var conversations = folderItems(for: .conversations)
         ///TODO: ignore this when folded not enabled
         var oneOnOneConversations = folderItems(for: .contacts)
 
-        for sectionIndex in sectionIndexs {
-            switch sectionIndex {
-            case .contactRequests:
-                if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                    inbox = items ?? [contactRequestsItem]
-                } else {
-                    inbox = []
-                }
-            case .conversations:
-                // Make a new copy of the conversation list
-                if let items = items {
-                    conversations = items
-                } else {
-                    conversations = newConversationList()
-                }
-            case .contacts:
-                if let items = items {
-                    oneOnOneConversations = items
-                } else {
-                    oneOnOneConversations = newOneOnOneConversationList()
-                }
+        switch sectionIndex {
+        case .contactRequests:
+            if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
+                inbox = items ?? [contactRequestsItem]
+            } else {
+                inbox = []
+            }
+        case .conversations:
+            // Make a new copy of the conversation list
+            if let items = items {
+                conversations = items
+            } else {
+                conversations = newConversationList()
+            }
+        case .contacts:
+            if let items = items {
+                oneOnOneConversations = items
+            } else {
+                oneOnOneConversations = newOneOnOneConversationList()
             }
         }
 
@@ -396,7 +377,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(sectionIndex, withItems: newList)
+                    self.updateSection(sectionIndex: sectionIndex, withItems: newList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -411,7 +392,7 @@ final class ConversationListViewModel: NSObject {
     private func updateConversationListAnimated() {
         /// reload if all sections are empty
         if numberOfItems(in: .conversations) == 0 &&
-           numberOfItems(in: .contacts) == 0 {
+            numberOfItems(in: .contacts) == 0 {
             reload()
         } else {
             ///TODO: loop for sections in folders
@@ -470,29 +451,17 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             reload()
         } else { ///TODO: unarchived -> one to one
             for updatedList in changeInfo.updatedLists {
-            switch updatedList {
-            case .unarchived:
-                ///TODO: only handle when non-folder mode
-                updateConversationListAnimated()
-            case .contacts:
-//                update
-                break
-            default:
-                break
+                switch updatedList {
+                case .unarchived:
+                    ///TODO: only handle when non-folder mode
+                    updateConversationListAnimated()
+                case .contacts:
+                    updateForConvoType(sectionIndex: .contacts)
+                default:
+                    break
+                }
             }
-            }
-//            updateConversationListAnimated() ///TODO: update oneOneOne also
-//            log.info("RELOAD section requests")
-//                let dir = userSession.managedObjectContext.
-//
-////            let sectionIndex = SectionIndex.contactRequests
-//            updateSection(sectionIndex)
-//
-//            if let sectionNumber = sectionNumber(for: sectionIndex) {
-//                delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
-//            }
         }
-
     }
 }
 
