@@ -34,9 +34,10 @@ final class ConversationListViewModelTests: XCTestCase {
         super.tearDown()
     }
 
+    // folders with 2 group conversations and 1 contact. First group conversation is mock conversation
     func fillDummyConversations(mockConversation: ZMConversation) {
 
-        sut.updateSection(section: .group, withItems: [mockConversation])
+        sut.updateSection(section: .group, withItems: [mockConversation, ZMConversation()])
         sut.updateSection(section: .contacts, withItems: [ZMConversation()])
     }
 
@@ -52,7 +53,7 @@ final class ConversationListViewModelTests: XCTestCase {
 
         ///THEN
         XCTAssertEqual(sut.numberOfItems(inSection: 0), 0)
-        XCTAssertEqual(sut.numberOfItems(inSection: 1), 1)
+        XCTAssertEqual(sut.numberOfItems(inSection: 1), 2)
         XCTAssertEqual(sut.numberOfItems(inSection: 2), 1)
         XCTAssertEqual(sut.numberOfItems(inSection: 100), 0)
     }
@@ -117,8 +118,44 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: 1), [mockConversation])
+        XCTAssertEqual(sut.section(at: 1)?.first, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
+    }
+
+    func testForItemAfter() {
+        ///GIVEN
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///WHEN
+
+        ///THEN
+        XCTAssertEqual(sut.item(after: 0, section: 1), IndexPath(item: 1, section: 1))
+
+        XCTAssertEqual(sut.item(after: 1, section: 1), IndexPath(item: 0, section: 2))
+
+        XCTAssertEqual(sut.item(after: 0, section: 2), nil)
+    }
+
+    func testForItemPervious() {
+        ///GIVEN
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///WHEN
+
+        ///THEN
+        XCTAssertEqual(sut.itemPrevious(to: 0, section: 1), nil)
+
+        XCTAssertEqual(sut.itemPrevious(to: 1, section: 1), IndexPath(item: 0, section: 1))
+
+        XCTAssertEqual(sut.itemPrevious(to: 0, section: 2), IndexPath(item: 1, section: 1))
     }
 }

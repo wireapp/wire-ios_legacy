@@ -203,9 +203,9 @@ final class ConversationListViewModel: NSObject {
     /// Search for next items
     ///
     /// - Parameters:
-    ///   - index: <#index description#>
-    ///   - sectionIndex: <#sectionIndex description#>
-    /// - Returns: <#return value description#>
+    ///   - index: index of search item
+    ///   - sectionIndex: section of search item
+    /// - Returns: an index path for next existing item
     @objc(itemAfterIndex:section:)
     func item(after index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
@@ -213,7 +213,7 @@ final class ConversationListViewModel: NSObject {
         if section.count > index + 1 {
             // Select next item in section
             return IndexPath(item: index + 1, section: Int(sectionIndex))
-        } else if index >= section.count {
+        } else if index + 1 >= section.count {
             // select last item in previous section
             return firstItemInSection(after: sectionIndex)
         }
@@ -221,7 +221,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    func firstItemInSection(after sectionIndex: UInt) -> IndexPath? {
+    private func firstItemInSection(after sectionIndex: UInt) -> IndexPath? {
         let nextSectionIndex = sectionIndex + 1
 
         if nextSectionIndex >= sectionCount {
@@ -245,9 +245,9 @@ final class ConversationListViewModel: NSObject {
     /// Search for previous items
     ///
     /// - Parameters:
-    ///   - index: <#index description#>
-    ///   - sectionIndex: <#sectionIndex description#>
-    /// - Returns: <#return value description#>
+    ///   - index: index of search item
+    ///   - sectionIndex: section of search item
+    /// - Returns: an index path for previous existing item
     @objc(itemPreviousToIndex:section:)
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
