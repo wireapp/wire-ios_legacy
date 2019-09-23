@@ -22,7 +22,7 @@ import XCTest
 final class ConversationListViewModelTests: XCTestCase {
     
     var sut: ConversationListViewModel!
-    
+
     override func setUp() {
         super.setUp()
         sut = ConversationListViewModel()
@@ -30,23 +30,78 @@ final class ConversationListViewModelTests: XCTestCase {
     
     override func tearDown() {
         sut = nil
+
         super.tearDown()
     }
 
-    func testForIndexPathOfItemAndItemForIndexPath(){
+    func fillDummyConversations(mockConversation: ZMConversation) {
+
+        sut.updateSection(section: .group, withItems: [mockConversation])
+        sut.updateSection(section: .contacts, withItems: [ZMConversation()])
+    }
+
+    func testForIndexPathOfItemAndItemForIndexPath() {
         ///GIVEN
+        sut.folderEnabled = true
+
         let mockConversation = ZMConversation()
 
-        sut.updateSection(sectionIndex: .conversations, withItems: [mockConversation])
-
-        sut.updateSection(sectionIndex: .contacts, withItems: [ZMConversation()])
+        fillDummyConversations(mockConversation: mockConversation)
 
         ///WHEN
-        let indexPath = sut.indexPath(for: mockConversation)!
+        guard let indexPath = sut.indexPath(for: mockConversation) else { XCTFail("indexPath is nil ")
+            return
+        }
 
         let item = sut.item(for: indexPath)
 
         ///THEN
         XCTAssertEqual(item, mockConversation)
+    }
+
+    func testThatOutOfBoundIndexPathReturnsNilItem() {
+        ///GIVEN & WHEN
+        let mockConversation = ZMConversation()
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///THEN
+        XCTAssertNil(sut.item(for: IndexPath(item: 1000, section: 1000)))
+    }
+
+    func testThatNonExistConversationHasNilIndexPath() {
+        ///GIVEN & WHEN
+
+        ///THEN
+        XCTAssertNil(sut.indexPath(for: ZMConversation()))
+    }
+
+    func testForSectionCount() {
+        ///GIVEN
+
+        ///WHEN
+        sut.folderEnabled = true
+
+        ///THEN
+        XCTAssertEqual(sut.sectionCount, 3)
+
+        ///WHEN
+        sut.folderEnabled = false
+        XCTAssertEqual(sut.sectionCount, 2)
+    }
+
+    func testForSectionAtIndex() {
+        ///GIVEN
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///WHEN
+
+        ///THEN
+        XCTAssertEqual(sut.section(at: 1), [mockConversation])
+
+        XCTAssertNil(sut.section(at: 100))
     }
 }

@@ -42,7 +42,7 @@ final class ConversationListViewModel: NSObject {
         //    case customFolder(folder: FolderType)
     }
 
-    struct Folder {
+    private struct Folder {
         var section: Section
         var items: [AnyHashable]
 
@@ -50,7 +50,7 @@ final class ConversationListViewModel: NSObject {
         ///
         /// - Parameter item: item to search
         /// - Returns: the index of the item
-        func index(for item: NSObject) -> Int? {
+        func index(for item: AnyHashable) -> Int? {
             return items.firstIndex(of: item)
         }
 
@@ -73,7 +73,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private(set) var folderEnabled = true {
+    var folderEnabled = true {
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -138,7 +138,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     @objc(sectionAtIndex:)
-    func section(at sectionIndex: UInt) -> [Any]? {
+    func section(at sectionIndex: UInt) -> [AnyHashable]? {
         if sectionIndex >= sectionCount {
             return nil
         }
@@ -146,16 +146,14 @@ final class ConversationListViewModel: NSObject {
         return folders[Int(sectionIndex)].items
     }
 
-    ///TODO: out of bound test
     @objc(itemForIndexPath:)
-    func item(for indexPath: IndexPath) -> NSObject? {
-        return section(at: UInt(indexPath.section))?[indexPath.item] as? NSObject
+    func item(for indexPath: IndexPath) -> AnyHashable? {
+        return section(at: UInt(indexPath.section))?[indexPath.item]
     }
 
-    ///Question: we may have multiple items in folders now.
-    ///TODO: test
+    ///TODO: Question: we may have multiple items in folders now. return array of IndexPaths?
     @objc(indexPathForItem:)
-    func indexPath(for item: NSObject?) -> IndexPath? {
+    func indexPath(for item: AnyHashable?) -> IndexPath? {
         guard let item = item else { return nil } 
 
         for (folderIndex, folder) in folders.enumerated() {
@@ -356,7 +354,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     @discardableResult
-    func updateForConversationType(section: Section) -> Bool {
+    private func updateForConversationType(section: Section) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
         let newConversationList = ConversationListViewModel.newList(for: section)
