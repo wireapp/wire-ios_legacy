@@ -25,8 +25,25 @@ final class ConversationListConnectRequestsItem : NSObject {}
 
 
 final class ConversationListViewModel: NSObject {
+    enum Section: CaseIterable {
+        /// for incoming requests
+        case contactRequests
+
+        /// for self pending requests / conversations
+        case conversations
+
+        /// one to one conversations
+        case contacts
+
+        /// gorup conversations
+        case group
+
+        ///TODO:
+        //    case customFolder(folder: FolderType)
+    }
+
     struct Folder {
-        var sectionIndex: SectionIndex
+        var section: Section
         var items: [AnyHashable]
 
         /// ref to AggregateArray, we return the first found item's index
@@ -37,9 +54,9 @@ final class ConversationListViewModel: NSObject {
             return items.firstIndex(of: item)
         }
 
-        init(sectionIndex: SectionIndex) {
-            items = ConversationListViewModel.newList(for: sectionIndex)
-            self.sectionIndex = sectionIndex
+        init(section: Section) {
+            items = ConversationListViewModel.newList(for: section)
+            self.section = section
         }
     }
 
@@ -69,11 +86,7 @@ final class ConversationListViewModel: NSObject {
     private var folders: [Folder] = []
 
     ///TODO: retire
-    //    private var pendingConversationListObserverToken: Any?
     private var conversationListObserverToken: Any?
-    //    private var clearedConversationListObserverToken: Any?
-    //    private var conversationListsReloadObserverToken: Any?
-
     private var conversationDirectoryToken: Any?
 
 
@@ -114,9 +127,9 @@ final class ConversationListViewModel: NSObject {
     }
 
     private
-    func numberOfItems(in sectionIndex: SectionIndex) -> Int? {
+    func numberOfItems(in section: Section) -> Int? {
         for (folder) in folders {
-            if folder.sectionIndex == sectionIndex {
+            if folder.section == section {
                 return folder.items.count
             }
         }
@@ -154,10 +167,10 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private static func newList(for sectionIndex: SectionIndex) -> [AnyHashable] {
+    private static func newList(for section: Section) -> [AnyHashable] {
         guard let userSession = ZMUserSession.shared() else { return [] }
 
-        switch sectionIndex {
+        switch section {
         case .contactRequests:
             return  ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 ? [contactRequestsItem] : []
         case .conversations:
@@ -279,10 +292,10 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func updateAllSections() {
-        for sectionIndex in SectionIndex.allCases {
-            let items = ConversationListViewModel.newList(for: sectionIndex)
+        for section in Section.allCases {
+            let items = ConversationListViewModel.newList(for: section)
 
-            updateSection(sectionIndex: sectionIndex, withItems: items)
+            updateSection(section: section, withItems: items)
         }
     }
 
@@ -294,35 +307,37 @@ final class ConversationListViewModel: NSObject {
     /// - Parameters:
     ///   - sectionIndex: the section to update
     ///   - items: updated items
-    func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]?) {
+    func updateSection(section: Section, withItems items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
-        if let sectionNumber = self.sectionNumber(for: sectionIndex) {
+        if let sectionNumber = self.sectionNumber(for: section) {
             folders[sectionNumber].items = items ?? []
         } else {
             // Re-create the folders
             createFolders()
 
-            if let sectionNumber = self.sectionNumber(for: sectionIndex) {
+            if let sectionNumber = self.sectionNumber(for: section) {
                 folders[sectionNumber].items = items ?? []
             }
         }
     }
 
+
+    /// Create the folder structure
     private func createFolders() {
         if folderEnabled {
-            folders = [Folder(sectionIndex: .contactRequests),
-                       Folder(sectionIndex: .group),
-                       Folder(sectionIndex: .contacts)]
+            folders = [Folder(section: .contactRequests),
+                       Folder(section: .group),
+                       Folder(section: .contacts)]
         } else {
-            folders = [Folder(sectionIndex: .contactRequests),
-                       Folder(sectionIndex: .conversations)]
+            folders = [Folder(section: .contactRequests),
+                       Folder(section: .conversations)]
         }
     }
 
-    private func folderItems(for sectionIndex: SectionIndex) -> [AnyHashable]? {
+    private func folderItems(for section: Section) -> [AnyHashable]? {
         for folder in folders {
-            if folder.sectionIndex == sectionIndex {
+            if folder.section == section {
                 return folder.items
             }
         }
@@ -330,9 +345,9 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func sectionNumber(for sectionIndex: SectionIndex) -> Int? {
+    private func sectionNumber(for section: Section) -> Int? {
         for (index, folder) in folders.enumerated() {
-            if folder.sectionIndex == sectionIndex {
+            if folder.section == section {
                 return index
             }
         }
@@ -341,12 +356,12 @@ final class ConversationListViewModel: NSObject {
     }
 
     @discardableResult
-    func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
-        guard let sectionNumber = self.sectionNumber(for: sectionIndex) else { return false }
+    func updateForConversationType(section: Section) -> Bool {
+        guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
-        let newConversationList = ConversationListViewModel.newList(for: sectionIndex)
+        let newConversationList = ConversationListViewModel.newList(for: section)
 
-        if let oldConversationList = folderItems(for: sectionIndex),
+        if let oldConversationList = folderItems(for: section),
             oldConversationList != newConversationList {
 
             ///TODO: use diff kit and retire requiresReload
@@ -364,7 +379,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(sectionIndex: sectionIndex, withItems: newConversationList)
+                    self.updateSection(section: section, withItems: newConversationList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -383,8 +398,8 @@ final class ConversationListViewModel: NSObject {
             reload()
         } else {
             ///TODO: loop for sections in folders
-            updateForConvoType(sectionIndex: .conversations)
-            updateForConvoType(sectionIndex: .contacts)
+            updateForConversationType(section: .conversations)
+            updateForConversationType(section: .contacts)
         }
     }
 
@@ -441,11 +456,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                     ///TODO: only handle when non-folder mode
                     updateConversationListAnimated()
                 case .contacts:
-                    updateForConvoType(sectionIndex: .contacts)
+                    updateForConversationType(section: .contacts)
                 case .pending:
-                    updateForConvoType(sectionIndex: .contactRequests)
+                    updateForConversationType(section: .contactRequests)
                 case .groups:
-                    updateForConvoType(sectionIndex: .group)
+                    updateForConversationType(section: .group)
                 case .archived:
                     break
                 }
