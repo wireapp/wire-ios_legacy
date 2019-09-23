@@ -397,10 +397,14 @@ final class ConversationListViewModel: NSObject {
             numberOfItems(in: .contacts) == 0 {
             reload()
         } else {
-            ///TODO: loop for sections in folders
-            updateForConversationType(section: .conversations)
-            updateForConversationType(section: .contacts)
+            folderSections.forEach() {
+                updateForConversationType(section: $0)
+            }
         }
+    }
+
+    private var folderSections: [Section] {
+        return folders.map() { return $0.section}
     }
 
     @objc(selectItem:)
@@ -449,12 +453,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
             reload()
-        } else { ///TODO: unarchived -> one to one
+        } else {
             for updatedList in changeInfo.updatedLists {
                 switch updatedList {
                 case .unarchived:
-                    ///TODO: only handle when non-folder mode
-                    updateConversationListAnimated()
+                    updateForConversationType(section: .conversations)
                 case .contacts:
                     updateForConversationType(section: .contacts)
                 case .pending:
