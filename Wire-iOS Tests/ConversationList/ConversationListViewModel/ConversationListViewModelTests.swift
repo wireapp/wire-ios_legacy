@@ -40,6 +40,23 @@ final class ConversationListViewModelTests: XCTestCase {
         sut.updateSection(section: .contacts, withItems: [ZMConversation()])
     }
 
+    func testForNumberOfItems() {
+        ///GIVEN
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///WHEN
+
+        ///THEN
+        XCTAssertEqual(sut.numberOfItems(inSection: 0), 0)
+        XCTAssertEqual(sut.numberOfItems(inSection: 1), 1)
+        XCTAssertEqual(sut.numberOfItems(inSection: 2), 1)
+        XCTAssertEqual(sut.numberOfItems(inSection: 100), 0)
+    }
+
     func testForIndexPathOfItemAndItemForIndexPath() {
         ///GIVEN
         sut.folderEnabled = true

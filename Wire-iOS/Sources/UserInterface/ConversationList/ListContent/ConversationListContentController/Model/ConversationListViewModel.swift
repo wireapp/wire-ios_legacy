@@ -117,7 +117,6 @@ final class ConversationListViewModel: NSObject {
         return UInt(folders.count)
     }
 
-    ///TODO: test for out of bound cases
     ///TODO: convert all UInt to Int
     @objc
     func numberOfItems(inSection sectionIndex: UInt) -> UInt {
