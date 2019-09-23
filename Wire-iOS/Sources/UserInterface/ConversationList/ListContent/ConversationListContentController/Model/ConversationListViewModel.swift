@@ -51,7 +51,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    private(set) var folderEnabled = false {
+    private(set) var folderEnabled = true {
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -87,7 +87,6 @@ final class ConversationListViewModel: NSObject {
 
         ///TODO:
         //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
-
         conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
 
 
@@ -151,14 +150,20 @@ final class ConversationListViewModel: NSObject {
     }
 
     ///TODO: new methods with SectionIndex as param
-    func newConversationList() -> [ZMConversation] {
+    private func newList(for sectionIndex: SectionIndex) -> [ZMConversation] {
         guard let userSession = ZMUserSession.shared() else { return [] }
 
-        return ZMConversationList.conversations(inUserSession: userSession).map { $0 } as? [ZMConversation] ?? []
-    }
-
-    func newOneOnOneConversationList() -> [ZMConversation] {
-        return ZMUserSession.shared()?.oneToOneConversations.map { $0 } ?? []
+        switch sectionIndex {
+        case .contactRequests:
+            return []
+            ///TODO:
+        case .conversations:
+            return ZMConversationList.conversations(inUserSession: userSession).map { $0 } as? [ZMConversation] ?? []
+        case .contacts:
+            return ZMUserSession.shared()?.oneToOneConversations.map { $0 } ?? []
+        case .group:
+            return ZMUserSession.shared()?.groupConversations.map { $0 } ?? []
+        }
     }
 
     private
@@ -288,6 +293,7 @@ final class ConversationListViewModel: NSObject {
         var conversations = folderItems(for: .conversations)
         ///TODO: ignore this when folded not enabled
         var oneOnOneConversations = folderItems(for: .contacts)
+        var groupConversations = folderItems(for: .group)
 
         switch sectionIndex {
         case .contactRequests:
@@ -301,13 +307,19 @@ final class ConversationListViewModel: NSObject {
             if let items = items {
                 conversations = items
             } else {
-                conversations = newConversationList()
+                conversations = newList(for: .conversations)
             }
         case .contacts:
             if let items = items {
                 oneOnOneConversations = items
             } else {
-                oneOnOneConversations = newOneOnOneConversationList()
+                oneOnOneConversations = newList(for: .contacts)
+            }
+        case .group:
+            if let items = items {
+                groupConversations = items
+            } else {
+                groupConversations = newList(for: .group)
             }
         }
 
@@ -315,8 +327,9 @@ final class ConversationListViewModel: NSObject {
         // Re-create the folders
         if folderEnabled {
             folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
-                       Folder(sectionIndex: .contacts, items: oneOnOneConversations ?? []),
-                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
+                       Folder(sectionIndex: .group, items: groupConversations ?? []),
+                       Folder(sectionIndex: .contacts, items: oneOnOneConversations ?? [])
+            ]
         } else {
             folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
                        Folder(sectionIndex: .conversations, items: conversations ?? [])]
@@ -348,16 +361,7 @@ final class ConversationListViewModel: NSObject {
         guard let sectionNumber = self.sectionNumber(for: sectionIndex) else { return false }
 
         ///TODO: mv to method
-        let newList: [ZMConversation]
-
-        switch sectionIndex {
-        case .contacts:
-            newList = newOneOnOneConversationList()
-        case .conversations:
-            newList = newConversationList()
-        default:
-            return false
-        }
+        let newList = self.newList(for: sectionIndex)
 
         if let oldConversationList = folderItems(for: sectionIndex) as? [ZMConversation],
             oldConversationList != newList {

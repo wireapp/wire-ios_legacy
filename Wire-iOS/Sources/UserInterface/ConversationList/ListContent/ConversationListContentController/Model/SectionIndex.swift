@@ -18,17 +18,18 @@
 
 import Foundation
 
-enum SectionIndex: CaseIterable { ///TODO: with items as associated value, all has no items
-    ///for incoming requests
+enum SectionIndex: CaseIterable {
+    /// for incoming requests
     case contactRequests
 
-     ///for self pending requests / conversations
+    /// for self pending requests / conversations
     case conversations
 
-    /// one on one conversations
+    /// one to one conversations
     case contacts
 
-    ///TODO: one more group convo
+    /// gorup conversations
+    case group
 
     ///TODO:
     //    case customFolder(folder: FolderType)

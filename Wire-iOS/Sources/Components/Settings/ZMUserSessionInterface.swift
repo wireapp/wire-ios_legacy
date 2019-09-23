@@ -34,4 +34,8 @@ extension ZMUserSession {
     var oneToOneConversations: [ZMConversation]? {
         return managedObjectContext.conversationListDirectory().oneToOneConversations as? [ZMConversation]
     }
+
+    var groupConversations: [ZMConversation]? {
+        return managedObjectContext.conversationListDirectory().groupConversations as? [ZMConversation]
+    }
 }
