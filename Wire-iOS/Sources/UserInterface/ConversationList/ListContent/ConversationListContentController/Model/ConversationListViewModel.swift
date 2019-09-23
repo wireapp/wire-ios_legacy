@@ -36,10 +36,15 @@ final class ConversationListViewModel: NSObject {
         func index(for item: NSObject) -> Int? {
             return items.firstIndex(of: item)
         }
+
+        init(sectionIndex: SectionIndex) {
+            items = ConversationListViewModel.newList(for: sectionIndex)
+            self.sectionIndex = sectionIndex
+        }
     }
 
     @objc
-    let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
+    static let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
     /// ZMConversaton or ConversationListConnectRequestsItem
     ///TODO: protocol
@@ -149,14 +154,12 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    ///TODO: new methods with SectionIndex as param
-    private func newList(for sectionIndex: SectionIndex) -> [ZMConversation] {
+    private static func newList(for sectionIndex: SectionIndex) -> [AnyHashable] {
         guard let userSession = ZMUserSession.shared() else { return [] }
 
         switch sectionIndex {
         case .contactRequests:
-            return []
-            ///TODO:
+            return  ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 ? [contactRequestsItem] : []
         case .conversations:
             return ZMConversationList.conversations(inUserSession: userSession).map { $0 } as? [ZMConversation] ?? []
         case .contacts:
@@ -277,7 +280,9 @@ final class ConversationListViewModel: NSObject {
     @objc
     func updateAllSections() {
         for sectionIndex in SectionIndex.allCases {
-            updateSection(sectionIndex: sectionIndex)
+            let items = ConversationListViewModel.newList(for: sectionIndex)
+
+            updateSection(sectionIndex: sectionIndex, withItems: items)
         }
     }
 
@@ -286,53 +291,32 @@ final class ConversationListViewModel: NSObject {
     /// local copies of the lists is that we get separate notifications for each list,
     /// which means that an update to one can render the collection view out of sync with the datasource.
     ///
-    /// - Parameter sectionIndex: the section to update
-    func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]? = nil) {
+    /// - Parameters:
+    ///   - sectionIndex: the section to update
+    ///   - items: updated items
+    func updateSection(sectionIndex: SectionIndex, withItems items: [AnyHashable]?) {
 
-        var inbox = folderItems(for: .contactRequests)
-        var conversations = folderItems(for: .conversations)
-        ///TODO: ignore this when folded not enabled
-        var oneOnOneConversations = folderItems(for: .contacts)
-        var groupConversations = folderItems(for: .group)
+        /// replace the section with new items if section found
+        if let sectionNumber = self.sectionNumber(for: sectionIndex) {
+            folders[sectionNumber].items = items ?? []
+        } else {
+            // Re-create the folders
+            createFolders()
 
-        switch sectionIndex {
-        case .contactRequests:
-            if let userSession = ZMUserSession.shared(), ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 {
-                inbox = items ?? [contactRequestsItem]
-            } else {
-                inbox = []
-            }
-        case .conversations:
-            // Make a new copy of the conversation list
-            if let items = items {
-                conversations = items
-            } else {
-                conversations = newList(for: .conversations)
-            }
-        case .contacts:
-            if let items = items {
-                oneOnOneConversations = items
-            } else {
-                oneOnOneConversations = newList(for: .contacts)
-            }
-        case .group:
-            if let items = items {
-                groupConversations = items
-            } else {
-                groupConversations = newList(for: .group)
+            if let sectionNumber = self.sectionNumber(for: sectionIndex) {
+                folders[sectionNumber].items = items ?? []
             }
         }
+    }
 
-
-        // Re-create the folders
+    private func createFolders() {
         if folderEnabled {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
-                       Folder(sectionIndex: .group, items: groupConversations ?? []),
-                       Folder(sectionIndex: .contacts, items: oneOnOneConversations ?? [])
-            ]
+            folders = [Folder(sectionIndex: .contactRequests),
+                       Folder(sectionIndex: .group),
+                       Folder(sectionIndex: .contacts)]
         } else {
-            folders = [Folder(sectionIndex: .contactRequests, items: inbox ?? []),
-                       Folder(sectionIndex: .conversations, items: conversations ?? [])]
+            folders = [Folder(sectionIndex: .contactRequests),
+                       Folder(sectionIndex: .conversations)]
         }
     }
 
@@ -360,15 +344,14 @@ final class ConversationListViewModel: NSObject {
     func updateForConvoType(sectionIndex: SectionIndex) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: sectionIndex) else { return false }
 
-        ///TODO: mv to method
-        let newList = self.newList(for: sectionIndex)
+        let newConversationList = ConversationListViewModel.newList(for: sectionIndex)
 
-        if let oldConversationList = folderItems(for: sectionIndex) as? [ZMConversation],
-            oldConversationList != newList {
+        if let oldConversationList = folderItems(for: sectionIndex),
+            oldConversationList != newConversationList {
 
             ///TODO: use diff kit and retire requiresReload
             let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
-            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newList))
+            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
             let updatedState = ZMOrderedSetState(orderedSet: [])
 
             guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return true}
@@ -381,7 +364,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(sectionIndex: sectionIndex, withItems: newList)
+                    self.updateSection(sectionIndex: sectionIndex, withItems: newConversationList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -447,8 +430,6 @@ extension ConversationListViewModel: ZMUserObserver {
 
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
-
-        ///TODO: check the info instead of compare the lists
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
@@ -461,7 +442,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                     updateConversationListAnimated()
                 case .contacts:
                     updateForConvoType(sectionIndex: .contacts)
-                default:
+                case .pending:
+                    updateForConvoType(sectionIndex: .contactRequests)
+                case .groups:
+                    updateForConvoType(sectionIndex: .group)
+                case .archived:
                     break
                 }
             }

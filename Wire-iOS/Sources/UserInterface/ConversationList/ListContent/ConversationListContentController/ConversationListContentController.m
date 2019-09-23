@@ -227,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         change.mutedMessageTypesChanged ||
         change.messagesChanged) {
         
-        [self updateCellForConversation:change.conversation]; 
+        [self updateCellForConversation:change.conversation];
     }
 }///TODO: mv logic to VM
 
@@ -273,7 +273,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([self.listViewModel numberOfItemsInSection:0] > 0) {
         
         self.focusOnNextSelection = focus;
-        [self selectModelItem:self.listViewModel.contactRequestsItem];
+        [self selectModelItem: ConversationListViewModel.contactRequestsItem];
         return YES;
     }
     return NO;
