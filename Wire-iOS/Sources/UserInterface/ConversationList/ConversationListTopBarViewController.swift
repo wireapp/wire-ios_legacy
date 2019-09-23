@@ -148,30 +148,6 @@ final class ConversationListTopBarViewController: UIViewController {
         return button
     }
 
-    func createDummyToggleBtn() -> UIView {
-        let button = IconButton(style: .circular)
-        button.setBackgroundImageColor(UIColor.softPink, for: .normal)
-
-        button.setIcon(.paperclip, size: 12, for: .normal)
-        button.setIconColor(.white, for: .normal)
-        button.setIconColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
-
-        button.addTarget(self, action: #selector(toggleSort), for: .touchUpInside)
-
-        NSLayoutConstraint.activate([
-            button.widthAnchor.constraint(equalToConstant: 24),
-            button.heightAnchor.constraint(equalToConstant: 24)
-            ])
-
-        return button
-    }
-
-    @objc
-    func toggleSort() {
-        ZClientViewController.shared()?.conversationListViewController.listContentController.toggleSort() ///TODO:
-    }
-
-
     func updateAccountView() {
         topBar?.leftView = createAccountView()
     }
@@ -204,7 +180,7 @@ final class ConversationListTopBarViewController: UIViewController {
     func updateLegalHoldIndictor() {
         switch selfUser.legalHoldStatus {
         case .disabled:
-            topBar?.rightView = createDummyToggleBtn() ///TODO: a dummy btn to toggle arrange convo
+            topBar?.rightView = nil
         case .pending:
             topBar?.rightView = createPendingLegalHoldRequestView()
         case .enabled:

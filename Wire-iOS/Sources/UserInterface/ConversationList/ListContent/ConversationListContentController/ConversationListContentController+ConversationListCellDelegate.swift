@@ -34,9 +34,3 @@ extension ConversationListContentController: ConversationListCellDelegate {
         startCallController.joinCall()
     }
 }
-
-extension ConversationListContentController {
-    func toggleSort() {
-        listViewModel.toggleSort()
-    }
-}
