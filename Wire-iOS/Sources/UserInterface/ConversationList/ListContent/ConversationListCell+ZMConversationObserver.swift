@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class AnimatedListMenuView;
+import Foundation
 
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
-static const NSTimeInterval OverscrollRatio = 2.5;
+extension ConversationListCell {
+    @objc
+    func setupConversationObserver(conversation: ZMConversation) {
+        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+    }
+}
 
-@interface ConversationListCell ()
-
-@property (nonatomic) BOOL hasCreatedInitialConstraints;
-@property (nonatomic) AnimatedListMenuView *menuDotsView;
-@property (nonatomic) NSDate *overscrollStartDate;
-
-@property (nonatomic) id conversationObserverToken;
-
-@end
+extension ConversationListCell: ZMConversationObserver {
+    public func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+        updateAppearance()
+    }
+}

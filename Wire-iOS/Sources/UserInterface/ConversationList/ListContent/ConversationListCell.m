@@ -112,6 +112,8 @@
         self.typingObserverToken = [_conversation addTypingObserver:self];
         
         [self updateAppearance];
+
+        [self setupConversationObserverWithConversation: conversation];
     }
 }
     

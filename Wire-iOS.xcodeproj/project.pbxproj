@@ -1179,6 +1179,7 @@
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
 		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
 		EF4C5D4A23351CF00092CA38 /* ConversationListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */; };
+		EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4D23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift */; };
 		EF4FFB3522830BD200B69851 /* String+WholeRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4FFB3422830BD200B69851 /* String+WholeRangeTests.swift */; };
 		EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */; };
 		EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */; };
@@ -2980,6 +2981,7 @@
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+OpenFile.swift"; sourceTree = "<group>"; };
 		EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModelTests.swift; sourceTree = "<group>"; };
+		EF4C5D4D23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListCell+ZMConversationObserver.swift"; sourceTree = "<group>"; };
 		EF4FFB3422830BD200B69851 /* String+WholeRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+WholeRangeTests.swift"; sourceTree = "<group>"; };
 		EF51C2BE211B2CAF0099A599 /* Data+HEIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+HEIF.swift"; sourceTree = "<group>"; };
 		EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+IsVisible.swift"; sourceTree = "<group>"; };
@@ -5133,8 +5135,9 @@
 				8F8913F11A9F287E0056AB0C /* ConversationListCell.h */,
 				8F8913F21A9F287E0056AB0C /* ConversationListCell.m */,
 				EF1C7F0E232BC92B00F5DB5B /* ConversationListCell+Scroll.swift */,
-				EFEE97C723229CF5007A4702 /* ConversationListCellDelegate.swift */,
 				EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */,
+				EF4C5D4D23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift */,
+				EFEE97C723229CF5007A4702 /* ConversationListCellDelegate.swift */,
 				8F8913F51A9F287E0056AB0C /* ConversationListItemView.h */,
 				EF6251D1213844D400943708 /* ConversationListItemView+Internal.h */,
 				8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */,
@@ -7629,6 +7632,7 @@
 				EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */,
 				F16427081FCC5BF800D2ABFC /* SetPasswordStepDescription.swift in Sources */,
 				5E8FFC0321ECC5CF0052DF03 /* AuthenticationFeatureProvider.swift in Sources */,
+				EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */,
 				EF51C2BF211B2CAF0099A599 /* Data+HEIF.swift in Sources */,
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */,

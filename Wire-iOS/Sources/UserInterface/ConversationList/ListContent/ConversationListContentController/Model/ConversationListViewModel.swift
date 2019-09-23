@@ -73,7 +73,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = true {
+    var folderEnabled = true {///TODO: read/write to storage
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -85,10 +85,7 @@ final class ConversationListViewModel: NSObject {
     // Local copies of the lists.
     private var folders: [Folder] = []
 
-    ///TODO: retire
-    private var conversationListObserverToken: Any?
     private var conversationDirectoryToken: Any?
-
 
     override init() {
         super.init()
@@ -106,10 +103,6 @@ final class ConversationListViewModel: NSObject {
         ///TODO:
         //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
         conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
-
-
-        ///TODO: keep this for signal cell conversation update
-        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
     }
 
     @objc
@@ -466,18 +459,5 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                 }
             }
         }
-    }
-}
-
-///TODO: retire
-extension ConversationListViewModel: ZMConversationListObserver {
-
-    ///TODO: mv to cell
-    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
-        delegate?.listViewModel(self, didUpdateConversationWithChange: changeInfo)
-    }
-
-    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
-        /// no op
     }
 }
