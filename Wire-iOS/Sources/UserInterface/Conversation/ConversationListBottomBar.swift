@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 
 enum ConversationListButtonType {
-    case archive, startUI
+    case archive, startUI, list, folder
 }
 
 protocol ConversationListBottomBarControllerDelegate: class {
@@ -32,23 +32,23 @@ final class ConversationListBottomBarController: UIViewController {
 
     weak var delegate: ConversationListBottomBarControllerDelegate?
 
+    let buttonStackview = UIStackView(axis: .horizontal)
+    
     let startUIButton  = IconButton()
+    let listButton     = IconButton()
+    let folderButton   = IconButton()
     let archivedButton = IconButton()
 
     let separator = UIView()
+    
     private let heightConstant: CGFloat = 56
     private let xInset: CGFloat = 16
 
-    private var didLayout = false
-
     var showArchived: Bool = false {
         didSet {
-            guard didLayout else { return }
-            updateViews()
+            self.archivedButton.isHidden = !self.showArchived
         }
     }
-
-    private let showComposeButtons: Bool = false // Set this to show the compose buttons
 
     var showSeparator: Bool {
         set { separator.fadeAndHide(!newValue) }
@@ -57,8 +57,11 @@ final class ConversationListBottomBarController: UIViewController {
 
     required init() {
         super.init(nibName: nil, bundle: nil)
-        self.view.backgroundColor = UIColor.clear
+        
+//        self.view.backgroundColor = UIColor.clear
+        
         createViews()
+        createConstraints()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -68,29 +71,48 @@ final class ConversationListBottomBarController: UIViewController {
 
     private func createViews() {
         separator.backgroundColor = UIColor.from(scheme: .separator, variant: .light)
+        separator.isHidden = true
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        
+        listButton.setIcon(.hamburger, size: .tiny, for: [])
+        listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
+        listButton.accessibilityIdentifier = "bottomBarListButton"
+        listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
+        listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized // TODO jacob update
+        
+        folderButton.setIcon(.addPerson, size: .tiny, for: [])
+        folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
+        folderButton.accessibilityIdentifier = "bottomBarFolderButton"
+        folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
+        folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized // TODO jacob update
         
         archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
         archivedButton.accessibilityIdentifier = "bottomBarArchivedButton"
         archivedButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized
         archivedButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized
+        archivedButton.isHidden = true
 
         startUIButton.setIcon(.person, size: .tiny, for: .normal)
         startUIButton.addTarget(self, action: #selector(startUIButtonTapped), for: .touchUpInside)
         startUIButton.accessibilityIdentifier = "bottomBarPlusButton"
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
-
-        [archivedButton, startUIButton].forEach { button in
+        
+        let buttons = [startUIButton, listButton, folderButton, archivedButton]
+        
+        buttonStackview.distribution = .equalSpacing
+        buttonStackview.alignment = .center
+        buttonStackview.translatesAutoresizingMaskIntoConstraints = false
+        
+        buttons.forEach { button in
             button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            buttonStackview.addArrangedSubview(button)
         }
-
-        addSubviews()
-        [separator, archivedButton].forEach{ $0.isHidden = true }
-
-        if !showComposeButtons {
-            createConstraints()
-        }
+        
+        view.addSubview(buttonStackview)
+        view.addSubview(separator)
     }
 
     private func addSubviews() {
@@ -98,48 +120,40 @@ final class ConversationListBottomBarController: UIViewController {
     }
 
     private func createConstraints() {
-        constrain(view, separator) { view, separator in
-            view.height == heightConstant ~ 750
-            separator.height == .hairline
-            separator.leading == view.leading
-            separator.trailing == view.trailing
-            separator.top == view.top
-        }
-
-        constrain(view, startUIButton, archivedButton) { view, startUIButton, archivedButton in
-            startUIButton.centerY == view.centerY
-            archivedButton.centerY == view.centerY
-            archivedButton.trailing == view.trailing - xInset
-
-            if showArchived {
-                startUIButton.leading == view.leading + xInset
-            } else {
-                startUIButton.centerX == view.centerX
-            }
-        }
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateViews()
-        didLayout = true
-    }
-
-    func updateViews() {
-        archivedButton.isHidden = !showArchived
-        [archivedButton, startUIButton, separator].forEach { $0.removeFromSuperview() }
-        
-        addSubviews()
-        createConstraints()
+        NSLayoutConstraint.activate([
+            view.heightAnchor.constraint(equalToConstant: heightConstant),
+            
+            separator.heightAnchor.constraint(equalToConstant: .hairline),
+            separator.leftAnchor.constraint(equalTo: view.leftAnchor),
+            separator.rightAnchor.constraint(equalTo: view.rightAnchor),
+            separator.topAnchor.constraint(equalTo: view.topAnchor),
+            
+            buttonStackview.leftAnchor.constraint(equalTo: view.leftAnchor, constant: xInset),
+            buttonStackview.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -xInset),
+            buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
+            buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
 
     // MARK: - Target Action
-
-    @objc private dynamic func archivedButtonTapped(_ sender: IconButton) {
+    
+    @objc
+    private dynamic func listButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
+    }
+    
+    @objc
+    private dynamic func folderButtonTapped(_ sender: IconButton) {
+        delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
+    }
+    
+    @objc
+    private dynamic func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
-
-    @objc private dynamic func startUIButtonTapped(_ sender: IconButton) {
+    
+    @objc
+    private dynamic func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 }
@@ -147,6 +161,7 @@ final class ConversationListBottomBarController: UIViewController {
 // MARK: - Helper
 
 public extension UIView {
+    
     func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {
             alpha = 0
@@ -157,5 +172,6 @@ public extension UIView {
         let completion: (Bool) -> Void = { _ in self.isHidden = hide }
         UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: animations, completion: completion)
     }
+    
 }
 

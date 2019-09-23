@@ -26,6 +26,10 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
             setState(.archived, animated: true)
         case .startUI:
             presentPeoplePicker()
+        case .folder:
+            break // TODO: present folder view
+        case .list:
+            break // TODO: present list view
         }
     }
 }
