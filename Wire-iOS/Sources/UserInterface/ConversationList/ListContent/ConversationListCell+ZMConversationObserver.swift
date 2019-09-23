@@ -26,7 +26,18 @@ extension ConversationListCell {
 }
 
 extension ConversationListCell: ZMConversationObserver {
-    public func conversationDidChange(_ changeInfo: ConversationChangeInfo) {
+    public func conversationDidChange(_ change: ConversationChangeInfo) {
+        guard change.conversation == self.conversation,
+            (change.isArchivedChanged ||
+            change.conversationListIndicatorChanged ||
+            change.nameChanged ||
+            change.unreadCountChanged ||
+            change.connectionStateChanged ||
+            change.mutedMessageTypesChanged ||
+            change.messagesChanged) else { return }
+
+
+        ///TODO: consider not update if not visible
         updateAppearance()
     }
 }

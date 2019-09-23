@@ -216,21 +216,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.focusOnNextSelection = NO;
 }
 
-///TODO: mv the logic to VM
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change
-{
-    if (change.isArchivedChanged ||
-        change.conversationListIndicatorChanged ||
-        change.nameChanged ||
-        change.unreadCountChanged ||
-        change.connectionStateChanged ||
-        change.mutedMessageTypesChanged ||
-        change.messagesChanged) {
-        
-        [self updateCellForConversation:change.conversation];
-    }
-}///TODO: mv logic to VM
-
 - (void)updateVisibleCells
 {
     [self updateCellForConversation:nil];

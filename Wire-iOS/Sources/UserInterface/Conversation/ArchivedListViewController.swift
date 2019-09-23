@@ -159,7 +159,8 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
+    ///TODO: retire
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
         guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
             change.unreadCountChanged || change.connectionStateChanged || change.mutedMessageTypesChanged else { return }
