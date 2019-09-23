@@ -136,22 +136,22 @@ final class ConversationListBottomBarController: UIViewController {
     // MARK: - Target Action
     
     @objc
-    private dynamic func listButtonTapped(_ sender: IconButton) {
+    private func listButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
     }
     
     @objc
-    private dynamic func folderButtonTapped(_ sender: IconButton) {
+    private func folderButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
     }
     
     @objc
-    private dynamic func archivedButtonTapped(_ sender: IconButton) {
+    private func archivedButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .archive)
     }
     
     @objc
-    private dynamic func startUIButtonTapped(_ sender: IconButton) {
+    private func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
     }
 }
