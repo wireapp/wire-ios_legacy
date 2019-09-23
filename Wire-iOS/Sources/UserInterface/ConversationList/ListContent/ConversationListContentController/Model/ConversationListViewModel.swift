@@ -97,7 +97,7 @@ final class ConversationListViewModel: NSObject {
 //        pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
 //
         ///TODO: keep this for signal cell conversation update
-        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
+//        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
 //
 //        clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
 
@@ -463,16 +463,25 @@ extension ConversationListViewModel: ZMUserObserver {
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
 
-//        guard let userSession = ZMUserSession.shared() else { return }
-
         ///TODO: check the info instead of compare the lists
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
             reload()
         } else { ///TODO: unarchived -> one to one
-//            switch changeInfo.updatedLists
-            updateConversationListAnimated() ///TODO: update oneOneOne also
+            for updatedList in changeInfo.updatedLists {
+            switch updatedList {
+            case .unarchived:
+                ///TODO: only handle when non-folder mode
+                updateConversationListAnimated()
+            case .contacts:
+//                update
+                break
+            default:
+                break
+            }
+            }
+//            updateConversationListAnimated() ///TODO: update oneOneOne also
 //            log.info("RELOAD section requests")
 //                let dir = userSession.managedObjectContext.
 //
@@ -490,33 +499,12 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
 ///TODO: retire
 extension ConversationListViewModel: ZMConversationListObserver {
 
-    ///TODO: still need to observe for single cell changes?
+    ///TODO: mv to cell
     public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         delegate?.listViewModel(self, didUpdateConversationWithChange: changeInfo)
     }
 
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
         /// no op
-        /*
-        return
-        guard let userSession = ZMUserSession.shared() else { return }
-
-        ///TODO: check the info instead of compare the lists
-        if changeInfo.conversationList == ZMConversationList.conversations(inUserSession: userSession) {
-            // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
-            // so we prefer to do the simple reload instead.
-
-            updateConversationListAnimated() ///TODO: update oneOneOne also
-        } else if changeInfo.conversationList == ZMConversationList.pendingConnectionConversations(inUserSession: userSession) {
-            log.info("RELOAD contact requests")
-
-            let sectionIndex = SectionIndex.contactRequests
-            updateSection(sectionIndex)
-
-            if let sectionNumber = sectionNumber(for: sectionIndex) {
-                delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
-            }
-        }
- */
     }
 }
