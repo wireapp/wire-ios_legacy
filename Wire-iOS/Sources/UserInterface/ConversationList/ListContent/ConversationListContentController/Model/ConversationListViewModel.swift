@@ -64,10 +64,10 @@ final class ConversationListViewModel: NSObject {
     private var folders: [Folder] = []
 
     ///TODO: retire
-    private var pendingConversationListObserverToken: Any?
-    private var conversationListObserverToken: Any?
-    private var clearedConversationListObserverToken: Any?
-    private var conversationListsReloadObserverToken: Any?
+//    private var pendingConversationListObserverToken: Any?
+//    private var conversationListObserverToken: Any?
+//    private var clearedConversationListObserverToken: Any?
+//    private var conversationListsReloadObserverToken: Any?
 
     private var conversationDirectoryToken: Any?
 
@@ -76,35 +76,29 @@ final class ConversationListViewModel: NSObject {
         super.init()
 
         updateAllSections()
-        setupObserversForListReloading()
-        setupObserversForActiveTeam()
+        setupObservers()
         subscribeToTeamsUpdates()
     }
 
-    private func setupObserversForListReloading() {
+    private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {
             return
         }
 
-        conversationListsReloadObserverToken = ConversationListChangeInfo.add(observer: self, userSession: userSession)
-    }
-
-    private func setupObserversForActiveTeam() {
-        guard let userSession = ZMUserSession.shared() else {
-            return
-        }
+//        conversationListsReloadObserverToken = ConversationListChangeInfo.add(observer: self, userSession: userSession)
 
         ///TODO:
 //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
 
-//        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
+        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
 
 
-        pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
-
-        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
-
-        clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
+        ///TODO: retire
+//        pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
+//
+//        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
+//
+//        clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
 
         ///TODO: oberve more lists?
     }
@@ -179,7 +173,7 @@ final class ConversationListViewModel: NSObject {
     private
     func reload() {
         updateAllSections()
-        setupObserversForActiveTeam()
+        setupObservers()
         log.debug("RELOAD conversation list")
         delegate?.listViewModelShouldBeReloaded()
     }
@@ -456,6 +450,7 @@ final class ConversationListViewModel: NSObject {
 
 fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
 
+///TODO: retire
 extension ConversationListViewModel: ZMConversationListReloadObserver {
     func conversationListsDidReload() {
         reload()
@@ -477,13 +472,12 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
 //        guard let userSession = ZMUserSession.shared() else { return }
 
         ///TODO: check the info instead of compare the lists
-//        if changeInfo.reloaded {
-            if true {
+        if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
-
-            updateConversationListAnimated() ///TODO: update oneOneOne also
+            reload()
         } else {
+            updateConversationListAnimated() ///TODO: update oneOneOne also
 //            log.info("RELOAD section requests")
 //                let dir = userSession.managedObjectContext.
 //
