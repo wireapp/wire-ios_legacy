@@ -58,8 +58,6 @@ final class ConversationListBottomBarController: UIViewController {
     required init() {
         super.init(nibName: nil, bundle: nil)
         
-//        self.view.backgroundColor = UIColor.clear
-        
         createViews()
         createConstraints()
     }
