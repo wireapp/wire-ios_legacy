@@ -65,7 +65,7 @@ final class ConversationListViewModel: NSObject {
 
     ///TODO: retire
 //    private var pendingConversationListObserverToken: Any?
-//    private var conversationListObserverToken: Any?
+    private var conversationListObserverToken: Any?
 //    private var clearedConversationListObserverToken: Any?
 //    private var conversationListsReloadObserverToken: Any?
 
@@ -96,7 +96,8 @@ final class ConversationListViewModel: NSObject {
         ///TODO: retire
 //        pendingConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.pendingConnectionConversations(inUserSession: userSession), userSession: userSession)
 //
-//        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
+        ///TODO: keep this for signal cell conversation update
+        conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: userSession), userSession: userSession)
 //
 //        clearedConversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.clearedConversations(inUserSession: userSession), userSession: userSession)
 
@@ -450,13 +451,6 @@ final class ConversationListViewModel: NSObject {
 
 fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
 
-///TODO: retire
-extension ConversationListViewModel: ZMConversationListReloadObserver {
-    func conversationListsDidReload() {
-        reload()
-    }
-}
-
 extension ConversationListViewModel: ZMUserObserver {
 
     public func userDidChange(_ note: UserChangeInfo) {
@@ -476,7 +470,8 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
             // so we prefer to do the simple reload instead.
             reload()
-        } else {
+        } else { ///TODO: unarchived -> one to one
+//            switch changeInfo.updatedLists
             updateConversationListAnimated() ///TODO: update oneOneOne also
 //            log.info("RELOAD section requests")
 //                let dir = userSession.managedObjectContext.
@@ -501,8 +496,9 @@ extension ConversationListViewModel: ZMConversationListObserver {
     }
 
     public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
-//        return
-        ///TODO: no op
+        /// no op
+        /*
+        return
         guard let userSession = ZMUserSession.shared() else { return }
 
         ///TODO: check the info instead of compare the lists
@@ -521,5 +517,6 @@ extension ConversationListViewModel: ZMConversationListObserver {
                 delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             }
         }
+ */
     }
 }

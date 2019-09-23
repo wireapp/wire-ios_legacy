@@ -227,7 +227,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         change.mutedMessageTypesChanged ||
         change.messagesChanged) {
         
-        [self updateCellForConversation:change.conversation];
+        [self updateCellForConversation:change.conversation]; 
     }
 }///TODO: mv logic to VM
 
