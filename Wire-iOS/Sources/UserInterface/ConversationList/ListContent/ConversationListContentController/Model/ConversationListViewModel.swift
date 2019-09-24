@@ -67,7 +67,7 @@ final class ConversationListViewModel: NSObject {
     /// ZMConversaton or ConversationListConnectRequestsItem
     ///TODO: protocol
     @objc
-    private(set) var selectedItem: Any?
+    private(set) var selectedItem: AnyHashable?
 
     @objc
     weak var delegate: ConversationListViewModelDelegate?
@@ -399,7 +399,7 @@ final class ConversationListViewModel: NSObject {
 
     @objc(selectItem:)
     @discardableResult
-    func select(itemToSelect: Any?) -> Bool {
+    func select(itemToSelect: AnyHashable?) -> Bool {
         guard let itemToSelect = itemToSelect else {
             selectedItem = nil
             delegate?.listViewModel(self, didSelectItem: nil)
@@ -407,8 +407,8 @@ final class ConversationListViewModel: NSObject {
             return false
         }
 
-        // Couldn't find the item
-        if self.indexPath(for: itemToSelect as? NSObject) == nil {
+        // Couldn't find the item, try unarchive it first
+        if self.indexPath(for: itemToSelect) == nil {
             (itemToSelect as? ZMConversation)?.unarchive()
         }
 
