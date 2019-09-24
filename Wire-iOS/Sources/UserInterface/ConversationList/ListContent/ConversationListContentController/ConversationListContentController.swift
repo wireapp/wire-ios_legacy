@@ -42,7 +42,9 @@ extension ConversationListContentController {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as! ConversationListHeaderView
             header.desiredWidth = collectionView.frame.width
-            header.desiredHeight = sectionHeaderHeight
+            header.desiredHeight = sectionHeaderHeight(indexPath: indexPath)
+            header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)
+
             return header
         default:
             fatal("No supplementary view for \(kind)")
@@ -56,14 +58,21 @@ extension ConversationListContentController {
 
     }
 
-    var sectionHeaderHeight: CGFloat {
-        ///TODO: no show if no item
+    var headerDesiredHeight: CGFloat {
         return listViewModel.folderEnabled ? 48:0
+    }
+
+    func sectionHeaderHeight(indexPath: IndexPath? = nil) -> CGFloat {
+        guard let indexPath = indexPath else {
+            return headerDesiredHeight
+        }
+
+        return listViewModel.numberOfItems(inSection: UInt(indexPath.section)) <= 0 ? 0 : headerDesiredHeight
     }
 
     @objc
     func updateSectionHeaderHeight() {
-        (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: sectionHeaderHeight)
+        (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: headerDesiredHeight)
     }
 
     @objc
@@ -87,8 +96,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.font = .smallSemiboldFont ///TODO: define style
         label.textColor = .white
-
-        label.text = "blah" ///TODO:
 
         return label
     }()

@@ -109,6 +109,29 @@ final class ConversationListViewModel: NSObject {
         conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
     }
 
+    func sectionHeaderTitle(sectionIndex: Int) -> String? {
+        switch kind(of: sectionIndex) {
+
+             ///TODO: confrim the strings
+        case .none:
+             return nil
+        case .conversations?:
+            return nil
+        case .contactRequests?:
+            return "Requests".localized
+        case .contacts?:
+            return "Contacts".localized
+        case .group?:
+            return "Groups".localized
+        }
+    }
+
+    private func kind(of sectionIndex: Int) -> Section.Kind? {
+        guard sections.indices.contains(sectionIndex) else { return nil }
+
+        return sections[sectionIndex].kind
+    }
+
     @objc
     var sectionCount: UInt {
         return UInt(sections.count)
