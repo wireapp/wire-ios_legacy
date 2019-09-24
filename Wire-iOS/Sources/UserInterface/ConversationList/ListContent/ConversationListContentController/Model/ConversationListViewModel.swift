@@ -122,8 +122,8 @@ final class ConversationListViewModel: NSObject {
         return UInt(sections[Int(sectionIndex)].items.count)
     }
 
-    private func numberOfItems(in section: Section.Kind) -> Int? {
-        return sections.first(where: { $0.kind == section })?.items.count ?? nil
+    private func numberOfItems(of kind: Section.Kind) -> Int? {
+        return sections.first(where: { $0.kind == kind })?.items.count ?? nil
     }
 
     @objc(sectionAtIndex:)
@@ -285,7 +285,7 @@ final class ConversationListViewModel: NSObject {
         for section in Section.Kind.allCases {
             let items = ConversationListViewModel.newList(for: section, userSession: userSession)
 
-            updateSection(section: section, withItems: items)
+            update(kind: section, with: items)
         }
     }
 
@@ -297,20 +297,20 @@ final class ConversationListViewModel: NSObject {
     /// - Parameters:
     ///   - sectionIndex: the section to update
     ///   - items: updated items
-    private func updateSection(section: Section.Kind, withItems items: [AnyHashable]?) {
+    private func update(kind: Section.Kind, with items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
-        if let sectionNumber = self.sectionNumber(for: section) {
+        if let sectionNumber = self.sectionNumber(for: kind) {
             sections[sectionNumber].items = items ?? []
         } else {
             // Re-create the sections
-            createSections(replaceSection: section, withReplaceItems: items)
+            createSections(replaceKind: kind, withReplaceItems: items)
         }
     }
 
 
     /// Create the section structure
-    private func createSections(replaceSection: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
+    private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
         if folderEnabled {
             sections = [Section(kind: .contactRequests, userSession: userSession),
                        Section(kind: .group, userSession: userSession),
@@ -320,7 +320,7 @@ final class ConversationListViewModel: NSObject {
                        Section(kind: .conversations, userSession: userSession)]
         }
 
-        if let sectionNumber = self.sectionNumber(for: replaceSection) {
+        if let sectionNumber = self.sectionNumber(for: replaceKind) {
             sections[sectionNumber].items = replaceItems ?? []
         }
     }
@@ -335,9 +335,9 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func sectionNumber(for section: Section.Kind) -> Int? {
+    private func sectionNumber(for kind: Section.Kind) -> Int? {
         for (index, section) in sections.enumerated() {
-            if section.kind == section {
+            if section.kind == kind {
                 return index
             }
         }
@@ -369,7 +369,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.updateSection(section: section, withItems: newConversationList)
+                    self.update(kind: section, with: newConversationList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -383,8 +383,8 @@ final class ConversationListViewModel: NSObject {
 
     private func updateConversationListAnimated() {
         /// reload if all sections are empty
-        if numberOfItems(in: .conversations) == 0 &&
-            numberOfItems(in: .contacts) == 0 {
+        if numberOfItems(of: .conversations) == 0 &&
+            numberOfItems(of: .contacts) == 0 {
             reload()
         } else {
             sectionKinds.forEach() {
