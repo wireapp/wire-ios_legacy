@@ -25,7 +25,7 @@ static NSString * _Nullable const CellReuseIdConversation = @"CellId";
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
+@interface ConversationListContentController () <ConversationListViewModelDelegate>
 
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
 

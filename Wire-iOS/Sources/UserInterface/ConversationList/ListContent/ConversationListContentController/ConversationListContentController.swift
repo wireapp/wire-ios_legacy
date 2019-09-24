@@ -42,7 +42,7 @@ extension ConversationListContentController {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as! ConversationListHeaderView
             header.desiredWidth = collectionView.frame.width
-            header.desiredHeight = sectionHeaderHeight(indexPath: indexPath)
+            header.desiredHeight = listViewModel.sectionVisible(section: indexPath) ? headerDesiredHeight: 0
             header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)
 
             return header
@@ -60,14 +60,6 @@ extension ConversationListContentController {
 
     var headerDesiredHeight: CGFloat {
         return listViewModel.folderEnabled ? 48:0
-    }
-
-    func sectionHeaderHeight(indexPath: IndexPath? = nil) -> CGFloat {
-        guard let indexPath = indexPath else {
-            return headerDesiredHeight
-        }
-
-        return listViewModel.numberOfItems(inSection: UInt(indexPath.section)) <= 0 ? 0 : headerDesiredHeight
     }
 
     @objc
@@ -88,45 +80,60 @@ extension ConversationListContentController {
     }
 }
 
-final class ConversationListHeaderView: UICollectionReusableView {
-    var desiredWidth: CGFloat = 0
-    var desiredHeight: CGFloat = 0
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.font = .smallSemiboldFont ///TODO: define style
-        label.textColor = .white
-
-        return label
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        addSubview(titleLabel)
-
-        createConstraints()
+extension ConversationListContentController: UICollectionViewDelegateFlowLayout {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.size.width, height: listViewModel.sectionVisible(section: section) ? headerDesiredHeight: 0)
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return layoutCell.size(inCollectionViewSize: collectionView.bounds.size)
     }
 
-    func createConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                     titleLabel.topAnchor.constraint(equalTo: topAnchor),
-                                     titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)])
-    }
-
-    override public var intrinsicContentSize: CGSize {
-        get {
-            return CGSize(width: desiredWidth,
-                          height: desiredHeight)
-        }
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
     }
 }
 
+//@available(iOS 6.0, *)
+//optional
+//@available(iOS 6.0, *)
+//optional
+//
+//@available(iOS 6.0, *)
+//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
+//
+//@available(iOS 6.0, *)
+//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
+//
+//@available(iOS 6.0, *)
+//optional
+//
+//@available(iOS 6.0, *)
+//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
+
+
+/*
+ @implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
+
+ - (CGSize)collectionView:(UICollectionView *)collectionView
+ layout:(UICollectionViewLayout *)collectionViewLayout
+ sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+ {
+ return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
+ }
+
+ - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
+ layout:(UICollectionViewLayout *)collectionViewLayout
+ insetForSectionAtIndex:(NSInteger)section
+ {
+ if (section == 0) {
+ return UIEdgeInsetsMake(12, 0, 0, 0);
+ }
+ else {
+ return UIEdgeInsetsMake(0, 0, 0, 0);
+ }
+ }
+
+ @end
+ */

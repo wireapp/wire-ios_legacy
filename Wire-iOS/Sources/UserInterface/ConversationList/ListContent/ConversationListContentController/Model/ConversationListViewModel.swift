@@ -126,6 +126,11 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
+    func sectionVisible(section: Int) -> Bool {
+        return numberOfItems(inSection: UInt(section)) > 0
+    }
+
+
     private func kind(of sectionIndex: Int) -> Section.Kind? {
         guard sections.indices.contains(sectionIndex) else { return nil }
 

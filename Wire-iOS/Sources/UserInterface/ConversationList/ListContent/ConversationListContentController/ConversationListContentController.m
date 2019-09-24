@@ -408,28 +408,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 
-@implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section
-{
-    if (section == 0) {
-        return UIEdgeInsetsMake(12, 0, 0, 0);
-    }
-    else {
-        return UIEdgeInsetsMake(0, 0, 0, 0);
-    }
-}
-
-@end
 
 @implementation ConversationListContentController (PeekAndPop)
 
