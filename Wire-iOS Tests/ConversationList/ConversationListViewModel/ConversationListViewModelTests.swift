@@ -18,7 +18,6 @@
 
 import XCTest
 @testable import Wire
-@testable import WireDataModel
 
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
     func listViewModelShouldBeReloaded() {

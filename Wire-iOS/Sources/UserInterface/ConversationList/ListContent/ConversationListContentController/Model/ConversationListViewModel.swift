@@ -381,7 +381,7 @@ final class ConversationListViewModel: NSObject {
         return false
     }
 
-    private func updateConversationListAnimated() {
+    private func updateAllConversations() {
         /// reload if all sections are empty
         if numberOfItems(of: .conversations) == 0 &&
             numberOfItems(of: .contacts) == 0 {
@@ -432,7 +432,7 @@ extension ConversationListViewModel: ZMUserObserver {
 
     public func userDidChange(_ note: UserChangeInfo) {
         if note.teamsChanged {
-            updateConversationListAnimated()
+            updateAllConversations()
         }
     }
 }
