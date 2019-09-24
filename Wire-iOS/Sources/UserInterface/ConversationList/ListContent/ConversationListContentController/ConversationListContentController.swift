@@ -35,7 +35,7 @@ extension ConversationListContentController {
     }
 
     @objc
-    func refresh() {
+    func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
 

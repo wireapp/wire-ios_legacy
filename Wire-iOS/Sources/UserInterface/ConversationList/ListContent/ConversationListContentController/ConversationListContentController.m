@@ -108,7 +108,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)listViewModelShouldBeReloaded
 {
-    [self refresh];
+    [self reload];
 }
 
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
