@@ -34,15 +34,27 @@ extension ConversationListContentController {
         }
     }
 
+    @objc
+    func refresh() {
+        collectionView.reloadData()
+        ensureCurrentSelection()
+
+        updateSectionHeaderHeight()
+
+        // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
+        // and then unarchive all at the same time
+        view.layoutIfNeeded()
+    }
+
     // MARK: - section header
 
     open override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
-        switch (kind) {
+        switch kind {
         case UICollectionView.elementKindSectionHeader:
             let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as! ConversationListHeaderView
             header.desiredWidth = collectionView.frame.width
-            header.desiredHeight = listViewModel.sectionVisible(section: indexPath) ? headerDesiredHeight: 0
+            header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
             header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)
 
             return header
@@ -66,18 +78,6 @@ extension ConversationListContentController {
     func updateSectionHeaderHeight() {
         (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: headerDesiredHeight)
     }
-
-    @objc
-    func refresh() {
-        collectionView.reloadData()
-        ensureCurrentSelection()
-
-        updateSectionHeaderHeight()
-
-        // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
-        // and then unarchive all at the same time
-        view.layoutIfNeeded()
-    }
 }
 
 
@@ -94,46 +94,3 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
         return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
     }
 }
-
-//@available(iOS 6.0, *)
-//optional
-//@available(iOS 6.0, *)
-//optional
-//
-//@available(iOS 6.0, *)
-//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat
-//
-//@available(iOS 6.0, *)
-//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat
-//
-//@available(iOS 6.0, *)
-//optional
-//
-//@available(iOS 6.0, *)
-//optional func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize
-
-
-/*
- @implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
-
- - (CGSize)collectionView:(UICollectionView *)collectionView
- layout:(UICollectionViewLayout *)collectionViewLayout
- sizeForItemAtIndexPath:(NSIndexPath *)indexPath
- {
- return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
- }
-
- - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
- layout:(UICollectionViewLayout *)collectionViewLayout
- insetForSectionAtIndex:(NSInteger)section
- {
- if (section == 0) {
- return UIEdgeInsetsMake(12, 0, 0, 0);
- }
- else {
- return UIEdgeInsetsMake(0, 0, 0, 0);
- }
- }
-
- @end
- */
