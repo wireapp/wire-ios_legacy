@@ -207,4 +207,18 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedItem, mockConversation)
     }
 
+    func testForSelectItemAtIndex() {
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        ///WHEN
+        let indexPath = sut.indexPath(for: mockConversation)!
+
+        ///THEN
+        XCTAssertEqual(sut.selectItem(at: indexPath), mockConversation)
+    }
+
 }

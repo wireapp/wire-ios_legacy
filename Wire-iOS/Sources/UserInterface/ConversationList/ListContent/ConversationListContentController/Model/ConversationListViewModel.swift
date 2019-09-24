@@ -186,7 +186,7 @@ final class ConversationListViewModel: NSObject {
     /// - Returns: the item selected
     @objc(selectItemAtIndexPath:)
     @discardableResult
-    func selectItem(at indexPath: IndexPath) -> Any? {
+    func selectItem(at indexPath: IndexPath) -> AnyHashable? {
         let item = self.item(for: indexPath)
         select(itemToSelect: item)
         return item
