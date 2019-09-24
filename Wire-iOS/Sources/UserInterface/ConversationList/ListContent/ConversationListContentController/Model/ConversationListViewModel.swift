@@ -153,20 +153,23 @@ final class ConversationListViewModel: NSObject {
     private static func newList(for section: Section) -> [AnyHashable] {
         guard let userSession = ZMUserSession.shared() else { return [] }
 
+        let conversationListType: ConversationListType
         switch section {
         case .contactRequests:
-            return userSession.managedObjectContext.conversationListDirectory().conversations(by: .pending).count > 0 ? [contactRequestsItem] : []
+            conversationListType = .pending
+            return userSession.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
         case .conversations:
-            return ZMConversationList.conversations(inUserSession: userSession).map { $0 } as? [ZMConversation] ?? []
+            conversationListType = .unarchived
         case .contacts:
-            return ZMUserSession.shared()?.oneToOneConversations.map { $0 } ?? []
+            conversationListType = .contacts
         case .group:
-            return ZMUserSession.shared()?.groupConversations.map { $0 } ?? []
+            conversationListType = .groups
         }
+
+        return userSession.conversations(by: conversationListType)
     }
 
-    private
-    func reload() {
+    private func reload() {
         updateAllSections()
         setupObservers()
         log.debug("RELOAD conversation list")

@@ -30,12 +30,7 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
 extension ZMUserSession: ZMUserSessionInterface {}
 
 extension ZMUserSession {
-    ///TODO: mv to DM
-    var oneToOneConversations: [ZMConversation]? {
-        return managedObjectContext.conversationListDirectory().oneToOneConversations as? [ZMConversation]
-    }
-
-    var groupConversations: [ZMConversation]? {
-        return managedObjectContext.conversationListDirectory().groupConversations as? [ZMConversation]
+    func conversations(by type: ConversationListType) -> [ZMConversation] {
+        return managedObjectContext.conversationListDirectory().conversations(by: type)
     }
 }
