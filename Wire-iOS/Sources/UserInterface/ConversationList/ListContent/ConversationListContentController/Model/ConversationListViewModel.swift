@@ -25,24 +25,25 @@ final class ConversationListConnectRequestsItem : NSObject {}
 
 
 final class ConversationListViewModel: NSObject {
-    enum Section: CaseIterable {
-        /// for incoming requests
-        case contactRequests
-
-        /// for self pending requests / conversations
-        case conversations
-
-        /// one to one conversations
-        case contacts
-
-        /// gorup conversations
-        case group
-
-        ///TODO:
-        //    case customFolder(folder: FolderType)
-    }
 
     private struct Folder {
+        enum Section: CaseIterable {
+            /// for incoming requests
+            case contactRequests
+
+            /// for self pending requests / conversations
+            case conversations
+
+            /// one to one conversations
+            case contacts
+
+            /// gorup conversations
+            case group
+
+            ///TODO:
+            //    case customFolder(folder: FolderType)
+        }
+
         var section: Section
         var items: [AnyHashable]
 
@@ -121,7 +122,7 @@ final class ConversationListViewModel: NSObject {
         return UInt(folders[Int(sectionIndex)].items.count)
     }
 
-    private func numberOfItems(in section: Section) -> Int? {
+    private func numberOfItems(in section: Folder.Section) -> Int? {
         return folders.first(where: { $0.section == section })?.items.count ?? nil
     }
 
@@ -153,7 +154,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private static func newList(for section: Section, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
+    private static func newList(for section: Folder.Section, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
         guard let userSession = userSession else { return [] } 
 
         let conversationListType: ConversationListType
@@ -281,7 +282,7 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func updateAllSections() {
-        for section in Section.allCases {
+        for section in Folder.Section.allCases {
             let items = ConversationListViewModel.newList(for: section, userSession: userSession)
 
             updateSection(section: section, withItems: items)
@@ -296,7 +297,7 @@ final class ConversationListViewModel: NSObject {
     /// - Parameters:
     ///   - sectionIndex: the section to update
     ///   - items: updated items
-    private func updateSection(section: Section, withItems items: [AnyHashable]?) {
+    private func updateSection(section: Folder.Section, withItems items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
         if let sectionNumber = self.sectionNumber(for: section) {
@@ -324,7 +325,7 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    private func folderItems(for section: Section) -> [AnyHashable]? {
+    private func folderItems(for section: Folder.Section) -> [AnyHashable]? {
         for folder in folders {
             if folder.section == section {
                 return folder.items
@@ -334,7 +335,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func sectionNumber(for section: Section) -> Int? {
+    private func sectionNumber(for section: Folder.Section) -> Int? {
         for (index, folder) in folders.enumerated() {
             if folder.section == section {
                 return index
@@ -345,7 +346,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     @discardableResult
-    private func updateForConversationType(section: Section) -> Bool {
+    private func updateForConversationType(section: Folder.Section) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
@@ -392,7 +393,7 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    private var folderSections: [Section] {
+    private var folderSections: [Folder.Section] {
         return folders.map() { return $0.section}
     }
 
