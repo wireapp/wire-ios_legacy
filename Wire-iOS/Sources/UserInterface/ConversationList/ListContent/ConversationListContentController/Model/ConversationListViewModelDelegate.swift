@@ -27,6 +27,5 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?)
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
 
-    ///TODO: retire
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
 }

@@ -73,7 +73,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = true {///TODO: read/write to storage
+    var folderEnabled = false {///TODO: read/write to storage
         didSet {
             guard folderEnabled != oldValue else { return }
 
