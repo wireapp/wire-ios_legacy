@@ -54,8 +54,8 @@ final class ConversationListViewModel: NSObject {
             return items.firstIndex(of: item)
         }
 
-        init(section: Section) {
-            items = ConversationListViewModel.newList(for: section)
+        init(section: Section, userSession: UserSessionSwiftInterface?) {
+            items = ConversationListViewModel.newList(for: section, userSession: userSession)
             self.section = section
         }
     }
@@ -91,7 +91,7 @@ final class ConversationListViewModel: NSObject {
 
     init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
         self.userSession = userSession
-        
+
         super.init()
 
         updateAllSections()
@@ -105,9 +105,7 @@ final class ConversationListViewModel: NSObject {
             return
         }
 
-        ///TODO:
-        //        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
-        conversationDirectoryToken = userSession.managedObjectContext.conversationListDirectory().addObserver(self)
+        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
     }
 
     @objc
@@ -155,8 +153,8 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private static func newList(for section: Section) -> [AnyHashable] {
-        guard let userSession = ZMUserSession.shared() else { return [] } ///TODO: mock
+    private static func newList(for section: Section, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
+        guard let userSession = userSession else { return [] } 
 
         let conversationListType: ConversationListType
         switch section {
@@ -284,7 +282,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     func updateAllSections() {
         for section in Section.allCases {
-            let items = ConversationListViewModel.newList(for: section)
+            let items = ConversationListViewModel.newList(for: section, userSession: userSession)
 
             updateSection(section: section, withItems: items)
         }
@@ -298,7 +296,7 @@ final class ConversationListViewModel: NSObject {
     /// - Parameters:
     ///   - sectionIndex: the section to update
     ///   - items: updated items
-    func updateSection(section: Section, withItems items: [AnyHashable]?) {
+    private func updateSection(section: Section, withItems items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
         if let sectionNumber = self.sectionNumber(for: section) {
@@ -317,12 +315,12 @@ final class ConversationListViewModel: NSObject {
     /// Create the folder structure
     private func createFolders() {
         if folderEnabled {
-            folders = [Folder(section: .contactRequests),
-                       Folder(section: .group),
-                       Folder(section: .contacts)]
+            folders = [Folder(section: .contactRequests, userSession: userSession),
+                       Folder(section: .group, userSession: userSession),
+                       Folder(section: .contacts, userSession: userSession)]
         } else {
-            folders = [Folder(section: .contactRequests),
-                       Folder(section: .conversations)]
+            folders = [Folder(section: .contactRequests, userSession: userSession),
+                       Folder(section: .conversations, userSession: userSession)]
         }
     }
 
@@ -350,7 +348,7 @@ final class ConversationListViewModel: NSObject {
     private func updateForConversationType(section: Section) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
-        let newConversationList = ConversationListViewModel.newList(for: section)
+        let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
 
         if let oldConversationList = folderItems(for: section),
             oldConversationList != newConversationList {

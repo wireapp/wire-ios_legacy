@@ -36,6 +36,6 @@ protocol UserSessionSwiftInterface: ZMUserSessionInterface {
 
 extension ZMUserSession: UserSessionSwiftInterface {
     func conversations(by type: ConversationListType) -> [ZMConversation] {
-        return managedObjectContext.conversationListDirectory().conversations(by: type)
+        return conversationDirectory.conversations(by: type)
     }
 }
