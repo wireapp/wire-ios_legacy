@@ -60,23 +60,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
-- (void)loadView
-{
-    [super loadView];
-    
-    self.layoutCell = [[ConversationListCell alloc] init];
-    
-    self.listViewModel = [[ConversationListViewModel alloc] init];
-    self.listViewModel.delegate = self;
-    [self setupViews];
-    
-    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
-        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        
-        [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
-    }
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

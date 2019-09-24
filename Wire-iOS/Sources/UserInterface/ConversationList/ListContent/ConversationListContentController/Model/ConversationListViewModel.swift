@@ -151,7 +151,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private static func newList(for section: Section) -> [AnyHashable] {
-        guard let userSession = ZMUserSession.shared() else { return [] }
+        guard let userSession = ZMUserSession.shared() else { return [] } ///TODO: mock
 
         let conversationListType: ConversationListType
         switch section {

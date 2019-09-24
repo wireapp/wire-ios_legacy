@@ -29,7 +29,12 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
 
 extension ZMUserSession: ZMUserSessionInterface {}
 
-extension ZMUserSession {
+// an interface for ZMUserSession's Swift-only functions
+protocol UserSessionSwiftInterface: ZMUserSessionInterface {
+    func conversations(by type: ConversationListType) -> [ZMConversation]
+}
+
+extension ZMUserSession: UserSessionSwiftInterface {
     func conversations(by type: ConversationListType) -> [ZMConversation] {
         return managedObjectContext.conversationListDirectory().conversations(by: type)
     }
