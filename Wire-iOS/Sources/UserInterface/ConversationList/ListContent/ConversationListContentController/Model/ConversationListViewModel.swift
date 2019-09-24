@@ -118,15 +118,8 @@ final class ConversationListViewModel: NSObject {
         return UInt(folders[Int(sectionIndex)].items.count)
     }
 
-    private
-    func numberOfItems(in section: Section) -> Int? {
-        for (folder) in folders {
-            if folder.section == section {
-                return folder.items.count
-            }
-        }
-
-        return nil
+    private func numberOfItems(in section: Section) -> Int? {
+        return folders.first(where: { $0.section == section })?.items.count ?? nil
     }
 
     @objc(sectionAtIndex:)
@@ -162,7 +155,7 @@ final class ConversationListViewModel: NSObject {
 
         switch section {
         case .contactRequests:
-            return  ZMConversationList.pendingConnectionConversations(inUserSession: userSession).count > 0 ? [contactRequestsItem] : []
+            return userSession.managedObjectContext.conversationListDirectory().conversations(by: .pending).count > 0 ? [contactRequestsItem] : []
         case .conversations:
             return ZMConversationList.conversations(inUserSession: userSession).map { $0 } as? [ZMConversation] ?? []
         case .contacts:
