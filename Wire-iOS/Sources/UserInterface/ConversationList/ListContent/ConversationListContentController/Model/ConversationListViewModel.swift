@@ -87,13 +87,18 @@ final class ConversationListViewModel: NSObject {
 
     private var conversationDirectoryToken: Any?
 
-    override init() {
+    private let userSession: UserSessionSwiftInterface?
+
+    init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+        self.userSession = userSession
+        
         super.init()
 
         updateAllSections()
         setupObservers()
         subscribeToTeamsUpdates()
     }
+    
 
     private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {

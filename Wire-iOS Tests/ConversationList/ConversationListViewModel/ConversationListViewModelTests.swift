@@ -22,14 +22,17 @@ import XCTest
 final class ConversationListViewModelTests: XCTestCase {
     
     var sut: ConversationListViewModel!
+    var mockUserSession: MockZMUserSession!
 
     override func setUp() {
         super.setUp()
-        sut = ConversationListViewModel()
+        mockUserSession = MockZMUserSession()
+        sut = ConversationListViewModel(userSession: mockUserSession)
     }
     
     override func tearDown() {
         sut = nil
+        mockUserSession = nil
 
         super.tearDown()
     }
