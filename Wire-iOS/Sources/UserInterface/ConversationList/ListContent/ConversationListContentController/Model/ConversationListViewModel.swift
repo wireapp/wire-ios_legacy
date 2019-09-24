@@ -26,8 +26,8 @@ final class ConversationListConnectRequestsItem : NSObject {}
 
 final class ConversationListViewModel: NSObject {
 
-    private struct Folder {
-        enum Section: CaseIterable {
+    private struct Section {
+        enum Kind: CaseIterable {
             /// for incoming requests
             case contactRequests
 
@@ -44,7 +44,7 @@ final class ConversationListViewModel: NSObject {
             //    case customFolder(folder: FolderType)
         }
 
-        var section: Section
+        var kind: Kind
         var items: [AnyHashable]
 
         /// ref to AggregateArray, we return the first found item's index
@@ -55,9 +55,9 @@ final class ConversationListViewModel: NSObject {
             return items.firstIndex(of: item)
         }
 
-        init(section: Section, userSession: UserSessionSwiftInterface?) {
-            items = ConversationListViewModel.newList(for: section, userSession: userSession)
-            self.section = section
+        init(kind: Kind, userSession: UserSessionSwiftInterface?) {
+            items = ConversationListViewModel.newList(for: kind, userSession: userSession)
+            self.kind = kind
         }
     }
 
@@ -84,7 +84,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     // Local copies of the lists.
-    private var folders: [Folder] = []
+    private var sections: [Section] = []
 
     private var conversationDirectoryToken: Any?
 
@@ -111,7 +111,7 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     var sectionCount: UInt {
-        return UInt(folders.count)
+        return UInt(sections.count)
     }
 
     ///TODO: convert all UInt to Int
@@ -119,11 +119,11 @@ final class ConversationListViewModel: NSObject {
     func numberOfItems(inSection sectionIndex: UInt) -> UInt {
         guard sectionIndex < sectionCount else { return 0 }
 
-        return UInt(folders[Int(sectionIndex)].items.count)
+        return UInt(sections[Int(sectionIndex)].items.count)
     }
 
-    private func numberOfItems(in section: Folder.Section) -> Int? {
-        return folders.first(where: { $0.section == section })?.items.count ?? nil
+    private func numberOfItems(in section: Section.Kind) -> Int? {
+        return sections.first(where: { $0.kind == section })?.items.count ?? nil
     }
 
     @objc(sectionAtIndex:)
@@ -132,7 +132,7 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        return folders[Int(sectionIndex)].items
+        return sections[Int(sectionIndex)].items
     }
 
     @objc(itemForIndexPath:)
@@ -145,20 +145,20 @@ final class ConversationListViewModel: NSObject {
     func indexPath(for item: AnyHashable?) -> IndexPath? {
         guard let item = item else { return nil } 
 
-        for (folderIndex, folder) in folders.enumerated() {
-            if let index = folder.index(for: item) {
-                return IndexPath(item: index, section: folderIndex)
+        for (sectionIndex, section) in sections.enumerated() {
+            if let index = section.index(for: item) {
+                return IndexPath(item: index, section: sectionIndex)
             }
         }
 
         return nil
     }
 
-    private static func newList(for section: Folder.Section, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
+    private static func newList(for kind: Section.Kind, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
         guard let userSession = userSession else { return [] } 
 
         let conversationListType: ConversationListType
-        switch section {
+        switch kind {
         case .contactRequests:
             conversationListType = .pending
             return userSession.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
@@ -282,7 +282,7 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func updateAllSections() {
-        for section in Folder.Section.allCases {
+        for section in Section.Kind.allCases {
             let items = ConversationListViewModel.newList(for: section, userSession: userSession)
 
             updateSection(section: section, withItems: items)
@@ -297,47 +297,47 @@ final class ConversationListViewModel: NSObject {
     /// - Parameters:
     ///   - sectionIndex: the section to update
     ///   - items: updated items
-    private func updateSection(section: Folder.Section, withItems items: [AnyHashable]?) {
+    private func updateSection(section: Section.Kind, withItems items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
         if let sectionNumber = self.sectionNumber(for: section) {
-            folders[sectionNumber].items = items ?? []
+            sections[sectionNumber].items = items ?? []
         } else {
-            // Re-create the folders
-            createFolders()
-
-            if let sectionNumber = self.sectionNumber(for: section) {
-                folders[sectionNumber].items = items ?? []
-            }
+            // Re-create the sections
+            createSections(replaceSection: section, withReplaceItems: items)
         }
     }
 
 
-    /// Create the folder structure
-    private func createFolders() {
+    /// Create the section structure
+    private func createSections(replaceSection: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
         if folderEnabled {
-            folders = [Folder(section: .contactRequests, userSession: userSession),
-                       Folder(section: .group, userSession: userSession),
-                       Folder(section: .contacts, userSession: userSession)]
+            sections = [Section(kind: .contactRequests, userSession: userSession),
+                       Section(kind: .group, userSession: userSession),
+                       Section(kind: .contacts, userSession: userSession)]
         } else {
-            folders = [Folder(section: .contactRequests, userSession: userSession),
-                       Folder(section: .conversations, userSession: userSession)]
+            sections = [Section(kind: .contactRequests, userSession: userSession),
+                       Section(kind: .conversations, userSession: userSession)]
+        }
+
+        if let sectionNumber = self.sectionNumber(for: replaceSection) {
+            sections[sectionNumber].items = replaceItems ?? []
         }
     }
 
-    private func folderItems(for section: Folder.Section) -> [AnyHashable]? {
-        for folder in folders {
-            if folder.section == section {
-                return folder.items
+    private func sectionItems(for kind: Section.Kind) -> [AnyHashable]? {
+        for section in sections {
+            if section.kind == kind {
+                return section.items
             }
         }
 
         return nil
     }
 
-    private func sectionNumber(for section: Folder.Section) -> Int? {
-        for (index, folder) in folders.enumerated() {
-            if folder.section == section {
+    private func sectionNumber(for section: Section.Kind) -> Int? {
+        for (index, section) in sections.enumerated() {
+            if section.kind == section {
                 return index
             }
         }
@@ -346,12 +346,12 @@ final class ConversationListViewModel: NSObject {
     }
 
     @discardableResult
-    private func updateForConversationType(section: Folder.Section) -> Bool {
+    private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
 
-        if let oldConversationList = folderItems(for: section),
+        if let oldConversationList = sectionItems(for: section),
             oldConversationList != newConversationList {
 
             ///TODO: use diff kit and retire requiresReload
@@ -387,14 +387,14 @@ final class ConversationListViewModel: NSObject {
             numberOfItems(in: .contacts) == 0 {
             reload()
         } else {
-            folderSections.forEach() {
+            sectionKinds.forEach() {
                 updateForConversationType(section: $0)
             }
         }
     }
 
-    private var folderSections: [Folder.Section] {
-        return folders.map() { return $0.section}
+    private var sectionKinds: [Section.Kind] {
+        return sections.map() { return $0.kind}
     }
 
     @objc(selectItem:)
