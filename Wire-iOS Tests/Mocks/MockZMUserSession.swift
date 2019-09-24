@@ -20,8 +20,19 @@ import Foundation
 @testable import Wire
 
 final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
+
+    var mockGroupConversations: [ZMConversation] = []
+    var mockContactsConversations: [ZMConversation] = []
+
     func conversations(by type: ConversationListType) -> [ZMConversation] {
-        return []
+        switch type {
+        case .groups:
+            return mockGroupConversations
+        case .contacts:
+            return mockContactsConversations
+        default:
+            return []
+        }
     }
 
     func performChanges(_ block: @escaping () -> Swift.Void) {

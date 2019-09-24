@@ -18,30 +18,61 @@
 
 import XCTest
 @testable import Wire
+@testable import WireDataModel
+
+final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
+    func listViewModelShouldBeReloaded() {
+        //no-op
+    }
+
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt) {
+        //no-op
+    }
+
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?) {
+        //no-op
+        updateBlock()
+    }
+
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+        //no-op
+    }
+
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?) {
+        //no-op
+    }
+}
 
 final class ConversationListViewModelTests: XCTestCase {
     
     var sut: ConversationListViewModel!
     var mockUserSession: MockZMUserSession!
+    var mockConversationListViewModelDelegate: MockConversationListViewModelDelegate!
 
     override func setUp() {
         super.setUp()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
+        mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
+        sut.delegate = mockConversationListViewModelDelegate
     }
     
     override func tearDown() {
         sut = nil
         mockUserSession = nil
+        mockConversationListViewModelDelegate = nil
 
         super.tearDown()
     }
 
     // folders with 2 group conversations and 1 contact. First group conversation is mock conversation
     func fillDummyConversations(mockConversation: ZMConversation) {
+        let info = ConversationDirectoryChangeInfo(reloaded: false, updatedLists: [.groups, .contacts])
 
-        sut.updateSection(section: .group, withItems: [mockConversation, ZMConversation()])
-        sut.updateSection(section: .contacts, withItems: [ZMConversation()])
+        mockUserSession.mockGroupConversations = [mockConversation, ZMConversation()]
+        mockUserSession.mockContactsConversations = [ZMConversation()]
+
+        sut.conversationDirectoryDidChange(info)
     }
 
     func testForNumberOfItems() {
