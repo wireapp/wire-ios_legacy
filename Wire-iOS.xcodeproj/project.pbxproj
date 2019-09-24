@@ -2122,8 +2122,6 @@
 		871BC21F1D34F8F800DF0793 /* UIViewController+WR_Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+WR_Additions.m"; sourceTree = "<group>"; };
 		871BC3191D34F94200DF0793 /* AccentColorChangeHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccentColorChangeHandler.h; sourceTree = "<group>"; };
 		871BC31A1D34F94200DF0793 /* AccentColorChangeHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccentColorChangeHandler.m; sourceTree = "<group>"; };
-		871BC31B1D34F94200DF0793 /* AggregateArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AggregateArray.h; sourceTree = "<group>"; };
-		871BC31C1D34F94200DF0793 /* AggregateArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AggregateArray.m; sourceTree = "<group>"; };
 		871BC3271D34F94200DF0793 /* AudioTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrack.h; sourceTree = "<group>"; };
 		871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioTrackPlayer.h; sourceTree = "<group>"; };
 		871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioTrackPlayer.m; sourceTree = "<group>"; };
@@ -4586,8 +4584,6 @@
 			children = (
 				871BC3191D34F94200DF0793 /* AccentColorChangeHandler.h */,
 				871BC31A1D34F94200DF0793 /* AccentColorChangeHandler.m */,
-				871BC31B1D34F94200DF0793 /* AggregateArray.h */,
-				871BC31C1D34F94200DF0793 /* AggregateArray.m */,
 				871BC31D1D34F94200DF0793 /* AudioPlayer */,
 				EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */,
 				EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */,

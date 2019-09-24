@@ -39,12 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationCallController *startCallController;
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
+
+- (void)ensureCurrentSelection;
+- (void)setupViews;
+- (void)listViewModelShouldBeReloaded;
+
 @end
 
 @interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
-
-- (void)setupViews;
-
 @end
 
 NS_ASSUME_NONNULL_END

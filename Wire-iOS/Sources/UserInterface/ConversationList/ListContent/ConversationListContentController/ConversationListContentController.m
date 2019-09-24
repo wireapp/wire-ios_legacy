@@ -50,12 +50,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
 
         if (nil != [UISelectionFeedbackGenerator class]) {
             self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
+
+        [self registerSectionHeader];
+
+        [self updateSectionHeaderHeight];
     }
     return self;
 }
@@ -103,7 +108,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)listViewModelShouldBeReloaded
 {
-    [self reload];
+    [self refresh];
 }
 
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
@@ -315,16 +320,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     } else { //nothing to select anymore, we select nothing
         [self.listViewModel selectItem:nil];
     }
-}
-
-- (void)reload
-{
-    [self.collectionView reloadData];
-    [self ensureCurrentSelection];
-    
-    // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
-    // and then unarchive all at the same time
-    [self.view layoutIfNeeded];
 }
 
 #pragma mark - Custom

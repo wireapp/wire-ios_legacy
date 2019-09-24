@@ -33,4 +33,93 @@ extension ConversationListContentController {
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
+
+    // MARK: - section header
+
+    open override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+        switch (kind) {
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as! ConversationListHeaderView
+            header.desiredWidth = collectionView.frame.width
+            header.desiredHeight = sectionHeaderHeight
+            return header
+        default:
+            fatal("No supplementary view for \(kind)")
+        }
+    }
+
+    @objc
+    func registerSectionHeader() {
+        collectionView?.register(ConversationListHeaderView.self, forSupplementaryViewOfKind:
+            UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
+
+    }
+
+    var sectionHeaderHeight: CGFloat {
+        ///TODO: no show if no item
+        return listViewModel.folderEnabled ? 48:0
+    }
+
+    @objc
+    func updateSectionHeaderHeight() {
+        (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: sectionHeaderHeight)
+    }
+
+    @objc
+    func refresh() {
+        collectionView.reloadData()
+        ensureCurrentSelection()
+
+        updateSectionHeaderHeight()
+
+        // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
+        // and then unarchive all at the same time
+        view.layoutIfNeeded()
+    }
 }
+
+final class ConversationListHeaderView: UICollectionReusableView {
+    var desiredWidth: CGFloat = 0
+    var desiredHeight: CGFloat = 0
+
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallSemiboldFont ///TODO: define style
+        label.textColor = .white
+
+        label.text = "blah" ///TODO:
+
+        return label
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        addSubview(titleLabel)
+
+        createConstraints()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func createConstraints() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+                                     titleLabel.topAnchor.constraint(equalTo: topAnchor),
+                                     titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+                                     titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)])
+    }
+
+    override public var intrinsicContentSize: CGSize {
+        get {
+            return CGSize(width: desiredWidth,
+                          height: desiredHeight)
+        }
+    }
+}
+
