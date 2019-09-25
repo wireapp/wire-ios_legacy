@@ -19,21 +19,37 @@
 import Foundation
 
 final class ConversationListHeaderView: UICollectionReusableView {
+    var isCollapsed = false {
+        didSet {
+            ///TODO: update icon
+            ///TODO: VM
+        }
+    }
+    
     var desiredWidth: CGFloat = 0
     var desiredHeight: CGFloat = 0
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallSemiboldFont ///TODO: define style
+        label.font = .smallSemiboldFont
         label.textColor = .white
 
         return label
     }()
-
+    
+    ///TODO: arraw icon animation?
+    let arrowIconImageView: UIImageView = {
+        let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
+        
+        let imageView = UIImageView(image: image)
+        
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        addSubview(titleLabel)
+        [titleLabel, arrowIconImageView].forEach(addSubview)
 
         createConstraints()
     }
@@ -42,14 +58,18 @@ final class ConversationListHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        translatesAutoresizingMaskIntoConstraints = false
+    private func createConstraints() {
+        [titleLabel, arrowIconImageView, self].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
 
-        NSLayoutConstraint.activate([titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-                                     titleLabel.topAnchor.constraint(equalTo: topAnchor),
-                                     titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-                                     titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor)])
+        NSLayoutConstraint.activate([
+            arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
+            arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)])
     }
 
     override public var intrinsicContentSize: CGSize {
