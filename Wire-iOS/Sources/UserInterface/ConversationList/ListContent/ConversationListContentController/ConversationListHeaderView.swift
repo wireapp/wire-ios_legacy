@@ -31,7 +31,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             // update rotation
             
             if collapsed {
-                arrowIconImageView.rotate(to: 180)
+                arrowIconImageView.rotate(to: 270)
             } else {
                 arrowIconImageView.transform = CGAffineTransform.identity
             }
