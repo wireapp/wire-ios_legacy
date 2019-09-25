@@ -27,7 +27,9 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         }
         
         withConversationForUsers(users, callback: { conversation in
-            if let conversation = conversation {
+            guard let conversation = conversation else { return }
+            
+            conversation.unarchive() {
                 ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
             }
         })
