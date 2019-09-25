@@ -58,6 +58,7 @@ final class ConversationListViewModel: NSObject {
         }
 
         var kind: Kind
+        var collapsed: Bool = false
         var items: [AnyHashable]
 
         /// ref to AggregateArray, we return the first found item's index
@@ -450,6 +451,13 @@ final class ConversationListViewModel: NSObject {
         guard let session = ZMUserSession.shared() else { return }
 
         selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
+    }
+
+    // MARK: - collapse section
+    func setCollapsed(sectionIndex: Int, collapsed: Bool) {
+        guard sections.indices.contains(sectionIndex) else { return }
+        
+        sections[sectionIndex].collapsed = collapsed
     }
 
 }
