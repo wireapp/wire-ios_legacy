@@ -111,18 +111,16 @@ final class ConversationListViewModel: NSObject {
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
         switch kind(of: sectionIndex) {
-
-             ///TODO: confrim the strings
         case .none:
              return nil
         case .conversations?:
             return nil
         case .contactRequests?:
-            return "Requests".localized
+            return "list.section.requests".localized
         case .contacts?:
-            return "Contacts".localized
+            return "list.section.contacts".localized
         case .group?:
-            return "Groups".localized
+            return "list.section.groups".localized
         }
     }
 
