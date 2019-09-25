@@ -42,6 +42,19 @@ final class ConversationListViewModel: NSObject {
 
             ///TODO:
             //    case customFolder(folder: FolderType)
+            
+            var title: String? {
+                switch self {
+                case .conversations:
+                    return nil
+                case .contactRequests:
+                    return "list.section.requests".localized
+                case .contacts:
+                    return "list.section.contacts".localized
+                case .group:
+                    return "list.section.groups".localized
+                }
+            }
         }
 
         var kind: Kind
@@ -110,18 +123,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
-        switch kind(of: sectionIndex) {
-        case .none:
-             return nil
-        case .conversations?:
-            return nil
-        case .contactRequests?:
-            return "list.section.requests".localized
-        case .contacts?:
-            return "list.section.contacts".localized
-        case .group?:
-            return "list.section.groups".localized
-        }
+        return kind(of: sectionIndex)?.title
     }
 
     func sectionVisible(section: Int) -> Bool {
