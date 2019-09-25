@@ -333,10 +333,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return result;
 }
 
-@end
-
-
-@implementation ConversationListContentController (UICollectionViewDataSource)
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
