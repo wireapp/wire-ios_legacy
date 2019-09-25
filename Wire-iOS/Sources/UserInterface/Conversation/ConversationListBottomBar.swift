@@ -72,13 +72,13 @@ final class ConversationListBottomBarController: UIViewController {
         separator.isHidden = true
         separator.translatesAutoresizingMaskIntoConstraints = false
         
-        listButton.setIcon(.hamburger, size: .tiny, for: [])
+        listButton.setIcon(.recentList, size: .tiny, for: [])
         listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
         listButton.accessibilityIdentifier = "bottomBarListButton"
         listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
         listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized // TODO jacob update
         
-        folderButton.setIcon(.addPerson, size: .tiny, for: [])
+        folderButton.setIcon(.folderList, size: .tiny, for: [])
         folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
         folderButton.accessibilityIdentifier = "bottomBarFolderButton"
         folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
