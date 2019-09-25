@@ -127,8 +127,14 @@ final class ConversationListViewModel: NSObject {
         return kind(of: sectionIndex)?.title
     }
 
+    /// section is visible when there is more then 0 items, even it is collapsed
+    ///
+    /// - Parameter sectionIndex: section number of collection view
+    /// - Returns: if the section exists and visible, return true. 
     func sectionVisible(section: Int) -> Bool {
-        return numberOfItems(inSection: section) > 0
+        guard sections.indices.contains(section) else { return false }
+
+        return sections[section].items.count > 0
     }
 
 
@@ -472,12 +478,9 @@ final class ConversationListViewModel: NSObject {
         let oldConversationList = collapsed ? sections[sectionIndex].items : []
         let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
-        let modelUpdates = {
-//            self.update(kind: section, with: list)
-        }
+        let modelUpdates = {}
         
-            
-            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+        guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
 
         delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
     }
