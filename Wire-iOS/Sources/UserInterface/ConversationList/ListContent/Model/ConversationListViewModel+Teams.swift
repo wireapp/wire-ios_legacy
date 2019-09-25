@@ -33,21 +33,26 @@ extension ConversationListViewModel {
     @discardableResult
     func select(itemToSelect: Any?) -> Bool {
         guard let itemToSelect = itemToSelect else {
-            selectedItem = nil
-            delegate?.listViewModel(self, didSelectItem: nil)
-
+            internalSelect(itemToSelect: nil)
             return false
         }
-
-        // Couldn't find the item
-        if self.indexPath(forItem: itemToSelect as! NSObject) == nil {
-            (itemToSelect as? ZMConversation)?.unarchive()
+        
+        if indexPath(forItem: itemToSelect as! NSObject) == nil {
+            guard let conversation = itemToSelect as? ZMConversation else { return false }
+            
+            conversation.unarchive {
+                self.internalSelect(itemToSelect: itemToSelect)
+            }
+        } else {
+            internalSelect(itemToSelect: itemToSelect)
         }
-
+        
+        return true
+    }
+    
+    private func internalSelect(itemToSelect: Any?) {
         selectedItem = itemToSelect
         delegate?.listViewModel(self, didSelectItem: itemToSelect)
-
-        return true
     }
 
 }
