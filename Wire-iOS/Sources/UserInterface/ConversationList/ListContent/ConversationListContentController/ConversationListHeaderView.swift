@@ -57,14 +57,23 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return imageView
     }()
     
-    override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
 
         [titleLabel, arrowIconImageView].forEach(addSubview)
 
         createConstraints()
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+    }
+    
+    @objc
+    func tappedOnNetworkStatusBar() {
+        collapsed = !collapsed
     }
 
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
