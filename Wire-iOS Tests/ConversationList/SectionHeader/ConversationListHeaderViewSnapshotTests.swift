@@ -46,4 +46,10 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     func testForExpanded() {
         verify(matching: sut)
     }
+
+    func testForCollapsed() {
+        sut.collapsed = true
+        
+        verify(matching: sut)
+    }
 }

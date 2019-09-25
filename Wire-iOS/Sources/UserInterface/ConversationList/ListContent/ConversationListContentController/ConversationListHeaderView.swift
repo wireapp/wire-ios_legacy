@@ -18,11 +18,23 @@
 
 import Foundation
 
+extension UIView {
+    func rotate(to angleInDegrees: CGFloat) {
+        transform = transform.rotated(by: angleInDegrees / 180 * CGFloat.pi)
+    }
+}
+
 final class ConversationListHeaderView: UICollectionReusableView {
-    var isCollapsed = false {
+    var collapsed = false {
         didSet {
-            ///TODO: update icon
-            ///TODO: VM
+            guard collapsed != oldValue else { return }
+            // update rotation
+            
+            if collapsed {
+                arrowIconImageView.rotate(to: 180)
+            } else {
+                arrowIconImageView.transform = CGAffineTransform.identity
+            }
         }
     }
     
@@ -37,7 +49,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return label
     }()
     
-    ///TODO: arraw icon animation?
     let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
         
