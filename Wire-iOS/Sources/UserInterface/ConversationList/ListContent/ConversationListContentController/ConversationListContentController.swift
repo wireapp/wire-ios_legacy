@@ -52,12 +52,20 @@ extension ConversationListContentController {
 
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as! ConversationListHeaderView
-            header.desiredWidth = collectionView.frame.width
-            header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
-            header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
-
-            return header
+            if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
+                header.desiredWidth = collectionView.frame.width
+                header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
+                
+                header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
+                
+                header.tapHandler = { collapsed in
+                    self.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
+                }
+                
+                return header
+            } else {
+                fatal("Unknown supplementary view for \(kind)")
+            }
         default:
             fatal("No supplementary view for \(kind)")
         }

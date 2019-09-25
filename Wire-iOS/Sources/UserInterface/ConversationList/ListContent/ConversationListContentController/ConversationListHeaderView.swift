@@ -24,6 +24,8 @@ extension UIView {
     }
 }
 
+typealias TapHandler = (_ collapsed: Bool) -> Void
+
 final class ConversationListHeaderView: UICollectionReusableView {
     var collapsed = false {
         didSet {
@@ -38,6 +40,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
     }
     
+    var tapHandler: TapHandler? = nil
+    
     var desiredWidth: CGFloat = 0
     var desiredHeight: CGFloat = 0
 
@@ -49,7 +53,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return label
     }()
     
-    let arrowIconImageView: UIImageView = {
+    private let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
         
         let imageView = UIImageView(image: image)
@@ -57,14 +61,24 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return imageView
     }()
     
-    override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
 
         [titleLabel, arrowIconImageView].forEach(addSubview)
 
         createConstraints()
+        
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+    }
+    
+    @objc
+    private func tappedOnNetworkStatusBar() {
+        collapsed = !collapsed
+        tapHandler?(collapsed)
     }
 
+
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -83,7 +97,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         )
     }
 
-    override public var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         get {
             return CGSize(width: desiredWidth,
                           height: desiredHeight)

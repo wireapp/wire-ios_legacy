@@ -58,6 +58,7 @@ final class ConversationListViewModel: NSObject {
         }
 
         var kind: Kind
+        var collapsed: Bool = false
         var items: [AnyHashable]
 
         /// ref to AggregateArray, we return the first found item's index
@@ -126,8 +127,14 @@ final class ConversationListViewModel: NSObject {
         return kind(of: sectionIndex)?.title
     }
 
+    /// section is visible when there is more then 0 items, even it is collapsed
+    ///
+    /// - Parameter sectionIndex: section number of collection view
+    /// - Returns: if the section exists and visible, return true. 
     func sectionVisible(section: Int) -> Bool {
-        return numberOfItems(inSection: UInt(section)) > 0
+        guard sections.indices.contains(section) else { return false }
+
+        return sections[section].items.count > 0
     }
 
 
@@ -142,18 +149,19 @@ final class ConversationListViewModel: NSObject {
         return UInt(sections.count)
     }
 
-    ///TODO: convert all UInt to Int
     @objc
-    func numberOfItems(inSection sectionIndex: UInt) -> UInt {
-        guard sectionIndex < sectionCount else { return 0 }
+    func numberOfItems(inSection sectionIndex: Int) -> Int {
+        guard sectionIndex < sectionCount,
+              !sections[sectionIndex].collapsed else { return 0 }
 
-        return UInt(sections[Int(sectionIndex)].items.count)
+        return sections[sectionIndex].items.count
     }
 
     private func numberOfItems(of kind: Section.Kind) -> Int? {
         return sections.first(where: { $0.kind == kind })?.items.count ?? nil
     }
 
+    ///TODO: convert all UInt to Int
     @objc(sectionAtIndex:)
     func section(at sectionIndex: UInt) -> [AnyHashable]? {
         if sectionIndex >= sectionCount {
@@ -373,6 +381,16 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
+    ///TODO: use diff kit and retire requiresReload
+    private func changedIndexes(oldConversationList: [AnyHashable],
+                                newConversationList: [AnyHashable]) -> ZMChangedIndexes? {
+        let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
+        let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
+        let updatedState = ZMOrderedSetState(orderedSet: [])
+        
+        return ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView)
+    }
+    
     @discardableResult
     private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
@@ -382,12 +400,8 @@ final class ConversationListViewModel: NSObject {
         if let oldConversationList = sectionItems(for: section),
             oldConversationList != newConversationList {
 
-            ///TODO: use diff kit and retire requiresReload
-            let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
-            let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
-            let updatedState = ZMOrderedSetState(orderedSet: [])
 
-            guard let changedIndexes = ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView) else { return true}
+            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return true }
 
             if changedIndexes.requiresReload {
                 reload()
@@ -452,7 +466,28 @@ final class ConversationListViewModel: NSObject {
         selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
     }
 
+    // MARK: - collapse section
+    func setCollapsed(sectionIndex: Int, collapsed: Bool) {
+        guard sections.indices.contains(sectionIndex) else { return }
+        let oldValue = sections[sectionIndex].collapsed
+        
+        sections[sectionIndex].collapsed = collapsed
+        
+        guard oldValue != collapsed else { return }
+        
+        let oldConversationList = collapsed ? sections[sectionIndex].items : []
+        let newConversationList = collapsed ? [] : sections[sectionIndex].items
+
+        let modelUpdates = {}
+        
+        guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+
+        delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+    }
+
 }
+
+// MARK: - ZMUserObserver
 
 fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
 
@@ -464,6 +499,8 @@ extension ConversationListViewModel: ZMUserObserver {
         }
     }
 }
+
+// MARK: - ConversationDirectoryObserver
 
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
