@@ -40,9 +40,11 @@ extension ConversationListViewModel {
         if indexPath(forItem: itemToSelect as! NSObject) == nil {
             guard let conversation = itemToSelect as? ZMConversation else { return false }
             
-            conversation.unarchive {
+            ZMUserSession.shared()?.enqueueChanges({
+                conversation.isArchived = false
+            }, completionHandler: {
                 self.internalSelect(itemToSelect: itemToSelect)
-            }
+            })
         } else {
             internalSelect(itemToSelect: itemToSelect)
         }
