@@ -21,35 +21,35 @@ import Foundation
 extension ConversationListContentController {
     override open func loadView() {
         super.loadView()
-        
+
         layoutCell = ConversationListCell()
-        
+
         listViewModel = ConversationListViewModel() ///TODO: inject session
         listViewModel.delegate = self
         setupViews()
-        
+
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
-            
+
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
-    
+
     @objc
     func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
-        
+
         updateSectionHeaderHeight()
-        
+
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
         view.layoutIfNeeded()
     }
-    
+
     // MARK: - section header
-    
+
     open override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
+
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
@@ -70,18 +70,18 @@ extension ConversationListContentController {
             fatal("No supplementary view for \(kind)")
         }
     }
-    
+
     @objc
     func registerSectionHeader() {
         collectionView?.register(ConversationListHeaderView.self, forSupplementaryViewOfKind:
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
-        
+
     }
-    
+
     var headerDesiredHeight: CGFloat {
         return listViewModel.folderEnabled ? CGFloat.ConversationListSectionHeader.height : 0
     }
-    
+
     @objc
     func updateSectionHeaderHeight() {
         (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: headerDesiredHeight)
@@ -93,11 +93,11 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.size.width, height: listViewModel.sectionVisible(section: section) ? headerDesiredHeight: 0)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return layoutCell.size(inCollectionViewSize: collectionView.bounds.size)
     }
-    
+
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
     }
