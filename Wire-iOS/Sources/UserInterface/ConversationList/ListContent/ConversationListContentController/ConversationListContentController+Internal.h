@@ -47,6 +47,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
+
+- (void)setupViews;
+
 @end
 
 NS_ASSUME_NONNULL_END
