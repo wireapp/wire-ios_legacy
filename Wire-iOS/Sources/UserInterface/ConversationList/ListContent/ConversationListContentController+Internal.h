@@ -25,7 +25,12 @@ static NSString * _Nullable const CellReuseIdConversation = @"CellId";
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma clang diagnostic push
+// To get rid of 'No protocol definition found' warnings which are not accurate
+#pragma clang diagnostic ignored "-Weverything"
+
 @interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
+#pragma clang diagnostic pop
 
 @property (nonatomic, strong) ConversationListViewModel *listViewModel;
 
