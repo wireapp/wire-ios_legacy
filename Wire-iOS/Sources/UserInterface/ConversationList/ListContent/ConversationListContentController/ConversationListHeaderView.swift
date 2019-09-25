@@ -31,7 +31,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .smallSemiboldFont
+        label.font = .smallRegularFont
         label.textColor = .white
 
         return label
@@ -68,8 +68,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)])
+            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8)]
+        )
     }
 
     override public var intrinsicContentSize: CGSize {
