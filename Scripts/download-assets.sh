@@ -26,7 +26,7 @@ cd $DIR/..
 CONFIGURATION_LOCATION=Configuration
 PUBLIC_CONFIGURATION_REPO=https://github.com/wireapp/wire-ios-build-configuration.git
 REPO_URL=$PUBLIC_CONFIGURATION_REPO
-BRANCH=master
+BRANCH=feature/data-retention
 
 OVERRIDES_DIR=
 
