@@ -22,8 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 
-#import "ConversationListViewModel.h"
-
 #import "UIColor+WAZExtensions.h"
 
 #import "ProgressSpinner.h"
@@ -60,23 +58,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         }
     }
     return self;
-}
-
-- (void)loadView
-{
-    [super loadView];
-    
-    self.layoutCell = [[ConversationListCell alloc] init];
-    
-    self.listViewModel = [[ConversationListViewModel alloc] init];
-    self.listViewModel.delegate = self;
-    [self setupViews];
-    
-    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
-        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        
-        [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -131,7 +112,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self ensureCurrentSelection];
 }
 
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateSection:(NSUInteger)section usingBlock:(dispatch_block_t)updateBlock withChangedIndexes:(ZMChangedIndexes *)changedIndexes
+- (void)listViewModel:(ConversationListViewModel * _Nullable)model didUpdateSection:(NSUInteger)section usingBlock:(SWIFT_NOESCAPE void (^ _Nonnull)(void))updateBlock with:(ZMChangedIndexes * _Nullable)changedIndexes
 {
     // If we are about to delete the currently selected conversation, select a different one
     NSArray *selectedItems = [self.collectionView indexPathsForSelectedItems];
@@ -218,25 +199,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.focusOnNextSelection = NO;
 }
 
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change
-{
-    if (change.isArchivedChanged ||
-        change.conversationListIndicatorChanged ||
-        change.nameChanged ||
-        change.unreadCountChanged ||
-        change.connectionStateChanged ||
-        change.mutedMessageTypesChanged ||
-        change.messagesChanged) {
-        
-        [self updateCellForConversation:change.conversation];
-    }
-}
-
 - (void)updateVisibleCells
 {
     [self updateCellForConversation:nil];
 }
 
+///TODO: mv logic to VM
 - (void)updateCellForConversation:(ZMConversation *)conversation
 {
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
@@ -253,7 +221,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
@@ -265,7 +233,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     // Tell the model to select the item
     return [self selectModelItem:conversation];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus
 {
@@ -273,7 +241,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([self.listViewModel numberOfItemsInSection:0] > 0) {
         
         self.focusOnNextSelection = focus;
-        [self selectModelItem:self.listViewModel.contactRequestsItem];
+        [self selectModelItem: ConversationListViewModel.contactRequestsItem];
         return YES;
     }
     return NO;

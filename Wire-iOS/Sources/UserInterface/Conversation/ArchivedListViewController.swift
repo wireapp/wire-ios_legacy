@@ -159,13 +159,10 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
-        guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
-            change.unreadCountChanged || change.connectionStateChanged || change.mutedMessageTypesChanged else { return }
-        for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {
-            cell.updateAppearance()
-        }
+
+        // no-op, ConversationListCell extended ZMConversationObserver 
     }
     
 }

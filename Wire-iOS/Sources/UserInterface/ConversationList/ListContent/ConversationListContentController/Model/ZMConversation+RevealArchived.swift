@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class AnimatedListMenuView;
+import Foundation
 
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
-static const NSTimeInterval OverscrollRatio = 2.5;
+extension ZMConversation {
 
-@interface ConversationListCell ()
+    func unarchive(userSession: ZMUserSessionInterface? = ZMUserSession.shared(),
+                   completionHandler: Completion? = nil) {
+        guard let userSession = userSession else { return }
 
-@property (nonatomic) BOOL hasCreatedInitialConstraints;
-@property (nonatomic) AnimatedListMenuView *menuDotsView;
-@property (nonatomic) NSDate *overscrollStartDate;
-
-@property (nonatomic) id conversationObserverToken;
-
-@end
+        userSession.enqueueChanges({
+            self.isArchived = false
+        }, completionHandler: completionHandler)
+    }
+}
