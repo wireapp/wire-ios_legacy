@@ -203,6 +203,10 @@
 "list.archived_conversations" = "ARCHIVE";
 "list.archived_conversations_close" = "Close archive";
 
+"list.section.groups" = "Groups";
+"list.section.contacts" = "Contacts";
+"list.section.requests" = "Requests";
+
 "conversation.voiceover.verified" = "verified";
 "conversation.voiceover.legalhold" = "legal hold";
 "conversation.voiceover.value.active" = "active";

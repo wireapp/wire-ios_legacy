@@ -50,12 +50,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
 
         if (nil != [UISelectionFeedbackGenerator class]) {
             self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
+
+        [self registerSectionHeader];
+
+        [self updateSectionHeaderHeight];
     }
     return self;
 }
@@ -317,16 +322,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)reload
-{
-    [self.collectionView reloadData];
-    [self ensureCurrentSelection];
-    
-    // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
-    // and then unarchive all at the same time
-    [self.view layoutIfNeeded];
-}
-
 #pragma mark - Custom
 
 + (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
@@ -413,28 +408,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 
-@implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section
-{
-    if (section == 0) {
-        return UIEdgeInsetsMake(12, 0, 0, 0);
-    }
-    else {
-        return UIEdgeInsetsMake(0, 0, 0, 0);
-    }
-}
-
-@end
 
 @implementation ConversationListContentController (PeekAndPop)
 

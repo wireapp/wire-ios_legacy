@@ -40,7 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)selectConversation:( ZMConversation * _Nonnull )conversation scrollToMessage:(id<ZMConversationMessage> _Nullable)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t _Nullable)completion;
 
 - (void)deselectAll;
-- (void)reload;
 
 - (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;

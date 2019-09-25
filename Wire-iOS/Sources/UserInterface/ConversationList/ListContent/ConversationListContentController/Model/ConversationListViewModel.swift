@@ -42,6 +42,19 @@ final class ConversationListViewModel: NSObject {
 
             ///TODO:
             //    case customFolder(folder: FolderType)
+            
+            var title: String? {
+                switch self {
+                case .conversations:
+                    return nil
+                case .contactRequests:
+                    return "list.section.requests".localized
+                case .contacts:
+                    return "list.section.contacts".localized
+                case .group:
+                    return "list.section.groups".localized
+                }
+            }
         }
 
         var kind: Kind
@@ -74,7 +87,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = false {///TODO: read/write to storage
+    var folderEnabled = true {///TODO: read/write to storage
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -107,6 +120,21 @@ final class ConversationListViewModel: NSObject {
         }
 
         conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
+    }
+
+    func sectionHeaderTitle(sectionIndex: Int) -> String? {
+        return kind(of: sectionIndex)?.title
+    }
+
+    func sectionVisible(section: Int) -> Bool {
+        return numberOfItems(inSection: UInt(section)) > 0
+    }
+
+
+    private func kind(of sectionIndex: Int) -> Section.Kind? {
+        guard sections.indices.contains(sectionIndex) else { return nil }
+
+        return sections[sectionIndex].kind
     }
 
     @objc
