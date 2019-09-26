@@ -395,6 +395,9 @@ final class ConversationListViewModel: NSObject {
     private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
+        /// no need to update collapsed section
+        guard !sections[sectionNumber].collapsed else { return false }
+
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
 
         if let oldConversationList = sectionItems(for: section),

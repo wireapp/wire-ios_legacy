@@ -24,12 +24,11 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
-        listViewModel = ConversationListViewModel() ///TODO: inject session
+        listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
         setupViews()
 
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
-
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
