@@ -467,6 +467,12 @@ final class ConversationListViewModel: NSObject {
     }
 
     // MARK: - collapse section
+    func collapsed(at sectionIndex: Int) -> Bool {
+        guard sections.indices.contains(sectionIndex) else { return false }
+
+        return sections[sectionIndex].collapsed
+    }
+
     func setCollapsed(sectionIndex: Int, collapsed: Bool) {
         guard sections.indices.contains(sectionIndex) else { return }
         let oldValue = sections[sectionIndex].collapsed
