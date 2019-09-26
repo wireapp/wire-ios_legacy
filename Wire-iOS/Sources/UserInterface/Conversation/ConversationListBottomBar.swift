@@ -78,15 +78,15 @@ final class ConversationListBottomBarController: UIViewController {
         
         listButton.setIcon(.recentList, size: .tiny, for: [])
         listButton.addTarget(self, action: #selector(listButtonTapped), for: .touchUpInside)
-        listButton.accessibilityIdentifier = "bottomBarListButton"
-        listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
-        listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized // TODO jacob update
+        listButton.accessibilityIdentifier = "bottomBarRecentListButton"
+        listButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.recent_button.label".localized
+        listButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.recent_button.hint".localized
         
         folderButton.setIcon(.folderList, size: .tiny, for: [])
         folderButton.addTarget(self, action: #selector(folderButtonTapped), for: .touchUpInside)
-        folderButton.accessibilityIdentifier = "bottomBarFolderButton"
-        folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.archived_button.label".localized // TODO jacob update
-        folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.archived_button.hint".localized // TODO jacob update
+        folderButton.accessibilityIdentifier = "bottomBarFolderListButton"
+        folderButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.folder_button.label".localized
+        folderButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.folder_button.hint".localized
         
         archivedButton.setIcon(.archive, size: .tiny, for: [])
         archivedButton.addTarget(self, action: #selector(archivedButtonTapped), for: .touchUpInside)
