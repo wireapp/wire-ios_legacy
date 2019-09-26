@@ -54,6 +54,10 @@ final class ConversationListBottomBarController: UIViewController {
         set { separator.fadeAndHide(!newValue) }
         get { return !separator.isHidden }
     }
+    
+    private var allButtons: [IconButton] {
+        return [startUIButton, listButton, folderButton, archivedButton]
+    }
 
     required init() {
         super.init(nibName: nil, bundle: nil)
@@ -97,24 +101,19 @@ final class ConversationListBottomBarController: UIViewController {
         startUIButton.accessibilityLabel = "conversation_list.voiceover.bottom_bar.contacts_button.label".localized
         startUIButton.accessibilityHint = "conversation_list.voiceover.bottom_bar.contacts_button.hint".localized
         
-        let buttons = [startUIButton, listButton, folderButton, archivedButton]
-        
         buttonStackview.distribution = .equalSpacing
         buttonStackview.alignment = .center
         buttonStackview.translatesAutoresizingMaskIntoConstraints = false
         
-        buttons.forEach { button in
+        allButtons.forEach { button in
             button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+            button.setIconColor(.strongBlue, for: .selected)
             button.translatesAutoresizingMaskIntoConstraints = false
             buttonStackview.addArrangedSubview(button)
         }
         
         view.addSubview(buttonStackview)
         view.addSubview(separator)
-    }
-
-    private func addSubviews() {
-        [archivedButton, startUIButton, separator].forEach(view.addSubview)
     }
 
     private func createConstraints() {
@@ -137,11 +136,13 @@ final class ConversationListBottomBarController: UIViewController {
     
     @objc
     private func listButtonTapped(_ sender: IconButton) {
+        updateSelection(with: sender)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .list)
     }
     
     @objc
     private func folderButtonTapped(_ sender: IconButton) {
+        updateSelection(with: sender)
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .folder)
     }
     
@@ -153,6 +154,10 @@ final class ConversationListBottomBarController: UIViewController {
     @objc
     private func startUIButtonTapped(_ sender: IconButton) {
         delegate?.conversationListBottomBar(self, didTapButtonWithType: .startUI)
+    }
+    
+    private func updateSelection(with button: IconButton) {
+        allButtons.forEach({ $0.isSelected = $0 == button })
     }
 }
 
