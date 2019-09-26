@@ -33,9 +33,9 @@ final class ConversationListHeaderView: UICollectionReusableView {
             // update rotation
             
             if collapsed {
-                arrowIconImageView.rotate(to: 270)
+                arrowIconImageView.rotate(to: -90)
             } else {
-                arrowIconImageView.transform = CGAffineTransform.identity
+                arrowIconImageView.transform = .identity
             }
         }
     }
@@ -68,13 +68,17 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         createConstraints()
         
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tappedOnNetworkStatusBar)))
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggledCollapsed)))
     }
     
     @objc
-    private func tappedOnNetworkStatusBar() {
-        collapsed = !collapsed
-        tapHandler?(collapsed)
+    private func toggledCollapsed() {
+        let newCollaped = !collapsed
+
+        UIView.animate(withDuration: 0.2, animations: {
+            self.collapsed = newCollaped
+             })
+        tapHandler?(newCollaped)
     }
 
 

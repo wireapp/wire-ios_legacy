@@ -59,8 +59,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         }
 
         [self registerSectionHeader];
-
-        [self updateSectionHeaderHeight];
     }
     return self;
 }

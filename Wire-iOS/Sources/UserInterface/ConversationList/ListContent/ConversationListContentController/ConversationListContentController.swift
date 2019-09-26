@@ -24,12 +24,11 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
-        listViewModel = ConversationListViewModel() ///TODO: inject session
+        listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
         setupViews()
 
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
-
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
@@ -38,8 +37,6 @@ extension ConversationListContentController {
     func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
-
-        updateSectionHeaderHeight()
 
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
@@ -57,7 +54,9 @@ extension ConversationListContentController {
                 header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
                 
                 header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
-                
+
+                header.collapsed = listViewModel.collapsed(at: indexPath.section)
+
                 header.tapHandler = { collapsed in
                     self.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
                 }
@@ -80,11 +79,6 @@ extension ConversationListContentController {
 
     var headerDesiredHeight: CGFloat {
         return listViewModel.folderEnabled ? CGFloat.ConversationListSectionHeader.height : 0
-    }
-
-    @objc
-    func updateSectionHeaderHeight() {
-        (collectionView.collectionViewLayout as? BoundsAwareFlowLayout)?.headerReferenceSize = CGSize(width: collectionView.frame.size.width, height: headerDesiredHeight)
     }
 }
 

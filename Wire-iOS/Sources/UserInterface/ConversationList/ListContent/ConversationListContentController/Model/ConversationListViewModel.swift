@@ -395,6 +395,9 @@ final class ConversationListViewModel: NSObject {
     private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
+        /// no need to update collapsed section
+        guard !sections[sectionNumber].collapsed else { return false }
+
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
 
         if let oldConversationList = sectionItems(for: section),
@@ -467,6 +470,12 @@ final class ConversationListViewModel: NSObject {
     }
 
     // MARK: - collapse section
+    func collapsed(at sectionIndex: Int) -> Bool {
+        guard sections.indices.contains(sectionIndex) else { return false }
+
+        return sections[sectionIndex].collapsed
+    }
+
     func setCollapsed(sectionIndex: Int, collapsed: Bool) {
         guard sections.indices.contains(sectionIndex) else { return }
         let oldValue = sections[sectionIndex].collapsed
