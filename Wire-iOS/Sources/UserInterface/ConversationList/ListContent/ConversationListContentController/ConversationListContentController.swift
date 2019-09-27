@@ -26,12 +26,15 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
+        ///TODO: move init VM
         let viewModel: ConversationListViewModel?
         if let persistentPath = ConversationListViewModel.persistentURL,
             let jsonData = try? Data(contentsOf: persistentPath) {
 
             do {
                 viewModel = try JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
+                viewModel?.setup(userSession: ZMUserSession.shared())
+                ///TODO: init update?
             } catch {
                 log.error("error decode ConversationListViewModel: \(error)")
                 viewModel = nil

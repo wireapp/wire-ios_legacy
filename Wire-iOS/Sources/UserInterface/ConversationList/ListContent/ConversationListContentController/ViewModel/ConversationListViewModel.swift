@@ -46,39 +46,12 @@ extension ConversationListViewModel.Section: Codable {
     }
 }
 
-//extension ConversationListViewModel.Section.Kind: Codable {
-//    enum Key: CodingKey {
-//        case value
-//    }
-
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: Key.self)
-//        try container.encode(self.rawValue, forKey: .value)
-//    }
-//}
-
 final class ConversationListViewModel: NSObject, Codable {
 
     private enum Key: CodingKey {
         case folderEnabled
         case sections
     }
-
-    init(from decoder: Decoder) throws {
-        ///session is not stored
-        self.userSession = nil
-
-        let container = try decoder.container(keyedBy: Key.self)
-        sections = try container.decode([ConversationListViewModel.Section].self, forKey: .sections)
-        folderEnabled = try container.decode(Bool.self, forKey: .folderEnabled)
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        try container.encode(sections, forKey: .sections)
-        try container.encode(folderEnabled, forKey: .folderEnabled)
-    }
-
 
     fileprivate struct Section {
         enum Kind: String, CaseIterable, Codable {
@@ -157,18 +130,36 @@ final class ConversationListViewModel: NSObject, Codable {
 
     private var conversationDirectoryToken: Any?
 
-    private let userSession: UserSessionSwiftInterface?
+    private var userSession: UserSessionSwiftInterface?
 
     init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
         self.userSession = userSession
 
         super.init()
 
+        setup(userSession: userSession)
+
         updateAllSections()
+    }
+
+    init(from decoder: Decoder) throws {
+        ///session is not stored
+
+        let container = try decoder.container(keyedBy: Key.self)
+        sections = try container.decode([ConversationListViewModel.Section].self, forKey: .sections)
+        folderEnabled = try container.decode(Bool.self, forKey: .folderEnabled)
+
+
+        ///TODO: update to fill the list
+    }
+
+    func setup(userSession: UserSessionSwiftInterface?) {
+        self.userSession = userSession
+
         setupObservers()
         subscribeToTeamsUpdates()
     }
-    
+
 
     private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {
@@ -450,10 +441,14 @@ final class ConversationListViewModel: NSObject, Codable {
     private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
-        /// no need to update collapsed section
-        guard !sections[sectionNumber].collapsed else { return false }
-
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
+
+        /// no need to update collapsed section's cells but the section header, update the stored list
+        if sections[sectionNumber].collapsed, newConversationList.count > 0 {
+            update(kind: section, with: newConversationList)
+            delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            return true
+        }
 
         if let oldConversationList = sectionItems(for: section),
             oldConversationList != newConversationList {
@@ -596,6 +591,12 @@ final class ConversationListViewModel: NSObject, Codable {
 
         return URL.directoryURL(persistentDirectory)?.appendingPathComponent(ConversationListViewModel.persistentFilename)
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+        try container.encode(sections, forKey: .sections)
+        try container.encode(folderEnabled, forKey: .folderEnabled)
+    }
 }
 
 // MARK: - ZMUserObserver
@@ -621,18 +622,20 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             reload()
         } else {
             for updatedList in changeInfo.updatedLists {
+                let kind: Section.Kind
                 switch updatedList {
                 case .unarchived:
-                    updateForConversationType(section: .conversations)
+                    kind = .conversations
                 case .contacts:
-                    updateForConversationType(section: .contacts)
+                    kind = .contacts
                 case .pending:
-                    updateForConversationType(section: .contactRequests)
+                    kind = .contactRequests
                 case .groups:
-                    updateForConversationType(section: .group)
+                    kind = .group
                 case .archived:
-                    break
+                    continue
                 }
+                updateForConversationType(section: kind)
             }
         }
     }
