@@ -23,11 +23,36 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
+extension ConversationListViewModel: Encodable {
+    private enum CodingKeys: String, CodingKey {
+        case folderEnabled
+        case sections
+    }
+}
+
+extension ConversationListViewModel.Section: Encodable {
+    private enum CodingKeys: String, CodingKey {
+        case kind
+        case collapsed
+    }
+}
+
+extension ConversationListViewModel.Section.Kind: Encodable {
+    enum CodingKeys: CodingKey {
+        case rawValue
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.rawValue, forKey: .rawValue)
+    }
+}
 
 final class ConversationListViewModel: NSObject {
 
-    private struct Section {
-        enum Kind: CaseIterable {
+    fileprivate struct Section {
+        enum Kind: String, CaseIterable {
+
             /// for incoming requests
             case contactRequests
 
