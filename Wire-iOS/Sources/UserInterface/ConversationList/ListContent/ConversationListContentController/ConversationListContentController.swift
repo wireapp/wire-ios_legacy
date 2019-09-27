@@ -26,18 +26,26 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
+        let viewModel: ConversationListViewModel?
         if let persistentPath = ConversationListViewModel.persistentURL,
             let jsonData = try? Data(contentsOf: persistentPath) {
 
-
             do {
-                 let viewModel = try JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
+                viewModel = try JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
             } catch {
                 log.error("error decode ConversationListViewModel: \(error)")
+                viewModel = nil
             }
+        } else {
+            viewModel = nil
         }
 
-        listViewModel = ConversationListViewModel() ///TODO: restore
+        if let viewModel = viewModel {
+            listViewModel = viewModel
+        } else {
+            listViewModel = ConversationListViewModel()
+        }
+
         listViewModel.delegate = self
         setupViews()
 

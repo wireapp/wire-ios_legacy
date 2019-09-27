@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationListContentController () <ConversationListViewModelDelegate>
 
-@property (nonatomic, strong) ConversationListViewModel *listViewModel;
+@property (nonatomic, strong, nonnull) ConversationListViewModel *listViewModel;
 
 @property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
 @property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
