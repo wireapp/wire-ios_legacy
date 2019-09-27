@@ -48,12 +48,12 @@ extension ConversationListViewModel.Section: Codable {
 
 extension ConversationListViewModel.Section.Kind: Codable {
     enum Key: CodingKey {
-        case rawValue
+        case value
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: Key.self)
-        try container.encode(self.rawValue, forKey: .rawValue)
+        try container.encode(self.rawValue, forKey: .value)
     }
 }
 
@@ -554,8 +554,22 @@ final class ConversationListViewModel: NSObject, Codable {
         guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
 
         delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+
+
+        ///TODO: save when app goes to BG?
+        save()
     }
 
+    ///TODO: test
+    @discardableResult
+    func save() -> String? {
+        guard let jsonData = try? JSONEncoder().encode(self) else { return nil }
+        let jsonString = String(data: jsonData, encoding: .utf8)!
+        print(jsonString)
+
+        return jsonString
+        ///TODO: save to folder with user id
+    }
 }
 
 // MARK: - ZMUserObserver
