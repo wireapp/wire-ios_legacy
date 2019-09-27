@@ -23,32 +23,62 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
-extension ConversationListViewModel: Encodable {
-    private enum CodingKeys: String, CodingKey {
-        case folderEnabled
-        case sections
-    }
-}
 
-extension ConversationListViewModel.Section: Encodable {
-    private enum CodingKeys: String, CodingKey {
+extension ConversationListViewModel.Section: Codable {
+    private enum Key: String, CodingKey {
         case kind
         case collapsed
     }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(collapsed, forKey: .collapsed)
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Key.self)
+        kind = try container.decode(ConversationListViewModel.Section.Kind.self, forKey: .kind)
+        collapsed = try container.decode(Bool.self, forKey: .collapsed)
+
+        ///list is not stored
+        items = []
+    }
 }
 
-extension ConversationListViewModel.Section.Kind: Encodable {
-    enum CodingKeys: CodingKey {
+extension ConversationListViewModel.Section.Kind: Codable {
+    enum Key: CodingKey {
         case rawValue
     }
 
     func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: Key.self)
         try container.encode(self.rawValue, forKey: .rawValue)
     }
 }
 
-final class ConversationListViewModel: NSObject {
+final class ConversationListViewModel: NSObject, Codable {
+
+    private enum Key: String, CodingKey {
+        case folderEnabled
+        case sections
+    }
+
+    init(from decoder: Decoder) throws {
+        ///session is not stored
+        self.userSession = nil
+
+        let container = try decoder.container(keyedBy: Key.self)
+        sections = try container.decode([ConversationListViewModel.Section].self, forKey: .sections)
+        folderEnabled = try container.decode(Bool.self, forKey: .folderEnabled)
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+        try container.encode(sections, forKey: .sections)
+        try container.encode(folderEnabled, forKey: .folderEnabled)
+    }
+
 
     fileprivate struct Section {
         enum Kind: String, CaseIterable {
