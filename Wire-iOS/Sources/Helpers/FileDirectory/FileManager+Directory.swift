@@ -25,8 +25,8 @@ extension FileManager {
     /// Create a directiory excluded from back up
     ///
     /// - Parameter pathComponent: folder to create
-    func createBackupExcludedDirectoryIfNeeded(_ pathComponent: String) {
-        guard let url = URL.directoryURL(pathComponent) else { return }
+    func createBackupExcludedDirectoryIfNeeded(_ pathComponent: String) -> URL? {
+        guard let url = URL.directoryURL(pathComponent) else { return nil }
 
         do {
             if !FileManager.default.fileExists(atPath: url.path) {
@@ -39,6 +39,7 @@ extension FileManager {
             zmLog.error("Error creating \(String(describing: url)): \(exception)")
         }
 
+        return url
     }
 }
 

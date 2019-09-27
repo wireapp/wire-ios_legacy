@@ -562,13 +562,22 @@ final class ConversationListViewModel: NSObject, Codable {
 
     ///TODO: test
     @discardableResult
-    func save() -> String? {
-        guard let jsonData = try? JSONEncoder().encode(self) else { return nil }
-        let jsonString = String(data: jsonData, encoding: .utf8)!
-        print(jsonString)
+    private func save() -> String? {
+        let className = String(describing: type(of: self))
+
+        ///TODO: save to folder with user id
+        guard let jsonData = try? JSONEncoder().encode(self),
+              let jsonString = String(data: jsonData, encoding: .utf8),
+              let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(className) else { return nil }
+
+        do {
+            try jsonString.write(to: directoryURL.appendingPathComponent("\(className).json"), atomically: true, encoding: .utf8)
+        } catch {
+            log.error("error writing ConversationListViewModel to \(directoryURL): \(error)")
+        }
+
 
         return jsonString
-        ///TODO: save to folder with user id
     }
 }
 

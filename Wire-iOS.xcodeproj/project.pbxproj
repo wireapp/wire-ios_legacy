@@ -5236,7 +5236,7 @@
 		8FC85126199245760008B66B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				EF39BD31233E41AA00F02DDB /* Folder */,
+				EF39BD31233E41AA00F02DDB /* FileDirectory */,
 				CE8E4FB61DF17BBE0009F437 /* TextTransform */,
 				8F5A3E9919AE2C9E00D0E9DA /* sound */,
 				8FC8512F199245760008B66B /* syncengine */,
@@ -6357,12 +6357,12 @@
 			path = ConversationCell;
 			sourceTree = "<group>";
 		};
-		EF39BD31233E41AA00F02DDB /* Folder */ = {
+		EF39BD31233E41AA00F02DDB /* FileDirectory */ = {
 			isa = PBXGroup;
 			children = (
 				EF39BD2F233E418B00F02DDB /* FileManager+Directory.swift */,
 			);
-			path = Folder;
+			path = FileDirectory;
 			sourceTree = "<group>";
 		};
 		EF471BE023265305008E11A5 /* ViewModel */ = {
