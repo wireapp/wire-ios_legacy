@@ -25,6 +25,7 @@ extension FileManager {
     /// Create a directiory excluded from back up
     ///
     /// - Parameter pathComponent: folder to create
+    @discardableResult
     func createBackupExcludedDirectoryIfNeeded(_ pathComponent: String) -> URL? {
         guard let url = URL.directoryURL(pathComponent) else { return nil }
 

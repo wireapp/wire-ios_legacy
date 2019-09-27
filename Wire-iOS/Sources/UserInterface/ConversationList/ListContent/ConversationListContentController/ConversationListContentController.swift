@@ -18,6 +18,8 @@
 
 import Foundation
 
+fileprivate let log = ZMSLog(tag: "ConversationListContentController")
+
 extension ConversationListContentController {
     override open func loadView() {
         super.loadView()
@@ -28,9 +30,11 @@ extension ConversationListContentController {
             let jsonData = try? Data(contentsOf: persistentPath) {
 
 
-        let viewModel = try? JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
-
-//        print(user.last_name)
+            do {
+                 let viewModel = try JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
+            } catch {
+                log.error("error decode ConversationListViewModel: \(error)")
+            }
         }
 
         listViewModel = ConversationListViewModel() ///TODO: restore

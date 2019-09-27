@@ -46,16 +46,16 @@ extension ConversationListViewModel.Section: Codable {
     }
 }
 
-extension ConversationListViewModel.Section.Kind: Codable {
-    enum Key: CodingKey {
-        case value
-    }
+//extension ConversationListViewModel.Section.Kind: Codable {
+//    enum Key: CodingKey {
+//        case value
+//    }
 
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        try container.encode(self.rawValue, forKey: .value)
-    }
-}
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: Key.self)
+//        try container.encode(self.rawValue, forKey: .value)
+//    }
+//}
 
 final class ConversationListViewModel: NSObject, Codable {
 
@@ -81,7 +81,7 @@ final class ConversationListViewModel: NSObject, Codable {
 
 
     fileprivate struct Section {
-        enum Kind: String, CaseIterable {
+        enum Kind: String, CaseIterable, Codable {
 
             /// for incoming requests
             case contactRequests
