@@ -25,7 +25,7 @@ final class ConversationListConnectRequestsItem : NSObject {}
 
 
 extension ConversationListViewModel.Section: Codable {
-    private enum Key: String, CodingKey {
+    private enum Key: CodingKey {
         case kind
         case collapsed
     }
@@ -59,7 +59,7 @@ extension ConversationListViewModel.Section.Kind: Codable {
 
 final class ConversationListViewModel: NSObject, Codable {
 
-    private enum Key: String, CodingKey {
+    private enum Key: CodingKey {
         case folderEnabled
         case sections
     }
@@ -560,24 +560,41 @@ final class ConversationListViewModel: NSObject, Codable {
         save()
     }
 
+    // MARK: - state presistent
+
     ///TODO: test
     @discardableResult
     private func save() -> String? {
-        let className = String(describing: type(of: self))
-
         guard let jsonData = try? JSONEncoder().encode(self),
               let jsonString = String(data: jsonData, encoding: .utf8),
-              let userID = ZMUser.selfUser()?.remoteIdentifier,
-              let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded("\(className)/\(userID)") else { return nil }
+              let persistentDirectory = ConversationListViewModel.persistentDirectory,
+              let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return nil }
 
         do {
-            try jsonString.write(to: directoryURL.appendingPathComponent("\(className).json"), atomically: true, encoding: .utf8)
+            try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)
         } catch {
             log.error("error writing ConversationListViewModel to \(directoryURL): \(error)")
         }
 
 
         return jsonString
+    }
+
+    private static var persistentDirectory: String? {
+        guard let userID = ZMUser.selfUser()?.remoteIdentifier else { return nil }
+
+        return "UI_state/\(userID)"
+    }
+
+    private static var persistentFilename: String {
+        let className = String(describing: self)
+        return "\(className).json"
+    }
+
+    static var persistentURL: URL? {
+        guard let persistentDirectory = persistentDirectory else { return nil }
+
+        return URL.directoryURL(persistentDirectory)?.appendingPathComponent(ConversationListViewModel.persistentFilename)
     }
 }
 

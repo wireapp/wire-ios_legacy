@@ -5156,13 +5156,13 @@
 			path = ListContent;
 			sourceTree = "<group>";
 		};
-		8F8914061A9F287E0056AB0C /* Model */ = {
+		8F8914061A9F287E0056AB0C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				EF4265882333BA7500DDAD0A /* ConversationListViewModel.swift */,
 				EF42658A2333DB9800DDAD0A /* ConversationListViewModelDelegate.swift */,
 			);
-			path = Model;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		8FC85083199245760008B66B /* Resources */ = {
@@ -6324,7 +6324,7 @@
 		EF26EBD923322EAD001EB65A /* ConversationListContentController */ = {
 			isa = PBXGroup;
 			children = (
-				8F8914061A9F287E0056AB0C /* Model */,
+				8F8914061A9F287E0056AB0C /* ViewModel */,
 				8F8913F31A9F287E0056AB0C /* ConversationListContentController.h */,
 				EFEE97CB23229EBC007A4702 /* ConversationListContentController+Internal.h */,
 				8F8913F41A9F287E0056AB0C /* ConversationListContentController.m */,
