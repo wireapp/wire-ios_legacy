@@ -1187,8 +1187,6 @@
 		EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF527E352111B74100F7AE15 /* UIViewController+IsVisible.swift */; };
 		EF5396D521B03AC3004CF034 /* NSTextAttachment+Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5396D421B03AC3004CF034 /* NSTextAttachment+Icon.swift */; };
 		EF5741EE2102001A0041AD47 /* MessageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5741ED2102001A0041AD47 /* MessageTests.swift */; };
-		EF57D40623312DA600D354D0 /* ZMConversation+RevealArchived.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF57D40523312DA600D354D0 /* ZMConversation+RevealArchived.swift */; };
-		EF57D40923313B6800D354D0 /* ZMConversation+RevealTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF57D40723313AB400D354D0 /* ZMConversation+RevealTests.swift */; };
 		EF5871662166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */; };
 		EF58B557218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */; };
 		EF5EF40220B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */; };
@@ -2991,8 +2989,6 @@
 		EF538FE02028AB6600EA4048 /* ProfileViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProfileViewController+internal.h"; sourceTree = "<group>"; };
 		EF5396D421B03AC3004CF034 /* NSTextAttachment+Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextAttachment+Icon.swift"; sourceTree = "<group>"; };
 		EF5741ED2102001A0041AD47 /* MessageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTests.swift; sourceTree = "<group>"; };
-		EF57D40523312DA600D354D0 /* ZMConversation+RevealArchived.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversation+RevealArchived.swift"; sourceTree = "<group>"; };
-		EF57D40723313AB400D354D0 /* ZMConversation+RevealTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversation+RevealTests.swift"; sourceTree = "<group>"; };
 		EF5871652166802B00E47E73 /* GroupDetailsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+KeyCommand.swift"; sourceTree = "<group>"; };
 		EF5EF40120B5B70A005453C1 /* ZMUserSession+MarketingConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+MarketingConsent.swift"; sourceTree = "<group>"; };
@@ -5162,7 +5158,6 @@
 			isa = PBXGroup;
 			children = (
 				EF4265882333BA7500DDAD0A /* ConversationListViewModel.swift */,
-				EF57D40523312DA600D354D0 /* ZMConversation+RevealArchived.swift */,
 				EF42658A2333DB9800DDAD0A /* ConversationListViewModelDelegate.swift */,
 			);
 			path = Model;
@@ -5903,7 +5898,6 @@
 				EFFE1D3A230D63EA00389290 /* CountryTests.swift */,
 				EF3243522317F0060043F147 /* ZClientViewControllerTests.swift */,
 				EF17C52F2321417600245EBF /* UITraitEnvironmentTests.swift */,
-				EF57D40723313AB400D354D0 /* ZMConversation+RevealTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -7854,7 +7848,6 @@
 				EF4686DD22A6AC3200E25764 /* ParticipantDeviceHeaderView+UITextViewDelegate.swift in Sources */,
 				EFDAC64722DE2AD100D63025 /* TeamImageView.swift in Sources */,
 				5E8FFC1021EE0CA60052DF03 /* AuthenticationButtonTapInputHandler.swift in Sources */,
-				EF57D40623312DA600D354D0 /* ZMConversation+RevealArchived.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
 				EFA06E4721FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift in Sources */,
 				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
@@ -8394,7 +8387,6 @@
 				876AE7601C159A9C00E3E743 /* NSStringFingerprintTests.m in Sources */,
 				5E8FFC0821ECCC9B0052DF03 /* MockAuthenticationFeatureProvider.swift in Sources */,
 				EF1D80D92226D6B800BCA8D3 /* MockConversationFactory.swift in Sources */,
-				EF57D40923313B6800D354D0 /* ZMConversation+RevealTests.swift in Sources */,
 				87909076211DE898006219B4 /* EmptySearchResultsViewTests.swift in Sources */,
 				EFBFABAA2257948F005D83C0 /* TopPeopleCellSnapshotTests.swift in Sources */,
 				EFD4B9CB22F09C3E008CA042 /* AppLockTests.swift in Sources */,

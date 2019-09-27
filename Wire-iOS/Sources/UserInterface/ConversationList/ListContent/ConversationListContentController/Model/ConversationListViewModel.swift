@@ -446,21 +446,28 @@ final class ConversationListViewModel: NSObject {
     @discardableResult
     func select(itemToSelect: AnyHashable?) -> Bool {
         guard let itemToSelect = itemToSelect else {
-            selectedItem = nil
-            delegate?.listViewModel(self, didSelectItem: nil)
-
+            internalSelect(itemToSelect: nil)
             return false
         }
 
-        // Couldn't find the item, try unarchive it first
-        if self.indexPath(for: itemToSelect) == nil {
-            (itemToSelect as? ZMConversation)?.unarchive()
+        if indexPath(for: itemToSelect) == nil {
+            guard let conversation = itemToSelect as? ZMConversation else { return false }
+
+            ZMUserSession.shared()?.enqueueChanges({
+                conversation.isArchived = false
+            }, completionHandler: {
+                self.internalSelect(itemToSelect: itemToSelect)
+            })
+        } else {
+            internalSelect(itemToSelect: itemToSelect)
         }
 
+        return true
+    }
+
+    private func internalSelect(itemToSelect: AnyHashable?) {
         selectedItem = itemToSelect
         delegate?.listViewModel(self, didSelectItem: itemToSelect)
-
-        return true
     }
 
     func subscribeToTeamsUpdates() {
