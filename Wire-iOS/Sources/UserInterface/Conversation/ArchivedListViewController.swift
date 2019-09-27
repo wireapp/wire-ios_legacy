@@ -22,7 +22,7 @@ import Cartography
 
 // MARK: ArchivedListViewControllerDelegate
 
-@objc protocol ArchivedListViewControllerDelegate: class {
+protocol ArchivedListViewControllerDelegate: class {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
 }
@@ -174,13 +174,17 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
 extension ArchivedListViewController: ConversationListCellDelegate {
 
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell!) {
-        startCallController = ConversationCallController(conversation: cell.conversation, target: self)
+    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else { return }
+
+        startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()
     }
     
-    func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
-        actionController = ConversationActionController(conversation: cell.conversation, target: self)
+    func conversationListCellOverscrolled(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else { return }
+
+        actionController = ConversationActionController(conversation: conversation, target: self)
         actionController?.presentMenu(from: cell, context: .list)
     }
 

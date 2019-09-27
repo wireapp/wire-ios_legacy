@@ -88,6 +88,7 @@
 #import "ConversationInputBarViewController+Files.h"
 
 #import "ConversationListContentController.h"
+#import "ConversationListContentController+Internal.h"
 #import "ConversationListViewModel.h"
 #import "ConversationListViewModel+Private.h"
 #import "SplitViewController.h"

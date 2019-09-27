@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
     SectionIndexAll = INT_MAX,
 };
 
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol ConversationListViewModelDelegate <NSObject>
 
@@ -37,7 +38,7 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section;
 /// Delegate MUST call the updateBlock in appropriate place (e.g. collectionView performBatchUpdates:) to update the model.
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSection:(NSUInteger)section usingBlock:(dispatch_block_t)updateBlock withChangedIndexes:(ZMChangedIndexes *)changedIndexes;
-- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item;
+- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(_Nullable id)item;
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change;
 @end
 
@@ -53,20 +54,18 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 @property (nonatomic, readonly) NSUInteger sectionCount;
 @property (nonatomic, readonly) ConversationListConnectRequestsItem *contactRequestsItem;
 
-@property (nonatomic, readonly) id selectedItem;
+@property (nonatomic, readonly, nullable) id selectedItem;
 
-@property (nonatomic, weak) id<ConversationListViewModelDelegate> delegate;
+@property (nonatomic, weak, nullable) id<ConversationListViewModelDelegate> delegate;
 
 - (NSUInteger)numberOfItemsInSection:(NSUInteger)sectionIndex;
 - (NSArray *)sectionAtIndex:(NSUInteger)sectionIndex;
 
-- (id<NSObject>)itemForIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)indexPathForItem:(id<NSObject>)item;
+- (id<NSObject> _Nullable)itemForIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath * _Nullable)indexPathForItem:(id<NSObject>)item;
 
 - (BOOL)isConversationAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathForConversation:(id)conversation;
-
-- (BOOL)selectItem:(id)itemToSelect;
 
 - (void)updateSection:(SectionIndex)sectionIndex;
 - (void)updateConversationListAnimated;
@@ -86,3 +85,5 @@ typedef NS_ENUM(NSUInteger, SectionIndex) {
 - (NSIndexPath *)itemAfterIndex:(NSUInteger)index section:(NSUInteger)sectionIndex;
 
 @end
+
+NS_ASSUME_NONNULL_END

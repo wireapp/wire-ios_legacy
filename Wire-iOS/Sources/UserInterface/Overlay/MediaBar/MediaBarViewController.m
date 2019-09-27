@@ -90,7 +90,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)playPause:(id)sender
+- (void)playPause:(id)sender
 {
     if (self.mediaPlaybackManager.activeMediaPlayer.state == MediaPlayerStatePlaying) {
         [self.mediaPlaybackManager pause];
@@ -99,7 +99,7 @@
     }
 }
 
-- (IBAction)stop:(id)sender
+- (void)stop:(id)sender
 {
     [self.mediaPlaybackManager stop];
 }

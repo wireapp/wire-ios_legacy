@@ -155,7 +155,7 @@ extension UserClientListViewController: ZMUserObserver {
 }
 
 extension UserClientListViewController: ParticipantDeviceHeaderViewDelegate {
-    func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView!) {
+    func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView) {
         URL.wr_fingerprintLearnMore.openInApp(above: self)
     }
 }

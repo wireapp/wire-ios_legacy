@@ -20,7 +20,6 @@
 #import "ProfileViewController.h"
 
 @protocol ViewControllerDismisser;
-@protocol ProfileViewControllerDelegate;
 
 @interface ProfilePresenter () <ViewControllerDismisser>
 @end
@@ -30,12 +29,14 @@
 @end
 
 
-@interface ProfilePresenter () <ProfileViewControllerDelegate>
+@interface ProfilePresenter ()
 
 @property (nonatomic, assign) CGRect presentedFrame;
 @property (nonatomic, weak, nullable)   UIView *viewToPresentOn;
 @property (nonatomic, weak, nullable)   UIViewController *controllerToPresentOn;
 @property (nonatomic, copy, nullable)   dispatch_block_t onDismiss;
 @property (nonatomic, nonnull) TransitionDelegate *transitionDelegate;
+
+- (void)dismissViewController:(UIViewController * _Nonnull)profileViewController completion:(dispatch_block_t _Nullable)completion;
 
 @end

@@ -21,9 +21,8 @@ import Foundation
 extension ConversationViewController {
     @objc
     func updateOutgoingConnectionVisibility() {
-        guard let conversation = conversation,
-            contentViewController.tableView != nil else {
-                return
+        guard let conversation = conversation else {
+            return
         }
 
         let outgoingConnection: Bool = conversation.relatedConnectionState == .sent

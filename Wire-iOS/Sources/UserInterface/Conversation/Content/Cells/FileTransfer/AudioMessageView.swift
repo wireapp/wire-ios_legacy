@@ -21,11 +21,11 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers final class AudioMessageView: UIView, TransferView {
-    public var fileMessage: ZMConversationMessage?
-    weak public var delegate: TransferViewDelegate?
+final class AudioMessageView: UIView, TransferView {
+    var fileMessage: ZMConversationMessage?
+    weak var delegate: TransferViewDelegate?
     private var _audioTrackPlayer: AudioTrackPlayer?
-    public var audioTrackPlayer: AudioTrackPlayer? {
+    var audioTrackPlayer: AudioTrackPlayer? {
         get {
             if _audioTrackPlayer == nil {
                 _audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
@@ -89,7 +89,7 @@ private let zmLog = ZMSLog(tag: "UI")
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall : Bool
 
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         isPausedForIncomingCall = false
 
         super.init(frame: frame)
@@ -130,11 +130,11 @@ private let zmLog = ZMSLog(tag: "UI")
         audioPlayerProgressObserver = nil
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
@@ -174,17 +174,17 @@ private let zmLog = ZMSLog(tag: "UI")
         
     }
     
-    public override var tintColor: UIColor! {
+    override var tintColor: UIColor! {
         didSet {
             self.downloadProgressView.tintColor = self.tintColor
         }
     }
     
-    public func stopProximitySensor() {
+    func stopProximitySensor() {
         self.proximityMonitorManager?.stopListening()
     }
     
-    public func configure(for message: ZMConversationMessage, isInitial: Bool) {
+    func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
         
         guard let fileMessageData = message.fileMessageData else {
@@ -214,7 +214,7 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    public func willDeleteMessage() {
+    func willDeleteMessage() {
         proximityMonitorManager?.stopListening()
         guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.stop()
@@ -328,12 +328,12 @@ private let zmLog = ZMSLog(tag: "UI")
         self.waveformProgressView.setProgress(progress, animated: animated)
     }
     
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
     
-    public func stopPlaying() {
+    func stopPlaying() {
         guard let player = self.audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.pause()
     }
@@ -403,8 +403,10 @@ private let zmLog = ZMSLog(tag: "UI")
     }
     
     func setupAudioPlayerObservers() {
-        audioPlayerProgressObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
-        audioPlayerStateObserver = KeyValueObserver.observe(_audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+        guard let audioTrackPlayer = _audioTrackPlayer else { return }
+        
+        audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
+        audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
     }
 
     // MARK: - Actions

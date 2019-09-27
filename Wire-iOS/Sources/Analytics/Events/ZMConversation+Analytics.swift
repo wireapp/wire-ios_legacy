@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc public enum ConversationType: Int {
+enum ConversationType: Int {
     case oneToOne
     case group
 }
@@ -45,16 +45,12 @@ extension ConversationType {
 
 extension ZMConversation {
     
-    @objc public func analyticsTypeString() -> String? {
+    func analyticsTypeString() -> String? {
         return ConversationType.type(self)?.analyticsTypeString
     }
-    
-    @objc public class func analyticsTypeString(withConversationType conversationType: ConversationType) -> String {
-        return conversationType.analyticsTypeString
-    }
-    
+        
     /// Whether the conversation is a 1-on-1 conversation with a service user
-    @objc public var isOneOnOneServiceUserConversation: Bool {
+    var isOneOnOneServiceUserConversation: Bool {
         guard self.activeParticipants.count == 2,
              let otherUser = self.firstActiveParticipantOtherThanSelf() else {
             return false
@@ -65,17 +61,18 @@ extension ZMConversation {
     }
     
     /// Whether the conversation includes at least 1 service user.
-    @objc public var includesServiceUser: Bool {
+    var includesServiceUser: Bool {
         guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return false }
         return participants.any { $0.isServiceUser }
     }
     
-    @objc public var sortedServiceUsers: [UserType] {
+    var sortedServiceUsers: [UserType] {
         guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
         return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
-    
-    @objc public var sortedOtherParticipants: [UserType] {
+
+    @objc
+    var sortedOtherParticipants: [UserType] {
         guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
         return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }

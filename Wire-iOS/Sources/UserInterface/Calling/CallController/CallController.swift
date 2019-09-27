@@ -85,10 +85,10 @@ extension CallController: WireCallCenterCallStateObserver {
         }
     }
     
-    func minimizeCall(completion: (() -> Void)?) {
+    func minimizeCall(animated: Bool, completion: (() -> Void)?) {
         guard let activeCallViewController = activeCallViewController else { completion?(); return }
     
-        activeCallViewController.dismiss(animated: true, completion: completion)
+        activeCallViewController.dismiss(animated: animated, completion: completion)
     }
     
     fileprivate func minimizeCall(in conversation: ZMConversation) {

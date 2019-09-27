@@ -36,32 +36,6 @@
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
-static NSString * const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
-static NSString * const CellReuseIdConversation = @"CellId";
-
-@interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
-
-@property (nonatomic, strong) ConversationListViewModel *listViewModel;
-
-@property (nonatomic) NSObject *activeMediaPlayerObserver;
-@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) BOOL focusOnNextSelection;
-@property (nonatomic) BOOL animateNextSelection;
-@property (nonatomic) id<ZMConversationMessage> scrollToMessageOnNextSelection;
-@property (nonatomic, copy) dispatch_block_t selectConversationCompletion;
-@property (nonatomic) ConversationListCell *layoutCell;
-@property (nonatomic) ConversationCallController *startCallController;
-
-@property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
-@end
-
-@interface ConversationListContentController (ConversationListCellDelegate) <ConversationListCellDelegate>
-
-@end
-
-@interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
-
-@end
 
 @implementation ConversationListContentController
 
@@ -210,6 +184,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
             [self.collectionView deselectItemAtIndexPath:obj animated:NO];
         }];
         [[ZClientViewController sharedZClientViewController] loadPlaceholderConversationControllerAnimated:YES];
+        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
     }
     else {
         
@@ -224,7 +199,7 @@ static NSString * const CellReuseIdConversation = @"CellId";
                                                                          animated:self.animateNextSelection
                                                                        completion:self.selectConversationCompletion];
             self.selectConversationCompletion = nil;
-            
+
             [self.contentDelegate conversationList:self didSelectConversation:item focusOnView:! self.focusOnNextSelection];
         }
         else if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
@@ -326,7 +301,11 @@ static NSString * const CellReuseIdConversation = @"CellId";
     NSArray *selectedIndexPaths = [self.collectionView indexPathsForSelectedItems];
     NSIndexPath *currentIndexPath = [self.listViewModel indexPathForItem:self.listViewModel.selectedItem];
     
-    if (! [selectedIndexPaths containsObject:currentIndexPath] && currentIndexPath != nil) {
+    if (currentIndexPath == nil) {
+        // Current selection is no longer available so we should unload the conversation view
+        [self.listViewModel selectItem:nil];
+
+    } else if (![selectedIndexPaths containsObject:currentIndexPath]) {
         // This method doesn't trigger any delegate callbacks, so no worries about special handling
         [self.collectionView selectItemAtIndexPath:currentIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
     }
@@ -489,28 +468,6 @@ static NSString * const CellReuseIdConversation = @"CellId";
 
 @end
 
-@implementation ConversationListContentController (ConversationListCellDelegate)
-
-- (void)conversationListCellOverscrolled:(ConversationListCell *)cell
-{
-    ZMConversation *conversation = cell.conversation;
-    if (! conversation) {
-        return;
-    }
-    
-    if ([self.contentDelegate respondsToSelector:@selector(conversationListContentController:wantsActionMenuForConversation:fromSourceView:)]) {
-        [self.contentDelegate conversationListContentController:self wantsActionMenuForConversation:conversation fromSourceView:cell];
-    }
-}
-    
-- (void)conversationListCellJoinCallButtonTapped:(ConversationListCell *)cell
-{
-    self.startCallController = [[ConversationCallController alloc] initWithConversation:cell.conversation target:self];
-    [self.startCallController joinCall];
-}
-
-@end
-
 @implementation ConversationListContentController (PeekAndPop)
 
 - (UIViewController *)previewingContext:(id<UIViewControllerPreviewing>)previewingContext viewControllerForLocation:(CGPoint)location
@@ -549,4 +506,4 @@ static NSString * const CellReuseIdConversation = @"CellId";
     [self selectModelItem:previewViewController.conversation];
 }
 
-@end
+@end  

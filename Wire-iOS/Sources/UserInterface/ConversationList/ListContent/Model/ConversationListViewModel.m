@@ -18,7 +18,6 @@
 
 
 #import "ConversationListViewModel.h"
-#import "AggregateArray.h"
 #import "WireSyncEngine+iOS.h"
 @import WireDataModel;
 #import "Wire-Swift.h"
@@ -26,27 +25,8 @@
 void debugLog (NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
 void debugLogUpdate (ConversationListChangeInfo *note);
 
-
-@implementation ConversationListConnectRequestsItem
+@implementation ConversationListConnectRequestsItem ///TODO: remove?
 @end
-
-
-@interface ConversationListViewModel () <ZMConversationListObserver, ZMConversationListReloadObserver>
-
-@property (nonatomic, strong) ConversationListConnectRequestsItem *contactRequestsItem;
-@property (nonatomic, strong) AggregateArray *aggregatedItems;
-@property (nonatomic, readwrite) id selectedItem;
-
-// Local copies of the lists.
-@property (nonatomic, copy) NSArray *inbox;
-@property (nonatomic, copy) NSArray *conversations;
-@property (nonatomic) id pendingConversationListObserverToken;
-@property (nonatomic) id conversationListObserverToken;
-@property (nonatomic) id clearedConversationListObserverToken;
-@property (nonatomic) id conversationListsReloadObserverToken;
-
-@end
-
 
 
 @implementation ConversationListViewModel
@@ -135,52 +115,6 @@ void debugLogUpdate (ConversationListChangeInfo *note);
     [sections addObject:self.conversations != nil ? self.conversations : @[]];
     
     self.aggregatedItems = [AggregateArray aggregateArrayWithSections:sections];
-}
-
-- (BOOL)selectItem:(id)itemToSelect
-{
-    if (itemToSelect == nil) {
-        self.selectedItem = itemToSelect;
-        [self.delegate listViewModel:self didSelectItem:nil];
-        return NO;
-    }
-    
-    NSIndexPath *indexPath = [self indexPathForItem:itemToSelect];
-    
-    // Couldn't find the item
-    if (indexPath == nil && [itemToSelect isKindOfClass:[ZMConversation class]]) {
-        ZMConversation *conversation = itemToSelect;
-        BOOL containedInOtherLists = NO;
-        
-        if ([[ZMConversationList archivedConversationsInUserSession:[ZMUserSession sharedSession]] containsObject:itemToSelect]) {
-            // Check if it's archived, this would mean that the archive is closed but we want to unarchive
-            // and select the item
-            containedInOtherLists = YES;
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                conversation.isArchived = NO;
-            } completionHandler:nil];
-        }
-        else if ([[ZMConversationList clearedConversationsInUserSession:[ZMUserSession sharedSession]] containsObject:itemToSelect]) {
-            containedInOtherLists = YES;
-            [[ZMUserSession sharedSession] enqueueChanges:^{
-                [conversation revealClearedConversation];
-            } completionHandler:nil];
-        }
-        
-        if (containedInOtherLists) {
-            self.selectedItem = itemToSelect;
-            [self.delegate listViewModel:self didSelectItem:itemToSelect];
-            
-            return YES;
-        }
-        
-        return NO;
-    }
-    
-    self.selectedItem = itemToSelect;
-    [self.delegate listViewModel:self didSelectItem:itemToSelect];
-    
-    return YES;
 }
 
 - (NSUInteger)sectionCount

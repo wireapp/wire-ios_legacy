@@ -23,36 +23,21 @@
 @class ZMConversation;
 @class ConversationListContentController;
 @protocol ZMConversationMessage;
+@protocol ConversationListContentDelegate;
 
-
-@protocol ConversationListContentDelegate <NSObject>
-
-- (void)conversationList:(ConversationListContentController *)controller
-   didSelectConversation:(ZMConversation *)conversation
-             focusOnView:(BOOL)focus;
-
-/// This is called after a delete when there is an item to select
-- (void)conversationList:(ConversationListContentController *)controller willSelectIndexPathAfterSelectionDeleted:(NSIndexPath *)conv;
-
-- (void)conversationListDidScroll:(ConversationListContentController *)controller;
-
-- (void)conversationListContentController:(ConversationListContentController *)controller wantsActionMenuForConversation:(ZMConversation *)conversation fromSourceView:(UIView *)sourceView;
-
-@end
-
-
+NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationListContentController : UICollectionViewController
 
-@property (nonatomic, weak) id <ConversationListContentDelegate> contentDelegate;
+@property (nonatomic, weak, nullable) id <ConversationListContentDelegate> contentDelegate;
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion;
+- (BOOL)selectConversation:( ZMConversation * _Nonnull )conversation scrollToMessage:(id<ZMConversationMessage> _Nullable)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t _Nullable)completion;
 
 - (void)deselectAll;
 - (void)reload;
@@ -61,3 +46,5 @@
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 @end
+
+NS_ASSUME_NONNULL_END

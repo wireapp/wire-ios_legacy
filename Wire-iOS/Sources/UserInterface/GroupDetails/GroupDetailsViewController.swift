@@ -185,11 +185,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         detailsViewController.delegate = self
         navigationController?.pushViewController(detailsViewController, animated: animated)
     }
-    
-    func dismissButtonTapped() {
-        dismiss(animated: true)
-    }
-    
 }
 
 extension GroupDetailsViewController {

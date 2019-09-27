@@ -110,7 +110,7 @@
 
 "add_participants.all_contacts_added" = "Todo mundo está aqui.";
 
-"add_participants.alert.title" = "O grupo está cheio";
+"add_participants.alert.title" = "Chamada cheia";
 "add_participants.alert.message.new_conversation" = "Até %d pessoas podem participar de uma conversa.";
 "add_participants.alert.message.existing_conversation" = "Até %1$d pessoas podem participar de uma conversa. Atualmente, há apenas espaço para mais %2$d.";
 
@@ -138,7 +138,7 @@
 "conversation_list.header.self_team.accessibility_value.has_new_messages" = "Tem novas mensagens.";
 
 // Conversation List Data Usage Permission Dialog
-"conversation_list.data_usage_permission_alert.title" = "Ajude-nos a tornar o Wire melhor";
+"conversation_list.data_usage_permission_alert.title" = "Nos ajude a melhorar o Wire";
 "conversation_list.data_usage_permission_alert.message" = "Concordo que o Wire pode criar e usar relatórios anônimos de uso e erro para aprimorar o aplicativo Wire. Eu posso revogar esse consentimento a qualquer momento.";
 "conversation_list.data_usage_permission_alert.disagree" = "Não";
 "conversation_list.data_usage_permission_alert.agree" = "Eu Concordo";
@@ -312,7 +312,7 @@
 "conversation.alert.message_deleted" = "A mensagem foi excluída.";
 
 "conversation.guests_present" = "Os convidados estão presentes";
-"conversation.services_present" = "Serviços estão ativos";
+"conversation.services_present" = "Serviços estão presentes";
 "conversation.guests_services_present" = "Os hóspedes e serviços estão presentes";
 "conversation.action.search" = "Procurar";
 
@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Envio cancelado";
 "content.file.upload_video" = "Vídeos";
 "content.file.take_video" = "Gravar um vídeo";
+"content.file.browse" = "Navegar";
 
 "content.file.save_video" = "Salvar";
 "content.file.save_audio" = "Salvar";
@@ -691,11 +692,12 @@
 "meta.menu.leave" = "Deixar Grupo…";
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
-"meta.menu.clear_content" = "Apagar Conteúdo…";
+"meta.menu.delete" = "Excluir grupo…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
-"meta.menu.cancel_connection_request" = "Cancelar Solicitação";
+"meta.menu.cancel_connection_request" = "Cancelar pedido";
 "meta.menu.mark_unread" = "Marcar como Não Lida";
 "meta.menu.mark_read" = "Marcar como Lida";
 "shortcut.mark_all_as_read.title" = "Marcar Todas como Lidas";
@@ -703,12 +705,12 @@
 "meta.menu.open_self_profile" = "Abrir Perfil";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Excluir conteúdo?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversas em todos os seus dispositivos.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
-"meta.menu.delete_content.button_delete" = "Apagar";
-"meta.menu.delete_content.button_delete_and_leave" = "Apagar e sair";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notifique-me sobre:";
@@ -720,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
 "meta.leave_conversation_dialog_message" = "Os participantes serão notificados e a conversa será removida da sua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Também excluir o conteúdo";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
-"meta.leave_conversation_button_leave_and_delete" = "Sair e excluir conteúdo";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
@@ -763,6 +765,12 @@
 "profile.connection_request_dialog.message" = "Isto irá conectá-lo e abrir a conversa com %@.";
 "profile.connection_request_dialog.button_cancel" = "Ignorar";
 "profile.connection_request_dialog.button_connect" = "Conectar";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Excluir conversa em grupo?";
+"conversation.delete_request_dialog.message" = "Isso excluirá o grupo e todo o conteúdo de todos os participantes em todos os dispositivos. Não há opção para restaurar o conteúdo. Todos os participantes serão notificados.";
+"conversation.delete_request_error_dialog.title" = "Ocorreu um erro ao tentar excluir o grupo %@. Por favor, tente novamente.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancelar pedido?";
@@ -825,13 +833,13 @@
 "participants.services.remove_integration.button" = "remover integração";
 
 // Group details
-"group_details.guest_options_cell.title" = "Hóspedes e serviços";
+"group_details.guest_options_cell.title" = "Opções de convidados";
 "group_details.guest_options_cell.enabled" = "Ligado";
 "group_details.guest_options_cell.disabled" = "Desligar";
 "group_details.timeout_options_cell.title" = "Mensagens com tempo";
 "group_details.notification_options_cell.title" = "Notificações";
-"group_details.notification_options_cell.description" = "Você pode ser notificado sobre tudo (incluindo chamadas de áudio e vídeo) ou apenas quando alguém mencioná-lo ou responder a uma de suas mensagens.";
-"group_details.receipt_options_cell.title" = "Recibos de Leitura";
+"group_details.notification_options_cell.description" = "Você pode ser notificado sobre tudo (incluindo chamadas de áudio e vídeo), ou apenas quando você é mencionado.";
+"group_details.receipt_options_cell.title" = "Confirmação de Leitura";
 "group_details.receipt_options_cell.description" = "Quando isso está ativado, as pessoas podem ver quando suas mensagens nessa conversa são lidas.";
 
 // Legal hold details
@@ -894,7 +902,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Criar uma equipe";
 "self.settings.manage_team.title" = "Gerenciar Equipe";
-"self.settings.add_team_or_account.title" = "Adicionar Conta";
+"self.settings.add_team_or_account.title" = "Adicionar conta";
 "self.settings.add_account.title" = "Adicionar uma conta";
 
 "self.settings.add_account.error.title" = "Três contas de ativas";
@@ -1230,7 +1238,7 @@
 
 "guest_room.allow_guests.title" = "Permitir que os hóspedes e serviços";
 "guest_room.allow_guests.subtitle" = "Abra esta conversa para serviços e pessoas fora da sua equipe.";
-"guest_room.remove_guests.message" = "Os hóspedes e serviços atuais serão removidos da conversa. Novos hóspedes e serviços não serão permitidos.";
+"guest_room.remove_guests.message" = "Convidados atuais serão removidos da conversa. Novos convidados não serão permitidos.";
 "guest_room.remove_guests.action" = "Remover";
 "guest_room.revoke_link.message" = "Novos convidados não será capazes de juntar-se com este link. Os convidados atuais ainda terão acesso.";
 "guest_room.revoke_link.action" = "Desativar Link";

@@ -19,11 +19,13 @@
 import Foundation
 
 @objc
-public protocol ZMUserSessionInterface: NSObjectProtocol {
+protocol ZMUserSessionInterface: NSObjectProtocol {
     func performChanges(_ block: @escaping () -> ())
     func enqueueChanges(_ block: @escaping () -> ())
+    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!)
 
     var isNotificationContentHidden : Bool { get set }
 }
 
-extension ZMUserSession: ZMUserSessionInterface {}
+extension ZMUserSession: ZMUserSessionInterface {
+}

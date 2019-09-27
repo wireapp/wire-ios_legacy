@@ -136,7 +136,7 @@ extension Mode {
     }
 }
 
-final public class ConversationAvatarView: UIView {
+final class ConversationAvatarView: UIView {
     enum Context {
         // one or more users requesting connection to self user
         case connect(users: [ZMUser])
@@ -229,7 +229,7 @@ final public class ConversationAvatarView: UIView {
     }
     
     override public var intrinsicContentSize: CGSize {
-        return CGSize(width: 32, height: 32)
+        return CGSize(width: CGFloat.ConversationAvatarView.iconSize, height: CGFloat.ConversationAvatarView.iconSize)
     }
     
     let clippingView = UIView()

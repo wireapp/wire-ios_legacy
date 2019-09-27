@@ -705,12 +705,6 @@ extension AuthenticationCoordinator {
 
     // MARK: - Backup
 
-    /// Call this method to mark the backup step as completed.
-    private func completeBackupStep() {
-        presenter?.showLoadingView = true
-        unauthenticatedSession.continueAfterBackupImportStep()
-    }
-
     // MARK: - Company Login
 
     var canStartCompanyLogin: Bool {

@@ -34,5 +34,4 @@ extension ProfilePresenter {
             presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
         }
     }
-
 }

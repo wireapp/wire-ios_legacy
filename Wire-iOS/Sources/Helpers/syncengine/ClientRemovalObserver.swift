@@ -18,39 +18,6 @@
 
 import Foundation
 
-private let zmLog = ZMSLog(tag: "UI")
-
-extension UIViewController {
-
-    @discardableResult
-    func requestPassword(_ completion: @escaping (ZMEmailCredentials?)->()) -> RequestPasswordController {
-        let passwordRequest = RequestPasswordController(context: .removeDevice) { (result: Result<String?>) -> () in
-            switch result {
-            case .success(let passwordString):
-                if let email = ZMUser.selfUser()?.emailAddress {
-
-                    if let passwordString = passwordString {
-                        let newCredentials = ZMEmailCredentials(email: email, password: passwordString)
-                        completion(newCredentials)
-                    }
-                } else {
-                    if DeveloperMenuState.developerMenuEnabled() {
-                        DebugAlert.showGeneric(message: "No email set!")
-                    }
-                    completion(nil)
-                }
-            case .failure(let error):
-                zmLog.error("Error: \(error)")
-                completion(nil)
-            }
-        }
-
-        present(passwordRequest.alertController, animated: true)
-
-        return passwordRequest
-    }
-}
-
 enum ClientRemovalUIError: Error {
     case noPasswordProvided
 }
@@ -60,6 +27,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     unowned let controller: UIViewController
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
+    private var requestPasswordController: RequestPasswordController?
     private var passwordIsNecessaryForDelete: Bool = false
     private var observerToken: Any?
     
@@ -68,8 +36,21 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         self.controller = controller
         self.credentials = credentials
         self.completion = completion
+        
         super.init()
+        
         observerToken = ZMUserSession.shared()?.add(self)
+        
+        requestPasswordController = RequestPasswordController(context: .removeDevice, callback: {[weak self] (password) in
+            guard let password = password, !password.isEmpty else {
+                self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
+                return
+            }
+            
+            self?.credentials = ZMEmailCredentials(email: "", password: password)
+            self?.startRemoval()
+            self?.passwordIsNecessaryForDelete = true
+        })
     }
 
     func startRemoval() {
@@ -98,17 +79,8 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         controller.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
-            controller.requestPassword { [weak self] newCredentials in
-                guard let emailCredentials = newCredentials,
-                    emailCredentials.password?.isEmpty == false else {
-                    self?.endRemoval(result: ClientRemovalUIError.noPasswordProvided)
-                    return
-                }
-                self?.credentials = emailCredentials
-                self?.startRemoval()
-
-                self?.passwordIsNecessaryForDelete = true
-            }
+            guard let requestPasswordController = requestPasswordController else { return }
+            controller.present(requestPasswordController.alertController, animated: true)
         } else {
             controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)

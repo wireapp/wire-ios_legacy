@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConversationListTopBarViewController!
     var mockAccount: Account!
@@ -46,24 +47,48 @@ final class ConversationListTopBarViewControllerSnapshotTests: ZMSnapshotTestCas
         sut.view.backgroundColor = .black
     }
 
+
+    // MARK: - legal hold
+
     func testForLegalHoldEnabled() {
         mockSelfUser.isUnderLegalHold = true
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLegalHoldPending() {
         mockSelfUser.requestLegalHold()
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLegalHoldDisabled() {
         mockSelfUser.isUnderLegalHold = false
         setupSut()
 
-        verify(view: sut.view)
+        verify(matching: sut)
+    }
+
+    // MARK: - use cases
+
+    func testForLongName() {
+        mockSelfUser.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+
+        setupSut()
+
+        verify(matching: sut)
+    }
+
+    func testForOverflowSeperatorIsShownWhenScrollViewScrollsDown() {
+        setupSut()
+
+        let mockScrollView = UIScrollView()
+        mockScrollView.contentOffset.y = 100
+
+        sut.scrollViewDidScroll(scrollView: mockScrollView)
+
+        verify(matching: sut)
     }
 }

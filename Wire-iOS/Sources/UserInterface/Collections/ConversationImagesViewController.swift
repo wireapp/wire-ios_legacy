@@ -487,23 +487,6 @@ extension ConversationImagesViewController: MenuVisibilityController {
 }
 
 
-extension MenuVisibilityController {
-    
-    func toggleMenuVisibility() {
-        fadeAndHideMenu(!menuVisible)
-    }
-}
-
-fileprivate extension UIPreviewAction {
-    convenience init(titleKey: String, handler: @escaping () -> Void) {
-        self.init(
-            title: titleKey.localized,
-            style: .default,
-            handler: { _,_  in handler() }
-        )
-    }
-}
-
 extension ConversationImagesViewController {
 
     override var previewActionItems: [UIPreviewActionItem] {

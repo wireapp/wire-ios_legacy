@@ -23,16 +23,18 @@
 
 @protocol AudioTrack;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface AudioTrackPlayer : NSObject <MediaPlayer>
 
-- (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler;
+- (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:( void(^ _Nullable )(BOOL loaded, NSError *error))completionHandler;
 
 @property (nonatomic, readonly) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic, readonly) CGFloat progress;
 @property (nonatomic, readonly) CGFloat duration;
 @property (nonatomic, readonly) NSTimeInterval elapsedTime;
 @property (nonatomic, readonly, getter=isPlaying) BOOL playing;
-@property (nonatomic, weak) id<MediaPlayerDelegate> mediaPlayerDelegate;
+@property (nonatomic, weak, nullable) id<MediaPlayerDelegate> mediaPlayerDelegate;
 
 /// Start the currently loaded/paused track.
 - (void)play;
@@ -41,3 +43,5 @@
 - (void)pause;
 
 @end
+
+NS_ASSUME_NONNULL_END

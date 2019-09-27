@@ -24,7 +24,7 @@ import XCTest
 
 import XCTest
 
-class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
+final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
     
     override func setUp() {
         super.setUp()

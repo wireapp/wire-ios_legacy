@@ -29,18 +29,7 @@ struct ConversationMessageContext: Equatable {
     let spacing: Float
 }
 
-extension IndexSet {
-    
-    func indexPaths(in section: Int) -> [IndexPath] {
-        return enumerated().map({ (_, index) in
-            return IndexPath(row: index, section: section)
-        })
-    }
-    
-}
-
-
-@objc protocol ConversationMessageSectionControllerDelegate: class {
+protocol ConversationMessageSectionControllerDelegate: class {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
 }
 
@@ -95,7 +84,7 @@ extension IndexSet {
     var messageCellIndex: Int = 0
     
     /// The object that receives informations from the section.
-    @objc weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
+    weak var sectionDelegate: ConversationMessageSectionControllerDelegate?
     
     /// Whether this section is selected
     private var selected: Bool

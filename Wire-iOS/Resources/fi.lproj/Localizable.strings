@@ -27,16 +27,16 @@
 "general.edit" = "Muokkaa";
 "general.done" = "Valmis";
 "general.confirm" = "OK";
-"general.skip" = "Not Now";
+"general.skip" = "Ei Nyt";
 "general.accept" = "Hyväksy";
 "general.decline" = "No, thanks";
 "general.failure" = "Jokin meni pieleen";
-"general.failure.try_again" = "Please try again.";
+"general.failure.try_again" = "Ole hyvä ja yritä uudelleen.";
 "general.service" = "Service";
 "general.off" = "Pois päältä";
 "general.on" = "On";
-"general.loading" = "Loading…";
-"general.paste" = "Paste";
+"general.loading" = "Ladataan…";
+"general.paste" = "Liitä";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -110,7 +110,7 @@
 
 "add_participants.all_contacts_added" = "Everyone’s here.";
 
-"add_participants.alert.title" = "The group is full";
+"add_participants.alert.title" = "Kaikki puhelukanavat varattuja";
 "add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
@@ -141,7 +141,7 @@
 "conversation_list.data_usage_permission_alert.title" = "Help us make Wire better";
 "conversation_list.data_usage_permission_alert.message" = "I agree that Wire may create and use anonymous usage and error reports to improve the Wire App. I can revoke this consent at any time.";
 "conversation_list.data_usage_permission_alert.disagree" = "Ei";
-"conversation_list.data_usage_permission_alert.agree" = "I Agree";
+"conversation_list.data_usage_permission_alert.agree" = "Hyväksy";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "yhteystiedoissa";
@@ -228,7 +228,7 @@
 "conversation.status.message.missedcall.groups" = "Missed call from %@";
 "conversation.status.message.mention" = "%@";
 "conversation.status.message.reply" = "%@";
-"conversation.status.message.ephemeral" = "Sent a message";
+"conversation.status.message.ephemeral" = "Lähetti sinulle viestin";
 "conversation.status.message.ephemeral.group" = "Someone sent a message";
 "conversation.status.message.ephemeral.mention" = "Mentioned you";
 "conversation.status.message.ephemeral.mention.group" = "Someone mentioned you";
@@ -239,7 +239,7 @@
 
 "conversation.status.unsent" = "⚠ Lähettämätön viesti";
 "conversation.status.you" = "Sinä";
-"conversation.status.someone" = "Someone";
+"conversation.status.someone" = "Joku";
 "conversation.status.you_was_added" = "%@ lisäsi sinut";
 "conversation.status.you_were_removed" = "Sinut poistettiin";
 "conversation.status.you_left" = "Sinä poistuit";
@@ -318,7 +318,7 @@
 
 // Reply message preview
 "conversation.input_bar.message_preview.image" = "Image";
-"conversation.input_bar.message_preview.location" = "Location";
+"conversation.input_bar.message_preview.location" = "Sijainti";
 "conversation.input_bar.message_preview.video" = "Video";
 "conversation.input_bar.message_preview.audio" = "Audio Message";
 "conversation.input_bar.message_preview.file" = "File";
@@ -486,7 +486,7 @@
 "content.system.is_verified" = "Kaikki sormenjäljet on vahvistettu";
 
 "content.system.new_users" = "Uusi käyttäjä liittyi.";
-"content.system.verify_devices" = "Vahvista laitteet";
+"content.system.verify_devices" = " vahvista laitteet";
 
 "content.system.unverified" = "%@ poisti vahvistuksen yhdestä %@"; // example "You unverified one of Jule’s devices"
 "content.system.your_devices" = "sinun laitteista";
@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Lähettäminen peruutettu";
 "content.file.upload_video" = "Videot";
 "content.file.take_video" = "Kuvaa video";
+"content.file.browse" = "Browse";
 
 "content.file.save_video" = "Tallenna";
 "content.file.save_audio" = "Tallenna";
@@ -533,7 +534,7 @@
 "content.message.forward.to" = "Etsi…";
 "content.message.open" = "Avaa";
 "content.message.copy" = "Kopioi";
-"content.message.download" = "Download";
+"content.message.download" = "Lataa";
 "content.message.details" = "Lisätietoja";
 
 // Reply
@@ -604,7 +605,7 @@
 "voice.end_call_button.title" = "End Call";
 "voice.call_error.unsupported_version.title" = "Please update Wire";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
-"voice.call_error.unsupported_version.dismiss" = "Later";
+"voice.call_error.unsupported_version.dismiss" = "Myöhemmin";
 
 "voice.alert.call_in_progress.title" = "Puhelu käynnissä";
 "voice.alert.call_in_progress.message" = "Sinulla voi olla vain yksi aktiivinen puhelu kerrallaan";
@@ -686,16 +687,17 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "Lisää toimintoja";
 "meta.menu.rename" = "Nimeä uudelleen";
 "meta.menu.leave" = "Leave Group…";
 "meta.menu.archive" = "Arkistoi";
 "meta.menu.unarchive" = "Palauta arkistosta";
-"meta.menu.clear_content" = "Delete Content…";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Mykistä";
 "meta.menu.silence.unmute" = "Poista mykistys";
 "meta.menu.cancel" = "Peruuta";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Peru pyyntö";
 "meta.menu.mark_unread" = "Mark as Unread";
 "meta.menu.mark_read" = "Mark as Read";
 "shortcut.mark_all_as_read.title" = "Mark All as Read";
@@ -703,12 +705,12 @@
 "meta.menu.open_self_profile" = "Open Profile";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Poista sisältö?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "This will clear the conversation history on all your devices.";
 "meta.menu.delete_content.leave_as_well_message" = "Poistu myös keskustelusta";
 "meta.menu.delete_content.button_cancel" = "Peruuta";
-"meta.menu.delete_content.button_delete" = "Poista";
-"meta.menu.delete_content.button_delete_and_leave" = "Delete and leave";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
@@ -720,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Poistu keskustelusta?";
 "meta.leave_conversation_dialog_message" = "Osallistujille ilmoitetaan ja keskustelu poistetaan listastasi.";
-"meta.leave_conversation.delete_content_as_well_message" = "Poista myös sisältö";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Peruuta";
 "meta.leave_conversation_button_leave" = "Poistu";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and delete content";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ aloitti käyttämään uutta laitetta.";
@@ -764,6 +766,12 @@
 "profile.connection_request_dialog.button_cancel" = "Hylkää";
 "profile.connection_request_dialog.button_connect" = "Yhdistä";
 
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Peruuta pyyntö?";
 "profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
@@ -775,7 +783,7 @@
 "profile.unblock_button_title" = "Unblock…";
 
 "profile.block_button_title_action" = "Estä";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "Poista esto";
 
 "profile.cancel_connection_button_title" = "PERUUTA PYYNTÖ";
 "profile.connection_request_state.blocked" = "ESTETTY";
@@ -814,12 +822,12 @@
 "device.class.desktop" = "Tietokone";
 "device.class.tablet" = "Tabletti";
 "device.class.phone" = "Puhelinnumero";
-"device.class.unknown" = "Unknown";
+"device.class.unknown" = "Tuntematon";
 
 "device.type.permanent" = "Permanent";
 "device.type.temporary" = "Temporary";
 "device.type.legalhold" = "Legal Hold";
-"device.type.unknown" = "Unknown";
+"device.type.unknown" = "Tuntematon";
 
 // Bot
 "participants.services.remove_integration.button" = "remove integration";
@@ -894,7 +902,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Luo tiimi";
 "self.settings.manage_team.title" = "Hallinnoi tiimiä";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "Lisää tili";
 "self.settings.add_account.title" = "Lisää tili";
 
 "self.settings.add_account.error.title" = "Three accounts active";
@@ -926,7 +934,7 @@
 
 "self.settings.account_appearance_group.title" = "Ulkoasu";
 
-"self.settings.privacy_section_group.title" = "Privacy";
+"self.settings.privacy_section_group.title" = "Tietosuoja";
 "self.settings.enable_read_receipts.title" = "Send Read Receipts";
 "self.settings.privacy_section_group.subtitle" = "When this is off, you won’t be able to see read receipts from other people.\n\nThis setting does not apply to group conversations.";
 
@@ -1083,7 +1091,7 @@
 "self.settings.privacy_security.lock_app.description" = "Avata Wire";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Avaa Wire Touch tunnuksella tai Salasanalla";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
 "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Avaa lukitus";
@@ -1162,7 +1170,7 @@
 "password.placeholder" = "Salasana";
 "password.guidance.toolong" = "Liian monta merkkiä";
 
-"phone.guidance.invalid" = "Invalid phone number";
+"phone.guidance.invalid" = "Virheellinen puhelinnumero";
 "phone.guidance.tooshort" = "Phone number is too short";
 "phone.guidance.toolong" = "Liian monta merkkiä";
 
@@ -1198,7 +1206,7 @@
 "team.activation_code.subheadline" = "Enter the verification code we sent to %@.";
 "team.activation_code.button.resend" = "Resend code";
 "team.activation_code.button.change_email" = "Vaihda sähköpostiosoite";
-"team.activation_code.button.change_phone" = "Change phone number";
+"team.activation_code.button.change_phone" = "Vaihda puhelinnumero";
 
 "team.full_name.headline" = "Your name";
 "team.full_name.textfield.placeholder" = "Full name";
@@ -1321,9 +1329,9 @@
 "login.sso.error.alert.title" = "Jokin meni pieleen";
 "login.sso.error.alert.invalid_code.title" = "Invalid code.";
 "login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.offline.alert.message" = "Tarkista internet-yhteytesi ja yritä uudelleen.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
-"login.sso.error.alert.unknown.message" = "Please try again later.";
+"login.sso.error.alert.unknown.message" = "Yritä myöhemmin uudelleen.";
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 
 // Restore In Progress Loading Titles
@@ -1375,7 +1383,7 @@
 "registration.push_access_denied.settings_button.title" = "Mene Asetuksiin";
 "registration.push_access_denied.maybe_later_button.title" = "Ehkä myöhemmin";
 
-"registration.personal.title" = "Create an account";
+"registration.personal.title" = "Luo käyttäjätili";
 "registration.signin.title" = "Kirjaudu sisään";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Poista yksi laitteistasi aloittaaksesi Wiren käytön tässä laiteessa.";
@@ -1667,7 +1675,7 @@
 "legalhold_request.button.accessibility" = "Pending approval.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
 "legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.detail.enter_password" = "Syötä salasanasi varmistaaksesi.";
 "legalhold_request.alert.error_wrong_password" = "Wrong Password";
 
 // Legal hold activated

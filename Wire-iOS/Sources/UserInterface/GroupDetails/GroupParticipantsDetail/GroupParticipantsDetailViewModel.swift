@@ -24,15 +24,7 @@ fileprivate extension String {
     }
 }
 
-fileprivate extension ZMUser {
-    private func name(in conversation: ZMConversation) -> String {
-        return conversation.activeParticipants.contains(self)
-            ? displayName(in: conversation)
-            : displayName
-    }
-}
-
-class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate, ZMConversationObserver {
+final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControllerDelegate, ZMConversationObserver {
 
     private var internalParticipants: [UserType]
     private var filterQuery: String?

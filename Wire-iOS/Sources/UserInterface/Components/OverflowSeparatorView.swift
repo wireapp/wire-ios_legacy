@@ -18,19 +18,17 @@
 
 
 import Foundation
-import Cartography
 
+final class OverflowSeparatorView: UIView {
 
-@objcMembers public class OverflowSeparatorView: UIView {
-
-    @objc public var inverse: Bool = false
+    var inverse: Bool = false
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.applyStyle()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.applyStyle()
     }
@@ -40,21 +38,19 @@ import Cartography
         self.alpha = 0
     }
     
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         get {
             return CGSize(width: UIView.noIntrinsicMetric, height: .hairline)
         }
     }
     
-    @objc(scrollViewDidScroll:)
-    public func scrollViewDidScroll(scrollView: UIScrollView!) {
+    func scrollViewDidScroll(scrollView: UIScrollView!) {
         if inverse {
             let (height, contentHeight) = (scrollView.bounds.height, scrollView.contentSize.height)
             let offsetY = scrollView.contentOffset.y
             let showSeparator = contentHeight - offsetY > height
             alpha = showSeparator ? 1 : 0
-        }
-        else {
+        } else {
             self.alpha = scrollView.contentOffset.y > 0 ? 1 : 0
         }
     }

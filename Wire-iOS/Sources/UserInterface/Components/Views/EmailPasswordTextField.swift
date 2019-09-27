@@ -148,11 +148,6 @@ class EmailPasswordTextField: UIView, MagicTappable {
         separatorContainer.view.backgroundColor = color
     }
 
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        emailField.colorSchemeVariant = colorSchemeVariant
-        passwordField.colorSchemeVariant = colorSchemeVariant
-    }
-
     // MARK: - Responder
 
     override var isFirstResponder: Bool {

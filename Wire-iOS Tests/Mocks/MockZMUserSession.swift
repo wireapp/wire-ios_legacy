@@ -28,5 +28,10 @@ final class MockZMUserSession: NSObject, ZMUserSessionInterface {
         block()
     }
 
+    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!) {
+        block()
+        completionHandler()
+    }
+
     var isNotificationContentHidden: Bool = false
 }

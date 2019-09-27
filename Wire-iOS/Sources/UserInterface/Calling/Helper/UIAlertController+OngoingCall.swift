@@ -30,16 +30,6 @@ extension UIAlertController {
         )
     }
     
-    static func ongoingCallStartCallConfirmation(completion: @escaping (Bool) -> Void) -> UIAlertController {
-        return ongoingCallConfirmation(
-            titleKey: "call.alert.ongoing.alert_title",
-            messageKey: "call.alert.ongoing.start.message",
-            buttonTitleKey: "call.alert.ongoing.start.button",
-            forceAlertModal: false,
-            completion: completion
-        )
-    }
-    
     static func confirmGroupCall(participants: Int, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
             title: "conversation.call.many_participants_confirmation.title".localized,

@@ -25,8 +25,36 @@ extension ConversationListViewModel {
 
     @objc public func subscribeToTeamsUpdates() {
         if let session = ZMUserSession.shared() {
-            self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
+            selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
         }
+    }
+
+    @objc(selectItem:)
+    @discardableResult
+    func select(itemToSelect: Any?) -> Bool {
+        guard let itemToSelect = itemToSelect else {
+            internalSelect(itemToSelect: nil)
+            return false
+        }
+        
+        if indexPath(forItem: itemToSelect as! NSObject) == nil {
+            guard let conversation = itemToSelect as? ZMConversation else { return false }
+            
+            ZMUserSession.shared()?.enqueueChanges({
+                conversation.isArchived = false
+            }, completionHandler: {
+                self.internalSelect(itemToSelect: itemToSelect)
+            })
+        } else {
+            internalSelect(itemToSelect: itemToSelect)
+        }
+        
+        return true
+    }
+    
+    private func internalSelect(itemToSelect: Any?) {
+        selectedItem = itemToSelect
+        delegate?.listViewModel(self, didSelectItem: itemToSelect)
     }
 
 }
