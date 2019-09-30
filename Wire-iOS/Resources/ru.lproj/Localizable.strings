@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Архивировать";
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить группу…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.clear_content" = "Очистить контент…";
 "meta.menu.silence.mute" = "Отключить уведомления";
 "meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отмена";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Открыть профиль";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Очистить контент?";
 "meta.menu.delete_content.dialog_message" = "Это очистит историю бесед на всех ваших устройствах.";
 "meta.menu.delete_content.leave_as_well_message" = "Также покинуть беседу";
 "meta.menu.delete_content.button_cancel" = "Отмена";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Очистить";
+"meta.menu.delete_content.button_delete_and_leave" = "Очистить и покинуть";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Уведомлять меня о:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Покинуть беседу?";
 "meta.leave_conversation_dialog_message" = "Участники будут уведомлены и беседа будет удалена из вашего списка.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Также очистить контент";
 "meta.leave_conversation_button_cancel" = "Отмена";
 "meta.leave_conversation_button_leave" = "Покинуть";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Покинуть и очистить контент";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ начал(-а) использовать новое устройство.";
@@ -779,7 +779,7 @@
 "profile.cancel_connection_request_dialog.button_yes" = "Да";
 
 // Unblock button
-"profile.block_button_title" = "Блокировать…";
+"profile.block_button_title" = "Заблокировать…";
 "profile.unblock_button_title" = "Разблокировать…";
 
 "profile.block_button_title_action" = "Заблокировать";
@@ -807,7 +807,7 @@
 // Device list
 "profile.devices.title" = "Устройства";
 "profile.devices.fingerprint_message_unencrypted" = "%@ использует устаревшую версию Wire. Устройства не отображаются.";
-"profile.devices.fingerprint_message.title" = "Wire дает каждому устройству уникальный отпечаток. Сравните их с %@ и верифицируйте вашу беседу.";
+"profile.devices.fingerprint_message.title" = "Wire присваивает каждому устройству уникальный отпечаток. Сравните их с %@ и верифицируйте вашу беседу.";
 "profile.devices.fingerprint_message.link" = "Зачем верифицировать беседы?";
 
 // Device detail
@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Выйти";
 "self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
+"self.settings.account_details.log_out.alert.password" = "Пароль";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Отчеты об использовании и сбоях";
@@ -1102,7 +1103,7 @@
 "self.settings.privacy_analytics_menu.devices.title" = "Устройства";
 
 "self.settings.privacy.clear_history.title" = "Очистить историю";
-"self.settings.privacy.clear_history.subtitle" = "Это навсегда удалит содержимое всех ваших бесед.";
+"self.settings.privacy.clear_history.subtitle" = "Это действие навсегда удалит контент всех ваших бесед.";
 
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
@@ -1299,7 +1300,7 @@
 
 // Restore History Warning Alert
 "registration.no_history.restore_backup_warning.title" = "Восстановить историю";
-"registration.no_history.restore_backup_warning.message" = "Содержимое резервной копии заменит историю бесед на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
+"registration.no_history.restore_backup_warning.message" = "Контент резервной копии заменит историю бесед на этом устройстве.\nВосстановить историю можно только из резервной копии для одной и той же платформы.";
 "registration.no_history.restore_backup_warning.proceed" = "Выберите резервную копию";
 
 /// Restore History Failure Alerts

@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Atsijungti";
 "self.settings.account_details.log_out.alert.message" = "Susirašinėjimų praeitis šiame įrenginyje bus ištrinta.";
+"self.settings.account_details.log_out.alert.password" = "Slaptažodis";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Naudojimo ir gedimo ataskaitos";

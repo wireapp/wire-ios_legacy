@@ -515,7 +515,7 @@
 "content.file.upload_cancelled" = "上傳被取消";
 "content.file.upload_video" = "影片";
 "content.file.take_video" = "錄製影片";
-"content.file.browse" = "Browse";
+"content.file.browse" = "瀏覽";
 
 "content.file.save_video" = "儲存";
 "content.file.save_audio" = "儲存";
@@ -692,8 +692,8 @@
 "meta.menu.leave" = "離開群組";
 "meta.menu.archive" = "封存";
 "meta.menu.unarchive" = "解除封存";
-"meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.delete" = "刪除群組…";
+"meta.menu.clear_content" = "清除內容…";
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "開啟個人資料";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "確定清除內容？";
 "meta.menu.delete_content.dialog_message" = "這將清除你所有設備上的會話歷史。";
 "meta.menu.delete_content.leave_as_well_message" = "離開聊天室";
 "meta.menu.delete_content.button_cancel" = "取消";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "清除";
+"meta.menu.delete_content.button_delete_and_leave" = "刪除並離開";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "通知我關於：";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "確定離開聊天室？";
 "meta.leave_conversation_dialog_message" = "此聊天室將從您的對話清單被移除，參與者也將收到離開通知。";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "並且清除內容";
 "meta.leave_conversation_button_cancel" = "取消";
 "meta.leave_conversation_button_leave" = "離開";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "離開並清除內容";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@開始使用新設備。";
@@ -735,7 +735,7 @@
 "meta.degraded.verify_devices_button" = "驗證設備…";
 "meta.degraded.send_anyway_button" = "仍然要寄送";
 "meta.degraded.cancel_sending_button" = "取消";
-"meta.legalhold.info_button" = "What Is Legal Hold?";
+"meta.legalhold.info_button" = "甚麼是合法保留？";
 "meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
 
 // Remove from conversation dialogue
@@ -767,10 +767,10 @@
 "profile.connection_request_dialog.button_connect" = "加為連絡人";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.title" = "要刪除群組對話嗎?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
 "conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "刪除群組";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "取消請求？";
@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "登出";
 "self.settings.account_details.log_out.alert.message" = "在此設備上，您信息歷史記錄將被刪除。";
+"self.settings.account_details.log_out.alert.password" = "密碼";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用資料和崩潰報告";
@@ -1051,7 +1052,7 @@
 "self.settings.link_options.maps.title" = "位置";
 "self.settings.link_options.browser.title" = "瀏覽器";
 
-"open_link.twitter.option.default" = "Browser / Twitter";
+"open_link.twitter.option.default" = "瀏覽器 / 推特";
 "open_link.twitter.option.tweetbot" = "Tweetbot";
 "open_link.twitter.option.twitterrific" = "Twitterrific";
 
@@ -1106,7 +1107,7 @@
 
 "self.settings.advanced.title" = "進階";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
@@ -1186,7 +1187,7 @@
 
 "landing.custom_backend.title" = "連接到「%@」";
 "landing.custom_backend.more_info.button.title" = "顯示更多";
-"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+"landing.custom_backend.more_info.alert.title" = " 您目前連線到第三方伺服器: %@";
 
 // Create team
 
@@ -1519,7 +1520,7 @@
 "force.update.ok_button" = "到App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.title" = "發現這部裝置已越獄";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
 // Third Party
@@ -1586,9 +1587,9 @@
 "availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
 "availability.reminder.available.title" = "You are set to Available";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.title" = "目前沒有設定狀態";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.action.dont_remind_me" = "Do not display this information again";
+"availability.reminder.action.dont_remind_me" = "不要再度顯示這個訊息";
 "availability.reminder.action.ok" = "確認";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1610,14 +1611,14 @@
 "url_action.title" = "確認 URL 動作";
 "url_action.connect_to_bot.message" = "你想要連接到Bot嗎？";
 
-"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.title" = "連線到伺服器";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
 
-"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in.title" = "無法切換伺服器";
 "url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
 
-"url_action.switch_backend.error.invalid_backend.title" = "The server is not responding";
-"url_action.switch_backend.error.invalid_backend" = "Please check your internet connection, verify the link and try again.";
+"url_action.switch_backend.error.invalid_backend.title" = "伺服器沒有回應";
+"url_action.switch_backend.error.invalid_backend" = "請檢查您的網路連接，然後再試一次。";
 
 
 // Deep Link
@@ -1663,7 +1664,7 @@
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
-"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+"legal_hold.deactivated.message" = "之後的訊息都不會被紀錄";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
@@ -1672,7 +1673,7 @@
 "share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.button.accessibility" = "等待核准";
 "legalhold_request.alert.title" = "Legal Hold Requested";
 "legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
 "legalhold_request.alert.detail.enter_password" = "請輸入您的密碼以便確認。";
@@ -1684,5 +1685,5 @@
 "legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
-"account_deleted_session_expired_alert.title" = "Your session expired";
+"account_deleted_session_expired_alert.title" = "你的登入階段已過期。";
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";

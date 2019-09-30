@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Cerrar sesión";
 "self.settings.account_details.log_out.alert.message" = "Tu historial de mensajes será borrado de este dispositivo.";
+"self.settings.account_details.log_out.alert.password" = "Contraseña";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";

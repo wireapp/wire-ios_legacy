@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Çıkış yap";
 "self.settings.account_details.log_out.alert.message" = "Bu aygıtta mesaj geçmişiniz silinecektir.";
+"self.settings.account_details.log_out.alert.password" = "Parola";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";

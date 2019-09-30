@@ -149,7 +149,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%1$@ 条消息</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -163,7 +163,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d 条新提及</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.reply</key>
@@ -177,7 +177,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d条回复</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -191,7 +191,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%2$@ 个打招呼</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -219,7 +219,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>未接来电</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -233,13 +233,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>来自 %2$@ 的未接来电</string>
       </dict>
     </dict>
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>至少 %#@character_count@ 个字符</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -247,7 +247,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d 个字符</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -261,7 +261,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d 个小写字母</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -275,7 +275,7 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d 个大写字母</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -289,7 +289,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d 个数字</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -303,7 +303,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d 个特殊符号</string>
       </dict>
     </dict>
   </dict>
