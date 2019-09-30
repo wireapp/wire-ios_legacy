@@ -111,7 +111,7 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = true {///TODO: read/write to storage
+    var folderEnabled = false {
         didSet {
             guard folderEnabled != oldValue else { return }
 
@@ -121,6 +121,12 @@ final class ConversationListViewModel: NSObject {
             /// restore collapse state
             if folderEnabled {
                 restoreCollpasion()
+            } else {
+                /// save folder enable state
+                state?.folderEnabled = folderEnabled
+                if let state = state {
+                    saveState(state: state)
+                }
             }
         }
     }
@@ -518,7 +524,7 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].collapsed
     }
 
-    func setCollapsed(sectionIndex: Int, collapsed: Bool, batchUpdate: Bool = true) {
+    func setCollapsed(sectionIndex: Int, collapsed: Bool, batchUpdate: Bool = true, presistent: Bool = false) {
         guard sections.indices.contains(sectionIndex) else { return }
         let oldValue = sections[sectionIndex].collapsed
         
@@ -537,11 +543,16 @@ final class ConversationListViewModel: NSObject {
         delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
         } else {
             UIView.performWithoutAnimation {
-            self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
+                self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
             }
         }
 
-        saveState()
+        if presistent {
+            let state = State(conversationListViewModel: self)
+            saveState(state: state)
+
+            self.state = state
+        }
     }
 
     // MARK: - state presistent
@@ -567,10 +578,9 @@ final class ConversationListViewModel: NSObject {
         return state?.jsonString
     }
 
-    private func saveState() {
-        state = State(conversationListViewModel: self)
+    private func saveState(state: State) {
 
-        guard let jsonString = jsonString,
+        guard let jsonString = state.jsonString,
             let persistentDirectory = ConversationListViewModel.persistentDirectory,
             let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return }
 
