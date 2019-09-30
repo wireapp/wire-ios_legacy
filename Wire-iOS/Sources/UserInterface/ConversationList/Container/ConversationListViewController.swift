@@ -213,6 +213,8 @@ final class ConversationListViewController: UIViewController {
         bottomBarController.delegate = self
         
         add(bottomBarController, to: conversationListContainer)
+
+        listContentController.listViewModel.restorationDelegate = bottomBarController
     }
 
     fileprivate func setupListContentController() {

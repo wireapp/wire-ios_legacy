@@ -23,7 +23,7 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
-// MARK: - codable
+// MARK: - Section codable
 extension ConversationListViewModel.Section: Codable {
     private enum Key: CodingKey {
         case kind
@@ -108,6 +108,11 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     weak var delegate: ConversationListViewModelDelegate?
+    weak var restorationDelegate: ConversationListViewModelRestorationDelegate? {
+        didSet {
+            restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
+        }
+    }
 
     private weak var selfUserObserver: NSObjectProtocol?
 
@@ -121,12 +126,12 @@ final class ConversationListViewModel: NSObject {
             /// restore collapse state
             if folderEnabled {
                 restoreCollpasion()
-            } else {
-                /// save folder enable state
-                state?.folderEnabled = folderEnabled
-                if let state = state {
-                    saveState(state: state)
-                }
+            }
+
+            state?.folderEnabled = folderEnabled
+
+            if let state = state {
+                saveState(state: state)
             }
         }
     }
