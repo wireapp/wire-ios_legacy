@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "تسجيل الخروج";
 "self.settings.account_details.log_out.alert.message" = "ستمسح محفوظات رسائلك على هذا الجهاز.";
+"self.settings.account_details.log_out.alert.password" = "كلمة المرور";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "تقارير الإستخدام والأعطال";
