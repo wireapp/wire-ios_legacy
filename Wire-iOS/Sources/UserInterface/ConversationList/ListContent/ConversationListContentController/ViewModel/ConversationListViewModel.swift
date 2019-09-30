@@ -556,7 +556,6 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    ///TODO: test
     @discardableResult
     private func saveState() -> String? {
         state = State(conversationListViewModel: self)

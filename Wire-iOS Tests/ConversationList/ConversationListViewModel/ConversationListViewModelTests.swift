@@ -220,4 +220,36 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectItem(at: indexPath), mockConversation)
     }
 
+    // MARK: - state
+    func testForSaveState() {
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        XCTAssertFalse(sut.collapsed(at: 1))
+
+        ///WHEN
+        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+
+        ///THEN
+        XCTAssert(sut.collapsed(at: 1))
+
+        ///WHEN
+
+        /// all folder are not collapsed when folder disabled
+        sut.folderEnabled = false
+
+        ///THEN
+        XCTAssertFalse(sut.collapsed(at: 1))
+
+        ///WHEN
+        sut.folderEnabled = true
+
+        ///THEN
+
+        ///collapsed state is restored
+        XCTAssert(sut.collapsed(at: 1))
+    }
 }
