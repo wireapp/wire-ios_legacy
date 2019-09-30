@@ -221,7 +221,7 @@ final class ConversationListViewModelTests: XCTestCase {
     }
 
     // MARK: - state
-    func testForSaveState() {
+    func testForCollapseState() {
         sut.folderEnabled = true
 
         let mockConversation = ZMConversation()
@@ -251,5 +251,25 @@ final class ConversationListViewModelTests: XCTestCase {
 
         ///collapsed state is restored
         XCTAssert(sut.collapsed(at: 1))
+    }
+
+    func testForStateJson() {
+        /// GIVEN
+        sut.folderEnabled = true
+
+        let mockConversation = ZMConversation()
+
+        fillDummyConversations(mockConversation: mockConversation)
+
+        /// WHEN & THEN
+
+        /// no state is saved when first run
+        XCTAssertNil(sut.jsonString)
+
+        /// WHEN
+        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+
+        /// THEN
+        XCTAssertEqual(sut.jsonString, "{\"folderEnabled\":true,\"sections\":[{\"kind\":\"contactRequests\",\"collapsed\":false},{\"kind\":\"group\",\"collapsed\":true},{\"kind\":\"contacts\",\"collapsed\":false}]}")
     }
 }

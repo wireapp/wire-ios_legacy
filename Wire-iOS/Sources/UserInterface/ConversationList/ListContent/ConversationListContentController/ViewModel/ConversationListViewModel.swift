@@ -554,31 +554,38 @@ final class ConversationListViewModel: NSObject {
             sections = conversationListViewModel.sections
             folderEnabled = conversationListViewModel.folderEnabled
         }
+
+        var jsonString: String? {
+            guard let jsonData = try? JSONEncoder().encode(self) else {
+                return nil }
+
+            return String(data: jsonData, encoding: .utf8)
+        }
     }
 
-    @discardableResult
-    private func saveState() -> String? {
+    var jsonString: String? {
+        return state?.jsonString
+    }
+
+    private func saveState() {
         state = State(conversationListViewModel: self)
 
-        guard let jsonData = try? JSONEncoder().encode(state),
-            let jsonString = String(data: jsonData, encoding: .utf8),
+        guard let jsonString = jsonString,
             let persistentDirectory = ConversationListViewModel.persistentDirectory,
-            let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return nil }
+            let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return }
 
         do {
             try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)
         } catch {
             log.error("error writing ConversationListViewModel to \(directoryURL): \(error)")
         }
-
-
-        return jsonString
     }
 
     private func restoreState() {
         if state == nil {
             guard let persistentPath = ConversationListViewModel.persistentURL,
-                let jsonData = try? Data(contentsOf: persistentPath) else { return }
+                let jsonData = try? Data(contentsOf: persistentPath) else { return
+            }
             do {
                 state = try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
             } catch {
