@@ -23,7 +23,7 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
-
+// MARK: - codable
 extension ConversationListViewModel.Section: Codable {
     private enum Key: CodingKey {
         case kind
@@ -46,15 +46,21 @@ extension ConversationListViewModel.Section: Codable {
     }
 }
 
-final class ConversationListViewModel: NSObject, Codable {
-
-    private enum Key: CodingKey {
-        case folderEnabled
-        case sections
+extension ConversationListViewModel.Section.Kind: Codable {
+    enum Key: CodingKey {
+        case value
     }
 
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+        try container.encode(self.rawValue, forKey: .value)
+    }
+}
+
+final class ConversationListViewModel: NSObject {
+
     fileprivate struct Section {
-        enum Kind: String, CaseIterable, Codable {
+        enum Kind: String, CaseIterable {
 
             /// for incoming requests
             case contactRequests
@@ -140,17 +146,6 @@ final class ConversationListViewModel: NSObject, Codable {
         setup(userSession: userSession)
 
         updateAllSections()
-    }
-
-    init(from decoder: Decoder) throws {
-        ///session is not stored
-
-        let container = try decoder.container(keyedBy: Key.self)
-        sections = try container.decode([ConversationListViewModel.Section].self, forKey: .sections)
-        folderEnabled = try container.decode(Bool.self, forKey: .folderEnabled)
-
-
-        ///TODO: update to fill the list
     }
 
     func setup(userSession: UserSessionSwiftInterface?) {
@@ -557,10 +552,23 @@ final class ConversationListViewModel: NSObject, Codable {
 
     // MARK: - state presistent
 
+    private struct State: Codable {
+        private var sections: [Section]
+        private var folderEnabled: Bool
+
+        init(sections: [Section], folderEnabled: Bool) {
+            self.sections = sections
+            self.folderEnabled = folderEnabled
+        }
+    }
+
     ///TODO: test
     @discardableResult
     private func save() -> String? {
-        guard let jsonData = try? JSONEncoder().encode(self),
+        let state = State(sections: sections, folderEnabled: folderEnabled)
+
+//        return nil
+        guard let jsonData = try? JSONEncoder().encode(state),
               let jsonString = String(data: jsonData, encoding: .utf8),
               let persistentDirectory = ConversationListViewModel.persistentDirectory,
               let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return nil }
@@ -592,11 +600,11 @@ final class ConversationListViewModel: NSObject, Codable {
         return URL.directoryURL(persistentDirectory)?.appendingPathComponent(ConversationListViewModel.persistentFilename)
     }
 
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        try container.encode(sections, forKey: .sections)
-        try container.encode(folderEnabled, forKey: .folderEnabled)
-    }
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: Key.self)
+//        try container.encode(sections, forKey: .sections)
+//        try container.encode(folderEnabled, forKey: .folderEnabled)
+//    }
 }
 
 // MARK: - ZMUserObserver

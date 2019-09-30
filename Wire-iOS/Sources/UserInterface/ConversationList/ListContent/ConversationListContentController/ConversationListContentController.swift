@@ -18,37 +18,22 @@
 
 import Foundation
 
-fileprivate let log = ZMSLog(tag: "ConversationListContentController")
-
 extension ConversationListContentController {
     override open func loadView() {
         super.loadView()
 
         layoutCell = ConversationListCell()
 
-        ///TODO: move init VM
-        let viewModel: ConversationListViewModel?
         if let persistentPath = ConversationListViewModel.persistentURL,
             let jsonData = try? Data(contentsOf: persistentPath) {
 
-            do {
-                viewModel = try JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
-                viewModel?.setup(userSession: ZMUserSession.shared())
-                ///TODO: init update?
-            } catch {
-                log.error("error decode ConversationListViewModel: \(error)")
-                viewModel = nil
-            }
-        } else {
-            viewModel = nil
+
+//        let viewModel = try? JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
+
+//        print(user.last_name)
         }
 
-        if let viewModel = viewModel {
-            listViewModel = viewModel
-        } else {
-            listViewModel = ConversationListViewModel()
-        }
-
+        listViewModel = ConversationListViewModel() ///TODO: restore
         listViewModel.delegate = self
         setupViews()
 
