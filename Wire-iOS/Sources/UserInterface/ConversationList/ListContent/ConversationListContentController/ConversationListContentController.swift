@@ -24,7 +24,7 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
-        listViewModel = ConversationListViewModel() ///TODO: restore
+        listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
         setupViews()
 

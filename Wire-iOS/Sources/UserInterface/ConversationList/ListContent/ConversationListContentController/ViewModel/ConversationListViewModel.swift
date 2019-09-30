@@ -132,27 +132,20 @@ final class ConversationListViewModel: NSObject {
 
     private var conversationDirectoryToken: Any?
 
-    private var userSession: UserSessionSwiftInterface?
+    private let userSession: UserSessionSwiftInterface?
 
     init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
         self.userSession = userSession
 
         super.init()
 
-        setup(userSession: userSession)
+        setupObservers()
+        subscribeToTeamsUpdates()
 
         updateAllSections()
 
         restoreState()
     }
-
-    func setup(userSession: UserSessionSwiftInterface?) {
-        self.userSession = userSession
-
-        setupObservers()
-        subscribeToTeamsUpdates()
-    }
-
 
     private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {
@@ -548,9 +541,7 @@ final class ConversationListViewModel: NSObject {
             }
         }
 
-
-        ///TODO: save when app goes to BG?
-        save()
+        saveState()
     }
 
     // MARK: - state presistent
@@ -563,21 +554,11 @@ final class ConversationListViewModel: NSObject {
             sections = conversationListViewModel.sections
             folderEnabled = conversationListViewModel.folderEnabled
         }
-
-        func sectionNumber(for kind: Section.Kind) -> Int? {
-            for (index, section) in sections.enumerated() {
-                if section.kind == kind {
-                    return index
-                }
-            }
-
-            return nil
-        }
     }
 
     ///TODO: test
     @discardableResult
-    private func save() -> String? {
+    private func saveState() -> String? {
         state = State(conversationListViewModel: self)
 
         guard let jsonData = try? JSONEncoder().encode(state),
