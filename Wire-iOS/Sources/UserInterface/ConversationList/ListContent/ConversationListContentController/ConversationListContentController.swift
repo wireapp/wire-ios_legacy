@@ -24,15 +24,6 @@ extension ConversationListContentController {
 
         layoutCell = ConversationListCell()
 
-        if let persistentPath = ConversationListViewModel.persistentURL,
-            let jsonData = try? Data(contentsOf: persistentPath) {
-
-
-//        let viewModel = try? JSONDecoder().decode(ConversationListViewModel.self, from: jsonData)
-
-//        print(user.last_name)
-        }
-
         listViewModel = ConversationListViewModel() ///TODO: restore
         listViewModel.delegate = self
         setupViews()

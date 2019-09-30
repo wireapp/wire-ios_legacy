@@ -46,21 +46,10 @@ extension ConversationListViewModel.Section: Codable {
     }
 }
 
-extension ConversationListViewModel.Section.Kind: Codable {
-    enum Key: CodingKey {
-        case value
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        try container.encode(self.rawValue, forKey: .value)
-    }
-}
-
 final class ConversationListViewModel: NSObject {
 
     fileprivate struct Section {
-        enum Kind: String, CaseIterable {
+        enum Kind: String, CaseIterable, Codable {
 
             /// for incoming requests
             case contactRequests
@@ -146,6 +135,32 @@ final class ConversationListViewModel: NSObject {
         setup(userSession: userSession)
 
         updateAllSections()
+
+        restore()
+    }
+
+    private func restore() {
+        guard let persistentPath = ConversationListViewModel.persistentURL,
+            let jsonData = try? Data(contentsOf: persistentPath) else { return }
+
+        var state: State! = nil
+        do {
+        state = try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
+        } catch {
+            print(error)
+            return
+        }
+
+//        guard let state != nil else { return }
+
+        folderEnabled = state.folderEnabled
+
+        state.sections.forEach() {
+            let kind = $0.kind
+            if let sectionNum = self.sectionNumber(for: kind) {
+                setCollapsed(sectionIndex: sectionNum, collapsed: $0.collapsed) ///TODO: no  animation?
+            }
+        }
     }
 
     func setup(userSession: UserSessionSwiftInterface?) {
@@ -193,7 +208,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
         guard sectionIndex < sectionCount,
-              !sections[sectionIndex].collapsed else { return 0 }
+            !sections[sectionIndex].collapsed else { return 0 }
 
         return sections[sectionIndex].items.count
     }
@@ -390,11 +405,11 @@ final class ConversationListViewModel: NSObject {
     private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
         if folderEnabled {
             sections = [Section(kind: .contactRequests, userSession: userSession),
-                       Section(kind: .group, userSession: userSession),
-                       Section(kind: .contacts, userSession: userSession)]
+                        Section(kind: .group, userSession: userSession),
+                        Section(kind: .contacts, userSession: userSession)]
         } else {
             sections = [Section(kind: .contactRequests, userSession: userSession),
-                       Section(kind: .conversations, userSession: userSession)]
+                        Section(kind: .conversations, userSession: userSession)]
         }
 
         if let sectionNumber = self.sectionNumber(for: replaceKind) {
@@ -553,25 +568,24 @@ final class ConversationListViewModel: NSObject {
     // MARK: - state presistent
 
     private struct State: Codable {
-        private var sections: [Section]
-        private var folderEnabled: Bool
+        var sections: [Section]
+        var folderEnabled: Bool
 
-        init(sections: [Section], folderEnabled: Bool) {
-            self.sections = sections
-            self.folderEnabled = folderEnabled
+        init(conversationListViewModel: ConversationListViewModel) {
+            self.sections = conversationListViewModel.sections
+            self.folderEnabled = conversationListViewModel.folderEnabled
         }
     }
 
     ///TODO: test
     @discardableResult
     private func save() -> String? {
-        let state = State(sections: sections, folderEnabled: folderEnabled)
+        let state = State(conversationListViewModel: self)
 
-//        return nil
         guard let jsonData = try? JSONEncoder().encode(state),
-              let jsonString = String(data: jsonData, encoding: .utf8),
-              let persistentDirectory = ConversationListViewModel.persistentDirectory,
-              let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return nil }
+            let jsonString = String(data: jsonData, encoding: .utf8),
+            let persistentDirectory = ConversationListViewModel.persistentDirectory,
+            let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return nil }
 
         do {
             try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)
@@ -599,12 +613,6 @@ final class ConversationListViewModel: NSObject {
 
         return URL.directoryURL(persistentDirectory)?.appendingPathComponent(ConversationListViewModel.persistentFilename)
     }
-
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: Key.self)
-//        try container.encode(sections, forKey: .sections)
-//        try container.encode(folderEnabled, forKey: .folderEnabled)
-//    }
 }
 
 // MARK: - ZMUserObserver
