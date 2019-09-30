@@ -28,8 +28,6 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
-
-    func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool)
 }
 
 

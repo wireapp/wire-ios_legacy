@@ -47,9 +47,11 @@ final class ConversationListViewModelTests: XCTestCase {
     var sut: ConversationListViewModel!
     var mockUserSession: MockZMUserSession!
     var mockConversationListViewModelDelegate: MockConversationListViewModelDelegate!
+    var mockBar: MockBar!
 
     override func setUp() {
         super.setUp()
+        mockBar = MockBar()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
@@ -60,6 +62,7 @@ final class ConversationListViewModelTests: XCTestCase {
         sut = nil
         mockUserSession = nil
         mockConversationListViewModelDelegate = nil
+        mockBar = nil
 
         super.tearDown()
     }
@@ -271,5 +274,29 @@ final class ConversationListViewModelTests: XCTestCase {
 
         /// THEN
         XCTAssertEqual(sut.jsonString, "{\"folderEnabled\":true,\"sections\":[{\"kind\":\"contactRequests\",\"collapsed\":false},{\"kind\":\"group\",\"collapsed\":true},{\"kind\":\"contacts\",\"collapsed\":false}]}")
+    }
+
+    func testForRestorationDelegateMethodCalledOnceAfterItIsSet() {
+        /// GIVEN
+        sut.folderEnabled = true
+        let mockConversation = ZMConversation()
+        fillDummyConversations(mockConversation: mockConversation)
+        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+        XCTAssertFalse(mockBar.folderEnabled)
+
+        /// WHEN
+        sut.restorationDelegate = mockBar
+
+        /// THEN
+        XCTAssert(mockBar.folderEnabled)
+    }
+
+}
+
+final class MockBar: ConversationListViewModelRestorationDelegate {
+    var folderEnabled: Bool = false
+
+    func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
+        folderEnabled = enabled
     }
 }
