@@ -693,7 +693,7 @@
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
 "meta.menu.delete" = "Excluir grupo…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.clear_content" = "Limpar conteúdo…";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
@@ -705,12 +705,12 @@
 "meta.menu.open_self_profile" = "Abrir Perfil";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Limpar conteúdo?";
 "meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversas em todos os seus dispositivos.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Limpar";
+"meta.menu.delete_content.button_delete_and_leave" = "Limpar e sair";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notifique-me sobre:";
@@ -722,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
 "meta.leave_conversation_dialog_message" = "Os participantes serão notificados e a conversa será removida da sua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Também limpar o conteúdo";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Sair e limpar conteúdo";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
@@ -770,7 +770,7 @@
 "conversation.delete_request_dialog.title" = "Excluir conversa em grupo?";
 "conversation.delete_request_dialog.message" = "Isso excluirá o grupo e todo o conteúdo de todos os participantes em todos os dispositivos. Não há opção para restaurar o conteúdo. Todos os participantes serão notificados.";
 "conversation.delete_request_error_dialog.title" = "Ocorreu um erro ao tentar excluir o grupo %@. Por favor, tente novamente.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "Excluir grupo";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancelar pedido?";
@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Sair";
 "self.settings.account_details.log_out.alert.message" = "Seu histórico de mensagens será apagado neste dispositivo.";
+"self.settings.account_details.log_out.alert.password" = "Senha";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";

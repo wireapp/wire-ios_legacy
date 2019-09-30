@@ -692,7 +692,7 @@
 "meta.menu.leave" = "グループを退出...";
 "meta.menu.archive" = "アーカイブ";
 "meta.menu.unarchive" = "解答する";
-"meta.menu.delete" = "Delete Group…";
+"meta.menu.delete" = "グループを削除…";
 "meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
@@ -770,7 +770,7 @@
 "conversation.delete_request_dialog.title" = "グループ会話を削除しますか？";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
 "conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "グループを削除";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "リクエストを取り消しますか？";
@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "ログアウト";
 "self.settings.account_details.log_out.alert.message" = "このデバイス上のメッセージ履歴が消去されます。";
+"self.settings.account_details.log_out.alert.password" = "パスワード";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "使用状況データと障害報告";

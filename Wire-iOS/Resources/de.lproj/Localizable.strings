@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Ausloggen";
 "self.settings.account_details.log_out.alert.message" = "Der Nachrichtenverlauf wird auf diesem Gerät gelöscht.";
+"self.settings.account_details.log_out.alert.password" = "Passwort";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";

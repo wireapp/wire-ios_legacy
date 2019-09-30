@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Logout";
 "self.settings.account_details.log_out.alert.message" = "La tua cronologia dei messaggi sarà cancellata da questo dispositivo.";
+"self.settings.account_details.log_out.alert.password" = "Password";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Segnalazioni di crash e dati di utilizzo";
