@@ -594,10 +594,10 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func restoreCollapse() {
-        for (index, section) in self.sections {
-            let kind = self.kind(of: index)
-            if let sectionNum = sectionNumber(for: kind) {
-                setCollapsed(sectionIndex: sectionNum, collapsed: state[kind].collapsed, batchUpdate: false)
+        for (index, _) in sections.enumerated() {            
+            if let kind = self.kind(of: index),
+                let sectionNum = sectionNumber(for: kind) {
+                setCollapsed(sectionIndex: sectionNum, collapsed: collapsed(at :index), batchUpdate: false)
             }
         }
     }
