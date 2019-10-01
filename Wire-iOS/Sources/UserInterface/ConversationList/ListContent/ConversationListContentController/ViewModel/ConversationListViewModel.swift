@@ -113,6 +113,7 @@ final class ConversationListViewModel: NSObject {
     // Local copies of the lists.
     private var sections: [Section] = []
 
+    /// for folder enabled and collapse presistent
     private lazy var state: State = {
         guard let persistentPath = ConversationListViewModel.persistentURL,
             let jsonData = try? Data(contentsOf: persistentPath) else { return State(conversationListViewModel: self)
@@ -540,11 +541,8 @@ final class ConversationListViewModel: NSObject {
             }
         }
 
-        if presistent {
-            let state = State(conversationListViewModel: self)
+        if presistent { ///TODO: rm
             saveState(state: state)
-
-            self.state = state
         }
     }
 
