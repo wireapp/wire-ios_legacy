@@ -365,12 +365,6 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    ///TODO: for debug
-    func toggleSort() {
-        folderEnabled = !folderEnabled
-    }
-
-
     private func updateAllSections() {
         for section in Section.Kind.allCases {
             let items = ConversationListViewModel.newList(for: section, userSession: userSession)
