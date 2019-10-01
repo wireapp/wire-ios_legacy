@@ -92,21 +92,25 @@ final class ConversationListViewModel: NSObject {
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = false {
-        didSet {
-            guard folderEnabled != oldValue else { return }
+    var folderEnabled: Bool {
+        set {
+            guard newValue != state.folderEnabled else { return }
 
+            state.folderEnabled = newValue
+            
             updateAllSections()
             delegate?.listViewModelShouldBeReloaded()
-
+            
             /// restore collapse state
-            if folderEnabled {
+            if state.folderEnabled {
                 restoreCollapse()
             }
-
-            state.folderEnabled = folderEnabled
-
+            
             saveState(state: state)
+        }
+        
+        get{
+            return state.folderEnabled
         }
     }
 
