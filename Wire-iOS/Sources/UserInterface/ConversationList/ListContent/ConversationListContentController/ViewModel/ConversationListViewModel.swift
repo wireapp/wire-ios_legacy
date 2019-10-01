@@ -23,29 +23,6 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
-// MARK: - Section codable
-extension ConversationListViewModel.Section: Codable {
-    private enum Key: CodingKey {
-        case kind
-        case collapsed
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: Key.self)
-        try container.encode(kind, forKey: .kind)
-        try container.encode(collapsed, forKey: .collapsed)
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: Key.self)
-        kind = try container.decode(ConversationListViewModel.Section.Kind.self, forKey: .kind)
-        collapsed = try container.decode(Bool.self, forKey: .collapsed)
-
-        ///list is not stored
-        items = []
-    }
-}
-
 final class ConversationListViewModel: NSObject {
 
     fileprivate struct Section {
@@ -81,7 +58,6 @@ final class ConversationListViewModel: NSObject {
         }
 
         var kind: Kind
-        var collapsed: Bool = false
         var items: [AnyHashable]
 
         /// ref to AggregateArray, we return the first found item's index
@@ -207,7 +183,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
         guard sectionIndex < sectionCount,
-            !sections[sectionIndex].collapsed else { return 0 }
+              !collapsed(at: sectionIndex) else { return 0 }
 
         return sections[sectionIndex].items.count
     }
@@ -446,7 +422,8 @@ final class ConversationListViewModel: NSObject {
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
 
         /// no need to update collapsed section's cells but the section header, update the stored list
-        if sections[sectionNumber].collapsed, newConversationList.count > 0 {
+
+        if collapsed(at: sectionNumber), newConversationList.count > 0 {
             update(kind: section, with: newConversationList)
             delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             return true
@@ -529,17 +506,22 @@ final class ConversationListViewModel: NSObject {
     }
 
     // MARK: - collapse section
-    func collapsed(at sectionIndex: Int) -> Bool {
-        guard sections.indices.contains(sectionIndex) else { return false }
 
-        return sections[sectionIndex].collapsed
+    func collapsed(at sectionIndex: Int) -> Bool {
+        guard let kind = kind(of: sectionIndex),
+            let collapsed = state.collapsed[kind] else { return false }
+
+        return collapsed
     }
 
-    func setCollapsed(sectionIndex: Int, collapsed: Bool, batchUpdate: Bool = true, presistent: Bool = false) {
-        guard sections.indices.contains(sectionIndex) else { return }
-        let oldValue = sections[sectionIndex].collapsed
+    func setCollapsed(sectionIndex: Int,
+                      collapsed: Bool, batchUpdate: Bool = true,
+                      presistent: Bool = false) {///TODO: rm presistent
+        guard let kind = self.kind(of: sectionIndex) else { return }
+
+        let oldValue = self.collapsed(at: sectionIndex)
         
-        sections[sectionIndex].collapsed = collapsed
+        state.collapsed[kind] = collapsed
 
         if batchUpdate {
             guard oldValue != collapsed else { return }
@@ -569,11 +551,12 @@ final class ConversationListViewModel: NSObject {
     // MARK: - state presistent
 
     private struct State: Codable {
-        var sections: [Section]
+        var collapsed: [Section.Kind: Bool]
         var folderEnabled: Bool
 
         init(conversationListViewModel: ConversationListViewModel) {
-            sections = conversationListViewModel.sections
+//            sections = conversationListViewModel.sections
+            collapsed = [:]
             folderEnabled = conversationListViewModel.folderEnabled
         }
 
@@ -611,10 +594,10 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func restoreCollapse() {
-        state.sections.forEach() {
-            let kind = $0.kind
+        for (index, section) in self.sections {
+            let kind = self.kind(of: index)
             if let sectionNum = sectionNumber(for: kind) {
-                setCollapsed(sectionIndex: sectionNum, collapsed: $0.collapsed, batchUpdate: false)
+                setCollapsed(sectionIndex: sectionNum, collapsed: state[kind].collapsed, batchUpdate: false)
             }
         }
     }
