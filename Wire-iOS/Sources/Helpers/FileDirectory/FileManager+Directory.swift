@@ -20,30 +20,6 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "FileManager")
 
-extension FileManager {
-
-    /// Create a directiory excluded from back up
-    ///
-    /// - Parameter pathComponent: folder to create
-    @discardableResult
-    func createBackupExcludedDirectoryIfNeeded(_ pathComponent: String) -> URL? {
-        guard let url = URL.directoryURL(pathComponent) else { return nil }
-
-        do {
-            if !FileManager.default.fileExists(atPath: url.path) {
-                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-            }
-
-            try url.wr_excludeFromBackup()
-        }
-        catch (let exception) {
-            zmLog.error("Error creating \(String(describing: url)): \(exception)")
-        }
-
-        return url
-    }
-}
-
 extension URL {
     static func directoryURL(_ pathComponent: String) -> URL? {
         let url = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)

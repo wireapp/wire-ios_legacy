@@ -586,8 +586,9 @@ final class ConversationListViewModel: NSObject {
     private func saveState(state: State) {
 
         guard let jsonString = state.jsonString,
-            let persistentDirectory = ConversationListViewModel.persistentDirectory,
-            let directoryURL = FileManager.default.createBackupExcludedDirectoryIfNeeded(persistentDirectory) else { return }
+              let persistentDirectory = ConversationListViewModel.persistentDirectory,
+              let url = URL.directoryURL(persistentDirectory),
+              let directoryURL = FileManager.default.createAndProtectDirectory(at: url) else { return }
 
         do {
             try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)

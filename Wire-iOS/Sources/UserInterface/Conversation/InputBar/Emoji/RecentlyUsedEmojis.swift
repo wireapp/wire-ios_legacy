@@ -61,9 +61,10 @@ final class RecentlyUsedEmojiPeristenceCoordinator {
     }
 
     static func store(_ section: RecentlyUsedEmojiSection) {
-        guard let emojiUrl = url else { return }
+        guard let emojiUrl = url,
+              let directoryUrl = URL.directoryURL(directory) else { return }
 
-        FileManager.default.createBackupExcludedDirectoryIfNeeded(directory)
+        FileManager.default.createAndProtectDirectory(at: directoryUrl)
         (section.emoji as NSArray).write(to: emojiUrl, atomically: true)
     }
 
