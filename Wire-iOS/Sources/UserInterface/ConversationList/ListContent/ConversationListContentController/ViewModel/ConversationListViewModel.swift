@@ -195,7 +195,7 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].kind
     }
 
-    func groupName(of sectionIndex: Int) -> String? {
+    func sectionName(of sectionIndex: Int) -> String? {
         return kind(of: sectionIndex)?.rawValue
     }
 
