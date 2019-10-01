@@ -259,16 +259,15 @@ final class ConversationListViewModelTests: XCTestCase {
 
     func testThatStateJsonFormatIsCorrect() {
         /// GIVEN
+
+        /// state is initial value when first run
+        XCTAssertEqual(sut.jsonString, #"{"folderEnabled":false,"sections":[{"kind":"contactRequests","collapsed":false},{"kind":"conversations","collapsed":false}]}"#)
+
         sut.folderEnabled = true
 
         let mockConversation = ZMConversation()
 
         fillDummyConversations(mockConversation: mockConversation)
-
-        /// WHEN & THEN
-
-        /// no state is saved when first run
-        XCTAssertNil(sut.jsonString)
 
         /// WHEN
         sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
