@@ -85,7 +85,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
 
     private func createConstraints() {
-        [titleLabel, arrowIconImageView, self].forEach() {
+        [arrowIconImageView, titleLabel].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 

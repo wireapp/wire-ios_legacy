@@ -29,12 +29,10 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ConversationListHeaderView()
-        sut.desiredWidth = 375
-        sut.desiredHeight = CGFloat.ConversationListSectionHeader.height
-        
+        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: CGFloat.ConversationListSectionHeader.height)))
+
         sut.titleLabel.text = "GROUPS"
-        
+
         sut.backgroundColor = .black
     }
     
