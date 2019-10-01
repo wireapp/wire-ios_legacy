@@ -20,6 +20,23 @@ import Foundation
 
 extension ConversationListCell {
 
+    override open var accessibilityIdentifier: String? {
+        get {
+            let prefix: String
+
+            if let groupName = groupName {
+                prefix = "\(groupName) - "
+            } else {
+                prefix = " "
+            }
+
+            return prefix + "conversation_list_cell"
+        }
+        set {
+            // no op
+        }
+    }
+
     override open var isSelected: Bool {
         didSet {
             if isIPadRegular() {

@@ -81,6 +81,35 @@ extension ConversationListContentController {
     var headerDesiredHeight: CGFloat {
         return listViewModel.folderEnabled ? CGFloat.ConversationListSectionHeader.height : 0
     }
+
+    // MARK: - UICollectionViewDataSource
+    
+    override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let item = listViewModel.item(for: indexPath)
+        let cell: UICollectionViewCell
+
+        if item is ConversationListConnectRequestsItem,
+           let labelCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellReuseIdConnectionRequests, for: indexPath) as? ConnectRequestsCell {
+            cell = labelCell
+        } else if item is ZMConversation,
+                  let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellReuseIdConversation, for: indexPath) as? ConversationListCell {
+
+            listCell.delegate = self
+            listCell.mutuallyExclusiveSwipeIdentifier = "ConversationList"
+            listCell.conversation = item as? ZMConversation
+            listCell.groupName = listViewModel.groupName(of: indexPath.section)
+            
+            cell = listCell
+        } else {
+            fatal("Unknown cell type")
+        }
+
+        cell.autoresizingMask = .flexibleWidth
+
+        return cell
+    }
+
+
 }
 
 

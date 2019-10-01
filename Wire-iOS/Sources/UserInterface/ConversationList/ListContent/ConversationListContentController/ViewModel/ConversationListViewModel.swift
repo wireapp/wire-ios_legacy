@@ -195,6 +195,10 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].kind
     }
 
+    func groupName(of sectionIndex: Int) -> String? {
+        return kind(of: sectionIndex)?.rawValue
+    }
+
     @objc
     var sectionCount: UInt {
         return UInt(sections.count)

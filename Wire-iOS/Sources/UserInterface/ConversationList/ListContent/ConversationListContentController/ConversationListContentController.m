@@ -345,30 +345,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return c;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    id item = [self.listViewModel itemForIndexPath:indexPath];
-    UICollectionViewCell *cell = nil;
-
-    if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
-        ConnectRequestsCell *labelCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdConnectionRequests forIndexPath:indexPath];
-        cell = labelCell;
-    }
-    else if ([item isKindOfClass:[ZMConversation class]]) {
-        ConversationListCell *listCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdConversation forIndexPath:indexPath];
-        listCell.delegate = self;
-        listCell.mutuallyExclusiveSwipeIdentifier = @"ConversationList";
-        listCell.conversation = item;
-        cell = listCell;
-    } else {
-        RequireString(false, "Unknown cell type");
-    }
-
-    cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    return cell;
-}
-
 @end
 
 

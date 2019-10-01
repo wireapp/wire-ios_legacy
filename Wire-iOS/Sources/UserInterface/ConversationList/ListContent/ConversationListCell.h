@@ -30,6 +30,10 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 @property (nonatomic, nullable) ZMConversation *conversation;
 @property (nonatomic, readonly, nonnull) ConversationListItemView *itemView;
 @property (nonatomic, weak, nullable) id <ConversationListCellDelegate> delegate;
+
+/// for accessibilityIdentifier prefix
+@property (nonatomic, copy) NSString *groupName;
+
 - (void)updateAppearance;
 - (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
 + (void)invalidateCachedCellSize;
