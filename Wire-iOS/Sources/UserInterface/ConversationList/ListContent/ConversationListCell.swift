@@ -24,6 +24,7 @@ extension ConversationListCell {
         get {
             return identifier
         }
+        
         set {
             // no op
         }
