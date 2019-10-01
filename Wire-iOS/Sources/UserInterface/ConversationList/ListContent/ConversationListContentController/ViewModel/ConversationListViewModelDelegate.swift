@@ -29,3 +29,8 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
 }
+
+
+protocol ConversationListViewModelRestorationDelegate: class {
+    func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool)
+}

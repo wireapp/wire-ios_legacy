@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2017 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,23 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
-public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
+private let zmLog = ZMSLog(tag: "FileManager")
 
-public extension URL {
-    ///TODO: retire, use Wire utility's excludeFromBackup
-    func wr_excludeFromBackup() throws {
-        var mutableCopy = self
-        var resourceValues = URLResourceValues()
-        resourceValues.isExcludedFromBackup = true
-        try mutableCopy.setResourceValues(resourceValues)
+extension URL {
+    static func directoryURL(_ pathComponent: String) -> URL? {
+        let url = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return url?.appendingPathComponent(pathComponent)
     }
-
-    ///TODO: mv to utility
-    static func wr_directory(for searchPathDirectory: FileManager.SearchPathDirectory) -> URL {
-        return URL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(searchPathDirectory, .userDomainMask, true).first!)
-    }
-
 }

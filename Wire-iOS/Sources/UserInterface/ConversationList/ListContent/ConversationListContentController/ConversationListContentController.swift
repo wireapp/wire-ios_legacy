@@ -26,6 +26,7 @@ extension ConversationListContentController {
 
         listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
+        
         setupViews()
 
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
@@ -57,8 +58,8 @@ extension ConversationListContentController {
 
                 header.collapsed = listViewModel.collapsed(at: indexPath.section)
 
-                header.tapHandler = { collapsed in
-                    self.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
+                header.tapHandler = {[weak self] collapsed in
+                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed, presistent: true)
                 }
                 
                 return header

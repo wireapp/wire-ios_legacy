@@ -178,3 +178,13 @@ public extension UIView {
     
 }
 
+// MARK: - ConversationListViewModelRestorationDelegate
+extension ConversationListBottomBarController: ConversationListViewModelRestorationDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool) {
+        if enabled {
+            updateSelection(with: folderButton)
+        } else {
+            updateSelection(with: listButton)
+        }
+    }
+}

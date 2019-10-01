@@ -19,9 +19,7 @@
 
 import Foundation
 
-private let zmLog = ZMSLog(tag: "UI")
-
-class RecentlyUsedEmojiSection: NSObject, EmojiSection {
+final class RecentlyUsedEmojiSection: NSObject, EmojiSection {
 
     let type: EmojiSectionType = .recent
 
@@ -56,15 +54,17 @@ class RecentlyUsedEmojiSection: NSObject, EmojiSection {
 }
 
 
-class RecentlyUsedEmojiPeristenceCoordinator {
+final class RecentlyUsedEmojiPeristenceCoordinator {
 
     static func loadOrCreate() -> RecentlyUsedEmojiSection {
         return loadFromDisk() ?? RecentlyUsedEmojiSection(capacity: 15)
     }
 
     static func store(_ section: RecentlyUsedEmojiSection) {
-        guard let emojiUrl = url else { return }
-        createDirectoryIfNeeded()
+        guard let emojiUrl = url,
+              let directoryUrl = URL.directoryURL(directory) else { return }
+
+        FileManager.default.createAndProtectDirectory(at: directoryUrl)
         (section.emoji as NSArray).write(to: emojiUrl, atomically: true)
     }
 
@@ -74,28 +74,10 @@ class RecentlyUsedEmojiPeristenceCoordinator {
         return RecentlyUsedEmojiSection(capacity: 15, elements: emoji)
     }
 
-    private static func createDirectoryIfNeeded() {
-        guard let url = directoryURL else { return }
-        
-        do {
-            if !FileManager.default.fileExists(atPath: url.path) {
-                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-            }
-
-            try url.wr_excludeFromBackup()
-        }
-        catch (let exception) {
-            zmLog.error("Error creating \(String(describing: directoryURL)): \(exception)")
-        }
-    }
-
-    private static var directoryURL: URL? = {
-        let url = try? FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return url?.appendingPathComponent("emoji")
-    }()
+    private static var directory: String = "emoji"
 
     private static var url: URL? = {
-        return directoryURL?.appendingPathComponent("recently_used.plist")
+        return URL.directoryURL(directory)?.appendingPathComponent("recently_used.plist")
     }()
 
 }

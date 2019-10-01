@@ -23,11 +23,34 @@ import Foundation
 @objc
 final class ConversationListConnectRequestsItem : NSObject {}
 
+// MARK: - Section codable
+extension ConversationListViewModel.Section: Codable {
+    private enum Key: CodingKey {
+        case kind
+        case collapsed
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Key.self)
+        try container.encode(kind, forKey: .kind)
+        try container.encode(collapsed, forKey: .collapsed)
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Key.self)
+        kind = try container.decode(ConversationListViewModel.Section.Kind.self, forKey: .kind)
+        collapsed = try container.decode(Bool.self, forKey: .collapsed)
+
+        ///list is not stored
+        items = []
+    }
+}
 
 final class ConversationListViewModel: NSObject {
 
-    private struct Section {
-        enum Kind: CaseIterable {
+    fileprivate struct Section {
+        enum Kind: String, CaseIterable, Codable {
+
             /// for incoming requests
             case contactRequests
 
@@ -85,20 +108,46 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     weak var delegate: ConversationListViewModelDelegate?
+    weak var restorationDelegate: ConversationListViewModelRestorationDelegate? {
+        didSet {
+            restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
+        }
+    }
 
     private weak var selfUserObserver: NSObjectProtocol?
 
-    var folderEnabled = true {///TODO: read/write to storage
+    var folderEnabled = false {
         didSet {
             guard folderEnabled != oldValue else { return }
 
             updateAllSections()
             delegate?.listViewModelShouldBeReloaded()
+
+            /// restore collapse state
+            if folderEnabled {
+                restoreCollapse()
+            }
+
+            state.folderEnabled = folderEnabled
+
+            saveState(state: state)
         }
     }
 
     // Local copies of the lists.
     private var sections: [Section] = []
+
+    private lazy var state: State = {
+        guard let persistentPath = ConversationListViewModel.persistentURL,
+            let jsonData = try? Data(contentsOf: persistentPath) else { return State(conversationListViewModel: self)
+        }
+        do {
+            return try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
+        } catch {
+            log.error("restore state error: \(error)")
+            return State(conversationListViewModel: self)
+        }
+    }()
 
     private var conversationDirectoryToken: Any?
 
@@ -109,11 +158,13 @@ final class ConversationListViewModel: NSObject {
 
         super.init()
 
-        updateAllSections()
         setupObservers()
         subscribeToTeamsUpdates()
+
+        updateAllSections()
+
+        restoreState()
     }
-    
 
     private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {
@@ -152,7 +203,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
         guard sectionIndex < sectionCount,
-              !sections[sectionIndex].collapsed else { return 0 }
+            !sections[sectionIndex].collapsed else { return 0 }
 
         return sections[sectionIndex].items.count
     }
@@ -316,8 +367,7 @@ final class ConversationListViewModel: NSObject {
     }
 
 
-    @objc
-    func updateAllSections() {
+    private func updateAllSections() {
         for section in Section.Kind.allCases {
             let items = ConversationListViewModel.newList(for: section, userSession: userSession)
 
@@ -336,8 +386,8 @@ final class ConversationListViewModel: NSObject {
     private func update(kind: Section.Kind, with items: [AnyHashable]?) {
 
         /// replace the section with new items if section found
-        if let sectionNumber = self.sectionNumber(for: kind) {
-            sections[sectionNumber].items = items ?? []
+        if let sectionNum = sectionNumber(for: kind) {
+            sections[sectionNum].items = items ?? []
         } else {
             // Re-create the sections
             createSections(replaceKind: kind, withReplaceItems: items)
@@ -349,11 +399,11 @@ final class ConversationListViewModel: NSObject {
     private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
         if folderEnabled {
             sections = [Section(kind: .contactRequests, userSession: userSession),
-                       Section(kind: .group, userSession: userSession),
-                       Section(kind: .contacts, userSession: userSession)]
+                        Section(kind: .group, userSession: userSession),
+                        Section(kind: .contacts, userSession: userSession)]
         } else {
             sections = [Section(kind: .contactRequests, userSession: userSession),
-                       Section(kind: .conversations, userSession: userSession)]
+                        Section(kind: .conversations, userSession: userSession)]
         }
 
         if let sectionNumber = self.sectionNumber(for: replaceKind) {
@@ -395,10 +445,14 @@ final class ConversationListViewModel: NSObject {
     private func updateForConversationType(section: Section.Kind) -> Bool {
         guard let sectionNumber = self.sectionNumber(for: section) else { return false }
 
-        /// no need to update collapsed section
-        guard !sections[sectionNumber].collapsed else { return false }
-
         let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
+
+        /// no need to update collapsed section's cells but the section header, update the stored list
+        if sections[sectionNumber].collapsed, newConversationList.count > 0 {
+            update(kind: section, with: newConversationList)
+            delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            return true
+        }
 
         if let oldConversationList = sectionItems(for: section),
             oldConversationList != newConversationList {
@@ -483,24 +537,107 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].collapsed
     }
 
-    func setCollapsed(sectionIndex: Int, collapsed: Bool) {
+    func setCollapsed(sectionIndex: Int, collapsed: Bool, batchUpdate: Bool = true, presistent: Bool = false) {
         guard sections.indices.contains(sectionIndex) else { return }
         let oldValue = sections[sectionIndex].collapsed
         
         sections[sectionIndex].collapsed = collapsed
-        
-        guard oldValue != collapsed else { return }
-        
-        let oldConversationList = collapsed ? sections[sectionIndex].items : []
-        let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
-        let modelUpdates = {}
-        
-        guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+        if batchUpdate {
+            guard oldValue != collapsed else { return }
 
-        delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+            let oldConversationList = collapsed ? sections[sectionIndex].items : []
+            let newConversationList = collapsed ? [] : sections[sectionIndex].items
+
+            let modelUpdates = {}
+
+            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+
+            delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+        } else {
+            UIView.performWithoutAnimation {
+                self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
+            }
+        }
+
+        if presistent {
+            let state = State(conversationListViewModel: self)
+            saveState(state: state)
+
+            self.state = state
+        }
     }
 
+    // MARK: - state presistent
+
+    private struct State: Codable {
+        var sections: [Section]
+        var folderEnabled: Bool
+
+        init(conversationListViewModel: ConversationListViewModel) {
+            sections = conversationListViewModel.sections
+            folderEnabled = conversationListViewModel.folderEnabled
+        }
+
+        var jsonString: String? {
+            guard let jsonData = try? JSONEncoder().encode(self) else {
+                return nil }
+
+            return String(data: jsonData, encoding: .utf8)
+        }
+    }
+
+    var jsonString: String? {
+        return state.jsonString
+    }
+
+    private func saveState(state: State) {
+
+        guard let jsonString = state.jsonString,
+              let persistentDirectory = ConversationListViewModel.persistentDirectory,
+              let directoryURL = URL.directoryURL(persistentDirectory) else { return }
+
+        FileManager.default.createAndProtectDirectory(at: directoryURL)
+
+        do {
+            try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)
+        } catch {
+            log.error("error writing ConversationListViewModel to \(directoryURL): \(error)")
+        }
+    }
+
+    private func restoreState() {
+        folderEnabled = state.folderEnabled
+
+        restoreCollapse()
+    }
+
+    private func restoreCollapse() {
+        state.sections.forEach() {
+            let kind = $0.kind
+            if let sectionNum = sectionNumber(for: kind) {
+                setCollapsed(sectionIndex: sectionNum, collapsed: $0.collapsed, batchUpdate: false)
+            }
+        }
+    }
+
+
+    private static var persistentDirectory: String? {
+        guard let userID = ZMUser.selfUser()?.remoteIdentifier else { return nil }
+
+        return "UI_state/\(userID)"
+    }
+
+    private static var persistentFilename: String {
+        let className = String(describing: self)
+        return "\(className).json"
+    }
+
+    static var persistentURL: URL? {
+        guard let persistentDirectory = persistentDirectory else { return nil }
+
+        return URL.directoryURL(persistentDirectory)?.appendingPathComponent(ConversationListViewModel.persistentFilename)
+    }
 }
 
 // MARK: - ZMUserObserver
@@ -526,18 +663,20 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             reload()
         } else {
             for updatedList in changeInfo.updatedLists {
+                let kind: Section.Kind
                 switch updatedList {
                 case .unarchived:
-                    updateForConversationType(section: .conversations)
+                    kind = .conversations
                 case .contacts:
-                    updateForConversationType(section: .contacts)
+                    kind = .contacts
                 case .pending:
-                    updateForConversationType(section: .contactRequests)
+                    kind = .contactRequests
                 case .groups:
-                    updateForConversationType(section: .group)
+                    kind = .group
                 case .archived:
-                    break
+                    continue
                 }
+                updateForConversationType(section: kind)
             }
         }
     }
