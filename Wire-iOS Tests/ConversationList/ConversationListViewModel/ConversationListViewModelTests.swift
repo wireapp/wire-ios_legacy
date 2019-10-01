@@ -234,7 +234,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertFalse(sut.collapsed(at: 1))
 
         ///WHEN
-        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+        sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
 
         ///THEN
         XCTAssert(sut.collapsed(at: 1))
@@ -270,7 +270,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertNil(sut.jsonString)
 
         /// WHEN
-        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+        sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
 
         /// THEN
         XCTAssertEqual(sut.jsonString, "{\"folderEnabled\":true,\"sections\":[{\"kind\":\"contactRequests\",\"collapsed\":false},{\"kind\":\"group\",\"collapsed\":true},{\"kind\":\"contacts\",\"collapsed\":false}]}")

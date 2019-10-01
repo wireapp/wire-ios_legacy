@@ -536,16 +536,16 @@ final class ConversationListViewModel: NSObject {
         sections[sectionIndex].collapsed = collapsed
 
         if batchUpdate {
-        guard oldValue != collapsed else { return }
-        
-        let oldConversationList = collapsed ? sections[sectionIndex].items : []
-        let newConversationList = collapsed ? [] : sections[sectionIndex].items
+            guard oldValue != collapsed else { return }
 
-        let modelUpdates = {}
-        
-        guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+            let oldConversationList = collapsed ? sections[sectionIndex].items : []
+            let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
-        delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+            let modelUpdates = {}
+
+            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+
+            delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
         } else {
             UIView.performWithoutAnimation {
                 self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
