@@ -51,9 +51,6 @@ extension ConversationListContentController {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.desiredWidth = collectionView.frame.width
-                header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
-                
                 header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
 
                 header.collapsed = listViewModel.collapsed(at: indexPath.section)
@@ -78,7 +75,7 @@ extension ConversationListContentController {
 
     }
 
-    var headerDesiredHeight: CGFloat {
+    var headerDesiredHeight: CGFloat {///TODO: 0 for request section
         return listViewModel.folderEnabled ? CGFloat.ConversationListSectionHeader.height : 0
     }
 }
