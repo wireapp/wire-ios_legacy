@@ -209,7 +209,8 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.selectedItem, mockConversation)
     }
 
-    func testForSelectItemAtIndex() {
+    func testThatSelectItemAtIndexReturnCorrectConversation() {
+        /// GIVEN
         sut.folderEnabled = true
 
         let mockConversation = ZMConversation()
@@ -224,7 +225,7 @@ final class ConversationListViewModelTests: XCTestCase {
     }
 
     // MARK: - state
-    func testForCollapseState() {
+    func testThatCollapseStateCanBeRestoredAfterFolderDisabled() {
         sut.folderEnabled = true
 
         let mockConversation = ZMConversation()
@@ -256,7 +257,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.collapsed(at: 1))
     }
 
-    func testForStateJson() {
+    func testThatStateJsonFormatIsCorrect() {
         /// GIVEN
         sut.folderEnabled = true
 

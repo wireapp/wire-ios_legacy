@@ -125,21 +125,29 @@ final class ConversationListViewModel: NSObject {
 
             /// restore collapse state
             if folderEnabled {
-                restoreCollpase()
+                restoreCollapse()
             }
 
-            state?.folderEnabled = folderEnabled
+            state.folderEnabled = folderEnabled
 
-            if let state = state {
-                saveState(state: state)
-            }
+            saveState(state: state)
         }
     }
 
     // Local copies of the lists.
     private var sections: [Section] = []
 
-    private var state: State?
+    private lazy var state: State = {
+        guard let persistentPath = ConversationListViewModel.persistentURL,
+            let jsonData = try? Data(contentsOf: persistentPath) else { return State(conversationListViewModel: self)
+        }
+        do {
+            return try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
+        } catch {
+            log.error("restore state error: \(error)")
+            return State(conversationListViewModel: self)
+        }
+    }()
 
     private var conversationDirectoryToken: Any?
 
@@ -580,7 +588,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     var jsonString: String? {
-        return state?.jsonString
+        return state.jsonString
     }
 
     private func saveState(state: State) {
@@ -599,27 +607,13 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func restoreState() {
-        if state == nil {
-            guard let persistentPath = ConversationListViewModel.persistentURL,
-                let jsonData = try? Data(contentsOf: persistentPath) else { return
-            }
-            do {
-                state = try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
-            } catch {
-                log.error("restore state error: \(error)")
-                return
-            }
-        }
-
-        guard let state = state else { return }
-
         folderEnabled = state.folderEnabled
 
-        restoreCollpase()
+        restoreCollapse()
     }
 
-    private func restoreCollpase() {
-        state?.sections.forEach() {
+    private func restoreCollapse() {
+        state.sections.forEach() {
             let kind = $0.kind
             if let sectionNum = sectionNumber(for: kind) {
                 setCollapsed(sectionIndex: sectionNum, collapsed: $0.collapsed, batchUpdate: false)
