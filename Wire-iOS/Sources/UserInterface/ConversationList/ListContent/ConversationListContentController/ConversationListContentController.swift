@@ -97,12 +97,13 @@ extension ConversationListContentController {
             listCell.delegate = self
             listCell.mutuallyExclusiveSwipeIdentifier = "ConversationList"
             listCell.conversation = item as? ZMConversation
-            listCell.groupName = listViewModel.groupName(of: indexPath.section)
-            
+
             cell = listCell
         } else {
             fatal("Unknown cell type")
         }
+
+        (cell as? SectionListCellType)?.sectionName = listViewModel.groupName(of: indexPath.section)
 
         cell.autoresizingMask = .flexibleWidth
 

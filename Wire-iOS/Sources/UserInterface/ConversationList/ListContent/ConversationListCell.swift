@@ -22,15 +22,7 @@ extension ConversationListCell {
 
     override open var accessibilityIdentifier: String? {
         get {
-            let prefix: String
-
-            if let groupName = groupName {
-                prefix = "\(groupName) - "
-            } else {
-                prefix = " "
-            }
-
-            return prefix + "conversation_list_cell"
+            return identifier
         }
         set {
             // no op

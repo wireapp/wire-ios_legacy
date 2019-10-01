@@ -41,3 +41,4 @@ final class ConnectRequestsCellSnapshotTests: CoreDataSnapshotTestCase {
         verify(view: sut)
     }
 }
+

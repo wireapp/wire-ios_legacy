@@ -1096,6 +1096,7 @@
 		EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2388872211B8C500331C07 /* UserType+DisplayString.swift */; };
 		EF24036A20A198CC002813BE /* UIImagePickerController+iPadPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */; };
 		EF24036C20A1A2EF002813BE /* ConversationInputBarViewController+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */; };
+		EF24477D2343656A00C747F5 /* ConnectRequestsCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF24477B2343655100C747F5 /* ConnectRequestsCellTests.swift */; };
 		EF25F7DE1FC45F8E0040C3CC /* AccessoryTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */; };
 		EF25F8871FC57F320040C3CC /* AccessoryTextFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */; };
 		EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */; };
@@ -2896,6 +2897,7 @@
 		EF2388872211B8C500331C07 /* UserType+DisplayString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserType+DisplayString.swift"; sourceTree = "<group>"; };
 		EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImagePickerController+iPadPopover.swift"; path = "../Conversation/InputBar/UIImagePickerController+iPadPopover.swift"; sourceTree = "<group>"; };
 		EF24036B20A1A2EE002813BE /* ConversationInputBarViewController+ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+ImagePicker.swift"; sourceTree = "<group>"; };
+		EF24477B2343655100C747F5 /* ConnectRequestsCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsCellTests.swift; sourceTree = "<group>"; };
 		EF25F7DD1FC45F8E0040C3CC /* AccessoryTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextField.swift; sourceTree = "<group>"; };
 		EF25F8851FC57EE90040C3CC /* AccessoryTextFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryTextFieldTests.swift; sourceTree = "<group>"; };
 		EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathLoadingBar.swift; sourceTree = "<group>"; };
@@ -5728,7 +5730,6 @@
 				EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */,
 				1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */,
 				BFAD3A1B1CD1078500F0FBED /* Resources */,
-				BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */,
 				5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */,
 				EEE60E2B2179D99100D03346 /* GroupDetailsNotificationOptionsCellTests.swift */,
 				D58192042091F34E003BA7EC /* CallActionsViewTests.swift */,
@@ -5887,7 +5888,6 @@
 				EF17B0E3223AB9F5006252A8 /* MediaBarSnapshotTests.swift */,
 				EF2E2F70223BC4A60038D7D9 /* VersionInfoViewControllerSnapshotTests.swift */,
 				EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */,
-				EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */,
 				EFBFABA92257948F005D83C0 /* TopPeopleCellSnapshotTests.swift */,
 				EFDC36D92257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift */,
 				5E39FC64225CDA7800C682B8 /* ChangeEmailViewControllerTests.swift */,
@@ -6321,6 +6321,15 @@
 			path = NetworkStatusView;
 			sourceTree = "<group>";
 		};
+		EF24477A2343650900C747F5 /* ConnectRequestsCell */ = {
+			isa = PBXGroup;
+			children = (
+				EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */,
+				EF24477B2343655100C747F5 /* ConnectRequestsCellTests.swift */,
+			);
+			path = ConnectRequestsCell;
+			sourceTree = "<group>";
+		};
 		EF26EBD923322EAD001EB65A /* ConversationListContentController */ = {
 			isa = PBXGroup;
 			children = (
@@ -6422,6 +6431,7 @@
 		EF6A33D02192F47200970698 /* ConversationListCell */ = {
 			isa = PBXGroup;
 			children = (
+				BF079A3520EF9E6F00B152DD /* ConversationListCellTests.swift */,
 				8742FB811E8BD23D00D046BC /* ConversationStatusLineTests.swift */,
 				F1F5E57D216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift */,
 				EF6A33D12192F4D400970698 /* CoreDataSnapshotTestCase+appendMessage.swift */,
@@ -6462,8 +6472,9 @@
 				EF4C5D4C23351D230092CA38 /* Container */,
 				EF4C5D4B23351D080092CA38 /* ConversationListViewModel */,
 				EF6A33D02192F47200970698 /* ConversationListCell */,
-				EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */,
+				EF24477A2343650900C747F5 /* ConnectRequestsCell */,
 				A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */,
+				EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */,
 			);
 			path = ConversationList;
 			sourceTree = "<group>";
@@ -8274,6 +8285,7 @@
 				EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */,
 				BFA13E161D4A5F7100F0A91B /* ConfirmAssetViewControllerTests.swift in Sources */,
 				EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */,
+				EF24477D2343656A00C747F5 /* ConnectRequestsCellTests.swift in Sources */,
 				A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */,
 				D50892FD2056C2AA004D3AE2 /* WirelessExpirationTimeFormatterTests.swift in Sources */,
 				D524BE5F207B99B800542A4E /* UIViewController+LoadingTests.swift in Sources */,
