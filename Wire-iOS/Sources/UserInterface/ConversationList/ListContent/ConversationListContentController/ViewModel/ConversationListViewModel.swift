@@ -178,12 +178,16 @@ final class ConversationListViewModel: NSObject {
         return kind(of: sectionIndex)?.title
     }
 
-    /// section is visible when there is more then 0 items, even it is collapsed
+    /// return true if seaction header is visible.
+    /// For .contactRequests section it is always invisible
+    /// When folderEnabled == true, returns false
     ///
     /// - Parameter sectionIndex: section number of collection view
     /// - Returns: if the section exists and visible, return true. 
-    func sectionVisible(section: Int) -> Bool {
-        guard sections.indices.contains(section) else { return false }
+    func sectionHeaderVisible(section: Int) -> Bool {
+        guard sections.indices.contains(section),
+              kind(of: section) != .contactRequests,
+              folderEnabled else { return false }
 
         return sections[section].items.count > 0
     }
