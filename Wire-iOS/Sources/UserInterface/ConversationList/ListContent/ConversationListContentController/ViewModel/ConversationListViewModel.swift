@@ -125,7 +125,7 @@ final class ConversationListViewModel: NSObject {
 
             /// restore collapse state
             if folderEnabled {
-                restoreCollpasion()
+                restoreCollpase()
             }
 
             state?.folderEnabled = folderEnabled
@@ -587,8 +587,9 @@ final class ConversationListViewModel: NSObject {
 
         guard let jsonString = state.jsonString,
               let persistentDirectory = ConversationListViewModel.persistentDirectory,
-              let url = URL.directoryURL(persistentDirectory),
-              let directoryURL = FileManager.default.createAndProtectDirectory(at: url) else { return }
+              let directoryURL = URL.directoryURL(persistentDirectory) else { return }
+
+        FileManager.default.createAndProtectDirectory(at: directoryURL)
 
         do {
             try jsonString.write(to: directoryURL.appendingPathComponent(ConversationListViewModel.persistentFilename), atomically: true, encoding: .utf8)
@@ -614,10 +615,10 @@ final class ConversationListViewModel: NSObject {
 
         folderEnabled = state.folderEnabled
 
-        restoreCollpasion()
+        restoreCollpase()
     }
 
-    private func restoreCollpasion() {
+    private func restoreCollpase() {
         state?.sections.forEach() {
             let kind = $0.kind
             if let sectionNum = sectionNumber(for: kind) {
