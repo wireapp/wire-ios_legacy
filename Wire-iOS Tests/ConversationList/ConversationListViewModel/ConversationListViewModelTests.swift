@@ -257,11 +257,26 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.collapsed(at: 1))
     }
 
+    func convertToDictionary(string: String) -> [String: Any]? {
+        if let data = string.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
+
     func testThatStateJsonFormatIsCorrect() {
         /// GIVEN
 
+        /// e.g. "{\"collapsed\":[\"contactRequests\",false,\"conversations\",false],\"folderEnabled\":false}"
+        let initDictionary = convertToDictionary(string: sut.jsonString!)!
+
         /// state is initial value when first run
-        XCTAssertEqual(sut.jsonString, #"{"folderEnabled":false,"sections":[{"kind":"contactRequests","collapsed":false},{"kind":"conversations","collapsed":false}]}"#)
+        var collapsed: [String: Any] = initDictionary["collapsed"] as! [String : Any]
+        XCTAssertNil(collapsed["group"])
 
         sut.folderEnabled = true
 
@@ -273,7 +288,13 @@ final class ConversationListViewModelTests: XCTestCase {
         sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
 
         /// THEN
-        XCTAssertEqual(sut.jsonString, "{\"folderEnabled\":true,\"sections\":[{\"kind\":\"contactRequests\",\"collapsed\":false},{\"kind\":\"group\",\"collapsed\":true},{\"kind\":\"contacts\",\"collapsed\":false}]}")
+        /// JSON example: "{\"collapsed\":[\"contacts\",false,\"conversations\",false,\"contactRequests\",false,\"group\",true],\"folderEnabled\":true}"
+        let updatedDictionary = convertToDictionary(string: sut.jsonString!)!
+
+        collapsed = updatedDictionary["collapsed"] as! [String : Any]
+        XCTAssertEqual(collapsed["group"] as! Bool, true)
+//        XCTAssert(updatedDictionary["group"])
+//        XCTAssert(updatedDictionary["folderEnabled"])
     }
 
     func testForRestorationDelegateMethodCalledOnceAfterItIsSet() {

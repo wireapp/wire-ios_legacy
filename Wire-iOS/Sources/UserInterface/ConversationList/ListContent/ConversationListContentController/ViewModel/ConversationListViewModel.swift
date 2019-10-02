@@ -109,7 +109,7 @@ final class ConversationListViewModel: NSObject {
             saveState(state: state)
         }
         
-        get{
+        get {
             return state.folderEnabled
         }
     }
@@ -120,13 +120,14 @@ final class ConversationListViewModel: NSObject {
     /// for folder enabled and collapse presistent
     private lazy var state: State = {
         guard let persistentPath = ConversationListViewModel.persistentURL,
-            let jsonData = try? Data(contentsOf: persistentPath) else { return State(conversationListViewModel: self)
+            let jsonData = try? Data(contentsOf: persistentPath) else { return State()
         }
+
         do {
             return try JSONDecoder().decode(ConversationListViewModel.State.self, from: jsonData)
         } catch {
             log.error("restore state error: \(error)")
-            return State(conversationListViewModel: self)
+            return State()
         }
     }()
 
@@ -565,10 +566,9 @@ final class ConversationListViewModel: NSObject {
         var collapsed: [Section.Kind: Bool]
         var folderEnabled: Bool
 
-        init(conversationListViewModel: ConversationListViewModel) {
-//            sections = conversationListViewModel.sections
+        init() {
             collapsed = [:]
-            folderEnabled = conversationListViewModel.folderEnabled
+            folderEnabled = false
         }
 
         var jsonString: String? {
