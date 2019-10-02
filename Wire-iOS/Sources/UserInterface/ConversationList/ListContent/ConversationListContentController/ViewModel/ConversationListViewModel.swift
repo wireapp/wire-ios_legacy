@@ -524,7 +524,7 @@ final class ConversationListViewModel: NSObject {
 
     private func internalSelect(itemToSelect: AnyHashable?) {
         selectedItem = itemToSelect
-        delegate?.listViewModel(self, didSelectItem: itemToSelect)/// TODO: nil item later?
+        delegate?.listViewModel(self, didSelectItem: itemToSelect)
     }
 
     func subscribeToTeamsUpdates() {
@@ -669,7 +669,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                 case .unarchived:
                     kind = .conversations
                 case .contacts:
-                    kind = folderEnabled ? .contacts : .conversations 
+                    kind = folderEnabled ? .contacts : .conversations
                 case .pending:
                     kind = .contactRequests
                 case .groups:
