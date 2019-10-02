@@ -142,7 +142,7 @@ extension ConversationContentViewController {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
-    @objc public func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
+    func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
         guard let message = message else { return }
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
@@ -165,14 +165,20 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
-        
-        if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
-            if let cell = fromCell as? SelectableView {
-                popoverPresentationController.config(from: rootViewController,
-                               pointToView: cell.selectionView,
-                               sourceView: rootViewController.view)
-            }
 
+        let pointToView: UIView?
+        if let cell = fromCell as? SelectableView,
+            let view = cell.selectionView {
+            pointToView = view
+        } else {
+            pointToView = fromCell
+        }
+
+        if let pointToView = pointToView {
+            keyboardAvoiding.configPopover(pointToView: pointToView)
+        }
+
+        if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
             popoverPresentationController.permittedArrowDirections = [.left, .right, .up, .down]
         }
@@ -185,6 +191,9 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
         }
 
+        ///TODO: dismiss first?
+        ///TODO: [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
+        /// TODO: dismiss full screen vc first? check sketch VC
         rootViewController.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
