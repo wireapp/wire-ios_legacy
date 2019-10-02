@@ -86,7 +86,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
             conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
         }, completionHandler:{
             delay(0.3) {
-                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)///TODO: convo not on list??
             }
         })
     }

@@ -669,11 +669,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                 case .unarchived:
                     kind = .conversations
                 case .contacts:
-                    kind = .contacts
+                    kind = folderEnabled ? .contacts : .conversations 
                 case .pending:
                     kind = .contactRequests
                 case .groups:
-                    kind = .group
+                    kind = folderEnabled ? .group : .conversations
                 case .archived:
                     continue
                 }
