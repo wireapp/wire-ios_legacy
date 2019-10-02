@@ -664,14 +664,14 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             reload()
         } else {
             for updatedList in changeInfo.updatedLists {
-                if let kind = self.kind(conversationListType: updatedList) {
+                if let kind = self.kind(of: updatedList) {
                     updateForConversationType(kind: kind)
                 }
             }
         }
     }
 
-    private func kind(conversationListType: ConversationListType) -> Section.Kind? {
+    private func kind(of conversationListType: ConversationListType) -> Section.Kind? {
 
         let kind: Section.Kind?
 
