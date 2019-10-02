@@ -532,13 +532,15 @@ final class ConversationListViewModel: NSObject {
                       collapsed: Bool, batchUpdate: Bool = true,
                       presistent: Bool = false) {///TODO: rm presistent
         guard let kind = self.kind(of: sectionIndex) else { return }
+        guard self.collapsed(at: sectionIndex) != collapsed else { return }
 
-        let oldValue = self.collapsed(at: sectionIndex)
-        
-        state.collapsed.insert(kind)
+        if collapsed {
+            state.collapsed.insert(kind)
+        } else {
+            state.collapsed.remove(kind)
+        }
 
         if batchUpdate {
-            guard oldValue != collapsed else { return }
 
             let oldConversationList = collapsed ? sections[sectionIndex].items : []
             let newConversationList = collapsed ? [] : sections[sectionIndex].items
