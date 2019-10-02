@@ -105,8 +105,6 @@ final class ConversationListViewModel: NSObject {
             if state.folderEnabled {
                 restoreCollapse()
             }
-            
-            saveState(state: state)
         }
         
         get {
@@ -118,7 +116,7 @@ final class ConversationListViewModel: NSObject {
     private var sections: [Section] = []
 
     /// for folder enabled and collapse presistent
-    private lazy var state: State = {
+    private lazy var _state: State = {
         guard let persistentPath = ConversationListViewModel.persistentURL,
             let jsonData = try? Data(contentsOf: persistentPath) else { return State()
         }
@@ -130,6 +128,22 @@ final class ConversationListViewModel: NSObject {
             return State()
         }
     }()
+
+    private var state: State {
+        get {
+            return _state
+        }
+
+        set {
+            if newValue != _state {
+                _state = newValue
+            }
+
+            /// simulate didSet
+
+            saveState(state: _state)
+        }
+    }
 
     private var conversationDirectoryToken: Any?
 
@@ -529,8 +543,8 @@ final class ConversationListViewModel: NSObject {
     }
 
     func setCollapsed(sectionIndex: Int,
-                      collapsed: Bool, batchUpdate: Bool = true,
-                      presistent: Bool = false) {///TODO: rm presistent
+                      collapsed: Bool,
+                      batchUpdate: Bool = true) {
         guard let kind = self.kind(of: sectionIndex) else { return }
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
 
@@ -541,7 +555,6 @@ final class ConversationListViewModel: NSObject {
         }
 
         if batchUpdate {
-
             let oldConversationList = collapsed ? sections[sectionIndex].items : []
             let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
@@ -551,19 +564,15 @@ final class ConversationListViewModel: NSObject {
 
             delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
         } else {
-            UIView.performWithoutAnimation {
+            UIView.performWithoutAnimation { ///TODO: mv UIKit method to VC
                 self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
             }
-        }
-
-        if presistent { ///TODO: rm
-            saveState(state: state)
         }
     }
 
     // MARK: - state presistent
 
-    private struct State: Codable {
+    private struct State: Codable, Equatable {
         var collapsed: Set<Section.Kind>
         var folderEnabled: Bool
 
@@ -608,7 +617,7 @@ final class ConversationListViewModel: NSObject {
     private func restoreCollapse() {
         for (index, _) in sections.enumerated() {            
             if let kind = self.kind(of: index),
-                let sectionNum = sectionNumber(for: kind) {
+               let sectionNum = sectionNumber(for: kind) {
                 setCollapsed(sectionIndex: sectionNum, collapsed: collapsed(at :index), batchUpdate: false)
             }
         }

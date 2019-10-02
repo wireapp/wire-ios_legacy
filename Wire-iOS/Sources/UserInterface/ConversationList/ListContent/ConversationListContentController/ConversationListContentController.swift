@@ -56,7 +56,7 @@ extension ConversationListContentController {
                 header.collapsed = listViewModel.collapsed(at: indexPath.section)
 
                 header.tapHandler = {[weak self] collapsed in
-                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed, presistent: true)
+                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
                 }
                 
                 return header
