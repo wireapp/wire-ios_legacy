@@ -523,10 +523,9 @@ final class ConversationListViewModel: NSObject {
     // MARK: - collapse section
 
     func collapsed(at sectionIndex: Int) -> Bool {
-        guard let kind = kind(of: sectionIndex),
-            let collapsed = state.collapsed[kind] else { return false }
+        guard let kind = kind(of: sectionIndex) else { return false }
 
-        return collapsed
+        return state.collapsed.contains(kind)
     }
 
     func setCollapsed(sectionIndex: Int,
@@ -536,7 +535,7 @@ final class ConversationListViewModel: NSObject {
 
         let oldValue = self.collapsed(at: sectionIndex)
         
-        state.collapsed[kind] = collapsed
+        state.collapsed.insert(kind)
 
         if batchUpdate {
             guard oldValue != collapsed else { return }
@@ -563,11 +562,11 @@ final class ConversationListViewModel: NSObject {
     // MARK: - state presistent
 
     private struct State: Codable {
-        var collapsed: [Section.Kind: Bool]
+        var collapsed: Set<Section.Kind>
         var folderEnabled: Bool
 
         init() {
-            collapsed = [:]
+            collapsed = []
             folderEnabled = false
         }
 
