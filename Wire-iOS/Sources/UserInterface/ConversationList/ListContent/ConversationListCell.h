@@ -22,6 +22,7 @@
 @class ZMConversation;
 @class ConversationListItemView;
 @protocol ConversationListCellDelegate;
+@protocol SectionListCellType;
 
 static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 
@@ -30,7 +31,12 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 @property (nonatomic, nullable) ZMConversation *conversation;
 @property (nonatomic, readonly, nonnull) ConversationListItemView *itemView;
 @property (nonatomic, weak, nullable) id <ConversationListCellDelegate> delegate;
+
 - (void)updateAppearance;
 - (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize;
 + (void)invalidateCachedCellSize;
+@end
+
+@interface ConversationListCell () <SectionListCellType>
+@property (nonatomic, copy, nullable) NSString *sectionName;
 @end

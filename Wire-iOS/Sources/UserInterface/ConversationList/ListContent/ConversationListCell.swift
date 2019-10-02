@@ -20,6 +20,16 @@ import Foundation
 
 extension ConversationListCell {
 
+    override open var accessibilityIdentifier: String? {
+        get {
+            return identifier
+        }
+        
+        set {
+            // no op
+        }
+    }
+
     override open var isSelected: Bool {
         didSet {
             if isIPadRegular() {
