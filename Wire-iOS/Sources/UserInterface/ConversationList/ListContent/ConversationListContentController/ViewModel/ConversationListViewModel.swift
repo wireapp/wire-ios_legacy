@@ -684,7 +684,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             kind = .contactRequests
         case .groups:
             kind = .group
-        case .archived:
+        default: ///TODO: favourite and custom folder
             kind = nil
         }
 
