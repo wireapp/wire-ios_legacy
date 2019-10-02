@@ -664,21 +664,33 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             reload()
         } else {
             for updatedList in changeInfo.updatedLists {
-                let kind: Section.Kind
-                switch updatedList {
-                case .unarchived:
-                    kind = .conversations
-                case .contacts:
-                    kind = folderEnabled ? .contacts : .conversations
-                case .pending:
-                    kind = .contactRequests
-                case .groups:
-                    kind = folderEnabled ? .group : .conversations
-                case .archived:
-                    continue
+                if let kind = self.kind(conversationListType: updatedList) {
+                    updateForConversationType(kind: kind)
                 }
-                updateForConversationType(kind: kind)
             }
         }
+    }
+
+    private func kind(conversationListType: ConversationListType) -> Section.Kind? {
+
+        let kind: Section.Kind?
+
+        switch (conversationListType, folderEnabled) {
+        case (.unarchived, _),
+             (.contacts, false),
+             (.groups, false):
+            kind = .conversations
+        case (.contacts, true):
+            kind = .contacts
+        case (.pending, _):
+            kind = .contactRequests
+        case (.groups, true):
+            kind = .group
+        case (.archived, _):
+            kind = nil
+        }
+
+        return kind
+
     }
 }
