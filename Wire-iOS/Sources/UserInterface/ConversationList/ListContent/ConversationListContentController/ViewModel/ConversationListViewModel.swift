@@ -444,20 +444,20 @@ final class ConversationListViewModel: NSObject {
     }
     
     @discardableResult
-    private func updateForConversationType(section: Section.Kind) -> Bool {
-        guard let sectionNumber = self.sectionNumber(for: section) else { return false }
+    private func updateForConversationType(kind: Section.Kind) -> Bool {
+        guard let sectionNumber = self.sectionNumber(for: kind) else { return false }
 
-        let newConversationList = ConversationListViewModel.newList(for: section, userSession: userSession)
+        let newConversationList = ConversationListViewModel.newList(for: kind, userSession: userSession)
 
         /// no need to update collapsed section's cells but the section header, update the stored list
 
         if collapsed(at: sectionNumber), newConversationList.count > 0 {
-            update(kind: section, with: newConversationList)
+            update(kind: kind, with: newConversationList)
             delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             return true
         }
 
-        if let oldConversationList = sectionItems(for: section),
+        if let oldConversationList = sectionItems(for: kind),
             oldConversationList != newConversationList {
 
 
@@ -471,7 +471,7 @@ final class ConversationListViewModel: NSObject {
                 // It is important to keep the data source of the collection view consistent, since
                 // any inconsistency in the delta update would make it throw an exception.
                 let modelUpdates = {
-                    self.update(kind: section, with: newConversationList)
+                    self.update(kind: kind, with: newConversationList)
                 }
                 
                 delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
@@ -490,7 +490,7 @@ final class ConversationListViewModel: NSObject {
             reload()
         } else {
             sectionKinds.forEach() {
-                updateForConversationType(section: $0)
+                updateForConversationType(kind: $0)
             }
         }
     }
@@ -524,7 +524,7 @@ final class ConversationListViewModel: NSObject {
 
     private func internalSelect(itemToSelect: AnyHashable?) {
         selectedItem = itemToSelect
-        delegate?.listViewModel(self, didSelectItem: itemToSelect)
+        delegate?.listViewModel(self, didSelectItem: itemToSelect)/// TODO: nil item later?
     }
 
     func subscribeToTeamsUpdates() {
@@ -677,7 +677,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                 case .archived:
                     continue
                 }
-                updateForConversationType(section: kind)
+                updateForConversationType(kind: kind)
             }
         }
     }
