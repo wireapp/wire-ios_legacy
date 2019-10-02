@@ -41,9 +41,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
     
     var tapHandler: TapHandler? = nil
-    
-    var desiredWidth: CGFloat = 0
-    var desiredHeight: CGFloat = 0
 
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -88,7 +85,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
 
     private func createConstraints() {
-        [titleLabel, arrowIconImageView, self].forEach() {
+        [arrowIconImageView, titleLabel].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -99,12 +96,5 @@ final class ConversationListHeaderView: UICollectionReusableView {
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8)]
         )
-    }
-
-    override var intrinsicContentSize: CGSize {
-        get {
-            return CGSize(width: desiredWidth,
-                          height: desiredHeight)
-        }
     }
 }

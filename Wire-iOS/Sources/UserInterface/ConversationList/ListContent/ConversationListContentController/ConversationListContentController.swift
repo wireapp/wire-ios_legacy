@@ -51,9 +51,6 @@ extension ConversationListContentController {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.desiredWidth = collectionView.frame.width
-                header.desiredHeight = listViewModel.sectionVisible(section: indexPath.section) ? headerDesiredHeight: 0
-                
                 header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
 
                 header.collapsed = listViewModel.collapsed(at: indexPath.section)
@@ -77,46 +74,12 @@ extension ConversationListContentController {
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
 
     }
-
-    var headerDesiredHeight: CGFloat {
-        return listViewModel.folderEnabled ? CGFloat.ConversationListSectionHeader.height : 0
-    }
-
-    // MARK: - UICollectionViewDataSource
-    
-    override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = listViewModel.item(for: indexPath)
-        let cell: UICollectionViewCell
-
-        if item is ConversationListConnectRequestsItem,
-           let labelCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellReuseIdConnectionRequests, for: indexPath) as? ConnectRequestsCell {
-            cell = labelCell
-        } else if item is ZMConversation,
-                  let listCell = collectionView.dequeueReusableCell(withReuseIdentifier: CellReuseIdConversation, for: indexPath) as? ConversationListCell {
-
-            listCell.delegate = self
-            listCell.mutuallyExclusiveSwipeIdentifier = "ConversationList"
-            listCell.conversation = item as? ZMConversation
-
-            cell = listCell
-        } else {
-            fatal("Unknown cell type")
-        }
-
-        (cell as? SectionListCellType)?.sectionName = listViewModel.sectionName(of: indexPath.section)
-
-        cell.autoresizingMask = .flexibleWidth
-
-        return cell
-    }
-
-
 }
 
 
 extension ConversationListContentController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: listViewModel.sectionVisible(section: section) ? headerDesiredHeight: 0)
+        return CGSize(width: collectionView.bounds.size.width, height: listViewModel.sectionHeaderVisible(section: section) ? CGFloat.ConversationListSectionHeader.height: 0)
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
