@@ -675,18 +675,16 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
 
         let kind: Section.Kind?
 
-        switch (conversationListType, folderEnabled) {
-        case (.unarchived, _),
-             (.contacts, false),
-             (.groups, false):
+        switch conversationListType {
+        case .unarchived:
             kind = .conversations
-        case (.contacts, true):
+        case .contacts:
             kind = .contacts
-        case (.pending, _):
+        case .pending:
             kind = .contactRequests
-        case (.groups, true):
+        case .groups:
             kind = .group
-        case (.archived, _):
+        case .archived:
             kind = nil
         }
 
