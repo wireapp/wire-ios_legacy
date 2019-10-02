@@ -235,7 +235,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssertFalse(sut.collapsed(at: 1))
 
         ///WHEN
-        sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
+        sut.setCollapsed(sectionIndex: 1, collapsed: true)
 
         ///THEN
         XCTAssert(sut.collapsed(at: 1))
@@ -270,7 +270,7 @@ final class ConversationListViewModelTests: XCTestCase {
         fillDummyConversations(mockConversation: mockConversation)
 
         /// WHEN
-        sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
+        sut.setCollapsed(sectionIndex: 1, collapsed: true)
 
         /// THEN
         XCTAssertEqual(sut.jsonString, #"{"collapsed":["group"],"folderEnabled":true}"#)

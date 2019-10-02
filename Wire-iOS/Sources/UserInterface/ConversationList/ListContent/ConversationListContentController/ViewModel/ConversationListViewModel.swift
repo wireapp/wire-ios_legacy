@@ -140,7 +140,6 @@ final class ConversationListViewModel: NSObject {
             }
 
             /// simulate didSet
-
             saveState(state: _state)
         }
     }
