@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Logi välja";
 "self.settings.account_details.log_out.alert.message" = "Kogu vestluste ajalugu kustutatakse.";
+"self.settings.account_details.log_out.alert.password" = "Parool";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kasutus- ja krahhiaruanded";

@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Odjava";
 "self.settings.account_details.log_out.alert.message" = "Your message history will be erased on this device.";
+"self.settings.account_details.log_out.alert.password" = "Geslo";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Podatki o uporabi in poročila o prisilnih ustavitvah";

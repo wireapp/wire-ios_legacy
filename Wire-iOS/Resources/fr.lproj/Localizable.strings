@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Se déconnecter";
 "self.settings.account_details.log_out.alert.message" = "L'historique de vos messages sera effacé de cet appareil.";
+"self.settings.account_details.log_out.alert.password" = "Mot de passe";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Rapports d’utilisation et de plantage";

@@ -959,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Kirjaudu ulos";
 "self.settings.account_details.log_out.alert.message" = "Viestihistoriasi poistetaan tästä laitteesta.";
+"self.settings.account_details.log_out.alert.password" = "Salasana";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Käyttö- ja vikaraportit";

@@ -213,6 +213,8 @@ final class ConversationListViewController: UIViewController {
         bottomBarController.delegate = self
         
         add(bottomBarController, to: conversationListContainer)
+
+        listContentController.listViewModel.restorationDelegate = bottomBarController
     }
 
     fileprivate func setupListContentController() {
@@ -347,10 +349,14 @@ final class ConversationListViewController: UIViewController {
         if showArchived == bottomBarController.showArchived {
             return
         }
-
-        UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
+        
+        UIView.performWithoutAnimation {
             self.bottomBarController.showArchived = showArchived
-        })
+            
+            UIView.transition(with: bottomBarController.view, duration: 0.35, options: .transitionCrossDissolve, animations: {
+                self.bottomBarController.view.layoutIfNeeded()
+            })
+        }
     }
 
     @objc
