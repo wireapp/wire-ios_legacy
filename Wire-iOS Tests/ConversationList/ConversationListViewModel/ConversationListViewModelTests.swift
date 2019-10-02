@@ -257,26 +257,11 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.collapsed(at: 1))
     }
 
-    func convertToDictionary(string: String) -> [String: Any]? {
-        if let data = string.data(using: .utf8) {
-            do {
-                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
-        return nil
-    }
-
     func testThatStateJsonFormatIsCorrect() {
         /// GIVEN
 
-        /// e.g. "{\"collapsed\":[\"contactRequests\",false,\"conversations\",false],\"folderEnabled\":false}"
-        let initDictionary = convertToDictionary(string: sut.jsonString!)!
-
         /// state is initial value when first run
-        var collapsed: [String: Any] = initDictionary["collapsed"] as! [String : Any]
-        XCTAssertNil(collapsed["group"])
+        XCTAssertEqual(sut.jsonString, #"{"collapsed":[],"folderEnabled":false}"#)
 
         sut.folderEnabled = true
 
@@ -288,13 +273,7 @@ final class ConversationListViewModelTests: XCTestCase {
         sut.setCollapsed(sectionIndex: 1, collapsed: true, presistent: true)
 
         /// THEN
-        /// JSON example: "{\"collapsed\":[\"contacts\",false,\"conversations\",false,\"contactRequests\",false,\"group\",true],\"folderEnabled\":true}"
-        let updatedDictionary = convertToDictionary(string: sut.jsonString!)!
-
-        collapsed = updatedDictionary["collapsed"] as! [String : Any]
-        XCTAssertEqual(collapsed["group"] as! Bool, true)
-//        XCTAssert(updatedDictionary["group"])
-//        XCTAssert(updatedDictionary["folderEnabled"])
+        XCTAssertEqual(sut.jsonString, #"{"collapsed":["group"],"folderEnabled":true}"#)
     }
 
     func testForRestorationDelegateMethodCalledOnceAfterItIsSet() {
