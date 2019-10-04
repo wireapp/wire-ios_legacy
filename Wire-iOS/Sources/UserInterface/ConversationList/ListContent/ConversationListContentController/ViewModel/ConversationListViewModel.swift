@@ -674,7 +674,8 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                     kind = .contactRequests
                 case .groups:
                     kind = .group
-                case .archived:
+//                case .archived:
+                default:
                     continue
                 }
                 updateForConversationType(section: kind)

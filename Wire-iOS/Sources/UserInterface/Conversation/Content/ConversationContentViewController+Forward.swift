@@ -194,7 +194,8 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         ///TODO: dismiss first?
         ///TODO: [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
         /// TODO: dismiss full screen vc first? check sketch VC
-        rootViewController.present(keyboardAvoiding, animated: true) {
+//        rootViewController.
+        present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }
