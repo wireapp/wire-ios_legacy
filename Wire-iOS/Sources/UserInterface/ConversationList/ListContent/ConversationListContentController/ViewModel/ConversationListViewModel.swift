@@ -37,7 +37,7 @@ final class ConversationListViewModel: NSObject {
             /// one to one conversations
             case contacts
 
-            /// gorup conversations
+            /// group conversations
             case groups
 
             /// favorites
