@@ -40,7 +40,7 @@ final class ConversationListViewModel: NSObject {
             /// gorup conversations
             case groups
 
-            /// favourites
+            /// favorites
             case favorites
 
             ///TODO: Bill - custom folder
