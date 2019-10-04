@@ -253,7 +253,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)selectModelItem:(id)itemToSelect
 {
     return [self.listViewModel selectItem:itemToSelect];
-}
+}///TODO: mv to VM
 
 - (void)deselectAll
 {
