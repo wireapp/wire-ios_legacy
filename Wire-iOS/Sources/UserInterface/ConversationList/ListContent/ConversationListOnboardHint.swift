@@ -19,16 +19,25 @@
 
 import Foundation
 
-final class ConversationListOnboardingHint : UIView {
+final class ConversationListOnboardingHint: UIView {
     
     let messageLabel : UILabel = UILabel()
     let arrowView : UIImageView = UIImageView()
+    weak var arrowPointToView: UIView? {
+        didSet {
+            guard let arrowPointToView = arrowPointToView else { return }
+            
+            NSLayoutConstraint.activate([
+            arrowView.centerXAnchor.constraint(equalTo: arrowPointToView.centerXAnchor)])
+        }
+    }
     
     override init(frame: CGRect) {
         
         super.init(frame: frame)
         
         arrowView.setIcon(.longDownArrow, size: .large, color: UIColor.white.withAlphaComponent(0.4))
+        
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .white
         messageLabel.textAlignment = .left
@@ -48,27 +57,15 @@ final class ConversationListOnboardingHint : UIView {
         [arrowView, messageLabel].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        let margin: CGFloat = 24
 
         NSLayoutConstraint.activate([
             messageLabel.topAnchor.constraint(equalTo: topAnchor),
-            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor), ///TODO: leading margin
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            arrowView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: 24),
-            arrowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24),
-            arrowView.centerXAnchor.constraint(equalTo: centerXAnchor) ///TODO: point to first icon
-            ])
-        
-//        constrain(self, arrowView, messageLabel) { container, arrowView, messageLabel in
-//            messageLabel.top == container.top
-//            messageLabel.leading == container.leading
-//            messageLabel.trailing == container.trailing
-//
-//            arrowView.top == messageLabel.bottom + 24
-//            arrowView.bottom == container.bottom - 24
-//            arrowView.centerX == container.centerX ///TODO point to first icon
-//        }
+            arrowView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: margin),
+            arrowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)])
     }
-    
-    
 }

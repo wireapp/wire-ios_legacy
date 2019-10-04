@@ -121,6 +121,8 @@ final class ConversationListViewController: UIViewController {
         setupNetworkStatusBar()
 
         createViewConstraints()
+        
+        onboardingHint.arrowPointToView = bottomBarController.startUIButton
     }
 
     @available(*, unavailable)
