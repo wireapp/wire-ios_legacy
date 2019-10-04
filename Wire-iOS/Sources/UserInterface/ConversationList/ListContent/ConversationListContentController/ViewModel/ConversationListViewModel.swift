@@ -38,11 +38,14 @@ final class ConversationListViewModel: NSObject {
             case contacts
 
             /// gorup conversations
-            case group
+            case groups
 
-            ///TODO:
-            //    case customFolder(folder: FolderType)
-            
+            ///TODO: Bill - custom folder
+            //    case folder(folder: FolderType)
+
+            ///TODO: Bill - favourites
+            //    case favourites
+
             var title: String? {
                 switch self {
                 case .conversations:
@@ -51,7 +54,7 @@ final class ConversationListViewModel: NSObject {
                     return "list.section.requests".localized
                 case .contacts:
                     return "list.section.contacts".localized
-                case .group:
+                case .groups:
                     return "list.section.groups".localized
                 }
             }
@@ -261,7 +264,7 @@ final class ConversationListViewModel: NSObject {
             conversationListType = .unarchived
         case .contacts:
             conversationListType = .contacts
-        case .group:
+        case .groups:
             conversationListType = .groups
         }
 
@@ -401,7 +404,7 @@ final class ConversationListViewModel: NSObject {
     private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
         if folderEnabled {
             sections = [Section(kind: .contactRequests, userSession: userSession),
-                        Section(kind: .group, userSession: userSession),
+                        Section(kind: .groups, userSession: userSession),
                         Section(kind: .contacts, userSession: userSession)]
         } else {
             sections = [Section(kind: .contactRequests, userSession: userSession),
@@ -673,8 +676,8 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
                 case .pending:
                     kind = .contactRequests
                 case .groups:
-                    kind = .group
-                case .archived:
+                    kind = .groups
+                default:
                     continue
                 }
                 updateForConversationType(section: kind)
