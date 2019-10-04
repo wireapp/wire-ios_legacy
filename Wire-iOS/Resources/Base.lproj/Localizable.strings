@@ -210,6 +210,7 @@
 "list.section.groups" = "Groups";
 "list.section.contacts" = "Contacts";
 "list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "verified";
 "conversation.voiceover.legalhold" = "legal hold";
