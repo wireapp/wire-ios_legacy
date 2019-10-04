@@ -40,11 +40,11 @@ final class ConversationListViewModel: NSObject {
             /// gorup conversations
             case groups
 
+            /// favourites
+            case favorites
+
             ///TODO: Bill - custom folder
             //    case folder(folder: FolderType)
-
-            ///TODO: Bill - favourites
-            //    case favourites
 
             var title: String? {
                 switch self {
@@ -56,6 +56,8 @@ final class ConversationListViewModel: NSObject {
                     return "list.section.contacts".localized
                 case .groups:
                     return "list.section.groups".localized
+                case .favorites:
+                    return "list.section.favorites".localized
                 }
             }
         }
@@ -266,6 +268,8 @@ final class ConversationListViewModel: NSObject {
             conversationListType = .contacts
         case .groups:
             conversationListType = .groups
+        case .favorites:
+            conversationListType = .favorites
         }
 
         return userSession.conversations(by: conversationListType)
