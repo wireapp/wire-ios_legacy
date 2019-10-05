@@ -18,21 +18,29 @@
 
 
 import Foundation
-import Cartography
 
-final class ConversationListOnboardingHint : UIView {
+final class ConversationListOnboardingHint: UIView {
     
     let messageLabel : UILabel = UILabel()
     let arrowView : UIImageView = UIImageView()
+    weak var arrowPointToView: UIView? {
+        didSet {
+            guard let arrowPointToView = arrowPointToView else { return }
+            
+            NSLayoutConstraint.activate([
+            arrowView.centerXAnchor.constraint(equalTo: arrowPointToView.centerXAnchor)])
+        }
+    }
     
     override init(frame: CGRect) {
         
         super.init(frame: frame)
         
         arrowView.setIcon(.longDownArrow, size: .large, color: UIColor.white.withAlphaComponent(0.4))
+        
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .white
-        messageLabel.textAlignment = .center
+        messageLabel.textAlignment = .left
         messageLabel.font = FontSpec(.large, .light).font
         messageLabel.text = "conversation_list.empty.no_contacts.message".localized
         
@@ -45,18 +53,19 @@ final class ConversationListOnboardingHint : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func createConstraints() {
-        
-        constrain(self, arrowView, messageLabel) { container, arrowView, messageLabel in
-            messageLabel.top == container.top
-            messageLabel.leading == container.leading
-            messageLabel.trailing == container.trailing
-            
-            arrowView.top == messageLabel.bottom + 24
-            arrowView.bottom == container.bottom - 24
-            arrowView.centerX == container.centerX
+    private func createConstraints() {
+        [arrowView, messageLabel].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
+        
+        let margin: CGFloat = 24
+
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: topAnchor),
+            messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margin),
+            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            arrowView.topAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: margin),
+            arrowView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -margin)])
     }
-    
-    
 }
