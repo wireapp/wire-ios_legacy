@@ -132,7 +132,7 @@ extension ConversationContentViewController {
                 }
             }
         case .forward:
-            showForwardFor(message: message, fromCell: view)
+            showForwardFor(message: message, from: view)
         case .showInConversation:
             scroll(to: message) { cell in
                 self.dataSource?.highlight(message: message)

@@ -142,7 +142,7 @@ extension ConversationContentViewController {
 
 extension ConversationContentViewController: UIAdaptivePresentationControllerDelegate {
 
-    func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
+    func showForwardFor(message: ZMConversationMessage?, from view: UIView?) {
         guard let message = message else { return }
 //        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
@@ -166,15 +166,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        let pointToView: UIView?
-        if let cell = fromCell as? SelectableView,
-            let view = cell.selectionView {
-            pointToView = view
-        } else {
-            pointToView = fromCell
-        }
-
-        if let pointToView = pointToView {
+        if let pointToView = (view as? SelectableView)?.selectionView ?? view {
             keyboardAvoiding.configPopover(pointToView: pointToView)
         }
 

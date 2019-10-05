@@ -213,7 +213,7 @@ extension ConversationViewController: CollectionsViewControllerDelegate {
         case .forward:
             viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
-                    self.contentViewController.showForwardFor(message: message, fromCell: cell)
+                    self.contentViewController.showForwardFor(message: message, from: cell)
                 }
             }
 
