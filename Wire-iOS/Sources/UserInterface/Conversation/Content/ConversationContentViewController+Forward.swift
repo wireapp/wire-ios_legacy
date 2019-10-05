@@ -144,7 +144,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
     func showForwardFor(message: ZMConversationMessage?, fromCell: UIView?) {
         guard let message = message else { return }
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+//        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
         endEditing()
         
@@ -191,11 +191,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
         }
 
-        ///TODO: dismiss first?
-        ///TODO: [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
-        /// TODO: dismiss full screen vc first? check sketch VC
-//        rootViewController.
-        present(keyboardAvoiding, animated: true) {
+        UIApplication.shared.topmostViewController()?.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }

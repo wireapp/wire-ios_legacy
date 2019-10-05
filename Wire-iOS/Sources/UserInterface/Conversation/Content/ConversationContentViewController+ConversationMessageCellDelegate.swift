@@ -26,7 +26,7 @@ extension UIView {
             return self
         }
 
-        var actionView: UIView! = tableView
+        var actionView: UIView = tableView
 
         let section = dataSource.section(for: message)
 
@@ -49,7 +49,10 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         guard let dataSource = dataSource else { return }
         let actionView = view.targetView(for: message, dataSource: dataSource)
-        let shouldDismissModal = action != .delete && action != .copy
+        
+        ///Do not dismiss Modal for forward since share VC is present in a popover
+        let shouldDismissModal = action != .delete && action != .copy &&
+            !(action == .forward && isIPadRegular())
 
         if messagePresenter.modalTargetController?.presentedViewController != nil &&
             shouldDismissModal {
