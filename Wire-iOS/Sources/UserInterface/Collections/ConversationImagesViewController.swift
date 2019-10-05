@@ -319,24 +319,26 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    private func perform(action: MessageAction) {
-        messageActionDelegate?.perform(action: action, for: currentMessage, view: view)
+    private func perform(action: MessageAction, sourceView: UIView?) {
+        messageActionDelegate?.perform(action: action, for: currentMessage, view: sourceView ?? view)
+        
+        ///TODO: if action == .forward and is pad regular, handle it here.
     }
 
-    @objc public func copyCurrent(_ sender: AnyObject!) {
+    @objc func copyCurrent(_ sender: AnyObject!) {
         let text = "collections.image_viewer.copied.title".localized(uppercased: true)
         overlay.show(text: text)
-        perform(action: .copy)
+        perform(action: .copy, sourceView: sender as? UIView)
     }
     
-    @objc public func saveCurrent(_ sender: UIButton!) {
+    @objc func saveCurrent(_ sender: UIButton!) {
         if sender != nil {
             self.currentController?.performSaveImageAnimation(from: sender)
         }
-        perform(action: .save)
+        perform(action: .save, sourceView: sender)
     }
 
-    @objc public func likeCurrent() {
+    @objc func likeCurrent() {
         ZMUserSession.shared()?.enqueueChanges({
             self.currentMessage.liked = !self.currentMessage.liked
         }, completionHandler: {
@@ -344,24 +346,24 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         })
     }
 
-    @objc public func shareCurrent(_ sender: AnyObject!) {
-        perform(action: .forward)
+    @objc func shareCurrent(_ sender: AnyObject!) {
+        perform(action: .forward, sourceView: sender as? UIView)
     }
 
-    @objc public func deleteCurrent(_ sender: AnyObject!) {
-        perform(action: .delete)
+    @objc func deleteCurrent(_ sender: AnyObject!) {
+        perform(action: .delete, sourceView: sender as? UIView)
     }
     
-    @objc public func revealCurrent(_ sender: AnyObject!) {
-        perform(action: .showInConversation)
+    @objc func revealCurrent(_ sender: AnyObject!) {
+        perform(action: .showInConversation, sourceView: sender as? UIView)
     }
     
-    @objc public func sketchCurrent(_ sender: AnyObject!) {
-        perform(action: .sketchDraw)
+    @objc func sketchCurrent(_ sender: AnyObject!) {
+        perform(action: .sketchDraw, sourceView: sender as? UIView)
     }
     
-    @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
-        perform(action: .sketchEmoji)
+    @objc func sketchCurrentEmoji(_ sender: AnyObject!) {
+        perform(action: .sketchEmoji, sourceView: sender as? UIView)
     }
 }
 
@@ -369,7 +371,8 @@ extension ConversationImagesViewController: MessageActionResponder {
     func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
         case .like: likeCurrent()
-        default: self.messageActionDelegate?.perform(action: action, for: message, view: view)
+        default:
+            perform(action: action, for: message, view: view)
         }
     }
 }

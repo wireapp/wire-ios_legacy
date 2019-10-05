@@ -144,7 +144,6 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
 
     func showForwardFor(message: ZMConversationMessage?, from view: UIView?) {
         guard let message = message else { return }
-//        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
         endEditing()
         
@@ -166,8 +165,15 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        if let pointToView = (view as? SelectableView)?.selectionView ?? view {
+        if let pointToView = (view as? SelectableView)?.selectionView ?? view//, let popover = keyboardAvoiding.popoverPresentationController,
+//            let topmostViewController = UIApplication.shared.topmostViewController() as? PopoverPresenter & UIViewController
+            {
             keyboardAvoiding.configPopover(pointToView: pointToView)
+
+                //            popover.config(from: topmostViewController,
+//                           pointToView: pointToView,
+//                           sourceView: topmostViewController.view)
+
         }
 
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
@@ -183,7 +189,9 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
         }
 
-        UIApplication.shared.topmostViewController()?.present(keyboardAvoiding, animated: true) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+
+        rootViewController.present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }
