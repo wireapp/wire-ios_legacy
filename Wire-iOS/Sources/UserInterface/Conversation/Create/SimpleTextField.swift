@@ -35,7 +35,7 @@ extension Optional where Wrapped == String {
     }
 }
 
-class SimpleTextField: UITextField, Themeable {
+final class SimpleTextField: UITextField, Themeable {
     
     @objc var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
@@ -116,7 +116,7 @@ class SimpleTextField: UITextField, Themeable {
         return textRect.inset(by: self.textInsets)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
         return editingRect.inset(by: textInsets)
     }
@@ -129,7 +129,7 @@ class SimpleTextField: UITextField, Themeable {
         return placeholder && attribute
     }
 
-    override open var placeholder: String? {
+    override var placeholder: String? {
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)

@@ -54,7 +54,7 @@ class BurstTimestampSenderMessageCellDescription: ConversationMessageCellDescrip
     
 }
 
-class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
+final class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
 
     private let timestampView = ConversationCellBurstTimestampView()
     private var configuration: BurstTimestampSenderMessageCellConfiguration? = nil
@@ -90,7 +90,7 @@ class BurstTimestampSenderMessageCell: UIView, ConversationMessageCell {
         ])
     }
 
-    override open func willMove(toWindow newWindow: UIWindow?) {
+    override func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         
         if self.window == nil {

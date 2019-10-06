@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers class LikeButton: IconButton {
+final class LikeButton: IconButton {
     static var normalColor: UIColor {
         return UIColor.from(scheme: .textDimmed)
     }
@@ -28,7 +28,7 @@ import Cartography
         return UIColor(for: .vividRed)
     }
 
-    open func setSelected(_ selected: Bool, animated: Bool) {
+    func setSelected(_ selected: Bool, animated: Bool) {
         // Do not animate changes if the state does not change
         guard selected != self.isSelected else {
             return
