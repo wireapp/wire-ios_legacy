@@ -59,12 +59,12 @@ extension CollectionCell: SelectableView {
 }
 
 
-@objcMembers final class DeletionDialogPresenter: NSObject {
+final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
-    var alert: UIAlertController!
+//    var alert: UIAlertController!
 
-    public init(sourceViewController: UIViewController) {
+    init(sourceViewController: UIViewController) {
         self.sourceViewController = sourceViewController
         super.init()
     }
@@ -78,9 +78,9 @@ extension CollectionCell: SelectableView {
      - parameter source: The source view used for a potential popover presentation of the dialog.
      - parameter completion: A completion closure which will be invoked with `true` if a deletion occured and `false` otherwise.
      */
-    public func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ((Bool) -> Void)?) {
+    func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ((Bool) -> Void)?) {
         guard !message.hasBeenDeleted else { return }
-        alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
+        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
@@ -109,12 +109,13 @@ extension CollectionCell: SelectableView {
                 presentationController.sourceView = selectableView.selectionView
                 presentationController.sourceRect = selectableView.selectionRect
             } else {
-                presentationController.sourceView = source
-                presentationController.sourceRect = source.frame
+                alert.configPopover(pointToView: source, popoverPresenter: sourceViewController as? (UIViewController & PopoverPresenter))
+//                presentationController.sourceView = source
+//                presentationController.sourceRect = source.frame
             }
         }
 
-        sourceViewController?.present(alert, animated: true, completion: nil)
+        sourceViewController?.present(alert, animated: true)
     }
 }
 
