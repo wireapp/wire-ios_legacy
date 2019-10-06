@@ -24,7 +24,7 @@ import Ziphy
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
-@objc class GiphySearchViewController: VerticalColumnCollectionViewController {
+final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     @objc weak var delegate: GiphySearchViewControllerDelegate?
 

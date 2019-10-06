@@ -77,18 +77,18 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
 
     // MARK: - View lifecycle
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         updateLayout()
     }
 
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             self.updateLayout(for: size)
         })
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateLayout()
     }
@@ -102,7 +102,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
      * is regular. You can override this method for testing purposes.
      */
 
-    open var isRegularLayout: Bool {
+    var isRegularLayout: Bool {
         return view.traitCollection.horizontalSizeClass == .regular
     }
 
@@ -115,7 +115,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
      * size of the view changes.
      */
 
-    open func updateLayout(for size: CGSize? = nil) {
+    func updateLayout(for size: CGSize? = nil) {
         layout.numberOfColumns = numberOfColumns(inContainer: size?.width ?? view.bounds.width)
         collectionView?.collectionViewLayout.invalidateLayout()
         navigationItem.titleView?.setNeedsLayout()
@@ -130,7 +130,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
 
     // MARK: - Sizing
 
-    open func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
         fatalError("Subclasses of 'VerticalColumnCollectionViewController' must implement this method.")
     }
 
