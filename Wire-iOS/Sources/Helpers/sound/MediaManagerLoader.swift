@@ -71,7 +71,7 @@ extension MediaManagerState {
         }
     }
     
-    internal func send(message: LoadingMessage) {
+    func send(message: LoadingMessage) {
         self.state.send(message: message)
     }
     

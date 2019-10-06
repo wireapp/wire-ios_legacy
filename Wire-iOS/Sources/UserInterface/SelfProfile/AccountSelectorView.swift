@@ -25,7 +25,7 @@ protocol AccountSelectorViewDelegate: class {
     
 }
 
-internal class LineView: UIView {
+class LineView: UIView {
     public let views: [UIView]
     init(views: [UIView]) {
         self.views = views

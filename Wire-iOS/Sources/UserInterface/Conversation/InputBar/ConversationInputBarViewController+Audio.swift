@@ -123,7 +123,7 @@ extension ConversationInputBarViewController {
         }
     }
     
-    internal func createAudioViewController(audioRecorder: AudioRecorderType? = nil) {
+    func createAudioViewController(audioRecorder: AudioRecorderType? = nil) {
         removeAudioViewController()
         
         let audioRecordViewController = AudioRecordViewController(audioRecorder: audioRecorder)
@@ -154,7 +154,7 @@ extension ConversationInputBarViewController {
         self.audioRecordViewContainer = audioRecordViewContainer
     }
     
-    internal func removeAudioViewController() {
+    func removeAudioViewController() {
         audioRecordViewController?.removeFromParent()
         audioRecordViewContainer?.removeFromSuperview()
         
@@ -168,7 +168,7 @@ extension ConversationInputBarViewController {
         }
     }
     
-    internal func showAudioRecordViewController(animated: Bool = true) {
+    func showAudioRecordViewController(animated: Bool = true) {
         guard let audioRecordViewContainer = self.audioRecordViewContainer,
               let audioRecordViewController = self.audioRecordViewController else {
             return
@@ -189,7 +189,7 @@ extension ConversationInputBarViewController {
         }
     }
     
-    internal func hideAudioRecordViewController() {
+    func hideAudioRecordViewController() {
         if self.mode == .audioRecord {
             hideInKeyboardAudioRecordViewController()
         }

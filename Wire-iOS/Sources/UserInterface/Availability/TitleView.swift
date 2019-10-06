@@ -23,9 +23,9 @@ import Cartography
 
 @objcMembers public class TitleView: UIView {
     
-    internal var titleColor, titleColorSelected: UIColor?
-    internal var titleFont: UIFont?
-    internal let titleButton = UIButton()
+    var titleColor, titleColorSelected: UIColor?
+    var titleFont: UIFont?
+    let titleButton = UIButton()
     public var tapHandler: ((UIButton) -> Void)? = nil
     
     public init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
@@ -61,11 +61,11 @@ import Cartography
     /// - parameter conversation: The conversation for which the view should be configured
     /// - parameter interactive: Whether the view should react to user interaction events
     /// - return: Whether the view contains any `NSTextAttachments`
-    internal func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
+    func configure(icon: NSTextAttachment?, title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
         configure(icons: icon == nil ? [] : [icon!], title: title, interactive: interactive, showInteractiveIcon: showInteractiveIcon)
     }
     
-    internal func configure(icons: [NSTextAttachment], title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
+    func configure(icons: [NSTextAttachment], title: String, interactive: Bool, showInteractiveIcon: Bool = true) {
     
         guard let font = titleFont, let color = titleColor, let selectedColor = titleColorSelected else { return }
         let shouldShowInteractiveIcon = interactive && showInteractiveIcon

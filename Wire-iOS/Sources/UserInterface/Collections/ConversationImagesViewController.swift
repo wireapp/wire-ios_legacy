@@ -35,7 +35,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }()
     fileprivate let likeButton = IconButton(style: .default)
     
-    internal let inverse: Bool
+    let inverse: Bool
 
     public var currentActionController: ConversationMessageActionController?
 
@@ -49,7 +49,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
     
-    internal var currentMessage: ZMConversationMessage {
+    var currentMessage: ZMConversationMessage {
         didSet {
             self.updateButtonsForMessage()
             self.createNavigationTitle()
@@ -348,7 +348,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         perform(action: .forward)
     }
 
-    @objc public func deleteCurrent(_ sender: AnyObject!) {
+    @objc func deleteCurrent(_ sender: AnyObject!) {
         perform(action: .delete)
     }
     

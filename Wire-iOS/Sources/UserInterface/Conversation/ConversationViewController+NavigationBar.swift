@@ -200,7 +200,7 @@ public extension ConversationViewController {
         })
     }
 
-    @objc internal func dismissCollectionIfNecessary() {
+    @objc func dismissCollectionIfNecessary() {
         if let collectionController = self.collectionController {
             collectionController.dismiss(animated: false)
         }

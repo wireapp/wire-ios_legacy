@@ -82,7 +82,7 @@ protocol SettingsProperty {
 }
 
 extension SettingsProperty {
-    internal func rawValue() -> Any? {
+    func rawValue() -> Any? {
         return self.value().value()
     }
 }
@@ -125,13 +125,13 @@ func << (value: inout Any?, property: SettingsProperty) {
 class SettingsUserDefaultsProperty : SettingsProperty {
     var enabled: Bool = true
 
-    internal func set(newValue: SettingsPropertyValue) throws {
+    func set(newValue: SettingsPropertyValue) throws {
         self.userDefaults.set(newValue.value(), forKey: self.userDefaultsKey)
         NotificationCenter.default.post(name: Notification.Name(rawValue: self.propertyName.changeNotificationName), object: self)
         self.trackNewValue()
     }
     
-    internal func value() -> SettingsPropertyValue {
+    func value() -> SettingsPropertyValue {
         switch self.userDefaults.object(forKey: self.userDefaultsKey) as AnyObject? {
         case let numberValue as NSNumber:
             return SettingsPropertyValue.propertyValue(numberValue.intValue as AnyObject?)
@@ -142,7 +142,7 @@ class SettingsUserDefaultsProperty : SettingsProperty {
         }
     }
 
-    internal func trackNewValue() {
+    func trackNewValue() {
         Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     
@@ -176,7 +176,7 @@ open class SettingsBlockProperty : SettingsProperty {
         self.trackNewValue()
     }
     
-    internal func trackNewValue() {
+    func trackNewValue() {
         Analytics.shared().tagSettingsChanged(for: self.propertyName, to: self.value())
     }
     

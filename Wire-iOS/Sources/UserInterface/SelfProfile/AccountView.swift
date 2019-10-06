@@ -247,7 +247,7 @@ extension BaseAccountView: ZMUserObserver {
 }
 
 final class PersonalAccountView: AccountView {
-    internal let userImageView: AvatarImageView = {
+    let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
 

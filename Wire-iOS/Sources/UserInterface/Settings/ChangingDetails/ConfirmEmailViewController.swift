@@ -83,7 +83,7 @@ extension UITableView {
         observer = nil
     }
 
-    internal func setupViews() {
+    func setupViews() {
         SettingsButtonCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.verify.title".localized(uppercased: true)

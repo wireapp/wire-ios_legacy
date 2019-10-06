@@ -24,7 +24,7 @@ import WireSyncEngine
 
 final public class BackgroundViewController: UIViewController {
     
-    internal var dispatchGroup: DispatchGroup = DispatchGroup()
+    var dispatchGroup: DispatchGroup = DispatchGroup()
     
     fileprivate let imageView = UIImageView()
     private let cropView = UIView()
@@ -166,7 +166,7 @@ final public class BackgroundViewController: UIViewController {
         self.darkMode = (ColorScheme.default.variant == .dark)
     }
     
-    internal func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
+    func updateFor(imageMediumDataChanged: Bool, accentColorValueChanged: Bool) {
         guard imageMediumDataChanged || accentColorValueChanged else {
             return
         }
