@@ -62,7 +62,7 @@ extension CollectionCell: SelectableView {
 final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
-//    var alert: UIAlertController!
+    var alert: UIAlertController!
 
     init(sourceViewController: UIViewController) {
         self.sourceViewController = sourceViewController
@@ -80,7 +80,7 @@ final class DeletionDialogPresenter: NSObject {
      */
     func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ((Bool) -> Void)?) {
         guard !message.hasBeenDeleted else { return }
-        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
+        alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
             
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {

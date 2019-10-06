@@ -56,7 +56,7 @@ extension UIPopoverPresentationController {
 
         if let viewController = popoverPresenter as? UIViewController {
             sourceRect = pointToView.popoverSourceRect(from: viewController)
-        } ///TODO: if source rect is too big, make it smaller?
+        }
 
         popoverPresenter.presentedPopover = self
         popoverPresenter.popoverPointToView = pointToView
