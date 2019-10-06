@@ -62,7 +62,45 @@ extension CollectionCell: SelectableView {
 final class DeletionDialogPresenter: NSObject {
 
     private weak var sourceViewController: UIViewController?
-    var alert: UIAlertController!
+    
+    func deleteAlert(message: ZMConversationMessage,
+                     sourceView: UIView?,
+                     completion: ResultHandler? = nil) -> UIAlertController {
+        let alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
+            
+            // Tracking needs to be called before performing the action, since the content of the message is cleared
+            if case .delete(let type) = action {
+                
+                ZMUserSession.shared()?.enqueueChanges({
+                    switch type {
+                    case .local:
+                        ZMMessage.hideMessage(message)
+                    case .everywhere:
+                        ZMMessage.deleteForEveryone(message)
+                    }
+                }, completionHandler: {
+                    completion?(true)
+                })
+            } else {
+                completion?(false)
+            }
+            
+            alert.dismiss(animated: true, completion: nil)
+        }
+        
+        if let presentationController = alert.popoverPresentationController,
+            let source = sourceView {
+            if let selectableView = source as? SelectableView,
+                selectableView.selectionView != nil {
+                presentationController.sourceView = selectableView.selectionView
+                presentationController.sourceRect = selectableView.selectionRect
+            } else {
+                alert.configPopover(pointToView: source, popoverPresenter: sourceViewController as? PopoverPresenterViewController)
+            }
+        }
+        
+        return alert
+    }
 
     init(sourceViewController: UIViewController) {
         self.sourceViewController = sourceViewController
@@ -78,41 +116,12 @@ final class DeletionDialogPresenter: NSObject {
      - parameter source: The source view used for a potential popover presentation of the dialog.
      - parameter completion: A completion closure which will be invoked with `true` if a deletion occured and `false` otherwise.
      */
-    func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ((Bool) -> Void)?) {
+    func presentDeletionAlertController(forMessage message: ZMConversationMessage, source: UIView?, completion: ResultHandler?) {
         guard !message.hasBeenDeleted else { return }
-        alert = UIAlertController.forMessageDeletion(with: message.deletionConfiguration) { (action, alert) in
-            
-            // Tracking needs to be called before performing the action, since the content of the message is cleared
-            if case .delete(let type) = action {
 
-                ZMUserSession.shared()?.enqueueChanges({ 
-                    switch type {
-                    case .local:
-                        ZMMessage.hideMessage(message)
-                    case .everywhere:
-                        ZMMessage.deleteForEveryone(message)
-                    }
-                }, completionHandler: {
-                    completion?(true)
-                })
-            } else {
-                completion?(false)
-            }
-
-            alert.dismiss(animated: true, completion: nil)
-        }
-
-        if let presentationController = alert.popoverPresentationController,
-            let source = source {
-            if let selectableView = source as? SelectableView,
-                selectableView.selectionView != nil {
-                presentationController.sourceView = selectableView.selectionView
-                presentationController.sourceRect = selectableView.selectionRect
-            } else {
-                alert.configPopover(pointToView: source, popoverPresenter: sourceViewController as? PopoverPresenterViewController)
-            }
-        }
-
+        let alert = deleteAlert(message: message,
+                                sourceView: source,
+                                completion: completion)
         sourceViewController?.present(alert, animated: true)
     }
 }
