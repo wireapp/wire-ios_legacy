@@ -142,7 +142,7 @@ final class WaveformProgressView: UIView {
         }
     }
     
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         maskShape.fillColor = UIColor.white.cgColor
@@ -163,7 +163,7 @@ final class WaveformProgressView: UIView {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
