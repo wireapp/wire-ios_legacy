@@ -52,7 +52,7 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
 
 extension URL {
 
-    public func openAsLocation() -> Bool {
+    func openAsLocation() -> Bool {
         log.debug("Trying to open \"\(self)\" as location")
         let saved = MapsOpeningOption.storedPreference()
         log.debug("Saved option to open a location: \(saved.displayString)")

@@ -25,7 +25,7 @@ protocol CameraCellDelegate: class {
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-class CameraCell: UICollectionViewCell {
+final class CameraCell: UICollectionViewCell {
     let cameraController: CameraController?
     
     let expandButton = IconButton()
@@ -111,13 +111,13 @@ class CameraCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func didMoveToWindow() {
+    override func didMoveToWindow() {
         super.didMoveToWindow()
         if self.window == .none { cameraController?.stopRunning() }
         else { cameraController?.startRunning() }
     }
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         cameraController?.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()

@@ -37,7 +37,7 @@ protocol ColorPickerControllerDelegate {
     static fileprivate let rowHeight: CGFloat = 44
     
     public let colors: [UIColor]
-    open var currentColor: UIColor?
+    var currentColor: UIColor?
     var delegate: ColorPickerControllerDelegate?
     
     public init(colors: [UIColor]) {
@@ -51,13 +51,13 @@ protocol ColorPickerControllerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override open var title: String? {
+    override var title: String? {
         didSet {
             self.titleLabel.text = self.title
         }
     }
     
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(self.contentView)
@@ -114,13 +114,13 @@ protocol ColorPickerControllerDelegate {
         self.tableView.separatorStyle = .none
     }
     
-    override open var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         get {
             return false
         }
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             return .lightContent
         }
@@ -169,7 +169,7 @@ protocol ColorPickerControllerDelegate {
         
     }
     
-    @objc open func didPressDismiss(_ sender: AnyObject?) {
+    @objc func didPressDismiss(_ sender: AnyObject?) {
         self.delegate?.colorPickerWantsToDismiss(self)
     }
 }
