@@ -377,7 +377,7 @@ extension ConversationImagesViewController: MessageActionResponder {
         default:
             perform(action: action,
                     for: message,
-                    sender: view)///TODO: delete button?
+                    sender: view)
         }
     }
 }
