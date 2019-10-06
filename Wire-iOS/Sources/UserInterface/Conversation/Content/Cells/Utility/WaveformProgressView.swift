@@ -82,7 +82,7 @@ import Cartography
     }
 }
 
-@objcMembers open class WaveformProgressView: UIView {
+@objcMembers class WaveformProgressView: UIView {
     
     fileprivate let backgroundWaveform = WaveformBarsView()
     fileprivate let foregroundWaveform = WaveformBarsView()

@@ -634,7 +634,7 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - Message Change
 
 extension CollectionsViewController: CollectionCellMessageChangeDelegate {
-    public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
+    func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
 
         // Open the file when it is downloaded
         guard let message = self.selectedMessage,

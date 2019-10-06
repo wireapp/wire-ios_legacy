@@ -49,7 +49,7 @@ public struct AdaptiveColumnCount {
  * You must implement the `collectionView(_:, sizeOfItemAt:)` method in your subclasses.
  */
 
-open class VerticalColumnCollectionViewController: UICollectionViewController, VerticalColumnCollectionViewLayoutDelegate {
+class VerticalColumnCollectionViewController: UICollectionViewController, VerticalColumnCollectionViewLayoutDelegate {
 
     fileprivate let layout: VerticalColumnCollectionViewLayout
     fileprivate let columnCount: AdaptiveColumnCount

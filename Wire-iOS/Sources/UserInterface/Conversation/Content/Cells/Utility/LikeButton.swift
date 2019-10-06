@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers open class LikeButton: IconButton {
+@objcMembers class LikeButton: IconButton {
     static var normalColor: UIColor {
         return UIColor.from(scheme: .textDimmed)
     }

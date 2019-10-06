@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objcMembers open class ConversationRootViewController: UIViewController {
+@objcMembers class ConversationRootViewController: UIViewController {
 
     let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()

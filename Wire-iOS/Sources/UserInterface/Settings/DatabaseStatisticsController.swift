@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 import WireDataModel
 
-@objcMembers open class DatabaseStatisticsController: UIViewController {
+@objcMembers class DatabaseStatisticsController: UIViewController {
 
     let stackView = UIStackView()
     let spinner = UIActivityIndicatorView()

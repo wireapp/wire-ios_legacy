@@ -32,7 +32,7 @@ import Contacts
 }
 
 /// Allows access to address book for search
-@objcMembers open class AddressBookHelper : NSObject, AddressBookHelperProtocol {
+@objcMembers class AddressBookHelper : NSObject, AddressBookHelperProtocol {
     
     /// Time to wait between searches
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h

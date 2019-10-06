@@ -22,7 +22,7 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-@objc open class UserImageView: AvatarImageView, ZMUserObserver {
+@objc class UserImageView: AvatarImageView, ZMUserObserver {
 
     /**
      * The different sizes for the avatar image.

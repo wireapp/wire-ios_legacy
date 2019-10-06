@@ -162,7 +162,7 @@ typealias GetAction = (SettingsBlockProperty) -> SettingsPropertyValue
 typealias SetAction = (SettingsBlockProperty, SettingsPropertyValue) throws -> ()
 
 /// Genetic block property
-open class SettingsBlockProperty : SettingsProperty {
+class SettingsBlockProperty : SettingsProperty {
     var enabled: Bool = true
 
     let propertyName : SettingsPropertyName

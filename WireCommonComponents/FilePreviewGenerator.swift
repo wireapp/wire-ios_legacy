@@ -68,7 +68,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     func generatePreview(_ fileURL: URL, UTI: String, completion: @escaping (UIImage?) -> ())
 }
 
-@objcMembers open class SharedPreviewGenerator: NSObject {
+@objcMembers class SharedPreviewGenerator: NSObject {
     @objc static var generator: AggregateFilePreviewGenerator = {
         let resultQueue = OperationQueue.main
         let thumbnailSizeDefault = CGSize(width: 120, height: 120)
@@ -84,7 +84,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     }()
 }
 
-@objcMembers open class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
+@objcMembers class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
     @objc let subGenerators: [FilePreviewGenerator]
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
@@ -115,7 +115,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
+@objcMembers class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
@@ -158,7 +158,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
+@objcMembers class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
    
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
@@ -227,7 +227,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
+@objcMembers class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue

@@ -19,11 +19,11 @@
 import UIKit
 import Cartography
 
-open class LayerHostView<LayerType: CALayer>: UIView {
+class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {
         return self.layer as! LayerType
     }
-    override open class var layerClass : AnyClass {
+    override class var layerClass : AnyClass {
         return LayerType.self
     }
 }

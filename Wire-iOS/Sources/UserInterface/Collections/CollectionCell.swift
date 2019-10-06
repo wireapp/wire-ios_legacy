@@ -27,7 +27,7 @@ protocol CollectionCellMessageChangeDelegate: class {
     func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
 }
 
-open class CollectionCell: UICollectionViewCell {
+class CollectionCell: UICollectionViewCell {
 
     var actionController: ConversationMessageActionController?
     var messageObserverToken: NSObjectProtocol? = .none

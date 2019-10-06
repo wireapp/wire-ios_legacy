@@ -26,7 +26,7 @@ protocol ColorPickerControllerDelegate {
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-@objcMembers open class ColorPickerController: UIViewController {
+@objcMembers class ColorPickerController: UIViewController {
     public let overlayView = UIView()
     public let contentView = UIView()
     public let tableView = UITableView()

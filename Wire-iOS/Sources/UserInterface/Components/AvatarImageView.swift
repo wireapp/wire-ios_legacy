@@ -22,7 +22,7 @@ import UIKit
  * A view that displays the avatar of a user, either as text initials or as an image.
  */
 
-open class AvatarImageView: UIControl {
+class AvatarImageView: UIControl {
 
     /**
      * The different, mutually-exclusive forms of avatars
