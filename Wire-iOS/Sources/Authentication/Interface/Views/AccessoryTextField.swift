@@ -28,7 +28,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-class AccessoryTextField: UITextField, TextContainer, Themeable {
+final class AccessoryTextField: UITextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)
@@ -290,7 +290,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         return textRect.inset(by: textInsets.directionAwareInsets)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
         return editingRect.inset(by: textInsets.directionAwareInsets)
     }
@@ -346,7 +346,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         return placeholder && attribute
     }
 
-    override open var placeholder: String? {
+    override var placeholder: String? {
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)
