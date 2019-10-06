@@ -20,7 +20,8 @@
  * A user image view that can display a badge on top for different connection states.
  */
 
-@objc class BadgeUserImageView: UserImageView {
+@objc
+final class BadgeUserImageView: UserImageView {
 
     /// The color of the badge.
     @objc var badgeColor: UIColor = .white {

@@ -19,7 +19,7 @@
 
 import Foundation
 
-class RotationAwareNavigationController: UINavigationController {
+final class RotationAwareNavigationController: UINavigationController {
     
     override var shouldAutorotate : Bool {
         if let topController = self.viewControllers.last {
@@ -57,7 +57,7 @@ class RotationAwareNavigationController: UINavigationController {
         }
     }
     
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
         if let topController = self.viewControllers.last {
             return topController.preferredStatusBarStyle
         }

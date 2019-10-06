@@ -88,7 +88,7 @@ class AvatarImageView: UIControl {
         set { initialsLabel.textColor = newValue }
     }
 
-    open override var contentMode: UIView.ContentMode {
+    override var contentMode: UIView.ContentMode {
         didSet {
             if contentMode != oldValue {
                 imageView.contentMode = contentMode
