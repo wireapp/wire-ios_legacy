@@ -38,7 +38,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     let textFieldValidator: TextFieldValidator
-    public weak var textFieldValidationDelegate: TextFieldValidationDelegate?
+    weak var textFieldValidationDelegate: TextFieldValidationDelegate?
 
     // MARK: - UI constants
 

@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import WireCommonComponents
 
-@objc public protocol AudioEffectsPickerDelegate: NSObjectProtocol {
+@objc protocol AudioEffectsPickerDelegate: NSObjectProtocol {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
@@ -29,7 +29,7 @@ import WireCommonComponents
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval
-    public weak var delegate: AudioEffectsPickerDelegate?
+    weak var delegate: AudioEffectsPickerDelegate?
     
     fileprivate var audioPlayerController: AudioPlayerController? {
         didSet {

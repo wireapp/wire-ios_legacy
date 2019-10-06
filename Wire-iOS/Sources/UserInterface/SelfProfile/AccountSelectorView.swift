@@ -75,7 +75,7 @@ class LineView: UIView {
 }
 
 final class AccountSelectorView: UIView {
-    public weak var delegate: AccountSelectorViewDelegate? = nil
+    weak var delegate: AccountSelectorViewDelegate? = nil
     
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!

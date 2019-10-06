@@ -22,7 +22,7 @@ import Cartography
 final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
-    weak public var delegate: TransferViewDelegate?
+    weak var delegate: TransferViewDelegate?
 
     public let progressView = CircularProgressView()
     public let topLabel = UILabel()

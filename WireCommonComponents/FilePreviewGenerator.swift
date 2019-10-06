@@ -61,7 +61,7 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     return CGRect(x: 0, y: 0, width: w, height: h);
 }
 
-@objc public protocol FilePreviewGenerator {
+@objc protocol FilePreviewGenerator {
     var callbackQueue: OperationQueue { get }
     var thumbnailSize: CGSize { get }
     func canGeneratePreviewForFile(_ fileURL: URL, UTI: String) -> Bool

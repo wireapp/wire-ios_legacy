@@ -51,7 +51,7 @@ class SimpleTextField: UITextField, Themeable {
 
     fileprivate let textFieldValidator = SimpleTextFieldValidator()
 
-    public weak var textFieldDelegate: SimpleTextFieldDelegate?
+    weak var textFieldDelegate: SimpleTextFieldDelegate?
 
     public var value: Value? {
         return text.value

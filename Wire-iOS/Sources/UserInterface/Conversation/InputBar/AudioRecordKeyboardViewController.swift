@@ -42,8 +42,8 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    public let recorder: AudioRecorderType
-    public weak var delegate: AudioRecordViewControllerDelegate?
+    let recorder: AudioRecorderType
+    weak var delegate: AudioRecordViewControllerDelegate?
     
     let recordButton = IconButton()
     let stopRecordButton = IconButton()

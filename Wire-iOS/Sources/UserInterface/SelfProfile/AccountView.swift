@@ -57,7 +57,7 @@ final class ShapeView: LayerHostView<CAShapeLayer> {
     }
 }
 
-public protocol AccountViewType {
+protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
     var onTap: ((Account?) -> ())? { get set }

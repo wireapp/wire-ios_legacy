@@ -21,14 +21,14 @@ import Foundation
 import Cartography
 import WireDataModel
 
-public protocol CollectionsViewControllerDelegate: class {
+protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
 @objcMembers final public class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
-    public weak var delegate: CollectionsViewControllerDelegate?
+    weak var delegate: CollectionsViewControllerDelegate?
     public var isShowingSearchResults: Bool {
         guard let textSearchController = self.textSearchController,
               let resultsView = textSearchController.resultsView else {

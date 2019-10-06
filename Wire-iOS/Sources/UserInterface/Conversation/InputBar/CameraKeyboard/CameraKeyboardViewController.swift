@@ -25,7 +25,7 @@ import AVFoundation
 
 private let zmLog = ZMSLog(tag: "UI")
 
-public protocol CameraKeyboardViewControllerDelegate: class {
+protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
                                       didSelectImageData: Data,
@@ -68,7 +68,7 @@ open class CameraKeyboardViewController: UIViewController {
     let cameraRollButton = IconButton()
     
     public let splitLayoutObservable: SplitLayoutObservable
-    open weak var delegate: CameraKeyboardViewControllerDelegate?
+    weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
         NotificationCenter.default.removeObserver(self)

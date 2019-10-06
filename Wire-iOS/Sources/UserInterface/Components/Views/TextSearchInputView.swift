@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import UIKit
 
-public protocol TextSearchInputViewDelegate: class {
+protocol TextSearchInputViewDelegate: class {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
@@ -34,7 +34,7 @@ public protocol TextSearchInputViewDelegate: class {
 
     private let spinner = ProgressSpinner()
     
-    public weak var delegate: TextSearchInputViewDelegate?
+    weak var delegate: TextSearchInputViewDelegate?
     public var query: String = "" {
         didSet {
             self.updateForSearchQuery()

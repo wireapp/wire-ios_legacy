@@ -19,7 +19,7 @@
 
 import UIKit
  
-@objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
+@objc protocol TextViewInteractionDelegate: NSObjectProtocol {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
@@ -27,7 +27,7 @@ import UIKit
 
 final public class LinkInteractionTextView: UITextView {
     
-    public weak var interactionDelegate: TextViewInteractionDelegate?
+    weak var interactionDelegate: TextViewInteractionDelegate?
 
     override public var selectedTextRange: UITextRange? {
         get { return nil }

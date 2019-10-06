@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc public protocol MessageActionResponder: NSObjectProtocol {
+@objc protocol MessageActionResponder: NSObjectProtocol {
     /// perform an action for the message
     ///
     /// - Parameters:

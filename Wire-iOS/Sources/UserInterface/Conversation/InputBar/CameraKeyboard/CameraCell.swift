@@ -20,7 +20,7 @@
 import Foundation
 import Cartography
 
-public protocol CameraCellDelegate: class {
+protocol CameraCellDelegate: class {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }

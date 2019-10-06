@@ -21,7 +21,7 @@ import UIKit
 import WireSyncEngine
 import Cartography
 
-public protocol ColorPickerControllerDelegate {
+protocol ColorPickerControllerDelegate {
     func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
@@ -38,7 +38,7 @@ public protocol ColorPickerControllerDelegate {
     
     public let colors: [UIColor]
     open var currentColor: UIColor?
-    open var delegate: ColorPickerControllerDelegate?
+    var delegate: ColorPickerControllerDelegate?
     
     public init(colors: [UIColor]) {
         self.colors = colors

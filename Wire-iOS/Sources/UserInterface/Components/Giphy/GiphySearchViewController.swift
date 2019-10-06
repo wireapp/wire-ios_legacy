@@ -26,7 +26,7 @@ import Ziphy
 
 @objc class GiphySearchViewController: VerticalColumnCollectionViewController {
 
-    @objc public weak var delegate: GiphySearchViewControllerDelegate?
+    @objc weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
     let searchBar: UISearchBar = UISearchBar()

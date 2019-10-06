@@ -75,8 +75,8 @@ final class ConversationTableViewDataSource: NSObject {
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil
     
-    @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
-    @objc public weak var messageActionResponder: MessageActionResponder? = nil
+    @objc weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
+    @objc weak var messageActionResponder: MessageActionResponder? = nil
     
     @objc public var searchQueries: [String] = [] {
         didSet {

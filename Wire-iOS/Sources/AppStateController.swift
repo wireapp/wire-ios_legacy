@@ -48,7 +48,7 @@ final class AppStateController : NSObject {
     private(set) var appState : AppState = .headless
     private(set) var lastAppState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
-    public weak var delegate : AppStateControllerDelegate? = nil
+    weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
