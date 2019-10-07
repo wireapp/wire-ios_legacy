@@ -21,7 +21,7 @@ import Cartography
 
 
 @objc
-protocol SearchHeaderViewControllerDelegate: class {
+public protocol SearchHeaderViewControllerDelegate : class {
     func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
 }
@@ -37,7 +37,7 @@ protocol SearchHeaderViewControllerDelegate: class {
     var allowsMultipleSelection: Bool = true
     
     @objc
-    weak var delegate : SearchHeaderViewControllerDelegate? = nil
+    public weak var delegate : SearchHeaderViewControllerDelegate? = nil
     
     public var query : String {
         return tokenField.filterText
