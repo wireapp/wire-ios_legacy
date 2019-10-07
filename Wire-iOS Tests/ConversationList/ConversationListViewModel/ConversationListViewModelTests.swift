@@ -49,6 +49,10 @@ final class ConversationListViewModelTests: XCTestCase {
     var mockConversationListViewModelDelegate: MockConversationListViewModelDelegate!
     var mockBar: MockBar!
 
+    /// constants
+    let sectionGroups: UInt = 2
+    let sectionContacts: UInt = 3
+
     override func setUp() {
         super.setUp()
         mockBar = MockBar()
@@ -89,8 +93,8 @@ final class ConversationListViewModelTests: XCTestCase {
 
         ///THEN
         XCTAssertEqual(sut.numberOfItems(inSection: 0), 0)
-        XCTAssertEqual(sut.numberOfItems(inSection: 1), 2)
-        XCTAssertEqual(sut.numberOfItems(inSection: 2), 1)
+        XCTAssertEqual(sut.numberOfItems(inSection: Int(sectionGroups)), 2)
+        XCTAssertEqual(sut.numberOfItems(inSection: Int(sectionContacts)), 1)
         XCTAssertEqual(sut.numberOfItems(inSection: 100), 0)
     }
 
@@ -136,7 +140,7 @@ final class ConversationListViewModelTests: XCTestCase {
         sut.folderEnabled = true
 
         ///THEN
-        XCTAssertEqual(sut.sectionCount, 3)
+        XCTAssertEqual(sut.sectionCount, 4)
 
         ///WHEN
         sut.folderEnabled = false
@@ -154,7 +158,7 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: 1)?.first, mockConversation)
+        XCTAssertEqual(sut.section(at: sectionGroups)?.first, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
     }
@@ -170,11 +174,9 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.item(after: 0, section: 1), IndexPath(item: 1, section: 1))
-
+        XCTAssertEqual(sut.item(after: 0, section: sectionGroups), IndexPath(item: 1, section: Int(sectionGroups)))
         XCTAssertEqual(sut.item(after: 1, section: 1), IndexPath(item: 0, section: 2))
-
-        XCTAssertEqual(sut.item(after: 0, section: 2), nil)
+        XCTAssertEqual(sut.item(after: 0, section: sectionContacts), nil)
     }
 
     func testForItemPervious() {
@@ -188,11 +190,11 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.itemPrevious(to: 0, section: 1), nil)
+        XCTAssertEqual(sut.itemPrevious(to: 0, section: sectionGroups), nil)
 
-        XCTAssertEqual(sut.itemPrevious(to: 1, section: 1), IndexPath(item: 0, section: 1))
+        XCTAssertEqual(sut.itemPrevious(to: 1, section: sectionGroups), IndexPath(item: 0, section: Int(sectionGroups)))
 
-        XCTAssertEqual(sut.itemPrevious(to: 0, section: 2), IndexPath(item: 1, section: 1))
+        XCTAssertEqual(sut.itemPrevious(to: 0, section: sectionContacts), IndexPath(item: 1, section: Int(sectionGroups)))
     }
 
     func testForSelectItem() {
@@ -270,7 +272,7 @@ final class ConversationListViewModelTests: XCTestCase {
         fillDummyConversations(mockConversation: mockConversation)
 
         /// WHEN
-        sut.setCollapsed(sectionIndex: 1, collapsed: true)
+        sut.setCollapsed(sectionIndex: 2, collapsed: true)
 
         /// THEN
         XCTAssertEqual(sut.jsonString, #"{"collapsed":["groups"],"folderEnabled":true}"#)
