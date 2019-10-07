@@ -32,6 +32,7 @@ extension ZMConversation {
         case markRead
         case markUnread
         case remove
+        case favorite(isFavorite: Bool)
     }
     
     var listActions: [Action] {
