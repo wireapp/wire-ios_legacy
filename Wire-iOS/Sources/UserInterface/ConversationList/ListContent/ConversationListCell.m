@@ -73,7 +73,6 @@
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
     self.canOpenDrawer = NO;
     self.clipsToBounds = YES;
-    self.accessibilityIdentifier = @"conversation_list_cell";
 
     self.itemView = [[ConversationListItemView alloc] init];
     
@@ -112,6 +111,8 @@
         self.typingObserverToken = [_conversation addTypingObserver:self];
         
         [self updateAppearance];
+
+        [self setupConversationObserverWithConversation: conversation];
     }
 }
     

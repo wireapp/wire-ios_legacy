@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class MockConversationList: ConversationListType {
+final class MockConversationList: ConversationListHelperType {
     static var hasArchivedConversations: Bool = false
 }
 

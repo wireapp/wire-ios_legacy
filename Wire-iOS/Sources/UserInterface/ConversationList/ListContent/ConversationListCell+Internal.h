@@ -27,4 +27,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 @property (nonatomic) AnimatedListMenuView *menuDotsView;
 @property (nonatomic) NSDate *overscrollStartDate;
 
+@property (nonatomic) id conversationObserverToken;
+
 @end

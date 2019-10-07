@@ -20,7 +20,17 @@ import Foundation
 
 extension FullscreenImageViewController {
     private func perform(action: MessageAction) {
-        delegate?.perform(action: action, for: message, view: scrollView)
+        let sourceView: UIView
+        
+        /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
+        if action == .delete,
+            let conversationImagesViewController = delegate as? ConversationImagesViewController {
+            sourceView = conversationImagesViewController.deleteButton
+        } else {
+            sourceView = scrollView
+        }
+        
+        delegate?.perform(action: action, for: message, view: sourceView)
     }
 }
 

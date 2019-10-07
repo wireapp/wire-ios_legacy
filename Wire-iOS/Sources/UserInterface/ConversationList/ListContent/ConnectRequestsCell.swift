@@ -14,9 +14,29 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
-final class ConnectRequestsCell : UICollectionViewCell {
+@objc protocol SectionListCellType {
+    var sectionName: String? { get set }
+}
+
+extension SectionListCellType {
+    var identifier: String {
+        let prefix: String
+
+        if let sectionName = sectionName {
+            prefix = "\(sectionName) - "
+        } else {
+            prefix = ""
+        }
+
+        return prefix + "conversation_list_cell"
+    }
+}
+
+final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
+    var sectionName: String?
+
     let itemView = ConversationListItemView()
 
     private var hasCreatedInitialConstraints = false
@@ -32,8 +52,7 @@ final class ConnectRequestsCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private
-    func setupConnectRequestsCell() {
+    private func setupConnectRequestsCell() {
         clipsToBounds = true
         addSubview(itemView)
         updateAppearance()
@@ -43,8 +62,17 @@ final class ConnectRequestsCell : UICollectionViewCell {
         }
 
         setNeedsUpdateConstraints()
-        accessibilityIdentifier = "conversation_list_cell"
     }
+
+    override var accessibilityIdentifier: String? {
+        get {
+            return identifier
+        }
+        set {
+            // no op
+        }
+    }
+
 
     override func updateConstraints() {
         if !hasCreatedInitialConstraints {

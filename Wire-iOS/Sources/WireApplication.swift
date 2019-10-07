@@ -18,13 +18,13 @@
 
 import UIKit
 
-@objcMembers public class WireApplication: UIApplication {
+final class WireApplication: UIApplication {
     
     var shouldRegisterUserNotificationSettings: Bool {
         return !(AutomationHelper.sharedHelper.skipFirstLoginAlerts || AutomationHelper.sharedHelper.disablePushNotificationAlert)
     }
     
-    override public func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
         DebugAlert.showSendLogsMessage(
             message: "You have performed a shake motion, please confirm sending debug logs."

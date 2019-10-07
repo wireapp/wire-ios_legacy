@@ -46,7 +46,9 @@ extension UIView {
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     // MARK: - MessageActionResponder
 
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    public func perform(action: MessageAction,
+                        for message: ZMConversationMessage!,
+                        view: UIView) {
         guard let dataSource = dataSource else { return }
         let actionView = view.targetView(for: message, dataSource: dataSource)
         let shouldDismissModal = action != .delete && action != .copy

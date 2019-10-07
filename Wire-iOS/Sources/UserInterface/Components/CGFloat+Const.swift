@@ -42,6 +42,10 @@ extension CGFloat {
 
         static let barHeight: CGFloat = 44
     }
+    
+    enum ConversationListSectionHeader {
+        static let height: CGFloat = 51
+    }
 
     enum ConversationAvatarView {
         static let iconSize: CGFloat = 32
