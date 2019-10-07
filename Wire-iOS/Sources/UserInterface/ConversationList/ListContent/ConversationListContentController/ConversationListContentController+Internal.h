@@ -28,11 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
-
-@interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
+@interface ConversationListContentController () <ConversationListViewModelDelegate>
 #pragma clang diagnostic pop
 
-@property (nonatomic, strong) ConversationListViewModel *listViewModel;
+@property (nonatomic, strong, nonnull) ConversationListViewModel *listViewModel;
 
 @property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
 @property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
@@ -44,10 +43,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationCallController *startCallController;
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
+
+- (void)ensureCurrentSelection;
+- (void)setupViews;
+- (void)listViewModelShouldBeReloaded;
+
 @end
 
 @interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
-
 @end
 
 NS_ASSUME_NONNULL_END
