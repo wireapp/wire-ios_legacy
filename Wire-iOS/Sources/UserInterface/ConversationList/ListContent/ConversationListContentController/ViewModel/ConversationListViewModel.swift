@@ -406,14 +406,18 @@ final class ConversationListViewModel: NSObject {
 
     /// Create the section structure
     private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
+        let kinds: [Section.Kind]
         if folderEnabled {
-            sections = [Section(kind: .contactRequests, userSession: userSession),
-                        Section(kind: .groups, userSession: userSession),
-                        Section(kind: .contacts, userSession: userSession)]
+            kinds = [.contactRequests,
+                     .favorites,
+                     .groups,
+                     .contacts]
         } else {
-            sections = [Section(kind: .contactRequests, userSession: userSession),
-                        Section(kind: .conversations, userSession: userSession)]
+            kinds = [.contactRequests,
+                     .conversations]
         }
+
+        sections = kinds.map{ Section(kind: $0, userSession: userSession) }
 
         if let sectionNumber = self.sectionNumber(for: replaceKind) {
             sections[sectionNumber].items = replaceItems ?? []
@@ -691,7 +695,9 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             kind = .contactRequests
         case .groups:
             kind = .groups
-        default: ///TODO: favourite and custom folder
+        case .favorites:
+            kind = .favorites
+        case .archived:
             kind = nil
         }
 

@@ -105,6 +105,8 @@ extension ZMConversation {
         }
 
         actions.append(.archive(isArchived: isArchived))
+        actions.append(.favorite(isFavorite: isFavorite))
+
         return actions
     }
     
