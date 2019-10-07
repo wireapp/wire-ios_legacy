@@ -461,8 +461,9 @@ final class ConversationListViewModel: NSObject {
         let newConversationList = ConversationListViewModel.newList(for: kind, userSession: userSession)
 
         /// no need to update collapsed section's cells but the section header, update the stored list
-
-        if collapsed(at: sectionNumber), newConversationList.count > 0 {
+        /// hide section header if no items
+        if (collapsed(at: sectionNumber) && newConversationList.count > 0) ||
+           newConversationList.count == 0 {
             update(kind: kind, with: newConversationList)
             delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             return true
