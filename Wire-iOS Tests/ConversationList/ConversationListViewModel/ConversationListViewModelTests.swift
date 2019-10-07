@@ -243,6 +243,7 @@ final class ConversationListViewModelTests: XCTestCase {
     }
 
     func testThatCollapseStateCanBeRestoredAfterFolderDisabled() {
+        ///GIVEN
         sut.folderEnabled = true
 
         let mockConversation = ZMConversation()
@@ -254,18 +255,12 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
         sut.setCollapsed(sectionIndex: 1, collapsed: true)
 
-        ///THEN
         XCTAssert(sut.collapsed(at: 1))
-
-        ///WHEN
 
         /// all folder are not collapsed when folder disabled
         sut.folderEnabled = false
 
-        ///THEN
         XCTAssertFalse(sut.collapsed(at: 1))
-
-        ///WHEN
         sut.folderEnabled = true
 
         ///THEN
