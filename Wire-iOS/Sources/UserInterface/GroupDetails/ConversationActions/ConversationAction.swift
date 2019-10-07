@@ -147,6 +147,7 @@ extension ZMConversation.Action {
         case .archive(isArchived: let archived): return "meta.menu.\(archived ? "unarchive" : "archive")"
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
+        case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
         }
     }
     
