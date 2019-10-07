@@ -228,19 +228,14 @@ final class ConversationListViewModelTests: XCTestCase {
 
     // MARK: - state
     func testThatSectionIsExpendedAfterSelected() {
+        ///GIVEN
         sut.folderEnabled = true
-
         let mockConversation = ZMConversation()
-
         fillDummyConversations(mockConversation: mockConversation)
-
-        ///WHEN
         sut.setCollapsed(sectionIndex: Int(sectionGroups), collapsed: true)///todo
 
-        ///THEN
-        XCTAssert(sut.collapsed(at: Int(sectionGroups)))
-
         ///WHEN
+        XCTAssert(sut.collapsed(at: Int(sectionGroups)))
         XCTAssert(sut.select(itemToSelect: mockConversation))
 
         ///THEN
