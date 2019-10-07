@@ -697,6 +697,9 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             kind = .groups
         case .favorites:
             kind = .favorites
+        case .folder(_):
+            ///TODO: Bill - folder
+            kind = nil
         case .archived:
             kind = nil
         }
