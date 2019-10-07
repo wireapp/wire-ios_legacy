@@ -16,18 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import UIKit
 @testable import Wire
 
-final class FolderCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
-    var sut: FolderCreationController!
+class FolderPickerControllerSnapshotTests: CoreDataSnapshotTestCase {
+
+    var sut: FolderPickerViewController!
     
     override func setUp() {
         super.setUp()
         
         let convo = createTeamGroupConversation()
-        sut = FolderCreationController(conversation: convo)
+        sut = FolderPickerViewController(conversation: convo,
+                                         folders: ["Folder A", "Folder B", "Folder C"])
         accentColor = .violet
     }
     
@@ -37,11 +38,9 @@ final class FolderCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
     
-    func testForEditingTextField() {
+    func testForDisplayingView() {
         
         sut.loadViewIfNeeded()
-        sut.beginAppearanceTransition(false, animated: false)
-        sut.endAppearanceTransition()
         
         sut.viewDidAppear(false)
         

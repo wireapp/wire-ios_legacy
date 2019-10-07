@@ -28,7 +28,7 @@ protocol FolderCreationValuesConfigurable: class {
     
     func folderController(
         _ controller: FolderCreationController,
-        didSelectName name: String)
+        didCreateFolder name: String)
     
 }
 
@@ -40,19 +40,19 @@ final class FolderCreationController: UIViewController {
     
     private lazy var nameSection: FolderCreationNameSectionController = {
         return FolderCreationNameSectionController(delegate: self,
-                                                   conversationName: conversationName)
+                                                   conversationName: conversation.displayName)
     }()
     
     private var folderName: String = ""
-    private var conversationName: String
+    private var conversation: ZMConversation
     
     fileprivate var navBarBackgroundView = UIView()
     
     @objc
     weak var delegate: FolderCreationControllerDelegate?
     
-    public init(conversationName: String) {
-        self.conversationName = conversationName
+    public init(conversation: ZMConversation) {
+        self.conversation = conversation
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -147,6 +147,9 @@ final class FolderCreationController: UIViewController {
             folderName = trimmed
             
             /// TODO: logic for creating folder and dismiss it
+            
+            self.delegate?.folderController(self, didCreateFolder: folderName)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -161,7 +164,7 @@ final class FolderCreationController: UIViewController {
 extension FolderCreationController: SimpleTextFieldDelegate {
     
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value) {
-        //errorSection.clearError()
+
         switch value {
         case .error(_): navigationItem.rightBarButtonItem?.isEnabled = false
         case .valid(let text): navigationItem.rightBarButtonItem?.isEnabled = !text.isEmpty
