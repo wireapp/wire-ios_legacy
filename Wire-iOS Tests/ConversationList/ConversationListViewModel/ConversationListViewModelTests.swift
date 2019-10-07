@@ -69,7 +69,7 @@ final class ConversationListViewModelTests: XCTestCase {
 
     // folders with 2 group conversations and 1 contact. First group conversation is mock conversation
     func fillDummyConversations(mockConversation: ZMConversation) {
-        let info = ConversationDirectoryChangeInfo(reloaded: false, updatedLists: [.groups, .contacts])
+        let info = ConversationDirectoryChangeInfo(reloaded: false, updatedLists: [.groups, .contacts], updatedFolders: false)
 
         mockUserSession.mockGroupConversations = [mockConversation, ZMConversation()]
         mockUserSession.mockContactsConversations = [ZMConversation()]
