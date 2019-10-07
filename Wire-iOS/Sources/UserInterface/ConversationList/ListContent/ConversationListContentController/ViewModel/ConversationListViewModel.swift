@@ -82,10 +82,19 @@ final class ConversationListViewModel: NSObject {
     @objc
     static let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
-    /// ZMConversaton or ConversationListConnectRequestsItem
-    ///TODO: protocol
+    /// current selected ZMConversaton or ConversationListConnectRequestsItem object
+    ///TODO: create protocol of these 2 classes
     @objc
-    private(set) var selectedItem: AnyHashable?
+    private(set) var selectedItem: AnyHashable? {
+        didSet {
+            /// expend the section if selcted item is update
+            guard selectedItem != oldValue,
+                  let indexPath = self.indexPath(for: selectedItem),
+                  collapsed(at: indexPath.section) else { return }
+
+            setCollapsed(sectionIndex: indexPath.section, collapsed: false, batchUpdate: false)
+        }
+    }
 
     @objc
     weak var delegate: ConversationListViewModelDelegate?
