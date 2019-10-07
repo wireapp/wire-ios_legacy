@@ -48,12 +48,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
+
 @interface StartUIViewController () <SearchHeaderViewControllerDelegate>
-#pragma clang diagnostic pop
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) EmptySearchResultsView *emptyResultView;
 
 @end
+
+#pragma clang diagnostic pop
 
 NS_ASSUME_NONNULL_END

@@ -24,9 +24,12 @@
 #pragma clang diagnostic push
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
+
 @interface ProfilePresenter () <ViewControllerDismisser>
 @end
+
 #pragma clang diagnostic pop
+
 
 @interface TransitionDelegate : NSObject <UIViewControllerTransitioningDelegate>
 
