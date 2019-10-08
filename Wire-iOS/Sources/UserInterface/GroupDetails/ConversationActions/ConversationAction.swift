@@ -45,7 +45,7 @@ extension ZMConversation {
     }
 }
 
-extension ConversationInterface { ///TODO: interface
+extension ConversationInterface {
 
     var listActions: [ZMConversation.Action] {
         return actions.filter({ $0 != .deleteGroup })
@@ -155,7 +155,7 @@ extension ZMConversation.Action {
     }
     
     fileprivate var title: String {
-        return localizationKey.localized
+        return localizationKey
     }
     
     private var localizationKey: String {
@@ -172,8 +172,8 @@ extension ZMConversation.Action {
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
         case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
-        case .removeFromFolder:
-            return "profile.remove_from_folder_button_title" ///TODO: folder name
+        case .removeFromFolder(let label):
+            return "profile.remove_from_folder_button_title".localized(args: label)
         case .moveToFolder:
             return "profile.move_to_folder_button_title"
         }

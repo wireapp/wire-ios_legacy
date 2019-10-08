@@ -33,8 +33,6 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         mockViewController = MockConversationListContainer(viewModel: sut)
         
         sut.viewController = mockViewController
-
-//        recordMode = true
     }
     
     override func tearDown() {
@@ -70,24 +68,24 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
 }
 
 final class ConversationActionControllerSnapshotTests: ZMSnapshotTestCase {
-    var sut: ConversationListViewController.ViewModel!
+    var viewModel: ConversationListViewController.ViewModel!
     fileprivate var mockViewController: MockConversationListContainer!
     
     override func setUp() {
         super.setUp()
         
         let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        viewModel = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
         
-        mockViewController = MockConversationListContainer(viewModel: sut)
+        mockViewController = MockConversationListContainer(viewModel: viewModel)
         
-        sut.viewController = mockViewController
+        viewModel.viewController = mockViewController
         
         recordMode = true
     }
     
     override func tearDown() {
-        sut = nil
+        viewModel = nil
         mockViewController = nil
         
         super.tearDown()
@@ -97,8 +95,11 @@ final class ConversationActionControllerSnapshotTests: ZMSnapshotTestCase {
     func testForActionMenu_removeFolder() {
         let mockConversation = MockConversation()
         mockConversation.folderName = "Test Folder"
-        sut.showActionMenu(for: mockConversation, from: mockViewController.view)
-        verifyAlertController((sut?.actionsController?.alertController)!)
+        viewModel.showActionMenu(for: mockConversation, from: mockViewController.view)
+
+        let sut = (viewModel?.actionsController)!
+
+        verifyAlertController(sut.alertController!)
     }
 }
 
