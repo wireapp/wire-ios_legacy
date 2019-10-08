@@ -24,9 +24,11 @@ import Foundation
 final class ConversationListConnectRequestsItem : NSObject {}
 
 final class ConversationListViewModel: NSObject {
+    
+    typealias SectionIdentifier = String
 
     fileprivate struct Section {
-        enum Kind: String, CaseIterable, Codable {
+        enum Kind: Equatable {
 
             /// for incoming requests
             case contactRequests
@@ -43,9 +45,26 @@ final class ConversationListViewModel: NSObject {
             /// favorites
             case favorites
 
-            ///TODO: Bill - custom folder
-            //    case folder(folder: FolderType)
-
+            /// conversations in folders
+            case folder(label: LabelType)
+            
+            var identifier: SectionIdentifier {
+                switch self {
+                case .contactRequests:
+                    return "contactRequests"
+                case .conversations:
+                    return "conversations"
+                case .contacts:
+                    return "contacts"
+                case .groups:
+                    return "groups"
+                case .favorites:
+                    return "favorites"
+                case .folder(label: let label):
+                    return label.remoteIdentifier?.transportString() ?? "folder"
+                }
+            }
+            
             var title: String? {
                 switch self {
                 case .conversations:
@@ -58,6 +77,27 @@ final class ConversationListViewModel: NSObject {
                     return "list.section.groups".localized
                 case .favorites:
                     return "list.section.favorites".localized
+                case .folder(label: let label):
+                    return label.name
+                }
+            }
+            
+            static func == (lhs: ConversationListViewModel.Section.Kind, rhs: ConversationListViewModel.Section.Kind) -> Bool {
+                switch (lhs, rhs) {
+                case (.conversations, .conversations):
+                    fallthrough
+                case (.contactRequests, .contactRequests):
+                    fallthrough
+                case (.contacts, .contacts):
+                    fallthrough
+                case (.groups, .groups):
+                    fallthrough
+                case (.favorites, .favorites):
+                    return true
+                case (.folder(let lhsLabel), .folder(let rhsLabel)):
+                    return lhsLabel === rhsLabel
+                default:
+                    return false
                 }
             }
         }
@@ -171,7 +211,6 @@ final class ConversationListViewModel: NSObject {
         subscribeToTeamsUpdates()
 
         updateAllSections()
-
         restoreState()
     }
 
@@ -208,13 +247,12 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].kind
     }
 
-
-    /// get section's name in raw value
+    /// Get section's title
     ///
     /// - Parameter sectionIndex: section index of the collection view
-    /// - Returns: raw value of the section's type
+    /// - Returns: localizated title
     func sectionName(of sectionIndex: Int) -> String? {
-        return kind(of: sectionIndex)?.rawValue
+        return kind(of: sectionIndex)?.title
     }
 
     @objc
@@ -279,6 +317,8 @@ final class ConversationListViewModel: NSObject {
             conversationListType = .groups
         case .favorites:
             conversationListType = .favorites
+        case .folder(label: let label):
+            conversationListType = .folder(label)
         }
 
         return userSession.conversations(by: conversationListType)
@@ -384,13 +424,9 @@ final class ConversationListViewModel: NSObject {
             return lastItemInSectionPrevious(to: previousSectionIndex)
         }
     }
-
+    
     private func updateAllSections() {
-        for section in Section.Kind.allCases {
-            let items = ConversationListViewModel.newList(for: section, userSession: userSession)
-
-            update(kind: section, with: items)
-        }
+        createSections()
     }
 
     /// This updates a specific section in the model, by copying the contents locally.
@@ -408,31 +444,33 @@ final class ConversationListViewModel: NSObject {
             sections[sectionNum].items = items ?? []
         } else {
             // Re-create the sections
-            createSections(replaceKind: kind, withReplaceItems: items)
+            createSections()
+            
+            if let sectionNum = sectionNumber(for: kind) {
+                sections[sectionNum].items = items ?? []
+            }
         }
     }
-
-
+    
     /// Create the section structure
-    private func createSections(replaceKind: Section.Kind, withReplaceItems replaceItems: [AnyHashable]?) {
-        let kinds: [Section.Kind]
+    private func createSections() {
+        var kinds: [Section.Kind]
         if folderEnabled {
             kinds = [.contactRequests,
                      .favorites,
                      .groups,
                      .contacts]
+            
+            let folders: [Section.Kind] = ZMUserSession.shared()!.conversationDirectory.allFolders.map({ .folder(label: $0) })
+            kinds.append(contentsOf: folders)
         } else {
             kinds = [.contactRequests,
                      .conversations]
         }
-
+        
         sections = kinds.map{ Section(kind: $0, userSession: userSession) }
-
-        if let sectionNumber = self.sectionNumber(for: replaceKind) {
-            sections[sectionNumber].items = replaceItems ?? []
-        }
     }
-
+    
     private func sectionItems(for kind: Section.Kind) -> [AnyHashable]? {
         for section in sections {
             if section.kind == kind {
@@ -465,7 +503,10 @@ final class ConversationListViewModel: NSObject {
     
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
-        guard let sectionNumber = self.sectionNumber(for: kind) else { return false }
+        guard let sectionNumber = self.sectionNumber(for: kind) else {
+            reload()
+            return false
+        }
 
         let newConversationList = ConversationListViewModel.newList(for: kind, userSession: userSession)
 
@@ -559,7 +600,7 @@ final class ConversationListViewModel: NSObject {
     func collapsed(at sectionIndex: Int) -> Bool {
         guard let kind = kind(of: sectionIndex) else { return false }
 
-        return state.collapsed.contains(kind)
+        return state.collapsed.contains(kind.identifier)
     }
 
     func setCollapsed(sectionIndex: Int,
@@ -569,9 +610,9 @@ final class ConversationListViewModel: NSObject {
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
 
         if collapsed {
-            state.collapsed.insert(kind)
+            state.collapsed.insert(kind.identifier)
         } else {
-            state.collapsed.remove(kind)
+            state.collapsed.remove(kind.identifier)
         }
 
         if batchUpdate {
@@ -593,7 +634,7 @@ final class ConversationListViewModel: NSObject {
     // MARK: - state presistent
 
     private struct State: Codable, Equatable {
-        var collapsed: Set<Section.Kind>
+        var collapsed: Set<SectionIdentifier>
         var folderEnabled: Bool
 
         init() {
@@ -635,7 +676,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func restoreCollapse() {
-        for (index, _) in sections.enumerated() {            
+        for (index, _) in sections.enumerated() {
             if let kind = self.kind(of: index),
                let sectionNum = sectionNumber(for: kind) {
                 setCollapsed(sectionIndex: sectionNum, collapsed: collapsed(at :index), batchUpdate: false)
@@ -707,13 +748,12 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             kind = .groups
         case .favorites:
             kind = .favorites
-        case .folder(_):
-            ///TODO: Bill - folder
-            kind = nil
+        case .folder(let label):
+            kind = .folder(label: label)
         case .archived:
             kind = nil
         }
-
+        
         return kind
 
     }
