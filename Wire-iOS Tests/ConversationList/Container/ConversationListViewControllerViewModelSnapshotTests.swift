@@ -62,14 +62,10 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
     }
 
     func testForActionMenu_removeFolder() {
-        teamTest {
-            let mockLabel = Label()
-            mockLabel.name = "Test Folder"
-            otherUserConversation.labels = [mockLabel]
-
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
-        }
+        let mockConversation = MockConversation()
+        mockConversation.folderName = "Test Folder"
+        sut.showActionMenu(for: mockConversation, from: mockViewController.view)
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
 
     func testForActionMenu_NoTeam() {
@@ -78,4 +74,34 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
+}
+
+fileprivate final class MockConversation: ConversationInterface {
+    var conversationType: ZMConversationType = .group
+
+    var teamRemoteIdentifier: UUID?
+
+    var connectedUser: ZMUser?
+
+    var displayName: String = "Mock Conversation"
+
+    var isArchived: Bool = false
+
+    var isReadOnly: Bool = false
+
+    var isFavorite: Bool = false
+
+    var mutedMessageTypes: MutedMessageTypes = .none
+
+    var activeParticipants: Set<ZMUser> = []
+
+    var folderName: String?
+
+    var unreadMessages: [ZMConversationMessage] = []
+
+    func canMarkAsUnread() -> Bool {
+        return true
+    }
+
+
 }

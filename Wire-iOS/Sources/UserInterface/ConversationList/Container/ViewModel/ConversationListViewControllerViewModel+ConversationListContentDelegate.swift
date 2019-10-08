@@ -65,6 +65,3 @@ protocol ConversationInterface: class {
 }
 
 extension ZMConversation: ConversationInterface {}
-
-//extension ConversationInterface {
-//}
