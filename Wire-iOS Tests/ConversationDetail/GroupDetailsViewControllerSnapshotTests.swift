@@ -79,4 +79,22 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             verify(view: self.sut.view)
         }
     }
+
+    func verifyConversationActionController() {
+        sut = GroupDetailsViewController(conversation: groupConversation)
+        sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
+        verifyAlertController((sut?.actionController?.alertController)!)
+    }
+
+    func testForActionMenu() {
+        teamTest {
+            verifyConversationActionController()
+        }
+    }
+    
+    func testForActionMenu_NonTeam() {
+        nonTeamTest {
+            verifyConversationActionController()
+        }
+    }
 }
