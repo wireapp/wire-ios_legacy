@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 
 
-public class TitleView: UIView {
+class TitleView: UIView {
     
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
