@@ -155,7 +155,12 @@ extension ZMConversation.Action {
     }
     
     fileprivate var title: String {
-        return localizationKey
+        switch self {
+        case .removeFromFolder(let label):
+            return "profile.remove_from_folder_button_title".localized(args: label)
+        default:
+            return localizationKey.localized
+        }
     }
     
     private var localizationKey: String {
@@ -163,7 +168,8 @@ extension ZMConversation.Action {
         case .deleteGroup: return "meta.menu.delete"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
-        case .leave: return "meta.menu.leave"
+        case .leave:
+            return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"
         case .configureNotifications: return "meta.menu.configure_notifications"
@@ -172,8 +178,8 @@ extension ZMConversation.Action {
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
         case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
-        case .removeFromFolder(let label):
-            return "profile.remove_from_folder_button_title".localized(args: label)
+        case .removeFromFolder:
+            return "profile.remove_from_folder_button_title"
         case .moveToFolder:
             return "profile.move_to_folder_button_title"
         }
