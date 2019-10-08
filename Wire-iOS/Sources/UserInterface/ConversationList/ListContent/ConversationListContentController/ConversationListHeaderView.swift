@@ -50,6 +50,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return label
     }()
 
+    /// display title of the header
     var title: String? {
         set {
             titleLabel.text = newValue
