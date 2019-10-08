@@ -795,6 +795,10 @@
 "profile.favorite_button_title" = "Add to Favorites";
 "profile.unfavorite_button_title" = "Remove from Favorites";
 
+// move to/removal from folder button
+"profile.remove_from_folder_button_title" = "Remove from %@";
+"profile.move_to_folder_button_title" = "Move to…";
+
 "profile.block_button_title_action" = "Block";
 "profile.unblock_button_title_action" = "Unblock";
 

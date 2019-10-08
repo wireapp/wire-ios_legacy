@@ -113,6 +113,13 @@ final class ConversationActionController {
             enqueue {
                 self.conversation.isFavorite = !isFavorite
             }
+        case .removeFromFolder:
+            enqueue {
+                self.conversation.removeFromFolder()
+            }
+        case .moveToFolder:
+        ///TODO: @Nicola show the move to folder screen
+            fatalError()
         case .remove: fatalError()
         }
     }
