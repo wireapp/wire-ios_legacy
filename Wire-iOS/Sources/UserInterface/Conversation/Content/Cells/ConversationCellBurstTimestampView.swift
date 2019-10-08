@@ -100,7 +100,7 @@ import Cartography
             view.height == 40
             
             leftSeparator.leading == view.leading
-            leftSeparator.width == UIView.conversationLayoutMargins.left - inset
+            leftSeparator.width == conversationHorizontalMargins.left - inset
             leftSeparator.centerY == view.centerY
             
             label.centerY == view.centerY

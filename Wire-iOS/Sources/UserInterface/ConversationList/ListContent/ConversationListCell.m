@@ -22,7 +22,7 @@
 #import "ConversationListItemView.h"
 
 
-#import "Constants.h"
+
 #import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Settings.h"
@@ -38,17 +38,11 @@
 #import "Wire-Swift.h"
 
 
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
-static const NSTimeInterval OverscrollRatio = 2.5;
-
-
 @interface ConversationListCell () <AVSMediaManagerClientObserver>
 
 @property (nonatomic) ConversationListItemView *itemView;
 
 @property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
-
-@property (nonatomic) NSDate *overscrollStartDate;
 
 @property (nonatomic) id typingObserverToken;
 @end
@@ -79,7 +73,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
     self.canOpenDrawer = NO;
     self.clipsToBounds = YES;
-    self.accessibilityIdentifier = @"conversation_list_cell";
 
     self.itemView = [[ConversationListItemView alloc] init];
     
@@ -110,24 +103,6 @@ static const NSTimeInterval OverscrollRatio = 2.5;
     self.itemView.visualDrawerOffset = visualDrawerOffset;
 }
 
-- (void)setSelected:(BOOL)selected
-{
-    [super setSelected:selected];
-    if (IS_IPAD_FULLSCREEN) {
-        self.itemView.selected  = self.selected || self.highlighted;
-    }
-}
-
-- (void)setHighlighted:(BOOL)highlighted
-{
-    [super setHighlighted:highlighted];
-    if (IS_IPAD_FULLSCREEN) {
-        self.itemView.selected  = self.selected || self.highlighted;
-    } else {
-        self.itemView.selected = self.highlighted;
-    }
-}
-
 - (void)setConversation:(ZMConversation *)conversation
 {
     if (_conversation != conversation) {
@@ -136,6 +111,8 @@ static const NSTimeInterval OverscrollRatio = 2.5;
         self.typingObserverToken = [_conversation addTypingObserver:self];
         
         [self updateAppearance];
+
+        [self setupConversationObserverWithConversation: conversation];
     }
 }
     
@@ -216,24 +193,6 @@ static CGSize cachedSize = {0, 0};
 }
 
 #pragma mark - DrawerOverrides
-
-- (void)drawerScrollingEndedWithOffset:(CGFloat)offset
-{
-    if (self.menuDotsView.progress >= 1) {
-        BOOL overscrolled = NO;
-        if (offset > (CGRectGetWidth(self.frame) / OverscrollRatio)) {
-            overscrolled = YES;
-        } else if (self.overscrollStartDate) {
-            NSTimeInterval diff = [[NSDate date] timeIntervalSinceDate:self.overscrollStartDate];
-            overscrolled = (diff > IgnoreOverscrollTimeInterval);
-        }
-
-        if (overscrolled) {
-            [self.delegate conversationListCellOverscrolled:self];
-        }
-    }
-    self.overscrollStartDate = nil;
-}
 
 - (void)drawerScrollingStarts
 {

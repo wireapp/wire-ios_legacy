@@ -21,6 +21,8 @@
 
 @class TopPeopleLineSection, UserSelection, ZMConversation;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol TopPeopleLineCollectionViewControllerDelegate <NSObject>
     
 - (void)topPeopleLineCollectionViewControllerDidSelectConversation:(ZMConversation *)conversation;
@@ -30,5 +32,7 @@
 @interface TopPeopleLineCollectionViewController : NSObject <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic) NSArray<ZMConversation *> *topPeople;
 @property (nonatomic) UserSelection *userSelection;
-@property (nonatomic, weak) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<TopPeopleLineCollectionViewControllerDelegate> delegate;
 @end
+
+NS_ASSUME_NONNULL_END

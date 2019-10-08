@@ -129,7 +129,7 @@
 
 #pragma mark - Actions
 
-- (IBAction)shareContacts:(id)sender
+- (void)shareContacts:(id)sender
 {
     [AddressBookHelper.sharedHelper requestPermissions:^(BOOL success) {
         if (success) {
@@ -141,7 +141,7 @@
     }];
 }
 
-- (IBAction)shareContactsLater:(id)sender
+- (void)shareContactsLater:(id)sender
 {
     [AddressBookHelper sharedHelper].addressBookSearchWasPostponed = YES;
     [self.delegate shareContactsViewControllerDidSkip:self];

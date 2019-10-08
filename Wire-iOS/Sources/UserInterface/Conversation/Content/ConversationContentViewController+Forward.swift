@@ -107,17 +107,13 @@ extension ZMConversationMessage {
     }
 }
 
-extension ZMConversationList {
+extension ZMConversationList {///TODO mv to DM
     func shareableConversations(excluding: ZMConversation? = nil) -> [ZMConversation] {
         return self.map { $0 as! ZMConversation }.filter { (conversation: ZMConversation) -> (Bool) in
             return (conversation.conversationType == .oneOnOne || conversation.conversationType == .group) &&
                 conversation.isSelfAnActiveMember &&
                 conversation != excluding
         }
-    }
-    
-    func convesationsWhereBotCanBeAdded() -> [ZMConversation] {
-        return self.shareableConversations().filter { $0.botCanBeAdded }
     }
 }
 

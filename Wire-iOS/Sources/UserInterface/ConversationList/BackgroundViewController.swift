@@ -189,11 +189,7 @@ final public class BackgroundViewController: UIViewController {
     static func blurredAppBackground(with imageData: Data) -> UIImage? {
         return UIImage(from: imageData, withMaxSize: 40)?.desaturatedImage(with: BackgroundViewController.ciContext, saturation: 2)
     }
-    
-    fileprivate func setBackground(imageData: Data) {
-        self.imageView.image = BackgroundViewController.blurredAppBackground(with: imageData)
-    }
-    
+        
     fileprivate func setBackground(color: UIColor) {
         self.imageView.backgroundColor = color
     }

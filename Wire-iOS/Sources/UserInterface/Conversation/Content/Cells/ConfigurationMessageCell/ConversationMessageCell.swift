@@ -179,8 +179,8 @@ extension ConversationMessageCellDescription {
         let bottom = view.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         
         top.constant = CGFloat(topMargin)
-        leading.constant = isFullWidth ? 0 : UIView.conversationLayoutMargins.left
-        trailing.constant = isFullWidth ? 0 : -UIView.conversationLayoutMargins.right
+        leading.constant = isFullWidth ? 0 : view.conversationHorizontalMargins.left
+        trailing.constant = isFullWidth ? 0 : -view.conversationHorizontalMargins.right
         
         NSLayoutConstraint.activate([leading, trailing, top, bottom])
         

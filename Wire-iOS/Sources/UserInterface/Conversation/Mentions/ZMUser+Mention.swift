@@ -18,7 +18,7 @@
 
 import Foundation
 
-class HashBox<Type: NSObjectProtocol>: Hashable, Equatable {
+final class HashBox<Type: NSObjectProtocol>: Hashable, Equatable {
     static func == (lhs: HashBox<Type>, rhs: HashBox<Type>) -> Bool {
         return lhs.value.isEqual(rhs.value)
     }

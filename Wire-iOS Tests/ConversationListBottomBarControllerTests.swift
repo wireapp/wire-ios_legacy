@@ -26,11 +26,17 @@ class MockConversationListBottomBarDelegate: NSObject, ConversationListBottomBar
             self.archiveButtonTapCount += 1
         case .startUI:
             self.startUIButtonCallCount += 1
+        case .list:
+            self.listButtonCallCount += 1
+        case .folder:
+            self.folderButtonTapCount += 1
         }
     }
 
     var startUIButtonCallCount: Int = 0
     var archiveButtonTapCount: Int = 0
+    var listButtonCallCount: Int = 0
+    var folderButtonTapCount: Int = 0
 }
 
 final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
@@ -45,7 +51,8 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         accentColor = .brightYellow
         mockDelegate = MockConversationListBottomBarDelegate()
         UIView.performWithoutAnimation({
-            self.sut = ConversationListBottomBarController(delegate: self.mockDelegate)
+            self.sut = ConversationListBottomBarController()
+            self.sut.delegate = self.mockDelegate
 
             ///SUT has a priority 750 height constraint. fix its height first
             NSLayoutConstraint.activate([
@@ -103,7 +110,6 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         sut.startUIButton.sendActions(for: .touchUpInside)
 
         // then
-        XCTAssertEqual(mockDelegate.startUIButtonCallCount, 1)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 0)
     }
 
@@ -112,7 +118,22 @@ final class ConversationListBottomBarControllerTests: ZMSnapshotTestCase {
         sut.archivedButton.sendActions(for: .touchUpInside)
 
         // then
-        XCTAssertEqual(mockDelegate.startUIButtonCallCount, 0)
         XCTAssertEqual(mockDelegate.archiveButtonTapCount, 1)
+    }
+    
+    func testThatItCallsTheDelegateWhenTheListButtonIsTapped() {
+        // when
+        sut.listButton.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(mockDelegate.listButtonCallCount, 1)
+    }
+    
+    func testThatItCallsTheDelegateWhenTheFolderButtonIsTapped() {
+        // when
+        sut.folderButton.sendActions(for: .touchUpInside)
+        
+        // then
+        XCTAssertEqual(mockDelegate.folderButtonTapCount, 1)
     }
 }

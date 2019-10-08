@@ -18,7 +18,6 @@
 
 
 import UIKit
-import Cartography
 
 final class ConversationTitleView: TitleView {
     var conversation: ZMConversation

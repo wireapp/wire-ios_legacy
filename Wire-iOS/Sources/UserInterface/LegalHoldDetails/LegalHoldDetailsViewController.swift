@@ -51,7 +51,7 @@ final class LegalHoldDetailsViewController: UIViewController {
     }
 
     @discardableResult
-    static func present(in parentViewController: UIViewController, user: ZMUser) -> UINavigationController? {
+    static func present(in parentViewController: UIViewController, user: UserType) -> UINavigationController? {
         guard let legalHoldDetailsViewController = LegalHoldDetailsViewController(user: user) else { return nil }
 
         return legalHoldDetailsViewController.wrapInNavigationControllerAndPresent(from: parentViewController)

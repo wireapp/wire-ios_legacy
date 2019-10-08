@@ -24,7 +24,6 @@
 
 #import "AppDelegate.h"
 
-#import "ConversationListViewController.h"
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
 #import "ProfileViewController.h"
@@ -34,7 +33,7 @@
 
 #import "AppDelegate.h"
 
-#import "Constants.h"
+
 #import "Analytics.h"
 #import "Settings.h"
 
@@ -42,7 +41,7 @@
 
 #import "StartUIViewController.h"
 
-@interface ZClientViewController (InitialState) <SplitViewControllerDelegate>
+@interface ZClientViewController (InitialState)
 
 - (void)restoreStartupState;
 - (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
@@ -59,8 +58,6 @@
 
 @property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
 @property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic) BackgroundViewController *backgroundViewController;
-@property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
 @property (nonatomic, readwrite) UIViewController *conversationRootViewController;
 @property (nonatomic, readwrite) ZMConversation *currentConversation;
 @property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
@@ -87,21 +84,30 @@
 
 - (instancetype)init
 {
+    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount selfUser:ZMUser.selfUser];
+}
+
+- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser
+{
     self = [super init];
     if (self) {
         self.proximityMonitorManager = [ProximityMonitorManager new];
         self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
+        self.dataUsagePermissionDialogDisplayed = NO;
+        self.needToShowDataUsagePermissionDialog = NO;
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];        
-        NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
-                                      URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
-        self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
-        
+        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
+        if (ZMUser.selfUser.remoteIdentifier != nil) {
+            NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
+                                          URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
+            self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
+        }
+
         self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
@@ -112,7 +118,7 @@
         [self setupAppearance];
 
         [self createLegalHoldDisclosureController];
-        [self setupConversationListViewController];
+        [self setupConversationListViewControllerWithAccount:account selfUser: selfUser];
     }
     return self;
 }
@@ -250,17 +256,6 @@
     [self.view setNeedsLayout];
 }
 
-#pragma mark - Setup methods
-
-- (void)setupConversationListViewController
-{
-    self.conversationListViewController = [[ConversationListViewController alloc] init];
-    self.conversationListViewController.account = SessionManager.shared.accountManager.selectedAccount;
-
-    self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = NO;
-}
-
 #pragma mark - Public API
 
 + (instancetype)sharedZClientViewController
@@ -276,29 +271,9 @@
     return nil;
 }
 
-- (void)selectConversation:(ZMConversation *)conversation
-{
-    [self.conversationListViewController selectConversation:conversation
-                                            scrollToMessage:nil
-                                                focusOnView:NO
-                                                   animated:NO];
-}
-
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     [self selectConversation:conversation scrollToMessage:nil focusOnView:focus animated:animated completion:nil];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
-{
-    [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
-
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    [self dismissAllModalControllersWithCallback:^{
-        [self.conversationListViewController selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:completion];
-    }];
 }
 
 - (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus
@@ -399,11 +374,6 @@
 
 #pragma mark - Animated conversation switch
 
-- (void)minimizeCallOverlayWithCompletion:(dispatch_block_t)completion
-{
-    [AppDelegate.sharedAppDelegate.callWindowRootViewController minimizeOverlayWithCompletion:completion];
-}
-
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback
 {
     dispatch_block_t dismissAction = ^{
@@ -438,7 +408,7 @@
         dismissAction();
     }
     else {
-        [self minimizeCallOverlayWithCompletion:^{
+        [self minimizeCallOverlayWithAnimated:YES withCompletion:^{
             dismissAction();
         }];
     }
@@ -451,33 +421,6 @@
     if (_currentConversation != currentConversation) {
         _currentConversation = currentConversation;
     }
-}
-
-- (void)setIsComingFromRegistration:(BOOL)isComingFromRegistration
-{
-    _isComingFromRegistration = isComingFromRegistration;
-
-    self.conversationListViewController.isComingFromRegistration = self.isComingFromRegistration;
-}
-
-- (BOOL)needToShowDataUsagePermissionDialog
-{
-    return self.conversationListViewController.needToShowDataUsagePermissionDialog;
-}
-
-- (void)setNeedToShowDataUsagePermissionDialog:(BOOL)needToShowDataUsagePermissionDialog
-{
-    self.conversationListViewController.needToShowDataUsagePermissionDialog = needToShowDataUsagePermissionDialog;
-}
-
-- (BOOL)isConversationViewVisible
-{
-    return IS_IPAD_LANDSCAPE_LAYOUT || !self.splitViewController.leftViewControllerRevealed;
-}
-
-- (BOOL)isConversationListVisible
-{
-    return IS_IPAD_LANDSCAPE_LAYOUT || (self.splitViewController.leftViewControllerRevealed && self.conversationListViewController.presentedViewController == NULL);
 }
 
 - (ZMUserSession *)context
@@ -643,17 +586,6 @@
         [self loadPlaceholderConversationControllerAnimated:YES];
     }
 }
-
-#pragma mark - SplitViewControllerDelegate
-
-- (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController
-{
-    return splitViewController.rightViewController != nil &&
-           splitViewController.leftViewController == self.backgroundViewController &&
-           self.conversationListViewController.state == ConversationListStateConversationList &&
-           (self.conversationListViewController.presentedViewController == nil || splitViewController.isLeftViewControllerRevealed == NO);
-}
-
 @end
 
 

@@ -94,7 +94,7 @@ class SenderCellComponent: UIView {
     }
     
     func createConstraints() {
-        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: UIView.conversationLayoutMargins.left)
+        let avatarSpacerWidthConstraint = avatarSpacer.widthAnchor.constraint(equalToConstant: conversationHorizontalMargins.left)
         self.avatarSpacerWidthConstraint = avatarSpacerWidthConstraint
         
         NSLayoutConstraint.activate([
@@ -139,11 +139,6 @@ class SenderCellComponent: UIView {
         }
         
         authorLabel.attributedText = attributedString
-    }
-    
-    func prepareForReuse() {
-        observerToken = nil
-        avatar.user = nil
     }
     
     private func attributedName(for kind: TextKind, string: String) -> NSAttributedString {

@@ -156,8 +156,8 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             switch normalizedNumber {
             case .invalid(let errorCode):
                 switch errorCode {
-                case .objectValidationErrorCodeStringTooLong: return .tooLong(kind: .phoneNumber)
-                case .objectValidationErrorCodeStringTooShort: return .tooShort(kind: .phoneNumber)
+                case .tooLong: return .tooLong(kind: .phoneNumber)
+                case .tooShort: return .tooShort(kind: .phoneNumber)
                 default: return .invalidPhoneNumber
                 }
             case .unknownError:
@@ -267,7 +267,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             return shouldInsert(phoneNumber: updatedString)
         }
 
-        let number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
+        var number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
 
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
@@ -350,10 +350,12 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     func submitValue() {
-        let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        var phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        let validationResult = phoneNumber.validate()
+        
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
 
-        if validationError == nil {
+        if validationError == nil && validationResult == .valid {
             delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: nil)
             delegate?.phoneNumberInputView(self, didPickPhoneNumber: phoneNumber)
         }

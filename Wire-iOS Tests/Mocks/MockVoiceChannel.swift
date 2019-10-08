@@ -59,6 +59,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return "token"
     }
     
+    func addMuteStateObserver(_ observer: MuteStateObserver) -> Any {
+        return "token"
+    }
+    
     var state: CallState {
         return mockCallState
     }

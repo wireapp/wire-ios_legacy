@@ -19,6 +19,10 @@
 import Foundation
 
 extension SplitViewController {
+    @objc
+    var isConversationViewVisible: Bool {
+        return (layoutSize == .regularLandscape) || !isLeftViewControllerRevealed
+    }
 
 
     /// update left view UI depends on isLeftViewControllerRevealed

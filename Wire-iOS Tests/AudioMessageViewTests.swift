@@ -99,7 +99,7 @@ final class AudioMessageViewTests: XCTestCase {
         })
 
         let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
-        sut.audioTrackPlayer = mediaPlayBackManager?.audioTrackPlayer
+        sut.audioTrackPlayer = mediaPlayBackManager.audioTrackPlayer
 
         sut.audioTrackPlayer?.load(audioMessage, sourceMessage: audioMessage, completionHandler: nil)
         sut.configure(for: audioMessage, isInitial: true)

@@ -108,7 +108,7 @@ extension TopPeopleSectionController: TopConversationsDirectoryObserver {
 
 extension TopPeopleSectionController: TopPeopleLineCollectionViewControllerDelegate {
 
-    func topPeopleLineCollectionViewControllerDidSelect(_ conversation: ZMConversation!) {
+    func topPeopleLineCollectionViewControllerDidSelect(_ conversation: ZMConversation) {
         delegate?.searchSectionController(self, didSelectConversation: conversation, at: IndexPath(row: 0, section: 0))
     }
 

@@ -30,7 +30,7 @@ extension UpsideDownTableView {
         guard numberOfSections > 0 else { return }
         
         let rowIndex = numberOfCells(inSection: indexToShow) - 1
-        guard rowIndex >= 0 else { return }
+        guard rowIndex >= 0 && indexToShow < numberOfSections else { return }
         let cellIndexPath = IndexPath(row: rowIndex, section: indexToShow)
         
         scrollToRow(at: cellIndexPath, at: .top, animated: false)

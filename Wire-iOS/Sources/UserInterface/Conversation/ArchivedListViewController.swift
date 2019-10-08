@@ -22,14 +22,14 @@ import Cartography
 
 // MARK: ArchivedListViewControllerDelegate
 
-@objc protocol ArchivedListViewControllerDelegate: class {
+protocol ArchivedListViewControllerDelegate: class {
     func archivedListViewControllerWantsToDismiss(_ controller: ArchivedListViewController)
     func archivedListViewController(_ controller: ArchivedListViewController, didSelectConversation conversation: ZMConversation)
 }
 
 // MARK: - ArchivedListViewController
 
-@objcMembers final class ArchivedListViewController: UIViewController {
+final class ArchivedListViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle { return .lightContent }
     
@@ -159,13 +159,10 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
     }
-    
+
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateConversationWithChange change: ConversationChangeInfo) {
-        guard change.isArchivedChanged || change.conversationListIndicatorChanged || change.nameChanged ||
-            change.unreadCountChanged || change.connectionStateChanged || change.mutedMessageTypesChanged else { return }
-        for case let cell as ConversationListCell in collectionView.visibleCells where cell.conversation == change.conversation {
-            cell.updateAppearance()
-        }
+
+        // no-op, ConversationListCell extended ZMConversationObserver 
     }
     
 }
@@ -174,14 +171,18 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 
 extension ArchivedListViewController: ConversationListCellDelegate {
 
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell!) {
-        startCallController = ConversationCallController(conversation: cell.conversation, target: self)
+    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else { return }
+
+        startCallController = ConversationCallController(conversation: conversation, target: self)
         startCallController?.joinCall()
     }
     
-    func conversationListCellOverscrolled(_ cell: ConversationListCell!) {
-        actionController = ConversationActionController(conversation: cell.conversation, target: self)
-        actionController?.presentMenu(from: cell)
+    func conversationListCellOverscrolled(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else { return }
+
+        actionController = ConversationActionController(conversation: conversation, target: self)
+        actionController?.presentMenu(from: cell, context: .list)
     }
 
 }

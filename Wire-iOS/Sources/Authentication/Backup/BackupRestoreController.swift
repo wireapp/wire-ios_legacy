@@ -98,14 +98,6 @@ class BackupRestoreController: NSObject {
 
     // MARK: - Alerts
 
-    fileprivate func showWarningMessage() {
-        let controller = UIAlertController.historyImportWarning { [showFilePicker] in
-            showFilePicker()
-        }
-
-        target.present(controller, animated: true)
-    }
-
     fileprivate func requestPassword(completion: @escaping (String) -> Void) {
         let controller = UIAlertController.requestRestorePassword { password in
             password.apply(completion)

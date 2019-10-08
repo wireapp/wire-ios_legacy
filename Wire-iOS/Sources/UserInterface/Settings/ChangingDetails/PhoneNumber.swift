@@ -28,17 +28,17 @@ struct PhoneNumber: Equatable {
 
         init(error: Error) {
             let code = (error as NSError).code
-            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: UInt(code)) else {
+            guard let errorCode = ZMManagedObjectValidationErrorCode(rawValue: code) else {
                 self = .invalid
                 return
             }
 
             switch errorCode {
-            case .objectValidationErrorCodeStringTooLong:
+            case .tooLong:
                 self = .tooLong
-            case .objectValidationErrorCodeStringTooShort:
+            case .tooShort:
                 self = .tooShort
-            case .objectValidationErrorCodePhoneNumberContainsInvalidCharacters:
+            case .phoneNumberContainsInvalidCharacters:
                 self = .containsInvalidCharacters
             default:
                 self = .invalid
@@ -47,7 +47,7 @@ struct PhoneNumber: Equatable {
     }
 
     let countryCode: UInt
-    let fullNumber: String
+    var fullNumber: String
     let numberWithoutCode: String
 
     var country: Country {
@@ -69,14 +69,17 @@ struct PhoneNumber: Equatable {
 
     }
 
-    func validate() -> ValidationResult {
-        var validatedNumber = fullNumber as NSString?
-        let pointer = AutoreleasingUnsafeMutablePointer<NSString?>(&validatedNumber)
+    mutating func validate() -> ValidationResult {
+        
+        var validatedNumber: String? = fullNumber
+        
         do {
-            try ZMUser.validatePhoneNumber(pointer)
+            _ = try ZMUser.validate(phoneNumber: &validatedNumber)
         } catch let error {
             return ValidationResult(error: error)
         }
+        
+        fullNumber = validatedNumber ?? fullNumber
 
         return .valid
     }

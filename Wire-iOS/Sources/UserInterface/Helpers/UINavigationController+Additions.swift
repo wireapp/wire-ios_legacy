@@ -44,21 +44,8 @@ extension UINavigationController {
         }
     }
 
-    open func setViewControllers(_ viewControllers: [UIViewController],
-                                 animated: Bool,
-                                 completion: (() -> Void)?) {
-        setViewControllers(viewControllers, animated: animated)
-
-        if animated, let coordinator = transitionCoordinator {
-            coordinator.animate(alongsideTransition: nil) { _ in
-                completion?()
-            }
-        } else {
-            completion?()
-        }
-    }
-    
-    @discardableResult open func popViewController(animated: Bool,
+    @discardableResult
+    func popViewController(animated: Bool,
                                                    completion: (() -> Void)?) -> UIViewController? {
         let controller = popViewController(animated: animated)
         

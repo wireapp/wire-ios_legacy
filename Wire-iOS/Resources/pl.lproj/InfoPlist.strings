@@ -16,12 +16,12 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.";
+"NSContactsUsageDescription" = "Pozwól Wire na dostęp do Twoich kontaktów, abyśmy mogli Cię z nimi połączyć. Wszystkie dane są anonimizowane przed przesłaniem na nasze serwery i nie dzielimy się nimi z nikim innym.";
 "NSMicrophoneUsageDescription" = "Pozwól Wire na dostęp do mikrofonu, aby móc rozmawiać lub wysyłać wiadomości audio.";
 "NSLocationWhenInUseUsageDescription" = "Pozwól Wire na dostęp do Twojej lokalizacji, dzięki temu będziesz mógł wysłać ją innym.";
 "NSCameraUsageDescription" = "Pozwól Wire na dostęp do kamery, aby móc wykonywać wideorozmowy lub wysyłać zdjęcia.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Allow Wire to store pictures you take in the photo library.";
+"NSPhotoLibraryAddUsageDescription" = "Pozwól Wire na zapisywanie zdjęć, które robisz, w Zdjęciach.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
 "NSPhotoLibraryUsageDescription" = "Allow Wire to access pictures stored in photo library.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */

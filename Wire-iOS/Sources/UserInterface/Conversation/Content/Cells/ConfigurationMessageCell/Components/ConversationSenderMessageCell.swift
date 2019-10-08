@@ -63,7 +63,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
         senderView.translatesAutoresizingMaskIntoConstraints = false
         indicatorImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        indicatorImageViewTrailing = indicatorImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -UIView.conversationLayoutMargins.right)
+        indicatorImageViewTrailing = indicatorImageView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -conversationHorizontalMargins.right)
 
         NSLayoutConstraint.activate([
             // indicatorImageView
@@ -80,7 +80,7 @@ class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        indicatorImageViewTrailing.constant = -UIView.conversationLayoutMargins.right
+        indicatorImageViewTrailing.constant = -conversationHorizontalMargins.right
     }
 
 }

@@ -28,8 +28,10 @@
 @class MediaPlaybackManager;
 @class ProximityMonitorManager;
 @class LegalHoldDisclosureController;
+@class Account;
 
 @protocol ZMConversationMessage;
+@protocol UserType;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -38,10 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIViewController *conversationRootViewController;
 
 @property (nonatomic, readonly) ZMConversation *currentConversation;
-
-@property (nonatomic, readonly) BOOL isConversationViewVisible;
-
-@property (nonatomic, readonly) BOOL isConversationListVisible;
 
 @property (nonatomic) BOOL isComingFromRegistration;
 
@@ -57,6 +55,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
 
+
+/**
+ init method for testing allows injecting an Account object and self user
+
+ @param account an Account object
+ @param selfUser an UserType object
+ @return a ZClientViewController instance
+ */
+- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser;
+
 + (__nullable instancetype)sharedZClientViewController;
 
 /**
@@ -65,12 +73,6 @@ NS_ASSUME_NONNULL_BEGIN
  * @return YES if it will actually switch, NO if the conversation is already selected.
  */
 - (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (void)selectConversation:(ZMConversation *)conversation scrollToMessage:(__nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (void)selectConversation:(ZMConversation *)conversation
-           scrollToMessage:(__nullable id<ZMConversationMessage>)message
-               focusOnView:(BOOL)focus
-                  animated:(BOOL)animated
-                completion:(__nullable dispatch_block_t)completion;
 
 /**
  * Open the user clients detail screen

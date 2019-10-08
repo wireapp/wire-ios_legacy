@@ -21,21 +21,19 @@ import UIKit
 
 // MARK: Cell Registration
 
-extension UITableViewCell {
+extension NSObject {
     @objc static var zm_reuseIdentifier: String {
-    	return NSStringFromClass(self) + "_ReuseIdentifier"
+        return NSStringFromClass(self) + "_ReuseIdentifier"
     }
-    
+}
+
+extension UITableViewCell {
     @objc static func register(in tableView: UITableView) {
         tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }
 
 extension UICollectionViewCell {
-    @objc static var zm_reuseIdentifier: String {
-        return NSStringFromClass(self) + "_ReuseIdentifier"
-    }
-    
     static func register(in collectionView: UICollectionView) {
         collectionView.register(self, forCellWithReuseIdentifier: zm_reuseIdentifier)
     }

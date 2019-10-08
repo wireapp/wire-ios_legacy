@@ -60,16 +60,11 @@ extension ConversationInputBarViewController {
             ZMUserSession.shared()?.enqueueChanges({
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 guard let basePath = paths.first,
-                    let sourceLocation = Bundle(for: type(of: self)).url(forResource: "CountryCodes", withExtension: "plist") else { return }
+                    let sourceLocation = Bundle.main.url(forResource: "CountryCodes", withExtension: "plist") else { return }
 
+                let destLocation = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
 
-                let destLocationString = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent).absoluteString
-                let destLocation = URL(fileURLWithPath: destLocationString)
-
-                do {
-                    try FileManager.default.copyItem(at: sourceLocation, to: destLocation)
-                } catch {
-                }
+                try? FileManager.default.copyItem(at: sourceLocation, to: destLocation)
                 self.uploadFile(at: destLocation)
             })
         }
@@ -78,14 +73,16 @@ extension ConversationInputBarViewController {
                                            style: .default,
                                            handler: plistHandler))
 
-        controller.addAction(uploadTestAlertAction(size: UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1, title: "Big file", fileName: "BigFile.bin"))
+        let size = UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1
+        let humanReadableSize = size / 1024 / 1024
+        controller.addAction(uploadTestAlertAction(size: size, title: "Big file (size = \(humanReadableSize) MB)", fileName: "BigFile.bin"))
 
         controller.addAction(uploadTestAlertAction(size: 20971520, title: "20 MB file", fileName: "20MBFile.bin"))
         controller.addAction(uploadTestAlertAction(size: 41943040, title: "40 MB file", fileName: "40MBFile.bin"))
 
         if ZMUser.selfUser()?.hasTeam == true {
-            controller.addAction(uploadTestAlertAction(size: 83886080, title: "80 MB file", fileName: "80MBFile.bin"))
-            controller.addAction(uploadTestAlertAction(size:125829120, title: "120 MB file", fileName: "120MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 83886080,  title: "80 MB file",  fileName: "80MBFile.bin"))
+            controller.addAction(uploadTestAlertAction(size: 125829120, title: "120 MB file", fileName: "120MBFile.bin"))
         }
         #endif
 
@@ -132,6 +129,7 @@ extension ConversationInputBarViewController {
 
         controller.addAction(.cancel())
 
+        controller.configPopover(pointToView: sender ?? view)
         return controller
     }
 
@@ -151,10 +149,7 @@ extension ConversationInputBarViewController {
     }
 
     private func recordVideo() {
-        if ZMUserSession.shared()?.isCallOngoing == true {
-            CameraAccess.displayCameraAlertForOngoingCall(at: CameraAccessFeature.recordVideo, from: self)
-            return
-        }
+        guard !CameraAccess.displayAlertIfOngoingCall(at: .recordVideo, from: self) else { return }
 
         presentImagePicker(with: .camera, mediaTypes: [kUTTypeMovie as String], allowsEditing: false, pointToView: videoButton.imageView)
     }

@@ -267,8 +267,6 @@ class CameraController {
         
         @available(iOS 11.0, *)
         func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-            guard #available(iOS 11, *) else { return }
-
             defer { completion() }
             
             if let error = error {

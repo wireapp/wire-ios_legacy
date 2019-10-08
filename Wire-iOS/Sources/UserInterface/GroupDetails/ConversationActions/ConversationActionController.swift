@@ -16,49 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc protocol ActionController: NSObjectProtocol {
-    var alertController: UIAlertController? {get}
-    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool)
-}
-
-extension ActionController {
-    private func prepare(viewController: UIViewController, with context: PresentationContext) {
-        viewController.popoverPresentationController.apply {
-            $0.sourceView = context.view
-            $0.sourceRect = context.rect
-        }
+final class ConversationActionController {
+    
+    struct PresentationContext {
+        let view: UIView
+        let rect: CGRect
     }
-
-    func present(_ controller: UIViewController,
-                 currentContext: PresentationContext?,
-                 target: UIViewController) {
-        currentContext.apply {
-            prepare(viewController: controller, with: $0)
-        }
-        target.present(controller, animated: true, completion: nil)
+    
+    enum Context {
+        case list, details
     }
-
-}
-
-struct PresentationContext {
-    let view: UIView
-    let rect: CGRect
-}
-
-@objcMembers final class ConversationActionController: NSObject, ActionController {
 
     private let conversation: ZMConversation
     unowned let target: UIViewController
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    @objc init(conversation: ZMConversation, target: UIViewController) {
+    init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
-        super.init()
     }
 
-    func presentMenu(from sourceView: UIView?, showConverationNameInMenuTitle: Bool = true) {
+    func presentMenu(from sourceView: UIView?, context: Context) {
         currentContext = sourceView.map {
             .init(
                 view: target.view,
@@ -66,9 +45,17 @@ struct PresentationContext {
             )
         }
         
-        let controller = UIAlertController(title: showConverationNameInMenuTitle ? conversation.displayName: nil, message: nil, preferredStyle: .actionSheet)
-        // TODO: we need to exclude the notification settings action if the menu is being presented from the conversation details.
-        conversation.actions.map(alertAction).forEach(controller.addAction)
+        let actions: [ZMConversation.Action]
+        switch context {
+        case .details:
+            actions = conversation.detailActions
+        case .list:
+            actions = conversation.listActions
+        }
+        
+        let title = context == .list ? conversation.displayName : nil
+        let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        actions.map(alertAction).forEach(controller.addAction)
         controller.addAction(.cancel())
         present(controller)
 
@@ -87,6 +74,12 @@ struct PresentationContext {
 
     func handleAction(_ action: ZMConversation.Action) {
         switch action {
+        case .deleteGroup:
+            guard let userSession = ZMUserSession.shared() else { return }
+
+            requestDeleteGroupResult() { result in
+                self.handleDeleteGroupResult(result, conversation: self.conversation, in: userSession)
+            }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }
@@ -105,8 +98,8 @@ struct PresentationContext {
         case .leave: self.request(LeaveResult.self) { result in
             self.handleLeaveResult(result, for: self.conversation)
             }
-        case .delete: self.requestDeleteResult(for: self.conversation) { result in
-            self.handleDeleteResult(result, for: self.conversation)
+        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
+            self.handleClearContentResult(result, for: self.conversation)
             }
         case .cancelRequest:
             guard let user = self.conversation.connectedUser else { return }
@@ -115,6 +108,10 @@ struct PresentationContext {
             }
         case .block: self.requestBlockResult(for: self.conversation) { result in
             self.handleBlockResult(result, for: self.conversation)
+            }
+        case .favorite(isFavorite: let isFavorite):
+            enqueue {
+                self.conversation.isFavorite = !isFavorite
             }
         case .remove: fatalError()
         }
@@ -132,4 +129,21 @@ struct PresentationContext {
                 currentContext: currentContext,
                 target: target)
     }
+    
+    private func prepare(viewController: UIViewController, with context: PresentationContext) {
+        viewController.popoverPresentationController.apply {
+            $0.sourceView = context.view
+            $0.sourceRect = context.rect
+        }
+    }
+    
+    private func present(_ controller: UIViewController,
+                 currentContext: PresentationContext?,
+                 target: UIViewController) {
+        currentContext.apply {
+            prepare(viewController: controller, with: $0)
+        }
+        target.present(controller, animated: true, completion: nil)
+    }
+    
 }

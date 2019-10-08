@@ -43,7 +43,6 @@
 #import "SCSiriWaveformView.h"
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
-#import "StackView.h"
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
 #import "Country.h"
@@ -89,8 +88,7 @@
 #import "ConversationInputBarViewController+Files.h"
 
 #import "ConversationListContentController.h"
-#import "ConversationListViewModel.h"
-#import "ConversationListViewModel+Private.h"
+#import "ConversationListContentController+Internal.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
@@ -101,11 +99,6 @@
 
 #import "SketchColorPickerController.h"
 #import "SketchColorPickerController+Internal.h"
-
-#import "ConversationListViewController.h"
-#import "ConversationListViewController+Private.h"
-#import "ConversationListViewController+Internal.h"
-#import "ConversationListViewController+StartUI.h"
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
@@ -133,10 +126,11 @@
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "PassthroughWindow.h"
-#import "PassthroughTouchesView.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
 #import "AuthenticationCoordinatedViewController.h"
+#import "ProfilePresenter.h"
+#import "ProfilePresenter+Internal.h"
 
 // Utils
 #import "Analytics.h"
@@ -151,13 +145,11 @@
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "LinkAttachmentPresenter.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
 #import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
-#import "NSIndexSet+IndexPaths.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
 #import "KeyboardFrameObserver.h"
@@ -182,3 +174,4 @@
 
 // Invite
 #import "ShareItemProvider.h"
+

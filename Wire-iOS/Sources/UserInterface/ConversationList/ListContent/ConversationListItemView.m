@@ -20,7 +20,7 @@
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
 
-#import "Constants.h"
+
 #import "UIColor+WAZExtensions.h"
 
 #import "WireSyncEngine+iOS.h"

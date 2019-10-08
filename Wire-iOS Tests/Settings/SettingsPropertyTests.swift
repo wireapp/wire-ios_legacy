@@ -30,8 +30,8 @@ import XCTest
         // no-op
     }
     
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws {
-        // no-op
+    static func validate(name: inout String?) throws -> Bool {
+        return false
     }
     
 }

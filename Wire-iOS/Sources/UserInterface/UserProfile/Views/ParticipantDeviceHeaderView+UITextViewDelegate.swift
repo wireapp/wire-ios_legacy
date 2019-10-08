@@ -21,7 +21,7 @@ import Foundation
 extension ParticipantDeviceHeaderView: UITextViewDelegate {
 
     public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        delegate.participantsDeviceHeaderViewDidTapLearnMore(self)
+        delegate?.participantsDeviceHeaderViewDidTapLearnMore(self)
 
         return false
     }

@@ -122,7 +122,7 @@ final class ReplyComposingView: UIView {
     }
     
     private func setupConstraints() {
-        let margins = UIView.directionAwareConversationLayoutMargins
+        let margins = directionAwareConversationLayoutMargins
         
         let constraints: [NSLayoutConstraint] = [
             leftSideView.leadingAnchor.constraint(equalTo: leadingAnchor),

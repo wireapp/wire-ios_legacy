@@ -29,7 +29,7 @@
 "general.confirm" = "TAMAM";
 "general.skip" = "Henüz değil";
 "general.accept" = "Kabul et";
-"general.decline" = "Hayır, Teşekkürler";
+"general.decline" = "Hayır , Teşekkürler";
 "general.failure" = "Bir şeyler yanlış gitti";
 "general.failure.try_again" = "Lütfen tekrar deneyin.";
 "general.service" = "Hizmet";
@@ -75,7 +75,7 @@
 "peoplepicker.services.add_service.error.full" = "Sohbet dolu";
 
 "peoplepicker.title.create_conversation" = "Grup oluştur";
-"peoplepicker.title.add_to_conversation" = "Katılımcılar ekle";
+"peoplepicker.title.add_to_conversation" = "Katılımcıları ekle";
 
 "peoplepicker.no_contacts_title" = "Kişi yok.";
 
@@ -110,7 +110,7 @@
 
 "add_participants.all_contacts_added" = "Herkes burada.";
 
-"add_participants.alert.title" = "Grup tamamen dolu";
+"add_participants.alert.title" = "Dolup taşmış";
 "add_participants.alert.message.new_conversation" = "%d kişiye kadar sohbete katılabilinir.";
 "add_participants.alert.message.existing_conversation" = "Bir sohbete %1$d kişi katılabilir. Şu anda %2$d kişilik daha yer var.";
 
@@ -235,7 +235,7 @@
 "conversation.status.message.ephemeral.reply" = "Mesajınıza yanıt verdi";
 "conversation.status.message.ephemeral.reply.group" = "Birisi mesajına yanıt verdi";
 "conversation.status.message.ephemeral.knock" = "Pingledi";
-"conversation.status.message.ephemeral.knock.group" = "Birisi ping attı";
+"conversation.status.message.ephemeral.knock.group" = "Birisi pingledi";
 
 "conversation.status.unsent" = "⚠️ Mesaj gönderilemedi";
 "conversation.status.you" = "Sen";
@@ -515,6 +515,7 @@
 "content.file.upload_cancelled" = "Yükleme iptal edildi";
 "content.file.upload_video" = "Videolar";
 "content.file.take_video" = "Bir video kaydet";
+"content.file.browse" = "Browse";
 
 "content.file.save_video" = "Kaydet";
 "content.file.save_audio" = "Kaydet";
@@ -522,7 +523,7 @@
 
 "content.message.delete" = "Sil";
 "content.message.save" = "Kaydet";
-"content.message.resend" = "Yeniden gönder";
+"content.message.resend" = "Tekrar gönder";
 
 "content.message.delete_ellipsis" = "Sil…";
 
@@ -604,7 +605,7 @@
 "voice.end_call_button.title" = "Çağrıyı Sonlandır";
 "voice.call_error.unsupported_version.title" = "Lütfen Wire'ı güncelleyin";
 "voice.call_error.unsupported_version.message" = "Bu Wire sürümü tarafından desteklenmeyen bir çağrı aldınız.\nApp Store'daki en son sürümü edinin.";
-"voice.call_error.unsupported_version.dismiss" = "Daha sonra";
+"voice.call_error.unsupported_version.dismiss" = "Sonra";
 
 "voice.alert.call_in_progress.title" = "Arama sürüyor";
 "voice.alert.call_in_progress.message" = "Tek seferde sadece bir arama yapabilirsiniz";
@@ -681,7 +682,7 @@
 "participants.all.title" = "İnsanlar";
 "participants.section.participants" = "Kişiler (%d)";
 "participants.section.services" = "Hizmetler (%d)";
-"participants.section.settings" = "Seçenekler";
+"participants.section.settings" = "Ayarlar";
 "participants.footer.add_title" = "Katılımcı ekle";
 "participants.section.name.footer" = "%1$d kişiye kadar katılımcı grup sohbetine katılabilir. Video görüşmeleri ise %2$d kişiyle ve birlikte çalışır.";
 
@@ -691,7 +692,8 @@
 "meta.menu.leave" = "Gruptan Ayrıl…";
 "meta.menu.archive" = "Arşivle";
 "meta.menu.unarchive" = "Arşivden kaldır";
-"meta.menu.delete" = "İçeriği Sil…";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -703,12 +705,12 @@
 "meta.menu.open_self_profile" = "Profili Aç";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "İçerik silinsin?";
+"meta.menu.delete_content.dialog_title" = "Clear content?";
 "meta.menu.delete_content.dialog_message" = "Bu, tüm cihazlarınızdaki sohbet geçmişini temizler.";
 "meta.menu.delete_content.leave_as_well_message" = "Konuşmadan da ayrıl";
 "meta.menu.delete_content.button_cancel" = "İptal";
-"meta.menu.delete_content.button_delete" = "Sil";
-"meta.menu.delete_content.button_delete_and_leave" = "Sil ve Ayrıl";
+"meta.menu.delete_content.button_delete" = "Clear";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Beni haberdar et:";
@@ -720,10 +722,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Konuşmadan ayrıl?";
 "meta.leave_conversation_dialog_message" = "Katılımcılar bilgilendirilecek ve konuşma listenizden silinecektir.";
-"meta.leave_conversation.delete_content_as_well_message" = "İçeriği de sil";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "İptal";
 "meta.leave_conversation_button_leave" = "Ayrıl";
-"meta.leave_conversation_button_leave_and_delete" = "Ayrıl ve içeriği sil";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ yeni bir cihaz kullanmaya başladı.";
@@ -763,6 +765,12 @@
 "profile.connection_request_dialog.message" = "Bu sizi, %@ ile bağlayacak ve bir konuşma açacak.";
 "profile.connection_request_dialog.button_cancel" = "Yoksay";
 "profile.connection_request_dialog.button_connect" = "Bağlan";
+
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "İstek iptal edilsin mi?";
@@ -894,7 +902,7 @@
 // Settings - top level
 "self.settings.create_team.title" = "Bir takım oluştur";
 "self.settings.manage_team.title" = "Takımı Yönet";
-"self.settings.add_team_or_account.title" = "Hesap Ekle";
+"self.settings.add_team_or_account.title" = "Hesap ekle";
 "self.settings.add_account.title" = "Bir hesap ekle";
 
 "self.settings.add_account.error.title" = "Üç hesap aktif";
@@ -951,6 +959,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Çıkış yap";
 "self.settings.account_details.log_out.alert.message" = "Bu aygıtta mesaj geçmişiniz silinecektir.";
+"self.settings.account_details.log_out.alert.password" = "Parola";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";
@@ -1171,7 +1180,7 @@
 "landing.header" = "Wire. Hesabınızı Ekleyin.";
 "landing.create_account.title" = "Kişisel";
 "landing.create_account.subtitle" = "Arkadaş grupları ile özel olarak sohbet et\U00A0and\U00A0family";
-"landing.create_team.title" = "Profesyonel";
+"landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "İşletmeler, kurumlar ve profesyoneller için güvenli işbirliği\nprofessional\U00A0organizations";
 "landing.login.hints" = "Zaten bir hesabınız var mı?";
 "landing.login.button.title" = "Giriş yap";
@@ -1229,7 +1238,7 @@
 // Guest Room
 
 "guest_room.allow_guests.title" = "Misafirlere ve hizmetlere izin ver";
-"guest_room.allow_guests.subtitle" = "Bu sohbeti ekibinizin dışındaki servislere ve insanlara da açın.";
+"guest_room.allow_guests.subtitle" = "Bu konuşmayı ekibinizin dışındaki servislere ve insanlara da açın.";
 "guest_room.remove_guests.message" = "Mevcut misafirler ve hizmetler sohbetten kaldırılacak. Yeni misafir ve hizmetlere izin verilmeyecektir.";
 "guest_room.remove_guests.action" = "Kaldır";
 "guest_room.revoke_link.message" = "Yeni misafirler bu bağlantıya katılamayacaklar. Mevcut misafirler ise hala erişime sahip olacaktır.";
@@ -1312,7 +1321,7 @@
 // SSO – Company Login
 "login.sso.alert.title" = "Şirket olarak giriş yapın";
 "login.sso.alert.message" = "Şirket SSO erişim kodunu girin.";
-"login.sso.alert.action" = "Giriş yap";
+"login.sso.alert.action" = "Giriş yapın";
 "login.sso.alert.text_field.placeholder" = "SSO erişim kodu";
 
 "login.sso.start_error_title" = "Şirket Girişi Başlatılamıyor";
@@ -1323,7 +1332,7 @@
 "login.sso.error.alert.invalid_code.message" = "Lütfen şirketinizin SSO erişim kodunu doğrulayın ve tekrar deneyin.";
 "login.sso.error.offline.alert.message" = "Lütfen internet bağlantınızı kontrol edin ve yeniden deneyin.";
 "login.sso.error.alert.message" = "Lütfen ayrıntılar için takım yöneticinize başvurun (hata %@).";
-"login.sso.error.alert.unknown.message" = "Lütfen daha sonra tekrar deneyin.";
+"login.sso.error.alert.unknown.message" = "Lütfen daha sonra tekrar dene.";
 "login.sso.error.alert.invalid_status.message" = "Lütfen daha sonra tekrar deneyin (Hata %@).";
 
 // Restore In Progress Loading Titles
@@ -1375,8 +1384,8 @@
 "registration.push_access_denied.settings_button.title" = "Ayarlara git";
 "registration.push_access_denied.maybe_later_button.title" = "Belki sonra";
 
-"registration.personal.title" = "Bir hesap oluştur";
-"registration.signin.title" = "Giriş yap";
+"registration.personal.title" = "Hesap oluşturun";
+"registration.signin.title" = "Giriş yapın";
 "registration.signin.too_many_devices.title" = "Çok Fazla Cihaz";
 "registration.signin.too_many_devices.subtitle" = "Wire'ı bu cihazda kullanmak için diğer cihazlarınızdan birini silin.";
 "registration.signin.too_many_devices.manage_button.title" = "Cihazları yönet";
@@ -1634,8 +1643,8 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "Bu mesajı henüz kimse beğenmedi.";
-"message_details.empty_read_receipts" = "Bu mesajı henüz kimse okumadı.";
+"message_details.empty_likes" = "Bu mesajı henüz kimse beğenmemiş.";
+"message_details.empty_read_receipts" = "Bu mesajı henüz kimse okumamış.";
 "message_details.read_receipts_disabled" = "Bu mesaj gönderildiğinde okuma bilgisi açık değildi.";
 "message_details.combined_title" = "Mesaj Ayrıntıları";
 "message_details.likes_title" = "Beğendi";

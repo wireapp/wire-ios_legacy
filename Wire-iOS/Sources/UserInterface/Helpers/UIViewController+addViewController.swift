@@ -37,7 +37,7 @@ extension UIViewController {
     ///
     /// - Parameter viewController: viewController to add
     func addToSelf(_ viewController: UIViewController) {
-        add(viewController, to: self.view)
+        add(viewController, to: view)
     }
 }
 

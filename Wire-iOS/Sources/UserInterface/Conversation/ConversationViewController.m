@@ -93,7 +93,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @property (nonatomic) id voiceChannelStateObserverToken;
 @property (nonatomic) id conversationObserverToken;
 
-@property (nonatomic) BOOL isAppearing;
 @property (nonatomic) ConversationTitleView *titleView;
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
@@ -241,29 +240,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     [super didMoveToParentViewController:parent];
     [self updateGuestsBarVisibility];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self updateLeftNavigationBarItems];
-
-    if (IS_IPAD_FULLSCREEN) {
-        [self becomeFirstResponder];
-    }
-    else if (self.isFocused) {
-        // We are presenting the conversation screen so mark it as the last viewed screen,
-        // but only if we are acutally focused (otherwise we would be shown on the next launch)
-        [Settings sharedSettings].lastViewedScreen = SettingsLastScreenConversation;
-        Account *currentAccount = SessionManager.shared.accountManager.selectedAccount;
-        [[Settings sharedSettings] setLastViewedWithConversation:self.conversation for:currentAccount];
-    }
-
-    self.contentViewController.searchQueries = self.collectionController.currentTextSearchQuery;
-
-    [[ZMUserSession sharedSession] didOpenWithConversation:self.conversation];
-    
-    self.isAppearing = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated

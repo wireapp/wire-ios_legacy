@@ -22,7 +22,7 @@
 
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
-#import "Constants.h"
+
 #import "UIColor+WAZExtensions.h"
 #import "UIImage+ImageUtilities.h"
 #import "Wire-Swift.h"
@@ -138,26 +138,26 @@
 
 #pragma mark - Actions
 
-- (IBAction)acceptImage:(id)sender
+- (void)acceptImage:(id)sender
 {
     if (self.onConfirm) {
         self.onConfirm(nil);
     }
 }
 
-- (IBAction)rejectImage:(id)sender
+- (void)rejectImage:(id)sender
 {
     if (self.onCancel) {
         self.onCancel();
     }
 }
 
-- (IBAction)sketchEdit:(id)sender
+- (void)sketchEdit:(id)sender
 {
     [self openSketchInEditMode:CanvasViewControllerEditModeDraw];
 }
 
-- (IBAction)emojiEdit:(id)sender
+- (void)emojiEdit:(id)sender
 {
     [self openSketchInEditMode:CanvasViewControllerEditModeEmoji];
 }

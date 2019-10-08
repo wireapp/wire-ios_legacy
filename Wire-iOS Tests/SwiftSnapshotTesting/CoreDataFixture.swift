@@ -105,7 +105,6 @@ final class CoreDataFixture {
         setupTestObjects()
 
         MockUser.setMockSelf(selfUser)
-
     }
 
     deinit {

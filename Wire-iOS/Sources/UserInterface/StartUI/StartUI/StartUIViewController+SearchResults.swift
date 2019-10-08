@@ -18,7 +18,28 @@
 
 import Foundation
 
-class StartUIView : UIView { }
+final class StartUIView : UIView { }
+
+extension StartUIViewController {
+    private func presentProfileViewController(for bareUser: UserType?,
+                                              at indexPath: IndexPath?) {
+        searchHeaderViewController.tokenField.resignFirstResponder()
+
+        guard let indexPath = indexPath,
+            let cell = searchResultsViewController.searchResultsView?.collectionView.cellForItem(at: indexPath) else { return }
+
+
+        profilePresenter.presentProfileViewController(for: bareUser, in: self, from: view.convert(cell.bounds, from: cell), onDismiss: {
+            if self.isIPadRegular(),
+                let indexPaths = self.searchResultsViewController.searchResultsView?.collectionView.indexPathsForVisibleItems {
+                self.searchResultsViewController.searchResultsView?.collectionView.reloadItems(at: indexPaths)
+            } else if self.profilePresenter.keyboardPersistedAfterOpeningProfile {
+                    self.searchHeaderViewController.tokenField.becomeFirstResponder()
+                    self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
+            }
+        }, arrowDirection: .left)
+    }
+}
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
@@ -27,9 +48,9 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             section: SearchResultsViewControllerSection) {
         
         if !user.isConnected && !user.isTeamMember {
-            self.presentProfileViewController(for: user, at: indexPath)
+            presentProfileViewController(for: user, at: indexPath)
         } else if let unboxed = user.zmUser {
-            delegate.startUI(self, didSelect: [unboxed])
+            delegate?.startUI(self, didSelect: [unboxed])
         }
     }
     
@@ -41,14 +62,14 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
             return
         }
         
-        self.delegate.startUI(self, didSelect: [unboxedUser])
+        delegate?.startUI(self, didSelect: [unboxedUser])
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnConversation conversation: ZMConversation) {
-        if conversation.conversationType == .group || conversation.conversationType == .oneOnOne {
-            self.delegate.startUI?(self, didSelect: conversation)
-        }
+        guard conversation.conversationType == .group || conversation.conversationType == .oneOnOne else { return }
+
+        delegate?.startUI(self, didSelect: conversation)
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
@@ -57,20 +78,21 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         let detail = ServiceDetailViewController(serviceUser: user,
                                                  actionType: .openConversation,
                                                  variant: ServiceDetailVariant(colorScheme: .dark, opaque: false)) { [weak self] result in
-            guard let `self` = self else { return }
+            guard let weakSelf = self else { return }
+
             if let result = result {
                 switch result {
                 case .success(let conversation):
-                    self.delegate.startUI?(self, didSelect: conversation)
+                    weakSelf.delegate?.startUI(weakSelf, didSelect: conversation)
                 case .failure(let error):
-                    error.displayAddBotError(in: self)
+                    error.displayAddBotError(in: weakSelf)
                 }
             } else {
-                self.navigationController?.dismiss(animated: true, completion: nil)
+                weakSelf.navigationController?.dismiss(animated: true, completion: nil)
             }
         }
         
-        self.navigationController?.pushViewController(detail, animated: true)
+        navigationController?.pushViewController(detail, animated: true)
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
@@ -106,14 +128,16 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
         
         GuestRoomEvent.created.track()
-        self.showLoadingView = true
-        userSession.performChanges {
+        showLoadingView = true
+        userSession.performChanges { [weak self] in
+            guard let weakSelf = self else { return }
+
             let conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession,
                                                                       withParticipants: [],
                                                                       name: "general.guest-room-name".localized,
                                                                       in: ZMUser.selfUser().team,
                                                                       allowGuests: true)
-            self.delegate.startUI?(self, didSelect: conversation)
+            self?.delegate?.startUI(weakSelf, didSelect: conversation)
         }
     }
 }
@@ -135,8 +159,10 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
                                         participants: Set<ZMUser>,
                                         allowGuests: Bool,
                                         enableReceipts: Bool) {
-        dismiss(controller: controller) {
-            self.delegate.startUI(self, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        dismiss(controller: controller) { [weak self] in
+            guard let weakSelf = self else { return }
+
+            weakSelf.delegate?.startUI(weakSelf, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
         }
     }
     

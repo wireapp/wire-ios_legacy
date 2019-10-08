@@ -23,7 +23,7 @@
 #import "SwizzleTransition.h"
 #import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "Constants.h"
+
 #import "Geometry.h"
 
 #import "Wire-Swift.h"
@@ -236,26 +236,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)updateConstraintsForSize:(CGSize)size {
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
-}
-
-- (void)updateConstraintsForSize:(CGSize)size willMoveToEmptyView:(BOOL)toEmptyView
-{
-    if (self.layoutSize == SplitViewControllerLayoutSizeCompact) {
-        self.leftViewWidthConstraint.constant = size.width;
-        self.rightViewWidthConstraint.constant = size.width;
-    }
-    else if (self.layoutSize == SplitViewControllerLayoutSizeRegularPortrait) {
-        self.leftViewWidthConstraint.constant = MIN(CGRound(size.width * 0.43), 336);
-        if(self.rightViewController == nil || toEmptyView) {
-            self.rightViewWidthConstraint.constant = size.width - self.leftViewWidthConstraint.constant;
-        } else {
-            self.rightViewWidthConstraint.constant = size.width;
-        }
-    }
-    else {
-        self.leftViewWidthConstraint.constant = MIN(CGRound(size.width * 0.43), 336);
-        self.rightViewWidthConstraint.constant = size.width - self.leftViewWidthConstraint.constant;
-    }
 }
 
 - (void)updateLayoutSizeAndLeftViewVisibility
@@ -500,7 +480,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
         return;
     }
     
-    if (self.leftViewControllerRevealed && ! IS_IPAD_FULLSCREEN) {
+    if (!self.isConversationViewVisible) {
         return;
     }
     

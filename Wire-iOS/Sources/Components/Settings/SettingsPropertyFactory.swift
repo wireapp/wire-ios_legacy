@@ -33,7 +33,7 @@ extension AVSMediaManager: AVSMediaManagerInterface {
 }
 
 protocol ValidatorType {
-    static func validateName(_ ioName: AutoreleasingUnsafeMutablePointer<NSString?>?) throws
+    static func validate(name: inout String?) throws -> Bool
 }
 
 extension ZMUser: ValidatorType {
@@ -118,8 +118,8 @@ class SettingsPropertyFactory {
                 case .string(let stringValue):
                     guard let selfUser = self.selfUser else { requireInternal(false, "Attempt to modify a user property without a self user"); break }
 
-                    var inOutString: NSString? = stringValue as NSString
-                    try type(of: selfUser).validateName(&inOutString)
+                    var inOutString: String? = stringValue as String
+                    _ = try type(of: selfUser).validate(name: &inOutString)
                     self.userSession?.enqueueChanges {
                         selfUser.name = stringValue
                     }

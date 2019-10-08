@@ -21,14 +21,18 @@ import Foundation
 
 extension ZClientViewController {
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
+    // MARK: - Setup methods
+
+    ///TODO: caller to Swift and accept SelfUserType as paramenter
+    @objc
+    func setupConversationListViewController(account: Account, selfUser: UserType) {
+        guard let selfUser = selfUser as? SelfUserType else { return }
+        
+        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 
-    func transitionToListIfPossible() {
-        guard splitViewController.layoutSize == .regularPortrait else { return }
-
-        transitionToList(animated: true, completion: nil)
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     @objc(transitionToListAnimated:completion:)
@@ -213,22 +217,46 @@ extension ZClientViewController {
         }
     }
 
-    /// Open the user clients detail screen
+    ///MARK: - select conversation
+
+    
+    /// Select a conversation and move the focus to the conversation view.
     ///
-    /// - Parameter client: the UserClient to show
-    func openDetailScreen(for client: UserClient) {
-        var viewController: UIViewController?
-
-        if let user = client.user, user.isSelfUser {
-            let userClientViewController = SettingsClientViewController(userClient: client, credentials: nil)
-            viewController = SettingsStyleNavigationController(rootViewController: userClientViewController)
-        } else {
-            viewController = ProfileClientViewController(client: client)
-        }
-
-        if let viewController = viewController {
-            viewController.modalPresentationStyle = .formSheet
-            present(viewController, animated: true)
-        }
+    /// - Parameters:
+    ///   - conversation: the conversation to select
+    ///   - message: scroll to  this message
+    ///   - focus: focus on the view or not
+    ///   - animated: perform animation or not
+    ///   - completion: the completion block
+    @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
+    func select(_ conversation: ZMConversation,
+                scrollTo message: ZMConversationMessage?,
+                focusOnView focus: Bool,
+                animated: Bool,
+                completion: Completion?) {
+        dismissAllModalControllers(callback: { [weak self] in
+            self?.conversationListViewController.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+        })
     }
+
+    @objc(selectConversation:)
+    func select(_ conversation: ZMConversation) {
+        conversationListViewController.viewModel.select(conversation)
+    }
+
+    @objc
+    var isConversationViewVisible: Bool {
+        return splitViewController.isConversationViewVisible
+    }
+
+    var isConversationListVisible: Bool {
+        return (splitViewController.layoutSize == .regularLandscape) || (splitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
+    }
+
+    @objc
+    func minimizeCallOverlay(animated: Bool,
+                             withCompletion completion: Completion?) {
+        AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+    }
+
 }
