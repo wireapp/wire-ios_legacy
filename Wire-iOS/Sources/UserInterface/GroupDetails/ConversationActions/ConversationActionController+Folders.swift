@@ -22,6 +22,16 @@ extension ConversationActionController {
     
     func openMoveToFolder(for conversation: ZMConversation) {
         let folderPicker = FolderPickerViewController(conversation: conversation)
-        self.present(folderPicker)
+        folderPicker.delegate = self
+        let navigationController = UINavigationController(rootViewController: folderPicker)
+        self.present(navigationController)
     }
+}
+
+extension ConversationActionController: FolderPickerViewControllerDelegate {
+    
+    func didPickFolder(_ folder: LabelType, for conversation: ZMConversation) {
+
+    }
+    
 }

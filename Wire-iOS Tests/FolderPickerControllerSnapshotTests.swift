@@ -27,8 +27,12 @@ class FolderPickerControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.setUp()
         
         let convo = createTeamGroupConversation()
-        sut = FolderPickerViewController(conversation: convo,
-                                         folders: ["Folder A", "Folder B", "Folder C"])
+        let directory = ZMUserSession.shared()!.conversationDirectory
+        _ = directory.createFolder("Folder A")
+        _ = directory.createFolder("Folder B")
+        _ = directory.createFolder("Folder C")
+        
+        sut = FolderPickerViewController(conversation: convo)
         accentColor = .violet
     }
     

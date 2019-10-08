@@ -27,7 +27,8 @@ class FolderPickerViewController: UIViewController {
 
     var delegate: FolderPickerViewControllerDelegate?
     
-    fileprivate var items: [LabelType] = []
+    fileprivate var items: [LabelType]!
+    fileprivate let colorSchemeVariant = ColorScheme.default.variant
     fileprivate let conversation: ZMConversation
     private let collectionViewLayout = UICollectionViewFlowLayout()
     
@@ -38,8 +39,8 @@ class FolderPickerViewController: UIViewController {
     
     public init(conversation: ZMConversation) {
         self.conversation = conversation
-        self.items = ZMUserSession.shared()?.conversationDirectory.allFolders ?? []
         super.init(nibName: nil, bundle: nil)
+        loadFolders()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +50,17 @@ class FolderPickerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureNavbar()
+        configureSubviews()
+        configureConstraints()
+    }
+    
+    private func configureNavbar() {
+        
         title = "folder.picker.title".localized(uppercased: true)
+        self.navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
+        
         navigationItem.leftBarButtonItem = navigationController?.closeItem()
         
         let newFolderItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(createNewFolder))
@@ -57,8 +68,10 @@ class FolderPickerViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = newFolderItem
         
-        configureSubviews()
-        configureConstraints()
+    }
+    
+    private func loadFolders() {
+        self.items = ZMUserSession.shared()?.conversationDirectory.allFolders ?? []
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -121,8 +134,8 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
     private func pickFolder(_ folder: LabelType) {
         
         self.conversation.moveToFolder(folder)
-        
         self.delegate?.didPickFolder(folder, for: conversation)
+        self.dismissIfNeeded()
     }
     
     private func handle(error: Error) {
@@ -146,8 +159,7 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
 
 extension FolderPickerViewController : FolderCreationControllerDelegate {
     func folderController(_ controller: FolderCreationController, didCreateFolder folder: LabelType) {
-        
-        
-        // logic to reload folders
+        loadFolders()
+        self.collectionView.reloadData()
     }
 }

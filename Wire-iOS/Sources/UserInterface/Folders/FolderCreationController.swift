@@ -61,7 +61,7 @@ final class FolderCreationController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
     
