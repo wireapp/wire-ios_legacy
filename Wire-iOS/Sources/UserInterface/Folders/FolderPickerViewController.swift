@@ -17,16 +17,17 @@
 //
 
 import UIKit
+import WireDataModel
 
 protocol FolderPickerViewControllerDelegate {
-    func didPickFolder(_ folder: String, for conversation: ZMConversation)
+    func didPickFolder(_ folder: LabelType, for conversation: ZMConversation)
 }
 
 class FolderPickerViewController: UIViewController {
 
     var delegate: FolderPickerViewControllerDelegate?
     
-    fileprivate var items: [String] = []
+    fileprivate var items: [LabelType] = []
     fileprivate let conversation: ZMConversation
     private let collectionViewLayout = UICollectionViewFlowLayout()
     
@@ -35,9 +36,9 @@ class FolderPickerViewController: UIViewController {
     }()
     
     
-    public init(conversation: ZMConversation, folders: [String]) {
+    public init(conversation: ZMConversation) {
         self.conversation = conversation
-        self.items = folders
+        self.items = ZMUserSession.shared()?.conversationDirectory.allFolders ?? []
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -108,20 +109,20 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let item = items[indexPath.row]
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
-        cell.title = item
+        let item = items[indexPath.row]
+        cell.title = item.name
         cell.showCheckmark = false
         cell.showSeparator = indexPath.row < (items.count - 1)
         
         return cell
     }
     
-    private func pickFolder(_ name: String) {
+    private func pickFolder(_ folder: LabelType) {
         
-        /// TODO logic for choosing folder
+        self.conversation.moveToFolder(folder)
         
-        self.delegate?.didPickFolder(name, for: conversation)
+        self.delegate?.didPickFolder(folder, for: conversation)
     }
     
     private func handle(error: Error) {
@@ -144,8 +145,8 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
 }
 
 extension FolderPickerViewController : FolderCreationControllerDelegate {
-    func folderController(_ controller: FolderCreationController, didCreateFolder name: String) {
-        self.items.append(name)
+    func folderController(_ controller: FolderCreationController, didCreateFolder folder: LabelType) {
+        
         
         // logic to reload folders
     }

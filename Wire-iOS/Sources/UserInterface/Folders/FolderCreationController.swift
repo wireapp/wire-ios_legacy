@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Cartography
+import WireDataModel
 
 protocol FolderCreationValuesConfigurable: class {
     func configure(with name: String)
@@ -28,7 +29,7 @@ protocol FolderCreationValuesConfigurable: class {
     
     func folderController(
         _ controller: FolderCreationController,
-        didCreateFolder name: String)
+        didCreateFolder folder: LabelType)
     
 }
 
@@ -146,10 +147,10 @@ final class FolderCreationController: UIViewController {
             nameSection.resignFirstResponder()
             folderName = trimmed
             
-            /// TODO: logic for creating folder and dismiss it
-            
-            self.delegate?.folderController(self, didCreateFolder: folderName)
-            self.navigationController?.popViewController(animated: true)
+            if let folder = ZMUserSession.shared()?.conversationDirectory.createFolder(folderName) {
+                self.delegate?.folderController(self, didCreateFolder: folder)
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
     

@@ -21,7 +21,7 @@ import UIKit
 extension ConversationActionController {
     
     func openMoveToFolder(for conversation: ZMConversation) {
-        let folderPicker = FolderPickerViewController(conversation: conversation, folders: [])
+        let folderPicker = FolderPickerViewController(conversation: conversation)
         self.present(folderPicker)
     }
 }
