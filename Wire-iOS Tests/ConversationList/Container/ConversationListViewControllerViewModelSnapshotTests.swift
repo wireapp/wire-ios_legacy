@@ -34,7 +34,7 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         
         sut.viewController = mockViewController
 
-        recordMode = true
+//        recordMode = true
     }
     
     override func tearDown() {
@@ -61,18 +61,44 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         }
     }
 
-    func testForActionMenu_removeFolder() {
-        let mockConversation = MockConversation()
-        mockConversation.folderName = "Test Folder"
-        sut.showActionMenu(for: mockConversation, from: mockViewController.view)
-        verifyAlertController((sut?.actionsController?.alertController)!)
-    }
-
     func testForActionMenu_NoTeam() {
         nonTeamTest {
             sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
+    }
+}
+
+final class ConversationActionControllerSnapshotTests: ZMSnapshotTestCase {
+    var sut: ConversationListViewController.ViewModel!
+    fileprivate var mockViewController: MockConversationListContainer!
+    
+    override func setUp() {
+        super.setUp()
+        
+        let account = Account.mockAccount(imageData: Data())
+        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        
+        mockViewController = MockConversationListContainer(viewModel: sut)
+        
+        sut.viewController = mockViewController
+        
+        recordMode = true
+    }
+    
+    override func tearDown() {
+        sut = nil
+        mockViewController = nil
+        
+        super.tearDown()
+    }
+
+
+    func testForActionMenu_removeFolder() {
+        let mockConversation = MockConversation()
+        mockConversation.folderName = "Test Folder"
+        sut.showActionMenu(for: mockConversation, from: mockViewController.view)
+        verifyAlertController((sut?.actionsController?.alertController)!)
     }
 }
 
