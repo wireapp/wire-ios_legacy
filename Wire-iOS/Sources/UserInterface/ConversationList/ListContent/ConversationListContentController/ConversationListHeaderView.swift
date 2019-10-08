@@ -29,8 +29,6 @@ typealias TapHandler = (_ collapsed: Bool) -> Void
 final class ConversationListHeaderView: UICollectionReusableView {
     var collapsed = false {
         didSet {
-            updateAccessibility()
-
             guard collapsed != oldValue else { return }
             // update rotation
             
@@ -72,6 +70,16 @@ final class ConversationListHeaderView: UICollectionReusableView {
         }
     }
 
+    override var accessibilityValue: String? {
+        get {
+            return collapsed ? "collapsed" : "expended"
+        }
+
+        set {
+            //no op
+        }
+    }
+
     private let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
         
@@ -80,10 +88,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
         return imageView
     }()
 
-    func updateAccessibility() {
-        accessibilityValue = collapsed ? "collapsed" : "expended"
-    }
-    
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -95,8 +99,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
         isAccessibilityElement = true
         shouldGroupAccessibilityChildren = true
-
-        updateAccessibility()
     }
     
     @objc
