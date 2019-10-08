@@ -22,6 +22,7 @@ extension ZMConversation {
     enum Action: Equatable {
         
         case deleteGroup
+        case moveToFolder
         case clearContent
         case leave
         case configureNotifications
@@ -96,6 +97,7 @@ extension ZMConversation {
         if !isReadOnly {
             if ZMUser.selfUser()?.isTeamMember ?? false {
                 actions.append(.configureNotifications)
+                actions.append(.moveToFolder)
             }
             else {
                 let isSilenced = mutedMessageTypes != .none
@@ -136,6 +138,7 @@ extension ZMConversation.Action {
     private var localizationKey: String {
         switch self {
         case .deleteGroup: return "meta.menu.delete"
+        case .moveToFolder: return "meta.menu.move_to_folder"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"

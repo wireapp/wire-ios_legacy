@@ -109,6 +109,8 @@ final class ConversationActionController {
         case .block: self.requestBlockResult(for: self.conversation) { result in
             self.handleBlockResult(result, for: self.conversation)
             }
+        case .moveToFolder:
+            self.openMoveToFolder(for: self.conversation)
         case .remove: fatalError()
         }
     }

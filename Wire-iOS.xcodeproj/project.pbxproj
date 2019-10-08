@@ -428,6 +428,7 @@
 		7C440E8123473F8500D91B5F /* FolderCreationControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E7E23473A0F00D91B5F /* FolderCreationControllerSnapshotTests.swift */; };
 		7C440E83234B35CB00D91B5F /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E82234B35CB00D91B5F /* FolderPickerViewController.swift */; };
 		7C440E86234B460400D91B5F /* FolderPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E84234B460100D91B5F /* FolderPickerControllerSnapshotTests.swift */; };
+		7C440E89234CE72F00D91B5F /* ConversationActionController+Folders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */; };
 		7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */; };
 		7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */; };
 		7C52F723200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */; };
@@ -2002,6 +2003,7 @@
 		7C440E7E23473A0F00D91B5F /* FolderCreationControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		7C440E82234B35CB00D91B5F /* FolderPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
 		7C440E84234B460100D91B5F /* FolderPickerControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPickerControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Folders.swift"; sourceTree = "<group>"; };
 		7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddBotError+UIHandler.swift"; sourceTree = "<group>"; };
 		7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+SafeArea.swift"; sourceTree = "<group>"; };
 		7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraKeyboardPermissionsCell.swift; sourceTree = "<group>"; };
@@ -4223,6 +4225,13 @@
 			path = Folders;
 			sourceTree = "<group>";
 		};
+		7C440E87234CE71B00D91B5F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		7C5836621FD5AB98001CC843 /* Availability */ = {
 			isa = PBXGroup;
 			children = (
@@ -6113,6 +6122,7 @@
 		D550F57320444BE8009E09DD /* ConversationActions */ = {
 			isa = PBXGroup;
 			children = (
+				7C440E87234CE71B00D91B5F /* New Group */,
 				D550F5762044532D009E09DD /* ConversationAction.swift */,
 				5E3A6C21206A3AD500907484 /* ConversationActionController.swift */,
 				BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */,
@@ -6124,6 +6134,7 @@
 				D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */,
 				D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */,
 				D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */,
+				7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */,
 			);
 			path = ConversationActions;
 			sourceTree = "<group>";
@@ -8197,6 +8208,7 @@
 				EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */,
 				1639A85B2264EAB800868AB9 /* AvailabilityTitleViewController.swift in Sources */,
 				EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */,
+				7C440E89234CE72F00D91B5F /* ConversationActionController+Folders.swift in Sources */,
 				EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */,
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,

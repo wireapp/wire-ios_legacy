@@ -712,6 +712,7 @@
 "meta.menu.unarchive" = "Unarchive";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";
