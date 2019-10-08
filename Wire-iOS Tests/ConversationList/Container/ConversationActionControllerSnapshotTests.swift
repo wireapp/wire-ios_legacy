@@ -50,10 +50,8 @@ final class ConversationActionControllerSnapshotTests: XCTestCase {
 
         let sut = (viewModel?.actionsController)!
         let alert = sut.alertController!
-//        verifyAlertController()
-        presentViewController(alert)
+
         verify(matching: alert)
-        dismissViewController(alert)
 
     }
 }

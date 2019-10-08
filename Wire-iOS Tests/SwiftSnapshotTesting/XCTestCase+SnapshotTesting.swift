@@ -69,16 +69,23 @@ extension XCTestCase {
 
 
     /// verify for a UIAlertController
-    /// NOTICE: UIAlertController actionSheet not work may crash for fatal error
     func verify(matching value: UIAlertController,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
 
+        if value.preferredStyle == .actionSheet {
+            presentViewController(value, file: file, line: line)
+        }
+
         let failure = verifySnapshot(matching: value,
                                      as: .image,
                                      snapshotDirectory: snapshotDirectory(file: file),
                                      file: file, testName: testName, line: line)
+
+        if value.preferredStyle == .actionSheet {
+            dismissViewController(value, file: file, line: line)
+        }
 
         XCTAssertNil(failure, file: file, line: line)
     }
