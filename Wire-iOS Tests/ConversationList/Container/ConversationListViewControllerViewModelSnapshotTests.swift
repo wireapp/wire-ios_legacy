@@ -50,7 +50,15 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
     }
-    
+
+    func testForActionMenu_archive() {
+        teamTest {
+            otherUserConversation.isArchived = true
+            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
+
     func testForActionMenu_NoTeam() {
         nonTeamTest {
             sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)

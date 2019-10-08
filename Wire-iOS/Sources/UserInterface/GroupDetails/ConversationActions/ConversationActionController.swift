@@ -111,6 +111,10 @@ final class ConversationActionController {
             }
         case .moveToFolder:
             self.openMoveToFolder(for: self.conversation)
+        case .favorite(isFavorite: let isFavorite):
+            enqueue {
+                self.conversation.isFavorite = !isFavorite
+            }
         case .remove: fatalError()
         }
     }

@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objc class ConversationMessageActionController: NSObject {
+final class ConversationMessageActionController: NSObject {
 
     @objc(ConversationMessageActionControllerContext)
     enum Context: Int {
