@@ -109,6 +109,10 @@ final class ConversationActionController {
         case .block: self.requestBlockResult(for: self.conversation) { result in
             self.handleBlockResult(result, for: self.conversation)
             }
+        case .favorite(isFavorite: let isFavorite):
+            enqueue {
+                self.conversation.isFavorite = !isFavorite
+            }
         case .remove: fatalError()
         }
     }

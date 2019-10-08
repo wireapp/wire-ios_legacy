@@ -32,6 +32,7 @@ extension ZMConversation {
         case markRead
         case markUnread
         case remove
+        case favorite(isFavorite: Bool)
     }
     
     var listActions: [Action] {
@@ -104,6 +105,11 @@ extension ZMConversation {
         }
 
         actions.append(.archive(isArchived: isArchived))
+
+        if !isArchived {
+            actions.append(.favorite(isFavorite: isFavorite))
+        }
+
         return actions
     }
     
@@ -146,6 +152,7 @@ extension ZMConversation.Action {
         case .archive(isArchived: let archived): return "meta.menu.\(archived ? "unarchive" : "archive")"
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
+        case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
         }
     }
     

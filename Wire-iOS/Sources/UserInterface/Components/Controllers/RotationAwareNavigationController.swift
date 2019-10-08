@@ -19,7 +19,11 @@
 
 import Foundation
 
-final class RotationAwareNavigationController: UINavigationController {
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
+    
+    // PopoverPresenter
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?    
     
     override var shouldAutorotate : Bool {
         if let topController = self.viewControllers.last {

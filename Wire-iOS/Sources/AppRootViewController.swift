@@ -46,6 +46,7 @@ final class AppRootViewController: UIViewController {
 
     var authenticationCoordinator: AuthenticationCoordinator?
 
+    // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
 
