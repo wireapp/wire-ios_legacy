@@ -40,10 +40,31 @@ extension ConversationListViewController.ViewModel: ConversationListContentDeleg
 }
 
 extension ConversationListViewController.ViewModel {
-    func showActionMenu(for conversation: ZMConversation!, from view: UIView!) {
+    func showActionMenu(for conversation: ConversationInterface!, from view: UIView!) {
         guard let viewController = viewController as? UIViewController else { return }
 
         actionsController = ConversationActionController(conversation: conversation, target: viewController)
         actionsController?.presentMenu(from: view, context: .list)
     }
 }
+
+protocol ConversationInterface: class {
+    var conversationType: ZMConversationType { get }
+    var teamRemoteIdentifier: UUID? { get set }
+    var connectedUser: ZMUser? { get }
+    var displayName: String { get }
+    var isArchived: Bool { get set }
+    var isReadOnly: Bool { get }
+    var isFavorite: Bool { get }
+    var mutedMessageTypes: MutedMessageTypes { get set }
+    var activeParticipants: Set<ZMUser> { get }
+    var folderName: String? { get }
+    var unreadMessages: [ZMConversationMessage] { get }
+
+    func canMarkAsUnread() -> Bool
+}
+
+extension ZMConversation: ConversationInterface {}
+
+//extension ConversationInterface {
+//}

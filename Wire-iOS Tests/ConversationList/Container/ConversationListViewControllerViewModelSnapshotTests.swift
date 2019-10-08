@@ -33,6 +33,8 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         mockViewController = MockConversationListContainer(viewModel: sut)
         
         sut.viewController = mockViewController
+
+        recordMode = true
     }
     
     override func tearDown() {
@@ -54,6 +56,17 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
     func testForActionMenu_archive() {
         teamTest {
             otherUserConversation.isArchived = true
+            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
+            verifyAlertController((sut?.actionsController?.alertController)!)
+        }
+    }
+
+    func testForActionMenu_removeFolder() {
+        teamTest {
+            let mockLabel = Label()
+            mockLabel.name = "Test Folder"
+            otherUserConversation.labels = [mockLabel]
+
             sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
             verifyAlertController((sut?.actionsController?.alertController)!)
         }
