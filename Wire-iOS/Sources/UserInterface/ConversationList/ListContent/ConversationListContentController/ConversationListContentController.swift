@@ -96,7 +96,7 @@ extension ConversationListContentController {
             fatal("Unknown cell type")
         }
 
-        (cell as? SectionListCellType)?.sectionName = listViewModel.sectionName(of: indexPath.section)
+        (cell as? SectionListCellType)?.sectionName = listViewModel.sectionCanonicalName(of: indexPath.section)
 
         cell.autoresizingMask = .flexibleWidth
 

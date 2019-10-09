@@ -50,6 +50,15 @@ final class ConversationListViewModel: NSObject {
             
             var identifier: SectionIdentifier {
                 switch self {
+                case.folder(label: let label):
+                    return label.remoteIdentifier?.transportString() ?? "folder"
+                default:
+                    return canonicalName
+                }
+            }
+            
+            var canonicalName: String {
+                switch self {
                 case .contactRequests:
                     return "contactRequests"
                 case .conversations:
@@ -61,11 +70,11 @@ final class ConversationListViewModel: NSObject {
                 case .favorites:
                     return "favorites"
                 case .folder(label: let label):
-                    return label.remoteIdentifier?.transportString() ?? "folder"
+                    return label.name ?? "folder"
                 }
             }
             
-            var title: String? {
+            var localizedName: String? {
                 switch self {
                 case .conversations:
                     return nil
@@ -219,7 +228,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
-        return kind(of: sectionIndex)?.title
+        return kind(of: sectionIndex)?.localizedName
     }
 
     /// return true if seaction header is visible.
@@ -243,12 +252,13 @@ final class ConversationListViewModel: NSObject {
         return sections[sectionIndex].kind
     }
 
-    /// Get section's title
+
+    /// Section's canonical name
     ///
     /// - Parameter sectionIndex: section index of the collection view
-    /// - Returns: localizated title
-    func sectionName(of sectionIndex: Int) -> String? {
-        return kind(of: sectionIndex)?.title
+    /// - Returns: canonical name
+    func sectionCanonicalName(of sectionIndex: Int) -> String? {
+        return kind(of: sectionIndex)?.canonicalName
     }
 
     @objc
