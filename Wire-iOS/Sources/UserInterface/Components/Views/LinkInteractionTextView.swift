@@ -102,16 +102,25 @@ extension LinkInteractionTextView: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
-        case .invokeDefaultAction:
+        case .invokeDefaultAction: ///TODO: tap on iOS 12 sim link goes to here
+            
             guard !UIMenuController.shared.isMenuVisible else {
                 return false // Don't open link/show alert if menu controller is visible
             }
-            
+
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-            // data detector links should be handle by the system
-            return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
-        case .presentActions:
+
+            if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
+                
+                // data detector links should be handle by the system
+                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            }
+            
+            return true
+            
+            
+        case .presentActions:///TODO: check iOS13 goes to here?
             interactionDelegate?.textViewDidLongPress(self)
             return false
         case .preview:
