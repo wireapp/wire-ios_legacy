@@ -209,9 +209,9 @@ final class ConversationListViewModel: NSObject {
 
     private var conversationDirectoryToken: Any?
 
-    private let userSession: UserSessionSwiftInterface
+    private let userSession: UserSessionSwiftInterface?
 
-    init(userSession: UserSessionSwiftInterface = ZMUserSession.shared()!) {
+    init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
         self.userSession = userSession
 
         super.init()
@@ -224,7 +224,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func setupObservers() {
-        conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
+        conversationDirectoryToken = userSession?.conversationDirectory.addObserver(self)
     }
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
@@ -458,6 +458,8 @@ final class ConversationListViewModel: NSObject {
     
     /// Create the section structure
     private func createSections() {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return }
+        
         var kinds: [Section.Kind]
         if folderEnabled {
             kinds = [.contactRequests,
@@ -465,14 +467,14 @@ final class ConversationListViewModel: NSObject {
                      .groups,
                      .contacts]
             
-            let folders: [Section.Kind] = userSession.conversationDirectory.allFolders.map({ .folder(label: $0) })
+            let folders: [Section.Kind] = conversationDirectory.allFolders.map({ .folder(label: $0) })
             kinds.append(contentsOf: folders)
         } else {
             kinds = [.contactRequests,
                      .conversations]
         }
         
-        sections = kinds.map{ Section(kind: $0, conversationDirectory: userSession.conversationDirectory) }
+        sections = kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory) }
     }
     
     private func sectionItems(for kind: Section.Kind) -> [AnyHashable]? {
@@ -507,12 +509,13 @@ final class ConversationListViewModel: NSObject {
     
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return false }
         guard let sectionNumber = self.sectionNumber(for: kind) else {
             reload()
             return false
         }
 
-        let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: userSession.conversationDirectory)
+        let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
 
         /// no need to update collapsed section's cells but the section header, update the stored list
         /// hide section header if no items
