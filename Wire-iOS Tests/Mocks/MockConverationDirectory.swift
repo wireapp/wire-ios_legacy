@@ -17,27 +17,30 @@
 //
 
 import Foundation
-@testable import Wire
 
-final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
-
-    func performChanges(_ block: @escaping () -> Swift.Void) {
-        block()
-    }
-
-    func enqueueChanges(_ block: @escaping () -> Swift.Void) {
-        block()
-    }
-
-    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!) {
-        block()
-        completionHandler()
+class MockConversationDirectory: ConversationDirectoryType {
+    
+    var allFolders: [LabelType] = []
+    var mockGroupConversations: [ZMConversation] = []
+    var mockContactsConversations: [ZMConversation] = []
+    
+    func createFolder(_ name: String) -> LabelType? {
+        return nil
     }
     
-    var mockConversationDirectory = MockConversationDirectory()
-    var conversationDirectory: ConversationDirectoryType {
-        return mockConversationDirectory
+    func addObserver(_ observer: ConversationDirectoryObserver) -> Any {
+        return "token"
     }
-
-    var isNotificationContentHidden: Bool = false
+    
+    func conversations(by type: ConversationListType) -> [ZMConversation] {
+        switch type {
+        case .groups:
+            return mockGroupConversations
+        case .contacts:
+            return mockContactsConversations
+        default:
+            return []
+        }
+    }
+    
 }

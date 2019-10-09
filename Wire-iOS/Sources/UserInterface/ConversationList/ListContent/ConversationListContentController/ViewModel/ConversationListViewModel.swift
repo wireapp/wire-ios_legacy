@@ -113,8 +113,8 @@ final class ConversationListViewModel: NSObject {
             return items.firstIndex(of: item)
         }
 
-        init(kind: Kind, userSession: UserSessionSwiftInterface?) {
-            items = ConversationListViewModel.newList(for: kind, userSession: userSession)
+        init(kind: Kind, conversationDirectory: ConversationDirectoryType) {
+            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             self.kind = kind
         }
     }
@@ -200,9 +200,9 @@ final class ConversationListViewModel: NSObject {
 
     private var conversationDirectoryToken: Any?
 
-    private let userSession: UserSessionSwiftInterface?
+    private let userSession: UserSessionSwiftInterface
 
-    init(userSession: UserSessionSwiftInterface? = ZMUserSession.shared()) {
+    init(userSession: UserSessionSwiftInterface = ZMUserSession.shared()!) {
         self.userSession = userSession
 
         super.init()
@@ -215,10 +215,6 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func setupObservers() {
-        guard let userSession = ZMUserSession.shared() else {
-            return
-        }
-
         conversationDirectoryToken = userSession.conversationDirectory.addObserver(self)
     }
 
@@ -301,14 +297,12 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private static func newList(for kind: Section.Kind, userSession: UserSessionSwiftInterface?) -> [AnyHashable] {
-        guard let userSession = userSession else { return [] } 
-
+    private static func newList(for kind: Section.Kind, conversationDirectory: ConversationDirectoryType) -> [AnyHashable] {
         let conversationListType: ConversationListType
         switch kind {
         case .contactRequests:
             conversationListType = .pending
-            return userSession.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
+            return conversationDirectory.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
         case .conversations:
             conversationListType = .unarchived
         case .contacts:
@@ -321,7 +315,7 @@ final class ConversationListViewModel: NSObject {
             conversationListType = .folder(label)
         }
 
-        return userSession.conversations(by: conversationListType)
+        return conversationDirectory.conversations(by: conversationListType)
     }
 
     private func reload() {
@@ -461,14 +455,14 @@ final class ConversationListViewModel: NSObject {
                      .groups,
                      .contacts]
             
-            let folders: [Section.Kind] = ZMUserSession.shared()!.conversationDirectory.allFolders.map({ .folder(label: $0) })
+            let folders: [Section.Kind] = userSession.conversationDirectory.allFolders.map({ .folder(label: $0) })
             kinds.append(contentsOf: folders)
         } else {
             kinds = [.contactRequests,
                      .conversations]
         }
         
-        sections = kinds.map{ Section(kind: $0, userSession: userSession) }
+        sections = kinds.map{ Section(kind: $0, conversationDirectory: userSession.conversationDirectory) }
     }
     
     private func sectionItems(for kind: Section.Kind) -> [AnyHashable]? {
@@ -508,7 +502,7 @@ final class ConversationListViewModel: NSObject {
             return false
         }
 
-        let newConversationList = ConversationListViewModel.newList(for: kind, userSession: userSession)
+        let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: userSession.conversationDirectory)
 
         /// no need to update collapsed section's cells but the section header, update the stored list
         /// hide section header if no items
