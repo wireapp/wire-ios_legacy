@@ -129,8 +129,6 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
     }
     
     private func pickFolder(_ folder: LabelType) {
-        
-        self.conversation.moveToFolder(folder)
         self.delegate?.didPickFolder(folder, for: conversation)
         self.dismissIfNeeded()
     }
@@ -155,8 +153,9 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
 }
 
 extension FolderPickerViewController : FolderCreationControllerDelegate {
+    
     func folderController(_ controller: FolderCreationController, didCreateFolder folder: LabelType) {
-        loadFolders()
-        self.collectionView.reloadData()
+        pickFolder(folder)
     }
+    
 }

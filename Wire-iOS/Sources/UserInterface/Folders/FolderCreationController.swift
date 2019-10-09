@@ -151,7 +151,6 @@ final class FolderCreationController: UIViewController {
             
             if let folder = ZMUserSession.shared()?.conversationDirectory.createFolder(folderName) {
                 self.delegate?.folderController(self, didCreateFolder: folder)
-                self.navigationController?.popViewController(animated: true)
             }
         }
     }
