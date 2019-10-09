@@ -154,7 +154,7 @@ final class ConversationListViewModel: NSObject {
     }
     weak var stateDelegate: ConversationListViewModelStateDelegate? {
         didSet {
-            delegateCollapseState(newState: state)
+            delegateFolderEnableState(newState: state)
         }
     }
 
@@ -174,7 +174,7 @@ final class ConversationListViewModel: NSObject {
                 restoreCollapse()
             }
 
-            delegateCollapseState(newState: state)
+            delegateFolderEnableState(newState: state)
         }
         
         get {
@@ -206,10 +206,6 @@ final class ConversationListViewModel: NSObject {
 
         set {
             /// simulate willSet
-            /// pass collapsed state to VC
-            if newValue != state {
-                delegateCollapseState(newState: newValue)
-            }
 
             /// assign
             if newValue != _state {
@@ -237,24 +233,8 @@ final class ConversationListViewModel: NSObject {
         restoreState()
     }
 
-    private func delegateCollapseState(newState: State) {
-        let expandedSet: Set<Section.Kind>
-        let collapsedSet: Set<Section.Kind>
-
-        if newState.folderEnabled {
-            expandedSet = Set<Section.Kind>(sections.compactMap({
-                return $0.items.isEmpty ? nil : $0.kind
-            })).subtracting(newState.collapsed)
-
-            collapsedSet = newState.collapsed
-        } else {
-            expandedSet = []
-            collapsedSet = []
-        }
-
-        stateDelegate?.listViewModel(self,
-                                     didChangeCollapsedState: Set(collapsedSet.map({$0.rawValue})),
-                                     expandedSet: Set(expandedSet.map({$0.rawValue})))
+    private func delegateFolderEnableState(newState: State) {
+        stateDelegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
     }
 
     private func setupObservers() {
