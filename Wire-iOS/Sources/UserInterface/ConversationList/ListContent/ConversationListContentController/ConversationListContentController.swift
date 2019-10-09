@@ -26,6 +26,7 @@ extension ConversationListContentController {
 
         listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
+        listViewModel.stateDelegate = self
         
         setupViews()
 
@@ -41,7 +42,7 @@ extension ConversationListContentController {
 
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
-        view.layoutIfNeeded()
+        view.setNeedsLayout()
     }
 
     // MARK: - section header
@@ -51,7 +52,7 @@ extension ConversationListContentController {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.titleLabel.text = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
+                header.title = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
 
                 header.collapsed = listViewModel.collapsed(at: indexPath.section)
 
@@ -96,14 +97,12 @@ extension ConversationListContentController {
             fatal("Unknown cell type")
         }
 
-        (cell as? SectionListCellType)?.sectionName = listViewModel.sectionName(of: indexPath.section)
+        (cell as? SectionListCellType)?.sectionName = listViewModel.sectionCanonicalName(of: indexPath.section)
 
         cell.autoresizingMask = .flexibleWidth
 
         return cell
     }
-
-
 }
 
 
@@ -118,5 +117,11 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
+extension ConversationListContentController: ConversationListViewModelStateDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
+        collectionView.accessibilityValue = folderEnabled ? "folders" : "recent"
     }
 }

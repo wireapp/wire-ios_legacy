@@ -75,8 +75,8 @@ final class ConversationListViewModelTests: XCTestCase {
     func fillDummyConversations(mockConversation: ZMConversation) {
         let info = ConversationDirectoryChangeInfo(reloaded: false, updatedLists: [.groups, .contacts], updatedFolders: false)
 
-        mockUserSession.mockGroupConversations = [mockConversation, ZMConversation()]
-        mockUserSession.mockContactsConversations = [ZMConversation()]
+        mockUserSession.mockConversationDirectory.mockGroupConversations = [mockConversation, ZMConversation()]
+        mockUserSession.mockConversationDirectory.mockContactsConversations = [ZMConversation()]
 
         sut.conversationDirectoryDidChange(info)
     }
@@ -227,7 +227,7 @@ final class ConversationListViewModelTests: XCTestCase {
     }
 
     // MARK: - state
-    func testThatSectionIsExpendedAfterSelected() {
+    func testThatSectionIsExpandedAfterSelected() {
         ///GIVEN
         sut.folderEnabled = true
         let mockConversation = ZMConversation()

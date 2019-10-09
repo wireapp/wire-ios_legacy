@@ -42,14 +42,45 @@ final class ConversationListHeaderView: UICollectionReusableView {
     
     var tapHandler: TapHandler? = nil
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallRegularFont
         label.textColor = .white
 
         return label
     }()
-    
+
+    /// display title of the header
+    var title: String? {
+        set {
+            titleLabel.text = newValue
+        }
+
+        get {
+            return titleLabel.text
+        }
+    }
+
+    override var accessibilityLabel: String? {
+        get {
+            return title
+        }
+
+        set {
+            //no op
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return collapsed ? "collapsed" : "expanded"
+        }
+
+        set {
+            //no op
+        }
+    }
+
     private let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
         
@@ -57,7 +88,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         
         return imageView
     }()
-    
+
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -66,6 +97,9 @@ final class ConversationListHeaderView: UICollectionReusableView {
         createConstraints()
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggledCollapsed)))
+
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
     }
     
     @objc

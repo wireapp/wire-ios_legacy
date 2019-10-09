@@ -18,6 +18,7 @@
 		160D6926212EFE3800096EAD /* Button.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E05C2421B6F7E0600616A66 /* Button.m */; };
 		160D6928212EFE4B00096EAD /* IconButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CAF1B6B83C6003B0CAC /* IconButton.m */; };
 		160D6929212EFE5300096EAD /* ButtonWithLargerHitArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E5E0CAD1B6B83C6003B0CAC /* ButtonWithLargerHitArea.m */; };
+		160DF02F234DCE0400978FCF /* MockConverationDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */; };
 		160FD05221085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */; };
 		1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */; };
 		1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */; };
@@ -1533,6 +1534,7 @@
 		160D6915212AB95100096EAD /* ImageResourceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceView.swift; sourceTree = "<group>"; };
 		160D691F212C78E800096EAD /* CallQualityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualityController.swift; sourceTree = "<group>"; };
 		160D6922212C814200096EAD /* CallController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallController.swift; sourceTree = "<group>"; };
+		160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConverationDirectory.swift; sourceTree = "<group>"; };
 		160FD05121085BDA00C517B5 /* ProfileSelfPictureViewController+UserObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileSelfPictureViewController+UserObserver.swift"; sourceTree = "<group>"; };
 		160FD05321085F3900C517B5 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		1610366E20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelfProfileViewController+NewDeviceAlert.swift"; sourceTree = "<group>"; };
@@ -4885,6 +4887,7 @@
 				5E97C30220F4CFDA00C806B4 /* MockZiphyClient.swift */,
 				EF6251D321392FFE00943708 /* MockTapGestureRecognizer.swift */,
 				EF207B3A2208438700738E84 /* MockZMUserSession.swift */,
+				160DF02E234DCE0400978FCF /* MockConverationDirectory.swift */,
 				A97192B2221302DD00E72AD1 /* MockUserRight.swift */,
 				EFDBA241229414E100874A15 /* Account+Mock.swift */,
 				EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */,
@@ -8336,6 +8339,7 @@
 				EF37C3892256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift in Sources */,
 				87BEB0E01C734DA60094BFE9 /* MockLoader.m in Sources */,
 				EFDC36DA2257A63000F916F3 /* CollectionViewContainerCellSnapshotTests.swift in Sources */,
+				160DF02F234DCE0400978FCF /* MockConverationDirectory.swift in Sources */,
 				EF883F8C215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift in Sources */,
 				EF9C552720D2796A00D94EEB /* EphemeralTimeoutFormatterTests.swift in Sources */,
 				8758CDB92191A7D60031BE0F /* ReplyComposingViewTests.swift in Sources */,

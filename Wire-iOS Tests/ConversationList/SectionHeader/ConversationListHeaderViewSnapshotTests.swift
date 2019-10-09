@@ -31,7 +31,7 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: CGFloat.ConversationListSectionHeader.height)))
 
-        sut.titleLabel.text = "GROUPS"
+        sut.title = "GROUPS"
 
         sut.backgroundColor = .black
     }
