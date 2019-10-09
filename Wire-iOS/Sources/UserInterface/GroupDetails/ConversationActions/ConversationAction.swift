@@ -106,10 +106,10 @@ extension ZMConversation {
         }
 
         actions.append(.archive(isArchived: isArchived))
-        actions.append(.moveToFolder)
 
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
+            actions.append(.moveToFolder)
         }
 
         return actions
