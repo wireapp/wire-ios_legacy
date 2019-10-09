@@ -122,8 +122,12 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
         let cell = collectionView.dequeueReusableCell(ofType: CheckmarkCell.self, for: indexPath)
         let item = items[indexPath.row]
         cell.title = item.name
-        cell.showCheckmark = false
         cell.showSeparator = indexPath.row < (items.count - 1)
+        if let folder = conversation.folder {
+            cell.showCheckmark = (folder.remoteIdentifier == item.remoteIdentifier)
+        } else {
+            cell.showCheckmark = false
+        }
         
         return cell
     }
