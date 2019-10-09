@@ -121,7 +121,7 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 }
 
 extension ConversationListContentController: ConversationListViewModelStateDelegate {
-    func listViewModel(_ model: ConversationListViewModel?, didChangeCollapsedState collapsedSet: Set<String>, expendedSet: Set<String>) {
-        collectionView.accessibilityValue = "expended folders: \(expendedSet)"
+    func listViewModel(_ model: ConversationListViewModel?, didChangeCollapsedState collapsedSet: Set<String>, expandedSet: Set<String>) {
+        collectionView.accessibilityValue = "expanded folders: \(expandedSet)"
     }
 }

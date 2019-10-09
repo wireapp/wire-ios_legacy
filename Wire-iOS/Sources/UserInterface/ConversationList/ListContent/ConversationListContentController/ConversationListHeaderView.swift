@@ -73,7 +73,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     override var accessibilityValue: String? {
         get {
-            return collapsed ? "collapsed" : "expended"
+            return collapsed ? "collapsed" : "expanded"
         }
 
         set {

@@ -87,7 +87,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     private(set) var selectedItem: AnyHashable? {
         didSet {
-            /// expend the section if selcted item is update
+            /// expand the section if selcted item is update
             guard selectedItem != oldValue,
                   let indexPath = self.indexPath(for: selectedItem),
                   collapsed(at: indexPath.section) else { return }
@@ -190,23 +190,23 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func delegateCollapseState(newState: State) {
-        let expendedSet: Set<Section.Kind>
+        let expandedSet: Set<Section.Kind>
         let collapsedSet: Set<Section.Kind>
 
         if newState.folderEnabled {
-            expendedSet = Set<Section.Kind>(sections.compactMap({
+            expandedSet = Set<Section.Kind>(sections.compactMap({
                 return $0.items.isEmpty ? nil : $0.kind
             })).subtracting(newState.collapsed)
 
             collapsedSet = newState.collapsed
         } else {
-            expendedSet = []
+            expandedSet = []
             collapsedSet = []
         }
 
         stateDelegate?.listViewModel(self,
                                      didChangeCollapsedState: Set(collapsedSet.map({$0.rawValue})),
-                                     expendedSet: Set(expendedSet.map({$0.rawValue})))
+                                     expandedSet: Set(expandedSet.map({$0.rawValue})))
     }
 
     private func setupObservers() {
