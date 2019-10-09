@@ -227,7 +227,7 @@ final class ConversationListViewModelTests: XCTestCase {
     }
 
     // MARK: - state
-    func testThatSectionIsexpandedAfterSelected() {
+    func testThatSectionIsExpandedAfterSelected() {
         ///GIVEN
         sut.folderEnabled = true
         let mockConversation = ZMConversation()
