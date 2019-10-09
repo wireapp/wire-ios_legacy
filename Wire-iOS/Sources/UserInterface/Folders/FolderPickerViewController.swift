@@ -133,11 +133,6 @@ extension FolderPickerViewController: UICollectionViewDelegateFlowLayout, UIColl
         self.dismissIfNeeded()
     }
     
-    private func handle(error: Error) {
-        let controller = UIAlertController.checkYourConnection()
-        present(controller, animated: true)
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let selectedItem = items[indexPath.row]
