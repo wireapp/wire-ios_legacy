@@ -78,6 +78,7 @@
 		1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA21D34FF0400105D44 /* ping_from_them.caf */; };
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
 		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
+		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
@@ -1597,6 +1598,7 @@
 		1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoTestFixture.swift; sourceTree = "<group>"; };
 		1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInfoViewControllerInput.swift; sourceTree = "<group>"; };
 		16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+CallEvents.swift"; sourceTree = "<group>"; };
+		1659FCCC234E415200D06C1F /* MockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLabel.swift; sourceTree = "<group>"; };
 		165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wire-iOS Share Extension-Bridging-Header.h"; sourceTree = "<group>"; };
 		165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSItemProvider+Helper.h"; sourceTree = "<group>"; };
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
@@ -4891,6 +4893,7 @@
 				A97192B2221302DD00E72AD1 /* MockUserRight.swift */,
 				EFDBA241229414E100874A15 /* Account+Mock.swift */,
 				EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */,
+				1659FCCC234E415200D06C1F /* MockLabel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -8527,6 +8530,7 @@
 				EF77DD4A22E5EB5200DF811F /* SettingsTechnicalReportViewControllerSnapshotTests.swift in Sources */,
 				EF282B94228AFA970042D6C5 /* RequestPasswordViewControllerSnapshotTests.swift in Sources */,
 				EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */,
+				1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				EFD4B9C822F08297008CA042 /* UIImage+DownsizeTests.swift in Sources */,
 				EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */,
