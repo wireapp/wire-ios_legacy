@@ -45,14 +45,12 @@ final class ConversationActionControllerSnapshotTests: XCTestCase {
 
     func testForActionMenu_removeFolder() {
         let mockConversation = MockConversation()
-        mockConversation.folderName = "Test Folder"
         viewModel.showActionMenu(for: mockConversation, from: mockViewController.view)
 
         let sut = (viewModel?.actionsController)!
         let alert = sut.alertController!
 
         verify(matching: alert)
-
     }
 }
 
@@ -75,7 +73,7 @@ fileprivate final class MockConversation: ConversationInterface {
 
     var activeParticipants: Set<ZMUser> = []
 
-    var folderName: String?
+    var folder: LabelType? = MockLabelType()
 
     var unreadMessages: [ZMConversationMessage] = []
 
@@ -83,5 +81,11 @@ fileprivate final class MockConversation: ConversationInterface {
         return true
     }
 
+    final class MockLabelType: NSObject, LabelType {
+        var remoteIdentifier: UUID?
 
+        var kind: Label.Kind = .folder
+
+        var name: String? = "Test Folder"
+    }
 }

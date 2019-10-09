@@ -38,11 +38,6 @@ extension ZMConversation {
         case removeFromFolder(label: String)
         case moveToFolder
     }
-
-    ///TODO: mv to DM
-    var folderName: String? {
-        return labels.first(where: {$0.kind == .folder} )?.name
-    }
 }
 
 extension ConversationInterface {
@@ -125,7 +120,7 @@ extension ConversationInterface {
 
         actions.append(.moveToFolder)
 
-        if let folerName = folderName {
+        if let folerName = folder?.name {
             actions.append(.removeFromFolder(label: folerName))
         }
 
