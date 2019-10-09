@@ -98,7 +98,6 @@ extension ZMConversation {
         if !isReadOnly {
             if ZMUser.selfUser()?.isTeamMember ?? false {
                 actions.append(.configureNotifications)
-                actions.append(.moveToFolder)
             }
             else {
                 let isSilenced = mutedMessageTypes != .none
@@ -107,6 +106,7 @@ extension ZMConversation {
         }
 
         actions.append(.archive(isArchived: isArchived))
+        actions.append(.moveToFolder)
 
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
