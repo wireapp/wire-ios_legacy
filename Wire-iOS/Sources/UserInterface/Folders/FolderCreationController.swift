@@ -46,14 +46,16 @@ final class FolderCreationController: UIViewController {
     
     private var folderName: String = ""
     private var conversation: ZMConversation
+    private var conversationDirectory: ConversationDirectoryType
     
     fileprivate var navBarBackgroundView = UIView()
     
     @objc
     weak var delegate: FolderCreationControllerDelegate?
     
-    public init(conversation: ZMConversation) {
+    public init(conversation: ZMConversation, directory: ConversationDirectoryType) {
         self.conversation = conversation
+        self.conversationDirectory = directory
         super.init(nibName: nil, bundle: nil)
     }
     

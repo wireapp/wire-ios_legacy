@@ -27,7 +27,8 @@ final class FolderCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
         super.setUp()
         
         let convo = createTeamGroupConversation()
-        sut = FolderCreationController(conversation: convo)
+        let conversationDirectory = uiMOC.conversationListDirectory()
+        sut = FolderCreationController(conversation: convo, directory: conversationDirectory)
         accentColor = .violet
     }
     

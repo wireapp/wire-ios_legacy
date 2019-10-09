@@ -22,17 +22,18 @@ import UIKit
 class FolderPickerControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     var sut: FolderPickerViewController!
+    var directory: ZMConversationListDirectory!
     
     override func setUp() {
         super.setUp()
         
         let convo = createTeamGroupConversation()
-        let directory = ZMUserSession.shared()!.conversationDirectory
+        directory = uiMOC.conversationListDirectory()
         _ = directory.createFolder("Folder A")
         _ = directory.createFolder("Folder B")
         _ = directory.createFolder("Folder C")
         
-        sut = FolderPickerViewController(conversation: convo)
+        sut = FolderPickerViewController(conversation: convo, directory: directory)
         accentColor = .violet
     }
     

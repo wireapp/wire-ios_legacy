@@ -27,6 +27,7 @@ class FolderPickerViewController: UIViewController {
 
     var delegate: FolderPickerViewControllerDelegate?
     
+    fileprivate var conversationDirectory: ConversationDirectoryType
     fileprivate var items: [LabelType]!
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
     fileprivate let conversation: ZMConversation
@@ -37,8 +38,9 @@ class FolderPickerViewController: UIViewController {
     }()
     
     
-    public init(conversation: ZMConversation) {
+    public init(conversation: ZMConversation, directory: ConversationDirectoryType) {
         self.conversation = conversation
+        self.conversationDirectory = directory
         super.init(nibName: nil, bundle: nil)
         loadFolders()
     }
@@ -71,7 +73,7 @@ class FolderPickerViewController: UIViewController {
     }
     
     private func loadFolders() {
-        self.items = ZMUserSession.shared()?.conversationDirectory.allFolders ?? []
+        self.items = conversationDirectory.allFolders
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -100,7 +102,7 @@ class FolderPickerViewController: UIViewController {
     }
     
     @objc private func createNewFolder() {
-        let folderCreation = FolderCreationController(conversation: conversation)
+        let folderCreation = FolderCreationController(conversation: conversation, directory: conversationDirectory)
         folderCreation.delegate = self
         self.navigationController?.pushViewController(folderCreation, animated: true)
     }

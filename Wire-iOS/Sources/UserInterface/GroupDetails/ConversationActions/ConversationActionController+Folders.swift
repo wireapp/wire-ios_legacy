@@ -21,7 +21,8 @@ import UIKit
 extension ConversationActionController {
     
     func openMoveToFolder(for conversation: ZMConversation) {
-        let folderPicker = FolderPickerViewController(conversation: conversation)
+        guard let directory = ZMUserSession.shared()?.conversationDirectory else { return }
+        let folderPicker = FolderPickerViewController(conversation: conversation, directory: directory)
         folderPicker.delegate = self
         let navigationController = UINavigationController(rootViewController: folderPicker)
         self.present(navigationController)
