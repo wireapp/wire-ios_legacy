@@ -103,6 +103,11 @@ final class ConversationListViewModel: NSObject {
             restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
         }
     }
+    weak var stateDelegate: ConversationListViewModelStateDelegate? {
+        didSet {
+            notifyCollapseState(newState: state)
+        }
+    }
 
     private weak var selfUserObserver: NSObjectProtocol?
 
@@ -149,6 +154,13 @@ final class ConversationListViewModel: NSObject {
         }
 
         set {
+            /// simulate willSet
+            /// pass collapsed state to VC
+            if newValue.collapsed != state.collapsed {
+                notifyCollapseState(newState: newValue)
+            }
+
+            /// assign
             if newValue != _state {
                 _state = newValue
             }
@@ -175,6 +187,16 @@ final class ConversationListViewModel: NSObject {
         restoreState()
     }
 
+    private func notifyCollapseState(newState: State) {
+        let expendedSet = Set<Section.Kind>(sections.compactMap({
+            return $0.items.isEmpty ? nil : $0.kind
+        })).subtracting(newState.collapsed)
+
+        stateDelegate?.listViewModel(self,
+                                     didChangeCollapsedState: Set(newState.collapsed.map({$0.rawValue})),
+                                     expendedSet: Set(expendedSet.map({$0.rawValue})))
+    }
+
     private func setupObservers() {
         guard let userSession = ZMUserSession.shared() else {
             return
@@ -198,7 +220,7 @@ final class ConversationListViewModel: NSObject {
               kind(of: section) != .contactRequests,
               folderEnabled else { return false }
 
-        return sections[section].items.count > 0
+        return !sections[section].items.isEmpty
     }
 
 
@@ -270,7 +292,7 @@ final class ConversationListViewModel: NSObject {
         switch kind {
         case .contactRequests:
             conversationListType = .pending
-            return userSession.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
+            return userSession.conversations(by: conversationListType).isEmpty ? [] : [contactRequestsItem]
         case .conversations:
             conversationListType = .unarchived
         case .contacts:
@@ -334,11 +356,11 @@ final class ConversationListViewModel: NSObject {
         }
 
         if let section = self.section(at: nextSectionIndex) {
-            if section.count > 0 {
-                return IndexPath(item: 0, section: Int(nextSectionIndex))
-            } else {
+            if section.isEmpty {
                 // Recursively move forward
                 return firstItemInSection(after: nextSectionIndex)
+            } else {
+                return IndexPath(item: 0, section: Int(nextSectionIndex))
             }
         }
 
@@ -356,7 +378,7 @@ final class ConversationListViewModel: NSObject {
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
-        if index > 0 && section.count > index - 1 {
+        if index > 0 && section.indices.contains(index - 1) {
             // Select previous item in section
             return IndexPath(item: index - 1, section: Int(sectionIndex))
         } else if index == 0 {
@@ -377,11 +399,11 @@ final class ConversationListViewModel: NSObject {
 
         guard let section = self.section(at: UInt(previousSectionIndex)) else { return nil }
 
-        if section.count > 0 {
-            return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
-        } else {
+        if section.isEmpty {
             // Recursively move back
             return lastItemInSectionPrevious(to: previousSectionIndex)
+        } else {
+            return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
         }
     }
 
@@ -471,8 +493,8 @@ final class ConversationListViewModel: NSObject {
 
         /// no need to update collapsed section's cells but the section header, update the stored list
         /// hide section header if no items
-        if (collapsed(at: sectionNumber) && newConversationList.count > 0) ||
-           newConversationList.count == 0 {
+        if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
+           newConversationList.isEmpty {
             update(kind: kind, with: newConversationList)
             delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             return true

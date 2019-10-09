@@ -26,6 +26,7 @@ extension ConversationListContentController {
 
         listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
+        listViewModel.stateDelegate = self
         
         setupViews()
 
@@ -41,7 +42,7 @@ extension ConversationListContentController {
 
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
-        view.layoutIfNeeded()
+        view.setNeedsLayout()
     }
 
     // MARK: - section header
@@ -102,8 +103,6 @@ extension ConversationListContentController {
 
         return cell
     }
-
-
 }
 
 
@@ -118,5 +117,11 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: section == 0 ? 12 : 0, left: 0, bottom: 0, right: 0)
+    }
+}
+
+extension ConversationListContentController: ConversationListViewModelStateDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didChangeCollapsedState collapsedSet: Set<String>, expendedSet: Set<String>) {
+        collectionView.accessibilityValue = "expended folders: \(expendedSet)"
     }
 }
