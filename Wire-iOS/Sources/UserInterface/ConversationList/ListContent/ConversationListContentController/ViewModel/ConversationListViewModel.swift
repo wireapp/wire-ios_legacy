@@ -105,7 +105,7 @@ final class ConversationListViewModel: NSObject {
     }
     weak var stateDelegate: ConversationListViewModelStateDelegate? {
         didSet {
-            notifyCollapseState(newState: state)
+            delegateCollapseState(newState: state)
         }
     }
 
@@ -124,6 +124,8 @@ final class ConversationListViewModel: NSObject {
             if state.folderEnabled {
                 restoreCollapse()
             }
+
+            delegateCollapseState(newState: state)
         }
         
         get {
@@ -156,8 +158,8 @@ final class ConversationListViewModel: NSObject {
         set {
             /// simulate willSet
             /// pass collapsed state to VC
-            if newValue.collapsed != state.collapsed {
-                notifyCollapseState(newState: newValue)
+            if newValue != state {
+                delegateCollapseState(newState: newValue)
             }
 
             /// assign
@@ -187,13 +189,23 @@ final class ConversationListViewModel: NSObject {
         restoreState()
     }
 
-    private func notifyCollapseState(newState: State) {
-        let expendedSet = Set<Section.Kind>(sections.compactMap({
-            return $0.items.isEmpty ? nil : $0.kind
-        })).subtracting(newState.collapsed)
+    private func delegateCollapseState(newState: State) {
+        let expendedSet: Set<Section.Kind>
+        let collapsedSet: Set<Section.Kind>
+
+        if newState.folderEnabled {
+            expendedSet = Set<Section.Kind>(sections.compactMap({
+                return $0.items.isEmpty ? nil : $0.kind
+            })).subtracting(newState.collapsed)
+
+            collapsedSet = newState.collapsed
+        } else {
+            expendedSet = []
+            collapsedSet = []
+        }
 
         stateDelegate?.listViewModel(self,
-                                     didChangeCollapsedState: Set(newState.collapsed.map({$0.rawValue})),
+                                     didChangeCollapsedState: Set(collapsedSet.map({$0.rawValue})),
                                      expendedSet: Set(expendedSet.map({$0.rawValue})))
     }
 
