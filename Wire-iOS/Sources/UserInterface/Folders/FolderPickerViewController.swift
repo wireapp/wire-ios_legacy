@@ -58,18 +58,13 @@ class FolderPickerViewController: UIViewController {
     }
     
     private func configureNavbar() {
-        
         title = "folder.picker.title".localized(uppercased: true)
-        self.navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        self.navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: colorSchemeVariant)
-        
-        navigationItem.leftBarButtonItem = navigationController?.closeItem()
         
         let newFolderItem = UIBarButtonItem(icon: .plus, target: self, action: #selector(createNewFolder))
         newFolderItem.accessibilityIdentifier = "button.newfolder.create"
         
+        navigationItem.leftBarButtonItem = navigationController?.closeItem()
         navigationItem.rightBarButtonItem = newFolderItem
-        
     }
     
     private func loadFolders() {
