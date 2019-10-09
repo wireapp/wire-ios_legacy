@@ -390,7 +390,7 @@ final class ConversationListViewModel: NSObject {
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
-        if index > 0 && section.indices.contains(index - 1) {
+        if section.indices.contains(index - 1) {
             // Select previous item in section
             return IndexPath(item: index - 1, section: Int(sectionIndex))
         } else if index == 0 {
