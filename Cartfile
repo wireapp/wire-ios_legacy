@@ -1,7 +1,7 @@
 github "wireapp/wire-ios-ziphy" ~> 13.0
 github "wireapp/Cartography" "4.0.0"
-github "wireapp/wire-ios-sync-engine" ~> 279.0
-github "wireapp/wire-ios-share-engine" ~> 158.0
+github "wireapp/wire-ios-sync-engine" ~> 280.0
+github "wireapp/wire-ios-share-engine" ~> 159.0
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" ~> 10.0
 github "wireapp/HockeySDK-iOS" ~> 5.1.4
