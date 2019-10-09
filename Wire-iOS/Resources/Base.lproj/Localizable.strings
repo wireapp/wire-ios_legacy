@@ -198,6 +198,7 @@
 "folder.creation.name.placeholder" = "Folder name";
 
 "folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)

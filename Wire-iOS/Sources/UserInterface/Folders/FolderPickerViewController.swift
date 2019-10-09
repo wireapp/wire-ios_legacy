@@ -28,9 +28,11 @@ class FolderPickerViewController: UIViewController {
     var delegate: FolderPickerViewControllerDelegate?
     
     fileprivate var conversationDirectory: ConversationDirectoryType
-    fileprivate var items: [LabelType]!
+    fileprivate var items: [LabelType] = []
     fileprivate let colorSchemeVariant = ColorScheme.default.variant
     fileprivate let conversation: ZMConversation
+    
+    private let hintLabel = UILabel()
     private let collectionViewLayout = UICollectionViewFlowLayout()
     
     private lazy var collectionView: UICollectionView = {
@@ -41,7 +43,9 @@ class FolderPickerViewController: UIViewController {
     public init(conversation: ZMConversation, directory: ConversationDirectoryType) {
         self.conversation = conversation
         self.conversationDirectory = directory
+        
         super.init(nibName: nil, bundle: nil)
+        
         loadFolders()
     }
     
@@ -68,7 +72,8 @@ class FolderPickerViewController: UIViewController {
     }
     
     private func loadFolders() {
-        self.items = conversationDirectory.allFolders
+        items = conversationDirectory.allFolders
+        hintLabel.isHidden = !items.isEmpty
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -76,6 +81,12 @@ class FolderPickerViewController: UIViewController {
     }
     
     private func configureSubviews() {
+        
+        hintLabel.text = "folder.picker.empty.hint".localized
+        hintLabel.numberOfLines = 0
+        hintLabel.textColor = UIColor.from(scheme: .textForeground)
+        hintLabel.font = FontSpec(.medium, .semibold).font!
+        hintLabel.textAlignment = .center
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -91,9 +102,15 @@ class FolderPickerViewController: UIViewController {
     private func configureConstraints() {
         
         view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hintLabel)
         
+        hintLabel.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.fitInSuperview()
+        
+        NSLayoutConstraint.activate([hintLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
+                                     hintLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
+                                     hintLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
     }
     
     @objc private func createNewFolder() {
