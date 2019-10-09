@@ -16,38 +16,48 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import SnapshotTesting
+import XCTest
 @testable import Wire
 
-class FolderPickerControllerSnapshotTests: CoreDataSnapshotTestCase {
+class FolderPickerControllerSnapshotTests: XCTestCase {
 
-    var sut: FolderPickerViewController!
     var directory: MockConversationDirectory!
+    var mockConversation: MockConversation!
     
     override func setUp() {
         super.setUp()
         
-        let conversation = MockConversation.groupConversation()
-        
+        mockConversation = MockConversation.groupConversation()
         directory = MockConversationDirectory()
-        directory.allFolders = [MockLabel(name: "Folder A"), MockLabel(name: "Folder B"), MockLabel(name: "Folder C")]
-        
-        sut = FolderPickerViewController(conversation: conversation.convertToRegularConversation(), directory: directory)
         accentColor = .violet
     }
     
     override func tearDown() {
-        sut = nil
-        ColorScheme.default.variant = .light
+        directory = nil
+        mockConversation = nil
         super.tearDown()
     }
     
-    func testForDisplayingView() {
+    func testWithNoExistingFolders() {
+        // given
+        directory.allFolders = []
         
-        sut.loadViewIfNeeded()
+        // when
+        let sut = FolderPickerViewController(conversation: mockConversation.convertToRegularConversation(), directory: directory)
         
-        sut.viewDidAppear(false)
+        // then
+        verify(matching: sut)
+    }
+    
+    func testWithExistingFolders() {
+        // given
+        directory.allFolders = [MockLabel(name: "Folder A"), MockLabel(name: "Folder B"), MockLabel(name: "Folder C")]
         
-        verify(view: sut.view)
+        // when
+        let sut = FolderPickerViewController(conversation: mockConversation.convertToRegularConversation(), directory: directory)
+        
+        // then
+        verify(matching: sut)
     }
 }
