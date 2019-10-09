@@ -28,7 +28,7 @@ protocol ConversationInterface: class {
     var isFavorite: Bool { get }
     var mutedMessageTypes: MutedMessageTypes { get set }
     var activeParticipants: Set<ZMUser> { get }
-    var folderName: String? { get }
+    var folder: LabelType? { get }
     var unreadMessages: [ZMConversationMessage] { get }
 
     func canMarkAsUnread() -> Bool
