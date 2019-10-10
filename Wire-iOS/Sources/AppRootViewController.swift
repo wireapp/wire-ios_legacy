@@ -22,21 +22,25 @@ import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-@objcMembers
 final class AppRootViewController: UIViewController {
 
-    public let mainWindow: UIWindow
-    public let callWindow: CallWindow
-    public let overlayWindow: NotificationWindow
+    @objc
+    let mainWindow: UIWindow
+    @objc
+    let callWindow: CallWindow
+    @objc
+    let overlayWindow: NotificationWindow
 
     public fileprivate(set) var sessionManager: SessionManager?
-    public fileprivate(set) var quickActionsManager: QuickActionsManager?
+    @objc
+    fileprivate(set) var quickActionsManager: QuickActionsManager?
     
     fileprivate var sessionManagerCreatedSessionObserverToken: Any?
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController?
+    @objc
+    fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
@@ -130,7 +134,8 @@ final class AppRootViewController: UIViewController {
     }
 
     
-    public func launch(with launchOptions: LaunchOptions) {
+    @objc
+    func launch(with launchOptions: LaunchOptions) {
         let bundle = Bundle.main
         let appVersion = bundle.infoDictionary?[kCFBundleVersionKey as String] as? String
         let mediaManager = AVSMediaManager.sharedInstance()
@@ -360,7 +365,8 @@ final class AppRootViewController: UIViewController {
         type(of: self).configureAppearance()
     }
 
-    public func performWhenAuthenticated(_ block : @escaping () -> Void) {
+    @objc
+    func performWhenAuthenticated(_ block : @escaping () -> Void) {
         if appStateController.appState == .authenticated(completedRegistration: false) {
             block()
         } else {
