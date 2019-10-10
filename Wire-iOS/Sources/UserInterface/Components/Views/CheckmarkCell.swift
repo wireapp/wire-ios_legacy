@@ -38,6 +38,9 @@ final class CheckmarkCell: RightIconDetailsCell {
         super.setUp()
         icon = nil
         status = nil
+
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
     }
 
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
@@ -68,4 +71,24 @@ final class CheckmarkCell: RightIconDetailsCell {
         accessory = StyleKitIcon.checkmark.makeImage(size: .tiny, color: color)
     }
 
+    // MARK: - accessibility
+    override var accessibilityLabel: String? {
+        get {
+            return title
+        }
+
+        set {
+            //no op
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return "\(showCheckmark)"
+        }
+
+        set {
+            //no op
+        }
+    }
 }
