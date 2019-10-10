@@ -112,7 +112,7 @@ final class ConversationActionController {
             self.handleBlockResult(result, for: conversation)
             }
         case .moveToFolder:
-            self.openMoveToFolder(for: self.conversation)
+            self.openMoveToFolder(for: conversation)
         case .favorite(isFavorite: let isFavorite):
             enqueue {
                 conversation.isFavorite = !isFavorite
@@ -121,9 +121,6 @@ final class ConversationActionController {
             enqueue {
                 conversation.removeFromFolder()
             }
-        case .moveToFolder:
-        ///TODO: @Nicola show the move to folder screen
-            fatalError()
         case .remove: fatalError()
         }
     }

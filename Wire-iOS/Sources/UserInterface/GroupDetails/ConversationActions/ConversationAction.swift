@@ -22,7 +22,6 @@ extension ZMConversation {
     enum Action: Equatable {
 
         case deleteGroup
-        case moveToFolder
         case clearContent
         case leave
         case configureNotifications
@@ -118,13 +117,12 @@ extension ConversationInterface {
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
             actions.append(.moveToFolder)
+
+            if let folerName = folder?.name {
+                actions.append(.removeFromFolder(label: folerName))
+            }
         }
 
-        actions.append(.moveToFolder)
-
-        if let folerName = folder?.name {
-            actions.append(.removeFromFolder(label: folerName))
-        }
 
         return actions
     }
@@ -178,8 +176,6 @@ extension ZMConversation.Action {
         case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
         case .removeFromFolder:
             return "profile.remove_from_folder_button_title"
-        case .moveToFolder:
-            return "profile.move_to_folder_button_title"
         }
     }
     
