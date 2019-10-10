@@ -18,7 +18,7 @@
 
 
 import UIKit
- 
+
 protocol TextViewInteractionDelegate: class {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
@@ -111,22 +111,22 @@ extension LinkInteractionTextView: UITextViewDelegate {
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
 
-            let shouldInteractWithURL = dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
-
+            /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
             if #available(iOS 13.0, *) {
                 if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
+
                     // data detector links should be handle by the system
-                    return shouldInteractWithURL
-                } else {
-                    return false
+                    return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
                 }
+
+                return true
             } else {
-                return shouldInteractWithURL
+                // data detector links should be handle by the system
+                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
             }
-        case .presentActions:
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        case .preview:
+            
+        case .presentActions,
+             .preview:
             // do not allow peeking links, as it blocks showing the menu for replies
             interactionDelegate?.textViewDidLongPress(self)
             return false
