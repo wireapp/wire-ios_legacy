@@ -23,7 +23,7 @@ protocol FolderPickerViewControllerDelegate {
     func didPickFolder(_ folder: LabelType, for conversation: ZMConversation)
 }
 
-class FolderPickerViewController: UIViewController {
+final class FolderPickerViewController: UIViewController {
 
     var delegate: FolderPickerViewControllerDelegate?
     
@@ -40,7 +40,7 @@ class FolderPickerViewController: UIViewController {
     }()
     
     
-    public init(conversation: ZMConversation, directory: ConversationDirectoryType) {
+    init(conversation: ZMConversation, directory: ConversationDirectoryType) {
         self.conversation = conversation
         self.conversationDirectory = directory
         

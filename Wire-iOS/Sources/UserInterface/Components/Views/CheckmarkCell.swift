@@ -18,11 +18,13 @@
 
 import UIKit
 
-class CheckmarkCell: RightIconDetailsCell {
+final class CheckmarkCell: RightIconDetailsCell {
 
     var showCheckmark: Bool = false {
         didSet {
             updateCheckmark(forColor: ColorScheme.default.variant)
+
+            titleBolded = showCheckmark
         }
     }
 
