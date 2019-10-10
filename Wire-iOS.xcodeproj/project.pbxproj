@@ -78,6 +78,7 @@
 		1658D2051D3E742A00249609 /* ping_from_them.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA21D34FF0400105D44 /* ping_from_them.caf */; };
 		1658D2061D3E742A00249609 /* ringing_from_them_long.caf in Resources */ = {isa = PBXBuildFile; fileRef = 87A4DAA31D34FF0400105D44 /* ringing_from_them_long.caf */; };
 		16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */; };
+		1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1659FCCC234E415200D06C1F /* MockLabel.swift */; };
 		165FDC4B1DD5D447009D75A2 /* NSItemProvider+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */; };
 		1660F2381FBC6E2E00A0EE54 /* silence.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1660F2371FBC6E2D00A0EE54 /* silence.m4a */; };
 		1660F23A1FBF32D400A0EE54 /* MediaPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */; };
@@ -423,6 +424,13 @@
 		7C374E4E1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C374E4A1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg */; };
 		7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C37E3431FDE89510077B2E3 /* unsplash_matterhorn.jpg */; };
 		7C3A82CB20B6E6B800313B4F /* CameraAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3A82CA20B6E6B800313B4F /* CameraAccess.swift */; };
+		7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E7423472C5200D91B5F /* FolderCreationController.swift */; };
+		7C440E7823472DFB00D91B5F /* FolderCreationNameSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E7723472DFB00D91B5F /* FolderCreationNameSectionController.swift */; };
+		7C440E7A23472E9900D91B5F /* FolderCreationNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E7923472E9900D91B5F /* FolderCreationNameCell.swift */; };
+		7C440E8123473F8500D91B5F /* FolderCreationControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E7E23473A0F00D91B5F /* FolderCreationControllerSnapshotTests.swift */; };
+		7C440E83234B35CB00D91B5F /* FolderPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E82234B35CB00D91B5F /* FolderPickerViewController.swift */; };
+		7C440E86234B460400D91B5F /* FolderPickerControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E84234B460100D91B5F /* FolderPickerControllerSnapshotTests.swift */; };
+		7C440E89234CE72F00D91B5F /* ConversationActionController+Folders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */; };
 		7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */; };
 		7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */; };
 		7C52F723200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */; };
@@ -1592,6 +1600,7 @@
 		1658C19920A1F00500148F6D /* CallInfoTestFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoTestFixture.swift; sourceTree = "<group>"; };
 		1658C19B20A1F07800148F6D /* MockCallInfoViewControllerInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallInfoViewControllerInput.swift; sourceTree = "<group>"; };
 		16595CFE20BEE5DF00E1340E /* Analytics+CallEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+CallEvents.swift"; sourceTree = "<group>"; };
+		1659FCCC234E415200D06C1F /* MockLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLabel.swift; sourceTree = "<group>"; };
 		165FDC481DD5D447009D75A2 /* Wire-iOS Share Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wire-iOS Share Extension-Bridging-Header.h"; sourceTree = "<group>"; };
 		165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSItemProvider+Helper.h"; sourceTree = "<group>"; };
 		165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSItemProvider+Helper.m"; sourceTree = "<group>"; };
@@ -1994,6 +2003,13 @@
 		7C374E4A1FDE7B8C00A43B9C /* unsplash_matterhorn_small_width.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn_small_width.jpg; sourceTree = "<group>"; };
 		7C37E3431FDE89510077B2E3 /* unsplash_matterhorn.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = unsplash_matterhorn.jpg; sourceTree = "<group>"; };
 		7C3A82CA20B6E6B800313B4F /* CameraAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraAccess.swift; sourceTree = "<group>"; };
+		7C440E7423472C5200D91B5F /* FolderCreationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationController.swift; sourceTree = "<group>"; };
+		7C440E7723472DFB00D91B5F /* FolderCreationNameSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationNameSectionController.swift; sourceTree = "<group>"; };
+		7C440E7923472E9900D91B5F /* FolderCreationNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationNameCell.swift; sourceTree = "<group>"; };
+		7C440E7E23473A0F00D91B5F /* FolderCreationControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCreationControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		7C440E82234B35CB00D91B5F /* FolderPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPickerViewController.swift; sourceTree = "<group>"; };
+		7C440E84234B460100D91B5F /* FolderPickerControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPickerControllerSnapshotTests.swift; sourceTree = "<group>"; };
+		7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Folders.swift"; sourceTree = "<group>"; };
 		7C4789842021F40E00A38442 /* AddBotError+UIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddBotError+UIHandler.swift"; sourceTree = "<group>"; };
 		7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+SafeArea.swift"; sourceTree = "<group>"; };
 		7C52F722200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraKeyboardPermissionsCell.swift; sourceTree = "<group>"; };
@@ -4206,6 +4222,24 @@
 			path = Mentions;
 			sourceTree = "<group>";
 		};
+		7C440E7123472BF500D91B5F /* Folders */ = {
+			isa = PBXGroup;
+			children = (
+				7C440E7423472C5200D91B5F /* FolderCreationController.swift */,
+				7C440E7723472DFB00D91B5F /* FolderCreationNameSectionController.swift */,
+				7C440E7923472E9900D91B5F /* FolderCreationNameCell.swift */,
+				7C440E82234B35CB00D91B5F /* FolderPickerViewController.swift */,
+			);
+			path = Folders;
+			sourceTree = "<group>";
+		};
+		7C440E87234CE71B00D91B5F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		7C5836621FD5AB98001CC843 /* Availability */ = {
 			isa = PBXGroup;
 			children = (
@@ -4862,6 +4896,7 @@
 				A97192B2221302DD00E72AD1 /* MockUserRight.swift */,
 				EFDBA241229414E100874A15 /* Account+Mock.swift */,
 				EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */,
+				1659FCCC234E415200D06C1F /* MockLabel.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -5383,6 +5418,7 @@
 		8FC8516F199245760008B66B /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				7C440E7123472BF500D91B5F /* Folders */,
 				16DD6E932283048A0090A74C /* LegalHoldDetails */,
 				16D49326203DCC59008DDFFA /* GroupDetails */,
 				7C5836621FD5AB98001CC843 /* Availability */,
@@ -5908,6 +5944,8 @@
 				EFFE1D3A230D63EA00389290 /* CountryTests.swift */,
 				EF3243522317F0060043F147 /* ZClientViewControllerTests.swift */,
 				EF17C52F2321417600245EBF /* UITraitEnvironmentTests.swift */,
+				7C440E7E23473A0F00D91B5F /* FolderCreationControllerSnapshotTests.swift */,
+				7C440E84234B460100D91B5F /* FolderPickerControllerSnapshotTests.swift */,
 			);
 			path = "Wire-iOS Tests";
 			sourceTree = "<group>";
@@ -6094,6 +6132,7 @@
 		D550F57320444BE8009E09DD /* ConversationActions */ = {
 			isa = PBXGroup;
 			children = (
+				7C440E87234CE71B00D91B5F /* New Group */,
 				D550F5762044532D009E09DD /* ConversationAction.swift */,
 				5E3A6C21206A3AD500907484 /* ConversationActionController.swift */,
 				BF5FAC0420B6C6E9004CEB45 /* ConversationCallController.swift */,
@@ -6105,6 +6144,7 @@
 				D53D390F2059784900B87DAD /* ConversationActionController+CancelRequest.swift */,
 				D53D390D20596ED300B87DAD /* ConversationActionController+Block.swift */,
 				D550F57420444CF8009E09DD /* AlertResultConfiguration.swift */,
+				7C440E88234CE72F00D91B5F /* ConversationActionController+Folders.swift */,
 			);
 			path = ConversationActions;
 			sourceTree = "<group>";
@@ -7302,6 +7342,7 @@
 				EF6ACA7A213169540064047B /* ConfirmAssetViewController+Style.swift in Sources */,
 				F15650E221DD11D100210504 /* ProgressSpinner.m in Sources */,
 				8F41CFC319926B7A00E3B032 /* ZMUser+Additions.m in Sources */,
+				7C440E83234B35CB00D91B5F /* FolderPickerViewController.swift in Sources */,
 				5E39FC61225CBBEF00C682B8 /* PasswordRules+Shared.swift in Sources */,
 				8784B6291D89448700AB71BD /* ProfileSelfPictureViewController.m in Sources */,
 				EF22DC7D224BBE3B001EDE8E /* SearchUserViewConroller.swift in Sources */,
@@ -7573,6 +7614,7 @@
 				87E4D2CA1FC6E39800F3C664 /* CharacterInputField.swift in Sources */,
 				F15650D921DD107800210504 /* RoundedViewProtocol.swift in Sources */,
 				5E39FC63225CCEFA00C682B8 /* ValueValidationCell.swift in Sources */,
+				7C440E7823472DFB00D91B5F /* FolderCreationNameSectionController.swift in Sources */,
 				F1CB5D252158FE1F001CCF5D /* MentionsHandler+TextView.swift in Sources */,
 				5EA73D7920D900830001D106 /* GroupOptionsSectionController.swift in Sources */,
 				BF79B10220AB236A001BF4FE /* SectionFooter.swift in Sources */,
@@ -7673,6 +7715,7 @@
 				5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				16A94AF8209B5334008A5718 /* VideoGridView.swift in Sources */,
+				7C440E7A23472E9900D91B5F /* FolderCreationNameCell.swift in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
 				EF2E2F6E223BAF410038D7D9 /* MediaBar.swift in Sources */,
 				EF7F8FC121B5761C00D7723C /* ConversationReadReceiptSettingChangedCellDescription.swift in Sources */,
@@ -8148,6 +8191,7 @@
 				16616750223A81CB00779AE3 /* MessageKeyPathObserver.swift in Sources */,
 				877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */,
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
+				7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */,
 				EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */,
 				EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */,
@@ -8185,6 +8229,7 @@
 				EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */,
 				1639A85B2264EAB800868AB9 /* AvailabilityTitleViewController.swift in Sources */,
 				EEBE8C5C1F681694009D78C9 /* NSData+ImageType.swift in Sources */,
+				7C440E89234CE72F00D91B5F /* ConversationActionController+Folders.swift in Sources */,
 				EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */,
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,
@@ -8268,6 +8313,7 @@
 				5EA73D9120D903B90001D106 /* GroupDetailsTimeoutOptionsCellTests.swift in Sources */,
 				8759DB851E6B696C000A832D /* ImageMessageViewTests.swift in Sources */,
 				EF159F381FD59607006E0A9C /* TextFieldValidatorTests.swift in Sources */,
+				7C440E86234B460400D91B5F /* FolderPickerControllerSnapshotTests.swift in Sources */,
 				1658C19620A1E2FA00148F6D /* MockVoiceChannel.swift in Sources */,
 				5502C6E522B7B800000684B7 /* LegalHoldAlertFactoryTests.swift in Sources */,
 				BF5127161CC9119400F23DEA /* ZMSnapshotTestCase.swift in Sources */,
@@ -8322,6 +8368,7 @@
 				EF6E3C7E208A0355003F6752 /* MockConversation+factory.swift in Sources */,
 				EF63528D209C4A9300F5E950 /* ConversationInputBarViewControllerTests.swift in Sources */,
 				877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */,
+				7C440E8123473F8500D91B5F /* FolderCreationControllerSnapshotTests.swift in Sources */,
 				5EBF47C621B2FA6D0021CFFC /* MockReadReceipt.swift in Sources */,
 				5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */,
 				EF1FCE5021B69381003E0BE2 /* ReadReceiptViewModelTests.swift in Sources */,
@@ -8499,6 +8546,7 @@
 				EF77DD4A22E5EB5200DF811F /* SettingsTechnicalReportViewControllerSnapshotTests.swift in Sources */,
 				EF282B94228AFA970042D6C5 /* RequestPasswordViewControllerSnapshotTests.swift in Sources */,
 				EF80466520D17130001A1C53 /* MessageDestructionTimeoutValueTests.swift in Sources */,
+				1659FCCD234E415200D06C1F /* MockLabel.swift in Sources */,
 				EF106E86204D8BDF00B9F0F6 /* MockDevice.swift in Sources */,
 				EFD4B9C822F08297008CA042 /* UIImage+DownsizeTests.swift in Sources */,
 				EF207B3B2208438700738E84 /* MockZMUserSession.swift in Sources */,

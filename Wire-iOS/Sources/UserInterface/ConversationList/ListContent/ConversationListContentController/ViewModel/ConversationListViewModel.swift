@@ -136,7 +136,7 @@ final class ConversationListViewModel: NSObject {
     @objc
     private(set) var selectedItem: AnyHashable? {
         didSet {
-            /// expend the section if selcted item is update
+            /// expand the section if selcted item is update
             guard selectedItem != oldValue,
                   let indexPath = self.indexPath(for: selectedItem),
                   collapsed(at: indexPath.section) else { return }
@@ -150,6 +150,11 @@ final class ConversationListViewModel: NSObject {
     weak var restorationDelegate: ConversationListViewModelRestorationDelegate? {
         didSet {
             restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
+        }
+    }
+    weak var stateDelegate: ConversationListViewModelStateDelegate? {
+        didSet {
+            delegateFolderEnableState(newState: state)
         }
     }
 
@@ -168,6 +173,8 @@ final class ConversationListViewModel: NSObject {
             if state.folderEnabled {
                 restoreCollapse()
             }
+
+            delegateFolderEnableState(newState: state)
         }
         
         get {
@@ -198,6 +205,9 @@ final class ConversationListViewModel: NSObject {
         }
 
         set {
+            /// simulate willSet
+
+            /// assign
             if newValue != _state {
                 _state = newValue
             }
@@ -223,6 +233,10 @@ final class ConversationListViewModel: NSObject {
         restoreState()
     }
 
+    private func delegateFolderEnableState(newState: State) {
+        stateDelegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
+    }
+
     private func setupObservers() {
         conversationDirectoryToken = userSession?.conversationDirectory.addObserver(self)
     }
@@ -242,7 +256,7 @@ final class ConversationListViewModel: NSObject {
               kind(of: section) != .contactRequests,
               folderEnabled else { return false }
 
-        return sections[section].items.count > 0
+        return !sections[section].items.isEmpty
     }
 
 
@@ -312,7 +326,7 @@ final class ConversationListViewModel: NSObject {
         switch kind {
         case .contactRequests:
             conversationListType = .pending
-            return conversationDirectory.conversations(by: conversationListType).count > 0 ? [contactRequestsItem] : []
+            return conversationDirectory.conversations(by: conversationListType).isEmpty ? [] : [contactRequestsItem]
         case .conversations:
             conversationListType = .unarchived
         case .contacts:
@@ -378,11 +392,11 @@ final class ConversationListViewModel: NSObject {
         }
 
         if let section = self.section(at: nextSectionIndex) {
-            if section.count > 0 {
-                return IndexPath(item: 0, section: Int(nextSectionIndex))
-            } else {
+            if section.isEmpty {
                 // Recursively move forward
                 return firstItemInSection(after: nextSectionIndex)
+            } else {
+                return IndexPath(item: 0, section: Int(nextSectionIndex))
             }
         }
 
@@ -400,7 +414,7 @@ final class ConversationListViewModel: NSObject {
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
-        if index > 0 && section.count > index - 1 {
+        if section.indices.contains(index - 1) {
             // Select previous item in section
             return IndexPath(item: index - 1, section: Int(sectionIndex))
         } else if index == 0 {
@@ -421,11 +435,11 @@ final class ConversationListViewModel: NSObject {
 
         guard let section = self.section(at: UInt(previousSectionIndex)) else { return nil }
 
-        if section.count > 0 {
-            return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
-        } else {
+        if section.isEmpty {
             // Recursively move back
             return lastItemInSectionPrevious(to: previousSectionIndex)
+        } else {
+            return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
         }
     }
     
@@ -519,8 +533,8 @@ final class ConversationListViewModel: NSObject {
 
         /// no need to update collapsed section's cells but the section header, update the stored list
         /// hide section header if no items
-        if (collapsed(at: sectionNumber) && newConversationList.count > 0) ||
-           newConversationList.count == 0 {
+        if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
+           newConversationList.isEmpty {
             update(kind: kind, with: newConversationList)
             delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
             return true

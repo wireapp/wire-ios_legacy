@@ -189,6 +189,17 @@
 "send_invitation.text" = "I’m on Wire, search for %@ or visit get.wire.com";
 "send_invitation_no_email.text" = "I’m on Wire. Visit get.wire.com to connect with me.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Create";
+"folder.creation.name.header" = "Move the conversation \"%@\" in a new custom folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "shared a picture";
@@ -703,6 +714,7 @@
 "meta.menu.unarchive" = "Unarchive";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
 "meta.menu.silence.mute" = "Mute";
 "meta.menu.silence.unmute" = "Unmute";
 "meta.menu.cancel" = "Cancel";

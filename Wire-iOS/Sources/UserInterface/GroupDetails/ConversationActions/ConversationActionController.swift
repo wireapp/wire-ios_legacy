@@ -111,6 +111,8 @@ final class ConversationActionController {
         case .block: self.requestBlockResult(for: conversation) { result in
             self.handleBlockResult(result, for: conversation)
             }
+        case .moveToFolder:
+            self.openMoveToFolder(for: self.conversation)
         case .favorite(isFavorite: let isFavorite):
             enqueue {
                 conversation.isFavorite = !isFavorite

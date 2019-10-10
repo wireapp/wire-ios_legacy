@@ -22,6 +22,7 @@ extension ZMConversation {
     enum Action: Equatable {
 
         case deleteGroup
+        case moveToFolder
         case clearContent
         case leave
         case configureNotifications
@@ -116,6 +117,7 @@ extension ConversationInterface {
 
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
+            actions.append(.moveToFolder)
         }
 
         actions.append(.moveToFolder)
@@ -161,6 +163,7 @@ extension ZMConversation.Action {
     private var localizationKey: String {
         switch self {
         case .deleteGroup: return "meta.menu.delete"
+        case .moveToFolder: return "meta.menu.move_to_folder"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
         case .leave:
