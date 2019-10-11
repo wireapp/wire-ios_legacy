@@ -32,6 +32,10 @@ protocol ConversationInterface: class {
     var unreadMessages: [ZMConversationMessage] { get }
 
     func canMarkAsUnread() -> Bool
+
+    var sortedActiveParticipants: [ZMUser] { get }
+
+    var voiceChannel: VoiceChannel? { get }
 }
 
 extension ZMConversation: ConversationInterface {}

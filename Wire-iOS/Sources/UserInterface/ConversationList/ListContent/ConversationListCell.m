@@ -120,20 +120,6 @@
 {
     [self.itemView updateForConversation:self.conversation];
 }
-
-- (void)onRightAccessorySelected:(UIButton *)sender
-{
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    
-    if (mediaPlaybackManager.activeMediaPlayer != nil &&
-        mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
-        [self toggleMediaPlayer];
-    }
-    else if (self.conversation.canJoinCall)
-    {
-        [self.delegate conversationListCellJoinCallButtonTapped:self];
-    }
-}
     
 - (void)toggleMediaPlayer
 {

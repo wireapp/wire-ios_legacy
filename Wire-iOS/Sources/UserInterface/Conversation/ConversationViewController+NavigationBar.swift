@@ -245,10 +245,10 @@ extension ConversationViewController: WireCallCenterCallStateObserver {
 
 }
 
-extension ZMConversation {
+extension ConversationInterface {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
-    @objc var canJoinCall: Bool {
+    var canJoinCall: Bool {
         return voiceChannel?.state.canJoinCall ?? false
     }
 

@@ -74,4 +74,16 @@ extension ConversationListCell {
             NSLayoutConstraint.activate(menuDotsViewEdges)
         }
     }
+
+    @objc
+    func onRightAccessorySelected(_ sender: UIButton?) {
+        if let activeMediaPlayer = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer,
+            activeMediaPlayer.sourceMessage?.conversation == conversation {
+            toggleMediaPlayer()
+        } else if conversation?.canJoinCall == true {
+            delegate?.conversationListCellJoinCallButtonTapped(self)
+        }
+    }
+
+
 }
