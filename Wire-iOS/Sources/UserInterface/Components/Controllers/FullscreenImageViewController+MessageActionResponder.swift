@@ -26,6 +26,9 @@ extension FullscreenImageViewController {
         if action == .delete,
             let conversationImagesViewController = delegate as? ConversationImagesViewController {
             sourceView = conversationImagesViewController.deleteButton
+        } else if action == .forward,
+            let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
+            sourceView = shareButton
         } else {
             sourceView = scrollView
         }
