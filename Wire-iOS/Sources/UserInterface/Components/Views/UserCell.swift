@@ -201,17 +201,17 @@ class UserCell: SeparatorCollectionViewCell {
         titleLabel.attributedText = attributedTitle
     }
     
-    public func configure(with user: UserType, conversation: ZMConversation? = nil) {
+    public func configure(with user: UserType, conversation: ConversationInterface? = nil) {
         configure(with: user, subtitle: subtitle(for: user), conversation: conversation)
     }
 
-    public func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ZMConversation? = nil) {
+    public func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ConversationInterface? = nil) {
         self.user = user
 
         avatar.user = user
         updateTitleLabel()
 
-        if let conversation = conversation {
+        if let conversation = conversation as? ZMConversation {
             guestIconView.isHidden = !user.isGuest(in: conversation)
         } else {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser

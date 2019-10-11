@@ -45,12 +45,12 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private var viewModel: LegalHoldParticipantsSectionViewModel
-    private let conversation: ZMConversation
+    private let conversation: ConversationInterface
     private var token: AnyObject?
     
     public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
-    init(conversation: ZMConversation) {
+    init(conversation: ConversationInterface) {
         viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
         self.conversation = conversation
         super.init()

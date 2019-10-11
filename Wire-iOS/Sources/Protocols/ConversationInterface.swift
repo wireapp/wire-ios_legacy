@@ -36,6 +36,8 @@ protocol ConversationInterface: class {
     var sortedActiveParticipants: [ZMUser] { get }
 
     var voiceChannel: VoiceChannel? { get }
+
+    func verifyLegalHoldSubjects()
 }
 
 extension ZMConversation: ConversationInterface {}
