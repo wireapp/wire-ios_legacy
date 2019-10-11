@@ -193,7 +193,7 @@
 
 "folder.creation.name.title" = "Create new folder";
 "folder.creation.name.button.create" = "Create";
-"folder.creation.name.header" = "Move the conversation \"%@\" in a new custom folder.";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
 "folder.creation.name.footer" = "Maximum 64 characters";
 "folder.creation.name.placeholder" = "Folder name";
 
@@ -219,7 +219,7 @@
 "list.archived_conversations_close" = "Close archive";
 
 "list.section.groups" = "Groups";
-"list.section.contacts" = "Contacts";
+"list.section.contacts" = "People";
 "list.section.requests" = "Requests";
 "list.section.favorites" = "Favorites";
 
