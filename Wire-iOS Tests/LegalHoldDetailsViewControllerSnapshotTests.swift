@@ -36,23 +36,23 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    private func verifyInColorThemes(conversation: MockConversation,
+    private func verifyInColorThemes(conversation: SwiftMockConversation,
                                      file: StaticString = #file,
                                      testName: String = #function,
                                      line: UInt = #line) {
         ColorScheme.default.variant = .dark
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        sut = LegalHoldDetailsViewController(conversation: conversation)
         wrappedInVC = sut.wrapInNavigationController()
         verify(matching: wrappedInVC, named: "DarkTheme", file: file, testName: testName, line: line)
 
         ColorScheme.default.variant = .light
-        sut = LegalHoldDetailsViewController(conversation: conversation.convertToRegularConversation())
+        sut = LegalHoldDetailsViewController(conversation: conversation)
         wrappedInVC = sut.wrapInNavigationController()
         verify(matching: wrappedInVC, named: "LightTheme", file: file, testName: testName, line: line)
     }
 
     func testSelfUserUnderLegalHold() {
-        let conversation = MockConversation.groupConversation()
+        let conversation = SwiftMockConversation.groupConversation()
         let selfUser = MockUser.mockSelf()
         selfUser?.isUnderLegalHold = true
 
@@ -60,7 +60,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     }
     
     func testOtherUserUnderLegalHold() {
-        let conversation = MockConversation.groupConversation()
+        let conversation = SwiftMockConversation.groupConversation()
         conversation.sortedActiveParticipants.forEach({ user in
             let mockUser = user as? MockUser
 

@@ -44,7 +44,7 @@ final class ConversationActionControllerSnapshotTests: XCTestCase {
 
 
     func testForActionMenu_removeFolder() {
-        let mockConversation = MockConversation()
+        let mockConversation = SwiftMockConversation()
         viewModel.showActionMenu(for: mockConversation, from: mockViewController.view)
 
         let sut = (viewModel?.actionsController)!
@@ -54,7 +54,7 @@ final class ConversationActionControllerSnapshotTests: XCTestCase {
     }
 }
 
-fileprivate final class MockConversation: ConversationInterface {
+final class SwiftMockConversation: ConversationInterface {
     var conversationType: ZMConversationType = .group
 
     var teamRemoteIdentifier: UUID?
@@ -85,6 +85,8 @@ fileprivate final class MockConversation: ConversationInterface {
 
     var voiceChannel: VoiceChannel?
 
+    var isConversationEligibleForVideoCalls: Bool = false
+
     func verifyLegalHoldSubjects() {}
 
     final class MockLabelType: NSObject, LabelType {
@@ -94,4 +96,19 @@ fileprivate final class MockConversation: ConversationInterface {
 
         var name: String? = "Test Folder"
     }
+}
+
+extension SwiftMockConversation {
+    static func groupConversation() -> SwiftMockConversation {
+        let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
+        let otherUser = MockUser.mockUsers().first!
+        let mockConversation = SwiftMockConversation()
+        mockConversation.conversationType = .group
+        mockConversation.displayName = otherUser.displayName
+        mockConversation.sortedActiveParticipants = [selfUser, otherUser]
+        mockConversation.isConversationEligibleForVideoCalls = true
+
+        return mockConversation
+    }
+
 }

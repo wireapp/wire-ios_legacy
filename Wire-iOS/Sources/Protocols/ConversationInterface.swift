@@ -36,7 +36,7 @@ protocol ConversationInterface: class {
     var sortedActiveParticipants: [ZMUser] { get }
 
     var voiceChannel: VoiceChannel? { get }
-
+    var isConversationEligibleForVideoCalls: Bool { get }
     func verifyLegalHoldSubjects()
 }
 

@@ -245,6 +245,12 @@ extension ConversationViewController: WireCallCenterCallStateObserver {
 
 }
 
+extension ZMConversation {
+    var isConversationEligibleForVideoCalls: Bool {
+        return self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants
+    }
+}
+
 extension ConversationInterface {
 
     /// Whether there is an incoming or inactive incoming call that can be joined.
@@ -266,10 +272,6 @@ extension ConversationInterface {
         }
 
         return false
-    }
-
-    var isConversationEligibleForVideoCalls: Bool {
-        return self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants
     }
 
     var isCallOngoing: Bool {
