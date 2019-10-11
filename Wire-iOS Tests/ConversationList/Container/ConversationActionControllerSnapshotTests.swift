@@ -81,6 +81,12 @@ fileprivate final class MockConversation: ConversationInterface {
         return true
     }
 
+    var sortedActiveParticipants: [ZMUser] = []
+
+    var voiceChannel: VoiceChannel?
+
+    func verifyLegalHoldSubjects() {}
+
     final class MockLabelType: NSObject, LabelType {
         var remoteIdentifier: UUID?
 
