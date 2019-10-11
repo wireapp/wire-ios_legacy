@@ -21,13 +21,15 @@ import UIKit
 
 public extension UIApplication {
     
-    static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
+//    static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
-        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
+        return
+//        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
     }
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
+        return
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         
@@ -51,9 +53,9 @@ public extension UIApplication {
             changed = true
         }
         
-        if changed {
-            NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
-        }
+//        if changed {
+//            NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
+//        }
     }
 
     /// return the visible window on the top most which fulfills these conditions:
