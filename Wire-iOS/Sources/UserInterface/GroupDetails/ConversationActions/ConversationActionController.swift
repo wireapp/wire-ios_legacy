@@ -27,12 +27,12 @@ final class ConversationActionController {
         case list, details
     }
 
-    private let conversation: ConversationInterface
+    private let conversation: ZMConversation
     unowned let target: UIViewController
     var currentContext: PresentationContext?
     weak var alertController: UIAlertController?
     
-    init(conversation: ConversationInterface, target: UIViewController) {
+    init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
     }
@@ -73,53 +73,51 @@ final class ConversationActionController {
     }
 
     func handleAction(_ action: ZMConversation.Action) {
-        guard let conversation = conversation as? ZMConversation else { return }
-
         switch action {
         case .deleteGroup:
             guard let userSession = ZMUserSession.shared() else { return }
 
             requestDeleteGroupResult() { result in
-                self.handleDeleteGroupResult(result, conversation: conversation, in: userSession)
+                self.handleDeleteGroupResult(result, conversation: self.conversation, in: userSession)
             }
         case .archive(isArchived: let isArchived): self.transitionToListAndEnqueue {
             self.conversation.isArchived = !isArchived
             }
         case .markRead: self.enqueue {
-            conversation.markAsRead()
+            self.conversation.markAsRead()
             }
         case .markUnread: self.enqueue {
-            conversation.markAsUnread()
+            self.conversation.markAsUnread()
             }
-        case .configureNotifications: self.requestNotificationResult(for: conversation) { result in
-            self.handleNotificationResult(result, for: conversation)
+        case .configureNotifications: self.requestNotificationResult(for: self.conversation) { result in
+            self.handleNotificationResult(result, for: self.conversation)
         }
         case .silence(isSilenced: let isSilenced): self.enqueue {
             self.conversation.mutedMessageTypes = isSilenced ? .none : .all 
             }
         case .leave: self.request(LeaveResult.self) { result in
-            self.handleLeaveResult(result, for: conversation)
+            self.handleLeaveResult(result, for: self.conversation)
             }
-        case .clearContent: self.requestClearContentResult(for: conversation) { result in
-            self.handleClearContentResult(result, for: conversation)
+        case .clearContent: self.requestClearContentResult(for: self.conversation) { result in
+            self.handleClearContentResult(result, for: self.conversation)
             }
         case .cancelRequest:
             guard let user = self.conversation.connectedUser else { return }
             self.requestCancelConnectionRequestResult(for: user) { result in
-                self.handleConnectionRequestResult(result, for: conversation)
+                self.handleConnectionRequestResult(result, for: self.conversation)
             }
-        case .block: self.requestBlockResult(for: conversation) { result in
-            self.handleBlockResult(result, for: conversation)
+        case .block: self.requestBlockResult(for: self.conversation) { result in
+            self.handleBlockResult(result, for: self.conversation)
             }
         case .moveToFolder:
-            self.openMoveToFolder(for: conversation)
-        case .favorite(isFavorite: let isFavorite):
-            enqueue {
-                conversation.isFavorite = !isFavorite
-            }
+            self.openMoveToFolder(for: self.conversation)
         case .removeFromFolder:
             enqueue {
-                conversation.removeFromFolder()
+                self.conversation.removeFromFolder()
+            }
+        case .favorite(isFavorite: let isFavorite):
+            enqueue {
+                self.conversation.isFavorite = !isFavorite
             }
         case .remove: fatalError()
         }

@@ -46,6 +46,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         let label = UILabel()
         label.font = .smallRegularFont
         label.textColor = .white
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
         return label
     }()
@@ -123,12 +124,15 @@ final class ConversationListHeaderView: UICollectionReusableView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        let spacing: CGFloat = 8
+
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8)]
+            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: spacing),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -spacing)]
         )
     }
 }

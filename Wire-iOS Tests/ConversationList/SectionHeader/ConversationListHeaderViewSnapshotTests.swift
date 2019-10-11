@@ -31,7 +31,7 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: CGFloat.ConversationListSectionHeader.height)))
 
-        sut.title = "GROUPS"
+        sut.title = "THIS IS A VERY VERY VERY VERY VERY VERY VERY VERY LONG FOLDER NAME"
 
         sut.backgroundColor = .black
     }

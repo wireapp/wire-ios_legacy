@@ -20,8 +20,10 @@ import Foundation
 
 extension ZMConversation {
     enum Action: Equatable {
-
+        
         case deleteGroup
+        case moveToFolder
+        case removeFromFolder(folder: String)
         case clearContent
         case leave
         case configureNotifications
@@ -32,25 +34,18 @@ extension ZMConversation {
         case markRead
         case markUnread
         case remove
-
-        /// folder operations
         case favorite(isFavorite: Bool)
-        case removeFromFolder(label: String)
-        case moveToFolder
     }
-}
-
-extension ConversationInterface {
-
-    var listActions: [ZMConversation.Action] {
+    
+    var listActions: [Action] {
         return actions.filter({ $0 != .deleteGroup })
     }
     
-    var detailActions: [ZMConversation.Action] {
+    var detailActions: [Action] {
         return actions.filter({ $0 != .configureNotifications})
     }
     
-    private var actions: [ZMConversation.Action] {
+    private var actions: [Action] {
         switch conversationType {
         case .connection:
             return availablePendingActions()
@@ -63,9 +58,9 @@ extension ConversationInterface {
         }
     }
     
-    private func availableOneToOneActions() -> [ZMConversation.Action] {
+    private func availableOneToOneActions() -> [Action] {
         precondition(conversationType == .oneOnOne)
-        var actions = [ZMConversation.Action]()
+        var actions = [Action]()
         actions.append(contentsOf: availableStandardActions())
         actions.append(.clearContent)
         if teamRemoteIdentifier == nil, let connectedUser = connectedUser {
@@ -74,12 +69,12 @@ extension ConversationInterface {
         return actions
     }
     
-    private func availablePendingActions() -> [ZMConversation.Action] {
+    private func availablePendingActions() -> [Action] {
         precondition(conversationType == .connection)
         return [.archive(isArchived: isArchived), .cancelRequest]
     }
     
-    private func availableGroupActions() -> [ZMConversation.Action] {
+    private func availableGroupActions() -> [Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
 
@@ -87,16 +82,15 @@ extension ConversationInterface {
             actions.append(.leave)
         }
 
-        if let conversation = self as? ZMConversation,
-            ZMUser.selfUser()?.canDeleteConversation(conversation) == true {//TODO
+        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
             actions.append(.deleteGroup)
         }
 
         return actions
     }
     
-    private func availableStandardActions() -> [ZMConversation.Action] {
-        var actions = [ZMConversation.Action]()
+    private func availableStandardActions() -> [Action] {
+        var actions = [Action]()
         
         if let markReadAction = markAsReadAction() {
             actions.append(markReadAction)
@@ -117,17 +111,16 @@ extension ConversationInterface {
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
             actions.append(.moveToFolder)
-
-            if let folerName = folder?.name {
-                actions.append(.removeFromFolder(label: folerName))
+            
+            if let folderName = folder?.name {
+                actions.append(.removeFromFolder(folder: folderName))
             }
         }
 
-
         return actions
     }
-
-    private func markAsReadAction() -> ZMConversation.Action? {
+    
+    private func markAsReadAction() -> Action? {
         guard DeveloperMenuState.developerMenuEnabled() else { return nil }
         if unreadMessages.count > 0 {
             return .markRead
@@ -151,8 +144,8 @@ extension ZMConversation.Action {
     
     fileprivate var title: String {
         switch self {
-        case .removeFromFolder(let label):
-            return "profile.remove_from_folder_button_title".localized(args: label)
+        case .removeFromFolder(let folder):
+            return localizationKey.localized(args: folder)
         default:
             return localizationKey.localized
         }
@@ -162,10 +155,10 @@ extension ZMConversation.Action {
         switch self {
         case .deleteGroup: return "meta.menu.delete"
         case .moveToFolder: return "meta.menu.move_to_folder"
+        case .removeFromFolder: return "meta.menu.remove_from_folder"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
-        case .leave:
-            return "meta.menu.leave"
+        case .leave: return "meta.menu.leave"
         case .markRead: return "meta.menu.mark_read"
         case .markUnread: return "meta.menu.mark_unread"
         case .configureNotifications: return "meta.menu.configure_notifications"
@@ -174,8 +167,6 @@ extension ZMConversation.Action {
         case .cancelRequest: return "meta.menu.cancel_connection_request"
         case .block(isBlocked: let blocked): return blocked ? "profile.unblock_button_title" : "profile.block_button_title"
         case .favorite(isFavorite: let favorited): return favorited ? "profile.unfavorite_button_title" : "profile.favorite_button_title"
-        case .removeFromFolder:
-            return "profile.remove_from_folder_button_title"
         }
     }
     
