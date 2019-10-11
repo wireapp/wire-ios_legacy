@@ -41,7 +41,7 @@ protocol LegalHoldParticipantsSectionControllerDelegate: class {
     
 }
 
-class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
+final class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private var viewModel: LegalHoldParticipantsSectionViewModel
@@ -51,7 +51,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
     init(conversation: ConversationInterface) {
-        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
+        viewModel = .init(participants: conversation.sortedActiveParticipantUsers.filter(\.isUnderLegalHold))
         self.conversation = conversation
         super.init()
         

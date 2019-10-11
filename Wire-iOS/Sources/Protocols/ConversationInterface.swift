@@ -33,11 +33,15 @@ protocol ConversationInterface: class {
 
     func canMarkAsUnread() -> Bool
 
-    var sortedActiveParticipants: [ZMUser] { get }
+    var sortedActiveParticipantUsers: [UserType] { get }
 
     var voiceChannel: VoiceChannel? { get }
     var isConversationEligibleForVideoCalls: Bool { get }
     func verifyLegalHoldSubjects()
 }
 
-extension ZMConversation: ConversationInterface {}
+extension ZMConversation: ConversationInterface {
+    var sortedActiveParticipantUsers: [UserType] {
+        return sortedActiveParticipants
+    }
+}
