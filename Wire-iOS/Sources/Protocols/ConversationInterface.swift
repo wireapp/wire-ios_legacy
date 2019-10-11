@@ -40,6 +40,7 @@ protocol ConversationInterface: class {
     func verifyLegalHoldSubjects()
 }
 
+///TODO: change DM's return type
 extension ZMConversation: ConversationInterface {
     var sortedActiveParticipantUsers: [UserType] {
         return sortedActiveParticipants
