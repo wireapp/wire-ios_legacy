@@ -58,9 +58,9 @@ final class NotificationWindowRootViewController: UIViewController {
     }
 
     ///TODO: overrides other window?
-//    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
+    override var prefersStatusBarHidden: Bool {
+        return true ///TODO: get behide windows value
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {///TODO:
         //        return callController?.activeCallViewController?.preferredStatusBarStyle ?? .default
