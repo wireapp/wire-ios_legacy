@@ -104,7 +104,7 @@ extension LegalHoldParticipantsSectionController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         guard changeInfo.connectionStateChanged || changeInfo.nameChanged || changeInfo.isUnderLegalHoldChanged else { return }
         
-        viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
+        viewModel = .init(participants: conversation.sortedActiveParticipantUsers.filter(\.isUnderLegalHold))
         collectionView?.reloadData()
     }
     

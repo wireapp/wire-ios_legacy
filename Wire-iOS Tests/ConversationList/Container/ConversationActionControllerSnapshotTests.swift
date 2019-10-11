@@ -81,7 +81,7 @@ final class SwiftMockConversation: ConversationInterface {
         return true
     }
 
-    var sortedActiveParticipants: [ZMUser] = []
+    var sortedActiveParticipantUsers: [UserType] = []
 
     var voiceChannel: VoiceChannel?
 
@@ -105,7 +105,7 @@ extension SwiftMockConversation {
         let mockConversation = SwiftMockConversation()
         mockConversation.conversationType = .group
         mockConversation.displayName = otherUser.displayName
-        mockConversation.sortedActiveParticipants = [selfUser, otherUser]
+        mockConversation.sortedActiveParticipantUsers = [selfUser, otherUser]
         mockConversation.isConversationEligibleForVideoCalls = true
 
         return mockConversation

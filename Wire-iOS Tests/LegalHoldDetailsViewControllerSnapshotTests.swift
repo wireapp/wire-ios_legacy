@@ -61,7 +61,7 @@ final class LegalHoldDetailsViewControllerSnapshotTests: XCTestCase {
     
     func testOtherUserUnderLegalHold() {
         let conversation = SwiftMockConversation.groupConversation()
-        conversation.sortedActiveParticipants.forEach({ user in
+        conversation.sortedActiveParticipantUsers.forEach({ user in
             let mockUser = user as? MockUser
 
             if mockUser?.isSelfUser == false {
