@@ -32,16 +32,6 @@ extension UINavigationController {
     }
 }
 
-class StatusBarNavigationController: UINavigationController {
-    open override var childForStatusBarStyle: UIViewController? {
-        return topViewController
-    }
-
-    open override var childForStatusBarHidden: UIViewController? {
-        return topViewController
-    }
-}
-
 @objcMembers
 final class AppRootViewController: UIViewController {
 
@@ -248,8 +238,7 @@ final class AppRootViewController: UIViewController {
                 break
             }
 
-            let navigationController = StatusBarNavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil) ///TODO: status bar
-            navigationController.navigationBar.barStyle = .`default`
+            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
@@ -334,7 +323,6 @@ final class AppRootViewController: UIViewController {
                     viewController.didMove(toParent: self)
                     previousViewController.removeFromParent()
                     self.visibleViewController = viewController
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
@@ -346,7 +334,6 @@ final class AppRootViewController: UIViewController {
                 view.addSubview(viewController.view)
                 viewController.didMove(toParent: self)
                 visibleViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }
@@ -420,13 +407,13 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return  .default
-    }
+//    override var prefersStatusBarHidden: Bool {
+//        return visibleViewController?.prefersStatusBarHidden ?? false
+//    }
+//
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return  visibleViewController?.preferredStatusBarStyle ?? .default
+//    }
 
     override var childForStatusBarStyle: UIViewController? {
         return visibleViewController
