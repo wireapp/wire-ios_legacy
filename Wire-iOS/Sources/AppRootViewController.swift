@@ -22,6 +22,16 @@ import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
+extension UINavigationController {
+    open override var childForStatusBarStyle: UIViewController? {
+        return topViewController
+    }
+
+    open override var childForStatusBarHidden: UIViewController? {
+        return topViewController
+    }
+}
+
 @objcMembers
 final class AppRootViewController: UIViewController {
 
@@ -36,7 +46,11 @@ final class AppRootViewController: UIViewController {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController?
+    fileprivate(set) var visibleViewController: UIViewController? {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
@@ -224,11 +238,14 @@ final class AppRootViewController: UIViewController {
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil) ///TODO: status bar
+//            navigationController.navigationBar.barStyle = .`default`
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
                                                                   featureProvider: BuildSettingAuthenticationFeatureProvider())
+
+            ///TODO: update status bar?
 
             authenticationCoordinator!.delegate = appStateController
             authenticationCoordinator!.startAuthentication(with: error, numberOfAccounts: SessionManager.numberOfAccounts)
@@ -393,12 +410,20 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return visibleViewController?.prefersStatusBarHidden ?? false
+//    override var prefersStatusBarHidden: Bool {
+//        return visibleViewController?.prefersStatusBarHidden ?? false
+//    }
+//
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return visibleViewController?.preferredStatusBarStyle ?? .default
+//    }
+
+    override var childForStatusBarStyle: UIViewController? {
+        return visibleViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleViewController?.preferredStatusBarStyle ?? .default
+    override var childForStatusBarHidden: UIViewController? {
+        return visibleViewController
     }
 
 }

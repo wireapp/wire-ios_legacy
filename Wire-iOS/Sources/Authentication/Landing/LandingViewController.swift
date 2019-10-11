@@ -25,7 +25,7 @@ import UIKit
 }
 
 /// Landing screen for choosing how to authenticate.
-class LandingViewController: AuthenticationStepViewController {
+final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - State
 
@@ -236,8 +236,13 @@ class LandingViewController: AuthenticationStepViewController {
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
 
+    ///TODO: rm
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return false
     }
 
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

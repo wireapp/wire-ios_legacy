@@ -24,7 +24,7 @@
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [self setStatusBarStyle:style animated:animated];
+//    [self setStatusBarStyle:style animated:animated];
 #pragma clang diagnostic pop
 }
 
@@ -32,7 +32,7 @@
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [self setStatusBarHidden:hidden withAnimation:animation];
+//    [self setStatusBarHidden:hidden withAnimation:animation];
 #pragma clang diagnostic pop
 }
 

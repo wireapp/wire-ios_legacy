@@ -142,7 +142,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
     }
 
     func stateDidChange(_ newState: AuthenticationFlowStep, mode: AuthenticationStateController.StateChangeMode) {
-        guard let presenter = self.presenter, newState.needsInterface else {
+        guard let presenter = presenter, newState.needsInterface else {
             return
         }
 
@@ -158,7 +158,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             presenter.pushViewController(stepViewController, animated: true)
 
         case .reset:
-            presenter.setViewControllers([stepViewController], animated: true)
+            presenter.setViewControllers([stepViewController], animated: true) ///TODO: presenter's status bar
 
         case .replace:
             var viewControllers = presenter.viewControllers
