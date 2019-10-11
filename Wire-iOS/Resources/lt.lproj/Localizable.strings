@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
 "conversation_list.voiceover.status.mention" = "jus paminėjo";
 "conversation_list.voiceover.status.reply" = "atsakyti";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Naudojuosi „Wire“, ieškokite %@ arba eikit į get.wire.com";
 "send_invitation_no_email.text" = "Aš naudoju Wire. Apsilankyk get.wire.com , kad su manimi susisiektum.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Kurti";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "pasidalino nuotrauka";
@@ -202,6 +217,11 @@
 "list.title" = "Susirašinėjimai";
 "list.archived_conversations" = "ARCHYVUOTI";
 "list.archived_conversations_close" = "Uždaryti archyvą";
+
+"list.section.groups" = "Grupės";
+"list.section.contacts" = "Žmonės";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "patvirtintas";
 "conversation.voiceover.legalhold" = "sulaikyta teisiškai";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "Išarchyvuoti";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Blokuoti…";
 "profile.unblock_button_title" = "Atblokuoti…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Užblokuoti";
 "profile.unblock_button_title_action" = "Atblokuoti";

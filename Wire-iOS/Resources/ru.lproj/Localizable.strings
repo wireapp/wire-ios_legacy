@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "пинг";
 "conversation_list.voiceover.status.mention" = "вас упомянули";
 "conversation_list.voiceover.status.reply" = "ответить";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "недавние";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "список недавних бесед";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "папки";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "список бесед, организованных в папки";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "архивировано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "список архивированных бесед";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакты";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Я использую Wire. Ищи меня там по нику %@ или зайди на сайт get.wire.com";
 "send_invitation_no_email.text" = "Я использую Wire. Зайди на сайт get.wire.com, чтобы связаться со мной.";
 
+// Folders
+
+"folder.creation.name.title" = "Создать новую папку";
+"folder.creation.name.button.create" = "Создать";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Не более 64 символов";
+"folder.creation.name.placeholder" = "Название папки";
+
+"folder.picker.title" = "Переместить в";
+"folder.picker.empty.hint" = "Создать новую папку нажатием на кнопку +";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "поделился(-лась) картинкой";
@@ -202,6 +217,11 @@
 "list.title" = "Беседы";
 "list.archived_conversations" = "АРХИВ";
 "list.archived_conversations_close" = "Закрыть архив";
+
+"list.section.groups" = "Группы";
+"list.section.contacts" = "Участники";
+"list.section.requests" = "Запросы";
+"list.section.favorites" = "Избранное";
 
 "conversation.voiceover.verified" = "верифицировано";
 "conversation.voiceover.legalhold" = "правовая защита";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить группу…";
 "meta.menu.clear_content" = "Очистить контент…";
+"meta.menu.move_to_folder" = "Переместить в…";
+"meta.menu.remove_from_folder" = "Удалить из \"%@\"";
 "meta.menu.silence.mute" = "Отключить уведомления";
 "meta.menu.silence.unmute" = "Включить уведомления";
 "meta.menu.cancel" = "Отмена";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Заблокировать…";
 "profile.unblock_button_title" = "Разблокировать…";
+
+// Favorite button
+"profile.favorite_button_title" = "Добавить в избранное";
+"profile.unfavorite_button_title" = "Удалить из избранного";
 
 "profile.block_button_title_action" = "Заблокировать";
 "profile.unblock_button_title_action" = "Разблокировать";
@@ -1287,7 +1313,7 @@
 "registration.verify_email.resend.button_title" = "Отправить повторно";
 
 "registration.no_history.hero" = "Вы впервые используете Wire на этом устройстве.";
-"registration.no_history.subtitle" = "История бесед не отображается из соображений конфиденциальности.";
+"registration.no_history.subtitle" = "История бесед не отображается в целях обеспечения конфиденциальности.";
 "registration.no_history.got_it" = "OK";
 "registration.no_history.restore_backup" = "Восстановить из резервной копии";
 
@@ -1521,7 +1547,7 @@
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "Обнаружен Jailbreak";
-"jailbrokendevice.alert.message" = "Из соображений безопасности, Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";
+"jailbrokendevice.alert.message" = "С целью обеспечения безопасности Wire нельзя использовать на этом устройстве. Все существующие данные Wire были удалены.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · через giphy.com";
