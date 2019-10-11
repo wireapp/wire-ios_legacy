@@ -16,36 +16,43 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class FolderCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+final class FolderCreationControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+
     var sut: FolderCreationController!
-    
+
+    var coreDataFixture: CoreDataFixture!
+
     override func setUp() {
         super.setUp()
-        
+
+        coreDataFixture = CoreDataFixture()
+
         let convo = createTeamGroupConversation()
-        let conversationDirectory = uiMOC.conversationListDirectory()
+        let conversationDirectory = coreDataFixture.uiMOC.conversationListDirectory()
         sut = FolderCreationController(conversation: convo, directory: conversationDirectory)
         accentColor = .violet
     }
-    
+
     override func tearDown() {
         sut = nil
         ColorScheme.default.variant = .light
+        coreDataFixture = nil
         super.tearDown()
     }
-    
+
     func testForEditingTextField() {
-        
+
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(false, animated: false)
         sut.endAppearanceTransition()
-        
+
         sut.viewDidAppear(false)
-        
-        verify(view: sut.view)
+
+        verify(matching: sut)
     }
 }
