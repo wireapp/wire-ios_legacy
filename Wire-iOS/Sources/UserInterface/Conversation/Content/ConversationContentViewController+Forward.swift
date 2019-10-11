@@ -134,7 +134,7 @@ extension ConversationContentViewController {
     }
 
     @objc func updatePopover() {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenterViewController else { return }
 
         rootViewController.updatePopoverSourceRect()
     }
@@ -165,20 +165,14 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        if let pointToView = (view as? SelectableView)?.selectionView ?? view//, let popover = keyboardAvoiding.popoverPresentationController,
-//            let topmostViewController = UIApplication.shared.topmostViewController() as? PopoverPresenter & UIViewController
-            {
-            keyboardAvoiding.configPopover(pointToView: pointToView)
+        let presenter: PopoverPresenterViewController? = self.presentedViewController as? PopoverPresenterViewController
 
-                //            popover.config(from: topmostViewController,
-//                           pointToView: pointToView,
-//                           sourceView: topmostViewController.view)
-
+        if let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
+            keyboardAvoiding.configPopover(pointToView: pointToView, popoverPresenter: presenter)
         }
 
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
-            popoverPresentationController.permittedArrowDirections = [.left, .right, .up, .down]
         }
         
         keyboardAvoiding.presentationController?.delegate = self
@@ -189,9 +183,8 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
             }
         }
 
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenter & UIViewController else { return }
 
-        rootViewController.present(keyboardAvoiding, animated: true) {
+        (presenter ?? self).present(keyboardAvoiding, animated: true) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         }
     }

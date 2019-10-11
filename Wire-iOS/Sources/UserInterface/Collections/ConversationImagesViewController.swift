@@ -322,7 +322,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     private func perform(action: MessageAction,
                          for message: ZMConversationMessage? = nil,
                          sender: AnyObject?) {
-    ///TODO: if action == .forward and is pad regular, handle it here.
         messageActionDelegate?.perform(action: action,
                                        for: message ?? currentMessage,
                                        view: sender as? UIView ?? view)
