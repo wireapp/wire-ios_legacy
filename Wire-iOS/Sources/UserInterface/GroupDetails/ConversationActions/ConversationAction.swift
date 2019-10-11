@@ -20,7 +20,7 @@ import Foundation
 
 extension ZMConversation {
     enum Action: Equatable {
-        
+
         case deleteGroup
         case moveToFolder
         case removeFromFolder(folder: String)
@@ -36,16 +36,19 @@ extension ZMConversation {
         case remove
         case favorite(isFavorite: Bool)
     }
-    
-    var listActions: [Action] {
+}
+
+extension ConversationInterface {
+
+    var listActions: [ZMConversation.Action] {
         return actions.filter({ $0 != .deleteGroup })
     }
     
-    var detailActions: [Action] {
+    var detailActions: [ZMConversation.Action] {
         return actions.filter({ $0 != .configureNotifications})
     }
     
-    private var actions: [Action] {
+    private var actions: [ZMConversation.Action] {
         switch conversationType {
         case .connection:
             return availablePendingActions()
@@ -58,9 +61,9 @@ extension ZMConversation {
         }
     }
     
-    private func availableOneToOneActions() -> [Action] {
+    private func availableOneToOneActions() -> [ZMConversation.Action] {
         precondition(conversationType == .oneOnOne)
-        var actions = [Action]()
+        var actions = [ZMConversation.Action]()
         actions.append(contentsOf: availableStandardActions())
         actions.append(.clearContent)
         if teamRemoteIdentifier == nil, let connectedUser = connectedUser {
@@ -69,12 +72,12 @@ extension ZMConversation {
         return actions
     }
     
-    private func availablePendingActions() -> [Action] {
+    private func availablePendingActions() -> [ZMConversation.Action] {
         precondition(conversationType == .connection)
         return [.archive(isArchived: isArchived), .cancelRequest]
     }
     
-    private func availableGroupActions() -> [Action] {
+    private func availableGroupActions() -> [ZMConversation.Action] {
         var actions = availableStandardActions()
         actions.append(.clearContent)
 
@@ -82,15 +85,16 @@ extension ZMConversation {
             actions.append(.leave)
         }
 
-        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
+        if let conversation = self as? ZMConversation,
+            ZMUser.selfUser()?.canDeleteConversation(conversation) == true {
             actions.append(.deleteGroup)
         }
 
         return actions
     }
     
-    private func availableStandardActions() -> [Action] {
-        var actions = [Action]()
+    private func availableStandardActions() -> [ZMConversation.Action] {
+        var actions = [ZMConversation.Action]()
         
         if let markReadAction = markAsReadAction() {
             actions.append(markReadAction)
@@ -120,7 +124,7 @@ extension ZMConversation {
         return actions
     }
     
-    private func markAsReadAction() -> Action? {
+    private func markAsReadAction() -> ZMConversation.Action? {
         guard DeveloperMenuState.developerMenuEnabled() else { return nil }
         if unreadMessages.count > 0 {
             return .markRead
