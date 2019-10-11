@@ -42,14 +42,46 @@ final class ConversationListHeaderView: UICollectionReusableView {
     
     var tapHandler: TapHandler? = nil
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallRegularFont
         label.textColor = .white
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
         return label
     }()
-    
+
+    /// display title of the header
+    var title: String? {
+        set {
+            titleLabel.text = newValue
+        }
+
+        get {
+            return titleLabel.text
+        }
+    }
+
+    override var accessibilityLabel: String? {
+        get {
+            return title
+        }
+
+        set {
+            //no op
+        }
+    }
+
+    override var accessibilityValue: String? {
+        get {
+            return collapsed ? "collapsed" : "expanded"
+        }
+
+        set {
+            //no op
+        }
+    }
+
     private let arrowIconImageView: UIImageView = {
         let image = StyleKitIcon.downArrow.makeImage(size: 10, color: .white)
         
@@ -57,7 +89,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         
         return imageView
     }()
-    
+
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -66,6 +98,9 @@ final class ConversationListHeaderView: UICollectionReusableView {
         createConstraints()
         
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggledCollapsed)))
+
+        isAccessibilityElement = true
+        shouldGroupAccessibilityChildren = true
     }
     
     @objc
@@ -89,12 +124,15 @@ final class ConversationListHeaderView: UICollectionReusableView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        let spacing: CGFloat = 8
+
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: 8)]
+            titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: spacing),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -spacing)]
         )
     }
 }

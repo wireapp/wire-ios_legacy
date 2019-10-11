@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.status.reply" = "odpowiedz";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Używam Wire, moja nazwa użytkownika to %@. Odwiedź get.wire.com i zacznij używać Wire.";
 "send_invitation_no_email.text" = "Używam Wire. Wejdź na get.wire.com aby się ze mną połączyć.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Utwórz";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "udostępniane zdjęcie";
@@ -202,6 +217,11 @@
 "list.title" = "Konwersacje";
 "list.archived_conversations" = "ARCHIWUM";
 "list.archived_conversations_close" = "Zamknij archiwum";
+
+"list.section.groups" = "Grupy";
+"list.section.contacts" = "Osoby";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "verified";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "Przywróć z archiwum";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Wyczyść zawartość…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Wycisz";
 "meta.menu.silence.unmute" = "Wyłącz wyciszenie";
 "meta.menu.cancel" = "Anuluj";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Zablokuj…";
 "profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Zablokuj";
 "profile.unblock_button_title_action" = "Odblokuj";

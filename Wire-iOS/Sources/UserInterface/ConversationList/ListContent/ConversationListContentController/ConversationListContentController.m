@@ -104,6 +104,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
+#pragma mark - View Model delegate
+
 - (void)listViewModelShouldBeReloaded
 {
     [self reload];

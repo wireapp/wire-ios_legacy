@@ -30,6 +30,10 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
 }
 
+/// TODO: merge with above delegate after converted to Swift
+protocol ConversationListViewModelStateDelegate: class {
+    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)
+}
 
 protocol ConversationListViewModelRestorationDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didRestoreFolderEnabled enabled: Bool)

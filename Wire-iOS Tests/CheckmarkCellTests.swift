@@ -67,5 +67,4 @@ final class CheckmarkCellTests: XCTestCase {
         cell.colorSchemeVariant = .dark
         verify(matching: cell)
     }
-
 }

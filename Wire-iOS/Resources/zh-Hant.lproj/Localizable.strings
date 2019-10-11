@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "招呼";
 "conversation_list.voiceover.status.mention" = "有人提及你";
 "conversation_list.voiceover.status.reply" = "回覆";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近更新";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近更新對話列表";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "資料夾";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "我在使用Wire，搜尋%@或造訪get.wire.com。";
 "send_invitation_no_email.text" = "我已加入 Wire ，請造訪 https://get.wire.com 來和我聯繫吧。";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "建立";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "分享了一幀圖片";
@@ -202,6 +217,11 @@
 "list.title" = "對話";
 "list.archived_conversations" = "封存";
 "list.archived_conversations_close" = "關閉封存";
+
+"list.section.groups" = "群組";
+"list.section.contacts" = "聯絡人";
+"list.section.requests" = "請求";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "已驗證";
 "conversation.voiceover.legalhold" = "合法保留";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "解除封存";
 "meta.menu.delete" = "刪除群組…";
 "meta.menu.clear_content" = "清除內容…";
+"meta.menu.move_to_folder" = "移動到...";
+"meta.menu.remove_from_folder" = "從 \"%@\" 中移除";
 "meta.menu.silence.mute" = "關閉訊息通知";
 "meta.menu.silence.unmute" = "開啟訊息通知";
 "meta.menu.cancel" = "取消";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "封鎖...";
 "profile.unblock_button_title" = "解除封鎖...";
+
+// Favorite button
+"profile.favorite_button_title" = "新增到最愛";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "封鎖";
 "profile.unblock_button_title_action" = "解除封鎖";
@@ -1589,7 +1615,7 @@
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.none.title" = "目前沒有設定狀態";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.action.dont_remind_me" = "不要再度顯示這個訊息";
+"availability.reminder.action.dont_remind_me" = "不再顯示這個訊息";
 "availability.reminder.action.ok" = "確認";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
