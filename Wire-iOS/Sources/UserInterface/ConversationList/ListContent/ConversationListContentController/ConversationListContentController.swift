@@ -19,6 +19,14 @@
 import Foundation
 
 extension ConversationListContentController {
+    override open var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+    open override var preferredStatusBarStyle: UIStatusBarStyle {        
+        return .lightContent
+    }
+
     override open func loadView() {
         super.loadView()
 

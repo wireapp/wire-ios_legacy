@@ -174,18 +174,22 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let presentedViewController = presentedViewController,
-            presentedViewController is UIAlertController {
-            return presentedViewController.preferredStatusBarStyle
-        }
-
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+
+//    override var prefersStatusBarHidden: Bool {
+//        return true
+//    }
+//
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        if let presentedViewController = presentedViewController,
+//            presentedViewController is UIAlertController {
+//            return presentedViewController.preferredStatusBarStyle
+//        }
+//
+//        return .lightContent
+//    }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { context in

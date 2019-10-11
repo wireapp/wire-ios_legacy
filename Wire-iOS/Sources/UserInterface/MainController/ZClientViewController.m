@@ -199,7 +199,7 @@
         return YES;
     }
 }
-
+/*
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     if (nil != self.topOverlayViewController) {
@@ -235,7 +235,7 @@
         return NO;
     }
 }
-
+*/
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
 {
     [super traitCollectionDidChange:previousTraitCollection];

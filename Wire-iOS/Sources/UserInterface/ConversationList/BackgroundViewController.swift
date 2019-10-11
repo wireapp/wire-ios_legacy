@@ -73,18 +73,18 @@ final public class BackgroundViewController: UIViewController {
         self.updateForColorScheme()
     }
     
-    public override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
-    public override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let child = children.first {
-            return child.preferredStatusBarStyle
-        }
-        else {
-            return .lightContent
-        }
-    }
+//    public override var prefersStatusBarHidden: Bool {
+//        return false
+//    }
+//
+//    public override var preferredStatusBarStyle : UIStatusBarStyle {
+//        if let child = children.first {
+//            return child.preferredStatusBarStyle
+//        }
+//        else {
+//            return .lightContent
+//        }
+//    }
     
     private func configureViews() {
         let factor = BackgroundViewController.backgroundScaleFactor
