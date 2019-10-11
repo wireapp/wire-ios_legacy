@@ -42,7 +42,6 @@ XCODE_VERSION=( ${version//./ } )
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."
-rm -rf ~/Library/Caches/org.carthage.CarthageKit
 carthage bootstrap --platform ios
 echo ""
 
