@@ -741,17 +741,7 @@ extension ConversationListViewModel: ZMUserObserver {
 
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
-        if changeInfo.reloaded {
-            // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
-            // so we prefer to do the simple reload instead.
-            reload()
-        } else {
-            for updatedList in changeInfo.updatedLists {
-                if let kind = self.kind(of: updatedList) {
-                    updateForConversationType(kind: kind)
-                }
-            }
-        }
+        reload() // NOTE temporarily reloading on all changes.
     }
 
     private func kind(of conversationListType: ConversationListType) -> Section.Kind? {
