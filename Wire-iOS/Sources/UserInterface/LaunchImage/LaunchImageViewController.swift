@@ -20,7 +20,14 @@ import UIKit
 
 /// Replicates the launch screen to prevent the black screen being visible, cause of later UI initialization
 class LaunchImageViewController: UIViewController {
-
+    override func removeFromParent() {
+        super.removeFromParent()
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+    }
+    
     private var shouldShowLoadingScreenOnViewDidLoad = false
 
     private var contentView: UIView!

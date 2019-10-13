@@ -48,7 +48,7 @@ final class AppRootViewController: UIViewController {
 
     fileprivate(set) var visibleViewController: UIViewController? {
         didSet {
-            setNeedsStatusBarAppearanceUpdate()
+            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
         }
     }
     fileprivate let appStateController: AppStateController
@@ -268,7 +268,7 @@ final class AppRootViewController: UIViewController {
             Analytics.shared().setTeam(ZMUser.selfUser().team)
 
             viewController = clientViewController
-        case .headless:
+        case .headless: ///TODO: headless twice?
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
@@ -309,20 +309,22 @@ final class AppRootViewController: UIViewController {
         // If we have some modal view controllers presented in any of the (grand)children
         // of this controller they stay in memory and leak on iOS 10.
         dismissModalsFromAllChildren(of: visibleViewController)
-        visibleViewController?.willMove(toParent: nil)
+//        visibleViewController?.willMove(toParent: nil)
 
         if let previousViewController = visibleViewController, animated {
 
             addChild(viewController)
+            view.addSubview(viewController.view)
+            previousViewController.willMove(toParent: nil)
             transition(from: previousViewController,
                        to: viewController,
                        duration: 0.5,
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
-                    viewController.didMove(toParent: self)
-                    previousViewController.removeFromParent()
-                    self.visibleViewController = viewController
+                        previousViewController.removeFromParent()
+                        viewController.didMove(toParent: self)
+//                    self.visibleViewController = viewController                        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
@@ -334,6 +336,7 @@ final class AppRootViewController: UIViewController {
                 view.addSubview(viewController.view)
                 viewController.didMove(toParent: self)
                 visibleViewController = viewController
+//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }
