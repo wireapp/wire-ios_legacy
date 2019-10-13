@@ -20,6 +20,28 @@
 import Foundation
 
 extension ZClientViewController {
+    private var child: UIViewController? {
+        if nil != topOverlayViewController {
+            return topOverlayViewController
+        } else if traitCollection.horizontalSizeClass == .compact {
+            if presentedViewController != nil {
+                return presentedViewController
+            } else {
+                return splitViewController
+            }
+        } else {
+            return nil
+        }
+
+    }
+    
+    open override var childForStatusBarStyle: UIViewController? {
+        return child
+    }
+    
+    open override var childForStatusBarHidden: UIViewController? {
+        return child
+    }
 
     // MARK: - Setup methods
 

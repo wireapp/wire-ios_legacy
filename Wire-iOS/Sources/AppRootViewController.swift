@@ -49,6 +49,7 @@ final class AppRootViewController: UIViewController {
     fileprivate(set) var visibleViewController: UIViewController? {
         didSet {
             visibleViewController?.setNeedsStatusBarAppearanceUpdate()
+            
         }
     }
     fileprivate let appStateController: AppStateController
@@ -331,7 +332,9 @@ final class AppRootViewController: UIViewController {
                         previousViewController.removeFromParent()
                         viewController.didMove(toParent: self)
                         
-                        self.visibleViewController = viewController                        //UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                        self.visibleViewController = viewController
+                        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                        self.setNeedsStatusBarAppearanceUpdate()
                     completionHandler?()
             })
         } else {
@@ -344,7 +347,8 @@ final class AppRootViewController: UIViewController {
                 addToSelf(viewController)
 
                 visibleViewController = viewController
-//                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
+                setNeedsStatusBarAppearanceUpdate()
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }

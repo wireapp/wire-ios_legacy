@@ -172,6 +172,8 @@ final class ConversationListViewController: UIViewController {
             ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
             ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
+//        setNeedsStatusBarAppearanceUpdate()
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "status bar"), object: nil)
     }
 
     public override var preferredStatusBarStyle: UIStatusBarStyle {

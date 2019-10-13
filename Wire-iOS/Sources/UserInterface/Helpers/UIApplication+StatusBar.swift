@@ -25,10 +25,11 @@ public extension UIApplication {
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
         return
-//        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
+        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
     }
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
+        UIApplication.shared.topmostViewController()?.setNeedsStatusBarAppearanceUpdate()
         return
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle

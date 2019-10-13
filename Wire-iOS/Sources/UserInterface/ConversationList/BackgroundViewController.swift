@@ -22,7 +22,7 @@ import Cartography
 import WireSyncEngine
 
 
-final public class BackgroundViewController: UIViewController {
+final class BackgroundViewController: UIViewController {
     
     internal var dispatchGroup: DispatchGroup = DispatchGroup()
     
@@ -71,8 +71,22 @@ final public class BackgroundViewController: UIViewController {
         
         self.updateForUser()
         self.updateForColorScheme()
+        
+        setNeedsStatusBarAppearanceUpdate()
     }
     
+    var child: UIViewController? {
+        return children.first
+    }
+    
+    override var childForStatusBarStyle: UIViewController? {
+        return child
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return child
+    }
+
 //    public override var prefersStatusBarHidden: Bool {
 //        return false
 //    }
