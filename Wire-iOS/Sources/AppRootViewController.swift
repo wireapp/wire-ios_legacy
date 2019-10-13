@@ -215,6 +215,11 @@ final class AppRootViewController: UIViewController {
     }
 
     func transition(to appState: AppState, completionHandler: (() -> Void)? = nil) {
+        if appState == .headless, appStateController.appState == appState {
+            completionHandler?()
+            return
+        }
+        
         var viewController: UIViewController? = nil
         showContentDelegate = nil
 
