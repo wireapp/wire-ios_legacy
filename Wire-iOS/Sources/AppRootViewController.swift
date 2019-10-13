@@ -268,7 +268,7 @@ final class AppRootViewController: UIViewController {
             Analytics.shared().setTeam(ZMUser.selfUser().team)
 
             viewController = clientViewController
-        case .headless: ///TODO: headless twice?
+        case .headless: ///TODO: headless twice? lazy
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
             viewController = SkeletonViewController(from: fromAccount, to: toAccount)
@@ -315,26 +315,29 @@ final class AppRootViewController: UIViewController {
 
             addChild(viewController)
             view.addSubview(viewController.view)
-            previousViewController.willMove(toParent: nil)
+            previousViewController.willMove(toParent: nil) ///TODO: previousViewController is ??
             transition(from: previousViewController,
                        to: viewController,
                        duration: 0.5,
                        options: .transitionCrossDissolve,
                        animations: nil,
                        completion: { (finished) in
+                        
                         previousViewController.removeFromParent()
                         viewController.didMove(toParent: self)
-//                    self.visibleViewController = viewController                        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                        
+                        self.visibleViewController = viewController                        //UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {
                 visibleViewController?.removeFromParent()
-                addChild(viewController)
+                
                 viewController.view.frame = view.bounds
                 viewController.view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-                view.addSubview(viewController.view)
-                viewController.didMove(toParent: self)
+                
+                addToSelf(viewController)
+
                 visibleViewController = viewController
 //                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
