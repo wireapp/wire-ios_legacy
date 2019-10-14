@@ -61,6 +61,11 @@ final class FolderPickerViewController: UIViewController {
         configureConstraints()
     }
     
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+    }
+    
     private func configureNavbar() {
         title = "folder.picker.title".localized(uppercased: true)
         
