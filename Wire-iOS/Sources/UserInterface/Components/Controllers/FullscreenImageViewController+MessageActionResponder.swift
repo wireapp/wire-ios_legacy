@@ -41,13 +41,7 @@ extension FullscreenImageViewController: MessageActionResponder {
     public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
         case .forward:
-            if isIPadRegular() {
-                perform(action: action)
-            } else {
-                dismiss(animated: true) {
-                    self.perform(action: action)
-                }
-            }            
+            perform(action: action)
         case .showInConversation,
              .reply:
             dismiss(animated: true) {
