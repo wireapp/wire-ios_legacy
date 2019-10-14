@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListContentController {
-    override open var prefersStatusBarHidden: Bool {
+    override open var prefersStatusBarHidden: Bool {///TODO: handle in parent?
         return true
     }
     

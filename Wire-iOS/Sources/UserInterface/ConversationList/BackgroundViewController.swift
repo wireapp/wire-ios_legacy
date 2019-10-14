@@ -75,7 +75,7 @@ final class BackgroundViewController: UIViewController {
         setNeedsStatusBarAppearanceUpdate()
     }
     
-    var child: UIViewController? {
+    private var child: UIViewController? {
         return children.first
     }
     
@@ -87,19 +87,6 @@ final class BackgroundViewController: UIViewController {
         return child
     }
 
-//    public override var prefersStatusBarHidden: Bool {
-//        return false
-//    }
-//
-//    public override var preferredStatusBarStyle : UIStatusBarStyle {
-//        if let child = children.first {
-//            return child.preferredStatusBarStyle
-//        }
-//        else {
-//            return .lightContent
-//        }
-//    }
-    
     private func configureViews() {
         let factor = BackgroundViewController.backgroundScaleFactor
         imageView.contentMode = .scaleAspectFill

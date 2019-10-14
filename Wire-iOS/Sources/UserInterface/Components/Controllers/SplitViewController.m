@@ -270,27 +270,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-
-//- (UIStatusBarStyle)preferredStatusBarStyle
-//{
-//    if (self.openPercentage > 0) {
-//        return self.leftViewController.preferredStatusBarStyle;
-//    }
-//    else {
-//        return self.rightViewController.preferredStatusBarStyle;
-//    }
-//}
-//
-//- (BOOL)prefersStatusBarHidden
-//{
-//    if (self.openPercentage > 0) {
-//        return self.leftViewController.prefersStatusBarHidden;
-//    }
-//    else {
-//        return self.rightViewController.prefersStatusBarHidden;
-//    }
-//}
-
 - (NSArray *)constraintsActiveForCurrentLayout
 {
     NSMutableSet *constraints = [NSMutableSet set];

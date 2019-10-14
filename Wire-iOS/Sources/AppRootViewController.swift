@@ -46,12 +46,7 @@ final class AppRootViewController: UIViewController {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    fileprivate(set) var visibleViewController: UIViewController? {
-        didSet {
-            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
-            
-        }
-    }
+    fileprivate(set) var visibleViewController: UIViewController?
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
@@ -334,7 +329,6 @@ final class AppRootViewController: UIViewController {
                         
                         self.visibleViewController = viewController
                         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                        self.setNeedsStatusBarAppearanceUpdate()
                     completionHandler?()
             })
         } else {
@@ -422,14 +416,6 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-//    override var prefersStatusBarHidden: Bool {
-//        return visibleViewController?.prefersStatusBarHidden ?? false
-//    }
-//
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return  visibleViewController?.preferredStatusBarStyle ?? .default
-//    }
-
     override var childForStatusBarStyle: UIViewController? {
         return visibleViewController
     }
@@ -437,7 +423,6 @@ extension AppRootViewController {
     override var childForStatusBarHidden: UIViewController? {
         return visibleViewController
     }
-
 }
 
 extension AppRootViewController: AppStateControllerDelegate {

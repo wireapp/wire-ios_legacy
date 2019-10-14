@@ -236,11 +236,6 @@ final class LandingViewController: AuthenticationStepViewController {
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
 
-    ///TODO: rm
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
     override var prefersStatusBarHidden: Bool {
         return false
     }

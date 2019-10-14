@@ -80,10 +80,6 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         self.flowType = flowType
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
     override var prefersStatusBarHidden: Bool {
         return false
     }

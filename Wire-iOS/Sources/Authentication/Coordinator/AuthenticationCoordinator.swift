@@ -158,7 +158,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             presenter.pushViewController(stepViewController, animated: true)
 
         case .reset:
-            presenter.setViewControllers([stepViewController], animated: true) ///TODO: presenter's status bar
+            presenter.setViewControllers([stepViewController], animated: true)
 
         case .replace:
             var viewControllers = presenter.viewControllers

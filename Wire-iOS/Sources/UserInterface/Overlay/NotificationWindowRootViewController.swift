@@ -65,24 +65,17 @@ final class NotificationWindowRootViewController: UIViewController {
         }
     }
 
-    ///TODO: overrides other window?
-//    override var prefersStatusBarHidden: Bool {
-//        return false//true ///TODO: get behide windows value
-//    }
-//
-//    override var preferredStatusBarStyle: UIStatusBarStyle {///TODO:
-//        //        return callController?.activeCallViewController?.preferredStatusBarStyle ?? .default
-//
-//        ///TODO: windows behide?
-//        return .lightContent ///confirmed this overrides other windows
-//    }
+    private var child: UIViewController? {
+//        return callController?.activeCallViewController ??
+        return topmostViewController()
+    }
 
     override var childForStatusBarStyle: UIViewController? {
-        return topmostViewController()
+        return child
     }
     
     override var childForStatusBarHidden: UIViewController? {
-        return topmostViewController()
+        return child
     }
 
     override var shouldAutorotate: Bool {

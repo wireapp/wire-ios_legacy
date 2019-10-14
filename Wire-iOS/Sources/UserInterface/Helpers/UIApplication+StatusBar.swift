@@ -29,34 +29,6 @@ public extension UIApplication {
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "status bar"), object: nil)
-
-        return
-        let statusBarHidden: Bool
-        let statusBarStyle: UIStatusBarStyle
-        
-        if let topContoller = self.topmostViewController(onlyFullScreen: onlyFullScreen) {
-            statusBarHidden = topContoller.prefersStatusBarHidden
-            statusBarStyle = topContoller.preferredStatusBarStyle
-        } else {
-            statusBarHidden = true
-            statusBarStyle = .lightContent
-        }
-        
-        var changed = false
-        
-        if (self.isStatusBarHidden != statusBarHidden) {
-            self.wr_setStatusBarHidden(statusBarHidden, with: animated ? .fade : .none)
-            changed = true
-        }
-        
-        if self.statusBarStyle != statusBarStyle {
-            self.wr_setStatusBarStyle(statusBarStyle, animated: animated)
-            changed = true
-        }
-        
-//        if changed {
-//            NotificationCenter.default.post(name: type(of: self).wr_statusBarStyleChangeNotification, object: self)
-//        }
     }
 
     /// return the visible window on the top most which fulfills these conditions:
