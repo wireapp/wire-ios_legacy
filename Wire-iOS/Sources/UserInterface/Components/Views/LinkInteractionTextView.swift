@@ -111,8 +111,12 @@ extension LinkInteractionTextView: UITextViewDelegate {
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
 
-            /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
-            if #available(iOS 13.0, *) {
+            if #available(iOS 13.2, *) {
+                // data detector links should be handle by the system
+                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            } else if #available(iOS 13.0, *) {
+                /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
+                /// the issue is fixed on iOS 13.2 and no need this workaround
                 if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
 
                     // data detector links should be handle by the system
