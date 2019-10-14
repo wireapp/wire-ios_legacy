@@ -65,7 +65,11 @@ final class FolderPickerViewController: UIViewController {
         super.viewWillAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
-    
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
     private func configureNavbar() {
         title = "folder.picker.title".localized(uppercased: true)
         
