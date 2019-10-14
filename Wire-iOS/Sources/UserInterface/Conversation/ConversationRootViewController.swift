@@ -108,6 +108,8 @@ import Cartography
         }
 
         shouldAnimateNetworkStatusView = true
+
+//        setNeedsStatusBarAppearanceUpdate() ///TODO: mv to will appear??
     }
 
     open override var prefersStatusBarHidden: Bool {
@@ -115,12 +117,7 @@ import Cartography
     }
 
     open override var preferredStatusBarStyle: UIStatusBarStyle {
-        switch ColorScheme.default.variant {
-        case .light:
-            return .default
-        case .dark:
-            return .lightContent
-        }
+        return ColorScheme.default.statusBarStyle
     }
     
     @objc (scrollToMessage:)

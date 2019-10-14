@@ -443,6 +443,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 {
     _openPercentage = percentage;
     [self updateRightAndLeftEdgeConstraints: percentage];
+
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage

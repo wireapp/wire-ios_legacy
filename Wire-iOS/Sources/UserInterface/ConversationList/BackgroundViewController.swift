@@ -71,8 +71,6 @@ final class BackgroundViewController: UIViewController {
         
         self.updateForUser()
         self.updateForColorScheme()
-        
-        setNeedsStatusBarAppearanceUpdate()
     }
     
     private var child: UIViewController? {

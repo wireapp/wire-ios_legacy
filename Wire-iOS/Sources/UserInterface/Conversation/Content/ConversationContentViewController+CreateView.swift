@@ -19,6 +19,10 @@
 import Foundation
 
 extension ConversationContentViewController {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
     @objc
     func createMentionsResultsView() {
         mentionsSearchResultsViewController = UserSearchResultsViewController()
