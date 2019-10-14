@@ -161,6 +161,16 @@ class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
         verify(message: message)
     }
     
+    func testDownloadedCell_zeroBytes() {
+        let message = MockMessage()
+        message.backingFileMessageData = MockFileMessageData()
+        message.backingFileMessageData.size = 0
+        message.backingFileMessageData.transferState = .uploaded
+        message.backingFileMessageData.downloadState = .downloaded
+        
+        verify(message: message)
+    }
+    
     func testFailedDownloadCell_fromThisDevice() {
         let message = MockMessageFactory.fileTransferMessage()!
         message.backingFileMessageData.transferState = .uploaded

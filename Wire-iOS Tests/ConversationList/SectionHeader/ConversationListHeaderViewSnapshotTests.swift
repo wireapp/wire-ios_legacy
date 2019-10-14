@@ -29,9 +29,9 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: CGFloat.ConversationListSectionHeader.height)))
+        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: CGFloat.ConversationListSectionHeader.height)))
 
-        sut.title = "THIS IS A VERY VERY VERY VERY VERY VERY VERY VERY LONG FOLDER NAME"
+        sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
         sut.backgroundColor = .black
     }
