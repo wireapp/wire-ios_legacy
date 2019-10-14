@@ -124,6 +124,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
+        arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
         let spacing: CGFloat = 8
 
         NSLayoutConstraint.activate([

@@ -193,7 +193,7 @@
 
 "folder.creation.name.title" = "Создать новую папку";
 "folder.creation.name.button.create" = "Создать";
-"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.header" = "Переместить беседу \"%@\" в новую папку.";
 "folder.creation.name.footer" = "Не более 64 символов";
 "folder.creation.name.placeholder" = "Название папки";
 
