@@ -20,8 +20,8 @@ import UIKit
 class PassthroughWindow: UIWindow {
 
     override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        for v in subviews {
-            if !v.isHidden && v.point(inside: convert(point, to: v), with: event) {
+        for view in subviews {
+            if !view.isHidden && view.point(inside: convert(point, to: view), with: event) {
                 return true
             }
         }
