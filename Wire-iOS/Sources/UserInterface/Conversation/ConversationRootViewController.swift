@@ -50,6 +50,7 @@ import Cartography
         navbar.shadowImage = UIImage()
         navbar.barTintColor = UIColor.from(scheme: .barBackground)
         navbar.tintColor = UIColor.from(scheme: .textForeground)
+        navbar.barStyle = ColorScheme.default.variant == .dark ? .black : .default ///TODO: update when scheme changes
 
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -103,23 +104,27 @@ import Cartography
 
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        delay(0.4) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
 
         shouldAnimateNetworkStatusView = true
-
-//        setNeedsStatusBarAppearanceUpdate() ///TODO: mv to will appear??
     }
 
-    open override var prefersStatusBarHidden: Bool {
-        return false
+    private var child: UIViewController? {
+        return conversationViewController?.contentViewController
     }
 
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+    override open var childForStatusBarStyle: UIViewController? {
+        return child
     }
-    
+
+    override open var childForStatusBarHidden: UIViewController? {
+        return child
+    }
+
+//    override open func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        setNeedsStatusBarAppearanceUpdate()
+//    }
+
     @objc (scrollToMessage:)
     func scroll(to message: ZMConversationMessage) {
         conversationViewController?.scroll(to: message)

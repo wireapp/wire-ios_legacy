@@ -203,6 +203,7 @@
     self.messagePresenter.modalTargetController = self.parentViewController;
 
     [self updateHeaderHeight];
+    [self setNeedsStatusBarAppearanceUpdate];
     
 }
 
