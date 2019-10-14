@@ -22,8 +22,6 @@
 #import "WireSyncEngine+iOS.h"
 #import "ZMUserSession+iOS.h"
 
-#import "ConversationListViewModel.h"
-
 #import "UIColor+WAZExtensions.h"
 
 #import "ProgressSpinner.h"
@@ -52,31 +50,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     flowLayout.minimumLineSpacing = 0;
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
     self = [super initWithCollectionViewLayout:flowLayout];
     if (self) {
 
         if (nil != [UISelectionFeedbackGenerator class]) {
             self.selectionFeedbackGenerator = [[UISelectionFeedbackGenerator alloc] init];
         }
+
+        [self registerSectionHeader];
     }
     return self;
-}
-
-- (void)loadView
-{
-    [super loadView];
-    
-    self.layoutCell = [[ConversationListCell alloc] init];
-    
-    self.listViewModel = [[ConversationListViewModel alloc] init];
-    self.listViewModel.delegate = self;
-    [self setupViews];
-    
-    if ([self respondsToSelector:@selector(registerForPreviewingWithDelegate:sourceView:)] &&
-        [[UIApplication sharedApplication] keyWindow].traitCollection.forceTouchCapability == UIForceTouchCapabilityAvailable) {
-        
-        [self registerForPreviewingWithDelegate:self sourceView:self.collectionView];
-    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -120,6 +104,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.clearsSelectionOnViewWillAppear = NO;
 }
 
+#pragma mark - View Model delegate
+
 - (void)listViewModelShouldBeReloaded
 {
     [self reload];
@@ -131,7 +117,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self ensureCurrentSelection];
 }
 
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateSection:(NSUInteger)section usingBlock:(dispatch_block_t)updateBlock withChangedIndexes:(ZMChangedIndexes *)changedIndexes
+- (void)listViewModel:(ConversationListViewModel * _Nullable)model didUpdateSection:(NSUInteger)section usingBlock:(SWIFT_NOESCAPE void (^ _Nonnull)(void))updateBlock with:(ZMChangedIndexes * _Nullable)changedIndexes
 {
     // If we are about to delete the currently selected conversation, select a different one
     NSArray *selectedItems = [self.collectionView indexPathsForSelectedItems];
@@ -218,25 +204,12 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.focusOnNextSelection = NO;
 }
 
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateConversationWithChange:(ConversationChangeInfo *)change
-{
-    if (change.isArchivedChanged ||
-        change.conversationListIndicatorChanged ||
-        change.nameChanged ||
-        change.unreadCountChanged ||
-        change.connectionStateChanged ||
-        change.mutedMessageTypesChanged ||
-        change.messagesChanged) {
-        
-        [self updateCellForConversation:change.conversation];
-    }
-}
-
 - (void)updateVisibleCells
 {
     [self updateCellForConversation:nil];
 }
 
+///TODO: mv logic to VM
 - (void)updateCellForConversation:(ZMConversation *)conversation
 {
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
@@ -253,7 +226,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
 {
     return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
 {
@@ -265,7 +238,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     // Tell the model to select the item
     return [self selectModelItem:conversation];
-}
+}///TODO: mv logic to VM
 
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus
 {
@@ -273,7 +246,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([self.listViewModel numberOfItemsInSection:0] > 0) {
         
         self.focusOnNextSelection = focus;
-        [self selectModelItem:self.listViewModel.contactRequestsItem];
+        [self selectModelItem: ConversationListViewModel.contactRequestsItem];
         return YES;
     }
     return NO;
@@ -282,7 +255,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)selectModelItem:(id)itemToSelect
 {
     return [self.listViewModel selectItem:itemToSelect];
-}
+}///TODO: mv to VM
 
 - (void)deselectAll
 {
@@ -349,16 +322,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)reload
-{
-    [self.collectionView reloadData];
-    [self ensureCurrentSelection];
-    
-    // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
-    // and then unarchive all at the same time
-    [self.view layoutIfNeeded];
-}
-
 #pragma mark - Custom
 
 + (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
@@ -370,10 +333,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return result;
 }
 
-@end
-
-
-@implementation ConversationListContentController (UICollectionViewDataSource)
+#pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
@@ -385,30 +345,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     NSInteger c = [self.listViewModel numberOfItemsInSection:section];
     return c;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    id item = [self.listViewModel itemForIndexPath:indexPath];
-    UICollectionViewCell *cell = nil;
-
-    if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
-        ConnectRequestsCell *labelCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdConnectionRequests forIndexPath:indexPath];
-        cell = labelCell;
-    }
-    else if ([item isKindOfClass:[ZMConversation class]]) {
-        ConversationListCell *listCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:CellReuseIdConversation forIndexPath:indexPath];
-        listCell.delegate = self;
-        listCell.mutuallyExclusiveSwipeIdentifier = @"ConversationList";
-        listCell.conversation = item;
-        cell = listCell;
-    } else {
-        RequireString(false, "Unknown cell type");
-    }
-
-    cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-
-    return cell;
 }
 
 @end
@@ -445,28 +381,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 
-@implementation ConversationListContentController (UICollectionViewDelegateFlowLayout)
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self.layoutCell sizeInCollectionViewSize:collectionView.bounds.size];
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView
-                        layout:(UICollectionViewLayout *)collectionViewLayout
-        insetForSectionAtIndex:(NSInteger)section
-{
-    if (section == 0) {
-        return UIEdgeInsetsMake(12, 0, 0, 0);
-    }
-    else {
-        return UIEdgeInsetsMake(0, 0, 0, 0);
-    }
-}
-
-@end
 
 @implementation ConversationListContentController (PeekAndPop)
 

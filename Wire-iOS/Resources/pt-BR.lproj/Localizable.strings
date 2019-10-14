@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "você foi mencionado";
 "conversation_list.voiceover.status.reply" = "responder";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arquivado";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista de conversas arquivadas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatos";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Eu estou no Wire, pesquise por %@ ou visite get.wire.com";
 "send_invitation_no_email.text" = "Estou no Wire. Visite get.wire.com para se conectar comigo.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Criar";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "compartilhou uma imagem";
@@ -202,6 +217,11 @@
 "list.title" = "Conversas";
 "list.archived_conversations" = "ARQUIVO";
 "list.archived_conversations_close" = "Fechar arquivo";
+
+"list.section.groups" = "Grupos";
+"list.section.contacts" = "Pessoas";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "verificado";
 "conversation.voiceover.legalhold" = "proteção jurídica";
@@ -693,7 +713,9 @@
 "meta.menu.archive" = "Arquivar";
 "meta.menu.unarchive" = "Desarquivar";
 "meta.menu.delete" = "Excluir grupo…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.clear_content" = "Limpar conteúdo…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
 "meta.menu.cancel" = "Cancelar";
@@ -705,12 +727,12 @@
 "meta.menu.open_self_profile" = "Abrir Perfil";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Limpar conteúdo?";
 "meta.menu.delete_content.dialog_message" = "Isto irá limpar o histórico de conversas em todos os seus dispositivos.";
 "meta.menu.delete_content.leave_as_well_message" = "Também sair da conversa";
 "meta.menu.delete_content.button_cancel" = "Cancelar";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Limpar";
+"meta.menu.delete_content.button_delete_and_leave" = "Limpar e sair";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notifique-me sobre:";
@@ -722,10 +744,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Sair da conversa?";
 "meta.leave_conversation_dialog_message" = "Os participantes serão notificados e a conversa será removida da sua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Também limpar o conteúdo";
 "meta.leave_conversation_button_cancel" = "Cancelar";
 "meta.leave_conversation_button_leave" = "Sair";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Sair e limpar conteúdo";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ começou a usar um novo dispositivo.";
@@ -770,7 +792,7 @@
 "conversation.delete_request_dialog.title" = "Excluir conversa em grupo?";
 "conversation.delete_request_dialog.message" = "Isso excluirá o grupo e todo o conteúdo de todos os participantes em todos os dispositivos. Não há opção para restaurar o conteúdo. Todos os participantes serão notificados.";
 "conversation.delete_request_error_dialog.title" = "Ocorreu um erro ao tentar excluir o grupo %@. Por favor, tente novamente.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "Excluir grupo";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Cancelar pedido?";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Bloquear…";
 "profile.unblock_button_title" = "Desbloquear…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Bloquear";
 "profile.unblock_button_title_action" = "Desbloquear";
@@ -959,6 +985,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Sair";
 "self.settings.account_details.log_out.alert.message" = "Seu histórico de mensagens será apagado neste dispositivo.";
+"self.settings.account_details.log_out.alert.password" = "Senha";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Relatórios de Uso e Erro";

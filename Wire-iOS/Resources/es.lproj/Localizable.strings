@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "te mencionaron";
 "conversation_list.voiceover.status.reply" = "responder";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivado";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista de conversaciones archivadas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contactos";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Uso Wire, búscame como %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Uso Wire. Visita get.wire.com para conectar conmigo.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Crear";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "envió una foto";
@@ -202,6 +217,11 @@
 "list.title" = "Chats";
 "list.archived_conversations" = "ARCHIVO";
 "list.archived_conversations_close" = "Cerrar archivo";
+
+"list.section.groups" = "Grupos";
+"list.section.contacts" = "Personas";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "verificado";
 "conversation.voiceover.legalhold" = "titular legal";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "Desarchivar";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "No silenciar";
 "meta.menu.cancel" = "Cancelar";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Bloquear…";
 "profile.unblock_button_title" = "Desbloquear…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Bloquear";
 "profile.unblock_button_title_action" = "Desbloquear";
@@ -959,6 +985,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Cerrar sesión";
 "self.settings.account_details.log_out.alert.message" = "Tu historial de mensajes será borrado de este dispositivo.";
+"self.settings.account_details.log_out.alert.password" = "Contraseña";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Informes de uso y fallos";

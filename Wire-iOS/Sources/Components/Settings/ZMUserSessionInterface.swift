@@ -27,5 +27,9 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
     var isNotificationContentHidden : Bool { get set }
 }
 
-extension ZMUserSession: ZMUserSessionInterface {
+// an interface for ZMUserSession's Swift-only functions
+protocol UserSessionSwiftInterface: ZMUserSessionInterface {
+    var conversationDirectory: ConversationDirectoryType { get }
 }
+
+extension ZMUserSession: UserSessionSwiftInterface {}

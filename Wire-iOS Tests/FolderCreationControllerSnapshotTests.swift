@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,46 +19,40 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class ZMConversationRevealTests: XCTestCase, CoreDataFixtureTestHelper {
+final class FolderCreationControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
 
-    var sut: ZMConversation!
+    var sut: FolderCreationController!
+
     var coreDataFixture: CoreDataFixture!
-    var mockConversation: ZMConversation!
-    var mockUserSession: MockZMUserSession!
 
     override func setUp() {
         super.setUp()
 
         coreDataFixture = CoreDataFixture()
-        mockConversation = createTeamGroupConversation()
-        mockUserSession = MockZMUserSession()
+
+        let convo = createTeamGroupConversation()
+        let conversationDirectory = coreDataFixture.uiMOC.conversationListDirectory()
+        sut = FolderCreationController(conversation: convo, directory: conversationDirectory)
+        accentColor = .violet
     }
 
     override func tearDown() {
         sut = nil
-        mockConversation = nil
-        mockUserSession = nil
-
+        ColorScheme.default.variant = .light
         coreDataFixture = nil
-
         super.tearDown()
     }
 
-    func testThatConversationIsUnarchivedAfterReveal() {
-        /// GIVEN
-        mockConversation.isArchived = true
+    func testForEditingTextField() {
 
-        let expectation = self.expectation(description: "Wait for conversation is archived")
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(false, animated: false)
+        sut.endAppearanceTransition()
 
-        /// WHEN
-        mockConversation.unarchive(userSession: mockUserSession) {
-            expectation.fulfill()
-        }
+        sut.viewDidAppear(false)
 
-        self.waitForExpectations(timeout: 2, handler: nil)
-
-        /// THEN
-        XCTAssertFalse(mockConversation.isArchived)
+        verify(matching: sut)
     }
 }

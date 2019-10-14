@@ -27,7 +27,8 @@ extension ZMConversationList {
     }
 }
 
-extension ZMConversationList: ConversationListType {
+///TODO: move to DM
+extension ZMConversationList: ConversationListHelperType {
     static var hasArchivedConversations: Bool {
         guard let session = ZMUserSession.shared() else { return false }
 
@@ -35,6 +36,7 @@ extension ZMConversationList: ConversationListType {
     }
 }
 
-protocol ConversationListType {
+///TODO: retire this static helper, refactor as  ZMUserSession's property
+protocol ConversationListHelperType {
     static var hasArchivedConversations: Bool { get }
 }

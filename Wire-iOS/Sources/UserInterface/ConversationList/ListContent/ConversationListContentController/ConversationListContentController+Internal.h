@@ -25,9 +25,9 @@ static NSString * _Nullable const CellReuseIdConversation = @"CellId";
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConversationListContentController () <ConversationListViewModelDelegate, UICollectionViewDelegateFlowLayout>
+@interface ConversationListContentController () <ConversationListViewModelDelegate>
 
-@property (nonatomic, strong) ConversationListViewModel *listViewModel;
+@property (nonatomic, strong, nonnull) ConversationListViewModel *listViewModel;
 
 @property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
 @property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
@@ -39,10 +39,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ConversationCallController *startCallController;
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
+
+- (void)ensureCurrentSelection;
+- (void)setupViews;
+- (void)listViewModelShouldBeReloaded;
+
 @end
 
 @interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
-
 @end
 
 NS_ASSUME_NONNULL_END

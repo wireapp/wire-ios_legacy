@@ -65,7 +65,7 @@ extension ConversationListViewController {
 
         let account: Account
         let selfUser: SelfUserType
-        let conversationListType: ConversationListType.Type
+        let conversationListType: ConversationListHelperType.Type
 
         var selectedConversation: ZMConversation?
 
@@ -80,7 +80,7 @@ extension ConversationListViewController {
 
         init(account: Account,
              selfUser: SelfUserType,
-             conversationListType: ConversationListType.Type = ZMConversationList.self) {
+             conversationListType: ConversationListHelperType.Type = ZMConversationList.self) {
             self.account = account
             self.selfUser = selfUser
             self.conversationListType = conversationListType

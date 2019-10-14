@@ -18,18 +18,18 @@
 
 
 import UIKit
- 
-@objc public protocol TextViewInteractionDelegate: NSObjectProtocol {
+
+protocol TextViewInteractionDelegate: class {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool
     func textViewDidLongPress(_ textView: LinkInteractionTextView)
 }
 
 
-final public class LinkInteractionTextView: UITextView {
+final class LinkInteractionTextView: UITextView {
     
-    public weak var interactionDelegate: TextViewInteractionDelegate?
+    weak var interactionDelegate: TextViewInteractionDelegate?
 
-    override public var selectedTextRange: UITextRange? {
+    override var selectedTextRange: UITextRange? {
         get { return nil }
         set { /* no-op */ }
     }
@@ -46,11 +46,11 @@ final public class LinkInteractionTextView: UITextView {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
         let isInside = super.point(inside: point, with: event)
         guard !UIMenuController.shared.isMenuVisible else { return false }
         guard let position = characterRange(at: point), isInside else { return false }
@@ -94,27 +94,43 @@ final public class LinkInteractionTextView: UITextView {
 
 extension LinkInteractionTextView: UITextViewDelegate {
     
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         guard interaction == .presentActions else { return true }
         interactionDelegate?.textViewDidLongPress(self)
         return false
     }
     
-    public func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         switch interaction {
         case .invokeDefaultAction:
+            
             guard !UIMenuController.shared.isMenuVisible else {
                 return false // Don't open link/show alert if menu controller is visible
             }
-            
+
             // if alert shown, link opening is handled in alert actions
             if showAlertIfNeeded(for: URL, in: characterRange) { return false }
-            // data detector links should be handle by the system
-            return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
-        case .presentActions:
-            interactionDelegate?.textViewDidLongPress(self)
-            return false
-        case .preview:
+
+            if #available(iOS 13.2, *) {
+                // data detector links should be handle by the system
+                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            } else if #available(iOS 13.0, *) {
+                /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
+                /// the issue is fixed on iOS 13.2 and no need this workaround
+                if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
+
+                    // data detector links should be handle by the system
+                    return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+                }
+
+                return true
+            } else {
+                // data detector links should be handle by the system
+                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+            }
+            
+        case .presentActions,
+             .preview:
             // do not allow peeking links, as it blocks showing the menu for replies
             interactionDelegate?.textViewDidLongPress(self)
             return false
@@ -128,7 +144,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
 @available(iOS 11.0, *)
 extension LinkInteractionTextView: UITextDragDelegate {
     
-    public func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
+    func textDraggableView(_ textDraggableView: UIView & UITextDraggable, itemsForDrag dragRequest: UITextDragRequest) -> [UIDragItem] {
         
         func isMentionLink(_ attributeTuple: (NSAttributedString.Key, Any)) -> Bool {
             return attributeTuple.0 == NSAttributedString.Key.link && (attributeTuple.1 as? NSURL)?.scheme ==  Mention.mentionScheme

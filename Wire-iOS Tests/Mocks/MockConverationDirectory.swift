@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,14 +18,29 @@
 
 import Foundation
 
-extension ZMConversation {
-
-    func unarchive(userSession: ZMUserSessionInterface? = ZMUserSession.shared(),
-                                 completionHandler: Completion? = nil) {
-        guard let userSession = userSession else { return }
-
-        userSession.enqueueChanges({
-            self.isArchived = false
-        }, completionHandler: completionHandler)
+class MockConversationDirectory: ConversationDirectoryType {
+    
+    var allFolders: [LabelType] = []
+    var mockGroupConversations: [ZMConversation] = []
+    var mockContactsConversations: [ZMConversation] = []
+    
+    func createFolder(_ name: String) -> LabelType? {
+        return nil
     }
+    
+    func addObserver(_ observer: ConversationDirectoryObserver) -> Any {
+        return "token"
+    }
+    
+    func conversations(by type: ConversationListType) -> [ZMConversation] {
+        switch type {
+        case .groups:
+            return mockGroupConversations
+        case .contacts:
+            return mockContactsConversations
+        default:
+            return []
+        }
+    }
+    
 }

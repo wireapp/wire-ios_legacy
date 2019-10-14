@@ -26,6 +26,10 @@ extension ConversationListViewController: ConversationListBottomBarControllerDel
             setState(.archived, animated: true)
         case .startUI:
             presentPeoplePicker()
+        case .folder:
+            listContentController.listViewModel.folderEnabled = true
+        case .list:
+            listContentController.listViewModel.folderEnabled = false
         }
     }
 }

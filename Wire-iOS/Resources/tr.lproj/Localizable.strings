@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "senden bahsedildi";
 "conversation_list.voiceover.status.reply" = "yanıtla";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arşivlendi";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arşivlenmiş konuşmaların listesi";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kişiler";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Wire'dayım, %@ olarak arat ya da get.wire.com adresini ziyaret et.";
 "send_invitation_no_email.text" = "Wire'dayım. get.wire.com 'u ziyaret ederek bana bağlanabilirsin.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Oluştur";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "bir resim paylaştı";
@@ -202,6 +217,11 @@
 "list.title" = "Konuşmalar";
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
+
+"list.section.groups" = "Gruplar";
+"list.section.contacts" = "İnsanlar";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "onaylanmış";
 "conversation.voiceover.legalhold" = "kanuni durdurma";
@@ -694,6 +714,8 @@
 "meta.menu.unarchive" = "Arşivden kaldır";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Engelle…";
 "profile.unblock_button_title" = "Engeli kaldır…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Engelle";
 "profile.unblock_button_title_action" = "Engeli kaldır";
@@ -959,6 +985,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Çıkış yap";
 "self.settings.account_details.log_out.alert.message" = "Bu aygıtta mesaj geçmişiniz silinecektir.";
+"self.settings.account_details.log_out.alert.password" = "Parola";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Kullanım ve kilitlenme raporları";

@@ -16,28 +16,38 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
+
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConnectRequestsCellSnapshotTests: CoreDataSnapshotTestCase {
+final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     
-    var sut: ConnectRequestsCell!
+    var sut: ConversationListHeaderView!
     
     override func setUp() {
         super.setUp()
-        sut = ConnectRequestsCell(frame: CGRect(x: 0, y: 0, width: 375, height: 56))
-        let titleString = String(format: "list.connect_request.people_waiting".localized, 1)
-        let title = NSAttributedString(string: titleString)
-        sut.itemView.configure(with: title, subtitle: nil, users: [otherUser])
+
+        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: CGFloat.ConversationListSectionHeader.height)))
+
+        sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
+
         sut.backgroundColor = .black
     }
     
     override func tearDown() {
         sut = nil
-        super.tearDown()
+        super.tearDown()        
+    }
+    
+    func testForExpanded() {
+        verify(matching: sut)
     }
 
-    func testForInitState() {
-        verify(view: sut)
+    func testForCollapsed() {
+        sut.collapsed = true
+        
+        verify(matching: sut)
     }
 }

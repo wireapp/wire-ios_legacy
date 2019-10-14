@@ -72,6 +72,7 @@ import WireLinkPreview
 }
 
 @objc protocol MockFileMessageDataType: ZMFileMessageData {
+    var size: UInt64 { get set }
     var mimeType: String? { get set }
     var filename: String? { get set }
     var fileURL: URL? { get set }

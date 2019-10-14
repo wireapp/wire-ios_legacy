@@ -19,7 +19,11 @@
 
 import Foundation
 
-class RotationAwareNavigationController: UINavigationController {
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
+    
+    // PopoverPresenter
+    weak var presentedPopover: UIPopoverPresentationController?
+    weak var popoverPointToView: UIView?    
     
     override var shouldAutorotate : Bool {
         if let topController = self.viewControllers.last {
@@ -57,7 +61,7 @@ class RotationAwareNavigationController: UINavigationController {
         }
     }
     
-    open override var preferredStatusBarStyle : UIStatusBarStyle {
+    public override var preferredStatusBarStyle : UIStatusBarStyle {
         if let topController = self.viewControllers.last {
             return topController.preferredStatusBarStyle
         }

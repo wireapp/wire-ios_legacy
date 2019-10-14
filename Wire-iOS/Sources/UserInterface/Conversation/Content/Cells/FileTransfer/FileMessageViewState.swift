@@ -65,6 +65,8 @@ public enum FileMessageViewState {
         case .uploading:
             if fileMessageData.fileURL != nil {
                 return .uploading
+            } else if fileMessageData.size == 0 {
+                return .downloaded
             } else {
                 return .unavailable
             }
