@@ -111,12 +111,14 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self reload];
 }
 
+///TODO: retire
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
 {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
     [self ensureCurrentSelection];
 }
 
+///TODO: retire
 - (void)listViewModel:(ConversationListViewModel * _Nullable)model didUpdateSection:(NSUInteger)section usingBlock:(SWIFT_NOESCAPE void (^ _Nonnull)(void))updateBlock with:(ZMChangedIndexes * _Nullable)changedIndexes
 {
     // If we are about to delete the currently selected conversation, select a different one

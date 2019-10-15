@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import DifferenceKit
 
 extension ConversationListContentController {
     override open func loadView() {
@@ -123,5 +124,13 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 extension ConversationListContentController: ConversationListViewModelStateDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
         collectionView.accessibilityValue = folderEnabled ? "folders" : "recent"
+    }
+
+    func reload<C>(
+        using stagedChangeset: StagedChangeset<C>,
+        interrupt: ((Changeset<C>) -> Bool)? = nil,
+        setData: (C) -> Void
+        ) {
+        collectionView.reload(using: stagedChangeset, interrupt: interrupt, setData: setData)
     }
 }

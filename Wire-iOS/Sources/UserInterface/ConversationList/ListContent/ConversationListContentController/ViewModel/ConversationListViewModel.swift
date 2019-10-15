@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import DifferenceKit
+
+extension AnyHashable: Differentiable { }
 
 // Placeholder for conversation requests item
 ///TODO: create a protocol, shared with ZMConversation
@@ -183,7 +186,16 @@ final class ConversationListViewModel: NSObject {
     }
 
     // Local copies of the lists.
+    ///TODO: change type to [DiffKitSection]
     private var sections: [Section] = []
+
+    typealias DiffKitSection = ArraySection<Int, AnyHashable>
+
+    fileprivate func diffKitSection(sections: [Section]) -> [DiffKitSection] {
+        return sections.enumerated().map { (index, section) in
+            return DiffKitSection(model: index, elements: collapsed(at: index) ? [] : section.items)
+        }
+    }
 
     /// for folder enabled and collapse presistent
     private lazy var _state: State = {
@@ -512,15 +524,16 @@ final class ConversationListViewModel: NSObject {
     }
 
     ///TODO: use diff kit and retire requiresReload
-    private func changedIndexes(oldConversationList: [AnyHashable],
-                                newConversationList: [AnyHashable]) -> ZMChangedIndexes? {
-        let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
-        let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
-        let updatedState = ZMOrderedSetState(orderedSet: [])
-        
-        return ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView)
-    }
-    
+    ///TODO: retire ZMChangedIndexes?
+//    private func changedIndexes(oldConversationList: [AnyHashable],
+//                                newConversationList: [AnyHashable]) -> ZMChangedIndexes? {
+//        let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
+//        let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
+//        let updatedState = ZMOrderedSetState(orderedSet: [])
+//
+//        return ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView)
+//    }
+
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
         guard let conversationDirectory = userSession?.conversationDirectory else { return false }
@@ -540,15 +553,16 @@ final class ConversationListViewModel: NSObject {
             return true
         }
 
-        if let oldConversationList = sectionItems(for: kind),
-            oldConversationList != newConversationList {
 
+            var newValue = sections
+            newValue[sectionNumber].items = newConversationList
 
-            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return true }
+            let changeset = StagedChangeset(source: diffKitSection(sections: sections), target: diffKitSection(sections:newValue))
+//            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return true }
 
-            if changedIndexes.requiresReload {
-                reload()
-            } else {
+//            if changedIndexes.requiresReload {
+//                reload()
+//            } else {
                 // We need to capture the state of `newConversationList` to make sure that we are updating the value
                 // of the list to the exact new state.
                 // It is important to keep the data source of the collection view consistent, since
@@ -556,14 +570,18 @@ final class ConversationListViewModel: NSObject {
                 let modelUpdates = {
                     self.update(kind: kind, with: newConversationList)
                 }
-                
-                delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
+
+            stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+                ///TODO: use data
+                modelUpdates()
             }
+                ///TODO: retire
+//                delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
+//            }
 
             return true
-        }
 
-        return false
+//        return false
     }
 
     private func updateAllConversations() {
@@ -629,6 +647,9 @@ final class ConversationListViewModel: NSObject {
                       batchUpdate: Bool = true) {
         guard let kind = self.kind(of: sectionIndex) else { return }
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
+        guard let sectionNumber = self.sectionNumber(for: kind) else {
+            return
+        }
 
         if collapsed {
             state.collapsed.insert(kind.identifier)
@@ -636,15 +657,34 @@ final class ConversationListViewModel: NSObject {
             state.collapsed.remove(kind.identifier)
         }
 
-        if batchUpdate {
+        if batchUpdate { ///TODO: always use  batchUpdate?
             let oldConversationList = collapsed ? sections[sectionIndex].items : []
             let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
-            let modelUpdates = {}
+//            let modelUpdates = {}
 
-            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
+            ///TODO: use StagedChangeset
+//            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
 
-            delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+            ///TODO: expose collection View? call collectionView.reload(using: changeset)
+//            delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
+
+            ///TODO: consider other section collapse status?? create list of all section's collapse state
+
+            var oldValue = sections
+            oldValue[sectionNumber].items = oldConversationList
+
+            var newValue = sections
+            newValue[sectionNumber].items = newConversationList
+
+            /// TODO: make a method
+            let changeset = StagedChangeset(source: diffKitSection(sections: oldValue), target: diffKitSection(sections:newValue))
+
+            self.stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+                ///TODO: use data
+            }
+
+
         } else {
             UIView.performWithoutAnimation { ///TODO: mv UIKit method to VC
                 self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
@@ -741,7 +781,19 @@ extension ConversationListViewModel: ZMUserObserver {
 
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
-        reload() // NOTE temporarily reloading on all changes.
+//        reload() // NOTE temporarily reloading on all changes.
+
+        if changeInfo.reloaded {
+            // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
+            // so we prefer to do the simple reload instead.
+            reload()
+        } else {
+            for updatedList in changeInfo.updatedLists {
+                if let kind = self.kind(of: updatedList) {
+                    updateForConversationType(kind: kind)
+                }
+            }
+        }
     }
 
     private func kind(of conversationListType: ConversationListType) -> Section.Kind? {

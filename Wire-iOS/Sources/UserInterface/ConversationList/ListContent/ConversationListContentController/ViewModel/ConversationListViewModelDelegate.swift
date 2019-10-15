@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import DifferenceKit
 
 @objc
 protocol ConversationListViewModelDelegate: NSObjectProtocol {
@@ -24,7 +25,8 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt)
     /// Delegate MUST call the updateBlock in appropriate place (e.g. collectionView performBatchUpdates:) to update the model.
 
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?)
+    ///TODO: retire
+//    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?)
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
@@ -33,6 +35,12 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
 /// TODO: merge with above delegate after converted to Swift
 protocol ConversationListViewModelStateDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)
+
+    func reload<C>(
+    using stagedChangeset: StagedChangeset<C>,
+    interrupt: ((Changeset<C>) -> Bool)?,
+    setData: (C) -> Void
+    )
 }
 
 protocol ConversationListViewModelRestorationDelegate: class {
