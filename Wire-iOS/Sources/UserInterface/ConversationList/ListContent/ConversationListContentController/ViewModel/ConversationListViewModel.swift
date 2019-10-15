@@ -191,10 +191,14 @@ final class ConversationListViewModel: NSObject {
 
     typealias DiffKitSection = ArraySection<Int, AnyHashable>
 
-    fileprivate func diffKitSection(sections: [Section]) -> [DiffKitSection] {
+    private func diffKitSection(sections: [Section], state: State) -> [DiffKitSection] {
         return sections.enumerated().map { (index, section) in
-            return DiffKitSection(model: index, elements: collapsed(at: index) ? [] : section.items)
+            return DiffKitSection(model: index, elements: collapsed(at: index, state: state) ? [] : section.items)
         }
+    }
+
+    private var diffKitSection: [DiffKitSection] {
+        return diffKitSection(sections: sections, state: state)
     }
 
     /// for folder enabled and collapse presistent
@@ -289,15 +293,15 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     var sectionCount: UInt {
-        return UInt(sections.count)
+        return UInt(diffKitSection.count)
     }
 
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
-        guard sectionIndex < sectionCount,
-              !collapsed(at: sectionIndex) else { return 0 }
+//        guard sectionIndex < sectionCount,
+//              !collapsed(at: sectionIndex) else { return 0 }
 
-        return sections[sectionIndex].items.count
+        return diffKitSection[sectionIndex].elements.count
     }
 
     private func numberOfItems(of kind: Section.Kind) -> Int? {
@@ -557,7 +561,7 @@ final class ConversationListViewModel: NSObject {
             var newValue = sections
             newValue[sectionNumber].items = newConversationList
 
-            let changeset = StagedChangeset(source: diffKitSection(sections: sections), target: diffKitSection(sections:newValue))
+        let changeset = StagedChangeset(source: diffKitSection(sections: sections, state: state), target: diffKitSection(sections:newValue, state: state))
 //            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return true }
 
 //            if changedIndexes.requiresReload {
@@ -637,6 +641,10 @@ final class ConversationListViewModel: NSObject {
     // MARK: - collapse section
 
     func collapsed(at sectionIndex: Int) -> Bool {
+        return collapsed(at: sectionIndex, state: state)
+    }
+
+    private func collapsed(at sectionIndex: Int, state: State) -> Bool {
         guard let kind = kind(of: sectionIndex) else { return false }
 
         return state.collapsed.contains(kind.identifier)
@@ -647,47 +655,45 @@ final class ConversationListViewModel: NSObject {
                       batchUpdate: Bool = true) {
         guard let kind = self.kind(of: sectionIndex) else { return }
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
-        guard let sectionNumber = self.sectionNumber(for: kind) else {
-            return
+        guard let sectionNumber = self.sectionNumber(for: kind) else { return }
+
+        /// snapshot before collapsed state changes
+        let oldSections = diffKitSection(sections: sections, state: state)
+
+        func modelUpdates(state: inout State) {
+            if collapsed {
+                state.collapsed.insert(kind.identifier)
+            } else {
+                state.collapsed.remove(kind.identifier)
+            }
         }
 
-        if collapsed {
-            state.collapsed.insert(kind.identifier)
-        } else {
-            state.collapsed.remove(kind.identifier)
-        }
+        var newState = state
+        modelUpdates(state: &newState)
+
 
         if batchUpdate { ///TODO: always use  batchUpdate?
-            let oldConversationList = collapsed ? sections[sectionIndex].items : []
             let newConversationList = collapsed ? [] : sections[sectionIndex].items
-
-//            let modelUpdates = {}
-
-            ///TODO: use StagedChangeset
-//            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return }
-
-            ///TODO: expose collection View? call collectionView.reload(using: changeset)
-//            delegate?.listViewModel(self, didUpdateSection: UInt(sectionIndex), usingBlock: modelUpdates, with: changedIndexes)
-
-            ///TODO: consider other section collapse status?? create list of all section's collapse state
-
-            var oldValue = sections
-            oldValue[sectionNumber].items = oldConversationList
 
             var newValue = sections
             newValue[sectionNumber].items = newConversationList
 
-            /// TODO: make a method
-            let changeset = StagedChangeset(source: diffKitSection(sections: oldValue), target: diffKitSection(sections:newValue))
+            /// TODO: strange item insert and move
 
-            self.stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+            /// TODO: make a method
+            let changeset = StagedChangeset(source: oldSections, target: diffKitSection(sections:newValue, state: newState))
+
+            stateDelegate?.reload(using: changeset, interrupt: nil) { data in
                 ///TODO: use data
+                self.state = newState
             }
 
 
         } else {
             UIView.performWithoutAnimation { ///TODO: mv UIKit method to VC
+                ///TODO: reload w/o animation
                 self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
+                self.state = newState
             }
         }
     }
