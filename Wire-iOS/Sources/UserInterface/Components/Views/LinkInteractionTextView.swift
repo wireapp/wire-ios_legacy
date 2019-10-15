@@ -121,7 +121,7 @@ extension LinkInteractionTextView: UITextViewDelegate {
                 needFixForRepeatedGesture = false
             }
 
-            let closure: () -> Bool = {
+            let performLinkInteraction: () -> Bool = {
                 // if alert shown, link opening is handled in alert actions
                 if self.showAlertIfNeeded(for: URL, in: characterRange) { return false }
 
@@ -133,12 +133,12 @@ extension LinkInteractionTextView: UITextViewDelegate {
                 /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
                 /// the issue is fixed on iOS 13.2 and no need this workaround
                 if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
-                    return closure()
+                    return performLinkInteraction()
                 }
 
                 return true
             } else {
-                return closure()
+                return performLinkInteraction()
             }
             
         case .presentActions,
