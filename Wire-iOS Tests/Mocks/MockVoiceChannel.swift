@@ -23,11 +23,10 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var conversation: ZMConversation?
     var mockCallState: CallState = .incoming(video: false, shouldRing: true, degraded: false)
     var mockCallDuration: TimeInterval?
-    var mockParticipants: NSOrderedSet = NSOrderedSet()
+    var mockParticipants: [CallParticipant] = []
     var mockIsConstantBitRateAudioActive: Bool = false
     var mockInitiator: ZMUser? = nil
     var mockIsVideoCall: Bool = false
-    var mockCallParticipantState: CallParticipantState = .unconnected
     var mockVideoState: VideoState = .stopped
     var mockNetworkQuality: NetworkQuality = .normal
 
@@ -75,7 +74,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         }
     }
     
-    var participants: NSOrderedSet {
+    var participants: [CallParticipant] {
         return mockParticipants
     }
     
@@ -89,10 +88,6 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     
     var initiator: ZMUser? {
         return mockInitiator
-    }
-    
-    func state(forParticipant: ZMUser) -> CallParticipantState {
-        return mockCallParticipantState
     }
     
     var videoState: VideoState {
