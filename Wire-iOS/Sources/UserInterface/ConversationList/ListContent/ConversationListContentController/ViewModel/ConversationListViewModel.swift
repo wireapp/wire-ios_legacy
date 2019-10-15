@@ -19,10 +19,6 @@
 import Foundation
 import DifferenceKit
 
-extension AnyHashable: Differentiable { }
-
-extension ZMConversation: Differentiable { }
-
 // Placeholder for conversation requests item
 ///TODO: create a protocol, shared with ZMConversation
 @objc
