@@ -21,6 +21,8 @@ import DifferenceKit
 
 extension AnyHashable: Differentiable { }
 
+extension ZMConversation: Differentiable { }
+
 // Placeholder for conversation requests item
 ///TODO: create a protocol, shared with ZMConversation
 @objc
@@ -189,11 +191,19 @@ final class ConversationListViewModel: NSObject {
     ///TODO: change type to [DiffKitSection]
     private var sections: [Section] = []
 
-    typealias DiffKitSection = ArraySection<Int, AnyHashable>
+    typealias DiffKitSection = ArraySection<Int, SectionItem>
+
+    /// make items has different hash in different sections
+    struct SectionItem: Hashable, Differentiable {
+        let item: AnyHashable
+        let section: Int
+    }
 
     private func diffKitSection(sections: [Section], state: State) -> [DiffKitSection] {
         return sections.enumerated().map { (index, section) in
-            return DiffKitSection(model: index, elements: collapsed(at: index, state: state) ? [] : section.items)
+            let items = section.items.map({ SectionItem(item: $0, section: index) })
+
+            return DiffKitSection(model: index, elements: collapsed(at: index, state: state) ? [] : items)
         }
     }
 
@@ -682,7 +692,7 @@ final class ConversationListViewModel: NSObject {
 
             let newSections = diffKitSection(sections:newValue, state: newState)
             /// TODO: make a method
-            let changeset = StagedChangeset(source: oldSections, target: newSections/*, section: sectionNumber*/)
+            let changeset = StagedChangeset(source: oldSections, target: newSections)
 
             stateDelegate?.reload(using: changeset, interrupt: nil) { data in
                 ///TODO: use data
