@@ -111,56 +111,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self reload];
 }
 
-///TODO: retire
 - (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
 {
     [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
     [self ensureCurrentSelection];
-}
-
-///TODO: retire
-- (void)listViewModel:(ConversationListViewModel * _Nullable)model didUpdateSection:(NSUInteger)section usingBlock:(SWIFT_NOESCAPE void (^ _Nonnull)(void))updateBlock with:(ZMChangedIndexes * _Nullable)changedIndexes
-{
-    // If we are about to delete the currently selected conversation, select a different one
-    NSArray *selectedItems = [self.collectionView indexPathsForSelectedItems];
-    [selectedItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSIndexPath *selectedIndexPath = obj;
-        [changedIndexes.deletedIndexes enumerateIndexesWithOptions:0 usingBlock:^(NSUInteger idx, BOOL *stop) {
-            if (selectedIndexPath.section == (NSInteger)section && selectedIndexPath.item == (NSInteger)idx) {
-                // select a different conversation
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self selectListItemAfterRemovingIndex:selectedIndexPath.item section:selectedIndexPath.section];
-                });
-            }
-        }];
-    }];
-    
-    [self.collectionView performBatchUpdates:^{
-        
-        if (updateBlock) {
-            updateBlock();
-        }
-        
-        // Delete
-        if (changedIndexes.deletedIndexes.count > 0) {
-            [self.collectionView deleteItemsAtIndexPaths:[[self class] indexPathsForIndexes:changedIndexes.deletedIndexes inSection:section]];
-        }
-        
-        // Insert
-        if (changedIndexes.insertedIndexes.count > 0) {
-            [self.collectionView insertItemsAtIndexPaths:[[self class] indexPathsForIndexes:changedIndexes.insertedIndexes inSection:section]];
-        }
-        
-        // Move
-        [changedIndexes enumerateMovedIndexes:^(NSUInteger from, NSUInteger to) {
-            NSIndexPath *fromIndexPath = [NSIndexPath indexPathForItem:from inSection:section];
-            NSIndexPath *toIndexPath = [NSIndexPath indexPathForItem:to inSection:section];
-            
-            [self.collectionView moveItemAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
-        }];
-    } completion:^(BOOL finished) {
-        [self ensureCurrentSelection];
-    }];
 }
 
 - (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item

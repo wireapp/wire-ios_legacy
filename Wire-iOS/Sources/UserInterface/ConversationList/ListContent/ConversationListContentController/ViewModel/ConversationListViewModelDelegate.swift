@@ -22,11 +22,9 @@ import DifferenceKit
 @objc
 protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModelShouldBeReloaded()
+    
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt)
-    /// Delegate MUST call the updateBlock in appropriate place (e.g. collectionView performBatchUpdates:) to update the model.
 
-    ///TODO: retire
-//    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?)
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)

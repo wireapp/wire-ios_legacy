@@ -585,13 +585,8 @@ final class ConversationListViewModel: NSObject {
                 ///TODO: use data
                 modelUpdates()
             }
-                ///TODO: retire
-//                delegate?.listViewModel(self, didUpdateSection: UInt(sectionNumber), usingBlock: modelUpdates, with: changedIndexes)
-//            }
-
             return true
 
-//        return false
     }
 
     private func updateAllConversations() {
