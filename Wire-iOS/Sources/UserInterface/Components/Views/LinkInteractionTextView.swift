@@ -100,7 +100,10 @@ extension LinkInteractionTextView: UITextViewDelegate {
         return false
     }
     
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView,
+                  shouldInteractWith URL: URL,
+                  in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+
         switch interaction {
         case .invokeDefaultAction:
             
@@ -108,25 +111,34 @@ extension LinkInteractionTextView: UITextViewDelegate {
                 return false // Don't open link/show alert if menu controller is visible
             }
 
-            // if alert shown, link opening is handled in alert actions
-            if showAlertIfNeeded(for: URL, in: characterRange) { return false }
+            let needFixForRepeatedGesture: Bool
 
             if #available(iOS 13.2, *) {
-                // data detector links should be handle by the system
-                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+                needFixForRepeatedGesture = false
             } else if #available(iOS 13.0, *) {
+                needFixForRepeatedGesture = true
+            } else {
+                needFixForRepeatedGesture = false
+            }
+
+            let closure: () -> Bool = {
+                // if alert shown, link opening is handled in alert actions
+                if self.showAlertIfNeeded(for: URL, in: characterRange) { return false }
+
+                // data detector links should be handle by the system
+                return self.dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(self.interactionDelegate?.textView(self, open: URL) ?? false)
+            }
+
+            if needFixForRepeatedGesture {
                 /// workaround for iOS 13 - this delegate method is called multiple times and we only want to handle it when the state == .ended
                 /// the issue is fixed on iOS 13.2 and no need this workaround
                 if textView.gestureRecognizers?.contains(where: {$0.isKind(of: UITapGestureRecognizer.self) && $0.state == .ended}) == true {
-
-                    // data detector links should be handle by the system
-                    return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+                    return closure()
                 }
 
                 return true
             } else {
-                // data detector links should be handle by the system
-                return dataDetectedURLSchemes.contains(URL.scheme ?? "") || !(interactionDelegate?.textView(self, open: URL) ?? false)
+                return closure()
             }
             
         case .presentActions,
