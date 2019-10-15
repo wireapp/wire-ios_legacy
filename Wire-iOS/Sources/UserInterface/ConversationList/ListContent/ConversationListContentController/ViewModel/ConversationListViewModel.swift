@@ -680,8 +680,9 @@ final class ConversationListViewModel: NSObject {
 
             /// TODO: strange item insert and move
 
+            let newSections = diffKitSection(sections:newValue, state: newState)
             /// TODO: make a method
-            let changeset = StagedChangeset(source: oldSections, target: diffKitSection(sections:newValue, state: newState))
+            let changeset = StagedChangeset(source: oldSections, target: newSections/*, section: sectionNumber*/)
 
             stateDelegate?.reload(using: changeset, interrupt: nil) { data in
                 ///TODO: use data
