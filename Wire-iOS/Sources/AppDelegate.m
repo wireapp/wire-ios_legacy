@@ -24,7 +24,6 @@
 
 // Helpers
 
-#import "AppDelegate+Hockey.h"
 #import "Application+runDuration.h"
 #import "ZClientViewController.h"
 #import "Analytics.h"
@@ -116,7 +115,7 @@ static AppDelegate *sharedAppDelegate = nil;
                                                  name:ZMUserSessionDidBecomeAvailableNotification
                                                object:nil];
     
-    [self setupHockeyWithCompletion:^() {
+    [self setupAppCenterWithCompletion:^() {
         [self.rootViewController launchWith:launchOptions];
     }];
     self.launchOptions = launchOptions;

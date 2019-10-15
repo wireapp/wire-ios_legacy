@@ -40,7 +40,7 @@ import WireSystem
     @objc static public let sharedHelper = AutomationHelper()
     
     /// Whether Hockeyapp should be used
-    @objc public var useHockey: Bool {
+    @objc public var useAppCenter: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
     }
     

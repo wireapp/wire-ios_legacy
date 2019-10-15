@@ -112,7 +112,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         super.viewDidLoad()
         currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
-        CrashReporter.setupHockeyIfNeeded()
+        CrashReporter.setupAppCenterIfNeeded()
         navigationController?.view.backgroundColor = .white
         updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)

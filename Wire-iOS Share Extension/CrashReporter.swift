@@ -18,36 +18,41 @@
 
 
 import WireCommonComponents
-import HockeySDK.BITHockeyManager
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
+import AppCenterDistribute
 
 
-/// Flag to determine if the HockeySDK has alreday been initialized (https://github.com/bitstadium/HockeySDK-iOS#34-ios-extensions)
-private var didSetupHockey = false
+/// Flag to determine if the App Center SDK has alreday been initialized (https://github.com/bitstadium/HockeySDK-iOS#34-ios-extensions)
+private var didSetupAppCenter = false
 
 
 /// Helper to setup crash reporting in the share extension
 class CrashReporter {
 
-    static func setupHockeyIfNeeded() {
-        guard !didSetupHockey, hockeyEnabled, let hockeyIdentifier = wr_hockeyAppId() else { return }
-        didSetupHockey = true
+    static func setupAppCenterIfNeeded() {
+        guard !didSetupAppCenter, appCenterEnabled, let appCenterIdentifier = wr_appCenterAppId() else { return }
+        didSetupAppCenter = true
 
         // See https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
 
+        MSAppCenter.start(appCenterIdentifier, withServices: [MSCrashes.self, MSDistribute.self])
+        /*
         let manager = BITHockeyManager.shared()
         manager.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
-        manager.configure(withIdentifier: hockeyIdentifier)
+        manager.configure(withIdentifier: appCenterIdentifier)
         manager.crashManager.crashManagerStatus = .autoSend
-        manager.start()
+        manager.start()*/
     }
 
-    private static var hockeyEnabled: Bool {
-        let configUseHockey = wr_useHockey() // The preprocessor macro USE_HOCKEY (from the .xcconfig files)
-        let automationUseHockey = AutomationHelper.sharedHelper.useHockey // Command line argument used by automation
+    private static var appCenterEnabled: Bool {
+        let configUseAppCenter = wr_useAppCenter() // The preprocessor macro USE_APP_CENTER (from the .xcconfig files)
+        let automationUseAppCenter = AutomationHelper.sharedHelper.useAppCenter // Command line argument used by automation
         let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // User consent
 
-        return (automationUseHockey || (!automationUseHockey && configUseHockey))
+        return (automationUseAppCenter || (!automationUseAppCenter && configUseAppCenter))
             && !settingsDisableCrashAndAnalyticsSharing
     }
     

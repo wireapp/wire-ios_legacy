@@ -14,25 +14,26 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-//
+// 
 
+import Foundation
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
+import AppCenterDistribute
 
-#import "PreprocessorHelper.h"
-@import Foundation;
-
-
-#define STRINGIZE_INTERNAL(x) #x
-#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
-
-
-NSString * wr_hockeyAppId() {
-    return @STRINGIZE(HOCKEY_APP_ID_KEY);
-}
-
-BOOL wr_useHockey() {
-#if USE_HOCKEY
-    return YES;
-#else
-    return NO;
-#endif
+extension MSAppCenter {
+    
+    @objc public static func setTrackingEnabled(_ enabled: Bool) {
+        MSAnalytics.setEnabled(!enabled)
+        
+        // self.isInstallTrackingDisabled = !enabled
+        
+        MSCrashes.setEnabled(!enabled)
+    }
+    
+    public static var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
+        guard let lastSessionCrashReport = MSCrashes.lastSessionCrashReport() else { return nil }
+        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
+    }
 }

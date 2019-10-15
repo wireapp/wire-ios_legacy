@@ -126,7 +126,7 @@
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
-#import "URLSchemeHelper.h"
+#import "ConfigurationHelper.h"
 #import "AuthenticationCoordinatedViewController.h"
 #import "ProfilePresenter.h"
 #import "ProfilePresenter+Internal.h"

@@ -19,3 +19,5 @@
 #import <Foundation/Foundation.h>
 
 NSString *wr_companyLoginURLScheme(void);
+NSString * wr_appCenterAppId();
+BOOL wr_useAppCenter();

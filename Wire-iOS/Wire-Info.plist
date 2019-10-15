@@ -38,6 +38,12 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>appcenter-${APP_SECRET}</string>
+			</array>
+		</dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>

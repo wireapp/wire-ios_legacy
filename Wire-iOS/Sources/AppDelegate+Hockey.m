@@ -85,10 +85,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)crashReportUploadDone
 {
     ZMLogError(@"HockeyIntegration: finished or timed out sending the crash report");
-    if (nil != self.hockeyInitCompletion) {
-        self.hockeyInitCompletion();
+    if (nil != self.appCenterInitCompletion) {
+        self.appCenterInitCompletion();
         ZMLogError(@"HockeyIntegration: END Waiting for the crash log upload...");
-        self.hockeyInitCompletion = nil;
+        self.appCenterInitCompletion = nil;
     }
 }
 
