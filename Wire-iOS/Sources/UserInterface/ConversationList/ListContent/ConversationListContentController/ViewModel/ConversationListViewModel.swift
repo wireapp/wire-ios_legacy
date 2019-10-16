@@ -578,12 +578,9 @@ final class ConversationListViewModel: NSObject {
         // It is important to keep the data source of the collection view consistent, since
         // any inconsistency in the delta update would make it throw an exception.
 
-        ///TODO: s1, no change
         stateDelegate?.reload(using: changeset, interrupt: { _ in
             self.update(kind: kind, with: newConversationList)
-            self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
-            
-            return true
+            return false
         }) { _ in
             self.update(kind: kind, with: newConversationList)
         }
@@ -686,8 +683,7 @@ final class ConversationListViewModel: NSObject {
 
             stateDelegate?.reload(using: changeset, interrupt: { _ in
                 self.state = newState
-                self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
-                return true
+                return false
             }) { _ in
                 ///TODO: use data
                 self.state = newState
@@ -798,9 +794,11 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             // so we prefer to do the simple reload instead.
             reload()
         } else {
+            ///TODO: When 2 sections are visible and a conversation belongs to both, the lower section's update animation is missing since it started after the top section update animation started. To fix this we should calculate the change set in one batch.
+            /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {
-                    updateForConversationType(kind: kind) ///TODO: kind is interrupted??
+                    updateForConversationType(kind: kind)
                 }
             }
         }
