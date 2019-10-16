@@ -21,7 +21,10 @@ import XCTest
 import DifferenceKit
 
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate, ConversationListViewModelStateDelegate {
-    
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
+        //no-op
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
         //no-op
     }
@@ -35,10 +38,6 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
     }
     
     func listViewModelShouldBeReloaded() {
-        //no-op
-    }
-
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt, animated: Bool) {
         //no-op
     }
 
