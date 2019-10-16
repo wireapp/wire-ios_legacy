@@ -333,7 +333,8 @@ final class ConversationListViewModel: NSObject {
 
     @objc(itemForIndexPath:)
     func item(for indexPath: IndexPath) -> AnyHashable? {
-        return section(at: UInt(indexPath.section))?[indexPath.item]
+        guard let items = section(at: UInt(indexPath.section)), items.indices.contains(indexPath.item) else { return nil }
+        return items[indexPath.item]
     }
 
     ///TODO: Question: we may have multiple items in folders now. return array of IndexPaths?
