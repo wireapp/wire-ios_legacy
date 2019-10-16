@@ -579,7 +579,7 @@ final class ConversationListViewModel: NSObject {
         stateDelegate?.reload(using: changeset, interrupt: { _ in
             return false
         }) { _ in
-            self.update(kind: kind, with: newConversationList) //////TODO: 2 fav is done
+            self.update(kind: kind, with: newConversationList)
         }
         return true
     }
