@@ -18,8 +18,18 @@
 
 import XCTest
 @testable import Wire
+import DifferenceKit
 
-final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
+final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate, ConversationListViewModelStateDelegate {
+    
+    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
+        //no-op
+    }
+    
+    func reload<C>(using stagedChangeset: StagedChangeset<C>, interrupt: ((Changeset<C>) -> Bool)?, setData: (C) -> Void) where C : Collection {
+        setData(stagedChangeset[0].data)
+    }
+    
     func listViewModelShouldBeReloaded() {
         //no-op
     }
@@ -53,8 +63,10 @@ final class ConversationListViewModelTests: XCTestCase {
         mockBar = MockBar()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
+        
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
         sut.delegate = mockConversationListViewModelDelegate
+        sut.stateDelegate = mockConversationListViewModelDelegate
     }
     
     override func tearDown() {
