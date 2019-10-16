@@ -28,11 +28,6 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         //no-op
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?) {
-        //no-op
-        updateBlock()
-    }
-
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
         //no-op
     }

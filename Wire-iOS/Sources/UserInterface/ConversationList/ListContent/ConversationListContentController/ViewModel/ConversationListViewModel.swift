@@ -184,7 +184,6 @@ final class ConversationListViewModel: NSObject {
     }
 
     // Local copies of the lists.
-    ///TODO: change type to [DiffKitSection]
     private var sections: [Section] = []
 
     typealias DiffKitSection = ArraySection<Int, SectionItem>
@@ -195,7 +194,14 @@ final class ConversationListViewModel: NSObject {
         let section: Int
     }
 
-    private func diffKitSection(sections: [Section], state: State) -> [DiffKitSection] {
+    
+    /// convert local sections to DifferenceKit type
+    ///
+    /// - Parameters:
+    ///   - sections: the sections to convert
+    ///   - state: the state of the sections
+    /// - Returns: DifferenceKit accepable sections type
+    private func diffKitSections(sections: [Section], state: State) -> [DiffKitSection] {
         return sections.enumerated().map { (index, section) in
             let items = section.items.map({ SectionItem(item: $0, section: index) })
 
@@ -204,7 +210,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private var diffKitSection: [DiffKitSection] {
-        return diffKitSection(sections: sections, state: state)
+        return diffKitSections(sections: sections, state: state)
     }
 
     /// for folder enabled and collapse presistent
@@ -299,15 +305,15 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     var sectionCount: UInt {
-        return UInt(diffKitSection.count)
+        return UInt(sections.count)
     }
 
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
-//        guard sectionIndex < sectionCount,
-//              !collapsed(at: sectionIndex) else { return 0 }
+        guard sectionIndex < sectionCount,
+              !collapsed(at: sectionIndex) else { return 0 }
 
-        return diffKitSection[sectionIndex].elements.count
+        return sections[sectionIndex].items.count
     }
 
     private func numberOfItems(of kind: Section.Kind) -> Int? {
@@ -533,16 +539,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    ///TODO: use diff kit and retire requiresReload
-    ///TODO: retire ZMChangedIndexes?
-//    private func changedIndexes(oldConversationList: [AnyHashable],
-//                                newConversationList: [AnyHashable]) -> ZMChangedIndexes? {
-//        let startState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: oldConversationList))
-//        let endState = ZMOrderedSetState(orderedSet: NSOrderedSet(array: newConversationList))
-//        let updatedState = ZMOrderedSetState(orderedSet: [])
-//
-//        return ZMChangedIndexes(start: startState, end: endState, updatedState: updatedState, moveType: ZMSetChangeMoveType.uiCollectionView)
-//    }
+    ///TODO: retire ZMChangedIndexes/ZMOrderedSetState?
 
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
@@ -567,12 +564,12 @@ final class ConversationListViewModel: NSObject {
             var newValue = sections
             newValue[sectionNumber].items = newConversationList
 
-        let changeset = StagedChangeset(source: diffKitSection(sections: sections, state: state), target: diffKitSection(sections:newValue, state: state))
-//            guard let changedIndexes = changedIndexes(oldConversationList: oldConversationList, newConversationList: newConversationList) else { return true }
+        let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
 
-//            if changedIndexes.requiresReload {
-//                reload()
-//            } else {
+            if changedIndexes.requiresReload {
+                reload()
+                return false
+            } else {
                 // We need to capture the state of `newConversationList` to make sure that we are updating the value
                 // of the list to the exact new state.
                 // It is important to keep the data source of the collection view consistent, since
@@ -581,12 +578,11 @@ final class ConversationListViewModel: NSObject {
                     self.update(kind: kind, with: newConversationList)
                 }
 
-            stateDelegate?.reload(using: changeset, interrupt: nil) { data in
-                ///TODO: use data
+            stateDelegate?.reload(using: changeset, interrupt: nil) { _ in
                 modelUpdates()
             }
             return true
-
+        }
     }
 
     private func updateAllConversations() {
@@ -659,7 +655,7 @@ final class ConversationListViewModel: NSObject {
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
 
         /// snapshot before collapsed state changes
-        let oldSections = diffKitSection(sections: sections, state: state)
+        let oldSections = diffKitSections(sections: sections, state: state)
 
         func modelUpdates(state: inout State) {
             if collapsed {
@@ -681,7 +677,7 @@ final class ConversationListViewModel: NSObject {
 
             /// TODO: strange item insert and move
 
-            let newSections = diffKitSection(sections:newValue, state: newState)
+            let newSections = diffKitSections(sections:newValue, state: newState)
             /// TODO: make a method
             let changeset = StagedChangeset(source: oldSections, target: newSections)
 
@@ -789,7 +785,6 @@ extension ConversationListViewModel: ZMUserObserver {
 
 extension ConversationListViewModel: ConversationDirectoryObserver {
     func conversationDirectoryDidChange(_ changeInfo: ConversationDirectoryChangeInfo) {
-//        reload() // NOTE temporarily reloading on all changes.
 
         if changeInfo.reloaded {
             // If the section was empty in certain cases collection view breaks down on the big amount of conversations,
