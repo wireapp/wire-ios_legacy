@@ -543,8 +543,6 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    ///TODO: retire ZMChangedIndexes/ZMOrderedSetState?
-
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
         guard let conversationDirectory = userSession?.conversationDirectory else { return false }
@@ -681,7 +679,6 @@ final class ConversationListViewModel: NSObject {
                 self.state = newState
                 return false
             }) { _ in
-                ///TODO: use data
                 self.state = newState
             }
 
