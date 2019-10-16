@@ -561,9 +561,8 @@ final class ConversationListViewModel: NSObject {
             return true
         }
 
-
-            var newValue = sections
-            newValue[sectionNumber].items = newConversationList
+        var newValue = sections
+        newValue[sectionNumber].items = newConversationList
 
         let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
 
@@ -571,12 +570,9 @@ final class ConversationListViewModel: NSObject {
         // of the list to the exact new state.
         // It is important to keep the data source of the collection view consistent, since
         // any inconsistency in the delta update would make it throw an exception.
-        let modelUpdates = {
-            self.update(kind: kind, with: newConversationList)
-        }
 
-        stateDelegate?.reload(using: changeset, interrupt: nil) { _ in
-            modelUpdates()
+        stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+            self.update(kind: kind, with: newConversationList)
         }
         return true
     }

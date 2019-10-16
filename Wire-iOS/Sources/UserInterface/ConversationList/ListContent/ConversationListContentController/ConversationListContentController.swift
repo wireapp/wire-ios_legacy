@@ -129,7 +129,7 @@ extension ConversationListContentController: ConversationListViewModelStateDeleg
     func reload<C>(
         using stagedChangeset: StagedChangeset<C>,
         interrupt: ((Changeset<C>) -> Bool)? = nil,
-        setData: (C) -> Void
+        setData: (C?) -> Void
         ) {
         collectionView.reload(using: stagedChangeset, interrupt: interrupt, setData: setData)
     }

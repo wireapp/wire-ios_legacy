@@ -26,8 +26,12 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         //no-op
     }
     
-    func reload<C>(using stagedChangeset: StagedChangeset<C>, interrupt: ((Changeset<C>) -> Bool)?, setData: (C) -> Void) where C : Collection {
-        setData(stagedChangeset[0].data)
+    func reload<C>(
+        using stagedChangeset: StagedChangeset<C>,
+        interrupt: ((Changeset<C>) -> Bool)?,
+        setData: (C?) -> Void
+        ) {
+        setData(nil)
     }
     
     func listViewModelShouldBeReloaded() {
