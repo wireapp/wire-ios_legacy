@@ -553,6 +553,10 @@ final class ConversationListViewModel: NSObject {
 
         let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
 
+        if newConversationList == sections[sectionNumber].items {
+            return true
+        }
+
         /// no need to update collapsed section's cells but the section header, update the stored list
         /// hide section header if no items
         if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
@@ -566,17 +570,16 @@ final class ConversationListViewModel: NSObject {
         newValue[sectionNumber].items = newConversationList
 
         let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
-        
+
         // We need to capture the state of `newConversationList` to make sure that we are updating the value
         // of the list to the exact new state.
         // It is important to keep the data source of the collection view consistent, since
         // any inconsistency in the delta update would make it throw an exception.
 
         stateDelegate?.reload(using: changeset, interrupt: { _ in
-            self.update(kind: kind, with: newConversationList)
             return false
         }) { _ in
-            self.update(kind: kind, with: newConversationList)
+            self.update(kind: kind, with: newConversationList) //////TODO: 2 fav is done
         }
         return true
     }
@@ -671,12 +674,10 @@ final class ConversationListViewModel: NSObject {
             var newValue = sections
             newValue[sectionNumber].items = newConversationList
 
-            /// TODO: strange item insert and move
             let newSections = diffKitSections(sections:newValue, state: newState)
             let changeset = StagedChangeset(source: oldSections, target: newSections)
 
             stateDelegate?.reload(using: changeset, interrupt: { _ in
-                self.state = newState
                 return false
             }) { _ in
                 self.state = newState
