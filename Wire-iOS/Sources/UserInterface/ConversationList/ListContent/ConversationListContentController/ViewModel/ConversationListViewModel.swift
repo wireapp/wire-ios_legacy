@@ -569,10 +569,6 @@ final class ConversationListViewModel: NSObject {
 
         let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
         
-//        if changeset.first == nil {
-//            return
-//        }
-
         // We need to capture the state of `newConversationList` to make sure that we are updating the value
         // of the list to the exact new state.
         // It is important to keep the data source of the collection view consistent, since
