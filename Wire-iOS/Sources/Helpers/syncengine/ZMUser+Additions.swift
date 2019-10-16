@@ -35,4 +35,21 @@ extension ZMUser {
         return hasTeam
         #endif
     }
+
+    var nameAccentColor: UIColor? {
+        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
+    }
+
+    /// Blocks user if not already blocked and vice versa.
+    func toggleBlocked() {
+        if isBlocked {
+            accept()
+        } else {
+            block()
+        }
+    }
+
+    var isPendingApproval: Bool {
+        return isPendingApprovalBySelfUser || isPendingApprovalByOtherUser
+    }
 }
