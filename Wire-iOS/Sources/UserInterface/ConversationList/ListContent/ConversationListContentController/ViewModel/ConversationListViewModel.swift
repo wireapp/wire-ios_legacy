@@ -191,7 +191,7 @@ final class ConversationListViewModel: NSObject {
     /// make items has different hash in different sections
     struct SectionItem: Hashable, Differentiable {
         let item: AnyHashable
-        let section: Int
+        let section: Int//TODO: kind
     }
 
     
