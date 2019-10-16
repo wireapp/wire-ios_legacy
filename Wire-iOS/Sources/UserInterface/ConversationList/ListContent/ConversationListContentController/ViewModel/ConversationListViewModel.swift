@@ -571,7 +571,12 @@ final class ConversationListViewModel: NSObject {
         // It is important to keep the data source of the collection view consistent, since
         // any inconsistency in the delta update would make it throw an exception.
 
-        stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+        stateDelegate?.reload(using: changeset, interrupt: { _ in
+            self.update(kind: kind, with: newConversationList)
+            self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            
+            return true
+        }) { data in
             self.update(kind: kind, with: newConversationList)
         }
         return true
@@ -668,12 +673,14 @@ final class ConversationListViewModel: NSObject {
             newValue[sectionNumber].items = newConversationList
 
             /// TODO: strange item insert and move
-
             let newSections = diffKitSections(sections:newValue, state: newState)
-            /// TODO: make a method
             let changeset = StagedChangeset(source: oldSections, target: newSections)
 
-            stateDelegate?.reload(using: changeset, interrupt: nil) { data in
+            stateDelegate?.reload(using: changeset, interrupt: { _ in
+                self.state = newState
+                self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+                return true
+            }) { _ in
                 ///TODO: use data
                 self.state = newState
             }
