@@ -38,7 +38,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         //no-op
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt) {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt, animated: Bool) {
         //no-op
     }
 

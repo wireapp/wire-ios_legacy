@@ -560,7 +560,7 @@ final class ConversationListViewModel: NSObject {
         if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
            newConversationList.isEmpty {
             update(kind: kind, with: newConversationList)
-            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
+            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber, animated: true)
             return true
         }
 
@@ -667,7 +667,7 @@ final class ConversationListViewModel: NSObject {
         modelUpdates(state: &newState)
 
 
-        if batchUpdate { ///TODO: always use  batchUpdate?
+        if batchUpdate {
             let newConversationList = collapsed ? [] : sections[sectionIndex].items
 
             var newValue = sections
@@ -687,11 +687,8 @@ final class ConversationListViewModel: NSObject {
 
 
         } else {
-            UIView.performWithoutAnimation { ///TODO: mv UIKit method to VC
-                ///TODO: reload w/o animation
-                self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex)
-                self.state = newState
-            }
+            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
+            state = newState
         }
     }
 

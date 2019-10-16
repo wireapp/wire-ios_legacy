@@ -122,12 +122,22 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 }
 
 extension ConversationListContentController: ConversationListViewModelStateDelegate {
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int) {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         // do not reload if section is not visible
-        guard collectionView.indexPathsForVisibleItems.contains(IndexPath(item: 0, section: section)) else { return }
-        
-        collectionView.reloadSections(IndexSet(integer: section))
-        ensureCurrentSelection()
+        guard collectionView.indexPathsForVisibleItems.map({$0.section}).contains(section) else { return }
+
+        let reloadClosure = {
+            self.collectionView.reloadSections(IndexSet(integer: section))
+            self.ensureCurrentSelection()
+        }
+
+        if animated {
+            reloadClosure()
+        } else {
+            UIView.performWithoutAnimation {
+                reloadClosure()
+            }
+        }
     }
 
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
