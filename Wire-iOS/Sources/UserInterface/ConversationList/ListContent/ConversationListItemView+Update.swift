@@ -77,8 +77,10 @@ extension ConversationListItemView {
             }
             labelsStack.accessibilityLabel = title?.string
         } else {
+            /// outgoing request
             title = conversation.displayName.attributedString
             labelsStack.accessibilityLabel = conversation.displayName
+            labelsStack.accessibilityValue = "pending request" //avatarView.accessibilityValue /// TODO: avatar to reflect it is pending
         }
 
         // Configure the avatar
