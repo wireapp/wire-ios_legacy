@@ -122,6 +122,14 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 }
 
 extension ConversationListContentController: ConversationListViewModelStateDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int) {
+        // do not reload if section is not visible
+        guard collectionView.indexPathsForVisibleItems.contains(IndexPath(item: 0, section: section)) else { return }
+        
+        collectionView.reloadSections(IndexSet(integer: section))
+        ensureCurrentSelection()
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
         collectionView.accessibilityValue = folderEnabled ? "folders" : "recent"
     }

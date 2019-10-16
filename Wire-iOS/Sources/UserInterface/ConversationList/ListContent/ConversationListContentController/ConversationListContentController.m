@@ -111,12 +111,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self reload];
 }
 
-- (void)listViewModel:(ConversationListViewModel *)model didUpdateSectionForReload:(NSUInteger)section
-{
-    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:section]];
-    [self ensureCurrentSelection];
-}
-
 - (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item
 {
     if (item == nil) {

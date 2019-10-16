@@ -333,7 +333,9 @@ final class ConversationListViewModel: NSObject {
 
     @objc(itemForIndexPath:)
     func item(for indexPath: IndexPath) -> AnyHashable? {
-        guard let items = section(at: UInt(indexPath.section)), items.indices.contains(indexPath.item) else { return nil }
+        guard let items = section(at: UInt(indexPath.section)),
+              items.indices.contains(indexPath.item) else { return nil }
+        
         return items[indexPath.item]
     }
 
@@ -558,7 +560,7 @@ final class ConversationListViewModel: NSObject {
         if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
            newConversationList.isEmpty {
             update(kind: kind, with: newConversationList)
-            delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
             return true
         }
 
@@ -566,18 +568,23 @@ final class ConversationListViewModel: NSObject {
         newValue[sectionNumber].items = newConversationList
 
         let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
+        
+//        if changeset.first == nil {
+//            return
+//        }
 
         // We need to capture the state of `newConversationList` to make sure that we are updating the value
         // of the list to the exact new state.
         // It is important to keep the data source of the collection view consistent, since
         // any inconsistency in the delta update would make it throw an exception.
 
+        ///TODO: s1, no change
         stateDelegate?.reload(using: changeset, interrupt: { _ in
             self.update(kind: kind, with: newConversationList)
-            self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+            self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
             
             return true
-        }) { data in
+        }) { _ in
             self.update(kind: kind, with: newConversationList)
         }
         return true
@@ -679,7 +686,7 @@ final class ConversationListViewModel: NSObject {
 
             stateDelegate?.reload(using: changeset, interrupt: { _ in
                 self.state = newState
-                self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionNumber))
+                self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber)
                 return true
             }) { _ in
                 ///TODO: use data
@@ -690,7 +697,7 @@ final class ConversationListViewModel: NSObject {
         } else {
             UIView.performWithoutAnimation { ///TODO: mv UIKit method to VC
                 ///TODO: reload w/o animation
-                self.delegate?.listViewModel(self, didUpdateSectionForReload: UInt(sectionIndex))
+                self.stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex)
                 self.state = newState
             }
         }
@@ -793,7 +800,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         } else {
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {
-                    updateForConversationType(kind: kind)
+                    updateForConversationType(kind: kind) ///TODO: kind is interrupted??
                 }
             }
         }
