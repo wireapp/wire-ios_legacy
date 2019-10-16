@@ -201,7 +201,8 @@ final class ConversationListViewModel: NSObject {
     ///   - sections: the sections to convert
     ///   - state: the state of the sections
     /// - Returns: DifferenceKit accepable sections type
-    private func diffKitSections(sections: [Section], state: State) -> [DiffKitSection] {
+    private func diffKitSections(sections: [Section],
+                                 state: State) -> [DiffKitSection] {
         return sections.enumerated().map { (index, section) in
             let items = section.items.map({ SectionItem(item: $0, section: index) })
 
@@ -566,23 +567,18 @@ final class ConversationListViewModel: NSObject {
 
         let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
 
-            if changedIndexes.requiresReload {
-                reload()
-                return false
-            } else {
-                // We need to capture the state of `newConversationList` to make sure that we are updating the value
-                // of the list to the exact new state.
-                // It is important to keep the data source of the collection view consistent, since
-                // any inconsistency in the delta update would make it throw an exception.
-                let modelUpdates = {
-                    self.update(kind: kind, with: newConversationList)
-                }
-
-            stateDelegate?.reload(using: changeset, interrupt: nil) { _ in
-                modelUpdates()
-            }
-            return true
+        // We need to capture the state of `newConversationList` to make sure that we are updating the value
+        // of the list to the exact new state.
+        // It is important to keep the data source of the collection view consistent, since
+        // any inconsistency in the delta update would make it throw an exception.
+        let modelUpdates = {
+            self.update(kind: kind, with: newConversationList)
         }
+
+        stateDelegate?.reload(using: changeset, interrupt: nil) { _ in
+            modelUpdates()
+        }
+        return true
     }
 
     private func updateAllConversations() {
