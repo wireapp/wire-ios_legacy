@@ -74,5 +74,15 @@ final class CallWindowRootViewController: UIViewController {
         guard topmost != self, !topmost.isKind(of: CallWindowRootViewController.self) else { return nil }
         return topmost
     }
-    
+
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        view.window?.isHidden = false
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
+
+    func hideWindowIfNeeded() {
+        if self.presentedViewController == nil {
+            view.window?.isHidden = true
+        }
+    }
 }

@@ -84,7 +84,15 @@ final class ActiveCallViewController : UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return visibleVoiceChannelViewController.preferredStatusBarStyle
     }
-    
+
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        let window = view.window
+        super.dismiss(animated: flag) {
+            completion?()
+            (window as? CallWindow)?.callController.hideWindowIfNeeded()///TODO: delay when call?
+        }
+    }
+
     func updateVisibleVoiceChannelViewController() {
         guard let conversation = ZMUserSession.shared()?.priorityCallConversation, visibleVoiceChannelViewController.conversation != conversation,
               let voiceChannel = conversation.voiceChannel else {

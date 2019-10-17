@@ -31,8 +31,9 @@ final class CallWindow: PassthroughWindow {
         accessibilityIdentifier = "ZClientCallWindow"
         accessibilityViewIsModal = true
         windowLevel = UIWindowLevelCallOverlay
+        isHidden = true
     }
-    
+
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
