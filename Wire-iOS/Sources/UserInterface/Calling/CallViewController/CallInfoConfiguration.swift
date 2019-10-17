@@ -49,7 +49,7 @@ fileprivate extension VoiceChannel {
         case .unknown, .none, .terminating, .mediaStopped, .established, .incoming(_, shouldRing: false, _):
             if conversation?.conversationType == .group {
                 return .participantsList(sortedConnectedParticipants(using: timestamps).map {
-                    .callParticipant(user: $0.0, sendsVideo: $0.1.isSendingVideo)
+                    .callParticipant(user: $0.user, sendsVideo: $0.state.isSendingVideo)
                 })
             } else if let remoteParticipant = conversation?.connectedUser {
                 return .avatar(remoteParticipant)
@@ -214,13 +214,11 @@ extension CallParticipantState {
     
     var isSendingVideo: Bool {
         switch self {
-        case .connected(videoState: let state) where state.isSending: return true
+        case .connected(videoState: let state, clientId: _) where state.isSending: return true
         default: return false
         }
     }
 }
-
-fileprivate typealias UserWithParticipantState = (ZMUser, CallParticipantState)
 
 fileprivate extension VoiceChannel {
     
@@ -231,22 +229,18 @@ fileprivate extension VoiceChannel {
     }
     
     var isAnyParticipantSendingVideo: Bool {
-        return videoState.isSending                              // Current user is sending video and can toggle off
-            || connectedParticipants.any { $0.1.isSendingVideo } // Other participants are sending video
-            || isIncomingVideoCall                               // This is an incoming video call
+        return videoState.isSending                                  // Current user is sending video and can toggle off
+            || connectedParticipants.any { $0.state.isSendingVideo } // Other participants are sending video
+            || isIncomingVideoCall                                   // This is an incoming video call
     }
     
-    var connectedParticipants: [UserWithParticipantState] {
-        return participants
-            .lazy
-            .compactMap { $0 as? ZMUser }
-            .map { ($0, self.state(forParticipant: $0)) }
-            .filter { $0.1.isConnected }
+    var connectedParticipants: [CallParticipant] {
+        return participants.filter { $0.state.isConnected }
     }
 
-    func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [UserWithParticipantState] {
+    func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            timestamps[lhs.0] > timestamps[rhs.0]
+            timestamps[lhs.user] > timestamps[rhs.user]
         }
     }
 

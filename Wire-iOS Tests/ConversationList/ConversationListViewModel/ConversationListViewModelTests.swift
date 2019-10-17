@@ -55,6 +55,7 @@ final class ConversationListViewModelTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        removeViewModelState()
         mockBar = MockBar()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
@@ -69,6 +70,12 @@ final class ConversationListViewModelTests: XCTestCase {
         mockBar = nil
 
         super.tearDown()
+    }
+    
+    func removeViewModelState() {
+        guard let persistentURL = ConversationListViewModel.persistentURL else { return }
+        
+        try? FileManager.default.removeItem(at: persistentURL)
     }
 
     // folders with 2 group conversations and 1 contact. First group conversation is mock conversation

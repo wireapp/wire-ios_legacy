@@ -81,6 +81,7 @@ static id<UserType> mockSelfUser = nil;
     if (mockSelfUser == nil) {
         MockUser *mockUser = (MockUser *)self.mockUsers.lastObject;
         mockUser.isSelfUser = YES;
+        mockUser.remoteIdentifier = [NSUUID UUID];
         mockSelfUser = (MockUser *)mockUser;
     }
     
@@ -264,6 +265,15 @@ static id<UserType> mockSelfUser = nil;
 - (void)fetchUserClients
 {
     
+}
+
+- (UserClient *)selfClient
+{
+    if (self.isSelfUser) {
+        return (UserClient *)self.clients.anyObject;
+    }
+    
+    return nil;
 }
 
 - (NSSet<UserClient *> *)clientsRequiringUserAttention
