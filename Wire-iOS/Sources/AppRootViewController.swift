@@ -111,7 +111,8 @@ final class AppRootViewController: UIViewController {
         mainWindow.rootViewController = self
         mainWindow.makeKeyAndVisible()
 //        callWindow.makeKeyAndVisible()
-//        overlayWindow.makeKeyAndVisible()
+        overlayWindow.makeKeyAndVisible()
+        overlayWindow.isHidden = true
 //        mainWindow.makeKey()
 
         type(of: self).configureAppearance()

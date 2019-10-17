@@ -28,7 +28,7 @@ public extension UIApplication {
     }
 
     @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "status bar"), object: nil) ///TODO: animation should be handled in each VC
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "status bar"), object: nil) ///TODO: animation should be handled in each VC
     }
 
     /// return the visible window on the top most which fulfills these conditions:

@@ -39,13 +39,13 @@ final class NotificationWindowRootViewController: UIViewController {
 
         setupConstraints()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: NSNotification.Name(rawValue: "status bar"), object: nil)///TODO: better notification name
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(onDidReceiveData(_:)), name: NSNotification.Name(rawValue: "status bar"), object: nil)///TODO: better notification name
+
     }
     
-    @objc func onDidReceiveData(_ notification:Notification) {
-//        setNeedsStatusBarAppearanceUpdate()
-    }
+//    @objc func onDidReceiveData(_ notification:Notification) {
+////        setNeedsStatusBarAppearanceUpdate()
+//    }
 
     private func setupConstraints() {
         appLockViewController?.view.translatesAutoresizingMaskIntoConstraints = false
