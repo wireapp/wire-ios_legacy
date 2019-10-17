@@ -224,9 +224,9 @@
 "list.section.favorites" = "Favoris";
 
 "conversation.voiceover.verified" = "vérifié";
-"conversation.voiceover.legalhold" = "conservation légale";
+"conversation.voiceover.legalhold" = "conservation à des fins juridique";
 "conversation.voiceover.value.active" = "active";
-"conversation.voiceover.value.disabled" = "disabled";
+"conversation.voiceover.value.disabled" = "désactivée";
 
 "conversation.status.typing" = "Écrit un message…";
 "conversation.status.typing.group" = "%@ : tape un message…";
@@ -492,8 +492,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "Cette conversation est conservée à des fins juridiques";
-"content.system.message_legal_hold.disabled" = "Conservation à des fins juridiques désactivé pour cette conversation";
+"content.system.message_legal_hold.enabled" = "L' archivage électronique à des fins juridiques est actif";
+"content.system.message_legal_hold.disabled" = "Archivage électronique à des fins juridiques désactivé";
 
 "content.system.message_legal_hold.learn_more" = "En savoir plus";
 
@@ -601,7 +601,7 @@
 // Voice
 "voice.status.one_to_one.incoming" = "Appel de %@";
 "voice.status.group_call.incoming" = "%@\nAppel Entrant";
-"voice.status.one_to_one.outgoing" = "%@\nAppel Entrant";
+"voice.status.one_to_one.outgoing" = "%@\nAppel";
 "voice.status.joining" = "%@\nConnexion";
 "voice.status.leaving" = "%@ a raccroché";
 "voice.status.video_not_available" = "Vidéo désactivée";
@@ -752,13 +752,13 @@
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ utilise un nouvel appareil.";
 "meta.degraded.degradation_reason_message.plural" = "%@ utilisent de nouveaux appareils.";
-"meta.degraded.degradation_reason_message.someone" = "Quelqu'un utilise un nouvel appareil.";
+"meta.degraded.degradation_reason_message.someone" = "Un participant utilise un nouvel appareil.";
 "meta.degraded.dialog_message" = "Voulez-vous quand même envoyer votre message ?";
 "meta.degraded.verify_devices_button" = "Vérifier les appareils…";
 "meta.degraded.send_anyway_button" = "Envoyer quand même";
 "meta.degraded.cancel_sending_button" = "Annuler";
-"meta.legalhold.info_button" = "Qu’est-ce que la conservation légale ?";
-"meta.legalhold.send_alert_title" = "La conversation est maintenant soumise à la conversation légale.";
+"meta.legalhold.info_button" = "Qu’est-ce que l'archivage électronique ?";
+"meta.legalhold.send_alert_title" = "La conversation est maintenant soumise à l'archivage électronique.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Supprimer ?";
@@ -844,7 +844,7 @@
 "device.verified" = "Vérifié";
 "device.not_verified" = "Non vérifié";
 
-"device.class.legalhold" = "Conservation à des fins juridiques";
+"device.class.legalhold" = "Archivage électronique";
 "device.class.desktop" = "Ordinateur";
 "device.class.tablet" = "Tablette";
 "device.class.phone" = "Téléphone";
@@ -852,7 +852,7 @@
 
 "device.type.permanent" = "Permanent";
 "device.type.temporary" = "Temporaire";
-"device.type.legalhold" = "Conservation à des fins juridiques";
+"device.type.legalhold" = "Archivage électronique";
 "device.type.unknown" = "Inconnu";
 
 // Bot
@@ -870,11 +870,11 @@
 
 // Legal hold details
 
-"legalhold.participants.section.title" = "Sujets à la conservation légale";
-"legalhold.header.title" = "Conservation à des fins juridiques";
-"legalhold.header.other_description" = "La conservation légale a été activée pour au moins une personne dans cette conversation.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.";
-"legalhold.header.self_description" = "La conservation légale a été activée sur votre compte.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés ou éphémères.\nVos partenaires de conversations seront conscients de l'enregistrement.";
-"legalhold.accessibility" = "Details de la conservation légale";
+"legalhold.participants.section.title" = "Soumis a l'archivage électronique";
+"legalhold.header.title" = "Archivage électronique";
+"legalhold.header.other_description" = "L'archivage électronique été activé pour au moins une personne dans cette conversation.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.";
+"legalhold.header.self_description" = "L' archivage électronique a été activé sur votre compte.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés ou éphémères.\nLes autres participants sont informés de l'enregistrement.";
+"legalhold.accessibility" = "Information sur l'archivage électronique";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1110,7 +1110,7 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Cela vous permet de vous connecter à d'autres personnes. Nous anonymisons toutes les informations et ne les partageons avec personne d'autre. Autorisez l'accès via Paramètres > Confidentialité > Contacts.";
 
 "self.settings.privacy_security.lock_app" = "Verrouiller avec un code";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Verrouiller Wire après %@.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Déverrouiller avec Touch ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Déverrouiller avec Face ID ou saisie du code.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Déverrouiller en saisissant le code.";
@@ -1133,8 +1133,8 @@
 
 "self.settings.advanced.title" = "Avancé";
 "self.settings.advanced.troubleshooting.title" = "Dépannage";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport de débogage";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide Wire Support à diagnostiquer les problèmes d'appel et à améliorer l'experience globale de l'application.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport d'erreur";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide Wire à identifier les problèmes d'appel et à améliorer l'experience globale de l'application.";
 "self.settings.advanced.reset_push_token.title" = "Réinitialiser le jeton des notifications Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Si vous rencontrez des problèmes avec les notifications push, l'assistance de Wire peut vous demander de réinitialiser ce jeton.";
 "self.settings.advanced.reset_push_token_alert.title" = "Le jeton pour les notifications Push a été réinitialisé";
@@ -1147,7 +1147,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Rapport technique";
 "self.settings.technical_report.send_report" = "Envoyer le rapport à Wire";
-"self.settings.technical_report.mail.subject" = "Rapport de débogage Wire";
+"self.settings.technical_report.mail.subject" = "Rapport d'erreur Wire";
 "self.settings.technical_report.include_log" = "Inclure le rapport détaillé";
 "self.settings.technical_report.privacy_warning" = "Les rapports détaillés pourraient contenir des données personnelles";
 "self.settings.technical_report.no_mail_alert" = "Aucun client de messagerie détecté. Appuyez sur \"OK\" et envoyer les enregistrements manuellement à : ";
@@ -1441,7 +1441,7 @@
 "signin_logout.email.subheadline" = "Votre session a expiré. Entrez votre adresse email et votre mot de passe pour continuer.";
 "signin_logout.phone.subheadline" = "Votre session a expiré. Entrez votre numéro de téléphone de continuer.";
 "signin_logout.sso.subheadline" = "Votre session a expiré. Connectez-vous avec votre compte entreprise pour continuer.";
-"signin_logout.sso.buton" = "Connexion avec Entreprise";
+"signin_logout.sso.buton" = "Connexion d'entreprise";
 
 "signin.email.missing_password.subtitle" = "Entrez votre adresse email et votre mot de passe pour continuer.";
 "signin.phone.missing_password.subtitle" = "Entrez votre numéro de téléphone pour continuer.";
@@ -1628,7 +1628,7 @@
 "calling.quality_survey.answer.3" = "Correcte";
 "calling.quality_survey.answer.4" = "Bonne";
 "calling.quality_survey.answer.5" = "Excellente";
-"calling.quality_survey.skip_button_title" = "Passer";
+"calling.quality_survey.skip_button_title" = "Décliner";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // URL Action
@@ -1689,26 +1689,26 @@
 "registration.password.rules.with_requirements" = "Utilisez %@, avec %@.";
 
 // Legal Hold Deactivation
-"legal_hold.deactivated.title" = "Conservation légale déactivée";
-"legal_hold.deactivated.message" = "Les messages futurs ne seront pas enregistrés.";
+"legal_hold.deactivated.title" = "Archivage électronique désactivé";
+"legal_hold.deactivated.message" = "Les futurs messages ne seront pas enregistrés.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
-"share_extension.voiceover.conversation_under_legal_hold" = "Sous conversation légale.";
+"share_extension.voiceover.conversation_under_legal_hold" = "Soumis à l'archivage électronique.";
 "share_extension.voiceover.conversation_secure" = "Tous les clients ont été vérifiés.";
 "share_extension.voiceover.conversation_secure_with_ignored" = "Tous les clients n'ont pas été vérifiés.";
 
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Validation en attente.";
-"legalhold_request.alert.title" = "Conservation légale demandée";
+"legalhold_request.alert.title" = "Archivage électronique demandé";
 "legalhold_request.alert.detail" = "Tous les messages futurs seront enregistrés par l'appareil avec empreinte digitale: \n\n%@\n\nCeci inclus les messages supprimés, modifiés et éphémères dans toutes les conversations.";
 "legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "La conservation légale est active";
+"legalhold_active.alert.title" = "L' archivage électronique est actif";
 "legalhold_active.alert.learn_more" = "En savoir plus";
-"legalhold_active.alert.message" = "La conservation légale a été activée sur votre compte. Tous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.\n\nVos partenaires de conversation seront conscients de l'enregistrement.";
+"legalhold_active.alert.message" = "L'archivage électronique a été activé sur votre compte. Tous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.\n\nVos partenaires de conversation sont informés que l'archivage électronique est actif.";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Votre session a expiré";

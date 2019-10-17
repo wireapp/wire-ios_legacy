@@ -125,7 +125,6 @@
 #import "CrossfadeTransition.h"
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
-#import "PassthroughWindow.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
 #import "AuthenticationCoordinatedViewController.h"

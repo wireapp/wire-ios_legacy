@@ -67,13 +67,13 @@ final class CallHapticsControllerTests: XCTestCase {
     func testThatItTriggersCorrectEventWhenAParticipantJoins() {
         // given
         let (first, second) = (UUID.create(), UUID.create())
-        sut.updateParticipants([(first, .connected(videoState: .started))])
+        sut.updateParticipants([(first, .connected(videoState: .started, clientId: nil))])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started)),
-            (second, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil)),
+            (second, .connected(videoState: .started, clientId: nil))
         ])
         
         // then
@@ -84,13 +84,13 @@ final class CallHapticsControllerTests: XCTestCase {
         // given
         let (first, second) = (UUID.create(), UUID.create())
         sut.updateParticipants([
-            (first, .connected(videoState: .started)),
-            (second, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil)),
+            (second, .connected(videoState: .started, clientId: nil))
         ])
 
         // when
         generator.reset()
-        sut.updateParticipants([(second, .connected(videoState: .started))])
+        sut.updateParticipants([(second, .connected(videoState: .started, clientId: nil))])
         
         // then
         XCTAssertEqual(generator.triggeredEvents, [.leave])
@@ -100,13 +100,13 @@ final class CallHapticsControllerTests: XCTestCase {
         // given
         let first = UUID.create()
         sut.updateParticipants([
-            (first, .connected(videoState: .stopped))
+            (first, .connected(videoState: .stopped, clientId: nil))
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil))
         ])
         
         // then
@@ -117,13 +117,13 @@ final class CallHapticsControllerTests: XCTestCase {
         // given
         let first = UUID.create()
         sut.updateParticipants([
-            (first, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil))
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .stopped))
+            (first, .connected(videoState: .stopped, clientId: nil))
         ])
         
         // then
@@ -146,15 +146,15 @@ final class CallHapticsControllerTests: XCTestCase {
         // given
         let (first, second) = (UUID.create(), UUID.create())
         sut.updateParticipants([
-            (first, .connected(videoState: .started)),
-            (second, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil)),
+            (second, .connected(videoState: .started, clientId: nil))
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started)),
-            (second, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil)),
+            (second, .connected(videoState: .started, clientId: nil ))
         ])
         
         // then
@@ -165,13 +165,13 @@ final class CallHapticsControllerTests: XCTestCase {
         // given
         let first = UUID.create()
         sut.updateParticipants([
-            (first, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil))
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started))
+            (first, .connected(videoState: .started, clientId: nil))
         ])
         
         // then
