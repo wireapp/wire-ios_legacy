@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationImageMessageCell: UIView, ConversationMessageCell {
+final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     struct Configuration {
         let image: ZMImageMessageData
@@ -30,7 +30,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     private var containerView = UIView()
     private var imageResourceView = ImageResourceView()
-    private let obfuscationView = ObfuscationView(icon: .photo)
+    private lazy var obfuscationView = ObfuscationView(icon: .photo)
     
     private var aspectConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
@@ -136,7 +136,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
 }
 
-class ConversationImageMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationImageMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = ConversationImageMessageCell
     let configuration: View.Configuration
@@ -152,7 +152,10 @@ class ConversationImageMessageCellDescription: ConversationMessageCellDescriptio
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
     
-    let accessibilityIdentifier: String? = "ImageCell"
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "Obfuscated image message" : "ImageCell"
+    }
+
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage, image: ZMImageMessageData) {

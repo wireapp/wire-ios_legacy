@@ -44,8 +44,6 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
             longPressGesture.isEnabled = cellDescription?.supportsActions == true
             doubleTapGesture.isEnabled = cellDescription?.supportsActions == true
             singleTapGesture.isEnabled = cellDescription?.supportsActions == true
-            accessibilityLabel = cellDescription?.accessibilityLabel
-            accessibilityIdentifier = cellDescription?.accessibilityIdentifier
         }
     }
     
@@ -58,6 +56,26 @@ class ConversationMessageCellTableViewAdapter<C: ConversationMessageCellDescript
     var isFullWidth: Bool = false {
         didSet {
             configureConstraints(fullWidth: isFullWidth)
+        }
+    }
+
+    override var accessibilityIdentifier: String? {
+        get {
+            return cellDescription?.accessibilityIdentifier
+        }
+
+        set {
+            // no-op
+        }
+    }
+
+    override var accessibilityLabel: String? {
+        get {
+            return cellDescription?.accessibilityLabel
+        }
+
+        set {
+            // no-op
         }
     }
 

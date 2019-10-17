@@ -111,7 +111,7 @@ extension ConversationAudioMessageCell: TransferViewDelegate {
     }
 }
 
-class ConversationAudioMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationAudioMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationAudioMessageCell
     let configuration: View.Configuration
     
@@ -126,7 +126,10 @@ class ConversationAudioMessageCellDescription: ConversationMessageCellDescriptio
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
-    let accessibilityIdentifier: String? = nil
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "Obfuscated audio message" : "AudioCell"
+    }
+
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage) {

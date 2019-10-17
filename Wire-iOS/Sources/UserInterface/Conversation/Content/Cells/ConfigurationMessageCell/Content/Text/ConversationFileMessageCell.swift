@@ -112,7 +112,7 @@ extension ConversationFileMessageCell: TransferViewDelegate {
     }
 }
 
-class ConversationFileMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationFileMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationFileMessageCell
     let configuration: View.Configuration
 
@@ -127,7 +127,9 @@ class ConversationFileMessageCellDescription: ConversationMessageCellDescription
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
 
-    let accessibilityIdentifier: String? = nil
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "Obfuscated file message" : "FileCell"
+    }
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage) {

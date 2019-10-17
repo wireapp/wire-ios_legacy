@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
+final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     
     struct Configuration {
         let message: ZMConversationMessage
@@ -112,7 +112,7 @@ extension ConversationVideoMessageCell: TransferViewDelegate {
     }
 }
 
-class ConversationVideoMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationVideoMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationVideoMessageCell
     let configuration: View.Configuration
     
@@ -127,7 +127,10 @@ class ConversationVideoMessageCellDescription: ConversationMessageCellDescriptio
     weak var delegate: ConversationMessageCellDelegate?
     weak var actionController: ConversationMessageActionController?
     
-    let accessibilityIdentifier: String? = nil
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "Obfuscated video message" : "VideoCell"
+    }
+
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage) {

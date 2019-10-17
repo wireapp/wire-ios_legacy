@@ -174,7 +174,7 @@ class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
 }
 
-class ConversationLocationMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationLocationMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationLocationMessageCell
     let configuration: View.Configuration
 
@@ -189,7 +189,10 @@ class ConversationLocationMessageCellDescription: ConversationMessageCellDescrip
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
 
-    let accessibilityIdentifier: String? = nil
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "Obfuscated location message" : "LocationCell"
+    }
+
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, location: LocationMessageData) {
