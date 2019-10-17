@@ -79,10 +79,4 @@ final class CallWindowRootViewController: UIViewController {
         view.window?.isHidden = false
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
-
-    func hideWindowIfNeeded() {
-        if self.presentedViewController == nil {
-            view.window?.isHidden = true
-        }
-    }
 }

@@ -89,7 +89,7 @@ final class ActiveCallViewController : UIViewController {
         let window = view.window
         super.dismiss(animated: flag) {
             completion?()
-            (window as? CallWindow)?.callController.hideWindowIfNeeded()///TODO: delay when call?
+            (window as? CallWindow)?.hideWindowIfNeeded()
         }
     }
 

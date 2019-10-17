@@ -29,7 +29,7 @@ protocol CallQualityControllerDelegate: class {
  * Observes call state to prompt the user for call quality feedback when appropriate.
  */
 
-class CallQualityController: NSObject {
+final class CallQualityController: NSObject {
     
     weak var delegate: CallQualityControllerDelegate? = nil
 

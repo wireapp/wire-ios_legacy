@@ -37,4 +37,10 @@ final class CallWindow: PassthroughWindow {
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    func hideWindowIfNeeded() {
+        if rootViewController?.presentedViewController == nil {
+            isHidden = true
+        }
+    }
 }
