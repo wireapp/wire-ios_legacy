@@ -29,7 +29,7 @@ final class ConversationListViewModel: NSObject {
     typealias SectionIdentifier = String
 
     fileprivate struct Section {
-        enum Kind: Equatable {
+        enum Kind: Equatable, Hashable {
 
             /// for incoming requests
             case contactRequests
@@ -48,6 +48,11 @@ final class ConversationListViewModel: NSObject {
 
             /// conversations in folders
             case folder(label: LabelType)
+
+            func hash(into hasher: inout Hasher) {
+                hasher.combine(identifier)
+            }
+
             
             var identifier: SectionIdentifier {
                 switch self {
@@ -186,12 +191,12 @@ final class ConversationListViewModel: NSObject {
     // Local copies of the lists.
     private var sections: [Section] = []
 
-    typealias DiffKitSection = ArraySection<Int, SectionItem>
+    private typealias DiffKitSection = ArraySection<Int, SectionItem>
 
     /// make items has different hash in different sections
-    struct SectionItem: Hashable, Differentiable {
+    private struct SectionItem: Hashable, Differentiable {
         let item: AnyHashable
-        let section: Int//TODO: kind
+        let section: Section.Kind
     }
 
     
@@ -204,7 +209,7 @@ final class ConversationListViewModel: NSObject {
     private func diffKitSections(sections: [Section],
                                  state: State) -> [DiffKitSection] {
         return sections.enumerated().map { (index, section) in
-            let items = section.items.map({ SectionItem(item: $0, section: index) })
+            let items = section.items.map({ SectionItem(item: $0, section: section.kind) })
 
             return DiffKitSection(model: index, elements: collapsed(at: index, state: state) ? [] : items)
         }
