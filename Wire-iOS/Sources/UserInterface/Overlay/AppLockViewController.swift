@@ -33,9 +33,7 @@ final class AppLockViewController: UIViewController {
 
     fileprivate var dimContents: Bool = false {
         didSet {
-            view.isHidden = !dimContents
-
-            AppDelegate.shared().notificationsWindow?.isHidden = !dimContents
+            view.window?.isHidden = !dimContents
         }
     }
     
