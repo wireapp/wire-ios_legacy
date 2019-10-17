@@ -26,20 +26,16 @@ extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")
 }
 
-@objcMembers final class AppLockViewController: UIViewController {
+final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
 
     fileprivate var dimContents: Bool = false {
         didSet {
-            self.view.isHidden = !self.dimContents
-                        
-            if dimContents {
-                AppDelegate.shared().notificationsWindow?.makeKey()
-            } else {
-                AppDelegate.shared().window.makeKey()
-            }
+            view.isHidden = !dimContents
+
+            AppDelegate.shared().notificationsWindow?.isHidden = !dimContents
         }
     }
     
