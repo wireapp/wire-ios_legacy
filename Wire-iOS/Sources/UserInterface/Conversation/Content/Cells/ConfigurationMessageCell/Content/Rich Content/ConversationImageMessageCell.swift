@@ -30,7 +30,7 @@ final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     private var containerView = UIView()
     private var imageResourceView = ImageResourceView()
-    private lazy var obfuscationView = ObfuscationView(icon: .photo)
+    private let obfuscationView = ObfuscationView(icon: .photo)
     
     private var aspectConstraint: NSLayoutConstraint?
     private var widthConstraint: NSLayoutConstraint?
