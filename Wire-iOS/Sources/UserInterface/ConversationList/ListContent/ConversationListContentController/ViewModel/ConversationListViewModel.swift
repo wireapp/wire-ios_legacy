@@ -682,8 +682,6 @@ final class ConversationListViewModel: NSObject {
             }) { _ in
                 self.state = newState
             }
-
-
         } else {
             stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
             state = newState

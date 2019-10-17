@@ -24,8 +24,6 @@ protocol ConversationListViewModelDelegate: NSObjectProtocol {
     func listViewModelShouldBeReloaded()
     
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
-
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
 }
 
 /// TODO: merge with above delegate after converted to Swift
