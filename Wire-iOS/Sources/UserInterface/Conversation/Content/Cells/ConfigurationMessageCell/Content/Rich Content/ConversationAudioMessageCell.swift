@@ -127,7 +127,7 @@ final class ConversationAudioMessageCellDescription: ConversationMessageCellDesc
     weak var actionController: ConversationMessageActionController?
     
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated audio message" : "AudioCell"
+        return configuration.isObfuscated ? "ObfuscatedAudioCell" : "AudioCell"
     }
 
     let accessibilityLabel: String? = nil

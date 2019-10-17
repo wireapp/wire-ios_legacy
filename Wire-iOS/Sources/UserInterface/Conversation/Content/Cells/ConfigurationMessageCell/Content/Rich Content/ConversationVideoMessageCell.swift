@@ -128,7 +128,7 @@ final class ConversationVideoMessageCellDescription: ConversationMessageCellDesc
     weak var actionController: ConversationMessageActionController?
     
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated video message" : "VideoCell"
+        return configuration.isObfuscated ? "ObfuscatedVideoCell" : "VideoCell"
     }
 
     let accessibilityLabel: String? = nil

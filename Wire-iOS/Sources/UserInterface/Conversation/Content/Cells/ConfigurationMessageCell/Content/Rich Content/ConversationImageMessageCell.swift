@@ -153,7 +153,7 @@ final class ConversationImageMessageCellDescription: ConversationMessageCellDesc
     let containsHighlightableContent: Bool = true
     
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated image message" : "ImageCell"
+        return configuration.isObfuscated ? "ObfuscatedImageCell" : "ImageCell"
     }
 
     let accessibilityLabel: String? = nil

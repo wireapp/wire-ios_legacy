@@ -109,7 +109,7 @@ final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCe
     let containsHighlightableContent: Bool = true
 
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated link message" : "LinkPreviewCell"
+        return configuration.isObfuscated ? "ObfuscatedLinkPreviewCell" : "LinkPreviewCell"
     }
 
     let accessibilityLabel: String? = nil

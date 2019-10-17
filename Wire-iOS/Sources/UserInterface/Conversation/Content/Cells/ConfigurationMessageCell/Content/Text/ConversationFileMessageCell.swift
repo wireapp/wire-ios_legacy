@@ -128,7 +128,7 @@ final class ConversationFileMessageCellDescription: ConversationMessageCellDescr
     weak var actionController: ConversationMessageActionController?
 
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated file message" : "FileCell"
+        return configuration.isObfuscated ? "ObfuscatedFileCell" : "FileCell"
     }
     let accessibilityLabel: String? = nil
 

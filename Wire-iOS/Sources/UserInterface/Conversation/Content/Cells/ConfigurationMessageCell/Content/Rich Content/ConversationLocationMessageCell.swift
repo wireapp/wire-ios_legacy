@@ -19,7 +19,7 @@
 import UIKit
 import MapKit
 
-class ConversationLocationMessageCell: UIView, ConversationMessageCell {
+final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
     struct Configuration {
         let location: LocationMessageData
@@ -190,7 +190,7 @@ final class ConversationLocationMessageCellDescription: ConversationMessageCellD
     let containsHighlightableContent: Bool = true
 
     var accessibilityIdentifier: String? {
-        return configuration.isObfuscated ? "Obfuscated location message" : "LocationCell"
+        return configuration.isObfuscated ? "ObfuscatedLocationCell" : "LocationCell"
     }
 
     let accessibilityLabel: String? = nil
