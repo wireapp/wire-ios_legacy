@@ -21,20 +21,6 @@ import Foundation
 
 final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
 
-    var mockGroupConversations: [ZMConversation] = []
-    var mockContactsConversations: [ZMConversation] = []
-
-    func conversations(by type: ConversationListType) -> [ZMConversation] {
-        switch type {
-        case .groups:
-            return mockGroupConversations
-        case .contacts:
-            return mockContactsConversations
-        default:
-            return []
-        }
-    }
-
     func performChanges(_ block: @escaping () -> Swift.Void) {
         block()
     }
@@ -46,6 +32,11 @@ final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
     func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!) {
         block()
         completionHandler()
+    }
+    
+    var mockConversationDirectory = MockConversationDirectory()
+    var conversationDirectory: ConversationDirectoryType {
+        return mockConversationDirectory
     }
 
     var isNotificationContentHidden: Bool = false

@@ -18,7 +18,7 @@
 
 import Foundation
 
-class CallController: NSObject {
+final class CallController: NSObject {
 
     weak var targetViewController: UIViewController? = nil
     private(set) weak var activeCallViewController: ActiveCallViewController?

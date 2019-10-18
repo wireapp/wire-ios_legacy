@@ -44,7 +44,7 @@
 "general.guest-room-name" = "Stanza degli ospiti";
 
 // User Cell
-"user_cell.title.you_suffix" = " (You)";
+"user_cell.title.you_suffix" = " (Tu)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "fai un trillo";
 "conversation_list.voiceover.status.mention" = "sei stato menzionato";
 "conversation_list.voiceover.status.reply" = "rispondi";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recente";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "elenco di conversazioni recenti";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "cartelle";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Sono su Wire. Visita get.wire.com per connetterti con me.";
 
+// Folders
+
+"folder.creation.name.title" = "Crea nuova cartella";
+"folder.creation.name.button.create" = "Creare";
+"folder.creation.name.header" = "Sposta la conversazione \"%@\" in una nuova cartella.";
+"folder.creation.name.footer" = "Massimo 64 caratteri";
+"folder.creation.name.placeholder" = "Nome cartella";
+
+"folder.picker.title" = "Sposta in";
+"folder.picker.empty.hint" = "Crea una nuova cartella premendo il pulsante +";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "ha condiviso un'immagine";
@@ -203,10 +218,15 @@
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
 
+"list.section.groups" = "Gruppi";
+"list.section.contacts" = "Persone";
+"list.section.requests" = "Richieste Ricevute";
+"list.section.favorites" = "Preferiti";
+
 "conversation.voiceover.verified" = "verificato";
-"conversation.voiceover.legalhold" = "legal hold";
-"conversation.voiceover.value.active" = "active";
-"conversation.voiceover.value.disabled" = "disabled";
+"conversation.voiceover.legalhold" = "legale";
+"conversation.voiceover.value.active" = "attivo";
+"conversation.voiceover.value.disabled" = "disattivato";
 
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
@@ -214,7 +234,7 @@
 "conversation.status.poor_connection" = "Connessione scadente";
 "conversation.status.blocked" = "Bloccato";
 "conversation.status.incoming_call" = "%@ sta chiamando…";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "Qualcuno sta chiamando…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Condividi un link";
@@ -309,7 +329,7 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Non è possibile registrare un video durante una chiamata.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Non è possibile scattare una foto durante una chiamata.";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "Il messaggio verrà eliminato.";
 
 "conversation.guests_present" = "Sono presenti ospiti";
 "conversation.services_present" = "I servizi sono attivi";
@@ -399,9 +419,9 @@
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "Anteprima video Youtube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Anteprima canzone SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Anteprima playlist SoundCloud";
 
 // New conversation participants added / removed / started system message
 
@@ -515,7 +535,7 @@
 "content.file.upload_cancelled" = "Caricamento annullato";
 "content.file.upload_video" = "Video";
 "content.file.take_video" = "Registra un video";
-"content.file.browse" = "Browse";
+"content.file.browse" = "Sfoglia";
 
 "content.file.save_video" = "Salva";
 "content.file.save_audio" = "Salva";
@@ -692,8 +712,10 @@
 "meta.menu.leave" = "Abbandona il gruppo…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
-"meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.delete" = "Elimina gruppo…";
+"meta.menu.clear_content" = "Elimina contenuti…";
+"meta.menu.move_to_folder" = "Sposta in…";
+"meta.menu.remove_from_folder" = "Rimuovi da \"%@\"";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
@@ -702,15 +724,15 @@
 "meta.menu.mark_read" = "Segna come letto";
 "shortcut.mark_all_as_read.title" = "Segna tutti come letti";
 "meta.menu.configure_notifications" = "Notifiche…";
-"meta.menu.open_self_profile" = "Open Profile";
+"meta.menu.open_self_profile" = "Apri il profilo";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Cancellare il contenuto?";
 "meta.menu.delete_content.dialog_message" = "La cronologia delle conversazioni verrà cancellata da tutti i tuoi dispositivi.";
 "meta.menu.delete_content.leave_as_well_message" = "In aggiunta, abbandona la conversazione";
 "meta.menu.delete_content.button_cancel" = "Annulla";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Cancella";
+"meta.menu.delete_content.button_delete_and_leave" = "Cancella e abbandona";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notificami riguardo:";
@@ -722,17 +744,17 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Abbandonare la conversazione?";
 "meta.leave_conversation_dialog_message" = "I partecipanti saranno informati e la conversazione verrà rimossa dalla tua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Elimina anche il contenuto";
 "meta.leave_conversation_button_cancel" = "Annulla";
 "meta.leave_conversation_button_leave" = "Abbandona";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Lascia e cancella il contenuto";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ ha iniziato a usare un nuovo dispositivo.";
 "meta.degraded.degradation_reason_message.plural" = "%@ ha iniziato a usare dei nuovi dispositivi.";
 "meta.degraded.degradation_reason_message.someone" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "meta.degraded.dialog_message" = "Vuoi comunque mandare il messaggio?";
-"meta.degraded.verify_devices_button" = "Verify Devices…";
+"meta.degraded.verify_devices_button" = "Verifica dispositivi…";
 "meta.degraded.send_anyway_button" = "Send Anyway";
 "meta.degraded.cancel_sending_button" = "Annulla";
 "meta.legalhold.info_button" = "What Is Legal Hold?";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Blocca…";
 "profile.unblock_button_title" = "Sblocca…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Blocca";
 "profile.unblock_button_title_action" = "Sblocca";

@@ -21,7 +21,7 @@ import Foundation
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
 /// ViewController container for CallViewControllers. Displays the active the controller for active or incoming calls.
-class ActiveCallViewController : UIViewController {
+final class ActiveCallViewController : UIViewController {
     
     weak var dismisser: ViewControllerDismisser? {
         didSet {

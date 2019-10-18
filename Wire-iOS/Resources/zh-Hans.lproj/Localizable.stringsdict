@@ -191,7 +191,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>%2$@ 个打招呼</string>
+        <string>%d 个打招呼</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>

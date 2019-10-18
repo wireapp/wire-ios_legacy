@@ -20,19 +20,36 @@ import WireDataModel
 
 
 extension ZMUser {
-    @objc var pov: PointOfView {
+    var pov: PointOfView {
         return self.isSelfUser ? .secondPerson : .thirdPerson
     }
         
-    @objc var hasUntrustedClients: Bool {
+    var hasUntrustedClients: Bool {
         return nil != self.clients.first { !$0.verified }
     }
     
-    @objc var canSeeServices: Bool {
+    var canSeeServices: Bool {
         #if ADD_SERVICE_DISABLED
         return false
         #else
         return hasTeam
         #endif
+    }
+
+    var nameAccentColor: UIColor? {
+        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
+    }
+
+    /// Blocks user if not already blocked and vice versa.
+    func toggleBlocked() {
+        if isBlocked {
+            accept()
+        } else {
+            block()
+        }
+    }
+
+    var isPendingApproval: Bool {
+        return isPendingApprovalBySelfUser || isPendingApprovalByOtherUser
     }
 }

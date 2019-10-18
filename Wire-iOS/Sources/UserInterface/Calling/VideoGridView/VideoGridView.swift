@@ -19,8 +19,13 @@
 import Foundation
 import Cartography
 
+struct Stream: Equatable {
+    let userId: UUID
+    let clientId: String?
+}
+
 struct ParticipantVideoState: Equatable {
-    let stream: UUID
+    let stream: Stream
     let isPaused: Bool
 }
 
@@ -46,6 +51,21 @@ extension VideoGridConfiguration {
     
 }
 
+extension ZMEditableUser {
+    
+    var selfStream: Stream {
+        guard let selfUser = ZMUser.selfUser(),
+              let userId = selfUser.remoteIdentifier,
+              let clientId = selfUser.selfClient()?.remoteIdentifier
+        else {
+            fatal("Could create self user stream which should always exist")
+        }
+        
+        return Stream(userId: userId, clientId: clientId)
+    }
+    
+}
+
 fileprivate extension CGSize {
     static let floatingPreviewSmall = CGSize(width: 108, height: 144)
     static let floatingPreviewLarge = CGSize(width: 150, height: 200)
@@ -63,7 +83,7 @@ fileprivate extension CGSize {
 
 final class VideoGridViewController: UIViewController {
 
-    private var gridVideoStreams: [UUID] = []
+    private var gridVideoStreams: [Stream] = []
     private let gridView = GridView()
     private let thumbnailViewController = PinnableThumbnailViewController()
     private let muteIndicatorView = MuteIndicatorView()
@@ -171,14 +191,14 @@ final class VideoGridViewController: UIViewController {
     func updateState() {
         Log.calling.debug("\nUpdating video configuration from:\n\(videoConfigurationDescription())")
 
-        let selfStreamId = ZMUser.selfUser().remoteIdentifier!
-        let selfInGrid = configuration.videoStreams.contains { $0.stream == selfStreamId }
+        let selfStream = ZMUser.selfUser().selfStream
+        let selfInGrid = configuration.videoStreams.contains { $0.stream == selfStream }
         let selfInFloatingOverlay = nil != configuration.floatingVideoStream
         let isShowingSelf = selfInGrid || selfInFloatingOverlay
 
         // Create self preview if there is none but we should show it
         if isShowingSelf && nil == selfPreviewView {
-            selfPreviewView = SelfVideoPreviewView(identifier: selfStreamId.transportString())
+            selfPreviewView = SelfVideoPreviewView(stream: selfStream)
             selfPreviewView?.translatesAutoresizingMaskIntoConstraints = false
         }
 
@@ -212,7 +232,7 @@ final class VideoGridViewController: UIViewController {
         }
 
         // We only support the self preview in the floating overlay
-        guard state.stream == ZMUser.selfUser().remoteIdentifier else {
+        guard state.stream == ZMUser.selfUser()?.selfStream else {
             return Log.calling.error("Invalid operation: Non self preview in overlay")
         }
 
@@ -257,9 +277,9 @@ final class VideoGridViewController: UIViewController {
     }
 
     private func updateVideoGrid(with videoStreams: [ParticipantVideoState]) {
-        let streamIds = videoStreams.map { $0.stream }
-        let removed = gridVideoStreams.filter { !streamIds.contains($0) }
-        let added = streamIds.filter { !gridVideoStreams.contains($0) }
+        let streams = videoStreams.map { $0.stream }
+        let removed = gridVideoStreams.filter { !streams.contains($0) }
+        let added = streams.filter { !gridVideoStreams.contains($0) }
 
         removed.forEach(removeStream)
         added.forEach(addStream)
@@ -273,34 +293,34 @@ final class VideoGridViewController: UIViewController {
         }
     }
 
-    private func addStream(_ streamId: UUID) {
-        Log.calling.debug("Adding video stream: \(streamId)")
+    private func addStream(_ stream: Stream) {
+        Log.calling.debug("Adding video stream: \(stream)")
 
         let view: UIView = {
-            if streamId == ZMUser.selfUser().remoteIdentifier, let previewView = selfPreviewView {
+            if stream == ZMUser.selfUser()?.selfStream, let previewView = selfPreviewView {
                 return previewView
             } else {
-                return VideoPreviewView(identifier: streamId.transportString())
+                return VideoPreviewView(stream: stream)
             }
         }()
 
         view.translatesAutoresizingMaskIntoConstraints = false
         gridView.append(view: view)
-        gridVideoStreams.append(streamId)
+        gridVideoStreams.append(stream)
     }
 
-    private func removeStream(_ streamId: UUID) {
-        Log.calling.debug("Removing video stream: \(streamId)")
-        guard let videoView = streamView(for: streamId) else {
-            return Log.calling.debug("Failed to remove video stream \(streamId) since view was not found")
+    private func removeStream(_ stream: Stream) {
+        Log.calling.debug("Removing video stream: \(stream)")
+        guard let videoView = streamView(for: stream) else {
+            return Log.calling.debug("Failed to remove video stream \(stream) since view was not found")
         }
         gridView.remove(view: videoView)
-        gridVideoStreams.firstIndex(of: streamId).apply { gridVideoStreams.remove(at: $0) }
+        gridVideoStreams.firstIndex(of: stream).apply { gridVideoStreams.remove(at: $0) }
     }
 
-    private func streamView(for streamId: UUID) -> UIView? {
+    private func streamView(for stream: Stream) -> UIView? {
         return gridView.gridSubviews.first {
-            ($0 as? AVSIdentifierProvider)?.identifier == streamId.transportString()
+            ($0 as? AVSIdentifierProvider)?.stream == stream
         }
     }
 

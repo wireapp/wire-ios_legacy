@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "skambtelėjimas";
 "conversation_list.voiceover.status.mention" = "jus paminėjo";
 "conversation_list.voiceover.status.reply" = "atsakyti";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "naujausi";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "naujausių susirašinėjimų sąrašas";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "aplankai";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "susirašinėjimų sąrašas aplankuose";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archyvuotas";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "archyvuotų susirašinėjimų sąrašas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontaktai";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Naudojuosi „Wire“, ieškokite %@ arba eikit į get.wire.com";
 "send_invitation_no_email.text" = "Aš naudoju Wire. Apsilankyk get.wire.com , kad su manimi susisiektum.";
 
+// Folders
+
+"folder.creation.name.title" = "Kurti naują aplanką";
+"folder.creation.name.button.create" = "Kurti";
+"folder.creation.name.header" = "Perkelti susirašinėjimą „%@“ į naują aplanką.";
+"folder.creation.name.footer" = "Iki 64 simbolių";
+"folder.creation.name.placeholder" = "Aplanko pavadinimas";
+
+"folder.picker.title" = "Perkelti į";
+"folder.picker.empty.hint" = "Naują aplanką sukursite paspaudę + mygtuką";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "pasidalino nuotrauka";
@@ -202,6 +217,11 @@
 "list.title" = "Susirašinėjimai";
 "list.archived_conversations" = "ARCHYVUOTI";
 "list.archived_conversations_close" = "Uždaryti archyvą";
+
+"list.section.groups" = "Grupės";
+"list.section.contacts" = "Žmonės";
+"list.section.requests" = "Prašymai";
+"list.section.favorites" = "Svarbiausi";
 
 "conversation.voiceover.verified" = "patvirtintas";
 "conversation.voiceover.legalhold" = "sulaikyta teisiškai";
@@ -515,7 +535,7 @@
 "content.file.upload_cancelled" = "Įkėlimas atšauktas";
 "content.file.upload_video" = "Vaizdo įrašai";
 "content.file.take_video" = "Įrašyti vaizdą";
-"content.file.browse" = "Browse";
+"content.file.browse" = "Naršyti";
 
 "content.file.save_video" = "Įrašyti";
 "content.file.save_audio" = "Įrašyti";
@@ -692,8 +712,10 @@
 "meta.menu.leave" = "Išeiti iš grupės…";
 "meta.menu.archive" = "Archyvuoti";
 "meta.menu.unarchive" = "Išarchyvuoti";
-"meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.delete" = "Ištrinti grupę…";
+"meta.menu.clear_content" = "Valyti turinį…";
+"meta.menu.move_to_folder" = "Perkelti į…";
+"meta.menu.remove_from_folder" = "Pašalinti iš „%@“";
 "meta.menu.silence.mute" = "Išjungti pranešimus";
 "meta.menu.silence.unmute" = "Įjungti pranešimus";
 "meta.menu.cancel" = "Atsisakyti";
@@ -705,12 +727,12 @@
 "meta.menu.open_self_profile" = "Atverti profilį";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Valyti turinį?";
 "meta.menu.delete_content.dialog_message" = "Tai išvalys bendravimo praeitį visuose jūsų įrenginiuose.";
 "meta.menu.delete_content.leave_as_well_message" = "Taip pat išeiti iš pokalbio";
 "meta.menu.delete_content.button_cancel" = "Atsisakyti";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Valyti";
+"meta.menu.delete_content.button_delete_and_leave" = "Valyti ir išeiti";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Pranešti apie:";
@@ -722,10 +744,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Išeiti iš susirašinėjimo?";
 "meta.leave_conversation_dialog_message" = "Dalyviams bus pranešta ir susirašinėjimas bus pašalintas iš sąrašo.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Taip pat išvalyti turinį";
 "meta.leave_conversation_button_cancel" = "Atsisakyti";
 "meta.leave_conversation_button_leave" = "Išeiti";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Išeiti ir išvalyti turinį";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ pradėjo naudotis nauju įrenginiu.";
@@ -767,10 +789,10 @@
 "profile.connection_request_dialog.button_connect" = "Užmegzti kontaktą";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_dialog.title" = "Ištrinti grupės susirašinėjimą?";
+"conversation.delete_request_dialog.message" = "Grupė ir visas turinys visiems dalyviams iš visų įrenginių bus ištrinti. Nėra galimybės atkurti turinio. Visiems dalyviams bus pranešta.";
+"conversation.delete_request_error_dialog.title" = "Trinant grupę „%@“ įvyko klaida. Bandykite dar kartą.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Ištrinti grupę";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Atsisakyti užklausos?";
@@ -781,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Blokuoti…";
 "profile.unblock_button_title" = "Atblokuoti…";
+
+// Favorite button
+"profile.favorite_button_title" = "Pridėti prie svarbiausių";
+"profile.unfavorite_button_title" = "Pašalinti iš svarbiausių";
 
 "profile.block_button_title_action" = "Užblokuoti";
 "profile.unblock_button_title_action" = "Atblokuoti";

@@ -39,6 +39,10 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
         super.setUp()
         mediaManager = ZMMockAVSMediaManager()
         configuration = MockVideoGridConfiguration()
+        
+        let mockSelfClient = MockUserClient()
+        mockSelfClient.remoteIdentifier = "selfClient123"
+        MockUser.mockSelf().clients = Set([mockSelfClient])
     }
     
     override func tearDown() {
@@ -49,7 +53,6 @@ final class VideoGridViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func createSut() {
-        ZMUser.selfUser().remoteIdentifier = UUID()
         sut = VideoGridViewController(configuration: configuration,
                                       mediaManager: mediaManager)
         sut.isCovered = false

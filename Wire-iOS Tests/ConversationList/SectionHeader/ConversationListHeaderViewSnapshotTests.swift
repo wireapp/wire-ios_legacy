@@ -29,9 +29,9 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 375, height: CGFloat.ConversationListSectionHeader.height)))
+        sut = ConversationListHeaderView(frame: CGRect(origin: .zero, size: CGSize(width: 320, height: CGFloat.ConversationListSectionHeader.height)))
 
-        sut.titleLabel.text = "GROUPS"
+        sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
         sut.backgroundColor = .black
     }
