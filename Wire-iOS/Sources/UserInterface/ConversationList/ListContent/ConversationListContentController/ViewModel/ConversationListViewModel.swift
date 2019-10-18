@@ -405,8 +405,7 @@ final class ConversationListViewModel: NSObject {
     ///   - index: index of search item
     ///   - sectionIndex: section of search item
     /// - Returns: an index path for next existing item
-    @objc(itemAfterIndex:section:)
-    func item(after index: Int, section sectionIndex: UInt) -> IndexPath? {
+    func item(after index: Int, section sectionIndex: Int) -> IndexPath? {
         guard let section = self.section(at: Int(sectionIndex)) else { return nil }
 
         if section.count > index + 1 {
@@ -420,7 +419,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func firstItemInSection(after sectionIndex: UInt) -> IndexPath? {
+    private func firstItemInSection(after sectionIndex: Int) -> IndexPath? {
         let nextSectionIndex = sectionIndex + 1
 
         if nextSectionIndex >= sectionCount {
@@ -447,8 +446,7 @@ final class ConversationListViewModel: NSObject {
     ///   - index: index of search item
     ///   - sectionIndex: section of search item
     /// - Returns: an index path for previous existing item
-    @objc(itemPreviousToIndex:section:)
-    func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
+    func itemPrevious(to index: Int, section sectionIndex: Int) -> IndexPath? {
         guard let section = self.section(at: Int(sectionIndex)) else { return nil }
 
         if section.indices.contains(index - 1) {
