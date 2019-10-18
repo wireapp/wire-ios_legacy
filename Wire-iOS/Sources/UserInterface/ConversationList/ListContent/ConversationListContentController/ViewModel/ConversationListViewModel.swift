@@ -549,10 +549,12 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    ///TODO: ConversationListItem
     private func internalSelect(itemToSelect: AnyHashable?) {
         selectedItem = itemToSelect
-        delegate?.listViewModel(self, didSelectItem: itemToSelect as? ConversationListItem)
+
+        if let itemToSelect = itemToSelect as? ConversationListItem {
+            delegate?.listViewModel(self, didSelectItem: itemToSelect)
+        }
     }
 
     // MARK: - collapse section
