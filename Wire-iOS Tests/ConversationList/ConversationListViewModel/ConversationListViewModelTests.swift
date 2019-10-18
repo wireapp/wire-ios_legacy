@@ -59,8 +59,8 @@ final class ConversationListViewModelTests: XCTestCase {
     var mockBar: MockBar!
 
     /// constants
-    let sectionGroups: UInt = 2
-    let sectionContacts: UInt = 3
+    let sectionGroups: Int = 2
+    let sectionContacts: Int = 3
 
     override func setUp() {
         super.setUp()
@@ -131,7 +131,7 @@ final class ConversationListViewModelTests: XCTestCase {
         let item = sut.item(for: indexPath)
 
         ///THEN
-        XCTAssertEqual(item, mockConversation)
+        XCTAssertEqual(item as? AnyHashable, mockConversation)
     }
 
     func testThatOutOfBoundIndexPathReturnsNilItem() {
@@ -175,7 +175,7 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: Int(sectionGroups))?.first, mockConversation)
+        XCTAssertEqual(sut.section(at: Int(sectionGroups))?.first as? AnyHashable, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
     }
@@ -225,7 +225,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.select(itemToSelect: mockConversation))
 
         ///THEN
-        XCTAssertEqual(sut.selectedItem, mockConversation)
+        XCTAssertEqual(sut.selectedItem as? AnyHashable, mockConversation)
     }
 
     func testThatSelectItemAtIndexReturnCorrectConversation() {
@@ -240,7 +240,7 @@ final class ConversationListViewModelTests: XCTestCase {
         let indexPath = sut.indexPath(for: mockConversation)!
 
         ///THEN
-        XCTAssertEqual(sut.selectItem(at: indexPath), mockConversation)
+        XCTAssertEqual(sut.selectItem(at: indexPath) as? AnyHashable, mockConversation)
     }
 
     // MARK: - state
