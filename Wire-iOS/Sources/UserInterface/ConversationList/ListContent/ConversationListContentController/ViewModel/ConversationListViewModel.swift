@@ -19,11 +19,6 @@
 import Foundation
 import DifferenceKit
 
-// Placeholder for conversation requests item
-///TODO: create a protocol, shared with ZMConversation
-@objc
-final class ConversationListConnectRequestsItem : NSObject {}
-
 final class ConversationListViewModel: NSObject {
     
     typealias SectionIdentifier = String
@@ -554,9 +549,10 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
+    ///TODO: ConversationListItem
     private func internalSelect(itemToSelect: AnyHashable?) {
         selectedItem = itemToSelect
-        delegate?.listViewModel(self, didSelectItem: itemToSelect)
+        delegate?.listViewModel(self, didSelectItem: itemToSelect as? ConversationListItem)
     }
 
     // MARK: - collapse section

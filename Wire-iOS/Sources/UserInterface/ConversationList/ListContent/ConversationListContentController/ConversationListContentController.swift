@@ -122,7 +122,7 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 
 extension ConversationListContentController: ConversationListViewModelDelegate {
 
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         defer {
             scrollToMessageOnNextSelection = nil
             focusOnNextSelection = false

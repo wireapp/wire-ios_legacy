@@ -19,8 +19,15 @@
 import Foundation
 import DifferenceKit
 
+protocol ConversationListItem {}
+
+extension ZMConversation: ConversationListItem {}
+
+// Placeholder for conversation requests item
+final class ConversationListConnectRequestsItem : NSObject, ConversationListItem {}
+
 protocol ConversationListViewModelDelegate: class {
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
 
     func listViewModelShouldBeReloaded()
 
