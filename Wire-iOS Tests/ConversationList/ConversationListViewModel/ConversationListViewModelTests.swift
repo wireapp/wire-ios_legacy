@@ -20,6 +20,7 @@ import XCTest
 @testable import Wire
 import DifferenceKit
 
+
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate, ConversationListViewModelStateDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         //no-op
@@ -34,7 +35,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         interrupt: ((Changeset<C>) -> Bool)?,
         setData: (C?) -> Void
         ) {
-        setData(nil)
+        setData(stagedChangeset.first?.data)
     }
     
     func listViewModelShouldBeReloaded() {

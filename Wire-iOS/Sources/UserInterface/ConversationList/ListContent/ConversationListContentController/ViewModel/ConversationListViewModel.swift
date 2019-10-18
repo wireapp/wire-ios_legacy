@@ -526,7 +526,9 @@ final class ConversationListViewModel: NSObject {
         stateDelegate?.reload(using: changeset, interrupt: { _ in
             return false
         }) { data in
-            self.sections = data!
+            if let data = data {
+                self.sections = data
+            }
         }
         return true
     }
@@ -596,7 +598,9 @@ final class ConversationListViewModel: NSObject {
             stateDelegate?.reload(using: changeset, interrupt: { _ in
                 return false
             }) { data in
-                self.sections = data!
+                if let data = data {
+                    self.sections = data
+                }
             }
         } else {
             sections = newValue
