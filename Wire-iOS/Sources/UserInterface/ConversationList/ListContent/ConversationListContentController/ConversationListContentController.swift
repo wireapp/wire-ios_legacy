@@ -184,7 +184,6 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
             return
         }
 
-        ///TODO: use protocol
         if let conversation = item as? ZMConversation {
 
             // Actually load the new view controller and optionally focus on it
@@ -200,7 +199,6 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         // Make sure the correct item is selected in the list, without triggering a collection view
         // callback
         ensureCurrentSelection()
-
     }
 
 
