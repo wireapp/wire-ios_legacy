@@ -38,10 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
 
-- (void)ensureCurrentSelection;
 - (void)setupViews;
-- (void)listViewModelShouldBeReloaded;
-- (BOOL)selectModelItem:(id)itemToSelect;
 
 @end
 

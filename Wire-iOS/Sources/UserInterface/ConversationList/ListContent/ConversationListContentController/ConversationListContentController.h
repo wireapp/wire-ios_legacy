@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)deselectAll;
 
-- (void)scrollToCurrentSelectionAnimated:(BOOL)animated;
 - (BOOL)selectInboxAndFocusOnView:(BOOL)focus;
 
 @end
