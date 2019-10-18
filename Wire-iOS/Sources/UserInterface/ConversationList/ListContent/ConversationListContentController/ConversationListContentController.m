@@ -185,18 +185,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return [self selectModelItem:conversation];
 }///TODO: mv logic to VM
 
-- (BOOL)selectInboxAndFocusOnView:(BOOL)focus
-{
-    // If there is anything in the inbox, select it
-    if ([self.listViewModel numberOfItemsInSection:0] > 0) {
-        
-        self.focusOnNextSelection = focus;
-        [self selectModelItem: ConversationListViewModel.contactRequestsItem];
-        return YES;
-    }
-    return NO;
-}
-
 - (BOOL)selectModelItem:(id)itemToSelect
 {
     return [self.listViewModel selectItem:itemToSelect];

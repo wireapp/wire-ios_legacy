@@ -107,6 +107,16 @@ extension ConversationListContentController {
         }
     }
 
+    func selectInboxAndFocus(onView focus: Bool) -> Bool {
+        // If there is anything in the inbox, select it
+        if listViewModel.numberOfItems(inSection: 0) > 0 {
+
+            focusOnNextSelection = focus
+            selectModelItem(ConversationListViewModel.contactRequestsItem)
+            return true
+        }
+        return false
+    }
 
     // MARK: - UICollectionViewDataSource
 

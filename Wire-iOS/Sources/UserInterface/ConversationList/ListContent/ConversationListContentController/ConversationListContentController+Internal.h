@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)ensureCurrentSelection;
 - (void)setupViews;
 - (void)listViewModelShouldBeReloaded;
+- (BOOL)selectModelItem:(id)itemToSelect;
 
 @end
 
