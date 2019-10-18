@@ -28,7 +28,8 @@ final class ConversationListViewModel: NSObject {
     
     typealias SectionIdentifier = String
 
-    fileprivate struct Section {
+    fileprivate struct Section: DifferentiableSection {
+        
         enum Kind: Equatable, Hashable {
 
             /// for incoming requests
@@ -118,10 +119,10 @@ final class ConversationListViewModel: NSObject {
         }
 
         var kind: Kind
-        var items: [AnyHashable]
+        var items: [SectionItem]
         var collapsed: Bool
         
-        var elements: [AnyHashable] {
+        var elements: [SectionItem] {
             return collapsed ? [] : items
         }
 
@@ -130,11 +131,25 @@ final class ConversationListViewModel: NSObject {
         /// - Parameter item: item to search
         /// - Returns: the index of the item
         func index(for item: AnyHashable) -> Int? {
-            return items.firstIndex(of: item)
+            return items.firstIndex(of: SectionItem(item: item, isFavorite: kind == .favorites))
         }
-
+        
+        func isContentEqual(to source: ConversationListViewModel.Section) -> Bool {
+            return kind == source.kind
+        }
+        
+        var differenceIdentifier: String {
+            return kind.identifier
+        }
+        
+        init<C>(source: ConversationListViewModel.Section, elements: C) where C : Collection, C.Element == SectionItem {
+            self.kind = source.kind
+            self.collapsed = source.collapsed
+            self.items = Array(elements)
+        }
+        
         init(kind: Kind, conversationDirectory: ConversationDirectoryType, collapsed: Bool) {
-            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory).map({ SectionItem(item: $0, isFavorite: kind == .favorites) })
             self.kind = kind
             self.collapsed = collapsed
         }
@@ -192,29 +207,9 @@ final class ConversationListViewModel: NSObject {
     private typealias DiffKitSection = ArraySection<Int, SectionItem>
 
     /// make items has different hash in different sections
-    private struct SectionItem: Hashable, Differentiable {
+    struct SectionItem: Hashable, Differentiable {
         let item: AnyHashable
-        let section: Section.Kind
-    }
-
-    
-    /// convert local sections to DifferenceKit type
-    ///
-    /// - Parameters:
-    ///   - sections: the sections to convert
-    ///   - state: the state of the sections
-    /// - Returns: DifferenceKit accepable sections type
-    private func diffKitSections(sections: [Section],
-                                 state: State) -> [DiffKitSection] {
-        return sections.enumerated().map { (index, section) in
-            let items = section.items.map({ SectionItem(item: $0, section: section.kind) })
-
-            return DiffKitSection(model: index, elements: collapsed(at: index, state: state) ? [] : items)
-        }
-    }
-
-    private var diffKitSection: [DiffKitSection] {
-        return diffKitSections(sections: sections, state: state)
+        let isFavorite: Bool
     }
 
     /// for folder enabled and collapse presistent
@@ -328,7 +323,7 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        return sections[Int(sectionIndex)].elements
+        return sections[Int(sectionIndex)].elements.map(\.item)
     }
 
     @objc(itemForIndexPath:)
@@ -376,7 +371,6 @@ final class ConversationListViewModel: NSObject {
 
     private func reload() {
         updateAllSections()
-        setupObservers()
         log.debug("RELOAD conversation list")
         delegate?.listViewModelShouldBeReloaded()
     }
@@ -476,35 +470,12 @@ final class ConversationListViewModel: NSObject {
     }
     
     private func updateAllSections() {
-        createSections()
-    }
-
-    /// This updates a specific section in the model, by copying the contents locally.
-    /// Passing in a value of SectionIndexAll updates all sections. The reason why we need to keep
-    /// local copies of the lists is that we get separate notifications for each list,
-    /// which means that an update to one can render the collection view out of sync with the datasource.
-    ///
-    /// - Parameters:
-    ///   - sectionIndex: the section to update
-    ///   - items: updated items
-    private func update(kind: Section.Kind, with items: [AnyHashable]?) {
-
-        /// replace the section with new items if section found
-        if let sectionNum = sectionNumber(for: kind) {
-            sections[sectionNum].items = items ?? []
-        } else {
-            // Re-create the sections
-            createSections()
-            
-            if let sectionNum = sectionNumber(for: kind) {
-                sections[sectionNum].items = items ?? []
-            }
-        }
+        sections = createSections()
     }
     
     /// Create the section structure
-    private func createSections() {
-        guard let conversationDirectory = userSession?.conversationDirectory else { return }
+    private func createSections() -> [Section] {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return [] }
         
         var kinds: [Section.Kind]
         if folderEnabled {
@@ -520,7 +491,7 @@ final class ConversationListViewModel: NSObject {
                      .conversations]
         }
         
-        sections = kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
+        return kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
     }
     
     private func sectionNumber(for kind: Section.Kind) -> Int? {
@@ -536,40 +507,22 @@ final class ConversationListViewModel: NSObject {
     @discardableResult
     private func updateForConversationType(kind: Section.Kind) -> Bool {
         guard let conversationDirectory = userSession?.conversationDirectory else { return false }
-        guard let sectionNumber = self.sectionNumber(for: kind) else {
-            reload()
-            return false
+        
+        var newValue: [Section]
+        if let sectionNumber = self.sectionNumber(for: kind) {
+            let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+            newValue = sections
+            newValue[sectionNumber].items = newConversationList.map({ SectionItem(item: $0, isFavorite: kind == .favorites) })
+        } else {
+            newValue = createSections()
         }
 
-        let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
-
-        if newConversationList == sections[sectionNumber].items {
-            return true
-        }
-
-        /// no need to update collapsed section's cells but the section header, update the stored list
-        /// hide section header if no items
-        if (collapsed(at: sectionNumber) && !newConversationList.isEmpty) ||
-           newConversationList.isEmpty {
-            update(kind: kind, with: newConversationList)
-            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber, animated: true)
-            return true
-        }
-
-        var newValue = sections
-        newValue[sectionNumber].items = newConversationList
-
-        let changeset = StagedChangeset(source: diffKitSections(sections: sections, state: state), target: diffKitSections(sections:newValue, state: state))
-
-        // We need to capture the state of `newConversationList` to make sure that we are updating the value
-        // of the list to the exact new state.
-        // It is important to keep the data source of the collection view consistent, since
-        // any inconsistency in the delta update would make it throw an exception.
+        let changeset = StagedChangeset(source: sections, target: newValue)
 
         stateDelegate?.reload(using: changeset, interrupt: { _ in
             return false
-        }) { _ in
-            self.update(kind: kind, with: newConversationList)
+        }) { data in
+            self.sections = data!
         }
         return true
     }
@@ -637,37 +590,27 @@ final class ConversationListViewModel: NSObject {
         guard let kind = self.kind(of: sectionIndex) else { return }
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
-
-        /// snapshot before collapsed state changes
-        let oldSections = diffKitSections(sections: sections, state: state)
-
-        func modelUpdates(state: inout State) {
-            if collapsed {
-                state.collapsed.insert(kind.identifier)
-            } else {
-                state.collapsed.remove(kind.identifier)
-            }
+        
+        if collapsed {
+            state.collapsed.insert(kind.identifier)
+        } else {
+            state.collapsed.remove(kind.identifier)
         }
 
-        var newState = state
-        modelUpdates(state: &newState)
-
-
+        var newValue = sections
+        newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
+        
         if batchUpdate {
-            var newValue = sections
-            newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
-
-            let newSections = diffKitSections(sections:newValue, state: newState)
-            let changeset = StagedChangeset(source: oldSections, target: newSections)
+            let changeset = StagedChangeset(source: sections, target: newValue)
 
             stateDelegate?.reload(using: changeset, interrupt: { _ in
                 return false
-            }) { _ in
-                self.state = newState
+            }) { data in
+                self.sections = data!
             }
         } else {
+            sections = newValue
             stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
-            state = newState
         }
     }
 
