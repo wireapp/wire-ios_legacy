@@ -128,42 +128,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
 }///TODO: mv logic to VM
 
-- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(dispatch_block_t)completion
-{
-    self.focusOnNextSelection = focus;
-
-    self.selectConversationCompletion = completion;
-    self.animateNextSelection = animated;
-    self.scrollToMessageOnNextSelection = message;
-    
-    // Tell the model to select the item
-    return [self selectModelItem:conversation];
-}///TODO: mv logic to VM
-
 - (void)deselectAll
 {
     [self selectModelItem:nil];
-}
-
-/**
- * Selects a new list item if the current selection is removed.
- */
-- (void)selectListItemAfterRemovingIndex:(NSUInteger)index section:(NSUInteger)sectionIndex
-{
-    // Select the next item after the item previous to the one that was deleted (important!)
-    NSIndexPath *itemIndex = [self.listViewModel itemAfterIndex:index-1 section:sectionIndex];
-    
-    if (itemIndex == nil) {
-        // we are at the bottom, so go backwards instead
-        itemIndex = [self.listViewModel itemPreviousToIndex:index section:sectionIndex];
-    }
-    
-    if (itemIndex != nil) {
-        [self.contentDelegate conversationList:self willSelectIndexPathAfterSelectionDeleted:itemIndex];
-        [self.listViewModel selectItemAtIndexPath:itemIndex];
-    } else { //nothing to select anymore, we select nothing
-        [self.listViewModel selectItem:nil];
-    }
 }
 
 #pragma mark - Custom

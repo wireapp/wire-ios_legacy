@@ -119,6 +119,17 @@ extension ConversationListContentController {
         return false
     }
 
+    func select(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: @escaping Completion) -> Bool {
+        focusOnNextSelection = focus
+        
+        selectConversationCompletion = completion
+        animateNextSelection = animated
+        scrollToMessageOnNextSelection = message
+        
+        // Tell the model to select the item
+        return selectModelItem(conversation)
+    }
+    
     ///TODO: change type to ConvListItem
     @discardableResult
     @objc
