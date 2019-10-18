@@ -130,7 +130,7 @@ extension ConversationListContentController {
         return selectModelItem(conversation)
     }
     
-    ///TODO: change type to ConvListItem
+    ///TODO: change type to ConvListItem after converted all callers to Swift
     @discardableResult
     @objc
     func selectModelItem(_ itemToSelect: AnyHashable?) -> Bool {
@@ -254,4 +254,28 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         ) {
         collectionView.reload(using: stagedChangeset, interrupt: interrupt, setData: setData)
     }
+}
+
+extension ConversationListContentController: UIViewControllerPreviewingDelegate {
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
+        
+        guard let previewViewController = viewControllerToCommit as? ConversationPreviewViewController else { return }
+        
+        focusOnNextSelection = true
+        animateNextSelection = true
+        selectModelItem(previewViewController.conversation)
+    }
+    
+    public func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        guard let indexPath = collectionView.indexPathForItem(at: location),
+              let layoutAttributes = collectionView.layoutAttributesForItem(at: indexPath),
+              let conversation = listViewModel.item(for: indexPath) as? ZMConversation else {
+            return nil
+        }
+        
+        previewingContext.sourceRect = layoutAttributes.frame
+        
+        return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
+    }
+
 }
