@@ -123,11 +123,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)deselectAll
-{
-    [self selectModelItem:nil];
-}
-
 #pragma mark - Custom
 
 + (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section

@@ -36,8 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout NS_UNAVAILABLE;
 - (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (void)deselectAll;
-
 @end
 
 NS_ASSUME_NONNULL_END
