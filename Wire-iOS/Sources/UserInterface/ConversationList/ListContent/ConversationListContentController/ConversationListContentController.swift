@@ -141,6 +141,19 @@ extension ConversationListContentController {
         return listViewModel.select(itemToSelect: itemToSelect)
     }
     
+    // MARK: - UICollectionViewDelegate
+
+    
+    override open func collectionView(_ collectionView: UICollectionView,
+                                 didSelectItemAt indexPath: IndexPath) {
+        selectionFeedbackGenerator.selectionChanged()
+        
+        let item = listViewModel.item(for: indexPath)
+        
+        focusOnNextSelection = true
+        animateNextSelection = true
+        selectModelItem(item)
+    }
     // MARK: - UICollectionViewDataSource
 
     override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

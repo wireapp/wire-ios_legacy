@@ -160,17 +160,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return YES;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.selectionFeedbackGenerator selectionChanged];
-    
-    id item = [self.listViewModel itemForIndexPath:indexPath];
-    
-    self.focusOnNextSelection = YES;
-    self.animateNextSelection = YES;
-    [self selectModelItem:item];
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([self.contentDelegate respondsToSelector:@selector(conversationListDidScroll:)]) {
