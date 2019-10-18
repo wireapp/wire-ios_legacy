@@ -313,9 +313,7 @@ final class ConversationListViewModel: NSObject {
         return sections.first(where: { $0.kind == kind })?.elements.count ?? nil
     }
 
-    ///TODO: convert all UInt to Int
-    @objc(sectionAtIndex:)
-    func section(at sectionIndex: UInt) -> [AnyHashable]? {
+    func section(at sectionIndex: Int) -> [AnyHashable]? {
         if sectionIndex >= sectionCount {
             return nil
         }
@@ -323,9 +321,10 @@ final class ConversationListViewModel: NSObject {
         return sections[Int(sectionIndex)].elements.map(\.item)
     }
 
+    ///TODO: caller to Swift
     @objc(itemForIndexPath:)
     func item(for indexPath: IndexPath) -> AnyHashable? {
-        guard let items = section(at: UInt(indexPath.section)),
+        guard let items = section(at: indexPath.section),
               items.indices.contains(indexPath.item) else { return nil }
         
         return items[indexPath.item]
@@ -393,7 +392,7 @@ final class ConversationListViewModel: NSObject {
     /// - Returns: an index path for next existing item
     @objc(itemAfterIndex:section:)
     func item(after index: Int, section sectionIndex: UInt) -> IndexPath? {
-        guard let section = self.section(at: sectionIndex) else { return nil }
+        guard let section = self.section(at: Int(sectionIndex)) else { return nil }
 
         if section.count > index + 1 {
             // Select next item in section
@@ -414,7 +413,7 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        if let section = self.section(at: nextSectionIndex) {
+        if let section = self.section(at: Int(nextSectionIndex)) {
             if section.isEmpty {
                 // Recursively move forward
                 return firstItemInSection(after: nextSectionIndex)
@@ -435,7 +434,7 @@ final class ConversationListViewModel: NSObject {
     /// - Returns: an index path for previous existing item
     @objc(itemPreviousToIndex:section:)
     func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
-        guard let section = self.section(at: sectionIndex) else { return nil }
+        guard let section = self.section(at: Int(sectionIndex)) else { return nil }
 
         if section.indices.contains(index - 1) {
             // Select previous item in section
@@ -456,7 +455,7 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        guard let section = self.section(at: UInt(previousSectionIndex)) else { return nil }
+        guard let section = self.section(at: previousSectionIndex) else { return nil }
 
         if section.isEmpty {
             // Recursively move back

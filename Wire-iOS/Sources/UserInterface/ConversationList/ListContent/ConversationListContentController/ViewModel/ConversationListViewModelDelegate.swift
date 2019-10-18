@@ -24,7 +24,7 @@ protocol ConversationListItem: class {}
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-final class ConversationListConnectRequestsItem: ConversationListItem {}
+final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
