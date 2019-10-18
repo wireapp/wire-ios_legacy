@@ -119,6 +119,11 @@ final class ConversationListViewModel: NSObject {
 
         var kind: Kind
         var items: [AnyHashable]
+        var collapsed: Bool
+        
+        var elements: [AnyHashable] {
+            return collapsed ? [] : items
+        }
 
         /// ref to AggregateArray, we return the first found item's index
         ///
@@ -128,9 +133,10 @@ final class ConversationListViewModel: NSObject {
             return items.firstIndex(of: item)
         }
 
-        init(kind: Kind, conversationDirectory: ConversationDirectoryType) {
+        init(kind: Kind, conversationDirectory: ConversationDirectoryType, collapsed: Bool) {
             items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             self.kind = kind
+            self.collapsed = collapsed
         }
     }
 
@@ -174,12 +180,6 @@ final class ConversationListViewModel: NSObject {
             
             updateAllSections()
             delegate?.listViewModelShouldBeReloaded()
-            
-            /// restore collapse state
-            if state.folderEnabled {
-                restoreCollapse()
-            }
-
             delegateFolderEnableState(newState: state)
         }
         
@@ -262,9 +262,7 @@ final class ConversationListViewModel: NSObject {
 
         setupObservers()
         subscribeToTeamsUpdates()
-
         updateAllSections()
-        restoreState()
     }
 
     private func delegateFolderEnableState(newState: State) {
@@ -319,11 +317,11 @@ final class ConversationListViewModel: NSObject {
         guard sectionIndex < sectionCount,
               !collapsed(at: sectionIndex) else { return 0 }
 
-        return sections[sectionIndex].items.count
+        return sections[sectionIndex].elements.count
     }
 
     private func numberOfItems(of kind: Section.Kind) -> Int? {
-        return sections.first(where: { $0.kind == kind })?.items.count ?? nil
+        return sections.first(where: { $0.kind == kind })?.elements.count ?? nil
     }
 
     ///TODO: convert all UInt to Int
@@ -333,7 +331,7 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        return sections[Int(sectionIndex)].items
+        return sections[Int(sectionIndex)].elements
     }
 
     @objc(itemForIndexPath:)
@@ -525,19 +523,9 @@ final class ConversationListViewModel: NSObject {
                      .conversations]
         }
         
-        sections = kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory) }
+        sections = kinds.map{ Section(kind: $0, conversationDirectory: conversationDirectory, collapsed: state.collapsed.contains($0.identifier)) }
     }
     
-    private func sectionItems(for kind: Section.Kind) -> [AnyHashable]? {
-        for section in sections {
-            if section.kind == kind {
-                return section.items
-            }
-        }
-
-        return nil
-    }
-
     private func sectionNumber(for kind: Section.Kind) -> Int? {
         for (index, section) in sections.enumerated() {
             if section.kind == kind {
@@ -654,6 +642,7 @@ final class ConversationListViewModel: NSObject {
     func setCollapsed(sectionIndex: Int,
                       collapsed: Bool,
                       batchUpdate: Bool = true) {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return }
         guard let kind = self.kind(of: sectionIndex) else { return }
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
@@ -674,10 +663,8 @@ final class ConversationListViewModel: NSObject {
 
 
         if batchUpdate {
-            let newConversationList = collapsed ? [] : sections[sectionIndex].items
-
             var newValue = sections
-            newValue[sectionNumber].items = newConversationList
+            newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
 
             let newSections = diffKitSections(sections:newValue, state: newState)
             let changeset = StagedChangeset(source: oldSections, target: newSections)
@@ -730,22 +717,6 @@ final class ConversationListViewModel: NSObject {
             log.error("error writing ConversationListViewModel to \(directoryURL): \(error)")
         }
     }
-
-    private func restoreState() {
-        folderEnabled = state.folderEnabled
-
-        restoreCollapse()
-    }
-
-    private func restoreCollapse() {
-        for (index, _) in sections.enumerated() {
-            if let kind = self.kind(of: index),
-               let sectionNum = sectionNumber(for: kind) {
-                setCollapsed(sectionIndex: sectionNum, collapsed: collapsed(at :index), batchUpdate: false)
-            }
-        }
-    }
-
 
     private static var persistentDirectory: String? {
         guard let userID = ZMUser.selfUser()?.remoteIdentifier else { return nil }
