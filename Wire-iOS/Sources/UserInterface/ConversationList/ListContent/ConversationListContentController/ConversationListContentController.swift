@@ -119,7 +119,7 @@ extension ConversationListContentController {
         return false
     }
 
-    func select(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: @escaping Completion) -> Bool {
+    func select(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: Completion?) -> Bool {
         focusOnNextSelection = focus
         
         selectConversationCompletion = completion

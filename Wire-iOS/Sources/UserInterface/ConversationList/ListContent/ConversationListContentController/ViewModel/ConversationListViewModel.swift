@@ -321,7 +321,6 @@ final class ConversationListViewModel: NSObject {
         return sections[Int(sectionIndex)].elements.map(\.item)
     }
 
-    ///TODO: caller to Swift
     @objc(itemForIndexPath:)
     func item(for indexPath: IndexPath) -> AnyHashable? {
         guard let items = section(at: indexPath.section),

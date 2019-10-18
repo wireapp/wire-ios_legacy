@@ -123,11 +123,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (BOOL)selectConversation:(ZMConversation *)conversation scrollToMessage:(id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated
-{
-    return [self selectConversation:conversation scrollToMessage:message focusOnView:focus animated:animated completion:nil];
-}///TODO: mv logic to VM
-
 - (void)deselectAll
 {
     [self selectModelItem:nil];
