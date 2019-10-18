@@ -29,7 +29,8 @@ extension AppDelegate {
         return ZMSLog(tag: "UI")
     }
     
-    @objc func setupAppCenter(with completion: @escaping () -> ()) {
+    @objc(setupAppCenterWithCompletion:)
+    func setupAppCenter(with completion: @escaping () -> ()) {
         
         let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || wr_useAppCenter()
         
@@ -43,16 +44,15 @@ extension AppDelegate {
         userDefaults.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") //check
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
-        let appCenterId = "HOCKEY_APP-ID" // @STRINGIZE(HOCKEY_APP_ID_KEY)
+        let appCenterId = wr_appCenterAppId()
         MSAppCenter.configure(withAppSecret: appCenterId)
+        
         //[hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
         //[hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
         
-        //BITHockeyManager *hockeyManager = [BITHockeyManager sharedHockeyManager];
-        
-        //if (! [BITHockeyManager sharedHockeyManager].crashManager.didCrashInLastSession) {
+        if MSCrashes.lastSessionCrashReport() == nil {
             UIApplication.shared.resetRunDuration()
-        //}
+        }
         
         let cmdLineDisableUpdateManager = userDefaults.bool(forKey: "DisableHockeyUpdates")
         if cmdLineDisableUpdateManager {
@@ -61,10 +61,10 @@ extension AppDelegate {
         
         //hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
         
-        MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
+        setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
         
         if appCenterTrackingEnabled {
-            //[hockeyManager startManager];
+            MSAppCenter.start()
             //[hockeyManager.authenticator authenticateInstallation];
         }
         
@@ -72,7 +72,7 @@ extension AppDelegate {
         
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
-            MSCrashes.timeIntervalCrashInLastSessionOccurred < 5 {
+            timeIntervalCrashInLastSessionOccurred < 5 {
             zmLog.error("HockeyIntegration: START Waiting for the crash log upload...")
             self.appCenterInitCompletion = completion
             self.perform(#selector(crashReportUploadDone), with: nil, afterDelay: 5)
@@ -92,12 +92,25 @@ extension AppDelegate {
         }
         
     }
+    
+    @objc public func setTrackingEnabled(_ enabled: Bool) {
+        MSAnalytics.setEnabled(!enabled)
+        
+        // self.isInstallTrackingDisabled = !enabled
+        
+        MSCrashes.setEnabled(!enabled)
+    }
+    
+    public var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
+        guard let lastSessionCrashReport = MSCrashes.lastSessionCrashReport() else { return nil }
+        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
+    }
 }
 
 extension AppDelegate: MSCrashesDelegate {
     
     public func crashes(_ crashes: MSCrashes!, shouldProcessErrorReport errorReport: MSErrorReport!) -> Bool {
-        return true // change to personal settings
+        return !TrackingManager.shared.disableCrashAndAnalyticsSharing
     }
     
     public func crashes(_ crashes: MSCrashes!, willSend errorReport: MSErrorReport!) {
@@ -106,6 +119,13 @@ extension AppDelegate: MSCrashesDelegate {
     
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         crashReportUploadDone()
+    }
+}
+
+extension MSAppCenter {
+    
+    static func start() {
+        MSAppCenter.start(withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
     }
 }
 

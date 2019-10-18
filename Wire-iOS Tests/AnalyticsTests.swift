@@ -34,7 +34,7 @@ class AnalyticsTests : XCTestCase {
         TrackingManager.shared.disableCrashAndAnalyticsSharing = true
         
         // THEN
-        XCTAssertTrue(BITHockeyManager.shared().isCrashManagerDisabled)
+        XCTAssertFalse(MSCrashes.isEnabled())
     }
     
     func testThatItSetsOptOutToSharedSettings() {

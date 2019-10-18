@@ -17,23 +17,6 @@
 // 
 
 import Foundation
-import AppCenter
-import AppCenterAnalytics
-import AppCenterCrashes
-import AppCenterDistribute
 
-extension MSAppCenter {
-    
-    @objc public static func setTrackingEnabled(_ enabled: Bool) {
-        MSAnalytics.setEnabled(!enabled)
-        
-        // self.isInstallTrackingDisabled = !enabled
-        
-        MSCrashes.setEnabled(!enabled)
-    }
-    
-    public static var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
-        guard let lastSessionCrashReport = MSCrashes.lastSessionCrashReport() else { return nil }
-        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
-    }
-}
+/* Move App Center common classes/extension methods here
+ after extension security has been implemented */
