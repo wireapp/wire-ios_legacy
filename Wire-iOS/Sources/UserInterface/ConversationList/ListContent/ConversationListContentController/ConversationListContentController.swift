@@ -134,7 +134,6 @@ extension ConversationListContentController {
         return selectModelItem(conversation)
     }
     
-    ///TODO: change type to ConvListItem after converted all callers to Swift
     @discardableResult
     func selectModelItem(_ itemToSelect: ConversationListItem?) -> Bool {
         return listViewModel.select(itemToSelect: itemToSelect)
