@@ -29,8 +29,7 @@ extension AppDelegate {
         return ZMSLog(tag: "UI")
     }
     
-    @objc(setupAppCenterWithCompletion:)
-    func setupAppCenter(with completion: @escaping () -> ()) {
+    @objc func setupAppCenter(completion: @escaping () -> ()) {
         
         let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || wr_useAppCenter()
         
@@ -40,17 +39,16 @@ extension AppDelegate {
         }
         
         let userDefaults = UserDefaults.standard
-        
         userDefaults.set(true, forKey: "kBITExcludeApplicationSupportFromBackup") //check
+        
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
         let appCenterId = wr_appCenterAppId()
         MSAppCenter.configure(withAppSecret: appCenterId)
+        MSCrashes.setDelegate(self)
+        MSAppCenter.setLogLevel(.verbose)
         
-        //[hockeyManager configureWithIdentifier:@STRINGIZE(HOCKEY_APP_ID_KEY) delegate:self];
-        //[hockeyManager.authenticator setIdentificationType:BITAuthenticatorIdentificationTypeAnonymous];
-        
-        if MSCrashes.lastSessionCrashReport() == nil {
+        if !MSCrashes.hasCrashedInLastSession() {
             UIApplication.shared.resetRunDuration()
         }
         
@@ -65,15 +63,12 @@ extension AppDelegate {
         
         if appCenterTrackingEnabled {
             MSAppCenter.start()
-            //[hockeyManager.authenticator authenticateInstallation];
         }
-        
-        //hockeyManager.crashManager.timeIntervalCrashInLastSessionOccurred < 5
         
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
             timeIntervalCrashInLastSessionOccurred < 5 {
-            zmLog.error("HockeyIntegration: START Waiting for the crash log upload...")
+            zmLog.error("AppCenterIntegration: START Waiting for the crash log upload...")
             self.appCenterInitCompletion = completion
             self.perform(#selector(crashReportUploadDone), with: nil, afterDelay: 5)
         } else {
@@ -83,23 +78,25 @@ extension AppDelegate {
     
     @objc func crashReportUploadDone() {
         
-        zmLog.error("HockeyIntegration: finished or timed out sending the crash report")
+        zmLog.error("AppCenterIntegration: finished or timed out sending the crash report")
         
-        if self.appCenterInitCompletion == nil {
+        if self.appCenterInitCompletion != nil {
             self.appCenterInitCompletion?()
-            zmLog.error("HockeyIntegration: END Waiting for the crash log upload...")
+            zmLog.error("AppCenterIntegration: END Waiting for the crash log upload...")
             self.appCenterInitCompletion = nil
         }
         
     }
     
+    // To be moved into Common Components
+    
     @objc public func setTrackingEnabled(_ enabled: Bool) {
         MSAnalytics.setEnabled(!enabled)
-        
-        // self.isInstallTrackingDisabled = !enabled
-        
+        MSDistribute.setEnabled(!enabled)
         MSCrashes.setEnabled(!enabled)
     }
+    
+    // To be moved into Common Components
     
     public var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
         guard let lastSessionCrashReport = MSCrashes.lastSessionCrashReport() else { return nil }
@@ -120,6 +117,7 @@ extension AppDelegate: MSCrashesDelegate {
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         crashReportUploadDone()
     }
+
 }
 
 extension MSAppCenter {

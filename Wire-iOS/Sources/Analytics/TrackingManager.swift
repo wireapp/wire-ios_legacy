@@ -53,10 +53,10 @@ import WireCommonComponents
     private func updateAppCenterStateIfNeeded(oldState: Bool, _ newState: Bool) {
         switch (oldState, newState) {
         case (true, false):
-            MSCrashes.setEnabled(true)
-            MSAppCenter.startService(MSCrashes.self)
+            MSAppCenter.setEnabled(true)
+            MSAppCenter.start()
         case (false, true):
-            MSCrashes.setEnabled(false)
+            MSAppCenter.setEnabled(false)
         default:
             return
         }
