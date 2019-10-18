@@ -531,22 +531,6 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    private func updateAllConversations() {
-        /// reload if all sections are empty
-        if numberOfItems(of: .conversations) == 0 &&
-            numberOfItems(of: .contacts) == 0 {
-            reload()
-        } else {
-            sectionKinds.forEach() {
-                updateForConversationType(kind: $0)
-            }
-        }
-    }
-
-    private var sectionKinds: [Section.Kind] {
-        return sections.map() { return $0.kind}
-    }
-
     @objc(selectItem:)
     @discardableResult
     func select(itemToSelect: AnyHashable?) -> Bool {
