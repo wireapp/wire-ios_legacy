@@ -524,7 +524,6 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    @objc(selectItem:)
     @discardableResult
     func select(itemToSelect: AnyHashable?) -> Bool {
         guard let itemToSelect = itemToSelect else {

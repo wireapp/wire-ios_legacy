@@ -93,6 +93,7 @@ extension ConversationListContentController {
         }
     }
 
+    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         guard let selectedItem = listViewModel.selectedItem,
             let selectedIndexPath = listViewModel.indexPath(for: selectedItem),
@@ -118,6 +119,13 @@ extension ConversationListContentController {
         return false
     }
 
+    ///TODO: change type to ConvListItem
+    @discardableResult
+    @objc
+    func selectModelItem(_ itemToSelect: AnyHashable?) -> Bool {
+        return listViewModel.select(itemToSelect: itemToSelect)
+    }
+    
     // MARK: - UICollectionViewDataSource
 
     override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
