@@ -170,8 +170,6 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    private weak var selfUserObserver: NSObjectProtocol?
-
     var folderEnabled: Bool {
         set {
             guard newValue != state.folderEnabled else { return }
@@ -261,7 +259,6 @@ final class ConversationListViewModel: NSObject {
         super.init()
 
         setupObservers()
-        subscribeToTeamsUpdates()
         updateAllSections()
     }
 
@@ -621,12 +618,6 @@ final class ConversationListViewModel: NSObject {
         delegate?.listViewModel(self, didSelectItem: itemToSelect)
     }
 
-    func subscribeToTeamsUpdates() {
-        guard let session = ZMUserSession.shared() else { return }
-
-        selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: session)
-    }
-
     // MARK: - collapse section
 
     func collapsed(at sectionIndex: Int) -> Bool {
@@ -739,15 +730,6 @@ final class ConversationListViewModel: NSObject {
 // MARK: - ZMUserObserver
 
 fileprivate let log = ZMSLog(tag: "ConversationListViewModel")
-
-extension ConversationListViewModel: ZMUserObserver {
-
-    public func userDidChange(_ note: UserChangeInfo) {
-        if note.teamsChanged {
-            updateAllConversations()
-        }
-    }
-}
 
 // MARK: - ConversationDirectoryObserver
 
