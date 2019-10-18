@@ -76,6 +76,24 @@ extension ConversationListContentController {
 
     }
 
+    /// ensures that the list selection state matches that of the model.
+    func ensureCurrentSelection() {
+        guard let selectedItem = listViewModel.selectedItem else { return }
+
+        let selectedIndexPaths = collectionView.indexPathsForSelectedItems
+
+        if let currentIndexPath = listViewModel.indexPath(for: selectedItem) {
+            if selectedIndexPaths?.contains(currentIndexPath) == false {
+                // This method doesn't trigger any delegate callbacks, so no worries about special handling
+                collectionView.selectItem(at: currentIndexPath, animated: false, scrollPosition: [])
+            }
+        } else {
+            // Current selection is no longer available so we should unload the conversation view
+            listViewModel.select(itemToSelect: nil)
+        }
+    }
+
+
     // MARK: - UICollectionViewDataSource
 
     override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
