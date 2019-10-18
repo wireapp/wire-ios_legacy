@@ -27,8 +27,7 @@ extension ConversationListContentController {
 
         listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
-        listViewModel.stateDelegate = self
-        
+
         setupViews()
 
         if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
@@ -121,7 +120,52 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
     }
 }
 
-extension ConversationListContentController: ConversationListViewModelStateDelegate {
+extension ConversationListContentController: ConversationListViewModelDelegate {
+
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+        defer {
+            scrollToMessageOnNextSelection = nil
+            focusOnNextSelection = false
+        }
+
+        guard let item = item else {
+            // Deselect all items in the collection view
+            let indexPaths = collectionView.indexPathsForSelectedItems
+            (indexPaths as NSArray?)?.enumerateObjects({ obj, idx, stop in
+                if let obj = obj as? IndexPath {
+                    self.collectionView.deselectItem(at: obj, animated: false)
+                }
+            })
+            ZClientViewController.shared()?.loadPlaceholderConversationController(animated: true)
+            ZClientViewController.shared()?.transitionToList(animated: true, completion: nil)
+
+            return
+        }
+
+        ///TODO: use protocol
+        if let conversation = item as? ZMConversation {
+
+            // Actually load the new view controller and optionally focus on it
+            ZClientViewController.shared()?.load(conversation, scrollTo: scrollToMessageOnNextSelection, focusOnView: focusOnNextSelection, animated: animateNextSelection, completion: selectConversationCompletion)
+            selectConversationCompletion = nil
+
+            contentDelegate?.conversationList(self, didSelect: conversation, focusOnView: !focusOnNextSelection)
+        } else if (item is ConversationListConnectRequestsItem) {
+            ZClientViewController.shared()?.loadIncomingContactRequestsAndFocus(onView: focusOnNextSelection, animated: true)
+        } else {
+            assert(false, "Invalid item in conversation list view model!!")
+        }
+        // Make sure the correct item is selected in the list, without triggering a collection view
+        // callback
+        ensureCurrentSelection()
+
+    }
+
+
+    func listViewModelShouldBeReloaded() {
+        reload()
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         // do not reload if section is not visible
         guard collectionView.indexPathsForVisibleItems.map({$0.section}).contains(section) else { return }

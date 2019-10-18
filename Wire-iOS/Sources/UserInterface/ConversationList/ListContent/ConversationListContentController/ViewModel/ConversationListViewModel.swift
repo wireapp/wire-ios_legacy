@@ -172,14 +172,12 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    @objc
-    weak var delegate: ConversationListViewModelDelegate?
     weak var restorationDelegate: ConversationListViewModelRestorationDelegate? {
         didSet {
             restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
         }
     }
-    weak var stateDelegate: ConversationListViewModelStateDelegate? {
+    weak var delegate: ConversationListViewModelDelegate? {
         didSet {
             delegateFolderEnableState(newState: state)
         }
@@ -263,7 +261,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func delegateFolderEnableState(newState: State) {
-        stateDelegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
+        delegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
     }
 
     private func setupObservers() {
@@ -523,7 +521,7 @@ final class ConversationListViewModel: NSObject {
 
         let changeset = StagedChangeset(source: sections, target: newValue)
 
-        stateDelegate?.reload(using: changeset, interrupt: { _ in
+        delegate?.reload(using: changeset, interrupt: { _ in
             return false
         }) { data in
             if let data = data {
@@ -595,7 +593,7 @@ final class ConversationListViewModel: NSObject {
         if batchUpdate {
             let changeset = StagedChangeset(source: sections, target: newValue)
 
-            stateDelegate?.reload(using: changeset, interrupt: { _ in
+            delegate?.reload(using: changeset, interrupt: { _ in
                 return false
             }) { data in
                 if let data = data {
@@ -604,7 +602,7 @@ final class ConversationListViewModel: NSObject {
             }
         } else {
             sections = newValue
-            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
+            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
         }
     }
 

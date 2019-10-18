@@ -19,15 +19,11 @@
 import Foundation
 import DifferenceKit
 
-@objc
-protocol ConversationListViewModelDelegate: NSObjectProtocol {
-    func listViewModelShouldBeReloaded()
-    
+protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
-}
 
-/// TODO: merge with above delegate after converted to Swift
-protocol ConversationListViewModelStateDelegate: class {
+    func listViewModelShouldBeReloaded()
+
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool)
     
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)

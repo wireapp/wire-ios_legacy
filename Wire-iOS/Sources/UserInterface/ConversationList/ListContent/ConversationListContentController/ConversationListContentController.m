@@ -106,53 +106,48 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - View Model delegate
 
-- (void)listViewModelShouldBeReloaded
-{
-    [self reload];
-}
-
-- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item
-{
-    if (item == nil) {
-        // Deselect all items in the collection view
-        NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
-        [indexPaths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [self.collectionView deselectItemAtIndexPath:obj animated:NO];
-        }];
-        [[ZClientViewController sharedZClientViewController] loadPlaceholderConversationControllerAnimated:YES];
-        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
-    }
-    else {
-        
-        if ([item isKindOfClass:[ZMConversation class]]) {
-            
-            ZMConversation *conversation = item;
-            
-            // Actually load the new view controller and optionally focus on it
-            [[ZClientViewController sharedZClientViewController] loadConversation:conversation
-                                                                  scrollToMessage:self.scrollToMessageOnNextSelection
-                                                                      focusOnView:self.focusOnNextSelection
-                                                                         animated:self.animateNextSelection
-                                                                       completion:self.selectConversationCompletion];
-            self.selectConversationCompletion = nil;
-
-            [self.contentDelegate conversationList:self didSelectConversation:item focusOnView:! self.focusOnNextSelection];
-        }
-        else if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
-            [[ZClientViewController sharedZClientViewController] loadIncomingContactRequestsAndFocusOnView:self.focusOnNextSelection
-                                                                                                  animated:YES];
-        }
-        else {
-            NSAssert(NO, @"Invalid item in conversation list view model!!");
-        }
-        // Make sure the correct item is selected in the list, without triggering a collection view
-        // callback
-        [self ensureCurrentSelection];
-    }
-    
-    self.scrollToMessageOnNextSelection = nil;
-    self.focusOnNextSelection = NO;
-}
+//- (void)listViewModel:(ConversationListViewModel *)model didSelectItem:(id)item
+//{
+//    if (item == nil) {
+//        // Deselect all items in the collection view
+//        NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
+//        [indexPaths enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//            [self.collectionView deselectItemAtIndexPath:obj animated:NO];
+//        }];
+//        [[ZClientViewController sharedZClientViewController] loadPlaceholderConversationControllerAnimated:YES];
+//        [[ZClientViewController sharedZClientViewController] transitionToListAnimated:YES completion:nil];
+//    }
+//    else {
+//        
+//        if ([item isKindOfClass:[ZMConversation class]]) {
+//            
+//            ZMConversation *conversation = item;
+//            
+//            // Actually load the new view controller and optionally focus on it
+//            [[ZClientViewController sharedZClientViewController] loadConversation:conversation
+//                                                                  scrollToMessage:self.scrollToMessageOnNextSelection
+//                                                                      focusOnView:self.focusOnNextSelection
+//                                                                         animated:self.animateNextSelection
+//                                                                       completion:self.selectConversationCompletion];
+//            self.selectConversationCompletion = nil;
+//
+//            [self.contentDelegate conversationList:self didSelectConversation:item focusOnView:! self.focusOnNextSelection];
+//        }
+//        else if ([item isKindOfClass:[ConversationListConnectRequestsItem class]]) {
+//            [[ZClientViewController sharedZClientViewController] loadIncomingContactRequestsAndFocusOnView:self.focusOnNextSelection
+//                                                                                                  animated:YES];
+//        }
+//        else {
+//            NSAssert(NO, @"Invalid item in conversation list view model!!");
+//        }
+//        // Make sure the correct item is selected in the list, without triggering a collection view
+//        // callback
+//        [self ensureCurrentSelection];
+//    }
+//    
+//    self.scrollToMessageOnNextSelection = nil;
+//    self.focusOnNextSelection = NO;
+//}
 
 - (void)updateVisibleCells
 {

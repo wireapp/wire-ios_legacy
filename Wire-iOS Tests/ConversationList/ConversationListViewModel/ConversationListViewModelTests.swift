@@ -21,7 +21,7 @@ import XCTest
 import DifferenceKit
 
 
-final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate, ConversationListViewModelStateDelegate {
+final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         //no-op
     }
@@ -71,7 +71,6 @@ final class ConversationListViewModelTests: XCTestCase {
         
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
         sut.delegate = mockConversationListViewModelDelegate
-        sut.stateDelegate = mockConversationListViewModelDelegate
     }
     
     override func tearDown() {
