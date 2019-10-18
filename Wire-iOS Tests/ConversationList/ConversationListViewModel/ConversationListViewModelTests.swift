@@ -175,7 +175,7 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: sectionGroups)?.first, mockConversation)
+        XCTAssertEqual(sut.section(at: Int(sectionGroups))?.first, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
     }
