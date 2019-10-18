@@ -579,11 +579,13 @@ final class ConversationListViewModel: NSObject {
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
         
+        var newState = state
         if collapsed {
-            state.collapsed.insert(kind.identifier)
+            newState.collapsed.insert(kind.identifier)
         } else {
-            state.collapsed.remove(kind.identifier)
+            newState.collapsed.remove(kind.identifier)
         }
+        state = newState
 
         var newValue = sections
         newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
