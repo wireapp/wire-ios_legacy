@@ -93,6 +93,20 @@ extension ConversationListContentController {
         }
     }
 
+    func scrollToCurrentSelection(animated: Bool) {
+        guard let selectedItem = listViewModel.selectedItem,
+            let selectedIndexPath = listViewModel.indexPath(for: selectedItem),
+            // Check if indexPath is valid for the collection view
+            collectionView.numberOfSections > selectedIndexPath.section,
+            collectionView.numberOfItems(inSection: selectedIndexPath.section) > selectedIndexPath.item else {
+            return
+        }
+
+        if !collectionView.indexPathsForVisibleItems.contains(selectedIndexPath) {
+            collectionView.scrollToItem(at: selectedIndexPath, at: [], animated: animated)
+        }
+    }
+
 
     // MARK: - UICollectionViewDataSource
 

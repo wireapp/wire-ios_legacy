@@ -42,7 +42,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         //no-op
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         //no-op
     }
 

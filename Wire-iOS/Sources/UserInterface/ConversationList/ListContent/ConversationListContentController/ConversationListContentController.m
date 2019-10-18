@@ -207,45 +207,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self selectModelItem:nil];
 }
 
-///**
-// * ensures that the list selection state matches that of the model.
-// */
-//- (void)ensureCurrentSelection
-//{
-//    if (self.listViewModel.selectedItem == nil) {
-//        return;
-//    }
-//    
-//    NSArray *selectedIndexPaths = [self.collectionView indexPathsForSelectedItems];
-//    NSIndexPath *currentIndexPath = [self.listViewModel indexPathForItem:self.listViewModel.selectedItem];
-//    
-//    if (currentIndexPath == nil) {
-//        // Current selection is no longer available so we should unload the conversation view
-//        [self.listViewModel selectItem:nil];
-//
-//    } else if (![selectedIndexPaths containsObject:currentIndexPath]) {
-//        // This method doesn't trigger any delegate callbacks, so no worries about special handling
-//        [self.collectionView selectItemAtIndexPath:currentIndexPath animated:NO scrollPosition:UICollectionViewScrollPositionNone];
-//    }
-//}
-
-- (void)scrollToCurrentSelectionAnimated:(BOOL)animated
-{
-    NSIndexPath *selectedIndexPath = [self.listViewModel indexPathForItem:self.listViewModel.selectedItem];
-    
-    if (selectedIndexPath != nil) {
-        // Check if indexPath is valid for the collection view
-        if (self.collectionView.numberOfSections > selectedIndexPath.section &&
-            [self.collectionView numberOfItemsInSection:selectedIndexPath.section] > selectedIndexPath.item) {
-            // Check for visibility
-            NSArray *visibleIndexPaths = self.collectionView.indexPathsForVisibleItems;
-            if (visibleIndexPaths.count > 0 && ! [visibleIndexPaths containsObject:selectedIndexPath]) {
-                [self.collectionView scrollToItemAtIndexPath:selectedIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:animated];
-            }
-        }
-    }
-}
-
 /**
  * Selects a new list item if the current selection is removed.
  */
