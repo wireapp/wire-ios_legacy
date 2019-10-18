@@ -131,7 +131,7 @@ final class ConversationListViewModel: NSObject {
         /// - Parameter item: item to search
         /// - Returns: the index of the item
         func index(for item: AnyHashable) -> Int? {
-            return items.firstIndex(of: SectionItem(item: item, isFavorite: kind == .favorites))
+            return items.firstIndex(of: SectionItem(item: item, kind: kind))
         }
         
         func isContentEqual(to source: ConversationListViewModel.Section) -> Bool {
@@ -149,7 +149,7 @@ final class ConversationListViewModel: NSObject {
         }
         
         init(kind: Kind, conversationDirectory: ConversationDirectoryType, collapsed: Bool) {
-            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory).map({ SectionItem(item: $0, isFavorite: kind == .favorites) })
+            self.items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             self.kind = kind
             self.collapsed = collapsed
         }
@@ -210,6 +210,11 @@ final class ConversationListViewModel: NSObject {
     struct SectionItem: Hashable, Differentiable {
         let item: AnyHashable
         let isFavorite: Bool
+        
+        fileprivate init(item: AnyHashable, kind: Section.Kind) {
+            self.item = item
+            self.isFavorite = kind == .favorites
+        }
     }
 
     /// for folder enabled and collapse presistent
@@ -348,12 +353,12 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private static func newList(for kind: Section.Kind, conversationDirectory: ConversationDirectoryType) -> [AnyHashable] {
+    private static func newList(for kind: Section.Kind, conversationDirectory: ConversationDirectoryType) -> [SectionItem] {
         let conversationListType: ConversationListType
         switch kind {
         case .contactRequests:
             conversationListType = .pending
-            return conversationDirectory.conversations(by: conversationListType).isEmpty ? [] : [contactRequestsItem]
+            return conversationDirectory.conversations(by: conversationListType).isEmpty ? [] : [SectionItem(item: contactRequestsItem, kind: kind)]
         case .conversations:
             conversationListType = .unarchived
         case .contacts:
@@ -366,7 +371,7 @@ final class ConversationListViewModel: NSObject {
             conversationListType = .folder(label)
         }
 
-        return conversationDirectory.conversations(by: conversationListType)
+        return conversationDirectory.conversations(by: conversationListType).map({ SectionItem(item: $0, kind: kind) })
     }
 
     private func reload() {
@@ -510,9 +515,8 @@ final class ConversationListViewModel: NSObject {
         
         var newValue: [Section]
         if let sectionNumber = self.sectionNumber(for: kind) {
-            let newConversationList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             newValue = sections
-            newValue[sectionNumber].items = newConversationList.map({ SectionItem(item: $0, isFavorite: kind == .favorites) })
+            newValue[sectionNumber].items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
         } else {
             newValue = createSections()
         }
