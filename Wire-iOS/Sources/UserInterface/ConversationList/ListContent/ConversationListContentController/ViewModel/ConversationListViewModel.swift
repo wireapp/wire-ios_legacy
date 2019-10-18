@@ -125,7 +125,7 @@ final class ConversationListViewModel: NSObject {
         ///
         /// - Parameter item: item to search
         /// - Returns: the index of the item
-        func index(for item: AnyHashable) -> Int? {
+        func index(for item: ConversationListItem) -> Int? {
             return items.firstIndex(of: SectionItem(item: item, kind: kind))
         }
         
@@ -153,13 +153,10 @@ final class ConversationListViewModel: NSObject {
     static let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
     /// current selected ZMConversaton or ConversationListConnectRequestsItem object
-    ///TODO: create protocol of these 2 classes
-    @objc
-    private(set) var selectedItem: AnyHashable? {
+    private(set) var selectedItem: ConversationListItem? {
         didSet {
             /// expand the section if selcted item is update
-            guard selectedItem != oldValue,
-                  let indexPath = self.indexPath(for: selectedItem),
+            guard let indexPath = self.indexPath(for: selectedItem),
                   collapsed(at: indexPath.section) else { return }
 
             setCollapsed(sectionIndex: indexPath.section, collapsed: false, batchUpdate: false)
@@ -200,12 +197,34 @@ final class ConversationListViewModel: NSObject {
 
     /// make items has different hash in different sections
     struct SectionItem: Hashable, Differentiable {
-        let item: AnyHashable
+        let item: ConversationListItem
         let isFavorite: Bool
         
-        fileprivate init(item: AnyHashable, kind: Section.Kind) {
+        fileprivate init(item: ConversationListItem, kind: Section.Kind) {
             self.item = item
             self.isFavorite = kind == .favorites
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(isFavorite)
+            
+            if let hashable = item as? AnyHashable {
+                hasher.combine(hashable)
+            }
+        }
+
+        static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
+            if lhs.isFavorite != rhs.isFavorite { return false }
+            
+            if let lhsConversation = lhs.item as? ZMConversation,
+               let rhsConversation = rhs.item as? ZMConversation {
+                return lhsConversation === rhsConversation
+            } else if let lhsConversation = lhs.item as? ConversationListConnectRequestsItem,
+                let rhsConversation = rhs.item as? ConversationListConnectRequestsItem {
+                return lhsConversation === rhsConversation
+            } else {
+                return false
+            }
         }
     }
 
@@ -313,7 +332,7 @@ final class ConversationListViewModel: NSObject {
         return sections.first(where: { $0.kind == kind })?.elements.count ?? nil
     }
 
-    func section(at sectionIndex: Int) -> [AnyHashable]? {
+    func section(at sectionIndex: Int) -> [ConversationListItem]? {
         if sectionIndex >= sectionCount {
             return nil
         }
@@ -321,8 +340,7 @@ final class ConversationListViewModel: NSObject {
         return sections[Int(sectionIndex)].elements.map(\.item)
     }
 
-    @objc(itemForIndexPath:)
-    func item(for indexPath: IndexPath) -> AnyHashable? {
+    func item(for indexPath: IndexPath) -> ConversationListItem? {
         guard let items = section(at: indexPath.section),
               items.indices.contains(indexPath.item) else { return nil }
         
@@ -330,8 +348,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     ///TODO: Question: we may have multiple items in folders now. return array of IndexPaths?
-    @objc(indexPathForItem:)
-    func indexPath(for item: AnyHashable?) -> IndexPath? {
+    func indexPath(for item: ConversationListItem?) -> IndexPath? {
         guard let item = item else { return nil } 
 
         for (sectionIndex, section) in sections.enumerated() {
@@ -374,9 +391,8 @@ final class ConversationListViewModel: NSObject {
     ///
     /// - Parameter indexPath: indexPath of the item to select
     /// - Returns: the item selected
-    @objc(selectItemAtIndexPath:)
     @discardableResult
-    func selectItem(at indexPath: IndexPath) -> AnyHashable? {
+    func selectItem(at indexPath: IndexPath) -> ConversationListItem? {
         let item = self.item(for: indexPath)
         select(itemToSelect: item)
         return item
@@ -524,7 +540,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     @discardableResult
-    func select(itemToSelect: AnyHashable?) -> Bool {
+    func select(itemToSelect: ConversationListItem?) -> Bool {
         guard let itemToSelect = itemToSelect else {
             internalSelect(itemToSelect: nil)
             return false
@@ -545,7 +561,7 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    private func internalSelect(itemToSelect: AnyHashable?) {
+    private func internalSelect(itemToSelect: ConversationListItem?) {
         selectedItem = itemToSelect
 
         if let itemToSelect = itemToSelect as? ConversationListItem {

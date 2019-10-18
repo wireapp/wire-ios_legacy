@@ -136,13 +136,11 @@ extension ConversationListContentController {
     
     ///TODO: change type to ConvListItem after converted all callers to Swift
     @discardableResult
-    @objc
-    func selectModelItem(_ itemToSelect: AnyHashable?) -> Bool {
+    func selectModelItem(_ itemToSelect: ConversationListItem?) -> Bool {
         return listViewModel.select(itemToSelect: itemToSelect)
     }
     
     // MARK: - UICollectionViewDelegate
-
     
     override open func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
@@ -154,6 +152,7 @@ extension ConversationListContentController {
         animateNextSelection = true
         selectModelItem(item)
     }
+    
     // MARK: - UICollectionViewDataSource
 
     override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
