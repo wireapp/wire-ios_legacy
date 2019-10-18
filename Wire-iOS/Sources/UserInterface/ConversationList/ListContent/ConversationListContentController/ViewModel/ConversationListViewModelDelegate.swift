@@ -19,12 +19,12 @@
 import Foundation
 import DifferenceKit
 
-protocol ConversationListItem {}
+protocol ConversationListItem: class {}
 
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-final class ConversationListConnectRequestsItem : NSObject, ConversationListItem {}
+final class ConversationListConnectRequestsItem: ConversationListItem {}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)

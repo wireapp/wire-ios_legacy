@@ -150,7 +150,6 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    @objc
     static let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
     /// current selected ZMConversaton or ConversationListConnectRequestsItem object
