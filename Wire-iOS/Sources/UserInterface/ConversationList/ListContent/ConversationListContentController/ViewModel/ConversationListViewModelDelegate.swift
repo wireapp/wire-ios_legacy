@@ -24,7 +24,18 @@ protocol ConversationListItem: class {}
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
+final class ConversationListConnectRequestsItem: ConversationListItem, Hashable {
+    private let hash: UUID = UUID()
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(hash)
+    }
+
+    static func == (lhs: ConversationListConnectRequestsItem, rhs: ConversationListConnectRequestsItem) -> Bool {
+        ///There should be one and only one ConversationListConnectRequestsItem exists
+        return lhs.hash == rhs.hash
+    }
+}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
