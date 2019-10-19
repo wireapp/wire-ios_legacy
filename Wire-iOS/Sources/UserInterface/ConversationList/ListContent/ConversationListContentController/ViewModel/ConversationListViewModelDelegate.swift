@@ -24,9 +24,7 @@ protocol ConversationListItem {}
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-struct ConversationListConnectRequestsItem: ConversationListItem, Hashable {
-    private let hash: UUID = UUID()
-}
+struct ConversationListConnectRequestsItem: ConversationListItem, Hashable {}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
