@@ -19,7 +19,7 @@
 import Foundation
 import DifferenceKit
 
-protocol ConversationListItem: class {}
+protocol ConversationListItem {}
 
 extension ZMConversation: ConversationListItem {}
 
