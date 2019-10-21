@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class NotificationWindow: PassthroughWindow {
+final class NotificationWindow: UIWindow {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,6 +27,7 @@ final class NotificationWindow: PassthroughWindow {
         accessibilityIdentifier = "ZClientNotificationWindow"
         accessibilityViewIsModal = true
         windowLevel = UIWindowLevelNotification // status bar level - 1
+        isOpaque = false
     }
     
     @available(*, unavailable) required init?(coder aDecoder: NSCoder) {

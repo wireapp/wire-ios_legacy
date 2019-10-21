@@ -1111,7 +1111,6 @@
 		EF27CDA020C161500077FE55 /* ClientListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF27CD9D20C161500077FE55 /* ClientListViewControllerTests.swift */; };
 		EF282B92228AF9790042D6C5 /* RequestPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF282B91228AF9790042D6C5 /* RequestPasswordController.swift */; };
 		EF282B94228AFA970042D6C5 /* RequestPasswordViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF282B93228AFA970042D6C5 /* RequestPasswordViewControllerSnapshotTests.swift */; };
-		EF285FCF2354693900D67643 /* PassthroughWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */; };
 		EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2971552099AD3000EFE6A4 /* SelfProfileViewControllerTests.swift */; };
 		EF297DD82131FABE0002983A /* LocationPreviewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */; };
 		EF297DDA2131FF310002983A /* ConversationInputBarViewController+Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */; };
@@ -2110,7 +2109,6 @@
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomTransition.m; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughTouchesView.h; sourceTree = "<group>"; };
 		871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughTouchesView.m; sourceTree = "<group>"; };
-		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
 		871BC1D21D34F8F800DF0793 /* ResizingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizingTextView.h; sourceTree = "<group>"; };
 		871BC1D31D34F8F800DF0793 /* ResizingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizingTextView.m; sourceTree = "<group>"; };
 		871BC1D61D34F8F800DF0793 /* SwipeMenuCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeMenuCollectionCell.h; sourceTree = "<group>"; };
@@ -4486,7 +4484,6 @@
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
 				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
 				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
-				871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */,
 				871BC1D21D34F8F800DF0793 /* ResizingTextView.h */,
 				871BC1D31D34F8F800DF0793 /* ResizingTextView.m */,
 				870C97C41D670CA700F6FD7D /* NextResponderTextView.h */,
@@ -7728,7 +7725,6 @@
 				D550F56E204444EE009E09DD /* ConversationActionController+Leave.swift in Sources */,
 				F15650E621DD14B300210504 /* TransformLabel.swift in Sources */,
 				87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */,
-				EF285FCF2354693900D67643 /* PassthroughWindow.swift in Sources */,
 				87AC33CB2181C6FB00069C79 /* ClientRemovalObserver.swift in Sources */,
 				5E4B1387204FE7DA00ED5DF1 /* SystemAnimationCurves.swift in Sources */,
 				D550F5772044532D009E09DD /* ConversationAction.swift in Sources */,
