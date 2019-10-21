@@ -80,19 +80,21 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         }
     }
 
+    func verifyConversationActionController() {
+        sut = GroupDetailsViewController(conversation: groupConversation)
+        sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
+        verifyAlertController((sut?.actionController?.alertController)!)
+    }
+
     func testForActionMenu() {
         teamTest {
-            sut = GroupDetailsViewController(conversation: groupConversation)
-            sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
-            verifyAlertController((sut?.actionController?.alertController)!)
+            verifyConversationActionController()
         }
     }
     
     func testForActionMenu_NonTeam() {
         nonTeamTest {
-            sut = GroupDetailsViewController(conversation: groupConversation)
-            sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
-            verifyAlertController((sut?.actionController?.alertController)!)
+            verifyConversationActionController()
         }
     }
 }

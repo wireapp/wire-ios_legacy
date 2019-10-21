@@ -22,6 +22,8 @@
 #import "CountryCodeBaseTableViewController.h"
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol CountryCodeTableViewControllerDelegate <NSObject>
 
 @optional
@@ -31,6 +33,8 @@
 
 @interface CountryCodeTableViewController : CountryCodeBaseTableViewController
 
-@property (nonatomic, weak) id<CountryCodeTableViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<CountryCodeTableViewControllerDelegate> delegate;
 
 @end
+
+NS_ASSUME_NONNULL_END

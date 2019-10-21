@@ -18,9 +18,8 @@
 
 
 import UIKit
-import Cartography
 
-class ConversationTitleView: TitleView {
+final class ConversationTitleView: TitleView {
     var conversation: ZMConversation
     var interactive: Bool = true
     

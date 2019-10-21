@@ -20,7 +20,7 @@ import Foundation
 
 final class VideoPreviewView: UIView, AVSIdentifierProvider {
 
-    var identifier: String
+    var stream: Stream
     var isPaused = false {
         didSet {
             guard oldValue != isPaused else { return }
@@ -41,9 +41,11 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     private var userHasSetFillMode: Bool = false
     private var snapshotView: UIView?
 
-    init(identifier: String) {
-        self.identifier = identifier
+    init(stream: Stream) {
+        self.stream = stream
+        
         super.init(frame: .zero)
+        
         setupViews()
         createConstraints()
         updateState()
@@ -70,7 +72,8 @@ final class VideoPreviewView: UIView, AVSIdentifierProvider {
     
     private func createPreviewView() {
         let preview = AVSVideoView()
-        preview.userid = identifier
+        preview.userid = stream.userId.transportString()
+        preview.clientid = stream.clientId
         preview.translatesAutoresizingMaskIntoConstraints = false
         if let snapshotView = snapshotView {
             insertSubview(preview, belowSubview: snapshotView)

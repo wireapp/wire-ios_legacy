@@ -56,11 +56,10 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testThatDeletionDialogIsCreatedForDeleteAction(){
+    func testThatDeletionDialogIsCreated(){
         // Notice: view arguemnt is used for iPad idiom. We should think about test it with iPad simulator that the alert shows in a popover which points to the view.
-        sut.perform(action: .delete, for: mockMessage, view: UIView())
+        let view = UIView()
 
-        XCTAssertNotNil(sut.deletionDialogPresenter.alert)
-        verifyAlertController(sut.deletionDialogPresenter.alert)
+        verifyAlertController(sut.deletionDialogPresenter.deleteAlert(message: mockMessage, sourceView: view))
     }
 }

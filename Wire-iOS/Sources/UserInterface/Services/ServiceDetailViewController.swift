@@ -219,10 +219,6 @@ fileprivate extension Button {
         return Button(style: .full, title: "peoplepicker.services.add_service.button".localized)
     }
 
-    static func createServiceConversationButton() -> Button {
-        return Button(style: .full, title: "peoplepicker.services.create_conversation.item".localized)
-    }
-
     static func createDestructiveServiceButton() -> Button {
         let button = Button(style: .full, title: "participants.services.remove_integration.button".localized)
         button.setBackgroundImageColor(.vividRed, for: .normal)

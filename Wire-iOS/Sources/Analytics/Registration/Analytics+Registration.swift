@@ -40,23 +40,7 @@ extension Analytics {
     func tagOpenedLogin(context: String) {
         self.tagEvent("start.opened_login", attributes: ["context": context])
     }
-    
-    func tagTeamCreationEmailVerified(context: String) {
-        self.tagEvent("team.verified", attributes: ["context": context])
-    }
-    
-    func tagTeamCreationAddedTeamName(context: String) {
-        self.tagEvent("team.added_team_name", attributes: ["context": context])
-    }
-    
-    func tagTeamCreationAcceptedTerms(context: String) {
-        self.tagEvent("team.accepted_terms", attributes: ["context": context])
-    }
-    
-    func tagTeamCreated(context: String) {
-        self.tagEvent("team.created", attributes: ["context": context])
-    }
-    
+        
     enum InviteResult {
         case none
         case invited(invitesCount: Int)

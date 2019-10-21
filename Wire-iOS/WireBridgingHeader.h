@@ -88,8 +88,7 @@
 #import "ConversationInputBarViewController+Files.h"
 
 #import "ConversationListContentController.h"
-#import "ConversationListViewModel.h"
-#import "ConversationListViewModel+Private.h"
+#import "ConversationListContentController+Internal.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
@@ -126,7 +125,6 @@
 #import "CrossfadeTransition.h"
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
-#import "PassthroughWindow.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "URLSchemeHelper.h"
 #import "AuthenticationCoordinatedViewController.h"
@@ -175,3 +173,4 @@
 
 // Invite
 #import "ShareItemProvider.h"
+

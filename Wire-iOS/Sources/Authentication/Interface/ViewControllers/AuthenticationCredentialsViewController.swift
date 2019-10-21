@@ -229,14 +229,6 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
     }
 
-    private func updateValidationError(_ error: TextFieldValidator.ValidationError?) {
-        if let error = error {
-            self.valueValidated(.error(error, showVisualFeedback: false))
-        } else {
-            self.valueValidated(nil)
-        }
-    }
-
     override func clearInputFields() {
         phoneInputView.text = nil
         emailInputField.text = nil
@@ -305,7 +297,7 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         // no-op: handled by the input view directly
     }
 
-    func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
+    func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {
         phoneInputView.selectCountry(country)
         viewController.dismiss(animated: true)
     }

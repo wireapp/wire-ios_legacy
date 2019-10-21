@@ -23,10 +23,13 @@ final class CallWindowRootViewController: UIViewController {
     
     private var callController: CallController?
     
-    @objc func minimizeOverlay(completion: @escaping () -> Void) {
-        guard let callController = callController else { return completion() }
+    func minimizeOverlay(animated: Bool, completion: Completion?) {
+        guard let callController = callController else {
+            completion?()
+            return            
+        }
         
-        callController.minimizeCall(completion: completion)
+        callController.minimizeCall(animated: animated, completion: completion)
     }
     
     @objc var isDisplayingCallOverlay: Bool {

@@ -27,6 +27,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton(style: .default)
+    var shareButton: IconButton?
     let overlay = FeedbackOverlayView()
     let separator: UIView = {
         let view = UIView()
@@ -37,15 +38,15 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     
     internal let inverse: Bool
 
-    public var currentActionController: ConversationMessageActionController?
+    var currentActionController: ConversationMessageActionController?
 
-    public weak var messageActionDelegate: MessageActionResponder? = .none {
+    weak var messageActionDelegate: MessageActionResponder? = .none {
         didSet {
             updateActionControllerForMessage()
         }
     }
 
-    public var snapshotBackgroundView: UIView? = .none
+    var snapshotBackgroundView: UIView? = .none
     
     fileprivate var imageMessages: [ZMConversationMessage] = []
     
@@ -57,13 +58,13 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
 
-    public var isPreviewing: Bool = false {
+    var isPreviewing: Bool = false {
         didSet {
             updateBarsForPreview()
         }
     }
     
-    public var swipeToDismiss: Bool = false {
+    var swipeToDismiss: Bool = false {
         didSet {
             if let currentController = self.currentController {
                 currentController.swipeToDismiss = self.swipeToDismiss
@@ -71,7 +72,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    public var dismissAction: DismissAction? = .none {
+    var dismissAction: DismissAction? = .none {
         didSet {
             if let currentController = self.currentController {
                 currentController.dismissAction = self.dismissAction
@@ -79,7 +80,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    public override var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
     
@@ -103,7 +104,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         self.collection.assetCollectionDelegate.remove(self)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -227,6 +228,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             shareButton.setIcon(.export, size: .tiny, for: .normal)
             shareButton.accessibilityLabel = "share"
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
+            self.shareButton = shareButton
 
             let sketchButton = IconButton(style: .default)
             sketchButton.setIcon(.brush, size: .tiny, for: .normal)
@@ -319,24 +321,28 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    private func perform(action: MessageAction) {
-        messageActionDelegate?.perform(action: action, for: currentMessage, view: view)
+    private func perform(action: MessageAction,
+                         for message: ZMConversationMessage? = nil,
+                         sender: AnyObject?) {
+        messageActionDelegate?.perform(action: action,
+                                       for: message ?? currentMessage,
+                                       view: sender as? UIView ?? view)
     }
 
-    @objc public func copyCurrent(_ sender: AnyObject!) {
+    @objc func copyCurrent(_ sender: AnyObject!) {
         let text = "collections.image_viewer.copied.title".localized(uppercased: true)
         overlay.show(text: text)
-        perform(action: .copy)
+        perform(action: .copy, sender: sender)
     }
     
-    @objc public func saveCurrent(_ sender: UIButton!) {
+    @objc func saveCurrent(_ sender: UIButton!) {
         if sender != nil {
             self.currentController?.performSaveImageAnimation(from: sender)
         }
-        perform(action: .save)
+        perform(action: .save, sender: sender)
     }
 
-    @objc public func likeCurrent() {
+    @objc func likeCurrent() {
         ZMUserSession.shared()?.enqueueChanges({
             self.currentMessage.liked = !self.currentMessage.liked
         }, completionHandler: {
@@ -344,32 +350,36 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         })
     }
 
-    @objc public func shareCurrent(_ sender: AnyObject!) {
-        perform(action: .forward)
+    @objc func shareCurrent(_ sender: AnyObject!) {
+        perform(action: .forward, sender: sender)
     }
 
-    @objc public func deleteCurrent(_ sender: AnyObject!) {
-        perform(action: .delete)
+    @objc func deleteCurrent(_ sender: AnyObject!) {
+        perform(action: .delete, sender: sender)
     }
     
-    @objc public func revealCurrent(_ sender: AnyObject!) {
-        perform(action: .showInConversation)
+    @objc func revealCurrent(_ sender: AnyObject!) {
+        perform(action: .showInConversation, sender: sender)
     }
     
-    @objc public func sketchCurrent(_ sender: AnyObject!) {
-        perform(action: .sketchDraw)
+    @objc func sketchCurrent(_ sender: AnyObject!) {
+        perform(action: .sketchDraw, sender: sender)
     }
     
-    @objc public func sketchCurrentEmoji(_ sender: AnyObject!) {
-        perform(action: .sketchEmoji)
+    @objc func sketchCurrentEmoji(_ sender: AnyObject!) {
+        perform(action: .sketchEmoji, sender: sender)
     }
 }
 
 extension ConversationImagesViewController: MessageActionResponder {
     func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
-        case .like: likeCurrent()
-        default: self.messageActionDelegate?.perform(action: action, for: message, view: view)
+        case .like:
+            likeCurrent()
+        default:
+            perform(action: action,
+                    for: message,
+                    sender: view)
         }
     }
 }
@@ -381,7 +391,7 @@ extension ConversationImagesViewController: ScreenshotProvider {
 }
 
 extension ConversationImagesViewController: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
+    func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
             let conversationMessages = messageCategory.value as [ZMConversationMessage]
@@ -392,7 +402,7 @@ extension ConversationImagesViewController: AssetCollectionDelegate {
         }
     }
     
-    public func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
+    func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
         // no-op
     }
 }
@@ -486,23 +496,6 @@ extension ConversationImagesViewController: MenuVisibilityController {
     }
 }
 
-
-extension MenuVisibilityController {
-    
-    func toggleMenuVisibility() {
-        fadeAndHideMenu(!menuVisible)
-    }
-}
-
-fileprivate extension UIPreviewAction {
-    convenience init(titleKey: String, handler: @escaping () -> Void) {
-        self.init(
-            title: titleKey.localized,
-            style: .default,
-            handler: { _,_  in handler() }
-        )
-    }
-}
 
 extension ConversationImagesViewController {
 

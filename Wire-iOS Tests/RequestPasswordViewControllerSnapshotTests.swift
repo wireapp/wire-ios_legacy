@@ -22,7 +22,6 @@ import XCTest
 final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
     var sut: RequestPasswordController!
-    let callback = { (result: Result<String?>) -> () in}
     var fingerprint: Data!
 
     override func setUp() {
@@ -39,7 +38,7 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForRemoveDeviceContextPasswordEntered(){
-        sut = RequestPasswordController(context: .removeDevice, callback: callback)
+        sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
         sut.passwordTextField?.text = "12345678"
         sut.passwordTextFieldChanged(sut.passwordTextField!)
 
@@ -47,7 +46,7 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForRemoveDeviceContext(){
-        sut = RequestPasswordController(context: .removeDevice, callback: callback)
+        sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
 
         verifyAlertController(sut.alertController)
     }

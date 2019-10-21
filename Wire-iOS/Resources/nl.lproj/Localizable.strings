@@ -27,16 +27,16 @@
 "general.edit" = "Bewerken";
 "general.done" = "Klaar";
 "general.confirm" = "OK";
-"general.skip" = "Not Now";
+"general.skip" = "Later";
 "general.accept" = "Neem op";
 "general.decline" = "Nee, bedankt";
 "general.failure" = "Er is iets mis gegaan";
-"general.failure.try_again" = "Please try again.";
+"general.failure.try_again" = "Probeer het alsjeblieft opnieuw.";
 "general.service" = "Dienst";
 "general.off" = "Uit";
 "general.on" = "Aan";
-"general.loading" = "Loading…";
-"general.paste" = "Paste";
+"general.loading" = "Laden…";
+"general.paste" = "Plakken";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
@@ -44,7 +44,7 @@
 "general.guest-room-name" = "Gast gesprek";
 
 // User Cell
-"user_cell.title.you_suffix" = " (You)";
+"user_cell.title.you_suffix" = " (Jij)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -75,7 +75,7 @@
 "peoplepicker.services.add_service.error.full" = "Het gesprek is vol";
 
 "peoplepicker.title.create_conversation" = "Maak groep";
-"peoplepicker.title.add_to_conversation" = "Voeg deelnemers toe";
+"peoplepicker.title.add_to_conversation" = "Personen toevoegen";
 
 "peoplepicker.no_contacts_title" = "Geen contacten";
 
@@ -88,7 +88,7 @@
 "peoplepicker.no_matching_results_provide_valid_email" = "Geldig e-mailadres invoeren a.u.b.";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Geen resultaten";
 "peoplepicker.no_matching_results_services_title" = "Diensten kunnen je workflow helpen te verbeteren. Vraag je administrator om ze aan te zetten.";
-"peoplepicker.no_matching_results_services_admin_title" = "Services are helpers that can improve your workflow.";
+"peoplepicker.no_matching_results_services_admin_title" = "Diensten zijn helpers die jouw workflow kunnen verbeteren.";
 "peoplepicker.no_matching_results_services_manage_services_title" = "Beheer diensten";
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "E-mailadres invoeren of";
@@ -111,7 +111,7 @@
 "add_participants.all_contacts_added" = "Iedereen is hier.";
 
 "add_participants.alert.title" = "De groep is vol";
-"add_participants.alert.message.new_conversation" = "Up to %d people can join a conversation.";
+"add_participants.alert.message.new_conversation" = "Tot %d mensen kunnen deelnemen aan een gesprek.";
 "add_participants.alert.message.existing_conversation" = "Up to %1$d people can join a conversation. Currently there is only room for %2$d more.";
 
 // Contacts UI
@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "je bent vermeld";
 "conversation_list.voiceover.status.reply" = "antwoorden";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "gearchiveerd";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lijst met gearchiveerde gesprekken";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacten";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com";
 "send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar get.wire.com om met mij te verbinden.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Aanmaken";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "deelde een foto";
@@ -203,10 +218,15 @@
 "list.archived_conversations" = "ARCHIEF";
 "list.archived_conversations_close" = "Archief sluiten";
 
+"list.section.groups" = "Groepen";
+"list.section.contacts" = "Deelnemers";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
+
 "conversation.voiceover.verified" = "geverifieerd";
 "conversation.voiceover.legalhold" = "legal hold";
-"conversation.voiceover.value.active" = "active";
-"conversation.voiceover.value.disabled" = "disabled";
+"conversation.voiceover.value.active" = "actief";
+"conversation.voiceover.value.disabled" = "uitgeschakeld";
 
 "conversation.status.typing" = "Typt een bericht…";
 "conversation.status.typing.group" = "%@: Typt een bericht…";
@@ -214,7 +234,7 @@
 "conversation.status.poor_connection" = "Slechte verbinding";
 "conversation.status.blocked" = "Geblokkeerd";
 "conversation.status.incoming_call" = "%@ belt…";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "Iemand belt je…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Deel een link";
@@ -229,7 +249,7 @@
 "conversation.status.message.mention" = "%@";
 "conversation.status.message.reply" = "%@";
 "conversation.status.message.ephemeral" = "Stuur een bericht";
-"conversation.status.message.ephemeral.group" = "Iemand stuurde je een bericht";
+"conversation.status.message.ephemeral.group" = "Iemand heeft een bericht gestuurd";
 "conversation.status.message.ephemeral.mention" = "Vermeldde jou";
 "conversation.status.message.ephemeral.mention.group" = "Iemand vermelde jou";
 "conversation.status.message.ephemeral.reply" = "Beantwoordte jou bericht";
@@ -251,7 +271,7 @@
 "compose.contact.title" = "Gesprek";
 "compose.message.title" = "Stuur bericht";
 
-"conversation_details.open_button.accessibility_hint" = "Double tap to view the details of the conversation.";
+"conversation_details.open_button.accessibility_hint" = "Dubbel tap om de details van het gesprek te bekijken.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Conversation
@@ -299,8 +319,8 @@
 "conversation.create.guidance.toolong" = "Te veel tekens";
 "conversation.create.options.title" = "Gesprek opties";
 "conversation.create.options.subtitle" = "Guests and services: %@, Read receipts: %@";
-"conversation.create.guests.title" = "Sta gasten en diensten toe";
-"conversation.create.guests.subtitle" = "Open this conversation to services and people outside your team.";
+"conversation.create.guests.title" = "Sta gasten en services toe";
+"conversation.create.guests.subtitle" = "Open dit gesprek voor mensen en services buiten jouw team.";
 "conversation.create.receipts.title" = "Leesbevestigingen";
 "conversation.create.receipts.subtitle" = "Wanneer dit aanstaat, kunnen mensen zien wanneer je hun berichten gelezen hebt.";
 
@@ -309,11 +329,11 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Je kan geen video maken tijdens een telefoongesprek.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Je kan geen foto maken tijdens een telefoongesprek.";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "Het bericht is verwijderd.";
 
 "conversation.guests_present" = "Er zijn gasten in dit geprek";
 "conversation.services_present" = "Diensten zijn actief";
-"conversation.guests_services_present" = "Guests and services are present";
+"conversation.guests_services_present" = "Gasten en diensten zijn aanwezig";
 "conversation.action.search" = "Zoeken";
 
 // Reply message preview
@@ -349,7 +369,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire heeft toegang nodig tot jou camera en foto's."; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire heeft toegang nodig tot jouw foto's.";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire heeft toegang nodig tot jou camera.";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "You can’t access the camera while you are on a video call.";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "Je kan de camera niet gebruiken als je in een video gesprek zit.";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE/AF-vergrendeling";
@@ -395,13 +415,13 @@
 "content.system.other_removed_you" = "%@ verwijderde jou";
 "content.system.you_removed_other" = "Jij verwijderde %@";
 
-"content.system.services.warning" = "Services have access to the content of this conversation";
+"content.system.services.warning" = "Diensten hebben toegang tot de inhoud van dit gesprek";
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "YouTube video voorvertoning";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud nummer voorvertoning";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud afspeellijst voorvertoning";
 
 // New conversation participants added / removed / started system message
 
@@ -417,7 +437,7 @@
 "content.system.conversation.team.member-leave" = "%@ was verwijderd van het team.";
 "content.system.conversation.guest.joined" = "%@ joined";
 
-"content.system.conversation.invite.title" = "Services and people outside your team can join this conversation.";
+"content.system.conversation.invite.title" = "Diensten en mensen buiten jou team kunnen deelnemen aan dit gesprek.";
 "content.system.conversation.invite.button" = "Nodig anderen uit";
 
 "content.system.other_renamed_conv_to_nothing" = "%@ verwijderde de naam van de conversatie";
@@ -457,8 +477,8 @@
 "content.system.message_timer_changes" = "%@ heeft een bericht timer gezet in %@";
 "content.system.message_timer_changes-you" = "%@ heeft een bericht timer gezet in %@";
 
-"content.system.message_timer_off" = "%@ turned off the message timer";
-"content.system.message_timer_off-you" = "%@ turned off the message timer";
+"content.system.message_timer_off" = "%@ heeft de berichttimer uitgeschakeld";
+"content.system.message_timer_off-you" = "%@ heeft de berichttimer uitgeschakeld";
 
 // read receipt
 
@@ -468,7 +488,7 @@
 "content.system.message_read_receipt_off" = "%@ turned read receipts off for everyone";
 "content.system.message_read_receipt_off-you" = "%@ turned read receipts off for everyone";
 
-"content.system.message_read_receipt_on_add_to_group" = "Read receipts are on";
+"content.system.message_read_receipt_on_add_to_group" = "Leesbevestiging staan aan";
 
 // legal hold
 
@@ -515,6 +535,7 @@
 "content.file.upload_cancelled" = "Upload geannuleerd";
 "content.file.upload_video" = "Video's";
 "content.file.take_video" = "Neem een video op";
+"content.file.browse" = "Zoek";
 
 "content.file.save_video" = "Opslaan";
 "content.file.save_audio" = "Opslaan";
@@ -537,7 +558,7 @@
 "content.message.details" = "Beschrijving";
 
 // Reply
-"content.message.reply" = "Beantwoord";
+"content.message.reply" = "Reageer";
 "content.message.original_label" = "Oorspronkelijk bericht";
 "content.message.reply.original_timestamp.date" = "Oorspronkelijk bericht van %@";
 "content.message.reply.original_timestamp.time" = "Oorspronkelijk bericht van %@";
@@ -545,10 +566,10 @@
 "content.message.reply.edited_message" = "Aangepast";
 
 "content.message.open_link_alert.title" = "Ga naar link";
-"content.message.open_link_alert.message" = "This will take you to\n%@";
+"content.message.open_link_alert.message" = "Dit zal je naar\n%@ brengen";
 "content.message.open_link_alert.open" = "Openen";
 
-"content.message.audio_message.accessibility" = "Play the audio message";
+"content.message.audio_message.accessibility" = "Speel het audio bericht af";
 
 "content.reactions_list.likers" = "Leuk gevonden door";
 
@@ -567,7 +588,7 @@
 "connection_request.title" = "Verbind met %@"; // check UPPERCASE implementation in code
 "missive.connection_request.default_message" = "Hallo %@, \nLaten we chatten via Wire.\n%@";
 
-"connection_request_pending_title" = "Connection Request";
+"connection_request_pending_title" = "Connectie verzoek";
 "connection_request.send_button_title" = "Uitnodigen";
 "inbox.connection_request.connect_button_title" = "Uitnodigen";
 "inbox.connection_request.ignore_button_title" = "Negeer";
@@ -625,7 +646,7 @@
 "call.status.incoming.user" = "%@ belt…";
 "call.status.incoming" = "Bellen…";
 "call.status.outgoing" = "Bellen…";
-"call.status.outgoing.user" = "Calling %@…";
+"call.status.outgoing.user" = "%@ aan het bellen…";
 "call.status.reconnecting" = "Opnieuw verbinden…";
 "call.status.terminating" = "Ophangen…";
 "call.status.constant_bitrate" = "Constante Bit Rate";
@@ -644,12 +665,12 @@
 "call.degraded.alert.message.unknown" = "Iemand begon met een nieuw apparaat.";
 "call.degraded.alert.action.continue" = "Toch bellen";
 
-"call.alert.ongoing.alert_title" = "This will end your other call.";
+"call.alert.ongoing.alert_title" = "Hiermee zal je andere oproep worden beëindigd.";
 
 "call.alert.ongoing.start.message" = "A call is active in another conversation.\nCalling here will hang up the other call.";
 "call.alert.ongoing.join.message" = "A call is active in another conversation.\nJoining this call will hang up the other one.";
 "call.alert.ongoing.start.button" = "Toch bellen";
-"call.alert.ongoing.join.button" = "Join anyway";
+"call.alert.ongoing.join.button" = "Toch aanmelden";
 
 // Call Actions (accessibility)
 
@@ -658,7 +679,7 @@
 "call.actions.label.toggle_mute_off" = "Dempen opheffen";
 "call.actions.label.flip_camera" = "Schakelen tussen camera's";
 "call.actions.label.toggle_speaker_on" = "Luidspreker inschakelen";
-"call.actions.label.toggle_speaker_off" = "Disable speaker";
+"call.actions.label.toggle_speaker_off" = "Luidspreker uitschakelen";
 "call.actions.label.accept_call" = "Gesprek aannemen";
 "call.actions.label.reject_call" = "Weiger oproep";
 "call.actions.label.terminate_call" = "Gesprek beëindigen";
@@ -678,7 +699,7 @@
 "participants.avatar.guest.title" = "Gast";
 
 "participants.title" = "Beschrijving";
-"participants.all.title" = "Deelnemers";
+"participants.all.title" = "Personen";
 "participants.section.participants" = "Personen (%d)";
 "participants.section.services" = "Services (%d)";
 "participants.section.settings" = "Opties";
@@ -686,29 +707,32 @@
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
 
 // Meta Menu
-"meta.menu.accessibility_more_options_button" = "More actions";
+"meta.menu.accessibility_more_options_button" = "Meer acties";
 "meta.menu.rename" = "Wijzig naam";
 "meta.menu.leave" = "Verlaat groep…";
 "meta.menu.archive" = "Archiveren";
 "meta.menu.unarchive" = "Terugzetten";
-"meta.menu.clear_content" = "Inhoud Verwijderen…";
+"meta.menu.delete" = "Delete Group…";
+"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
-"meta.menu.cancel_connection_request" = "Cancel Request";
+"meta.menu.cancel_connection_request" = "Annuleer verzoek";
 "meta.menu.mark_unread" = "Markeer als ongelezen";
 "meta.menu.mark_read" = "Markeren als gelezen";
 "shortcut.mark_all_as_read.title" = "Alles markeren als gelezen";
-"meta.menu.configure_notifications" = "Notifications…";
-"meta.menu.open_self_profile" = "Open Profile";
+"meta.menu.configure_notifications" = "Meldingen…";
+"meta.menu.open_self_profile" = "Profiel openen";
 
 // Delete conversation
 "meta.menu.delete_content.dialog_title" = "Inhoud verwijderen?";
 "meta.menu.delete_content.dialog_message" = "Dit verwijdert de gesprek history van al je apparaten.";
 "meta.menu.delete_content.leave_as_well_message" = "Ook het gesprek verlaten";
 "meta.menu.delete_content.button_cancel" = "Annuleer";
-"meta.menu.delete_content.button_delete" = "Verwijderen";
-"meta.menu.delete_content.button_delete_and_leave" = "Verwijder en verlaat";
+"meta.menu.delete_content.button_delete" = "Wissen";
+"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notify me about:";
@@ -720,10 +744,10 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Gesprek verlaten?";
 "meta.leave_conversation_dialog_message" = "De deelnemers ontvangen een notificatie en het gesprek wordt uit je lijst verwijderd.";
-"meta.leave_conversation.delete_content_as_well_message" = "Verwijder de inhoud ook";
+"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
 "meta.leave_conversation_button_cancel" = "Annuleer";
 "meta.leave_conversation_button_leave" = "Verlaten";
-"meta.leave_conversation_button_leave_and_delete" = "Verlaat en verwijder inhoud";
+"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ is een ander apparaat gaan gebruiken.";
@@ -764,6 +788,12 @@
 "profile.connection_request_dialog.button_cancel" = "Negeer";
 "profile.connection_request_dialog.button_connect" = "Accepteer";
 
+// Delete group
+"conversation.delete_request_dialog.title" = "Delete group conversation?";
+"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Verzoek annuleren?";
 "profile.cancel_connection_request_dialog.message" = "Cancel your connection request to %@?";
@@ -774,8 +804,12 @@
 "profile.block_button_title" = "Blokeer…";
 "profile.unblock_button_title" = "Deblokkeer…";
 
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
+
 "profile.block_button_title_action" = "Blokkeer";
-"profile.unblock_button_title_action" = "Unblock";
+"profile.unblock_button_title_action" = "Deblokkeer";
 
 "profile.cancel_connection_button_title" = "VERZOEK ANNULEREN";
 "profile.connection_request_state.blocked" = "GEBLOKKEERD";
@@ -814,25 +848,25 @@
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefoonnummer";
-"device.class.unknown" = "Unknown";
+"device.class.unknown" = "Onbekend";
 
 "device.type.permanent" = "Permanent";
 "device.type.temporary" = "Temporary";
 "device.type.legalhold" = "Legal Hold";
-"device.type.unknown" = "Unknown";
+"device.type.unknown" = "Onbekend";
 
 // Bot
 "participants.services.remove_integration.button" = "verwijder integratie";
 
 // Group details
-"group_details.guest_options_cell.title" = "Guests and services";
+"group_details.guest_options_cell.title" = "Gasten en services";
 "group_details.guest_options_cell.enabled" = "Aan";
 "group_details.guest_options_cell.disabled" = "Uit";
-"group_details.timeout_options_cell.title" = "Timed messages";
+"group_details.timeout_options_cell.title" = "Tijdelijke berichten";
 "group_details.notification_options_cell.title" = "Meldingen";
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
-"group_details.receipt_options_cell.title" = "Read receipts";
-"group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+"group_details.receipt_options_cell.title" = "Leesbevestigingen";
+"group_details.receipt_options_cell.description" = "Wanneer dit aanstaat, kunnen mensen zien wanneer je hun berichten gelezen hebt.";
 
 // Legal hold details
 
@@ -863,8 +897,8 @@
 "self.add_phone_number" = "Voeg telefoonnummer toe";
 "self.add_email_password" = "Voeg e-mailadres en wachtwoord toe";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Profielfoto";
+"self.accessibility.profile_photo_edit_button" = "Wijzig profiel afbeelding";
 
 // About screen
 "about.tos.title" = "Gebruikersvoorwaarden";
@@ -875,8 +909,8 @@
 
 // Licenses screen
 "about.license.project_header" = "Beschrijving";
-"about.license.open_project_button" = "View Project Page";
-"about.license.license_header" = "Acknowledgements";
+"about.license.open_project_button" = "Bekijk projectpagina";
+"about.license.license_header" = "Dankwoord";
 
 // Self new devices
 "self.new_device_alert.title" = "Je account werd gebruikt op:";
@@ -894,14 +928,14 @@
 // Settings - top level
 "self.settings.create_team.title" = "Creëer Team";
 "self.settings.manage_team.title" = "Beheer team";
-"self.settings.add_team_or_account.title" = "Add Account";
+"self.settings.add_team_or_account.title" = "Account toevoegen";
 "self.settings.add_account.title" = "Voeg een account toe";
 
 "self.settings.add_account.error.title" = "Drie accounts zijn actief";
 "self.settings.add_account.error.message" = "Je kan maximaal met 3 accounts te gelijk inloggen. Log op een ander account uit, om een nieuw account toe te voegen.";
 
 "self.settings.switch_account.message" = "A call is active in this account.\nSwitching accounts will hang up the current call.";
-"self.settings.switch_account.action" = "Switch anyway";
+"self.settings.switch_account.action" = "Toch wisselen";
 
 // Settings - Account details
 "self.settings.account_section" = "Profiel";
@@ -951,11 +985,12 @@
 
 "self.settings.account_details.log_out.alert.title" = "Uitloggen";
 "self.settings.account_details.log_out.alert.message" = "Je berichten history word verwijdert op dit apparaat.";
+"self.settings.account_details.log_out.alert.password" = "Wachtwoord";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Diagnose en gebruik";
 "self.settings.privacy_analytics.title" = "Anoniem gegevens delen";
-"self.settings.privacy_analytics_menu.description.title" = "Help make Wire better by sending anonymous usage and crash reports.";
+"self.settings.privacy_analytics_menu.description.title" = "Help Wire te verbeteren door anonieme gebruiksdata en crashrapporten te sturen.";
 
 "self.settings.receiveNews_and_offers.title" = "Ontvang nieuwsbrief";
 "self.settings.receiveNews_and_offers.description.title" = "Ontvang nieuws en product updates van Wire via de mail.";
@@ -1049,7 +1084,7 @@
 
 "open_link.maps.option.apple" = "Kaarten";
 "open_link.maps.option.google" = "Google Maps";
-"open_link.maps.footer" = "Some location links will always open in Apple Maps.";
+"open_link.maps.footer" = "Sommige locatie links zullen altijd open in Apple Maps.";
 
 "open_link.browser.option.safari" = "Safari";
 "open_link.browser.option.chrome" = "Chrome";
@@ -1075,16 +1110,16 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Dit helpt je te verbinden met anderen. We anonimiseren alle informatie en delen dit nooit met derde partijen. Geef toegang via Instellingen > Privacy > Contacten.";
 
 "self.settings.privacy_security.lock_app" = "Vergrendel Met Wachtwoord";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
-"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Unlock with Touch ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.face_id" = "Unlock with Face ID or enter your passcode.";
-"self.settings.privacy_security.lock_app.subtitle.none" = "Unlock by entering your passcode.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Wire vergrendelen na %@ op de achtergrond.";
+"self.settings.privacy_security.lock_app.subtitle.touch_id" = "Ontgrendel met Touch ID of voer je toegangscode in.";
+"self.settings.privacy_security.lock_app.subtitle.face_id" = "Ontgrendel met Face ID of voer je toegangscode in.";
+"self.settings.privacy_security.lock_app.subtitle.none" = "Ontgrendel door het invoeren van uw toegangscode.";
 
 "self.settings.privacy_security.lock_app.description" = "Ontgrendel Wire";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Unlock Wire with Touch ID or Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Ontgrendel Wire met Face ID of Wachtwoord";
+"self.settings.privacy_security.lock_cancelled.description_touch_id" = "Ontgrendel Wire met Touch ID of Wachtwoord";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Ontgrendel Wire met wachtwoord";
 "self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
 "self.settings.privacy_security.lock_cancelled.action" = "Ontgrendel";
 
@@ -1098,7 +1133,7 @@
 
 "self.settings.advanced.title" = "Geavanceerd";
 "self.settings.advanced.troubleshooting.title" = "Probleemoplossing";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Foutrapportage";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push-notificaties, kan Wire je vragen om deze token te herstellen.";
@@ -1107,12 +1142,12 @@
 "self.settings.advanced.version_technical_details.title" = "Technische details van deze versie";
 
 // data usage permissions options
-"self.settings.account.data_usage_permissions.title" = "Data gebruik toestemmingen";
+"self.settings.account.data_usage_permissions.title" = "Machtigingen voor datagebruik";
 
 // Technical Report
 "self.settings.technical_report_section.title" = "Technisch rapport";
 "self.settings.technical_report.send_report" = "Stuur rapport naar Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Wire Fout Rapport";
 "self.settings.technical_report.include_log" = "Voeg gedetailleerd log toe";
 "self.settings.technical_report.privacy_warning" = "Gedetailleerde logs kunnen persoonlijke gegevens bevatten";
 "self.settings.technical_report.no_mail_alert" = "Er is geen mail app gedetecteerd. Klik op 'OK' om de logs handmatig te versturen naar: ";
@@ -1132,7 +1167,7 @@
 "self.settings.history_backup.error.title" = "Fout";
 
 "self.settings.history_backup.set_email.title" = "Stel een e-mailadres en een wachtwoord in.";
-"self.settings.history_backup.set_email.message" = "You need an email and a password in order to back up your conversation history. You can do it from the account page in Settings.";
+"self.settings.history_backup.set_email.message" = "Je hebt een e-mailadres en wachtwoord nodig om je gespreksgeschiedenis te back-uppen. Je kunt deze toevoegen op de 'account' sectie van de instellingen.";
 
 // History backup password
 
@@ -1162,13 +1197,13 @@
 "password.placeholder" = "Wachtwoord";
 "password.guidance.toolong" = "Te veel tekens";
 
-"phone.guidance.invalid" = "Invalid phone number";
-"phone.guidance.tooshort" = "Phone number is too short";
+"phone.guidance.invalid" = "Ongeldig telefoonnummer";
+"phone.guidance.tooshort" = "Telefoonnummer is te kort";
 "phone.guidance.toolong" = "Te veel tekens";
 
 // Landing screen
 
-"landing.header" = "Wire. Add your Account.";
+"landing.header" = "Wire. Voeg je account toe.";
 "landing.create_account.title" = "Persoonlijk";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
@@ -1177,7 +1212,7 @@
 "landing.login.button.title" = "Inloggen";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
-"landing.custom_backend.more_info.button.title" = "Show more";
+"landing.custom_backend.more_info.button.title" = "Meer tonen";
 "landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
 
 // Create team
@@ -1190,7 +1225,7 @@
 
 "team.email.headline" = "Je account";
 "team.email.subheadline" = "Voer je werk-e-mailadres in.";
-"team.email.textfield.placeholder" = "Your company email";
+"team.email.textfield.placeholder" = "Je bedrijfs email";
 "team.email.button.learn_more" = "Leer meer";
 
 "team.activation_code.headline" = "Je hebt een e-mail ontvangen";
@@ -1198,7 +1233,7 @@
 "team.activation_code.subheadline" = "Voer de verificatiecode in die we naar %@ gestuurde hebben.";
 "team.activation_code.button.resend" = "Code opnieuw verzenden";
 "team.activation_code.button.change_email" = "E-mailadres wijzigen";
-"team.activation_code.button.change_phone" = "Change phone number";
+"team.activation_code.button.change_phone" = "Telefoonnummer wijzigen";
 
 "team.full_name.headline" = "Jouw naam";
 "team.full_name.textfield.placeholder" = "Volledige naam";
@@ -1213,8 +1248,8 @@
 
 "team.invite.header.title" = "Maak je team aan";
 "team.invite.header.subtitle" = "Your Wire team is ready to go. Invite your colleagues as members.";
-"team.invite.textfield.placeholder" = "Colleague's email";
-"team.invite.textfield.accesibility" = "Enter email address for colleague to invite.";
+"team.invite.textfield.placeholder" = "E-mail van collega";
+"team.invite.textfield.accesibility" = "Voer e-mailadres in van de collega die u uitnodigt.";
 "team.invite.learn_more.title" = "Leer meer";
 "team.invite.top_bar.skip" = "Sla over";
 "team.invite.top_bar.done" = "Klaar";
@@ -1228,11 +1263,11 @@
 
 // Guest Room
 
-"guest_room.allow_guests.title" = "Allow guests and services";
-"guest_room.allow_guests.subtitle" = "Open this conversation to services and people outside your team.";
+"guest_room.allow_guests.title" = "Sta gasten en services toe";
+"guest_room.allow_guests.subtitle" = "Open dit gesprek voor mensen en services buiten jouw team.";
 "guest_room.remove_guests.message" = "Current guests and services will be removed from the conversation. New guests and services will not be allowed.";
 "guest_room.remove_guests.action" = "Verwijderen";
-"guest_room.revoke_link.message" = "New guests will not be able to join with this link. Current guests will still have access.";
+"guest_room.revoke_link.message" = "Nieuwe gasten zullen niet kunnen deelnemen via deze link. Huidige gasten blijven toegang houden.";
 "guest_room.revoke_link.action" = "Link intrekken";
 
 "guest_room.error.generic.title" = "Er is iets mis gegaan";
@@ -1285,8 +1320,8 @@
 "registration.alert.account_exists.title" = "Dit account bestaat al";
 "registration.alert.account_exists.message_phone" = "The phone number you used to register is already linked to an account.\n\nUse another phone number, or try to log in if you own this account.";
 "registration.alert.account_exists.message_email" = "The email address you used to register is already linked to an account.\n\n Use another email address, or try to log in if you own this account.";
-"registration.alert.change_email_action" = "Register with Another Email";
-"registration.alert.change_phone_action" = "Register with Another Number";
+"registration.alert.change_email_action" = "Registreer met een ander e-mail";
+"registration.alert.change_phone_action" = "Registreren met ander mobiel nummer";
 "registration.alert.change_signin_action" = "Inloggen";
 
 // Restore History Warning Alert
@@ -1307,7 +1342,7 @@
 
 // Incompatible Version
 "registration.no_history.restore_backup_failed.wrong_version.title" = "Incompatibele backup";
-"registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
+"registration.no_history.restore_backup_failed.wrong_version.message" = "Deze back-up is gemaakt met een nieuwere of verouderde versie van Wire en kan hier niet worden teruggezet.";
 
 // SSO – Company Login
 "login.sso.alert.title" = "Bedrijfs login";
@@ -1321,9 +1356,9 @@
 "login.sso.error.alert.title" = "Er is iets mis gegaan";
 "login.sso.error.alert.invalid_code.title" = "Ongeldige code.";
 "login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
-"login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
+"login.sso.error.offline.alert.message" = "Controleer uw internetverbinding alstublieft en probeer het opnieuw.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
-"login.sso.error.alert.unknown.message" = "Probeer het later nog eens.";
+"login.sso.error.alert.unknown.message" = "Probeer het later alsjeblieft opnieuw.";
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
 
 // Restore In Progress Loading Titles
@@ -1375,7 +1410,7 @@
 "registration.push_access_denied.settings_button.title" = "Ga naar Instellingen";
 "registration.push_access_denied.maybe_later_button.title" = "Misschien later";
 
-"registration.personal.title" = "Create an account";
+"registration.personal.title" = "Een account aanmaken";
 "registration.signin.title" = "Inloggen";
 "registration.signin.too_many_devices.title" = "Too Many Devices";
 "registration.signin.too_many_devices.subtitle" = "Verwijder een van je andere apparaten om Wire op dit apparaat te gebruiken.";
@@ -1548,7 +1583,7 @@
 "compose.drafts.title" = "Berichten";
 "compose.drafts.empty.title" = "Geen berichten";
 "compose.drafts.empty.subtitle" = "Tap + om er een optestellen";
-"compose.drafts.compose.title" = "Type een bericht";
+"compose.drafts.compose.title" = "Typ een bericht";
 "compose.drafts.compose.subject.placeholder" = "Tap om een onderwerp toe te voegen";
 
 "compose.drafts.compose.delete.confirm.title" = "Verwijderen bevestigen";
@@ -1572,13 +1607,13 @@
 "availability.away.placeholder" = "%@ is afwezig";
 "availability.busy.placeholder" = "%@ is bezet";
 
-"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.title" = "U bent ingesteld op Afwezig";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
-"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.title" = "U bent ingesteld op Druk";
 "availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
 "availability.reminder.available.title" = "You are set to Available";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
-"availability.reminder.none.title" = "No status set";
+"availability.reminder.none.title" = "Geen status ingesteld";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.action.dont_remind_me" = "Do not display this information again";
 "availability.reminder.action.ok" = "OK";
@@ -1602,7 +1637,7 @@
 "url_action.title" = "Bevestig deze URL";
 "url_action.connect_to_bot.message" = "Wil je met deze bot connecten?";
 
-"url_action.switch_backend.title" = "Connect to server";
+"url_action.switch_backend.title" = "Verbinden met server";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
 
 "url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
@@ -1613,7 +1648,7 @@
 
 
 // Deep Link
-"url_action.invalid_user.title" = "Wire can't find this person.";
+"url_action.invalid_user.title" = "Wire kan deze persoon niet vinden.";
 "url_action.invalid_user.message" = "You may not have permission with this account or it no longer exists.";
 
 "url_action.invalid_conversation.title" = "Wire can't open this conversation.";
@@ -1622,7 +1657,7 @@
 "url_action.authorization_required.title" = "Authorization required.";
 "url_action.authorization_required.message" = "You need to log in to view this content.";
 
-"url_action.invalid_link.title" = "Invalid link.";
+"url_action.invalid_link.title" = "Ongeldige link.";
 "url_action.invalid_link.message" = "The link you opened is not valid.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1650,8 +1685,8 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Gebruik %@.";
+"registration.password.rules.with_requirements" = "Gebruik %@, met %@.";
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
@@ -1660,14 +1695,14 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 "share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
-"share_extension.voiceover.conversation_secure" = "All clients verified.";
+"share_extension.voiceover.conversation_secure" = "Alle devices geverifieerd.";
 "share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.button.accessibility" = "In afwachting van goedkeuring.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
 "legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.detail.enter_password" = "Voer je wachtwoord in om te bevestigen.";
 "legalhold_request.alert.error_wrong_password" = "Onjuist wachtwoord";
 
 // Legal hold activated

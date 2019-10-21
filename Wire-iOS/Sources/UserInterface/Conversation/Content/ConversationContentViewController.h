@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) ZMConversation *conversation;
 @property (nonatomic) CGFloat bottomMargin;
 @property (nonatomic, readonly) BOOL isScrolledToBottom;
-@property (nonatomic, weak) ConversationMediaController *mediaController;
-@property (nonatomic) UpsideDownTableView *tableView;
+@property (nonatomic, weak, nullable) ConversationMediaController *mediaController;
+@property (nonatomic, nonnull) UpsideDownTableView *tableView;
 @property (nonatomic) UIView *bottomContainer;
 @property (nonatomic) NSArray<NSString *> *searchQueries;
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;

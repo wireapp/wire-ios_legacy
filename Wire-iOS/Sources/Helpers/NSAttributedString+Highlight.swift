@@ -40,17 +40,6 @@ extension String {
 }
 
 extension NSString {
-    func range(of strings: [String], options: NSString.CompareOptions = [], range: NSRange? = .none) -> NSRange {
-        let queryRange = range ?? NSRange(location: 0, length: self.length)
-
-        return strings.compactMap {
-            self.range(of: $0,
-                       options: options,
-                       range: queryRange,
-                       locale: nil)
-            }.sorted { $0.location < $1.location }.first ?? NSRange(location: NSNotFound, length: 0)
-    }
-    
     func allRanges(of strings: [String], options: NSString.CompareOptions = [], range: NSRange? = .none) -> [String: [NSRange]] {
         let initialQueryRange = range ?? NSRange(location: 0, length: self.length)
         var result = [String: [NSRange]]()
@@ -158,7 +147,7 @@ extension NSAttributedString {
         return ellipsisString + self
     }
     
-    @objc func highlightingAppearances(of query: [String],
+    func highlightingAppearances(of query: [String],
                                        with attributes: [NSAttributedString.Key: Any],
                                        upToWidth: CGFloat,
                                        totalMatches: UnsafeMutablePointer<Int>?) -> NSAttributedString {

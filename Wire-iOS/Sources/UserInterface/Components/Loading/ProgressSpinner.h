@@ -28,7 +28,7 @@
 @property (nonatomic, assign) BOOL hidesWhenStopped;
 @property (nonatomic, assign, getter=isAnimating) BOOL animating;
 
-- (IBAction)startAnimation:(id)sender;
-- (IBAction)stopAnimation:(id)sender;
+- (void)startAnimation:(id)sender;
+- (void)stopAnimation:(id)sender;
 
 @end

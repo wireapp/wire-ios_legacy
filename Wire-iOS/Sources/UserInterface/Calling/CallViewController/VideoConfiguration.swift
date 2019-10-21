@@ -35,23 +35,20 @@ fileprivate extension VoiceChannel {
     var selfStream: ParticipantVideoState? {
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
-            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: false)
+            return .init(stream: ZMUser.selfUser().selfStream, isPaused: false)
         case (_, .paused):
-            return .init(stream: ZMUser.selfUser().remoteIdentifier, isPaused: true)
+            return .init(stream: ZMUser.selfUser().selfStream, isPaused: true)
         case (_, .stopped):
             return nil
         }
     }
     
     var videoStreamArrangment: (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
-        let otherParticipants: [ParticipantVideoState] = participants.compactMap { user in
-            guard let user = user as? ZMUser else { return nil }
-            switch state(forParticipant: user) {
-            case .connected(videoState: .started), .connected(videoState: .badConnection), .connected(videoState: .screenSharing):
-                return .init(stream: user.remoteIdentifier, isPaused: false)
-            case .connected(videoState: .paused):
-                return .init(stream: user.remoteIdentifier, isPaused: true)
-            default: return nil
+        let otherParticipants: [ParticipantVideoState] = participants.compactMap { participant in
+            if case .connected(videoState: let videoState, clientId: let clientId) = participant.state {
+                return .init(stream: Stream(userId: participant.user.remoteIdentifier, clientId: clientId), isPaused: videoState == .paused)
+            } else {
+                return nil
             }
         }
         

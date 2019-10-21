@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ConversationImageMessageCell: UIView, ConversationMessageCell {
+final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
     struct Configuration {
         let image: ZMImageMessageData
@@ -136,7 +136,7 @@ class ConversationImageMessageCell: UIView, ConversationMessageCell {
     
 }
 
-class ConversationImageMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationImageMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = ConversationImageMessageCell
     let configuration: View.Configuration
@@ -152,7 +152,10 @@ class ConversationImageMessageCellDescription: ConversationMessageCellDescriptio
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
     
-    let accessibilityIdentifier: String? = "ImageCell"
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "ObfuscatedImageCell" : "ImageCell"
+    }
+
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage, image: ZMImageMessageData) {

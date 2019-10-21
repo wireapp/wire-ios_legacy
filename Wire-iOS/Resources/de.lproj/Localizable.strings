@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "Ping";
 "conversation_list.voiceover.status.mention" = "du wurdest erwähnt";
 "conversation_list.voiceover.status.reply" = "antworten";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "zuletzt";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "Liste der letzten Unterhaltungen";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "Ordner";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "Liste der in Ordnern organisierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivierte";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "Liste der archivierten Unterhaltungen";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "Kontakte";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Ich benutze Wire. Suche nach %@ oder gehe auf get.wire.com";
 "send_invitation_no_email.text" = "Ich bin bei Wire. Gehe auf get.wire.com, um mich als Kontakt hinzuzufügen.";
 
+// Folders
+
+"folder.creation.name.title" = "Neuen Ordner anlegen";
+"folder.creation.name.button.create" = "Erstellen";
+"folder.creation.name.header" = "Unterhaltung \"%@\" in einen neuen Ordner verschieben.";
+"folder.creation.name.footer" = "Maximal 64 Zeichen";
+"folder.creation.name.placeholder" = "Ordnername";
+
+"folder.picker.title" = "Verschieben nach";
+"folder.picker.empty.hint" = "Neuen Ordner durch Drücken der + Taste anlegen";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "hat ein Bild geteilt";
@@ -202,6 +217,11 @@
 "list.title" = "Unterhaltungen";
 "list.archived_conversations" = "Archiv";
 "list.archived_conversations_close" = "Archiv schliessen";
+
+"list.section.groups" = "Gruppen";
+"list.section.contacts" = "Kontakte";
+"list.section.requests" = "Anfragen";
+"list.section.favorites" = "Favoriten";
 
 "conversation.voiceover.verified" = "Überprüft";
 "conversation.voiceover.legalhold" = "gesetzliche Aufbewahrung";
@@ -300,7 +320,7 @@
 "conversation.create.options.title" = "Optionen";
 "conversation.create.options.subtitle" = "Gäste und Dienste: %@, Lesebestätigungen: %@";
 "conversation.create.guests.title" = "Gäste und Dienste zulassen";
-"conversation.create.guests.subtitle" = "Öffne diese Unterhaltung für Dienste und Personen außerhalb des Teams.";
+"conversation.create.guests.subtitle" = "Diese Unterhaltung für Dienste und Personen außerhalb des Teams öffnen.";
 "conversation.create.receipts.title" = "Lesebestätigungen";
 "conversation.create.receipts.subtitle" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
 
@@ -475,7 +495,7 @@
 "content.system.message_legal_hold.enabled" = "Diese Unterhaltung unterliegt der gesetzlichen Aufbewahrung";
 "content.system.message_legal_hold.disabled" = "Die gesetzliche Aufbewahrung wurde für diese Unterhaltung deaktiviert";
 
-"content.system.message_legal_hold.learn_more" = "Erfahre mehr";
+"content.system.message_legal_hold.learn_more" = "Mehr erfahren";
 
 //
 
@@ -515,6 +535,7 @@
 "content.file.upload_cancelled" = "Hochladen abgebrochen";
 "content.file.upload_video" = "Videos";
 "content.file.take_video" = "Video aufnehmen & hochladen";
+"content.file.browse" = "Durchsuchen";
 
 "content.file.save_video" = "Speichern";
 "content.file.save_audio" = "Speichern";
@@ -691,7 +712,10 @@
 "meta.menu.leave" = "Gruppe verlassen…";
 "meta.menu.archive" = "Archivieren";
 "meta.menu.unarchive" = "Reaktivieren";
-"meta.menu.clear_content" = "Inhalt löschen…";
+"meta.menu.delete" = "Gruppe löschen…";
+"meta.menu.clear_content" = "Verlauf löschen…";
+"meta.menu.move_to_folder" = "Verschieben nach…";
+"meta.menu.remove_from_folder" = "Aus \"%@\" entfernen";
 "meta.menu.silence.mute" = "Stumm";
 "meta.menu.silence.unmute" = "Benachrichtigen";
 "meta.menu.cancel" = "Abbrechen";
@@ -703,7 +727,7 @@
 "meta.menu.open_self_profile" = "Profil öffnen";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Gesprächsverlauf löschen?";
+"meta.menu.delete_content.dialog_title" = "Verlauf löschen?";
 "meta.menu.delete_content.dialog_message" = "Der Gesprächsverlauf wird auf all deinen Geräten gelöscht.";
 "meta.menu.delete_content.leave_as_well_message" = "Unterhaltung verlassen";
 "meta.menu.delete_content.button_cancel" = "Abbrechen";
@@ -723,7 +747,7 @@
 "meta.leave_conversation.delete_content_as_well_message" = "Unterhaltungsverlauf löschen";
 "meta.leave_conversation_button_cancel" = "Abbrechen";
 "meta.leave_conversation_button_leave" = "Verlassen";
-"meta.leave_conversation_button_leave_and_delete" = "Verlassen und Inhalt löschen";
+"meta.leave_conversation_button_leave_and_delete" = "Verlassen und Verlauf löschen";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ hat ein neues Gerät hinzugefügt.";
@@ -764,6 +788,12 @@
 "profile.connection_request_dialog.button_cancel" = "Ignorieren";
 "profile.connection_request_dialog.button_connect" = "Kontaktanfrage";
 
+// Delete group
+"conversation.delete_request_dialog.title" = "Gruppenunterhaltung löschen?";
+"conversation.delete_request_dialog.message" = "Dies wird die Gruppe und alle Inhalte für alle Teilnehmer auf allen Geräten löschen. Es gibt keine Möglichkeit, den Inhalt wiederherzustellen. Alle Teilnehmer werden darüber benachrichtigt.";
+"conversation.delete_request_error_dialog.title" = "Beim Löschen der Gruppe %@ ist ein Fehler aufgetreten. Bitte erneut versuchen.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Gruppe löschen";
+
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Kontaktanfrage abbrechen?";
 "profile.cancel_connection_request_dialog.message" = "Die Kontaktanfrage an %@ abbrechen?";
@@ -773,6 +803,10 @@
 // Unblock button
 "profile.block_button_title" = "Blockieren…";
 "profile.unblock_button_title" = "Freigeben…";
+
+// Favorite button
+"profile.favorite_button_title" = "Zu Favoriten hinzufügen";
+"profile.unfavorite_button_title" = "Aus Favoriten entfernen";
 
 "profile.block_button_title_action" = "Blockieren";
 "profile.unblock_button_title_action" = "Freigeben";
@@ -951,6 +985,7 @@
 
 "self.settings.account_details.log_out.alert.title" = "Ausloggen";
 "self.settings.account_details.log_out.alert.message" = "Der Nachrichtenverlauf wird auf diesem Gerät gelöscht.";
+"self.settings.account_details.log_out.alert.password" = "Passwort";
 
 // Settings - Personal information
 "self.settings.privacy_analytics_section.title" = "Nutzungs- und Fehlerberichte";
@@ -1264,7 +1299,7 @@
 "registration.close_phone_invitation_button.phone_title" = "Andere Tel.-Nr. verwenden";
 
 "registration.register_by_phone" = "Telefon";
-"registration.register_by_email" = "E-Mail";
+"registration.register_by_email" = "E-Mail-Adresse";
 
 "registration.enter_phone_number.title" = "Telefonnummer bearbeiten";
 "registration.enter_phone_number.placeholder" = "Telefonnummer";
@@ -1312,7 +1347,7 @@
 // SSO – Company Login
 "login.sso.alert.title" = "Login für Unternehmen";
 "login.sso.alert.message" = "SSO-Zugangscode des Unternehmens eingeben.";
-"login.sso.alert.action" = "Login";
+"login.sso.alert.action" = "Einloggen";
 "login.sso.alert.text_field.placeholder" = "SSO Zugangscode";
 
 "login.sso.start_error_title" = "Login kann nicht gestartet werden";
@@ -1668,7 +1703,7 @@
 "legalhold_request.alert.title" = "Gesetzliche Aufbewahrung ersucht";
 "legalhold_request.alert.detail" = "Aufbewahrung aller künftigen Nachrichten vom Gerät mit Fingerabdruck:\n\n%@\n\nEinschließlich gelöschter, bearbeiteter und temporärer Nachrichten in allen Unterhaltungen.";
 "legalhold_request.alert.detail.enter_password" = "Bitte zur Bestätigung das Passwort eingeben.";
-"legalhold_request.alert.error_wrong_password" = "Ungültiges Passwort";
+"legalhold_request.alert.error_wrong_password" = "Falsches Passwort";
 
 // Legal hold activated
 "legalhold_active.alert.title" = "Gesetzliche Aufbewahrung ist aktiv";

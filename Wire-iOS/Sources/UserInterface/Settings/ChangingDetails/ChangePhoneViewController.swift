@@ -217,7 +217,7 @@ extension ChangePhoneViewController: PhoneNumberInputViewDelegate {
 }
 
 extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
-    func countryCodeTableViewController(_ viewController: UIViewController!, didSelect country: Country!) {
+    func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country) {
         state.selectedCountry = country
         viewController.dismiss(animated: true, completion: nil)
         updateSaveButtonState()

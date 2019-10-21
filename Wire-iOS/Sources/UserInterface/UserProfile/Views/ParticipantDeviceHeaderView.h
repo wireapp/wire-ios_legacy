@@ -21,11 +21,13 @@
 
 @protocol ParticipantDeviceHeaderViewDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface ParticipantDeviceHeaderView : UIView
 
 - (instancetype)initWithUserName:(NSString *)userName;
 
-@property (weak, nonatomic) id <ParticipantDeviceHeaderViewDelegate> delegate;
+@property (weak, nonatomic, nullable) id <ParticipantDeviceHeaderViewDelegate> delegate;
 @property (nonatomic, readonly) NSString *userName;
 @property (nonatomic) BOOL showUnencryptedLabel;
 
@@ -34,6 +36,8 @@
 
 @protocol ParticipantDeviceHeaderViewDelegate <NSObject>
 
-- (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView *)headerView;
+- (void)participantsDeviceHeaderViewDidTapLearnMore:(ParticipantDeviceHeaderView * _Nonnull)headerView;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -25,6 +25,8 @@
 @class TokenField;
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface TokenSeparatorAttachment : NSTextAttachment
 
 @property (nonatomic) Token *token;
@@ -38,10 +40,12 @@
 @interface TokenTextAttachment : NSTextAttachment
 
 @property (strong, nonatomic) Token *token;
-@property (weak, nonatomic) TokenField *tokenField;
+@property (weak, nonatomic, nullable) TokenField *tokenField;
 @property (assign, nonatomic, getter=isSelected) BOOL selected;
 
 - (instancetype)initWithToken:(Token *)token tokenField:(TokenField *)tokenField;
 - (void)refreshImage;
 
 @end
+
+NS_ASSUME_NONNULL_END

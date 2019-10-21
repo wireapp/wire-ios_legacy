@@ -31,14 +31,3 @@ extension String {
     }
 
 }
-
-// MARK: - For Obj-c without suffix support
-extension NSString {
-    /// Return a file name with length <= 255 - 4(reserve for extension) - 37(reserve for WireDataModel UUID prefix) characters
-    /// Notice: this method is for objc only, which does not support Swift optional parameter
-    ///
-    /// - Returns: Returns: a filename <= 214 characters
-    @objc static func filenameForSelfUser() -> NSString {
-        return String.filenameForSelfUser(suffix: nil) as NSString
-    }
-}

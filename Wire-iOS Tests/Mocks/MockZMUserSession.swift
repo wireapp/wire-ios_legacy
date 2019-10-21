@@ -19,13 +19,24 @@
 import Foundation
 @testable import Wire
 
-final class MockZMUserSession: NSObject, ZMUserSessionInterface {
+final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
+
     func performChanges(_ block: @escaping () -> Swift.Void) {
         block()
     }
 
     func enqueueChanges(_ block: @escaping () -> Swift.Void) {
         block()
+    }
+
+    func enqueueChanges(_ block: @escaping () -> Void, completionHandler: (() -> Void)!) {
+        block()
+        completionHandler()
+    }
+    
+    var mockConversationDirectory = MockConversationDirectory()
+    var conversationDirectory: ConversationDirectoryType {
+        return mockConversationDirectory
     }
 
     var isNotificationContentHidden: Bool = false

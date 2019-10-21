@@ -159,6 +159,10 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         updateLegalHoldIndicator()
         collectionViewController.sections = computeVisibleSections()
         footerView.update(for: conversation)
+        
+        if changeInfo.participantsChanged, !conversation.isSelfAnActiveMember {
+           navigationController?.popToRootViewController(animated: true)
+        }
     }
     
     func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action) {
@@ -185,11 +189,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         detailsViewController.delegate = self
         navigationController?.pushViewController(detailsViewController, animated: animated)
     }
-    
-    func dismissButtonTapped() {
-        dismiss(animated: true)
-    }
-    
 }
 
 extension GroupDetailsViewController {

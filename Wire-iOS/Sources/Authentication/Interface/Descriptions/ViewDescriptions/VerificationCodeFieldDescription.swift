@@ -94,10 +94,6 @@ extension VerificationCodeFieldDescription: ViewDescriptor {
         
         return containerView
     }
-
-    func constrainsToActivate() -> [NSLayoutConstraint] {
-        return constraints
-    }
 }
 
 extension VerificationCodeFieldDescription: CharacterInputFieldDelegate {

@@ -23,9 +23,11 @@
 
 @protocol StartUIDelegate;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface StartUIViewController : UIViewController
 
-@property (nonatomic, weak) id <StartUIDelegate> delegate;
+@property (nonatomic, weak, nullable) id <StartUIDelegate> delegate;
 @property (nonatomic, readonly) UIScrollView *scrollView;
 
 - (void)showKeyboardIfNeeded;
@@ -38,3 +40,5 @@
 - (void)startUI:(StartUIViewController *)startUI createConversationWithUsers:(NSSet<ZMUser *> *)users name:(NSString *)name allowGuests:(BOOL)allowGuests enableReceipts:(BOOL)enableReceipts;
 - (void)startUI:(StartUIViewController *)startUI didSelectConversation:(ZMConversation *)conversation;
 @end
+
+NS_ASSUME_NONNULL_END

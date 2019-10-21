@@ -45,7 +45,7 @@ extension PHAssetCreationRequest: AssetCreationRequestProtocol {}
 
 private let log = ZMSLog(tag: "SavableImage")
 
-@objcMembers final public class SavableImage: NSObject {
+final class SavableImage: NSObject {
     
     enum Source {
         case gif(URL)
@@ -58,7 +58,7 @@ private let log = ZMSLog(tag: "SavableImage")
     var assetCreationRequestType: AssetCreationRequestProtocol.Type = PHAssetCreationRequest.self
     var applicationType: ApplicationProtocol.Type = UIApplication.self
 
-    public typealias ImageSaveCompletion = (Bool) -> Void
+    typealias ImageSaveCompletion = (Bool) -> Void
 
     private var writeInProgess = false
     private let imageData: Data

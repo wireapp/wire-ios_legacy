@@ -21,9 +21,11 @@
 
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface KeyValueObserver : NSObject
 
-@property (nonatomic, weak) id target;
+@property (nonatomic, weak, nullable) id target;
 @property (nonatomic) SEL selector;
 
 /// Create a Key-Value Observing helper object.
@@ -57,3 +59,4 @@
 @end
 
 
+NS_ASSUME_NONNULL_END

@@ -106,17 +106,5 @@
     }];
 }
 
-#pragma mark - ProfileViewControllerDelegate
-
-- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
-{
-    [self dismissViewController:controller completion:^{
-        [[[ZClientViewController sharedZClientViewController] conversationListViewController] dismissPeoplePickerWithCompletionBlock:^{
-            [[ZClientViewController sharedZClientViewController] selectConversation:conversation
-                                                                        focusOnView:YES
-                                                                           animated:YES];
-        }];
-    }];
-}
 
 @end

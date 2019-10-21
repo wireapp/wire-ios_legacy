@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol ShareContactsViewControllerDelegate <NSObject>
 
 - (void)shareContactsViewControllerDidSkip:(UIViewController *)viewController;
@@ -28,7 +30,7 @@
 
 @interface ShareContactsViewController : UIViewController
 
-@property (nonatomic, weak) id<ShareContactsViewControllerDelegate> delegate;
+@property (nonatomic, weak, nullable) id<ShareContactsViewControllerDelegate> delegate;
 
 @property (nonatomic) BOOL uploadAddressBookImmediately;
 @property (nonatomic) BOOL backgroundBlurDisabled;
@@ -37,3 +39,5 @@
 @property (nonatomic, readonly) BOOL showingAddressBookAccessDeniedViewController;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -374,11 +374,6 @@
 
 #pragma mark - Animated conversation switch
 
-- (void)minimizeCallOverlayWithCompletion:(dispatch_block_t)completion
-{
-    [AppDelegate.sharedAppDelegate.callWindowRootViewController minimizeOverlayWithCompletion:completion];
-}
-
 - (void)dismissAllModalControllersWithCallback:(dispatch_block_t)callback
 {
     dispatch_block_t dismissAction = ^{
@@ -413,7 +408,7 @@
         dismissAction();
     }
     else {
-        [self minimizeCallOverlayWithCompletion:^{
+        [self minimizeCallOverlayWithAnimated:YES withCompletion:^{
             dismissAction();
         }];
     }
