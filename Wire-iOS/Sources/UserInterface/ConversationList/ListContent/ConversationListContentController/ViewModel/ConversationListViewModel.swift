@@ -316,7 +316,6 @@ final class ConversationListViewModel: NSObject {
         return sections.count
     }
 
-    @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
         guard sectionIndex < sectionCount,
               !collapsed(at: sectionIndex) else { return 0 }

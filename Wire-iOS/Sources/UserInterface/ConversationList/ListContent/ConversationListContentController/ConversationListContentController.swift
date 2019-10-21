@@ -72,15 +72,15 @@ final class ConversationListContentController: UICollectionViewController {
         guard let _ = ZMUserSession.shared() else {
             return
         }
-        
+
         updateVisibleCells()
 
         scrollToCurrentSelection(animated: false)
 
         if let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
-        activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)))
+            activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)))
 
-        self.mediaPlaybackManager = mediaPlaybackManager
+            self.mediaPlaybackManager = mediaPlaybackManager
         }
     }
 
@@ -89,7 +89,7 @@ final class ConversationListContentController: UICollectionViewController {
         activeMediaPlayerObserver = nil
     }
 
-    @objc
+
     func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
@@ -145,7 +145,7 @@ final class ConversationListContentController: UICollectionViewController {
         }
     }
 
-    @objc
+
     func registerSectionHeader() {
         collectionView?.register(ConversationListHeaderView.self, forSupplementaryViewOfKind:
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
@@ -169,7 +169,6 @@ final class ConversationListContentController: UICollectionViewController {
         }
     }
 
-    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         guard let selectedItem = listViewModel.selectedItem,
             let selectedIndexPath = listViewModel.indexPath(for: selectedItem),
