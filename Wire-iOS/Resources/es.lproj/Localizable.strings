@@ -461,9 +461,16 @@
 "content.system.you_started" = "Tú";
 "content.system.this_device" = "este dispositivo";
 
-"content.system.call.you" = "Tú";
 "content.system.call.called" = "%@ llamó";
 "content.system.call.called-you" = "%@ llamó";
+"content.system.call.called.you" = "Tú";
+
+"content.system.call.missed-call" = "Llamada perdida";
+"content.system.call.missed-call-you" = "Llamada perdida";
+
+"content.system.call.missed-call.groups" = "Llamada perdida de %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Tú";
 
 "content.system.renamed_conv.title" = "%@ renombró el chat";
 "content.system.renamed_conv.title-you" = "%@ renombró el chat";

@@ -191,14 +191,14 @@
 
 // Folders
 
-"folder.creation.name.title" = "Создать новую папку";
+"folder.creation.name.title" = "Создание новой папки";
 "folder.creation.name.button.create" = "Создать";
-"folder.creation.name.header" = "Переместить беседу \"%@\" в новую папку.";
+"folder.creation.name.header" = "Переместить беседу с \"%@\" в новую папку.";
 "folder.creation.name.footer" = "Не более 64 символов";
 "folder.creation.name.placeholder" = "Название папки";
 
-"folder.picker.title" = "Переместить в";
-"folder.picker.empty.hint" = "Создать новую папку нажатием на кнопку +";
+"folder.picker.title" = "Перемещение";
+"folder.picker.empty.hint" = "Создайте новую папку кнопкой +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -461,9 +461,16 @@
 "content.system.you_started" = "Вы";
 "content.system.this_device" = "это устройство";
 
-"content.system.call.you" = "Вы";
 "content.system.call.called" = "%@ звонили";
 "content.system.call.called-you" = "%@ звонил(-а)";
+"content.system.call.called.you" = "Вы";
+
+"content.system.call.missed-call" = "Пропущенный вызов";
+"content.system.call.missed-call-you" = "Пропущенный вызов";
+
+"content.system.call.missed-call.groups" = "Пропущенный вызов от %@";
+"content.system.call.missed-call.groups-you" = "Пропущенный вызов от %2$@";
+"content.system.call.missed-call.groups.you" = "Вы";
 
 "content.system.renamed_conv.title" = "%@ переименовал(-а) беседу";
 "content.system.renamed_conv.title-you" = "%@ переименовали беседу";
@@ -699,7 +706,7 @@
 "participants.avatar.guest.title" = "Гость";
 
 "participants.title" = "Детали";
-"participants.all.title" = "Участники";
+"participants.all.title" = "Контакты";
 "participants.section.participants" = "Участники (%d)";
 "participants.section.services" = "Сервисы (%d)";
 "participants.section.settings" = "Настройки";
@@ -714,7 +721,7 @@
 "meta.menu.unarchive" = "Разархивировать";
 "meta.menu.delete" = "Удалить группу…";
 "meta.menu.clear_content" = "Очистить контент…";
-"meta.menu.move_to_folder" = "Переместить в…";
+"meta.menu.move_to_folder" = "Переместить…";
 "meta.menu.remove_from_folder" = "Удалить из \"%@\"";
 "meta.menu.silence.mute" = "Отключить уведомления";
 "meta.menu.silence.unmute" = "Включить уведомления";

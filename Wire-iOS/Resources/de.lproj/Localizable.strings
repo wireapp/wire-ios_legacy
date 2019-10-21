@@ -465,7 +465,12 @@
 "content.system.call.called-you" = "%@ hast angerufen";
 "content.system.call.called.you" = "Du";
 
-"content.system.call.missed-call.groups.you" = "Dir";
+"content.system.call.missed-call" = "Verpasster Anruf";
+"content.system.call.missed-call-you" = "Verpasster Anruf";
+
+"content.system.call.missed-call.groups" = "Verpasster Anruf von %@";
+"content.system.call.missed-call.groups-you" = "Verpasster Anruf von %2$@";
+"content.system.call.missed-call.groups.you" = "Du";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
 "content.system.renamed_conv.title-you" = "%@ hast das Gespräch umbenannt";

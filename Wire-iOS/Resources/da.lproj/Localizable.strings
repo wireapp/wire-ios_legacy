@@ -461,9 +461,16 @@
 "content.system.you_started" = "Dig";
 "content.system.this_device" = "denne enhed";
 
-"content.system.call.you" = "Dig";
 "content.system.call.called" = "%@ har ringet";
 "content.system.call.called-you" = "%@ har ringet";
+"content.system.call.called.you" = "Dig";
+
+"content.system.call.missed-call" = "Ubesvarede opkald";
+"content.system.call.missed-call-you" = "Ubesvarede opkald";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Dig";
 
 "content.system.renamed_conv.title" = "%@ omdøbte samtalen";
 "content.system.renamed_conv.title-you" = "%@ omdøbte samtalen";
