@@ -19,6 +19,8 @@
 import Foundation
 import DifferenceKit
 
+
+/// a item which can be presented in the conversaton list
 protocol ConversationListItem {}
 
 extension ZMConversation: ConversationListItem {}
