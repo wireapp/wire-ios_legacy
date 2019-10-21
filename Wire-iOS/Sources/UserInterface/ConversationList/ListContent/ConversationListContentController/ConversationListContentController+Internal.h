@@ -18,14 +18,12 @@
 
 @class ConversationListViewModel;
 
-@protocol ConversationListViewModelDelegate;
-
 static NSString * _Nullable const CellReuseIdConnectionRequests = @"CellIdConnectionRequests";
 static NSString * _Nullable const CellReuseIdConversation = @"CellId";
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ConversationListContentController () <ConversationListViewModelDelegate>
+@interface ConversationListContentController ()
 
 @property (nonatomic, strong, nonnull) ConversationListViewModel *listViewModel;
 
@@ -40,13 +38,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) UISelectionFeedbackGenerator *selectionFeedbackGenerator;
 
-- (void)ensureCurrentSelection;
 - (void)setupViews;
-- (void)listViewModelShouldBeReloaded;
 
-@end
-
-@interface ConversationListContentController (PeekAndPop) <UIViewControllerPreviewingDelegate>
 @end
 
 NS_ASSUME_NONNULL_END

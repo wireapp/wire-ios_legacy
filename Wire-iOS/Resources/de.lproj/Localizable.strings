@@ -461,9 +461,11 @@
 "content.system.you_started" = "Du";
 "content.system.this_device" = "dieses Gerät";
 
-"content.system.call.you" = "Du";
 "content.system.call.called" = "%@ hat angerufen";
 "content.system.call.called-you" = "%@ hast angerufen";
+"content.system.call.called.you" = "Du";
+
+"content.system.call.missed-call.groups.you" = "Dir";
 
 "content.system.renamed_conv.title" = "%@ hat das Gespräch umbenannt";
 "content.system.renamed_conv.title-you" = "%@ hast das Gespräch umbenannt";

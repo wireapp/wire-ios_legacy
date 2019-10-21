@@ -17,22 +17,31 @@
 //
 
 import Foundation
+import DifferenceKit
 
-@objc
-protocol ConversationListViewModelDelegate: NSObjectProtocol {
+
+/// a item which can be presented in the conversaton list
+protocol ConversationListItem {}
+
+extension ZMConversation: ConversationListItem {}
+
+// Placeholder for conversation requests item
+struct ConversationListConnectRequestsItem: ConversationListItem, Hashable {}
+
+protocol ConversationListViewModelDelegate: class {
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
+
     func listViewModelShouldBeReloaded()
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt)
-    /// Delegate MUST call the updateBlock in appropriate place (e.g. collectionView performBatchUpdates:) to update the model.
 
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?)
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?)
-
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateConversationWithChange change: ConversationChangeInfo?)
-}
-
-/// TODO: merge with above delegate after converted to Swift
-protocol ConversationListViewModelStateDelegate: class {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool)
+    
     func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool)
+
+    func reload<C>(
+    using stagedChangeset: StagedChangeset<C>,
+    interrupt: ((Changeset<C>) -> Bool)?,
+    setData: (C?) -> Void
+    )
 }
 
 protocol ConversationListViewModelRestorationDelegate: class {

@@ -43,8 +43,7 @@ struct CallCellViewModel {
             systemMessageData.systemMessageType == systemMessageType
             else { return nil }
 
-        let senderString = string(for: sender)
-        
+        let senderString: String
         var called = NSAttributedString()
         let childs = systemMessageData.childMessages.count
         
@@ -56,9 +55,12 @@ struct CallCellViewModel {
                 detailKey.append(".groups")
             }
             
+            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : sender.displayName
             called = key(with: detailKey).localized(pov: sender.pov, args: childs + 1, senderString) && labelFont
         } else {
-            called = key(with: "called").localized(pov: sender.pov, args: senderString) && labelFont
+            let detailKey = "called"
+            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : sender.displayName
+            called = key(with: detailKey).localized(pov: sender.pov, args: senderString) && labelFont
         }
         
         var title = called.adding(font: labelBoldFont, to: senderString)
@@ -70,11 +72,11 @@ struct CallCellViewModel {
         return title && labelTextColor
     }
 
-    private func string(for user: ZMUser) -> String {
-        return user.isSelfUser ? key(with: "you").localized : user.displayName
-    }
-
     private func key(with component: String) -> String {
         return "content.system.call.\(component)"
+    }
+    
+    private func selfKey(with component: String) -> String {
+        return "\(key(with: component)).you"
     }
 }
