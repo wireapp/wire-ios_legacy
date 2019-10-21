@@ -19,11 +19,6 @@
 import Foundation
 import DifferenceKit
 
-// Placeholder for conversation requests item
-///TODO: create a protocol, shared with ZMConversation
-@objc
-final class ConversationListConnectRequestsItem : NSObject {}
-
 final class ConversationListViewModel: NSObject {
     
     typealias SectionIdentifier = String
@@ -130,7 +125,7 @@ final class ConversationListViewModel: NSObject {
         ///
         /// - Parameter item: item to search
         /// - Returns: the index of the item
-        func index(for item: AnyHashable) -> Int? {
+        func index(for item: ConversationListItem) -> Int? {
             return items.firstIndex(of: SectionItem(item: item, kind: kind))
         }
         
@@ -155,31 +150,25 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
-    @objc
     static let contactRequestsItem: ConversationListConnectRequestsItem = ConversationListConnectRequestsItem()
 
     /// current selected ZMConversaton or ConversationListConnectRequestsItem object
-    ///TODO: create protocol of these 2 classes
-    @objc
-    private(set) var selectedItem: AnyHashable? {
+    private(set) var selectedItem: ConversationListItem? {
         didSet {
             /// expand the section if selcted item is update
-            guard selectedItem != oldValue,
-                  let indexPath = self.indexPath(for: selectedItem),
+            guard let indexPath = self.indexPath(for: selectedItem),
                   collapsed(at: indexPath.section) else { return }
 
             setCollapsed(sectionIndex: indexPath.section, collapsed: false, batchUpdate: false)
         }
     }
 
-    @objc
-    weak var delegate: ConversationListViewModelDelegate?
     weak var restorationDelegate: ConversationListViewModelRestorationDelegate? {
         didSet {
             restorationDelegate?.listViewModel(self, didRestoreFolderEnabled: folderEnabled)
         }
     }
-    weak var stateDelegate: ConversationListViewModelStateDelegate? {
+    weak var delegate: ConversationListViewModelDelegate? {
         didSet {
             delegateFolderEnableState(newState: state)
         }
@@ -208,12 +197,31 @@ final class ConversationListViewModel: NSObject {
 
     /// make items has different hash in different sections
     struct SectionItem: Hashable, Differentiable {
-        let item: AnyHashable
+        let item: ConversationListItem
         let isFavorite: Bool
         
-        fileprivate init(item: AnyHashable, kind: Section.Kind) {
+        fileprivate init(item: ConversationListItem, kind: Section.Kind) {
             self.item = item
             self.isFavorite = kind == .favorites
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(isFavorite)
+            
+            if let hashable = item as? AnyHashable {
+                hasher.combine(hashable)
+            }
+        }
+
+        static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
+            if lhs.isFavorite != rhs.isFavorite { return false }
+            
+            if let lhsItem = lhs.item as? AnyHashable,
+               let rhsItem = rhs.item as? AnyHashable {
+                return lhsItem == rhsItem
+            } else {
+                return false
+            }
         }
     }
 
@@ -263,7 +271,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func delegateFolderEnableState(newState: State) {
-        stateDelegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
+        delegate?.listViewModel(self, didChangeFolderEnabled: folderEnabled)
     }
 
     private func setupObservers() {
@@ -304,6 +312,7 @@ final class ConversationListViewModel: NSObject {
         return kind(of: sectionIndex)?.canonicalName
     }
 
+    ///TODO： use int
     @objc
     var sectionCount: UInt {
         return UInt(sections.count)
@@ -321,27 +330,23 @@ final class ConversationListViewModel: NSObject {
         return sections.first(where: { $0.kind == kind })?.elements.count ?? nil
     }
 
-    ///TODO: convert all UInt to Int
-    @objc(sectionAtIndex:)
-    func section(at sectionIndex: UInt) -> [AnyHashable]? {
+    func section(at sectionIndex: Int) -> [ConversationListItem]? {
         if sectionIndex >= sectionCount {
             return nil
         }
 
-        return sections[Int(sectionIndex)].elements.map(\.item)
+        return sections[sectionIndex].elements.map(\.item)
     }
 
-    @objc(itemForIndexPath:)
-    func item(for indexPath: IndexPath) -> AnyHashable? {
-        guard let items = section(at: UInt(indexPath.section)),
+    func item(for indexPath: IndexPath) -> ConversationListItem? {
+        guard let items = section(at: indexPath.section),
               items.indices.contains(indexPath.item) else { return nil }
         
         return items[indexPath.item]
     }
 
     ///TODO: Question: we may have multiple items in folders now. return array of IndexPaths?
-    @objc(indexPathForItem:)
-    func indexPath(for item: AnyHashable?) -> IndexPath? {
+    func indexPath(for item: ConversationListItem?) -> IndexPath? {
         guard let item = item else { return nil } 
 
         for (sectionIndex, section) in sections.enumerated() {
@@ -384,9 +389,8 @@ final class ConversationListViewModel: NSObject {
     ///
     /// - Parameter indexPath: indexPath of the item to select
     /// - Returns: the item selected
-    @objc(selectItemAtIndexPath:)
     @discardableResult
-    func selectItem(at indexPath: IndexPath) -> AnyHashable? {
+    func selectItem(at indexPath: IndexPath) -> ConversationListItem? {
         let item = self.item(for: indexPath)
         select(itemToSelect: item)
         return item
@@ -399,13 +403,12 @@ final class ConversationListViewModel: NSObject {
     ///   - index: index of search item
     ///   - sectionIndex: section of search item
     /// - Returns: an index path for next existing item
-    @objc(itemAfterIndex:section:)
-    func item(after index: Int, section sectionIndex: UInt) -> IndexPath? {
+    func item(after index: Int, section sectionIndex: Int) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
         if section.count > index + 1 {
             // Select next item in section
-            return IndexPath(item: index + 1, section: Int(sectionIndex))
+            return IndexPath(item: index + 1, section: sectionIndex)
         } else if index + 1 >= section.count {
             // select last item in previous section
             return firstItemInSection(after: sectionIndex)
@@ -414,7 +417,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func firstItemInSection(after sectionIndex: UInt) -> IndexPath? {
+    private func firstItemInSection(after sectionIndex: Int) -> IndexPath? {
         let nextSectionIndex = sectionIndex + 1
 
         if nextSectionIndex >= sectionCount {
@@ -427,7 +430,7 @@ final class ConversationListViewModel: NSObject {
                 // Recursively move forward
                 return firstItemInSection(after: nextSectionIndex)
             } else {
-                return IndexPath(item: 0, section: Int(nextSectionIndex))
+                return IndexPath(item: 0, section: nextSectionIndex)
             }
         }
 
@@ -441,16 +444,15 @@ final class ConversationListViewModel: NSObject {
     ///   - index: index of search item
     ///   - sectionIndex: section of search item
     /// - Returns: an index path for previous existing item
-    @objc(itemPreviousToIndex:section:)
-    func itemPrevious(to index: Int, section sectionIndex: UInt) -> IndexPath? {
+    func itemPrevious(to index: Int, section sectionIndex: Int) -> IndexPath? {
         guard let section = self.section(at: sectionIndex) else { return nil }
 
         if section.indices.contains(index - 1) {
             // Select previous item in section
-            return IndexPath(item: index - 1, section: Int(sectionIndex))
+            return IndexPath(item: index - 1, section: sectionIndex)
         } else if index == 0 {
             // select last item in previous section
-            return lastItemInSectionPrevious(to: Int(sectionIndex))
+            return lastItemInSectionPrevious(to: sectionIndex)
         }
 
         return nil
@@ -464,13 +466,13 @@ final class ConversationListViewModel: NSObject {
             return nil
         }
 
-        guard let section = self.section(at: UInt(previousSectionIndex)) else { return nil }
+        guard let section = self.section(at: previousSectionIndex) else { return nil }
 
         if section.isEmpty {
             // Recursively move back
             return lastItemInSectionPrevious(to: previousSectionIndex)
         } else {
-            return IndexPath(item: section.count - 1, section: Int(previousSectionIndex))
+            return IndexPath(item: section.count - 1, section: previousSectionIndex)
         }
     }
     
@@ -523,7 +525,7 @@ final class ConversationListViewModel: NSObject {
 
         let changeset = StagedChangeset(source: sections, target: newValue)
 
-        stateDelegate?.reload(using: changeset, interrupt: { _ in
+        delegate?.reload(using: changeset, interrupt: { _ in
             return false
         }) { data in
             if let data = data {
@@ -533,9 +535,8 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    @objc(selectItem:)
     @discardableResult
-    func select(itemToSelect: AnyHashable?) -> Bool {
+    func select(itemToSelect: ConversationListItem?) -> Bool {
         guard let itemToSelect = itemToSelect else {
             internalSelect(itemToSelect: nil)
             return false
@@ -556,9 +557,12 @@ final class ConversationListViewModel: NSObject {
         return true
     }
 
-    private func internalSelect(itemToSelect: AnyHashable?) {
+    private func internalSelect(itemToSelect: ConversationListItem?) {
         selectedItem = itemToSelect
-        delegate?.listViewModel(self, didSelectItem: itemToSelect)
+
+        if let itemToSelect = itemToSelect as? ConversationListItem {
+            delegate?.listViewModel(self, didSelectItem: itemToSelect)
+        }
     }
 
     // MARK: - collapse section
@@ -595,7 +599,7 @@ final class ConversationListViewModel: NSObject {
         if batchUpdate {
             let changeset = StagedChangeset(source: sections, target: newValue)
 
-            stateDelegate?.reload(using: changeset, interrupt: { _ in
+            delegate?.reload(using: changeset, interrupt: { _ in
                 return false
             }) { data in
                 if let data = data {
@@ -604,7 +608,7 @@ final class ConversationListViewModel: NSObject {
             }
         } else {
             sections = newValue
-            stateDelegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
+            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
         }
     }
 

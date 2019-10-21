@@ -21,7 +21,7 @@ import XCTest
 import DifferenceKit
 
 
-final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate, ConversationListViewModelStateDelegate {
+final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         //no-op
     }
@@ -42,7 +42,7 @@ final class MockConversationListViewModelDelegate: NSObject, ConversationListVie
         //no-op
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         //no-op
     }
 
@@ -59,8 +59,8 @@ final class ConversationListViewModelTests: XCTestCase {
     var mockBar: MockBar!
 
     /// constants
-    let sectionGroups: UInt = 2
-    let sectionContacts: UInt = 3
+    let sectionGroups: Int = 2
+    let sectionContacts: Int = 3
 
     override func setUp() {
         super.setUp()
@@ -71,7 +71,6 @@ final class ConversationListViewModelTests: XCTestCase {
         
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
         sut.delegate = mockConversationListViewModelDelegate
-        sut.stateDelegate = mockConversationListViewModelDelegate
     }
     
     override func tearDown() {
@@ -132,7 +131,7 @@ final class ConversationListViewModelTests: XCTestCase {
         let item = sut.item(for: indexPath)
 
         ///THEN
-        XCTAssertEqual(item, mockConversation)
+        XCTAssertEqual(item as? AnyHashable, mockConversation)
     }
 
     func testThatOutOfBoundIndexPathReturnsNilItem() {
@@ -176,7 +175,7 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: sectionGroups)?.first, mockConversation)
+        XCTAssertEqual(sut.section(at: Int(sectionGroups))?.first as? AnyHashable, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
     }
@@ -226,7 +225,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.select(itemToSelect: mockConversation))
 
         ///THEN
-        XCTAssertEqual(sut.selectedItem, mockConversation)
+        XCTAssertEqual(sut.selectedItem as? AnyHashable, mockConversation)
     }
 
     func testThatSelectItemAtIndexReturnCorrectConversation() {
@@ -241,7 +240,7 @@ final class ConversationListViewModelTests: XCTestCase {
         let indexPath = sut.indexPath(for: mockConversation)!
 
         ///THEN
-        XCTAssertEqual(sut.selectItem(at: indexPath), mockConversation)
+        XCTAssertEqual(sut.selectItem(at: indexPath) as? AnyHashable, mockConversation)
     }
 
     // MARK: - state
