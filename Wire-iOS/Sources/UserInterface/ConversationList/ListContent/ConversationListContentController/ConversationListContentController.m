@@ -63,89 +63,71 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // viewWillAppear: can get called also when dismissing the controller above this one.
-    // The user session might not be there anymore in some cases, e.g. when logging out
-    if ([ZMUserSession sharedSession] == nil) {
-        return;
-    }
-    [self updateVisibleCells];
-    
-    [self scrollToCurrentSelectionAnimated:NO];
-    
-    self.mediaPlaybackManager = AppDelegate.sharedAppDelegate.mediaPlaybackManager;
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                             keyPath:@"activeMediaPlayer"
-                                                              target:self
-                                                            selector:@selector(activeMediaPlayerChanged:)];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.activeMediaPlayerObserver = nil;
-}
-
-- (void)setupViews
-{
-    [self.collectionView registerClass:[ConnectRequestsCell class] forCellWithReuseIdentifier:CellReuseIdConnectionRequests];
-    [self.collectionView registerClass:[ConversationListCell class] forCellWithReuseIdentifier:CellReuseIdConversation];
-    
-    self.collectionView.backgroundColor = [UIColor clearColor];
-    self.collectionView.alwaysBounceVertical = YES;
-    self.collectionView.allowsSelection = YES;
-    self.collectionView.allowsMultipleSelection = NO;
-    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
-    self.collectionView.delaysContentTouches = NO;
-    self.collectionView.accessibilityIdentifier = @"conversation list";
-    self.clearsSelectionOnViewWillAppear = NO;
-}
-
-- (void)updateVisibleCells
-{
-    [self updateCellForConversation:nil];
-}
-
-///TODO: mv logic to VM
-- (void)updateCellForConversation:(ZMConversation *)conversation
-{
-    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-        if ([cell isKindOfClass:[ConversationListCell class]]) {
-            ConversationListCell *convListCell = (ConversationListCell *)cell;
-            
-            if (conversation == nil || [convListCell.conversation isEqual:conversation]) {
-                [convListCell updateAppearance];
-            }
-        }
-    }
-}
-
-#pragma mark - Custom
-
-+ (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
-{
-    __block NSMutableArray * result = [NSMutableArray arrayWithCapacity:indexes.count];
-    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-        [result addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
-    }];
-    return result;
-}
-
-//#pragma mark - UICollectionViewDataSource
-
-//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+//- (void)viewWillAppear:(BOOL)animated
 //{
-//    NSInteger sections = self.listViewModel.sectionCount;
-//    return sections;
+//    [super viewWillAppear:animated];
+//
+//    // viewWillAppear: can get called also when dismissing the controller above this one.
+//    // The user session might not be there anymore in some cases, e.g. when logging out
+//    if ([ZMUserSession sharedSession] == nil) {
+//        return;
+//    }
+//    [self updateVisibleCells];
+//    
+//    [self scrollToCurrentSelectionAnimated:NO];
+//    
+//    self.mediaPlaybackManager = AppDelegate.sharedAppDelegate.mediaPlaybackManager;
+//    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
+//                                                             keyPath:@"activeMediaPlayer"
+//                                                              target:self
+//                                                            selector:@selector(activeMediaPlayerChanged:)];
 //}
 //
-//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+//- (void)viewWillDisappear:(BOOL)animated
 //{
-//    NSInteger c = [self.listViewModel numberOfItemsInSection:section];
-//    return c;
+//    [super viewWillDisappear:animated];
+//    self.activeMediaPlayerObserver = nil;
+//}
+
+//- (void)setupViews
+//{
+//    [self.collectionView registerClass:[ConnectRequestsCell class] forCellWithReuseIdentifier:CellReuseIdConnectionRequests];
+//    [self.collectionView registerClass:[ConversationListCell class] forCellWithReuseIdentifier:CellReuseIdConversation];
+//
+//    self.collectionView.backgroundColor = [UIColor clearColor];
+//    self.collectionView.alwaysBounceVertical = YES;
+//    self.collectionView.allowsSelection = YES;
+//    self.collectionView.allowsMultipleSelection = NO;
+//    self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//    self.collectionView.delaysContentTouches = NO;
+//    self.collectionView.accessibilityIdentifier = @"conversation list";
+//    self.clearsSelectionOnViewWillAppear = NO;
+//}
+
+//- (void)updateVisibleCells
+//{
+//    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+//        if ([cell isKindOfClass:[ConversationListCell class]]) {
+//            ConversationListCell *convListCell = (ConversationListCell *)cell;
+//                [convListCell updateAppearance];
+//        }
+//    }
+//}
+
+///TODO: mv logic to VM
+//- (void)updateCellForConversation:(ZMConversation *)conversation
+//{
+//}
+
+//#pragma mark - Custom
+
+//+ (NSArray *)indexPathsForIndexes:(NSIndexSet *)indexes inSection:(NSUInteger)section
+//{
+//    __block NSMutableArray * result = [NSMutableArray arrayWithCapacity:indexes.count];
+//    [indexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+//        [result addObject:[NSIndexPath indexPathForItem:idx inSection:section]];
+//    }];
+//    return result;
 //}
 
 @end

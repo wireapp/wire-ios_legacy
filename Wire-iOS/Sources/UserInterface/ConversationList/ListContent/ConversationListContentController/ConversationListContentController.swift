@@ -35,6 +35,30 @@ extension ConversationListContentController {
         }
     }
 
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // viewWillAppear: can get called also when dismissing the controller above this one.
+        // The user session might not be there anymore in some cases, e.g. when logging out
+        if ZMUserSession.shared() == nil {
+            return
+        }
+        updateVisibleCells()
+
+        scrollToCurrentSelection(animated: false)
+
+        if let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+        activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)))
+
+        self.mediaPlaybackManager = mediaPlaybackManager
+        }
+    }
+
+    override open func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        activeMediaPlayerObserver = nil
+    }
+
     @objc
     func reload() {
         collectionView.reloadData()
@@ -44,6 +68,28 @@ extension ConversationListContentController {
         // and then unarchive all at the same time
         view.setNeedsLayout()
     }
+
+    func updateVisibleCells() {
+        for cell in collectionView.visibleCells {
+            (cell as? ConversationListCell)?.updateAppearance()
+        }
+    }
+
+    func setupViews() {
+        collectionView.register(ConnectRequestsCell.self, forCellWithReuseIdentifier: CellReuseIdConnectionRequests)
+        collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: CellReuseIdConversation)
+
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.alwaysBounceVertical = true
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.delaysContentTouches = false
+        collectionView.accessibilityIdentifier = "conversation list"
+        clearsSelectionOnViewWillAppear = false
+    }
+
+
 
     // MARK: - section header
 
