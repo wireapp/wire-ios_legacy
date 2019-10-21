@@ -134,37 +134,18 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return result;
 }
 
-#pragma mark - UICollectionViewDataSource
+//#pragma mark - UICollectionViewDataSource
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    NSInteger sections = self.listViewModel.sectionCount;
-    return sections;
-}
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    NSInteger c = [self.listViewModel numberOfItemsInSection:section];
-    return c;
-}
-
-@end
-
-
-
-//@implementation ConversationListContentController (UICollectionViewDelegate)
-
-//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+//- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 //{
-//    [self.selectionFeedbackGenerator prepare];
-//    return YES;
+//    NSInteger sections = self.listViewModel.sectionCount;
+//    return sections;
 //}
 //
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 //{
-//    if ([self.contentDelegate respondsToSelector:@selector(conversationListDidScroll:)]) {
-//        [self.contentDelegate conversationListDidScroll:self];
-//    }
+//    NSInteger c = [self.listViewModel numberOfItemsInSection:section];
+//    return c;
 //}
 
-//@end
+@end

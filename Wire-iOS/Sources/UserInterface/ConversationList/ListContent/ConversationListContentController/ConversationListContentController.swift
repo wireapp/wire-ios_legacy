@@ -163,6 +163,15 @@ extension ConversationListContentController {
     
     // MARK: - UICollectionViewDataSource
 
+    override open func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return listViewModel.sectionCount
+    }
+
+    override open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return listViewModel.numberOfItems(inSection: section)
+    }
+
+
     override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = listViewModel.item(for: indexPath)
         let cell: UICollectionViewCell
