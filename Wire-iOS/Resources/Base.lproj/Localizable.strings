@@ -466,7 +466,7 @@
 "content.system.call.called.you" = "You";
 
 "content.system.call.missed-call" = "Missed call";
-"content.system.call.missed-call-you" = "Missed call";;
+"content.system.call.missed-call-you" = "Missed call";
 
 "content.system.call.missed-call.groups" = "Missed call from %@";
 "content.system.call.missed-call.groups-you" = "Missed call from %2$@";
