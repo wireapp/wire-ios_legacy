@@ -140,7 +140,16 @@ extension ConversationListContentController {
     }
     
     // MARK: - UICollectionViewDelegate
-    
+
+    override open func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        selectionFeedbackGenerator.prepare()
+        return true
+    }
+
+    override open func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        contentDelegate?.conversationListDidScroll(self)
+    }
+
     override open func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
         selectionFeedbackGenerator.selectionChanged()

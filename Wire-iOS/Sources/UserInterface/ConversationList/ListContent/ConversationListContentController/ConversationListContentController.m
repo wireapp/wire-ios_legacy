@@ -152,19 +152,19 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 
-@implementation ConversationListContentController (UICollectionViewDelegate)
+//@implementation ConversationListContentController (UICollectionViewDelegate)
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.selectionFeedbackGenerator prepare];
-    return YES;
-}
+//- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [self.selectionFeedbackGenerator prepare];
+//    return YES;
+//}
+//
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if ([self.contentDelegate respondsToSelector:@selector(conversationListDidScroll:)]) {
+//        [self.contentDelegate conversationListDidScroll:self];
+//    }
+//}
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ([self.contentDelegate respondsToSelector:@selector(conversationListDidScroll:)]) {
-        [self.contentDelegate conversationListDidScroll:self];
-    }
-}
-
-@end
+//@end
