@@ -146,7 +146,7 @@ final class ConversationListContentController: UICollectionViewController {
     }
 
 
-    func registerSectionHeader() {
+    private func registerSectionHeader() {
         collectionView?.register(ConversationListHeaderView.self, forSupplementaryViewOfKind:
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
 
