@@ -18,8 +18,8 @@
 
 import Foundation
 
-public let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
-public let UIWindowLevelCallOverlay: UIWindow.Level = UIWindowLevelNotification - 1
+let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
+let UIWindowLevelCallOverlay: UIWindow.Level = UIWindowLevelNotification - 1
 
 final class CallWindow: PassthroughWindow {
     let callController = CallWindowRootViewController()
@@ -33,7 +33,8 @@ final class CallWindow: PassthroughWindow {
         windowLevel = UIWindowLevelCallOverlay
     }
 
-    @available(*, unavailable) required init?(coder aDecoder: NSCoder) {
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

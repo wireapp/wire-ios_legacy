@@ -32,7 +32,7 @@ final class CallWindowRootViewController: UIViewController {
         callController.minimizeCall(animated: animated, completion: completion)
     }
     
-    @objc var isDisplayingCallOverlay: Bool {
+    var isDisplayingCallOverlay: Bool {
         return callController?.activeCallViewController != nil
     }
     
