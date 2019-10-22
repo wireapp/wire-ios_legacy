@@ -510,15 +510,21 @@ final class ConversationListViewModel: NSObject {
 
         return nil
     }
-
-    @discardableResult
-    private func updateForConversationType(kind: Section.Kind) -> Bool {
-        guard let conversationDirectory = userSession?.conversationDirectory else { return false }
+    ///TODO: unarchive a fav -> favoriten is expanded but no items in it. collpase -> crash
+    private func updateForConversationType(kind: Section.Kind) {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return }
         
         var newValue: [Section]
         if let sectionNumber = self.sectionNumber(for: kind) {
             newValue = sections
-            newValue[sectionNumber].items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+            let newList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+
+            ///Refresh the header when a section becomes empty
+            if !sections[sectionNumber].items.isEmpty, newList.isEmpty {
+                delegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber, animated: true)
+                return
+            }
+            newValue[sectionNumber].items = newList
         } else {
             newValue = createSections()
         }
@@ -532,7 +538,7 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
-        return true
+        return
     }
 
     @discardableResult
@@ -710,7 +716,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         case .folder(let label):
             kind = .folder(label: label)
         case .archived:
-            kind = nil
+            kind = nil ///TODO: refesh fav?
         }
         
         return kind
