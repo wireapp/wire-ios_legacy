@@ -18,13 +18,12 @@
 
 
 import WireCommonComponents
-/*
- //Enable after securing app extensions from App Center
+
 import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
-*/
+
 
 /// Flag to determine if the App Center SDK has already been initialized
 private var didSetupAppCenter = false
@@ -40,13 +39,13 @@ class CrashReporter {
         // See https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
 
-        /*
-         //Enable after securing app extensions from App Center
-            MSAppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
-            MSAppCenter.configure(withAppSecret: wr_appCenterAppId())
-            // manager.crashManager.crashManagerStatus = .autoSend
-            MSAppCenter.start()
-         */
+        
+        //Enable after securing app extensions from App Center
+        MSAppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
+        MSAppCenter.configure(withAppSecret: wr_appCenterAppId())
+        // manager.crashManager.crashManagerStatus = .autoSend
+        MSAppCenter.start()
+ 
     }
 
     private static var appCenterEnabled: Bool {

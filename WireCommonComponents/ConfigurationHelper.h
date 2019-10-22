@@ -16,25 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+#import <Foundation/Foundation.h>
 
-#import "PreprocessorHelper.h"
-@import Foundation;
-
-#define STRINGIZE_INTERNAL(x) #x
-#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
-
-NSString *wr_companyLoginURLScheme() {
-    return @STRINGIZE(WIRE_SSO_URL_SCHEME);
-}
-
-NSString * wr_appCenterAppId() {
-    return @STRINGIZE(APP_CENTER_APP_ID_KEY);
-}
-
-BOOL wr_useAppCenter() {
-#if USE_APP_CENTER
-    return YES;
-#else
-    return NO;
-#endif
-}
+NSString *wr_companyLoginURLScheme(void);
+NSString *wr_appCenterAppId(void);
+BOOL wr_useAppCenter(void);

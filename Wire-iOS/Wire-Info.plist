@@ -40,7 +40,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcenter-${APP_SECRET}</string>
+				<string>appcenter-${APP_CENTER_APP_ID}</string>
 			</array>
 		</dict>
 		<dict>

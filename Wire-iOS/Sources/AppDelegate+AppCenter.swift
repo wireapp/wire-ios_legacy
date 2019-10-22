@@ -59,7 +59,7 @@ extension AppDelegate {
         
         //hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
         
-        setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
+        MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
         
         if appCenterTrackingEnabled {
             MSAppCenter.start()
@@ -67,7 +67,7 @@ extension AppDelegate {
         
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
-            timeIntervalCrashInLastSessionOccurred < 5 {
+            MSCrashes.timeIntervalCrashInLastSessionOccurred < 5 {
             zmLog.error("AppCenterIntegration: START Waiting for the crash log upload...")
             self.appCenterInitCompletion = completion
             self.perform(#selector(crashReportUploadDone), with: nil, afterDelay: 5)
@@ -87,21 +87,6 @@ extension AppDelegate {
         }
         
     }
-    
-    // To be moved into Common Components
-    
-    @objc public func setTrackingEnabled(_ enabled: Bool) {
-        MSAnalytics.setEnabled(!enabled)
-        MSDistribute.setEnabled(!enabled)
-        MSCrashes.setEnabled(!enabled)
-    }
-    
-    // To be moved into Common Components
-    
-    public var timeIntervalCrashInLastSessionOccurred: TimeInterval? {
-        guard let lastSessionCrashReport = MSCrashes.lastSessionCrashReport() else { return nil }
-        return lastSessionCrashReport.appErrorTime.timeIntervalSince(lastSessionCrashReport.appStartTime)
-    }
 }
 
 extension AppDelegate: MSCrashesDelegate {
@@ -118,13 +103,6 @@ extension AppDelegate: MSCrashesDelegate {
         crashReportUploadDone()
     }
 
-}
-
-extension MSAppCenter {
-    
-    static func start() {
-        MSAppCenter.start(withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
-    }
 }
 
 /*

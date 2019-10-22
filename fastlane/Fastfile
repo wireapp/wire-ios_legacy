@@ -25,7 +25,7 @@ platform :ios do
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
-                config_branch = "master"
+                config_branch = "feature/app-center-support"
             end
 
             build = Build.new(options: options)
@@ -68,7 +68,7 @@ platform :ios do
         )
     end
 
-    desc "Build for release to AppStore or Hockey/S3"
+    desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         build = Build.new(options: options)
 
@@ -132,7 +132,7 @@ platform :ios do
     end
 
     desc "Upload for internal use"
-    lane :upload_hockey do |options|
+    lane :upload_app_center do |options|
         build = Build.new(options: options)
         changelog = ""
 
@@ -148,36 +148,33 @@ platform :ios do
                 pretty: "* [%an] %s",
             )
         end
-
-        hockey_app_id = options[:hockey_app_id]
-        if hockey_app_id.nil? 
-            hockey_app_id = build.hockey_app_id
-        end
         
-        hockey(
-          api_token: ENV["HOCKEY_APP_TOKEN"],
-          public_identifier: hockey_app_id,
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: ENV["APPCENTER_APP_NAME"],
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
-          notes: changelog,
-          notify: "0"
+          release_notes: changelog,
+          notify_testers: "0"
         )
     end
 
     desc "Upload dSYMs for AppStore crash tracking"
-    lane :upload_hockey_appstore do |options|
+    lane :upload_app_center_appstore do |options|
         build = Build.new(options: options)
 
         if !build.appstore_build
             UI.user_error! "This step is only relevant for AppStore builds"
         end
 
-        hockey(
-          api_token: ENV["HOCKEY_APP_TOKEN"],
-          public_identifier: build.hockey_app_id,
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: ENV["APPCENTER_APP_NAME"],
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
           upload_dsym_only: true,
           release_type: "1",
-          notify: "0"
+          notify_testers: "0"
         )
     end
 
@@ -392,27 +389,6 @@ class Build
             "Release"
         else
             @build_type
-        end
-    end
-
-    # Hockey
-
-    def hockey_app_id
-        case @build_type
-        when "Playground"
-            ENV["HOCKEY_IOS_PLAYGROUND_ID"]
-        when "Development"
-            ENV["HOCKEY_IOS_DEV_ID"]
-        when "Internal"
-            ENV["HOCKEY_IOS_INT_ID"]
-        when "AppStore"
-            ENV["HOCKEY_IOS_APPSTORE_ID"]
-        when "AVS"
-            ENV["HOCKEY_IOS_AVS_ID"]
-        when "RC"
-            ENV["HOCKEY_IOS_RELEASE_ID"]
-        else
-            UI.user_error! "Unknown build type: #{@build_type}"
         end
     end
 

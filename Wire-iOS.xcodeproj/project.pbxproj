@@ -438,11 +438,21 @@
 		7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5836651FD5ABFE001CC843 /* TitleView.swift */; };
 		7C5B94FA22DCAF3700A6F8BB /* BlockerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5B94F922DCAF3700A6F8BB /* BlockerViewController.swift */; };
 		7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */; };
-		7C64B6F1235710E500385B70 /* ConfigurationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BF841E2A2107212800CB09E4 /* ConfigurationHelper.m */; };
-		7C64B6FA2357160700385B70 /* PreprocessorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C64B6F92357160700385B70 /* PreprocessorHelper.m */; };
 		7C6878DB201B3785003A0C7A /* StartUIViewController+SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */; };
 		7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */; };
 		7C72F03D200E0D03001231D3 /* PhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */; };
+		7C88BB84235DE2D80075BCC5 /* AppCenterData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB7B5D235998E200A65042 /* AppCenterData.framework */; };
+		7C88BB85235DE2D80075BCC5 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
+		7C88BB86235DE2D80075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
+		7C88BB87235DE2D80075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
+		7C88BB88235DE2D80075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
+		7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB7B5D235998E200A65042 /* AppCenterData.framework */; };
+		7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
+		7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
+		7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
+		7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
+		7C88BB8E235DE3EE0075BCC5 /* ConfigurationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BF841E2A2107212800CB09E4 /* ConfigurationHelper.m */; };
+		7C88BB8F235DE3F50075BCC5 /* ConfigurationHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BF841E292107212800CB09E4 /* ConfigurationHelper.h */; };
 		7CA971F7235605D6007C5F09 /* AppDelegate+AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */; };
 		7CAB7B59235998E200A65042 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
 		7CAB7B5A235998E200A65042 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
@@ -2019,8 +2029,6 @@
 		7C5836651FD5ABFE001CC843 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		7C5B94F922DCAF3700A6F8BB /* BlockerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockerViewController.swift; sourceTree = "<group>"; };
 		7C5DF2CB1FD7DEAD00B793B6 /* AvailabilityExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityExtensions.swift; sourceTree = "<group>"; };
-		7C64B6F82357160600385B70 /* PreprocessorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreprocessorHelper.h; sourceTree = "<group>"; };
-		7C64B6F92357160700385B70 /* PreprocessorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreprocessorHelper.m; sourceTree = "<group>"; };
 		7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+SearchResults.swift"; sourceTree = "<group>"; };
 		7C6A69041FDFD80E007EBE41 /* AvailabilityLabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityLabelTests.swift; sourceTree = "<group>"; };
 		7C72F03C200E0D03001231D3 /* PhotoPermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPermissionsController.swift; sourceTree = "<group>"; };
@@ -3260,6 +3268,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F156509C21DCEE4600210504 /* WireCommonComponents.framework in Frameworks */,
+				7C88BB84235DE2D80075BCC5 /* AppCenterData.framework in Frameworks */,
+				7C88BB85235DE2D80075BCC5 /* AppCenterAnalytics.framework in Frameworks */,
+				7C88BB86235DE2D80075BCC5 /* AppCenter.framework in Frameworks */,
+				7C88BB87235DE2D80075BCC5 /* AppCenterCrashes.framework in Frameworks */,
+				7C88BB88235DE2D80075BCC5 /* AppCenterDistribute.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3315,6 +3328,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */,
+				7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */,
+				7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */,
+				7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */,
+				7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3648,8 +3666,6 @@
 		5E144FF9213E92A700B65E14 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				7C64B6F82357160600385B70 /* PreprocessorHelper.h */,
-				7C64B6F92357160700385B70 /* PreprocessorHelper.m */,
 				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
 				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
 				BF9AEE151E4A0BA20005FBA7 /* CrashReporter.swift */,
@@ -5362,8 +5378,6 @@
 				EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */,
 				5E0F75BD2268A0B6006C991E /* ColorScheme+Helper.swift */,
 				5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */,
-				BF841E292107212800CB09E4 /* ConfigurationHelper.h */,
-				BF841E2A2107212800CB09E4 /* ConfigurationHelper.m */,
 				550C63B322C36985005CE9FC /* FormattedText.swift */,
 			);
 			path = Helpers;
@@ -6719,6 +6733,8 @@
 				BFB332671E3A2D95003B0CD2 /* ExtensionSettings.swift */,
 				161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */,
 				A9B02231209B6E4E00DF25D8 /* AppCenter.swift */,
+				BF841E292107212800CB09E4 /* ConfigurationHelper.h */,
+				BF841E2A2107212800CB09E4 /* ConfigurationHelper.m */,
 				8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */,
 				BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */,
 				F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */,
@@ -6762,6 +6778,7 @@
 				F15650C021DD08F400210504 /* AVAsset+VideoConvert.h in Headers */,
 				F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */,
 				F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */,
+				7C88BB8F235DE3F50075BCC5 /* ConfigurationHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7242,7 +7259,6 @@
 				BF96A6CA1E2FD3340057974A /* NSExtensionContext+Attachments.swift in Sources */,
 				BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */,
 				BF96A6C61E2FA1790057974A /* UnsentSendable.swift in Sources */,
-				7C64B6FA2357160700385B70 /* PreprocessorHelper.m in Sources */,
 				5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */,
 				5EDD2538213FD5E200C0E254 /* SLComposeServiceViewController+Preview.swift in Sources */,
 				BFBE45771E36205F009FBF60 /* Error+Logging.swift in Sources */,
@@ -7790,7 +7806,6 @@
 				EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */,
 				5E8FFC0A21ECE3920052DF03 /* BackupRestoreStepDescription.swift in Sources */,
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
-				7C64B6F1235710E500385B70 /* ConfigurationHelper.m in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
 				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
@@ -8575,6 +8590,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C88BB8E235DE3EE0075BCC5 /* ConfigurationHelper.m in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
 				F15650C521DD0C2800210504 /* AppCenter.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
@@ -8782,6 +8798,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = W5KEQBF9B5;
+				PROVISIONING_PROFILE_SPECIFIER = "Wire Alpha Development";
 			};
 			name = Debug;
 		};
