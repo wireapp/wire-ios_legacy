@@ -270,6 +270,22 @@
         <string>Appels manqués de %2$@</string>
       </dict>
     </dict>
+    <key>content.system.call.missed-call.groups-you</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Appel manqué de %2$@</string>
+        <key>other</key>
+        <string>Appels manqués de %2$@</string>
+      </dict>
+    </dict>
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

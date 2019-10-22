@@ -461,9 +461,16 @@
 "content.system.you_started" = "Sinä";
 "content.system.this_device" = "tämä laite";
 
-"content.system.call.you" = "Sinä";
 "content.system.call.called" = "%@ soitti";
 "content.system.call.called-you" = "%@ soitit";
+"content.system.call.called.you" = "Sinä";
+
+"content.system.call.missed-call" = "Vastaamaton puhelu";
+"content.system.call.missed-call-you" = "Vastaamaton puhelu";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Sinä";
 
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
 "content.system.renamed_conv.title-you" = "%@ nimesit keskustelun uudelleen";

@@ -74,7 +74,7 @@ import Foundation
     @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
         
-        let callbackScheme = wr_companyLoginURLScheme()
+        let callbackScheme = Bundle.main.infoForKey("Wire SSO URL Scheme")
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
         let requester = CompanyLoginController.createRequester(with: callbackScheme)
