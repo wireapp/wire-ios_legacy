@@ -89,14 +89,13 @@ final class ConversationListContentController: UICollectionViewController {
         activeMediaPlayerObserver = nil
     }
 
-
     func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
 
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
-        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
 
     func updateVisibleCells() {

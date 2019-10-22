@@ -140,11 +140,13 @@ final class ConversationListViewModel: NSObject {
         init<C>(source: ConversationListViewModel.Section, elements: C) where C : Collection, C.Element == SectionItem {
             self.kind = source.kind
             self.collapsed = source.collapsed
-            self.items = Array(elements)
+            items = Array(elements)
         }
         
-        init(kind: Kind, conversationDirectory: ConversationDirectoryType, collapsed: Bool) {
-            self.items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+        init(kind: Kind,
+             conversationDirectory: ConversationDirectoryType,
+             collapsed: Bool) {
+            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             self.kind = kind
             self.collapsed = collapsed
         }
@@ -317,7 +319,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     func numberOfItems(inSection sectionIndex: Int) -> Int {
-        guard sectionIndex < sectionCount,
+        guard sections.indices.contains(sectionIndex),
               !collapsed(at: sectionIndex) else { return 0 }
 
         return sections[sectionIndex].elements.count
@@ -508,14 +510,22 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    @discardableResult
-    private func updateForConversationType(kind: Section.Kind) -> Bool {
-        guard let conversationDirectory = userSession?.conversationDirectory else { return false }
+    private func updateForConversationType(kind: Section.Kind) {
+        guard let conversationDirectory = userSession?.conversationDirectory else { return }
         
         var newValue: [Section]
         if let sectionNumber = self.sectionNumber(for: kind) {
             newValue = sections
-            newValue[sectionNumber].items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+            let newList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+
+            newValue[sectionNumber].items = newList
+
+            ///Refresh the section header(since it may be hidden if the sectio is empty) when a section becomes empty/from empty to non-empty
+            if sections[sectionNumber].items.isEmpty || newList.isEmpty {
+                sections = newValue
+                delegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber, animated: true)
+                return
+            }
         } else {
             newValue = createSections()
         }
@@ -529,7 +539,7 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
-        return true
+        return
     }
 
     @discardableResult
@@ -582,13 +592,11 @@ final class ConversationListViewModel: NSObject {
         guard self.collapsed(at: sectionIndex) != collapsed else { return }
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
         
-        var newState = state
         if collapsed {
-            newState.collapsed.insert(kind.identifier)
+            state.collapsed.insert(kind.identifier)
         } else {
-            newState.collapsed.remove(kind.identifier)
+            state.collapsed.remove(kind.identifier)
         }
-        state = newState
 
         var newValue = sections
         newValue[sectionNumber] = Section(kind: kind, conversationDirectory:conversationDirectory, collapsed: collapsed)
