@@ -140,11 +140,13 @@ final class ConversationListViewModel: NSObject {
         init<C>(source: ConversationListViewModel.Section, elements: C) where C : Collection, C.Element == SectionItem {
             self.kind = source.kind
             self.collapsed = source.collapsed
-            self.items = Array(elements)
+            items = Array(elements)
         }
         
-        init(kind: Kind, conversationDirectory: ConversationDirectoryType, collapsed: Bool) {
-            self.items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
+        init(kind: Kind,
+             conversationDirectory: ConversationDirectoryType,
+             collapsed: Bool) {
+            items = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
             self.kind = kind
             self.collapsed = collapsed
         }
@@ -320,7 +322,7 @@ final class ConversationListViewModel: NSObject {
 
     @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
-        guard sectionIndex < sectionCount,
+        guard sections.indices.contains(sectionIndex),
               !collapsed(at: sectionIndex) else { return 0 }
 
         return sections[sectionIndex].elements.count
