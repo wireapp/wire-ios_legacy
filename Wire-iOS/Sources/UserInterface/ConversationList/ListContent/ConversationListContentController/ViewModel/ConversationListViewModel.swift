@@ -519,12 +519,14 @@ final class ConversationListViewModel: NSObject {
             newValue = sections
             let newList = ConversationListViewModel.newList(for: kind, conversationDirectory: conversationDirectory)
 
+            newValue[sectionNumber].items = newList
+
             ///Refresh the section header(since it may be hidden if the sectio is empty) when a section becomes empty/from empty to non-empty
             if sections[sectionNumber].items.isEmpty || newList.isEmpty {
+                sections = newValue
                 delegate?.listViewModel(self, didUpdateSectionForReload: sectionNumber, animated: true)
                 return
             }
-            newValue[sectionNumber].items = newList
         } else {
             newValue = createSections()
         }
@@ -588,7 +590,7 @@ final class ConversationListViewModel: NSObject {
                       batchUpdate: Bool = true) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
         guard let kind = self.kind(of: sectionIndex) else { return }
-        guard self.collapsed(at: sectionIndex) != collapsed else { return } ///TODO: when unarchive, collapse state restored???
+        guard self.collapsed(at: sectionIndex) != collapsed else { return }
         guard let sectionNumber = self.sectionNumber(for: kind) else { return }
         
         if collapsed {
