@@ -115,10 +115,9 @@ final class ProfileActionsFactory: NSObject {
 
     // MARK: - Calculating the Actions
 
-    /**
-     * Calculates the list of actions to display to the user.
-     */
-
+    /// Calculates the list of actions to display to the user.
+    ///
+    /// - Returns: array of availble actions
     func makeActionsList() -> [ProfileAction] {
         // Do nothing if the user was deleted
         if user.isAccountDeleted {
