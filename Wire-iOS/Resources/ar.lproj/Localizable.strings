@@ -461,9 +461,16 @@
 "content.system.you_started" = "أنت";
 "content.system.this_device" = "هذا الجهاز";
 
-"content.system.call.you" = "أنت";
 "content.system.call.called" = "اتصل %@";
 "content.system.call.called-you" = "اتصل %@";
+"content.system.call.called.you" = "أنت";
+
+"content.system.call.missed-call" = "مكالمة فائتة";
+"content.system.call.missed-call-you" = "مكالمة فائتة";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "أنت";
 
 "content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";

@@ -18,19 +18,8 @@
 
 import Foundation
 
-extension ConversationListContentController: ConversationListCellDelegate {
-    func conversationListCellOverscrolled(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else {
-            return
-        }
-
-        contentDelegate?.conversationListContentController(self, wantsActionMenuFor: conversation, fromSourceView: cell)
-    }
-
-    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
-        guard let conversation = cell.conversation else { return }
-        
-        startCallController = ConversationCallController(conversation: conversation, target: self)
-        startCallController.joinCall()
+extension Bundle {
+    func infoForKey(_ key: String) -> String? {
+        return infoDictionary?[key] as? String
     }
 }

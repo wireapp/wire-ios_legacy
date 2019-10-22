@@ -57,7 +57,7 @@
         }
     }
     
-    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:self presetName:AVAssetExportPresetMediumQuality];
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:self presetName:AVAssetExportPresetHighestQuality];
     exportSession.outputURL = outputURL;
     exportSession.shouldOptimizeForNetworkUse = YES;
     exportSession.outputFileType = AVFileTypeMPEG4;

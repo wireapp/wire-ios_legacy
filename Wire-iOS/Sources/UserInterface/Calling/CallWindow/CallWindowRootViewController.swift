@@ -32,7 +32,7 @@ final class CallWindowRootViewController: UIViewController {
         callController.minimizeCall(animated: animated, completion: completion)
     }
     
-    @objc var isDisplayingCallOverlay: Bool {
+    var isDisplayingCallOverlay: Bool {
         return callController?.activeCallViewController != nil
     }
     
@@ -74,5 +74,9 @@ final class CallWindowRootViewController: UIViewController {
         guard topmost != self, !topmost.isKind(of: CallWindowRootViewController.self) else { return nil }
         return topmost
     }
-    
+
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        view.window?.isHidden = false
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
 }

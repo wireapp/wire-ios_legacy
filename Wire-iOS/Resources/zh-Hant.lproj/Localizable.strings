@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -191,13 +191,13 @@
 
 // Folders
 
-"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.title" = "新建資料夾";
 "folder.creation.name.button.create" = "建立";
 "folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
 "folder.creation.name.footer" = "Maximum 64 characters";
 "folder.creation.name.placeholder" = "Folder name";
 
-"folder.picker.title" = "Move to";
+"folder.picker.title" = "移動到";
 "folder.picker.empty.hint" = "Create a new folder by pressing the + button";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -221,7 +221,7 @@
 "list.section.groups" = "群組";
 "list.section.contacts" = "聯絡人";
 "list.section.requests" = "請求";
-"list.section.favorites" = "Favorites";
+"list.section.favorites" = "我的最愛";
 
 "conversation.voiceover.verified" = "已驗證";
 "conversation.voiceover.legalhold" = "合法保留";
@@ -461,9 +461,16 @@
 "content.system.you_started" = "您";
 "content.system.this_device" = "這個設備";
 
-"content.system.call.you" = "您";
 "content.system.call.called" = "%@曾打電話";
 "content.system.call.called-you" = "%@曾打電話";
+"content.system.call.called.you" = "您";
+
+"content.system.call.missed-call" = "未接來電";
+"content.system.call.missed-call-you" = "未接來電";
+
+"content.system.call.missed-call.groups" = "錯過%@的來電";
+"content.system.call.missed-call.groups-you" = "錯過%2$@的來電";
+"content.system.call.missed-call.groups.you" = "您";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@重新命名聊天室";

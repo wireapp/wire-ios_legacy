@@ -87,8 +87,6 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 
-#import "ConversationListContentController.h"
-#import "ConversationListContentController+Internal.h"
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
@@ -126,7 +124,6 @@
 #import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
-#import "URLSchemeHelper.h"
 #import "AuthenticationCoordinatedViewController.h"
 #import "ProfilePresenter.h"
 #import "ProfilePresenter+Internal.h"

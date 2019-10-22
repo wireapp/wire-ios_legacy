@@ -461,9 +461,16 @@
 "content.system.you_started" = "あなた";
 "content.system.this_device" = "このデバイス";
 
-"content.system.call.you" = "あなた";
 "content.system.call.called" = "%@ からの着信";
 "content.system.call.called-you" = "%@ からの着信";
+"content.system.call.called.you" = "あなた";
+
+"content.system.call.missed-call" = "不在着信";
+"content.system.call.missed-call-you" = "不在着信";
+
+"content.system.call.missed-call.groups" = "%@ からの不在着信";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "あなた";
 
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
 "content.system.renamed_conv.title-you" = "%@が会話に名前を付けました";
