@@ -512,7 +512,7 @@ final class ConversationListViewModel: NSObject {
 
         return nil
     }
-    ///TODO: unarchive a fav -> favoriten is expanded but no items in it. collpase -> crash
+
     private func updateForConversationType(kind: Section.Kind) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
         
@@ -718,7 +718,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
         case .folder(let label):
             kind = .folder(label: label)
         case .archived:
-            kind = nil ///TODO: refesh fav?
+            kind = nil
         }
         
         return kind
