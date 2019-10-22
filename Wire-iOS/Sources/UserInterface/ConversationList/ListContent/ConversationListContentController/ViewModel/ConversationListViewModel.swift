@@ -314,13 +314,10 @@ final class ConversationListViewModel: NSObject {
         return kind(of: sectionIndex)?.canonicalName
     }
 
-    ///TODO： use int
-    @objc
-    var sectionCount: UInt {
-        return UInt(sections.count)
+    var sectionCount: Int {
+        return sections.count
     }
 
-    @objc
     func numberOfItems(inSection sectionIndex: Int) -> Int {
         guard sections.indices.contains(sectionIndex),
               !collapsed(at: sectionIndex) else { return 0 }
