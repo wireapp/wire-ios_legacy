@@ -31,10 +31,9 @@ extension ProfileViewController {
     @objc func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
-}
 
-// MARK: - init
-extension ProfileViewController {
+    // MARK: - init
+
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
@@ -75,6 +74,35 @@ extension ProfileViewController {
         
         addToSelf(tabsController)
     }
+
+    // MARK : - constraints
+
+    @objc
+    func setupConstraints() {
+        usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
+        tabsController.view.translatesAutoresizingMaskIntoConstraints = false
+        profileFooterView.translatesAutoresizingMaskIntoConstraints = false
+
+        usernameDetailsView.fitInSuperview(exclude: [.bottom])
+        tabsController.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
+        tabsController.view.fitInSuperview(exclude: [.top])
+        profileFooterView.fitInSuperview(exclude: [.top])
+
+        incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
+            incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            ])
+    }
+
+    // MARK: - Factories
+
+    @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
+        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
+    }
+
 }
 
 extension ProfileViewController: ViewControllerDismisser {
@@ -353,39 +381,4 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
         presentAlert(controller, targetView: view)
     }
-}
-
-// MARK : - constraints
-
-extension ProfileViewController {
-
-    @objc
-    func setupConstraints() {
-        usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        tabsController.view.translatesAutoresizingMaskIntoConstraints = false
-        profileFooterView.translatesAutoresizingMaskIntoConstraints = false
-
-        usernameDetailsView.fitInSuperview(exclude: [.bottom])
-        tabsController.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
-        tabsController.view.fitInSuperview(exclude: [.top])
-        profileFooterView.fitInSuperview(exclude: [.top])
-
-        incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
-            incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-            ])
-    }
-}
-
-// MARK: - Factories
-
-extension ProfileViewController {
-
-    @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
-    }
-
 }
