@@ -141,17 +141,14 @@ final class ProfileActionsFactory: NSObject {
             conversation = selfConversation
         } else if context == .profileViewer {
             conversation = nil
-        } else {
-            if !user.isConnected {
-                if user.isPendingApprovalByOtherUser {
-                    return [.cancelConnectionRequest]
-                } else if !user.isPendingApprovalBySelfUser {
-                    return [.connect]
-                }
+        } else if !user.isConnected {
+            if user.isPendingApprovalByOtherUser {
+                return [.cancelConnectionRequest]
+            } else if !user.isPendingApprovalBySelfUser {
+                return [.connect]
             }
-
-            return []
         }
+
 
         var actions: [ProfileAction] = []
 
@@ -174,6 +171,7 @@ final class ProfileActionsFactory: NSObject {
             }
 
         case (.profileViewer, .none),
+             (.search, .none),
              (_, .group?):
             // Do nothing if the viewer is a wireless user because they can't have 1:1's
             if viewer.isWirelessUser {
