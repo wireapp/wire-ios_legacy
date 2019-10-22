@@ -19,23 +19,28 @@
 import Foundation
 
 protocol AVSIdentifierProvider {
-    var identifier: String { get }
+    var stream: Stream { get }
 }
 
 extension AVSVideoView: AVSIdentifierProvider {
-    var identifier: String {
-        return userid
+    
+    var stream: Stream {
+        return Stream(userId: UUID(uuidString: userid)!, clientId: clientid)
     }
+    
 }
 
 final class SelfVideoPreviewView: UIView, AVSIdentifierProvider {
     
     private let previewView = AVSVideoPreview()
-    let identifier: String
     
-    init(identifier: String) {
-        self.identifier = identifier
+    let stream: Stream
+    
+    init(stream: Stream) {
+        self.stream = stream
+        
         super.init(frame: .zero)
+        
         setupViews()
         createConstraints()
     }

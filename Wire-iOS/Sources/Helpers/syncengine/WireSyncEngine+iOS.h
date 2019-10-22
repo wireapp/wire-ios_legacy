@@ -21,5 +21,4 @@
 @import WireDataModel;
 
 #import "ZMUserSession+iOS.h"
-#import "ZMUser+Additions.h"
 #import "ZMConversation+Additions.h"

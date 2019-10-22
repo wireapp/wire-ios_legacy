@@ -461,9 +461,16 @@
 "content.system.you_started" = "Ви";
 "content.system.this_device" = "цей пристрій";
 
-"content.system.call.you" = "Ви";
 "content.system.call.called" = "%@ дзвонив(-ла)";
 "content.system.call.called-you" = "%@ дзвонив(-ла)";
+"content.system.call.called.you" = "Ви";
+
+"content.system.call.missed-call" = "Пропущений дзвінок";
+"content.system.call.missed-call-you" = "Пропущений дзвінок";
+
+"content.system.call.missed-call.groups" = "Пропущений дзвінок від %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Ви";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
 "content.system.renamed_conv.title-you" = "%@ перейменував(-ла) розмову";

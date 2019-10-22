@@ -32,7 +32,6 @@
 #import "Wire-Swift.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUser+Additions.h"
 #import "avs+iOS.h"
 
 #import "Settings.h"

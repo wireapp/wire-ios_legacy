@@ -461,9 +461,16 @@
 "content.system.you_started" = "Ti";
 "content.system.this_device" = "ta naprava";
 
-"content.system.call.you" = "Ti";
 "content.system.call.called" = "%@ je klical(-a)";
 "content.system.call.called-you" = "%@ je klical(-a)";
+"content.system.call.called.you" = "Ti";
+
+"content.system.call.missed-call" = "Zgrešen klic";
+"content.system.call.missed-call-you" = "Zgrešen klic";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Ti";
 
 "content.system.renamed_conv.title" = "%@ je preimenoval(-a) pogovor";
 "content.system.renamed_conv.title-you" = "%@ je preimenoval(-a) pogovor";

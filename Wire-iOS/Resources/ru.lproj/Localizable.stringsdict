@@ -329,13 +329,33 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Пропущенный звонок от %2$@</string>
+        <string>Пропущенный вызов от %2$@</string>
         <key>few</key>
-        <string>Пропущенных звонка от %2$@</string>
+        <string>Пропущенные вызовы от %2$@</string>
         <key>many</key>
-        <string>Пропущенных звонков от %2$@</string>
+        <string>Пропущенные вызовы от %2$@</string>
         <key>other</key>
-        <string>Пропущенных звонков от %2$@</string>
+        <string>Пропущенные вызовы от %2$@</string>
+      </dict>
+    </dict>
+    <key>content.system.call.missed-call.groups-you</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Пропущенный вызов от %2$@</string>
+        <key>few</key>
+        <string>Пропущенные вызовы от %2$@</string>
+        <key>many</key>
+        <string>Пропущенные вызовы от %2$@</string>
+        <key>other</key>
+        <string>Пропущенные вызовы от %2$@</string>
       </dict>
     </dict>
     <key>registration.password.rules.min_length</key>
