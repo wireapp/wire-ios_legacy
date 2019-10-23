@@ -27,28 +27,3 @@ extension UINavigationController {
         return topViewController
     }
 }
-
-extension UIAlertController {
-
-    override open var modalPresentationCapturesStatusBarAppearance: Bool {
-        get {
-            return true
-        }
-
-        set {
-            // no-op
-        }
-    }
-
-        override open var preferredStatusBarStyle: UIStatusBarStyle {
-            return presentingViewController?.topmostViewController.preferredStatusBarStyle ?? .default
-        }
-
-    //    open override var childForStatusBarStyle: UIViewController? {
-    //        return UIApplication.shared.topmostViewController()?.childForStatusBarStyle
-    //    }
-
-    //    open override var childForStatusBarHidden: UIViewController? {
-    //        return presentingViewController
-    //    }
-}
