@@ -295,8 +295,6 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Block
 
     private func presentBlockRequest(from targetView: UIView) {
-//        handleBlockResult(BlockResult.block(isBlocked: true))
-//        return
 
         let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
         BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
