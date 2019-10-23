@@ -150,9 +150,7 @@ final class ConversationActionController {
             prepare(viewController: controller, with: $0)
         }
 
-        target.present(controller, animated: true) {
-//            controller.setNeedsStatusBarAppearanceUpdate()
-        }
+        target.present(controller, animated: true)
     }
     
 }
