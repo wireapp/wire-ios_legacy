@@ -23,6 +23,9 @@ import UIKit
  */
 
 final class ProfileDetailsViewController: UIViewController, Themeable {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag, completion: completion)
+    }
 
     /// The user whose profile is displayed.
     let user: UserType

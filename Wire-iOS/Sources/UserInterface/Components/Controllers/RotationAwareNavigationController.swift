@@ -20,7 +20,10 @@
 import Foundation
 
 final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
-    
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag, completion: completion)///TODO: also called when dismiss child
+    } ///TODO: viewDidDismiss??
+
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?    
