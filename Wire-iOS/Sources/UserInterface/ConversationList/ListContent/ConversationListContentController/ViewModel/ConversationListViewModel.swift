@@ -510,7 +510,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func updateForConversationType(kind: Section.Kind) {
+    private func update(for kind: Section.Kind) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
         
         var newValue: [Section]
@@ -567,7 +567,7 @@ final class ConversationListViewModel: NSObject {
     private func internalSelect(itemToSelect: ConversationListItem?) {
         selectedItem = itemToSelect
 
-        if let itemToSelect = itemToSelect as? ConversationListItem {
+        if let itemToSelect = itemToSelect {
             delegate?.listViewModel(self, didSelectItem: itemToSelect)
         }
     }
@@ -584,6 +584,13 @@ final class ConversationListViewModel: NSObject {
         return state.collapsed.contains(kind.identifier)
     }
 
+
+    /// set a collpase state of a section
+    ///
+    /// - Parameters:
+    ///   - sectionIndex: section to update
+    ///   - collapsed: collapsed or expanded
+    ///   - batchUpdate: true for update with difference kit comparison, false for reload the section animated
     func setCollapsed(sectionIndex: Int,
                       collapsed: Bool,
                       batchUpdate: Bool = true) {
@@ -613,7 +620,7 @@ final class ConversationListViewModel: NSObject {
             }
         } else {
             sections = newValue
-            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
+            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: true)
         }
     }
 
@@ -691,7 +698,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {
-                    updateForConversationType(kind: kind)
+                    update(for: kind)
                 }
             }
         }
