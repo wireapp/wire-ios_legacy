@@ -20,21 +20,6 @@ import Foundation
 
 // MARK: - Keyboard frame observer
 extension ProfileViewController {
-    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        super.dismiss(animated: flag, completion: completion)
-    }
-
-//    open override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//    }
-
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
 
     @objc func setupKeyboardFrameNotification() {
         NotificationCenter.default.addObserver(self,
@@ -310,6 +295,9 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Block
 
     private func presentBlockRequest(from targetView: UIView) {
+//        handleBlockResult(BlockResult.block(isBlocked: true))
+//        return
+
         let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
         BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
