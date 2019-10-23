@@ -27,6 +27,14 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         super.dismiss(animated: flag, completion: completion)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+
     /// The user whose profile is displayed.
     let user: UserType
 
