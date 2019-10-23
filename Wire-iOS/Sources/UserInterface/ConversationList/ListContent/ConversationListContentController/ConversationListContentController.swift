@@ -333,9 +333,6 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
     }
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
-        // do not reload if section is not visible
-        guard collectionView.indexPathsForVisibleItems.map({$0.section}).contains(section) else { return }
-
         let reloadClosure = {
             self.collectionView.reloadSections(IndexSet(integer: section))
             self.ensureCurrentSelection()
