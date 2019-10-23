@@ -510,7 +510,7 @@ final class ConversationListViewModel: NSObject {
         return nil
     }
 
-    private func updateForConversationType(kind: Section.Kind) {
+    private func update(for kind: Section.Kind) {
         guard let conversationDirectory = userSession?.conversationDirectory else { return }
         
         var newValue: [Section]
@@ -567,7 +567,7 @@ final class ConversationListViewModel: NSObject {
     private func internalSelect(itemToSelect: ConversationListItem?) {
         selectedItem = itemToSelect
 
-        if let itemToSelect = itemToSelect as? ConversationListItem {
+        if let itemToSelect = itemToSelect {
             delegate?.listViewModel(self, didSelectItem: itemToSelect)
         }
     }
@@ -691,7 +691,7 @@ extension ConversationListViewModel: ConversationDirectoryObserver {
             /// TODO: wait for SE update for returning multiple items in changeInfo.updatedLists
             for updatedList in changeInfo.updatedLists {
                 if let kind = self.kind(of: updatedList) {
-                    updateForConversationType(kind: kind)
+                    update(for kind: kind)
                 }
             }
         }
