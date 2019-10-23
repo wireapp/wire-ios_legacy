@@ -584,6 +584,13 @@ final class ConversationListViewModel: NSObject {
         return state.collapsed.contains(kind.identifier)
     }
 
+
+    /// set a collpase state of a section
+    ///
+    /// - Parameters:
+    ///   - sectionIndex: section to update
+    ///   - collapsed: collapsed or expanded
+    ///   - batchUpdate: true for update with difference kit comparison, false for reload the section animated
     func setCollapsed(sectionIndex: Int,
                       collapsed: Bool,
                       batchUpdate: Bool = true) {
@@ -613,7 +620,7 @@ final class ConversationListViewModel: NSObject {
             }
         } else {
             sections = newValue
-            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: false)
+            delegate?.listViewModel(self, didUpdateSectionForReload: sectionIndex, animated: true)
         }
     }
 
