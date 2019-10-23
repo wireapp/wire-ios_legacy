@@ -317,9 +317,20 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
 
     private func handleBlockResult(_ result: BlockResult) {
         guard case .block = result else { return }
-        transitionToListAndEnqueue {
+
+        let updateClosure = {
             self.fullUser()?.toggleBlocked()
             self.updateFooterViews()
+        }
+
+        switch context {
+            case .search:
+                /// stay on this VC and let user to decise what to do next
+                updateClosure()
+            default:
+                transitionToListAndEnqueue {
+                    updateClosure()
+                }
         }
     }
 
