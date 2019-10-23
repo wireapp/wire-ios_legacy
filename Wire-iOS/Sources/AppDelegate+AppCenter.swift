@@ -31,7 +31,7 @@ extension AppDelegate {
     
     @objc func setupAppCenter(completion: @escaping () -> ()) {
         
-        let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || wr_useAppCenter()
+        let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter
         
         if !shouldUseAppCenter {
             completion()
@@ -43,7 +43,7 @@ extension AppDelegate {
         
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
-        let appCenterId = wr_appCenterAppId()
+        let appCenterId = Bundle.appCenterAppId
         MSAppCenter.configure(withAppSecret: appCenterId)
         MSCrashes.setDelegate(self)
         MSAppCenter.setLogLevel(.verbose)

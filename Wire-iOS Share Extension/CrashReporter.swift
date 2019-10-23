@@ -33,7 +33,7 @@ private var didSetupAppCenter = false
 class CrashReporter {
 
     static func setupAppCenterIfNeeded() {
-        guard !didSetupAppCenter, appCenterEnabled, let appCenterIdentifier = wr_appCenterAppId() else { return }
+        guard !didSetupAppCenter, appCenterEnabled, let appCenterIdentifier = Bundle.appCenterAppId else { return }
         didSetupAppCenter = true
 
         // See https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
@@ -42,14 +42,14 @@ class CrashReporter {
         
         //Enable after securing app extensions from App Center
         MSAppCenter.setTrackingEnabled(!ExtensionSettings.shared.disableCrashAndAnalyticsSharing)
-        MSAppCenter.configure(withAppSecret: wr_appCenterAppId())
+        MSAppCenter.configure(withAppSecret: Bundle.appCenterAppId)
         // manager.crashManager.crashManagerStatus = .autoSend
         MSAppCenter.start()
  
     }
 
     private static var appCenterEnabled: Bool {
-        let configUseAppCenter = wr_useAppCenter() // The preprocessor macro USE_APP_CENTER (from the .xcconfig files)
+        let configUseAppCenter = Bundle.useAppCenter // The preprocessor macro USE_APP_CENTER (from the .xcconfig files)
         let automationUseAppCenter = AutomationHelper.sharedHelper.useAppCenter // Command line argument used by automation
         let settingsDisableCrashAndAnalyticsSharing = ExtensionSettings.shared.disableCrashAndAnalyticsSharing // User consent
 

@@ -74,7 +74,7 @@ static AppDelegate *sharedAppDelegate = nil;
     }
     
     if (backendEnvironment.length == 0 || [backendEnvironment isEqualToString:@"default"]) {
-        NSString *defaultBackend = @STRINGIZE(DEFAULT_BACKEND);
+        NSString *defaultBackend = [NSBundle defaultBackend];
         
         ZMLogInfo(@"Backend environment is <not defined>. Using '%@'.", defaultBackend);
         [[NSUserDefaults standardUserDefaults] setObject:defaultBackend forKey:BackendEnvironmentTypeKey];

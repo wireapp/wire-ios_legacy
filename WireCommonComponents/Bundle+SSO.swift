@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,25 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
 
-#import "ConfigurationHelper.h"
-@import Foundation;
-
-#define STRINGIZE_INTERNAL(x) #x
-#define STRINGIZE(x) STRINGIZE_INTERNAL(x)
-
-NSString *wr_companyLoginURLScheme() {
-    return @STRINGIZE(WIRE_SSO_URL_SCHEME);
+public extension Bundle {
+    static var ssoURLScheme: String? {
+        return Bundle.appMainBundle.infoForKey("Wire SSO URL Scheme")
+    }
 }
 
-NSString * wr_appCenterAppId() {
-    return @STRINGIZE(APP_CENTER_APP_ID_KEY);
-}
-
-BOOL wr_useAppCenter() {
-#if USE_APP_CENTER
-    return YES;
-#else
-    return NO;
-#endif
-}

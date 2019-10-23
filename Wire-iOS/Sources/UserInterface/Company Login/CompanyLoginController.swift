@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 @objc protocol CompanyLoginControllerDelegate: class {
 
@@ -72,9 +73,9 @@ import Foundation
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
     @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
-        guard CompanyLoginController.isCompanyLoginEnabled else { return nil } // Disable on public builds
+        guard CompanyLoginController.isCompanyLoginEnabled,
+            let callbackScheme = Bundle.ssoURLScheme else { return nil } // Disable on public builds
         
-        let callbackScheme = Bundle.main.infoForKey("Wire SSO URL Scheme")
         requireInternal(nil != callbackScheme, "no valid callback scheme")
 
         let requester = CompanyLoginController.createRequester(with: callbackScheme)

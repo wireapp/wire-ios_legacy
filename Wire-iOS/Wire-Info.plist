@@ -40,7 +40,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcenter-${APP_CENTER_APP_ID}</string>
+				<string>appcenter-$(APP_CENTER_APP_ID)</string>
 			</array>
 		</dict>
 		<dict>
@@ -180,5 +180,9 @@
 	<string>${WIRE_BUNDLE_ID}</string>
 	<key>Wire SSO URL Scheme</key>
 	<string>$(WIRE_SSO_URL_SCHEME)</string>
+	<key>UseAppCenter</key>
+	<string>${USE_APP_CENTER}</string>
+	<key>DefaultBackend</key>
+	<string>$(DEFAULT_BACKEND}</string>
 </dict>
 </plist>
