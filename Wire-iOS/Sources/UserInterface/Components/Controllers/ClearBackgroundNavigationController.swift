@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ClearBackgroundNavigationController: UINavigationController {
+final class ClearBackgroundNavigationController: UINavigationController {
     fileprivate let pushTransition = PushTransition()
     fileprivate let popTransition = PopTransition()
     
@@ -45,16 +45,12 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.transitioningDelegate = self
     }
     
-    open var useDefaultPopGesture: Bool = false {
+    var useDefaultPopGesture: Bool = false {
         didSet {
             self.interactivePopGestureRecognizer?.isEnabled = useDefaultPopGesture
         }
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return topViewController?.preferredStatusBarStyle ?? .lightContent
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear

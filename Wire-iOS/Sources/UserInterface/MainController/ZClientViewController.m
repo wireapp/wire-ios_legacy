@@ -199,43 +199,7 @@
         return YES;
     }
 }
-/*
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    if (nil != self.topOverlayViewController) {
-        return self.topOverlayViewController.preferredStatusBarStyle;
-    }
-    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
-        if (self.presentedViewController) {
-            if (![self.presentedViewController isKindOfClass:UIAlertController.class]) {
-                return self.presentedViewController.preferredStatusBarStyle;
-            }
-        }
 
-        return self.splitViewController.preferredStatusBarStyle;
-    }
-    else {
-        return UIStatusBarStyleLightContent;
-    }
-}
-
-- (BOOL)prefersStatusBarHidden {
-    if (nil != self.topOverlayViewController) {
-        return self.topOverlayViewController.prefersStatusBarHidden;
-    }
-    else if (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact) {
-        if (self.presentedViewController) {
-            return self.presentedViewController.prefersStatusBarHidden;
-        }
-        else {
-            return self.splitViewController.prefersStatusBarHidden;
-        }
-    }
-    else {
-        return NO;
-    }
-}
-*/
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
 {
     [super traitCollectionDidChange:previousTraitCollection];

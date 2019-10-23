@@ -20,6 +20,14 @@ import Foundation
 
 extension KeyboardAvoidingViewController {
 
+    override open var childForStatusBarStyle: UIViewController? {
+        return viewController
+    }
+
+    override open var childForStatusBarHidden: UIViewController? {
+        return viewController
+    }
+
     override open var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
         return viewController.preferredInterfaceOrientationForPresentation
     }

@@ -69,16 +69,6 @@
     return [self.viewController navigationItem];
 }
 
-- (BOOL)prefersStatusBarHidden
-{
-    return self.viewController.prefersStatusBarHidden;
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return self.viewController.preferredStatusBarStyle;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

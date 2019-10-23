@@ -149,7 +149,36 @@ final class ConversationActionController {
         currentContext.apply {
             prepare(viewController: controller, with: $0)
         }
-        target.present(controller, animated: true, completion: nil)
+
+        target.present(controller, animated: true) {
+//            controller.setNeedsStatusBarAppearanceUpdate()
+        }
     }
     
+}
+
+
+extension UIAlertController {
+
+    override open var modalPresentationCapturesStatusBarAppearance: Bool {
+        get {
+            return true
+        }
+
+        set {
+            // no-op
+        }
+    }
+
+    override open var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+//    open override var childForStatusBarStyle: UIViewController? {
+//        return UIApplication.shared.topmostViewController(onlyFullScreen: false)
+//    }
+//
+//    open override var childForStatusBarHidden: UIViewController? {
+//        return presentingViewController
+//    }
 }

@@ -151,8 +151,6 @@ final class ConversationListViewController: UIViewController {
 
         viewModel.savePendingLastRead()
         viewModel.requestSuggestedHandlesIfNeeded()
-
-//        setNeedsStatusBarAppearanceUpdate() ///TODO: mv to split VC??
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -177,11 +175,6 @@ final class ConversationListViewController: UIViewController {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let presentedViewController = presentedViewController,
-            presentedViewController is UIAlertController {
-            return presentedViewController.preferredStatusBarStyle
-        }
-
         return .lightContent
     }
 
