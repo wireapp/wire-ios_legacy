@@ -20,8 +20,20 @@ import Foundation
 
 // MARK: - Keyboard frame observer
 extension ProfileViewController {
-    override open func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         super.dismiss(animated: flag, completion: completion)
+    }
+
+//    open override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
 
     @objc func setupKeyboardFrameNotification() {

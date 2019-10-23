@@ -24,6 +24,14 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         super.dismiss(animated: flag, completion: completion)///TODO: also called when dismiss child
     } ///TODO: viewDidDismiss??
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?    
