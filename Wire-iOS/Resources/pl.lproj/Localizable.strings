@@ -461,9 +461,16 @@
 "content.system.you_started" = "Ty";
 "content.system.this_device" = "to urządzenie";
 
-"content.system.call.you" = "Ty";
 "content.system.call.called" = "%@ dzwoni";
 "content.system.call.called-you" = "%@ dzwoni";
+"content.system.call.called.you" = "Ty";
+
+"content.system.call.missed-call" = "Nieodebrane połączenie";
+"content.system.call.missed-call-you" = "Nieodebrane połączenie";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Ty";
 
 "content.system.renamed_conv.title" = "%@ zmienił nazwę konwersacji";
 "content.system.renamed_conv.title-you" = "%@ zmienił nazwę konwersacji";

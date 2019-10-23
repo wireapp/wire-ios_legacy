@@ -461,9 +461,16 @@
 "content.system.you_started" = "Jūs";
 "content.system.this_device" = "šį įrenginį";
 
-"content.system.call.you" = "Jūs";
 "content.system.call.called" = "%@ skambino";
 "content.system.call.called-you" = "%@ skambinote";
+"content.system.call.called.you" = "Jūs";
+
+"content.system.call.missed-call" = "Praleistas skambutis";
+"content.system.call.missed-call-you" = "Praleistas skambutis";
+
+"content.system.call.missed-call.groups" = "Skambino %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Jūs";
 
 "content.system.renamed_conv.title" = "%@ pakeitė susirašinėjimo pavadinimą";
 "content.system.renamed_conv.title-you" = "%@ pakeitėte susirašinėjimo pavadinimą";

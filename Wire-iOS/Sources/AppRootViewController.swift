@@ -114,6 +114,8 @@ final class AppRootViewController: UIViewController {
         callWindow.isHidden = true
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
+        callWindow.isHidden = true
+        overlayWindow.isHidden = true
 
         type(of: self).configureAppearance()
         configureMediaManager()

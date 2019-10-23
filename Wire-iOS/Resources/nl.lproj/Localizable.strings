@@ -461,9 +461,16 @@
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
 
-"content.system.call.you" = "Jij";
 "content.system.call.called" = "%@ belde";
 "content.system.call.called-you" = "%@ belde";
+"content.system.call.called.you" = "Jij";
+
+"content.system.call.missed-call" = "Gemiste oproep";
+"content.system.call.missed-call-you" = "Gemiste oproep";
+
+"content.system.call.missed-call.groups" = "Gemiste oproep van %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Jij";
 
 "content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
