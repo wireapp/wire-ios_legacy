@@ -154,29 +154,3 @@ final class ConversationActionController {
     }
     
 }
-
-
-extension UIAlertController {
-
-    override open var modalPresentationCapturesStatusBarAppearance: Bool {
-        get {
-            return true
-        }
-
-        set {
-            // no-op
-        }
-    }
-
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-
-//    open override var childForStatusBarStyle: UIViewController? {
-//        return UIApplication.shared.topmostViewController(onlyFullScreen: false)
-//    }
-//
-//    open override var childForStatusBarHidden: UIViewController? {
-//        return presentingViewController
-//    }
-}

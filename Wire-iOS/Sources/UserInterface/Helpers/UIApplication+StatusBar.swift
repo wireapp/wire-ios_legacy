@@ -73,8 +73,24 @@ public extension UIApplication {
             (!onlyFullScreen || presentedController.modalPresentationStyle == .fullScreen) {
             topController = presentedController
         }
-        
+
         return topController
     }
 }
 
+extension UIViewController {
+    var topmostViewController: UIViewController {
+        if let navigationVC = self as? UINavigationController,
+            let topVC = navigationVC.topViewController {
+            return topVC.topmostViewController
+        } else if let tabBarVC = self as? UITabBarController,
+            let selectedVC = tabBarVC.selectedViewController {
+            return selectedVC.topmostViewController
+        } else if let presentedVC = presentedViewController, !(presentedViewController is UIAlertController) {
+            return presentedVC.topmostViewController
+        } else if let childVC = children.last, childVC.view.frame == self.view.window?.frame {
+            return childVC.topmostViewController
+        }
+        return self
+    }
+}

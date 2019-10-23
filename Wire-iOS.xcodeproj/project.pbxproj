@@ -1292,6 +1292,7 @@
 		EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
 		EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */; };
 		EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */; };
+		EFD254EC2360922B00E67B80 /* UINavigationController+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD254EB2360922B00E67B80 /* UINavigationController+StatusBar.swift */; };
 		EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */; };
 		EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */; };
 		EFD4B9C822F08297008CA042 /* UIImage+DownsizeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD4B9C722F08297008CA042 /* UIImage+DownsizeTests.swift */; };
@@ -3100,6 +3101,7 @@
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
 		EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+CreateViews.swift"; sourceTree = "<group>"; };
+		EFD254EB2360922B00E67B80 /* UINavigationController+StatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+StatusBar.swift"; sourceTree = "<group>"; };
 		EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DeviceSize.swift"; sourceTree = "<group>"; };
 		EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EFD4B9C722F08297008CA042 /* UIImage+DownsizeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+DownsizeTests.swift"; sourceTree = "<group>"; };
@@ -5243,6 +5245,7 @@
 				162936BA1F470A9300D4F386 /* AppState.swift */,
 				162936BC1F470B4800D4F386 /* AppStateController.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
+				EFD254EB2360922B00E67B80 /* UINavigationController+StatusBar.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
 				8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */,
 			);
@@ -7988,6 +7991,7 @@
 				EFDE37FD213994750095DCA4 /* ContactsSectionHeaderView.swift in Sources */,
 				EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */,
 				5E35F7782181D51300D3F4FE /* ConversationIconBasedCell.swift in Sources */,
+				EFD254EC2360922B00E67B80 /* UINavigationController+StatusBar.swift in Sources */,
 				7CEB45281F8FAAC400D772D5 /* UINavigationBarContainer.swift in Sources */,
 				87A540A81E09450B009028C5 /* CollectionViewLeftAlignedFlowLayout.swift in Sources */,
 				BF0515251E390E10000D5C22 /* CopyableLabel.swift in Sources */,
