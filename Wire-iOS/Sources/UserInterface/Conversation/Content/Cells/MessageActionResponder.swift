@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol MessageActionResponder: NSObjectProtocol {
+protocol MessageActionResponder: class {
     /// perform an action for the message
     ///
     /// - Parameters:

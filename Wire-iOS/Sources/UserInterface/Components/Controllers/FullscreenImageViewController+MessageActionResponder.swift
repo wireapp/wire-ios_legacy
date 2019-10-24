@@ -38,7 +38,7 @@ extension FullscreenImageViewController {
 }
 
 extension FullscreenImageViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
         case .forward:
             perform(action: action)

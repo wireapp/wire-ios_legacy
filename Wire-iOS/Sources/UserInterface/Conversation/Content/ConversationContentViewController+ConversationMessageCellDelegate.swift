@@ -46,7 +46,7 @@ extension UIView {
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     // MARK: - MessageActionResponder
 
-    public func perform(action: MessageAction,
+    func perform(action: MessageAction,
                         for message: ZMConversationMessage!,
                         view: UIView) {
         guard let dataSource = dataSource else { return }
