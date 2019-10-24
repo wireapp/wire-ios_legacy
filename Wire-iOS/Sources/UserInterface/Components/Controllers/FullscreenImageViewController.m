@@ -84,7 +84,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [self setupStyle];
 
         [self setActionController];
-//        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
+
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
