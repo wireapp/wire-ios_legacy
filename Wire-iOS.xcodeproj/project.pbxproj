@@ -8797,7 +8797,8 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
-				PROVISIONING_PROFILE_SPECIFIER = "Wire Alpha Development";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha";
+				PROVISIONING_PROFILE_SPECIFIER = "Development Wildcard";
 			};
 			name = Debug;
 		};
@@ -8805,6 +8806,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha";
 			};
 			name = Release;
 		};

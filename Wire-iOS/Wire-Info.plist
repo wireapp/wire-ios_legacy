@@ -40,7 +40,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcenter-$(APP_CENTER_APP_ID)</string>
+				<string>appcenter-$(APP_CENTER_APP_ID_KEY)</string>
 			</array>
 		</dict>
 		<dict>
@@ -70,6 +70,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
+	<key>DefaultBackend</key>
+	<string>${DEFAULT_BACKEND}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -176,13 +178,11 @@
 			</dict>
 		</dict>
 	</array>
-	<key>WireGroupId</key>
-	<string>${WIRE_BUNDLE_ID}</string>
+	<key>UseAppCenter</key>
+	<string>$(USE_APP_CENTER_KEY)</string>
 	<key>Wire SSO URL Scheme</key>
 	<string>$(WIRE_SSO_URL_SCHEME)</string>
-	<key>UseAppCenter</key>
-	<string>${USE_APP_CENTER}</string>
-	<key>DefaultBackend</key>
-	<string>$(DEFAULT_BACKEND}</string>
+	<key>WireGroupId</key>
+	<string>${WIRE_BUNDLE_ID}</string>
 </dict>
 </plist>
