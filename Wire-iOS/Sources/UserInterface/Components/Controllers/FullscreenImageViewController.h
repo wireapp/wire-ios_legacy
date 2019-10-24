@@ -18,11 +18,9 @@
 
 
 #import <Foundation/Foundation.h>
-#import "MessageAction.h"
 
 @class CenteredScrollView;
 @protocol ZMConversationMessage;
-@protocol MessageActionResponder;
 
 NS_ASSUME_NONNULL_BEGIN
 @class FullscreenImageViewController;
@@ -41,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, readonly) UIScrollView *scrollView;
 @property (nonatomic, readonly) id<ZMConversationMessage> message;
 @property (nonatomic) UIView *snapshotBackgroundView;
-@property (nonatomic, weak, nullable)   id <MessageActionResponder, ScreenshotProvider, MenuVisibilityController> delegate;
+@property (nonatomic, weak, nullable)   id <ScreenshotProvider, MenuVisibilityController> delegate;
 @property (nonatomic) BOOL swipeToDismiss;
 @property (nonatomic) BOOL showCloseButton;
 @property (nonatomic, copy, nullable) void (^dismissAction)(__nullable dispatch_block_t);

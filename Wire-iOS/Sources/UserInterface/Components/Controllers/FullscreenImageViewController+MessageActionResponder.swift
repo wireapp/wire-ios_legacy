@@ -33,7 +33,7 @@ extension FullscreenImageViewController {
             sourceView = scrollView
         }
         
-        delegate?.perform(action: action, for: message, view: sourceView)
+        (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
     }
 }
 
