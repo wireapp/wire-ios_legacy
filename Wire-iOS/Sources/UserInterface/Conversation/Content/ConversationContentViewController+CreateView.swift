@@ -20,6 +20,11 @@ import Foundation
 
 extension ConversationContentViewController {
     @objc
+    func setDataSource() {
+        dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
+    }
+
+    @objc
     func createMentionsResultsView() {
         mentionsSearchResultsViewController = UserSearchResultsViewController()
         mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false

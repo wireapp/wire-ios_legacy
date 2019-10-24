@@ -75,8 +75,8 @@ final class ConversationTableViewDataSource: NSObject {
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil
     
-    @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
-    @objc public weak var messageActionResponder: MessageActionResponder? = nil
+    weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
+    weak var messageActionResponder: MessageActionResponder? = nil
     
     @objc public var searchQueries: [String] = [] {
         didSet {
@@ -137,7 +137,7 @@ final class ConversationTableViewDataSource: NSObject {
         return updatedSections
     }
     
-    @objc public init(conversation: ZMConversation, tableView: UpsideDownTableView, actionResponder: MessageActionResponder, cellDelegate: ConversationMessageCellDelegate) {
+    init(conversation: ZMConversation, tableView: UpsideDownTableView, actionResponder: MessageActionResponder, cellDelegate: ConversationMessageCellDelegate) {
         self.messageActionResponder = actionResponder
         self.conversationCellDelegate = cellDelegate
         self.conversation = conversation

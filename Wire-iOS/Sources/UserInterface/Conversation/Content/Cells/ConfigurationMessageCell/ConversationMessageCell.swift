@@ -20,7 +20,7 @@ import UIKit
 import WireUtilities
 
 
-@objc protocol ConversationMessageCellDelegate: MessageActionResponder {
+protocol ConversationMessageCellDelegate: MessageActionResponder {
     
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect)
@@ -284,7 +284,7 @@ extension ConversationMessageCellDescription {
         return baseTypeGetter()
     }
 
-    @objc var delegate: ConversationMessageCellDelegate? {
+    var delegate: ConversationMessageCellDelegate? {
         get { return _delegate.getter() }
         set { _delegate.setter(newValue) }
     }

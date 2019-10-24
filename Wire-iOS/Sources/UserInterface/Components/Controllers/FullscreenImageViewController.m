@@ -51,8 +51,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, strong) ConversationMessageActionController *actionController;
-
 @property (nonatomic) CALayer *highlightLayer;
 
 @property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
@@ -89,7 +87,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [self setupStyle];
 
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
+        [self setActionController];
+//        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }
