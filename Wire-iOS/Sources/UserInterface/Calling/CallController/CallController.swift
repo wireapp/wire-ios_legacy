@@ -86,7 +86,10 @@ extension CallController: WireCallCenterCallStateObserver {
     }
     
     func minimizeCall(animated: Bool, completion: (() -> Void)?) {
-        guard let activeCallViewController = activeCallViewController else { completion?(); return }
+        guard let activeCallViewController = activeCallViewController else {
+            completion?()
+            return
+        }
     
         activeCallViewController.dismiss(animated: animated, completion: completion)
     }
