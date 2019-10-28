@@ -76,18 +76,19 @@ enum StatusMessageType: Int, CaseIterable {
         return "conversation.silenced.status.message"
     }
 
-    private var matchedSummaryTypesDescriptions: [StatusMessageType: String] { ///TODO: switch
-        return [
-        .mention:    "mention",
-        .reply:      "reply",
-        .missedCall: "missedcall",
-        .knock:      "knock",
-        .text:       "generic_message"
-        ]
+    private var localizationKeySuffix: String? {
+        switch self {
+            case .mention: return    "mention"
+            case .reply: return      "reply"
+            case .missedCall: return "missedcall"
+            case .knock: return      "knock"
+            case .text: return       "generic_message"
+            default: return          nil
+        }
     }
 
     var localizationKey: String? {
-        guard let localizationKey = matchedSummaryTypesDescriptions[self] else {
+        guard let localizationKey = localizationKeySuffix else {
             return nil
         }
 
