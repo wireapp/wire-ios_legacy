@@ -86,12 +86,18 @@ enum StatusMessageType: Int, CaseIterable {
         ]
     }
 
-    func localizedString(with count: UInt) -> String? {
+    var localizationKey: String? {
         guard let localizationKey = matchedSummaryTypesDescriptions[self] else {
             return nil
         }
 
-        return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+        return (localizationSilencedRootPath + "." + localizationKey)
+    }
+
+    func localizedString(with count: UInt) -> String? {
+        guard let localizationKey = localizationKey else { return nil }
+
+        return String(format: localizationKey.localized, count)
     }
 }
 
