@@ -54,13 +54,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>one</key>
-        <string>has been added</string>
+        <string>został dodany</string>
         <key>few</key>
         <string>have been added</string>
         <key>many</key>
         <string>have been added</string>
         <key>other</key>
-        <string>have been added</string>
+        <string>zostali dodani</string>
       </dict>
     </dict>
     <key>content.system.missing_messages.subtitle_removed</key>
@@ -80,7 +80,7 @@
         <key>many</key>
         <string>have been removed</string>
         <key>other</key>
-        <string>have been removed</string>
+        <string>zostali usunięci</string>
       </dict>
     </dict>
     <key>list.connect_request.people_waiting</key>
@@ -209,13 +209,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 message</string>
+        <string>wiadomość</string>
         <key>few</key>
         <string>%d messages</string>
         <key>many</key>
         <string>%d messages</string>
         <key>other</key>
-        <string>%d messages</string>
+        <string>%d wiadomości</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.mention</key>
@@ -235,7 +235,7 @@
         <key>many</key>
         <string>%d mentions</string>
         <key>other</key>
-        <string>%d mentions</string>
+        <string>%d wzmianek</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.reply</key>
@@ -255,7 +255,7 @@
         <key>many</key>
         <string>%d replies</string>
         <key>other</key>
-        <string>%d replies</string>
+        <string>%d odpowiedzi</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.knock</key>
@@ -269,13 +269,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 ping</string>
+        <string>zaczepienie</string>
         <key>few</key>
         <string>%d pings</string>
         <key>many</key>
         <string>%d pings</string>
         <key>other</key>
-        <string>%d pings</string>
+        <string>%d zaczepek</string>
       </dict>
     </dict>
     <key>conversation.silenced.status.message.missedcall</key>
@@ -289,7 +289,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 missed call</string>
+        <string>nieodebrane połączenie</string>
         <key>few</key>
         <string>%d nieodebranych połączeń</string>
         <key>many</key>
@@ -315,7 +315,7 @@
         <key>many</key>
         <string>Missed calls</string>
         <key>other</key>
-        <string>Missed calls</string>
+        <string>Nieodebrane połączenia</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups</key>
@@ -335,7 +335,7 @@
         <key>many</key>
         <string>Missed calls from %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
       </dict>
     </dict>
     <key>content.system.call.missed-call.groups-you</key>
@@ -349,13 +349,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Nieodebrana rozmowa od %2$@</string>
         <key>few</key>
         <string>Missed calls from %2$@</string>
         <key>many</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
         <key>other</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
       </dict>
     </dict>
     <key>registration.password.rules.min_length</key>
@@ -415,7 +415,7 @@
         <key>many</key>
         <string>%d capital letters</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d wielkich liter</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -435,7 +435,7 @@
         <key>many</key>
         <string>%d numbers</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d liczb</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -455,7 +455,7 @@
         <key>many</key>
         <string>%d special characters</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d znaków specjalnych</string>
       </dict>
     </dict>
   </dict>
