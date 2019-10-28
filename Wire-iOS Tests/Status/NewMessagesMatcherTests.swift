@@ -55,11 +55,17 @@ final class NewMessagesMatcherTests: XCTestCase {
     }
 
     func testForSummerizeCase() {
+        let messagesRequiringAttentionByType: [StatusMessageType: UInt] = [.mention: 1,
+                                                                             .text: 2,
+                                                                             .file: 3,
+                                                                             .newConversation: 4]
+
+
         let conversationStatus: ConversationStatus = ConversationStatus(isGroup: true,
                                                                         hasMessages: true,
                                                                         hasUnsentMessages: true,
                                                                         messagesRequiringAttention: [],
-                                                                        messagesRequiringAttentionByType: [:],
+                                                                        messagesRequiringAttentionByType: messagesRequiringAttentionByType,
                                                                         isTyping: true,
                                                                         mutedMessageTypes: MutedMessageTypes.regular,
                                                                         isOngoingCall: true,
@@ -72,6 +78,6 @@ final class NewMessagesMatcherTests: XCTestCase {
 
         let string = sut.description(with: conversationStatus, conversation: mockConversation)
 
-        XCTAssertEqual(string, NSAttributedString())
+        XCTAssertEqual(string?.string, "1 mention, 5 messages")
     }
 }
