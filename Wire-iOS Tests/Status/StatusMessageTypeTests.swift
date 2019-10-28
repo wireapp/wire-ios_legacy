@@ -28,15 +28,6 @@ func localizeString (stringToLocalize: String, language: String) -> String? {
 }
 
 final class StatusMessageTypeTests: XCTestCase {
-    var sut: StatusMessageType!
-
-    override func setUp() {
-        super.setUp()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-    }
 
     func testForAllLanguageIsLocalized() {
         /// GIVEN
