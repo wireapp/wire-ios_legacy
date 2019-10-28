@@ -56,7 +56,7 @@ struct ConversationStatus {
 }
 
 // Describes the conversation message.
-enum StatusMessageType: Int {
+enum StatusMessageType: Int, CaseIterable {
     case mention
     case reply
     case missedCall
