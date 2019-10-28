@@ -405,7 +405,7 @@ extension ConversationStatus {
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
-final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
+final class NewMessagesMatcher: TypedConversationStatusMatcher {
     var matchedTypes: [StatusMessageType] {
         return StatusMessageType.summaryTypes
     }
@@ -459,7 +459,7 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
                         return
                     }
 
-                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count) ///TODO: crash
                     $0.append(string)
                 }
 
