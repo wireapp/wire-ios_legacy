@@ -78,12 +78,18 @@ enum StatusMessageType: Int, CaseIterable {
 
     private var localizationKeySuffix: String? {
         switch self {
-            case .mention: return    "mention"
-            case .reply: return      "reply"
-            case .missedCall: return "missedcall"
-            case .knock: return      "knock"
-            case .text: return       "generic_message"
-            default: return          nil
+            case .mention:
+                return "mention"
+            case .reply:
+                return "reply"
+            case .missedCall:
+                return "missedcall"
+            case .knock:
+                return "knock"
+            case .text:
+                return "generic_message"
+            default:
+                return nil
         }
     }
 
