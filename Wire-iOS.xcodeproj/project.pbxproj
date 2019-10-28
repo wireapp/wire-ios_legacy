@@ -1159,7 +1159,7 @@
 		EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */; };
 		EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
 		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
-		EF37AB732366F67500C1F5D9 /* NewMessagesMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37AB722366F67500C1F5D9 /* NewMessagesMatcherTests.swift */; };
+		EF37AB732366F67500C1F5D9 /* StatusMessageTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37AB722366F67500C1F5D9 /* StatusMessageTypeTests.swift */; };
 		EF37C3892256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */; };
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */; };
 		EF39BD2E233E2FDA00F02DDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39BD2D233E2FDA00F02DDB /* main.swift */; };
@@ -2962,7 +2962,7 @@
 		EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Self.swift"; sourceTree = "<group>"; };
 		EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+SelfUserFromSession.swift"; sourceTree = "<group>"; };
 		EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF37AB722366F67500C1F5D9 /* NewMessagesMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessagesMatcherTests.swift; sourceTree = "<group>"; };
+		EF37AB722366F67500C1F5D9 /* StatusMessageTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMessageTypeTests.swift; sourceTree = "<group>"; };
 		EF37C3882256614300EA0C32 /* ConnectRequestsCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardAvoidingViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
@@ -6396,7 +6396,7 @@
 		EF37AB742366F6BA00C1F5D9 /* Status */ = {
 			isa = PBXGroup;
 			children = (
-				EF37AB722366F67500C1F5D9 /* NewMessagesMatcherTests.swift */,
+				EF37AB722366F67500C1F5D9 /* StatusMessageTypeTests.swift */,
 			);
 			path = Status;
 			sourceTree = "<group>";
@@ -8435,7 +8435,7 @@
 				870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */,
 				EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */,
 				5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */,
-				EF37AB732366F67500C1F5D9 /* NewMessagesMatcherTests.swift in Sources */,
+				EF37AB732366F67500C1F5D9 /* StatusMessageTypeTests.swift in Sources */,
 				16030DAD21A846A200F8032E /* ConversationVideoMessageCellTests.swift in Sources */,
 				A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */,
 				BF4D99D01E79AF8100A7B08F /* StartedConversationCellTests.swift in Sources */,
