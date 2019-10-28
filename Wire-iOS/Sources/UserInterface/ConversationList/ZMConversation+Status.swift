@@ -71,6 +71,28 @@ enum StatusMessageType: Int {
     case addParticipants
     case removeParticipants
     case newConversation
+
+    private var localizationSilencedRootPath: String {
+        return "conversation.silenced.status.message"
+    }
+
+    private var matchedSummaryTypesDescriptions: [StatusMessageType: String] { ///TODO: switch
+        return [
+        .mention:    "mention",
+        .reply:      "reply",
+        .missedCall: "missedcall",
+        .knock:      "knock",
+        .text:       "generic_message"
+        ]
+    }
+
+    func localizedString(with count: UInt) -> String? {
+        guard let localizationKey = matchedSummaryTypesDescriptions[self] else {
+            return nil
+        }
+
+        return String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
+    }
 }
 
 extension StatusMessageType {
@@ -410,16 +432,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         return StatusMessageType.summaryTypes
     }
 
-    let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
-
-    let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
-        .mention:    "mention",
-        .reply:      "reply",
-        .missedCall: "missedcall",
-        .knock:      "knock",
-        .text:       "generic_message"
-    ]
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
@@ -455,11 +468,10 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
             let localizedMatchedItems: [String] = flattenedCount.keys.lazy
                 .sorted { $0.rawValue < $1.rawValue }
                 .reduce(into: []) {
-                    guard let count = flattenedCount[$1], let localizationKey = matchedSummaryTypesDescriptions[$1] else {
+                    guard let count = flattenedCount[$1], let string = $1.localizedString(with: count) else {
                         return
                     }
 
-                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count) ///TODO: crash
                     $0.append(string)
                 }
 
