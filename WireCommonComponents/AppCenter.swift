@@ -31,7 +31,7 @@ public extension MSAppCenter {
     }
     
     static func start() {
-        MSAppCenter.start(withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
+        MSAppCenter.start(Bundle.appCenterAppId, withServices: [MSCrashes.self, MSDistribute.self, MSAnalytics.self])
     }
 }
 

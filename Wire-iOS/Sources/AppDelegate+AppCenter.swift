@@ -43,21 +43,12 @@ extension AppDelegate {
         
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
-        let appCenterId = Bundle.appCenterAppId
-        MSAppCenter.configure(withAppSecret: appCenterId)
         MSCrashes.setDelegate(self)
         MSAppCenter.setLogLevel(.verbose)
         
         if !MSCrashes.hasCrashedInLastSession() {
             UIApplication.shared.resetRunDuration()
         }
-        
-        let cmdLineDisableUpdateManager = userDefaults.bool(forKey: "DisableHockeyUpdates")
-        if cmdLineDisableUpdateManager {
-            //hockeyManager.updateManager.updateSetting = BITUpdateCheckManually;
-        }
-        
-        //hockeyManager.crashManager.crashManagerStatus = BITCrashManagerStatusAutoSend;
         
         MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
         
@@ -104,22 +95,3 @@ extension AppDelegate: MSCrashesDelegate {
     }
 
 }
-
-/*
-
-#pragma mark - BITHockeyManagerDelegate
-- (NSString *)applicationLogForCrashManager:(BITCrashManager *)crashManager
-{
-    // get the content
-    NSData *fileContent = [NSData dataWithContentsOfURL:ZMLastAssertionFile()];
-    if(fileContent == nil) {
-        return nil;
-    }
-    
-    // delete it
-    [[NSFileManager defaultManager] removeItemAtURL:ZMLastAssertionFile() error:nil];
-    
-    // return
-    return [[NSString alloc] initWithData:fileContent encoding:NSUTF8StringEncoding];
-}
-*/
