@@ -416,8 +416,17 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
         registeredCells.append(description.baseType)
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard currentSections.indices.contains(indexPath.section) else {
+            fatal("currentSections has \(currentSections.count) elements, but try to access #\(indexPath)")
+        }
+
         let section = currentSections[indexPath.section]
+
+        guard section.elements.indices.contains(indexPath.row) else {
+            fatal("section.elements has \(section.elements.count) elements, but try to access #\(indexPath)")
+        }
+
         let cellDescription = section.elements[indexPath.row]
         
         registerCellIfNeeded(with: cellDescription, in: tableView)
