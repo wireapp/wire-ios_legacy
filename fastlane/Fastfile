@@ -25,7 +25,7 @@ platform :ios do
 
             config_branch = options[:config_branch]
             if config_branch.nil? 
-                config_branch = "feature/app-center-support"
+                config_branch = "master"
             end
 
             build = Build.new(options: options)
