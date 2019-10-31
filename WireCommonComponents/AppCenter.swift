@@ -25,9 +25,9 @@ import AppCenterAnalytics
 public extension MSAppCenter {
     
     @objc static func setTrackingEnabled(_ enabled: Bool) {
-        MSAnalytics.setEnabled(!enabled)
-        MSDistribute.setEnabled(!enabled)
-        MSCrashes.setEnabled(!enabled)
+        MSAnalytics.setEnabled(enabled)
+        MSDistribute.setEnabled(enabled)
+        MSCrashes.setEnabled(enabled)
     }
     
     static func start() {
