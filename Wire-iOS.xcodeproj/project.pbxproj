@@ -447,11 +447,6 @@
 		7C88BB86235DE2D80075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
 		7C88BB87235DE2D80075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
 		7C88BB88235DE2D80075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
-		7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB7B5D235998E200A65042 /* AppCenterData.framework */; };
-		7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
-		7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
-		7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
-		7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
 		7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7C88BB8F235DE3F50075BCC5 /* (null) in Headers */ = {isa = PBXBuildFile; };
 		7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */; };
@@ -3324,11 +3319,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */,
-				7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */,
-				7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */,
-				7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */,
-				7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
