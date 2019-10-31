@@ -54,15 +54,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     NSString *tmpPath = [NSTemporaryDirectory() stringByAppendingPathComponent:message.fileMessageData.filename];
     [[NSFileManager defaultManager] linkItemAtPath:message.fileMessageData.fileURL.path toPath:tmpPath error:&error];
     if (nil != error) {
-        ZMLogError(@"Cannot symlink %@ to %@: %@", message.fileMessageData.fileURL.path, tmpPath, error); ///TODO: frozen after this
+        ZMLogError(@"Cannot symlink %@ to %@: %@", message.fileMessageData.fileURL.path, tmpPath, error);
         tmpPath =  message.fileMessageData.fileURL.path;
     }
     
     self.documentInteractionController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:tmpPath]];
     self.documentInteractionController.delegate = self;
-
-    BOOL result = [self.documentInteractionController presentPreviewAnimated:YES];
-    if (!preview || !result) {
+    if (!preview || ![self.documentInteractionController presentPreviewAnimated:YES]) {
         
         [self.documentInteractionController presentOptionsMenuFromRect:[self.targetViewController.view convertRect:targetView.bounds fromView:targetView]
                                                                 inView:self.targetViewController.view
