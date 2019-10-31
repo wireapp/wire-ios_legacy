@@ -29,7 +29,7 @@
 #import "InviteContactsViewController.h"
 #import "Analytics.h"
 #import "WireSyncEngine+iOS.h"
-#import "ZMConversation+Additions.h"
+
 
 #import "Wire-Swift.h"
 

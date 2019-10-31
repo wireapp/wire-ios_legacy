@@ -30,12 +30,12 @@ extension AuthenticationFlowStep {
                 return nil
             }
 
-            guard let object = try? session.managedObjectContext.existingObject(with: $0) else {
+                guard let object = try? session.managedObjectContext.existingObject(with: $0) else {
                 return nil
             }
 
             return object as? UserClient
-        }
+        } 
 
         return .clientManagement(clients: clients, credentials: credentials)
     }
