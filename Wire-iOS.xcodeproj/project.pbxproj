@@ -8799,7 +8799,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
-				PROVISIONING_PROFILE_SPECIFIER = "Development Wildcard";
 			};
 			name = Debug;
 		};
