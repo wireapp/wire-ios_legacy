@@ -18,6 +18,7 @@
 
 @class IconButton;
 @class ObfuscationView;
+@class ConversationMessageActionController;
 
 static CGFloat const kZoomScaleDelta = 0.0003;
 
@@ -29,6 +30,7 @@ static CGFloat const kZoomScaleDelta = 0.0003;
 @property (nonatomic, readwrite, nonnull) UIScrollView *scrollView;
 @property (nonatomic, nullable) UIActivityIndicatorView *loadingSpinner;
 @property (nonatomic, nonnull) ObfuscationView *obfuscationView;
+@property (nonatomic, strong, nonnull) ConversationMessageActionController *actionController;
 
 - (void)centerScrollViewContent;
 - (void)setSelectedByMenu:(BOOL)selected animated:(BOOL)animated;

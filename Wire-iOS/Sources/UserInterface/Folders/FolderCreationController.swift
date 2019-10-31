@@ -149,7 +149,7 @@ final class FolderCreationController: UIViewController {
             nameSection.resignFirstResponder()
             folderName = trimmed
             
-            if let folder = ZMUserSession.shared()?.conversationDirectory.createFolder(folderName) {
+            if let folder = ZMUserSession.shared()?.conversationDirectory?.createFolder(folderName) {
                 self.delegate?.folderController(self, didCreateFolder: folder)
             }
         }

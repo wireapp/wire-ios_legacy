@@ -385,6 +385,10 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
 }
 
 extension ConversationListContentController: ConversationListCellDelegate {
+    func indexPath(for cell: ConversationListCell) -> IndexPath? {
+        return collectionView.indexPath(for: cell)
+    }
+
     func conversationListCellOverscrolled(_ cell: ConversationListCell) {
         guard let conversation = cell.conversation else {
             return

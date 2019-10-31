@@ -32,16 +32,16 @@
 "general.decline" = "Nie, dzięki!";
 "general.failure" = "Coś poszło nie tak";
 "general.failure.try_again" = "Proszę spróbować ponownie.";
-"general.service" = "Service";
+"general.service" = "Usługa";
 "general.off" = "Wyłącz";
-"general.on" = "On";
+"general.on" = "Włączone";
 "general.loading" = "Wczytuje…";
 "general.paste" = "Wklej";
 
 // Language like Chinese does not use space to sperate words or sentences.
 "general.space_between_words" = " ";
 
-"general.guest-room-name" = "Guest room";
+"general.guest-room-name" = "Pokój gościnny";
 
 // User Cell
 "user_cell.title.you_suffix" = " (Ty)";
@@ -148,8 +148,8 @@
 
 // Conversation list voiceover accessibility
 "conversation_list.voiceover.open_conversation.hint" = "Otwórz konwersację";
-"conversation_list.voiceover.status.pending_connection" = "pending";
-"conversation_list.voiceover.status.active_call" = "active call";
+"conversation_list.voiceover.status.pending_connection" = "w toku";
+"conversation_list.voiceover.status.active_call" = "aktywne połączenie";
 "conversation_list.voiceover.status.missed_call" = "nieodebrane połączenie";
 "conversation_list.voiceover.status.pause_media" = "pause media";
 "conversation_list.voiceover.status.play_media" = "play media";
@@ -160,9 +160,9 @@
 "conversation_list.voiceover.status.reply" = "odpowiedz";
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "foldery";
 "conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
-"conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
+"conversation_list.voiceover.bottom_bar.archived_button.label" = "zarchiwizowane";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kontakty";
 "conversation_list.voiceover.bottom_bar.contacts_button.hint" = "search for people on Wire";

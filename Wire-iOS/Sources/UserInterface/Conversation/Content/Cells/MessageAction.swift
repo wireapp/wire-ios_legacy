@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,24 +17,22 @@
 //
 
 
-@protocol ZMConversationMessage;
-
-typedef NS_CLOSED_ENUM(NSUInteger, MessageAction) {
-    MessageActionCancel,
-    MessageActionResend,
-    MessageActionDelete,
-    MessageActionPresent,
-    MessageActionSave,
-    MessageActionCopy,
-    MessageActionEdit,
-    MessageActionSketchDraw,
-    MessageActionSketchEmoji,
-    MessageActionSketchText,
-    MessageActionLike,
-    MessageActionForward,
-    MessageActionShowInConversation,
-    MessageActionDownload,
-    MessageActionReply,
-    MessageActionOpenQuote,
-    MessageActionOpenDetails
-};
+enum MessageAction {
+    case cancel,
+    resend,
+    `delete`,
+    present,
+    save,
+    copy,
+    edit,
+    sketchDraw,
+    sketchEmoji,
+    sketchText,
+    like,
+    forward,
+    showInConversation,
+    download,
+    reply,
+    openQuote,
+    openDetails
+}

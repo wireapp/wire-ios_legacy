@@ -98,7 +98,7 @@ public final class CollectionsView: UIView {
         return button
     }
     
-    public func constrainViews(searchViewController: TextSearchViewController) {
+    func constrainViews(searchViewController: TextSearchViewController) {
         self.addSubview(searchViewController.resultsView)
         self.addSubview(searchViewController.searchBar)
         

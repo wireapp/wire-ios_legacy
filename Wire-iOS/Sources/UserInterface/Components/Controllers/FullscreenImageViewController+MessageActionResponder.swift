@@ -33,12 +33,12 @@ extension FullscreenImageViewController {
             sourceView = scrollView
         }
         
-        delegate?.perform(action: action, for: message, view: sourceView)
+        (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
     }
 }
 
 extension FullscreenImageViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
         case .forward:
             perform(action: action)

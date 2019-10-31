@@ -55,13 +55,19 @@ final public class AppLock {
         /// There's no authenticated method available (no passcode is set)
         case unavailable
     }
-    
+
+
+    /// a weak reference to LAContext, it should be nil when evaluatePolicy is done.
+    private static weak var weakLAContext: LAContext? = nil
+
     // Creates a new LAContext and evaluates the authentication settings of the user.
     public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
-    
+        guard AppLock.weakLAContext == nil else { return }
+
         let context: LAContext = LAContext()
         var error: NSError?
-    
+
+        AppLock.weakLAContext = context
         if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthentication, error: &error) {
             context.evaluatePolicy(LAPolicy.deviceOwnerAuthentication, localizedReason: description, reply: { (success, error) -> Void in
                 callback(success ? .granted : .denied)
