@@ -35,7 +35,7 @@ final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
     }
     
     var mockConversationDirectory = MockConversationDirectory()
-    var conversationDirectory: ConversationDirectoryType {
+    var conversationDirectory: ConversationDirectoryType? {
         return mockConversationDirectory
     }
 
