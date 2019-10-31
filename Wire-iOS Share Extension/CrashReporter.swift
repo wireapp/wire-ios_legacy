@@ -36,7 +36,6 @@ class CrashReporter {
         guard !didSetupAppCenter, appCenterEnabled, let appCenterIdentifier = Bundle.appCenterAppId else { return }
         didSetupAppCenter = true
 
-        // See https://github.com/bitstadium/HockeySDK-iOS/releases/tag/4.0.1
         UserDefaults.standard.set(true, forKey: "kBITExcludeApplicationSupportFromBackup")
 
         
