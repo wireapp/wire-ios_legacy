@@ -8809,7 +8809,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha";
 			};
 			name = Release;
 		};
