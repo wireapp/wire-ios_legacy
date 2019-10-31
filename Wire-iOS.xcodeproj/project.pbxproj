@@ -8800,7 +8800,6 @@
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = W5KEQBF9B5;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.wearezeta.zclient-alpha";
 				PROVISIONING_PROFILE_SPECIFIER = "Development Wildcard";
 			};
 			name = Debug;
