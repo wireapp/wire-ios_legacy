@@ -277,7 +277,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func setupObservers() {
-        conversationDirectoryToken = userSession?.conversationDirectory.addObserver(self)
+        conversationDirectoryToken = userSession?.conversationDirectory?.addObserver(self)
     }
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
