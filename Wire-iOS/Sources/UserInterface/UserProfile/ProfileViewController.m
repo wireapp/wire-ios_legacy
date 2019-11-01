@@ -25,7 +25,6 @@
 
 
 
-#import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"

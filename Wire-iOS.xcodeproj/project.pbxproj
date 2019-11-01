@@ -512,7 +512,6 @@
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
 		871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F91D34F8F800DF0793 /* UIAlertController+Wire.m */; };
 		871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */; };
-		871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */; };
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
 		871BC28B1D34F8F800DF0793 /* UIResponder+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
@@ -745,6 +744,7 @@
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
+		A978D995236C852000B568AE /* UIColor+Accents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D994236C852000B568AE /* UIColor+Accents.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */; };
@@ -2122,8 +2122,6 @@
 		871BC1F81D34F8F800DF0793 /* UIAlertController+Wire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+Wire.h"; sourceTree = "<group>"; };
 		871BC1F91D34F8F800DF0793 /* UIAlertController+Wire.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+Wire.m"; sourceTree = "<group>"; };
 		871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
-		871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+WAZExtensions.h"; sourceTree = "<group>"; };
-		871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+WAZExtensions.m"; sourceTree = "<group>"; };
 		871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MonoSpaced.swift"; sourceTree = "<group>"; };
 		871BC2071D34F8F800DF0793 /* UIResponder+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+FirstResponder.h"; sourceTree = "<group>"; };
 		871BC2081D34F8F800DF0793 /* UIResponder+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+FirstResponder.m"; sourceTree = "<group>"; };
@@ -2456,6 +2454,7 @@
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
+		A978D994236C852000B568AE /* UIColor+Accents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Accents.swift"; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* Hockey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hockey.swift; sourceTree = "<group>"; };
@@ -4553,10 +4552,9 @@
 				871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */,
 				87A6BD0D1F0D2A36006A3232 /* UIApplication+StatusBar.h */,
 				87A6BD0E1F0D2A58006A3232 /* UIApplication+StatusBar.m */,
-				871BC1FD1D34F8F800DF0793 /* UIColor+WAZExtensions.h */,
-				871BC1FE1D34F8F800DF0793 /* UIColor+WAZExtensions.m */,
-				16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */,
+				A978D994236C852000B568AE /* UIColor+Accents.swift */,
 				EF2F6DA220ED11D2007B6D70 /* UIColor+Accent.swift */,
+				16E256202108AF6E00919DB0 /* FontSpec+DynamicType.swift */,
 				871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */,
 				163FB99020518BF400E74F83 /* UIFont+FontSpec.swift */,
 				5501FFCA22B399CD0050D8FC /* UITextContentType+Availability.swift */,
@@ -7456,7 +7454,6 @@
 				F1199D411FC849450070FAC3 /* TextFieldDescription.swift in Sources */,
 				16814840228C6E120069F16F /* UserClientCell.swift in Sources */,
 				D58192002091CEBF003BA7EC /* UIStackView+Helper.swift in Sources */,
-				871BC2851D34F8F800DF0793 /* UIColor+WAZExtensions.m in Sources */,
 				EF20BE4322CB57B1004F8910 /* UIViewController+Present.swift in Sources */,
 				EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */,
 				1610367120617BEC008AFDD0 /* AppRootViewController+Appearance.swift in Sources */,
@@ -7837,6 +7834,7 @@
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				EF1EB851235F008F00575DD9 /* Bundle+InfoDict.swift in Sources */,
+				A978D995236C852000B568AE /* UIColor+Accents.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,

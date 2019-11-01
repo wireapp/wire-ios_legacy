@@ -31,7 +31,6 @@
 #import "MediaPlayer.h"
 #import "AppDelegate.h"
 
-#import "UIColor+WAZExtensions.h"
 
 #import "ZClientViewController.h"
 #import "AnimatedListMenuView.h"

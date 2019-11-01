@@ -48,7 +48,6 @@
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
-#import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
 #import "UIResponder+FirstResponder.h"
