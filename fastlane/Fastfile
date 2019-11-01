@@ -68,7 +68,7 @@ platform :ios do
         )
     end
 
-    desc "Build for release to AppStore or Hockey/S3"
+    desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         build = Build.new(options: options)
 
@@ -178,6 +178,53 @@ platform :ios do
           upload_dsym_only: true,
           release_type: "1",
           notify: "0"
+        )
+    end
+
+    desc "Upload for internal use"
+    lane :upload_app_center do |options|
+        build = Build.new(options: options)
+        changelog = ""
+
+        if build.playground_build
+            changelog = "Playground build for #{build.git_branch}"
+        elsif build.avs_build
+            changelog = "AVS #{build.avs_version}"
+        elsif build.last_commit.nil? || build.last_commit.empty? 
+            changelog = "No changelog available"
+        else
+            changelog = "Changes Since Last Build:\n" + changelog_from_git_commits(
+                between: [build.last_commit, "HEAD"],
+                pretty: "* [%an] %s",
+            )
+        end
+        
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: ENV["APPCENTER_APP_NAME"],
+          ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+          release_notes: changelog,
+          notify_testers: "0"
+        )
+    end
+
+    desc "Upload dSYMs for AppStore crash tracking"
+    lane :upload_app_center_appstore do |options|
+        build = Build.new(options: options)
+
+        if !build.appstore_build
+            UI.user_error! "This step is only relevant for AppStore builds"
+        end
+
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: ENV["APPCENTER_APP_NAME"],
+          dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
+          upload_dsym_only: true,
+          release_type: "1",
+          notify_testers: "0"
         )
     end
 
@@ -415,5 +462,4 @@ class Build
             UI.user_error! "Unknown build type: #{@build_type}"
         end
     end
-
 end
