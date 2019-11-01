@@ -31,19 +31,15 @@ extension ZMConversation {
         case .group:
             addOrShowError(participants: participants)
             return self
-        case .oneOnOne:
-            if participants.count > 1 || (participants.count == 1 && !(connectedUser == participants.first)) {
-                
-                let team = ZMUser.selfUser().team
-                
-                var listOfPeople = Array(participants)
-                
-                if let connectedUser = connectedUser {
-                    listOfPeople.append(connectedUser)
-                }
-                
-                return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: team)
+        case .oneOnOne where participants.count > 1 || (participants.count == 1 && !(connectedUser == participants.first)):
+            
+            var listOfPeople = Array(participants)
+            
+            if let connectedUser = connectedUser {
+                listOfPeople.append(connectedUser)
             }
+            
+            return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: ZMUser.selfUser().team)
         default:
             break
         }
@@ -53,9 +49,9 @@ extension ZMConversation {
 
     @objc
     var firstActiveParticipantOtherThanSelf: ZMUser? {
-        let selfUser = ZMUser.selfUser()
+        guard let selfUser = ZMUser.selfUser() else { return activeParticipants.first }
         
-        return activeParticipants.first(where: {!($0 == selfUser)} )
+        return activeParticipants.first(where: {$0 != selfUser} )
     }
 
 }
