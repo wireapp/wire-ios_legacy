@@ -20,7 +20,6 @@
 #import "ZMConversation+Additions.h"
 
 #import "WireSyncEngine+iOS.h"
-#import "ZMUserSession+iOS.h"
 #import <AVFoundation/AVFoundation.h>
 #import "Analytics.h"
 #import "Analytics.h"

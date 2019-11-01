@@ -21,7 +21,6 @@
 // Data model
 @import WireSyncEngine;
 @import avs;
-#import "ZMUserSession+iOS.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
