@@ -26,9 +26,7 @@ extension ZMConversation {
     }
     
     var firstCallingParticipantOtherThanSelf : ZMUser? {
-        return voiceChannel?.participants.first(where: { (user) -> Bool in
-            return !ZMUser.selfUser().isEqual(user)
-        }) as? ZMUser
+      return (voiceChannel?.participants.first { !ZMUser.selfUser().isEqual($0.user) })?.user
     }
     
     func startAudioCall() {

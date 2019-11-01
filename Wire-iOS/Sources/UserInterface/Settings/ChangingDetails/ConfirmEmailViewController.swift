@@ -52,7 +52,7 @@ extension UITableView {
     }
 }
 
-@objcMembers final class ConfirmEmailViewController: SettingsBaseTableViewController {
+final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
 
