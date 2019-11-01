@@ -19,6 +19,12 @@
 import XCTest
 @testable import Wire
 
+extension UIColor {    
+    class var accentOverrideColor: ZMAccentColor? {
+        return ZMUser.selfUser()?.accentColorValue
+    }
+}
+
 extension XCTestCase {
     /// If this is set the accent color will be overriden for the tests
     static var accentColor: ZMAccentColor {

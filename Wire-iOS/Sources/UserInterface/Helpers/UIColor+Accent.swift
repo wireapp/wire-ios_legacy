@@ -34,10 +34,6 @@ extension UIColor {
         })
     }
     
-    class var accentOverrideColor: ZMAccentColor? {
-        return ZMUser.selfUser()?.accentColorValue
-    }
-    
     class func indexedAccentColor() -> ZMAccentColor {
         // priority 1: overriden color
         if overridenAccentColor != .undefined {
