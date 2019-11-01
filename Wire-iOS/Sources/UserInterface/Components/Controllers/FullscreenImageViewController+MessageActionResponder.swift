@@ -26,19 +26,23 @@ extension FullscreenImageViewController {
         if action == .delete,
             let conversationImagesViewController = delegate as? ConversationImagesViewController {
             sourceView = conversationImagesViewController.deleteButton
+        } else if action == .forward,
+            let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
+            sourceView = shareButton
         } else {
             sourceView = scrollView
         }
         
-        delegate?.perform(action: action, for: message, view: sourceView)
+        (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
     }
 }
 
 extension FullscreenImageViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         switch action {
-        case .forward,
-             .showInConversation,
+        case .forward:
+            perform(action: action)
+        case .showInConversation,
              .reply:
             dismiss(animated: true) {
                 self.perform(action: action)

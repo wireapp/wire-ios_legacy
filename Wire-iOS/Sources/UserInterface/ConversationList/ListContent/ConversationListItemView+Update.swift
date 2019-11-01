@@ -43,7 +43,6 @@ extension ConversationListItemView {
         avatarView.configure(context: .connect(users: users))
         
         labelsStack.accessibilityLabel = title?.string
-        labelsStack.accessibilityValue = rightAccessory.accessibilityValue
     }
     
     @objc(updateForConversation:)
@@ -100,7 +99,11 @@ extension ConversationListItemView {
             statusComponents.append(statusIconAccessibilityValue)
         }
 
+        if conversation.activeParticipants.first?.isPendingApproval == true {
+            statusComponents.append("pending approval")
+        }
+
         labelsStack.accessibilityValue = FormattedText.list(from: statusComponents)
-        self.configure(with: title, subtitle: status.description(for: conversation))
+        configure(with: title, subtitle: status.description(for: conversation))
     }
 }

@@ -93,7 +93,7 @@ extension ConversationLinkPreviewArticleCell: ArticleViewDelegate {
     
 }
 
-class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
+final class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationLinkPreviewArticleCell
     let configuration: View.Configuration
 
@@ -108,7 +108,10 @@ class ConversationLinkPreviewArticleCellDescription: ConversationMessageCellDesc
     let supportsActions: Bool = true
     let containsHighlightableContent: Bool = true
 
-    let accessibilityIdentifier: String? = nil
+    var accessibilityIdentifier: String? {
+        return configuration.isObfuscated ? "ObfuscatedLinkPreviewCell" : "LinkPreviewCell"
+    }
+
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, data: ZMTextMessageData) {

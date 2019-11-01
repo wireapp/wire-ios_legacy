@@ -47,7 +47,6 @@
 @end
 
 
-
 @implementation ProfileViewController
 
 - (id)initWithUser:(id<UserType>)user viewer:(id<UserType>)viewer context:(ProfileViewControllerContext)context

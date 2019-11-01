@@ -44,7 +44,7 @@
 "general.guest-room-name" = "Stanza degli ospiti";
 
 // User Cell
-"user_cell.title.you_suffix" = " (You)";
+"user_cell.title.you_suffix" = " (Tu)";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "fai un trillo";
 "conversation_list.voiceover.status.mention" = "sei stato menzionato";
 "conversation_list.voiceover.status.reply" = "rispondi";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recente";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "elenco di conversazioni recenti";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "cartelle";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Sono su Wire, cerca %@ o visita get.wire.com";
 "send_invitation_no_email.text" = "Sono su Wire. Visita get.wire.com per connetterti con me.";
 
+// Folders
+
+"folder.creation.name.title" = "Crea nuova cartella";
+"folder.creation.name.button.create" = "Creare";
+"folder.creation.name.header" = "Sposta la conversazione \"%@\" in una nuova cartella.";
+"folder.creation.name.footer" = "Massimo 64 caratteri";
+"folder.creation.name.placeholder" = "Nome cartella";
+
+"folder.picker.title" = "Sposta in";
+"folder.picker.empty.hint" = "Crea una nuova cartella premendo il pulsante +";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "ha condiviso un'immagine";
@@ -203,10 +218,15 @@
 "list.archived_conversations" = "ARCHIVIO";
 "list.archived_conversations_close" = "Chiudi archivio";
 
+"list.section.groups" = "Gruppi";
+"list.section.contacts" = "Persone";
+"list.section.requests" = "Richieste Ricevute";
+"list.section.favorites" = "Preferiti";
+
 "conversation.voiceover.verified" = "verificato";
-"conversation.voiceover.legalhold" = "legal hold";
-"conversation.voiceover.value.active" = "active";
-"conversation.voiceover.value.disabled" = "disabled";
+"conversation.voiceover.legalhold" = "legale";
+"conversation.voiceover.value.active" = "attivo";
+"conversation.voiceover.value.disabled" = "disattivato";
 
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
@@ -214,7 +234,7 @@
 "conversation.status.poor_connection" = "Connessione scadente";
 "conversation.status.blocked" = "Bloccato";
 "conversation.status.incoming_call" = "%@ sta chiamando…";
-"conversation.status.incoming_call.unknown" = "Someone is calling…";
+"conversation.status.incoming_call.unknown" = "Qualcuno sta chiamando…";
 
 "conversation.status.message.text" = "%@";
 "conversation.status.message.link" = "Condividi un link";
@@ -309,7 +329,7 @@
 "conversation.input_bar.ongoing_call_alert.video.message" = "Non è possibile registrare un video durante una chiamata.";
 "conversation.input_bar.ongoing_call_alert.photo.message" = "Non è possibile scattare una foto durante una chiamata.";
 
-"conversation.alert.message_deleted" = "The message is deleted.";
+"conversation.alert.message_deleted" = "Il messaggio verrà eliminato.";
 
 "conversation.guests_present" = "Sono presenti ospiti";
 "conversation.services_present" = "I servizi sono attivi";
@@ -399,9 +419,9 @@
 
 // Link attachment messages
 
-"content.message.link_attachment.accessibility_label.youtube" = "YouTube video preview";
-"content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
-"content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
+"content.message.link_attachment.accessibility_label.youtube" = "Anteprima video Youtube";
+"content.message.link_attachment.accessibility_label.soundcloud_song" = "Anteprima canzone SoundCloud";
+"content.message.link_attachment.accessibility_label.soundcloud_set" = "Anteprima playlist SoundCloud";
 
 // New conversation participants added / removed / started system message
 
@@ -441,9 +461,16 @@
 "content.system.you_started" = "Tu";
 "content.system.this_device" = "questo dispositivo";
 
-"content.system.call.you" = "Tu";
 "content.system.call.called" = "%@ ha chiamato";
 "content.system.call.called-you" = "%@ ha chiamato";
+"content.system.call.called.you" = "Tu";
+
+"content.system.call.missed-call" = "Chiamata senza risposta";
+"content.system.call.missed-call-you" = "Chiamata senza risposta";
+
+"content.system.call.missed-call.groups" = "Chiamata persa da %@";
+"content.system.call.missed-call.groups-you" = "Chiamata persa da %2$@";
+"content.system.call.missed-call.groups.you" = "Tu";
 
 "content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
 "content.system.renamed_conv.title-you" = "%@ ha rinominato la conversazione";
@@ -515,7 +542,7 @@
 "content.file.upload_cancelled" = "Caricamento annullato";
 "content.file.upload_video" = "Video";
 "content.file.take_video" = "Registra un video";
-"content.file.browse" = "Browse";
+"content.file.browse" = "Sfoglia";
 
 "content.file.save_video" = "Salva";
 "content.file.save_audio" = "Salva";
@@ -603,7 +630,7 @@
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
 "voice.end_call_button.title" = "Termina chiamata";
-"voice.call_error.unsupported_version.title" = "Please update Wire";
+"voice.call_error.unsupported_version.title" = "Si prega di aggiornare Wire";
 "voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Più tardi";
 
@@ -692,8 +719,10 @@
 "meta.menu.leave" = "Abbandona il gruppo…";
 "meta.menu.archive" = "Archivia";
 "meta.menu.unarchive" = "Disarchivia";
-"meta.menu.delete" = "Delete Group…";
-"meta.menu.clear_content" = "Clear Content…";
+"meta.menu.delete" = "Elimina gruppo…";
+"meta.menu.clear_content" = "Elimina contenuti…";
+"meta.menu.move_to_folder" = "Sposta in…";
+"meta.menu.remove_from_folder" = "Rimuovi da \"%@\"";
 "meta.menu.silence.mute" = "Silenzia";
 "meta.menu.silence.unmute" = "Riattiva audio";
 "meta.menu.cancel" = "Annulla";
@@ -702,15 +731,15 @@
 "meta.menu.mark_read" = "Segna come letto";
 "shortcut.mark_all_as_read.title" = "Segna tutti come letti";
 "meta.menu.configure_notifications" = "Notifiche…";
-"meta.menu.open_self_profile" = "Open Profile";
+"meta.menu.open_self_profile" = "Apri il profilo";
 
 // Delete conversation
-"meta.menu.delete_content.dialog_title" = "Clear content?";
+"meta.menu.delete_content.dialog_title" = "Cancellare il contenuto?";
 "meta.menu.delete_content.dialog_message" = "La cronologia delle conversazioni verrà cancellata da tutti i tuoi dispositivi.";
 "meta.menu.delete_content.leave_as_well_message" = "In aggiunta, abbandona la conversazione";
 "meta.menu.delete_content.button_cancel" = "Annulla";
-"meta.menu.delete_content.button_delete" = "Clear";
-"meta.menu.delete_content.button_delete_and_leave" = "Clear and leave";
+"meta.menu.delete_content.button_delete" = "Cancella";
+"meta.menu.delete_content.button_delete_and_leave" = "Cancella e abbandona";
 
 // Configure conversation notifications
 "meta.menu.configure_notification.dialog_message" = "Notificami riguardo:";
@@ -722,18 +751,18 @@
 // Leave conversation
 "meta.leave_conversation_dialog_title" = "Abbandonare la conversazione?";
 "meta.leave_conversation_dialog_message" = "I partecipanti saranno informati e la conversazione verrà rimossa dalla tua lista.";
-"meta.leave_conversation.delete_content_as_well_message" = "Also clear the content";
+"meta.leave_conversation.delete_content_as_well_message" = "Elimina anche il contenuto";
 "meta.leave_conversation_button_cancel" = "Annulla";
 "meta.leave_conversation_button_leave" = "Abbandona";
-"meta.leave_conversation_button_leave_and_delete" = "Leave and clear content";
+"meta.leave_conversation_button_leave_and_delete" = "Lascia e cancella il contenuto";
 
 // Conversation Degraded (security level lowered)
 "meta.degraded.degradation_reason_message.singular" = "%@ ha iniziato a usare un nuovo dispositivo.";
 "meta.degraded.degradation_reason_message.plural" = "%@ ha iniziato a usare dei nuovi dispositivi.";
 "meta.degraded.degradation_reason_message.someone" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "meta.degraded.dialog_message" = "Vuoi comunque mandare il messaggio?";
-"meta.degraded.verify_devices_button" = "Verify Devices…";
-"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.verify_devices_button" = "Verifica dispositivi…";
+"meta.degraded.send_anyway_button" = "Invia comunque";
 "meta.degraded.cancel_sending_button" = "Annulla";
 "meta.legalhold.info_button" = "What Is Legal Hold?";
 "meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
@@ -770,7 +799,7 @@
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
 "conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_error_dialog.button_delete_group" = "Elimina Gruppo";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annullare la richiesta?";
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "Blocca…";
 "profile.unblock_button_title" = "Sblocca…";
+
+// Favorite button
+"profile.favorite_button_title" = "Aggiungi ai preferiti";
+"profile.unfavorite_button_title" = "Rimuovi dai preferiti";
 
 "profile.block_button_title_action" = "Blocca";
 "profile.unblock_button_title_action" = "Sblocca";
@@ -824,8 +857,8 @@
 "device.class.phone" = "Telefono";
 "device.class.unknown" = "Sconosciuto";
 
-"device.type.permanent" = "Permanent";
-"device.type.temporary" = "Temporary";
+"device.type.permanent" = "Permanente";
+"device.type.temporary" = "Temporaneo";
 "device.type.legalhold" = "Legal Hold";
 "device.type.unknown" = "Sconosciuto";
 
@@ -871,8 +904,8 @@
 "self.add_phone_number" = "Aggiungi un numero di telefono";
 "self.add_email_password" = "Aggiungi indirizzo email e password";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Immagine del profilo";
+"self.accessibility.profile_photo_edit_button" = "Cambia la foto del profilo";
 
 // About screen
 "about.tos.title" = "Termini di utilizzo";
@@ -1107,7 +1140,7 @@
 
 "self.settings.advanced.title" = "Avanzate";
 "self.settings.advanced.troubleshooting.title" = "Risoluzione dei problemi";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Report di debug";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Reimpostazione delle notifiche Push Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Se si verificano problemi con le notifiche push, il supporto di Wire può chiedere di reimpostare questo token.";
@@ -1121,7 +1154,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Relazione tecnica";
 "self.settings.technical_report.send_report" = "Invia una relazione a Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Report di debug di Wire";
 "self.settings.technical_report.include_log" = "Includere file di registro dettagliato";
 "self.settings.technical_report.privacy_warning" = "Log dettagliati potrebbero contenere dati personali";
 "self.settings.technical_report.no_mail_alert" = "Nessun client di posta rilevato. Fai tap su \"OK\" ed invia i log manualmente a: ";
@@ -1520,7 +1553,7 @@
 "force.update.ok_button" = "Vai all'App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbreak detected";
+"jailbrokendevice.alert.title" = "Jailbreak rilevato";
 "jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
 
 // Third Party
@@ -1570,8 +1603,8 @@
 
 "availability.message.cancel" = "Annulla";
 "availability.message.set_status" = "Imposta uno stato";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
+"availability.accessibility_label.change_status" = "Cambia stato";
+"availability.accessibility_label.status" = "Stato";
 
 "availability.none" = "Nessuno";
 "availability.available" = "Disponibile";
@@ -1614,7 +1647,7 @@
 "url_action.switch_backend.title" = "Connetti al server";
 "url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
 
-"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
+"url_action.switch_backend.error.logged_in.title" = "Impossibile cambiare server";
 "url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
 
 "url_action.switch_backend.error.invalid_backend.title" = "Il server non risponde";
@@ -1659,8 +1692,8 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Usa %@.";
+"registration.password.rules.with_requirements" = "Usa %@, con %@.";
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "Legal Hold Deactivated";
@@ -1669,14 +1702,14 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 "share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
-"share_extension.voiceover.conversation_secure" = "All clients verified.";
-"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+"share_extension.voiceover.conversation_secure" = "Tutti i client verificati.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Non tutti i client verificati.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
+"legalhold_request.button.accessibility" = "In attesa di approvazione.";
 "legalhold_request.alert.title" = "Legal Hold Requested";
 "legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.alert.detail.enter_password" = "Inserisci la password per confermare.";
 "legalhold_request.alert.error_wrong_password" = "Password errata";
 
 // Legal hold activated
@@ -1685,5 +1718,5 @@
 "legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
 
 // Account deleted alert
-"account_deleted_session_expired_alert.title" = "Your session expired";
-"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+"account_deleted_session_expired_alert.title" = "La sessione è scaduta";
+"account_deleted_session_expired_alert.message" = "L'applicazione non ha comunicato con il server per un lungo periodo di tempo, o la tua sessione è stata remotamente invalidata.";

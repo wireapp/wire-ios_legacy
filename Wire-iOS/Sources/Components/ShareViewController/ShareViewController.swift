@@ -18,7 +18,7 @@
 
 import Foundation
 
-public protocol ShareDestination: Hashable {
+protocol ShareDestination: Hashable {
     var displayName: String { get }
     var securityLevel: ZMConversationSecurityLevel { get }
     var showsGuestIcon: Bool { get }
@@ -26,13 +26,13 @@ public protocol ShareDestination: Hashable {
     var avatarView: UIView? { get }
 }
 
-public protocol Shareable {
+protocol Shareable {
     associatedtype I: ShareDestination
     func share<I>(to: [I])
     func previewView() -> UIView?
 }
 
-public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
+final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
     public let destinations: [D]
     public let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -69,7 +69,7 @@ public class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContr
     public var onDismiss: ((ShareViewController, Bool)->())?
     internal var bottomConstraint: NSLayoutConstraint?
     
-    public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
+    init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
         self.destinations = destinations
         self.filteredDestinations = destinations
         self.shareable = shareable

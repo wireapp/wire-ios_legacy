@@ -41,6 +41,7 @@ final class ConversationListBottomBarController: UIViewController {
 
     let separator = UIView()
     
+    private var userObserverToken: Any?
     private let heightConstant: CGFloat = 56
     private let xInset: CGFloat = 16
 
@@ -64,6 +65,8 @@ final class ConversationListBottomBarController: UIViewController {
         
         createViews()
         createConstraints()
+        updateColorScheme()
+        addObservers()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -106,8 +109,6 @@ final class ConversationListBottomBarController: UIViewController {
         buttonStackview.translatesAutoresizingMaskIntoConstraints = false
         
         allButtons.forEach { button in
-            button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
-            button.setIconColor(.strongBlue, for: .selected)
             button.translatesAutoresizingMaskIntoConstraints = false
             buttonStackview.addArrangedSubview(button)
         }
@@ -130,6 +131,19 @@ final class ConversationListBottomBarController: UIViewController {
             buttonStackview.topAnchor.constraint(equalTo: view.topAnchor),
             buttonStackview.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
+    }
+    
+    private func addObservers() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+    }
+    
+    fileprivate func updateColorScheme() {
+        allButtons.forEach { button in
+            button.setIconColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
+            button.setIconColor(.accent(), for: .selected)
+        }
     }
 
     // MARK: - Target Action
@@ -187,4 +201,14 @@ extension ConversationListBottomBarController: ConversationListViewModelRestorat
             updateSelection(with: listButton)
         }
     }
+}
+
+extension ConversationListBottomBarController: ZMUserObserver {
+    
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.accentColorValueChanged else { return }
+        
+        updateColorScheme()
+    }
+    
 }

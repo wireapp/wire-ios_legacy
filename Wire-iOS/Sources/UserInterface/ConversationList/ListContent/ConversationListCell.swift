@@ -20,6 +20,16 @@ import Foundation
 
 extension ConversationListCell {
 
+    override open var accessibilityValue: String? {
+        get {
+            return delegate?.indexPath(for: self)?.description
+        }
+
+        set {
+            // no op
+        }
+    }
+
     override open var accessibilityIdentifier: String? {
         get {
             return identifier

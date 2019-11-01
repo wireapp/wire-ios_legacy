@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "あなたがメンションされました";
 "conversation_list.voiceover.status.reply" = "返信";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "フォルダ";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "アーカイブ済み";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "アーカイブ済み会話一覧";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡先";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "私はWireにいます。%@ で検索するか、get.wire.com. にアクセスしてください";
 "send_invitation_no_email.text" = "私はWireにいます。https://get.wire.com にアクセスして私とつながりましょう。";
 
+// Folders
+
+"folder.creation.name.title" = "新規フォルダを作成";
+"folder.creation.name.button.create" = "新規作成";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "最大64文字";
+"folder.creation.name.placeholder" = "フォルダ名";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "写真を共有します";
@@ -202,6 +217,11 @@
 "list.title" = "会話";
 "list.archived_conversations" = "アーカイブ";
 "list.archived_conversations_close" = "アーカイブして閉じます";
+
+"list.section.groups" = "グループ";
+"list.section.contacts" = "ピープル";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "お気に入り";
 
 "conversation.voiceover.verified" = "認証済み";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "あなた";
 "content.system.this_device" = "このデバイス";
 
-"content.system.call.you" = "あなた";
 "content.system.call.called" = "%@ からの着信";
 "content.system.call.called-you" = "%@ からの着信";
+"content.system.call.called.you" = "あなた";
+
+"content.system.call.missed-call" = "不在着信";
+"content.system.call.missed-call-you" = "不在着信";
+
+"content.system.call.missed-call.groups" = "%@ からの不在着信";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "あなた";
 
 "content.system.renamed_conv.title" = "%@が会話に名前を付けました";
 "content.system.renamed_conv.title-you" = "%@が会話に名前を付けました";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "解答する";
 "meta.menu.delete" = "グループを削除…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "ミュート";
 "meta.menu.silence.unmute" = "ミュート解除します。";
 "meta.menu.cancel" = "キャンセル";
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "ブロック...";
 "profile.unblock_button_title" = "連絡先のブロックを解除";
+
+// Favorite button
+"profile.favorite_button_title" = "お気に入りに追加";
+"profile.unfavorite_button_title" = "お気に入りから削除";
 
 "profile.block_button_title_action" = "ブロック";
 "profile.unblock_button_title_action" = "ブロック解除";

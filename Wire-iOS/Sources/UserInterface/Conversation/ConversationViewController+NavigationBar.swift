@@ -208,12 +208,12 @@ public extension ConversationViewController {
 }
 
 extension ConversationViewController: CollectionsViewControllerDelegate {
-    public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
+    func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
             viewController.dismissIfNeeded(animated: true) {
                 self.contentViewController.scroll(to: message) { cell in
-                    self.contentViewController.showForwardFor(message: message, fromCell: cell)
+                    self.contentViewController.showForwardFor(message: message, from: cell)
                 }
             }
 

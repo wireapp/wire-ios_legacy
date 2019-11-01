@@ -47,7 +47,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
             lastPreviewURL = url
             controller = BrowserViewController(url: url)
         } else if message.isImage {
-            controller = self.messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
+            controller = messagePresenter.viewController(forImageMessagePreview: message, actionResponder: self)
         } else if message.isLocation {
             controller = LocationPreviewController(message: message, actionResponder: self)
         }

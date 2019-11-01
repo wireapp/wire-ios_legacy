@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "打招呼";
 "conversation_list.voiceover.status.mention" = "您被提及";
 "conversation_list.voiceover.status.reply" = "回复";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已归档的聊天列表";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "联系人";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "我在使用Wire，搜索%@或者访问get.wire.com";
 "send_invitation_no_email.text" = "我在使用Wire。访问 get.wire.com 来添加我为好友。";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "创建";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "分享了图片";
@@ -202,6 +217,11 @@
 "list.title" = "会话";
 "list.archived_conversations" = "归档";
 "list.archived_conversations_close" = "关闭归档";
+
+"list.section.groups" = "群组";
+"list.section.contacts" = "联系人";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "收藏夾";
 
 "conversation.voiceover.verified" = "已验证";
 "conversation.voiceover.legalhold" = "证据保全";
@@ -340,7 +360,7 @@
 
 // Camera access
 "camera_access.denied" = "Wire需要使用相机的权限。";
-"video_call.camera_access.denied" = "Wire没有权限访问相机";
+"video_call.camera_access.denied" = "Wire没有权限使用相机";
 "camera_access.denied.instruction" = "";
 "camera_access.denied.open_settings" = "在Wire设置中启用它";
 
@@ -349,7 +369,7 @@
 "keyboard_photos_access.denied.keyboard.camera_and_photos" = "Wire需要使用你的\n相机和照片。"; // split text on two lines for a better text balance
 "keyboard_photos_access.denied.keyboard.photos" = "Wire需要使用你的相机。";
 "keyboard_photos_access.denied.keyboard.camera" = "Wire需要你授权相机权限。";
-"keyboard_photos_access.denied.keyboard.ongoing_call" = "正在视频通话时，无法访问摄像头。";
+"keyboard_photos_access.denied.keyboard.ongoing_call" = "正在视频通话时，无法使用摄像头。";
 
 // Camera Controls
 "camera_controls.aeaf_lock" = "AE / AF锁定";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "你";
 "content.system.this_device" = "此设备";
 
-"content.system.call.you" = "你";
 "content.system.call.called" = "%@曾打电话";
 "content.system.call.called-you" = "%@曾打电话";
+"content.system.call.called.you" = "你";
+
+"content.system.call.missed-call" = "未接电话";
+"content.system.call.missed-call-you" = "未接电话";
+
+"content.system.call.missed-call.groups" = "从 %@ 的未接来电";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "你";
 
 "content.system.renamed_conv.title" = "%@ 重新命名了聊天室";
 "content.system.renamed_conv.title-you" = "%@ 重新命名了聊天室";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "取消归档";
 "meta.menu.delete" = "删除群聊...";
 "meta.menu.clear_content" = "清除内容…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
 "meta.menu.cancel" = "取消";
@@ -716,7 +745,7 @@
 "meta.menu.configure_notification.dialog_message" = "通知我：";
 "meta.menu.configure_notification.button_everything" = "Everything";
 "meta.menu.configure_notification.button_mentions_and_replies" = "提及与回复";
-"meta.menu.configure_notification.button_nothing" = "Nothing";
+"meta.menu.configure_notification.button_nothing" = "无";
 "meta.menu.configure_notification.button_cancel" = "取消";
 
 // Leave conversation
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "封锁...";
 "profile.unblock_button_title" = "解除封锁...";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "从收藏移除";
 
 "profile.block_button_title_action" = "屏蔽";
 "profile.unblock_button_title_action" = "取消屏蔽";
@@ -1137,7 +1170,7 @@
 "self.settings.conversations.title" = "历史记录";
 "self.settings.history_backup.title" = "备份对话";
 "self.settings.history_backup.description" = "Create a backup to preserve your conversation history. You can use this to restore history if you lose your device or switch to a new one.\n\nChoose a strong password to protect the backup file.";
-"self.settings.history_backup.action" = "立即返回";
+"self.settings.history_backup.action" = "立即备份\n";
 "self.settings.history_backup.error.title" = "错误";
 
 "self.settings.history_backup.set_email.title" = "设置电子邮件和密码。";

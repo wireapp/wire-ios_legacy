@@ -73,7 +73,7 @@ final public class CollectionAudioCell: CollectionCell {
 }
 
 extension CollectionAudioCell: TransferViewDelegate {
-    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+    func transferView(_ view: TransferView, didSelect action: MessageAction) {
         self.delegate?.collectionCell(self, performAction: action)
     }
 }

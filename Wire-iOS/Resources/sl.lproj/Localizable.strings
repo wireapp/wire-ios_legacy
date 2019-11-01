@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archived";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "list of archived conversations";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "stiki";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Sem na Wire, poišči %@ ali obišči get.wire.com";
 "send_invitation_no_email.text" = "Sem na Wire. Obišči get.wire.com za povezavo z mano.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Ustvari";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "je delil(-a) sliko";
@@ -202,6 +217,11 @@
 "list.title" = "Pogovori";
 "list.archived_conversations" = "ARHIVIRAJ";
 "list.archived_conversations_close" = "Zapri arhiv";
+
+"list.section.groups" = "Skupine";
+"list.section.contacts" = "Osebe";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "verified";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "Ti";
 "content.system.this_device" = "ta naprava";
 
-"content.system.call.you" = "Ti";
 "content.system.call.called" = "%@ je klical(-a)";
 "content.system.call.called-you" = "%@ je klical(-a)";
+"content.system.call.called.you" = "Ti";
+
+"content.system.call.missed-call" = "Zgrešen klic";
+"content.system.call.missed-call-you" = "Zgrešen klic";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Ti";
 
 "content.system.renamed_conv.title" = "%@ je preimenoval(-a) pogovor";
 "content.system.renamed_conv.title-you" = "%@ je preimenoval(-a) pogovor";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "Dearhiviraj";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Utišaj";
 "meta.menu.silence.unmute" = "Povrni glasnost";
 "meta.menu.cancel" = "Prekliči";
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "Block…";
 "profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Blokiraj";
 "profile.unblock_button_title_action" = "Odblokiraj";

@@ -56,7 +56,7 @@ struct ConversationStatus {
 }
 
 // Describes the conversation message.
-enum StatusMessageType: Int {
+enum StatusMessageType: Int, CaseIterable {
     case mention
     case reply
     case missedCall
@@ -71,6 +71,41 @@ enum StatusMessageType: Int {
     case addParticipants
     case removeParticipants
     case newConversation
+
+    private var localizationSilencedRootPath: String {
+        return "conversation.silenced.status.message"
+    }
+
+    private var localizationKeySuffix: String? {
+        switch self {
+            case .mention:
+                return "mention"
+            case .reply:
+                return "reply"
+            case .missedCall:
+                return "missedcall"
+            case .knock:
+                return "knock"
+            case .text:
+                return "generic_message"
+            default:
+                return nil
+        }
+    }
+
+    var localizationKey: String? {
+        guard let localizationKey = localizationKeySuffix else {
+            return nil
+        }
+
+        return (localizationSilencedRootPath + "." + localizationKey)
+    }
+
+    func localizedString(with count: UInt) -> String? {
+        guard let localizationKey = localizationKey else { return nil }
+
+        return String(format: localizationKey.localized, count)
+    }
 }
 
 extension StatusMessageType {
@@ -405,21 +440,12 @@ extension ConversationStatus {
 // In silenced "N (text|image|link|...) message, ..."
 // In not silenced: "[Sender:] <message text>"
 // Ephemeral: "Ephemeral message"
-final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
+final class NewMessagesMatcher: TypedConversationStatusMatcher {
     var matchedTypes: [StatusMessageType] {
         return StatusMessageType.summaryTypes
     }
 
-    let localizationSilencedRootPath = "conversation.silenced.status.message"
     let localizationRootPath = "conversation.status.message"
-
-    let matchedSummaryTypesDescriptions: [StatusMessageType: String] = [
-        .mention:    "mention",
-        .reply:      "reply",
-        .missedCall: "missedcall",
-        .knock:      "knock",
-        .text:       "generic_message"
-    ]
 
     let matchedTypesDescriptions: [StatusMessageType: String] = [
         .mention:    "mention",
@@ -455,11 +481,10 @@ final internal class NewMessagesMatcher: TypedConversationStatusMatcher {
             let localizedMatchedItems: [String] = flattenedCount.keys.lazy
                 .sorted { $0.rawValue < $1.rawValue }
                 .reduce(into: []) {
-                    guard let count = flattenedCount[$1], let localizationKey = matchedSummaryTypesDescriptions[$1] else {
+                    guard let count = flattenedCount[$1], let string = $1.localizedString(with: count) else {
                         return
                     }
 
-                    let string = String(format: (localizationSilencedRootPath + "." + localizationKey).localized, count)
                     $0.append(string)
                 }
 

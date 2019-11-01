@@ -34,6 +34,16 @@ class DetailsCollectionViewCell: SeparatorCollectionViewCell {
 
     // MARK: - Properties
 
+    var titleBolded: Bool {
+        set {
+            titleLabel.font = newValue ? FontSpec.init(.normal, .semibold).font! : FontSpec.init(.normal, .light).font!
+        }
+
+        get {
+            return titleLabel.font == FontSpec.init(.normal, .semibold).font
+        }
+    }
+
     var icon: UIImage? {
         get { return leftIconView.image }
         set { updateIcon(newValue) }

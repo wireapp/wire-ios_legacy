@@ -37,4 +37,8 @@ extension FullscreenImageViewController {
         return true
     }
 
+    @objc
+    func setActionController() {
+        actionController = ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
+    }
 }

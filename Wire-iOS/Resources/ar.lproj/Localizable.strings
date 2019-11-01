@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "بينغ";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.status.reply" = "رد";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "مؤرشف";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "قائمة المحادثات المؤرشفة";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "جهات اتصال";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "أنا أستخدم Wire, ابحث عن %@ أو لِج get.wire.com";
 "send_invitation_no_email.text" = "أنا أستخدم Wire. لِج get.wire.com لتتواصل معي.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "إنشاء";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "شارك صورة";
@@ -202,6 +217,11 @@
 "list.title" = "المحادثات";
 "list.archived_conversations" = "حفظ في الأرشيف";
 "list.archived_conversations_close" = "إغلاق الأرشيف";
+
+"list.section.groups" = "المجموعات";
+"list.section.contacts" = "أشخاص";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "موثّق";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "أنت";
 "content.system.this_device" = "هذا الجهاز";
 
-"content.system.call.you" = "أنت";
 "content.system.call.called" = "اتصل %@";
 "content.system.call.called-you" = "اتصل %@";
+"content.system.call.called.you" = "أنت";
+
+"content.system.call.missed-call" = "مكالمة فائتة";
+"content.system.call.missed-call-you" = "مكالمة فائتة";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "أنت";
 
 "content.system.renamed_conv.title" = "قام %@ بإعادة تسمية المُحادثة";
 "content.system.renamed_conv.title-you" = "قام %@ بإعادة تسمية المُحادثة";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "إلغاء الأرشفة";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "كتم الصوت";
 "meta.menu.silence.unmute" = "إلغاء كتم الصوت";
 "meta.menu.cancel" = "إلغاء";
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "حظر…";
 "profile.unblock_button_title" = "إلغاء الحظر…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "حظر \n";
 "profile.unblock_button_title_action" = "إلغاء حظر";

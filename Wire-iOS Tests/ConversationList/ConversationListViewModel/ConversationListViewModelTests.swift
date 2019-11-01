@@ -18,22 +18,31 @@
 
 import XCTest
 @testable import Wire
+import DifferenceKit
+
 
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
+        //no-op
+    }
+
+    func listViewModel(_ model: ConversationListViewModel?, didChangeFolderEnabled folderEnabled: Bool) {
+        //no-op
+    }
+    
+    func reload<C>(
+        using stagedChangeset: StagedChangeset<C>,
+        interrupt: ((Changeset<C>) -> Bool)?,
+        setData: (C?) -> Void
+        ) {
+        setData(stagedChangeset.first?.data)
+    }
+    
     func listViewModelShouldBeReloaded() {
         //no-op
     }
 
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: UInt) {
-        //no-op
-    }
-
-    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: UInt, usingBlock updateBlock: () -> (), with changedIndexes: ZMChangedIndexes?) {
-        //no-op
-        updateBlock()
-    }
-
-    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: Any?) {
+    func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         //no-op
     }
 
@@ -50,14 +59,16 @@ final class ConversationListViewModelTests: XCTestCase {
     var mockBar: MockBar!
 
     /// constants
-    let sectionGroups: UInt = 2
-    let sectionContacts: UInt = 3
+    let sectionGroups: Int = 2
+    let sectionContacts: Int = 3
 
     override func setUp() {
         super.setUp()
+        removeViewModelState()
         mockBar = MockBar()
         mockUserSession = MockZMUserSession()
         sut = ConversationListViewModel(userSession: mockUserSession)
+        
         mockConversationListViewModelDelegate = MockConversationListViewModelDelegate()
         sut.delegate = mockConversationListViewModelDelegate
     }
@@ -70,13 +81,19 @@ final class ConversationListViewModelTests: XCTestCase {
 
         super.tearDown()
     }
+    
+    func removeViewModelState() {
+        guard let persistentURL = ConversationListViewModel.persistentURL else { return }
+        
+        try? FileManager.default.removeItem(at: persistentURL)
+    }
 
     // folders with 2 group conversations and 1 contact. First group conversation is mock conversation
     func fillDummyConversations(mockConversation: ZMConversation) {
         let info = ConversationDirectoryChangeInfo(reloaded: false, updatedLists: [.groups, .contacts], updatedFolders: false)
 
-        mockUserSession.mockGroupConversations = [mockConversation, ZMConversation()]
-        mockUserSession.mockContactsConversations = [ZMConversation()]
+        mockUserSession.mockConversationDirectory.mockGroupConversations = [mockConversation, ZMConversation()]
+        mockUserSession.mockConversationDirectory.mockContactsConversations = [ZMConversation()]
 
         sut.conversationDirectoryDidChange(info)
     }
@@ -114,7 +131,7 @@ final class ConversationListViewModelTests: XCTestCase {
         let item = sut.item(for: indexPath)
 
         ///THEN
-        XCTAssertEqual(item, mockConversation)
+        XCTAssertEqual(item as? AnyHashable, mockConversation)
     }
 
     func testThatOutOfBoundIndexPathReturnsNilItem() {
@@ -158,7 +175,7 @@ final class ConversationListViewModelTests: XCTestCase {
         ///WHEN
 
         ///THEN
-        XCTAssertEqual(sut.section(at: sectionGroups)?.first, mockConversation)
+        XCTAssertEqual(sut.section(at: Int(sectionGroups))?.first as? AnyHashable, mockConversation)
 
         XCTAssertNil(sut.section(at: 100))
     }
@@ -208,7 +225,7 @@ final class ConversationListViewModelTests: XCTestCase {
         XCTAssert(sut.select(itemToSelect: mockConversation))
 
         ///THEN
-        XCTAssertEqual(sut.selectedItem, mockConversation)
+        XCTAssertEqual(sut.selectedItem as? AnyHashable, mockConversation)
     }
 
     func testThatSelectItemAtIndexReturnCorrectConversation() {
@@ -223,11 +240,11 @@ final class ConversationListViewModelTests: XCTestCase {
         let indexPath = sut.indexPath(for: mockConversation)!
 
         ///THEN
-        XCTAssertEqual(sut.selectItem(at: indexPath), mockConversation)
+        XCTAssertEqual(sut.selectItem(at: indexPath) as? AnyHashable, mockConversation)
     }
 
     // MARK: - state
-    func testThatSectionIsExpendedAfterSelected() {
+    func testThatSectionIsExpandedAfterSelected() {
         ///GIVEN
         sut.folderEnabled = true
         let mockConversation = ZMConversation()

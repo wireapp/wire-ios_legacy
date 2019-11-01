@@ -27,6 +27,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     var pageViewController: UIPageViewController = UIPageViewController(transitionStyle:.scroll, navigationOrientation:.horizontal, options: [:])
     var buttonsBar: InputBarButtonsView!
     let deleteButton = IconButton(style: .default)
+    var shareButton: IconButton?
     let overlay = FeedbackOverlayView()
     let separator: UIView = {
         let view = UIView()
@@ -227,6 +228,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             shareButton.setIcon(.export, size: .tiny, for: .normal)
             shareButton.accessibilityLabel = "share"
             shareButton.addTarget(self, action: #selector(ConversationImagesViewController.shareCurrent(_:)), for: .touchUpInside)
+            self.shareButton = shareButton
 
             let sketchButton = IconButton(style: .default)
             sketchButton.setIcon(.brush, size: .tiny, for: .normal)

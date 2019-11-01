@@ -27,10 +27,10 @@ final class ConversationMessageActionController: NSObject {
 
     @objc let message: ZMConversationMessage
     @objc let context: Context
-    @objc weak var responder: MessageActionResponder?
+    weak var responder: MessageActionResponder?
     weak var view: UIView!
 
-    @objc init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
+    init(responder: MessageActionResponder?, message: ZMConversationMessage, context: Context, view: UIView) {
         self.responder = responder
         self.message = message
         self.context = context
