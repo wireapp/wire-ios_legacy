@@ -29,16 +29,13 @@ extension UIColor {
     ///
     /// - Parameter accentColor: the accent color
     class func setAccent(_ accentColor: ZMAccentColor) {
-        weak var editableSelf = ZMUser.selfUser()
         ZMUserSession.shared()?.enqueueChanges({
-            editableSelf?.accentColorValue = accentColor
+            ZMUser.selfUser()?.accentColorValue = accentColor
         })
     }
     
-    class func accentOverrideColor() -> ZMAccentColor {
-        weak var editableSelf = ZMUser.selfUser()
-        
-        return (editableSelf?.accentColorValue)!
+    class func accentOverrideColor() -> ZMAccentColor? {
+        return ZMUser.selfUser()?.accentColorValue
     }
     
     class func indexedAccentColor() -> ZMAccentColor {
@@ -48,14 +45,14 @@ extension UIColor {
         }
         
         // priority 2: color from self user
-        let selfUser = ZMUser.selfUser(inUserSession: SessionManager.shared?.activeUserSession)
-        let selfAccentColor = selfUser?.accentColorValue
-        if selfUser != nil && (selfAccentColor != .undefined) {
-            return selfAccentColor!
+        guard let activeUserSession = SessionManager.shared?.activeUserSession,
+            let selfAccentColor = ZMUser.selfUser(inUserSession: activeUserSession).accentColorValue,
+            selfUser.accentColorValue != .undefined else {
+            // priority 3: default color
+            return .strongBlue
         }
-        
-        // priority 3: default color
-        return .strongBlue
+
+        return selfAccentColor
     }
     
     
@@ -70,18 +67,18 @@ extension UIColor {
         overridenAccentColor = overrideColor
     }
     
-    func isEqual(to object: Any?) -> Bool {
-        if !(object is UIColor) {
-            return false
-        }
-        let lhs = self
-        let rhs = object as? UIColor
-        
-        let rgba1 = [CGFloat](repeating: 0.0, count: 4)
-        lhs?.getRed(rgba1 + 0, green: rgba1 + 1, blue: rgba1 + 2, alpha: rgba1 + 3)
-        let rgba2 = [CGFloat](repeating: 0.0, count: 4)
-        rhs?.getRed(rgba2 + 0, green: rgba2 + 1, blue: rgba2 + 2, alpha: rgba2 + 3)
-        
-        return (rgba1[0] == rgba2[0]) && (rgba1[1] == rgba2[1]) && (rgba1[2] == rgba2[2]) && (rgba1[3] == rgba2[3])
-    }
+//    func isEqual(to object: Any?) -> Bool {
+//        if !(object is UIColor) {
+//            return false
+//        }
+//        let lhs = self
+//        let rhs = object as? UIColor
+//
+//        let rgba1 = [CGFloat](repeating: 0.0, count: 4)
+//        lhs.getRed(rgba1 + 0, green: rgba1 + 1, blue: rgba1 + 2, alpha: rgba1 + 3)
+//        let rgba2 = [CGFloat](repeating: 0.0, count: 4)
+//        rhs.getRed(rgba2 + 0, green: rgba2 + 1, blue: rgba2 + 2, alpha: rgba2 + 3)
+//
+//        return (rgba1[0] == rgba2[0]) && (rgba1[1] == rgba2[1]) && (rgba1[2] == rgba2[2]) && (rgba1[3] == rgba2[3])
+//    }
 }
