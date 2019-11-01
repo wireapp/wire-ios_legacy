@@ -41,10 +41,8 @@ extension ZMConversation {
             
             return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: ZMUser.selfUser().team)
         default:
-            break
+            return self
         }
-
-        return self
     }
 
     @objc
