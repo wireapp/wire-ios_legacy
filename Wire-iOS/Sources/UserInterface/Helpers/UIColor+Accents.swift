@@ -44,15 +44,14 @@ extension UIColor {
             return overridenAccentColor
         }
         
-        // priority 2: color from self user
         guard let activeUserSession = SessionManager.shared?.activeUserSession,
-            let selfAccentColor = ZMUser.selfUser(inUserSession: activeUserSession).accentColorValue,
-            selfUser.accentColorValue != .undefined else {
+            ZMUser.selfUser(inUserSession: activeUserSession).accentColorValue != .undefined else {
             // priority 3: default color
             return .strongBlue
         }
 
-        return selfAccentColor
+        // priority 2: color from self user
+        return ZMUser.selfUser(inUserSession: activeUserSession).accentColorValue
     }
     
     

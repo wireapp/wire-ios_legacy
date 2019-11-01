@@ -249,9 +249,7 @@ extension ColorSchemeColor {
             return ColorPair(light: UIColor(rgb: 0xE60606), dark: UIColor(rgb: 0xFC3E37))
         }
     }
-}
-
-public extension ColorScheme {
+    
     @objc(colorWithName:)
     func color(named: ColorSchemeColor) -> UIColor {
         return color(named: named, variant: variant)
