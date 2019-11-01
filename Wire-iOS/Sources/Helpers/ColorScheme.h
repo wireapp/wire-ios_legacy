@@ -38,7 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (UIKeyboardAppearance)keyboardAppearanceForVariant:(ColorSchemeVariant)variant;
 
-//- (BOOL)isCurrentAccentColor:(UIColor *)accentColor;
 @end
 
 @interface UIColor (ColorScheme)
