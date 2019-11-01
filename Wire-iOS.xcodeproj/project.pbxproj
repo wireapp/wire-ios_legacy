@@ -447,6 +447,11 @@
 		7C88BB86235DE2D80075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
 		7C88BB87235DE2D80075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
 		7C88BB88235DE2D80075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
+		7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB7B5D235998E200A65042 /* AppCenterData.framework */; };
+		7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
+		7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
+		7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
+		7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
 		7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		7C88BB8F235DE3F50075BCC5 /* (null) in Headers */ = {isa = PBXBuildFile; };
 		7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */; };
@@ -1033,8 +1038,6 @@
 		EF15A7B420BC304A00A045C7 /* SavableImageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B320BC304A00A045C7 /* SavableImageTests.swift */; };
 		EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF15A7B520BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift */; };
 		EF17175922D4990800697EB0 /* ConversationAvatarViewModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17175822D4990800697EB0 /* ConversationAvatarViewModeTests.swift */; };
-		EF174FD5236B28D80084A27C /* AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* AppCenter.swift */; };
-		EF174FD6236B28D80084A27C /* AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* AppCenter.swift */; };
 		EF17B0CE223A5D67006252A8 /* KeyboardAvoidingViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CD223A5D66006252A8 /* KeyboardAvoidingViewController+Constraint.swift */; };
 		EF17B0D0223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0CF223A6692006252A8 /* MediaPreviewViewSnapshotTests.swift */; };
 		EF17B0D2223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF17B0D1223A6936006252A8 /* LaunchImageViewControllerSnapshotTests.swift */; };
@@ -1392,6 +1395,7 @@
 		F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */; };
 		F15650C321DD0A9B00210504 /* Bundle+Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */; };
 		F15650C421DD0AB200210504 /* UIApplication+ShareExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18998B52111F76500A7FC95 /* UIApplication+ShareExtension.swift */; };
+		F15650C521DD0C2800210504 /* AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* AppCenter.swift */; };
 		F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784D4581E818AA4007A6867 /* CGFloat+Hairline.swift */; };
 		F15650D421DD0FAB00210504 /* VerticalColumnPositioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CCD20E7A53A00EB9ED4 /* VerticalColumnPositioning.swift */; };
 		F15650D521DD0FC200210504 /* VerticalColumnPositioningContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED26CD120E7CC5900EB9ED4 /* VerticalColumnPositioningContext.swift */; };
@@ -3320,6 +3324,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C88BB89235DE2EB0075BCC5 /* AppCenterData.framework in Frameworks */,
+				7C88BB8A235DE2EB0075BCC5 /* AppCenterAnalytics.framework in Frameworks */,
+				7C88BB8B235DE2EB0075BCC5 /* AppCenter.framework in Frameworks */,
+				7C88BB8C235DE2EB0075BCC5 /* AppCenterCrashes.framework in Frameworks */,
+				7C88BB8D235DE2EB0075BCC5 /* AppCenterDistribute.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7243,7 +7252,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF174FD5236B28D80084A27C /* AppCenter.swift in Sources */,
 				7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */,
 				7CD0154A218053FF00DE7E3F /* NSString+URL.swift in Sources */,
 				EF2DB834231678360055BDB4 /* UnsentGifImageSendable.swift in Sources */,
@@ -7700,6 +7708,7 @@
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
 				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
+				EF1C7F0D232BC7A200F5DB5B /* ConversationListContentController+ConversationListCellDelegate.swift in Sources */,
 				5E21344F21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift in Sources */,
 				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
 				8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */,
@@ -7865,7 +7874,6 @@
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
-				EF174FD6236B28D80084A27C /* AppCenter.swift in Sources */,
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
@@ -8583,6 +8591,7 @@
 			files = (
 				7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
+				F15650C521DD0C2800210504 /* AppCenter.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
 				F156509F21DCF2A100210504 /* NetworkStatus.m in Sources */,
 				F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */,
