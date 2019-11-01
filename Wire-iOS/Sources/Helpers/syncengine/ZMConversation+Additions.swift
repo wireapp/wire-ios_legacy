@@ -27,35 +27,35 @@ extension ZMConversation {
             return self
         }
 
-        if conversationType == .group {
+        switch conversationType {
+        case .group:
             addOrShowError(participants: participants)
             return self
-        } else if conversationType == .oneOnOne,
-                  (participants.count > 1 || (participants.count == 1 && !(connectedUser == participants.first))) {
-
-            let team = ZMUser.selfUser().team
-
-            var listOfPeople = Array(participants)
-
-            if let connectedUser = connectedUser {
-                listOfPeople.append(connectedUser)
+        case .oneOnOne:
+            if participants.count > 1 || (participants.count == 1 && !(connectedUser == participants.first)) {
+                
+                let team = ZMUser.selfUser().team
+                
+                var listOfPeople = Array(participants)
+                
+                if let connectedUser = connectedUser {
+                    listOfPeople.append(connectedUser)
+                }
+                
+                return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: team)
             }
-
-            return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: team)
+        default:
+            break
         }
 
         return self
     }
 
     @objc
-    func firstActiveParticipantOtherThanSelf() -> ZMUser? {
+    var firstActiveParticipantOtherThanSelf: ZMUser? {
         let selfUser = ZMUser.selfUser()
-        for user in activeParticipants {
-            if !(user == selfUser) {
-                return user
-            }
-        }
-        return nil
+        
+        return activeParticipants.first(where: {!($0 == selfUser)} )
     }
 
 }
