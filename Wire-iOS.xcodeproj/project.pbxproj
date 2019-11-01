@@ -1130,10 +1130,6 @@
 		EF2AF697236C3DA000793FD0 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
 		EF2AF698236C3DA000793FD0 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
 		EF2AF699236C3DA000793FD0 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
-		EF2AF69A236C3DA000793FD0 /* AppCenterData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CAB7B5D235998E200A65042 /* AppCenterData.framework */; };
-		EF2AF69B236C3DA000793FD0 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
-		EF2AF69E236C3DA100793FD0 /* AppCenterPush.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2AF69C236C3DA100793FD0 /* AppCenterPush.framework */; };
-		EF2AF69F236C3DA100793FD0 /* AppCenterAuth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF2AF69D236C3DA100793FD0 /* AppCenterAuth.framework */; };
 		EF2B0DD121CA8EF1003B2882 /* url.json in Resources */ = {isa = PBXBuildFile; fileRef = EF2B0DD021CA8DF7003B2882 /* url.json */; };
 		EF2B255D22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */; };
 		EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2B255E2209C542006712CA /* UIUserInterfaceSizeClass+Constraint.swift */; };
@@ -3263,13 +3259,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF2AF69E236C3DA100793FD0 /* AppCenterPush.framework in Frameworks */,
-				EF2AF69F236C3DA100793FD0 /* AppCenterAuth.framework in Frameworks */,
 				EF2AF697236C3DA000793FD0 /* AppCenter.framework in Frameworks */,
 				EF2AF698236C3DA000793FD0 /* AppCenterAnalytics.framework in Frameworks */,
 				EF2AF699236C3DA000793FD0 /* AppCenterCrashes.framework in Frameworks */,
-				EF2AF69A236C3DA000793FD0 /* AppCenterData.framework in Frameworks */,
-				EF2AF69B236C3DA000793FD0 /* AppCenterDistribute.framework in Frameworks */,
 				5EF4A6E820F497E300A9EF22 /* Ziphy.framework in Frameworks */,
 				BFBC11E31ED84DB200502AF0 /* WireDataModel.framework in Frameworks */,
 				AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */,
@@ -7188,7 +7180,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ZipArchive.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FormatterKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/avs.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/AppCenter.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/FLAnimatedImage.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Down.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/libcmark.framework",
@@ -7218,7 +7209,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ZipArchive.framework/ZipArchive",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FormatterKit.framework/FormatterKit",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/avs.framework/avs",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/AppCenter.framework/AppCenter",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/FLAnimatedImage.framework/FLAnimatedImage",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Down.framework/Down",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/libcmark.framework/libcmark",
