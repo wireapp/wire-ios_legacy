@@ -34,7 +34,7 @@ extension UIColor {
         })
     }
     
-    class func accentOverrideColor() -> ZMAccentColor? {
+    class var accentOverrideColor: ZMAccentColor? {
         return ZMUser.selfUser()?.accentColorValue
     }
     
