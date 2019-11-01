@@ -18,7 +18,6 @@
 
 
 #import "ShareItemProvider.h"
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 NSString *ActivityToAnalyticsString(NSString *activity) {

@@ -18,7 +18,6 @@
 
 
 #import "UIViewController+Errors.h"
-#import "WireSyncEngine+iOS.h"
 #import <WireUtilities/WireUtilities.h>
 
 @implementation UIViewController (Errors)

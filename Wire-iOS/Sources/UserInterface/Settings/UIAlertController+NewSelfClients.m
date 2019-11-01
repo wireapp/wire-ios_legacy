@@ -18,7 +18,6 @@
 
 
 #import "UIAlertController+NewSelfClients.h"
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 

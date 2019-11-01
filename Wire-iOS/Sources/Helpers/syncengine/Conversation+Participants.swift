@@ -40,7 +40,6 @@ extension ZMConversation {
         return type(of: self).maxParticipants - activeParticipants.count
     }
     
-    @objc(addParticipantsOrShowError:)
     func addOrShowError(participants: Set<ZMUser>) {
         guard let session = ZMUserSession.shared(),
                 session.networkState != .offline else {

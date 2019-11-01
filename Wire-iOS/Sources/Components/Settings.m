@@ -19,7 +19,6 @@
 
 #import "Settings.h"
 #import "Settings+ColorScheme.h"
-#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Wire-Swift.h"
 @import WireCommonComponents;

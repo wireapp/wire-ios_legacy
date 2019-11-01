@@ -27,7 +27,6 @@
 #import "ColorScheme.h"
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
-#import "WireSyncEngine+iOS.h"
 #import "UIViewController+WR_Additions.h"
 
 #import "Wire-Swift.h"

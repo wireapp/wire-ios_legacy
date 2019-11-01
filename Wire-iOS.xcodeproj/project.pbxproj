@@ -726,7 +726,6 @@
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
 		87F61D1A1CD36F0900670794 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F61D191CD36F0900670794 /* GradientView.swift */; };
 		87FC0AEB1FC71C020036E029 /* CharacterInputFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */; };
-		8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */; };
 		8F41CFC9199297C600E3B032 /* Message+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F41CFC7199297C600E3B032 /* Message+UI.m */; };
 		8F5A3E9D19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F5A3E9C19AE2C9E00D0E9DA /* AVSMediaManager+Additions.m */; };
 		8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F21A9F287E0056AB0C /* ConversationListCell.m */; };
@@ -1245,6 +1244,7 @@
 		EF834B8422035AD400E92F13 /* ConversationContentViewController+MessageAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF834B8322035AD400E92F13 /* ConversationContentViewController+MessageAction.swift */; };
 		EF834B862203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */; };
 		EF84DF4E2130565B00033702 /* ConversationListBottomBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF84DF4D2130565A00033702 /* ConversationListBottomBarControllerTests.swift */; };
+		EF864A0D236AEB400074DFF7 /* ZMConversation+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */; };
 		EF883F292151190900B440CC /* UserCellSubtitleProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F282151190900B440CC /* UserCellSubtitleProtocol.swift */; };
 		EF883F2B21511DD700B440CC /* people-15Sections.json in Resources */ = {isa = PBXBuildFile; fileRef = EF883F2A21511DD700B440CC /* people-15Sections.json */; };
 		EF883F2E215144B800B440CC /* Analytics+OptOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F2C215144B800B440CC /* Analytics+OptOut.swift */; };
@@ -2408,8 +2408,6 @@
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
 		87F61D191CD36F0900670794 /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		87FC0AE91FC719E80036E029 /* CharacterInputFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInputFieldTests.swift; sourceTree = "<group>"; };
-		8F41CFC4199297C600E3B032 /* ZMConversation+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZMConversation+Additions.h"; sourceTree = "<group>"; };
-		8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZMConversation+Additions.m"; sourceTree = "<group>"; };
 		8F41CFC6199297C600E3B032 /* Message+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Message+UI.h"; sourceTree = "<group>"; };
 		8F41CFC7199297C600E3B032 /* Message+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Message+UI.m"; sourceTree = "<group>"; };
 		8F42C538199244A700288E4D /* Wire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wire.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2452,7 +2450,6 @@
 		8FC853A0199245770008B66B /* Wire-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Wire-Info.plist"; path = "Wire-iOS/Wire-Info.plist"; sourceTree = "<group>"; };
 		8FC853A1199245770008B66B /* Wire-iOS-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Wire-iOS-Prefix.pch"; path = "Wire-iOS/Wire-iOS-Prefix.pch"; sourceTree = "<group>"; };
 		8FC8563F19924CBA0008B66B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WireSyncEngine+iOS.h"; sourceTree = "<group>"; };
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
@@ -3057,6 +3054,7 @@
 		EF834B8322035AD400E92F13 /* ConversationContentViewController+MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MessageAction.swift"; sourceTree = "<group>"; };
 		EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+MessageActionResponder.swift"; sourceTree = "<group>"; };
 		EF84DF4D2130565A00033702 /* ConversationListBottomBarControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListBottomBarControllerTests.swift; sourceTree = "<group>"; };
+		EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Additions.swift"; sourceTree = "<group>"; };
 		EF883F282151190900B440CC /* UserCellSubtitleProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCellSubtitleProtocol.swift; sourceTree = "<group>"; };
 		EF883F2A21511DD700B440CC /* people-15Sections.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-15Sections.json"; path = "PeoplePickerControllerTests/people-15Sections.json"; sourceTree = "<group>"; };
 		EF883F2C215144B800B440CC /* Analytics+OptOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+OptOut.swift"; sourceTree = "<group>"; };
@@ -5349,8 +5347,7 @@
 			isa = PBXGroup;
 			children = (
 				1633875A1F065A960015034C /* SessionManager+Shared.swift */,
-				8F41CFC4199297C600E3B032 /* ZMConversation+Additions.h */,
-				8F41CFC5199297C600E3B032 /* ZMConversation+Additions.m */,
+				EF864A0C236AEB400074DFF7 /* ZMConversation+Additions.swift */,
 				16E2A0A51F6BF233005F4DB1 /* ZMConversation+Calling.swift */,
 				8F41CFC6199297C600E3B032 /* Message+UI.h */,
 				8F41CFC7199297C600E3B032 /* Message+UI.m */,
@@ -5358,7 +5355,6 @@
 				8742F2EA2191DCDF00D2E40F /* Message.swift */,
 				EF6163A41FE9583400C6F5A9 /* Message+dayFormatter.swift */,
 				EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */,
-				8FC856B019925B680008B66B /* WireSyncEngine+iOS.h */,
 				A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */,
 				163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */,
 				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
@@ -7600,6 +7596,7 @@
 				5E3A6C25206A4E4A00907484 /* LocationPreviewController.swift in Sources */,
 				EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */,
 				BF8ECC2D1E570A920015177D /* UIActivityViewController+FileSaving.swift in Sources */,
+				EF864A0D236AEB400074DFF7 /* ZMConversation+Additions.swift in Sources */,
 				8708B8331DDDFF0D00310A53 /* UserConnectionView.swift in Sources */,
 				EF218AC920AC76DB004977BF /* UIAlertController+Newsletter.swift in Sources */,
 				D5168F4D2010B61D00F8222A /* URL+Wire.swift in Sources */,
@@ -7753,7 +7750,6 @@
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
 				EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */,
-				8F41CFC8199297C600E3B032 /* ZMConversation+Additions.m in Sources */,
 				F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */,
 				EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */,
 				BAEF10FA1B8C8849005BFA48 /* AnimatedListMenuView.m in Sources */,

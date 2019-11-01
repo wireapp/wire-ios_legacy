@@ -31,7 +31,6 @@
 #import "Analytics.h"
 #import "Wire-Swift.h"
 
-#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 
 #import "Settings.h"
