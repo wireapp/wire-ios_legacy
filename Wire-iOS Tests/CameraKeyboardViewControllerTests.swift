@@ -45,9 +45,9 @@ final class CameraKeyboardViewControllerDelegateMock: CameraKeyboardViewControll
 }
 
 
-@objcMembers class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
-    @objc var layoutSize: SplitViewControllerLayoutSize = .compact
-    @objc var leftViewControllerWidth: CGFloat = 0
+final class SplitLayoutObservableMock: NSObject, SplitLayoutObservable {
+    var layoutSize: SplitViewControllerLayoutSize = .compact
+    var leftViewControllerWidth: CGFloat = 0
 }
 
 private final class MockAssetLibrary: AssetLibrary {

@@ -34,7 +34,7 @@ protocol ConfirmPhoneDelegate: class {
     func didConfirmPhone(inController controller: ConfirmPhoneViewController)
 }
 
-@objcMembers final class ConfirmPhoneViewController: SettingsBaseTableViewController {
+final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observer: NSObjectProtocol?
     fileprivate var observerToken: Any?
