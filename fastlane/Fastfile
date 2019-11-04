@@ -461,6 +461,8 @@ class Build
             "Wire-iOS-Internal"
         elsif build.appstore_build
             "Wire-iOS-App-Store"
+        elsif build.rc_build
+            "Wire-iOS-Release-Candidate"
         end
     end
 
