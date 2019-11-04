@@ -188,8 +188,19 @@ platform :ios do
         appName = ""
 
         if build.playground_build
-            changelog = "Playground build for #{build.git_branch}"
             appName = "Wire-iOS-Playground"
+        elsif build.avs_build
+            appName = "Wire-iOS-AVS"
+        elsif build.development_build
+            appName = "Wire-iOS-Development"
+        elsif build.internal_build
+            appName = "Wire-iOS-Internal"
+        elsif build.appstore_build
+            appName = "Wire-iOS-App-Store"
+        end
+
+        if build.playground_build
+            changelog = "Playground build for #{build.git_branch}"
         elsif build.avs_build
             changelog = "AVS #{build.avs_version}"
         elsif build.last_commit.nil? || build.last_commit.empty? 
@@ -307,6 +318,14 @@ class Build
 
     def appstore_build
         @build_type == "AppStore"
+    end
+
+    def development_build
+        @build_type == "Development"
+    end
+
+    def internal_build
+        @build_type == "Internal"
     end
 
     def avs_build
@@ -441,6 +460,20 @@ class Build
             "Release"
         else
             @build_type
+        end
+    end
+
+    def app_name
+        if playground_build
+            "Wire-iOS-Playground"
+        elsif build.avs_build
+            "Wire-iOS-AVS"
+        elsif build.development_build
+            "Wire-iOS-Development"
+        elsif build.internal_build
+            "Wire-iOS-Internal"
+        elsif build.appstore_build
+            "Wire-iOS-App-Store"
         end
     end
 
