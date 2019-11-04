@@ -185,19 +185,6 @@ platform :ios do
     lane :upload_app_center do |options|
         build = Build.new(options: options)
         changelog = ""
-        appName = ""
-
-        if build.playground_build
-            appName = "Wire-iOS-Playground"
-        elsif build.avs_build
-            appName = "Wire-iOS-AVS"
-        elsif build.development_build
-            appName = "Wire-iOS-Development"
-        elsif build.internal_build
-            appName = "Wire-iOS-Internal"
-        elsif build.appstore_build
-            appName = "Wire-iOS-App-Store"
-        end
 
         if build.playground_build
             changelog = "Playground build for #{build.git_branch}"
@@ -215,7 +202,7 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: appName,
+          app_name: app_name,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
           notify_testers: true
@@ -233,7 +220,7 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: ENV["APPCENTER_APP_NAME"], ##TODO: like above
+          app_name: app_name,
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
           upload_dsym_only: true,
           release_type: "1",
