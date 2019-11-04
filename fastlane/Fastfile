@@ -202,10 +202,10 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: ENV["APPCENTER_APP_NAME"],
+          app_name: build.app_name,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
-          notify_testers: "0"
+          notify_testers: true
         )
     end
 
@@ -220,7 +220,7 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: ENV["APPCENTER_APP_NAME"],
+          app_name: build.app_name,
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
           upload_dsym_only: true,
           release_type: "1",
@@ -305,6 +305,14 @@ class Build
 
     def appstore_build
         @build_type == "AppStore"
+    end
+
+    def development_build
+        @build_type == "Development"
+    end
+
+    def internal_build
+        @build_type == "Internal"
     end
 
     def avs_build
@@ -439,6 +447,22 @@ class Build
             "Release"
         else
             @build_type
+        end
+    end
+
+    def app_name
+        if playground_build
+            "Wire-iOS-Playground"
+        elsif build.avs_build
+            "Wire-iOS-AVS"
+        elsif build.development_build
+            "Wire-iOS-Development"
+        elsif build.internal_build
+            "Wire-iOS-Internal"
+        elsif build.appstore_build
+            "Wire-iOS-App-Store"
+        elsif build.rc_build
+            "Wire-iOS-Release-Candidate"
         end
     end
 

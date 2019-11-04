@@ -39,8 +39,8 @@ final public class AutomationEmailCredentials: NSObject {
     
     @objc static public let sharedHelper = AutomationHelper()
     
-    /// Whether Hockeyapp should be used
-    @objc public var useHockey: Bool {
+    /// Whether AppCenter should be used
+    @objc public var useAppCenter: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
     }
     

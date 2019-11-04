@@ -124,7 +124,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 {
     self = [super init];
     if (self) {
-        [self migrateHockeyAndOptOutSettingsToSharedDefaults];
+        [self migrateAppCenterAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedAVSSettings];
         
 #if !(TARGET_OS_SIMULATOR)
@@ -146,7 +146,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     return [NSUserDefaults standardUserDefaults];
 }
 
-- (void)migrateHockeyAndOptOutSettingsToSharedDefaults
+- (void)migrateAppCenterAndOptOutSettingsToSharedDefaults
 {
     if (! [self.defaults boolForKey:UserDefaultDidMigrateHockeySettingInitially]) {
         ExtensionSettings.shared.disableLinkPreviews = self.disableLinkPreviews;
