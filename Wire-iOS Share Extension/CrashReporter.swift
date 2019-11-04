@@ -30,7 +30,7 @@ private var didSetupAppCenter = false
 
 
 /// Helper to setup crash reporting in the share extension
-class CrashReporter {
+final class CrashReporter {
 
     static func setupAppCenterIfNeeded() {
         guard !didSetupAppCenter, appCenterEnabled, let _ = Bundle.appCenterAppId else { return }

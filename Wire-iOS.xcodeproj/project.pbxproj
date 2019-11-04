@@ -1125,7 +1125,6 @@
 		EF2A8DEB214A9AFD002C9058 /* ContactsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */; };
 		EF2A8DED214AA36E002C9058 /* SeparatorViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */; };
 		EF2A8DEF214AAB13002C9058 /* ContactsCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2A8DEE214AAB13002C9058 /* ContactsCellSnapshotTests.swift */; };
-		EF2AF696236C3D0500793FD0 /* AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* AppCenter.swift */; };
 		EF2AF697236C3DA000793FD0 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
 		EF2AF698236C3DA000793FD0 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
 		EF2AF699236C3DA000793FD0 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
@@ -1168,6 +1167,12 @@
 		EF3976CE2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3976CD2114506E0030BE68 /* KeyboardAvoidingViewController+Extension.swift */; };
 		EF39BD2E233E2FDA00F02DDB /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39BD2D233E2FDA00F02DDB /* main.swift */; };
 		EF39BD30233E418B00F02DDB /* FileManager+Directory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF39BD2F233E418B00F02DDB /* FileManager+Directory.swift */; };
+		EF3B26DC2370585700245701 /* AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B02231209B6E4E00DF25D8 /* AppCenter.swift */; };
+		EF3B26DD2370588600245701 /* AppCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF64235860A700FB0401 /* AppCenter.framework */; };
+		EF3B26DE2370588600245701 /* AppCenterAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF6A235860F300FB0401 /* AppCenterAnalytics.framework */; };
+		EF3B26E02370588600245701 /* AppCenterCrashes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF66235860A800FB0401 /* AppCenterCrashes.framework */; };
+		EF3B26E22370588600245701 /* AppCenterDistribute.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C73FF65235860A800FB0401 /* AppCenterDistribute.framework */; };
+		EF3B26E52370596300245701 /* CrashReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B26E42370596300245701 /* CrashReporter.swift */; };
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
 		EF3BD69D225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */; };
@@ -2974,6 +2979,7 @@
 		EF3976CF21148A110030BE68 /* KeyboardAvoidingViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingViewController+Internal.h"; sourceTree = "<group>"; };
 		EF39BD2D233E2FDA00F02DDB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		EF39BD2F233E418B00F02DDB /* FileManager+Directory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Directory.swift"; sourceTree = "<group>"; };
+		EF3B26E42370596300245701 /* CrashReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrashReporter.swift; sourceTree = "<group>"; };
 		EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Language.swift"; sourceTree = "<group>"; };
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
 		EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PermissionDeniedViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -3306,6 +3312,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3B26DD2370588600245701 /* AppCenter.framework in Frameworks */,
+				EF3B26DE2370588600245701 /* AppCenterAnalytics.framework in Frameworks */,
+				EF3B26E02370588600245701 /* AppCenterCrashes.framework in Frameworks */,
+				EF3B26E22370588600245701 /* AppCenterDistribute.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3401,6 +3411,7 @@
 				5E7F012E213E921400C6F3E9 /* Resources */,
 				5E7F012D213E91F700C6F3E9 /* Supporting Files */,
 				BF2756DA1E38E16D00082786 /* ShareExtensionAnalytics.swift */,
+				EF3B26E42370596300245701 /* CrashReporter.swift */,
 			);
 			path = "Wire-iOS Share Extension";
 			sourceTree = "<group>";
@@ -7227,6 +7238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF3B26E52370596300245701 /* CrashReporter.swift in Sources */,
 				7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */,
 				7CD0154A218053FF00DE7E3F /* NSString+URL.swift in Sources */,
 				EF2DB834231678360055BDB4 /* UnsentGifImageSendable.swift in Sources */,
@@ -7847,7 +7859,6 @@
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
-				EF2AF696236C3D0500793FD0 /* AppCenter.swift in Sources */,
 				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
@@ -8581,6 +8592,7 @@
 				5EA952C32260F90A00C83FDB /* StyleKitIconSize.swift in Sources */,
 				F15650AE21DCFCED00210504 /* SettingsPropertyName.swift in Sources */,
 				F15650AD21DCFC8700210504 /* AppLock.swift in Sources */,
+				EF3B26DC2370585700245701 /* AppCenter.swift in Sources */,
 				5E3E1B732260DA200053AC59 /* StyleKitIcons.generated.swift in Sources */,
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
