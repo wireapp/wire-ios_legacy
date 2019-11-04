@@ -202,7 +202,7 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: app_name,
+          app_name: build.app_name,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
           notify_testers: true
@@ -220,7 +220,7 @@ platform :ios do
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: app_name,
+          app_name: build.app_name,
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
           upload_dsym_only: true,
           release_type: "1",
