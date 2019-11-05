@@ -18,7 +18,6 @@
 
 #import "IconButton.h"
 #import "UIImage+ImageUtilities.h"
-#import "UIColor+Mixing.h"
 #import "UIControl+Wire.h"
 #import "Wire-Swift.h"
 

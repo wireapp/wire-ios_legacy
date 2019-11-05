@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers final public class NoResultsView: UIView {
+final class NoResultsView: UIView {
     public let label = UILabel()
     private let iconView = UIImageView()
 
@@ -41,8 +41,7 @@ import Cartography
     
     public var placeholderColor: UIColor {
         let backgroundColor = UIColor.from(scheme: .background)
-        let placeholderColor = backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
-        return placeholderColor!
+        return backgroundColor.mix(UIColor.from(scheme: .sectionText), amount: 0.16)
     }
     
     override init(frame: CGRect) {

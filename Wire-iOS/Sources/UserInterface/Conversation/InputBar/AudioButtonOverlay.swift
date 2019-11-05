@@ -112,7 +112,7 @@ import Cartography
         widthConstraint?.constant = state.width
         alpha = state.alpha
         
-        let blendedGray = grayColor.removeAlphaByBlending(with: superviewColor)!
+        let blendedGray = grayColor.removeAlphaByBlending(with: superviewColor)
         sendButton.setIconColor(state.colorWithColors(greenColor, highlightedColor: brightColor), for: [])
         backgroundView.backgroundColor = state.colorWithColors(blendedGray, highlightedColor: greenColor)
         audioButton.setIconColor(state.colorWithColors(darkColor, highlightedColor: brightColor), for: [])

@@ -33,7 +33,7 @@ public extension UIColor {
     static var lightGraphiteAlpha24: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.24)")
     static var lightGraphiteAlpha48: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.48)")
     static var lightGraphiteAlpha64: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.64)")
-    static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)!
+    static var lightGraphiteWhite: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .white98)
     static var lightGraphiteDark: UIColor = lightGraphiteAlpha8.removeAlphaByBlending(with: .backgroundGraphite)
 
     static var backgroundGraphite: UIColor = UIColor.wr_color(from: "rgb(22, 24, 25)")

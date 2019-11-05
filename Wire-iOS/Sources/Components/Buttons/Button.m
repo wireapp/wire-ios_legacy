@@ -21,7 +21,6 @@
 #import "Button.h"
 
 // helpers
-#import "UIColor+Mixing.h"
 
 #import "UIControl+Wire.h"
 #import "UIImage+ImageUtilities.h"
