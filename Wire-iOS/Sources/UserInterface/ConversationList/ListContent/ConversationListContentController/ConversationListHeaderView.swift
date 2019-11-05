@@ -154,7 +154,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         badgeMarginConstraint = titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: badgeLabel.leadingAnchor, constant: 0)
-        
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
