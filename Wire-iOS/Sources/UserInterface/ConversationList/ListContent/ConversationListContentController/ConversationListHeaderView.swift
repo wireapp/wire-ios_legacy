@@ -36,9 +36,10 @@ final class ConversationListHeaderView: UICollectionReusableView {
                 badgeLabel.text = String(folderBadge)
                 
                 badgeMarginConstraint?.constant = -spacing
-                
             } else {
                 badgeLabel.isHidden = true
+                badgeLabel.text = nil
+                
                 badgeMarginConstraint?.constant = 0
             }
         }
@@ -154,6 +155,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         badgeMarginConstraint = titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: badgeLabel.leadingAnchor, constant: 0)
+        
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -163,7 +165,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             
             badgeMarginConstraint!,
             badgeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            badgeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
+            badgeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
             ]
         )
     }
