@@ -579,7 +579,7 @@ final class ConversationListViewModel: NSObject {
     
     func folderBadge(at sectionIndex: Int) -> Int {
         return sections[sectionIndex].items.filter({
-            (($0.item as? ZMConversation)?.status.messagesRequiringAttention.isEmpty == false)
+            ($0.item as? ZMConversation)?.status.messagesRequiringAttention.isEmpty == false
         }).count
     }
 

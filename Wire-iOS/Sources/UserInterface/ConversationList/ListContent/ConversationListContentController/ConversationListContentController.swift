@@ -130,7 +130,6 @@ final class ConversationListContentController: UICollectionViewController {
             
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
                 header.title = listViewModel.sectionHeaderTitle(sectionIndex: section)?.uppercased()
-                ///TODO: observe conv change here and update folder badge??
                 
                 header.folderBadge = listViewModel.folderBadge(at: section)
 
