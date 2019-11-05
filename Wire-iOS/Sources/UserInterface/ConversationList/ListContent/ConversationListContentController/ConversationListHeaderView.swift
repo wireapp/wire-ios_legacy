@@ -30,7 +30,6 @@ final class ConversationListHeaderView: UICollectionReusableView {
     var folderBadge: Int = 0 {
         didSet {
             ///TODO: update UI
-            print("🍆 \(folderBadge)")
         }
     }
     

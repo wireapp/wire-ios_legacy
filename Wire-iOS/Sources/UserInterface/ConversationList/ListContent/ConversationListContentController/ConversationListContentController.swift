@@ -295,6 +295,12 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 
 extension ConversationListContentController: ConversationListViewModelDelegate {
 
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int) {
+        if let header = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: section)) as? ConversationListHeaderView {
+            header.folderBadge = listViewModel.folderBadge(at: section)
+        }
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         defer {
             scrollToMessageOnNextSelection = nil

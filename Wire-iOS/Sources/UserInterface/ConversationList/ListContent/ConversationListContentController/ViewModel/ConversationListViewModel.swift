@@ -539,7 +539,10 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
-        return
+
+        if let sectionNumber = sectionNumber(for: kind) {
+            delegate?.listViewModel(self, didUpdateSection: sectionNumber)
+        }
     }
 
     @discardableResult
