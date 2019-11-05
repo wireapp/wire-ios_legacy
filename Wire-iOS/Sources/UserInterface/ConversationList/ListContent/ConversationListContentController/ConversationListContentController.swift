@@ -126,13 +126,18 @@ final class ConversationListContentController: UICollectionViewController {
 
         switch kind {
         case UICollectionView.elementKindSectionHeader:
+            let section = indexPath.section
+            
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.title = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
+                header.title = listViewModel.sectionHeaderTitle(sectionIndex: section)?.uppercased()
+                ///TODO: observe conv change here and update folder badge??
+                
+                header.folderBadge = listViewModel.folderBadge(at: section)
 
-                header.collapsed = listViewModel.collapsed(at: indexPath.section)
+                header.collapsed = listViewModel.collapsed(at: section)
 
                 header.tapHandler = {[weak self] collapsed in
-                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
+                    self?.listViewModel.setCollapsed(sectionIndex: section, collapsed: collapsed)
                 }
                 
                 return header

@@ -572,6 +572,12 @@ final class ConversationListViewModel: NSObject {
         }
     }
 
+    // MARK: - folder badge
+    
+    func folderBadge(at sectionIndex: Int) -> Int {
+        return 0 ///TODO
+    }
+
     // MARK: - collapse section
 
     func collapsed(at sectionIndex: Int) -> Bool {

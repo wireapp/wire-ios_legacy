@@ -27,6 +27,13 @@ extension UIView {
 typealias TapHandler = (_ collapsed: Bool) -> Void
 
 final class ConversationListHeaderView: UICollectionReusableView {
+    var folderBadge: Int = 0 {
+        didSet {
+            ///TODO: update UI
+            print("🍆 \(folderBadge)")
+        }
+    }
+    
     var collapsed = false {
         didSet {
             guard collapsed != oldValue else { return }
