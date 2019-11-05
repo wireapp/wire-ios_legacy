@@ -33,7 +33,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         didSet {
             if folderBadge > 0 {
                 badgeLabel.isHidden = false
-                badgeLabel.text = String(folderBadge)
+                badgeLabel.text = folderBadge > 99 ? "99+" : String(folderBadge)
                 
                 badgeMarginConstraint?.constant = -spacing
                 
