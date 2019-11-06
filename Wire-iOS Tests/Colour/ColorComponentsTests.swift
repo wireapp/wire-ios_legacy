@@ -44,5 +44,13 @@ final class ColorComponentsTests: XCTestCase {
         ///THEN
         XCTAssertEqual(sut, redColor.components)
     }
-    
+
+    func testThatColorCanNotBeCompareDirectly() {
+        XCTAssertNotEqual(UIColor.black, UIColor(red: 0, green: 0, blue: 0, alpha: 1))
+    }
+
+    func testThatColorCanBeCompareWithColorComponents() {
+        XCTAssertEqual(UIColor.black.components, UIColor(red: 0, green: 0, blue: 0, alpha: 1).components)
+    }
+
 }

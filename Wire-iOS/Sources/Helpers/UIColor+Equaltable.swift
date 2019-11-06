@@ -16,34 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
-@testable import Wire
+import Foundation
 
-final class ColorSchemeTests: XCTestCase {
-    
-    var sut: ColorScheme!
-    
-    override func setUp() {
-        super.setUp()
+extension UIColor {
+    struct Components: Equatable {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
         
-        sut = ColorScheme()
+        init(color: UIColor) {
+            color.getRed(&r, green: &g, blue: &b, alpha: &a)
+        }
     }
     
-    override func tearDown() {
-        sut = nil
+    var components: Components {
+        return Components(color: self)
     }
-
-    func testForIsCurrentAccentColor() {
-        ///GIVEN
-        sut.accentColor = .black
-        let alphaBlack = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
-
-        ///THEN
-        XCTAssertEqual(sut.accentColor, .black)
-        XCTAssert(sut.isCurrentAccentColor(.black))
-
-        XCTAssertNotEqual(sut.accentColor, alphaBlack)
-        XCTAssertFalse(sut.isCurrentAccentColor(alphaBlack))
+    
+    static func == (lhs: UIColor, rhs: UIColor) -> Bool {
+        return lhs.components == rhs.components
     }
 }
 

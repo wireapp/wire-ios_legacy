@@ -33,24 +33,3 @@ extension ColorScheme {
     }
     
 }
-
-extension UIColor {
-    struct Components: Equatable {
-        var r: CGFloat = 0
-        var g: CGFloat = 0
-        var b: CGFloat = 0
-        var a: CGFloat = 0
-        
-        init(color: UIColor) {
-            color.getRed(&r, green: &g, blue: &b, alpha: &a)
-        }
-    }
-    
-    var components: Components {
-        return Components(color: self)
-    }
-    
-    static func == (lhs: UIColor, rhs: UIColor) -> Bool {
-        return lhs.components == rhs.components
-    }
-}
