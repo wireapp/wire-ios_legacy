@@ -75,17 +75,6 @@
     return defaultColorScheme;
 }
 
-- (BOOL)brightColor:(UIColor *)color
-{
-    CGFloat red, green, blue, alpha;
-    if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
-        // Check if color is brighter then a threshold
-        return ((red + green + blue) / 3.0f) > 0.55f;
-    }
-
-    return NO;
-}
-
 @end
 
 @implementation UIColor (ColorScheme)
