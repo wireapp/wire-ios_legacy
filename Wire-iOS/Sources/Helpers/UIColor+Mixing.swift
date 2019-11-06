@@ -54,27 +54,5 @@ extension UIColor {
         let blue = mix(value0: component0.b, value1: component1.b, progress: alpha0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
-    }///TODO: test
-        
-    class func wr_color(from string: String) -> UIColor {
-        let scanner = Scanner(string: string)
-        
-        scanner.charactersToBeSkipped = CharacterSet(charactersIn: "rgba(), ")
-        
-        var r: Float = 0
-        var g: Float = 0
-        var b: Float = 0
-        var a: Float = 1
-        scanner.scanFloat(&r)
-        scanner.scanFloat(&g)
-        scanner.scanFloat(&b)
-        scanner.scanFloat(&a)
-        
-        if scanner.isAtEnd {
-            return UIColor(red: CGFloat(r / 255), green: CGFloat(g / 255), blue: CGFloat(b / 255), alpha: CGFloat(a))
-        } else {
-            fatal("invalid color string")
-        }
-    }
-
+    }///TODO: test        
 }

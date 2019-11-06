@@ -43,5 +43,9 @@ extension UIColor {
         self.init(red: CGFloat(tuple.red / 255), green: CGFloat(tuple.green / 255), blue: CGFloat(tuple.blue / 255), alpha: CGFloat(tuple.alpha))
     }
 
+    convenience init(tuple: (red: UInt, green: UInt, blue: UInt)) {
+        self.init(tuple: (red: tuple.red, green: tuple.green, blue: tuple.blue, alpha: 1))///TODO: test
+    }
+
 }
 
