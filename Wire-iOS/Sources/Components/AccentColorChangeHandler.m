@@ -19,7 +19,6 @@
 
 #import "AccentColorChangeHandler.h"
 
-#import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
 

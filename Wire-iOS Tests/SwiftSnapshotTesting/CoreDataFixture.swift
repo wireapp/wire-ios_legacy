@@ -58,7 +58,7 @@ final class CoreDataFixture {
             UIColor.setAccentOverride(newValue)
         }
         get {
-            return UIColor.accentOverrideColor()
+            return UIColor.accentOverrideColor!
         }
     }
 

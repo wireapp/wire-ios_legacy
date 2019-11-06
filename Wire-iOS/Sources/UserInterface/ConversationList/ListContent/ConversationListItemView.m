@@ -21,7 +21,6 @@
 #import "ConversationListItemView+Internal.h"
 
 
-#import "UIColor+WAZExtensions.h"
 
 #import "Wire-Swift.h"
 
