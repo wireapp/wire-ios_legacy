@@ -453,15 +453,15 @@ class Build
     def app_name
         if playground_build
             "Wire-iOS-Playground"
-        elsif build.avs_build
+        elsif avs_build
             "Wire-iOS-AVS"
-        elsif build.development_build
+        elsif development_build
             "Wire-iOS-Development"
-        elsif build.internal_build
+        elsif internal_build
             "Wire-iOS-Internal"
-        elsif build.appstore_build
+        elsif appstore_build
             "Wire-iOS-App-Store"
-        elsif build.rc_build
+        elsif rc_build
             "Wire-iOS-Release-Candidate"
         end
     end

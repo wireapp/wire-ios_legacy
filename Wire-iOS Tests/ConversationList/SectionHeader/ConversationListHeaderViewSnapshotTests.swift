@@ -50,4 +50,9 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
         
         verify(matching: sut)
     }
+    
+    func testForBadgeNumberHitLimit() {
+        sut.folderBadge = 999
+        verify(matching: sut)
+    }
 }

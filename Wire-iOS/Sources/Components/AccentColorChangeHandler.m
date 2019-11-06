@@ -19,7 +19,6 @@
 
 #import "AccentColorChangeHandler.h"
 
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 

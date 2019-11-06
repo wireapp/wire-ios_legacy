@@ -28,7 +28,6 @@
 #import "ShareItemProvider.h"
 #import "InviteContactsViewController.h"
 #import "Analytics.h"
-#import "WireSyncEngine+iOS.h"
 
 
 #import "Wire-Swift.h"

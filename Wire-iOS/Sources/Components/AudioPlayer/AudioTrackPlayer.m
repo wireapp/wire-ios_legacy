@@ -21,7 +21,6 @@
 #import "AudioTrackPlayer.h"
 #import "AudioTrack.h"
 #import "UIImage+ImageUtilities.h"
-#import "WireSyncEngine+iOS.h"
 
 @import WireCommonComponents;
 @import WireUtilities;

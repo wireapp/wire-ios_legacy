@@ -29,7 +29,6 @@
 
 
 // model
-#import "WireSyncEngine+iOS.h"
 #import "Message+UI.h"
 
 // ui

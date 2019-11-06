@@ -32,7 +32,6 @@
 @import AVKit;
 
 // model
-#import "WireSyncEngine+iOS.h"
 
 // ui
 #import "ZClientViewController.h"
