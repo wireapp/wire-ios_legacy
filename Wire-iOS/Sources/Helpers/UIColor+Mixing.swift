@@ -32,23 +32,17 @@ extension UIColor {
     /// - Returns: the mixed color
     @objc
     func mix(_ color: UIColor, amount progress: CGFloat) -> UIColor {
-        var red0: CGFloat = 0
-        var green0: CGFloat = 0
-        var blue0: CGFloat = 0
-        var alpha0: CGFloat = 0
-        var red1: CGFloat = 0
-        var green1: CGFloat = 0
-        var blue1: CGFloat = 0
-        var alpha1: CGFloat = 0
-        getRed(&red0, green: &green0, blue: &blue0, alpha: &alpha0)
-        color.getRed(&red1, green: &green1, blue: &blue1, alpha: &alpha1)
-        let red = mix(value0: red0, value1: red1, progress: progress)
-        let green = mix(value0: green0, value1: green1, progress: progress)
-        let blue = mix(value0: blue0, value1: blue1, progress: progress)
-        let alpha = mix(value0: alpha0, value1: alpha1, progress: progress)
+        
+        let component0 = components
+        let component1 = color.components
+
+        let red = mix(value0: component0.r, value1: component1.r, progress: progress)
+        let green = mix(value0: component0.g, value1: component1.g, progress: progress)
+        let blue = mix(value0: component0.b, value1: component1.b, progress: progress)
+        let alpha = mix(value0: component0.a, value1: component1.a, progress: progress)
         
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }
+    }///TODO: test
     
     func removeAlphaByBlending(with color: UIColor) -> UIColor {
         var red0: CGFloat = 0
