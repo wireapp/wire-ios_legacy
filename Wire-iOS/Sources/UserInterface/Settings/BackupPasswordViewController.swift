@@ -91,7 +91,6 @@ final class BackupPasswordViewController: UIViewController {
     override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-    
     private func setupViews() {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
         
