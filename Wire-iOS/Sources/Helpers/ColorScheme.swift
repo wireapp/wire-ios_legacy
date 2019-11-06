@@ -19,8 +19,8 @@
 import Foundation
 import UIKit
 
-public extension UIColor {
-    @objc static var graphite: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58)")
+extension UIColor {
+    static var graphite: UIColor = UIColor(tuple:(51, 55, 58, 1))
     static var graphiteAlpha4: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.04)")
     static var graphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.08)")
     static var graphiteAlpha16: UIColor = UIColor.wr_color(from: "rgb(51, 55, 58, 0.16)")
@@ -28,7 +28,7 @@ public extension UIColor {
 
     static var backgroundLightGraphite: UIColor = UIColor.wr_color(from: "rgb(30, 32, 33)")
 
-    @objc static var lightGraphite: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
+    static var lightGraphite: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159)")
     static var lightGraphiteAlpha8: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.08)")
     static var lightGraphiteAlpha24: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.24)")
     static var lightGraphiteAlpha48: UIColor = UIColor.wr_color(from: "rgb(141, 152, 159, 0.48)")

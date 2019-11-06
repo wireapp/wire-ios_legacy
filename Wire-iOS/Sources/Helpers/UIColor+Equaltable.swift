@@ -37,5 +37,11 @@ extension UIColor {
     static func == (lhs: UIColor, rhs: UIColor) -> Bool {
         return lhs.components == rhs.components
     }
+    
+    convenience init(tuple: (red: UInt, green: UInt, blue: UInt, alpha: CGFloat)) {
+        
+        self.init(red: CGFloat(tuple.red / 255), green: CGFloat(tuple.green / 255), blue: CGFloat(tuple.blue / 255), alpha: CGFloat(tuple.alpha))
+    }
+
 }
 

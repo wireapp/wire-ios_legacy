@@ -55,7 +55,7 @@ extension UIColor {
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }///TODO: test
-    
+        
     class func wr_color(from string: String) -> UIColor {
         let scanner = Scanner(string: string)
         
