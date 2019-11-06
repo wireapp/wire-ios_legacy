@@ -18,7 +18,6 @@
 
 
 #import "ContactsDataSource.h"
-#import "WireSyncEngine+iOS.h"
 
 #import "Wire-Swift.h"
 

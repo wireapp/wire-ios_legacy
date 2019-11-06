@@ -21,7 +21,6 @@
 // Data model
 @import WireSyncEngine;
 @import avs;
-#import "ZMUserSession+iOS.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
@@ -134,7 +133,6 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIColor+WAZExtensions.h"
 #import "AccentColorChangeHandler.h"
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"

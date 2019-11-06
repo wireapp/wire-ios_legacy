@@ -37,7 +37,6 @@ extension ConversationListCell: ZMConversationObserver {
             change.messagesChanged) else { return }
 
 
-        ///TODO: consider not update if not visible
         updateAppearance()
     }
 }

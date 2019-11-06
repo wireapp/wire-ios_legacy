@@ -20,12 +20,10 @@
 #import "ProfileViewController.h"
 #import "ProfileViewController+internal.h"
 
-#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 
 
 
-#import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
 #import "ContactsDataSource.h"

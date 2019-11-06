@@ -36,7 +36,6 @@
 #import "Analytics.h"
 
 // model
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";

@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -16,32 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-extension UIColor {    
-    class var accentOverrideColor: ZMAccentColor? {
-        return ZMUser.selfUser()?.accentColorValue
+final class ColorSchemeTests: XCTestCase {
+    
+    var sut: ColorScheme!
+    
+    override func setUp() {
+        super.setUp()
+        
+        sut = ColorScheme()
     }
-}
-
-extension XCTestCase {
-    /// If this is set the accent color will be overriden for the tests
-    static var accentColor: ZMAccentColor {
-        set {
-            UIColor.setAccentOverride(newValue)
-        }
-        get {
-            return UIColor.accentOverrideColor!
-        }
+    
+    override func tearDown() {
+        sut = nil
     }
 
-    var accentColor: ZMAccentColor {
-        set {
-            XCTestCase.accentColor = newValue
-        }
-        get {
-            return XCTestCase.accentColor
-        }
+    func testForIsCurrentAccentColor() {
+        ///GIVEN
+        sut.accentColor = .black
+        let alphaBlack = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0)
+        
+        ///THEN
+        XCTAssertEqual(sut.accentColor, .black)
+        XCTAssert(sut.isCurrentAccentColor(.black))
+
+        XCTAssertNotEqual(sut.accentColor, alphaBlack)
+        XCTAssertFalse(sut.isCurrentAccentColor(alphaBlack))
     }
 }

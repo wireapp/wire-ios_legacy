@@ -252,6 +252,7 @@ extension ColorSchemeColor {
 }
 
 public extension ColorScheme {
+
     @objc(colorWithName:)
     func color(named: ColorSchemeColor) -> UIColor {
         return color(named: named, variant: variant)

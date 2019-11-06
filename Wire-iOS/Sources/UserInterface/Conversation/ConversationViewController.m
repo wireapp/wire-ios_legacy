@@ -29,7 +29,6 @@
 
 
 // model
-#import "WireSyncEngine+iOS.h"
 #import "Message+UI.h"
 
 // ui
@@ -48,7 +47,6 @@
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
-#import "UIColor+WAZExtensions.h"
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
 #import "UIResponder+FirstResponder.h"

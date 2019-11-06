@@ -539,7 +539,10 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
-        return
+
+        if let sectionNumber = sectionNumber(for: kind) {
+            delegate?.listViewModel(self, didUpdateSection: sectionNumber)
+        }
     }
 
     @discardableResult
@@ -570,6 +573,14 @@ final class ConversationListViewModel: NSObject {
         if let itemToSelect = itemToSelect {
             delegate?.listViewModel(self, didSelectItem: itemToSelect)
         }
+    }
+
+    // MARK: - folder badge
+    
+    func folderBadge(at sectionIndex: Int) -> Int {
+        return sections[sectionIndex].items.filter({
+            ($0.item as? ZMConversation)?.status.messagesRequiringAttention.isEmpty == false
+        }).count
     }
 
     // MARK: - collapse section
