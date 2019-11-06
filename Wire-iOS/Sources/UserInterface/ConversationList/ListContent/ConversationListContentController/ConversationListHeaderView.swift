@@ -27,6 +27,23 @@ extension UIView {
 typealias TapHandler = (_ collapsed: Bool) -> Void
 
 final class ConversationListHeaderView: UICollectionReusableView {
+    private let spacing: CGFloat = 8
+
+    var folderBadge: Int = 0 {
+        didSet {
+            if folderBadge > 0 {
+                badgeLabel.isHidden = false
+                badgeLabel.text = String(folderBadge)
+                
+                badgeMarginConstraint?.constant = -spacing
+                
+            } else {
+                badgeLabel.isHidden = true
+                badgeMarginConstraint?.constant = 0
+            }
+        }
+    }
+    
     var collapsed = false {
         didSet {
             guard collapsed != oldValue else { return }
@@ -42,12 +59,22 @@ final class ConversationListHeaderView: UICollectionReusableView {
     
     var tapHandler: TapHandler? = nil
 
+    private var badgeMarginConstraint: NSLayoutConstraint?
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallRegularFont
         label.textColor = .white
         label.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
 
+        return label
+    }()
+    
+    private let badgeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .white
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
 
@@ -93,7 +120,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     required override init(frame: CGRect) {
         super.init(frame: frame)
 
-        [titleLabel, arrowIconImageView].forEach(addSubview)
+        [titleLabel, arrowIconImageView, badgeLabel].forEach(addSubview)
 
         createConstraints()
         
@@ -120,21 +147,25 @@ final class ConversationListHeaderView: UICollectionReusableView {
     }
 
     private func createConstraints() {
-        [arrowIconImageView, titleLabel].forEach() {
+        [arrowIconImageView, titleLabel, badgeLabel].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
-        let spacing: CGFloat = 8
-
+        badgeMarginConstraint = titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: badgeLabel.leadingAnchor, constant: 0)
+        
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
             arrowIconImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: arrowIconImageView.trailingAnchor, constant: spacing),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -spacing)]
+            
+            badgeMarginConstraint!,
+            badgeLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            badgeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -spacing),
+            ]
         )
     }
 }
