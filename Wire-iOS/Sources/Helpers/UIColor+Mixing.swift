@@ -45,23 +45,16 @@ extension UIColor {
     }///TODO: test
     
     func removeAlphaByBlending(with color: UIColor) -> UIColor {
-        var red0: CGFloat = 0
-        var green0: CGFloat = 0
-        var blue0: CGFloat = 0
-        var alpha0: CGFloat = 0
-        getRed(&red0, green: &green0, blue: &blue0, alpha: &alpha0)
+        let component0 = components
+        let component1 = color.components
+        let alpha0 = component0.a
         
-        var red1: CGFloat = 0
-        var green1: CGFloat = 0
-        var blue1: CGFloat = 0
-        color.getRed(&red1, green: &green1, blue: &blue1, alpha: nil)
-        
-        let red = mix(value0: red1, value1: red0, progress: alpha0)
-        let green = mix(value0: green1, value1: green0, progress: alpha0)
-        let blue = mix(value0: blue1, value1: blue0, progress: alpha0)
+        let red = mix(value0: component0.r, value1: component1.r, progress: alpha0)
+        let green = mix(value0: component0.g, value1: component1.g, progress: alpha0)
+        let blue = mix(value0: component0.b, value1: component1.b, progress: alpha0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
-    }
+    }///TODO: test
     
     class func wr_color(from string: String) -> UIColor {
         let scanner = Scanner(string: string)
