@@ -5751,19 +5751,19 @@
 			path = "Wire-iOS Tests/ConversationList/SectionHeader";
 			sourceTree = SOURCE_ROOT;
 		};
-		A9E844F723730CC7001D1C47 /* Colour */ = {
+		A9E844F723730CC7001D1C47 /* Color */ = {
 			isa = PBXGroup;
 			children = (
 				A9991374237072C600E1ABBB /* ColorSchemeTests.swift */,
 				A9E844F823730D08001D1C47 /* ColorComponentsTests.swift */,
 			);
-			path = Colour;
+			path = Color;
 			sourceTree = "<group>";
 		};
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A9E844F723730CC7001D1C47 /* Colour */,
+				A9E844F723730CC7001D1C47 /* Color */,
 				EF37AB742366F6BA00C1F5D9 /* Status */,
 				EFD4B9CA22F09C3D008CA042 /* AppLockTests.swift */,
 				EFD4B9C922F082BE008CA042 /* UIImage */,

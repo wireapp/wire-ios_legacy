@@ -49,7 +49,7 @@ final class ColorComponentsTests: XCTestCase {
         XCTAssertNotEqual(UIColor.black, UIColor(red: 0, green: 0, blue: 0, alpha: 1))
     }
 
-    func testThatColorCanBeCompareWithColorComponents() {
-        XCTAssertEqual(UIColor.black.components, UIColor(red: 0, green: 0, blue: 0, alpha: 1).components)
+    func testThatColorisComparableWithEqualSign() {
+        XCTAssert(UIColor.black == UIColor(red: 0, green: 0, blue: 0, alpha: 1))
     }
 }
