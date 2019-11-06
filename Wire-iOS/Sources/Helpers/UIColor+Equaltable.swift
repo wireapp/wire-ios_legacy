@@ -38,13 +38,13 @@ extension UIColor {
         return lhs.components == rhs.components
     }
     
-    convenience init(tuple: (red: UInt, green: UInt, blue: UInt, alpha: CGFloat)) {
+    convenience init(rgba: (red: UInt, green: UInt, blue: UInt, alpha: CGFloat)) {
         
-        self.init(red: CGFloat(tuple.red / 255), green: CGFloat(tuple.green / 255), blue: CGFloat(tuple.blue / 255), alpha: CGFloat(tuple.alpha))
+        self.init(red: CGFloat(rgba.red / 255), green: CGFloat(rgba.green / 255), blue: CGFloat(rgba.blue / 255), alpha: CGFloat(rgba.alpha))
     }
 
-    convenience init(tuple: (red: UInt, green: UInt, blue: UInt)) {
-        self.init(tuple: (red: tuple.red, green: tuple.green, blue: tuple.blue, alpha: 1))///TODO: test
+    convenience init(rgb: (red: UInt, green: UInt, blue: UInt)) {
+        self.init(rgba: (red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: 1))///TODO: test
     }
 
 }
