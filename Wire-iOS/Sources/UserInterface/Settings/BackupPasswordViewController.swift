@@ -88,6 +88,10 @@ final class BackupPasswordViewController: UIViewController {
         passwordView.becomeFirstResponder()
     }
 
+    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+    
     private func setupViews() {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
         

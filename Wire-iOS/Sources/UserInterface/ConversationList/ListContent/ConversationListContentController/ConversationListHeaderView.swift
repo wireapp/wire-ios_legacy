@@ -102,7 +102,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
 
     override var accessibilityValue: String? {
         get {
-            return collapsed ? "collapsed" : "expanded"
+            return (collapsed ? "collapsed" : "expanded") + " \(folderBadge)"
         }
 
         set {
