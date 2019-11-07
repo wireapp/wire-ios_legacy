@@ -37,6 +37,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     private var generator: MockCallHapticsGenerator!
     private var firstUser: ZMUser!
     private var secondUser: ZMUser!
+    private var clientId1: String = "ClientId1"
+    private var clientId2: String = "ClientId2"
     
     override func setUp() {
         super.setUp()
@@ -75,8 +77,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     func testThatItTriggersCorrectEventWhenAParticipantJoins() {
         // given
     
-        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
-        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: clientId2))
         
         sut.updateParticipants([first])
         
@@ -91,10 +93,28 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(generator.triggeredEvents, [.join])
     }
     
+    func testThatItTriggersCorrectEventWhenTheSameUserJoinsWithDifferentDevice() {
+        // given
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
+        let second = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId2))
+        
+        sut.updateParticipants([first])
+
+        //when
+        generator.reset()
+        sut.updateParticipants([
+            first,
+            second
+        ])
+        
+        //then
+        XCTAssertEqual(generator.triggeredEvents, [.join])
+    }
+    
     func testThatItTriggersCorrectEventWhenAParticipantLeaves() {
         // given
-        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
-        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: clientId2))
        
         sut.updateParticipants([
             first,
@@ -109,10 +129,28 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
         XCTAssertEqual(generator.triggeredEvents, [.leave])
     }
     
+    func testThatItTriggersCorrectEventWhenAUserLeavesFromOneOfItsDevices() {
+        // given
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
+        let second = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId2))
+        
+        sut.updateParticipants([
+            first,
+            second
+        ])
+        
+        // when
+        generator.reset()
+        sut.updateParticipants([second])
+        
+        // then
+        XCTAssertEqual(generator.triggeredEvents, [.leave])
+    }
+    
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOnHerVideoStream() {
         // given
-        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: nil))
-        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: clientId1))
+        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
         sut.updateParticipants([stopped])
         
         // when
@@ -125,8 +163,8 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOffHerVideoStream() {
         // given
-        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: nil))
-        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: clientId1))
+        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
         sut.updateParticipants([
             started
         ])
@@ -153,10 +191,10 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
         XCTAssert(generator.triggeredEvents.isEmpty)
     }
     
-    func testThatItDoesNotTriggersAnEventWhenTheParticipantsDoNotChange() {
+    func testThatItDoesNotTriggerAnEventWhenTheParticipantsDoNotChange() {
         // given
-        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
-        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: clientId2))
 
         sut.updateParticipants([
             first,
@@ -174,9 +212,9 @@ final class CallHapticsControllerTests: ZMSnapshotTestCase {
         XCTAssert(generator.triggeredEvents.isEmpty)
     }
     
-    func testThatItDoesNotTriggersAnEventWhenTheAParticipantsVideoStateDoesNotChange() {
+    func testThatItDoesNotTriggerAnEventWhenTheParticipantsVideoStateDoesNotChange() {
         // given
-        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: clientId1))
 
         sut.updateParticipants([
             first
