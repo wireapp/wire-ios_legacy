@@ -20,7 +20,7 @@ final class CallHapticsController {
 
     private var lastCallState: CallState?
     private var participants = Set<CallParticipant>()
-    private var videoStates = [Int: Bool]()
+    private var videoStates = [CallParticipant: Bool]()
     private let hapticGenerator: CallHapticsGeneratorType
     
     init(hapticGenerator: CallHapticsGeneratorType = CallHapticsGenerator()) {
@@ -49,8 +49,8 @@ final class CallHapticsController {
     // MARK: - Private
     
     private func updateParticipantsList(_ newParticipants: [CallParticipant]) {
-        let updatedHashes = Set(newParticipants.map({$0.hashValue}))
-        let participantsHashes = Set(participants.map({$0.hashValue}))
+        let updatedHashes = Set(newParticipants.map(\.hashValue))
+        let participantsHashes = Set(participants.map(\.hashValue))
         
         let removed = !participantsHashes.subtracting(updatedHashes).isEmpty
         let added = !updatedHashes.subtracting(participantsHashes).isEmpty
@@ -73,8 +73,10 @@ final class CallHapticsController {
         let newVideoStates = createVideoStateMap(using: newParticipants)
         Log.haptics.debug("updating video state map: \(newVideoStates), old: \(videoStates)")
 
-        for (participantHash, wasSending) in videoStates {
-            if let isSending = newVideoStates[participantHash], isSending != wasSending {
+        let mappedNewVideoStates = newVideoStates.mapKeys({$0.hashValue})
+        for (participant, wasSending) in videoStates {
+           
+            if let isSending = mappedNewVideoStates[participant.hashValue], isSending != wasSending {
                 Log.haptics.debug("triggering toggle video event")
                 hapticGenerator.trigger(event: .toggleVideo)
             }
@@ -83,9 +85,9 @@ final class CallHapticsController {
         videoStates = newVideoStates
     }
     
-    private func createVideoStateMap(using participants: [CallParticipant]) -> [Int : Bool] {
+    private func createVideoStateMap(using participants: [CallParticipant]) -> [CallParticipant : Bool] {
         return Dictionary(uniqueKeysWithValues: participants.map {
-            ($0.hashValue, $0.state.isSendingVideo)
+            ($0, $0.state.isSendingVideo)
         })
     }
 }
