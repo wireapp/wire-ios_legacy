@@ -20,7 +20,7 @@ final class CallHapticsController {
 
     private var lastCallState: CallState?
     private var participants = Set<CallParticipant>()
-    private var videoStates = [CallParticipant: Bool]()
+    private var videoStates = [Int: Bool]()
     private let hapticGenerator: CallHapticsGeneratorType
     
     init(hapticGenerator: CallHapticsGeneratorType = CallHapticsGenerator()) {
@@ -49,9 +49,12 @@ final class CallHapticsController {
     // MARK: - Private
     
     private func updateParticipantsList(_ newParticipants: [CallParticipant]) {
-        let updated = Set(newParticipants)
-        let removed = !participants.subtracting(updated).isEmpty
-        let added = !updated.subtracting(participants).isEmpty
+        let updatedHashes = Set(newParticipants.map({$0.hashValue}))
+        let participantsHashes = Set(participants.map({$0.hashValue}))
+        
+        let removed = !participantsHashes.subtracting(updatedHashes).isEmpty
+        let added = !updatedHashes.subtracting(participantsHashes).isEmpty
+        
         Log.haptics.debug("updating participants list: \(newParticipants), old: \(participants)")
         
         if removed {
@@ -63,15 +66,15 @@ final class CallHapticsController {
             hapticGenerator.trigger(event: .join)
         }
         
-        participants = updated
+        participants = Set(newParticipants)
     }
     
     private func updateParticipantsVideoStateList(_ newParticipants: [CallParticipant]) {
         let newVideoStates = createVideoStateMap(using: newParticipants)
         Log.haptics.debug("updating video state map: \(newVideoStates), old: \(videoStates)")
 
-        for (participant, wasSending) in videoStates {
-            if let isSending = newVideoStates[participant], isSending != wasSending {
+        for (participantHash, wasSending) in videoStates {
+            if let isSending = newVideoStates[participantHash], isSending != wasSending {
                 Log.haptics.debug("triggering toggle video event")
                 hapticGenerator.trigger(event: .toggleVideo)
             }
@@ -80,9 +83,9 @@ final class CallHapticsController {
         videoStates = newVideoStates
     }
     
-    private func createVideoStateMap(using participants: [CallParticipant]) -> [CallParticipant : Bool] {
+    private func createVideoStateMap(using participants: [CallParticipant]) -> [Int : Bool] {
         return Dictionary(uniqueKeysWithValues: participants.map {
-            ($0, $0.state.isSendingVideo)
+            ($0.hashValue, $0.state.isSendingVideo)
         })
     }
 }
