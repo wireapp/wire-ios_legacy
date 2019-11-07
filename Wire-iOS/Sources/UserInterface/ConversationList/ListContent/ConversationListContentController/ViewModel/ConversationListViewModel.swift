@@ -539,8 +539,15 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
+        
 
         if let sectionNumber = sectionNumber(for: kind) {
+            
+            ///When the section is collaped, the setData closure of the reload() above is not called and we need to set here to make sure the folder badge calculation is correct
+            if collapsed(at: sectionNumber) {
+                sections = newValue
+            }
+            
             delegate?.listViewModel(self, didUpdateSection: sectionNumber)
         }
     }
