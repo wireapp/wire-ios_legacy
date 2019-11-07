@@ -31,20 +31,28 @@ fileprivate class MockCallHapticsGenerator: CallHapticsGeneratorType {
     }
 }
 
-final class CallHapticsControllerTests: XCTestCase {
+final class CallHapticsControllerTests: ZMSnapshotTestCase {
     
     private var sut: CallHapticsController!
     private var generator: MockCallHapticsGenerator!
+    private var firstUser: ZMUser!
+    private var secondUser: ZMUser!
     
     override func setUp() {
         super.setUp()
         generator = MockCallHapticsGenerator()
         sut = CallHapticsController(hapticGenerator: generator)
+        firstUser = ZMUser.insertNewObject(in: uiMOC)
+        firstUser.remoteIdentifier = UUID()
+        secondUser = ZMUser.insertNewObject(in: uiMOC)
+        secondUser.remoteIdentifier = UUID()
     }
     
     override func tearDown() {
         sut = nil
         generator = nil
+        firstUser = nil
+        secondUser = nil
         super.tearDown()
     }
     
@@ -66,14 +74,17 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantJoins() {
         // given
-        let (first, second) = (UUID.create(), UUID.create())
-        sut.updateParticipants([(first, .connected(videoState: .started, clientId: nil))])
+    
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+        
+        sut.updateParticipants([first])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil)),
-            (second, .connected(videoState: .started, clientId: nil))
+            first,
+            second
         ])
         
         // then
@@ -82,15 +93,17 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantLeaves() {
         // given
-        let (first, second) = (UUID.create(), UUID.create())
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+       
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil)),
-            (second, .connected(videoState: .started, clientId: nil))
+            first,
+            second
         ])
 
         // when
         generator.reset()
-        sut.updateParticipants([(second, .connected(videoState: .started, clientId: nil))])
+        sut.updateParticipants([second])
         
         // then
         XCTAssertEqual(generator.triggeredEvents, [.leave])
@@ -98,16 +111,13 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOnHerVideoStream() {
         // given
-        let first = UUID.create()
-        sut.updateParticipants([
-            (first, .connected(videoState: .stopped, clientId: nil))
-        ])
+        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: nil))
+        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        sut.updateParticipants([stopped])
         
         // when
         generator.reset()
-        sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil))
-        ])
+        sut.updateParticipants([started])
         
         // then
         XCTAssertEqual(generator.triggeredEvents, [.toggleVideo])
@@ -115,15 +125,16 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItTriggersCorrectEventWhenAParticipantTurnsOffHerVideoStream() {
         // given
-        let first = UUID.create()
+        let stopped = CallParticipant(user: firstUser, state: .connected(videoState: .stopped, clientId: nil))
+        let started = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil))
+            started
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .stopped, clientId: nil))
+            stopped
         ])
         
         // then
@@ -144,17 +155,19 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItDoesNotTriggersAnEventWhenTheParticipantsDoNotChange() {
         // given
-        let (first, second) = (UUID.create(), UUID.create())
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+        let second = CallParticipant(user: secondUser, state: .connected(videoState: .started, clientId: nil))
+
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil)),
-            (second, .connected(videoState: .started, clientId: nil))
+            first,
+            second
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil)),
-            (second, .connected(videoState: .started, clientId: nil ))
+           first,
+           second
         ])
         
         // then
@@ -163,15 +176,16 @@ final class CallHapticsControllerTests: XCTestCase {
     
     func testThatItDoesNotTriggersAnEventWhenTheAParticipantsVideoStateDoesNotChange() {
         // given
-        let first = UUID.create()
+        let first = CallParticipant(user: firstUser, state: .connected(videoState: .started, clientId: nil))
+
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil))
+            first
         ])
         
         // when
         generator.reset()
         sut.updateParticipants([
-            (first, .connected(videoState: .started, clientId: nil))
+            first
         ])
         
         // then
