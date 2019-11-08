@@ -38,6 +38,10 @@ extension UIColor {
         return lhs.components == rhs.components
     }
     
+    
+    /// Create a color with a tuple rgba. The range of each component is 0 to 255 and alpha is 0 to 1
+    ///
+    /// - Parameter rgba: tuple of color components
     convenience init(rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)) {
         
         self.init(red: rgba.red / 255,
@@ -46,6 +50,9 @@ extension UIColor {
                   alpha: rgba.alpha)
     }
 
+    /// Create a color with a tuple rgba. The range of each component is 0 to 255 and alpha 1
+    ///
+    /// - Parameter rgba: tuple of color components
     convenience init(rgb: (red: CGFloat, green: CGFloat, blue: CGFloat)) {
         self.init(rgba: (red: rgb.red,
                          green: rgb.green,

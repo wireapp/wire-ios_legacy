@@ -49,9 +49,9 @@ extension UIColor {
         let component1 = color.components
         let alpha0 = component0.a
         
-        let red = mix(value0: component0.r, value1: component1.r, progress: alpha0)
-        let green = mix(value0: component0.g, value1: component1.g, progress: alpha0)
-        let blue = mix(value0: component0.b, value1: component1.b, progress: alpha0)
+        let red = mix(value0: component1.r, value1: component0.r, progress: alpha0)
+        let green = mix(value0: component1.g, value1: component0.g, progress: alpha0)
+        let blue = mix(value0: component1.b, value1: component0.b, progress: alpha0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }///TODO: test        
