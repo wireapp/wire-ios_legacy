@@ -19,6 +19,7 @@
 import XCTest
 @testable import Wire
 
+///TODO: move to utility
 final class ColorComponentsTests: XCTestCase {
     func testThatWhiteColorComponentsAreCorrect() {
         ///GIVEN
@@ -31,7 +32,7 @@ final class ColorComponentsTests: XCTestCase {
         XCTAssertEqual(sut.red, 1)
         XCTAssertEqual(sut.green, 1)
         XCTAssertEqual(sut.blue, 1)
-        XCTAssertEqual(sut.a, 1)
+        XCTAssertEqual(sut.alpha, 1)
     }
     
     func testThatRedColorComponentsAreCorrect() {
