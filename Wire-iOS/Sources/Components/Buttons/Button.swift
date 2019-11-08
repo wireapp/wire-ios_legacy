@@ -20,6 +20,7 @@ import Foundation
 
 extension Button {
     
+    @objc
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
         self.init()
         

@@ -133,7 +133,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.bottomContainerSeparatorView = [[UIView alloc] init];
     [self.bottomContainerView addSubview:self.bottomContainerSeparatorView];
     
-    self.inviteOthersButton = [Button buttonWithStyle:ButtonStyleEmpty variant:self.colorSchemeVariant];
+    self.inviteOthersButton = [[Button alloc] initWithStyle:ButtonStyleEmpty variant:self.colorSchemeVariant];
     [self.inviteOthersButton addTarget:self action:@selector(sendIndirectInvite:) forControlEvents:UIControlEventTouchUpInside];
     [self.inviteOthersButton setTitle:NSLocalizedString(@"contacts_ui.invite_others", @"") forState:UIControlStateNormal];
     [self.bottomContainerView addSubview:self.inviteOthersButton];

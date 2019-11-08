@@ -33,6 +33,7 @@ extension IconButton {
         }
     }
 
+    @objc
     convenience init(style: IconButtonStyle, variant: ColorSchemeVariant) {
         self.init()
         

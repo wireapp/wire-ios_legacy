@@ -17,9 +17,9 @@
 // 
 
 
+#import "ColorSchemeVariant.h"
+
 @import UIKit;
-
-
 
 @class ContactsDataSource;
 @class ContactsViewController;
@@ -28,7 +28,6 @@
 @class ZMAddressBookContact;
 @class Button;
 
-enum ColorSchemeVariant;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -60,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ContactsDataSource *__nullable dataSource;
 @property (nonatomic, weak, nullable) id<ContactsViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ContactsViewControllerContentDelegate> contentDelegate;
-@property (nonatomic) enum ColorSchemeVariant colorSchemeVariant;
+@property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
 /// Button displayed at the bottom of the screen. If nil a default button is displayed.
 @property (nonatomic, nullable) Button * bottomButton;
