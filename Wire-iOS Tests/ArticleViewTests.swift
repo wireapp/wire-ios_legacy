@@ -21,7 +21,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-class ArticleViewTests: ZMSnapshotTestCase {
+final class ArticleViewTests: ZMSnapshotTestCase {
     
     var sut: ArticleView!
 
