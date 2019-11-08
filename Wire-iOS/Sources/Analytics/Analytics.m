@@ -20,7 +20,6 @@
 
 #import "Analytics.h"
 #import "Analytics+Internal.h"
-#import "WireSyncEngine+iOS.h"
 #import "AnalyticsDecryptionFailedObserver.h"
 #import <avs/AVSFlowManager.h>
 #import "Wire-Swift.h"

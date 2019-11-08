@@ -21,12 +21,12 @@ import UIKit
 import Cartography
 
 
-@objcMembers public class TitleView: UIView {
+class TitleView: UIView {
     
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
     internal let titleButton = UIButton()
-    public var tapHandler: ((UIButton) -> Void)? = nil
+    @objc public var tapHandler: ((UIButton) -> Void)? = nil
     
     public init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)
@@ -53,7 +53,7 @@ import Cartography
         addSubview(titleButton)
     }
     
-    func titleButtonTapped(_ sender: UIButton) {
+    @objc func titleButtonTapped(_ sender: UIButton) {
         tapHandler?(sender)
     }
     

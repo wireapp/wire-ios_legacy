@@ -126,13 +126,17 @@ final class ConversationListContentController: UICollectionViewController {
 
         switch kind {
         case UICollectionView.elementKindSectionHeader:
+            let section = indexPath.section
+            
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.title = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
+                header.title = listViewModel.sectionHeaderTitle(sectionIndex: section)?.uppercased()
+                
+                header.folderBadge = listViewModel.folderBadge(at: section)
 
-                header.collapsed = listViewModel.collapsed(at: indexPath.section)
+                header.collapsed = listViewModel.collapsed(at: section)
 
                 header.tapHandler = {[weak self] collapsed in
-                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
+                    self?.listViewModel.setCollapsed(sectionIndex: section, collapsed: collapsed)
                 }
                 
                 return header
@@ -289,6 +293,14 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 }
 
 extension ConversationListContentController: ConversationListViewModelDelegate {
+
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int) {
+        guard let header = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: section)) as? ConversationListHeaderView else {
+            return
+        }
+
+        header.folderBadge = listViewModel.folderBadge(at: section)
+    }
 
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         defer {

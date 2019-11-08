@@ -102,12 +102,12 @@ private struct InputBarConstants {
     let buttonsBarHeight: CGFloat = 56
 }
 
-@objcMembers public final class InputBar: UIView {
+final class InputBar: UIView {
 
     private let inputBarVerticalInset: CGFloat = 34
     public static let rightIconSize: CGFloat = 32
 
-
+    @objc
     let textView = MarkdownTextView(with: DownStyle.compact)
     public let leftAccessoryView  = UIView()
     public let rightAccessoryStackView: UIStackView = {
@@ -132,7 +132,9 @@ private struct InputBarConstants {
     
     public let buttonsView: InputBarButtonsView
     public let editingView = InputBarEditView()
-    public let markdownView = MarkdownBarView()
+    
+    @objc
+    let markdownView = MarkdownBarView()
     
     public var editingBackgroundColor = UIColor.brightYellow
     public var barBackgroundColor: UIColor? = UIColor.from(scheme: .barBackground)
@@ -140,7 +142,9 @@ private struct InputBarConstants {
     public var ephemeralColor: UIColor {
         return .accent()
     }
-    public var placeholderColor: UIColor? = .from(scheme: .textPlaceholder)
+    
+    @objc
+    var placeholderColor: UIColor? = .from(scheme: .textPlaceholder)
     public var textColor: UIColor? = .from(scheme: .textForeground)
 
     fileprivate var rowTopInsetConstraint: NSLayoutConstraint? = nil
@@ -158,6 +162,7 @@ private struct InputBarConstants {
         return inputBarState.isEditing
     }
     
+    @objc
     var isMarkingDown: Bool {
         return inputBarState.isMarkingDown
     }
@@ -173,13 +178,15 @@ private struct InputBarConstants {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    public var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
+    @objc
+    var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
-    public var availabilityPlaceholder : NSAttributedString? {
+    @objc
+    var availabilityPlaceholder : NSAttributedString? {
         didSet {
             updatePlaceholder()
         }
@@ -339,7 +346,8 @@ private struct InputBarConstants {
         buttonsView.showRow(0, animated: true)
     }
     
-    public func updateReturnKey() {
+    @objc
+    func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
         textView.reloadInputViews()
     }
@@ -434,7 +442,8 @@ private struct InputBarConstants {
         }
     }
 
-    public func updateEphemeralState() {
+    @objc
+    func updateEphemeralState() {
         guard inputBarState.isWriting else { return }
         updateColors()
         updatePlaceholder()

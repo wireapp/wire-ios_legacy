@@ -23,7 +23,6 @@
 
 
 
-#import "WireSyncEngine+iOS.h"
 #import "avs+iOS.h"
 #import "Settings.h"
 
@@ -31,7 +30,6 @@
 #import "MediaPlayer.h"
 #import "AppDelegate.h"
 
-#import "UIColor+WAZExtensions.h"
 
 #import "ZClientViewController.h"
 #import "AnimatedListMenuView.h"

@@ -4,7 +4,7 @@ github "wireapp/wire-ios-sync-engine" "fix/call-participant-crash"
 github "wireapp/wire-ios-share-engine" ~> 159.0
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/wire-ios-canvas" ~> 10.0
-github "wireapp/HockeySDK-iOS" ~> 5.1.4
+github "microsoft/appcenter-sdk-apple" ~> 2.5
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/Down" "v2.1.3"
 github "wireapp/DifferenceKit" "1.1.3"

@@ -170,6 +170,12 @@ final class ConversationCreationController: UIViewController {
         nameSection.becomeFirstResponder()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    
     private func setupViews() {
         // TODO: if keyboard is open, it should scroll.
         let collectionView = UICollectionView(forGroupedSections: ())

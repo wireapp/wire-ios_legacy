@@ -24,7 +24,7 @@ extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")
 }
 
-@objcMembers class MarkdownTextView: NextResponderTextView {
+final class MarkdownTextView: NextResponderTextView {
     
     enum ListType {
         case number, bullet
@@ -52,6 +52,7 @@ extension Notification.Name {
         return (markdownTextWithMentions as String, mentions)
     }
     
+    @objc
     func setDraftMessage(_ draft: DraftMessage) {
         setText(draft.text, withMentions: draft.mentions)
     }
@@ -203,6 +204,7 @@ extension Notification.Name {
     }
     
     /// Clears active markdown & updates typing attributes.
+    @objc
     func resetMarkdown() { activeMarkdown = .none }
     
     /// Call this method before the text view changes to give it a chance

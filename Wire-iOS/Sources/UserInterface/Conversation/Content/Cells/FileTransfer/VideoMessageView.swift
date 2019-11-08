@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers final class VideoMessageView: UIView, TransferView {
+final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     

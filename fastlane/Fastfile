@@ -68,7 +68,7 @@ platform :ios do
         )
     end
 
-    desc "Build for release to AppStore or Hockey/S3"
+    desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
         build = Build.new(options: options)
 
@@ -181,6 +181,53 @@ platform :ios do
         )
     end
 
+    desc "Upload for internal use"
+    lane :upload_app_center do |options|
+        build = Build.new(options: options)
+        changelog = ""
+
+        if build.playground_build
+            changelog = "Playground build for #{build.git_branch}"
+        elsif build.avs_build
+            changelog = "AVS #{build.avs_version}"
+        elsif build.last_commit.nil? || build.last_commit.empty? 
+            changelog = "No changelog available"
+        else
+            changelog = "Changes Since Last Build:\n" + changelog_from_git_commits(
+                between: [build.last_commit, "HEAD"],
+                pretty: "* [%an] %s",
+            )
+        end
+        
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: build.app_name,
+          ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+          release_notes: changelog,
+          notify_testers: true
+        )
+    end
+
+    desc "Upload dSYMs for AppStore crash tracking"
+    lane :upload_app_center_appstore do |options|
+        build = Build.new(options: options)
+
+        if !build.appstore_build
+            UI.user_error! "This step is only relevant for AppStore builds"
+        end
+
+        appcenter_upload(
+          api_token: ENV["APPCENTER_API_TOKEN"],
+          owner_name: ENV["APPCENTER_OWNER_NAME"],
+          app_name: build.app_name,
+          dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
+          upload_dsym_only: true,
+          release_type: "1",
+          notify_testers: "0"
+        )
+    end
+
     desc "Run post-test tasks"
     lane :post_test do
         sh "curl -s https://codecov.io/bash > codecov"
@@ -258,6 +305,14 @@ class Build
 
     def appstore_build
         @build_type == "AppStore"
+    end
+
+    def development_build
+        @build_type == "Development"
+    end
+
+    def internal_build
+        @build_type == "Internal"
     end
 
     def avs_build
@@ -395,6 +450,22 @@ class Build
         end
     end
 
+    def app_name
+        if playground_build
+            "Wire-iOS-Playground"
+        elsif avs_build
+            "Wire-iOS-AVS"
+        elsif development_build
+            "Wire-iOS-Development"
+        elsif internal_build
+            "Wire-iOS-Internal"
+        elsif appstore_build
+            "Wire-iOS-App-Store"
+        elsif rc_build
+            "Wire-iOS-Release-Candidate"
+        end
+    end
+
     # Hockey
 
     def hockey_app_id
@@ -415,5 +486,4 @@ class Build
             UI.user_error! "Unknown build type: #{@build_type}"
         end
     end
-
 end

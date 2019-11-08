@@ -539,7 +539,17 @@ final class ConversationListViewModel: NSObject {
                 self.sections = data
             }
         }
-        return
+        
+
+        if let sectionNumber = sectionNumber(for: kind) {
+            
+            ///When the section is collaped, the setData closure of the reload() above is not called and we need to set here to make sure the folder badge calculation is correct
+            if collapsed(at: sectionNumber) {
+                sections = newValue
+            }
+            
+            delegate?.listViewModel(self, didUpdateSection: sectionNumber)
+        }
     }
 
     @discardableResult
@@ -570,6 +580,16 @@ final class ConversationListViewModel: NSObject {
         if let itemToSelect = itemToSelect {
             delegate?.listViewModel(self, didSelectItem: itemToSelect)
         }
+    }
+
+    // MARK: - folder badge
+    
+    func folderBadge(at sectionIndex: Int) -> Int {
+        return sections[sectionIndex].items.filter({
+             let status = ($0.item as? ZMConversation)?.status
+             return status?.messagesRequiringAttention.isEmpty == false &&
+                    status?.showingAllMessages == true
+        }).count
     }
 
     // MARK: - collapse section
