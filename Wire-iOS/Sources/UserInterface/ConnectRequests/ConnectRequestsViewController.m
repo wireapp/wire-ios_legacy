@@ -29,7 +29,6 @@
 #import "Wire-Swift.h"
 
 // model
-#import "WireSyncEngine+iOS.h"
 
 @class ZMConversation;
 

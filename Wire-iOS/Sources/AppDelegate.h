@@ -45,7 +45,7 @@ FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotif
 
 @property (readonly) ApplicationLaunchType launchType;
 
-@property (nonatomic, copy, nullable) dispatch_block_t hockeyInitCompletion;
+@property (nonatomic, copy, nullable) dispatch_block_t appCenterInitCompletion;
 
 + (instancetype _Nonnull )sharedAppDelegate;
 

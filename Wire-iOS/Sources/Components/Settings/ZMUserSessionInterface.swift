@@ -29,7 +29,7 @@ protocol ZMUserSessionInterface: NSObjectProtocol {
 
 // an interface for ZMUserSession's Swift-only functions
 protocol UserSessionSwiftInterface: ZMUserSessionInterface {
-    var conversationDirectory: ConversationDirectoryType { get }
+    var conversationDirectory: ConversationDirectoryType? { get }
 }
 
 extension ZMUserSession: UserSessionSwiftInterface {}

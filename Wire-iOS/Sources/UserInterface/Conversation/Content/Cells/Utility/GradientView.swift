@@ -19,12 +19,12 @@
 
 import Foundation
 
-@objcMembers open class GradientView: UIView {
-    override open class var layerClass : AnyClass {
+final class GradientView: UIView {
+    override public class var layerClass : AnyClass {
         return CAGradientLayer.self;
     }
     
-    open var gradientLayer: CAGradientLayer {
+    public var gradientLayer: CAGradientLayer {
         get {
             if let gradientLayer = self.layer as? CAGradientLayer {
                 return gradientLayer

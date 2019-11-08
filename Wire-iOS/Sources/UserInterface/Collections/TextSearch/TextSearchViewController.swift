@@ -21,11 +21,11 @@ import WireSyncEngine
 import WireDataModel
 import Cartography
 
-public final class TextSearchViewController: NSObject {
+final class TextSearchViewController: NSObject {
     public var resultsView: TextSearchResultsView!
     public var searchBar: TextSearchInputView!
     
-    public weak var delegate: MessageActionResponder? = .none
+    weak var delegate: MessageActionResponder? = .none
     public let conversation: ZMConversation
     public var searchQuery: String? {
         return self.searchBar.query

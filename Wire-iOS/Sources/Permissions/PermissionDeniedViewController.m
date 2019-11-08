@@ -19,7 +19,6 @@
 
 #import "PermissionDeniedViewController.h"
 
-#import "UIColor+WAZExtensions.h"
 #import "Analytics.h"
 #import "Wire-Swift.h"
 #import "Button.h"

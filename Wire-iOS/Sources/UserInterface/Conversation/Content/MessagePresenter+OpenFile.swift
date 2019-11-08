@@ -92,4 +92,57 @@ extension MessagePresenter {
             openDocumentController(for: message, targetView: targetView, withPreview: true)
         }
     }
+
+    /// Target view must be container in @c targetViewController's view.
+    ///
+    /// - Parameters:
+    ///   - message: message to open
+    ///   - targetView: target view when opens the message
+    ///   - delegate: the receiver of action callbacks for the message. Currently only forward and reveal in conversation actions are supported.
+    func open(_ message: ZMConversationMessage, targetView: UIView, actionResponder delegate: MessageActionResponder) {
+        fileAvailabilityObserver = nil
+        modalTargetController?.view.window?.endEditing(true)
+
+        if Message.isLocation(message) {
+            openLocationMessage(message)
+        } else if Message.isFileTransfer(message) {
+            openFileMessage(message, targetView: targetView)
+        } else if Message.isImage(message) {
+            openImageMessage(message, actionResponder: delegate)
+        } else if let openableURL = message.textMessageData?.linkPreview?.openableURL {
+            openableURL.open()
+        }
+    }
+
+    func openLocationMessage(_ message: ZMConversationMessage) {
+        if let locationMessageData = message.locationMessageData {
+            Message.openInMaps(locationMessageData)
+        }
+    }
+
+    func openImageMessage(_ message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) {
+        let imageViewController = viewController(forImageMessage: message, actionResponder: delegate)
+        if let imageViewController = imageViewController {
+            modalTargetController?.present(imageViewController, animated: true)
+        }
+    }
+
+    func viewController(forImageMessage message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) -> UIViewController? {
+        guard Message.isImage(message),
+              message.imageMessageData != nil else {
+            return nil
+        }
+
+        return imagesViewController(for: message, actionResponder: delegate, isPreviewing: false)
+    }
+
+    func viewController(forImageMessagePreview message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) -> UIViewController? {
+        guard Message.isImage(message),
+            message.imageMessageData != nil else {
+                return nil
+        }
+
+        return imagesViewController(for: message, actionResponder: delegate, isPreviewing: true)
+    }
+
 }

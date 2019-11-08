@@ -74,7 +74,7 @@ protocol ConversationMessageSectionControllerDelegate: class {
     }
     
     /// The delegate for cells injected by the list adapter.
-    @objc weak var cellDelegate: ConversationMessageCellDelegate? {
+    weak var cellDelegate: ConversationMessageCellDelegate? {
         didSet {
             updateDelegates()
         }

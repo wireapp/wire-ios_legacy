@@ -158,7 +158,7 @@
 "conversation_list.voiceover.status.ping" = "打招呼";
 "conversation_list.voiceover.status.mention" = "您被提及";
 "conversation_list.voiceover.status.reply" = "回复";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "最近";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
 "conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
@@ -221,7 +221,7 @@
 "list.section.groups" = "群组";
 "list.section.contacts" = "联系人";
 "list.section.requests" = "Requests";
-"list.section.favorites" = "Favorites";
+"list.section.favorites" = "收藏夾";
 
 "conversation.voiceover.verified" = "已验证";
 "conversation.voiceover.legalhold" = "证据保全";

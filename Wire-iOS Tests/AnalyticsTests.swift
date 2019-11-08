@@ -19,11 +19,14 @@
 import Foundation
 import XCTest
 import Wire
-import HockeySDK
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
+import AppCenterDistribute
 
 class AnalyticsTests : XCTestCase {
 
-    func testThatItSetsOptOutOnHockey() {
+    func testThatItSetsOptOutOnAppCenter() {
         // GIVEN
         TrackingManager.shared.disableCrashAndAnalyticsSharing = false
         
@@ -31,7 +34,7 @@ class AnalyticsTests : XCTestCase {
         TrackingManager.shared.disableCrashAndAnalyticsSharing = true
         
         // THEN
-        XCTAssertTrue(BITHockeyManager.shared().isCrashManagerDisabled)
+        XCTAssertFalse(MSCrashes.isEnabled())
     }
     
     func testThatItSetsOptOutToSharedSettings() {

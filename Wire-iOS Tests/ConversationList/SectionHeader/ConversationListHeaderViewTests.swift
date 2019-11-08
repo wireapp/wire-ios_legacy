@@ -1,38 +1,43 @@
-// 
+//
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
-// 
+// Copyright (C) 2019 Wire Swiss GmbH
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
+import XCTest
+@testable import Wire
 
-#import <UIKit/UIKit.h>
-
-#import <WireSyncEngine/WireSyncEngine.h>
-
-
-@interface UIColor (WAZExtensions)
-
-/// Set override accent color. Can set to ZMAccentColorUndefined to remove override.
-+ (void)setAccentOverrideColor:(ZMAccentColor)overrideColor;
-+ (ZMAccentColor)accentOverrideColor;
-
-/// Set accent color on self user to this index.
-+ (void)setAccentColor:(ZMAccentColor)accentColor;
-
-+ (ZMAccentColor)indexedAccentColor;
-
-- (BOOL)isEqualTo:(id)object;
-
-@end
+final class ConversationListHeaderViewTests: XCTestCase {
+    
+    var sut: ConversationListHeaderView!
+    
+    override func setUp() {
+        super.setUp()
+        
+        sut = ConversationListHeaderView()
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
+    func testThatAccessibilityValueForCollapsedAndFolderBadgeIsGenerated() {
+        sut.collapsed = true
+        sut.folderBadge = 999
+        
+        XCTAssertEqual(sut.accessibilityValue, "collapsed 999")
+    }
+}

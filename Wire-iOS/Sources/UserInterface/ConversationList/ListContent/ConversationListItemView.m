@@ -21,9 +21,7 @@
 #import "ConversationListItemView+Internal.h"
 
 
-#import "UIColor+WAZExtensions.h"
 
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 
@@ -129,15 +127,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     self.titleField.numberOfLines = 1;
     self.titleField.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.labelsStack addArrangedSubview:self.titleField];
-}
-
-- (void)createSubtitleField
-{
-    self.subtitleField = [[UILabel alloc] init];
-    self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityIdentifier = @"subtitle";
-    self.subtitleField.numberOfLines = 1;
-    [self.labelsStack addArrangedSubview:self.subtitleField];
 }
 
 - (void)setTitleText:(NSAttributedString *)titleText

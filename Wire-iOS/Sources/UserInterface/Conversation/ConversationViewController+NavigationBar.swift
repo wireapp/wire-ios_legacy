@@ -208,7 +208,7 @@ public extension ConversationViewController {
 }
 
 extension ConversationViewController: CollectionsViewControllerDelegate {
-    public func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
+    func collectionsViewController(_ viewController: CollectionsViewController, performAction action: MessageAction, onMessage message: ZMConversationMessage) {
         switch action {
         case .forward:
             viewController.dismissIfNeeded(animated: true) {

@@ -20,7 +20,7 @@
 import Foundation
 import WireSystem
 
-@objcMembers public class AutomationEmailCredentials: NSObject {
+final public class AutomationEmailCredentials: NSObject {
     public var email: String
     public var password: String
     
@@ -39,8 +39,8 @@ import WireSystem
     
     @objc static public let sharedHelper = AutomationHelper()
     
-    /// Whether Hockeyapp should be used
-    @objc public var useHockey: Bool {
+    /// Whether AppCenter should be used
+    @objc public var useAppCenter: Bool {
         return UserDefaults.standard.bool(forKey: "UseHockey")
     }
     

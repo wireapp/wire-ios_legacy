@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,7 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-NSString * wr_hockeyAppId(void);
-BOOL wr_useHockey(void);
+public extension Bundle {
+    static var ssoURLScheme: String? {
+        return Bundle.appMainBundle.infoForKey("Wire SSO URL Scheme")
+    }
+}
+

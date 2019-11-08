@@ -18,7 +18,6 @@
 
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "WireSyncEngine+iOS.h"
 #import "Analytics.h"
 #import "Wire-Swift.h"
 #import "UIViewController+WR_Additions.h"
@@ -37,30 +36,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @implementation MessagePresenter
-
-- (void)openMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView actionResponder:(nullable id<MessageActionResponder>)delegate
-{
-    self.fileAvailabilityObserver = nil;
-    [self.modalTargetController.view.window endEditing:YES];
-
-    if ([Message isLocationMessage:message]) {
-        [self openLocationMessage:message];
-    }
-    else if ([Message isFileTransferMessage:message]) {
-        [self openFileMessage:message targetView:targetView];
-    }
-    else if ([Message isImageMessage:message]) {
-        [self openImageMessage:message actionResponder:delegate];
-    }
-    else if (message.textMessageData.linkPreview != nil) {
-        [[message.textMessageData.linkPreview openableURL] open];
-    }
-}
-
-- (void)openLocationMessage:(id<ZMConversationMessage>)message
-{
-    [Message openInMaps:message.locationMessageData];
-}
 
 - (void)openDocumentControllerForMessage:(id<ZMConversationMessage>)message targetView:(UIView *)targetView withPreview:(BOOL)preview
 {
@@ -99,41 +74,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (linkDeleteError) {
         ZMLogError(@"Cannot delete temporary link %@: %@", self.documentInteractionController.URL, linkDeleteError);
     }
-}
-
-- (nullable UIViewController *)viewControllerForImageMessage:(id<ZMConversationMessage>)message
-                                             actionResponder:(nullable id<MessageActionResponder>)delegate
-{
-    if (! [Message isImageMessage:message]) {
-        return nil;
-    }
-    
-    if (message.imageMessageData == nil) {
-        return nil;
-    }
-    
-    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing: NO];
-}
-
-- (nullable UIViewController *)viewControllerForImageMessagePreview:(id<ZMConversationMessage>)message
-                                                    actionResponder:(nullable id<MessageActionResponder>)delegate
-
-{
-    if (! [Message isImageMessage:message]) {
-        return nil;
-    }
-
-    if (message.imageMessageData == nil) {
-        return nil;
-    }
-
-    return [self imagesViewControllerFor:message actionResponder:delegate isPreviewing:YES];
-}
-
-- (void)openImageMessage:(id<ZMConversationMessage>)message actionResponder:(nullable id<MessageActionResponder>)delegate
-{
-    UIViewController *imageViewController = [self viewControllerForImageMessage:message actionResponder:delegate];
-    [self.modalTargetController presentViewController:imageViewController animated:YES completion:nil];
 }
 
 @end

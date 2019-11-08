@@ -34,6 +34,12 @@ final class AppLockViewController: UIViewController {
     fileprivate var dimContents: Bool = false {
         didSet {
             view.window?.isHidden = !dimContents
+            
+            if dimContents {
+                AppDelegate.shared().notificationsWindow?.makeKey()
+            } else {
+                AppDelegate.shared().window.makeKey()
+            }
         }
     }
     
@@ -91,8 +97,7 @@ final class AppLockViewController: UIViewController {
         
             if self.localAuthenticationCancelled {
                 self.lockView.showReauth = true
-            }
-            else {
+            } else {
                 self.lockView.showReauth = false
                 self.requireLocalAuthenticationIfNeeded { result in
                     
@@ -107,8 +112,7 @@ final class AppLockViewController: UIViewController {
                     }
                 }
             }
-        }
-        else {
+        } else {
             self.lockView.showReauth = false
             self.dimContents = false
         }
@@ -128,7 +132,7 @@ final class AppLockViewController: UIViewController {
             callback(.granted)
             return
         }
-        
+
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
                 callback(result)
@@ -139,11 +143,9 @@ final class AppLockViewController: UIViewController {
             }
         }
     }
-}
 
-// MARK: - Application state observators
+    // MARK: - Application state observators
 
-extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
             self.dimContents = true

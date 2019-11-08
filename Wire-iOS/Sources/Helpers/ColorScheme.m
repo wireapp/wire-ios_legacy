@@ -18,7 +18,6 @@
 
 #import "ColorScheme.h"
 #import "UIColor+Mixing.h"
-#import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
 @interface ColorScheme ()
@@ -59,11 +58,6 @@
 + (UIBlurEffectStyle)blurEffectStyleForVariant:(ColorSchemeVariant)variant
 {
     return variant == ColorSchemeVariantLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
-}
-
-- (BOOL)isCurrentAccentColor:(UIColor *)accentColor
-{
-    return [self.accentColor isEqualTo:accentColor];
 }
 
 - (void)setVariant:(ColorSchemeVariant)variant

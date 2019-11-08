@@ -19,17 +19,16 @@
 final class CallHapticsController {
 
     private var lastCallState: CallState?
-    private var participants = Set<UUID>()
-    private var videoStates = [UUID: Bool]()
+    private var participants = Set<CallParticipant>()
+    private var videoStates = [CallParticipant: Bool]()
     private let hapticGenerator: CallHapticsGeneratorType
     
     init(hapticGenerator: CallHapticsGeneratorType = CallHapticsGenerator()) {
         self.hapticGenerator = hapticGenerator
     }
 
-    func updateParticipants(_ newParticipants: [(UUID, CallParticipantState)]) {
-        let newParticipantIdentifiers = newParticipants.map { $0.0 }
-        updateParticipantsList(newParticipantIdentifiers)
+    func updateParticipants(_ newParticipants: [CallParticipant]) {
+        updateParticipantsList(newParticipants)
         updateParticipantsVideoStateList(newParticipants)
     }
     
@@ -49,10 +48,13 @@ final class CallHapticsController {
     
     // MARK: - Private
     
-    private func updateParticipantsList(_ newParticipants: [UUID]) {
-        let updated = Set(newParticipants)
-        let removed = !participants.subtracting(updated).isEmpty
-        let added = !updated.subtracting(participants).isEmpty
+    private func updateParticipantsList(_ newParticipants: [CallParticipant]) {
+        let updatedHashes = Set(newParticipants.map(\.hashValue))
+        let participantsHashes = Set(participants.map(\.hashValue))
+        
+        let removed = !participantsHashes.subtracting(updatedHashes).isEmpty
+        let added = !updatedHashes.subtracting(participantsHashes).isEmpty
+        
         Log.haptics.debug("updating participants list: \(newParticipants), old: \(participants)")
         
         if removed {
@@ -64,24 +66,28 @@ final class CallHapticsController {
             hapticGenerator.trigger(event: .join)
         }
         
-        participants = updated
+        participants = Set(newParticipants)
     }
     
-    private func updateParticipantsVideoStateList(_ newParticipants: [(UUID, CallParticipantState)]) {
+    private func updateParticipantsVideoStateList(_ newParticipants: [CallParticipant]) {
         let newVideoStates = createVideoStateMap(using: newParticipants)
         Log.haptics.debug("updating video state map: \(newVideoStates), old: \(videoStates)")
-        for (uuid, wasSending) in videoStates {
-            if let isSending = newVideoStates[uuid], isSending != wasSending {
+
+        let mappedNewVideoStates = newVideoStates.mapKeys({$0.hashValue})
+        for (participant, wasSending) in videoStates {
+           
+            if let isSending = mappedNewVideoStates[participant.hashValue], isSending != wasSending {
                 Log.haptics.debug("triggering toggle video event")
                 hapticGenerator.trigger(event: .toggleVideo)
             }
         }
+        
         videoStates = newVideoStates
     }
     
-    private func createVideoStateMap(using participants: [(UUID, CallParticipantState)]) -> [UUID: Bool] {
+    private func createVideoStateMap(using participants: [CallParticipant]) -> [CallParticipant : Bool] {
         return Dictionary(uniqueKeysWithValues: participants.map {
-            ($0.0, $0.1.isSendingVideo)
+            ($0, $0.state.isSendingVideo)
         })
     }
 }

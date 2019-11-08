@@ -24,7 +24,7 @@ enum ClientRemovalUIError: Error {
 
 final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     var userClientToDelete: UserClient
-    unowned let controller: UIViewController
+    private weak var controller: UIViewController?
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var requestPasswordController: RequestPasswordController?
@@ -54,7 +54,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     }
 
     func startRemoval() {
-        controller.showLoadingView = true
+        controller?.showLoadingView = true
         ZMUserSession.shared()?.delete(userClientToDelete, with: credentials)
     }
     
@@ -71,18 +71,18 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]) {
-        controller.showLoadingView = false
+        controller?.showLoadingView = false
         endRemoval(result: nil)
     }
     
     func failedToDeleteClientsWithError(_ error: Error) {
-        controller.showLoadingView = false
+        controller?.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {
             guard let requestPasswordController = requestPasswordController else { return }
-            controller.present(requestPasswordController.alertController, animated: true)
+            controller?.present(requestPasswordController.alertController, animated: true)
         } else {
-            controller.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
+            controller?.presentAlertWithOKButton(message: "self.settings.account_details.remove_device.password.error".localized)
             endRemoval(result: error)
 
             /// allow password input alert can be show next time

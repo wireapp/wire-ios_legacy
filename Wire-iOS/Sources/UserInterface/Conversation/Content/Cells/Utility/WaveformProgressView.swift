@@ -82,45 +82,45 @@ import Cartography
     }
 }
 
-@objcMembers open class WaveformProgressView: UIView {
+final public class WaveformProgressView: UIView {
     
     fileprivate let backgroundWaveform = WaveformBarsView()
     fileprivate let foregroundWaveform = WaveformBarsView()
     fileprivate var maskShape = CAShapeLayer()
     
-    open var samples : [Float] = [] {
+    public var samples : [Float] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples
         }
     }
     
-    open var barColor : UIColor = UIColor.gray {
+    public var barColor : UIColor = UIColor.gray {
         didSet {
             backgroundWaveform.barColor = barColor
         }
     }
     
-    open var highlightedBarColor : UIColor = UIColor.accent() {
+    public var highlightedBarColor : UIColor = UIColor.accent() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
     }
     
-    open var progress : Float = 0.0 {
+    public var progress : Float = 0.0 {
         didSet {
             setProgress(progress, animated: false)
         }
     }
     
-    open override var backgroundColor: UIColor? {
+    public override var backgroundColor: UIColor? {
         didSet {
             backgroundWaveform.backgroundColor = backgroundColor
             foregroundWaveform.backgroundColor = backgroundColor
         }
     }
     
-    open func setProgress(_ progress: Float, animated: Bool) {
+    public func setProgress(_ progress: Float, animated: Bool) {
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         
         if (animated) {
@@ -136,7 +136,7 @@ import Cartography
         maskShape.path = path
     }
     
-    open override var bounds: CGRect {
+    public override var bounds: CGRect {
         didSet {
             maskShape.path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         }

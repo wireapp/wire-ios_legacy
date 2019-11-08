@@ -75,8 +75,8 @@ final class ConversationTableViewDataSource: NSObject {
     @objc public var selectedMessage: ZMConversationMessage? = nil
     @objc public var editingMessage: ZMConversationMessage? = nil
     
-    @objc public weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
-    @objc public weak var messageActionResponder: MessageActionResponder? = nil
+    weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
+    weak var messageActionResponder: MessageActionResponder? = nil
     
     @objc public var searchQueries: [String] = [] {
         didSet {
@@ -137,7 +137,7 @@ final class ConversationTableViewDataSource: NSObject {
         return updatedSections
     }
     
-    @objc public init(conversation: ZMConversation, tableView: UpsideDownTableView, actionResponder: MessageActionResponder, cellDelegate: ConversationMessageCellDelegate) {
+    init(conversation: ZMConversation, tableView: UpsideDownTableView, actionResponder: MessageActionResponder, cellDelegate: ConversationMessageCellDelegate) {
         self.messageActionResponder = actionResponder
         self.conversationCellDelegate = cellDelegate
         self.conversation = conversation
@@ -416,8 +416,17 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
         registeredCells.append(description.baseType)
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard currentSections.indices.contains(indexPath.section) else {
+            fatal("currentSections has \(currentSections.count) elements, but try to access #\(indexPath)")
+        }
+
         let section = currentSections[indexPath.section]
+
+        guard section.elements.indices.contains(indexPath.row) else {
+            fatal("section.elements has \(section.elements.count) elements, but try to access #\(indexPath)")
+        }
+
         let cellDescription = section.elements[indexPath.row]
         
         registerCellIfNeeded(with: cellDescription, in: tableView)

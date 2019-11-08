@@ -20,10 +20,10 @@ import Foundation
 
 final class CallParticipantTimestamps {
 
-    private var participants = Set<UUID>()
-    private var participantTimestamps = [UUID: Date]()
+    private var participants = Set<CallParticipant>()
+    private var participantTimestamps = [CallParticipant: Date]()
     
-    func updateParticipants(_ newParticipants: [UUID]) {
+    func updateParticipants(_ newParticipants: [CallParticipant]) {
         let updated = Set(newParticipants)
         let removed = participants.subtracting(updated)
         let added = updated.subtracting(participants)
@@ -40,13 +40,8 @@ final class CallParticipantTimestamps {
         participants = updated
     }
     
-    subscript(_ uuid: UUID) -> Date? {
-        return participantTimestamps[uuid]
+    subscript(_ participant: CallParticipant) -> Date? {
+        return participantTimestamps[participant]
     }
-    
-    subscript(_ user: ZMUser) -> Date? {
-        guard let uuid = user.remoteIdentifier else { return nil }
-        return self[uuid]
-    }
-    
+
 }

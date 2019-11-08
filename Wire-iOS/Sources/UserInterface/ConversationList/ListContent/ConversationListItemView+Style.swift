@@ -22,4 +22,14 @@ extension ConversationListItemView {
     @objc func setupStyle() {
         titleField?.textColor = .from(scheme: .textForeground, variant: .dark)
     }
+    
+    @objc
+    func createSubtitleField() {
+        subtitleField = UILabel()
+        subtitleField.textColor = .whiteAlpha64
+        subtitleField.accessibilityIdentifier = "subtitle"
+        subtitleField.numberOfLines = 1
+        labelsStack.addArrangedSubview(subtitleField)
+    }
+
 }
