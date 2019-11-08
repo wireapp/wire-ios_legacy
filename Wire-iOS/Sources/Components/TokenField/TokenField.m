@@ -22,7 +22,6 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
-#import "ColorScheme.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";

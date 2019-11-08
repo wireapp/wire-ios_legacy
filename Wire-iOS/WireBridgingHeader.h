@@ -155,7 +155,6 @@
 
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
-#import "ColorScheme.h"
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"

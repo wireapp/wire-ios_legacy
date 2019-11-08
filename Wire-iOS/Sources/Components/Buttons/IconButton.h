@@ -19,7 +19,6 @@
 @import WireCommonComponents;
 
 #import "ButtonWithLargerHitArea.h"
-#import "ColorScheme.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,7 +46,6 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
 @property (nonatomic) BOOL adjustBackgroundImageWhenHighlighted;
 @property (nonatomic) CGFloat titleImageSpacing;
 
-- (instancetype)initWithStyle:(IconButtonStyle)style variant:(ColorSchemeVariant)variant;
 - (instancetype)initWithStyle:(IconButtonStyle)style;
 - (instancetype)init;
 

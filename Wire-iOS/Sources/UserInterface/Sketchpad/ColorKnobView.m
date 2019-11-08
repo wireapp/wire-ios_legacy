@@ -18,7 +18,6 @@
 
 
 #import "ColorKnobView.h"
-#import "ColorScheme.h"
 
 
 
