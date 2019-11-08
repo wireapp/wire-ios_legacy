@@ -18,7 +18,7 @@
 
 import Foundation
 
-extension UIColor {
+extension UIColor {///TODO: mv to utility
 
     fileprivate func mix(value0: CGFloat, value1: CGFloat, progress: CGFloat) -> CGFloat {
         return value0 * (1 - progress) + value1 * progress
@@ -36,10 +36,10 @@ extension UIColor {
         let component0 = components
         let component1 = color.components
 
-        let red = mix(value0: component0.r, value1: component1.r, progress: progress)
-        let green = mix(value0: component0.g, value1: component1.g, progress: progress)
-        let blue = mix(value0: component0.b, value1: component1.b, progress: progress)
-        let alpha = mix(value0: component0.a, value1: component1.a, progress: progress)
+        let red = mix(value0: component0.red, value1: component1.red, progress: progress)
+        let green = mix(value0: component0.green, value1: component1.green, progress: progress)
+        let blue = mix(value0: component0.blue, value1: component1.blue, progress: progress)
+        let alpha = mix(value0: component0.alpha, value1: component1.alpha, progress: progress)
         
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
     }///TODO: test
@@ -47,11 +47,11 @@ extension UIColor {
     func removeAlphaByBlending(with color: UIColor) -> UIColor {
         let component0 = components
         let component1 = color.components
-        let alpha0 = component0.a
+        let alpha0 = component0.alpha
         
-        let red = mix(value0: component1.r, value1: component0.r, progress: alpha0)
-        let green = mix(value0: component1.g, value1: component0.g, progress: alpha0)
-        let blue = mix(value0: component1.b, value1: component0.b, progress: alpha0)
+        let red = mix(value0: component1.red, value1: component0.red, progress: alpha0)
+        let green = mix(value0: component1.green, value1: component0.green, progress: alpha0)
+        let blue = mix(value0: component1.blue, value1: component0.blue, progress: alpha0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }///TODO: test        

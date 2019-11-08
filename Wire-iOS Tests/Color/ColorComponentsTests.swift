@@ -28,9 +28,9 @@ final class ColorComponentsTests: XCTestCase {
         let sut = UIColor.Components(color: whiteColor)
         
         ///THEN
-        XCTAssertEqual(sut.r, 1)
-        XCTAssertEqual(sut.g, 1)
-        XCTAssertEqual(sut.b, 1)
+        XCTAssertEqual(sut.red, 1)
+        XCTAssertEqual(sut.green, 1)
+        XCTAssertEqual(sut.blue, 1)
         XCTAssertEqual(sut.a, 1)
     }
     
