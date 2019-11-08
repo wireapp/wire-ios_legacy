@@ -129,15 +129,6 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
     [self.labelsStack addArrangedSubview:self.titleField];
 }
 
-- (void)createSubtitleField
-{
-    self.subtitleField = [[UILabel alloc] init];
-    self.subtitleField.textColor = [UIColor colorWithWhite:1.0f alpha:0.64f];
-    self.subtitleField.accessibilityIdentifier = @"subtitle";
-    self.subtitleField.numberOfLines = 1;
-    [self.labelsStack addArrangedSubview:self.subtitleField];
-}
-
 - (void)setTitleText:(NSAttributedString *)titleText
 {
     _titleText = titleText;
