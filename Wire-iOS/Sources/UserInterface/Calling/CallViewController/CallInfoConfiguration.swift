@@ -240,7 +240,7 @@ fileprivate extension VoiceChannel {
 
     func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            timestamps[lhs.user] > timestamps[rhs.user]
+            timestamps[lhs] > timestamps[rhs]
         }
     }
 

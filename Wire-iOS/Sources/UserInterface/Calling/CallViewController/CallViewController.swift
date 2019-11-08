@@ -274,9 +274,9 @@ extension CallViewController: WireCallCenterCallStateObserver {
 
 extension CallViewController: WireCallCenterCallParticipantObserver {
     
-    func callParticipantsDidChange(conversation: ZMConversation, participants: [(UUID, CallParticipantState)]) {
+    func callParticipantsDidChange(conversation: ZMConversation, participants: [CallParticipant]) {
         hapticsController.updateParticipants(participants)
-        participantsTimestamps.updateParticipants(participants.map { $0.0 })
+        participantsTimestamps.updateParticipants(participants)
         updateConfiguration() // Has to succeed updating the timestamps
     }
 
