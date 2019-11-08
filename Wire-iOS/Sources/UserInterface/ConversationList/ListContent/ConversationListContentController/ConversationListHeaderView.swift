@@ -74,7 +74,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
     private let badgeLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .white
+        label.textColor = .whiteAlpha64
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()

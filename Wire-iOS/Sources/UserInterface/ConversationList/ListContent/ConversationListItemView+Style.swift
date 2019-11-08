@@ -26,7 +26,7 @@ extension ConversationListItemView {
     @objc
     func createSubtitleField() {
         subtitleField = UILabel()
-        subtitleField.textColor = UIColor.whiteAlpha64
+        subtitleField.textColor = .whiteAlpha64
         subtitleField.accessibilityIdentifier = "subtitle"
         subtitleField.numberOfLines = 1
         labelsStack.addArrangedSubview(subtitleField)
