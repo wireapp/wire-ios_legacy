@@ -20,6 +20,9 @@ import Foundation
 
 extension UITextView {
     func replace(_ range: NSRange, withAttributedText replacement: NSAttributedString) {
+        guard range.length <= self.text.count else {
+            return
+        }
         let updatedString = NSMutableAttributedString(attributedString: attributedText)
         updatedString.replaceCharacters(in: range, with: replacement)
 
