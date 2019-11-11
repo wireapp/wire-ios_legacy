@@ -552,7 +552,7 @@
 "content.message.save" = "保存";
 "content.message.resend" = "再送する";
 
-"content.message.delete_ellipsis" = "削除...";
+"content.message.delete_ellipsis" = "削除…";
 
 "content.message.like" = "いいね！";
 "content.message.unlike" = "いいね！を取消す";
@@ -783,8 +783,8 @@
 // Delete message dialog
 "message.delete_dialog.message" = "この操作は元に戻すことができません。";
 "message.delete_dialog.action.cancel" = "キャンセル";
-"message.delete_dialog.action.hide" = "削除します";
-"message.delete_dialog.action.delete" = "削除します";
+"message.delete_dialog.action.hide" = "自分宛を削除";
+"message.delete_dialog.action.delete" = "すべての人宛を削除";
 
 // Edit message
 "message.menu.edit.title" = "編集";
@@ -798,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "グループ会話を削除しますか？";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "グループを削除";
 
 // Cancel connection request
