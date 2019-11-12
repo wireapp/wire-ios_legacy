@@ -27,12 +27,12 @@ class SoundPreviewPlayer {
         self.mediaManager = mediaManager
     }
     
-    func playPreview(_ sound: String, limit: TimeInterval = 3) {
+    func playPreview(_ mediaManagerSound: MediaManagerSound, limit: TimeInterval = 3) {
         stopTimer?.fire()
-        mediaManager.playSound(sound)
+        mediaManager.playSound(of: mediaManagerSound)
         
         stopTimer = Timer.scheduledTimer(withTimeInterval: limit, repeats: false) { [weak self] _ in
-            self?.mediaManager.stopSound(sound)
+            self?.mediaManager.stop(sound: mediaManagerSound)
             self?.stopTimer = nil
         }
     }

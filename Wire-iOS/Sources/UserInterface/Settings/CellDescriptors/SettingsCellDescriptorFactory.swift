@@ -131,11 +131,11 @@ class SettingsCellDescriptorFactory {
                 
                 switch settingsProperty.propertyName {
                 case .callSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundRingingFromThemSound)
+                    previewPlayer.playPreview(.RingingFromThemSound)
                 case .pingSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundIncomingKnockSound)
+                    previewPlayer.playPreview(.IncomingKnockSound)
                 case .messageSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundMessageReceivedSound)
+                    previewPlayer.playPreview(.MessageReceivedSound)
                 default:
                     break
                 }
