@@ -45,9 +45,10 @@ fileprivate extension VoiceChannel {
     
     var videoStreamArrangment: (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
         let otherParticipants: [ParticipantVideoState] = participants.compactMap { participant in
-            if case .connected(videoState: let videoState, clientId: let clientId) = participant.state {
+            switch participant.state {
+            case .connected(let videoState, let clientId) where videoState != .stopped:
                 return .init(stream: Stream(userId: participant.user.remoteIdentifier, clientId: clientId), isPaused: videoState == .paused)
-            } else {
+            default:
                 return nil
             }
         }
