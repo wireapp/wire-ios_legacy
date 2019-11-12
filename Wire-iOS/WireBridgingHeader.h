@@ -165,7 +165,6 @@
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 #import "MediaPlaybackManager.h"
-#import "AVSMediaManager+Additions.h"
 
 // Invite
 #import "ShareItemProvider.h"

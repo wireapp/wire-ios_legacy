@@ -21,7 +21,67 @@ import Foundation
 import avs
 
 
+private var ZM_UNUSED = "UI"
+let MediaManagerSoundOutgoingKnockSound = "ping_from_me"
+let MediaManagerSoundIncomingKnockSound = "ping_from_them"
+let MediaManagerSoundMessageReceivedSound = "new_message"
+let MediaManagerSoundFirstMessageReceivedSound = "first_message"
+let MediaManagerSoundSomeoneJoinsVoiceChannelSound = "talk"
+let MediaManagerSoundTransferVoiceToHereSound = "pull_voice"
+let MediaManagerSoundRingingFromThemSound = "ringing_from_them"
+let MediaManagerSoundRingingFromThemInCallSound = "ringing_from_them_incall"
+let MediaManagerSoundCallDropped = "call_drop"
+let MediaManagerSoundAlert = "alert"
+let MediaManagerSoundCamera = "camera"
+let MediaManagerSoundSomeoneLeavesVoiceChannelSound = "talk_later"
+
+func MediaManagerPlayAlert() {
+    AVSMediaManager.sharedInstance().playSound(MediaManagerSoundAlert)
+}
+
+private let zmLog = ZMSLog(tag: "AVSMediaManager CustomSounds")
+
 extension AVSMediaManager {
+    static private var MediaManagerSoundConfig: [AnyHashable : Any]? = nil
+
+    // Configure default sounds
+    func configureDefaultSounds() {
+        guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
+
+        let audioDir = "audio-notifications"
+        
+        if AVSMediaManager.MediaManagerSoundConfig == nil,
+            let path = Bundle.main.path(forResource: "MediaManagerConfig", ofType: "plist", inDirectory: audioDir) {
+            
+            let soundConfig = NSDictionary(contentsOfFile: path) as? [AnyHashable : Any]
+            
+            if soundConfig == nil {
+                zmLog.error("Couldn't load sound config file: \(path)")
+                return
+            }
+            
+            AVSMediaManager.MediaManagerSoundConfig = soundConfig
+        }
+        
+        
+        // Unregister all previous custom sounds
+        mediaManager.unregisterMedia(byName: MediaManagerSoundFirstMessageReceivedSound)
+        mediaManager.unregisterMedia(byName: MediaManagerSoundMessageReceivedSound)
+        mediaManager.unregisterMedia(byName: MediaManagerSoundRingingFromThemInCallSound)
+        mediaManager.unregisterMedia(byName: MediaManagerSoundRingingFromThemSound)
+        mediaManager.unregisterMedia(byName: MediaManagerSoundOutgoingKnockSound)
+        mediaManager.unregisterMedia(byName: MediaManagerSoundIncomingKnockSound)
+        
+        mediaManager.registerMedia(fromConfiguration: AVSMediaManager.MediaManagerSoundConfig, inDirectory: audioDir)
+    }
+    
+    @objc
+    func configureSounds() {
+        configureDefaultSounds()
+        // Configure customizable sounds
+        configureCustomSounds()
+    }
+
     func observeSoundConfigurationChanges() {
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.messageSoundName.changeNotificationName), object: .none)
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.callSoundName.changeNotificationName), object: .none)
