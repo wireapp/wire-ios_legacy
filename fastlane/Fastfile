@@ -198,11 +198,17 @@ platform :ios do
                 pretty: "* [%an] %s",
             )
         end
+
+        app_name = options[:app_name]
+        if app_name.nil? 
+            app_name = build.app_name
+        end
+
         
         appcenter_upload(
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
-          app_name: build.app_name,
+          app_name: app_name,
           ipa: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
           notify_testers: true
