@@ -798,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Видалити цю розмову?";
 "conversation.delete_request_dialog.message" = "Це видалить групу та весь її вміст для всіх учасників на всіх пристроях. Можливостей для відновлення вмісту розмови не існує. Всі учасники будуть повідмлені про це.";
-"conversation.delete_request_error_dialog.title" = "При вилученні групи %@ сталася помилка. Будь ласка, пробуйте ще раз.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Видалити групу";
 
 // Cancel connection request

@@ -20,7 +20,6 @@
 #import "ProfileViewController.h"
 #import "ProfileViewController+internal.h"
 
-#import "avs+iOS.h"
 
 
 

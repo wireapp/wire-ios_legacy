@@ -30,7 +30,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>lu</string>
         <key>one</key>
-        <string>Un contact</string>
+        <string>%lu contact</string>
         <key>other</key>
         <string>%lu contacts</string>
       </dict>
@@ -78,9 +78,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Un contact</string>
+        <string>%d contact</string>
         <key>other</key>
-        <string>%d personnes</string>
+        <string>%d contacts</string>
       </dict>
     </dict>
     <key>content.system.participants_n_others</key>

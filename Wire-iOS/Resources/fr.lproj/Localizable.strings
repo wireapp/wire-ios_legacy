@@ -95,14 +95,14 @@
 /*  */
 "peoplepicker.no_matching_results_after_address_book_upload_button" = "partagez vos contacts";
 
-"peoplepicker.share_contacts.no_results.title" = "Trouvez des contacts par leur nom ou leur adresse e-mail";
+"peoplepicker.share_contacts.no_results.title" = "Trouvez des contacts grâce à leur nom ou à leur adresse e-mail";
 
 "peoplepicker.send_invitation.dialog.title" = "Invitation envoyée";
 "peoplepicker.send_invitation.dialog.message" = "Elle peut être utilisée pendant 2 semaines. Envoyez-en une nouvelle si elle expire.";
 "peoplepicker.send_invitation.dialog.ok" = "OK";
 
-"peoplepicker.invite_more_people" = "Invitez plus de personnes";
-"peoplepicker.invite_team_members" = "Invitez des contacts à rejoindre l'équipe";
+"peoplepicker.invite_more_people" = "Invitez d'autres contacts";
+"peoplepicker.invite_team_members" = "Invitez des contacts à rejoindre votre équipe";
 "peoplepicker.quick-action.open-conversation" = "Ouvrir";
 "peoplepicker.quick-action.create-conversation" = "Créer un groupe";
 "peoplepicker.quick-action.create-guest-room" = "Créer une Guest Room";
@@ -112,7 +112,7 @@
 
 "add_participants.alert.title" = "Le groupe est complet";
 "add_participants.alert.message.new_conversation" = "Jusqu'à %d contacts peuvent participer à une conversation.";
-"add_participants.alert.message.existing_conversation" = "Jusqu'à %1$d contacts peuvent participer à une conversation. Actuellement, %2$d places sont encore disponibles.";
+"add_participants.alert.message.existing_conversation" = "Jusqu'à %1$d contacts peuvent participer à une conversation. Actuellement, %2$d contacts peuvent encore rejoindre cette conversation.";
 
 // Contacts UI
 "contacts_ui.search_placeholder" = "Cherchez par nom";
@@ -124,7 +124,7 @@
 "contacts_ui.invite_sheet.cancel_button_title" = "Annuler";
 "contacts_ui.notification.invitation_sent" = "Invitation envoyée";
 "contacts_ui.notification.invitation_failed" = "Échec de l'envoi de l'invitation";
-"contacts_ui.title" = "Inviter des personnes";
+"contacts_ui.title" = "Inviter des contacts";
 
 "conversation_list.empty.all_archived.message" = "Tout a été archivé";
 "conversation_list.empty.no_contacts.message" = "Commencez une conversation ou créez un groupe.";
@@ -703,7 +703,7 @@
 // Profile and Participants
 
 "participants.add_people_button_title" = "Ajouter";
-"participants.avatar.guest.title" = "Externe";
+"participants.avatar.guest.title" = "Contact externe";
 
 "participants.title" = "Informations";
 "participants.all.title" = "Contacts";
@@ -764,7 +764,7 @@
 "meta.degraded.verify_devices_button" = "Vérifier les appareils…";
 "meta.degraded.send_anyway_button" = "Envoyer quand même";
 "meta.degraded.cancel_sending_button" = "Annuler";
-"meta.legalhold.info_button" = "Conservation à des fins juridiques ?";
+"meta.legalhold.info_button" = "Qu’est-ce que la conservation à des fins juridiques ?";
 "meta.legalhold.send_alert_title" = "La conversation est maintenant soumise à la conservation à des fins juridiques.";
 
 // Remove from conversation dialogue
@@ -831,7 +831,7 @@
 
 // User Details
 "profile.details.title" = "Détails";
-"profile.details.guest" = "Externe";
+"profile.details.guest" = "Contact externe";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
 "profile_view.accessibility.name" = "Nom affiché";
@@ -877,10 +877,10 @@
 
 // Legal hold details
 
-"legalhold.participants.section.title" = "Participants soumis a la conservation à des fins juridiques";
+"legalhold.participants.section.title" = "Participants soumis à la conservation à des fins juridiques";
 "legalhold.header.title" = "Conservation à des fins juridiques";
 "legalhold.header.other_description" = "La conservation à des fins juridiques été activée pour au moins un contact dans cette conversation.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés et éphémères.";
-"legalhold.header.self_description" = "La conservation à des fins juridiques a été activée sur votre compte.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés ou éphémères.\nLes autres participants seront informés de l'enregistrement.";
+"legalhold.header.self_description" = "La conservation à des fins juridiques a été activée pour votre compte.\nTous les messages seront préservés en prévision de futurs accès, y compris les messages supprimés, modifiés ou éphémères.\nLes autres participants seront informés de l'enregistrement.";
 "legalhold.accessibility" = "Information sur la conservation à des fins juridiques";
 
 
@@ -956,7 +956,7 @@
 "self.settings.account_section.handle.title" = "Nom d'utilisateur";
 "self.settings.account_section.add_handle.title" = "Choisir un identifiant";
 
-"self.settings.account_details_group.info.footer" = "Des contacts peuvent vous trouver grâce à ces informations.";
+"self.settings.account_details_group.info.footer" = "Vos contacts peuvent vous retrouver grâce à ces informations.";
 "self.settings.account_details_group.personal.footer" = "Cette information n’est pas visible.";
 
 "self.settings.account_details.remove_device.title" = "Supprimer l'appareil";
@@ -978,7 +978,7 @@
 
 "self.settings.account_picture_group.theme" = "Thème sombre";
 
-"self.settings.device_details.fingerprint.subtitle" = "Wire donne à chaque appareil une empreinte numérique unique. Comparez-les et vérifiez vos appareils et conversations.";
+"self.settings.device_details.fingerprint.subtitle" = "Wire attribue à chaque appareil une empreinte numérique unique. Comparez-les et vérifiez vos appareils et conversations.";
 "self.settings.device_details.reset_session.subtitle" = "Si les empreintes numériques ne correspondent pas, réinitialisez la session afin de générer de nouvelles clés de chiffrement des deux côtés.";
 "self.settings.device_details.remove_device.subtitle" = "Supprimez cet appareil si vous ne l'utilisez plus. Vous serez déconnecté de cet appareil immédiatement.";
 "self.settings.device_details.reset_session.success" = "La session a été réinitialisée";
@@ -1131,7 +1131,7 @@
 "self.settings.privacy_security.lock_cancelled.action" = "Déverrouiller";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Créer un aperçu des liens";
-"self.settings.privacy_security.disable_link_previews.footer" = "Les aperçus pourront toujours s'afficher pour les liens d'autres contacts.";
+"self.settings.privacy_security.disable_link_previews.footer" = "Les aperçus peuvent toujours s'afficher pour les liens venant d'autres contacts.";
 
 "self.settings.privacy_analytics_menu.devices.title" = "Appareils";
 
@@ -1274,7 +1274,7 @@
 "guest_room.allow_guests.subtitle" = "Rendre cette conversation accessible à des services et contacts externes à votre équipe.";
 "guest_room.remove_guests.message" = "Tous les contacts externes et services seront retirés de la conversation. Il ne sera plus possible d'ajouter de nouveaux contacts externes ou services.";
 "guest_room.remove_guests.action" = "Supprimer";
-"guest_room.revoke_link.message" = "Les contacts externes ne pourront plus rejoindre la conversation avec ce lien. Les contacts externes ayant déjà rejoint la conversation conserveront leurs accès.";
+"guest_room.revoke_link.message" = "De nouveaux contacts externes ne pourront plus rejoindre la conversation avec ce lien. Les contacts externes ayant déjà rejoint la conversation conserveront leurs accès.";
 "guest_room.revoke_link.action" = "Révoquer le lien";
 
 "guest_room.error.generic.title" = "Une erreur est survenue";
@@ -1515,7 +1515,7 @@
 // Those are caught by the UI without involving the SE validation. Basically very similar to ZMUserSessionErrorCode onces
 "error.updating_password" = "Nous n’avons pas pu mettre à jour votre mot de passe.";
 
-"error.group_call.too_many_members_in_conversation.title" = "Trop de contacts pour un appel";
+"error.group_call.too_many_members_in_conversation.title" = "Trop de participants pour un appel";
 "error.group_call.too_many_members_in_conversation" = "Les appels fonctionnent dans des conversations avec %d participants ou moins.";
 "error.group_call.too_many_participants_in_the_call.title" = "L'appel est complet";
 "error.group_call.too_many_participants_in_the_call" = "Il n'y a de la place que pour %d participants ici.";
@@ -1619,7 +1619,7 @@
 "availability.reminder.busy.title" = "Vous êtes Occupé";
 "availability.reminder.busy.message" = "Vos contacts vous verront comme Occupé. Vous recevrez uniquement des notifications pour les mentions, les réponses et les appels dans les conversations qui ne sont pas mises en sourdine.";
 "availability.reminder.available.title" = "Vous êtes Disponible";
-"availability.reminder.available.message" = "Vos contacts vous verront comme Disponible. Vous recevrez des notifications pour les appels entrants et pour les messages selon les paramètres Notifications dans chaque conversation.";
+"availability.reminder.available.message" = "Vos contacts vous verront comme Disponible. Vous recevrez des notifications pour les appels entrants et pour les messages selon les paramètres de notifications de chaque conversation.";
 "availability.reminder.none.title" = "Aucun statut";
 "availability.reminder.none.message" = "Vous recevrez des notifications pour les appels entrants et pour les messages selon les paramètres de notification dans chaque conversation.";
 "availability.reminder.action.dont_remind_me" = "Ne Plus Afficher ce Message";
@@ -1708,7 +1708,7 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "Validation en attente.";
 "legalhold_request.alert.title" = "Conservation à des fins juridiques demandée";
-"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés par l'appareil avec l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
+"legalhold_request.alert.detail" = "Tous les futurs messages seront enregistrés sur votre appareil avec l'empreinte numérique suivante: \n\n%@\n\nCela inclut les messages supprimés, modifiés et éphémères dans toutes les conversations.";
 "legalhold_request.alert.detail.enter_password" = "Saisissez votre mot de passe pour confirmer.";
 "legalhold_request.alert.error_wrong_password" = "Mot de passe incorrect";
 
