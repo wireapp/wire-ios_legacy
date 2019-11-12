@@ -74,7 +74,7 @@ class SoundEventListener : NSObject {
     
     func playSoundIfAllowed(_ mediaManagerSound : MediaManagerSound) {
         guard soundEventWatchDog.outputAllowed else { return }
-        AVSMediaManager.sharedInstance()?.playSound(of: mediaManagerSound)
+        AVSMediaManager.sharedInstance()?.play(sound: mediaManagerSound)
     }
     
     func provideHapticFeedback(for message: ZMConversationMessage) {
@@ -114,9 +114,9 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
 
             if isFirstUnreadMessage {
-                playSoundIfAllowed(.FirstMessageReceivedSound)
+                playSoundIfAllowed(.firstMessageReceivedSound)
             } else {
-                playSoundIfAllowed(.MessageReceivedSound)
+                playSoundIfAllowed(.messageReceivedSound)
             }
         }
     }
@@ -132,7 +132,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
                 continue
             }
             
-            playSoundIfAllowed(.IncomingKnockSound)
+            playSoundIfAllowed(.incomingKnockSound)
         }
     }
     
@@ -162,19 +162,19 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             })
             
             if otherNonIdleCalls.count > 0 {
-                playSoundIfAllowed(.RingingFromThemInCallSound)
+                playSoundIfAllowed(.ringingFromThemInCallSound)
             } else if sessionManager.callNotificationStyle != .callKit {
-                playSoundIfAllowed(.RingingFromThemSound)
+                playSoundIfAllowed(.ringingFromThemSound)
             }
         case .incoming(video: _, shouldRing: false, degraded: _):
-            mediaManager.stop(sound: .RingingFromThemInCallSound)
-            mediaManager.stop(sound: .RingingFromThemSound)
+            mediaManager.stop(sound: .ringingFromThemInCallSound)
+            mediaManager.stop(sound: .ringingFromThemSound)
         case .terminating(reason: let reason):
             switch reason {
             case .normal, .canceled:
                 break
             default:
-                playSoundIfAllowed(.CallDropped)
+                playSoundIfAllowed(.callDropped)
             }
         default:
             break
@@ -188,8 +188,8 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
                 return
             }
             
-            mediaManager.stop(sound: .RingingFromThemInCallSound)
-            mediaManager.stop(sound: .RingingFromThemSound)
+            mediaManager.stop(sound: .ringingFromThemInCallSound)
+            mediaManager.stop(sound: .ringingFromThemSound)
         }
         
     }

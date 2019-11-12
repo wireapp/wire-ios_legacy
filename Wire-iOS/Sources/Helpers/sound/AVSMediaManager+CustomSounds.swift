@@ -22,17 +22,17 @@ import avs
 
 enum MediaManagerSound: String {
     case outgoingKnockSound = "ping_from_me"
-    case IncomingKnockSound = "ping_from_them"
-    case MessageReceivedSound = "new_message"
-    case FirstMessageReceivedSound = "first_message"
-    case SomeoneJoinsVoiceChannelSound = "talk"
-    case TransferVoiceToHereSound = "pull_voice"
-    case RingingFromThemSound = "ringing_from_them"
-    case RingingFromThemInCallSound = "ringing_from_them_incall"
-    case CallDropped = "call_drop"
-    case Alert = "alert"
-    case Camera = "camera"
-    case SomeoneLeavesVoiceChannelSound = "talk_later"
+    case incomingKnockSound = "ping_from_them"
+    case messageReceivedSound = "new_message"
+    case firstMessageReceivedSound = "first_message"
+    case someoneJoinsVoiceChannelSound = "talk"
+    case transferVoiceToHereSound = "pull_voice"
+    case ringingFromThemSound = "ringing_from_them"
+    case ringingFromThemInCallSound = "ringing_from_them_incall"
+    case callDropped = "call_drop"
+    case alert = "alert"
+    case camera = "camera"
+    case someoneLeavesVoiceChannelSound = "talk_later"
 }
 
 
@@ -41,8 +41,8 @@ private let zmLog = ZMSLog(tag: "AVSMediaManager CustomSounds")
 extension AVSMediaManager {
     static private var MediaManagerSoundConfig: [AnyHashable : Any]? = nil
 
-    func playSound(of mediaManagerSound: MediaManagerSound) {
-        playSound(mediaManagerSound.rawValue)
+    func play(sound: MediaManagerSound) {
+        playSound(sound.rawValue)
     }
 
     func stop(sound: MediaManagerSound) {
@@ -51,11 +51,11 @@ extension AVSMediaManager {
 
     @objc
     func playKnockSound() {
-        playSound(of: .outgoingKnockSound)
+        play(sound: .outgoingKnockSound)
     }
     
     func mediaManagerPlayAlert() {
-        playSound(MediaManagerSound.Alert.rawValue)
+        playSound(MediaManagerSound.alert.rawValue)
     }
 
     // Configure default sounds
@@ -79,12 +79,12 @@ extension AVSMediaManager {
         
         
         // Unregister all previous custom sounds
-        mediaManager.unregisterMedia(byName: MediaManagerSound.FirstMessageReceivedSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.MessageReceivedSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.RingingFromThemInCallSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.RingingFromThemSound.rawValue)
+        mediaManager.unregisterMedia(byName: MediaManagerSound.firstMessageReceivedSound.rawValue)
+        mediaManager.unregisterMedia(byName: MediaManagerSound.messageReceivedSound.rawValue)
+        mediaManager.unregisterMedia(byName: MediaManagerSound.ringingFromThemInCallSound.rawValue)
+        mediaManager.unregisterMedia(byName: MediaManagerSound.ringingFromThemSound.rawValue)
         mediaManager.unregisterMedia(byName: MediaManagerSound.outgoingKnockSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.IncomingKnockSound.rawValue)
+        mediaManager.unregisterMedia(byName: MediaManagerSound.incomingKnockSound.rawValue)
         
         mediaManager.registerMedia(fromConfiguration: AVSMediaManager.MediaManagerSoundConfig, inDirectory: audioDir)
     }
@@ -130,16 +130,16 @@ extension AVSMediaManager {
         
         switch propertyName {
         case SettingsPropertyName.messageSoundName.rawValue:
-            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.FirstMessageReceivedSound.rawValue)
-            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.MessageReceivedSound.rawValue)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.firstMessageReceivedSound.rawValue)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.messageReceivedSound.rawValue)
             
         case SettingsPropertyName.callSoundName.rawValue:
-            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.RingingFromThemInCallSound.rawValue)
-            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.RingingFromThemSound.rawValue)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.ringingFromThemInCallSound.rawValue)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.ringingFromThemSound.rawValue)
             
         case SettingsPropertyName.pingSoundName.rawValue:
             self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.outgoingKnockSound.rawValue)
-            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.IncomingKnockSound.rawValue)
+            self.register(soundValue?.fileURL(), forMedia: MediaManagerSound.incomingKnockSound.rawValue)
             
         default:
             fatalError("\(propertyName) is not a sound property")
