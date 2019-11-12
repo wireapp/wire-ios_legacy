@@ -20,7 +20,7 @@ import Foundation
 
 extension UITextView {
     func replace(_ range: NSRange, withAttributedText replacement: NSAttributedString) {
-        guard range.length <= self.text.count else {
+        guard NSMaxRange(self.attributedText.wholeRange) >= NSMaxRange(range)  else {
             return
         }
         let updatedString = NSMutableAttributedString(attributedString: attributedText)

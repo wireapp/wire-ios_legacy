@@ -49,7 +49,7 @@ class UITextView_ReplaceTests: XCTestCase {
     
     func testRangeIsInsideTheReplacementString() {
         // GIVEN
-        let text = "12345678"
+        let text = "12345678🐶"
         sut.text = text
         let attributedText = sut.attributedText
         let range = NSRange(location: 0, length: 4)
@@ -58,6 +58,20 @@ class UITextView_ReplaceTests: XCTestCase {
         sut.replace(range, withAttributedText: attributedText!)
         
         // THEN
-        XCTAssertEqual(sut.text, "123456785678", "Should have been a success")
+        XCTAssertEqual(sut.text, "12345678🐶5678🐶", "Should have been a success")
+    }
+    
+    func testGivenRangeIsOutsideTheWholeRange() {
+        // GIVEN
+        let text = "12345678"
+        sut.text = text
+        let attributedText = sut.attributedText
+        let range = NSRange(location: 4, length: 6)
+        
+        // WHEN
+        sut.replace(range, withAttributedText: attributedText!)
+        
+        // THEN
+        XCTAssertEqual(sut.text, text, "Should have been a success")
     }
 }
