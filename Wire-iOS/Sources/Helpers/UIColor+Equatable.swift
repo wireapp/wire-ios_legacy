@@ -57,7 +57,7 @@ extension UIColor {
         self.init(rgba: (red: rgb.red,
                          green: rgb.green,
                          blue: rgb.blue,
-                         alpha: 1))///TODO: test
+                         alpha: 1))
     }
 
 }
