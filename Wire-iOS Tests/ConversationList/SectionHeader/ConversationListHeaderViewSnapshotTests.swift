@@ -53,4 +53,9 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
         sut.folderBadge = 999
         verify(matching: sut)
     }
+    
+    func testForBadgeNumberEquals10() {
+        sut.folderBadge = 10
+        verify(matching: sut)
+    }
 }
