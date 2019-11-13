@@ -133,7 +133,11 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(receiptOptionsSectionController)
         }
 
-        let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        if let selfUser = ZMUser.selfUser() {
+            participants.append(selfUser)
+            participants = participants.sorted { $0.displayName < $1.displayName }
+        }
         if !participants.isEmpty {
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
             sections.append(participantsSectionController)
