@@ -36,6 +36,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             badgeView.updateCollapseConstraints(isCollapsed: isHidden)
             badgeView.isHidden = isHidden
             badgeMarginConstraint?.constant = isHidden ? 0 : -spacing
+            badgeWidthConstraint?.constant = isHidden ? 0 : 28
             
             let text: String?
             switch folderBadge {
@@ -66,7 +67,8 @@ final class ConversationListHeaderView: UICollectionReusableView {
     var tapHandler: TapHandler? = nil
 
     private var badgeMarginConstraint: NSLayoutConstraint?
-    
+    private var badgeWidthConstraint: NSLayoutConstraint?
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .smallRegularFont
@@ -83,10 +85,11 @@ final class ConversationListHeaderView: UICollectionReusableView {
         roundedTextBadge.textLabel.textColor = .white
 
         roundedTextBadge.backgroundColor = .whiteAlpha16
+        
+        roundedTextBadge.isHidden = true
+        
         return roundedTextBadge
     }()
-    ///TODO:  badgeView.accessibilityIdentifier = "action_button"
-    ///TODO: updateCollapseConstraints
 
     /// display title of the header
     var title: String? {
@@ -164,6 +167,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
         arrowIconImageView.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         badgeMarginConstraint = titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: badgeView.leadingAnchor, constant: 0)
+        badgeWidthConstraint = badgeView.widthAnchor.constraint(greaterThanOrEqualToConstant: 0)
         
         NSLayoutConstraint.activate([
             arrowIconImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: CGFloat.ConversationList.horizontalMargin),
@@ -174,7 +178,7 @@ final class ConversationListHeaderView: UICollectionReusableView {
             
             badgeMarginConstraint!,
             badgeView.heightAnchor.constraint(equalToConstant: 20),
-            badgeView.widthAnchor.constraint(greaterThanOrEqualToConstant: 28),///TODO: defaultViewWidth
+            badgeWidthConstraint!,
             badgeView.centerYAnchor.constraint(equalTo: centerYAnchor),
             badgeView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.ConversationList.horizontalMargin),
             ]
