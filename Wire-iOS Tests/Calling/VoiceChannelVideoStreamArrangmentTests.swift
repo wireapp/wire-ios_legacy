@@ -24,15 +24,17 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     private var sut: MockVoiceChannel!
     var mockUser1: ZMUser!
     var mockUser2: ZMUser!
+    var remoteId1 = UUID()
+    var remoteId2 = UUID()
     
     override func setUp() {
         super.setUp()
         let mockConversation = ((MockConversation.oneOnOneConversation() as Any) as! ZMConversation)
         sut = MockVoiceChannel(conversation: mockConversation)
         mockUser1 = MockUser.mockUsers()[0]
-        mockUser1.remoteIdentifier = UUID()
+        mockUser1.remoteIdentifier = remoteId1
         mockUser2 = MockUser.mockUsers()[1]
-        mockUser2.remoteIdentifier = UUID()
+        mockUser2.remoteIdentifier = remoteId2
     }
     
     override func tearDown() {
@@ -48,44 +50,64 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     // MARK - participantsActiveVideoStates
     
     func testThatWithOneParticipantWithoutVideoItReturnsEmpty() {
+        // GIVEN
         let participant = participantStub(for: mockUser1, videoEnabled: false)
         sut.mockParticipants = [participant]
         
+        // THEN
         XCTAssert(sut.participantsActiveVideoStreams.isEmpty)
     }
     
     func testThatWithOneParticipantWithVideoItReturnsOneParticipantVideoState() {
+        // GIVEN
         let participant = participantStub(for: mockUser1, videoEnabled: true)
         sut.mockParticipants = [participant]
         
-        XCTAssert(sut.participantsActiveVideoStreams.count == 1)
+        // WHEN
+        let videoStreams = sut.participantsActiveVideoStreams
+        
+        // THEN
+        XCTAssert(videoStreams.count == 1)
+        XCTAssert(videoStreams.first?.stream.userId == remoteId1)
     }
     
     func testThatWithTwoParticipantsWithoutVideoItReturnsEmpty() {
+        // GIVEN
         let participant1 = participantStub(for: mockUser1, videoEnabled: false)
         let participant2 = participantStub(for: mockUser2, videoEnabled: false)
-        
         sut.mockParticipants = [participant1, participant2]
         
+        // THEN
         XCTAssert(sut.participantsActiveVideoStreams.isEmpty)
     }
     
     func testThatWithTwoParticipantsWithOneStartedAndOneStoppedVideoItReturnsOnlyOneVideoState() {
+        // GIVEN
         let participant1 = participantStub(for: mockUser1, videoEnabled: false)
         let participant2 = participantStub(for: mockUser2, videoEnabled: true)
-        
         sut.mockParticipants = [participant1, participant2]
         
-        XCTAssert(sut.participantsActiveVideoStreams.count == 1)
+        // WHEN
+        let videoStreams = sut.participantsActiveVideoStreams
+        
+        // THEN
+        XCTAssert(videoStreams.count == 1)
+        XCTAssert(videoStreams.first?.stream.userId == remoteId2)
     }
     
     func testThatWithTwoParticipantsWithTwoStartedVideosItReturnsTwoVideoStates() {
+        // GIVEN
         let participant1 = participantStub(for: mockUser1, videoEnabled: true)
         let participant2 = participantStub(for: mockUser2, videoEnabled: true)
-        
         sut.mockParticipants = [participant1, participant2]
         
-        XCTAssert(sut.participantsActiveVideoStreams.count == 2)
+        // WHEN
+        let videoStreams = sut.participantsActiveVideoStreams
+        
+        // THEN
+        XCTAssert(videoStreams.count == 2)
+        XCTAssert(videoStreams.contains(where: {$0.stream.userId == remoteId1}))
+        XCTAssert(videoStreams.contains(where: {$0.stream.userId == remoteId2}))
     }
     
     // MARK - arrangeVideoStreams
@@ -95,28 +117,40 @@ class VoiceChannelVideoStreamArrangementTests: XCTestCase {
     }
     
     func testThatWithoutSelfStreamItReturnsNilPreviewAndParticipantsVideoStateGrid() {
+        // GIVEN
         let participantVideoStreams = [videoStreamStub(), videoStreamStub()]
         
+        // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: nil, participantsStreams: participantVideoStreams)
+
+        // THEN
         XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == nil)
     }
     
     func testThatWithSelfStreamAndOneParticipantItReturnsSelfStreamAsPreviewAndOtherParticipantsVideoStatesAsGrid() {
+        // GIVEN
         let participantVideoStreams = [videoStreamStub()]
         let selfStream = videoStreamStub()
         
+        // WHEN
         let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
+
+        // THEN
         XCTAssert(videoStreamArrangement.grid.elementsEqual(participantVideoStreams))
         XCTAssert(videoStreamArrangement.preview == selfStream)
     }
     
     func testThatWithSelfStreamAndMultipleParticipantsItReturnsNilAsPreviewAndSelfStreamPlusOtherParticipantsVideoStatesAsGrid()  {
+        // GIVEN
         let participantVideoStreams = [videoStreamStub(), videoStreamStub()]
         let selfStream = videoStreamStub()
-        
-        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
         let expectedStreams = [selfStream] + participantVideoStreams
+
+        // WHEN
+        let videoStreamArrangement = sut.arrangeVideoStreams(for: selfStream, participantsStreams: participantVideoStreams)
+
+        // THEN
         XCTAssert(videoStreamArrangement.grid.elementsEqual(expectedStreams))
         XCTAssert(videoStreamArrangement.preview == nil)
     }
