@@ -52,6 +52,7 @@ public extension UIColor {
 
     static var blackAlpha4: UIColor = UIColor(white: 0.0, alpha: 0.04)
     static var blackAlpha8: UIColor = UIColor(white: 0.0, alpha: 0.08)
+    static var blackAlpha16: UIColor = UIColor(white: 0, alpha: 0.16)
     static var blackAlpha24: UIColor = UIColor(white: 0.0, alpha: 0.24)
     static var blackAlpha48: UIColor = UIColor(white: 0.0, alpha: 0.48)
     static var blackAlpha40: UIColor = UIColor(white: 0.0, alpha: 0.4)

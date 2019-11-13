@@ -180,7 +180,7 @@ import UIKit
     
     func updateForIcon() {
         self.badgeView.containedView.subviews.forEach { $0.removeFromSuperview() }
-        self.badgeView.backgroundColor = .whiteAlpha16
+        self.badgeView.backgroundColor = .blackAlpha16
 
         self.badgeView.isHidden = false
         self.transparentIconView.isHidden = true

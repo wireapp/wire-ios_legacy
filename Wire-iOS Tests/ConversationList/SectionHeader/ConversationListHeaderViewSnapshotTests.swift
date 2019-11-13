@@ -31,7 +31,7 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
-        sut.backgroundColor = .black
+        sut.backgroundColor = .gray
     }
     
     override func tearDown() {
