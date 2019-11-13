@@ -58,14 +58,13 @@ extension AVSMediaManager {
         playSound(MediaManagerSound.alert.rawValue)
     }
 
-    // Configure default sounds
-    func configureDefaultSounds() {
+    private func configureDefaultSounds() {
         guard let mediaManager = AVSMediaManager.sharedInstance() else { return }
 
         let audioDir = "audio-notifications"
         
         if AVSMediaManager.MediaManagerSoundConfig == nil,
-            let path = Bundle.main.path(forResource: "MediaManagerConfig", ofType: "plist", inDirectory: audioDir) {
+           let path = Bundle.main.path(forResource: "MediaManagerConfig", ofType: "plist", inDirectory: audioDir) {
             
             let soundConfig = NSDictionary(contentsOfFile: path) as? [AnyHashable : Any]
             
@@ -79,12 +78,15 @@ extension AVSMediaManager {
         
         
         // Unregister all previous custom sounds
-        mediaManager.unregisterMedia(byName: MediaManagerSound.firstMessageReceivedSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.messageReceivedSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.ringingFromThemInCallSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.ringingFromThemSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.outgoingKnockSound.rawValue)
-        mediaManager.unregisterMedia(byName: MediaManagerSound.incomingKnockSound.rawValue)
+        let sounds: [MediaManagerSound] = [.firstMessageReceivedSound,
+                                           .messageReceivedSound,
+                                           .ringingFromThemInCallSound,
+                                           .ringingFromThemSound,
+                                           .outgoingKnockSound,
+                                           .incomingKnockSound]
+        sounds.forEach() {
+            mediaManager.unregisterMedia(byName: $0.rawValue)
+        }
         
         mediaManager.registerMedia(fromConfiguration: AVSMediaManager.MediaManagerSoundConfig, inDirectory: audioDir)
     }
@@ -92,7 +94,6 @@ extension AVSMediaManager {
     @objc
     func configureSounds() {
         configureDefaultSounds()
-        // Configure customizable sounds
         configureCustomSounds()
     }
 
@@ -102,7 +103,7 @@ extension AVSMediaManager {
         NotificationCenter.default.addObserver(self, selector: #selector(AVSMediaManager.didUpdateSound(_:)), name: NSNotification.Name(rawValue: SettingsPropertyName.pingSoundName.changeNotificationName), object: .none)
     }
     
-    @objc func configureCustomSounds() {
+    private func configureCustomSounds() {
         let settingsPropertyFactory = SettingsPropertyFactory(userSession: nil, selfUser: nil)
         
         let messageSoundProperty = settingsPropertyFactory.property(.messageSoundName)
