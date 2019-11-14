@@ -26,6 +26,7 @@
 #import <AVFoundation/AVFoundation.h>
 
 NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPermissionsNotification";
+typedef void (^AlertActionHandler)(UIAlertAction *);
 
 @implementation UIApplication (Permissions)
 
@@ -134,14 +135,35 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 {
     UIAlertController *noMicrophoneAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.microphone_warning.title", nil)
                                                                                message:NSLocalizedString(@"voice.alert.microphone_warning.explanation", nil)
-                                                                     cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
+                                                                        preferredStyle:UIAlertControllerStyleAlert];
     
-    [noMicrophoneAlert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
-                                           options:@{}
-                                 completionHandler:NULL];
-    }]];
+    void (^completionHandler)(void) = ^() {
+        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
+        [AppDelegate sharedAppDelegate].notificationsWindow.hidden = YES;
+    };
     
+    AlertActionHandler actionSettingsHandler = ^(UIAlertAction *action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
+            completionHandler();
+        }];
+    };
+    
+    AlertActionHandler actionOkHandler = ^(UIAlertAction *action) {
+        completionHandler();
+    };
+    
+    UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil)
+                                                             style:UIAlertActionStyleDefault
+                                                           handler:actionSettingsHandler];
+    
+    UIAlertAction *actionOK = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil)
+                                                       style:UIAlertActionStyleCancel
+                                                     handler:actionOkHandler];
+
+    [noMicrophoneAlert addAction:actionSettings];
+    [noMicrophoneAlert addAction:actionOK];
+    
+    [AppDelegate sharedAppDelegate].notificationsWindow.hidden = NO;
     [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noMicrophoneAlert animated:YES completion:nil];
 }
 
