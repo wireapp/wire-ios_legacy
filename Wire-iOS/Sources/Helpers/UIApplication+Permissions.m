@@ -21,6 +21,7 @@
 #import "AppDelegate.h"
 #import "UIAlertController+Wire.h"
 #import "UIResponder+FirstResponder.h"
+#import "Wire-Swift.h"
 
 @import Photos;
 #import <AVFoundation/AVFoundation.h>
@@ -133,38 +134,20 @@ typedef void (^AlertActionHandler)(UIAlertAction *);
 
 + (void)wr_warnAboutMicrophonePermission
 {
-    UIAlertController *noMicrophoneAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.microphone_warning.title", nil)
-                                                                               message:NSLocalizedString(@"voice.alert.microphone_warning.explanation", nil)
-                                                                        preferredStyle:UIAlertControllerStyleAlert];
-    
-    void (^completionHandler)(void) = ^() {
-        [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
-        [AppDelegate sharedAppDelegate].notificationsWindow.hidden = YES;
-    };
-    
-    AlertActionHandler actionSettingsHandler = ^(UIAlertAction *action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:^(BOOL success) {
-            completionHandler();
-        }];
-    };
-    
-    AlertActionHandler actionOkHandler = ^(UIAlertAction *action) {
-        completionHandler();
-    };
+    UIAlertController *noMicrophoneAlert = [UIAlertController alertWithOKButtonWithTitle:NSLocalizedString(@"voice.alert.microphone_warning.title", nil)
+                                                                                 message:NSLocalizedString(@"voice.alert.microphone_warning.explanation", nil)
+                                                                         okActionHandler:nil];
     
     UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil)
                                                              style:UIAlertActionStyleDefault
-                                                           handler:actionSettingsHandler];
+                                                           handler:^(UIAlertAction *action) {
+                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
+                                                           }
+                                     ];
     
-    UIAlertAction *actionOK = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil)
-                                                       style:UIAlertActionStyleCancel
-                                                     handler:actionOkHandler];
-
     [noMicrophoneAlert addAction:actionSettings];
-    [noMicrophoneAlert addAction:actionOK];
-    
-    [AppDelegate sharedAppDelegate].notificationsWindow.hidden = NO;
-    [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noMicrophoneAlert animated:YES completion:nil];
+
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:noMicrophoneAlert animated:YES completion:nil];
 }
 
 + (void)wr_warnAboutPhotoLibraryRestricted
