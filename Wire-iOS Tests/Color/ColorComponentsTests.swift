@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-///TODO: move to utility
+///TODO: mv to utility
 final class ColorComponentsTests: XCTestCase {
     func testThatWhiteColorComponentsAreCorrect() {
         ///GIVEN
