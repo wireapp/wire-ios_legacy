@@ -42,15 +42,26 @@ private struct ParticipantsSectionViewModel {
     static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
     let participants: [UserType]
-    
+    let teamRole: TeamRole
+
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     
-    var sectionTitle: String {
-        return "participants.section.participants".localized(uppercased: true, args: participants.count)
+    var sectionTitle: String? {
+        switch teamRole {
+        case .member:
+            return "Conversation members".localized.uppercased() ///TODO: merge with Katia's work
+        case .admin:
+            return "Conversation admins".localized.uppercased() ///TODO: merge with Katia's work            
+        default:
+            return nil
+        }
     }
 
-    init(participants: [UserType]) {
+    init(participants: [UserType],
+         teamRole: TeamRole) {
         self.participants = participants
+        self.teamRole = teamRole
+        
         rows = ParticipantsSectionViewModel.computeRows(participants)
     }
     
@@ -78,8 +89,11 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
-        viewModel = .init(participants: participants)
+    init(participants: [UserType],
+         teamRole: TeamRole, ///TODO: own enum with .admin and .members type only
+         conversation: ZMConversation,
+         delegate: GroupDetailsSectionControllerDelegate) {
+        viewModel = .init(participants: participants, teamRole: teamRole)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
@@ -96,7 +110,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         self.collectionView = collectionView
     }
     
-    override var sectionTitle: String {
+    override var sectionTitle: String? {
         return viewModel.sectionTitle
     }
     
