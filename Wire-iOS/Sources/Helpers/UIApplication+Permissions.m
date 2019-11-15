@@ -27,7 +27,6 @@
 #import <AVFoundation/AVFoundation.h>
 
 NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPermissionsNotification";
-typedef void (^AlertActionHandler)(UIAlertAction *);
 
 @implementation UIApplication (Permissions)
 
