@@ -229,8 +229,7 @@ platform :ios do
           app_name: build.app_name,
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
           upload_dsym_only: true,
-          release_type: "1",
-          notify_testers: "0"
+          notify_testers: true
         )
     end
 
