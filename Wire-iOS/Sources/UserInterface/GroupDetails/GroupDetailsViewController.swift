@@ -129,12 +129,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, delegate: self)
             sections.append(participantsSectionController)
         }
-        if !serviceUsers.isEmpty {
-            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
-            sections.append(servicesSection)
-        }
-        
-        // MARK: - options sections
+
+        // MARK: options sections
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
         if optionsSectionController.hasOptions {
             sections.append(optionsSectionController)
@@ -147,7 +143,14 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
         }
-
+        
+        // MARK: services sections
+        
+        if !serviceUsers.isEmpty {
+            let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
+            sections.append(servicesSection)
+        }
+        
         return sections
     }
     
