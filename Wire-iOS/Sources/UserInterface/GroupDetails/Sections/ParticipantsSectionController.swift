@@ -39,19 +39,21 @@ enum ParticipantsRowType {
 }
 
 private struct ParticipantsSectionViewModel {
-    static private let maxParticipants = 7
+    static private let maxParticipants = 5
     let rows: [ParticipantsRowType]
     let participants: [UserType]
     
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
+    var sectionStringTitle: String = "participants.section.participants"
     
     var sectionTitle: String {
-        return "participants.section.participants".localized(uppercased: true, args: participants.count)
+        return sectionStringTitle.localized(uppercased: true, args: participants.count)
     }
 
-    init(participants: [UserType]) {
+    init(participants: [UserType], sectionStringTitle: String, isRowsComputed: Bool = true) {
         self.participants = participants
-        rows = ParticipantsSectionViewModel.computeRows(participants)
+        self.sectionStringTitle = sectionStringTitle
+        rows = isRowsComputed ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
     }
     
     static func computeRows(_ participants: [UserType]) -> [ParticipantsRowType] {
@@ -78,8 +80,8 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [UserType], conversation: ZMConversation, delegate: GroupDetailsSectionControllerDelegate) {
-        viewModel = .init(participants: participants)
+    init(participants: [UserType], conversation: ZMConversation, sectionStringTitle: String, isRowsComputed: Bool = true, delegate: GroupDetailsSectionControllerDelegate) {
+        viewModel = .init(participants: participants, sectionStringTitle: sectionStringTitle, isRowsComputed: isRowsComputed)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
