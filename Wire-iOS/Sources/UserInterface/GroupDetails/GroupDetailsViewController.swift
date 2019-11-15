@@ -120,19 +120,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-        if optionsSectionController.hasOptions {
-            sections.append(optionsSectionController)            
-        }
-
-        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team == selfUser.team {
-            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
-                                                                                  syncCompleted: didCompleteInitialSync,
-                                                                                  collectionView: self.collectionViewController.collectionView!,
-                                                                                  presentingViewController: self)
-            sections.append(receiptOptionsSectionController)
-        }
-
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if let selfUser = ZMUser.selfUser() {
             participants.append(selfUser)
@@ -147,6 +134,20 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(servicesSection)
         }
         
+        // MARK: - options sections
+        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+        if optionsSectionController.hasOptions {
+            sections.append(optionsSectionController)
+        }
+        
+        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team == selfUser.team {
+            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
+                                                                                  syncCompleted: didCompleteInitialSync,
+                                                                                  collectionView: self.collectionViewController.collectionView!,
+                                                                                  presentingViewController: self)
+            sections.append(receiptOptionsSectionController)
+        }
+
         return sections
     }
     
