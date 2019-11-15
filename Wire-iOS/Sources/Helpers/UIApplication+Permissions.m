@@ -103,32 +103,26 @@ typedef void (^AlertActionHandler)(UIAlertAction *);
         [currentResponder endEditing:YES];
     }
     
-    UIAlertController *noVideoAlert =
-    [UIAlertController alertControllerWithTitle:NSLocalizedString(@"voice.alert.camera_warning.title", nil)
-                                        message:NSLocalizedString(@"voice.alert.camera_warning.explanation", nil)
-                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *noVideoAlert = [UIAlertController alertWithOKButtonWithTitle:NSLocalizedString(@"voice.alert.camera_warning.title", nil)
+                                                                            message:NSLocalizedString(@"voice.alert.camera_warning.explanation", nil)
+                                                                    okActionHandler:^(UIAlertAction * _Nonnull action) {
+                                                                        if (completion) completion();
+                                                                    }
+                                       ];
     
     UIAlertAction *actionSettings = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.open_settings", nil)
                                                              style:UIAlertActionStyleDefault
                                                            handler:^(UIAlertAction * _Nonnull action) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
-                                           options:@{}
-                                 completionHandler:NULL];
-        if (nil != completion) completion();
-    }];
+                                                               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                                                                                  options:@{}
+                                                                                        completionHandler:NULL];
+                                                               if (completion) completion();
+                                                           }
+                                     ];
     
     [noVideoAlert addAction:actionSettings];
     
-    UIAlertAction *actionOK = [UIAlertAction actionWithTitle:NSLocalizedString(@"general.ok", nil)
-                                                       style:UIAlertActionStyleCancel
-                                                     handler:^(UIAlertAction * _Nonnull action) {
-         [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController dismissViewControllerAnimated:YES completion:nil];
-         if (nil != completion) completion();
-                                                     }];
-    
-    [noVideoAlert addAction:actionOK];
-    
-    [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:noVideoAlert animated:YES completion:nil];
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:noVideoAlert animated:YES completion:nil];
 }
 
 
@@ -156,7 +150,7 @@ typedef void (^AlertActionHandler)(UIAlertAction *);
                                                                                     message:NSLocalizedString(@"library.alert.permission_warning.restrictions.explaination", nil)
                                                                           cancelButtonTitle:NSLocalizedString(@"general.ok", nil)];
 
-    [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:libraryRestrictedAlert animated:YES completion:nil];
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:libraryRestrictedAlert animated:YES completion:nil];
 }
 
 + (void)wr_warnAboutPhotoLibaryDenied
@@ -171,7 +165,7 @@ typedef void (^AlertActionHandler)(UIAlertAction *);
                                  completionHandler:NULL];
     }]];
 
-    [[AppDelegate sharedAppDelegate].notificationsWindow.rootViewController presentViewController:deniedAlert animated:YES completion:nil];
+    [[AppDelegate sharedAppDelegate].window.rootViewController presentViewController:deniedAlert animated:YES completion:nil];
 }
 
 @end
