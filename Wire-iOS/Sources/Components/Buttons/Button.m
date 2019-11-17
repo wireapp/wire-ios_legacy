@@ -27,15 +27,6 @@
 
 @import QuartzCore;
 
-@interface Button ()
-
-@property (nonatomic) NSMutableDictionary *originalTitles;
-@property (nonatomic, readonly) NSMutableDictionary *borderColorByState;
-
-@end
-
-
-
 @implementation Button
 
 + (instancetype)buttonWithStyle:(ButtonStyle)style
@@ -130,34 +121,6 @@
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state
 {
     [self setBackgroundImage:[UIImage singlePixelImageWithColor:color] forState:state];
-}
-
-- (void)setTitle:(NSString *)title forState:(UIControlState)state
-{
-    [self expandState:state block:^(UIControlState state) {
-        if (title) {
-            [self.originalTitles setObject:title forKey:@(state)];
-        } else {
-            [self.originalTitles removeObjectForKey:@(state)];
-        }
-    }];
-    
-    if (self.textTransform != TextTransformNone) {
-        title = [title stringByApplyingTextTransform:self.textTransform];
-    }
-
-    [super setTitle:title forState:state];
-}
-
-- (void)setBorderColor:(UIColor *)color forState:(UIControlState)state
-{
-    [self expandState:state block:^(UIControlState state) {
-        if (color) {
-            [self.borderColorByState setObject:[color copy] forKey:@(state)];
-        }
-    }];
-    
-    [self updateBorderColor];
 }
 
 - (UIColor *)borderColorForState:(UIControlState)state

@@ -58,14 +58,6 @@
 @end
 
 
-@interface IconButton ()
-
-@property (nonatomic, readonly) NSMutableDictionary *iconColorsByState;
-@property (nonatomic, readonly) NSMutableDictionary *borderColorByState;
-@property (nonatomic, readonly) NSMutableDictionary *iconDefinitionsByState;
-@property (nonatomic) UIControlState priorState;
-@end
-
 
 
 @implementation IconButton
@@ -268,20 +260,20 @@
     return iconColor;
 }
 
-- (void)setBorderColor:(UIColor *)color forState:(UIControlState)state
-{
-    [self expandState:state block:^(UIControlState state) {
-        if (color) {
-            [self.borderColorByState setObject:[color copy] forKey:@(state)];
-
-            if (self.adjustsBorderColorWhenHighlighted && state == UIControlStateNormal) {
-                [self.borderColorByState setObject:[color mix:UIColor.blackColor amount:0.4] forKey:@(UIControlStateHighlighted)];
-            }
-        }
-    }];
-
-    [self updateBorderColor];
-}
+//- (void)setBorderColor:(UIColor *)color forState:(UIControlState)state
+//{
+//    [self expandState:state block:^(UIControlState state) {
+//        if (color) {
+//            [self.borderColorByState setObject:[color copy] forKey:@(state)];
+//
+//            if (self.adjustsBorderColorWhenHighlighted && state == UIControlStateNormal) {
+//                [self.borderColorByState setObject:[color mix:UIColor.blackColor amount:0.4] forKey:@(UIControlStateHighlighted)];
+//            }
+//        }
+//    }];
+//
+//    [self updateBorderColor];
+//}
 
 - (UIColor *)borderColorForState:(UIControlState)state
 {

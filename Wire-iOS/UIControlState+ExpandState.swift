@@ -18,28 +18,27 @@
 
 import Foundation
 
-extension UIControl {
+extension UIControl.State {
+    
     /// Expand UIControl.State to its contained states
     ///
     /// - Parameters:
     ///   - state: the state to expand
     ///   - block: a closure with expanded state(s) as a argument
-    @objc(expandState:block:)
-    func expand(_ state: UIControl.State,
-                block: @escaping (_ state: UIControl.State) -> Void) {
-        if state == .normal {
+    func expand(block: @escaping (_ state: UIControl.State) -> Void) {
+        if self == .normal {
             block(.normal)
         }
         
-        if state.contains(.disabled) {
+        if self.contains(.disabled) {
             block(.disabled)
         }
         
-        if state.contains(.highlighted) {
+        if self.contains(.highlighted) {
             block(.highlighted)
         }
         
-        if state.contains(.selected) {
+        if self.contains(.selected) {
             block(.selected)
         }
     }
