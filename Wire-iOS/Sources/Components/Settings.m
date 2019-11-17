@@ -61,10 +61,9 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
 
 @interface Settings ()
 
-@property (strong, readonly, nonatomic) NSUserDefaults *defaults;
 @property (nonatomic) NSTimeInterval maxRecordingDurationDebug;
-@end
 
+@end
 
 
 @interface Settings (MediaManager)
@@ -136,11 +135,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
                                                    object:nil];
     }
     return self;
-}
-
-- (NSUserDefaults *)defaults
-{
-    return [NSUserDefaults standardUserDefaults];
 }
 
 - (void)migrateAppCenterAndOptOutSettingsToSharedDefaults
@@ -223,23 +217,6 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
     [self storeCurrentIntensityLevelAsLastUsed];
     
     [self.defaults synchronize];
-}
-
-- (SettingsColorScheme)colorScheme
-{
-    return [self colorSchemeFromString:[self.defaults objectForKey:UserDefaultColorScheme]];
-}
-
-- (void)setColorScheme:(SettingsColorScheme)colorScheme
-{
-    [self.defaults setObject:[self stringForColorScheme:colorScheme] forKey:UserDefaultColorScheme];
-    [self.defaults synchronize];
-    [self notifyColorSchemeChanged];
-}
-
-- (void)notifyColorSchemeChanged
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:SettingsColorSchemeChangedNotification object:self userInfo:nil];
 }
 
 - (NSTimeInterval)blacklistDownloadInterval

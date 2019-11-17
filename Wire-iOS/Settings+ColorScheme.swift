@@ -18,9 +18,38 @@
 
 import Foundation
 
+enum SettingsColorScheme {
+    case light
+    case dark
+}
+
 extension Settings {
-    @objc(colorSchemeFromString:)
-    func colorScheme(from string: String) -> SettingsColorScheme {
+    func notifyColorSchemeChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self, userInfo: nil)
+    }
+
+    @objc
+    var defaults: UserDefaults {
+        return UserDefaults.standard
+    }
+
+    var colorScheme: SettingsColorScheme? {
+        get {
+            guard let string = defaults.string(forKey: UserDefaultColorScheme) else { return nil }
+            
+            return settingsColorScheme(from: string)
+        }
+
+        set {
+            guard let colorScheme = colorScheme else { return }
+            
+            defaults.set(string(for: colorScheme), forKey: UserDefaultColorScheme)
+            defaults.synchronize()
+            notifyColorSchemeChanged()
+        }
+    }
+    
+    func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
         case "dark":
             return .dark
@@ -31,7 +60,6 @@ extension Settings {
         }
     }
     
-    @objc(stringForColorScheme:)
     func string(for colorScheme: SettingsColorScheme) -> String {
         switch colorScheme {
         case .dark:
