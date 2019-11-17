@@ -42,7 +42,7 @@ extension UIColor {///TODO: mv to utility
         let alpha = mix(value0: component0.alpha, value1: component1.alpha, progress: progress)
         
         return UIColor(red: red, green: green, blue: blue, alpha: alpha)
-    }///TODO: test
+    }
     
     func removeAlphaByBlending(with color: UIColor) -> UIColor {
         let component0 = components
@@ -54,5 +54,5 @@ extension UIColor {///TODO: mv to utility
         let blue = mix(value0: component1.blue, value1: component0.blue, progress: alpha0)
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
-    }///TODO: test        
+    }
 }

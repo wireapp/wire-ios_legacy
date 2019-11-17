@@ -194,8 +194,8 @@
 "folder.creation.name.title" = "新建資料夾";
 "folder.creation.name.button.create" = "建立";
 "folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
-"folder.creation.name.footer" = "Maximum 64 characters";
-"folder.creation.name.placeholder" = "Folder name";
+"folder.creation.name.footer" = "最多64個字元";
+"folder.creation.name.placeholder" = "資料夾名稱";
 
 "folder.picker.title" = "移動到";
 "folder.picker.empty.hint" = "Create a new folder by pressing the + button";
@@ -499,8 +499,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
-"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+"content.system.message_legal_hold.enabled" = "此對話已啟用合法保留";
+"content.system.message_legal_hold.disabled" = "此對話已停用合法保留";
 
 "content.system.message_legal_hold.learn_more" = "瞭解詳情";
 
@@ -765,7 +765,7 @@
 "meta.degraded.send_anyway_button" = "仍然要寄送";
 "meta.degraded.cancel_sending_button" = "取消";
 "meta.legalhold.info_button" = "甚麼是合法保留？";
-"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+"meta.legalhold.send_alert_title" = "對話現在受到合法保留。";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "確定移除？";
@@ -798,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "要刪除群組對話嗎?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "刪除群組";
 
 // Cancel connection request
@@ -813,7 +813,7 @@
 
 // Favorite button
 "profile.favorite_button_title" = "新增到最愛";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.unfavorite_button_title" = "從我的最愛中移除";
 
 "profile.block_button_title_action" = "封鎖";
 "profile.unblock_button_title_action" = "解除封鎖";
@@ -877,11 +877,11 @@
 
 // Legal hold details
 
-"legalhold.participants.section.title" = "Legal hold subjects";
+"legalhold.participants.section.title" = "合法保留對象";
 "legalhold.header.title" = "合法保留";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
-"legalhold.accessibility" = "Legal hold details";
+"legalhold.header.other_description" = "此對話中至少有一個人被激活了合法保留。\n所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。";
+"legalhold.header.self_description" = "您的帳戶的合法保留已被激活。\n所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。\n您的對話成員將被提醒記錄中。";
+"legalhold.accessibility" = "合法保留詳情";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1616,7 +1616,7 @@
 
 "availability.reminder.away.title" = "You are set to Away";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
-"availability.reminder.busy.title" = "You are set to Busy";
+"availability.reminder.busy.title" = "您設置為忙碌";
 "availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
 "availability.reminder.available.title" = "You are set to Available";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
@@ -1696,26 +1696,26 @@
 "registration.password.rules.with_requirements" = "使用%@，與%@。";
 
 // Legal Hold Deactivation
-"legal_hold.deactivated.title" = "Legal Hold Deactivated";
+"legal_hold.deactivated.title" = "合法保留已停用";
 "legal_hold.deactivated.message" = "之後的訊息都不會被紀錄";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
-"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
+"share_extension.voiceover.conversation_under_legal_hold" = "在合法保留之下。";
 "share_extension.voiceover.conversation_secure" = "All clients verified.";
 "share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
 
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "等待核准";
-"legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
+"legalhold_request.alert.title" = "合法保留要求";
+"legalhold_request.alert.detail" = "設備將使用指紋記錄所有以後的消息：\n\n%@\n\n這包括所有對話中的已刪除，已編輯和定時的消息。";
 "legalhold_request.alert.detail.enter_password" = "請輸入您的密碼以便確認。";
 "legalhold_request.alert.error_wrong_password" = "密碼錯誤";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.title" = "合法保留生效";
 "legalhold_active.alert.learn_more" = "瞭解更多";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "您的帳戶的合法保留已被激活。 所有消息都將保留，以供將來訪問，包括刪除，編輯和定時消息。\n\n您的對話成員將被提醒記錄中。";
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "你的登入階段已過期。";

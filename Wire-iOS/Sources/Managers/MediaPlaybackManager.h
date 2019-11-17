@@ -18,9 +18,8 @@
 
 
 @import Foundation;
-#import "avs+iOS.h"
 #import "MediaPlayer.h"
-
+#import <avs/AVSMediaManager.h>
 
 
 @class AudioTrackPlayer;

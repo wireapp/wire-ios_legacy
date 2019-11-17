@@ -48,6 +48,6 @@ extension UIViewController {
         }
         
         present(controller, animated: true)
-        MediaManagerPlayAlert()
+        AVSMediaManager.sharedInstance().mediaManagerPlayAlert()
     }
 }
