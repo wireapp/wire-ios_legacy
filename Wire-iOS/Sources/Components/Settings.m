@@ -18,7 +18,6 @@
 
 
 #import "Settings.h"
-#import "Settings+ColorScheme.h"
 #import "Wire-Swift.h"
 @import WireCommonComponents;
 
