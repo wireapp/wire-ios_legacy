@@ -23,9 +23,9 @@ extension Button {
         var title = title
         state.expand(block: { expandedState in
             if title != nil {
-                self.originalTitles[NSNumber(value: expandedState.rawValue)] = title
+                self.originalTitles?[NSNumber(value: expandedState.rawValue)] = title
             } else {
-                self.originalTitles.removeObject(forKey: NSNumber(value: expandedState.rawValue))
+                self.originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
             }
         })
         
