@@ -19,6 +19,10 @@
 import Foundation
 import UIKit
 
+@objc enum ColorSchemeVariant: UInt {
+    case light, dark
+};
+
 extension UIColor {
     static var graphite: UIColor = UIColor(rgb: (51, 55, 58))
     static var graphiteAlpha4: UIColor = UIColor(rgba:(51, 55, 58, 0.04))

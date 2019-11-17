@@ -36,7 +36,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
-        self.colorSchemeVariant = ColorSchemeVariantDark;
         self.delegate = self;
         self.contentDelegate = self;
         self.dataSource = [[ContactsDataSource alloc] init];

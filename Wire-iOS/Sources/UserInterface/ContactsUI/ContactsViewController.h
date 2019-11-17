@@ -17,8 +17,6 @@
 // 
 
 
-#import "ColorSchemeVariant.h"
-
 @import UIKit;
 
 @class ContactsDataSource;
@@ -59,7 +57,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) ContactsDataSource *__nullable dataSource;
 @property (nonatomic, weak, nullable) id<ContactsViewControllerDelegate> delegate;
 @property (nonatomic, weak, nullable) id<ContactsViewControllerContentDelegate> contentDelegate;
-@property (nonatomic) ColorSchemeVariant colorSchemeVariant;
 
 /// Button displayed at the bottom of the screen. If nil a default button is displayed.
 @property (nonatomic, nullable) Button * bottomButton;
