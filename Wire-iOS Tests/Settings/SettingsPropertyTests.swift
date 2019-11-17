@@ -209,11 +209,11 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = "IntegerKey"
-        settings.defaults().setValue(42, forKey: key)
+        settings.defaults.setValue(42, forKey: key)
         
         // when & then
         let result: Int? = settings.value(for: key, in: account)
-        XCTAssertNil(settings.defaults().object(forKey: key))
+        XCTAssertNil(settings.defaults.object(forKey: key))
         XCTAssertEqual(result, 42)
     }
 }
