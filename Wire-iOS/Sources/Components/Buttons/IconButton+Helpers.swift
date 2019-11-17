@@ -34,15 +34,16 @@ extension IconButton {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expand(block: { expandedState in
+        state.expanded.forEach(){ expandedState in
             if color != nil {
-                self.borderColorByState[NSNumber(value: expandedState.rawValue)] = color
+                borderColorByState[NSNumber(value: expandedState.rawValue)] = color
                 
-                if self.adjustsBorderColorWhenHighlighted && expandedState == .normal {
-                    self.borderColorByState[NSNumber(value: UIControl.State.highlighted.rawValue)] = color?.mix(UIColor.black, amount: 0.4)
+                if adjustsBorderColorWhenHighlighted &&
+                   expandedState == .normal {
+                    borderColorByState[NSNumber(value: UIControl.State.highlighted.rawValue)] = color?.mix(.black, amount: 0.4)
                 }
             }
-        })
+        }
         
         updateBorderColor()
     }

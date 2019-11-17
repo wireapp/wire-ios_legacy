@@ -21,13 +21,13 @@ import Foundation
 extension Button {
     open override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
-        state.expand(block: { expandedState in
+        state.expanded.forEach(){ expandedState in
             if title != nil {
-                self.originalTitles?[NSNumber(value: expandedState.rawValue)] = title
+                originalTitles?[NSNumber(value: expandedState.rawValue)] = title
             } else {
-                self.originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
+                originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
             }
-        })
+        }
         
         if textTransform != .none {
             title = title?.applying(transform: textTransform)
@@ -37,11 +37,11 @@ extension Button {
     }
     
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expand(block: { state in
+        state.expanded.forEach(){ expandedState in
             if color != nil {
-                self.borderColorByState[NSNumber(value: state.rawValue)] = color
+                borderColorByState[NSNumber(value: expandedState.rawValue)] = color
             }
-        })
+        }
         
         updateBorderColor()
     }

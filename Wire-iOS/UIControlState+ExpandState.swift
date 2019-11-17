@@ -21,26 +21,20 @@ import Foundation
 extension UIControl.State {
     
     /// Expand UIControl.State to its contained states
-    ///
-    /// - Parameters:
-    ///   - state: the state to expand
-    ///   - block: a closure with expanded state(s) as a argument
-    func expand(block: @escaping (_ state: UIControl.State) -> Void) {
+    var expanded: [UIControl.State] {
+        var expandedStates = [UIControl.State]()
         if self == .normal {
-            block(.normal)
+            expandedStates.append(.normal)
         }
         
-        if self.contains(.disabled) {
-            block(.disabled)
+        let states: [UIControl.State] = [.disabled, .highlighted, .selected]
+        states.forEach() {
+            if contains($0) {
+                expandedStates.append($0)
+            }
         }
         
-        if self.contains(.highlighted) {
-            block(.highlighted)
-        }
-        
-        if self.contains(.selected) {
-            block(.selected)
-        }
+        return expandedStates
     }
 }
 
