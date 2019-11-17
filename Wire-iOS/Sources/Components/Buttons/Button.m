@@ -22,7 +22,6 @@
 
 // helpers
 
-#import "UIControl+Wire.h"
 #import "UIImage+ImageUtilities.h"
 #import "Wire-Swift.h"
 

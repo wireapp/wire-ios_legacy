@@ -18,7 +18,6 @@
 
 #import "IconButton.h"
 #import "UIImage+ImageUtilities.h"
-#import "UIControl+Wire.h"
 #import "Wire-Swift.h"
 
 @implementation IconDefinition
