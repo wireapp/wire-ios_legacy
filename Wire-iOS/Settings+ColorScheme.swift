@@ -21,6 +21,15 @@ import Foundation
 enum SettingsColorScheme {
     case light
     case dark
+    
+    var colorSchemeVariant: ColorSchemeVariant {
+        switch self {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        }
+    }
 }
 
 extension Settings {

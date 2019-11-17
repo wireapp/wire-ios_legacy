@@ -336,13 +336,7 @@ final class AppRootViewController: UIViewController {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
 
-        switch Settings.shared().colorScheme {
-        case .light?,
-             .none:
-            colorScheme.variant = .light
-        case .dark?:
-            colorScheme.variant = .dark
-        }
+        colorScheme.variant = Settings.shared().colorScheme?.colorSchemeVariant ?? .light
     }
     
     func applicationDidTransition(to appState: AppState) {
