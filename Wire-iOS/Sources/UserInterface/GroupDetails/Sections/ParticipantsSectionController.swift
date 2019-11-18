@@ -185,31 +185,6 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
-    ///MARK: - footer
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        footer.titleLabel.text = footerText
-        footer.size(fittingWidth: collectionView.bounds.width)
-        return viewModel.sectionFooterSize == nil ? footer.bounds.size : viewModel.sectionFooterSize!
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionHeader {
-            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
-            
-            if let sectionHeaderView = supplementaryView as? SectionHeader {
-                sectionHeaderView.titleLabel.text = sectionTitle
-                sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
-            }
-            
-            return supplementaryView
-        } else {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
-            (view as? SectionFooter)?.titleLabel.text = footerText
-            return view
-        }
-    }
-    
 }
 
 extension ParticipantsSectionController: ZMUserObserver {

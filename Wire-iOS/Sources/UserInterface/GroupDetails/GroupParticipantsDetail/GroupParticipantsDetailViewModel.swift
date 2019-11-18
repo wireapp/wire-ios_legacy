@@ -53,9 +53,6 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
 
     init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
-        if let selfUser = ZMUser.selfUser() {
-            internalParticipants.insert(selfUser, at: 0)
-        }
         self.conversation = conversation
         self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
         
@@ -75,8 +72,8 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     }
     
     private func computeParticipantGroups()  {
-        admins = participants.filter({$0.teamRole == .admin || $0.teamRole == .owner})
-        members = participants.filter({$0.teamRole == .none}) ///TODO: should be .member
+        admins = participants.filter({$0.teamRole.isAdminGroup})
+        members = participants.filter({!$0.teamRole.isAdminGroup}) 
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {
