@@ -30,6 +30,7 @@ class UserCell: SeparatorCollectionViewCell {
     let connectButton = IconButton()
     let accessoryIconView = UIImageView()
     let guestIconView = UIImageView()
+    let externalUserIconView = UIImageView()
     let verifiedIconView = UIImageView()
     let videoIconView = UIImageView()
     let checkmarkIconView = UIImageView()
@@ -71,6 +72,7 @@ class UserCell: SeparatorCollectionViewCell {
         
         UIView.performWithoutAnimation {
             hidesSubtitle = false
+            externalUserIconView.isHidden = true
             verifiedIconView.isHidden = true
             videoIconView.isHidden = true
             connectButton.isHidden = true
@@ -94,6 +96,12 @@ class UserCell: SeparatorCollectionViewCell {
         videoIconView.accessibilityIdentifier = "img.video"
         videoIconView.isHidden = true
         
+        externalUserIconView.image = WireStyleKit.imageOfExternalUser
+        externalUserIconView.translatesAutoresizingMaskIntoConstraints = false
+        externalUserIconView.contentMode = .center
+        externalUserIconView.accessibilityIdentifier = "img.externalUser"
+        externalUserIconView.isHidden = true
+
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
         verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
         verifiedIconView.contentMode = .center
@@ -129,7 +137,7 @@ class UserCell: SeparatorCollectionViewCell {
         avatarSpacer.addSubview(avatar)
         avatarSpacer.translatesAutoresizingMaskIntoConstraints = false
         
-        iconStackView = UIStackView(arrangedSubviews: [verifiedIconView, guestIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
+        iconStackView = UIStackView(arrangedSubviews: [externalUserIconView, verifiedIconView, guestIconView, videoIconView, connectButton, checkmarkIconView, accessoryIconView])
         iconStackView.spacing = 16
         iconStackView.axis = .horizontal
         iconStackView.distribution = .fill
@@ -220,8 +228,10 @@ class UserCell: SeparatorCollectionViewCell {
         if let user = user as? ZMUser {
             verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
         } else {
-            verifiedIconView.isHidden  = true
+            verifiedIconView.isHidden = true
         }
+        ///TODO: snapshot test
+        externalUserIconView.isHidden = user.teamRole != .partner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
             subtitleLabel.isHidden = false
