@@ -36,6 +36,7 @@ extension Button {
         super.setTitle(title, for: state)
     }
     
+    @objc(setBorderColor:forState:)
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
         state.expanded.forEach(){ expandedState in
             if color != nil {
