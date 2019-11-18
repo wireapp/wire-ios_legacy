@@ -96,7 +96,6 @@ class UserCell: SeparatorCollectionViewCell {
         videoIconView.accessibilityIdentifier = "img.video"
         videoIconView.isHidden = true
         
-        externalUserIconView.image = WireStyleKit.imageOfExternalUser
         externalUserIconView.translatesAutoresizingMaskIntoConstraints = false
         externalUserIconView.contentMode = .center
         externalUserIconView.accessibilityIdentifier = "img.externalUser"
@@ -184,9 +183,15 @@ class UserCell: SeparatorCollectionViewCell {
     override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         super.applyColorScheme(colorSchemeVariant)
         let sectionTextColor = UIColor.from(scheme: .sectionText, variant: colorSchemeVariant)
+        
+        let iconColor = UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant)
+        
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
-        videoIconView.setIcon(.videoCall, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
-        guestIconView.setIcon(.guest, size: .tiny, color: UIColor.from(scheme: .iconGuest, variant: colorSchemeVariant))
+        
+        videoIconView.setIcon(.videoCall, size: .tiny, color: iconColor)
+        externalUserIconView.setIcon(.externalUser, size: .tiny, color: iconColor)
+        guestIconView.setIcon(.guest, size: .tiny, color: iconColor)
+        
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
         connectButton.setIconColor(sectionTextColor, for: .normal)
         checkmarkIconView.layer.borderColor = UIColor.from(scheme: .iconNormal, variant: colorSchemeVariant).cgColor
