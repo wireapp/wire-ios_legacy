@@ -43,8 +43,13 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     }
     
     var participants = [UserType]() {
-        didSet { participantsDidChange?() }
+        didSet {
+            self.computeParticipantGroups()
+            participantsDidChange?()
+        }
     }
+    var admins = [UserType]()
+    var members = [UserType]()
 
     init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
@@ -64,6 +69,11 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     private func computeVisibleParticipants() {
         guard let query = filterQuery, query.isValidQuery else { return participants = internalParticipants }
         participants = (internalParticipants as NSArray).filtered(using: filterPredicate(for: query)) as! [UserType]
+    }
+    
+    private func computeParticipantGroups()  {
+        admins = participants.filter({$0.teamRole == .admin || $0.teamRole == .owner})
+        members = participants.filter({$0.teamRole == .none}) ///TODO: should be .member
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

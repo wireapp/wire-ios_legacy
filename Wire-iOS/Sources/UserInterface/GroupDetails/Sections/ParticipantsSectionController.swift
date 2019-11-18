@@ -43,16 +43,23 @@ private struct ParticipantsSectionViewModel {
     let rows: [ParticipantsRowType]
     let participants: [UserType]
     
-    var sectionAccesibilityIdentifier = "label.groupdetails.participants"
-    var sectionStringTitle: String = "participants.section.participants"
+    let teamRole: TeamRole
     
-    var sectionTitle: String {
-        return sectionStringTitle.localized(uppercased: true, args: participants.count)
+    var sectionAccesibilityIdentifier = "label.groupdetails.participants"
+    var sectionTitle: String? {
+        switch teamRole {
+        case .member:
+            return "group_details.conversation_members_header.title".localized.uppercased()
+        case .admin:
+            return "group_details.conversation_admins_header.title".localized.uppercased()
+        default:
+            return nil
+        }
     }
 
-    init(participants: [UserType], sectionStringTitle: String, isRowsComputed: Bool = true) {
+    init(participants: [UserType], teamRole: TeamRole, isRowsComputed: Bool = true) {
         self.participants = participants
-        self.sectionStringTitle = sectionStringTitle
+        self.teamRole = teamRole
         rows = isRowsComputed ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
     }
     
@@ -76,12 +83,12 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     
     fileprivate weak var collectionView: UICollectionView?
     private weak var delegate: GroupDetailsSectionControllerDelegate?
-    private let viewModel: ParticipantsSectionViewModel
+    private var viewModel: ParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [UserType], conversation: ZMConversation, sectionStringTitle: String, isRowsComputed: Bool = true, delegate: GroupDetailsSectionControllerDelegate) {
-        viewModel = .init(participants: participants, sectionStringTitle: sectionStringTitle, isRowsComputed: isRowsComputed)
+    init(participants: [UserType], conversation: ZMConversation, teamRole: TeamRole, isRowsComputed: Bool = true, delegate: GroupDetailsSectionControllerDelegate) {
+        viewModel = .init(participants: participants, teamRole: teamRole, isRowsComputed: isRowsComputed)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
@@ -98,7 +105,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         self.collectionView = collectionView
     }
     
-    override var sectionTitle: String {
+    override var sectionTitle: String? {
         return viewModel.sectionTitle
     }
     
