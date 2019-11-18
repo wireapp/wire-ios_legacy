@@ -148,14 +148,15 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         
-        guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
-
-        footer.size(fittingWidth: collectionView.bounds.width)
-        let footerSize: CGSize = viewModel.footerVisible ? footer.bounds.size : .zero
+        guard viewModel.footerVisible,
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
         
-        return footerSize
+        footer.titleLabel.text = viewModel.footerTitle
+        
+        footer.size(fittingWidth: collectionView.bounds.width)
+        return footer.bounds.size
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard kind == UICollectionView.elementKindSectionFooter else { return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
         
