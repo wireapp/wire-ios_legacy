@@ -41,9 +41,19 @@ final class GroupParticipantsDetailViewController: UIViewController {
         return ColorScheme.default.statusBarStyle
     }
     
-    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
+    init(participants: [UserType], ///TODO: no need to pass this 
+         selectedParticipants: [UserType],
+         conversation: ZMConversation) {
+        
+        var allParticipants = conversation.sortedOtherParticipants
+        allParticipants = allParticipants.sorted { $0.displayName < $1.displayName }
+        if let selfUser = ZMUser.selfUser() {
+            allParticipants.insert(selfUser, at: 0)
+        }
+
+        
         viewModel = GroupParticipantsDetailViewModel(
-            participants: participants,
+            participants: allParticipants,
             selectedParticipants: selectedParticipants,
             conversation: conversation
         )
