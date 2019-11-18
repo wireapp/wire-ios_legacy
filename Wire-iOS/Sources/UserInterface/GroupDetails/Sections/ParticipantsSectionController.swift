@@ -48,9 +48,9 @@ private struct ParticipantsSectionViewModel {
     
     var sectionTitle: String {
         if teamRole.isAdminGroup {
-            return "Conversation members".localized.uppercased()
+            return "group_details.conversation_admins_header.title".localized.uppercased()
         } else {
-            return "Conversation admins".localized.uppercased()
+            return "group_details.conversation_members_header.title".localized.uppercased()
         }
     }
 
