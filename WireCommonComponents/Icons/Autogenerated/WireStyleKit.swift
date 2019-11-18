@@ -22,6 +22,7 @@ public class WireStyleKit : NSObject {
         static var imageOfOngoingcall: UIImage?
         static var ongoingcallTargets: [AnyObject]?
         static var imageOfShieldverified: UIImage?
+        static var imageOfExternalUser: UIImage?
         static var shieldverifiedTargets: [AnyObject]?
         static var imageOfShieldnotverified: UIImage?
         static var shieldnotverifiedTargets: [AnyObject]?
@@ -5267,6 +5268,62 @@ public class WireStyleKit : NSObject {
         logo2Path.fill()
     }
 
+    @objc dynamic public class func drawIcon_externalUser_16pt(color: UIColor = UIColor(red: 0.200, green: 0.216, blue: 0.227, alpha: 1.000)) {
+        
+        //// Color Declarations
+        let fillColor = color
+        
+        //// Group 2
+        //// Bezier Drawing
+        let bezierPath = UIBezierPath()
+        bezierPath.move(to: CGPoint(x: 4, y: 8))
+        bezierPath.addLine(to: CGPoint(x: 4, y: 8))
+        bezierPath.addCurve(to: CGPoint(x: 2, y: 6), controlPoint1: CGPoint(x: 2.9, y: 8), controlPoint2: CGPoint(x: 2, y: 7.1))
+        bezierPath.addCurve(to: CGPoint(x: 4, y: 4), controlPoint1: CGPoint(x: 2, y: 4.9), controlPoint2: CGPoint(x: 2.9, y: 4))
+        bezierPath.addLine(to: CGPoint(x: 4, y: 4))
+        bezierPath.addCurve(to: CGPoint(x: 6, y: 6), controlPoint1: CGPoint(x: 5.11, y: 4), controlPoint2: CGPoint(x: 6, y: 4.9))
+        bezierPath.addCurve(to: CGPoint(x: 4, y: 8), controlPoint1: CGPoint(x: 6, y: 7.1), controlPoint2: CGPoint(x: 5.11, y: 8))
+        bezierPath.close()
+        bezierPath.move(to: CGPoint(x: 8, y: 12.27))
+        bezierPath.addLine(to: CGPoint(x: 8.02, y: 12.25))
+        bezierPath.addCurve(to: CGPoint(x: 6.84, y: 13.22), controlPoint1: CGPoint(x: 7.67, y: 12.62), controlPoint2: CGPoint(x: 7.28, y: 12.95))
+        bezierPath.addLine(to: CGPoint(x: 6.76, y: 13.27))
+        bezierPath.addCurve(to: CGPoint(x: 3.67, y: 13.99), controlPoint1: CGPoint(x: 5.82, y: 13.81), controlPoint2: CGPoint(x: 4.75, y: 14.06))
+        bezierPath.addCurve(to: CGPoint(x: 0, y: 12.12), controlPoint1: CGPoint(x: 2.28, y: 13.9), controlPoint2: CGPoint(x: 0.96, y: 13.22))
+        bezierPath.addLine(to: CGPoint(x: 0, y: 11))
+        bezierPath.addLine(to: CGPoint(x: 0, y: 11))
+        bezierPath.addCurve(to: CGPoint(x: 2, y: 9), controlPoint1: CGPoint(x: 0, y: 9.9), controlPoint2: CGPoint(x: 0.9, y: 9))
+        bezierPath.addLine(to: CGPoint(x: 6, y: 9))
+        bezierPath.addLine(to: CGPoint(x: 6, y: 9))
+        bezierPath.addCurve(to: CGPoint(x: 8, y: 11), controlPoint1: CGPoint(x: 7.11, y: 9), controlPoint2: CGPoint(x: 8, y: 9.9))
+        bezierPath.addLine(to: CGPoint(x: 8, y: 12.27))
+        bezierPath.close()
+        bezierPath.move(to: CGPoint(x: 12, y: 4))
+        bezierPath.addLine(to: CGPoint(x: 12, y: 4))
+        bezierPath.addCurve(to: CGPoint(x: 10, y: 2), controlPoint1: CGPoint(x: 10.9, y: 4), controlPoint2: CGPoint(x: 10, y: 3.1))
+        bezierPath.addCurve(to: CGPoint(x: 12, y: 0), controlPoint1: CGPoint(x: 10, y: 0.9), controlPoint2: CGPoint(x: 10.9, y: 0))
+        bezierPath.addLine(to: CGPoint(x: 12, y: 0))
+        bezierPath.addCurve(to: CGPoint(x: 14, y: 2), controlPoint1: CGPoint(x: 13.11, y: 0), controlPoint2: CGPoint(x: 14, y: 0.9))
+        bezierPath.addCurve(to: CGPoint(x: 12, y: 4), controlPoint1: CGPoint(x: 14, y: 3.1), controlPoint2: CGPoint(x: 13.11, y: 4))
+        bezierPath.close()
+        bezierPath.move(to: CGPoint(x: 16, y: 8.27))
+        bezierPath.addLine(to: CGPoint(x: 16.02, y: 8.25))
+        bezierPath.addCurve(to: CGPoint(x: 14.84, y: 9.22), controlPoint1: CGPoint(x: 15.67, y: 8.62), controlPoint2: CGPoint(x: 15.28, y: 8.95))
+        bezierPath.addLine(to: CGPoint(x: 14.76, y: 9.27))
+        bezierPath.addCurve(to: CGPoint(x: 11.67, y: 9.99), controlPoint1: CGPoint(x: 13.82, y: 9.81), controlPoint2: CGPoint(x: 12.75, y: 10.06))
+        bezierPath.addCurve(to: CGPoint(x: 8, y: 8.12), controlPoint1: CGPoint(x: 10.28, y: 9.9), controlPoint2: CGPoint(x: 8.96, y: 9.22))
+        bezierPath.addLine(to: CGPoint(x: 8, y: 7))
+        bezierPath.addLine(to: CGPoint(x: 8, y: 7))
+        bezierPath.addCurve(to: CGPoint(x: 10, y: 5), controlPoint1: CGPoint(x: 8, y: 5.9), controlPoint2: CGPoint(x: 8.9, y: 5))
+        bezierPath.addLine(to: CGPoint(x: 14, y: 5))
+        bezierPath.addLine(to: CGPoint(x: 14, y: 5))
+        bezierPath.addCurve(to: CGPoint(x: 16, y: 7), controlPoint1: CGPoint(x: 15.11, y: 5), controlPoint2: CGPoint(x: 16, y: 5.9))
+        bezierPath.addLine(to: CGPoint(x: 16, y: 8.27))
+        bezierPath.close()
+        fillColor.setFill()
+        bezierPath.fill()
+    }
+    
     @objc dynamic public class func drawShieldverified() {
         //// Color Declarations
         let e2EE = UIColor(red: 0.000, green: 0.588, blue: 0.941, alpha: 1.000)
