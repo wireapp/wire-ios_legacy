@@ -229,6 +229,10 @@ class UserCell: SeparatorCollectionViewCell {
         } else {
             subtitleLabel.isHidden = true
         }
+        
+        if let user = user as? ZMUser {
+            iconStackView.isHidden = (user == ZMUser.selfUser()) ? true : false
+        }
     }
 
 }

@@ -172,8 +172,9 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
             profileViewControllerDelegate: self,
             viewControllerDismisser: self
         )
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        if user != ZMUser.selfUser() {
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {

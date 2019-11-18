@@ -53,6 +53,9 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
 
     init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
+        if let selfUser = ZMUser.selfUser() {
+            internalParticipants.insert(selfUser, at: 0)
+        }
         self.conversation = conversation
         self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
         
