@@ -231,7 +231,7 @@ class UserCell: SeparatorCollectionViewCell {
         }
         
         if let user = user as? ZMUser {
-            iconStackView.isHidden = (user == ZMUser.selfUser()) ? true : false
+            iconStackView.isHidden = user.isSelfUser ? true : false
         }
     }
 

@@ -97,14 +97,20 @@ class ParticipantsSectionController: GroupDetailsSectionController {
             token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
         }
     }
+    private var footer = SectionFooter(frame: .zero)
+    private lazy var footerText: String = {
+        return "group_details.no_admins_footer.title".localized
+    }()
     
     override func prepareForUse(in collectionView : UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView?.register(ShowAllParticipantsCell.self, forCellWithReuseIdentifier: ShowAllParticipantsCell.reuseIdentifier)
+        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
+        collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
         self.collectionView = collectionView
     }
-    
+
     override var sectionTitle: String? {
         return viewModel.sectionTitle
     }
@@ -132,6 +138,32 @@ class ParticipantsSectionController: GroupDetailsSectionController {
             delegate?.presentDetails(for: user)
         case .showAll:
             delegate?.presentFullParticipantsList(for: viewModel.participants, in: conversation)
+        }
+    }
+    
+    ///MARK: - footer
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        footer.titleLabel.text = footerText
+        footer.size(fittingWidth: collectionView.bounds.width)
+        let footerSize: CGSize = ((viewModel.teamRole == .admin || viewModel.teamRole == .owner) && viewModel.participants.isEmpty) ? footer.bounds.size : .zero
+        return footerSize
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            let supplementaryView = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader", for: indexPath)
+            
+            if let sectionHeaderView = supplementaryView as? SectionHeader {
+                sectionHeaderView.titleLabel.text = sectionTitle
+                sectionHeaderView.accessibilityIdentifier = sectionAccessibilityIdentifier
+            }
+            
+            return supplementaryView
+        } else {
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
+            (view as? SectionFooter)?.titleLabel.text = footerText
+            return view
         }
     }
     

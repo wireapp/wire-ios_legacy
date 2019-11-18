@@ -172,7 +172,7 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
             profileViewControllerDelegate: self,
             viewControllerDismisser: self
         )
-        if user != ZMUser.selfUser() {
+        if !user.isSelfUser {
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
