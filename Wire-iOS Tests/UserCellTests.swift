@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class UserCellTests: ZMSnapshotTestCase {
+final class UserCellTests: ZMSnapshotTestCase {
     
     var mockConversation: MockConversation!
     

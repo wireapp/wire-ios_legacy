@@ -146,7 +146,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
 }
 
-private class SelectedUserCell: UserCell {
+private final class SelectedUserCell: UserCell {
 
     func configureContentBackground(preselected: Bool, animated: Bool) {
         contentView.backgroundColor = .clear
