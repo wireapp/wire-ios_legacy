@@ -227,7 +227,7 @@ class UserCell: SeparatorCollectionViewCell {
         } else {
             verifiedIconView.isHidden = true
         }
-        ///TODO: snapshot test
+
         externalUserIconView.isHidden = user.teamRole != .partner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
