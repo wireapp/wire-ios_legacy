@@ -62,7 +62,7 @@ final class SectionFooterView: UIView, Themeable {
 
 }
 
-class SectionFooter: UICollectionReusableView, Themeable {
+final class SectionFooter: UICollectionReusableView, Themeable {
 
     let footerView = SectionFooterView()
 
@@ -95,6 +95,9 @@ class SectionFooter: UICollectionReusableView, Themeable {
         footerView.applyColorScheme(colorSchemeVariant)
     }
 
+    class func register(collectionView: UICollectionView) {
+        collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+    }
 }
 
 class SectionTableFooter: UITableViewHeaderFooterView, Themeable {
