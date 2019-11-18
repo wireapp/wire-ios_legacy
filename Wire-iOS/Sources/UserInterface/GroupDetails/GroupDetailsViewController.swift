@@ -19,6 +19,19 @@
 import UIKit
 import Cartography
 
+///TODO: move  to DM
+extension TeamRole {
+    var isAdminGroup: Bool {
+        switch self {
+        case .admin,
+             .owner:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController
@@ -133,10 +146,26 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(receiptOptionsSectionController)
         }
 
-        let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        if let selfUser = ZMUser.selfUser() {
+            participants.append(selfUser)
+            participants = participants.sorted { $0.displayName < $1.displayName }
+        }
         if !participants.isEmpty {
-            let participantsSectionController = ParticipantsSectionController(participants: participants, conversation: conversation, teamRole: .admin, delegate: self)
-            sections.append(participantsSectionController)
+            
+            let admins = participants.filter({$0.teamRole.isAdminGroup})
+            let adminSection = ParticipantsSectionController(participants: admins,
+                                                             teamRole: .admin,
+                                                             conversation: conversation,
+                                                             delegate: self)
+            sections.append(adminSection)
+
+            let members = participants.filter({!$0.teamRole.isAdminGroup})
+            let memberSection = ParticipantsSectionController(participants: members,
+                                                              teamRole: .member,
+                                                              conversation: conversation,
+                                                              delegate: self)
+            sections.append(memberSection)
         }
         if !serviceUsers.isEmpty {
             let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)

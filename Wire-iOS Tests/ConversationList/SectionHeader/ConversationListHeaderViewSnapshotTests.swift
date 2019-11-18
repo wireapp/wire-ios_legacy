@@ -31,7 +31,7 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
-        sut.backgroundColor = .black
+        sut.backgroundColor = .gray
     }
     
     override func tearDown() {
@@ -51,6 +51,11 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     
     func testForBadgeNumberHitLimit() {
         sut.folderBadge = 999
+        verify(matching: sut)
+    }
+    
+    func testForBadgeNumberEquals10() {
+        sut.folderBadge = 10
         verify(matching: sut)
     }
 }

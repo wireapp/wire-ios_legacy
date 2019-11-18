@@ -17,8 +17,8 @@
 //
 
 struct VideoConfiguration: VideoGridConfiguration {
-    let floatingVideoStream: ParticipantVideoState?
-    let videoStreams: [ParticipantVideoState]
+    let floatingVideoStream: VideoStream?
+    let videoStreams: [VideoStream]
     let isMuted: Bool
     let networkQuality: NetworkQuality
 
@@ -30,9 +30,9 @@ struct VideoConfiguration: VideoGridConfiguration {
     }
 }
 
-fileprivate extension VoiceChannel {
+extension VoiceChannel {
     
-    var selfStream: ParticipantVideoState? {
+    private var selfStream: VideoStream? {
         switch (isUnconnectedOutgoingVideoCall, videoState) {
         case (true, _), (_, .started), (_, .badConnection), (_, .screenSharing):
             return .init(stream: ZMUser.selfUser().selfStream, isPaused: false)
@@ -43,37 +43,43 @@ fileprivate extension VoiceChannel {
         }
     }
     
-    var videoStreamArrangment: (preview: ParticipantVideoState?, grid: [ParticipantVideoState]) {
-        let otherParticipants: [ParticipantVideoState] = participants.compactMap { participant in
-            if case .connected(videoState: let videoState, clientId: let clientId) = participant.state {
-                return .init(stream: Stream(userId: participant.user.remoteIdentifier, clientId: clientId), isPaused: videoState == .paused)
-            } else {
-                return nil
-            }
-        }
-        
+    fileprivate var videoStreamArrangment: (preview: VideoStream?, grid: [VideoStream]) {
         guard isEstablished else { return (nil, selfStream.map { [$0] } ?? [] ) }
         
-        if let selfStream = selfStream {
-            if 1 == otherParticipants.count {
-                return (selfStream, otherParticipants)
-            } else {
-                return (nil, [selfStream] + otherParticipants)
-            }
+        return arrangeVideoStreams(for: selfStream, participantsStreams: participantsActiveVideoStreams)
+    }
+    
+    private var isEstablished: Bool {
+        return state == .established
+    }
+    
+    func arrangeVideoStreams(for selfStream: VideoStream?, participantsStreams: [VideoStream]) -> (preview: VideoStream?, grid: [VideoStream]) {
+        guard let selfStream = selfStream else {
+            return (nil, participantsStreams)
+        }
+        
+        if 1 == participantsStreams.count {
+            return (selfStream, participantsStreams)
         } else {
-            return (nil, otherParticipants)
+            return (nil, [selfStream] + participantsStreams)
         }
     }
     
-    var isUnconnectedOutgoingVideoCall: Bool {
+    var participantsActiveVideoStreams: [VideoStream] {
+        return participants.compactMap { participant in
+            switch participant.state {
+            case .connected(let videoState, let clientId) where videoState != .stopped:
+                return .init(stream: Stream(userId: participant.user.remoteIdentifier, clientId: clientId), isPaused: videoState == .paused)
+            default:
+                return nil
+            }
+        }
+    }
+    
+   private var isUnconnectedOutgoingVideoCall: Bool {
         switch (state, isVideoCall) {
         case (.outgoing, true): return true
         default: return false
         }
-    }
-    
-    var isEstablished: Bool {
-        guard case .established = state else { return false }
-        return true
     }
 }

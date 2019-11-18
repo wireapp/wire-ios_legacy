@@ -41,8 +41,7 @@ enum ParticipantsRowType {
 private struct ParticipantsSectionViewModel {
     static private let maxParticipants = 5
     let rows: [ParticipantsRowType]
-    let participants: [UserType]
-    
+    let participants: [UserType]    
     let teamRole: TeamRole
     
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
@@ -63,6 +62,17 @@ private struct ParticipantsSectionViewModel {
         default:
             return .zero
         }
+    }
+    var footerTitle: String {
+        if teamRole.isAdminGroup {
+            return "participants.section.admins.footer".localized
+        } else {
+            return "participants.section.members.footer".localized
+        }
+    }
+
+    var footerVisible: Bool {
+        return participants.isEmpty
     }
     
     init(participants: [UserType], teamRole: TeamRole, isRowsComputed: Bool = true) {
@@ -87,9 +97,14 @@ extension UserCell: ParticipantsCellConfigurable {
     }
 }
 
-class ParticipantsSectionController: GroupDetailsSectionController {
+final class ParticipantsSectionController: GroupDetailsSectionController {
     
-    fileprivate weak var collectionView: UICollectionView?
+    fileprivate weak var collectionView: UICollectionView? {
+        didSet {
+            guard let collectionView =  collectionView else { return }
+            SectionFooter.register(collectionView: collectionView)
+        }
+    }
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private var viewModel: ParticipantsSectionViewModel
     private let conversation: ZMConversation
@@ -139,6 +154,27 @@ class ParticipantsSectionController: GroupDetailsSectionController {
         return cell
     }
     
+    ///MARK: - footer
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        guard viewModel.footerVisible,
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: IndexPath(item: 0, section: section)) as? SectionFooter else { return .zero }
+        
+        footer.titleLabel.text = viewModel.footerTitle
+        
+        footer.size(fittingWidth: collectionView.bounds.width)
+        return footer.bounds.size
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard kind == UICollectionView.elementKindSectionFooter else { return super.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)}
+        
+        let view = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter", for: indexPath)
+        (view as? SectionFooter)?.titleLabel.text = viewModel.footerTitle
+        return view
+    }
+
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch viewModel.rows[indexPath.row] {
         case .user(let bareUser):

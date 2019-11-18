@@ -240,7 +240,7 @@ final class ClientListViewController: UIViewController,
         self.editingList = true
     }
     
-    @objc func endEditing(_ sender: AnyObject!) {
+    @objc private func endEditing(_ sender: AnyObject!) {
         self.editingList = false
     }
     
