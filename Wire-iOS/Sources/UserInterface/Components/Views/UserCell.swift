@@ -18,8 +18,16 @@
 
 import UIKit
 
+extension UIImageView {
+    func setUpIconImageView(accessibilityIdentifier: String? = nil) {
+        translatesAutoresizingMaskIntoConstraints = false
+        contentMode = .center
+        self.accessibilityIdentifier = accessibilityIdentifier
+        isHidden = true
+    }
+}
 
-class UserCell: SeparatorCollectionViewCell {
+final class UserCell: SeparatorCollectionViewCell {
 
     var hidesSubtitle: Bool = false
     
@@ -86,26 +94,12 @@ class UserCell: SeparatorCollectionViewCell {
     override func setUp() {
         super.setUp()
 
-        guestIconView.translatesAutoresizingMaskIntoConstraints = false
-        guestIconView.contentMode = .center
-        guestIconView.accessibilityIdentifier = "img.guest"
-        guestIconView.isHidden = true
+        guestIconView.setUpIconImageView(accessibilityIdentifier: "img.guest")
+        videoIconView.setUpIconImageView(accessibilityIdentifier: "img.video")
+        externalUserIconView.setUpIconImageView(accessibilityIdentifier: "img.externalUser")
         
-        videoIconView.translatesAutoresizingMaskIntoConstraints = false
-        videoIconView.contentMode = .center
-        videoIconView.accessibilityIdentifier = "img.video"
-        videoIconView.isHidden = true
-        
-        externalUserIconView.translatesAutoresizingMaskIntoConstraints = false
-        externalUserIconView.contentMode = .center
-        externalUserIconView.accessibilityIdentifier = "img.externalUser"
-        externalUserIconView.isHidden = true
-
         verifiedIconView.image = WireStyleKit.imageOfShieldverified
-        verifiedIconView.translatesAutoresizingMaskIntoConstraints = false
-        verifiedIconView.contentMode = .center
-        verifiedIconView.accessibilityIdentifier = "img.shield"
-        verifiedIconView.isHidden = true
+        verifiedIconView.setUpIconImageView(accessibilityIdentifier: "img.shield")
         
         connectButton.setIcon(.plusCircled, size: .tiny, for: .normal)
         connectButton.imageView?.contentMode = .center
@@ -116,9 +110,7 @@ class UserCell: SeparatorCollectionViewCell {
         checkmarkIconView.layer.cornerRadius = 12
         checkmarkIconView.isHidden = true
 
-        accessoryIconView.translatesAutoresizingMaskIntoConstraints = false
-        accessoryIconView.contentMode = .center
-        accessoryIconView.isHidden = true
+        accessoryIconView.setUpIconImageView()
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = .normalLightFont
