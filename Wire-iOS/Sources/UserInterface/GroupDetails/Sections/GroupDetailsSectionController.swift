@@ -32,8 +32,8 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         return false
     }
 
-    var sectionTitle: String {
-        return ""
+    var sectionTitle: String? {
+        return nil
     }
 
     var sectionAccessibilityIdentifier: String {

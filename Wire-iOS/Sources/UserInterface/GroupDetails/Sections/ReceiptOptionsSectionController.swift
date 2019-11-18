@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ReceiptOptionsSectionController: GroupDetailsSectionController {
+final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     
     private let emptySectionHeaderHeight: CGFloat = 24
@@ -45,7 +45,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         self.syncCompleted = syncCompleted
         self.presentingViewController = presentingViewController
 
-        collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+        SectionFooter.register(collectionView: collectionView)
     }
 
     // MARK: - Collection View
