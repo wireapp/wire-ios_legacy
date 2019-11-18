@@ -55,14 +55,7 @@ private struct ParticipantsSectionViewModel {
             return nil
         }
     }
-    var sectionFooterSize: CGSize? {
-        switch teamRole {
-        case .admin, .owner:
-            return participants.isEmpty ? nil : .zero
-        default:
-            return .zero
-        }
-    }
+   
     var footerTitle: String {
         if teamRole.isAdminGroup {
             return "participants.section.admins.footer".localized
@@ -120,17 +113,11 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
             token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
         }
     }
-    private var footer = SectionFooter(frame: .zero)
-    private lazy var footerText: String = {
-        return "group_details.no_admins_footer.title".localized
-    }()
     
     override func prepareForUse(in collectionView : UICollectionView?) {
         super.prepareForUse(in: collectionView)
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseIdentifier)
         collectionView?.register(ShowAllParticipantsCell.self, forCellWithReuseIdentifier: ShowAllParticipantsCell.reuseIdentifier)
-        collectionView?.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
-        collectionView?.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
         self.collectionView = collectionView
     }
 
