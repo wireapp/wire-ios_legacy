@@ -19,6 +19,19 @@
 import UIKit
 import Cartography
 
+///TODO: move  to DM
+extension TeamRole {
+    var isAdminGroup: Bool {
+        switch self {
+        case .admin,
+             .owner:
+            return true
+        default:
+            return false
+        }
+    }
+}
+
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController
@@ -140,15 +153,14 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         }
         if !participants.isEmpty {
             
-            ///TODO: move these logic to DM
-            let admins = participants.filter({$0.teamRole == .admin || $0.teamRole == .owner})
+            let admins = participants.filter({$0.isAdminGroup})
             let adminSection = ParticipantsSectionController(participants: admins,
                                                              teamRole: .admin,
                                                              conversation: conversation,
                                                              delegate: self)
             sections.append(adminSection)
 
-            let members = participants.filter({$0.teamRole == .member})
+            let members = participants.filter({!$0.isAdminGroup})
             let memberSection = ParticipantsSectionController(participants: members,
                                                               teamRole: .member,
                                                               conversation: conversation,
