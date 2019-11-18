@@ -27,7 +27,7 @@ extension UIImageView {
     }
 }
 
-final class UserCell: SeparatorCollectionViewCell {
+class UserCell: SeparatorCollectionViewCell {
 
     var hidesSubtitle: Bool = false
     
