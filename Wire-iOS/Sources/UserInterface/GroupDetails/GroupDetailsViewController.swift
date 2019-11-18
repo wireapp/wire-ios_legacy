@@ -147,6 +147,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         }
 
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        participants = participants.sorted { $0.displayName < $1.displayName }
         if let selfUser = ZMUser.selfUser() {
             participants.insert(selfUser, at: 0)
         }
