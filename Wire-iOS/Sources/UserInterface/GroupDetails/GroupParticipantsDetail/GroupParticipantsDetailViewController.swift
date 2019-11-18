@@ -69,7 +69,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         if firstLayout {
             firstLayout = false
-            scrollToFirstHighlightedUser()
+//            scrollToFirstHighlightedUser()
         }
     }
     

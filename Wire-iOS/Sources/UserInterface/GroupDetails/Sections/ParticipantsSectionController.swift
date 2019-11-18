@@ -39,7 +39,7 @@ enum ParticipantsRowType {
 }
 
 private struct ParticipantsSectionViewModel {
-    static private let maxParticipants = 5
+    static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
     let participants: [UserType]    
     let teamRole: TeamRole
