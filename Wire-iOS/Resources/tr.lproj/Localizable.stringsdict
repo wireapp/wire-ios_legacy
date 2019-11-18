@@ -270,6 +270,22 @@
         <string>%2$@ kişisinden cevapsız çağrılar</string>
       </dict>
     </dict>
+    <key>content.system.call.missed-call.groups-you</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%2$@ kişisinden cevapsız çağrı</string>
+        <key>other</key>
+        <string>%2$@ kişisinden cevapsız çağrılar</string>
+      </dict>
+    </dict>
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

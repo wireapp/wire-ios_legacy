@@ -61,7 +61,6 @@ typedef NS_ENUM(NSUInteger, IconButtonStyle) {
 - (nullable UIColor *)iconColorForState:(UIControlState)state;
 
 - (void)setBackgroundImageColor:(UIColor *)color forState:(UIControlState)state;
-- (void)setBorderColor:(UIColor *)color forState:(UIControlState)state;
 - (void)setTitleImageSpacing:(CGFloat)titleImageSpacing horizontalMargin:(CGFloat)horizontalMargin;
 
 @end

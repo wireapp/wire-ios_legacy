@@ -33,14 +33,9 @@
 #import "AppDelegate.h"
 
 // helpers
-#import "MessageAction.h"
-
-
-
 #import "Analytics.h"
 
 // model
-#import "WireSyncEngine+iOS.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
@@ -50,8 +45,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 @interface FullscreenImageViewController () <UIScrollViewDelegate>
-
-@property (nonatomic, strong) ConversationMessageActionController *actionController;
 
 @property (nonatomic) CALayer *highlightLayer;
 
@@ -89,7 +82,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         [self setupStyle];
 
-        self.actionController = [[ConversationMessageActionController alloc] initWithResponder:self message:message context:ConversationMessageActionControllerContextCollection view: self.scrollView];
+        [self setActionController];
+
         if (nil != [ZMUserSession sharedSession]) {
             self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
         }

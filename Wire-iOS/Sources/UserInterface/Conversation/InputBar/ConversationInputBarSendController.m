@@ -21,7 +21,6 @@
 @import WireDataModel;
 
 #import "ConversationInputBarSendController.h"
-#import "ZMUserSession+iOS.h"
 #import "Analytics.h"
 #import "Settings.h"
 #import "Wire-Swift.h"

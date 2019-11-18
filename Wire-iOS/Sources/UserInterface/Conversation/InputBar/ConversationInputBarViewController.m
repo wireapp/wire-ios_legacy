@@ -31,9 +31,6 @@
 #import "Analytics.h"
 #import "Wire-Swift.h"
 
-#import "WireSyncEngine+iOS.h"
-#import "ZMUser+Additions.h"
-#import "avs+iOS.h"
 
 #import "Settings.h"
 #import "ConversationInputBarSendController.h"
@@ -731,7 +728,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         if (knockMessage) {
             [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
 
-            [AVSMediaManager.sharedInstance playSound:MediaManagerSoundOutgoingKnockSound];
+            [AVSMediaManager.sharedInstance playKnockSound];
             [self.notificationFeedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
         }
     }];

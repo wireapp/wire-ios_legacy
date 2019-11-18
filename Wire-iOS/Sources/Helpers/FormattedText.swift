@@ -41,7 +41,7 @@ enum FormattedText {
      */
 
     static func list(from array: [String]) -> String {
-        #warning("TODO iOS 13: Use the Foundation list formatter.")
+        // TODO iOS 13: Use the Foundation list formatter.
         return legacayArrayFormatter.string(from: array)
     }
 

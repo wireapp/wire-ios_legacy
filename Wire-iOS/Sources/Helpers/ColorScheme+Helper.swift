@@ -28,4 +28,8 @@ extension ColorScheme {
         return variant == .light ? .default : .white
     }
 
+    func isCurrentAccentColor(_ accentColor: UIColor) -> Bool {
+        return self.accentColor == accentColor
+    }
+    
 }

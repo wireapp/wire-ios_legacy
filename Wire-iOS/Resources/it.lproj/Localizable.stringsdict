@@ -270,10 +270,26 @@
         <string>Chiamate perse da %2$@</string>
       </dict>
     </dict>
+    <key>content.system.call.missed-call.groups-you</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@missed_call_from@</string>
+      <key>missed_call_from</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Chiamata persa da %2$@</string>
+        <key>other</key>
+        <string>Chiamate perse da %2$@</string>
+      </dict>
+    </dict>
     <key>registration.password.rules.min_length</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
-      <string>at least %#@character_count@</string>
+      <string>almeno %#@character_count@</string>
       <key>character_count</key>
       <dict>
         <key>NSStringFormatSpecTypeKey</key>
@@ -281,9 +297,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one character</string>
+        <string>un carattere</string>
         <key>other</key>
-        <string>%d characters</string>
+        <string>%d caratteri</string>
       </dict>
     </dict>
     <key>registration.password.rules.lowercase</key>
@@ -297,9 +313,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>one lowercase letter</string>
+        <string>una lettera minuscola</string>
         <key>other</key>
-        <string>%d lowercase letters</string>
+        <string>%d lettere minuscole</string>
       </dict>
     </dict>
     <key>registration.password.rules.uppercase</key>
@@ -313,9 +329,9 @@
         <key>NSStringFormatSpecTypeKey</key>
         <string>NSStringPluralRuleType</string>
         <key>one</key>
-        <string>one capital letter</string>
+        <string>una lettera maiuscola</string>
         <key>other</key>
-        <string>%d capital letters</string>
+        <string>%d lettere maiuscole</string>
       </dict>
     </dict>
     <key>registration.password.rules.number</key>
@@ -329,9 +345,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a number</string>
+        <string>un numero</string>
         <key>other</key>
-        <string>%d numbers</string>
+        <string>%d numeri</string>
       </dict>
     </dict>
     <key>registration.password.rules.special</key>
@@ -345,9 +361,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>a special character</string>
+        <string>un carattere speciale</string>
         <key>other</key>
-        <string>%d special characters</string>
+        <string>%d caratteri speciali</string>
       </dict>
     </dict>
   </dict>

@@ -19,17 +19,17 @@
 import Foundation
 import Cartography
 
-@objc protocol CallQualityViewControllerDelegate: class {
+protocol CallQualityViewControllerDelegate: class {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)
     func callQualityController(_ controller: CallQualityViewController, didSelect score: Int)
 }
 
-class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
+final class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate {
 
     let questionLabelText: String
     let callDuration: Int
 
-    @objc weak var delegate: CallQualityViewControllerDelegate?
+    weak var delegate: CallQualityViewControllerDelegate?
 
     let contentView = RoundedView()
     let dimmingView = UIView()
@@ -190,7 +190,15 @@ class CallQualityViewController : UIViewController, UIGestureRecognizerDelegate 
     }
     
     // MARK: Dismiss Events
-    
+
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        let window = view.window
+        super.dismiss(animated: flag) {
+            completion?()
+            (window as? CallWindow)?.hideWindowIfNeeded()
+        }
+    }
+
     @objc func onCloseButtonTapped() {
         delegate?.callQualityControllerDidFinishWithoutScore(self)
     }

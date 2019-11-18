@@ -39,8 +39,10 @@ extension XCTestCase {
 }
 
 extension XCTestCase {
-    static func CreateCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController {
-        ZMUser.selfUser().remoteIdentifier = UUID()
+    static func createCallViewController(mediaManager: ZMMockAVSMediaManager) -> CallViewController {
+        let mockSelfClient = MockUserClient()
+        mockSelfClient.remoteIdentifier = "selfClient123"
+        MockUser.mockSelf().clients = Set([mockSelfClient])
 
         let conversation = (MockConversation.oneOnOneConversation() as Any) as! ZMConversation
         let voiceChannel = MockVoiceChannel(conversation: conversation)
@@ -60,48 +62,10 @@ final class CallViewControllerTests: XCTestCase {
         // when & then
         verifyDeallocation { () -> CallViewController in
             // given
-            let callController = XCTestCase.CreateCallViewController(mediaManager: ZMMockAVSMediaManager())
+            let callController = XCTestCase.createCallViewController(mediaManager: ZMMockAVSMediaManager())
             // Simulate user click
             callController.startOverlayTimer()
             return callController
         }
-    }
-}
-
-final class CallViewControllerGestureTests: XCTestCase {
-    var sut: CallViewController!
-    var mediaManager: ZMMockAVSMediaManager!
-
-    override func setUp() {
-        super.setUp()
-        UIView.setAnimationsEnabled(false)
-
-        mediaManager = ZMMockAVSMediaManager()
-        sut = XCTestCase.CreateCallViewController(mediaManager: mediaManager)
-    }
-
-    override func tearDown() {
-        sut = nil
-        super.tearDown()
-
-        UIView.setAnimationsEnabled(true)
-    }
-
-    func tapOnSut() {
-        sut.handleSingleTap(UITapGestureRecognizer(target: nil, action: nil))
-    }
-
-    func testThatOverlayDismissesAfterTapped() {
-        // GIVEN
-        mediaManager.isMicrophoneMuted = true
-
-        // WHEN
-        // call overlay is visible at the beginning
-        XCTAssert(sut.isOverlayVisible)
-
-        tapOnSut()
-
-        // call overlay is invisible after tapped
-        XCTAssertFalse(sut.isOverlayVisible)
     }
 }

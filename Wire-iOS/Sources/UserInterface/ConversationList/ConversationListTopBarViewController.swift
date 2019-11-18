@@ -76,7 +76,7 @@ final class ConversationListTopBarViewController: UIViewController {
         topBar?.middleView = createTitleView()
     }
     
-    func createTitleView() -> UIView {
+    private func createTitleView() -> UIView {
         if selfUser.isTeamMember {
             let availabilityViewController = AvailabilityTitleViewController(user: selfUser, options: .header)
             availabilityViewController.availabilityTitleView?.colorSchemeVariant = .dark
@@ -91,7 +91,7 @@ final class ConversationListTopBarViewController: UIViewController {
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
-            titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+            titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
             titleLabel.setContentHuggingPriority(.required, for: .vertical)

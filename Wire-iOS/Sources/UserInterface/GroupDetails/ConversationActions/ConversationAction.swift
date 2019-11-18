@@ -22,6 +22,8 @@ extension ZMConversation {
     enum Action: Equatable {
         
         case deleteGroup
+        case moveToFolder
+        case removeFromFolder(folder: String)
         case clearContent
         case leave
         case configureNotifications
@@ -108,6 +110,11 @@ extension ZMConversation {
 
         if !isArchived {
             actions.append(.favorite(isFavorite: isFavorite))
+            actions.append(.moveToFolder)
+            
+            if let folderName = folder?.name {
+                actions.append(.removeFromFolder(folder: folderName))
+            }
         }
 
         return actions
@@ -136,12 +143,19 @@ extension ZMConversation.Action {
     }
     
     fileprivate var title: String {
-        return localizationKey.localized
+        switch self {
+        case .removeFromFolder(let folder):
+            return localizationKey.localized(args: folder)
+        default:
+            return localizationKey.localized
+        }
     }
     
     private var localizationKey: String {
         switch self {
         case .deleteGroup: return "meta.menu.delete"
+        case .moveToFolder: return "meta.menu.move_to_folder"
+        case .removeFromFolder: return "meta.menu.remove_from_folder"
         case .remove: return "profile.remove_dialog_button_remove"
         case .clearContent: return "meta.menu.clear_content"
         case .leave: return "meta.menu.leave"

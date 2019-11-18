@@ -37,6 +37,10 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 + (void)invalidateCachedCellSize;
 @end
 
+#pragma clang diagnostic push
+// To get rid of 'No protocol definition found' warnings which are not accurate
+#pragma clang diagnostic ignored "-Weverything"
 @interface ConversationListCell () <SectionListCellType>
+#pragma clang diagnostic pop
 @property (nonatomic, copy, nullable) NSString *sectionName;
 @end

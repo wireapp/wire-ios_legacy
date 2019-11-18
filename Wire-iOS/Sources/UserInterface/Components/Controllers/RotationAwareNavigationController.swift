@@ -20,7 +20,7 @@
 import Foundation
 
 final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
-    
+
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?    

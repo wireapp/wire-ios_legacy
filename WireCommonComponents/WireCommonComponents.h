@@ -28,3 +28,4 @@ FOUNDATION_EXPORT const unsigned char WireCommonComponentsVersionString[];
 
 #import <WireCommonComponents/NetworkStatus.h>
 #import <WireCommonComponents/AVAsset+VideoConvert.h>
+#import <AppCenter/AppCenter.h>

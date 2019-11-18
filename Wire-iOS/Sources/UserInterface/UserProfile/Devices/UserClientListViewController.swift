@@ -19,7 +19,7 @@
 import Foundation
 
 
-class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+final class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     fileprivate let headerView: ParticipantDeviceHeaderView
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())

@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "senden bahsedildi";
 "conversation_list.voiceover.status.reply" = "yanıtla";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arşivlendi";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "arşivlenmiş konuşmaların listesi";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "kişiler";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Wire'dayım, %@ olarak arat ya da get.wire.com adresini ziyaret et.";
 "send_invitation_no_email.text" = "Wire'dayım. get.wire.com 'u ziyaret ederek bana bağlanabilirsin.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Oluştur";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "bir resim paylaştı";
@@ -202,6 +217,11 @@
 "list.title" = "Konuşmalar";
 "list.archived_conversations" = "ARŞİVLE";
 "list.archived_conversations_close" = "Arşivi kapat";
+
+"list.section.groups" = "Gruplar";
+"list.section.contacts" = "İnsanlar";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "onaylanmış";
 "conversation.voiceover.legalhold" = "kanuni durdurma";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "Sen";
 "content.system.this_device" = "bu cihaz";
 
-"content.system.call.you" = "Sen";
 "content.system.call.called" = "%@ aradı";
 "content.system.call.called-you" = "%@ aradı";
+"content.system.call.called.you" = "Sen";
+
+"content.system.call.missed-call" = "Cevapsız arama";
+"content.system.call.missed-call-you" = "Cevapsız arama";
+
+"content.system.call.missed-call.groups" = "%@ Kaynağından gelen cevapsız çağrı";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Sen";
 
 "content.system.renamed_conv.title" = "%@ bu konuşmanın adını değiştirdi";
 "content.system.renamed_conv.title-you" = "%@ bu konuşmanın adını değiştirdi";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "Arşivden kaldır";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Sustur";
 "meta.menu.silence.unmute" = "Sesi aç";
 "meta.menu.cancel" = "İptal";
@@ -769,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
 // Cancel connection request
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "Engelle…";
 "profile.unblock_button_title" = "Engeli kaldır…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Engelle";
 "profile.unblock_button_title_action" = "Engeli kaldır";

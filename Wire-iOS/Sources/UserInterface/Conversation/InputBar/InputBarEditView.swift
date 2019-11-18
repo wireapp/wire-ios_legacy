@@ -27,7 +27,7 @@ import Cartography
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
 
-@objcMembers public final class InputBarEditView: UIView {
+public final class InputBarEditView: UIView {
     private static var iconButtonTemplate: IconButton {
         let iconButton = IconButton()
         iconButton.setIconColor(.from(scheme: .iconNormal), for: .normal)

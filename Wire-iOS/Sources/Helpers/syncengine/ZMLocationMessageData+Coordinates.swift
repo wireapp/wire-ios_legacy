@@ -21,8 +21,8 @@ import Foundation
 import MapKit
 import Contacts
 
-public extension Message {
-    @objc class func openInMaps(_ messageData: LocationMessageData) {
+extension Message {
+    class func openInMaps(_ messageData: LocationMessageData) {
         messageData.openInMaps(with: MKCoordinateSpan(zoomLevel: Int(messageData.zoomLevel), viewSize: Float(UIScreen.main.bounds.height)))
     }
 }

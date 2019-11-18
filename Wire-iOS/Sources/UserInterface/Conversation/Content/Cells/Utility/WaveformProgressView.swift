@@ -82,45 +82,45 @@ import Cartography
     }
 }
 
-final class WaveformProgressView: UIView {
+final public class WaveformProgressView: UIView {
     
     fileprivate let backgroundWaveform = WaveformBarsView()
     fileprivate let foregroundWaveform = WaveformBarsView()
     fileprivate var maskShape = CAShapeLayer()
     
-    var samples : [Float] = [] {
+    public var samples : [Float] = [] {
         didSet {
             backgroundWaveform.samples = samples
             foregroundWaveform.samples = samples
         }
     }
     
-    var barColor : UIColor = UIColor.gray {
+    public var barColor : UIColor = UIColor.gray {
         didSet {
             backgroundWaveform.barColor = barColor
         }
     }
     
-    var highlightedBarColor : UIColor = UIColor.accent() {
+    public var highlightedBarColor : UIColor = UIColor.accent() {
         didSet {
             foregroundWaveform.barColor = highlightedBarColor
         }
     }
     
-    var progress : Float = 0.0 {
+    public var progress : Float = 0.0 {
         didSet {
             setProgress(progress, animated: false)
         }
     }
     
-    override var backgroundColor: UIColor? {
+    public override var backgroundColor: UIColor? {
         didSet {
             backgroundWaveform.backgroundColor = backgroundColor
             foregroundWaveform.backgroundColor = backgroundColor
         }
     }
     
-    func setProgress(_ progress: Float, animated: Bool) {
+    public func setProgress(_ progress: Float, animated: Bool) {
         let path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         
         if (animated) {
@@ -136,13 +136,13 @@ final class WaveformProgressView: UIView {
         maskShape.path = path
     }
     
-    override var bounds: CGRect {
+    public override var bounds: CGRect {
         didSet {
             maskShape.path = UIBezierPath(rect: CGRect(x: 0, y: 0, width: self.bounds.width * CGFloat(progress), height: self.bounds.height)).cgPath
         }
     }
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         
         maskShape.fillColor = UIColor.white.cgColor
@@ -163,7 +163,7 @@ final class WaveformProgressView: UIView {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

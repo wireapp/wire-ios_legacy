@@ -69,7 +69,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     public var onDismiss: ((ShareViewController, Bool)->())?
     var bottomConstraint: NSLayoutConstraint?
     
-    public init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
+    init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
         self.destinations = destinations
         self.filteredDestinations = destinations
         self.shareable = shareable

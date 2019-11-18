@@ -32,7 +32,6 @@
 @import AVKit;
 
 // model
-#import "WireSyncEngine+iOS.h"
 
 // ui
 #import "ZClientViewController.h"
@@ -145,11 +144,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.dataSource = [[ConversationTableViewDataSource alloc] initWithConversation:self.conversation
-                                                                          tableView:self.tableView
-                                                                    actionResponder:self
-                                                                       cellDelegate:self];
+
+    [self setDataSource];
     self.tableView.estimatedRowHeight = 80;
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.allowsSelection = YES;

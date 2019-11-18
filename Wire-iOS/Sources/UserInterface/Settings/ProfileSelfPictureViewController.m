@@ -23,7 +23,6 @@
 
 @import MobileCoreServices;
 
-#import "WireSyncEngine+iOS.h"
 
 
 #import "Analytics.h"

@@ -28,8 +28,7 @@
 #import "ConnectRequestsViewController.h"
 #import "ProfileViewController.h"
 
-#import "WireSyncEngine+iOS.h"
-#import "ZMConversation+Additions.h"
+
 
 #import "AppDelegate.h"
 

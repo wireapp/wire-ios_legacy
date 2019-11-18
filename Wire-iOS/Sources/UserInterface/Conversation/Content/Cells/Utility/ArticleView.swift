@@ -25,7 +25,8 @@ import WireLinkPreview
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
 }
 
-@objcMembers class ArticleView: UIView {
+@objcMembers
+final class ArticleView: UIView {
 
     /// MARK - Styling
     var containerColor: UIColor? = .from(scheme: .placeholderBackground)

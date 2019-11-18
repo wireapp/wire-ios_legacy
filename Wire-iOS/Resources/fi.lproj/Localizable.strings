@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "you are mentioned";
 "conversation_list.voiceover.status.reply" = "reply";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arkistoitu";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista arkistoiduista keskusteluista";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "yhteystiedot";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Olen Wiressä, etsi %@ tai mene osoitteeseen get.wire.com";
 "send_invitation_no_email.text" = "Olen Wiressä. Mene osoitteeseen get.wire.com ottaaksesi minuun yhteyttä.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Luo";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "jakoi kuvan";
@@ -202,6 +217,11 @@
 "list.title" = "Keskustelut";
 "list.archived_conversations" = "ARKISTOI";
 "list.archived_conversations_close" = "Sulje arkisto";
+
+"list.section.groups" = "Ryhmät";
+"list.section.contacts" = "Ihmiset";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "vahvistettu";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "Sinä";
 "content.system.this_device" = "tämä laite";
 
-"content.system.call.you" = "Sinä";
 "content.system.call.called" = "%@ soitti";
 "content.system.call.called-you" = "%@ soitit";
+"content.system.call.called.you" = "Sinä";
+
+"content.system.call.missed-call" = "Vastaamaton puhelu";
+"content.system.call.missed-call-you" = "Vastaamaton puhelu";
+
+"content.system.call.missed-call.groups" = "Missed call from %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Sinä";
 
 "content.system.renamed_conv.title" = "%@ nimesi keskustelun uudelleen";
 "content.system.renamed_conv.title-you" = "%@ nimesit keskustelun uudelleen";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "Palauta arkistosta";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Mykistä";
 "meta.menu.silence.unmute" = "Poista mykistys";
 "meta.menu.cancel" = "Peruuta";
@@ -769,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
 // Cancel connection request
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "Block…";
 "profile.unblock_button_title" = "Unblock…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Estä";
 "profile.unblock_button_title_action" = "Poista esto";

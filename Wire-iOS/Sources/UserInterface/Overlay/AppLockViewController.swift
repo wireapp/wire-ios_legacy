@@ -26,15 +26,15 @@ extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")
 }
 
-@objcMembers final class AppLockViewController: UIViewController {
+final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
 
     fileprivate var dimContents: Bool = false {
         didSet {
-            self.view.isHidden = !self.dimContents
-                        
+            view.window?.isHidden = !dimContents
+            
             if dimContents {
                 AppDelegate.shared().notificationsWindow?.makeKey()
             } else {
@@ -97,8 +97,7 @@ extension Notification.Name {
         
             if self.localAuthenticationCancelled {
                 self.lockView.showReauth = true
-            }
-            else {
+            } else {
                 self.lockView.showReauth = false
                 self.requireLocalAuthenticationIfNeeded { result in
                     
@@ -113,8 +112,7 @@ extension Notification.Name {
                     }
                 }
             }
-        }
-        else {
+        } else {
             self.lockView.showReauth = false
             self.dimContents = false
         }
@@ -134,7 +132,7 @@ extension Notification.Name {
             callback(.granted)
             return
         }
-        
+
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
                 callback(result)
@@ -145,11 +143,9 @@ extension Notification.Name {
             }
         }
     }
-}
 
-// MARK: - Application state observators
+    // MARK: - Application state observators
 
-extension AppLockViewController {
     @objc func applicationWillResignActive() {
         if AppLock.isActive {
             self.dimContents = true

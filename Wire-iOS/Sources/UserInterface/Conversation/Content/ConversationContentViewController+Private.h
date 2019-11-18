@@ -20,7 +20,6 @@
 /// Private material for conversationContentViewController.
 
 #import "ConversationContentViewController.h"
-#import "MessageAction.h"
 
 @import WireSyncEngine;
 

@@ -17,8 +17,6 @@
 //
 
 #import "ColorScheme.h"
-#import "UIColor+Mixing.h"
-#import "UIColor+WAZExtensions.h"
 #import "Wire-Swift.h"
 
 @interface ColorScheme ()
@@ -61,11 +59,6 @@
     return variant == ColorSchemeVariantLight ? UIBlurEffectStyleLight : UIBlurEffectStyleDark;
 }
 
-- (BOOL)isCurrentAccentColor:(UIColor *)accentColor
-{
-    return [self.accentColor isEqualTo:accentColor];
-}
-
 - (void)setVariant:(ColorSchemeVariant)variant
 {
     _variant = variant;
@@ -80,17 +73,6 @@
     });
     
     return defaultColorScheme;
-}
-
-- (BOOL)brightColor:(UIColor *)color
-{
-    CGFloat red, green, blue, alpha;
-    if ([color getRed:&red green:&green blue:&blue alpha:&alpha]) {
-        // Check if color is brighter then a threshold
-        return ((red + green + blue) / 3.0f) > 0.55f;
-    }
-
-    return NO;
 }
 
 @end

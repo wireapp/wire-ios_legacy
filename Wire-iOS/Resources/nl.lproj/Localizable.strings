@@ -158,6 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "je bent vermeld";
 "conversation_list.voiceover.status.reply" = "antwoorden";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "gearchiveerd";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lijst met gearchiveerde gesprekken";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contacten";
@@ -185,6 +189,17 @@
 "send_invitation.text" = "Ik gebruik Wire, zoek naar %@ of bezoek get.wire.com";
 "send_invitation_no_email.text" = "Ik gebruik Wire. Ga naar get.wire.com om met mij te verbinden.";
 
+// Folders
+
+"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.button.create" = "Aanmaken";
+"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.footer" = "Maximum 64 characters";
+"folder.creation.name.placeholder" = "Folder name";
+
+"folder.picker.title" = "Move to";
+"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
 "notifications.shared_a_photo" = "deelde een foto";
@@ -202,6 +217,11 @@
 "list.title" = "Gesprekken";
 "list.archived_conversations" = "ARCHIEF";
 "list.archived_conversations_close" = "Archief sluiten";
+
+"list.section.groups" = "Groepen";
+"list.section.contacts" = "Deelnemers";
+"list.section.requests" = "Requests";
+"list.section.favorites" = "Favorites";
 
 "conversation.voiceover.verified" = "geverifieerd";
 "conversation.voiceover.legalhold" = "legal hold";
@@ -441,9 +461,16 @@
 "content.system.you_started" = "Jij";
 "content.system.this_device" = "dit apparaat";
 
-"content.system.call.you" = "Jij";
 "content.system.call.called" = "%@ belde";
 "content.system.call.called-you" = "%@ belde";
+"content.system.call.called.you" = "Jij";
+
+"content.system.call.missed-call" = "Gemiste oproep";
+"content.system.call.missed-call-you" = "Gemiste oproep";
+
+"content.system.call.missed-call.groups" = "Gemiste oproep van %@";
+"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups.you" = "Jij";
 
 "content.system.renamed_conv.title" = "%@ hernoemde het gesprek";
 "content.system.renamed_conv.title-you" = "%@ hernoemde het gesprek";
@@ -694,6 +721,8 @@
 "meta.menu.unarchive" = "Terugzetten";
 "meta.menu.delete" = "Delete Group…";
 "meta.menu.clear_content" = "Clear Content…";
+"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Dempen";
 "meta.menu.silence.unmute" = "Dempen opheffen";
 "meta.menu.cancel" = "Annuleer";
@@ -769,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Delete group conversation?";
 "conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
 
 // Cancel connection request
@@ -781,6 +810,10 @@
 // Unblock button
 "profile.block_button_title" = "Blokeer…";
 "profile.unblock_button_title" = "Deblokkeer…";
+
+// Favorite button
+"profile.favorite_button_title" = "Add to Favorites";
+"profile.unfavorite_button_title" = "Remove from Favorites";
 
 "profile.block_button_title_action" = "Blokkeer";
 "profile.unblock_button_title_action" = "Deblokkeer";

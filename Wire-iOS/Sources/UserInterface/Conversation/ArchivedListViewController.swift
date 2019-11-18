@@ -170,6 +170,9 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 // MARK: - ConversationListCellDelegate
 
 extension ArchivedListViewController: ConversationListCellDelegate {
+    func indexPath(for cell: ConversationListCell) -> IndexPath? {
+        return collectionView.indexPath(for: cell)
+    }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
         guard let conversation = cell.conversation else { return }

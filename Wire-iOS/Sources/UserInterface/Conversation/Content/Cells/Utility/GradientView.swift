@@ -20,11 +20,11 @@
 import Foundation
 
 final class GradientView: UIView {
-    override class var layerClass : AnyClass {
+    override public class var layerClass : AnyClass {
         return CAGradientLayer.self;
     }
     
-    var gradientLayer: CAGradientLayer {
+    public var gradientLayer: CAGradientLayer {
         get {
             if let gradientLayer = self.layer as? CAGradientLayer {
                 return gradientLayer
