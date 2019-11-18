@@ -133,19 +133,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
-        if optionsSectionController.hasOptions {
-            sections.append(optionsSectionController)            
-        }
-
-        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team == selfUser.team {
-            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
-                                                                                  syncCompleted: didCompleteInitialSync,
-                                                                                  collectionView: self.collectionViewController.collectionView!,
-                                                                                  presentingViewController: self)
-            sections.append(receiptOptionsSectionController)
-        }
-
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if let selfUser = ZMUser.selfUser() {
             participants.append(selfUser)
@@ -159,7 +146,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                              conversation: conversation,
                                                              delegate: self)
             sections.append(adminSection)
-
+            
             let members = participants.filter({!$0.teamRole.isAdminGroup})
             let memberSection = ParticipantsSectionController(participants: members,
                                                               teamRole: .member,
@@ -167,6 +154,23 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                               delegate: self)
             sections.append(memberSection)
         }
+
+        // MARK: options sections
+        let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
+        if optionsSectionController.hasOptions {
+            sections.append(optionsSectionController)
+        }
+        
+        if let selfUser = ZMUser.selfUser(), selfUser.isTeamMember, conversation.team == selfUser.team {
+            let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
+                                                                                  syncCompleted: didCompleteInitialSync,
+                                                                                  collectionView: self.collectionViewController.collectionView!,
+                                                                                  presentingViewController: self)
+            sections.append(receiptOptionsSectionController)
+        }
+        
+        // MARK: services sections
+        
         if !serviceUsers.isEmpty {
             let servicesSection = ServicesSectionController(serviceUsers: serviceUsers, conversation: conversation, delegate: self)
             sections.append(servicesSection)
