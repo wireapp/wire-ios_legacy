@@ -206,11 +206,11 @@ class UserCell: SeparatorCollectionViewCell {
         titleLabel.attributedText = attributedTitle
     }
     
-    public func configure(with user: UserType, conversation: ZMConversation? = nil) {
+    func configure(with user: UserType, conversation: ZMConversation? = nil) {
         configure(with: user, subtitle: subtitle(for: user), conversation: conversation)
     }
 
-    public func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ZMConversation? = nil) {
+    func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ZMConversation? = nil) {
         self.user = user
 
         avatar.user = user

@@ -175,6 +175,15 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        switch viewModel.rows[indexPath.row] {
+        case .user(let bareUser):
+            return !bareUser.isSelfUser
+        default:
+            return true
+        }
+    }
+
 }
 
 extension ParticipantsSectionController: ZMUserObserver {
