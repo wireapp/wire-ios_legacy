@@ -141,6 +141,10 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return .init(width: view.bounds.size.width, height: 56)
     }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return viewModel.participants[indexPath.row].isSelfUser == false
+    }
 }
 
 private final class SelectedUserCell: UserCell {
