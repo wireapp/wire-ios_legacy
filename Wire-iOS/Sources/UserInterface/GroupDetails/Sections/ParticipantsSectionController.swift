@@ -84,7 +84,7 @@ extension UserCell: ParticipantsCellConfigurable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
         guard case let .user(user) = rowType else { preconditionFailure() }
         configure(with: user, conversation: conversation)
-        accessoryIconView.isHidden = false
+        accessoryIconView.isHidden = user.isSelfUser
         accessibilityIdentifier = "participants.section.participants.cell"
         self.showSeparator = showSeparator
     }
@@ -104,7 +104,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     private var token: AnyObject?
     
     init(participants: [UserType],
-         teamRole: TeamRole, ///TODO: own enum with .admin and .members type only
+         teamRole: TeamRole,
          conversation: ZMConversation,
          delegate: GroupDetailsSectionControllerDelegate) {
         viewModel = .init(participants: participants, teamRole: teamRole)
