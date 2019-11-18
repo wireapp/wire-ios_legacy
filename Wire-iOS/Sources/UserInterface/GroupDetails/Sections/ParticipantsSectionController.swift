@@ -56,7 +56,15 @@ private struct ParticipantsSectionViewModel {
             return nil
         }
     }
-
+    var sectionFooterSize: CGSize? {
+        switch teamRole {
+        case .admin, .owner:
+            return participants.isEmpty ? nil : .zero
+        default:
+            return .zero
+        }
+    }
+    
     init(participants: [UserType], teamRole: TeamRole, isRowsComputed: Bool = true) {
         self.participants = participants
         self.teamRole = teamRole
@@ -146,8 +154,7 @@ class ParticipantsSectionController: GroupDetailsSectionController {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         footer.titleLabel.text = footerText
         footer.size(fittingWidth: collectionView.bounds.width)
-        let footerSize: CGSize = ((viewModel.teamRole == .admin || viewModel.teamRole == .owner) && viewModel.participants.isEmpty) ? footer.bounds.size : .zero
-        return footerSize
+        return viewModel.sectionFooterSize == nil ? footer.bounds.size : viewModel.sectionFooterSize!
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
