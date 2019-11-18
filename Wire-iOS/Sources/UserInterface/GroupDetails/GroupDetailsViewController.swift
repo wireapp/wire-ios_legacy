@@ -142,13 +142,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             
             let admins = participants.filter({$0.teamRole.isAdminGroup})
             let adminSection = ParticipantsSectionController(participants: admins,
-                                                             conversation: conversation, teamRole: .admin,
+                                                             teamRole: .admin, conversation: conversation,
                                                              delegate: self)
             sections.append(adminSection)
             
             let members = participants.filter({!$0.teamRole.isAdminGroup})
             let memberSection = ParticipantsSectionController(participants: members,
-                                                              conversation: conversation, teamRole: .member,
+                                                              teamRole: .member, conversation: conversation,
                                                               delegate: self)
             sections.append(memberSection)
         }

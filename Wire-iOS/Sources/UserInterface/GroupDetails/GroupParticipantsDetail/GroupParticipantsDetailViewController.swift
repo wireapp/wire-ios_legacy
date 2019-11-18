@@ -138,11 +138,15 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     private func computeSections() -> [CollectionViewSectionController] {
-        let adminsSection = ParticipantsSectionController(participants: viewModel.admins, conversation: viewModel.conversation, teamRole: .admin, isRowsComputed: false, delegate: self)
-        let membersSection = ParticipantsSectionController(participants: viewModel.members, conversation: viewModel.conversation, teamRole: .member, isRowsComputed: false, delegate: self)
+        let adminsSection = ParticipantsSectionController(participants: viewModel.admins, teamRole: .admin, conversation: viewModel.conversation, delegate: self, isRowsComputed: false)
+        let membersSection = ParticipantsSectionController(participants: viewModel.members, teamRole: .member, conversation: viewModel.conversation, delegate: self, isRowsComputed: false)
 
         sections = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? [] : [adminsSection, membersSection]
         return sections
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return viewModel.participants[indexPath.row].isSelfUser == false
     }
 }
 

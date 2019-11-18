@@ -84,7 +84,7 @@ extension UserCell: ParticipantsCellConfigurable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool) {
         guard case let .user(user) = rowType else { preconditionFailure() }
         configure(with: user, conversation: conversation)
-        accessoryIconView.isHidden = false
+        accessoryIconView.isHidden = user.isSelfUser
         accessibilityIdentifier = "participants.section.participants.cell"
         self.showSeparator = showSeparator
     }
@@ -103,7 +103,10 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    init(participants: [UserType], conversation: ZMConversation, teamRole: TeamRole, isRowsComputed: Bool = true, delegate: GroupDetailsSectionControllerDelegate) {
+    init(participants: [UserType],
+         teamRole: TeamRole,
+         conversation: ZMConversation,
+         delegate: GroupDetailsSectionControllerDelegate, isRowsComputed: Bool = true) {
         viewModel = .init(participants: participants, teamRole: teamRole, isRowsComputed: isRowsComputed)
         self.conversation = conversation
         self.delegate = delegate
@@ -172,6 +175,15 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        switch viewModel.rows[indexPath.row] {
+        case .user(let bareUser):
+            return !bareUser.isSelfUser
+        default:
+            return true
+        }
+    }
+
 }
 
 extension ParticipantsSectionController: ZMUserObserver {
