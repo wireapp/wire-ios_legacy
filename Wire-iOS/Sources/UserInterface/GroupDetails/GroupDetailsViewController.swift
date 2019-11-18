@@ -208,7 +208,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
     func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
-            participants: users,
             selectedParticipants: selectedUsers,
             conversation: conversation
         )
