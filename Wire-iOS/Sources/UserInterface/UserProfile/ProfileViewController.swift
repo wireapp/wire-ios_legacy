@@ -20,6 +20,8 @@ import Foundation
 
 import UIKit
 
+private let zmLog = ZMSLog(tag: "ProfileViewController")
+
 enum ProfileViewControllerTabBarIndex : Int {
     case details = 0
     case devices
@@ -43,7 +45,7 @@ protocol ProfileViewControllerDelegate: class {
 final class ProfileViewController: UIViewController {
     
     private(set) var bareUser: UserType
-    private(set) var viewer: UserType?
+    private(set) var viewer: UserType
     weak var delegate: ProfileViewControllerDelegate?
     weak var viewControllerDismisser: ViewControllerDismisser?
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
@@ -88,11 +90,11 @@ final class ProfileViewController: UIViewController {
         super.init(coder: aDecoder)
     }
     
-    func dismissButtonClicked() {
+    func dismissButtonClicked() { ///TODO: remove
         requestDismissal(withCompletion: { })
     }
     
-    func requestDismissal(withCompletion completion: @escaping () -> ()) {
+    private func requestDismissal(withCompletion completion: @escaping () -> ()) {
         viewControllerDismisser?.dismiss(viewController: self, completion: completion)
     }
     
@@ -138,80 +140,91 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateShowVerifiedShield() {
-        
         if let user = bareUser.zmUser {
-            let showShield = user.trusted != nil &&
-                !user.clients.count.isEmpty &&
+            let showShield = user.trusted() &&
+                !user.clients.isEmpty &&
                 context != .deviceList &&
-                tabsController.selectedIndex != Int(ProfileViewControllerTabBarIndexDevices) && ZMUser.selfUser.trusted
+                tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue && ZMUser.selfUser().trusted()
             
-            profileTitleView.showVerifiedShield = showShield
+            profileTitleView?.showVerifiedShield = showShield
         } else {
-            profileTitleView.showVerifiedShield = false
+            profileTitleView?.showVerifiedShield = false
         }
+    }
+    
+    private var fullUser: ZMUser? {
+        return bareUser.zmUser
     }
     
     // MARK: - Actions
-    func bringUpConversationCreationFlow() { ///not private
-        let users = Set<AnyHashable>(objects: fullUser(), nil) as? Set<ZMUser>
+    private func bringUpConversationCreationFlow() {
+        let users: Set<ZMUser>
+        if let fullUser = fullUser {
+            users = Set<ZMUser>([fullUser])
+        } else {
+            users = Set<ZMUser>()
+        }
+
         let controller = ConversationCreationController(preSelectedParticipants: users)
         controller.delegate = self
-        let wrappedController = controller.wrapInNavigation()
-        wrappedController?.modalPresentationStyle = .formSheet
-        if let wrappedController = wrappedController {
-            present(wrappedController, animated: true)
-        }
+        
+        let wrappedController = controller.wrapInNavigationController()
+        wrappedController.modalPresentationStyle = .formSheet
+        present(wrappedController, animated: true)
     }
     
-    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {///not private
-        let controller = UIAlertController.cancelConnectionRequest(forUser: fullUser) { canceled in
+    private func bringUpCancelConnectionRequestSheet(from targetView: UIView) {
+        guard let fullUser = fullUser else { return }
+        
+        let controller = UIAlertController.cancelConnectionRequest(for: fullUser) { canceled in
             if !canceled {
                 self.cancelConnectionRequest()
             }
         }
         
-        presentAlert(controller, fromTargetView: targetView)
+        presentAlert(controller, targetView: targetView)
     }
     
     func cancelConnectionRequest() {
-        let user = fullUser()
-        ZMUserSession.shared().enqueueChanges({
+        let user = fullUser
+        ZMUserSession.shared()?.enqueueChanges({
             user?.cancelConnectionRequest()
             self.returnToPreviousScreen()
         })
     }
     
-    func openOneToOneConversation() {///TODO: non private
-        if fullUser == nil {
-            ZMLogError("No user to open conversation with")
+    private func openOneToOneConversation() {
+        guard let fullUser = fullUser else {
+            zmLog.error("No user to open conversation with")
             return
         }
-        var conversation: ZMConversation? = nil
+        var conversation: ZMConversation! = nil
         
-        ZMUserSession.shared().enqueueChanges({
-            conversation = self.fullUser.oneToOneConversation
+        ZMUserSession.shared()?.enqueueChanges({
+            conversation = fullUser.oneToOneConversation
         }, completionHandler: {
-            self.delegate.profileViewController(self, wantsToNavigateTo: conversation)
+            self.delegate?.profileViewController(self, wantsToNavigateTo: conversation)
         })
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default().statusBarStyle
+        return ColorScheme.default.statusBarStyle
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         profileFooterView = ProfileFooterView()
-        view.addSubview(profileFooterView)
+        view.addSubview(profileFooterView!)
         
         incomingRequestFooter = IncomingRequestFooterView()
-        view.addSubview(incomingRequestFooter)
+        view.addSubview(incomingRequestFooter!)
         
-        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        view.backgroundColor = UIColor.from(scheme: .barBackground)
         
-        if nil != fullUser && nil != ZMUserSession.shared() {
-            observerToken = UserChangeInfo.addObserver(self, forUser: fullUser, userSession: ZMUserSession.shared())
+        if let fullUser = fullUser,
+            let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.addObserver(self, for: fullUser, userSession: userSession)
         }
         
         setupNavigationItems()
@@ -224,13 +237,13 @@ final class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
-        UIAccessibilityPostNotification(UIAccessibility.Notification.screenChanged, navigationItem?.titleView)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
+        UIAccessibilityPostNotification(UIAccessibility.Notification.screenChanged, navigationItem.titleView)
     }
     
     // MARK: - Keyboard frame observer
@@ -275,7 +288,7 @@ final class ProfileViewController: UIViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
         
-        if let fullUser = self.fullUser(), context != .search && context != .profileViewer {
+        if let fullUser = self.fullUser, context != .search && context != .profileViewer {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
@@ -292,8 +305,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK : - constraints
     
-    @objc
-    func setupConstraints() {
+    private func setupConstraints() {
         usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
         tabsController.view.translatesAutoresizingMaskIntoConstraints = false
         profileFooterView.translatesAutoresizingMaskIntoConstraints = false
@@ -314,8 +326,8 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Factories
     
-    @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
+    private func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
+        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: fullUser?.addressBookEntry?.cachedName)
     }
     
 }
@@ -458,7 +470,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     @objc
     func presentLegalHoldDetails() {
-        guard let user = fullUser() else { return }
+        guard let user = fullUser else { return }
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
@@ -474,7 +486,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     private func sendConnectionRequest() {
         let connect: (String) -> Void = {
-            if let user = self.fullUser() {
+            if let user = self.fullUser {
                 user.connect(message: $0)
             } else if let searchUser = self.bareUser as? ZMSearchUser {
                 searchUser.connect(message: $0)
@@ -490,7 +502,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
     
     private func acceptConnectionRequest() {
-        guard let user = self.fullUser() else { return }
+        guard let user = self.fullUser else { return }
         ZMUserSession.shared()?.enqueueChanges {
             user.accept()
             user.refreshData()
@@ -499,7 +511,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
     
     private func ignoreConnectionRequest() {
-        guard let user = self.fullUser() else { return }
+        guard let user = self.fullUser else { return }
         ZMUserSession.shared()?.enqueueChanges {
             user.ignore()
             self.returnToPreviousScreen()
@@ -519,7 +531,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         guard case .block = result else { return }
         
         let updateClosure = {
-            self.fullUser()?.toggleBlocked()
+            self.fullUser?.toggleBlocked()
             self.updateFooterViews()
         }
         
@@ -582,7 +594,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     // MARK: Remove User
     
     private func presentRemoveUserMenuSheetController(from view: UIView) {
-        guard let otherUser = self.fullUser() else {
+        guard let otherUser = fullUser else {
             return
         }
         
@@ -629,7 +641,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     }
     
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return bareUser.displayName.uppercasedWithCurrentLocale()
+        return bareUser.displayName.uppercasedWithCurrentLocale
     }
     
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
