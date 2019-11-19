@@ -22,8 +22,9 @@ final class GroupParticipantsDetailViewController: UIViewController {
 
     private let collectionView = UICollectionView(forGroupedSections: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
-    private let viewModel: GroupParticipantsDetailViewModel
+    let viewModel: GroupParticipantsDetailViewModel
     private let collectionViewController: SectionCollectionViewController
+    private let variant: ColorSchemeVariant
     
     // used for scrolling and fading selected cells
     private var firstLayout = true
@@ -42,7 +43,10 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     init(selectedParticipants: [UserType],
-         conversation: ZMConversation) {
+         conversation: ZMConversation,
+         variant: ColorSchemeVariant = ColorScheme.default.variant) {
+        
+        self.variant = variant
         
         var allParticipants = conversation.sortedOtherParticipants
         allParticipants = allParticipants.sorted { $0.displayName < $1.displayName }
@@ -95,7 +99,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         })
     }
     
-    private func setupViews() {
+    func setupViews() {
         addToSelf(searchViewController)
         searchViewController.view.translatesAutoresizingMaskIntoConstraints = false
         searchViewController.delegate = viewModel
@@ -125,9 +129,12 @@ final class GroupParticipantsDetailViewController: UIViewController {
         ])
     }
     
-    private func participantsDidChange() {
+     func participantsDidChange() {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
+        
+        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
+        collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
     }
     
     private func scrollToFirstHighlightedUser() {
