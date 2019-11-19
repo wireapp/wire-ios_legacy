@@ -41,19 +41,21 @@ enum ParticipantsRowType {
 private struct ParticipantsSectionViewModel {
     static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
-    let participants: [UserType]
+    let participants: [UserType]    
     let teamRole: TeamRole
-
-    var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     
-    var sectionTitle: String {
-        if teamRole.isAdminGroup {
-            return "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
-        } else {
+    var sectionAccesibilityIdentifier = "label.groupdetails.participants"
+    var sectionTitle: String? {
+        switch teamRole {
+        case .member:
             return "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
+        case .admin:
+            return "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
+        default:
+            return nil
         }
     }
-
+   
     var footerTitle: String {
         if teamRole.isAdminGroup {
             return "participants.section.admins.footer".localized
@@ -65,13 +67,17 @@ private struct ParticipantsSectionViewModel {
     var footerVisible: Bool {
         return participants.isEmpty
     }
-
-    init(participants: [UserType],
-         teamRole: TeamRole) {
+    
+    /// init method
+    ///
+    /// - Parameters:
+    ///   - participants: list of conversation participants
+    ///   - teamRole: participant's role
+    ///   - showAllRows: enable/disable the display of the “ShowAll” button
+    init(participants: [UserType], teamRole: TeamRole, clipSection: Bool = true) {
         self.participants = participants
         self.teamRole = teamRole
-        
-        rows = ParticipantsSectionViewModel.computeRows(participants)
+        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
     }
     
     static func computeRows(_ participants: [UserType]) -> [ParticipantsRowType] {
@@ -99,15 +105,16 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         }
     }
     private weak var delegate: GroupDetailsSectionControllerDelegate?
-    private let viewModel: ParticipantsSectionViewModel
+    private var viewModel: ParticipantsSectionViewModel
     private let conversation: ZMConversation
     private var token: AnyObject?
     
     init(participants: [UserType],
          teamRole: TeamRole,
          conversation: ZMConversation,
-         delegate: GroupDetailsSectionControllerDelegate) {
-        viewModel = .init(participants: participants, teamRole: teamRole)
+         delegate: GroupDetailsSectionControllerDelegate,
+         clipSection: Bool = true) {
+        viewModel = .init(participants: participants, teamRole: teamRole, clipSection: clipSection)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
@@ -123,7 +130,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         collectionView?.register(ShowAllParticipantsCell.self, forCellWithReuseIdentifier: ShowAllParticipantsCell.reuseIdentifier)
         self.collectionView = collectionView
     }
-    
+
     override var sectionTitle: String? {
         return viewModel.sectionTitle
     }
