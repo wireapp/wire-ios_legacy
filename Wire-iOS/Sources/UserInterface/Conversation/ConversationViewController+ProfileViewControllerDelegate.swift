@@ -18,6 +18,14 @@
 
 import Foundation
 
+extension ConversationViewController {
+    @objc
+    func createUserDetailViewControllerWithUser() -> UIViewController {
+        ///TODO: unwrap
+        return UserDetailViewControllerFactory.createUserDetailViewController(user: conversation.firstActiveParticipantOtherThanSelf!, conversation: conversation, profileViewControllerDelegate: self, viewControllerDismisser: self)
+    }
+}
+
 ///TODO:
 extension ConversationViewController: ProfileViewControllerDelegate {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {return nil}
