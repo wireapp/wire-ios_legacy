@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "No results.";
 "peoplepicker.no_matching_results_message" = "Enter a full email address.";
+"peoplepicker.no_search results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Send an invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Share contacts";
