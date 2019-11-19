@@ -58,11 +58,11 @@ final class ProfileViewController: UIViewController {
     
     private var observerToken: Any?
     
-    convenience init(user: UserType?, viewer: UserType?, context: ProfileViewControllerContext) {
+    convenience init(user: UserType, viewer: UserType, context: ProfileViewControllerContext) {
         self.init(user: user, viewer: viewer, conversation: nil, context: context)
     }
     
-    convenience init(user: UserType?, viewer: UserType?, conversation: ZMConversation?) {
+    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?) {
         let context: ProfileViewControllerContext
         if conversation?.conversationType == .group {
             context = .groupConversation
@@ -73,7 +73,7 @@ final class ProfileViewController: UIViewController {
         self.init(user: user, viewer: viewer, conversation: conversation, context: context)
     }
     
-    init(user: UserType, viewer: UserType?, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         super.init(nibName: nil, bundle: nil)
         bareUser = user
         self.viewer = viewer
@@ -92,26 +92,28 @@ final class ProfileViewController: UIViewController {
         requestDismissal(withCompletion: { })
     }
     
-    func requestDismissal(withCompletion completion: () -> ()) {
-        viewControllerDismisser?.dismiss(self, completion: completion)
+    func requestDismissal(withCompletion completion: @escaping () -> ()) {
+        viewControllerDismisser?.dismiss(viewController: self, completion: completion)
     }
     
-    func setupNavigationItems() {
-        var legalHoldItem: UIBarButtonItem? = nil
-        if bareUser.isUnderLegalHold || conversation.isUnderLegalHold {
+    private func setupNavigationItems() {
+        let legalHoldItem: UIBarButtonItem?
+        if bareUser.isUnderLegalHold || conversation?.isUnderLegalHold == true {
             legalHoldItem = legalholdItem
+        } else {
+            legalHoldItem = nil
         }
         
         if navigationController?.viewControllers.count == 1 {
-            navigationItem?.rightBarButtonItem = navigationController?.closeItem()
-            navigationItem?.leftBarButtonItem = legalHoldItem
+            navigationItem.rightBarButtonItem = navigationController?.closeItem()
+            navigationItem.leftBarButtonItem = legalHoldItem
         } else {
-            navigationItem?.rightBarButtonItem = legalHoldItem
+            navigationItem.rightBarButtonItem = legalHoldItem
         }
     }
     
     // MARK: - Header
-    func setupHeader() {
+    private func setupHeader() {
         let viewModel = makeUserNameDetailViewModel()
         let usernameDetailsView = UserNameDetailView()
         usernameDetailsView.configure(with: viewModel)
@@ -121,25 +123,27 @@ final class ProfileViewController: UIViewController {
         let titleView = ProfileTitleView()
         titleView.configure(with: viewModel)
         
+        titleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
-            titleView.translatesAutoresizingMaskIntoConstraints = false
-            navigationItem?.titleView = titleView
+            navigationItem.titleView = titleView
         } else {
-            titleView.translatesAutoresizingMaskIntoConstraints = false
             titleView.setNeedsLayout()
             titleView.layoutIfNeeded()
             titleView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             titleView.translatesAutoresizingMaskIntoConstraints = true
         }
         
-        navigationItem?.titleView = titleView
+        navigationItem.titleView = titleView
         profileTitleView = titleView
     }
     
-    func updateShowVerifiedShield() {
-        let user = fullUser()
-        if nil != user {
-            let showShield = user?.trusted != nil && user?.clients.count ?? 0 > 0 && context != ProfileViewControllerContextDeviceList && tabsController.selectedIndex != Int(ProfileViewControllerTabBarIndexDevices) && ZMUser.selfUser.trusted
+    private func updateShowVerifiedShield() {
+        
+        if let user = bareUser.zmUser {
+            let showShield = user.trusted != nil &&
+                !user.clients.count.isEmpty &&
+                context != .deviceList &&
+                tabsController.selectedIndex != Int(ProfileViewControllerTabBarIndexDevices) && ZMUser.selfUser.trusted
             
             profileTitleView.showVerifiedShield = showShield
         } else {
@@ -643,7 +647,13 @@ extension ProfileViewController: ConversationCreationControllerDelegate {
         enableReceipts: Bool
         ) {
         controller.dismiss(animated: true) { [weak self] in
-            self?.delegate?.profileViewController?(self, wantsToCreateConversationWithName: name, users: participants)
+            self?.delegate?.profileViewController(self, wantsToCreateConversationWithName: name, users: participants)
         }
+    }
+}
+
+extension ProfileViewController: TabBarControllerDelegate {
+    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
+        updateShowVerifiedShield()
     }
 }
