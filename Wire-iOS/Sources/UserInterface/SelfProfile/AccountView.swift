@@ -19,11 +19,11 @@
 import UIKit
 import Cartography
 
-open class LayerHostView<LayerType: CALayer>: UIView {
+class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {
         return self.layer as! LayerType
     }
-    override open class var layerClass : AnyClass {
+    override class var layerClass : AnyClass {
         return LayerType.self
     }
 }
@@ -57,7 +57,7 @@ final class ShapeView: LayerHostView<CAShapeLayer> {
     }
 }
 
-public protocol AccountViewType {
+protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
     var onTap: ((Account?) -> ())? { get set }
@@ -247,7 +247,7 @@ extension BaseAccountView: ZMUserObserver {
 }
 
 final class PersonalAccountView: AccountView {
-    internal let userImageView: AvatarImageView = {
+    let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
 

@@ -19,7 +19,7 @@
 import Foundation
 
 
-public protocol PopoverPresenter: class {
+protocol PopoverPresenter: class {
 
     /// The presenting popover. Its frame should be updated when the orientation or screen size changes.
     var presentedPopover: UIPopoverPresentationController? {get set}
@@ -33,7 +33,7 @@ public protocol PopoverPresenter: class {
 }
 
 extension PopoverPresenter where Self: UIViewController {
-    public func updatePopoverSourceRect() {
+    func updatePopoverSourceRect() {
         guard let presentedPopover = presentedPopover,
               let popoverPointToView = popoverPointToView else { return }
 

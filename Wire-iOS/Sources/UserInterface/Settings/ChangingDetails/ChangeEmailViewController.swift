@@ -115,7 +115,7 @@ struct ChangeEmailState {
         observerToken = nil
     }
     
-    internal func setupViews() {
+    func setupViews() {
         title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false

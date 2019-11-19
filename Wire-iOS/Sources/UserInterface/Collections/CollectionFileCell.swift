@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-final public class CollectionFileCell: CollectionCell {
+final class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     private let headerView = CollectionCellHeader()
     

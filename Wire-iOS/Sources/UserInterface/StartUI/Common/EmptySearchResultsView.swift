@@ -86,7 +86,7 @@ extension EmptySearchResultsViewAction {
     private let statusLabel  = UILabel()
     private let actionButton: InviteButton
     
-    @objc public weak var delegate: EmptySearchResultsViewDelegate?
+    @objc weak var delegate: EmptySearchResultsViewDelegate?
     
     @objc public init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
         self.variant = variant

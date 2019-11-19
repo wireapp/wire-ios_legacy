@@ -42,8 +42,8 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    public let recorder: AudioRecorderType
-    public weak var delegate: AudioRecordViewControllerDelegate?
+    let recorder: AudioRecorderType
+    weak var delegate: AudioRecordViewControllerDelegate?
     
     let recordButton = IconButton()
     let stopRecordButton = IconButton()
@@ -406,7 +406,7 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button Actions
     
-    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
+    @objc func recordButtonPressed(_ sender: AnyObject!) {
         self.recorder.startRecording { success in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)

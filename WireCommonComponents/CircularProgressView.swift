@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objcMembers open class CircularProgressView: UIView {
+public class CircularProgressView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -77,7 +77,7 @@ import Foundation
         self.shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.bounds.width/2).cgPath
     }
     
-    override open class var layerClass : AnyClass {
+    override public class var layerClass : AnyClass {
         return CAShapeLayer.self
     }
     

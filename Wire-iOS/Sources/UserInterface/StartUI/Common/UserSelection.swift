@@ -20,7 +20,7 @@ import Foundation
 import WireUtilities
 
 @objc
-public protocol UserSelectionObserver {
+protocol UserSelectionObserver {
     
     func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser)
     func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser)
@@ -50,14 +50,14 @@ public class UserSelection : NSObject {
     }
     
     @objc(addObserver:)
-    public func add(observer: UserSelectionObserver) {
+    func add(observer: UserSelectionObserver) {
         guard !observers.contains(where: { $0.unbox === observer}) else { return }
         
         observers.append(UnownedObject(observer))
     }
     
     @objc(removeObserver:)
-    public func remove(observer: UserSelectionObserver) {
+    func remove(observer: UserSelectionObserver) {
         guard let index = observers.firstIndex(where: { $0.unbox === observer}) else { return }
         
         observers.remove(at: index)

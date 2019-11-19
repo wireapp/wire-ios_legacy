@@ -19,7 +19,7 @@
 
 import Cartography
 
-@objc public protocol ModalTopBarDelegate: class {
+@objc protocol ModalTopBarDelegate: class {
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 
