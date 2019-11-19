@@ -133,7 +133,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
         
-        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search results".localized() : ""
+        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
         collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
     }
     
