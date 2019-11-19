@@ -750,6 +750,7 @@
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
+		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
@@ -2465,6 +2466,7 @@
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
+		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
@@ -5303,7 +5305,6 @@
 				878607041D33E3FF00971A19 /* KeyValueObserver.h */,
 				878607051D33E3FF00971A19 /* KeyValueObserver.m */,
 				A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */,
-				A95FA0DF2371D7C400BD166A /* UIColor+Mixing.swift */,
 				87AAE41C1E42399E00E1D13A /* UIFont+DynamicType.swift */,
 				16A5FE24215CB64D00AEEBBD /* UIFont+Weight.swift */,
 				16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */,
@@ -5754,6 +5755,14 @@
 			path = "Wire-iOS Tests/ConversationList/SectionHeader";
 			sourceTree = SOURCE_ROOT;
 		};
+		A97284092384245F00AFEFC6 /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */,
+			);
+			path = Backup;
+			sourceTree = "<group>";
+		};
 		A9E844F723730CC7001D1C47 /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -5765,6 +5774,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A97284092384245F00AFEFC6 /* Backup */,
 				A9E844F723730CC7001D1C47 /* Color */,
 				6340EF8E237AE90700EF8506 /* Calling */,
 				EF37AB742366F6BA00C1F5D9 /* Status */,
@@ -8524,6 +8534,7 @@
 				EF17B0E4223AB9F5006252A8 /* MediaBarSnapshotTests.swift in Sources */,
 				5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */,
 				7C25D75B21494E4B002E22BF /* UserSearchResultsViewControllerTests.swift in Sources */,
+				A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */,
 				EF40353122609D6C001A3568 /* MarkDownSnapshotTests.swift in Sources */,
 				87240383215B92F90094363B /* ZMUserMentionsTest.swift in Sources */,
 				8742C2F11E533AC400329FB6 /* NSAttributedStringHighlightTests.swift in Sources */,

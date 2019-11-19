@@ -19,11 +19,10 @@
 
 import Foundation
 
-
 private let zmLog = ZMSLog(tag: "UI")
 
-final class FileBackupExcluder: NSObject {
-
+final class FileBackupExcluder: BackupExcluder {
+   
     private static let filesToExclude: [FileInDirectory] = [
         (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
         (.libraryDirectory, ".")
@@ -33,9 +32,7 @@ final class FileBackupExcluder: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override init() {
-        super.init()
-        
+    init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillEnterForeground(_:)),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -59,17 +56,13 @@ final class FileBackupExcluder: NSObject {
     
     private func excludeFilesFromBackup() {
         do {
-            try type(of: self).filesToExclude.forEach { (directory, path) in
-                let url = URL.wr_directory(for: directory).appendingPathComponent(path)
-                try url.excludeFromBackupIfExists()
-            }
-        }
-        catch (let error) {
+            try FileBackupExcluder.exclude(filesToExclude: FileBackupExcluder.filesToExclude)
+        } catch (let error) {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
 
-    @objc public func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
+    func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
         do {
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()
@@ -77,15 +70,4 @@ final class FileBackupExcluder: NSObject {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
-}
-
-
-fileprivate extension URL {
-
-    func excludeFromBackupIfExists() throws {
-        if FileManager.default.fileExists(atPath: path) {
-            try wr_excludeFromBackup()
-        }
-    }
-
 }
