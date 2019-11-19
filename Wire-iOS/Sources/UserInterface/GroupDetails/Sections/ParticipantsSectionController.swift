@@ -48,9 +48,9 @@ private struct ParticipantsSectionViewModel {
     var sectionTitle: String? {
         switch teamRole {
         case .member:
-            return "group_details.conversation_members_header.title".localized.uppercased()
+            return "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
         case .admin:
-            return "group_details.conversation_admins_header.title".localized.uppercased()
+            return "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
         default:
             return nil
         }
