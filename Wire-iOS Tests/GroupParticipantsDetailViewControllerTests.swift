@@ -67,6 +67,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
         sut.viewModel.admins = []
         sut.viewModel.members = []
+        sut.setupViews()
         sut.participantsDidChange()
 
         // then

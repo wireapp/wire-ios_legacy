@@ -99,7 +99,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         })
     }
     
-    private func setupViews() {
+    func setupViews() {
         addToSelf(searchViewController)
         searchViewController.view.translatesAutoresizingMaskIntoConstraints = false
         searchViewController.delegate = viewModel
