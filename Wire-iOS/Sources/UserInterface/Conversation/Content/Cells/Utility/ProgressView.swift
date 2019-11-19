@@ -19,7 +19,7 @@
 
 import Foundation
 
-@objcMembers open class ProgressView: UIView {
+final class ProgressView: UIView {
     fileprivate var deterministic: Bool? = .none
     fileprivate var progress: Float = 0
     fileprivate var progressView: UIView = UIView()
@@ -51,19 +51,19 @@ import Foundation
         self.spinner.backgroundColor = self.tintColor
     }
     
-    open override var tintColor: UIColor? {
+    override var tintColor: UIColor? {
         didSet {
             self.progressView.backgroundColor = tintColor
             self.spinner.backgroundColor = tintColor
         }
     }
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         self.updateProgress(false)
     }
     
-    open func setDeterministic(_ determenistic: Bool, animated: Bool) {
+    func setDeterministic(_ determenistic: Bool, animated: Bool) {
         if self.deterministic != .none && self.deterministic == determenistic {
             return
         }
@@ -72,7 +72,7 @@ import Foundation
         self.updateProgress(animated)
     }
 
-    open func setProgress(_ progress: Float, animated: Bool) {
+    func setProgress(_ progress: Float, animated: Bool) {
         self.progress = progress
         self.updateProgress(animated)
     }

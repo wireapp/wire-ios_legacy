@@ -20,7 +20,7 @@
 import Foundation
 
 
-open class MulticastDelegate<T: Any>: NSObject {
+class MulticastDelegate<T: Any>: NSObject {
     private let delegates = NSHashTable<AnyObject>(options: .weakMemory, capacity: 0)
     
     func add(_ delegate: T) {

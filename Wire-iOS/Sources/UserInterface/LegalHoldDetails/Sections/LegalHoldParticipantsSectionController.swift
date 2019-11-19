@@ -48,7 +48,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
+    weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
     init(conversation: ZMConversation) {
         viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))

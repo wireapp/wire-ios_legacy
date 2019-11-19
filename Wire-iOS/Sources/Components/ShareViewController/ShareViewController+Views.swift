@@ -41,7 +41,7 @@ extension ShareViewController {
         self.shareablePreviewWrapper?.isHidden = !showPreview
     }
 
-    internal func createViews() {
+    func createViews() {
         
         createShareablePreview()
 
@@ -102,7 +102,7 @@ extension ShareViewController {
         }
     }
     
-    internal func createConstraints() {
+    func createConstraints() {
         constrain(self.view, self.blurView, self.containerView) { view, blurView, containerView in
             blurView.edges == view.edges
             containerView.top == view.topMargin

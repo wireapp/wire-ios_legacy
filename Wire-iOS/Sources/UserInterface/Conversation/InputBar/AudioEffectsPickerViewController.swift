@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 import WireCommonComponents
 
-@objc public protocol AudioEffectsPickerDelegate: NSObjectProtocol {
+@objc protocol AudioEffectsPickerDelegate: NSObjectProtocol {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
@@ -29,7 +29,7 @@ import WireCommonComponents
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval
-    public weak var delegate: AudioEffectsPickerDelegate?
+    weak var delegate: AudioEffectsPickerDelegate?
     
     fileprivate var audioPlayerController: AudioPlayerController? {
         didSet {
@@ -40,20 +40,20 @@ import WireCommonComponents
         }
     }
     
-    internal enum State {
+    enum State {
         case none
         case tip
         case time
         case playing
     }
     
-    internal var state: State = .none
+    var state: State = .none
     
     fileprivate let effects: [AVSAudioEffectType] = AVSAudioEffectType.displayedEffects
-    internal var normalizedLoudness: [Float] = []
+    var normalizedLoudness: [Float] = []
     fileprivate var lastLayoutSize = CGSize.zero
     
-    internal var selectedAudioEffect: AVSAudioEffectType = .none {
+    var selectedAudioEffect: AVSAudioEffectType = .none {
         didSet {
             if self.selectedAudioEffect == .reverse {
                 self.progressView.samples = self.normalizedLoudness.reversed()
@@ -119,7 +119,7 @@ import WireCommonComponents
     fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let statusBoxView = UIView()
-    internal let progressView = WaveformProgressView()
+    let progressView = WaveformProgressView()
     fileprivate let subtitleLabel = UILabel()
     
     override public func viewDidLoad() {
@@ -216,7 +216,7 @@ import WireCommonComponents
         }
     }
     
-    internal func setState(_ state: State, animated: Bool) {
+    func setState(_ state: State, animated: Bool) {
         if self.state == state {
             return
         }

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-internal class TextSearchResultCell: UITableViewCell {
+class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()

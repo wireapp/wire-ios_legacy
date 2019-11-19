@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objcMembers open class ConversationRootViewController: UIViewController {
+@objcMembers class ConversationRootViewController: UIViewController {
 
     let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
@@ -32,9 +32,9 @@ import Cartography
 
     fileprivate let networkStatusViewController: NetworkStatusViewController
 
-    @objc open fileprivate(set) weak var conversationViewController: ConversationViewController?
+    @objc fileprivate(set) weak var conversationViewController: ConversationViewController?
 
-    public init(conversation: ZMConversation, message: ZMConversationMessage?, clientViewController: ZClientViewController) {
+    init(conversation: ZMConversation, message: ZMConversationMessage?, clientViewController: ZClientViewController) {
         let conversationController = ConversationViewController()
         conversationController.session = ZMUserSession.shared()
         conversationController.conversation = conversation
@@ -66,11 +66,11 @@ import Cartography
         configure()
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open func configure() {
+    func configure() {
         guard let conversationViewController = self.conversationViewController else {
             return
         }
@@ -101,7 +101,7 @@ import Cartography
         navBarContainer.navigationBar.pushItem(conversationViewController.navigationItem, animated: false)
     }
 
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         delay(0.4) {
             UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
@@ -110,11 +110,11 @@ import Cartography
         shouldAnimateNetworkStatusView = true
     }
 
-    open override var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
 
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         switch ColorScheme.default.variant {
         case .light:
             return .default

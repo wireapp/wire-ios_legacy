@@ -49,7 +49,7 @@ final class ConversationTimeoutOptionsViewController: UIViewController {
     fileprivate let userSession: ZMUserSession
     fileprivate var observerToken: Any! = nil
 
-    public weak var dismisser: ViewControllerDismisser?
+    weak var dismisser: ViewControllerDismisser?
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
 

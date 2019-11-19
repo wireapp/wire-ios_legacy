@@ -61,7 +61,9 @@
 #import "TopPeopleCell+Internal.h"
 
 #import "IconButton.h"
+#import "IconButton+Internal.h"
 #import "Button.h"
+#import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
 #import "AnimatedListMenuView.h"

@@ -22,7 +22,7 @@ import Cartography
     case undo, confirm, cancel
 }
 
-@objc public protocol InputBarEditViewDelegate: class {
+@objc protocol InputBarEditViewDelegate: class {
     func inputBarEditView(_ editView: InputBarEditView, didTapButtonWithType buttonType: EditButtonType)
     func inputBarEditViewDidLongPressUndoButton(_ editView: InputBarEditView)
 }
@@ -41,7 +41,7 @@ public final class InputBarEditView: UIView {
     let cancelButton = InputBarEditView.iconButtonTemplate
     let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
     
-    public weak var delegate: InputBarEditViewDelegate?
+    weak var delegate: InputBarEditViewDelegate?
     
     public init() {
         super.init(frame: .zero)

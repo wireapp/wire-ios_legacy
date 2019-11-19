@@ -61,15 +61,15 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     return CGRect(x: 0, y: 0, width: w, height: h);
 }
 
-@objc public protocol FilePreviewGenerator {
+protocol FilePreviewGenerator {
     var callbackQueue: OperationQueue { get }
     var thumbnailSize: CGSize { get }
     func canGeneratePreviewForFile(_ fileURL: URL, UTI: String) -> Bool
     func generatePreview(_ fileURL: URL, UTI: String, completion: @escaping (UIImage?) -> ())
 }
 
-@objcMembers open class SharedPreviewGenerator: NSObject {
-    @objc static var generator: AggregateFilePreviewGenerator = {
+final class SharedPreviewGenerator: NSObject {
+    static var generator: AggregateFilePreviewGenerator = {
         let resultQueue = OperationQueue.main
         let thumbnailSizeDefault = CGSize(width: 120, height: 120)
         let thumbnailSizeVideo = CGSize(width: 640, height: 480)
@@ -84,19 +84,19 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
     }()
 }
 
-@objcMembers open class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
-    @objc let subGenerators: [FilePreviewGenerator]
+final class AggregateFilePreviewGenerator: NSObject, FilePreviewGenerator {
+    let subGenerators: [FilePreviewGenerator]
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
     
-    @objc init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    init(subGenerators: [FilePreviewGenerator], callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.callbackQueue = callbackQueue
         self.thumbnailSize = thumbnailSize
         self.subGenerators = subGenerators
         super.init()
     }
     
-    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+    public func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return self.subGenerators.filter {
             $0.canGeneratePreviewForFile(fileURL, UTI:uti)
         }.count > 0
@@ -115,18 +115,18 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
+final class ImageFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
     
-    @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+    public func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return UTTypeConformsTo(uti as CFString, kUTTypeImage)
     }
     
@@ -158,18 +158,18 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
+final class MovieFilePreviewGenerator: NSObject, FilePreviewGenerator {
    
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
     
-    @objc init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+    public func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return AVURLAsset.wr_isAudioVisualUTI(uti)
     }
     
@@ -227,18 +227,18 @@ func AspectFitRectInRect(_ fit: CGRect, into: CGRect) -> CGRect
 }
 
 
-@objcMembers open class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
+final public class PDFFilePreviewGenerator: NSObject, FilePreviewGenerator {
     
     public let thumbnailSize: CGSize
     public let callbackQueue: OperationQueue
     
-    @objc public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
+    public init(callbackQueue: OperationQueue, thumbnailSize: CGSize) {
         self.thumbnailSize = thumbnailSize
         self.callbackQueue = callbackQueue
         super.init()
     }
     
-    open func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
+    func canGeneratePreviewForFile(_ fileURL: URL, UTI uti: String) -> Bool {
         return UTTypeConformsTo(uti as CFString, kUTTypePDF)
     }
     

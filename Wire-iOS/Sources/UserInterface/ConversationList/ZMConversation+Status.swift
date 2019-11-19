@@ -273,7 +273,7 @@ extension ZMConversation {
 
 
 // "You left"
-final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
+final class SelfUserLeftMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages && status.isGroup && !status.isSelfAnActiveMember
     }
@@ -290,7 +290,7 @@ final internal class SelfUserLeftMatcher: ConversationStatusMatcher {
 }
 
 // "Blocked"
-final internal class BlockedMatcher: ConversationStatusMatcher {
+final class BlockedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isBlocked
     }
@@ -303,7 +303,7 @@ final internal class BlockedMatcher: ConversationStatusMatcher {
 }
 
 // "Active Call"
-final internal class CallingMatcher: ConversationStatusMatcher {
+final class CallingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isOngoingCall
     }
@@ -342,7 +342,7 @@ final internal class CallingMatcher: ConversationStatusMatcher {
 }
 
 // "A, B, C: typing a message..."
-final internal class TypingMatcher: ConversationStatusMatcher {
+final class TypingMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.isTyping && status.showingAllMessages
     }
@@ -369,7 +369,7 @@ final internal class TypingMatcher: ConversationStatusMatcher {
 }
 
 // "Silenced"
-final internal class SilencedMatcher: ConversationStatusMatcher {
+final class SilencedMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.showingAllMessages
     }
@@ -579,7 +579,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
 }
 
 // ! Failed to send
-final internal class FailedSendMatcher: ConversationStatusMatcher {
+final class FailedSendMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.hasUnsentMessages
     }
@@ -603,7 +603,7 @@ extension ZMUser {
 }
 
 // "[You|User] [added|removed|left] [_|users|you]"
-final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
+final class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]
     
     private func addedString(for messages: [ZMConversationMessage], in conversation: ZMConversation) -> NSAttributedString? {
@@ -652,7 +652,7 @@ final internal class GroupActivityMatcher: TypedConversationStatusMatcher {
 }
 
 // [Someone] started a conversation
-final internal class StartConversationMatcher: TypedConversationStatusMatcher {
+final class StartConversationMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.newConversation]
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
@@ -676,7 +676,7 @@ final internal class StartConversationMatcher: TypedConversationStatusMatcher {
 }
 
 // Fallback for empty conversations: showing the handle.
-final internal class UnsernameMatcher: ConversationStatusMatcher {
+final class UnsernameMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return !status.hasMessages
     }

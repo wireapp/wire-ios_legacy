@@ -17,7 +17,7 @@
 //
 
 
-class EphemeralTimeoutFormatter {
+final class EphemeralTimeoutFormatter {
 
 
     /// A formatter to produce a string with day in full style and hour/minute in positional style
@@ -44,7 +44,7 @@ class EphemeralTimeoutFormatter {
         ///
         /// - Parameter timeInterval: timeInterval to convert
         /// - Returns: formatted string
-        open func string(from interval: TimeInterval) -> String? {
+        func string(from interval: TimeInterval) -> String? {
 
             guard let dayString = dayFormatter.string(from: interval),
                 let hourString = hourFormatter.string(from: interval) else {

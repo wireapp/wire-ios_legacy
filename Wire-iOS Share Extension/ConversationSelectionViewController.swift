@@ -87,7 +87,7 @@ class ConversationSelectionViewController : UITableViewController {
 }
 
 extension ConversationSelectionViewController : UISearchResultsUpdating {
-    internal func updateSearchResults(for searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
             visibleConversations = allConversations.filter { conversation in
