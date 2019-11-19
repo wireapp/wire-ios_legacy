@@ -33,9 +33,9 @@ class ExtensionBackupExcluder {
     static func exclude() {
         do {
             try filesToExclude.forEach { (directory, path) in
-                let url = URL.wr_directory(for: directory).appendingPathComponent(path)
+                let url = URL.directory(for: directory).appendingPathComponent(path)
                 if FileManager.default.fileExists(atPath: url.path) {
-                    try url.wr_excludeFromBackup()
+                    url.excludeFromBackup()
                 }
             }
         } catch {

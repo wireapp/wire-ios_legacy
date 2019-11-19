@@ -60,7 +60,7 @@ final class FileBackupExcluder: NSObject {
     private func excludeFilesFromBackup() {
         do {
             try type(of: self).filesToExclude.forEach { (directory, path) in
-                let url = URL.wr_directory(for: directory).appendingPathComponent(path)
+                let url = URL.directory(for: directory).appendingPathComponent(path)
                 try url.excludeFromBackupIfExists()
             }
         }
@@ -77,15 +77,4 @@ final class FileBackupExcluder: NSObject {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
-}
-
-
-fileprivate extension URL {
-
-    func excludeFromBackupIfExists() throws {
-        if FileManager.default.fileExists(atPath: path) {
-            try wr_excludeFromBackup()
-        }
-    }
-
 }
