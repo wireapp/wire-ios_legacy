@@ -666,43 +666,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-///TODO:
-/*
-@implementation ConversationViewController (ProfileViewController)
-
-- (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
-{
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self.zClientViewController selectConversation:conversation
-                                           focusOnView:YES
-                                              animated:YES];
-    }];
-}
-
-- (void)profileViewController:(ProfileViewController *)controller wantsToCreateConversationWithName:(NSString *)name users:(NSSet *)users
-{
-    dispatch_block_t conversationCreation = ^{
-        __block  ZMConversation *newConversation = nil;
-        
-        ZM_WEAK(self);
-        [ZMUserSession.sharedSession enqueueChanges:^{
-            newConversation = [ZMConversation insertGroupConversationIntoUserSession:ZMUserSession.sharedSession withParticipants:users.allObjects name:name inTeam:ZMUser.selfUser.team];
-        } completionHandler:^{
-            ZM_STRONG(self);
-            [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
-        }];
-    };
-
-    if (nil != self.presentedViewController) {
-        [self dismissViewControllerAnimated:YES completion:conversationCreation];
-    }
-    else {
-        conversationCreation();
-    }
-}
-
-@end
-*/
 @implementation ConversationViewController (ZMConversationObserver)
 
 - (void)conversationDidChange:(ConversationChangeInfo *)note

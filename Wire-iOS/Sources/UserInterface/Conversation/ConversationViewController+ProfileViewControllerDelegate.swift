@@ -26,10 +26,35 @@ extension ConversationViewController {
     }
 }
 
-///TODO:
 extension ConversationViewController: ProfileViewControllerDelegate {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {return nil}
-    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){}
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>){}
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){
+        dismiss(animated: true) {
+            self.zClientViewController?.select(conversation, focusOnView: true, animated: true)
+        }
+    }
+    
+    ///TODO: unwrap
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        let conversationCreation = { [weak self] in
+            var newConversation: ZMConversation! = nil
+            
+            userSession.enqueueChanges({
+                newConversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team)
+            }, completionHandler: {
+                self?.zClientViewController?.select(newConversation, focusOnView: true, animated: true)
+            })
+        }
+        
+        if nil != presentedViewController {
+            dismiss(animated: true, completion: conversationCreation)
+        } else {
+            conversationCreation()
+        }
+
+    }
 
 }
