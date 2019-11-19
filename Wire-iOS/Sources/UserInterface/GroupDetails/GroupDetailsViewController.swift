@@ -134,23 +134,21 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         self.renameGroupSectionController = renameGroupSectionController
         
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
+        participants = participants.sorted { $0.displayName < $1.displayName }
         if let selfUser = ZMUser.selfUser() {
-            participants.append(selfUser)
-            participants = participants.sorted { $0.displayName < $1.displayName }
+            participants.insert(selfUser, at: 0)
         }
         if !participants.isEmpty {
             
             let admins = participants.filter({$0.teamRole.isAdminGroup})
             let adminSection = ParticipantsSectionController(participants: admins,
-                                                             teamRole: .admin,
-                                                             conversation: conversation,
+                                                             teamRole: .admin, conversation: conversation,
                                                              delegate: self)
             sections.append(adminSection)
             
             let members = participants.filter({!$0.teamRole.isAdminGroup})
             let memberSection = ParticipantsSectionController(participants: members,
-                                                              teamRole: .member,
-                                                              conversation: conversation,
+                                                              teamRole: .member, conversation: conversation,
                                                               delegate: self)
             sections.append(memberSection)
         }
@@ -214,7 +212,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
     func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
-            participants: users,
             selectedParticipants: selectedUsers,
             conversation: conversation
         )
