@@ -18,6 +18,267 @@
 
 import Foundation
 
+import UIKit
+
+enum ProfileViewControllerTabBarIndex : Int {
+    case details = 0
+    case devices
+}
+
+enum ProfileViewControllerContext : Int {
+    case search
+    case groupConversation
+    case oneToOneConversation
+    case deviceList
+    /// when opening from a URL scheme, not linked to a specific conversation
+    case profileViewer
+}
+
+@objc protocol ProfileViewControllerDelegate: NSObjectProtocol {
+    @objc optional func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String
+    @objc optional func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
+    @objc optional func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
+}
+
+final class ProfileViewController: UIViewController {
+   
+    private(set) weak var bareUser: UserType?
+    private(set) weak var viewer: UserType?
+    weak var delegate: ProfileViewControllerDelegate?
+    weak var viewControllerDismisser: ViewControllerDismisser?
+    weak var navigationControllerDelegate: UINavigationControllerDelegate?
+    
+    private var context: ProfileViewControllerContext?
+    private var conversation: ZMConversation?
+    private var profileFooterView: ProfileFooterView?
+    private var incomingRequestFooter: IncomingRequestFooterView?
+    private var usernameDetailsView: UserNameDetailView?
+    private var profileTitleView: ProfileTitleView?
+    private var tabsController: TabBarController?
+
+    private var observerToken: Any?
+
+    convenience init?(user: UserType?, viewer: UserType?, context: ProfileViewControllerContext) {
+        self.init(user: user, viewer: viewer, conversation: nil, context: context)
+    }
+    
+    convenience init?(user: UserType?, viewer: UserType?, conversation: ZMConversation?) {
+        if conversation?.conversationType == ZMConversationTypeGroup {
+            self.init(user: user, viewer: viewer, conversation: conversation, context: ProfileViewControllerContextGroupConversation)
+        } else {
+            self.init(user: user, viewer: viewer, conversation: conversation, context: ProfileViewControllerContextOneToOneConversation)
+        }
+    }
+    
+    init?(user: UserType?, viewer: UserType?, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+        super.init()
+        bareUser = user
+        self.viewer = viewer
+        self.conversation = conversation
+        self.context = context
+        
+        setupKeyboardFrameNotification()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    func dismissButtonClicked() {
+        requestDismissal(withCompletion: { })
+    }
+    
+    func requestDismissal(withCompletion completion: () -> ()) {
+        if delegate.responds(to: #selector(dismissViewController(_:completion:))) {
+            viewControllerDismisser.dismissViewController(self, completion: completion)
+        }
+    }
+    
+    func setupNavigationItems() {
+        var legalHoldItem: UIBarButtonItem? = nil
+        if bareUser.isUnderLegalHold || conversation.isUnderLegalHold {
+            legalHoldItem = legalholdItem
+        }
+        
+        if navigationController?.viewControllers.count == 1 {
+            navigationItem?.rightBarButtonItem = navigationController?.closeItem()
+            navigationItem?.leftBarButtonItem = legalHoldItem
+        } else {
+            navigationItem?.rightBarButtonItem = legalHoldItem
+        }
+    }
+    
+    // MARK: - Header
+    func setupHeader() {
+        let viewModel = makeUserNameDetailViewModel()
+        let usernameDetailsView = UserNameDetailView()
+        usernameDetailsView.configure(with: viewModel)
+        view.addSubview(usernameDetailsView)
+        self.usernameDetailsView = usernameDetailsView
+        
+        let titleView = ProfileTitleView()
+        titleView.configure(with: viewModel)
+        
+        if #available(iOS 11, *) {
+            titleView.translatesAutoresizingMaskIntoConstraints = false
+            navigationItem?.titleView = titleView
+        } else {
+            titleView.translatesAutoresizingMaskIntoConstraints = false
+            titleView.setNeedsLayout()
+            titleView.layoutIfNeeded()
+            titleView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            titleView.translatesAutoresizingMaskIntoConstraints = true
+        }
+        
+        navigationItem?.titleView = titleView
+        profileTitleView = titleView
+    }
+
+    func updateShowVerifiedShield() {
+        let user = fullUser()
+        if nil != user {
+            let showShield = user?.trusted != nil && user?.clients.count ?? 0 > 0 && context != ProfileViewControllerContextDeviceList && tabsController.selectedIndex != Int(ProfileViewControllerTabBarIndexDevices) && ZMUser.selfUser.trusted
+            
+            profileTitleView.showVerifiedShield = showShield
+        } else {
+            profileTitleView.showVerifiedShield = false
+        }
+    }
+    
+    func userDidChange(_ note: UserChangeInfo?) {
+        if note?.trustLevelChanged != nil {
+            updateShowVerifiedShield()
+        }
+        
+        if note?.legalHoldStatusChanged != nil {
+            setupNavigationItems()
+        }
+    }
+    
+    // MARK: - Actions
+    func bringUpConversationCreationFlow() {
+        let users = Set<AnyHashable>(objects: fullUser(), nil) as? Set<ZMUser>
+        let controller = ConversationCreationController(preSelectedParticipants: users)
+        controller.delegate = self
+        let wrappedController = controller.wrapInNavigation()
+        wrappedController?.modalPresentationStyle = .formSheet
+        if let wrappedController = wrappedController {
+            present(wrappedController, animated: true)
+        }
+    }
+    
+    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {
+        let controller = UIAlertController.cancelConnectionRequest(forUser: fullUser) { canceled in
+            if !canceled {
+                self.cancelConnectionRequest()
+            }
+        }
+        
+        presentAlert(controller, fromTargetView: targetView)
+    }
+    
+    func cancelConnectionRequest() {
+        let user = fullUser()
+        ZMUserSession.shared().enqueueChanges({
+            user?.cancelConnectionRequest()
+            self.returnToPreviousScreen()
+        })
+    }
+
+        func openOneToOneConversation() {///TODO: non private
+            if fullUser == nil {
+                ZMLogError("No user to open conversation with")
+                return
+            }
+            var conversation: ZMConversation? = nil
+            
+            ZMUserSession.shared().enqueueChanges({
+                conversation = self.fullUser.oneToOneConversation
+            }, completionHandler: {
+                self.delegate.profileViewController(self, wantsToNavigateTo: conversation)
+            })
+        }
+    
+    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {
+    }
+    
+    func bringUpConversationCreationFlow() {
+    }
+       
+    private func updateShowVerifiedShield() {
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default().statusBarStyle
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        profileFooterView = ProfileFooterView()
+        view.addSubview(profileFooterView)
+        
+        incomingRequestFooter = IncomingRequestFooterView()
+        view.addSubview(incomingRequestFooter)
+        
+        view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorBarBackground)
+        
+        if nil != fullUser && nil != ZMUserSession.shared() {
+            observerToken = UserChangeInfo.addObserver(self, forUser: fullUser, userSession: ZMUserSession.shared())
+        }
+        
+        setupNavigationItems()
+        setupHeader()
+        setupTabsController()
+        setupConstraints()
+        updateFooterViews()
+        updateShowVerifiedShield()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
+        UIAccessibilityPostNotification(UIAccessibility.Notification.screenChanged, navigationItem?.titleView)
+    }
+
+}
+
+extension ProfileViewController: ZMUserObserver {
+    
+}
+
+extension ProfileViewController: ProfileViewControllerDelegate {
+    @objc func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation?) {
+        if delegate.responds(to: #selector(profileViewController(_:wantsToNavigateTo:))) {
+            delegate.profileViewController(controller, wantsToNavigateTo: conversation)
+        }
+    }
+    
+    func suggestedBackButtonTitle(forProfileViewController controller: Any?) -> String? {
+        return bareUser.displayName.uppercasedWithCurrentLocale()
+    }
+}
+
+extension ProfileViewController: ConversationCreationControllerDelegate {
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: Set<ZMUser>,
+        allowGuests: Bool,
+        enableReceipts: Bool
+        ) {
+        controller.dismiss(animated: true) { [weak self] in
+            self?.delegate?.profileViewController?(self, wantsToCreateConversationWithName: name, users: participants)
+        }
+    }
+}
+
 // MARK: - Keyboard frame observer
 extension ProfileViewController {
 

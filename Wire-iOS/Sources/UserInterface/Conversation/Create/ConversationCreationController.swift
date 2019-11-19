@@ -49,7 +49,7 @@ final public class ConversationCreationValues {
     }
 }
 
-@objc protocol ConversationCreationControllerDelegate: class {
+protocol ConversationCreationControllerDelegate: class {
 
     func conversationCreationController(
         _ controller: ConversationCreationController,

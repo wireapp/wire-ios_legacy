@@ -51,7 +51,6 @@
 #import "TokenField.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
-#import "ProfileViewController.h"
 #import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
