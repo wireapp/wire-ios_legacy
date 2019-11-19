@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireUtilities
 
 public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
 

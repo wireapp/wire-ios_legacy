@@ -19,7 +19,6 @@
 
 import Foundation
 
-
 private let zmLog = ZMSLog(tag: "UI")
 
 final class FileBackupExcluder: BackupExcluder {
@@ -63,7 +62,7 @@ final class FileBackupExcluder: BackupExcluder {
         }
     }
 
-    @objc public func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
+    func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
         do {
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()
