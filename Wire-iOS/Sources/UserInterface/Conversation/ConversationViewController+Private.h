@@ -49,7 +49,4 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL isAppearing;
 @end
 
-@interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
-@end
-
 NS_ASSUME_NONNULL_END

@@ -34,16 +34,16 @@ enum ProfileViewControllerContext : Int {
     case profileViewer
 }
 
-@objc protocol ProfileViewControllerDelegate: NSObjectProtocol {
-    @objc optional func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String
-    @objc optional func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
-    @objc optional func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
+protocol ProfileViewControllerDelegate: class {
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
 }
 
 final class ProfileViewController: UIViewController {
-   
-    private(set) weak var bareUser: UserType?
-    private(set) weak var viewer: UserType?
+    
+    private(set) var bareUser: UserType
+    private(set) var viewer: UserType?
     weak var delegate: ProfileViewControllerDelegate?
     weak var viewControllerDismisser: ViewControllerDismisser?
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
@@ -55,23 +55,26 @@ final class ProfileViewController: UIViewController {
     private var usernameDetailsView: UserNameDetailView?
     private var profileTitleView: ProfileTitleView?
     private var tabsController: TabBarController?
-
+    
     private var observerToken: Any?
-
-    convenience init?(user: UserType?, viewer: UserType?, context: ProfileViewControllerContext) {
+    
+    convenience init(user: UserType?, viewer: UserType?, context: ProfileViewControllerContext) {
         self.init(user: user, viewer: viewer, conversation: nil, context: context)
     }
     
-    convenience init?(user: UserType?, viewer: UserType?, conversation: ZMConversation?) {
-        if conversation?.conversationType == ZMConversationTypeGroup {
-            self.init(user: user, viewer: viewer, conversation: conversation, context: ProfileViewControllerContextGroupConversation)
+    convenience init(user: UserType?, viewer: UserType?, conversation: ZMConversation?) {
+        let context: ProfileViewControllerContext
+        if conversation?.conversationType == .group {
+            context = .groupConversation
         } else {
-            self.init(user: user, viewer: viewer, conversation: conversation, context: ProfileViewControllerContextOneToOneConversation)
+            context = .oneToOneConversation
         }
+        
+        self.init(user: user, viewer: viewer, conversation: conversation, context: context)
     }
     
-    init?(user: UserType?, viewer: UserType?, conversation: ZMConversation?, context: ProfileViewControllerContext) {
-        super.init()
+    init(user: UserType, viewer: UserType?, conversation: ZMConversation?, context: ProfileViewControllerContext) {
+        super.init(nibName: nil, bundle: nil)
         bareUser = user
         self.viewer = viewer
         self.conversation = conversation
@@ -79,7 +82,7 @@ final class ProfileViewController: UIViewController {
         
         setupKeyboardFrameNotification()
     }
-
+    
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -90,9 +93,7 @@ final class ProfileViewController: UIViewController {
     }
     
     func requestDismissal(withCompletion completion: () -> ()) {
-        if delegate.responds(to: #selector(dismissViewController(_:completion:))) {
-            viewControllerDismisser.dismissViewController(self, completion: completion)
-        }
+        viewControllerDismisser?.dismiss(self, completion: completion)
     }
     
     func setupNavigationItems() {
@@ -134,7 +135,7 @@ final class ProfileViewController: UIViewController {
         navigationItem?.titleView = titleView
         profileTitleView = titleView
     }
-
+    
     func updateShowVerifiedShield() {
         let user = fullUser()
         if nil != user {
@@ -146,18 +147,8 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    func userDidChange(_ note: UserChangeInfo?) {
-        if note?.trustLevelChanged != nil {
-            updateShowVerifiedShield()
-        }
-        
-        if note?.legalHoldStatusChanged != nil {
-            setupNavigationItems()
-        }
-    }
-    
     // MARK: - Actions
-    func bringUpConversationCreationFlow() {
+    func bringUpConversationCreationFlow() { ///not private
         let users = Set<AnyHashable>(objects: fullUser(), nil) as? Set<ZMUser>
         let controller = ConversationCreationController(preSelectedParticipants: users)
         controller.delegate = self
@@ -168,7 +159,7 @@ final class ProfileViewController: UIViewController {
         }
     }
     
-    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {
+    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {///not private
         let controller = UIAlertController.cancelConnectionRequest(forUser: fullUser) { canceled in
             if !canceled {
                 self.cancelConnectionRequest()
@@ -185,30 +176,21 @@ final class ProfileViewController: UIViewController {
             self.returnToPreviousScreen()
         })
     }
-
-        func openOneToOneConversation() {///TODO: non private
-            if fullUser == nil {
-                ZMLogError("No user to open conversation with")
-                return
-            }
-            var conversation: ZMConversation? = nil
-            
-            ZMUserSession.shared().enqueueChanges({
-                conversation = self.fullUser.oneToOneConversation
-            }, completionHandler: {
-                self.delegate.profileViewController(self, wantsToNavigateTo: conversation)
-            })
+    
+    func openOneToOneConversation() {///TODO: non private
+        if fullUser == nil {
+            ZMLogError("No user to open conversation with")
+            return
         }
-    
-    func bringUpCancelConnectionRequestSheet(from targetView: UIView?) {
+        var conversation: ZMConversation? = nil
+        
+        ZMUserSession.shared().enqueueChanges({
+            conversation = self.fullUser.oneToOneConversation
+        }, completionHandler: {
+            self.delegate.profileViewController(self, wantsToNavigateTo: conversation)
+        })
     }
     
-    func bringUpConversationCreationFlow() {
-    }
-       
-    private func updateShowVerifiedShield() {
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default().statusBarStyle
     }
@@ -246,82 +228,49 @@ final class ProfileViewController: UIViewController {
         UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
         UIAccessibilityPostNotification(UIAccessibility.Notification.screenChanged, navigationItem?.titleView)
     }
-
-}
-
-extension ProfileViewController: ZMUserObserver {
     
-}
-
-extension ProfileViewController: ProfileViewControllerDelegate {
-    @objc func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation?) {
-        if delegate.responds(to: #selector(profileViewController(_:wantsToNavigateTo:))) {
-            delegate.profileViewController(controller, wantsToNavigateTo: conversation)
-        }
-    }
+    // MARK: - Keyboard frame observer
     
-    func suggestedBackButtonTitle(forProfileViewController controller: Any?) -> String? {
-        return bareUser.displayName.uppercasedWithCurrentLocale()
-    }
-}
-
-extension ProfileViewController: ConversationCreationControllerDelegate {
-    func conversationCreationController(
-        _ controller: ConversationCreationController,
-        didSelectName name: String,
-        participants: Set<ZMUser>,
-        allowGuests: Bool,
-        enableReceipts: Bool
-        ) {
-        controller.dismiss(animated: true) { [weak self] in
-            self?.delegate?.profileViewController?(self, wantsToCreateConversationWithName: name, users: participants)
-        }
-    }
-}
-
-// MARK: - Keyboard frame observer
-extension ProfileViewController {
-
     @objc func setupKeyboardFrameNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameDidChange(notification:)),
                                                name: UIResponder.keyboardDidChangeFrameNotification,
                                                object: nil)
-
+        
     }
-
+    
     @objc func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
-
+    
     // MARK: - init
-
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-
+    
     convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
         self.init(user: user, viewer: viewer, conversation: conversation)
         self.viewControllerDismisser = viewControllerDismisser
     }
-
+    
     func setupProfileDetailsViewController() -> ProfileDetailsViewController {
         let profileDetailsViewController = ProfileDetailsViewController(user: bareUser,
                                                                         viewer: viewer,
                                                                         conversation: conversation,
                                                                         context: context)
         profileDetailsViewController.title = "profile.details.title".localized
-
+        
         return profileDetailsViewController
     }
-
+    
     @objc
     func setupTabsController() {
         var viewControllers = [UIViewController]()
-
+        
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
-
+        
         if let fullUser = self.fullUser(), context != .search && context != .profileViewer {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
@@ -336,35 +285,35 @@ extension ProfileViewController {
         
         addToSelf(tabsController)
     }
-
+    
     // MARK : - constraints
-
+    
     @objc
     func setupConstraints() {
         usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
         tabsController.view.translatesAutoresizingMaskIntoConstraints = false
         profileFooterView.translatesAutoresizingMaskIntoConstraints = false
-
+        
         usernameDetailsView.fitInSuperview(exclude: [.bottom])
         tabsController.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
         tabsController.view.fitInSuperview(exclude: [.top])
         profileFooterView.fitInSuperview(exclude: [.top])
-
+        
         incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
             incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
     }
-
+    
     // MARK: - Factories
-
+    
     @objc func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
         return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: bareUser.zmUser?.addressBookEntry?.cachedName)
     }
-
+    
 }
 
 extension ProfileViewController: ViewControllerDismisser {
@@ -376,24 +325,24 @@ extension ProfileViewController: ViewControllerDismisser {
 // MARK: - Footer View
 
 extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFooterViewDelegate {
-
+    
     @objc
     func updateFooterViews() {
         // Actions
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
         let actions = factory.makeActionsList()
-
+        
         profileFooterView.delegate = self
         profileFooterView.isHidden = actions.isEmpty
         profileFooterView.configure(with: actions)
         view.bringSubviewToFront(profileFooterView)
-
+        
         // Incoming Request Footer
         incomingRequestFooter.isHidden = !bareUser.isPendingApprovalBySelfUser
         incomingRequestFooter.delegate = self
         view.bringSubviewToFront(incomingRequestFooter)
     }
-
+    
     func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction) {
         switch action {
         case .accept:
@@ -403,26 +352,26 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
         
     }
-
+    
     func footerView(_ footerView: ProfileFooterView, shouldPerformAction action: ProfileAction) {
         performAction(action, targetView: footerView.leftButton)
     }
-
+    
     func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction]) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
+        
         for action in actions {
             let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
                 self.performAction(action, targetView: footerView)
             }
-
+            
             actionSheet.addAction(sheetAction)
         }
-
+        
         actionSheet.addAction(.cancel())
         presentAlert(actionSheet, targetView: footerView)
     }
-
+    
     func performAction(_ action: ProfileAction, targetView: UIView) {
         switch action {
         case .createGroup:
@@ -449,7 +398,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             openSelfProfile()
         }
     }
-
+    
     private func openSelfProfile() {
         ///do not reveal list view for iPad regular mode
         let leftViewControllerRevealed: Bool
@@ -458,23 +407,23 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         } else {
             leftViewControllerRevealed = true
         }
-
+        
         dismiss(animated: true){ [weak self] in
             self?.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
                 ZClientViewController.shared()?.conversationListViewController.topBarViewController.presentSettings()
             }
         }
     }
-
+    
     // MARK: - Helpers
-
+    
     private func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
         ZClientViewController.shared()?.transitionToList(animated: true,
                                                          leftViewControllerRevealed: leftViewControllerRevealed) {
-            ZMUserSession.shared()?.enqueueChanges(block)
+                                                            ZMUserSession.shared()?.enqueueChanges(block)
         }
     }
-
+    
     @objc func returnToPreviousScreen() {
         if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
             navigationController.popViewController(animated: true)
@@ -482,7 +431,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             self.dismiss(animated: true, completion: nil)
         }
     }
-
+    
     /// Presents an alert as a popover if needed.
     @objc(presentAlert:fromTargetView:)
     func presentAlert(_ alert: UIAlertController, targetView: UIView) {
@@ -510,15 +459,15 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
     
     // MARK: - Action Handlers
-
+    
     private func archiveConversation() {
         transitionToListAndEnqueue {
             self.conversation?.isArchived.toggle()
         }
     }
-
+    
     // MARK: Connect
-
+    
     private func sendConnectionRequest() {
         let connect: (String) -> Void = {
             if let user = self.fullUser() {
@@ -527,7 +476,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                 searchUser.connect(message: $0)
             }
         }
-
+        
         ZMUserSession.shared()?.enqueueChanges {
             let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
             connect(messageText)
@@ -535,7 +484,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             self.updateFooterViews()
         }
     }
-
+    
     private func acceptConnectionRequest() {
         guard let user = self.fullUser() else { return }
         ZMUserSession.shared()?.enqueueChanges {
@@ -544,7 +493,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             self.updateFooterViews()
         }
     }
-
+    
     private func ignoreConnectionRequest() {
         guard let user = self.fullUser() else { return }
         ZMUserSession.shared()?.enqueueChanges {
@@ -552,37 +501,37 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             self.returnToPreviousScreen()
         }
     }
-
+    
     // MARK: Block
-
+    
     private func presentBlockRequest(from targetView: UIView) {
-
+        
         let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
         BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
-
+    
     private func handleBlockResult(_ result: BlockResult) {
         guard case .block = result else { return }
-
+        
         let updateClosure = {
             self.fullUser()?.toggleBlocked()
             self.updateFooterViews()
         }
-
+        
         switch context {
-            case .search:
-                /// stay on this VC and let user to decise what to do next
+        case .search:
+            /// stay on this VC and let user to decise what to do next
+            updateClosure()
+        default:
+            transitionToListAndEnqueue {
                 updateClosure()
-            default:
-                transitionToListAndEnqueue {
-                    updateClosure()
-                }
+            }
         }
     }
-
+    
     // MARK: Notifications
-
+    
     private func updateMute(enableNotifications: Bool) {
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
@@ -590,7 +539,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             self.updateFooterViews()
         }
     }
-
+    
     private func presentNotificationsOptions(from targetView: UIView) {
         guard let conversation = self.conversation else { return }
         let title = "\(conversation.displayName) • \(NotificationResult.title)"
@@ -598,7 +547,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         NotificationResult.allCases.map { $0.action(for: conversation, handler: handleNotificationResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
-
+    
     func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
             ZMUserSession.shared()?.performChanges {
@@ -606,16 +555,16 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             }
         }
     }
-
+    
     // MARK: Delete Contents
-
+    
     private func presentDeleteConfirmationPrompt(from targetView: UIView) {
         guard let conversation = self.conversation else { return }
         let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
         ClearContentResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
-
+    
     func handleDeleteResult(_ result: ClearContentResult) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
@@ -625,20 +574,20 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             }
         }
     }
-
+    
     // MARK: Remove User
-
+    
     private func presentRemoveUserMenuSheetController(from view: UIView) {
         guard let otherUser = self.fullUser() else {
             return
         }
-
+        
         let controller = UIAlertController(
             title: "profile.remove_dialog_message".localized(args: otherUser.displayName),
             message: nil,
             preferredStyle: .actionSheet
         )
-
+        
         let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
             self.conversation?.removeOrShowError(participnant: otherUser) { result in
                 switch result {
@@ -649,10 +598,52 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
                 }
             }
         }
-
+        
         controller.addAction(removeAction)
         controller.addAction(.cancel())
-
+        
         presentAlert(controller, targetView: view)
+    }
+}
+
+extension ProfileViewController: ZMUserObserver {
+    func userDidChange(_ note: UserChangeInfo) {
+        if note.trustLevelChanged {
+            updateShowVerifiedShield()
+        }
+        
+        if note.legalHoldStatusChanged {
+            setupNavigationItems()
+        }
+    }
+}
+
+extension ProfileViewController: ProfileViewControllerDelegate {
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        delegate?.profileViewController(controller, wantsToNavigateTo: conversation)
+    }
+    
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
+        return bareUser.displayName.uppercasedWithCurrentLocale()
+    }
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+        // no-op
+    }
+
+}
+
+extension ProfileViewController: ConversationCreationControllerDelegate {
+    func conversationCreationController(
+        _ controller: ConversationCreationController,
+        didSelectName name: String,
+        participants: Set<ZMUser>,
+        allowGuests: Bool,
+        enableReceipts: Bool
+        ) {
+        controller.dismiss(animated: true) { [weak self] in
+            self?.delegate?.profileViewController?(self, wantsToCreateConversationWithName: name, users: participants)
+        }
     }
 }

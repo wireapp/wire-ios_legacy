@@ -1,4 +1,4 @@
-
+//
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -18,21 +18,10 @@
 
 import Foundation
 
-extension ProfilePresenter: ProfileViewControllerDelegate {
-    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
-        guard let controller = controller else { return }
-        
-        dismiss(controller) {
-            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
-        }
-    }
+///TODO:
+extension ConversationViewController: ProfileViewControllerDelegate {
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {return nil}
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){}
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>){}
 
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        //no-op.
-        return nil
-    }
-
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
-        //no-op.
-    }
 }

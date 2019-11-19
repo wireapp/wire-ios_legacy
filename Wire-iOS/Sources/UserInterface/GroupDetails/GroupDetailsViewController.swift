@@ -207,18 +207,27 @@ extension GroupDetailsViewController {
     
 }
 
-extension GroupDetailsViewController: ViewControllerDismisser, ProfileViewControllerDelegate {
-    
+extension GroupDetailsViewController: ViewControllerDismisser {
     func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
-    
+}
+
+extension GroupDetailsViewController: ProfileViewControllerDelegate {    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
             ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
+        //no-op
+        return nil
+    }
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+        //no-op
+    }
 }
 
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {

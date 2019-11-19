@@ -670,6 +670,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
+///TODO:
+/*
 @implementation ConversationViewController (ProfileViewController)
 
 - (void)profileViewController:(ProfileViewController *)controller wantsToNavigateToConversation:(ZMConversation *)conversation
@@ -704,7 +706,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
+*/
 @implementation ConversationViewController (ZMConversationObserver)
 
 - (void)conversationDidChange:(ConversationChangeInfo *)note
