@@ -24,6 +24,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
     private let viewModel: GroupParticipantsDetailViewModel
     private let collectionViewController: SectionCollectionViewController
+    private let variant: ColorSchemeVariant
     
     // used for scrolling and fading selected cells
     private var firstLayout = true
@@ -42,7 +43,10 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     init(selectedParticipants: [UserType],
-         conversation: ZMConversation) {
+         conversation: ZMConversation,
+         variant: ColorSchemeVariant = ColorScheme.default.variant) {
+        
+        self.variant = variant
         
         var allParticipants = conversation.sortedOtherParticipants
         allParticipants = allParticipants.sorted { $0.displayName < $1.displayName }
@@ -128,6 +132,9 @@ final class GroupParticipantsDetailViewController: UIViewController {
     private func participantsDidChange() {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
+        
+        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search results".localized() : ""
+        collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
     }
     
     private func scrollToFirstHighlightedUser() {
