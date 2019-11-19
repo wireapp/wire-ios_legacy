@@ -22,7 +22,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
 
     private let collectionView = UICollectionView(forGroupedSections: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
-    private let viewModel: GroupParticipantsDetailViewModel
+    let viewModel: GroupParticipantsDetailViewModel
     private let collectionViewController: SectionCollectionViewController
     private let variant: ColorSchemeVariant
     
@@ -129,7 +129,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         ])
     }
     
-    private func participantsDidChange() {
+     func participantsDidChange() {
         collectionViewController.sections = computeSections()
         collectionViewController.collectionView?.reloadData()
         

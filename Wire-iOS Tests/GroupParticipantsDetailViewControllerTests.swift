@@ -57,4 +57,20 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         verify(view: wrapped.view)
         ColorScheme.default.variant = .light
     }
+    
+    func testEmptyState() {
+        // given
+        let selected:[ZMUser] = []
+        let conversation = createGroupConversation()
+        
+        // when
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+        sut.viewModel.admins = []
+        sut.viewModel.members = []
+        sut.participantsDidChange()
+
+        // then
+        let wrapped = sut.wrapInNavigationController()
+        verify(view: wrapped.view)
+    }
 }
