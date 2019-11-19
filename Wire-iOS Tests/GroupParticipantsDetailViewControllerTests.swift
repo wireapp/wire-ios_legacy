@@ -34,7 +34,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         conversation.internalAddParticipants(users)
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
@@ -50,7 +50,7 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         conversation.internalAddParticipants(users)
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
