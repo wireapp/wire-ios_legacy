@@ -106,7 +106,7 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
     
-    internal var optionsExpanded: Bool = false {
+    var optionsExpanded: Bool = false {
         didSet {
             self.guestsSection.isHidden = !optionsExpanded
             self.receiptsSection.isHidden = !optionsExpanded

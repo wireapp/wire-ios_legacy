@@ -16,32 +16,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
-import WireCommonComponents
+import Foundation
 
-extension IconButton {
-
-    func icon(for state: UIControl.State) -> StyleKitIcon? {
-        return iconDefinition(for: state)?.iconType
-    }
-
-    func setIcon(_ icon: StyleKitIcon?, size: StyleKitIcon.Size, for state: UIControl.State, renderingMode: UIImage.RenderingMode = .alwaysTemplate) {
-        if let icon = icon {
-            self.__setIcon(icon, withSize: size.rawValue, for: state, renderingMode: renderingMode)
-        } else {
-            self.removeIcon(for: state)
+extension Button {
+    open override func setTitle(_ title: String?, for state: UIControl.State) {
+        var title = title
+        state.expanded.forEach(){ expandedState in
+            if title != nil {
+                originalTitles?[NSNumber(value: expandedState.rawValue)] = title
+            } else {
+                originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
+            }
         }
+        
+        if textTransform != .none {
+            title = title?.applying(transform: textTransform)
+        }
+        
+        super.setTitle(title, for: state)
     }
-
+    
+    @objc(setBorderColor:forState:)
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
         state.expanded.forEach(){ expandedState in
             if color != nil {
                 borderColorByState[NSNumber(value: expandedState.rawValue)] = color
-                
-                if adjustsBorderColorWhenHighlighted &&
-                   expandedState == .normal {
-                    borderColorByState[NSNumber(value: UIControl.State.highlighted.rawValue)] = color?.mix(.black, amount: 0.4)
-                }
             }
         }
         

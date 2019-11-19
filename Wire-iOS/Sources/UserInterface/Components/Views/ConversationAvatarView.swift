@@ -18,7 +18,7 @@
 
 
 /// Source of random values.
-public protocol RandomGenerator {
+protocol RandomGenerator {
     func rand<ContentType>() -> ContentType
 }
 
@@ -52,7 +52,7 @@ extension RandomGeneratorFromData {
 }
 
 extension Array {
-    public func shuffled(with generator: RandomGenerator) -> Array {
+    func shuffled(with generator: RandomGenerator) -> Array {
         
         var workingCopy = Array(self)
         var result = Array()

@@ -22,7 +22,7 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "UI")
 
-final internal class FileBackupExcluder: NSObject {
+final class FileBackupExcluder: NSObject {
 
     private static let filesToExclude: [FileInDirectory] = [
         (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
@@ -33,7 +33,7 @@ final internal class FileBackupExcluder: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override internal init() {
+    override init() {
         super.init()
         
         NotificationCenter.default.addObserver(self,
@@ -49,11 +49,11 @@ final internal class FileBackupExcluder: NSObject {
         self.excludeFilesFromBackup()
     }
     
-    @objc internal func applicationWillEnterForeground(_ sender: AnyObject!) {
+    @objc func applicationWillEnterForeground(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     
-    @objc internal func applicationWillResignActive(_ sender: AnyObject!) {
+    @objc func applicationWillResignActive(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     

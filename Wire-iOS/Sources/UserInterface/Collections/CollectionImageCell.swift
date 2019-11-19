@@ -23,7 +23,7 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
-final public class CollectionImageCell: CollectionCell {
+final class CollectionImageCell: CollectionCell {
     
     static let maxCellSize: CGFloat = 100
 

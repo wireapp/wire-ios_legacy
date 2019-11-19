@@ -20,12 +20,12 @@
 import Foundation
 import Cartography
 
-public protocol CameraCellDelegate: class {
+protocol CameraCellDelegate: class {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-open class CameraCell: UICollectionViewCell {
+final class CameraCell: UICollectionViewCell {
     let cameraController: CameraController?
     
     let expandButton = IconButton()
@@ -111,13 +111,13 @@ open class CameraCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func didMoveToWindow() {
+    override func didMoveToWindow() {
         super.didMoveToWindow()
         if self.window == .none { cameraController?.stopRunning() }
         else { cameraController?.startRunning() }
     }
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         cameraController?.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()

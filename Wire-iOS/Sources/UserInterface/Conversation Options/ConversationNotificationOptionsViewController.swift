@@ -26,7 +26,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
     private let userSession: ZMUserSession
     private var observerToken: Any! = nil
     
-    public weak var dismisser: ViewControllerDismisser?
+    weak var dismisser: ViewControllerDismisser?
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
     

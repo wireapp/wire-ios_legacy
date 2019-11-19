@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,23 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+@interface IconButton ()
 
-protocol Reusable {
-    static var reuseIdentifier: String { get }
-    var reuseIdentifier: String? { get }
-}
+@property (nonatomic, readonly) NSMutableDictionary *iconColorsByState;
+@property (nonatomic, readonly) NSMutableDictionary *borderColorByState;
+@property (nonatomic, readonly) NSMutableDictionary *iconDefinitionsByState;
+@property (nonatomic) UIControlState priorState;
 
-extension Reusable {
-    static var reuseIdentifier: String {
-        guard let `class` = self as? AnyClass else { return "\(self)" }
-        return NSStringFromClass(`class`)
-    }
-    
-    var reuseIdentifier: String? {
-        return type(of: self).reuseIdentifier
-    }
-}
-
-extension UITableViewCell: Reusable {}
-extension UICollectionReusableView: Reusable {}
+- (void)updateBorderColor;
+@end

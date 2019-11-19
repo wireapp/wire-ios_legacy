@@ -39,7 +39,7 @@ extension ZMConversation {
     }
 }
 
-public protocol AddParticipantsConversationCreationDelegate: class {
+protocol AddParticipantsConversationCreationDelegate: class {
 
     func addParticipantsViewController(_ addParticipantsViewController : AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction)
 }
@@ -112,7 +112,7 @@ final public class AddParticipantsViewController: UIViewController {
     private let bottomMargin: CGFloat = UIScreen.hasBottomInset ? 8 : 16
 
     
-    public weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
+    weak var conversationCreationDelegate : AddParticipantsConversationCreationDelegate?
     
     fileprivate var viewModel: AddParticipantsViewModel {
         didSet {

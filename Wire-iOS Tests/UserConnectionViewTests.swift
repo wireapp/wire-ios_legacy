@@ -36,7 +36,7 @@ extension UIView {
 }
 
 final class MockUserCopyable: MockUser, Copyable {
-    internal convenience init(instance: MockUserCopyable) {
+    convenience init(instance: MockUserCopyable) {
         self.init(jsonObject: [:])
         self.name = instance.name
         self.emailAddress = instance.emailAddress

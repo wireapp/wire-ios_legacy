@@ -20,8 +20,8 @@ import Foundation
 import Cartography
 
 @objcMembers final public class TextSearchResultsView: UIView {
-    internal var tableView = UITableView()
-    internal var noResultsView = NoResultsView()
+    var tableView = UITableView()
+    var noResultsView = NoResultsView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

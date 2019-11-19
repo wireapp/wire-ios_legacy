@@ -66,7 +66,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-open class ZMSnapshotTestCase: FBSnapshotTestCase {
+class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void

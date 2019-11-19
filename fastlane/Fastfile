@@ -131,55 +131,6 @@ platform :ios do
         sh "cd .. && aws s3 cp --recursive --exclude '*'  --include '*.ipa' --include '*.xcarchive.tgz' artifacts/ s3://#{ENV['S3_BUCKET']}/ios/"
     end
 
-    desc "Upload for internal use"
-    lane :upload_hockey do |options|
-        build = Build.new(options: options)
-        changelog = ""
-
-        if build.playground_build
-            changelog = "Playground build for #{build.git_branch}"
-        elsif build.avs_build
-            changelog = "AVS #{build.avs_version}"
-        elsif build.last_commit.nil? || build.last_commit.empty? 
-            changelog = "No changelog available"
-        else
-            changelog = "Changes Since Last Build:\n" + changelog_from_git_commits(
-                between: [build.last_commit, "HEAD"],
-                pretty: "* [%an] %s",
-            )
-        end
-
-        hockey_app_id = options[:hockey_app_id]
-        if hockey_app_id.nil? 
-            hockey_app_id = build.hockey_app_id
-        end
-        
-        hockey(
-          api_token: ENV["HOCKEY_APP_TOKEN"],
-          public_identifier: hockey_app_id,
-          ipa: "#{build.artifact_path(with_filename: true)}.ipa",
-          notes: changelog,
-          notify: "0"
-        )
-    end
-
-    desc "Upload dSYMs for AppStore crash tracking"
-    lane :upload_hockey_appstore do |options|
-        build = Build.new(options: options)
-
-        if !build.appstore_build
-            UI.user_error! "This step is only relevant for AppStore builds"
-        end
-
-        hockey(
-          api_token: ENV["HOCKEY_APP_TOKEN"],
-          public_identifier: build.hockey_app_id,
-          dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip",
-          upload_dsym_only: true,
-          release_type: "1",
-          notify: "0"
-        )
-    end
 
     desc "Upload for internal use"
     lane :upload_app_center do |options|
@@ -471,24 +422,4 @@ class Build
         end
     end
 
-    # Hockey
-
-    def hockey_app_id
-        case @build_type
-        when "Playground"
-            ENV["HOCKEY_IOS_PLAYGROUND_ID"]
-        when "Development"
-            ENV["HOCKEY_IOS_DEV_ID"]
-        when "Internal"
-            ENV["HOCKEY_IOS_INT_ID"]
-        when "AppStore"
-            ENV["HOCKEY_IOS_APPSTORE_ID"]
-        when "AVS"
-            ENV["HOCKEY_IOS_AVS_ID"]
-        when "RC"
-            ENV["HOCKEY_IOS_RELEASE_ID"]
-        else
-            UI.user_error! "Unknown build type: #{@build_type}"
-        end
-    end
 end

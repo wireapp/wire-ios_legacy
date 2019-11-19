@@ -60,7 +60,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         self.cameraKeyboardViewController = cameraKeyboardViewController
     }
     
-    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if duration > ZMUserSession.shared()!.maxVideoLength() {
             let videoEditor = StatusBarVideoEditorController()
@@ -120,7 +120,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
+    func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
                                              didSelectImageData imageData: Data,
                                              isFromCamera: Bool,
                                              uti: String?) {
@@ -140,7 +140,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
+    func cameraKeyboardViewControllerWantsToOpenFullScreenCamera(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
             self.presentImagePicker(with: .camera,
@@ -150,7 +150,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
+    func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController) {
         self.hideCameraKeyboardViewController {
             self.shouldRefocusKeyboardAfterImagePickerDismiss = true
             self.presentImagePicker(with: .photoLibrary,

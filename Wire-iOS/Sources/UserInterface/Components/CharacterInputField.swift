@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-public protocol CharacterInputFieldDelegate: NSObjectProtocol {
+protocol CharacterInputFieldDelegate: NSObjectProtocol {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
     func didChangeText(_ inputField: CharacterInputField, to: String)
     func didFillInput(inputField: CharacterInputField, text: String)
@@ -46,7 +46,7 @@ public class CharacterInputField: UIControl, UITextInputTraits, TextContainer {
     
     public let maxLength: Int
     public let characterSet: CharacterSet
-    public weak var delegate: CharacterInputFieldDelegate? = .none
+    weak var delegate: CharacterInputFieldDelegate? = .none
     private let characterViews: [CharacterView]
     private let stackView = UIStackView()
     

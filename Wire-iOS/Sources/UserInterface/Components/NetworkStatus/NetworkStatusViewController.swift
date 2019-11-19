@@ -156,7 +156,7 @@ final class NetworkStatusViewController : UIViewController {
         perform(#selector(applyPendingState), with: nil, afterDelay: 1)
     }
 
-    @objc internal func applyPendingState() {
+    @objc func applyPendingState() {
         guard let state = pendingState else { return }
         update(state: state)
         pendingState = nil

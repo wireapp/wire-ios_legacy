@@ -32,7 +32,7 @@ import Contacts
 }
 
 /// Allows access to address book for search
-@objcMembers open class AddressBookHelper : NSObject, AddressBookHelperProtocol {
+@objcMembers class AddressBookHelper : NSObject, AddressBookHelperProtocol {
     
     /// Time to wait between searches
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
@@ -41,7 +41,7 @@ import Contacts
     public static let sharedHelper : AddressBookHelper = AddressBookHelper()
     
     /// Configuration override (used for testing)
-    open var configuration : AddressBookHelperConfiguration!
+    var configuration : AddressBookHelperConfiguration!
 }
 
 // MARK: - Permissions
@@ -156,7 +156,7 @@ private let addressBookSearchWasPostponedKey = "AddressBookUploadWasPostponed"
 private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
 
 // MARK: - Testing
-@objc public protocol AddressBookHelperConfiguration : NSObjectProtocol {
+@objc protocol AddressBookHelperConfiguration : NSObjectProtocol {
 
     /// Whether the remote search using address book should be performed also on simulator
     var shouldPerformAddressBookRemoteSearchEvenOnSimulator : Bool { get }
