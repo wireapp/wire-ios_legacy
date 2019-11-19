@@ -44,16 +44,16 @@ protocol ProfileViewControllerDelegate: class {
 
 final class ProfileViewController: UIViewController {
     
-    private(set) var bareUser: UserType
+    private let bareUser: UserType
     private(set) var viewer: UserType
     weak var delegate: ProfileViewControllerDelegate?
     weak var viewControllerDismisser: ViewControllerDismisser?
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
-    private var context: ProfileViewControllerContext?
+    private var context: ProfileViewControllerContext
     private var conversation: ZMConversation?
     private var profileFooterView: ProfileFooterView?
-    private var incomingRequestFooter: IncomingRequestFooterView?
+    private var incomingRequestFooter: IncomingRequestFooterView? ///TODO: create here
     private var usernameDetailsView: UserNameDetailView?
     private var profileTitleView: ProfileTitleView?
     private var tabsController: TabBarController?
@@ -76,21 +76,22 @@ final class ProfileViewController: UIViewController {
     }
     
     init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
-        super.init(nibName: nil, bundle: nil)
         bareUser = user
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        
+
+        super.init(nibName: nil, bundle: nil)
+
         setupKeyboardFrameNotification()
     }
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
-    func dismissButtonClicked() { ///TODO: remove
+    private func dismissButtonClicked() { ///TODO: remove
         requestDismissal(withCompletion: { })
     }
     
@@ -223,8 +224,8 @@ final class ProfileViewController: UIViewController {
         view.backgroundColor = UIColor.from(scheme: .barBackground)
         
         if let fullUser = fullUser,
-            let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.addObserver(self, for: fullUser, userSession: userSession)
+           let userSession = ZMUserSession.shared() {
+            observerToken = UserChangeInfo.add(observer: self, for: fullUser, userSession: userSession)
         }
         
         setupNavigationItems()
@@ -243,7 +244,7 @@ final class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-        UIAccessibilityPostNotification(UIAccessibility.Notification.screenChanged, navigationItem.titleView)
+        UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: navigationItem.titleView)
     }
     
     // MARK: - Keyboard frame observer
@@ -281,8 +282,7 @@ final class ProfileViewController: UIViewController {
         return profileDetailsViewController
     }
     
-    @objc
-    func setupTabsController() {
+    private func setupTabsController() {
         var viewControllers = [UIViewController]()
         
         let profileDetailsViewController = setupProfileDetailsViewController()
@@ -293,34 +293,34 @@ final class ProfileViewController: UIViewController {
             viewControllers.append(userClientListViewController)
         }
         
-        tabsController = TabBarController(viewControllers: viewControllers)
-        tabsController.delegate = self
+        tabsController = TabBarController(viewControllers: viewControllers) ///TODO: move to closure
+        tabsController?.delegate = self
         
-        if context == .deviceList, tabsController.viewControllers.count > 1 {
-            tabsController.selectIndex(ProfileViewControllerTabBarIndex.devices.rawValue, animated: false)
+        if context == .deviceList, tabsController?.viewControllers.count > 1 {
+            tabsController?.selectIndex(ProfileViewControllerTabBarIndex.devices.rawValue, animated: false)
         }
         
-        addToSelf(tabsController)
+        addToSelf(tabsController!)
     }
     
     // MARK : - constraints
     
     private func setupConstraints() {
-        usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        tabsController.view.translatesAutoresizingMaskIntoConstraints = false
-        profileFooterView.translatesAutoresizingMaskIntoConstraints = false
+        usernameDetailsView?.translatesAutoresizingMaskIntoConstraints = false
+        tabsController?.view.translatesAutoresizingMaskIntoConstraints = false
+        profileFooterView?.translatesAutoresizingMaskIntoConstraints = false
         
-        usernameDetailsView.fitInSuperview(exclude: [.bottom])
-        tabsController.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
-        tabsController.view.fitInSuperview(exclude: [.top])
-        profileFooterView.fitInSuperview(exclude: [.top])
+        usernameDetailsView?.fitInSuperview(exclude: [.bottom]) ///TODO: clean up
+        tabsController?.view?.topAnchor.constraint(equalTo: usernameDetailsView!.bottomAnchor).isActive = true
+        tabsController?.view.fitInSuperview(exclude: [.top])
+        profileFooterView?.fitInSuperview(exclude: [.top])
         
-        incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
+        incomingRequestFooter?.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
-            incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            (incomingRequestFooter?.bottomAnchor.constraint(equalTo: profileFooterView!.topAnchor))!,
+            (incomingRequestFooter?.leadingAnchor.constraint(equalTo: view.leadingAnchor))!,
+            (incomingRequestFooter?.trailingAnchor.constraint(equalTo: view.trailingAnchor))!
             ])
     }
     
@@ -348,15 +348,15 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
         let actions = factory.makeActionsList()
         
-        profileFooterView.delegate = self
-        profileFooterView.isHidden = actions.isEmpty
-        profileFooterView.configure(with: actions)
-        view.bringSubviewToFront(profileFooterView)
+        profileFooterView?.delegate = self
+        profileFooterView?.isHidden = actions.isEmpty
+        profileFooterView?.configure(with: actions)
+        view.bringSubviewToFront(profileFooterView!)
         
         // Incoming Request Footer
-        incomingRequestFooter.isHidden = !bareUser.isPendingApprovalBySelfUser
-        incomingRequestFooter.delegate = self
-        view.bringSubviewToFront(incomingRequestFooter)
+        incomingRequestFooter?.isHidden = !bareUser.isPendingApprovalBySelfUser
+        incomingRequestFooter?.delegate = self
+        view.bringSubviewToFront(incomingRequestFooter!)
     }
     
     func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction) {

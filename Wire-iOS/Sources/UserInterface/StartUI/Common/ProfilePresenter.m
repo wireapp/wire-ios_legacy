@@ -60,6 +60,7 @@
     return self;
 }
 
+///TODO: swift
 - (void)presentProfileViewControllerForUser:(id<UserType>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection
 {
     self.profileOpenedFromPeoplePicker = YES;
