@@ -68,10 +68,16 @@ private struct ParticipantsSectionViewModel {
         return participants.isEmpty
     }
     
-    init(participants: [UserType], teamRole: TeamRole, showAllRows: Bool = true) {//Enable / Disable the display of the “ShowAll” cell
+    /// init method
+    ///
+    /// - Parameters:
+    ///   - participants: list of conversation participants
+    ///   - teamRole: participant's role
+    ///   - showAllRows: enable/disable the display of the “ShowAll” button
+    init(participants: [UserType], teamRole: TeamRole, clipSection: Bool = true) {
         self.participants = participants
         self.teamRole = teamRole
-        rows = showAllRows ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
+        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
     }
     
     static func computeRows(_ participants: [UserType]) -> [ParticipantsRowType] {
@@ -107,8 +113,8 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          teamRole: TeamRole,
          conversation: ZMConversation,
          delegate: GroupDetailsSectionControllerDelegate,
-         showAllRows: Bool = true) { //Enable / Disable the display of the “ShowAll” cell
-        viewModel = .init(participants: participants, teamRole: teamRole, showAllRows: showAllRows)
+         clipSection: Bool = true) {
+        viewModel = .init(participants: participants, teamRole: teamRole, clipSection: clipSection)
         self.conversation = conversation
         self.delegate = delegate
         super.init()

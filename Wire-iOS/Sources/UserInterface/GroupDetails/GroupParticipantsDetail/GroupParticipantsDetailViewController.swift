@@ -138,8 +138,8 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     private func computeSections() -> [CollectionViewSectionController] {
-        let adminsSection = ParticipantsSectionController(participants: viewModel.admins, teamRole: .admin, conversation: viewModel.conversation, delegate: self, showAllRows: false)
-        let membersSection = ParticipantsSectionController(participants: viewModel.members, teamRole: .member, conversation: viewModel.conversation, delegate: self, showAllRows: false)
+        let adminsSection = ParticipantsSectionController(participants: viewModel.admins, teamRole: .admin, conversation: viewModel.conversation, delegate: self, clipSection: false)
+        let membersSection = ParticipantsSectionController(participants: viewModel.members, teamRole: .member, conversation: viewModel.conversation, delegate: self, clipSection: false)
 
         sections = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? [] : [adminsSection, membersSection]
         return sections
