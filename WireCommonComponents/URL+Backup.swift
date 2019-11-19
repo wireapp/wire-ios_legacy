@@ -20,3 +20,22 @@
 import Foundation
 
 public typealias FileInDirectory = (FileManager.SearchPathDirectory, String)
+
+public protocol BackupExcluder: class {
+    static func exclude(filesToExclude: [FileInDirectory]) throws
+}
+
+public extension BackupExcluder {
+    static func exclude(filesToExclude: [FileInDirectory]) throws {
+        do {
+            try filesToExclude.forEach { (directory, path) in
+                let url = URL.directory(for: directory).appendingPathComponent(path)
+                try url.excludeFromBackupIfExists()
+            }
+        }
+        catch (let error) {
+            throw error
+        }
+    }
+
+}
