@@ -75,6 +75,11 @@ final class ProfileViewController: UIViewController {
         self.init(user: user, viewer: viewer, conversation: conversation, context: context)
     }
     
+    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
+        self.init(user: user, viewer: viewer, conversation: conversation)
+        self.viewControllerDismisser = viewControllerDismisser
+    }
+
     init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
         bareUser = user
         self.viewer = viewer
@@ -186,7 +191,7 @@ final class ProfileViewController: UIViewController {
         presentAlert(controller, targetView: targetView)
     }
     
-    func cancelConnectionRequest() {
+    private func cancelConnectionRequest() {
         let user = fullUser
         ZMUserSession.shared()?.enqueueChanges({
             user?.cancelConnectionRequest()
@@ -249,7 +254,7 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Keyboard frame observer
     
-    @objc func setupKeyboardFrameNotification() {
+    private func setupKeyboardFrameNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameDidChange(notification:)),
                                                name: UIResponder.keyboardDidChangeFrameNotification,
@@ -257,7 +262,8 @@ final class ProfileViewController: UIViewController {
         
     }
     
-    @objc func keyboardFrameDidChange(notification: Notification) {
+    @objc
+    private func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
     
@@ -267,12 +273,7 @@ final class ProfileViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
     
-    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
-        self.init(user: user, viewer: viewer, conversation: conversation)
-        self.viewControllerDismisser = viewControllerDismisser
-    }
-    
-    func setupProfileDetailsViewController() -> ProfileDetailsViewController {
+    private func setupProfileDetailsViewController() -> ProfileDetailsViewController {
         let profileDetailsViewController = ProfileDetailsViewController(user: bareUser,
                                                                         viewer: viewer,
                                                                         conversation: conversation,
@@ -440,7 +441,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
     }
     
-    @objc func returnToPreviousScreen() {
+    private func returnToPreviousScreen() {
         if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
             navigationController.popViewController(animated: true)
         } else {
@@ -449,8 +450,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
     
     /// Presents an alert as a popover if needed.
-    @objc(presentAlert:fromTargetView:)
-    func presentAlert(_ alert: UIAlertController, targetView: UIView) {
+    private func presentAlert(_ alert: UIAlertController, targetView: UIView) {
         alert.popoverPresentationController?.sourceView = targetView
         alert.popoverPresentationController?.sourceRect = targetView.bounds.insetBy(dx: 8, dy: 8)
         alert.popoverPresentationController?.permittedArrowDirections = .down
@@ -460,8 +460,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     // MARK: Legal Hold
     
-    @objc
-    var legalholdItem: UIBarButtonItem {
+    private var legalholdItem: UIBarButtonItem {
         let item = UIBarButtonItem(icon: .legalholdactive, target: self, action: #selector(presentLegalHoldDetails))
         item.setLegalHoldAccessibility()
         item.tintColor = .vividRed
@@ -469,7 +468,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
     
     @objc
-    func presentLegalHoldDetails() {
+    private func presentLegalHoldDetails() {
         guard let user = fullUser else { return }
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
@@ -564,7 +563,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         presentAlert(controller, targetView: targetView)
     }
     
-    func handleNotificationResult(_ result: NotificationResult) {
+    private func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
             ZMUserSession.shared()?.performChanges {
                 self.conversation?.mutedMessageTypes = mutedMessageTypes
@@ -581,7 +580,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         presentAlert(controller, targetView: targetView)
     }
     
-    func handleDeleteResult(_ result: ClearContentResult) {
+    private func handleDeleteResult(_ result: ClearContentResult) {
         guard case .delete(leave: let leave) = result else { return }
         transitionToListAndEnqueue {
             self.conversation?.clearMessageHistory()
