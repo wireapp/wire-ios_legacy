@@ -27,15 +27,6 @@ enum ProfileViewControllerTabBarIndex : Int {
     case devices
 }
 
-enum ProfileViewControllerContext : Int {
-    case search
-    case groupConversation
-    case oneToOneConversation
-    case deviceList
-    /// when opening from a URL scheme, not linked to a specific conversation
-    case profileViewer
-}
-
 protocol ProfileViewControllerDelegate: class {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
@@ -43,15 +34,11 @@ protocol ProfileViewControllerDelegate: class {
 }
 
 final class ProfileViewController: UIViewController {
-    
-    private let bareUser: UserType
-    private(set) var viewer: UserType
+    let viewModel: ProfileViewControllerViewModel
     weak var delegate: ProfileViewControllerDelegate?
     weak var viewControllerDismisser: ViewControllerDismisser?
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
-    private var context: ProfileViewControllerContext
-    private var conversation: ZMConversation?
     private var profileFooterView: ProfileFooterView?
     private var incomingRequestFooter: IncomingRequestFooterView? ///TODO: create here
     private var usernameDetailsView: UserNameDetailView?
@@ -59,11 +46,9 @@ final class ProfileViewController: UIViewController {
     private var tabsController: TabBarController?
     
     private var observerToken: Any?
-    
-    convenience init(user: UserType, viewer: UserType, context: ProfileViewControllerContext) {
-        self.init(user: user, viewer: viewer, conversation: nil, context: context)
-    }
-    
+
+    // MARK: - init
+
     convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?) {
         let context: ProfileViewControllerContext
         if conversation?.conversationType == .group {
@@ -80,16 +65,37 @@ final class ProfileViewController: UIViewController {
         self.viewControllerDismisser = viewControllerDismisser
     }
 
-    init(user: UserType, viewer: UserType, conversation: ZMConversation?, context: ProfileViewControllerContext) {
-        bareUser = user
-        self.viewer = viewer
-        self.conversation = conversation
-        self.context = context
+    convenience init(user: UserType,
+                     viewer: UserType,
+                     conversation: ZMConversation? = nil,
+                     context: ProfileViewControllerContext? = nil) {
+        let profileViewControllerContext: ProfileViewControllerContext
+        
+        if context == nil {
+            if conversation?.conversationType == .group {
+                profileViewControllerContext = .groupConversation
+            } else {
+                profileViewControllerContext = .oneToOneConversation
+            }
+        } else {
+            profileViewControllerContext = context
+        }
 
-        super.init(nibName: nil, bundle: nil)
+        let viewModel = ProfileViewControllerViewModel(bareUser: user,
+                                                       conversation: conversation,
+                                                       viewer: viewer,
+                                                       context: profileViewControllerContext)
+        
+        self.init(viewModel: viewModel)
 
         setupKeyboardFrameNotification()
     }
+    
+    required init(viewModel: ProfileViewControllerViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName:nil, bundle:nil)
+    }
+    
     
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -105,12 +111,7 @@ final class ProfileViewController: UIViewController {
     }
     
     private func setupNavigationItems() {
-        let legalHoldItem: UIBarButtonItem?
-        if bareUser.isUnderLegalHold || conversation?.isUnderLegalHold == true {
-            legalHoldItem = legalholdItem
-        } else {
-            legalHoldItem = nil
-        }
+        let legalHoldItem: UIBarButtonItem? = viewModel.hasLegalHoldItem ? legalholdItem : nil
         
         if navigationController?.viewControllers.count == 1 {
             navigationItem.rightBarButtonItem = navigationController?.closeItem()
@@ -146,22 +147,9 @@ final class ProfileViewController: UIViewController {
     }
     
     private func updateShowVerifiedShield() {
-        if let user = bareUser.zmUser {
-            let showShield = user.trusted() &&
-                !user.clients.isEmpty &&
-                context != .deviceList &&
-                tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue && ZMUser.selfUser().trusted()
-            
-            profileTitleView?.showVerifiedShield = showShield
-        } else {
-            profileTitleView?.showVerifiedShield = false
-        }
+        profileTitleView?.showVerifiedShield = viewModel.showVerifiedShield
     }
-    
-    private var fullUser: ZMUser? {
-        return bareUser.zmUser
-    }
-    
+        
     // MARK: - Actions
     private func bringUpConversationCreationFlow() {
         let users: Set<ZMUser>
@@ -267,17 +255,16 @@ final class ProfileViewController: UIViewController {
         updatePopoverFrame()
     }
     
-    // MARK: - init
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
     
     private func setupProfileDetailsViewController() -> ProfileDetailsViewController {
-        let profileDetailsViewController = ProfileDetailsViewController(user: bareUser,
-                                                                        viewer: viewer,
-                                                                        conversation: conversation,
-                                                                        context: context)
+        ///TODO: pass the whole view Model/stuct/context
+        let profileDetailsViewController = ProfileDetailsViewController(user: viewModel.bareUser,
+                                                                        viewer: viewModel.viewer,
+                                                                        conversation: viewModel.conversation,
+                                                                        context: viewModel.context)
         profileDetailsViewController.title = "profile.details.title".localized
         
         return profileDetailsViewController
@@ -289,7 +276,8 @@ final class ProfileViewController: UIViewController {
         let profileDetailsViewController = setupProfileDetailsViewController()
         viewControllers.append(profileDetailsViewController)
         
-        if let fullUser = self.fullUser, context != .search && context != .profileViewer {
+        if viewModel.hasUserClientListTab,
+            let fullUser = viewModel.fullUser {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
@@ -297,7 +285,7 @@ final class ProfileViewController: UIViewController {
         tabsController = TabBarController(viewControllers: viewControllers) ///TODO: move to closure
         tabsController?.delegate = self
         
-        if context == .deviceList, tabsController?.viewControllers.count > 1 {
+        if viewModel.context == .deviceList, tabsController?.viewControllers.count > 1 {
             tabsController?.selectIndex(ProfileViewControllerTabBarIndex.devices.rawValue, animated: false)
         }
         
