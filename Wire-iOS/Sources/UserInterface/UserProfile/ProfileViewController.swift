@@ -33,6 +33,17 @@ protocol ProfileViewControllerDelegate: class {
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
 }
 
+extension ZMConversationType {
+    var profileViewControllerContext: ProfileViewControllerContext {
+        switch self {
+        case .group:
+            return .groupConversation
+        default:
+            return .oneToOneConversation
+        }
+    }
+}
+
 final class ProfileViewController: UIViewController {
     let viewModel: ProfileViewControllerViewModel
     weak var viewControllerDismisser: ViewControllerDismisser?
@@ -67,11 +78,7 @@ final class ProfileViewController: UIViewController {
         if let context = context {
             profileViewControllerContext = context
         } else {
-            if conversation?.conversationType == .group {
-                profileViewControllerContext = .groupConversation
-            } else {
-                profileViewControllerContext = .oneToOneConversation
-            }
+            profileViewControllerContext = conversation?.conversationType.profileViewControllerContext ?? .oneToOneConversation
         }
 
         let viewModel = ProfileViewControllerViewModel(bareUser: user,
