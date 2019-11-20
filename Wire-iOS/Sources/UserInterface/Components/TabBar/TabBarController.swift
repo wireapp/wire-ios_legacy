@@ -33,7 +33,7 @@ extension UIPageViewController {
 }
 
 extension UIViewController {
-    @objc var wr_tabBarController: TabBarController? {
+    var wr_tabBarController: TabBarController? {
         if parent == nil {
             return nil
         } else if (parent?.isKind(of: TabBarController.self) != nil) {
@@ -43,24 +43,23 @@ extension UIViewController {
         }
     }
 
-    @objc public func takeFirstResponder() {
+    func takeFirstResponder() {
         if UIAccessibility.isVoiceOverRunning {
             return
         }
     }
 }
 
-@objcMembers
-class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate {
+final class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate {
 
     weak var delegate: TabBarControllerDelegate?
     
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private(set) var viewControllers: [UIViewController]
-    private(set) var selectedIndex: Int ///TODO: use ProfileViewControllerTabBarIndex?
+    private(set) var selectedIndex: Int
     
-    @objc(interactive) var isInteractive = true {
+    var isInteractive = true {
         didSet {
             pageViewController.dataSource = isInteractive ? self : nil
             pageViewController.delegate = isInteractive ? self : nil
@@ -68,7 +67,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         }
     }
 
-    @objc(tabBarHidden) var isTabBarHidden = false {
+    var isTabBarHidden = false {
         didSet {
             tabBar?.isHidden = isTabBarHidden
             tabBarHeight?.isActive = isTabBarHidden
@@ -81,7 +80,6 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
         }
     }
 
-    @objc(enabled)
     var isEnabled = true {
         didSet {
             tabBar?.isUserInteractionEnabled = isEnabled

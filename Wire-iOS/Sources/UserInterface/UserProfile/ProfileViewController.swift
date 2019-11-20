@@ -226,7 +226,7 @@ final class ProfileViewController: UIViewController {
             viewControllers.append(userClientListViewController)
         }
         
-        tabsController = TabBarController(viewControllers: viewControllers) ///TODO: move to closure
+        tabsController = TabBarController(viewControllers: viewControllers)
         tabsController?.delegate = self
         
         if viewModel.context == .deviceList, tabsController?.viewControllers.count > 1 {
