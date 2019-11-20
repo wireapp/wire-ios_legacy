@@ -56,16 +56,12 @@ final class ProfileViewController: UIViewController {
     }
 
     // MARK: - init
-  
-    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
-        self.init(user: user, viewer: viewer, conversation: conversation)
-        self.viewControllerDismisser = viewControllerDismisser
-    }
 
     convenience init(user: UserType,
                      viewer: UserType,
                      conversation: ZMConversation? = nil,
-                     context: ProfileViewControllerContext? = nil) {
+                     context: ProfileViewControllerContext? = nil,
+                     viewControllerDismisser: ViewControllerDismisser? = nil) {
         let profileViewControllerContext: ProfileViewControllerContext
         
         if let context = context {
@@ -86,6 +82,8 @@ final class ProfileViewController: UIViewController {
         self.init(viewModel: viewModel)
 
         setupKeyboardFrameNotification()
+
+        self.viewControllerDismisser = viewControllerDismisser
     }
     
     required init(viewModel: ProfileViewControllerViewModel) {
