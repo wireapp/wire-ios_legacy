@@ -5721,11 +5721,11 @@
 			children = (
 				EF22DC7C224BBE3B001EDE8E /* SearchUserViewConroller.swift */,
 				EF3CB75421DD157B0030C3E8 /* ProfileViewController.swift */,
+				A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */,
 				5E628020221ED0A60039A8AB /* ProfileActionsFactory.swift */,
 				5EF7BA73221D85E800815625 /* Details */,
 				5EF7BA74221D861600815625 /* Devices */,
 				872CB8A019E58816006752B4 /* Views */,
-				A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */,
 			);
 			path = UserProfile;
 			sourceTree = "<group>";

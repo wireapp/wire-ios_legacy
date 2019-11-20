@@ -58,7 +58,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objcMembers final class UserNameDetailViewModel: NSObject {
+final class UserNameDetailViewModel: NSObject {
 
     let title: NSAttributedString
 

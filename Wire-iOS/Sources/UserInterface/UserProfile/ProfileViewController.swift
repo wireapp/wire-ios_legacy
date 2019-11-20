@@ -35,17 +35,23 @@ protocol ProfileViewControllerDelegate: class {
 
 final class ProfileViewController: UIViewController {
     let viewModel: ProfileViewControllerViewModel
-    weak var delegate: ProfileViewControllerDelegate?
     weak var viewControllerDismisser: ViewControllerDismisser?
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
-    private var profileFooterView: ProfileFooterView?
+    private let profileFooterView: ProfileFooterView = ProfileFooterView()
     private var incomingRequestFooter: IncomingRequestFooterView? ///TODO: create here
     private var usernameDetailsView: UserNameDetailView?
     private var profileTitleView: ProfileTitleView?
     private var tabsController: TabBarController?
     
-    private var observerToken: Any?
+    var delegate: ProfileViewControllerDelegate? {
+        get {
+            return viewModel.delegate
+        }
+        set {
+            viewModel.delegate = delegate
+        }
+    }
 
     // MARK: - init
 
@@ -71,14 +77,14 @@ final class ProfileViewController: UIViewController {
                      context: ProfileViewControllerContext? = nil) {
         let profileViewControllerContext: ProfileViewControllerContext
         
-        if context == nil {
+        if let context = context {
+            profileViewControllerContext = context
+        } else {
             if conversation?.conversationType == .group {
                 profileViewControllerContext = .groupConversation
             } else {
                 profileViewControllerContext = .oneToOneConversation
             }
-        } else {
-            profileViewControllerContext = context
         }
 
         let viewModel = ProfileViewControllerViewModel(bareUser: user,
@@ -110,27 +116,16 @@ final class ProfileViewController: UIViewController {
         viewControllerDismisser?.dismiss(viewController: self, completion: completion)
     }
     
-    private func setupNavigationItems() {
-        let legalHoldItem: UIBarButtonItem? = viewModel.hasLegalHoldItem ? legalholdItem : nil
-        
-        if navigationController?.viewControllers.count == 1 {
-            navigationItem.rightBarButtonItem = navigationController?.closeItem()
-            navigationItem.leftBarButtonItem = legalHoldItem
-        } else {
-            navigationItem.rightBarButtonItem = legalHoldItem
-        }
-    }
-    
     // MARK: - Header
     private func setupHeader() {
-        let viewModel = makeUserNameDetailViewModel()
+        let userNameDetailViewModel = viewModel.makeUserNameDetailViewModel()
         let usernameDetailsView = UserNameDetailView()
-        usernameDetailsView.configure(with: viewModel)
+        usernameDetailsView.configure(with: userNameDetailViewModel)
         view.addSubview(usernameDetailsView)
         self.usernameDetailsView = usernameDetailsView
         
         let titleView = ProfileTitleView()
-        titleView.configure(with: viewModel)
+        titleView.configure(with: userNameDetailViewModel)
         
         titleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
@@ -146,20 +141,10 @@ final class ProfileViewController: UIViewController {
         profileTitleView = titleView
     }
     
-    private func updateShowVerifiedShield() {
-        profileTitleView?.showVerifiedShield = viewModel.showVerifiedShield
-    }
-        
     // MARK: - Actions
     private func bringUpConversationCreationFlow() {
-        let users: Set<ZMUser>
-        if let fullUser = fullUser {
-            users = Set<ZMUser>([fullUser])
-        } else {
-            users = Set<ZMUser>()
-        }
 
-        let controller = ConversationCreationController(preSelectedParticipants: users)
+        let controller = ConversationCreationController(preSelectedParticipants: viewModel.fullUserSet)
         controller.delegate = self
         
         let wrappedController = controller.wrapInNavigationController()
@@ -168,59 +153,39 @@ final class ProfileViewController: UIViewController {
     }
     
     private func bringUpCancelConnectionRequestSheet(from targetView: UIView) {
-        guard let fullUser = fullUser else { return }
+        guard let fullUser = viewModel.fullUser else { return }
         
         let controller = UIAlertController.cancelConnectionRequest(for: fullUser) { canceled in
             if !canceled {
-                self.cancelConnectionRequest()
+                self.viewModel.cancelConnectionRequest() {
+                    self.returnToPreviousScreen()
+                }
             }
         }
         
         presentAlert(controller, targetView: targetView)
     }
     
-    private func cancelConnectionRequest() {
-        let user = fullUser
-        ZMUserSession.shared()?.enqueueChanges({
-            user?.cancelConnectionRequest()
-            self.returnToPreviousScreen()
-        })
-    }
-    
-    private func openOneToOneConversation() {
-        guard let fullUser = fullUser else {
-            zmLog.error("No user to open conversation with")
-            return
-        }
-        var conversation: ZMConversation! = nil
-        
-        ZMUserSession.shared()?.enqueueChanges({
-            conversation = fullUser.oneToOneConversation
-        }, completionHandler: {
-            self.delegate?.profileViewController(self, wantsToNavigateTo: conversation)
-        })
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
     
+    override func loadView() {
+        super.loadView()
+        
+        viewModel.viewModelDelegate = self
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        profileFooterView = ProfileFooterView()
-        view.addSubview(profileFooterView!)
+        view.addSubview(profileFooterView)
         
-        incomingRequestFooter = IncomingRequestFooterView()
+        incomingRequestFooter = IncomingRequestFooterView() ///TODO: mv to top
         view.addSubview(incomingRequestFooter!)
         
         view.backgroundColor = UIColor.from(scheme: .barBackground)
-        
-        if let fullUser = fullUser,
-           let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: fullUser, userSession: userSession)
-        }
-        
+                
         setupNavigationItems()
         setupHeader()
         setupTabsController()
@@ -297,28 +262,21 @@ final class ProfileViewController: UIViewController {
     private func setupConstraints() {
         usernameDetailsView?.translatesAutoresizingMaskIntoConstraints = false
         tabsController?.view.translatesAutoresizingMaskIntoConstraints = false
-        profileFooterView?.translatesAutoresizingMaskIntoConstraints = false
+        profileFooterView.translatesAutoresizingMaskIntoConstraints = false
         
         usernameDetailsView?.fitInSuperview(exclude: [.bottom]) ///TODO: clean up
         tabsController?.view?.topAnchor.constraint(equalTo: usernameDetailsView!.bottomAnchor).isActive = true
         tabsController?.view.fitInSuperview(exclude: [.top])
-        profileFooterView?.fitInSuperview(exclude: [.top])
+        profileFooterView.fitInSuperview(exclude: [.top])
         
         incomingRequestFooter?.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            (incomingRequestFooter?.bottomAnchor.constraint(equalTo: profileFooterView!.topAnchor))!,
+            (incomingRequestFooter?.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor))!,
             (incomingRequestFooter?.leadingAnchor.constraint(equalTo: view.leadingAnchor))!,
             (incomingRequestFooter?.trailingAnchor.constraint(equalTo: view.trailingAnchor))!
             ])
     }
-    
-    // MARK: - Factories
-    
-    private func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: fullUser?.addressBookEntry?.cachedName)
-    }
-    
 }
 
 extension ProfileViewController: ViewControllerDismisser {
@@ -331,29 +289,12 @@ extension ProfileViewController: ViewControllerDismisser {
 
 extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFooterViewDelegate {
     
-    @objc
-    func updateFooterViews() {
-        // Actions
-        let factory = ProfileActionsFactory(user: bareUser, viewer: viewer, conversation: conversation, context: context)
-        let actions = factory.makeActionsList()
-        
-        profileFooterView?.delegate = self
-        profileFooterView?.isHidden = actions.isEmpty
-        profileFooterView?.configure(with: actions)
-        view.bringSubviewToFront(profileFooterView!)
-        
-        // Incoming Request Footer
-        incomingRequestFooter?.isHidden = !bareUser.isPendingApprovalBySelfUser
-        incomingRequestFooter?.delegate = self
-        view.bringSubviewToFront(incomingRequestFooter!)
-    }
-    
     func footerView(_ footerView: IncomingRequestFooterView, didRespondToRequestWithAction action: IncomingConnectionAction) {
         switch action {
         case .accept:
-            acceptConnectionRequest()
+            viewModel.acceptConnectionRequest()
         case .ignore:
-            ignoreConnectionRequest()
+            viewModel.ignoreConnectionRequest()
         }
         
     }
@@ -377,26 +318,27 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         presentAlert(actionSheet, targetView: footerView)
     }
     
-    func performAction(_ action: ProfileAction, targetView: UIView) {
+    private func performAction(_ action: ProfileAction,
+                       targetView: UIView) {
         switch action {
         case .createGroup:
             bringUpConversationCreationFlow()
         case .mute(let isMuted):
-            updateMute(enableNotifications: isMuted)
+            viewModel.updateMute(enableNotifications: isMuted)
         case .manageNotifications:
             presentNotificationsOptions(from: targetView)
         case .archive:
-            archiveConversation()
+            viewModel.archiveConversation()
         case .deleteContents:
             presentDeleteConfirmationPrompt(from: targetView)
         case .block:
             presentBlockRequest(from: targetView)
         case .openOneToOne:
-            openOneToOneConversation()
+            viewModel.openOneToOneConversation()
         case .removeFromGroup:
             presentRemoveUserMenuSheetController(from: targetView)
         case .connect:
-            sendConnectionRequest()
+            viewModel.sendConnectionRequest()
         case .cancelConnectionRequest:
             bringUpCancelConnectionRequestSheet(from: targetView)
         case .openSelfProfile:
@@ -414,26 +356,9 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
         
         dismiss(animated: true){ [weak self] in
-            self?.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
+            self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
                 ZClientViewController.shared()?.conversationListViewController.topBarViewController.presentSettings()
             }
-        }
-    }
-    
-    // MARK: - Helpers
-    
-    private func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true,
-                                                         leftViewControllerRevealed: leftViewControllerRevealed) {
-                                                            ZMUserSession.shared()?.enqueueChanges(block)
-        }
-    }
-    
-    private func returnToPreviousScreen() {
-        if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
-            navigationController.popViewController(animated: true)
-        } else {
-            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -457,60 +382,18 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     @objc
     private func presentLegalHoldDetails() {
-        guard let user = fullUser else { return }
+        guard let user = viewModel.fullUser else { return }
+        
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
-    // MARK: - Action Handlers
-    
-    private func archiveConversation() {
-        transitionToListAndEnqueue {
-            self.conversation?.isArchived.toggle()
-        }
-    }
-    
-    // MARK: Connect
-    
-    private func sendConnectionRequest() {
-        let connect: (String) -> Void = {
-            if let user = self.fullUser {
-                user.connect(message: $0)
-            } else if let searchUser = self.bareUser as? ZMSearchUser {
-                searchUser.connect(message: $0)
-            }
-        }
-        
-        ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
-            connect(messageText)
-            // update the footer view to display the cancel request button
-            self.updateFooterViews()
-        }
-    }
-    
-    private func acceptConnectionRequest() {
-        guard let user = self.fullUser else { return }
-        ZMUserSession.shared()?.enqueueChanges {
-            user.accept()
-            user.refreshData()
-            self.updateFooterViews()
-        }
-    }
-    
-    private func ignoreConnectionRequest() {
-        guard let user = self.fullUser else { return }
-        ZMUserSession.shared()?.enqueueChanges {
-            user.ignore()
-            self.returnToPreviousScreen()
-        }
-    }
     
     // MARK: Block
     
     private func presentBlockRequest(from targetView: UIView) {
         
-        let controller = UIAlertController(title: BlockResult.title(for: bareUser), message: nil, preferredStyle: .actionSheet)
-        BlockResult.all(isBlocked: bareUser.isBlocked).map { $0.action(handleBlockResult) }.forEach(controller.addAction)
+        let controller = UIAlertController(title: viewModel.blockTitle, message: nil, preferredStyle: .actionSheet)
+        viewModel.allBockResult.map { $0.action(handleBlockResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
     
@@ -518,16 +401,16 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         guard case .block = result else { return }
         
         let updateClosure = {
-            self.fullUser?.toggleBlocked()
+            self.viewModel.toggleBlocked()
             self.updateFooterViews()
         }
         
-        switch context {
+        switch viewModel.context {
         case .search:
             /// stay on this VC and let user to decise what to do next
             updateClosure()
         default:
-            transitionToListAndEnqueue {
+            viewModel.transitionToListAndEnqueue {
                 updateClosure()
             }
         }
@@ -535,53 +418,30 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     // MARK: Notifications
     
-    private func updateMute(enableNotifications: Bool) {
-        ZMUserSession.shared()?.enqueueChanges {
-            self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
-            // update the footer view to display the correct mute/unmute button
-            self.updateFooterViews()
-        }
-    }
-    
     private func presentNotificationsOptions(from targetView: UIView) {
-        guard let conversation = self.conversation else { return }
+        guard let conversation = viewModel.conversation else { return }
+        
         let title = "\(conversation.displayName) • \(NotificationResult.title)"
         let controller = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-        NotificationResult.allCases.map { $0.action(for: conversation, handler: handleNotificationResult) }.forEach(controller.addAction)
+        NotificationResult.allCases.map { $0.action(for: conversation, handler: viewModel.handleNotificationResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
-    }
-    
-    private func handleNotificationResult(_ result: NotificationResult) {
-        if let mutedMessageTypes = result.mutedMessageTypes {
-            ZMUserSession.shared()?.performChanges {
-                self.conversation?.mutedMessageTypes = mutedMessageTypes
-            }
-        }
     }
     
     // MARK: Delete Contents
     
     private func presentDeleteConfirmationPrompt(from targetView: UIView) {
-        guard let conversation = self.conversation else { return }
+        guard let conversation = viewModel.conversation else { return }
+        
         let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
-        ClearContentResult.options(for: conversation) .map { $0.action(handleDeleteResult) }.forEach(controller.addAction)
+        ClearContentResult.options(for: conversation) .map { $0.action(viewModel.handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
     
-    private func handleDeleteResult(_ result: ClearContentResult) {
-        guard case .delete(leave: let leave) = result else { return }
-        transitionToListAndEnqueue {
-            self.conversation?.clearMessageHistory()
-            if leave {
-                self.conversation?.removeOrShowError(participnant: .selfUser())
-            }
-        }
-    }
     
     // MARK: Remove User
     
     private func presentRemoveUserMenuSheetController(from view: UIView) {
-        guard let otherUser = fullUser else {
+        guard let otherUser = viewModel.fullUser else {
             return
         }
         
@@ -592,7 +452,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         )
         
         let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
-            self.conversation?.removeOrShowError(participnant: otherUser) { result in
+            self.viewModel.conversation?.removeOrShowError(participnant: otherUser) { result in
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
@@ -609,18 +469,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
 }
 
-extension ProfileViewController: ZMUserObserver {
-    func userDidChange(_ note: UserChangeInfo) {
-        if note.trustLevelChanged {
-            updateShowVerifiedShield()
-        }
-        
-        if note.legalHoldStatusChanged {
-            setupNavigationItems()
-        }
-    }
-}
-
+///TODO: mv to VM
 extension ProfileViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
@@ -628,7 +477,7 @@ extension ProfileViewController: ProfileViewControllerDelegate {
     }
     
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return bareUser.displayName.uppercasedWithCurrentLocale
+        return viewModel.bareUser.displayName.uppercasedWithCurrentLocale
     }
     
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
@@ -654,5 +503,46 @@ extension ProfileViewController: ConversationCreationControllerDelegate {
 extension ProfileViewController: TabBarControllerDelegate {
     func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
         updateShowVerifiedShield()
+    }
+}
+
+extension ProfileViewController: ProfileViewControllerViewModelDelegate {
+    func updateShowVerifiedShield() {
+        profileTitleView?.showVerifiedShield = viewModel.showVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
+    }
+
+    func setupNavigationItems() {
+        let legalHoldItem: UIBarButtonItem? = viewModel.hasLegalHoldItem ? legalholdItem : nil
+        
+        if navigationController?.viewControllers.count == 1 {
+            navigationItem.rightBarButtonItem = navigationController?.closeItem()
+            navigationItem.leftBarButtonItem = legalHoldItem
+        } else {
+            navigationItem.rightBarButtonItem = legalHoldItem
+        }
+    }
+    
+    func updateFooterViews() {
+        // Actions
+        let factory = viewModel.profileActionsFactory
+        let actions = factory.makeActionsList()
+        
+        profileFooterView.delegate = self
+        profileFooterView.isHidden = actions.isEmpty
+        profileFooterView.configure(with: actions)
+        view.bringSubviewToFront(profileFooterView)
+        
+        // Incoming Request Footer
+        incomingRequestFooter?.isHidden = viewModel.incomingRequestFooterHidden
+        incomingRequestFooter?.delegate = self
+        view.bringSubviewToFront(incomingRequestFooter!)
+    }
+    
+    func returnToPreviousScreen() {
+        if let navigationController = self.navigationController, navigationController.viewControllers.first != self {
+            navigationController.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
 }

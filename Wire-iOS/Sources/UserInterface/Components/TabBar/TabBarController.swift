@@ -58,7 +58,7 @@ class TabBarController: UIViewController, UIPageViewControllerDelegate, UIPageVi
     private let pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
 
     private(set) var viewControllers: [UIViewController]
-    private(set) var selectedIndex: Int
+    private(set) var selectedIndex: Int ///TODO: use ProfileViewControllerTabBarIndex?
     
     @objc(interactive) var isInteractive = true {
         didSet {
