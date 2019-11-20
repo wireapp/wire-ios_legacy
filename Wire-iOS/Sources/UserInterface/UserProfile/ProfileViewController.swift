@@ -39,9 +39,11 @@ final class ProfileViewController: UIViewController {
     weak var navigationControllerDelegate: UINavigationControllerDelegate?
     
     private let profileFooterView: ProfileFooterView = ProfileFooterView()
-    private var incomingRequestFooter: IncomingRequestFooterView? ///TODO: create here
-    private var usernameDetailsView: UserNameDetailView?
-    private var profileTitleView: ProfileTitleView?
+    private let incomingRequestFooter: IncomingRequestFooterView = IncomingRequestFooterView()
+    private let usernameDetailsView: UserNameDetailView = UserNameDetailView()
+
+    private let profileTitleView: ProfileTitleView = ProfileTitleView()
+
     private var tabsController: TabBarController?
     
     var delegate: ProfileViewControllerDelegate? {
@@ -108,10 +110,6 @@ final class ProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func dismissButtonClicked() { ///TODO: remove
-        requestDismissal(withCompletion: { })
-    }
-    
     private func requestDismissal(withCompletion completion: @escaping () -> ()) {
         viewControllerDismisser?.dismiss(viewController: self, completion: completion)
     }
@@ -119,26 +117,22 @@ final class ProfileViewController: UIViewController {
     // MARK: - Header
     private func setupHeader() {
         let userNameDetailViewModel = viewModel.makeUserNameDetailViewModel()
-        let usernameDetailsView = UserNameDetailView()
         usernameDetailsView.configure(with: userNameDetailViewModel)
         view.addSubview(usernameDetailsView)
-        self.usernameDetailsView = usernameDetailsView
         
-        let titleView = ProfileTitleView()
-        titleView.configure(with: userNameDetailViewModel)
+        profileTitleView.configure(with: userNameDetailViewModel)
         
-        titleView.translatesAutoresizingMaskIntoConstraints = false
+        profileTitleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
-            navigationItem.titleView = titleView
+            navigationItem.titleView = profileTitleView
         } else {
-            titleView.setNeedsLayout()
-            titleView.layoutIfNeeded()
-            titleView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            titleView.translatesAutoresizingMaskIntoConstraints = true
+            profileTitleView.setNeedsLayout()
+            profileTitleView.layoutIfNeeded()
+            profileTitleView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            profileTitleView.translatesAutoresizingMaskIntoConstraints = true
         }
         
-        navigationItem.titleView = titleView
-        profileTitleView = titleView
+        navigationItem.titleView = profileTitleView
     }
     
     // MARK: - Actions
@@ -180,9 +174,7 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(profileFooterView)
-        
-        incomingRequestFooter = IncomingRequestFooterView() ///TODO: mv to top
-        view.addSubview(incomingRequestFooter!)
+        view.addSubview(incomingRequestFooter)
         
         view.backgroundColor = UIColor.from(scheme: .barBackground)
                 
@@ -260,21 +252,21 @@ final class ProfileViewController: UIViewController {
     // MARK : - constraints
     
     private func setupConstraints() {
-        usernameDetailsView?.translatesAutoresizingMaskIntoConstraints = false
+        usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
         tabsController?.view.translatesAutoresizingMaskIntoConstraints = false
         profileFooterView.translatesAutoresizingMaskIntoConstraints = false
         
-        usernameDetailsView?.fitInSuperview(exclude: [.bottom]) ///TODO: clean up
-        tabsController?.view?.topAnchor.constraint(equalTo: usernameDetailsView!.bottomAnchor).isActive = true
+        usernameDetailsView.fitInSuperview(exclude: [.bottom]) ///TODO: clean up and activate in one batch
+        tabsController?.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
         tabsController?.view.fitInSuperview(exclude: [.top])
         profileFooterView.fitInSuperview(exclude: [.top])
         
-        incomingRequestFooter?.translatesAutoresizingMaskIntoConstraints = false
+        incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            (incomingRequestFooter?.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor))!,
-            (incomingRequestFooter?.leadingAnchor.constraint(equalTo: view.leadingAnchor))!,
-            (incomingRequestFooter?.trailingAnchor.constraint(equalTo: view.trailingAnchor))!
+            (incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor)),
+            (incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor)),
+            (incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor))
             ])
     }
 }
@@ -508,7 +500,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateShowVerifiedShield() {
-        profileTitleView?.showVerifiedShield = viewModel.showVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
+        profileTitleView.showVerifiedShield = viewModel.showVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
     }
 
     func setupNavigationItems() {
@@ -533,9 +525,9 @@ extension ProfileViewController: ProfileViewControllerViewModelDelegate {
         view.bringSubviewToFront(profileFooterView)
         
         // Incoming Request Footer
-        incomingRequestFooter?.isHidden = viewModel.incomingRequestFooterHidden
-        incomingRequestFooter?.delegate = self
-        view.bringSubviewToFront(incomingRequestFooter!)
+        incomingRequestFooter.isHidden = viewModel.incomingRequestFooterHidden
+        incomingRequestFooter.delegate = self
+        view.bringSubviewToFront(incomingRequestFooter)
     }
     
     func returnToPreviousScreen() {
