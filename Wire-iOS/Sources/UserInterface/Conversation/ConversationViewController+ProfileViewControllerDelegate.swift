@@ -21,8 +21,9 @@ import Foundation
 extension ConversationViewController {
     @objc
     func createUserDetailViewControllerWithUser() -> UIViewController {
-        ///TODO: unwrap
-        return UserDetailViewControllerFactory.createUserDetailViewController(user: conversation.firstActiveParticipantOtherThanSelf!, conversation: conversation, profileViewControllerDelegate: self, viewControllerDismisser: self)
+        guard let user = conversation.firstActiveParticipantOtherThanSelf else { fatal("no firstActiveParticipantOtherThanSelf!") }
+
+        return UserDetailViewControllerFactory.createUserDetailViewController(user: user, conversation: conversation, profileViewControllerDelegate: self, viewControllerDismisser: self)
     }
 }
 
@@ -35,8 +36,9 @@ extension ConversationViewController: ProfileViewControllerDelegate {
         }
     }
     
-    ///TODO: unwrap
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?,
+                               wantsToCreateConversationWithName name: String?,
+                               users: Set<ZMUser>) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationCreation = { [weak self] in
@@ -54,7 +56,5 @@ extension ConversationViewController: ProfileViewControllerDelegate {
         } else {
             conversationCreation()
         }
-
     }
-
 }

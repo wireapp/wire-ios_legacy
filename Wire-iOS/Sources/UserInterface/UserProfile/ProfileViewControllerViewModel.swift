@@ -126,7 +126,7 @@ final class ProfileViewControllerViewModel: NSObject {
         ZMUserSession.shared()?.enqueueChanges({
             conversation = fullUser.oneToOneConversation
         }, completionHandler: {
-            self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController, wantsToNavigateTo: conversation) ///TODO: test
+            self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController, wantsToNavigateTo: conversation)
         })
     }
     
