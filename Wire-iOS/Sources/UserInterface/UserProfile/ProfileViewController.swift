@@ -51,23 +51,12 @@ final class ProfileViewController: UIViewController {
             return viewModel.delegate
         }
         set {
-            viewModel.delegate = delegate
+            viewModel.delegate = newValue
         }
     }
 
     // MARK: - init
-
-    convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?) {
-        let context: ProfileViewControllerContext
-        if conversation?.conversationType == .group {
-            context = .groupConversation
-        } else {
-            context = .oneToOneConversation
-        }
-        
-        self.init(user: user, viewer: viewer, conversation: conversation, context: context)
-    }
-    
+  
     convenience init(user: UserType, viewer: UserType, conversation: ZMConversation?, viewControllerDismisser: ViewControllerDismisser) {
         self.init(user: user, viewer: viewer, conversation: conversation)
         self.viewControllerDismisser = viewControllerDismisser
