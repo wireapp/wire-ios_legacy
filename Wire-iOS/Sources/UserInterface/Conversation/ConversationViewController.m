@@ -379,7 +379,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         case ZMConversationTypeOneOnOne:
         case ZMConversationTypeConnection:
         {
-            viewController = [self createUserDetailViewControllerWithUser];
+            viewController = [self createUserDetailViewController];
             break;
         }
         case ZMConversationTypeInvalid:

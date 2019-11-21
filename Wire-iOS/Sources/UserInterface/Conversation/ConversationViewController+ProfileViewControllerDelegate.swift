@@ -20,15 +20,19 @@ import Foundation
 
 extension ConversationViewController {
     @objc
-    func createUserDetailViewControllerWithUser() -> UIViewController {
-        guard let user = conversation.firstActiveParticipantOtherThanSelf else { fatal("no firstActiveParticipantOtherThanSelf!") }
+    func createUserDetailViewController() -> UIViewController {
+        guard let user = conversation.firstActiveParticipantOtherThanSelf else {
+            fatal("no firstActiveParticipantOtherThanSelf!")            
+        }
 
         return UserDetailViewControllerFactory.createUserDetailViewController(user: user, conversation: conversation, profileViewControllerDelegate: self, viewControllerDismisser: self)
     }
 }
 
 extension ConversationViewController: ProfileViewControllerDelegate {
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {return nil}
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
+        return nil        
+    }
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){
         dismiss(animated: true) {
