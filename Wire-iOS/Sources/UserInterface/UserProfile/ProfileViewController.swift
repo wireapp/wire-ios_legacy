@@ -228,7 +228,7 @@ final class ProfileViewController: UIViewController {
         viewControllers.append(profileDetailsViewController)
         
         if viewModel.hasUserClientListTab,
-            let fullUser = viewModel.fullUser {
+           let fullUser = viewModel.fullUser {
             let userClientListViewController = UserClientListViewController(user: fullUser)
             viewControllers.append(userClientListViewController)
         }
@@ -246,22 +246,31 @@ final class ProfileViewController: UIViewController {
     // MARK : - constraints
     
     private func setupConstraints() {
+        guard let tabsView = tabsController?.view else { fatal("Tabs view is not created") }
+        
         usernameDetailsView.translatesAutoresizingMaskIntoConstraints = false
-        tabsController?.view.translatesAutoresizingMaskIntoConstraints = false
+        tabsView.translatesAutoresizingMaskIntoConstraints = false
         profileFooterView.translatesAutoresizingMaskIntoConstraints = false
-        
-        usernameDetailsView.fitInSuperview(exclude: [.bottom]) ///TODO: clean up and activate in one batch
-        tabsController?.view?.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor).isActive = true
-        tabsController?.view.fitInSuperview(exclude: [.top])
-        profileFooterView.fitInSuperview(exclude: [.top])
-        
         incomingRequestFooter.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
-            (incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor)),
-            (incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor)),
-            (incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor))
-            ])
+            usernameDetailsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            usernameDetailsView.topAnchor.constraint(equalTo: view.topAnchor),
+            usernameDetailsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            tabsView.topAnchor.constraint(equalTo: usernameDetailsView.bottomAnchor),
+
+            tabsView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tabsView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tabsView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            profileFooterView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileFooterView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileFooterView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            incomingRequestFooter.bottomAnchor.constraint(equalTo: profileFooterView.topAnchor),
+            incomingRequestFooter.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            incomingRequestFooter.trailingAnchor.constraint(equalTo: view.trailingAnchor) ])
     }
 }
 
