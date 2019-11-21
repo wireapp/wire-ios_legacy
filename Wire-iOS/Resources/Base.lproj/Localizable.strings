@@ -878,8 +878,8 @@
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
-"group_details.conversation_admins_header.title" = "Conversation admins (%d)";
-"group_details.conversation_members_header.title" = "Conversation members (%d)";
+"group_details.conversation_admins_header.title" = "Group admins (%d)";
+"group_details.conversation_members_header.title" = "Group members (%d)";
 
 // Legal hold details
 
