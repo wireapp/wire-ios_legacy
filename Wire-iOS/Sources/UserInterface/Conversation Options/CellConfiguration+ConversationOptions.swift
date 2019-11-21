@@ -26,6 +26,7 @@ extension CellConfiguration {
             title: "guest_room.allow_guests.title".localized,
             subtitle: "guest_room.allow_guests.subtitle".localized,
             identifier: "toggle.guestoptions.allowguests",
+            titleIdentifier: "label.guestoptions.description",
             get: get,
             set: set
         )

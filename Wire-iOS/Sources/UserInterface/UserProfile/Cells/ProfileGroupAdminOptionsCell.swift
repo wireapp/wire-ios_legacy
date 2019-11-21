@@ -19,29 +19,29 @@
 import UIKit
 
 
-final class ProfileGroupAdminOptionsCell: IconToggleCell {
+final class ProfileGroupAdminOptionsCell: ToggleSubtitleCell {
 
-    override func setUp() {
-        super.setUp()
+//    override func setUp() {
+//        super.setUp()
+//
+////        titleLabel.accessibilityIdentifier = "cell.profile.group_admin_options"
+////        toggle.accessibilityIdentifier = "GroupAdminSwitch"
+////
+////        titleLabel.text = "profile.profile.group_admin_options.title".localized
+//    }
 
-        accessibilityIdentifier = "cell.profile.group_admin_options"
-        toggle.accessibilityIdentifier = "GroupAdminSwitch"
-
-        title = "profile.profile.group_admin_options.title".localized
-    }
-
-    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        super.applyColorScheme(colorSchemeVariant)
-        
-        icon = StyleKitIcon.eye.makeImage(
-            size: .tiny,
-            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        )
-    }
+//    override func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+//        super.applyColorScheme(colorSchemeVariant)
+//
+//        icon = StyleKitIcon.eye.makeImage(
+//            size: .tiny,
+//            color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+//        )
+//    }
 }
 
 extension ProfileGroupAdminOptionsCell: ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation) {
-        isOn = true//TODO: create method like conversation.isGroupAdmin(user: user)
+//        toggle.isOn = true//TODO: create method like conversation.isGroupAdmin(user: user)
     }
 }

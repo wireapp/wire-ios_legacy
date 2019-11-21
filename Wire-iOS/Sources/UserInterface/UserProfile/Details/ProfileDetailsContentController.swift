@@ -33,7 +33,10 @@ protocol ProfileDetailsContentControllerDelegate: class {
  * An object that controls the content to display in the user details screen.
  */
 
-final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
+final class ProfileDetailsContentController: NSObject,
+                                             UITableViewDataSource,
+                                             UITableViewDelegate,
+                                             ZMUserObserver {
     
     /**
      * The type of content that can be displayed in the profile details.
@@ -45,6 +48,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         
         /// Display the status of read receipts for a 1:1 conversation.
         case readReceiptsStatus(enabled: Bool)
+        
+        /// Display the status of groud admin enabled for a group conversation.
+        case groupAdminStatus(enabled: Bool)
     }
     
     /// The user to display the details of.
@@ -134,13 +140,15 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         
         switch conversation?.conversationType ?? .group {
         case .group:
+            let groupAdminEnabled = true //TODO: wait for BE support
+
+            var items: [ProfileDetailsContentController.Content] = [.groupAdminStatus(enabled: groupAdminEnabled)] ///TODO: check all context
             if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
-                contents = [richProfile]
-            } else {
-                // If there is no rich profile data, show nothing.
-                contents = []
+                items.append(richProfile)
             }
+
+            contents = items
 
         case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
@@ -176,6 +184,8 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
             return fields.count
         case .readReceiptsStatus:
             return 0
+        case .groupAdminStatus:
+            return 1
         }
     }
 
@@ -183,7 +193,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         let header = SectionTableHeader()
 
         switch contents[section] {
-
+        case .groupAdminStatus:
+            header.titleLabel.text = nil
+            header.accessibilityIdentifier = nil
         case .richProfile:
             header.titleLabel.text = "profile.extended_metadata.header".localized(uppercased: true)
             header.accessibilityIdentifier = "InformationHeader"
@@ -201,6 +213,12 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch contents[indexPath.section] {
+        case .groupAdminStatus(let groupAdminEnabled):
+            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileGroupAdminOptionsCell.zm_reuseIdentifier, for: indexPath) as! ProfileGroupAdminOptionsCell
+            
+//            cell.configure(with: conversation)///TODO: inject user
+
+            return cell
         case .richProfile(let fields):
             let field = fields[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: userPropertyCellID) as? UserPropertyCell ?? UserPropertyCell(style: .default, reuseIdentifier: userPropertyCellID)
@@ -222,6 +240,11 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
             let footer = SectionTableFooter()
             footer.titleLabel.text = "profile.read_receipts_memo.body".localized
             footer.accessibilityIdentifier = "ReadReceiptsStatusFooter"
+            return footer
+        case .groupAdminStatus:
+            let footer = SectionTableFooter()
+            footer.titleLabel.text = "profile.group_admin_status_memo.body".localized
+            footer.accessibilityIdentifier = "GroupAdminStatusFooter"
             return footer
         }
     }

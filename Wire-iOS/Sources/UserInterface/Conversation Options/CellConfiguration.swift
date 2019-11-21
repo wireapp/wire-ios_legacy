@@ -24,7 +24,12 @@ protocol CellConfigurationConfigurable: Reusable {
 
 enum CellConfiguration {
     typealias Action = (UIView?) -> Void
-    case toggle(title: String, subtitle: String, identifier: String, get: () -> Bool, set: (Bool) -> Void)
+    case toggle(title: String,
+                subtitle: String,
+                identifier: String,
+                titleIdentifier: String,
+                get: () -> Bool,
+                set: (Bool) -> Void)
     case linkHeader
     case leadingButton(title: String, identifier: String, action: Action)
     case loading

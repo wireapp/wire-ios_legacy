@@ -22,7 +22,7 @@ import UIKit
  * A cell that displays a user property as part of the rich profile data.
  */
 
-class UserPropertyCell: SeparatorTableViewCell {
+final class UserPropertyCell: SeparatorTableViewCell {
     
     private let contentStack = UIStackView()
 

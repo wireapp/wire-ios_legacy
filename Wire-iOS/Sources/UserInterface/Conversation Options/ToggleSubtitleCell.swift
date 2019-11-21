@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
+class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {///TODO: convert to base
     private let topContainer = UIView()
     private let titleLabel = UILabel()
     private let toggle = UISwitch()
@@ -42,14 +42,13 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    func setupViews() {
         [titleLabel, toggle].forEach(topContainer.addSubview)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         titleLabel.font = FontSpec(.normal, .light).font
-        titleLabel.accessibilityIdentifier = "label.guestoptions.description"
         accessibilityElements = [titleLabel, toggle]
     }
     
@@ -85,11 +84,12 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .toggle(title, subtitle, identifier, get, set) = configuration else { preconditionFailure() }
+        guard case let .toggle(title, subtitle, identifier, titleIdentifier, get, set) = configuration else { preconditionFailure() }
         titleLabel.text = title
         subtitleLabel.text = subtitle
         action = set
         toggle.accessibilityIdentifier = identifier
+        titleLabel.accessibilityIdentifier = titleIdentifier
         toggle.isOn = get()
         self.variant = variant
     }

@@ -87,6 +87,8 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         super.init(nibName: nil, bundle: nil)
         
         self.contentController.delegate = self
+
+        tableView.register(ProfileGroupAdminOptionsCell.self, forCellReuseIdentifier: ProfileGroupAdminOptionsCell.zm_reuseIdentifier) ///TODO: no need to subclass?
     }
     
     required init?(coder aDecoder: NSCoder) {
