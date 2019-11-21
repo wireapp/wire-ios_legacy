@@ -159,6 +159,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
         let showSeparator = (viewModel.rows.count - 1) != indexPath.row
         (cell as? SectionListCellType)?.sectionName = viewModel.accessibilityTitle
+        (cell as? SectionListCellType)?.cellIdentifier = "participants.section.participants.cell"
         cell.configure(with: configuration, conversation: conversation, showSeparator: showSeparator)
         return cell
     }

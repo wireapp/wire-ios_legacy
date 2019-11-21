@@ -65,17 +65,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     var sectionName: String?
-    var identifier: String {
-        let prefix: String
-        
-        if let sectionName = sectionName {
-            prefix = "\(sectionName) - "
-        } else {
-            prefix = ""
-        }
-        
-        return prefix + "participants.section.participants.cell"
-    }
+    var cellIdentifier : String?
 
     override var isSelected: Bool {
         didSet {
