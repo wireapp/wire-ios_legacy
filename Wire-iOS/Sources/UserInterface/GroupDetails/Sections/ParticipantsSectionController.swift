@@ -22,6 +22,21 @@ protocol ParticipantsCellConfigurable: Reusable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool)
 }
 
+///TODO: move  to DM
+extension TeamRole {
+    var name: String {
+        switch self {
+        case .admin,
+             .owner:
+            return "Admins"
+        case .member:
+            return "Members"
+        default:
+            return ""
+        }
+    }
+}
+
 enum ParticipantsRowType {
     case user(UserType)
     case showAll(Int)
@@ -69,14 +84,7 @@ private struct ParticipantsSectionViewModel {
     }
     
     var accessibilityTitle: String {
-        switch teamRole {
-        case .member:
-            return "Members"
-        case .admin:
-            return "Admins"
-        default:
-            return ""
-        }
+        return teamRole.name
     }
         
     /// init method
