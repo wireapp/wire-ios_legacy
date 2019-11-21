@@ -68,6 +68,17 @@ private struct ParticipantsSectionViewModel {
         return participants.isEmpty
     }
     
+    var accessibilityTitle: String {
+        switch teamRole {
+        case .member:
+            return "Members"
+        case .admin:
+            return "Admins"
+        default:
+            return ""
+        }
+    }
+        
     /// init method
     ///
     /// - Parameters:
@@ -91,7 +102,7 @@ extension UserCell: ParticipantsCellConfigurable {
         guard case let .user(user) = rowType else { preconditionFailure() }
         configure(with: user, conversation: conversation)
         accessoryIconView.isHidden = user.isSelfUser
-        accessibilityIdentifier = "participants.section.participants.cell"
+        accessibilityIdentifier = identifier
         self.showSeparator = showSeparator
     }
 }
@@ -147,6 +158,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         let configuration = viewModel.rows[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
         let showSeparator = (viewModel.rows.count - 1) != indexPath.row
+        (cell as? SectionListCellType)?.sectionName = viewModel.accessibilityTitle
         cell.configure(with: configuration, conversation: conversation, showSeparator: showSeparator)
         return cell
     }
