@@ -139,7 +139,7 @@
 
 // Conversation List Data Usage Permission Dialog
 "conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
-"conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и использовать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать свое согласие в любое время.";
+"conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и анализировать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать данное согласие в любое время.";
 "conversation_list.data_usage_permission_alert.disagree" = "Нет";
 "conversation_list.data_usage_permission_alert.agree" = "Принимаю";
 

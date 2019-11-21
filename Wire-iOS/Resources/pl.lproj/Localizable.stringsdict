@@ -329,11 +329,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Nieodebrana rozmowa od %2$@</string>
         <key>few</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
         <key>many</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
         <key>other</key>
         <string>Nieodebrane rozmowy od %2$@</string>
       </dict>
@@ -351,7 +351,7 @@
         <key>one</key>
         <string>Nieodebrana rozmowa od %2$@</string>
         <key>few</key>
-        <string>Missed calls from %2$@</string>
+        <string>Nieodebrane rozmowy od %2$@</string>
         <key>many</key>
         <string>Nieodebrane rozmowy od %2$@</string>
         <key>other</key>
