@@ -253,17 +253,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (!ZMUser.selfUser.hasTeam || self.conversation.conversationType != ZMConversationTypeOneOnOne) {
         return;
     }
-    
-    Availability connectedUserAvailability = self.conversation.connectedUser.availability;
-    
-    if (connectedUserAvailability == AvailabilityNone) {
-        self.inputBar.availabilityPlaceholder = nil;
-    } else {
-        self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
+
+    self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
                                                                                 with:AvailabilityLabelStylePlaceholder
                                                                                color:self.inputBar.placeholderColor];
-    }
-    
 }
 
 - (void)updateNewButtonTitleLabel
