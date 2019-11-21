@@ -158,10 +158,10 @@
 "conversation_list.voiceover.status.ping" = "ping";
 "conversation_list.voiceover.status.mention" = "você foi mencionado";
 "conversation_list.voiceover.status.reply" = "responder";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "recente";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "lista de conversas recentes";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "pastas";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "lista de conversas organizadas em pastas";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "arquivado";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "lista de conversas arquivadas";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatos";
@@ -191,11 +191,11 @@
 
 // Folders
 
-"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.title" = "Criar nova pasta";
 "folder.creation.name.button.create" = "Criar";
-"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
-"folder.creation.name.footer" = "Maximum 64 characters";
-"folder.creation.name.placeholder" = "Folder name";
+"folder.creation.name.header" = "Mover a conversa \"%@\" para uma nova pasta.";
+"folder.creation.name.footer" = "Máximo: 64 caracteres";
+"folder.creation.name.placeholder" = "Nome da pasta";
 
 "folder.picker.title" = "Move to";
 "folder.picker.empty.hint" = "Create a new folder by pressing the + button";
