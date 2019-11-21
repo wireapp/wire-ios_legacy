@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class AvailabilityStringBuilderTests: XCTestCase {
+final class AvailabilityStringBuilderTests: XCTestCase {
     var otherUser: ZMUser!
     var selfUser: ZMUser!
     var team1: Team!
