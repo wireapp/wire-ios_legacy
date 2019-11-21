@@ -716,6 +716,8 @@
 "participants.section.admins.footer" = "There are no admins.";
 "participants.section.members.footer" = "There are no members.";
 
+"profile.profile.group_admin_options.title" = "Group admin";
+
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "More actions";
 "meta.menu.rename" = "Rename";
@@ -829,6 +831,8 @@
 "profile.read_receipts_enabled_memo.header" = "YOU HAVE ENABLED READ RECEIPTS";
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
 "profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
+
+"profile.group_admin_status_memo.body" = "When this is on, the user can add and remove people, also edit group settings, such as name and services.";
 
 "profile.extended_metadata.header" = "Information";
 
