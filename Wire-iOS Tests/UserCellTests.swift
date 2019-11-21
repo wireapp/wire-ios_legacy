@@ -128,4 +128,14 @@ final class UserCellTests: ZMSnapshotTestCase {
         }))
     }
     
+    func testThatAccessIDIsGenerated() {
+        let user = MockUser.mockUsers().map(ParticipantsRowType.init)[0]
+        
+        let cell = UserCell(frame: CGRect(x: 0, y: 0, width: 320, height: 56))
+        cell.sectionName = "Members"
+        cell.cellIdentifier = "participants.section.participants.cell"
+        cell.configure(with: user, conversation: conversation, showSeparator: true)
+        XCTAssertEqual(cell.accessibilityIdentifier, "Members - participants.section.participants.cell")
+    }
+    
 }

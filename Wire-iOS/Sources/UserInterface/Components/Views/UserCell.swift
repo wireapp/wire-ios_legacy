@@ -27,7 +27,7 @@ extension UIImageView {
     }
 }
 
-class UserCell: SeparatorCollectionViewCell {
+class UserCell: SeparatorCollectionViewCell, SectionListCellType {
 
     var hidesSubtitle: Bool = false
     
@@ -63,6 +63,9 @@ class UserCell: SeparatorCollectionViewCell {
             avatarSpacerWidthConstraint?.constant = newValue ?? UserCell.defaultAvatarSpacing
         }
     }
+    
+    var sectionName: String?
+    var cellIdentifier : String?
 
     override var isSelected: Bool {
         didSet {

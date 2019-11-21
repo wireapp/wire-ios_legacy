@@ -22,6 +22,21 @@ protocol ParticipantsCellConfigurable: Reusable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool)
 }
 
+///TODO: move  to DM
+extension TeamRole {
+    var name: String {
+        switch self {
+        case .admin,
+             .owner:
+            return "Admins"
+        case .member:
+            return "Members"
+        default:
+            return ""
+        }
+    }
+}
+
 enum ParticipantsRowType {
     case user(UserType)
     case showAll(Int)
@@ -68,6 +83,10 @@ private struct ParticipantsSectionViewModel {
         return participants.isEmpty
     }
     
+    var accessibilityTitle: String {
+        return teamRole.name
+    }
+        
     /// init method
     ///
     /// - Parameters:
@@ -91,7 +110,7 @@ extension UserCell: ParticipantsCellConfigurable {
         guard case let .user(user) = rowType else { preconditionFailure() }
         configure(with: user, conversation: conversation)
         accessoryIconView.isHidden = user.isSelfUser
-        accessibilityIdentifier = "participants.section.participants.cell"
+        accessibilityIdentifier = identifier
         self.showSeparator = showSeparator
     }
 }
@@ -147,6 +166,8 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         let configuration = viewModel.rows[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
         let showSeparator = (viewModel.rows.count - 1) != indexPath.row
+        (cell as? SectionListCellType)?.sectionName = viewModel.accessibilityTitle
+        (cell as? SectionListCellType)?.cellIdentifier = "participants.section.participants.cell"
         cell.configure(with: configuration, conversation: conversation, showSeparator: showSeparator)
         return cell
     }
