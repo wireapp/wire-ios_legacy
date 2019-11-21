@@ -209,11 +209,18 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         titleLabel.attributedText = attributedTitle
     }
     
-    func configure(with user: UserType, conversation: ZMConversation? = nil) {
-        configure(with: user, subtitle: subtitle(for: user), conversation: conversation)
-    }
-
-    func configure(with user: UserType, subtitle: NSAttributedString?, conversation: ZMConversation? = nil) {
+    func configure(with user: UserType,
+                   subtitle overrideSubtitle: NSAttributedString? = nil,
+                   conversation: ZMConversation? = nil,
+                   hideIconView: Bool = false) {
+        
+        let subtitle: NSAttributedString?
+        if overrideSubtitle == nil {
+            subtitle = self.subtitle(for: user)
+        } else {
+            subtitle = overrideSubtitle
+        }
+        
         self.user = user
 
         avatar.user = user
@@ -222,7 +229,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         if let conversation = conversation {
             guestIconView.isHidden = !user.isGuest(in: conversation)
         } else {
-            guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser
+            guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
         }
 
         if let user = user as? ZMUser {

@@ -26,7 +26,6 @@
 
 #import "ConversationViewController.h"
 #import "ConnectRequestsViewController.h"
-#import "ProfileViewController.h"
 
 
 

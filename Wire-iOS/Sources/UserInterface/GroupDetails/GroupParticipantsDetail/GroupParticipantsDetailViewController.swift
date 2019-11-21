@@ -211,16 +211,23 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
     
 }
 
-extension GroupParticipantsDetailViewController: ViewControllerDismisser, ProfileViewControllerDelegate {
+extension GroupParticipantsDetailViewController: ViewControllerDismisser {
     
     func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         navigationController?.popViewController(animated: true, completion: completion)
     }
+
+}
+
+extension GroupParticipantsDetailViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
             ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
-    
+
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+            //no-op
+    }
 }

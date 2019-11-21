@@ -18,7 +18,7 @@
 
 import Foundation
 
-class UserDetailViewControllerFactory: NSObject {
+final class UserDetailViewControllerFactory: NSObject {
 
     /// Create a ServiceDetailViewController if the user is a serviceUser, otherwise return a ProfileViewController
     ///
@@ -28,7 +28,7 @@ class UserDetailViewControllerFactory: NSObject {
     ///   - profileViewControllerDelegate: a ProfileViewControllerDelegate for ProfileViewController
     ///   - viewControllerDismisser: a ViewControllerDismisser for returing UIViewController's dismiss action
     /// - Returns: if the user is a serviceUser, return a ProfileHeaderServiceDetailViewController. if the user not a serviceUser, return a ProfileViewController
-    @objc static func createUserDetailViewController(user: ZMUser,
+    static func createUserDetailViewController(user: ZMUser,
                                                      conversation: ZMConversation,
                                                      profileViewControllerDelegate: ProfileViewControllerDelegate,
                                                      viewControllerDismisser: ViewControllerDismisser) -> UIViewController {
