@@ -79,7 +79,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         }
     }
     
-    @objc public weak var delegate: UserSearchResultsViewControllerDelegate?
+    @objc weak var delegate: UserSearchResultsViewControllerDelegate?
 
     private var keyboardObserver: KeyboardBlockObserver?
 

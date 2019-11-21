@@ -19,7 +19,7 @@
 
 import Foundation
 
-class ClearBackgroundNavigationController: UINavigationController {
+final class ClearBackgroundNavigationController: UINavigationController {
     fileprivate let pushTransition = PushTransition()
     fileprivate let popTransition = PopTransition()
     
@@ -45,7 +45,7 @@ class ClearBackgroundNavigationController: UINavigationController {
         self.transitioningDelegate = self
     }
     
-    open var useDefaultPopGesture: Bool = false {
+    var useDefaultPopGesture: Bool = false {
         didSet {
             self.interactivePopGestureRecognizer?.isEnabled = useDefaultPopGesture
         }

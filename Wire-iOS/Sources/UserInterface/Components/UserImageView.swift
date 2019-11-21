@@ -22,7 +22,8 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-@objc open class UserImageView: AvatarImageView, ZMUserObserver {
+@objc
+class UserImageView: AvatarImageView, ZMUserObserver {
 
     /**
      * The different sizes for the avatar image.
@@ -99,7 +100,7 @@ import WireSyncEngine
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: size.rawValue, height: size.rawValue)
     }
 
@@ -204,7 +205,7 @@ import WireSyncEngine
 
     // MARK: - Updates
 
-    open func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
         if size == .big{
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
@@ -223,7 +224,7 @@ import WireSyncEngine
     }
 
     /// Called when the user or user session changes.
-    open func updateUser() {
+    func updateUser() {
         guard let user = self.user, let initials = user.initials else {
             return
         }

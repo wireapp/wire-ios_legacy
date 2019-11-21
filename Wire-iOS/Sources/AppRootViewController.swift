@@ -442,7 +442,7 @@ extension AppRootViewController: ShowContentDelegate {
         }
     }
     
-    internal func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+    func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
         if let delegate = showContentDelegate {
             closure(delegate)
         }

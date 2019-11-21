@@ -55,7 +55,7 @@ extension SearchGroup {
 }
 
 @objc
-public protocol SearchResultsViewControllerDelegate {
+protocol SearchResultsViewControllerDelegate {
     
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)
@@ -156,7 +156,7 @@ extension UIViewController {
     public var filterConversation: ZMConversation? = nil
     public let shouldIncludeGuests: Bool
 
-    public weak var delegate: SearchResultsViewControllerDelegate? = nil
+    weak var delegate: SearchResultsViewControllerDelegate? = nil
 
     public var mode: SearchResultsViewControllerMode = .search {
         didSet {

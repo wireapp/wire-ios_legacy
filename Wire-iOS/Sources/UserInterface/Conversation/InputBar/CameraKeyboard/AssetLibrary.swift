@@ -20,12 +20,12 @@
 import Foundation
 import Photos
 
-public protocol AssetLibraryDelegate: class {
+protocol AssetLibraryDelegate: class {
     func assetLibraryDidChange(_ library: AssetLibrary)
 }
 
-open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
-    open weak var delegate: AssetLibraryDelegate?
+class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
+    weak var delegate: AssetLibraryDelegate?
     fileprivate var fetchingAssets = false
     public let synchronous: Bool
     let photoLibrary: PhotoLibraryProtocol
