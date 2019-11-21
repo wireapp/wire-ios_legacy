@@ -19,13 +19,7 @@
 import Foundation
 
 extension ZClientViewController: ProfileViewControllerDelegate {
-
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        // The Profile VC is presented in Model style and back button is not needed
-        return nil
-    }
-
-
+    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         select(conversation, focusOnView: true, animated: true)
     }

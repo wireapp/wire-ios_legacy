@@ -28,9 +28,12 @@ enum ProfileViewControllerTabBarIndex : Int {
 }
 
 protocol ProfileViewControllerDelegate: class {
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
+}
+
+protocol BackButtonTitleDelegate: class {
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String?
 }
 
 extension ZMConversationType {
@@ -56,7 +59,7 @@ final class ProfileViewController: UIViewController {
     private let profileTitleView: ProfileTitleView = ProfileTitleView()
 
     private var tabsController: TabBarController?
-    
+
     var delegate: ProfileViewControllerDelegate? {
         get {
             return viewModel.delegate
@@ -464,17 +467,12 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     }
 }
 
-///TODO: mv to VM
 extension ProfileViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         delegate?.profileViewController(controller, wantsToNavigateTo: conversation)
     }
-    
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return viewModel.bareUser.displayName.uppercasedWithCurrentLocale
-    }
-    
+        
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
         // no-op
     }

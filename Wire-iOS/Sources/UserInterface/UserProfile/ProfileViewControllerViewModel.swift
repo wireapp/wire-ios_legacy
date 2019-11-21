@@ -34,7 +34,16 @@ final class ProfileViewControllerViewModel: NSObject {
     let conversation: ZMConversation?
     let viewer: UserType
     let context: ProfileViewControllerContext
-    weak var delegate: ProfileViewControllerDelegate?
+    
+    weak var delegate: ProfileViewControllerDelegate? {
+        didSet {
+            backButtonTitleDelegate = delegate as? BackButtonTitleDelegate
+        }
+    }
+
+    
+    weak var backButtonTitleDelegate: BackButtonTitleDelegate?
+    
     private var observerToken: Any?
     weak var viewModelDelegate: ProfileViewControllerViewModelDelegate?
 
@@ -235,6 +244,12 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
         if note.legalHoldStatusChanged {
             viewModelDelegate?.setupNavigationItems()
         }
+    }
+}
+
+extension ProfileViewControllerViewModel: BackButtonTitleDelegate {
+    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
+        return bareUser.displayName.uppercasedWithCurrentLocale
     }
 }
 

@@ -60,11 +60,6 @@ extension ProfilePresenter: ProfileViewControllerDelegate {
         }
     }
 
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        //no-op.
-        return nil
-    }
-
     func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
         //no-op.
     }

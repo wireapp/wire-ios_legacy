@@ -29,11 +29,7 @@ extension ConversationViewController {
     }
 }
 
-extension ConversationViewController: ProfileViewControllerDelegate {
-    func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return nil        
-    }
-    
+extension ConversationViewController: ProfileViewControllerDelegate {    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){
         dismiss(animated: true) {
             self.zClientViewController?.select(conversation, focusOnView: true, animated: true)
