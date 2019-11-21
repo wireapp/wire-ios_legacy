@@ -419,7 +419,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         guard let conversation = viewModel.conversation else { return }
         
         let controller = UIAlertController(title: ClearContentResult.title, message: nil, preferredStyle: .actionSheet)
-        ClearContentResult.options(for: conversation) .map { $0.action(viewModel.handleDeleteResult) }.forEach(controller.addAction)
+        ClearContentResult.options(for: conversation).map { $0.action(viewModel.handleDeleteResult) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
     
