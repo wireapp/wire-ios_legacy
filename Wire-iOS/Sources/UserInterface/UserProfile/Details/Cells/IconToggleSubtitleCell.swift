@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,11 +19,13 @@
 import UIKit
 import Cartography
 
-final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
+final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
+    private var iconImageView = UIImageView()
     private let topContainer = UIView()
     private let titleLabel = UILabel()
     private let toggle = UISwitch()
     private let subtitleLabel = UILabel()
+    
     private var action: ((Bool) -> Void)?
     private var variant: ColorSchemeVariant = .light {
         didSet {
@@ -38,12 +40,13 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         styleViews()
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func setupViews() {
-        [titleLabel, toggle].forEach(topContainer.addSubview)
+        [iconImageView, titleLabel, toggle].forEach(topContainer.addSubview)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
@@ -53,11 +56,15 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     private func createConstraints() {
-        constrain(topContainer, titleLabel, toggle) { topContainer, titleLabel, toggle in
+        constrain(topContainer, titleLabel, toggle, iconImageView) { topContainer, titleLabel, toggle, iconImageView in
+            iconImageView.width == 64 ///TODO: constant share with IconActionCell
+            iconImageView.centerY == topContainer.centerY
+            titleLabel.leading == iconImageView.trailing + 16
+            iconImageView.leading == topContainer.leading + 16
+
             toggle.centerY == topContainer.centerY
             toggle.trailing == topContainer.trailing - 16
             titleLabel.centerY == topContainer.centerY
-            titleLabel.leading == topContainer.leading + 16
         }
         constrain(contentView, topContainer, subtitleLabel) { contentView, topContainer, subtitleLabel in
             topContainer.top == contentView.top
@@ -84,8 +91,21 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .toggle(title, subtitle, identifier, titleIdentifier, get, set) = configuration else { preconditionFailure() }
+        guard case let .iconToggle(title,
+                                   subtitle,
+                                   identifier,
+                                   titleIdentifier,
+                                   icon,
+                                   color,
+                                   get,
+                                   set) = configuration else { preconditionFailure() }
+        let mainColor = color ?? UIColor.from(scheme: .textForeground, variant: variant)
+
+        iconImageView.setIcon(icon, size: .tiny, color: mainColor)
+
         titleLabel.text = title
+        titleLabel.textColor = mainColor
+
         subtitleLabel.text = subtitle
         action = set
         toggle.accessibilityIdentifier = identifier

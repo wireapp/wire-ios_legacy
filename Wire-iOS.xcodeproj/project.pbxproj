@@ -753,6 +753,7 @@
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
+		A9681D8123883877004FE917 /* IconToggleSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
@@ -2473,6 +2474,7 @@
 		A92E06BA2386EC8400371343 /* ProfileGroupAdminOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGroupAdminOptionsCell.swift; sourceTree = "<group>"; };
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
+		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
 		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
@@ -4186,9 +4188,9 @@
 		5EF7BA73221D85E800815625 /* Details */ = {
 			isa = PBXGroup;
 			children = (
+				A9681D8223883890004FE917 /* Cells */,
 				5EF7BA64221AEB1B00815625 /* ProfileDetailsContentController.swift */,
 				5EF7BA62221ADF5500815625 /* ProfileDetailsViewController.swift */,
-				5EF7BA68221B042200815625 /* UserPropertyCell.swift */,
 			);
 			path = Details;
 			sourceTree = "<group>";
@@ -5771,6 +5773,15 @@
 			name = SectionHeader;
 			path = "Wire-iOS Tests/ConversationList/SectionHeader";
 			sourceTree = SOURCE_ROOT;
+		};
+		A9681D8223883890004FE917 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */,
+				5EF7BA68221B042200815625 /* UserPropertyCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
 		};
 		A97284092384245F00AFEFC6 /* Backup */ = {
 			isa = PBXGroup;
@@ -8290,6 +8301,7 @@
 				A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */,
 				D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */,
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
+				A9681D8123883877004FE917 /* IconToggleSubtitleCell.swift in Sources */,
 				D5F4387B206BBBB9003F1F14 /* Analytics+HistoryBackup.swift in Sources */,
 				5E8DA78C211C6FF700360979 /* AuthenticationLoginCodeAvailableEventHandler.swift in Sources */,
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,

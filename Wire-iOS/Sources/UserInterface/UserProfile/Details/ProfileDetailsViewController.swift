@@ -88,7 +88,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         
         self.contentController.delegate = self
 
-        ToggleSubtitleCell.register(in: tableView)
+        IconToggleSubtitleCell.register(in: tableView)
     }
     
     required init?(coder aDecoder: NSCoder) {
