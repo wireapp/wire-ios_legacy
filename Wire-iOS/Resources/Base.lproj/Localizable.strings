@@ -835,7 +835,7 @@
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
-"profile.details.group_admin" = "GROUP ADMIN";
+"profile.details.group_admin" = "Group admin";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Display name";

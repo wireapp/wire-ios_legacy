@@ -51,7 +51,7 @@ public class GroupRoleLabelIndicator: UIStackView, Themeable {
         label.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
         label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-        label.text = "profile.details.group_admin".localized
+        label.text = "profile.details.group_admin".localized(uppercased: true)
         
         super.init(frame: .zero)
         
