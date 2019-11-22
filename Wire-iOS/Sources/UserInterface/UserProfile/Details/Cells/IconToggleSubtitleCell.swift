@@ -20,6 +20,7 @@ import UIKit
 import Cartography
 
 final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
+    private let imageContainer = UIView()
     private var iconImageView = UIImageView()
     private let topContainer = UIView()
     private let titleLabel = UILabel()
@@ -46,7 +47,8 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
     }
     
     func setupViews() {
-        [iconImageView, titleLabel, toggle].forEach(topContainer.addSubview)
+        [imageContainer, titleLabel, toggle].forEach(topContainer.addSubview)
+        imageContainer.addSubview(iconImageView)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
         subtitleLabel.numberOfLines = 0
@@ -55,11 +57,11 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         accessibilityElements = [titleLabel, toggle]
     }
     
-    private func createConstraints() {
-        constrain(topContainer, titleLabel, toggle, iconImageView) { topContainer, titleLabel, toggle, iconImageView in
-            iconImageView.width == 64 ///TODO: constant share with IconActionCell
+    private func createConstraints() { ///fixme: no cartography
+        constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
+            imageContainer.width == 64 ///TODO: constant share with IconActionCell
             iconImageView.centerY == topContainer.centerY
-            titleLabel.leading == iconImageView.trailing + 16
+            titleLabel.leading == iconImageView.trailing + 16 ///FIXME: constant share with toggle cell
             iconImageView.leading == topContainer.leading + 16
 
             toggle.centerY == topContainer.centerY

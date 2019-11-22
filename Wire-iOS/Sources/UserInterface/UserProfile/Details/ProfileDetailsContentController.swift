@@ -140,7 +140,7 @@ final class ProfileDetailsContentController: NSObject,
         
         switch conversation?.conversationType ?? .group {
         case .group:
-            let groupAdminEnabled = true //TODO: wait for BE support
+            let groupAdminEnabled = false //TODO: wait for BE support
 
             var items: [ProfileDetailsContentController.Content] = [.groupAdminStatus(enabled: groupAdminEnabled)] ///TODO: check all context
             if let richProfile = richProfileInfoWithEmail {
@@ -216,8 +216,9 @@ final class ProfileDetailsContentController: NSObject,
         case .groupAdminStatus(let groupAdminEnabled):
             let cell = tableView.dequeueReusableCell(withIdentifier: IconToggleSubtitleCell.zm_reuseIdentifier, for: indexPath) as! IconToggleSubtitleCell
             
-//            cell.configure(with: <#T##CellConfiguration#>, variant: <#T##ColorSchemeVariant#>)
-//            cell.configure(with: conversation)///TODO: inject user
+            cell.configure(with: CellConfiguration.groupAdminToogle(get: {return groupAdminEnabled}, set: {_ in
+                ///FIXME: change converation's usr's admin setting
+            }), variant: ColorScheme.default.variant)
 
             return cell
         case .richProfile(let fields):

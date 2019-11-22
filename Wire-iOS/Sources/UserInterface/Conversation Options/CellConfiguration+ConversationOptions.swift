@@ -22,11 +22,13 @@ import Foundation
 extension CellConfiguration {
 
     static func groupAdminToogle(get: @escaping () -> Bool, set: @escaping (Bool) -> Void) -> CellConfiguration {
-        return .toggle(
+        return .iconToggle(
             title: "profile.profile.group_admin_options.title".localized,
-            subtitle: "", ///TODO: nilable?
+            subtitle: "",
             identifier: "cell.profile.group_admin_options",
             titleIdentifier: "label.groupAdminOptions.description",
+            icon: StyleKitIcon.about, ///FIXME:
+            color: nil,
             get: get,
             set: set
         )
