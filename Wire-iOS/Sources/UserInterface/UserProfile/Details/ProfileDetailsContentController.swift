@@ -214,8 +214,9 @@ final class ProfileDetailsContentController: NSObject,
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch contents[indexPath.section] {
         case .groupAdminStatus(let groupAdminEnabled):
-            let cell = tableView.dequeueReusableCell(withIdentifier: ProfileGroupAdminOptionsCell.zm_reuseIdentifier, for: indexPath) as! ProfileGroupAdminOptionsCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ToggleSubtitleCell.zm_reuseIdentifier, for: indexPath) as! ToggleSubtitleCell
             
+//            cell.configure(with: <#T##CellConfiguration#>, variant: <#T##ColorSchemeVariant#>)
 //            cell.configure(with: conversation)///TODO: inject user
 
             return cell

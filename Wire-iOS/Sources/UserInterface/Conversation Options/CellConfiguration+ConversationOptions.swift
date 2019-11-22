@@ -21,6 +21,17 @@ import Foundation
 
 extension CellConfiguration {
 
+    static func groupAdminToogle(get: @escaping () -> Bool, set: @escaping (Bool) -> Void) -> CellConfiguration {
+        return .toggle(
+            title: "profile.profile.group_admin_options.title".localized,
+            subtitle: "", ///TODO: nilable?
+            identifier: "cell.profile.group_admin_options",
+            titleIdentifier: "label.groupAdminOptions.description",
+            get: get,
+            set: set
+        )
+    }
+
     static func allowGuestsToogle(get: @escaping () -> Bool, set: @escaping (Bool) -> Void) -> CellConfiguration {
         return .toggle(
             title: "guest_room.allow_guests.title".localized,
