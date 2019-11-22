@@ -2471,7 +2471,6 @@
 		A90E4AC22381EE0C00468F31 /* IconButton+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IconButton+Internal.h"; path = "Wire-iOS/Sources/Components/IconButton+Internal.h"; sourceTree = SOURCE_ROOT; };
 		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A90E4AC52381F09000468F31 /* Button+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Button+Internal.h"; sourceTree = "<group>"; };
-		A92E06BA2386EC8400371343 /* ProfileGroupAdminOptionsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileGroupAdminOptionsCell.swift; sourceTree = "<group>"; };
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
@@ -5733,7 +5732,6 @@
 		8FC852BC199245760008B66B /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				A92E06BC2386ECC900371343 /* Cells */,
 				EF22DC7C224BBE3B001EDE8E /* SearchUserViewConroller.swift */,
 				EF3CB75421DD157B0030C3E8 /* ProfileViewController.swift */,
 				A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */,
@@ -5754,14 +5752,6 @@
 				874C09381B4A8EF40077393B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		A92E06BC2386ECC900371343 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				A92E06BA2386EC8400371343 /* ProfileGroupAdminOptionsCell.swift */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		A93E6102233B870200CEA65F /* SectionHeader */ = {

@@ -42,7 +42,7 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupViews() {
+    private func setupViews() {
         [titleLabel, toggle].forEach(topContainer.addSubview)
         [topContainer, subtitleLabel].forEach(contentView.addSubview)
         toggle.addTarget(self, action: #selector(toggleChanged), for: .valueChanged)
