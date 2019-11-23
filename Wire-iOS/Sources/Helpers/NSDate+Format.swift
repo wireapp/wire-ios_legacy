@@ -19,8 +19,8 @@
 import Foundation
 
 extension NSDate {
-    @objc(wr_formattedDate)
-    var formattedString: NSString {
+    @objc
+    var wr_formattedDate: NSString {
         return (self as Date).formattedDate as NSString
     }
 }

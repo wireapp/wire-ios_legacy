@@ -28,7 +28,7 @@ extension ZMConversationMessage {
         let formattedDate: String
 
         if Calendar.current.isDateInToday(timestamp) {
-            formattedDate = Message.shortTimeFormatter?.string(from: timestamp)
+            formattedDate = Message.shortTimeFormatter.string(from: timestamp)
             return "content.message.reply.original_timestamp.time".localized(args: formattedDate)
         } else {
             formattedDate = Message.shortDateFormatter.string(from: timestamp)

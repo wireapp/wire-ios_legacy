@@ -18,56 +18,70 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "Message+UI")
+
 extension Message {
     class func formattedReceivedDate(for message: ZMConversationMessage) -> String {///TODO: property of message
-        // Today's date
-        let today = Date()
         
-        var serverTimestamp = message.serverTimestamp
-        if serverTimestamp == nil {
-            serverTimestamp = today
+        let serverTimestamp: Date
+            
+        if let messageServerTimestamp = message.serverTimestamp {
+            serverTimestamp = messageServerTimestamp
+        } else {
+            // Today's date
+            serverTimestamp = Date()
         }
         
-        return serverTimestamp.formattedString
+        return serverTimestamp.formattedDate
     }
     
-    class func shouldShowTimestamp(_ message: ZMConversationMessage?) -> Bool {
-        let allowedType = Message.isTextMessage(message) || Message.isImageMessage(message) || Message.isFileTransferMessage(message) || Message.isKnock(message) || Message.isLocationMessage(message) || Message.isDeletedMessage(message) || Message.isMissedCall(message) || Message.isPerformedCall(message)
+    class func shouldShowTimestamp(_ message: ZMConversationMessage) -> Bool {
+        let allowedType = Message.isText(message) ||
+            Message.isImage(message) ||
+            Message.isFileTransfer(message) ||
+            Message.isKnock(message) ||
+            Message.isLocation(message) ||
+            Message.isDeleted(message) ||
+            Message.isMissedCall(message) ||
+            Message.isPerformedCall(message)
         
         return allowedType
     }
     
-    class func shouldShowDeliveryState(_ message: ZMConversationMessage?) -> Bool {
-        return !Message.isPerformedCall(message) && !Message.isMissedCall(message)
+    class func shouldShowDeliveryState(_ message: ZMConversationMessage) -> Bool {
+        return !Message.isPerformedCall(message) &&
+               !Message.isMissedCall(message)
     }
     
+    ///TODO: this ls lazy?
     static var shortTimeFormatter: DateFormatter = {
         var shortTimeFormatter = DateFormatter()
-        shortTimeFormatter?.dateStyle = .none
-        shortTimeFormatter?.timeStyle = .short
+        shortTimeFormatter.dateStyle = .none
+        shortTimeFormatter.timeStyle = .short
         return shortTimeFormatter
     }()
     
-    class func shortTimeFormatter() -> DateFormatter? {
-        // `dispatch_once()` call was converted to a static variable initializer
-        
-        return shortTimeFormatter
-    }
+//    class func shortTimeFormatter() -> DateFormatter? {
+//        // `dispatch_once()` call was converted to a static variable initializer
+//
+//        return shortTimeFormatter
+//    }
     
-    static var shortDateFormatter = {
+    ///TODO: this is lazy?
+    static let shortDateFormatter : DateFormatter = {
         var shortDateFormatter = DateFormatter()
-        shortDateFormatter?.dateStyle = .short
-        shortDateFormatter?.timeStyle = .none
+        shortDateFormatter.dateStyle = .short
+        shortDateFormatter.timeStyle = .none
         return shortDateFormatter
     }()
     
-    class func shortDateFormatter() -> DateFormatter? {
-        // `dispatch_once()` call was converted to a static variable initializer
-        
-        return shortDateFormatter
-    }
+//    class var shortDateFormatter: DateFormatter {
+//        // `dispatch_once()` call was converted to a static variable initializer
+//
+//        return shortDateFormatter
+//    }
     
-    static let shortDateTimeLongDateFormatter: DateFormatter? = {
+    static let shortDateTimeLongDateFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .long
         longDateFormatter.timeStyle = .short
@@ -75,39 +89,41 @@ extension Message {
         return longDateFormatter
     }()
     
-    class func shortDateTimeFormatter() -> DateFormatter? {
-        // `dispatch_once()` call was converted to a static variable initializer
-        
+    class var shortDateTimeFormatter: DateFormatter {
         return shortDateTimeLongDateFormatter
     }
     
-    static let spellOutDateTimeLongDateFormatter: DateFormatter? = {
+    ///TODO: lazy?
+    static let spellOutDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .short
         longDateFormatter.timeStyle = .short
         return longDateFormatter
     }()
     
-    class func spellOutDateTimeFormatter() -> DateFormatter? {
-        // `dispatch_once()` call was converted to a static variable initializer
-        
-        return spellOutDateTimeLongDateFormatter
-    }
+//    class var spellOutDateTimeFormatter: DateFormatter {
+//        // `dispatch_once()` call was converted to a static variable initializer
+//
+//        return spellOutDateTimeLongDateFormatter
+//    }
 
-    class func nonNilImageDataIdentifier(_ message: ZMConversationMessage?) -> String? {
-        let identifier = message?.imageMessageData.imageDataIdentifier
-        if identifier == nil {
-            ZMLogWarn("Image cache key is nil!")
-            if let imageData = message?.imageMessageData.imageData {
-                return String(format: "nonnil-%p", imageData)
-            }
-            return nil
+    class func nonNilImageDataIdentifier(_ message: ZMConversationMessage) -> String? {
+        if let identifier = message.imageMessageData?.imageDataIdentifier {
+            return identifier
         }
-        return identifier
+        
+        zmLog.warn("Image cache key is nil!")
+        if let imageData = message.imageMessageData?.imageData { ///TODO: check/test
+//            return [NSString stringWithFormat:@"nonnil-%p", message.imageMessageData.imageData];
+            return "nonnil-\(imageData.hashValue)"
+        }
+        return nil
     }
     
-    class func canBePrefetched(_ message: ZMConversationMessage?) -> Bool {
-        return Message.isImageMessage(message) || Message.isFileTransferMessage(message) || Message.isTextMessage(message)
+    class func canBePrefetched(_ message: ZMConversationMessage) -> Bool {
+        return Message.isImage(message) ||
+               Message.isFileTransfer(message) ||
+               Message.isText(message)
     }
 
 }
