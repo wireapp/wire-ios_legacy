@@ -34,7 +34,7 @@ extension Message {
         return shortDateFormatter
     }()
     
-    static let shortDateTimeFormatter: DateFormatter = {
+    static let spellOutDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .long
         longDateFormatter.timeStyle = .short
@@ -42,7 +42,7 @@ extension Message {
         return longDateFormatter
     }()
     
-    static let spellOutDateTimeFormatter: DateFormatter = {
+    static let shortDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .short
         longDateFormatter.timeStyle = .short
