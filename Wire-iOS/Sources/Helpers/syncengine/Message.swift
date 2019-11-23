@@ -32,4 +32,9 @@ extension ZMConversationMessage {
                !self.isObfuscated &&
                !self.isKnock
     }
+
+    var shouldShowDeliveryState: Bool {
+        return !Message.isPerformedCall(self) &&
+            !Message.isMissedCall(self)
+    }
 }

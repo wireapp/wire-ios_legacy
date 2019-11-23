@@ -18,15 +18,6 @@
 
 import Foundation
 
-private let zmLog = ZMSLog(tag: "Message+UI")
-
-extension ZMConversationMessage {
-    var shouldShowDeliveryState: Bool {
-        return !Message.isPerformedCall(self) &&
-               !Message.isMissedCall(self)
-    }
-}
-
 extension Message {
     
     static var shortTimeFormatter: DateFormatter = {
