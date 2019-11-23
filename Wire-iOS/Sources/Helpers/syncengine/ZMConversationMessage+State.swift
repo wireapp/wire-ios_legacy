@@ -18,13 +18,6 @@
 
 import Foundation
 
-extension Message {
-    @objc(shouldShowDestructionCountdown:)
-    public static func shouldShowDestructionCountdown(_ message: ZMConversationMessage) -> Bool {
-        return message.shouldShowDestructionCountdown
-    }
-}
-
 extension ZMConversationMessage {
     var shouldShowDestructionCountdown: Bool {
         return !self.hasBeenDeleted &&
