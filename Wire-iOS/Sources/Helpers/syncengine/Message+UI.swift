@@ -29,7 +29,6 @@ extension ZMConversationMessage {
 
 extension Message {
     
-    ///TODO: this ls lazy?
     static var shortTimeFormatter: DateFormatter = {
         var shortTimeFormatter = DateFormatter()
         shortTimeFormatter.dateStyle = .none
@@ -37,13 +36,6 @@ extension Message {
         return shortTimeFormatter
     }()
     
-//    class func shortTimeFormatter() -> DateFormatter? {
-//        // `dispatch_once()` call was converted to a static variable initializer
-//
-//        return shortTimeFormatter
-//    }
-    
-    ///TODO: this is lazy?
     static let shortDateFormatter : DateFormatter = {
         var shortDateFormatter = DateFormatter()
         shortDateFormatter.dateStyle = .short
@@ -51,13 +43,7 @@ extension Message {
         return shortDateFormatter
     }()
     
-//    class var shortDateFormatter: DateFormatter {
-//        // `dispatch_once()` call was converted to a static variable initializer
-//
-//        return shortDateFormatter
-//    }
-    
-    static let shortDateTimeLongDateFormatter: DateFormatter = {
+    static let shortDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .long
         longDateFormatter.timeStyle = .short
@@ -65,11 +51,6 @@ extension Message {
         return longDateFormatter
     }()
     
-    class var shortDateTimeFormatter: DateFormatter {
-        return shortDateTimeLongDateFormatter
-    }
-    
-    ///TODO: lazy?
     static let spellOutDateTimeFormatter: DateFormatter = {
         var longDateFormatter = DateFormatter()
         longDateFormatter.dateStyle = .short
