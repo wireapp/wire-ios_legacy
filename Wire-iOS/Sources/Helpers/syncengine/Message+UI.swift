@@ -21,36 +21,10 @@ import Foundation
 private let zmLog = ZMSLog(tag: "Message+UI")
 
 extension Message {
-    class func formattedReceivedDate(for message: ZMConversationMessage) -> String {///TODO: property of message
-        
-        let serverTimestamp: Date
-            
-        if let messageServerTimestamp = message.serverTimestamp {
-            serverTimestamp = messageServerTimestamp
-        } else {
-            // Today's date
-            serverTimestamp = Date()
-        }
-        
-        return serverTimestamp.formattedDate
-    }
     
-    class func shouldShowTimestamp(_ message: ZMConversationMessage) -> Bool {
-        let allowedType = Message.isText(message) ||
-            Message.isImage(message) ||
-            Message.isFileTransfer(message) ||
-            Message.isKnock(message) ||
-            Message.isLocation(message) ||
-            Message.isDeleted(message) ||
-            Message.isMissedCall(message) ||
-            Message.isPerformedCall(message)
-        
-        return allowedType
-    }
-    
-    class func shouldShowDeliveryState(_ message: ZMConversationMessage) -> Bool {
-        return !Message.isPerformedCall(message) &&
-               !Message.isMissedCall(message)
+    var shouldShowDeliveryState: Bool {
+        return !Message.isPerformedCall(self) &&
+               !Message.isMissedCall(self)
     }
     
     ///TODO: this ls lazy?
