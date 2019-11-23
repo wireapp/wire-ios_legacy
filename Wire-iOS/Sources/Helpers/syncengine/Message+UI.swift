@@ -20,12 +20,14 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "Message+UI")
 
-extension Message {
-    
+extension ZMConversationMessage {
     var shouldShowDeliveryState: Bool {
         return !Message.isPerformedCall(self) &&
                !Message.isMissedCall(self)
     }
+}
+
+extension Message {
     
     ///TODO: this ls lazy?
     static var shortTimeFormatter: DateFormatter = {
@@ -75,29 +77,4 @@ extension Message {
         return longDateFormatter
     }()
     
-//    class var spellOutDateTimeFormatter: DateFormatter {
-//        // `dispatch_once()` call was converted to a static variable initializer
-//
-//        return spellOutDateTimeLongDateFormatter
-//    }
-
-    class func nonNilImageDataIdentifier(_ message: ZMConversationMessage) -> String? {
-        if let identifier = message.imageMessageData?.imageDataIdentifier {
-            return identifier
-        }
-        
-        zmLog.warn("Image cache key is nil!")
-        if let imageData = message.imageMessageData?.imageData { ///TODO: check/test
-//            return [NSString stringWithFormat:@"nonnil-%p", message.imageMessageData.imageData];
-            return "nonnil-\(imageData.hashValue)"
-        }
-        return nil
-    }
-    
-    class func canBePrefetched(_ message: ZMConversationMessage) -> Bool {
-        return Message.isImage(message) ||
-               Message.isFileTransfer(message) ||
-               Message.isText(message)
-    }
-
 }
