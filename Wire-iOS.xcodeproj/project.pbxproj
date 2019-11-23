@@ -738,7 +738,6 @@
 		8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F21A9F287E0056AB0C /* ConversationListCell.m */; };
 		8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */; };
 		8FC853FF199245770008B66B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC850F6199245760008B66B /* AppDelegate.m */; };
-		8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC85143199245760008B66B /* ZetaKeyValueValidation.m */; };
 		8FC8543D199245770008B66B /* ConnectRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC8517A199245760008B66B /* ConnectRequestsViewController.m */; };
 		8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AA199245760008B66B /* ConversationContentViewController.m */; };
 		8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */; };
@@ -2439,8 +2438,6 @@
 		8FC850BA199245760008B66B /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8FC850F5199245760008B66B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8FC850F6199245760008B66B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8FC85142199245760008B66B /* ZetaKeyValueValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZetaKeyValueValidation.h; sourceTree = "<group>"; };
-		8FC85143199245760008B66B /* ZetaKeyValueValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZetaKeyValueValidation.m; sourceTree = "<group>"; };
 		8FC85179199245760008B66B /* ConnectRequestsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectRequestsViewController.h; sourceTree = "<group>"; };
 		8FC8517A199245760008B66B /* ConnectRequestsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConnectRequestsViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "ConversationContentViewController+Private.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -5389,8 +5386,6 @@
 				EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */,
 				A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */,
 				163495861F010F91004E80DB /* UnauthenticatedSession+Shared.swift */,
-				8FC85142199245760008B66B /* ZetaKeyValueValidation.h */,
-				8FC85143199245760008B66B /* ZetaKeyValueValidation.m */,
 				BF10B58C1E6452B800E7036E /* ZMMessage+Likes.swift */,
 				5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */,
 				BAED82B71B307AEE004D027F /* ZMUserSession+RequestProxy.h */,
@@ -7690,7 +7685,6 @@
 				5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */,
 				F15650D421DD0FAB00210504 /* VerticalColumnPositioning.swift in Sources */,
 				5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */,
-				8FC85427199245770008B66B /* ZetaKeyValueValidation.m in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
 				D5168F572010F25400F8222A /* Token.m in Sources */,
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,

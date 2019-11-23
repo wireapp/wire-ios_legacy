@@ -186,6 +186,7 @@ final class ConversationListContentController: UICollectionViewController {
         }
     }
 
+    @discardableResult
     func selectInboxAndFocus(onView focus: Bool) -> Bool {
         // If there is anything in the inbox, select it
         if listViewModel.numberOfItems(inSection: 0) > 0 {
