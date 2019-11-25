@@ -27,7 +27,7 @@ extension UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "availability.reminder.action.dont_remind_me".localized, style: .default, handler: { (_) in
-            Settings.shared()?.dontRemindUserWhenChanging(availability)
+            Settings.shared.dontRemindUserWhenChanging(availability)
         }))
         alert.addAction(UIAlertAction(title: "availability.reminder.action.ok".localized, style: .default, handler: { (_) in }))
         
