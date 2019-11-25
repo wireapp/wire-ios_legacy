@@ -49,12 +49,12 @@ extension SplitViewController {
             return
         }
         
-        let offset = gestureRecognizer.translation(in: view)
+        var offset = gestureRecognizer.translation(in: view)
         
         switch gestureRecognizer.state {
         case .began:
             leftViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: true)
-            rightViewController?.beginAppearanceTransition(leftViewControllerRevealed, animated: true)
+            rightViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: true)
             leftView?.isHidden = false
         case .changed:
             if isLeftViewControllerRevealed {
@@ -62,7 +62,7 @@ extension SplitViewController {
                     offset.x = 0
                 }
                 if CGAbs(offset.x) > leftViewController.view.bounds.size.width {
-                    offset.x = -`self`().leftViewController.view.bounds.size.width
+                    offset.x = -leftViewController.view.bounds.size.width
                 }
                 openPercentage = 1.0 - CGAbs(offset.x) / leftViewController.view.bounds.size.width
             } else {
@@ -73,19 +73,19 @@ extension SplitViewController {
                     offset.x = leftViewController.view.bounds.size.width
                 }
                 openPercentage = CGAbs(offset.x) / leftViewController.view.bounds.size.width
-                UIApplication.shared.wr_updateStatusBarForCurrentController(animated: true)
+                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
             view.layoutIfNeeded()
         case .cancelled,
              .ended:
             let isRevealed = openPercentage > 0.5
-            let didCompleteTransition = isRevealed != leftViewControllerRevealed
+            let didCompleteTransition = isRevealed != isLeftViewControllerRevealed
             
             setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
                 
                 if didCompleteTransition {
-                    self?.leftViewController.endAppearanceTransition()
-                    self?.rightViewController.endAppearanceTransition()
+                    self?.leftViewController?.endAppearanceTransition()
+                    self?.rightViewController?.endAppearanceTransition()
                 }
             }
         default:
