@@ -16,10 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
+final class ProfileDetailsViewControllerTests: XCTestCase {
 
     var selfUserTeam: UUID!
     var selfUser: MockUser!
@@ -949,13 +950,17 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
                                conversation: MockConversation?,
                                context: ProfileViewControllerContext,
                                file: StaticString = #file,
+                               testName: String = #function,
                                line: UInt = #line) {
         let details = ProfileDetailsViewController(user: user,
                                                    viewer: viewer,
                                                    conversation: conversation?.convertToRegularConversation(),
                                                    context: context)
 
-        verify(view: details.view, file: file, line: line)
+        verify(matching: details,
+               file: file,
+               testName: testName,
+               line: line)
     }
     
     private func richProfileFieldWithEmail(for user: UserType) -> UserRichProfileField {
