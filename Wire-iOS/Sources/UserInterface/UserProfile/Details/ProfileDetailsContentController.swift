@@ -29,6 +29,15 @@ protocol ProfileDetailsContentControllerDelegate: class {
     func profileDetailsContentDidChange()
 }
 
+///TODO: move to DM
+extension UserType {
+    func canbeManagedGroupRole(by user: UserType) -> Bool {
+        return !isSelfUser ||
+            isConnected || /// in case not belongs to the same team
+            isOnSameTeam(otherUser: user) /// in case in the same team
+    }
+}
+
 /**
  * An object that controls the content to display in the user details screen.
  */
@@ -141,15 +150,10 @@ final class ProfileDetailsContentController: NSObject,
         switch conversation?.conversationType ?? .group {
         case .group:
             let groupAdminEnabled = false //TODO: wait for BE support
-
-            var items: [ProfileDetailsContentController.Content]
             
-            if user.isConnected {
-                items = [.groupAdminStatus(enabled: groupAdminEnabled)]
-            } else {
-                items = []
-            }
-                
+            ///Do not show group admin toggle for self user or requesting connection user
+            var items: [ProfileDetailsContentController.Content] = user.canbeManagedGroupRole(by: viewer) ? [.groupAdminStatus(enabled: groupAdminEnabled)] : []
+            
             if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
                 items.append(richProfile)
