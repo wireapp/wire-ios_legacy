@@ -22,21 +22,6 @@ protocol ParticipantsCellConfigurable: Reusable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool)
 }
 
-///TODO: move  to DM
-extension TeamRole {
-    var name: String {
-        switch self {
-        case .admin,
-             .owner:
-            return "Admins"
-        case .member:
-            return "Members"
-        default:
-            return ""
-        }
-    }
-}
-
 enum ParticipantsRowType {
     case user(UserType)
     case showAll(Int)
@@ -53,15 +38,28 @@ enum ParticipantsRowType {
     }
 }
 
+enum ConversationRole {
+    case admin, member
+    
+    var name: String {
+        switch self {
+        case .admin:
+            return "Admins"
+        case .member:
+            return "Members"
+        }
+    }
+}
+
 private struct ParticipantsSectionViewModel {
     static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
     let participants: [UserType]    
-    let teamRole: TeamRole
+    let conversationRole: ConversationRole
     
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     var sectionTitle: String? {
-        switch teamRole {
+        switch conversationRole {
         case .member:
             return "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
         case .admin:
@@ -72,10 +70,11 @@ private struct ParticipantsSectionViewModel {
     }
    
     var footerTitle: String {
-        if teamRole.isAdminGroup {
-            return "participants.section.admins.footer".localized
-        } else {
-            return "participants.section.members.footer".localized
+        switch conversationRole {
+            case .admin:
+                return "participants.section.admins.footer".localized
+            case .member:
+                return "participants.section.members.footer".localized
         }
     }
 
@@ -84,18 +83,18 @@ private struct ParticipantsSectionViewModel {
     }
     
     var accessibilityTitle: String {
-        return teamRole.name
+        return conversationRole.name
     }
         
     /// init method
     ///
     /// - Parameters:
     ///   - participants: list of conversation participants
-    ///   - teamRole: participant's role
+    ///   - conversationRole: participants' ConversationRole
     ///   - showAllRows: enable/disable the display of the “ShowAll” button
-    init(participants: [UserType], teamRole: TeamRole, clipSection: Bool = true) {
+    init(participants: [UserType], conversationRole: ConversationRole, clipSection: Bool = true) {
         self.participants = participants
-        self.teamRole = teamRole
+        self.conversationRole = conversationRole
         rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
     }
     
@@ -129,11 +128,11 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     private var token: AnyObject?
     
     init(participants: [UserType],
-         teamRole: TeamRole,
+         conversationRole: ConversationRole,
          conversation: ZMConversation,
          delegate: GroupDetailsSectionControllerDelegate,
          clipSection: Bool = true) {
-        viewModel = .init(participants: participants, teamRole: teamRole, clipSection: clipSection)
+        viewModel = .init(participants: participants, conversationRole: conversationRole, clipSection: clipSection)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
