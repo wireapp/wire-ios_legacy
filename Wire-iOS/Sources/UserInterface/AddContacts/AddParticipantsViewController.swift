@@ -141,7 +141,7 @@ final public class AddParticipantsViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    public init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
+    init(context: Context, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.variant = variant
         
         viewModel = AddParticipantsViewModel(with: context, variant: variant)

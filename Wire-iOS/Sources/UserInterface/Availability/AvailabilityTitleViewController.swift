@@ -71,7 +71,7 @@ class AvailabilityTitleViewController: UIViewController {
             changes()
         }
         
-        if Settings.shared()?.shouldRemindUserWhenChanging(availability) == true {
+        if Settings.shared.shouldRemindUserWhenChanging(availability) {
             present(UIAlertController.availabilityExplanation(availability), animated: true)
         }
     }

@@ -18,9 +18,7 @@
 
 
 #import "ColorKnobView.h"
-#import "ColorScheme.h"
-
-
+#import "Wire-Swift.h"
 
 @interface ColorKnobView ()
 

@@ -34,61 +34,11 @@
     return [[Button alloc] initWithStyle:style];
 }
 
-+ (instancetype)buttonWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant
-{
-    return [[Button alloc] initWithStyle:style variant:variant];
-}
-
 - (instancetype)initWithStyle:(ButtonStyle)style
 {
     return [self initWithStyle:style variant:ColorScheme.defaultColorScheme.variant];
 }
 
-- (instancetype)initWithStyle:(ButtonStyle)style variant:(ColorSchemeVariant)variant
-{
-    self = [self init];
-    
-    self.textTransform = TextTransformUpper;
-    self.titleLabel.font = UIFont.smallLightFont;
-    self.layer.cornerRadius = 4;
-    self.contentEdgeInsets = UIEdgeInsetsMake(4, 16, 4, 16);
-    
-    switch (style) {
-        case ButtonStyleFull:
-            [self setBackgroundImageColor:UIColor.accentColor forState:UIControlStateNormal];
-            [self setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
-            break;
-        case ButtonStyleFullMonochrome:
-            [self setBackgroundImageColor:UIColor.whiteColor forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantLight] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight] forState:UIControlStateHighlighted];
-            break;
-        case ButtonStyleEmpty:
-            self.layer.borderWidth = 1;
-            
-            [self setTitleColor:[UIColor buttonEmptyTextWithVariant:variant] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateHighlighted];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:variant] forState:UIControlStateDisabled];
-            
-            [self setBorderColor:UIColor.accentColor forState:UIControlStateNormal];
-            [self setBorderColor:UIColor.accentDarken forState:UIControlStateHighlighted];
-            [self setBorderColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed  variant:variant] forState:UIControlStateDisabled];
-            break;
-        case ButtonStyleEmptyMonochrome:
-            self.layer.borderWidth = 1;
-            
-            [self setBackgroundImageColor:UIColor.clearColor forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [self setTitleColor:[UIColor wr_colorFromColorScheme:ColorSchemeColorTextDimmed variant:ColorSchemeVariantLight] forState:UIControlStateHighlighted];
-            
-            [self setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.32] forState:UIControlStateNormal];
-            [self setBorderColor:[UIColor colorWithWhite:1.0 alpha:0.16] forState:UIControlStateHighlighted];
-            break;
-    }
-    
-    return self;
-}
 
 - (instancetype)init
 {

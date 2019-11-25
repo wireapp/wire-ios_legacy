@@ -24,7 +24,6 @@
 #import "ContactsViewController+ShareContacts.h"
 #import "UIView+Zeta.h"
 
-#import "ColorScheme.h"
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
 #import "UIViewController+WR_Additions.h"
@@ -44,8 +43,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     
     if (self) {
-        _colorSchemeVariant = [ColorScheme defaultColorScheme].variant;
-
         self.shouldShowShareContactsViewController = YES;
 
         [self setupViews];
@@ -74,7 +71,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)setupViews
 {
     ColorScheme *colorScheme = [[ColorScheme alloc] init];
-    colorScheme.variant = self.colorSchemeVariant;
+    colorScheme.variant = [ColorScheme defaultColorScheme].variant;
     
     self.view.backgroundColor = [colorScheme colorWithName:ColorSchemeColorBackground];
     
@@ -134,7 +131,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.bottomContainerSeparatorView = [[UIView alloc] init];
     [self.bottomContainerView addSubview:self.bottomContainerSeparatorView];
     
-    self.inviteOthersButton = [Button buttonWithStyle:ButtonStyleEmpty variant:self.colorSchemeVariant];
+    self.inviteOthersButton = [[Button alloc] initWithStyle:ButtonStyleEmpty variant:[ColorScheme defaultColorScheme].variant];
     [self.inviteOthersButton addTarget:self action:@selector(sendIndirectInvite:) forControlEvents:UIControlEventTouchUpInside];
     [self.inviteOthersButton setTitle:NSLocalizedString(@"contacts_ui.invite_others", @"") forState:UIControlStateNormal];
     [self.bottomContainerView addSubview:self.inviteOthersButton];

@@ -31,7 +31,7 @@ extension ConversationViewController {
             // but only if we are acutally focused (otherwise we would be shown on the next launch)
             Settings.shared().lastViewedScreen = .conversation
             if let currentAccount = SessionManager.shared?.accountManager.selectedAccount {
-                Settings.shared()?.setLastViewed(conversation: conversation, for: currentAccount)
+                Settings.shared.setLastViewed(conversation: conversation, for: currentAccount)
             }
         }
 
