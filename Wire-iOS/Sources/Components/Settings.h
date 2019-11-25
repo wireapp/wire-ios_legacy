@@ -102,7 +102,7 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @property (nonatomic) NSInteger browserLinkOpeningOptionRawValue;
 @property (nonatomic) NSInteger mapsLinkOpeningOptionRawValue;
 
-+ (instancetype)sharedSettings;
++ (nonnull instancetype)sharedSettings;
 
 // Persist all the settings
 - (void)synchronize;
