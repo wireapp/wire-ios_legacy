@@ -119,6 +119,14 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         return conversation
     }
     
+    func createGroupConversationOnlyAdmin() -> ZMConversation {
+        let conversation = ZMConversation.insertNewObject(in: uiMOC)
+        conversation.remoteIdentifier = UUID.create()
+        conversation.conversationType = .group
+        conversation.internalAddParticipants([selfUser])
+        return conversation
+    }
+    
     func createTeamGroupConversation() -> ZMConversation {
         let conversation = createGroupConversation()
         conversation.teamRemoteIdentifier = UUID.create()
