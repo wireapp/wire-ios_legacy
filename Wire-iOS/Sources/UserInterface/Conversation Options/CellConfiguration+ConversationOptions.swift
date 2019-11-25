@@ -28,7 +28,7 @@ extension CellConfiguration {
             subtitle: "",
             identifier: "cell.profile.group_admin_options",
             titleIdentifier: "label.groupAdminOptions.description",
-            icon: StyleKitIcon.groupRole,
+            icon: .groupAdmin,
             color: nil,
             get: get,
             set: set
