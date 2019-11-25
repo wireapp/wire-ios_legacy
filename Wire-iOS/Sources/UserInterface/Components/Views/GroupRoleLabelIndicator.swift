@@ -30,7 +30,7 @@ final class GroupRoleLabelIndicator: UIStackView, Themeable {
     
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         label.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        groupRoleIcon.setIcon(.groupRole, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
     }
     
     private let groupRoleIcon = UIImageView()
@@ -42,7 +42,7 @@ final class GroupRoleLabelIndicator: UIStackView, Themeable {
         groupRoleIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
         groupRoleIcon.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
         groupRoleIcon.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        groupRoleIcon.setIcon(.groupRole, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         groupRoleIcon.accessibilityIdentifier = "img.group_role"
         
         label.numberOfLines = 0

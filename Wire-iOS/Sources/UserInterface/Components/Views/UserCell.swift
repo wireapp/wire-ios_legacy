@@ -184,7 +184,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         backgroundColor = contentBackgroundColor(for: colorSchemeVariant)
         
         videoIconView.setIcon(.videoCall, size: .tiny, color: iconColor)
-        externalUserIconView.setIcon(.externalUser, size: .tiny, color: iconColor)
+        externalUserIconView.setIcon(.externalPartner, size: .tiny, color: iconColor)
         guestIconView.setIcon(.guest, size: .tiny, color: iconColor)
         
         accessoryIconView.setIcon(.disclosureIndicator, size: 12, color: sectionTextColor)
