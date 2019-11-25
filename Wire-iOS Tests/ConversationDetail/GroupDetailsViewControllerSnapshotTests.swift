@@ -29,8 +29,6 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         groupConversation = createGroupConversation()
         groupConversation.userDefinedName = "iOS Team"
-        
-        
     }
     
     override func tearDown() {
