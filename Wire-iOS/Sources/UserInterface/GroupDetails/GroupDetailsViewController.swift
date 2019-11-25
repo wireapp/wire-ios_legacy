@@ -19,10 +19,10 @@
 import UIKit
 import Cartography
 
-///TODO: move  to DM
-extension TeamRole {
+extension UserType {
     var isAdminGroup: Bool {
-        switch self {
+        ///FIXME: for debug only, isAdminGroup should be determated by new API
+        switch teamRole {
         case .admin,
              .owner:
             return true
@@ -140,13 +140,13 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         }
         if !participants.isEmpty {
             
-            let admins = participants.filter({$0.teamRole.isAdminGroup})
+            let admins = participants.filter({$0.isAdminGroup})
             let adminSection = ParticipantsSectionController(participants: admins,
                                                              teamRole: .admin, conversation: conversation,
                                                              delegate: self)
             sections.append(adminSection)
             
-            let members = participants.filter({!$0.teamRole.isAdminGroup})
+            let members = participants.filter({!$0.isAdminGroup})
             if !members.isEmpty {
                 let memberSection = ParticipantsSectionController(participants: members,
                                                                   teamRole: .member, conversation: conversation,
