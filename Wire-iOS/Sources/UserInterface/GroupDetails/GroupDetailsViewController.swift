@@ -22,6 +22,11 @@ import Cartography
 extension UserType {
     var isAdminGroup: Bool {
         ///FIXME: for debug only, isAdminGroup should be determated by new API
+        
+        if isSelfUser {
+            return true
+        }
+        
         switch teamRole {
         case .admin,
              .owner:
