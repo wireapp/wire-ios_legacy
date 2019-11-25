@@ -97,4 +97,18 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             verifyConversationActionController()
         }
     }
+    
+    func testForOptionsForTeamUserInTeamConversation_Admins() {
+        // GIVEN
+        let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
+        teamTest {
+            selfUser.membership?.setTeamRole(.admin)
+            groupConversationAdmin.team =  selfUser.team
+            groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            sut = GroupDetailsViewController(conversation: groupConversationAdmin)
+            
+            // THEN
+            verify(view: sut.view)
+        }
+    }
 }
