@@ -18,44 +18,11 @@
 
 @import UIKit;
 
-
-static inline CGFloat CGMax(CGFloat const a, CGFloat const b)
-{
-#if CGFLOAT_IS_DOUBLE
-    return fmax(a, b);
-#else
-    return fmaxf(a, b);
-#endif
-}
-
-static inline CGFloat CGMin(CGFloat const a, CGFloat const b)
-{
-#if CGFLOAT_IS_DOUBLE
-    return fmin(a, b);
-#else
-    return fminf(a, b);
-#endif
-}
-
-static inline CGFloat CGClamp(CGFloat const min, CGFloat max, CGFloat const v)
-{
-    return CGMin(max, CGMax(min, v));
-}
-
 static inline CGFloat CGAbs(CGFloat const a)
 {
 #if CGFLOAT_IS_DOUBLE
     return fabs(a);
 #else
     return fabsf(a);
-#endif
-}
-
-static inline CGFloat CGRound(CGFloat const a)
-{
-#if CGFLOAT_IS_DOUBLE
-    return round(a);
-#else
-    return roundf(a);
 #endif
 }
