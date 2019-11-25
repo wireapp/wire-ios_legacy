@@ -276,3 +276,9 @@ public extension ColorScheme {
     }
 
 }
+
+extension ColorSchemeVariant {
+    func mainColor(color: UIColor?) -> UIColor {
+        return color ?? UIColor.from(scheme: .textForeground, variant: self)
+    }
+}

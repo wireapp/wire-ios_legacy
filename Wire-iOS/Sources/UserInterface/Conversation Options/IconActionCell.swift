@@ -76,9 +76,3 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
         separator.backgroundColor = UIColor.from(scheme: .cellSeparator, variant: variant)
     }
 }
-
-extension ColorSchemeVariant{
-    func mainColor(color: UIColor?) -> UIColor {
-        return color ?? UIColor.from(scheme: .textForeground, variant: self)
-    }
-}
