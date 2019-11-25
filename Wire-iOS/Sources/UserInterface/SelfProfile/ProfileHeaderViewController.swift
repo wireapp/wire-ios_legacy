@@ -98,6 +98,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let guestIndicatorStack = UIStackView()
     let guestIndicator = GuestLabelIndicator()
     let remainingTimeLabel = UILabel()
+    let groupRoleIndicator = GroupRoleLabelIndicator()
     
     private var tokens: [Any?] = []
     
@@ -168,12 +169,13 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         guestIndicatorStack.alignment = .center
         
         updateGuestIndicator()
+        updategroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
         addChild(availabilityTitleViewController)
         
-        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityTitleViewController.view, guestIndicatorStack])
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityTitleViewController.view, guestIndicatorStack, groupRoleIndicator])
         
         stackView.alignment = .center
         stackView.axis = .vertical
@@ -181,6 +183,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         stackView.wr_addCustomSpacing(32, after: nameHandleStack)
         stackView.wr_addCustomSpacing(32, after: teamNameLabel)
         stackView.wr_addCustomSpacing(24, after: imageView)
+        stackView.wr_addCustomSpacing(20, after: guestIndicatorStack)
         
         view.addSubview(stackView)
         applyColorScheme(colorSchemeVariant)
@@ -230,6 +233,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         } else {
             guestIndicatorStack.isHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
         }
+    }
+    
+    func updategroupRoleIndicator() {
+        groupRoleIndicator.isHidden = !user.teamRole.isAdminGroup 
     }
     
     private func applyOptions() {

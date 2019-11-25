@@ -22,9 +22,6 @@
 @interface ZMProxyRequest (ZiphyRequestIdentifier) <ZiphyRequestIdentifier>
 @end
 
-@implementation ZMProxyRequest (ZiphyRequestIdentifier)
-@end
-
 @implementation ZMUserSession (RequestProxy)
 
 - (id<ZiphyRequestIdentifier>)performZiphyRequest:(NSURLRequest *)request completionHandler:(void (^)(NSData * _Nullable, NSURLResponse * _Nullable, NSError * _Nullable))completionHandler

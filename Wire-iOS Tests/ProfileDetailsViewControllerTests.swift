@@ -788,6 +788,27 @@ final class ProfileDetailsViewControllerTests: ZMSnapshotTestCase {
             .richProfile([richProfileFieldWithEmail(for: otherUser)])]
         )
     }
+    
+    func test_Group_OtherUserIsAdmin_ViewerIsGuest_SCIM() {
+        // GIVEN
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.availability = .busy
+        otherUser.readReceiptsEnabled = true
+        otherUser.richProfile = defaultRichProfile
+        otherUser.teamRole = .admin
+        
+        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        guest.isGuestInConversation = true
+        
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [otherUser, guest]
+        
+        // THEN
+        verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .richProfile([richProfileFieldWithEmail(for: otherUser)])]
+        )
+    }
 
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN

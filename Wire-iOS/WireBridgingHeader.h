@@ -24,7 +24,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message+UI.h"
+
 
 // UI
 #import "ParticipantDeviceHeaderView.h"
