@@ -19,24 +19,6 @@
 import UIKit
 import Cartography
 
-extension UserType {
-    var isAdminGroup: Bool {
-        ///FIXME: for debug only, isAdminGroup should be determated by new API
-        
-        if isSelfUser {
-            return true
-        }
-        
-        switch teamRole {
-        case .admin,
-             .owner:
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     
     fileprivate let collectionViewController: SectionCollectionViewController

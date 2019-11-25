@@ -29,18 +29,6 @@ protocol ProfileDetailsContentControllerDelegate: class {
     func profileDetailsContentDidChange()
 }
 
-///TODO: move to DM
-extension UserType {
-    func canManagedGroupRole(of user: UserType) -> Bool {
-        guard isAdminGroup else { return false }
-        
-        return !user.isSelfUser &&
-            (user.isConnected || /// in case not belongs to the same team
-            isOnSameTeam(otherUser: user) /// in case in the same team
-        )
-    }
-}
-
 /**
  * An object that controls the content to display in the user details screen.
  */
