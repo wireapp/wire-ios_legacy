@@ -142,7 +142,14 @@ final class ProfileDetailsContentController: NSObject,
         case .group:
             let groupAdminEnabled = false //TODO: wait for BE support
 
-            var items: [ProfileDetailsContentController.Content] = [.groupAdminStatus(enabled: groupAdminEnabled)] ///TODO: check all context
+            var items: [ProfileDetailsContentController.Content]
+            
+            if user.isConnected {
+                items = [.groupAdminStatus(enabled: groupAdminEnabled)]
+            } else {
+                items = []
+            }
+                
             if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
                 items.append(richProfile)
@@ -216,7 +223,9 @@ final class ProfileDetailsContentController: NSObject,
         case .groupAdminStatus(let groupAdminEnabled):
             let cell = tableView.dequeueReusableCell(withIdentifier: IconToggleSubtitleCell.zm_reuseIdentifier, for: indexPath) as! IconToggleSubtitleCell
             
-            cell.configure(with: CellConfiguration.groupAdminToogle(get: {return groupAdminEnabled}, set: {_ in
+            cell.configure(with: CellConfiguration.groupAdminToogle(get: {
+                return groupAdminEnabled
+            }, set: {_ in
                 ///FIXME: change converation's usr's admin setting
             }), variant: ColorScheme.default.variant)
 

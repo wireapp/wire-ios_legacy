@@ -479,6 +479,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
@@ -516,7 +517,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
 
     func test_Group_OtherUserIsPartner_SCIM() {
@@ -534,6 +535,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
@@ -553,6 +555,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])
             ])
     }
@@ -572,10 +575,10 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
     
-    func test_Group_SelfUser_SCIM() {
+    func test_Group_SelfUser_SCIM() {///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = true
@@ -591,6 +594,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         ])
     }
 
+    ///FIXME: can self user disable myself as admin? In this test since self user.isConnected == false we do not show it.
     func test_Group_SelfUser_NoSCIM() {
         // GIVEN
         selfUser.availability = .busy
@@ -616,7 +620,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         // THEN
         verifyProfile(user: guest, viewer: selfUser, conversation: group, context: .groupConversation)
-        verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [])
+        verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
 
     func test_Group_OtherUserIsExpiringGuest_SCIM() {
@@ -631,7 +635,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         // THEN
         verifyProfile(user: guest, viewer: selfUser, conversation: group, context: .groupConversation)
-        verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [])
+        verifyContents(user: guest, viewer: selfUser, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
 
     // MARK: Viewer is a partner
@@ -650,6 +654,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
@@ -669,6 +674,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile(defaultRichProfile)
             ])
     }
@@ -688,6 +694,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
@@ -708,6 +715,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile(defaultRichProfile)
             ])
     }
@@ -726,7 +734,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
 
     // MARK: Viewer is a guest
@@ -747,6 +755,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])
         ])
     }
@@ -767,7 +776,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
     
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM() {
@@ -787,6 +796,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])]
         )
     }
@@ -808,6 +818,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])]
         )
     }
@@ -829,7 +840,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
     
     func test_Group_OtherUserIsGuest_ViewerIsGuest_SCIM() {
@@ -848,7 +859,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
     
     func test_Group_OtherUserInTeam_ViewerIsGuestFromOtherTeam_SCIM() {
@@ -866,7 +877,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
-        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [])
+        verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [.groupAdminStatus(enabled: false)])
     }
 
     func test_Group_UserAndViewerAreGuestsFromSameTeam_SCIM() {
@@ -886,6 +897,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             richProfileItemWithEmailAndDefaultData(for: otherUser)
         ])
     }
@@ -908,6 +920,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: guest, viewer: otherUser, conversation: group, context: .groupConversation)
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile(defaultRichProfile)
             ])
     }
