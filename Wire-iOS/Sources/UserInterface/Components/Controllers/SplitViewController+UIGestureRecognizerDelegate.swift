@@ -21,7 +21,7 @@ import Foundation
 extension SplitViewController: UIGestureRecognizerDelegate {
 
     @objc(gestureRecognizerShouldBegin:)
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if layoutSize == .regularLandscape {
             return false
         }
@@ -57,26 +57,27 @@ extension SplitViewController {
             rightViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: true)
             leftView?.isHidden = false
         case .changed:
-            if isLeftViewControllerRevealed,
-               let width = leftViewController?.view.bounds.size.width {
-                if offset.x > 0 {
-                    offset.x = 0
+            if let width = leftViewController?.view.bounds.size.width {
+                if isLeftViewControllerRevealed {
+                    if offset.x > 0 {
+                        offset.x = 0
+                    }
+                    if abs(offset.x) > width {
+                        offset.x = -width
+                    }
+                    openPercentage = 1.0 - abs(offset.x) / width
+                } else {
+                    if offset.x < 0 {
+                        offset.x = 0
+                    }
+                    if abs(offset.x) > width {
+                        offset.x = width
+                    }
+                    openPercentage = abs(offset.x) / width
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 }
-                if CGAbs(offset.x) > width {
-                    offset.x = -width
-                }
-                openPercentage = 1.0 - CGAbs(offset.x) / width
-            } else {
-                if offset.x < 0 {
-                    offset.x = 0
-                }
-                if CGAbs(offset.x) > width {
-                    offset.x = width
-                }
-                openPercentage = CGAbs(offset.x) / width
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                view.layoutIfNeeded()
             }
-            view.layoutIfNeeded()
         case .cancelled,
              .ended:
             let isRevealed = openPercentage > 0.5
