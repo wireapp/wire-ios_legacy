@@ -43,7 +43,7 @@ extension SplitViewController {
     func onHorizontalPan(_ gestureRecognizer: UIPanGestureRecognizer?) {
         
         guard layoutSize != .regularLandscape,
-              delegate.splitViewControllerShouldMoveLeftViewController(self),
+              delegate?.splitViewControllerShouldMoveLeftViewController(self) == true,
               isConversationViewVisible,
               let gestureRecognizer = gestureRecognizer else {
             return
@@ -53,26 +53,26 @@ extension SplitViewController {
         
         switch gestureRecognizer.state {
         case .began:
-            leftViewController?.beginAppearanceTransition(!leftViewControllerRevealed, animated: true)
-            rightViewController.beginAppearanceTransition(leftViewControllerRevealed, animated: true)
+            leftViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: true)
+            rightViewController?.beginAppearanceTransition(leftViewControllerRevealed, animated: true)
             leftView?.isHidden = false
         case .changed:
-            if leftViewControllerRevealed {
-                if (offset?.x ?? 0.0) > 0 {
-                    offset?.x = 0
+            if isLeftViewControllerRevealed {
+                if offset.x > 0 {
+                    offset.x = 0
                 }
-                if CGAbs(offset?.x) > leftViewController.view.bounds.size.width {
-                    offset?.x = -`self`().leftViewController.view.bounds.size.width
+                if CGAbs(offset.x) > leftViewController.view.bounds.size.width {
+                    offset.x = -`self`().leftViewController.view.bounds.size.width
                 }
-                openPercentage = 1.0 - CGAbs(offset?.x) / leftViewController.view.bounds.size.width
+                openPercentage = 1.0 - CGAbs(offset.x) / leftViewController.view.bounds.size.width
             } else {
-                if (offset?.x ?? 0.0) < 0 {
-                    offset?.x = 0
+                if offset.x < 0 {
+                    offset.x = 0
                 }
-                if CGAbs(offset?.x) > leftViewController.view.bounds.size.width {
-                    offset?.x = leftViewController.view.bounds.size.width
+                if CGAbs(offset.x) > leftViewController.view.bounds.size.width {
+                    offset.x = leftViewController.view.bounds.size.width
                 }
-                openPercentage = CGAbs(offset?.x) / leftViewController.view.bounds.size.width
+                openPercentage = CGAbs(offset.x) / leftViewController.view.bounds.size.width
                 UIApplication.shared.wr_updateStatusBarForCurrentController(animated: true)
             }
             view.layoutIfNeeded()
@@ -81,15 +81,15 @@ extension SplitViewController {
             let isRevealed = openPercentage > 0.5
             let didCompleteTransition = isRevealed != leftViewControllerRevealed
             
-            ZM_WEAK(self)
-            setLeftViewControllerRevealed(isRevealed, animated: true) {
+            setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
                 
-                ZM_STRONG(self)
                 if didCompleteTransition {
-                    self.leftViewController.endAppearanceTransition()
-                    self.rightViewController.endAppearanceTransition()
+                    self?.leftViewController.endAppearanceTransition()
+                    self?.rightViewController.endAppearanceTransition()
                 }
             }
+        default:
+            break
         }
     }
 
