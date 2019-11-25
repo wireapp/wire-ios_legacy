@@ -18,7 +18,7 @@
 
 import Foundation
 
-public class GroupRoleLabelIndicator: UIStackView, Themeable {
+final class GroupRoleLabelIndicator: UIStackView, Themeable {
     
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
