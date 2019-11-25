@@ -101,7 +101,7 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
                                    color,
                                    get,
                                    set) = configuration else { preconditionFailure() }
-        let mainColor = color ?? UIColor.from(scheme: .textForeground, variant: variant)
+        let mainColor = variant.mainColor(color: color)
 
         iconImageView.setIcon(icon, size: .tiny, color: mainColor)
 
