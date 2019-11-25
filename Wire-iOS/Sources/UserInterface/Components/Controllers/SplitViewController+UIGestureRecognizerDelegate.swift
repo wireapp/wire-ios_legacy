@@ -57,22 +57,23 @@ extension SplitViewController {
             rightViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: true)
             leftView?.isHidden = false
         case .changed:
-            if isLeftViewControllerRevealed {
+            if isLeftViewControllerRevealed,
+               let width = leftViewController?.view.bounds.size.width {
                 if offset.x > 0 {
                     offset.x = 0
                 }
-                if CGAbs(offset.x) > leftViewController.view.bounds.size.width {
-                    offset.x = -leftViewController.view.bounds.size.width
+                if CGAbs(offset.x) > width {
+                    offset.x = -width
                 }
-                openPercentage = 1.0 - CGAbs(offset.x) / leftViewController.view.bounds.size.width
+                openPercentage = 1.0 - CGAbs(offset.x) / width
             } else {
                 if offset.x < 0 {
                     offset.x = 0
                 }
-                if CGAbs(offset.x) > leftViewController.view.bounds.size.width {
-                    offset.x = leftViewController.view.bounds.size.width
+                if CGAbs(offset.x) > width {
+                    offset.x = width
                 }
-                openPercentage = CGAbs(offset.x) / leftViewController.view.bounds.size.width
+                openPercentage = CGAbs(offset.x) / width
                 UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
             view.layoutIfNeeded()
