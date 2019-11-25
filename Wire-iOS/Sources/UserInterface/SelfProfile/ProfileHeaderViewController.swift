@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ProfileHeaderViewController: UIViewController, Themeable {
+final class ProfileHeaderViewController: UIViewController, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
