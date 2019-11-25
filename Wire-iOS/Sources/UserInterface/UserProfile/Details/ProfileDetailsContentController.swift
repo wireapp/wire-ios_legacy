@@ -152,7 +152,7 @@ final class ProfileDetailsContentController: NSObject,
         
         switch conversation?.conversationType ?? .group {
         case .group:
-            let groupAdminEnabled = false //TODO: wait for BE support
+            let groupAdminEnabled = user.isAdminGroup
             
             ///Do not show group admin toggle for self user or requesting connection user
             var items: [ProfileDetailsContentController.Content] = viewer.canManagedGroupRole(of: user) ? [.groupAdminStatus(enabled: groupAdminEnabled)] : []
