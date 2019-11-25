@@ -23,9 +23,6 @@
 #import "SwizzleTransition.h"
 #import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-
-#import "Geometry.h"
-
 #import "Wire-Swift.h"
 
 
@@ -473,7 +470,7 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 }
 
 #pragma mark - Gesture
-
+/*
 - (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer
 {
     if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape || ! [self.delegate splitViewControllerShouldMoveLeftViewController:self]) {
@@ -539,5 +536,5 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
             break;
     }
 }
-
+*/
 @end
