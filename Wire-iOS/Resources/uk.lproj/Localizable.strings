@@ -158,10 +158,10 @@
 "conversation_list.voiceover.status.ping" = "пінг";
 "conversation_list.voiceover.status.mention" = "вас хтось згадав";
 "conversation_list.voiceover.status.reply" = "відповідь";
-"conversation_list.voiceover.bottom_bar.recent_button.label" = "recent";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
-"conversation_list.voiceover.bottom_bar.folder_button.label" = "folders";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.recent_button.label" = "нещодавні";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "список нещодавніх розмов";
+"conversation_list.voiceover.bottom_bar.folder_button.label" = "теки";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "список розмов, організованих в теки";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "заархівовано";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "перелік заархівованих розмов";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "контакти";
@@ -191,14 +191,14 @@
 
 // Folders
 
-"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.title" = "Створити нову теку";
 "folder.creation.name.button.create" = "Створити";
-"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
-"folder.creation.name.footer" = "Maximum 64 characters";
-"folder.creation.name.placeholder" = "Folder name";
+"folder.creation.name.header" = "Перенести розмову \"%@\" до нової теки.";
+"folder.creation.name.footer" = "Максимум 64 символи";
+"folder.creation.name.placeholder" = "Назва теки";
 
-"folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.title" = "Перемістити до";
+"folder.picker.empty.hint" = "Створити нову папку за допомогою кнопки +";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -220,8 +220,8 @@
 
 "list.section.groups" = "Групи";
 "list.section.contacts" = "Люди";
-"list.section.requests" = "Requests";
-"list.section.favorites" = "Favorites";
+"list.section.requests" = "Запити";
+"list.section.favorites" = "Вподобання";
 
 "conversation.voiceover.verified" = "верифіковано";
 "conversation.voiceover.legalhold" = "правовий захист";
@@ -469,7 +469,7 @@
 "content.system.call.missed-call-you" = "Пропущений дзвінок";
 
 "content.system.call.missed-call.groups" = "Пропущений дзвінок від %@";
-"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups-you" = "Пропущений дзвінок від %2$@";
 "content.system.call.missed-call.groups.you" = "Ви";
 
 "content.system.renamed_conv.title" = "%@ перейменував(-ла) розмову";
@@ -721,8 +721,8 @@
 "meta.menu.unarchive" = "Розархівувати";
 "meta.menu.delete" = "Видалити групу…";
 "meta.menu.clear_content" = "Очистити вміст…";
-"meta.menu.move_to_folder" = "Move to…";
-"meta.menu.remove_from_folder" = "Remove from \"%@\"";
+"meta.menu.move_to_folder" = "Перемістити до…";
+"meta.menu.remove_from_folder" = "Видалити з \"%@\"";
 "meta.menu.silence.mute" = "Вимкнути звук";
 "meta.menu.silence.unmute" = "Увімкнути звук";
 "meta.menu.cancel" = "Скасувати";
@@ -798,7 +798,7 @@
 // Delete group
 "conversation.delete_request_dialog.title" = "Видалити цю розмову?";
 "conversation.delete_request_dialog.message" = "Це видалить групу та весь її вміст для всіх учасників на всіх пристроях. Можливостей для відновлення вмісту розмови не існує. Всі учасники будуть повідмлені про це.";
-"conversation.delete_request_error_dialog.title" = "An error occurred while trying to delete the group %@. Please try again.";
+"conversation.delete_request_error_dialog.title" = "При вилученні групи \"%@\" сталася помилка. Будь ласка, пробуйте ще раз.";
 "conversation.delete_request_error_dialog.button_delete_group" = "Видалити групу";
 
 // Cancel connection request
@@ -812,8 +812,8 @@
 "profile.unblock_button_title" = "Розблокувати…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "Додати до вподобань";
+"profile.unfavorite_button_title" = "Видалити з уподобань";
 
 "profile.block_button_title_action" = "Заблокувати";
 "profile.unblock_button_title_action" = "Розблокувати";

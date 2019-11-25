@@ -22,16 +22,7 @@
 @import Ziphy;
 @import WireSyncEngine;
 
-@protocol ProxiedURLRequester <NSObject>
-- (ZMProxyRequest  * _Nonnull)doRequestWithPath:(NSString * __nonnull)path
-                                         method:(ZMTransportRequestMethod)method
-                                           type:(ProxiedRequestType)type
-                              completionHandler:(void (^ __nonnull)(NSData * __nullable, NSURLResponse * __nullable, NSError * __nullable))completionHandler;
-@end
-
-
-
 /// Extension for Ziphy and WireSyncEngine proxying of the request to the Wire backend
-@interface ZMUserSession (RequestProxy) <ProxiedURLRequester, ZiphyURLRequester>
+@interface ZMUserSession (RequestProxy) <ZiphyURLRequester>
 
 @end

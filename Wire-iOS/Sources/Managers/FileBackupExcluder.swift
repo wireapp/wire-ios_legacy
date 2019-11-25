@@ -19,11 +19,10 @@
 
 import Foundation
 
-
 private let zmLog = ZMSLog(tag: "UI")
 
-final internal class FileBackupExcluder: NSObject {
-
+final class FileBackupExcluder: BackupExcluder {
+   
     private static let filesToExclude: [FileInDirectory] = [
         (.libraryDirectory, "Preferences/com.apple.EmojiCache.plist"),
         (.libraryDirectory, ".")
@@ -33,9 +32,7 @@ final internal class FileBackupExcluder: NSObject {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override internal init() {
-        super.init()
-        
+    init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(FileBackupExcluder.applicationWillEnterForeground(_:)),
                                                name: UIApplication.willEnterForegroundNotification,
@@ -49,27 +46,23 @@ final internal class FileBackupExcluder: NSObject {
         self.excludeFilesFromBackup()
     }
     
-    @objc internal func applicationWillEnterForeground(_ sender: AnyObject!) {
+    @objc func applicationWillEnterForeground(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     
-    @objc internal func applicationWillResignActive(_ sender: AnyObject!) {
+    @objc func applicationWillResignActive(_ sender: AnyObject!) {
         self.excludeFilesFromBackup()
     }
     
     private func excludeFilesFromBackup() {
         do {
-            try type(of: self).filesToExclude.forEach { (directory, path) in
-                let url = URL.wr_directory(for: directory).appendingPathComponent(path)
-                try url.excludeFromBackupIfExists()
-            }
-        }
-        catch (let error) {
+            try FileBackupExcluder.exclude(filesToExclude: FileBackupExcluder.filesToExclude)
+        } catch (let error) {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
 
-    @objc public func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
+    func excludeLibraryFolderInSharedContainer(sharedContainerURL : URL ) {
         do {
             let libraryURL = sharedContainerURL.appendingPathComponent("Library")
             try libraryURL.excludeFromBackupIfExists()
@@ -77,15 +70,4 @@ final internal class FileBackupExcluder: NSObject {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }
-}
-
-
-fileprivate extension URL {
-
-    func excludeFromBackupIfExists() throws {
-        if FileManager.default.fileExists(atPath: path) {
-            try wr_excludeFromBackup()
-        }
-    }
-
 }

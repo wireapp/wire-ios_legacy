@@ -19,7 +19,6 @@
 import Foundation
 
 extension Button {
-    
     @objc
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
         self.init()
@@ -55,5 +54,33 @@ extension Button {
         default:
             break
         }
+    }
+
+    open override func setTitle(_ title: String?, for state: UIControl.State) {
+        var title = title
+        state.expanded.forEach(){ expandedState in
+            if title != nil {
+                originalTitles?[NSNumber(value: expandedState.rawValue)] = title
+            } else {
+                originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
+            }
+        }
+        
+        if textTransform != .none {
+            title = title?.applying(transform: textTransform)
+        }
+        
+        super.setTitle(title, for: state)
+    }
+    
+    @objc(setBorderColor:forState:)
+    func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
+        state.expanded.forEach(){ expandedState in
+            if color != nil {
+                borderColorByState[NSNumber(value: expandedState.rawValue)] = color
+            }
+        }
+        
+        updateBorderColor()
     }
 }

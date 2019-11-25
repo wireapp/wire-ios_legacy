@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension ProfileViewController: TabBarControllerDelegate {
-    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
-        updateShowVerifiedShield()
+extension ZMConversationMessage {
+    var shouldShowDeliveryState: Bool {
+        return !Message.isPerformedCall(self) &&
+               !Message.isMissedCall(self)
     }
 }
-

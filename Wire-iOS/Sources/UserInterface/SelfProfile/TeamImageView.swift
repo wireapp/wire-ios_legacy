@@ -48,7 +48,7 @@ final class TeamImageView: UIImageView {
     }
 
     private var lastLayoutBounds: CGRect = .zero
-    internal let initialLabel = UILabel()
+    let initialLabel = UILabel()
     public var style: TeamImageViewStyle = .small {
         didSet {
             applyStyle(style: style)

@@ -56,7 +56,7 @@ fileprivate extension ZMConversationMessage {
 
 final class ReplyComposingView: UIView {
     let message: ZMConversationMessage
-    internal let closeButton = IconButton()
+    let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionVideoCell: CollectionCell {
+final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
 
     public required init?(coder aDecoder: NSCoder) {

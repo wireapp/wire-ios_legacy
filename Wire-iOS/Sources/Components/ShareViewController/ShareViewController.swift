@@ -67,7 +67,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
 
     public let allowsMultipleSelection: Bool
     public var onDismiss: ((ShareViewController, Bool)->())?
-    internal var bottomConstraint: NSLayoutConstraint?
+    var bottomConstraint: NSLayoutConstraint?
     
     init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
         self.destinations = destinations

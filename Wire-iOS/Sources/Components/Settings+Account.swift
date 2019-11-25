@@ -27,7 +27,7 @@ extension Account {
 
 extension Settings {
     private func payload(for account: Account) -> [String: Any] {
-        return self.defaults().value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
+        return defaults.value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
     
     /// Returns the value associated with the given account for the given key,
@@ -35,10 +35,10 @@ extension Settings {
     ///
     func value<T>(for key: String, in account: Account) -> T? {
         // Attempt to migrate the shared value
-        if let rootValue = self.defaults().value(forKey: key) {
+        if let rootValue = defaults.value(forKey: key) {
             setValue(rootValue, for: key, in: account)
-            self.defaults().setValue(nil, forKey: key)
-            self.defaults().synchronize()
+            defaults.setValue(nil, forKey: key)
+            defaults.synchronize()
         }
         
         var accountPayload = self.payload(for: account)
@@ -50,7 +50,7 @@ extension Settings {
     func setValue<T>(_ value: T?, for key: String, in account: Account) {
         var accountPayload = self.payload(for: account)
         accountPayload[key] = value
-        self.defaults().setValue(accountPayload, forKey: account.userDefaultsKey())
+        defaults.setValue(accountPayload, forKey: account.userDefaultsKey())
     }
     
     @objc func lastViewedConversation(for account: Account) -> ZMConversation? {
@@ -67,7 +67,7 @@ extension Settings {
     @objc func setLastViewed(conversation: ZMConversation, for account: Account) {
         let conversationURI = conversation.objectID.uriRepresentation()
         self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
-        self.defaults().synchronize()
+        defaults.synchronize()
     }
 
     @objc

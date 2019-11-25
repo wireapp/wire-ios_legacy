@@ -335,7 +335,8 @@ final class AppRootViewController: UIViewController {
 
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
+
+        colorScheme.variant = Settings.shared.colorScheme.colorSchemeVariant
     }
     
     func applicationDidTransition(to appState: AppState) {
@@ -441,7 +442,7 @@ extension AppRootViewController: ShowContentDelegate {
         }
     }
     
-    internal func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+    func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
         if let delegate = showContentDelegate {
             closure(delegate)
         }
@@ -456,7 +457,7 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard !(Settings.shared()?.chatHeadsDisabled ?? false) else {
+        guard !Settings.shared.chatHeadsDisabled else {
             return false
         }
         

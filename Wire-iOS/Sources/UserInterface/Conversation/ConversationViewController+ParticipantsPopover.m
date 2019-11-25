@@ -18,7 +18,6 @@
 
 
 #import "ConversationViewController+ParticipantsPopover.h"
-#import "ProfileViewController.h"
 #import "Wire-Swift.h"
 
 @implementation ConversationViewController (ParticipantsPopover)

@@ -74,7 +74,7 @@ final class DotView: UIView {
         clientsObserverTokens = user.clients.map { UserClientChangeInfo.add(observer: self, for: $0) }
     }
     
-    internal func updateIndicator() {
+    func updateIndicator() {
         showIndicator = hasUnreadMessages ||
                         user?.clientsRequiringUserAttention.count > 0 ||
                         user?.readReceiptsEnabledChangedRemotely == true

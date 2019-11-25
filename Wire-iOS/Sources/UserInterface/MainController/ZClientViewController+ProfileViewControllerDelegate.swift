@@ -19,18 +19,12 @@
 import Foundation
 
 extension ZClientViewController: ProfileViewControllerDelegate {
-
-    public func suggestedBackButtonTitle(for controller: ProfileViewController?) -> Any! {
-        // The Profile VC is presented in Model style and back button is not needed
-        return nil
-    }
-
-
-    public func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         select(conversation, focusOnView: true, animated: true)
     }
 
-    public func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: Any!, users: Any!) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
         //no-op. Profile viewer does not have function to create a group conversation.
     }
 

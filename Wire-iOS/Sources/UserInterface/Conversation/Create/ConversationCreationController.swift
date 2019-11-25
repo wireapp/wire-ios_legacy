@@ -49,7 +49,7 @@ final public class ConversationCreationValues {
     }
 }
 
-@objc protocol ConversationCreationControllerDelegate: class {
+protocol ConversationCreationControllerDelegate: class {
 
     func conversationCreationController(
         _ controller: ConversationCreationController,
@@ -106,7 +106,7 @@ final class ConversationCreationController: UIViewController {
         return section
     }()
     
-    internal var optionsExpanded: Bool = false {
+    var optionsExpanded: Bool = false {
         didSet {
             self.guestsSection.isHidden = !optionsExpanded
             self.receiptsSection.isHidden = !optionsExpanded
@@ -118,7 +118,6 @@ final class ConversationCreationController: UIViewController {
     fileprivate var values = ConversationCreationValues()
     fileprivate let source: LinearGroupCreationFlowEvent.Source
 
-    @objc
     weak var delegate: ConversationCreationControllerDelegate?
     private var preSelectedParticipants: Set<ZMUser>?
     

@@ -28,7 +28,7 @@
 #import "MockUser.h"
 #import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>
-#import "Message+UI.h"
+
 #import "MockConversation.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"
 #import "ConnectRequestsViewController.h"

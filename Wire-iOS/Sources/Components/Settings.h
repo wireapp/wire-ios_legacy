@@ -26,11 +26,6 @@
 @class ZMConversation;
 @class ZMEmailCredentials;
 
-typedef NS_CLOSED_ENUM(NSUInteger, SettingsColorScheme) {
-    SettingsColorSchemeLight,
-    SettingsColorSchemeDark
-};
-
 typedef NS_ENUM (NSUInteger, SettingsLastScreen) {
     SettingsLastScreenNone = 0,
     SettingsLastScreenList,
@@ -96,7 +91,6 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 
 @property (nonatomic) SettingsLastScreen lastViewedScreen;
 @property (nonatomic) SettingsCamera preferredCamera;
-@property (nonatomic) SettingsColorScheme colorScheme;
 @property (nonatomic, readonly) NSTimeInterval blacklistDownloadInterval;
 @property (nonatomic) ZMLocationData *lastUserLocation;
 
@@ -108,14 +102,12 @@ extern NSString * const UserDefaultDisableLinkPreviews;
 @property (nonatomic) NSInteger browserLinkOpeningOptionRawValue;
 @property (nonatomic) NSInteger mapsLinkOpeningOptionRawValue;
 
-+ (instancetype)sharedSettings;
++ (nonnull instancetype)sharedSettings;
 
 // Persist all the settings
 - (void)synchronize;
 
 - (void)reset;
-
-- (NSUserDefaults *)defaults;
 
 @end
 

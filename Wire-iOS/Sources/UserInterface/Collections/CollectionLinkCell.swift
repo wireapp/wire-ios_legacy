@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-final public class CollectionLinkCell: CollectionCell {
+final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
     private var headerView = CollectionCellHeader()
     

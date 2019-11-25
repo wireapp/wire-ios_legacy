@@ -49,7 +49,7 @@ final class AccountSelectorController: UIViewController {
     
     private var showAccounts: Bool = false
     
-    internal func updateShowAccountsIfNeeded() {
+    func updateShowAccountsIfNeeded() {
         let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
         guard showAccounts != self.showAccounts else { return }
         setShowAccounts(to: showAccounts)

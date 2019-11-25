@@ -63,7 +63,7 @@ final class ServiceDetailViewController: UIViewController {
 
     public let completion: Completion?
     public let variant: ServiceDetailVariant
-    public weak var viewControllerDismisser: ViewControllerDismisser?
+    weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
     private let actionButton: Button

@@ -25,7 +25,7 @@ import UIKit
  * You need to override `+ (Class *)layerClass` on `UIView` before conforming to this protocol.
  */
 
-public protocol RoundedViewProtocol: NSObjectProtocol {
+protocol RoundedViewProtocol: NSObjectProtocol {
     var layer: CALayer { get }
 }
 
