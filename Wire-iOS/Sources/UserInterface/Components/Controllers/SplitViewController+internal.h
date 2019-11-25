@@ -34,7 +34,6 @@
 
 @property (nonatomic) SplitViewControllerLayoutSize layoutSize;
 
-- (void)onHorizontalPan:(UIPanGestureRecognizer *)gestureRecognizer;
 - (void)resetOpenPercentage;
 
 - (NSArray *)constraintsInactiveForCurrentLayout;

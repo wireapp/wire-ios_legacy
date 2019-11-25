@@ -36,22 +36,24 @@ extension SplitViewController: UIGestureRecognizerDelegate {
 
         return true
     }
-    
+}
+
+extension SplitViewController {
     @objc
     func onHorizontalPan(_ gestureRecognizer: UIPanGestureRecognizer?) {
-        if layoutSize == SplitViewControllerLayoutSizeRegularLandscape || !delegate.splitViewControllerShouldMoveLeftViewController(self) {
+        
+        guard layoutSize != .regularLandscape,
+              delegate.splitViewControllerShouldMoveLeftViewController(self),
+              isConversationViewVisible,
+              let gestureRecognizer = gestureRecognizer else {
             return
         }
         
-        if !isConversationViewVisible {
-            return
-        }
+        let offset = gestureRecognizer.translation(in: view)
         
-        let offset = gestureRecognizer?.translation(in: view)
-        
-        switch gestureRecognizer?.state {
+        switch gestureRecognizer.state {
         case .began:
-            leftViewController.beginAppearanceTransition(!leftViewControllerRevealed, animated: true)
+            leftViewController?.beginAppearanceTransition(!leftViewControllerRevealed, animated: true)
             rightViewController.beginAppearanceTransition(leftViewControllerRevealed, animated: true)
             leftView?.isHidden = false
         case .changed:
@@ -74,7 +76,8 @@ extension SplitViewController: UIGestureRecognizerDelegate {
                 UIApplication.shared.wr_updateStatusBarForCurrentController(animated: true)
             }
             view.layoutIfNeeded()
-        case .cancelled, .ended:
+        case .cancelled,
+             .ended:
             let isRevealed = openPercentage > 0.5
             let didCompleteTransition = isRevealed != leftViewControllerRevealed
             
@@ -89,4 +92,5 @@ extension SplitViewController: UIGestureRecognizerDelegate {
             }
         }
     }
+
 }
