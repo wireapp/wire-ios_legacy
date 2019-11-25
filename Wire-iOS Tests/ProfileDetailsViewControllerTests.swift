@@ -497,6 +497,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // THEN
         verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: selfUser, conversation: group, expectedContents: [
+            .groupAdminStatus(enabled: false),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])
             ])
     }
