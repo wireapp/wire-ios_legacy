@@ -76,7 +76,7 @@ import WireCommonComponents
         guard CompanyLoginController.isCompanyLoginEnabled,
             let callbackScheme = Bundle.ssoURLScheme else { return nil } // Disable on public builds
         
-        requireInternal(nil != callbackScheme, "no valid callback scheme")
+        requireInternal(nil != Bundle.ssoURLScheme, "no valid callback scheme")
 
         let requester = CompanyLoginController.createRequester(with: callbackScheme)
         self.init(detector: .shared, requester: requester)

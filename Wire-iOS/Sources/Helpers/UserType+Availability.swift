@@ -18,9 +18,9 @@
 
 import Foundation
 
-extension ProfileViewController: TabBarControllerDelegate {
-    func tabBarController(_ controller: TabBarController, tabBarDidSelectIndex: Int) {
-        updateShowVerifiedShield()
+extension UserType {
+    var shouldHideAvailability: Bool {
+        guard let user = zmUser else { return false }
+        return user.shouldHideAvailability
     }
 }
-

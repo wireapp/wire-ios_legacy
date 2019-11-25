@@ -21,7 +21,7 @@ import Foundation
 final class StartUIView : UIView { }
 
 extension StartUIViewController {
-    private func presentProfileViewController(for bareUser: UserType?,
+    private func presentProfileViewController(for bareUser: UserType,
                                               at indexPath: IndexPath?) {
         searchHeaderViewController.tokenField.resignFirstResponder()
 

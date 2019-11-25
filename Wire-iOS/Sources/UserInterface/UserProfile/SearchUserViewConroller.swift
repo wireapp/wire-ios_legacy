@@ -86,7 +86,7 @@ final class SearchUserViewConroller: UIViewController {
 
 
         if let profileUser = profileUser {
-            let profileViewController = ProfileViewController(user: profileUser, viewer: ZMUser.selfUser(), context: .profileViewer) ///TODO: context
+            let profileViewController = ProfileViewController(user: profileUser, viewer: ZMUser.selfUser(), context: .profileViewer)
             profileViewController.delegate = profileViewControllerDelegate
 
             navigationController?.setViewControllers([profileViewController], animated: true)

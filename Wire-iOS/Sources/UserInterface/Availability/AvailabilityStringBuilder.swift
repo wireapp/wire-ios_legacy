@@ -41,14 +41,15 @@
                 color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
-                if availability != .none { //Should use the default placeholder string
-                    title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).localizedUppercase
+                guard availability != .none && !user.shouldHideAvailability else { //Should use the default placeholder string
+                    return nil
                 }
+                title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).localizedUppercase
             }
         }
         
         guard let textColor = color else { return nil }
-        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
+        let icon = user.shouldHideAvailability ? nil : AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }

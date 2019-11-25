@@ -286,20 +286,24 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
 
 }
 
-// MARK: - ProfileViewControllerDelegate
-
-extension MessageDetailsContentViewController: ProfileViewControllerDelegate, ViewControllerDismisser {
-
+extension MessageDetailsContentViewController: ViewControllerDismisser {
     func dismiss(viewController: UIViewController, completion: (() -> ())?) {
         viewController.dismiss(animated: true, completion: nil)
     }
+}
 
+// MARK: - ProfileViewControllerDelegate
+
+extension MessageDetailsContentViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
             ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
 
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+        //no-op
+    }
 }
 
 // MARK: - Adaptive Presentation

@@ -192,7 +192,7 @@ class MessageToolboxDataSource {
         let countdownStatus = makeEphemeralCountdown()
 
         if let timestampString = self.timestampString(message), message.isSent {
-            if let deliveryStateString = deliveryStateString, Message.shouldShowDeliveryState(message) {
+            if let deliveryStateString = deliveryStateString, message.shouldShowDeliveryState {
                 return (timestampString && attributes, deliveryStateString, countdownStatus)
             }
             else {

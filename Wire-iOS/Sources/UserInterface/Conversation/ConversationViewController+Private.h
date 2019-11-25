@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-#import "ProfileViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -48,9 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ConversationViewController ()
 @property (nonatomic) BOOL isAppearing;
-@end
-
-@interface ConversationViewController (ProfileViewController) <ProfileViewControllerDelegate>
 @end
 
 NS_ASSUME_NONNULL_END
