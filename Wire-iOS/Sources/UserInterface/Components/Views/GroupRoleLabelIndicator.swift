@@ -18,54 +18,62 @@
 
 import Foundation
 
-final class GroupRoleLabelIndicator: UIStackView, Themeable {
-    
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
-        didSet {
-            guard oldValue != colorSchemeVariant else { return }
-            applyColorSchemeOnSubviews(colorSchemeVariant)
-            applyColorScheme(colorSchemeVariant)
-        }
-    }
-    
-    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-        label.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-    }
-    
+final class GroupRoleLabelIndicator: UIView {
+
+    private let variant: ColorSchemeVariant
     private let groupRoleIcon = UIImageView()
-    private let label = UILabel()
+    private let titleLabel = UILabel()
+    private let containerView = UIView()
     
     init() {
-        groupRoleIcon.contentMode = .scaleToFill
-        groupRoleIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        groupRoleIcon.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-        groupRoleIcon.setContentHuggingPriority(UILayoutPriority.required, for: .vertical)
-        groupRoleIcon.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
-        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-        groupRoleIcon.accessibilityIdentifier = "img.group_role"
-        
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.font = FontSpec(.medium, .semibold, .inputText).font
-        label.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .vertical)
-        label.setContentCompressionResistancePriority(UILayoutPriority.required, for: .horizontal)
-        label.text = "profile.details.group_admin".localized(uppercased: true)
-        
+        self.variant = ColorScheme.default.variant
         super.init(frame: .zero)
-        
-        axis = .horizontal
-        spacing = 8
-        distribution = .fill
-        alignment = .fill
-        addArrangedSubview(groupRoleIcon)
-        addArrangedSubview(label)
-        
-        accessibilityIdentifier = "group role indicator"
+        setupViews()
+        createConstraints()
     }
     
-    public required init(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupViews() {
+        titleLabel.accessibilityIdentifier =  "label.group_role"
+        titleLabel.numberOfLines = 0
+        titleLabel.textAlignment = .left
+        titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        titleLabel.text = "profile.details.group_admin".localized(uppercased: true)
+        
+        groupRoleIcon.accessibilityIdentifier =  "img.group_role"
+        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
+        
+        containerView.addSubview(titleLabel)
+        containerView.addSubview(groupRoleIcon)
+        addSubview(containerView)
+    }
+    
+    private func createConstraints() {
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        groupRoleIcon.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: containerView.topAnchor),
+            
+            // containerView
+            containerView.heightAnchor.constraint(equalToConstant: 56),
+            containerView.leadingAnchor.constraint(equalTo: safeLeadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
+            
+            // groupRoleIcon
+            groupRoleIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            groupRoleIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            
+            // titleLabel
+            titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: groupRoleIcon.trailingAnchor, constant: 6)
+            ])
     }
 }
