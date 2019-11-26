@@ -124,10 +124,11 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         self.renameGroupSectionController = renameGroupSectionController
         
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
-        participants = participants.sorted { $0.displayName < $1.displayName }
         if let selfUser = ZMUser.selfUser() {
-            participants.insert(selfUser, at: 0)
+//            participants.insert(selfUser, at: 0)
+            participants.append(selfUser)
         }
+        participants = participants.sorted { $0.displayName < $1.displayName }
         if !participants.isEmpty {
             
 //<<<<<<< HEAD
