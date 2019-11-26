@@ -54,7 +54,6 @@ class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
     }
     
     fileprivate func setup() {
-//        accessibilityIdentifier = "cell.call.show_all_participants"
         participantIconView.translatesAutoresizingMaskIntoConstraints = false
         participantIconView.contentMode = .scaleAspectFit
         participantIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
