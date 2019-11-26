@@ -45,7 +45,7 @@ extension UserType {
         ///FIXME: for debug only, isAdminGroup should be determated by new API
         
         if isSelfUser {
-            return false
+            return true ///TODO: mock user imp?
         }
         
         switch teamRole {
