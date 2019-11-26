@@ -21,10 +21,6 @@ import XCTest
 
 final class ProfileViewTests: ZMSnapshotTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     func test_DefaultOptions() {
         verifyProfile(options: [])
     }

@@ -140,16 +140,11 @@ final class ProfileDetailsContentController: NSObject,
         
         switch conversation?.conversationType ?? .group {
         case .group:
-            let groupAdminEnabled = false //TODO: wait for BE support
-
-            var items: [ProfileDetailsContentController.Content]
+            let groupAdminEnabled = user.isAdminGroup
             
-            if user.isConnected {
-                items = [.groupAdminStatus(enabled: groupAdminEnabled)]
-            } else {
-                items = []
-            }
-                
+            ///Do not show group admin toggle for self user or requesting connection user
+            var items: [ProfileDetailsContentController.Content] = viewer.canManagedGroupRole(of: user) ? [.groupAdminStatus(enabled: groupAdminEnabled)] : []
+            
             if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
                 items.append(richProfile)

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
+final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     
     override func tearDown() {
         resetColorScheme()

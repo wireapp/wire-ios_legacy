@@ -75,6 +75,12 @@ enum ProfileAction: Equatable {
 
 }
 
+extension UserType {
+    func isOnSameTeam(otherUser: UserType) -> Bool {
+        return canAccessCompanyInformation(of: otherUser)
+    }
+}
+
 /**
  * An object that returns the actions that a user can perform in the scope
  * of a conversation.
@@ -178,7 +184,7 @@ final class ProfileActionsFactory: NSObject {
                 break
             }
 
-            let isOnSameTeam = viewer.canAccessCompanyInformation(of: user)
+            let isOnSameTeam = viewer.isOnSameTeam(otherUser: user)
 
             // Show connection request actions for unconnected users from different teams.
             if user.isPendingApprovalByOtherUser {

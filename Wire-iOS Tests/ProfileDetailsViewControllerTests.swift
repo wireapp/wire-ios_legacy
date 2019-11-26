@@ -748,6 +748,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.teamRole = .admin
         
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
@@ -770,7 +771,8 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
-        
+        guest.teamRole = .admin
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
         
@@ -789,6 +791,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.teamRole = .admin
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
@@ -811,14 +814,15 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
-        
+        guest.teamRole = .admin
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
         
         // THEN
         verifyProfile(user: otherUser, viewer: guest, conversation: group, context: .groupConversation)
         verifyContents(user: otherUser, viewer: guest, conversation: group, expectedContents: [
-            .groupAdminStatus(enabled: false),
+            .groupAdminStatus(enabled: true),
             .richProfile([richProfileFieldWithEmail(for: otherUser)])]
         )
     }
@@ -834,7 +838,8 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
-        
+        guest.teamRole = .admin
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
         
@@ -853,6 +858,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
+        guest.teamRole = .admin
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
@@ -871,7 +877,8 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: UUID())
         guest.isGuestInConversation = true
-        
+        guest.teamRole = .admin
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser, otherUser, guest]
 
@@ -886,11 +893,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
+        otherUser.teamRole = .admin
 
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
         
@@ -908,12 +916,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
-        
+        otherUser.teamRole = .admin
+
         let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
         guest.emailAddress = nil
-        
+
         let group = MockConversation.groupConversation()
         group.activeParticipants = [otherUser, guest]
         

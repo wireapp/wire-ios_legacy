@@ -31,4 +31,29 @@ extension UserType {
         }
     }
 
+    func canManagedGroupRole(of user: UserType) -> Bool {
+        guard isAdminGroup else { return false }
+        
+        return !user.isSelfUser &&
+            (user.isConnected || /// in case not belongs to the same team
+                isOnSameTeam(otherUser: user) /// in case in the same team
+        )
+    }
+
+    
+    var isAdminGroup: Bool {
+        ///FIXME: for debug only, isAdminGroup should be determated by new API
+        
+        if isSelfUser {
+            return true ///TODO: mock user imp?
+        }
+        
+        switch teamRole {
+        case .admin,
+             .owner:
+            return true
+        default:
+            return false
+        }
+    }
 }
