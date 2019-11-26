@@ -42,6 +42,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
+    private let maxParticipants: Int = 7
+    private let maxDisplayedParticipants: Int = 5
+
     var didCompleteInitialSync = false {
         didSet {
             collectionViewController.sections = computeVisibleSections()
@@ -141,17 +144,38 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         if !participants.isEmpty {
             
             let admins = participants.filter({$0.teamRole.isAdminGroup})
-            let adminSection = ParticipantsSectionController(participants: admins,
-                                                             teamRole: .admin, conversation: conversation,
-                                                             delegate: self)
-            sections.append(adminSection)
-            
             let members = participants.filter({!$0.teamRole.isAdminGroup})
-            if !members.isEmpty {
-                let memberSection = ParticipantsSectionController(participants: members,
-                                                                  teamRole: .member, conversation: conversation,
-                                                                  delegate: self)
-                sections.append(memberSection)
+            
+            if admins.count <= maxParticipants || admins.isEmpty {
+                if admins.count >= maxDisplayedParticipants && (participants.count > maxParticipants) { // Dispay the ShowAll button after the first section
+                    let adminSection = ParticipantsSectionController(participants: admins,
+                                                                     teamRole: .admin, conversation: conversation,
+                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: admins.count - 1, maxDisplayedParticipants: admins.count)
+                    sections.append(adminSection)
+                } else {
+                    let adminSection = ParticipantsSectionController(participants: admins,
+                                                                     teamRole: .admin, conversation: conversation,
+                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: false)
+                    sections.append(adminSection)
+                    if members.count <= (maxParticipants - admins.count) { // Don't display the ShowAll button
+                        if !members.isEmpty {
+                            let memberSection = ParticipantsSectionController(participants: members,
+                                                                              teamRole: .member, conversation: conversation,
+                                                                              delegate: self, totalParticipantsCount: participants.count, clipSection: false)
+                            sections.append(memberSection)
+                        }
+                    } else { // Display the ShowAll button after the second section
+                        let memberSection = ParticipantsSectionController(participants: members,
+                                                                          teamRole: .member, conversation: conversation,
+                                                                          delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: (maxParticipants - admins.count), maxDisplayedParticipants: (maxParticipants - admins.count) - 2)
+                        sections.append(memberSection)
+                    }
+                }
+            } else { // Display only one section without the ShowAll button
+                let adminSection = ParticipantsSectionController(participants: admins,
+                                                                 teamRole: .admin, conversation: conversation,
+                                                                 delegate: self, totalParticipantsCount: participants.count, clipSection: true)
+                sections.append(adminSection)
             }
         }
 

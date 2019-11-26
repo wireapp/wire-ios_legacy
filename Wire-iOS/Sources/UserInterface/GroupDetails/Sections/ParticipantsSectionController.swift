@@ -54,7 +54,6 @@ enum ParticipantsRowType {
 }
 
 private struct ParticipantsSectionViewModel {
-    static private let maxParticipants = 7
     let rows: [ParticipantsRowType]
     let participants: [UserType]    
     let teamRole: TeamRole
@@ -92,16 +91,19 @@ private struct ParticipantsSectionViewModel {
     /// - Parameters:
     ///   - participants: list of conversation participants
     ///   - teamRole: participant's role
-    ///   - showAllRows: enable/disable the display of the “ShowAll” button
-    init(participants: [UserType], teamRole: TeamRole, clipSection: Bool = true) {
+    ///   - totalParticipantsCount: the number of all participants in the conversation
+    ///   - clipSection: enable/disable the display of the “ShowAll” button
+    ///   - maxParticipants: max number of participants we can display
+    ///   - maxDisplayedParticipants: max number of participants we can display, if there are more than maxParticipants participants
+    init(participants: [UserType], teamRole: TeamRole, totalParticipantsCount: Int, clipSection: Bool = true, maxParticipants: Int = 7, maxDisplayedParticipants: Int = 5) {
         self.participants = participants
         self.teamRole = teamRole
-        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants) : participants.map(ParticipantsRowType.init)
+        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants, totalParticipantsCount: totalParticipantsCount, maxParticipants: maxParticipants, maxDisplayedParticipants: maxDisplayedParticipants) : participants.map(ParticipantsRowType.init)
     }
     
-    static func computeRows(_ participants: [UserType]) -> [ParticipantsRowType] {
+    static func computeRows(_ participants: [UserType], totalParticipantsCount: Int, maxParticipants: Int, maxDisplayedParticipants: Int) -> [ParticipantsRowType] {
         guard participants.count > maxParticipants else { return participants.map(ParticipantsRowType.init) }
-        return participants[0..<5].map(ParticipantsRowType.init) + [.showAll(participants.count)]
+        return participants[0..<maxDisplayedParticipants].map(ParticipantsRowType.init) + [.showAll(totalParticipantsCount)]
     }
 }
 
@@ -132,8 +134,11 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          teamRole: TeamRole,
          conversation: ZMConversation,
          delegate: GroupDetailsSectionControllerDelegate,
-         clipSection: Bool = true) {
-        viewModel = .init(participants: participants, teamRole: teamRole, clipSection: clipSection)
+         totalParticipantsCount: Int,
+         clipSection: Bool = true,
+         maxParticipants: Int = 7,
+         maxDisplayedParticipants: Int = 5) {
+        viewModel = .init(participants: participants, teamRole: teamRole, totalParticipantsCount: totalParticipantsCount, clipSection: clipSection, maxParticipants: maxParticipants, maxDisplayedParticipants: maxDisplayedParticipants)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
