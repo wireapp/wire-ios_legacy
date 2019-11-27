@@ -48,11 +48,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        var allParticipants = conversation.sortedOtherParticipants
-        allParticipants = allParticipants.sorted { $0.displayName < $1.displayName }
-        if let selfUser = ZMUser.selfUser() {
-            allParticipants.insert(selfUser, at: 0)
-        }
+        let allParticipants = conversation.createParticipantsList()
         viewModel = GroupParticipantsDetailViewModel(
             participants: allParticipants,
             selectedParticipants: selectedParticipants,
@@ -147,10 +143,10 @@ final class GroupParticipantsDetailViewController: UIViewController {
     private func computeSections() -> [CollectionViewSectionController] {
         sections = []
         if !viewModel.admins.isEmpty {
-            sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false))
+            sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false, showSectionCount: false))
         }
         
-        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false))
+        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, showSectionCount: false))
         }
 
         return sections
