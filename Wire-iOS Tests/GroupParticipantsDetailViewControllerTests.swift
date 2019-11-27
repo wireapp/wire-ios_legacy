@@ -68,7 +68,7 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         sut.viewModel.admins = []
         sut.viewModel.members = []
         sut.setupViews()
-        sut.participantsDidChange(isSearching: false)
+        sut.participantsDidChange(showSectionCount: false)
 
         // then
         let wrapped = sut.wrapInNavigationController()
