@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: XCTestCase {
+final class ProfileViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
