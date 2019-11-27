@@ -275,7 +275,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
             isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
         }
         
-        availabilityTitleViewController.view?.isHidden = isHidden
+        availabilityTitleViewController.view?.isHidden = true//isHidden
     }
     
     private func updateImageButton() {
