@@ -31,7 +31,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     
     let selectedParticipants: [UserType]
     let conversation: ZMConversation
-    var participantsDidChange: ((_:Bool) -> Void)? = nil
+    var participantsDidChange: ((Bool) -> Void)? = nil
     
     fileprivate var token: NSObjectProtocol?
 

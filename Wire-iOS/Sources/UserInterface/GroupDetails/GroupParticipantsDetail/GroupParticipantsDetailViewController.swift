@@ -129,8 +129,8 @@ final class GroupParticipantsDetailViewController: UIViewController {
         ])
     }
     
-     func participantsDidChange(isSearching: Bool) {
-        collectionViewController.sections = computeSections(isSearching: isSearching)
+     func participantsDidChange(showSectionCount: Bool) {
+        collectionViewController.sections = computeSections(showSectionCount: showSectionCount)
         collectionViewController.collectionView?.reloadData()
         
         let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
@@ -144,13 +144,13 @@ final class GroupParticipantsDetailViewController: UIViewController {
         }
     }
     
-    private func computeSections(isSearching: Bool = false) -> [CollectionViewSectionController] {
+    private func computeSections(showSectionCount: Bool = false) -> [CollectionViewSectionController] {
         sections = []
         if !viewModel.admins.isEmpty {
-            sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false, isSearching: isSearching))
+            sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false, showSectionCount: showSectionCount))
         }
         
-        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, isSearching: isSearching))
+        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, showSectionCount: showSectionCount))
         }
 
         return sections
