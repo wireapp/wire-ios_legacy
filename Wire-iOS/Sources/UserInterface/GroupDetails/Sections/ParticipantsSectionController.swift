@@ -61,9 +61,9 @@ private struct ParticipantsSectionViewModel {
     var sectionTitle: String? {
         switch conversationRole {
         case .member:
-            return showSectionCount ? "group_details.conversation_members_header.title".localized.localizedUppercase : ("group_details.conversation_members_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count))
+            return showSectionCount ? ("group_details.conversation_members_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count)) : "group_details.conversation_members_header.title".localized.localizedUppercase
         case .admin:
-            return showSectionCount ? "group_details.conversation_admins_header.title".localized.localizedUppercase : ("group_details.conversation_admins_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count))
+            return showSectionCount ? ("group_details.conversation_admins_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count)) : "group_details.conversation_admins_header.title".localized.localizedUppercase
         }
     }
    
@@ -100,7 +100,7 @@ private struct ParticipantsSectionViewModel {
          clipSection: Bool = true,
          maxParticipants: Int = 7,
          maxDisplayedParticipants: Int = 5,
-         showSectionCount: Bool = false) {
+         showSectionCount: Bool = true) {
         self.participants = participants
         self.conversationRole = conversationRole
         self.showSectionCount = showSectionCount
@@ -144,7 +144,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          clipSection: Bool = true,
          maxParticipants: Int = 7,
          maxDisplayedParticipants: Int = 5,
-         showSectionCount: Bool = false) {
+         showSectionCount: Bool = true) {
         viewModel = .init(participants: participants,
                           conversationRole: conversationRole,
                           totalParticipantsCount: totalParticipantsCount,

@@ -31,7 +31,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     
     let selectedParticipants: [UserType]
     let conversation: ZMConversation
-    var participantsDidChange: ((Bool) -> Void)? = nil
+    var participantsDidChange: (() -> Void)? = nil
     
     fileprivate var token: NSObjectProtocol?
 
@@ -45,11 +45,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     var participants = [UserType]() {
         didSet {
             self.computeParticipantGroups()
-            if let query = filterQuery {
-                participantsDidChange?(!query.isEmpty)
-            } else {
-                participantsDidChange?(false)
-            }
+            participantsDidChange?()
         }
     }
     var admins = [UserType]()
