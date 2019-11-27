@@ -68,6 +68,7 @@ import Cartography
     public func configure(with user: UserType, variant: ColorSchemeVariant) {
         let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant))
         titleLabel.attributedText = attributedTitle
+        titleLabel.font = FontSpec(.normal, .medium).font!
     }
     
     private func updateVerifiedShield() {
