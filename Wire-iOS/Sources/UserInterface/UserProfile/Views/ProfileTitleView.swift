@@ -23,7 +23,6 @@ import Cartography
     
     let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified)
     let titleLabel = UILabel()
-    var variant: ColorSchemeVariant
     
     var showVerifiedShield = false {
         didSet {
@@ -32,7 +31,6 @@ import Cartography
     }
     
     override init(frame: CGRect) {
-        variant = ColorScheme.default.variant
         super.init(frame: frame)
 
         setupViews()
@@ -66,8 +64,8 @@ import Cartography
         }
     }
     
-    @objc(configureWithViewModel:)
-    public func configure(with user: UserType) {
+    @objc(configureWithViewModel::)
+    public func configure(with user: UserType, variant: ColorSchemeVariant) {
         let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant))
         titleLabel.attributedText = attributedTitle
     }

@@ -117,7 +117,7 @@ final class ProfileViewController: UIViewController {
         usernameDetailsView.configure(with: userNameDetailViewModel)
         view.addSubview(usernameDetailsView)
         
-        profileTitleView.configure(with: viewModel.bareUser)
+        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
         
         profileTitleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
