@@ -61,9 +61,9 @@ private struct ParticipantsSectionViewModel {
     var sectionTitle: String? {
         switch conversationRole {
         case .member:
-            return showSectionCount ? "group_details.conversation_members_header_without_parameter.title".localized.localizedUppercase : "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
+            return showSectionCount ? "group_details.conversation_members_header.title".localized.localizedUppercase : ("group_details.conversation_members_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count))
         case .admin:
-            return showSectionCount ? "group_details.conversation_admins_header_without_parameter.title".localized.localizedUppercase : "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
+            return showSectionCount ? "group_details.conversation_admins_header.title".localized.localizedUppercase : ("group_details.conversation_admins_header.title".localized.localizedUppercase + " (%d)".localized(args: participants.count))
         }
     }
    
