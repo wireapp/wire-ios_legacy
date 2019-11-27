@@ -56,7 +56,7 @@ private struct ParticipantsSectionViewModel {
     let participants: [UserType]    
     let conversationRole: ConversationRole
     
-    var showSectionCount: Bool = false
+    let showSectionCount: Bool
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     var sectionTitle: String? {
         switch conversationRole {
