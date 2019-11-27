@@ -67,6 +67,19 @@ final class ProfileViewControllerTests: XCTestCase {
 
         verify(matching: sut)
     }
+    
+    func testForUserName() {
+        selfUser.teamRole = .member
+        selfUser.emailAddress = nil
+        selfUser.availability = .busy
+        selfUser.trusted = true
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        sut.updateShowVerifiedShield()
+        let navWrapperController = sut.wrapInNavigationController()
+        verify(matching: navWrapperController)
+    }
 
     func testForContextOneToOneConversation() {
         selfUser.teamRole = .member
