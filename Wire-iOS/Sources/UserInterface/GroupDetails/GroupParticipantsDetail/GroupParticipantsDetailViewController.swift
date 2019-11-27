@@ -48,11 +48,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        var allParticipants = conversation.sortedOtherParticipants
-        allParticipants = allParticipants.sorted { $0.displayName < $1.displayName }
-        if let selfUser = ZMUser.selfUser() {
-            allParticipants.insert(selfUser, at: 0)
-        }
+        let allParticipants = conversation.createParticipantsList()
         viewModel = GroupParticipantsDetailViewModel(
             participants: allParticipants,
             selectedParticipants: selectedParticipants,
