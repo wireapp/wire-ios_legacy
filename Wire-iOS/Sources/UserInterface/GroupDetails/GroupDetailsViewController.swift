@@ -116,6 +116,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     func updateLegalHoldIndicator() {
         navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
+    
+   
 
     func computeVisibleSections() -> [CollectionViewSectionController] {
         var sections = [CollectionViewSectionController]()
@@ -124,11 +126,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         self.renameGroupSectionController = renameGroupSectionController
         
         var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
-        if let selfUser = ZMUser.selfUser() {
-//            participants.insert(selfUser, at: 0)
-            participants.append(selfUser)
-        }
-        participants = participants.sorted { $0.displayName < $1.displayName }
+        participants = conversation.createParticipantsList()
         if !participants.isEmpty {
             
 //<<<<<<< HEAD
@@ -318,4 +316,16 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(menu, animated: animated)
     }
     
+}
+
+extension ZMConversation {
+    
+    func createParticipantsList() -> [UserType] {
+        var participants:[UserType] = self.sortedOtherParticipants
+        if let selfUser = ZMUser.selfUser() {
+            participants.append(selfUser)
+        }
+        participants = participants.sorted { $0.displayName < $1.displayName }
+        return participants
+    }
 }
