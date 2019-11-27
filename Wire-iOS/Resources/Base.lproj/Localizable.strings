@@ -885,6 +885,8 @@
 
 "group_details.conversation_admins_header.title" = "Group admins (%d)";
 "group_details.conversation_members_header.title" = "Group members (%d)";
+"group_details.conversation_admins_header_without_parameter.title" = "Group admins";
+"group_details.conversation_members_header_without_parameter.title" = "Group members";
 
 
 // Legal hold details

@@ -56,15 +56,14 @@ private struct ParticipantsSectionViewModel {
     let participants: [UserType]    
     let conversationRole: ConversationRole
     
+    var isSearching: Bool = false
     var sectionAccesibilityIdentifier = "label.groupdetails.participants"
     var sectionTitle: String? {
         switch conversationRole {
         case .member:
-            return "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
+            return isSearching ? "group_details.conversation_members_header_without_parameter.title".localized.localizedUppercase : "group_details.conversation_members_header.title".localized(args: participants.count).localizedUppercase
         case .admin:
-            return "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
-        default:
-            return nil
+            return isSearching ? "group_details.conversation_admins_header_without_parameter.title".localized.localizedUppercase : "group_details.conversation_admins_header.title".localized(args: participants.count).localizedUppercase
         }
     }
    
@@ -94,14 +93,17 @@ private struct ParticipantsSectionViewModel {
     ///   - clipSection: enable/disable the display of the “ShowAll” button
     ///   - maxParticipants: max number of participants we can display
     ///   - maxDisplayedParticipants: max number of participants we can display, if there are more than maxParticipants participants
+    ///   - isSearching: current view model - a search result or not
     init(participants: [UserType],
          conversationRole: ConversationRole,
          totalParticipantsCount: Int,
          clipSection: Bool = true,
          maxParticipants: Int = 7,
-         maxDisplayedParticipants: Int = 5) {
+         maxDisplayedParticipants: Int = 5,
+         isSearching: Bool = false) {
         self.participants = participants
         self.conversationRole = conversationRole
+        self.isSearching = isSearching
         rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants, totalParticipantsCount: totalParticipantsCount, maxParticipants: maxParticipants, maxDisplayedParticipants: maxDisplayedParticipants) : participants.map(ParticipantsRowType.init)
     }
     
@@ -141,13 +143,15 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          totalParticipantsCount: Int,
          clipSection: Bool = true,
          maxParticipants: Int = 7,
-         maxDisplayedParticipants: Int = 5) {
+         maxDisplayedParticipants: Int = 5,
+         isSearching: Bool = false) {
         viewModel = .init(participants: participants,
                           conversationRole: conversationRole,
                           totalParticipantsCount: totalParticipantsCount,
                           clipSection: clipSection,
                           maxParticipants: maxParticipants,
-                          maxDisplayedParticipants: maxDisplayedParticipants)
+                          maxDisplayedParticipants: maxDisplayedParticipants,
+                          isSearching: isSearching)
         self.conversation = conversation
         self.delegate = delegate
         super.init()
