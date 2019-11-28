@@ -29,9 +29,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
 
-    private let maxParticipants: Int = 7
-    private let maxDisplayedParticipants: Int = 5
-
     var didCompleteInitialSync = false {
         didSet {
             collectionViewController.sections = computeVisibleSections()
@@ -146,18 +143,18 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             let admins = participants.filter({$0.isAdminGroup})
             let members = participants.filter({!$0.isAdminGroup})
             
-            if admins.count <= maxParticipants || admins.isEmpty {
-                if admins.count >= maxDisplayedParticipants && (participants.count > maxParticipants) { // Dispay the ShowAll button after the first section
+            if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
+                if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
                     let adminSection = ParticipantsSectionController(participants: admins,
                                                                      conversationRole: .admin, conversation: conversation,
-                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: admins.count - 1, maxDisplayedParticipants: admins.count)
+                                                                     delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: admins.count - 1, maxDisplayedParticipants: Int.ConversationParticipants.maxNumberOfDisplayed)
                     sections.append(adminSection)
                 } else {
                     let adminSection = ParticipantsSectionController(participants: admins,
                                                                      conversationRole: .admin, conversation: conversation,
                                                                      delegate: self, totalParticipantsCount: participants.count, clipSection: false)
                     sections.append(adminSection)
-                    if members.count <= (maxParticipants - admins.count) { // Don't display the ShowAll button
+                    if members.count <= (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count) { // Don't display the ShowAll button
                         if !members.isEmpty {
                             let memberSection = ParticipantsSectionController(participants: members,
                                                                               conversationRole: .member, conversation: conversation,
@@ -167,7 +164,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                     } else { // Display the ShowAll button after the second section
                         let memberSection = ParticipantsSectionController(participants: members,
                                                                           conversationRole: .member, conversation: conversation,
-                                                                          delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: (maxParticipants - admins.count), maxDisplayedParticipants: (maxParticipants - admins.count) - 2)
+                                                                          delegate: self, totalParticipantsCount: participants.count, clipSection: true, maxParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count), maxDisplayedParticipants: (Int.ConversationParticipants.maxNumberWithoutTruncation - admins.count) - 2)
                         sections.append(memberSection)
                     }
                 }

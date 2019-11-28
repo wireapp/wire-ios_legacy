@@ -98,8 +98,8 @@ private struct ParticipantsSectionViewModel {
          conversationRole: ConversationRole,
          totalParticipantsCount: Int,
          clipSection: Bool = true,
-         maxParticipants: Int = 7,
-         maxDisplayedParticipants: Int = 5,
+         maxParticipants: Int,
+         maxDisplayedParticipants: Int,
          showSectionCount: Bool = true) {
         self.participants = participants
         self.conversationRole = conversationRole
@@ -142,8 +142,8 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          delegate: GroupDetailsSectionControllerDelegate,
          totalParticipantsCount: Int,
          clipSection: Bool = true,
-         maxParticipants: Int = 7,
-         maxDisplayedParticipants: Int = 5,
+         maxParticipants: Int = Int.ConversationParticipants.maxNumberWithoutTruncation,
+         maxDisplayedParticipants: Int = Int.ConversationParticipants.maxNumberOfDisplayed,
          showSectionCount: Bool = true) {
         viewModel = .init(participants: participants,
                           conversationRole: conversationRole,
