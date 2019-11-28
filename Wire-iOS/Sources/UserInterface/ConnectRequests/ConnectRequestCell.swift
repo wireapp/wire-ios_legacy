@@ -28,6 +28,8 @@ final class ConnectRequestCell: UITableViewCell {
 
     var user: ZMUser! {
         didSet {
+            guard let user = user else { return }
+            
             connectRequestViewController?.view.removeFromSuperview()
 
             let incomingConnectionViewController = IncomingConnectionViewController(userSession: ZMUserSession.shared(), user: user)

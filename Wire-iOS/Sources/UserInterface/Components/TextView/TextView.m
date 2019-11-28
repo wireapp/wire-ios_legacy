@@ -110,18 +110,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.placeholderLabel.textColor = placeholderTextColor;
 }
 
-- (void)setText:(NSString *)text
-{
-    [super setText:text];
-    [self showOrHidePlaceholder];
-}
-
-- (void)setAttributedText:(NSAttributedString *)attributedText
-{
-    [super setAttributedText:attributedText];
-    [self showOrHidePlaceholder];
-}
-
 - (void)setPlaceholderFont:(UIFont *)placeholderFont
 {
     _placeholderFont = placeholderFont;
