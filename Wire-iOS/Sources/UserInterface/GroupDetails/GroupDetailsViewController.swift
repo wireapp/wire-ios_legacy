@@ -122,8 +122,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        var (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
-        participants.addSelfUser() 
+        let (participants, serviceUsers) = (conversation.sortedOtherParticipants.addSelfUserAndSorted(), conversation.sortedServiceUsers)
         if !participants.isEmpty {
             
 //<<<<<<< HEAD
@@ -316,11 +315,11 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
 }
 
 extension Array where Element: UserType {
-    mutating func addSelfUser() {
+    func addSelfUserAndSorted() -> [UserType] {
         var arr: [UserType] = self
         if let selfUser = ZMUser.selfUser() {
             arr.append(selfUser)
         }
-        self = arr.sorted { $0.displayName < $1.displayName } as! Array<Element>
+        return arr.sorted { $0.displayName < $1.displayName } as! Array<Element>
     }
 }

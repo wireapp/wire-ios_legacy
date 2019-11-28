@@ -48,8 +48,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        var allParticipants = conversation.sortedOtherParticipants
-        allParticipants.addSelfUser()
+        let allParticipants = conversation.sortedOtherParticipants.addSelfUserAndSorted()
         
         viewModel = GroupParticipantsDetailViewModel(
             participants: allParticipants,
