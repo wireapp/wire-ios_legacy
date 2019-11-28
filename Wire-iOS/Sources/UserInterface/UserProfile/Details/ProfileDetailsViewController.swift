@@ -74,9 +74,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]
         
         // The availability status has been moved to the left of the user name, so now we can always hide this status in the user's profile.
-        //        if user.isSelfUser || !viewer.canAccessCompanyInformation(of: user) {
         profileHeaderOptions.insert(.hideAvailability)
-        //        }
         
         self.user = user
         self.viewer = viewer
