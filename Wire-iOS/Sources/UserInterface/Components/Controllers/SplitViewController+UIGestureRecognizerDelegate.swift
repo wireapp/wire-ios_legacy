@@ -37,3 +37,62 @@ extension SplitViewController: UIGestureRecognizerDelegate {
         return true
     }
 }
+
+extension SplitViewController {
+    @objc
+    func onHorizontalPan(_ gestureRecognizer: UIPanGestureRecognizer?) {
+        
+        guard layoutSize != .regularLandscape,
+              delegate?.splitViewControllerShouldMoveLeftViewController(self) == true,
+              isConversationViewVisible,
+              let gestureRecognizer = gestureRecognizer else {
+            return
+        }
+        
+        var offset = gestureRecognizer.translation(in: view)
+        
+        switch gestureRecognizer.state {
+        case .began:
+            leftViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: true)
+            rightViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: true)
+            leftView?.isHidden = false
+        case .changed:
+            if let width = leftViewController?.view.bounds.size.width {
+                if isLeftViewControllerRevealed {
+                    if offset.x > 0 {
+                        offset.x = 0
+                    }
+                    if abs(offset.x) > width {
+                        offset.x = -width
+                    }
+                    openPercentage = 1.0 - abs(offset.x) / width
+                } else {
+                    if offset.x < 0 {
+                        offset.x = 0
+                    }
+                    if abs(offset.x) > width {
+                        offset.x = width
+                    }
+                    openPercentage = abs(offset.x) / width
+                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+                }
+                view.layoutIfNeeded()
+            }
+        case .cancelled,
+             .ended:
+            let isRevealed = openPercentage > 0.5
+            let didCompleteTransition = isRevealed != isLeftViewControllerRevealed
+            
+            setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
+                
+                if didCompleteTransition {
+                    self?.leftViewController?.endAppearanceTransition()
+                    self?.rightViewController?.endAppearanceTransition()
+                }
+            }
+        default:
+            break
+        }
+    }
+
+}
