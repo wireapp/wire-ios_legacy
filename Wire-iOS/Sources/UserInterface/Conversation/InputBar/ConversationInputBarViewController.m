@@ -91,6 +91,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
+@interface ConversationInputBarViewController (UIDropInteractionDelegate) <UIDropInteractionDelegate>
+
+@end
+
 
 @interface ConversationInputBarViewController ()
 
@@ -210,6 +214,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self setInputLanguage];
     [self setupStyle];
+    
+    if (@available(iOS 11.0, *)) {
+        UIDropInteraction *interaction = [[UIDropInteraction alloc] initWithDelegate:self];
+        [self.inputBar.textView addInteraction:interaction];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
