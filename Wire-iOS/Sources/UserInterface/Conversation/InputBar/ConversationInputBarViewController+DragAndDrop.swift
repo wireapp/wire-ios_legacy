@@ -18,6 +18,8 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "Drag and drop images")
+
 extension ConversationInputBarViewController: UIDropInteractionDelegate {
     
     @available(iOS 11.0, *)
@@ -26,7 +28,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
         for dragItem in session.items {
             dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { object, error in
                 
-                guard error == nil else { return print("Failed to load our dragged item") }
+                guard error == nil else { return zmLog.error("Failed to load our dragged item") }
                 guard let draggedImage = object as? UIImage else { return }
                 
                 DispatchQueue.main.async {

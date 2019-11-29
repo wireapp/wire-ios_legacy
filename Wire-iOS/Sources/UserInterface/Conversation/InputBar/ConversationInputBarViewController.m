@@ -91,11 +91,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface ConversationInputBarViewController (UIDropInteractionDelegate) <UIDropInteractionDelegate>
-
-@end
-
-
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
