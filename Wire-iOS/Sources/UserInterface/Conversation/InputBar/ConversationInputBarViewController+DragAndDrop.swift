@@ -28,7 +28,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
         for dragItem in session.items {
             dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { object, error in
                 
-                guard error == nil else { return zmLog.error("Failed to load our dragged item") }
+                guard error == nil else { return zmLog.error("Failed to load dragged item: \(error!.localizedDescription)") }
                 guard let draggedImage = object as? UIImage else { return }
                 
                 DispatchQueue.main.async {
@@ -52,6 +52,8 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                     }
                 }
             })
+            ///TODO: it's a temporary solution to drag only one image, while we have no design for multiple images
+            break
         }
     }
     
