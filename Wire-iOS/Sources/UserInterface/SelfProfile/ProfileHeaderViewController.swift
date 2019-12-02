@@ -219,7 +219,6 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     
     func applyColorScheme(_ variant: ColorSchemeVariant) {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
-//        guestIndicator.colorSchemeVariant = variant
         
         handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
