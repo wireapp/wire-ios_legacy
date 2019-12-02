@@ -18,17 +18,17 @@
 
 import Foundation
 
-final class GroupRoleLabelIndicator: UIView {
-
+final class LabelIndicator: UIView {
+    
     private let variant: ColorSchemeVariant
-    private let groupRoleIcon = UIImageView()
+    private let guestIcon = UIImageView()
     private let titleLabel = UILabel()
     private let containerView = UIView()
     
-    init() {
+    init(icon: StyleKitIcon, title: String, accessibilityIdentifier: String) {
         self.variant = ColorScheme.default.variant
         super.init(frame: .zero)
-        setupViews()
+        setupViews(icon: icon, title: title, accessibilityString: accessibilityIdentifier)
         createConstraints()
     }
     
@@ -36,25 +36,27 @@ final class GroupRoleLabelIndicator: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
-        titleLabel.accessibilityIdentifier =  "label.group_role"
+    private func setupViews(icon: StyleKitIcon, title: String, accessibilityString: String) {
+        titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
-        titleLabel.text = "profile.details.group_admin".localized(uppercased: true)
+        titleLabel.text = title
         
-        groupRoleIcon.accessibilityIdentifier =  "img.group_role"
-        groupRoleIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
+        guestIcon.accessibilityIdentifier =  "img." + accessibilityString
+        guestIcon.setIcon(icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
         
         containerView.addSubview(titleLabel)
-        containerView.addSubview(groupRoleIcon)
+        containerView.addSubview(guestIcon)
+        accessibilityIdentifier = accessibilityString + " indicator"
+        
         addSubview(containerView)
     }
     
     private func createConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupRoleIcon.translatesAutoresizingMaskIntoConstraints = false
+        guestIcon.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -66,14 +68,14 @@ final class GroupRoleLabelIndicator: UIView {
             containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             
-            // groupRoleIcon
-            groupRoleIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            groupRoleIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            // guestIcon
+            guestIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            guestIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             
             // titleLabel
             titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: groupRoleIcon.trailingAnchor, constant: 6)
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: guestIcon.trailingAnchor, constant: 6)
             ])
     }
 }

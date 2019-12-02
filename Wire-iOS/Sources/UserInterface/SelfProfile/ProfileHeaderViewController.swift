@@ -96,9 +96,9 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let availabilityTitleViewController: AvailabilityTitleViewController
     
     let guestIndicatorStack = UIStackView()
-    let guestIndicator = GuestLabelIndicator()
+    let guestIndicator = LabelIndicator(icon: .guest, title: "profile.details.guest".localized(uppercased: true), accessibilityIdentifier: "guest")
     let remainingTimeLabel = UILabel()
-    let groupRoleIndicator = GroupRoleLabelIndicator()
+    let groupRoleIndicator = LabelIndicator(icon: .groupAdmin, title: "profile.details.group_admin".localized(uppercased: true), accessibilityIdentifier: "group_role")
     
     private var tokens: [Any?] = []
     
@@ -219,7 +219,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     
     func applyColorScheme(_ variant: ColorSchemeVariant) {
         availabilityTitleViewController.availabilityTitleView?.colorSchemeVariant = variant
-        guestIndicator.colorSchemeVariant = variant
+//        guestIndicator.colorSchemeVariant = variant
         
         handleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         nameLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
