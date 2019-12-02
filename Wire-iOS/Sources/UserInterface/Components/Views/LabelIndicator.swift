@@ -21,7 +21,7 @@ import Foundation
 final class LabelIndicator: UIView {
     
     private let variant: ColorSchemeVariant
-    private let guestIcon = UIImageView()
+    private let indicatorIcon = UIImageView()
     private let titleLabel = UILabel()
     private let containerView = UIView()
     
@@ -44,11 +44,11 @@ final class LabelIndicator: UIView {
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
         titleLabel.text = title
         
-        guestIcon.accessibilityIdentifier =  "img." + accessibilityString
-        guestIcon.setIcon(icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
+        indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
+        indicatorIcon.setIcon(icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
         
         containerView.addSubview(titleLabel)
-        containerView.addSubview(guestIcon)
+        containerView.addSubview(indicatorIcon)
         accessibilityIdentifier = accessibilityString + " indicator"
         
         addSubview(containerView)
@@ -56,7 +56,7 @@ final class LabelIndicator: UIView {
     
     private func createConstraints() {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        guestIcon.translatesAutoresizingMaskIntoConstraints = false
+        indicatorIcon.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -68,14 +68,14 @@ final class LabelIndicator: UIView {
             containerView.trailingAnchor.constraint(equalTo: safeTrailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: safeBottomAnchor),
             
-            // guestIcon
-            guestIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            guestIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            // indicatorIcon
+            indicatorIcon.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            indicatorIcon.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
             
             // titleLabel
             titleLabel.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: guestIcon.trailingAnchor, constant: 6)
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: indicatorIcon.trailingAnchor, constant: 6)
             ])
     }
 }
