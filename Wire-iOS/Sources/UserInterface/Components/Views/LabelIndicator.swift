@@ -18,17 +18,23 @@
 
 import Foundation
 
+enum LabelIndicatorContext {
+    case guest, groupRole
+}
+
 final class LabelIndicator: UIView {
     
     private let variant: ColorSchemeVariant
     private let indicatorIcon = UIImageView()
     private let titleLabel = UILabel()
     private let containerView = UIView()
+    private let context: LabelIndicatorContext
     
-    init(icon: StyleKitIcon, title: String, accessibilityIdentifier: String) {
+    init(context: LabelIndicatorContext) {
+        self.context = context
         self.variant = ColorScheme.default.variant
         super.init(frame: .zero)
-        setupViews(icon: icon, title: title, accessibilityString: accessibilityIdentifier)
+        setupViews()
         createConstraints()
     }
     
@@ -36,7 +42,21 @@ final class LabelIndicator: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews(icon: StyleKitIcon, title: String, accessibilityString: String) {
+    private func setupViews() {
+        var accessibilityString: String
+        var title: String
+        var icon: StyleKitIcon
+        
+        switch context {
+        case .guest:
+            accessibilityString = "guest"
+            title = "profile.details.guest".localized(uppercased: true)
+            icon = .guest
+        case .groupRole:
+            accessibilityString = "group_role"
+            title = "profile.details.group_admin".localized(uppercased: true)
+            icon = .groupAdmin
+        }
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
