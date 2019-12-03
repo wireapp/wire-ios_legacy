@@ -96,9 +96,9 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let availabilityTitleViewController: AvailabilityTitleViewController
     
     let guestIndicatorStack = UIStackView()
-    let guestIndicator = GuestLabelIndicator()
+    let guestIndicator = LabelIndicator(context: .guest)
     let remainingTimeLabel = UILabel()
-    let groupRoleIndicator = GroupRoleLabelIndicator()
+    let groupRoleIndicator = LabelIndicator(context: .groupRole)
     
     private var tokens: [Any?] = []
     
