@@ -681,8 +681,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (![AppDelegate isOffline]) {
         
-        NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
+        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:@"" conversation:self.conversation];
         giphySearchViewController.delegate = self;
         [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:^{
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
