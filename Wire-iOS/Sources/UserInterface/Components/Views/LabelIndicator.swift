@@ -22,9 +22,25 @@ enum LabelIndicatorContext {
     case guest, groupRole
 }
 
-final class LabelIndicator: UIView {
+final class LabelIndicator: UIView, Themeable {
+    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+        didSet {
+            guard oldValue != colorSchemeVariant else { return }
+            applyColorSchemeOnSubviews(colorSchemeVariant)
+            applyColorScheme(colorSchemeVariant)
+        }
+    }
     
-    private let variant: ColorSchemeVariant
+    func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
+        switch context {
+        case .guest:
+            indicatorIcon.setIcon(.guest, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        case .groupRole:
+            indicatorIcon.setIcon(.groupAdmin, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
+        }
+    }
+    
     private let indicatorIcon = UIImageView()
     private let titleLabel = UILabel()
     private let containerView = UIView()
@@ -32,7 +48,6 @@ final class LabelIndicator: UIView {
     
     init(context: LabelIndicatorContext) {
         self.context = context
-        self.variant = ColorScheme.default.variant
         super.init(frame: .zero)
         setupViews()
         createConstraints()
@@ -61,11 +76,11 @@ final class LabelIndicator: UIView {
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: variant)
+        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
         titleLabel.text = title
         
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
-        indicatorIcon.setIcon(icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: variant))
+        indicatorIcon.setIcon(icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
         
         containerView.addSubview(titleLabel)
         containerView.addSubview(indicatorIcon)
