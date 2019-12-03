@@ -169,7 +169,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         guestIndicatorStack.alignment = .center
         
         updateGuestIndicator()
-        updategroupRoleIndicator()
+        updateGroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
@@ -235,12 +235,16 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
     
-    func updategroupRoleIndicator() {
+    private func updateGroupRoleIndicator() {
         if let _ = conversation {
             groupRoleIndicator.isHidden = !user.isAdminGroup
         } else {
             groupRoleIndicator.isHidden = true
         }
+    }
+    
+    func switchGroupRoleIndicatorToAdmin(_ isAdminRole: Bool) {
+        groupRoleIndicator.isHidden = !isAdminRole
     }
     
     private func applyOptions() {

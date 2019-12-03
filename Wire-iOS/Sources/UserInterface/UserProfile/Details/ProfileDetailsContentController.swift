@@ -27,6 +27,9 @@ protocol ProfileDetailsContentControllerDelegate: class {
     
     /// Called when the profile details change.
     func profileDetailsContentDidChange()
+    
+    /// Called when the group role change.
+    func profileGroupRoleDidChange(isAdminRole: Bool)
 }
 
 /**
@@ -61,6 +64,9 @@ final class ProfileDetailsContentController: NSObject,
     
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
+    
+    /// The current group admin status for UI.
+    private var isAdminState: Bool
 
     // MARK: - Accessing the Content
     
@@ -91,6 +97,7 @@ final class ProfileDetailsContentController: NSObject,
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+        self.isAdminState = self.user.isAdminGroup
 
         super.init()
         configureObservers()
@@ -221,6 +228,8 @@ final class ProfileDetailsContentController: NSObject,
             cell.configure(with: CellConfiguration.groupAdminToogle(get: {
                 return groupAdminEnabled
             }, set: {_ in
+                self.isAdminState = !self.isAdminState
+                self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
                 ///FIXME: change converation's usr's admin setting
             }), variant: ColorScheme.default.variant)
 
