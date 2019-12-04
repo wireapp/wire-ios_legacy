@@ -91,7 +91,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-
 @interface ConversationInputBarViewController ()
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
@@ -210,6 +209,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
     [self setInputLanguage];
     [self setupStyle];
+    
+    if (@available(iOS 11.0, *)) {
+        UIDropInteraction *interaction = [[UIDropInteraction alloc] initWithDelegate:self];
+        [self.inputBar.textView addInteraction:interaction];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -677,8 +681,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     if (![AppDelegate isOffline]) {
         
-        NSString *searchTerm = [self.inputBar.textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:searchTerm conversation:self.conversation];
+        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:@"" conversation:self.conversation];
         giphySearchViewController.delegate = self;
         [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:^{
             [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
