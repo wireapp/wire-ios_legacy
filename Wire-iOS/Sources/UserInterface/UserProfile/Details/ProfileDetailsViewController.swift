@@ -38,7 +38,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     /// The current group admin status.
     var isAdminRole: Bool {
         didSet {
-            profileHeaderViewController.switchGroupRoleIndicatorToAdmin(self.isAdminRole)
+            profileHeaderViewController.isAdminRole = self.isAdminRole
         }
     }
 
