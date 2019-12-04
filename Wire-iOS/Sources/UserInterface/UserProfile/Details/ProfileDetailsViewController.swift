@@ -34,6 +34,13 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     let conversation: ZMConversation?
 
     let context: ProfileViewControllerContext
+    
+    /// The current group admin status.
+    var isAdminRole: Bool {
+        didSet {
+            profileHeaderViewController.isAdminRole = self.isAdminRole
+        }
+    }
 
     /**
      * The object that calculates and controls the content to display in the user
@@ -77,6 +84,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         profileHeaderOptions.insert(.hideAvailability)
         
         self.user = user
+        self.isAdminRole = self.user.isAdminGroup
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
@@ -172,6 +180,10 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
 // MARK: - ProfileDetailsContentController
 
 extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate {
+    
+    func profileGroupRoleDidChange(isAdminRole: Bool) {
+        self.isAdminRole = isAdminRole
+    }
     
     func profileDetailsContentDidChange() {
         tableView.reloadData()

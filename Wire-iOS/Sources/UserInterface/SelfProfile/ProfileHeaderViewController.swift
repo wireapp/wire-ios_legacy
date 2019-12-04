@@ -64,6 +64,13 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     /// The user who is viewing this view
     let viewer: UserType
 
+    /// The current group admin status.
+    var isAdminRole: Bool {
+        didSet {
+            groupRoleIndicator.isHidden = !self.isAdminRole
+        }
+    }
+    
     @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
@@ -111,6 +118,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     
     init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
         self.user = user
+        self.isAdminRole = self.user.isAdminGroup
         self.viewer = viewer
         self.conversation = conversation
         self.options = options
@@ -169,7 +177,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         guestIndicatorStack.alignment = .center
         
         updateGuestIndicator()
-        updategroupRoleIndicator()
+        updateGroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
@@ -235,7 +243,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
     
-    func updategroupRoleIndicator() {
+    private func updateGroupRoleIndicator() {
         if let _ = conversation {
             groupRoleIndicator.isHidden = !user.isAdminGroup
         } else {
