@@ -197,8 +197,8 @@
 "folder.creation.name.footer" = "Maximum 64 characters";
 "folder.creation.name.placeholder" = "Folder name";
 
-"folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.title" = "移动到";
+"folder.picker.empty.hint" = "按 + 按钮创建新文件夹";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -220,7 +220,7 @@
 
 "list.section.groups" = "群组";
 "list.section.contacts" = "联系人";
-"list.section.requests" = "Requests";
+"list.section.requests" = "请求";
 "list.section.favorites" = "收藏夾";
 
 "conversation.voiceover.verified" = "已验证";
@@ -306,7 +306,7 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "插入换行符";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
@@ -721,7 +721,7 @@
 "meta.menu.unarchive" = "取消归档";
 "meta.menu.delete" = "删除群聊...";
 "meta.menu.clear_content" = "清除内容…";
-"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.move_to_folder" = "移至 ...";
 "meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
@@ -904,7 +904,7 @@
 "self.add_phone_number" = "新增手机号码";
 "self.add_email_password" = "新增邮箱地址和密码";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_image" = "个人图像";
 "self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen
