@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire needs access to the Microphone.";
-"voice.alert.microphone_warning.explanation" = "Enable it in Wire Settings.";
 
 "voice.alert.camera_warning.title" = "Wire needs access to the Camera.";
-"voice.alert.camera_warning.explanation" = "Go to Settings and allow Wire to access the camera.";
 
 "voice.top_overlay.tap_to_return" = "Tap to return to call";
 "voice.top_overlay.accessibility_title" = "Ongoing call";
