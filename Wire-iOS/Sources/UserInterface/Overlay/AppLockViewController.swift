@@ -135,6 +135,11 @@ final class AppLockViewController: UIViewController {
 
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
+                if case .appLogin = result {
+                    callback(.granted)
+                    SessionManager.shared?.logoutCurrentSession()
+                    return
+                }
                 callback(result)
                 if case .granted = result {
                     AppLock.lastUnlockedDate = Date()
