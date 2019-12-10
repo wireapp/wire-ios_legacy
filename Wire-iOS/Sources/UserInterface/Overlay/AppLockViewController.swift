@@ -135,12 +135,39 @@ final class AppLockViewController: UIViewController {
 
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async {
-                if case .appLogin = result {
-                    callback(.granted)
-                    SessionManager.shared?.logoutCurrentSession()
+                guard result != .needAccountPassword else {
+                    // login with password
+                    
+                    let alertController = UIAlertController(title: "Unlock Wire", message: "Type your account password", preferredStyle: .alert)
+                    var textField: UITextField?
+                    
+                    alertController.addTextField(configurationHandler: { addedTextField in
+                        textField = addedTextField
+                    })
+                    
+                    let logInAction = UIAlertAction(title: "Log in", style: .default) {
+                        _ in
+                        // Trigger password check in here
+                        // Execute callback when done
+                        _ = textField?.text
+                        callback(.granted)
+                    }
+                    
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) {
+                        _ in
+                        callback(.denied)
+                    }
+                    
+                    alertController.addAction(cancelAction)
+                    alertController.addAction(logInAction)
+                  
+                    self.present(alertController, animated: true, completion: nil)
+                    callback(.denied)
                     return
                 }
+                
                 callback(result)
+                // Will need to do this as well after successful account password unlock
                 if case .granted = result {
                     AppLock.lastUnlockedDate = Date()
                     NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)

@@ -54,7 +54,8 @@ final public class AppLock {
         case denied
         /// There's no authenticated method available (no passcode is set)
         case unavailable
-        case appLogin
+        /// Biometrics failed and account password is needed instead of device PIN
+        case needAccountPassword
     }
 
     /// a weak reference to LAContext, it should be nil when evaluatePolicy is done.
@@ -66,34 +67,29 @@ final public class AppLock {
     // Creates a new LAContext and evaluates the authentication settings of the user.
     public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
 
-        let superSecureLock = rules.customAppLock
+        let useBiometricsOrAccountPassword = rules.useBiometricsOrAccountPassword
         let context: LAContext = LAContext()
         var error: NSError?
 
         AppLock.weakLAContext = context
         
-        // If we want to make this more readable we can look into getting rid of this ternary operation
-        // And instead extend evaluatePolicy to call the callback in its completion handler
-        // That way we can specify a different policy without duplicating the code
-        //
-        // If superSecureLock
-        //      superSecureFlow
-        // else
-        //      normalFlow
-        //
-        // But I like the current implementation, and don't think it would make it much cleaner or more readable
-        
-        let policy: LAPolicy = superSecureLock ? LAPolicy.deviceOwnerAuthenticationWithBiometrics : LAPolicy.deviceOwnerAuthentication
+        let policy: LAPolicy = useBiometricsOrAccountPassword ? LAPolicy.deviceOwnerAuthenticationWithBiometrics : LAPolicy.deviceOwnerAuthentication
         let canEvaluatePolicy = context.canEvaluatePolicy(policy, error: &error)
         
-        if superSecureLock && (biometricsChanged(from: context.evaluatedPolicyDomainState) || !canEvaluatePolicy || true) {
-            callback(.appLogin)
+        if useBiometricsOrAccountPassword && (biometricsChanged(in: context) || !canEvaluatePolicy) {
+            callback(.needAccountPassword)
             return
         }
         
         if canEvaluatePolicy {
             context.evaluatePolicy(policy, localizedReason: description, reply: { (success, error) -> Void in
-                callback(success ? .granted : .denied)
+                var authResult: AuthenticationResult = success ? .granted : .denied
+            
+                if useBiometricsOrAccountPassword, let laError = error as? LAError, laError.code == .userFallback {
+                    authResult = .needAccountPassword
+                }
+                
+                callback(authResult)
             })
         } else {
             // If there's no passcode set automatically grant access unless app lock is a requirement to run the app
@@ -103,8 +99,8 @@ final public class AppLock {
     }
     
     // Tells us if biometrics database has changed (ex: fingerprints added or removed)
-    private static func biometricsChanged(from currentState: Data?) -> Bool {
-        guard let currentState = currentState, let previousState = previousDomainState else {
+    private static func biometricsChanged(in context: LAContext) -> Bool {
+        guard let currentState = context.evaluatedPolicyDomainState, let previousState = previousDomainState else {
             return false
         }
         return currentState != previousState
@@ -113,7 +109,7 @@ final public class AppLock {
 }
 
 public struct AppLockRules: Decodable {
-    public let customAppLock: Bool
+    public let useBiometricsOrAccountPassword: Bool
     public let forceAppLock: Bool
     public let appLockTimeout: UInt
     
