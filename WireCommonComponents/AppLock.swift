@@ -21,6 +21,7 @@ import WireDataModel
 import LocalAuthentication
 
 private let zmLog = ZMSLog(tag: "UI")
+private let UserDefaultsDomainStateKey = "DomainStateKey"
 
 final public class AppLock {
     // Returns true if user enabled the app lock feature.
@@ -62,7 +63,14 @@ final public class AppLock {
     private static weak var weakLAContext: LAContext? = nil
 
     // TODO: Persist domain state
-    private static var previousDomainState: Data? = nil
+    private static var previousDomainState: Data? {
+        get {
+            return UserDefaults.standard.data(forKey: UserDefaultsDomainStateKey)
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsDomainStateKey)
+        }
+    }
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
     public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
@@ -76,11 +84,11 @@ final public class AppLock {
         let policy: LAPolicy = useBiometricsOrAccountPassword ? LAPolicy.deviceOwnerAuthenticationWithBiometrics : LAPolicy.deviceOwnerAuthentication
         let canEvaluatePolicy = context.canEvaluatePolicy(policy, error: &error)
         
-        if useBiometricsOrAccountPassword && (biometricsChanged(in: context) || !canEvaluatePolicy) {
+        if useBiometricsOrAccountPassword && (BiometricsState.biometricsChanged(in: context) || !canEvaluatePolicy) {
             callback(.needAccountPassword)
             return
         }
-        
+
         if canEvaluatePolicy {
             context.evaluatePolicy(policy, localizedReason: description, reply: { (success, error) -> Void in
                 var authResult: AuthenticationResult = success ? .granted : .denied
@@ -97,15 +105,36 @@ final public class AppLock {
             zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }
-    
-    // Tells us if biometrics database has changed (ex: fingerprints added or removed)
-    private static func biometricsChanged(in context: LAContext) -> Bool {
-        guard let currentState = context.evaluatedPolicyDomainState, let previousState = previousDomainState else {
-            return false
+}
+
+public class BiometricsState {
+    private static var lastPolicyDomainState: Data? {
+        get {
+            return UserDefaults.standard.data(forKey: UserDefaultsDomainStateKey)
         }
-        return currentState != previousState
+        set {
+            UserDefaults.standard.set(newValue, forKey: UserDefaultsDomainStateKey)
+        }
     }
     
+    private static var currentPolicyDomainState: Data?
+    
+    // Tells us if biometrics database has changed (ex: fingerprints added or removed)
+    public static func biometricsChanged(in context: LAContext) -> Bool {
+        currentPolicyDomainState = context.evaluatedPolicyDomainState
+        guard let currentState = currentPolicyDomainState,
+            let lastState = lastPolicyDomainState,
+            currentState == lastState else {
+                return true
+        }
+        return false
+    }
+    
+    /// Persists the state of the biometric credentials.
+    /// Should be called after a successful unlock with account password
+    public static func persistCurrentState() {
+        lastPolicyDomainState = currentPolicyDomainState
+    }
 }
 
 public struct AppLockRules: Decodable {

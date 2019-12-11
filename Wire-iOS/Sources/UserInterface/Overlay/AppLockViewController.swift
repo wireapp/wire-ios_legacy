@@ -30,6 +30,7 @@ final class AppLockViewController: UIViewController {
     fileprivate var lockView: AppLockView!
     fileprivate var localAuthenticationCancelled: Bool = false
     fileprivate var localAuthenticationNeeded: Bool = true
+    private var passwordController: RequestPasswordController?
 
     fileprivate var dimContents: Bool = false {
         didSet {
@@ -102,10 +103,11 @@ final class AppLockViewController: UIViewController {
                 self.requireLocalAuthenticationIfNeeded { result in
                     
                     let granted = result == .granted
+                    let needPassword = result == .needAccountPassword
                     
                     self.dimContents = !granted
                     self.localAuthenticationCancelled = !granted
-                    self.localAuthenticationNeeded = !granted
+                    self.localAuthenticationNeeded = !granted || !needPassword
                     
                     if case .unavailable = result {
                         self.lockView.showReauth = true
@@ -134,36 +136,20 @@ final class AppLockViewController: UIViewController {
         }
 
         AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
-            DispatchQueue.main.async {
-                guard result != .needAccountPassword else {
+            DispatchQueue.main.async { [weak self] in
+                guard let sSelf = self else { return }
+                if case .needAccountPassword = result{
                     // login with password
-                    
-                    let alertController = UIAlertController(title: "Unlock Wire", message: "Type your account password", preferredStyle: .alert)
-                    var textField: UITextField?
-                    
-                    alertController.addTextField(configurationHandler: { addedTextField in
-                        textField = addedTextField
-                    })
-                    
-                    let logInAction = UIAlertAction(title: "Log in", style: .default) {
-                        _ in
-                        // Trigger password check in here
-                        // Execute callback when done
-                        _ = textField?.text
+                    let passwordController = RequestPasswordController(context: .unlock) { password in
+                        guard password != nil, !password!.isEmpty else {
+                            callback(.denied)
+                            return
+                        }
                         callback(.granted)
+                        BiometricsState.persistCurrentState()
                     }
-                    
-                    let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) {
-                        _ in
-                        callback(.denied)
-                    }
-                    
-                    alertController.addAction(cancelAction)
-                    alertController.addAction(logInAction)
-                  
-                    self.present(alertController, animated: true, completion: nil)
-                    callback(.denied)
-                    return
+                    sSelf.passwordController = passwordController
+                    sSelf.present(passwordController.alertController, animated: true, completion: nil)
                 }
                 
                 callback(result)

@@ -25,6 +25,7 @@ final class RequestPasswordController {
     enum RequestPasswordContext {
         case removeDevice
         case logout
+        case unlock
     }
     
     var alertController: UIAlertController
@@ -42,17 +43,24 @@ final class RequestPasswordController {
         let title: String
         let message: String
         let placeholder: String
+        let okActionStyle: UIAlertAction.Style
 
         switch context {
         case .removeDevice:
             title = "self.settings.account_details.remove_device.title".localized
             message = "self.settings.account_details.remove_device.message".localized
             placeholder = "self.settings.account_details.remove_device.password".localized
-            
+            okActionStyle = .destructive
         case .logout:
             title = "self.settings.account_details.log_out.alert.title".localized
             message = "self.settings.account_details.log_out.alert.message".localized
             placeholder = "self.settings.account_details.log_out.alert.password".localized
+            okActionStyle = .destructive
+        case .unlock:
+            title = "self.settings.account_details.log_out.alert.title".localized
+            message = "self.settings.account_details.log_out.alert.message".localized
+            placeholder = "self.settings.account_details.log_out.alert.password".localized
+            okActionStyle = .default
         }
 
         alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -67,7 +75,7 @@ final class RequestPasswordController {
             self.passwordTextField = textField
         }
 
-        let okAction = UIAlertAction(title: okTitle, style: .destructive) { [weak self] action in
+        let okAction = UIAlertAction(title: okTitle, style: okActionStyle) { [weak self] action in
             if let passwordField = self?.alertController.textFields?[0] {
                 self?.callback(passwordField.text)
             }
