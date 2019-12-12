@@ -20,15 +20,17 @@ import Foundation
 
 extension MockConversation {
     @objc
-//    var localParticipants: Set<AnyHashable> {
+    var localParticipants: Set<AnyHashable> {
+        return Set(sortedActiveParticipants as! [AnyHashable])
+    }
+    
+    @objc
     var activeParticipants: [AnyHashable] {
         get {
-//            return Set(sortedActiveParticipants as! [AnyHashable])
             return sortedActiveParticipants as! [AnyHashable]
         }
         
         set {
-//            sortedActiveParticipants = Array(newValue)
             sortedActiveParticipants = newValue
         }
     }
