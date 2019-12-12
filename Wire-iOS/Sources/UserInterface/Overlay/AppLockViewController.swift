@@ -92,31 +92,30 @@ final class AppLockViewController: UIViewController {
         self.dimContents = false
     }
     
-    fileprivate func showUnlockIfNeeded() {
-        if AppLock.isActive && self.localAuthenticationNeeded {
-            self.dimContents = true
-        
-            if self.localAuthenticationCancelled {
-                self.lockView.showReauth = true
-            } else {
-                self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { result in
-                    
-                    let granted = result == .granted
-                    let needPassword = result == .needAccountPassword
-                    
-                    self.dimContents = !granted
-                    self.localAuthenticationCancelled = !granted
-                    self.localAuthenticationNeeded = !granted || !needPassword
-                    
-                    if case .unavailable = result {
-                        self.lockView.showReauth = true
-                    }
-                }
-            }
-        } else {
+    private func showUnlockIfNeeded() {
+        guard AppLock.isActive && self.localAuthenticationNeeded else {
             self.lockView.showReauth = false
             self.dimContents = false
+            return
+        }
+        
+        self.dimContents = true
+        
+        if self.localAuthenticationCancelled {
+            self.lockView.showReauth = true
+        } else {
+            self.lockView.showReauth = false
+            self.requireLocalAuthenticationIfNeeded { result in
+                let shouldShowUnlock = result != .granted
+                
+                self.dimContents = shouldShowUnlock
+                self.localAuthenticationCancelled = shouldShowUnlock
+                self.localAuthenticationNeeded = shouldShowUnlock
+                
+                if case .unavailable = result {
+                    self.lockView.showReauth = true
+                }
+            }
         }
     }
 
