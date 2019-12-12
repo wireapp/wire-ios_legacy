@@ -101,7 +101,9 @@ private struct ParticipantsSectionViewModel {
          maxParticipants: Int,
          maxDisplayedParticipants: Int,
          showSectionCount: Bool = true) {
-        self.participants = participants
+        self.participants = participants.sorted(by: {
+            $0.name < $1.name
+        })
         self.conversationRole = conversationRole
         self.showSectionCount = showSectionCount
         rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants, totalParticipantsCount: totalParticipantsCount, maxParticipants: maxParticipants, maxDisplayedParticipants: maxDisplayedParticipants) : participants.map(ParticipantsRowType.init)
