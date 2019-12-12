@@ -87,26 +87,30 @@ private struct ParticipantsSectionViewModel {
     /// init method
     ///
     /// - Parameters:
-    ///   - participants: list of conversation participants
+    ///   - users: list of conversation participants
     ///   - conversationRole: participants' ConversationRole
     ///   - totalParticipantsCount: the number of all participants in the conversation
     ///   - clipSection: enable/disable the display of the “ShowAll” button
     ///   - maxParticipants: max number of participants we can display
     ///   - maxDisplayedParticipants: max number of participants we can display, if there are more than maxParticipants participants
     ///   - showSectionCount: current view model - a search result or not
-    init(participants: [UserType],
+    init(users: [UserType],
          conversationRole: ConversationRole,
          totalParticipantsCount: Int,
          clipSection: Bool = true,
          maxParticipants: Int,
          maxDisplayedParticipants: Int,
          showSectionCount: Bool = true) {
-        self.participants = participants.sorted(by: {
+        participants = users.sorted(by: {
             $0.name < $1.name
         })
         self.conversationRole = conversationRole
         self.showSectionCount = showSectionCount
-        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants, totalParticipantsCount: totalParticipantsCount, maxParticipants: maxParticipants, maxDisplayedParticipants: maxDisplayedParticipants) : participants.map(ParticipantsRowType.init)
+        rows = clipSection ? ParticipantsSectionViewModel.computeRows(participants,
+                                                                      totalParticipantsCount: totalParticipantsCount,
+                                                                      maxParticipants: maxParticipants,
+                                                                      maxDisplayedParticipants: maxDisplayedParticipants) :
+                             participants.map(ParticipantsRowType.init)
     }
     
     static func computeRows(_ participants: [UserType], totalParticipantsCount: Int, maxParticipants: Int, maxDisplayedParticipants: Int) -> [ParticipantsRowType] {
@@ -147,7 +151,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
          maxParticipants: Int = Int.ConversationParticipants.maxNumberWithoutTruncation,
          maxDisplayedParticipants: Int = Int.ConversationParticipants.maxNumberOfDisplayed,
          showSectionCount: Bool = true) {
-        viewModel = .init(participants: participants,
+        viewModel = .init(users: participants,
                           conversationRole: conversationRole,
                           totalParticipantsCount: totalParticipantsCount,
                           clipSection: clipSection,
