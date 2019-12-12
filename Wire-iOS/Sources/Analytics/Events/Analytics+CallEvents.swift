@@ -100,7 +100,7 @@ extension Analytics {
     }
     
     private func attributesForParticipants(in conversation: ZMConversation) -> [String : Any] {
-        return ["conversation_participants": conversation.activeParticipants.count]
+        return ["conversation_participants": conversation.localParticipants.count]
     }
     
     private func attributesForCallParticipants(with callInfo: CallInfo) -> [String : Any] {

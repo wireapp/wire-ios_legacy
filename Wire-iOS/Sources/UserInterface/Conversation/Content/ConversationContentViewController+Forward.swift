@@ -26,7 +26,7 @@ extension ZMConversation: ShareDestination {
     public var showsGuestIcon: Bool {
         return ZMUser.selfUser().hasTeam &&
             self.conversationType == .oneOnOne &&
-            self.activeParticipants.first {
+            self.localParticipants.first {
                 $0.isGuest(in: self) } != nil
     }
     

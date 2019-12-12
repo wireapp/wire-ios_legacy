@@ -99,7 +99,7 @@ public extension ConversationViewController {
     }
 
     @objc func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
-        guard !conversation.isReadOnly, conversation.activeParticipants.count != 0 else { return [] }
+        guard !conversation.isReadOnly, conversation.localParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
             return [joinCallButton]
@@ -269,7 +269,7 @@ extension ZMConversation {
     }
 
     var isConversationEligibleForVideoCalls: Bool {
-        return self.activeParticipants.count <= ZMConversation.maxVideoCallParticipants
+        return self.localParticipants.count <= ZMConversation.maxVideoCallParticipants
     }
 
     var isCallOngoing: Bool {

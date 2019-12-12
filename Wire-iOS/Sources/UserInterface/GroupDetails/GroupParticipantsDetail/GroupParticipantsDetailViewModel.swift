@@ -44,7 +44,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     
     var participants = [UserType]() {
         didSet {
-            self.computeParticipantGroups()
+            computeParticipantGroups()
             participantsDidChange?()
         }
     }
@@ -54,7 +54,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
         internalParticipants = participants
         self.conversation = conversation
-        self.selectedParticipants = selectedParticipants.sorted { $0.displayName < $1.displayName }
+        self.selectedParticipants = selectedParticipants.sorted { $0.name < $1.name }
         
         super.init()
         token = ConversationChangeInfo.add(observer: self, for: conversation)
@@ -73,7 +73,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     
     private func computeParticipantGroups()  {
         admins = participants.filter({$0.isAdminGroup})
-        members = participants.filter({!$0.isAdminGroup}) 
+        members = participants.filter({!$0.isAdminGroup})
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

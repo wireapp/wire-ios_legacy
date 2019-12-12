@@ -340,7 +340,7 @@ extension UIViewController {
         var contacts = searchResult.contacts
         var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
 
-        if let filteredParticpants = filterConversation?.activeParticipants {
+        if let filteredParticpants = filterConversation?.localParticipants {
             contacts = contacts.filter({ !filteredParticpants.contains($0) })
             teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
         }

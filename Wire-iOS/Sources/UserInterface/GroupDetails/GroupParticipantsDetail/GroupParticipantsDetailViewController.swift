@@ -48,7 +48,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        let allParticipants = conversation.sortedOtherParticipants.addSelfUserAndSorted()
+        let allParticipants = conversation.sortedOtherParticipants
         
         viewModel = GroupParticipantsDetailViewModel(
             participants: allParticipants,
@@ -77,6 +77,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         if firstLayout {
             firstLayout = false
+            ///TODO: Katarina this need to be restored?
 //            scrollToFirstHighlightedUser()
         }
     }

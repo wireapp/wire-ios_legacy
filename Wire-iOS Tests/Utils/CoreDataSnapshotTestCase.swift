@@ -88,12 +88,16 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser.accentColorValue = .brightOrange
 
         otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
+        otherUserConversation.add(user: ZMUser.selfUser(in: uiMOC), isFromLocal: true) ///TODO: cp to fixture
+        
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.remoteIdentifier = UUID.create()
         let connection = ZMConnection.insertNewObject(in: uiMOC)
         connection.to = otherUser
         connection.status = .accepted
         connection.conversation = otherUserConversation
+        
+        connection.add(user: otherUser)///TODO: cp to fixture
 
         uiMOC.saveOrRollback()
     }

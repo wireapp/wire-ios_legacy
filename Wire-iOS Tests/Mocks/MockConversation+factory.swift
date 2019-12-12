@@ -19,6 +19,28 @@
 import Foundation
 
 extension MockConversation {
+    @objc
+    var isSelfAnActiveMember: Bool {
+        let selfUserPredicate = NSPredicate(format: "isSelfUser == YES")
+        return !sortedActiveParticipants.filter { selfUserPredicate.evaluate(with: $0) }.isEmpty
+    }
+
+    @objc
+    var localParticipants: Set<AnyHashable> {
+        return Set(sortedActiveParticipants as! [AnyHashable])
+    }
+    
+    @objc
+    var activeParticipants: [AnyHashable] {
+        get {
+            return sortedActiveParticipants as! [AnyHashable]
+        }
+        
+        set {
+            sortedActiveParticipants = newValue
+        }
+    }
+
     static func oneOnOneConversation() -> MockConversation {
         let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
         let otherUser = MockUser.mockUsers().first!

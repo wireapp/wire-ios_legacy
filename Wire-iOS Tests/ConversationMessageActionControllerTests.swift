@@ -53,7 +53,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
 
     // MARK: - Double Tap Action
 
-    func testThatItAllowsToLikeMessage() {
+    func testThatItAllowsToLikeMessage() {///TODO: move outside snapshot tests, use fixure
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Super likeable")!
         message.sender = otherUser
