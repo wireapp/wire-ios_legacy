@@ -122,23 +122,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         sections.append(renameGroupSectionController)
         self.renameGroupSectionController = renameGroupSectionController
         
-        let (participants, serviceUsers) = (conversation.sortedOtherParticipants.addSelfUserAndSorted(), conversation.sortedServiceUsers)
+        let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             
-//<<<<<<< HEAD
-//            let admins = participants.filter({$0.isAdminGroup})
-//            let adminSection = ParticipantsSectionController(participants: admins,
-//                                                             conversationRole: .admin, conversation: conversation,
-//                                                             delegate: self)
-//            sections.append(adminSection)
-//
-//            let members = participants.filter({!$0.isAdminGroup})
-//            if !members.isEmpty {
-//                let memberSection = ParticipantsSectionController(participants: members,
-//                                                                  conversationRole: .member, conversation: conversation,
-//                                                                  delegate: self)
-//                sections.append(memberSection)
-//=======
             let admins = participants.filter({$0.isAdminGroup})
             let members = participants.filter({!$0.isAdminGroup})
             

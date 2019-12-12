@@ -37,7 +37,7 @@ extension ZMConversation {
     }
     
     @objc var freeParticipantSlots: Int {
-        return type(of: self).maxParticipants - activeParticipants.count
+        return type(of: self).maxParticipants - localParticipants.count
     }
     
     func addOrShowError(participants: Set<ZMUser>) {

@@ -38,7 +38,7 @@ import Foundation
             }
         }
         
-        if conversation.activeParticipants.count <= 4 {
+        if conversation.localParticipants.count <= 4 {
             startCall()
         } else {
             confirmGroupCall { accepted in
@@ -66,7 +66,7 @@ import Foundation
 
     private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> ()) {
         let controller = UIAlertController.confirmGroupCall(
-            participants: conversation.activeParticipants.count - 1,
+            participants: conversation.localParticipants.count - 1,
             completion: completion
         )
         target.present(controller, animated: true)
