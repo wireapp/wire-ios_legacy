@@ -18,7 +18,7 @@
 
 import Foundation
 import Cartography
-
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -139,12 +139,17 @@ final class AppLockViewController: UIViewController {
                 guard let sSelf = self else { return }
                 if case .needAccountPassword = result{
                     // login with password
+                    // TODO: Extract this to another method
                     let passwordController = RequestPasswordController(context: .unlock) { password in
                         guard password != nil, !password!.isEmpty else {
                             callback(.denied)
                             return
                         }
+                        // TODO: Verify password
+                        
+                        VerifyPasswordRequestStrategy.triggerNotification()
                         callback(.granted)
+                        sSelf.appUnlocked()
                         BiometricsState.persistCurrentState()
                     }
                     sSelf.passwordController = passwordController
@@ -154,11 +159,16 @@ final class AppLockViewController: UIViewController {
                 callback(result)
                 // Will need to do this as well after successful account password unlock
                 if case .granted = result {
-                    AppLock.lastUnlockedDate = Date()
-                    NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
+                    sSelf.appUnlocked()
                 }
             }
         }
+    }
+    
+    // TODO: Find better name
+    private func appUnlocked() {
+        AppLock.lastUnlockedDate = Date()
+        NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 
     // MARK: - Application state observators
