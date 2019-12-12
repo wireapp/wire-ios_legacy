@@ -24,7 +24,7 @@ extension ZMConversation {
     static func createOtherUserConversation(moc: NSManagedObjectContext, otherUser: ZMUser) -> ZMConversation {
         
         let otherUserConversation = ZMConversation.insertNewObject(in: moc)
-        otherUserConversation.add(user: ZMUser.selfUser(in: moc), isFromLocal: true) ///TODO: cp to fixture
+        otherUserConversation.add(user: ZMUser.selfUser(in: moc), isFromLocal: true)
         
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.remoteIdentifier = UUID.create()
