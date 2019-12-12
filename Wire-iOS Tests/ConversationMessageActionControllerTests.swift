@@ -19,8 +19,19 @@
 import XCTest
 @testable import Wire
 
-class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
+final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
     
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+    }
+    
+    override func tearDown() {
+        coreDataFixture = nil
+        super.tearDown()
+    }
+
     // MARK: - Single Tap Action
     
     func testThatImageIsPresentedOnSingleTapWhenDownloaded() {
@@ -53,7 +64,7 @@ class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
 
     // MARK: - Double Tap Action
 
-    func testThatItAllowsToLikeMessage() {///TODO: move outside snapshot tests, use fixure
+    func testThatItAllowsToLikeMessage() {
         // GIVEN
         let message = MockMessageFactory.textMessage(withText: "Super likeable")!
         message.sender = otherUser
