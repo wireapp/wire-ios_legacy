@@ -18,9 +18,10 @@
 
 import Foundation
 
+///TODO: move to DM
 fileprivate extension ZMConversation {
     var otherNonServiceParticipants: [UserType] {
-        guard let users = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
+        let users = Array(localParticipants)
         return users.filter { !$0.isServiceUser }
     }
 }
@@ -45,7 +46,7 @@ struct ServiceAddedEvent: Event {
     init(service: ServiceUser, conversation: ZMConversation, context: Context) {
         serviceIdentifier = service.serviceIdentifier ?? ""
         conversationSize = conversation.otherNonServiceParticipants.count // Without service users
-        servicesSize = conversation.lastServerSyncedActiveParticipants.count - conversationSize
+        servicesSize = conversation.localParticipants.count - conversationSize
         self.context = context
     }
     

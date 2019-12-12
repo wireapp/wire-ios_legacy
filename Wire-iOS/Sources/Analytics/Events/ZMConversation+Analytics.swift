@@ -43,6 +43,7 @@ extension ConversationType {
     }
 }
 
+///TODO: move to DM
 extension ZMConversation {
     
     func analyticsTypeString() -> String? {
@@ -62,18 +63,18 @@ extension ZMConversation {
     
     /// Whether the conversation includes at least 1 service user.
     var includesServiceUser: Bool {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return false }
+        let participants = Array(localParticipants)
         return participants.any { $0.isServiceUser }
     }
     
     var sortedServiceUsers: [UserType] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
+        let participants = Array(localParticipants)
         return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
 
     @objc
     var sortedOtherParticipants: [UserType] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
+        let participants = Array(localParticipants)
         return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
     }
 
