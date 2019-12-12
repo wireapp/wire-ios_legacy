@@ -22,7 +22,7 @@ import Foundation
 extension ZMConversation {
     
     var isCallingSupported : Bool {
-        return activeParticipants.count > 1
+        return localParticipants.count > 1
     }
     
     var firstCallingParticipantOtherThanSelf : ZMUser? {

@@ -52,7 +52,7 @@ extension ZMConversation {
         
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
-        guard self.activeParticipants.count == 2,
+        guard self.localParticipants.count == 2,
              let otherUser = firstActiveParticipantOtherThanSelf else {
             return false
         }

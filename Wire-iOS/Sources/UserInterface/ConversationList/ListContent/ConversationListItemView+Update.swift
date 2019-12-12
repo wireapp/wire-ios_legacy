@@ -99,7 +99,7 @@ extension ConversationListItemView {
             statusComponents.append(statusIconAccessibilityValue)
         }
 
-        if conversation.activeParticipants.first?.isPendingApproval == true {
+        if conversation.localParticipants.first?.isPendingApproval == true {
             statusComponents.append("pending approval")
         }
 
