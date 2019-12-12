@@ -19,6 +19,20 @@
 import Foundation
 
 extension MockConversation {
+    @objc
+//    var localParticipants: Set<AnyHashable> {
+    var activeParticipants: [AnyHashable] {
+        get {
+//            return Set(sortedActiveParticipants as! [AnyHashable])
+            return sortedActiveParticipants as! [AnyHashable]
+        }
+        
+        set {
+//            sortedActiveParticipants = Array(newValue)
+            sortedActiveParticipants = newValue
+        }
+    }
+
     static func oneOnOneConversation() -> MockConversation {
         let selfUser = (MockUser.mockSelf() as Any) as! ZMUser
         let otherUser = MockUser.mockUsers().first!

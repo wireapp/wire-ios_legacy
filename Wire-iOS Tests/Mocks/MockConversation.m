@@ -63,16 +63,6 @@
     return nil;
 }
 
-- (NSSet *)activeParticipants
-{
-    return [NSSet setWithArray:self.sortedActiveParticipants];
-}
-
-- (void)setActiveParticipants:(NSSet *)activeParticipants
-{
-    self.sortedActiveParticipants = [activeParticipants allObjects];
-}
-
 - (NSArray *)messages;
 {
     return nil;
@@ -93,11 +83,11 @@
     return nil;
 }
 
-- (BOOL)isSelfAnActiveMember
-{
-    NSPredicate *selfUserPredicate = [NSPredicate predicateWithFormat:@"isSelfUser == YES"];
-    return ![self.activeParticipants filteredSetUsingPredicate:selfUserPredicate].isEmpty;
-}
+//- (BOOL)isSelfAnActiveMember
+//{
+//    NSPredicate *selfUserPredicate = [NSPredicate predicateWithFormat:@"isSelfUser == YES"];
+//    return ![self.activeParticipants filteredSetUsingPredicate:selfUserPredicate].isEmpty;
+//}
 
 - (BOOL)canMarkAsUnread
 {

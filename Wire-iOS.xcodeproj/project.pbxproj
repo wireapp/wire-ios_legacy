@@ -4879,9 +4879,9 @@
 		87BEB0D71C734D550094BFE9 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */,
 				BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.swift */,
 				87BEB0D81C734D710094BFE9 /* MockConversation.h */,
-				5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */,
 				87BEB0D91C734D710094BFE9 /* MockConversation.m */,
 				EF6E3C7D208A0355003F6752 /* MockConversation+factory.swift */,
 				EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */,
