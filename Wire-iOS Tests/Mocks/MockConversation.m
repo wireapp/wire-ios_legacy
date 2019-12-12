@@ -83,12 +83,6 @@
     return nil;
 }
 
-//- (BOOL)isSelfAnActiveMember
-//{
-//    NSPredicate *selfUserPredicate = [NSPredicate predicateWithFormat:@"isSelfUser == YES"];
-//    return ![self.activeParticipants filteredSetUsingPredicate:selfUserPredicate].isEmpty;
-//}
-
 - (BOOL)canMarkAsUnread
 {
     return self.unreadMessages.count > 0;
