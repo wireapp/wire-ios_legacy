@@ -1614,7 +1614,7 @@
 "availability.away.placeholder" = "%@已離開";
 "availability.busy.placeholder" = "%@忙碌中";
 
-"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.title" = "您設置為離開";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
 "availability.reminder.busy.title" = "您設置為忙碌";
 "availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
@@ -1702,8 +1702,8 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 "share_extension.voiceover.conversation_under_legal_hold" = "在合法保留之下。";
-"share_extension.voiceover.conversation_secure" = "All clients verified.";
-"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+"share_extension.voiceover.conversation_secure" = "所有設備都已驗證。";
+"share_extension.voiceover.conversation_secure_with_ignored" = "沒有驗證所有設備。";
 
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "等待核准";

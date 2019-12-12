@@ -197,7 +197,7 @@
 "folder.creation.name.footer" = "Máximo: 64 caracteres";
 "folder.creation.name.placeholder" = "Nome da pasta";
 
-"folder.picker.title" = "Move to";
+"folder.picker.title" = "Mover para";
 "folder.picker.empty.hint" = "Create a new folder by pressing the + button";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
@@ -469,7 +469,7 @@
 "content.system.call.missed-call-you" = "Chamada não atendida";
 
 "content.system.call.missed-call.groups" = "Chamada não atendida de %@";
-"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups-you" = "Chamada perdida de %2$@";
 "content.system.call.missed-call.groups.you" = "Você";
 
 "content.system.renamed_conv.title" = "%@ renomeou a conversa";
@@ -721,7 +721,7 @@
 "meta.menu.unarchive" = "Desarquivar";
 "meta.menu.delete" = "Excluir grupo…";
 "meta.menu.clear_content" = "Limpar conteúdo…";
-"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.move_to_folder" = "Mover para…";
 "meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "Silenciar";
 "meta.menu.silence.unmute" = "Notificar";
