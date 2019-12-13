@@ -53,8 +53,8 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
-        conversation?.internalRemoveParticipants([selfUser!, otherUser!, thirdUser], sender: selfUser)
+        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
+        conversation?.removeParticipantsAndUpdateConversationState(users: [selfUser!, otherUser!, thirdUser], initiatingUser: selfUser)
 
         // WHEN
         sut.configure(context: .conversation(conversation: conversation!))
@@ -79,8 +79,8 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // AND WHEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
-        conversation?.internalRemoveParticipants([selfUser!, otherUser!, thirdUser], sender: selfUser)
+        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
+        conversation?.removeParticipantsAndUpdateConversationState(users: [selfUser!, otherUser!, thirdUser], initiatingUser: selfUser)
         
         sut.configure(context: .conversation(conversation: conversation!))
 
@@ -136,7 +136,7 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
         // GIVEN
         let thirdUser = ZMUser.insertNewObject(in: uiMOC)
         thirdUser.name = "Anna"
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: [otherUser!, thirdUser])
+        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: [otherUser!, thirdUser])
         
         conversation?.sortedActiveParticipants.assignSomeAccentColors()
         
@@ -149,7 +149,7 @@ final class ConversationAvatarViewTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersManyUsers() {
         // GIVEN
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: usernames.map(createUser))
+        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: usernames.map(createUser))
         
         conversation?.sortedActiveParticipants.assignSomeAccentColors()
 

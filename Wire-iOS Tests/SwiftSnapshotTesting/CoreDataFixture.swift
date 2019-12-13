@@ -184,7 +184,7 @@ final class CoreDataFixture {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser])
+        conversation.add(participants:[selfUser, otherUser])
         return conversation
     }
     

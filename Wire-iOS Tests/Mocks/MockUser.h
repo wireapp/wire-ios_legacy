@@ -92,6 +92,7 @@
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 @property (nonatomic) UIImage * profileImage;
+@property (nonatomic) NSSet<ParticipantRole *> *  participantRoles;
 
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

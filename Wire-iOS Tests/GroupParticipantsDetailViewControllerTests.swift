@@ -19,6 +19,21 @@
 import XCTest
 @testable import Wire
 
+extension ZMConversation {
+
+    func add(participants: Set<ZMUser>) {
+        addParticipantsAndUpdateConversationState(users: participants, role: nil)
+    }
+
+    func add(participants: [ZMUser]) {
+        add(participants: Set(participants))
+    }
+
+    func add(participants: ZMUser...) {
+        add(participants: Set(participants))
+    }
+}
+
 final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     
     override func tearDown() {
@@ -31,7 +46,7 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         
         // when
         let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
@@ -47,7 +62,7 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(users)
+        conversation.add(participants: users)
         
         // when
         let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
