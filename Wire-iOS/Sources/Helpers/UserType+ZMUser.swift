@@ -42,7 +42,8 @@ extension UserType {
 
     
     func isAdminGroup(conversation: ZMConversation?) -> Bool {
-        let roleName = zmUser?.participantRoles.first(where: { $0.conversation == conversation })?.role?.name
+        guard let zmUser = zmUser else { return false }
+        let roleName = zmUser.participantRoles.first(where: { $0.conversation == conversation })?.role?.name
         return roleName == "admin" ///TODO: enum
     }
 }
