@@ -132,12 +132,12 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         userSession.performChanges { [weak self] in
             guard let weakSelf = self else { return }
 
-            let conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession,
-                                                                      withParticipants: [],
+            if let conversation = ZMConversation.insertGroupConversation(session: userSession,
+                                                                      participants: [],
                                                                       name: "general.guest-room-name".localized,
-                                                                      in: ZMUser.selfUser().team,
-                                                                      allowGuests: true)
-            self?.delegate?.startUI(weakSelf, didSelect: conversation)
+                                                                      team: ZMUser.selfUser().team) {
+                weakSelf.delegate?.startUI(weakSelf, didSelect: conversation)
+            }
         }
     }
 }
