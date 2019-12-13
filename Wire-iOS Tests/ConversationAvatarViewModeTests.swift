@@ -65,7 +65,7 @@ final class ConversationAvatarViewModeTests: XCTestCase, CoreDataFixtureTestHelp
     func testThatModeIsNoneWhenGroupConversationIsEmpty() {
         // GIVEN
         let conversation = createGroupConversation()
-        conversation.removeParticipantsAndUpdateConversationState([otherUser!], sender: selfUser)
+        conversation.removeParticipantsAndUpdateConversationState(users:[otherUser!], initiatingUser: selfUser)
 
         // WHEN
         sut.configure(context: .conversation(conversation: conversation))

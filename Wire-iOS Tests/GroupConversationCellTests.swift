@@ -49,7 +49,7 @@ class GroupConversationCellTests: CoreDataSnapshotTestCase {
         let groupConversation = createGroupConversation()
         groupConversation.userDefinedName  = "Loooooooooooooooooooooooooong name"
         for username in usernames.prefix(upTo: 3) {
-            groupconversation.add(participants:[createUser(name: username)])
+            groupConversation.add(participants:[createUser(name: username)])
         }
         
         verifyInAllColorSchemes(view: cell({ (cell) in

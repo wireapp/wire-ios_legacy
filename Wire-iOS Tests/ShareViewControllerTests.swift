@@ -139,7 +139,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
     }
 
     private func createSut() {
-        groupconversation.add(participants:[self.createUser(name: "John Appleseed")])
+        groupConversation.add(participants:[self.createUser(name: "John Appleseed")])
         let oneToOneConversation = otherUserConversation!
 
         guard let message = groupConversation.lastMessage else {
