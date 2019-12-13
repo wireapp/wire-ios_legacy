@@ -104,35 +104,6 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
             team = nil
         }
     }
-
-    
-    
-    ///TODO: cp to fixture
-    func createGroupConversation() -> ZMConversation {
-        let conversation = createGroupConversationOnlyAdmin()
-        conversation.add(participants:otherUser)
-        return conversation
-    }
-    
-    ///TODO: cp to fixture
-    func createGroupConversationOnlyAdmin() -> ZMConversation {
-        let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        conversation.remoteIdentifier = UUID.create()
-        conversation.conversationType = .group
-
-        let role = Role(context: uiMOC)
-        role.name = "admin"
-        conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
-
-        return conversation
-    }
-    
-    func createTeamGroupConversation() -> ZMConversation {
-        let conversation = createGroupConversation()
-        conversation.teamRemoteIdentifier = UUID.create()
-        conversation.userDefinedName = "Group conversation"
-        return conversation
-    }
     
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
@@ -167,11 +138,23 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
     }
 
-}
+
+//MARK: - mock conversation
+    
+    func createGroupConversation() -> ZMConversation {
+        return ZMConversation.createGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
+    }
+    
+    func createTeamGroupConversation() -> ZMConversation {
+        return ZMConversation.createTeamGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
+    }
+    
+    func createGroupConversationOnlyAdmin() -> ZMConversation {
+        return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
+    }
 
 //MARK: - mock service user
 
-extension CoreDataSnapshotTestCase {
     func createServiceUser() -> ZMUser {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()

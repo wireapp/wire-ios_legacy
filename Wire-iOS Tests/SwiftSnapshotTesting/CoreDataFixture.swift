@@ -20,11 +20,14 @@ import WireTesting
 import XCTest
 @testable import Wire
 
+
+// MARK: - factory methods
+
 extension ZMConversation {
     static func createOtherUserConversation(moc: NSManagedObjectContext, otherUser: ZMUser) -> ZMConversation {
         
         let otherUserConversation = ZMConversation.insertNewObject(in: moc)
-        otherUserConversation.add(participants: ZMUser.selfUser(in: uiMOC))
+        otherUserConversation.add(participants: ZMUser.selfUser(in: moc))
 
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.remoteIdentifier = UUID.create()
@@ -37,6 +40,36 @@ extension ZMConversation {
 
         return otherUserConversation
     }
+    
+    static func createGroupConversationOnlyAdmin(moc: NSManagedObjectContext, selfUser: ZMUser) -> ZMConversation {
+        let conversation = ZMConversation.insertNewObject(in: moc)
+        conversation.remoteIdentifier = UUID.create()
+        conversation.conversationType = .group
+        
+        let role = Role(context: moc)
+        role.name = "admin"
+        conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
+        
+        return conversation
+    }
+    
+    static func createGroupConversation(moc: NSManagedObjectContext,
+                                        otherUser: ZMUser,
+                                        selfUser: ZMUser) -> ZMConversation {
+        let conversation = createGroupConversationOnlyAdmin(moc: moc, selfUser: selfUser)
+        conversation.add(participants:otherUser)
+        return conversation
+    }
+    
+    static func createTeamGroupConversation(moc: NSManagedObjectContext,
+                                            otherUser: ZMUser,
+                                            selfUser: ZMUser) -> ZMConversation {
+        let conversation = createGroupConversation(moc: moc, otherUser: otherUser, selfUser: selfUser)
+        conversation.teamRemoteIdentifier = UUID.create()
+        conversation.userDefinedName = "Group conversation"
+        return conversation
+    }
+
 }
 
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
@@ -191,21 +224,6 @@ final class CoreDataFixture {
             team = nil
         }
     }
-
-    func createGroupConversation() -> ZMConversation {
-        let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        conversation.remoteIdentifier = UUID.create()
-        conversation.conversationType = .group
-        conversation.add(participants:[selfUser, otherUser])
-        return conversation
-    }
-    
-    func createTeamGroupConversation() -> ZMConversation {
-        let conversation = createGroupConversation()
-        conversation.teamRemoteIdentifier = UUID.create()
-        conversation.userDefinedName = "Group conversation"
-        return conversation
-    }
     
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
@@ -289,10 +307,10 @@ extension CoreDataFixtureTestHelper {
     }
 
     func createGroupConversation() -> ZMConversation {
-        return coreDataFixture.createGroupConversation()
+        return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-
+    
     func createTeamGroupConversation() -> ZMConversation {
-        return coreDataFixture.createTeamGroupConversation()
+        return ZMConversation.createTeamGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
 }
