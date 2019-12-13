@@ -66,7 +66,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                 userSession.enqueueChanges({
                     let team = ZMUser.selfUser().team
                     
-                    conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), in: team)
+                    conversation = ZMConversation.insertGroupConversation(session: userSession, participants: Array(users), team: team)
                 }, completionHandler: {
                     delay(0.3) {
                         onConversationCreated(conversation)
@@ -83,7 +83,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         var conversation: ZMConversation! = nil
         
         userSession.enqueueChanges({
-            conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
+            conversation = ZMConversation.insertGroupConversation(session: userSession, participants: Array(users), name: name, team: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
         }, completionHandler:{
             delay(0.3) {
                 ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)

@@ -28,6 +28,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
+    private var conversationRole: Role?
 
     var didCompleteInitialSync = false {
         didSet {
@@ -47,6 +48,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
+        if let selfUser = ZMUser.selfUser() {
+            conversationRole = selfUser.participantRoles.filter({$0.conversation == conversation}).first?.role
+        }
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
 
@@ -173,6 +177,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                                                   collectionView: self.collectionViewController.collectionView!,
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
+           
+            
         }
         
         // MARK: services sections

@@ -45,7 +45,7 @@ extension ConversationViewController: ProfileViewControllerDelegate {
             var newConversation: ZMConversation! = nil
             
             userSession.enqueueChanges({
-                newConversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team)
+                newConversation = ZMConversation.insertGroupConversation(session: userSession, participants: Array(users), name: name, team: ZMUser.selfUser().team)
             }, completionHandler: {
                 self?.zClientViewController?.select(newConversation, focusOnView: true, animated: true)
             })
