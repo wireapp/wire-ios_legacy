@@ -24,8 +24,8 @@ extension ZMConversation {
     static func createOtherUserConversation(moc: NSManagedObjectContext, otherUser: ZMUser) -> ZMConversation {
         
         let otherUserConversation = ZMConversation.insertNewObject(in: moc)
-        otherUserConversation.add(user: ZMUser.selfUser(in: moc), isFromLocal: true)
-        
+        otherUserConversation.add(participants: ZMUser.selfUser(in: uiMOC))
+
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.remoteIdentifier = UUID.create()
         let connection = ZMConnection.insertNewObject(in: moc)
@@ -196,7 +196,7 @@ final class CoreDataFixture {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser])
+        conversation.add(participants:[selfUser, otherUser])
         return conversation
     }
     

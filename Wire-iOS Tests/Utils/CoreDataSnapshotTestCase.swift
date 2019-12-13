@@ -105,19 +105,25 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         }
     }
 
+    
+    
+    ///TODO: cp to fixture
     func createGroupConversation() -> ZMConversation {
-        let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        conversation.remoteIdentifier = UUID.create()
-        conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser])
+        let conversation = createGroupConversationOnlyAdmin()
+        conversation.add(participants:otherUser)
         return conversation
     }
     
+    ///TODO: cp to fixture
     func createGroupConversationOnlyAdmin() -> ZMConversation {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser])
+
+        let role = Role(context: uiMOC)
+        role.name = "admin"
+        conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
+
         return conversation
     }
     

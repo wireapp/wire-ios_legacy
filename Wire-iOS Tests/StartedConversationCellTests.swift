@@ -225,7 +225,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }()
         
         let users = Array(message.users).filter { $0 != selfUser }
-        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
+        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: users, team: team)
         conversation?.allowGuests = allowGuests
         conversation?.remoteIdentifier = .create()
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier

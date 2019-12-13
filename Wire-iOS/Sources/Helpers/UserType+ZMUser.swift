@@ -31,8 +31,8 @@ extension UserType {
         }
     }
 
-    func canManagedGroupRole(of user: UserType) -> Bool {
-        guard isAdminGroup else { return false }
+    func canManagedGroupRole(of user: UserType, conversation: ZMConversation?) -> Bool {
+        guard isAdminGroup(conversation: conversation) else { return false }
         
         return !user.isSelfUser &&
             (user.isConnected || /// in case not belongs to the same team
@@ -41,19 +41,8 @@ extension UserType {
     }
 
     
-    var isAdminGroup: Bool {
-        ///FIXME: for debug only, isAdminGroup should be determated by new API
-        
-        if isSelfUser {
-            return true ///TODO: mock user imp?
-        }
-        
-        switch teamRole {
-        case .admin,
-             .owner:
-            return true
-        default:
-            return false
-        }
+    func isAdminGroup(conversation: ZMConversation?) -> Bool {
+        let roleName = zmUser?.participantRoles.first(where: { $0.conversation == conversation })?.role?.name
+        return roleName == "admin" ///TODO: enum
     }
 }
