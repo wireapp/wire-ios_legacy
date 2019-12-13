@@ -82,7 +82,7 @@ extension ZMConversation {
             actions.append(.leave)
         }
 
-        if ZMUser.selfUser()?.canDeleteConversation(self) == true {
+        if ZMUser.selfUser()?.canDelete(self) == true {
             actions.append(.deleteGroup)
         }
 

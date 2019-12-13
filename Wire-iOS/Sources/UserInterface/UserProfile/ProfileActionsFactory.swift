@@ -196,7 +196,7 @@ final class ProfileActionsFactory: NSObject {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if let conversation = conversation, viewer.canRemoveUser(from: conversation) {
+            if let conversation = conversation, (viewer.zmUser?.canRemoveMember(from: conversation) ?? false) {
                 actions.append(.removeFromGroup)
             }
 
