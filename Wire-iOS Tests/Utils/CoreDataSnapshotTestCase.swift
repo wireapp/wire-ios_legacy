@@ -88,7 +88,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser.accentColorValue = .brightOrange
 
         otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
-        otherUserConversation.add(user: ZMUser.selfUser(in: uiMOC), isFromLocal: true) ///TODO: cp to fixture
+        otherUserConversation.add(participants: ZMUser.selfUser(in: uiMOC)) ///TODO: cp to fixture
         
         otherUserConversation.conversationType = .oneOnOne
         otherUserConversation.remoteIdentifier = UUID.create()
@@ -119,7 +119,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser])
+        conversation.add(participants:[selfUser, otherUser])
         return conversation
     }
     
@@ -127,7 +127,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         let conversation = ZMConversation.insertNewObject(in: uiMOC)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser])
+        conversation.add(participants:[selfUser])
         return conversation
     }
     

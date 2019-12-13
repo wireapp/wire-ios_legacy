@@ -217,7 +217,7 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversation() {
         // when
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants([createUser(name: "Ana")])
+        conversation.add(participants:[createUser(name: "Ana")])
 
         // then
         verify(conversation)
@@ -226,7 +226,7 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
-        conversation.internalRemoveParticipants([selfUser], sender: otherUser)
+        conversation.removeParticipantsAndUpdateConversationState([selfUser], sender: otherUser)
         
         // then
         verify(conversation)

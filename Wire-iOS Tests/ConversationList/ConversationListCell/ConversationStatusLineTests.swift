@@ -225,7 +225,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
     func testStatusForSystemMessageILeft() {
         // GIVEN
         let sut = self.createGroupConversation()
-        sut.internalRemoveParticipants([selfUser], sender: selfUser)
+        sut.removeParticipantsAndUpdateConversationState(users: [selfUser], initiatingUser: selfUser)
         
         // WHEN
         let status = sut.status.description(for: sut)

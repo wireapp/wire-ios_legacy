@@ -52,10 +52,12 @@ extension ConversationStatusLineTests_Muting {
         XCTAssertEqual(status.string, "Replied to your message")
     }
 
+    ///TODO: move this test to SE
     func testStatusShowSpecialSummaryForSingleEphemeralReplyWhenOnlyReplies_group() {
         // GIVEN
         let sut = self.createGroupConversation()
-        sut.addParticipantIfMissing(createUser(name: "other"), date: nil)
+//        sut.addParticipantIfMissing(createUser(name: "other"), date: nil)
+        sut.add(participants: createUser(name: "other"))
         sut.messageDestructionTimeout = .local(100)
 
         let selfMessage = appendSelfMessage(to: sut)
