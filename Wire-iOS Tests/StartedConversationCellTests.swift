@@ -186,6 +186,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
             selfUser.membership!.setTeamRole(.partner)
+            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -194,6 +195,7 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         nonTeamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
             message.conversation?.teamRemoteIdentifier = .create()
+            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -229,9 +231,31 @@ class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         conversation?.allowGuests = allowGuests
         conversation?.remoteIdentifier = .create()
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier
+        createARoleForSelfUserWith(["add_conversation_member", "modify_conversation_access"], conversation: conversation!)
         message.visibleInConversation = conversation
         
         return message
+    }
+    
+    private func createARoleForSelfUserWith(_ actionNames: [String], conversation: ZMConversation) {
+        let participantRole = ParticipantRole.insertNewObject(in: uiMOC)
+        participantRole.conversation = conversation
+        participantRole.user = selfUser
+        
+        var actions: [Action] = []
+        actionNames.forEach { (actionName) in
+            let action = Action.insertNewObject(in: uiMOC)
+            action.name = actionName
+            actions.append(action)
+        }
+        
+        
+        let adminRole = Role.insertNewObject(in: uiMOC)
+        adminRole.name = "wire_admin"
+        adminRole.actions = Set(actions)
+        participantRole.role = adminRole
+        
+        selfUser.participantRoles = Set([participantRole])
     }
 
 }
