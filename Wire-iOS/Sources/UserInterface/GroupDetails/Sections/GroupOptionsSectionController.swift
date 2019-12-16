@@ -35,8 +35,8 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         func accessible(in conversation: ZMConversation, by user: ZMUser) -> Bool {
             switch self {
             case .notifications: return user.canModifyNotificationSettings(in: conversation)
-            case .guests:        return user.canModifyAccessControl(in: conversation)
-            case .timeout:       return user.canModifyMessageTimer(in: conversation) 
+            case .guests:        return user.canModifyAccessControlSettings(in: conversation)
+            case .timeout:       return user.canModifyEphemeralSettings(in: conversation) 
             }
         }
         

@@ -196,10 +196,8 @@ final class ProfileActionsFactory: NSObject {
             }
 
             // Only non-guests and non-partners are allowed to remove
-            if let conversation = conversation {
-                if (conversation.conversationType == .group && (viewer.zmUser?.canRemoveMember(from: conversation) ?? false)) || (conversation.conversationType != .group && viewer.canRemoveUser(from: conversation)) {
-                    actions.append(.removeFromGroup)
-                }
+            if let conversation = conversation, viewer.canRemoveUser(from: conversation) {
+                actions.append(.removeFromGroup)
             }
 
             // If the user is not from the same team as the other user, allow blocking

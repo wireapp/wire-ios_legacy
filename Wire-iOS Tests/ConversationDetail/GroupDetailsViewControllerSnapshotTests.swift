@@ -39,8 +39,20 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     func testForOptionsForTeamUserInNonTeamConversation() {
         teamTest {
+            let actionAddMember = Action.insertNewObject(in: uiMOC)
+            actionAddMember.name = "add_conversation_member"
+            
+            let actionModifyTimer = Action.insertNewObject(in: uiMOC)
+            actionModifyTimer.name = "modify_conversation_message_timer"
+            
+            let actionModifyName = Action.insertNewObject(in: uiMOC)
+            actionModifyName.name = "modify_conversation_name"
+            
             selfUser.membership?.setTeamRole(.member)
+            let groupRole = selfUser.participantRoles.filter({$0.conversation == groupConversation}).first?.role
+            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
+
             verify(view: sut.view)
         }
     }
@@ -54,11 +66,31 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
     
     func testForOptionsForTeamUserInTeamConversation() {
+        // GIVEN
+        let actionAddMember = Action.insertNewObject(in: uiMOC)
+        actionAddMember.name = "add_conversation_member"
+        
+        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
+        actionModifyTimer.name = "modify_conversation_message_timer"
+        
+        let actionModifyName = Action.insertNewObject(in: uiMOC)
+        actionModifyName.name = "modify_conversation_name"
+        
+        let actionModifyAccess = Action.insertNewObject(in: uiMOC)
+        actionModifyAccess.name = "modify_conversation_access"
+        
+        let actionReceiptMode = Action.insertNewObject(in: uiMOC)
+        actionReceiptMode.name = "modify_conversation_receipt_mode"
+        
         teamTest {
             selfUser.membership?.setTeamRole(.member)
             groupConversation.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            let groupRole = selfUser.participantRoles.filter({$0.conversation == groupConversation}).first?.role
+            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName, actionModifyAccess, actionReceiptMode])
             sut = GroupDetailsViewController(conversation: groupConversation)
+            
+            // THEN
             verify(view: sut.view)
         }
     }
@@ -74,8 +106,22 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func testForOptionsForNonTeamUser() {
+        // GIVEN
+        let actionAddMember = Action.insertNewObject(in: uiMOC)
+        actionAddMember.name = "add_conversation_member"
+        
+        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
+        actionModifyTimer.name = "modify_conversation_message_timer"
+        
+        let actionModifyName = Action.insertNewObject(in: uiMOC)
+        actionModifyName.name = "modify_conversation_name"
+        
         nonTeamTest {
+            let groupRole = selfUser.participantRoles.filter({$0.conversation == groupConversation}).first?.role
+            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
+            
+            // THEN
             verify(view: self.sut.view)
         }
     }
@@ -101,10 +147,21 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForOptionsForTeamUserInTeamConversation_Admins() {
         // GIVEN
         let groupConversationAdmin: ZMConversation = createGroupConversationOnlyAdmin()
+        let actionAddMember = Action.insertNewObject(in: uiMOC)
+        actionAddMember.name = "add_conversation_member"
+        
+        let actionModifyTimer = Action.insertNewObject(in: uiMOC)
+        actionModifyTimer.name = "modify_conversation_message_timer"
+        
+        let actionModifyName = Action.insertNewObject(in: uiMOC)
+        actionModifyName.name = "modify_conversation_name"
+        
         teamTest {
             selfUser.membership?.setTeamRole(.admin)
             groupConversationAdmin.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
+            let groupRole = selfUser.participantRoles.filter({$0.conversation == groupConversationAdmin}).first?.role
+            groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversationAdmin)
             
             // THEN

@@ -52,7 +52,7 @@ class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: GroupDetailsRenameCell.self, for: indexPath)
-        cell.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyName(in: conversation) ?? false)
+        cell.configure(for: conversation, editable: ZMUser.selfUser()?.canModifyTitle(in: conversation) ?? false)
         cell.titleTextField.textFieldDelegate = self
         renameCell = cell
         return cell
