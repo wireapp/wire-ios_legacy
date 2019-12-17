@@ -48,9 +48,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
-        if let selfUser = ZMUser.selfUser() {
-            conversationRole = selfUser.participantRoles.filter({$0.conversation == conversation}).first?.role
-        }
+        conversationRole = ZMUser.selfUser().role(in: conversation)
+        
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
 

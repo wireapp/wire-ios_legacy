@@ -45,4 +45,14 @@ extension UserType {
         let roleName = zmUser?.participantRoles.first(where: { $0.conversation == conversation })?.role?.name
         return roleName == ZMConversation.defaultAdminRoleName
     }
+
+    ///TODO: mv to data model
+    func participantRole(in conversation: ZMConversation?) -> ParticipantRole? {
+        return zmUser?.participantRoles.first(where: { $0.conversation == conversation })
+    }
+
+    ///TODO: mv to data model
+    func role(in conversation: ZMConversation?) -> Role? {
+        return participantRole(in: conversation)?.role
+    }
 }
