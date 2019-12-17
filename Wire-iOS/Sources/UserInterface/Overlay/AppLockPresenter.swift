@@ -29,22 +29,12 @@ protocol AppLockUserInterface: class {
     func setReauth(visible: Bool)
 }
 
-enum AuthenticationState {
+private enum AuthenticationState {
     case needed
     case cancelled
     case authenticated
     case pendingPassword
-    
-    func needAuthentication() -> Bool {
-        guard AppLock.isActive else { return false }
-        switch self {
-        case .cancelled, .needed, .pendingPassword:
-            return true
-        case .authenticated:
-            return false
-        }
-    }
-    
+
     mutating func update(with result: AppLock.AuthenticationResult) {
         switch result {
         case .denied:
@@ -57,15 +47,18 @@ enum AuthenticationState {
     }
 }
 
+// MARK: - AppLockPresenter
 class AppLockPresenter {
     weak var userInterface: AppLockUserInterface?
     private var authenticationState: AuthenticationState
+    private var appLockService: AppLockService
     
     init(userInterface: AppLockUserInterface) {
         self.userInterface = userInterface
-        authenticationState = .needed
-        addApplicationStateObservers()
-        VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)))
+        self.authenticationState = .needed
+        self.appLockService = AppLockService()
+        self.appLockService.output = self
+        self.addApplicationStateObservers()
     }
     
     func requireAuthentication() {
@@ -74,7 +67,7 @@ class AppLockPresenter {
     }
     
     private func requireAuthenticationIfNeeded() {
-        guard AppLock.isActive, isLockTimeoutReached else {
+        guard AppLock.isActive, appLockService.isLockTimeoutReached else {
             setContents(dimmed: false)
             return
         }
@@ -82,105 +75,67 @@ class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            evaluateAuthentication()
+            appLockService.evaluateAuthentication()
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
-        default:
+        case .pendingPassword:
             break
         }
     }
 }
 
-// MARK: Auth helpers for Biometrics
+// MARK: - Account password helper
 extension AppLockPresenter {
-    
-    // Service
-    private var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
-            return false
-        }
-        return true
-    }
-    
-    // TODO: Find a better name
-    private func evaluateAuthentication() {
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
+    private func requestAccountPassword(with message: String) {
+        userInterface?.presentRequestPasswordController(with: message) { password in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
-                
-                self.authenticationState.update(with: result)
-                
-                if case .needAccountPassword = result {
-                    self.requestAccountPassword()
-                }
-                
-                self.setContents(dimmed: result != .granted, withReauth: result == .unavailable)
-                
-                if case .granted = result {
-                    self.appUnlocked()
-                }
-            }
-        }
-    }
-}
-
-// MARK: Account password helpers
-extension AppLockPresenter {
-    private func requestAccountPassword() {
-        userInterface?.presentRequestPasswordController(with: "Generic Message") { password in
-            DispatchQueue.main.async {
                 guard let password = password, !password.isEmpty else {
                     self.authenticationState = .cancelled
                     self.setContents(dimmed: true, withReauth: true)
                     return
                 }
                 self.userInterface?.setLoadingActivity(visible: true)
-                ZMUserSession.shared()?.enqueueChanges {
-                    // Will call passwordVerified(with:) when completed
-                    VerifyPasswordRequestStrategy.triggerPasswordVerification(with: password)
-                }
+                self.appLockService.verify(password: password)
             }
         }
     }
+}
+
+// MARK: - AppLockServiceOutput
+extension AppLockPresenter: AppLockServiceOutput {
+    func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
+        authenticationState.update(with: result)
+        setContents(dimmed: result != .granted, withReauth: result == .unavailable)
+
+        if case .needAccountPassword = result {
+            requestAccountPassword(with: "Generic message")
+        }
+        
+        if case .granted = result {
+            appUnlocked()
+        }
+    }
     
-    @objc func passwordVerified(with notification: Notification) {
+    func passwordVerified(with result: VerifyPasswordResult?) {
         userInterface?.setLoadingActivity(visible: false)
-        guard let result = notification.userInfo?[VerifyPasswordRequestStrategy.verificationResultKey] as? VerifyPasswordResult else {
+        guard let result = result else {
             self.setContents(dimmed: true, withReauth: true)
             return
         }
+        setContents(dimmed: result != .validated)
         switch result {
         case .validated:
-            setContents(dimmed: false)
             appUnlocked()
-            BiometricsState.persistCurrentState()
-        default:
-            requestAccountPassword()
-            setContents(dimmed: true)
+        case .denied, .unknown:
+            requestAccountPassword(with: "Wrong password")
+        case .timeout:
+            requestAccountPassword(with: "Try again online")
         }
     }
-    
 }
 
-// MARK: Helpers
-extension AppLockPresenter {
-    
-    private func setContents(dimmed: Bool, withReauth showReauth: Bool = false) {
-        self.userInterface?.setContents(dimmed: dimmed)
-        self.userInterface?.setReauth(visible: showReauth)
-    }
-    // TODO: Find better name
-    private func appUnlocked() {
-        authenticationState = .authenticated
-        AppLock.lastUnlockedDate = Date()
-        NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
-    }
-}
-
+// MARK: - App state observers
 extension AppLockPresenter {
     func addApplicationStateObservers() {
         NotificationCenter.default.addObserver(self,
@@ -216,5 +171,19 @@ extension AppLockPresenter {
     
     @objc func applicationDidBecomeActive() {
         requireAuthenticationIfNeeded()
+    }
+}
+
+// MARK: - Helpers
+extension AppLockPresenter {
+    private func setContents(dimmed: Bool, withReauth showReauth: Bool = false) {
+        self.userInterface?.setContents(dimmed: dimmed)
+        self.userInterface?.setReauth(visible: showReauth)
+    }
+    
+    private func appUnlocked() {
+        authenticationState = .authenticated
+        AppLock.lastUnlockedDate = Date()
+        NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
     }
 }
