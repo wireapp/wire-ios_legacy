@@ -233,9 +233,10 @@ final class ProfileDetailsContentController: NSObject,
             cell.configure(with: CellConfiguration.groupAdminToogle(get: {
                 return groupAdminEnabled
             }, set: {_ in
-                self.isAdminState = !self.isAdminState
+                self.isAdminState.toggle()
                 self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
-                ///FIXME: change converation's usr's admin setting
+                self.updateConversationRole()
+                
             }), variant: ColorScheme.default.variant)
 
             return cell
@@ -277,4 +278,28 @@ final class ProfileDetailsContentController: NSObject,
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    private func updateConversationRole() {
+        let groupRoles = self.conversation?.getRoles()
+        let newParticipantRole = groupRoles?.first {
+            $0.name == (self.isAdminState ? ZMConversation.defaultAdminRoleName : ZMConversation.defaultMemberRoleName)
+        }
+        
+        guard
+            let role = newParticipantRole,
+            let session = ZMUserSession.shared(),
+            let user = user.zmUser
+            else { return }
+        
+        conversation?.updateRole(of: user, to: role, session: session) { (result) in
+            if case .failure = result {
+                self.isAdminState.toggle()
+                self.updateUI()
+            }
+        }
+    }
+    
+    private func updateUI() {
+        self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
+        self.delegate?.profileDetailsContentDidChange()
+    }
 }
