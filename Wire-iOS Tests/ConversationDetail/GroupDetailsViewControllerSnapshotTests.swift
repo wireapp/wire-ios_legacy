@@ -160,7 +160,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             selfUser.membership?.setTeamRole(.admin)
             groupConversationAdmin.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            let groupRole = selfUser.role(in: groupConversation)
+            let groupRole = selfUser.role(in: groupConversationAdmin)
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversationAdmin)
             
