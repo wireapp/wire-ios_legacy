@@ -23,7 +23,7 @@ extension ContactsDataSource {
     
     @objc
     public func search(withQuery query: String) {
-        guard let searchDirectory = searchDirectory else { return }
+        guard let searchDirectory = self.searchDirectory else { return }
         
         let request = SearchRequest(query: query, searchOptions: [.contacts, .addressBook])
         let task = searchDirectory.perform(request)
