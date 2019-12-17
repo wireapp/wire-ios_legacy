@@ -236,9 +236,8 @@ final class ProfileDetailsContentController: NSObject,
                 self.isAdminState.toggle()
                 self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
                 self.updateConversationRole()
-                
             }), variant: ColorScheme.default.variant)
-
+            
             return cell
         case .richProfile(let fields):
             let field = fields[indexPath.row]
@@ -247,7 +246,7 @@ final class ProfileDetailsContentController: NSObject,
             cell.propertyValue = field.value
             cell.showSeparator = indexPath.row < fields.count - 1
             return cell
-
+            
         case .readReceiptsStatus:
             fatalError("We do not create cells for the readReceiptsStatus section.")
         }
