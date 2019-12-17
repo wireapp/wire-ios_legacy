@@ -183,6 +183,22 @@ extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate 
     
     func profileGroupRoleDidChange(isAdminRole: Bool) {
         self.isAdminRole = isAdminRole
+        /// change role of a usr
+        ///TODO: not merge this part
+        
+        guard let roles = conversation?.getRoles() else { return }
+        
+        let newRole: Role?
+        if isAdminRole {
+            newRole = roles.first(where: {$0.name == ZMConversation.defaultAdminRoleName})
+        
+        } else {
+            newRole = roles.first(where: {$0.name != ZMConversation.defaultAdminRoleName})
+        }
+
+        ZMUserSession.shared()?.performChanges {
+            self.user.participantRole(in: self.conversation)?.role = newRole
+        }
     }
     
     func profileDetailsContentDidChange() {

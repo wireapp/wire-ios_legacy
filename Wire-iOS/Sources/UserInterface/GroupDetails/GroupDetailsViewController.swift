@@ -29,7 +29,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
     private var conversationRole: Role?
-
+    
     var didCompleteInitialSync = false {
         didSet {
             collectionViewController.sections = computeVisibleSections()
@@ -39,11 +39,11 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
+    
     @objc
     public init(conversation: ZMConversation) {
         self.conversation = conversation
@@ -52,9 +52,9 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
-
+        
         createSubviews()
-
+        
         if let session = ZMUserSession.shared() {
             syncObserver = InitialSyncObserver(in: session) { [weak self] completed in
                 self?.didCompleteInitialSync = completed
@@ -65,17 +65,17 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func createSubviews() {
         let collectionView = UICollectionView(forGroupedSections: ())
         collectionView.accessibilityIdentifier = "group_details.list"
-
+        
         if #available(iOS 11.0, *) {
             collectionView.contentInsetAdjustmentBehavior = .never
         }
-
+        
         [collectionView, footerView].forEach(view.addSubview)
-
+        
         constrain(view, collectionView, footerView) { container, collectionView, footerView in
             collectionView.top == container.top
             collectionView.leading == container.leading
@@ -85,14 +85,14 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             footerView.trailing == container.trailing
             footerView.bottom == container.bottom
         }
-
+        
         collectionViewController.collectionView = collectionView
         footerView.delegate = self
         footerView.update(for: conversation)
         collectionViewController.sections = computeVisibleSections()
-
+        
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "participants.title".localized(uppercased: true)
@@ -106,20 +106,18 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         collectionViewController.collectionView?.reloadData()
     }
-
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
         })
     }
-
+    
     func updateLegalHoldIndicator() {
         navigationItem.leftBarButtonItem = conversation.isUnderLegalHold ? legalholdItem : nil
     }
     
-   
-
-    func computeVisibleSections() -> [CollectionViewSectionController] {
+    private func computeVisibleSections() -> [CollectionViewSectionController] {
         var sections = [CollectionViewSectionController]()
         let renameGroupSectionController = RenameGroupSectionController(conversation: conversation)
         sections.append(renameGroupSectionController)
@@ -163,7 +161,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                 sections.append(adminSection)
             }
         }
-
+        
         // MARK: options sections
         let optionsSectionController = GroupOptionsSectionController(conversation: conversation, delegate: self, syncCompleted: didCompleteInitialSync)
         if optionsSectionController.hasOptions {
@@ -176,7 +174,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
                                                                                   collectionView: self.collectionViewController.collectionView!,
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
-           
+            
             
         }
         
@@ -242,7 +240,7 @@ extension GroupDetailsViewController {
         item.tintColor = .vividRed
         return item
     }
-
+    
     @objc
     func presentLegalHoldDetails() {
         LegalHoldDetailsViewController.present(in: self, conversation: conversation)
@@ -269,7 +267,7 @@ extension GroupDetailsViewController: ProfileViewControllerDelegate {
 }
 
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
-
+    
     func presentDetails(for user: ZMUser) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
@@ -277,7 +275,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
             profileViewControllerDelegate: self,
             viewControllerDismisser: self
         )
-
+        
         navigationController?.pushViewController(viewController, animated: true)
     }
     
@@ -290,7 +288,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         let menu = ConversationOptionsViewController(conversation: conversation, userSession: .shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
-
+    
     func presentTimeoutOptions(animated: Bool) {
         let menu = ConversationTimeoutOptionsViewController(conversation: conversation, userSession: .shared()!)
         menu.dismisser = self
