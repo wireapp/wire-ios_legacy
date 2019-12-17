@@ -21,7 +21,7 @@ No license is granted to the Wire trademark and its associated logos, all of whi
 
 # Wire iOS
 
-The Wire mobile app has an architectural layer that we call *sync engine* . It is the client-side layer that processes all the data that is displayed in the mobile app. It handles network communication and authentication with the backend, push notifications, local caching of data, client-side business logic, signaling with the audio-video libraries, encryption and decryption (using encryption libraries from a lower level) and other bits and pieces.
+The Wire mobile app has an architectural layer that we call *sync engine*. It is the client-side layer that processes all the data that is displayed in the mobile app. It handles network communication and authentication with the backend, push notifications, local caching of data, client-side business logic, signaling with the audio-video libraries, encryption and decryption (using encryption libraries from a lower level) and other bits and pieces.
 
 The user interface layer of the mobile app is built on top of the *sync engine*, which provides the data to display to the UI.
 The sync engine itself is built on top of a few third-party frameworks, and uses Wire components that are shared between platforms for cryptography (Proteus/Cryptobox) and audio-video signaling (AVS).
