@@ -25,7 +25,7 @@ final class RequestPasswordController {
     enum RequestPasswordContext {
         case removeDevice
         case logout
-        case unlock
+        case unlock(String)
     }
     
     var alertController: UIAlertController
@@ -56,9 +56,9 @@ final class RequestPasswordController {
             message = "self.settings.account_details.log_out.alert.message".localized
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .destructive
-        case .unlock:
+        case .unlock(let unlockMessage):
             title = "self.settings.account_details.log_out.alert.title".localized
-            message = "self.settings.account_details.log_out.alert.message".localized
+            message = unlockMessage
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .default
         }
