@@ -47,7 +47,7 @@ extension ZMConversation {
         conversation.conversationType = .group
         
         let role = Role(context: moc)
-        role.name = "admin"
+        role.name = ZMConversation.defaultAdminRoleName
         conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
         
         return conversation

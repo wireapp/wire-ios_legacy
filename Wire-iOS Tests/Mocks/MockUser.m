@@ -35,6 +35,7 @@ static id<UserType> mockSelfUser = nil;
         _canCreateConversation = YES;
         _canAddUserToConversation = YES;
         _canRemoveUserFromConversation = YES;
+        _canModifyOtherMemberInConversation = NO;
     }
     return self;
 }
@@ -331,6 +332,11 @@ static id<UserType> mockSelfUser = nil;
 - (BOOL)canAddUserToConversation:(ZMConversation * _Nonnull)conversation
 {
     return self.canAddUserToConversation;
+}
+
+- (BOOL)canModifyOtherMemberInConversation:(ZMConversation * _Nonnull)conversation
+{
+    return self.canModifyOtherMemberInConversation;
 }
 
 - (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
