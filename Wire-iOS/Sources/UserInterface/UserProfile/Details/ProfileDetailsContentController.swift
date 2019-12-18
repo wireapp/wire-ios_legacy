@@ -152,7 +152,9 @@ final class ProfileDetailsContentController: NSObject,
             ///Do not show group admin toggle for self user or requesting connection user
             var items: [ProfileDetailsContentController.Content] = []
             if let conversation = conversation {
-                if (viewer.zmUser?.canModifyOtherMember(in: conversation) ?? false) && !user.isWirelessUser {
+                let viewerCanChangeOtherRoles = viewer.zmUser?.canModifyOtherMember(in: conversation) ?? false
+                let userCanHaveRoleChanged = !user.isWirelessUser
+                if viewerCanChangeOtherRoles && userCanHaveRoleChanged {
                     items.append(.groupAdminStatus(enabled: groupAdminEnabled))
                 }
             }
