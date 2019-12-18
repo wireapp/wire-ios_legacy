@@ -109,7 +109,7 @@ extension AppLockPresenter: AppLockServiceOutput {
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
         if case .needAccountPassword = result {
-            requestAccountPassword(with: "Generic message")
+            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.unlock".localized)
         }
         
         if case .granted = result {
@@ -128,9 +128,9 @@ extension AppLockPresenter: AppLockServiceOutput {
         case .validated:
             appUnlocked()
         case .denied, .unknown:
-            requestAccountPassword(with: "Wrong password")
+            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.wrong_password".localized)
         case .timeout:
-            requestAccountPassword(with: "Try again online")
+            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.wrong_offline_password".localized)
         }
     }
 }
