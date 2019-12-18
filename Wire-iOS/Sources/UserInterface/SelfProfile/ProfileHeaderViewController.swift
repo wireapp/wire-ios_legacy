@@ -106,7 +106,8 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let guestIndicator = LabelIndicator(context: .guest)
     let remainingTimeLabel = UILabel()
     let groupRoleIndicator = LabelIndicator(context: .groupRole)
-    
+    let externalIndicator = LabelIndicator(context: .external)
+
     private var tokens: [Any?] = []
     
     /**
@@ -177,13 +178,20 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         guestIndicatorStack.alignment = .center
         
         updateGuestIndicator()
+        updateExternalIndicator()
         updateGroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
         addChild(availabilityTitleViewController)
         
-        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityTitleViewController.view, guestIndicatorStack, groupRoleIndicator])
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack,
+                                                                          teamNameLabel,
+                                                                          imageView,
+                                                                          availabilityTitleViewController.view,
+                                                                          guestIndicatorStack,
+                                                                          externalIndicator,
+                                                                          groupRoleIndicator])
         
         stackView.alignment = .center
         stackView.axis = .vertical
@@ -235,7 +243,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
     }
     
-    func updateGuestIndicator() {
+    private func updateGuestIndicator() {
         if let conversation = conversation {
             guestIndicatorStack.isHidden = !user.isGuest(in: conversation)
         } else {
@@ -243,6 +251,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
     
+    private func updateExternalIndicator() {
+        externalIndicator.isHidden = !user.isExternalPartner
+    }
+
     private func updateGroupRoleIndicator() {
         if let _ = conversation {
             groupRoleIndicator.isHidden = !user.isAdminGroup(conversation: conversation)

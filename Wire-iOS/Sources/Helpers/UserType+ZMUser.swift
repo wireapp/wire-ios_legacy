@@ -55,4 +55,9 @@ extension UserType {
     func role(in conversation: ZMConversation?) -> Role? {
         return participantRole(in: conversation)?.role
     }
+
+    var isExternalPartner: Bool {
+        return teamRole == .partner
+    }
 }
+

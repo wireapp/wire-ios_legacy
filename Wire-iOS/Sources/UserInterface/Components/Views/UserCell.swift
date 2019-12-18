@@ -238,7 +238,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             verifiedIconView.isHidden = true
         }
 
-        externalUserIconView.isHidden = user.teamRole != .partner
+        externalUserIconView.isHidden = !user.isExternalPartner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
             subtitleLabel.isHidden = false
