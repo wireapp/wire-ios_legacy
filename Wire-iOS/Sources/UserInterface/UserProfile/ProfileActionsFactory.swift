@@ -75,12 +75,6 @@ enum ProfileAction: Equatable {
 
 }
 
-extension UserType {
-    func isOnSameTeam(otherUser: UserType) -> Bool {
-        return canAccessCompanyInformation(of: otherUser)
-    }
-}
-
 /**
  * An object that returns the actions that a user can perform in the scope
  * of a conversation.
