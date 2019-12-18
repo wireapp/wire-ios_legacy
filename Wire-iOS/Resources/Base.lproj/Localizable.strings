@@ -832,7 +832,7 @@
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
 "profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
 
-"profile.group_admin_status_memo.body" = "When this is on, the user can add and remove people, also edit group settings, such as name and services.";
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
 
 "profile.extended_metadata.header" = "Information";
 
