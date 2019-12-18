@@ -45,7 +45,7 @@
 - (void)shareContactsViewControllerDidFinish:(UIViewController *)viewController
 {
     // Reload data source
-    [self.dataSource searchWithQuery:@""];
+    [self.dataSource searchWithQuery:@"" searchDirectory:self.dataSource.searchDirectory];
     
     [self dismissChildViewController:viewController];
 }
