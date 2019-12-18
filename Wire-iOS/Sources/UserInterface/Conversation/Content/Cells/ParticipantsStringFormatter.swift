@@ -47,7 +47,7 @@ private extension ConversationActionType {
 /// structure keeps track of which string components should be applied with
 /// which attributes. Then, given an attributed string, these attributes are
 /// applied to their corresponding component.
-private class FormatSequence {
+private final class FormatSequence {
 
     typealias SubstringAttrs = (substring: String, attrs: Attributes)
     var string = String()
@@ -73,7 +73,7 @@ private class FormatSequence {
     }
 }
 
-class ParticipantsStringFormatter {
+final class ParticipantsStringFormatter {
 
     private struct Key {
         static let youStartedTheConversation = "content.system.conversation.with_name.title-you"

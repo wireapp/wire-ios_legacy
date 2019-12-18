@@ -178,6 +178,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
+            (message as! ZMSystemMessage).numberOfGuestsAdded = 10 ///Hack for unstable test
             verify(message: message)
         }
     }
