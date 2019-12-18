@@ -21,7 +21,7 @@ import XCTest
 @testable import Wire
 
 
-class StartedConversationCellTests: ConversationCellSnapshotTestCase {
+final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
