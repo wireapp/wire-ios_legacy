@@ -96,7 +96,8 @@
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
-        AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
+        
+        [self setupAddressBookHelper];
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
         NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];

@@ -22,6 +22,11 @@ import Foundation
 extension ZClientViewController {
 
     // MARK: - Setup methods
+    
+    @objc
+    func setupAddressBookHelper() {
+        AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
+    }
 
     ///TODO: caller to Swift and accept SelfUserType as paramenter
     @objc
