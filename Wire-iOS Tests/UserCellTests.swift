@@ -46,7 +46,18 @@ final class UserCellTests: ZMSnapshotTestCase {
         cell.layoutIfNeeded()
         return cell
     }
-    
+
+    func testExternalUser() {
+        MockUser.mockSelf().isTeamMember = true
+        let mockUser = MockUser.firstMockUser()
+        mockUser.isTeamMember = true
+        mockUser.teamRole = .partner
+        
+        verifyInAllColorSchemes(view: cell({ (cell) in
+            cell.configure(with: mockUser, conversation: conversation)
+        }))
+    }
+
     func testServiceUser() {
         MockUser.mockSelf().isTeamMember = true
         let mockUser = MockUser.firstMockUser()
