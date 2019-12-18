@@ -19,12 +19,6 @@
 import WireSyncEngine
 
 extension UserType {
-
-    ///TODO: mv to data model
-    func participantRole(in conversation: ZMConversation?) -> ParticipantRole? {
-        return zmUser?.participantRoles.first(where: { $0.conversation == conversation })
-    }
-
     var isExternalPartner: Bool {
         return teamRole == .partner
     }
