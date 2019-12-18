@@ -26,6 +26,8 @@ protocol AppLockServiceOutput: class {
 class AppLockService {
     weak var output: AppLockServiceOutput?
     
+    var appLock: AppLock.Type = AppLock.self
+    
     init() {
         VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)))
     }
@@ -34,18 +36,18 @@ class AppLockService {
 // MARK: - Interface
 extension AppLockService {
     var isLockTimeoutReached: Bool {
-        let lastAuthDate = AppLock.lastUnlockedDate
+        let lastAuthDate = appLock.lastUnlockedDate
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
+        if timeSinceAuth >= 0 && timeSinceAuth < Double(appLock.rules.appLockTimeout) {
             return false
         }
         return true
     }
     
     func evaluateAuthentication() {
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
+        appLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
                 self.output?.authenticationEvaluated(with: result)
@@ -65,15 +67,19 @@ extension AppLockService {
 extension AppLockService {
     @objc private func passwordVerified(with notification: Notification) {
         guard let result = notification.userInfo?[VerifyPasswordRequestStrategy.verificationResultKey] as? VerifyPasswordResult else {
-            output?.passwordVerified(with: nil)
+            notifyPasswordVerified(with: nil)
             return
         }
+        notifyPasswordVerified(with: result)
+        if case .validated = result {
+            appLock.persistBiometrics()
+        }
+    }
+    
+    private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             self.output?.passwordVerified(with: result)
-        }
-        if case .validated = result {
-            BiometricsState.persistCurrentState()
         }
     }
 }

@@ -23,7 +23,7 @@ import LocalAuthentication
 private let zmLog = ZMSLog(tag: "UI")
 private let UserDefaultsDomainStateKey = "DomainStateKey"
 
-final public class AppLock {
+public class AppLock {
     // Returns true if user enabled the app lock feature.
     
     public static var rules = AppLockRules.fromBundle()
@@ -61,19 +61,10 @@ final public class AppLock {
 
     /// a weak reference to LAContext, it should be nil when evaluatePolicy is done.
     private static weak var weakLAContext: LAContext? = nil
-
-    // TODO: Persist domain state
-    private static var previousDomainState: Data? {
-        get {
-            return UserDefaults.standard.data(forKey: UserDefaultsDomainStateKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: UserDefaultsDomainStateKey)
-        }
-    }
     
     // Creates a new LAContext and evaluates the authentication settings of the user.
-    public static func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
+    open class func evaluateAuthentication(description: String, with callback: @escaping (AuthenticationResult) -> Void) {
+        guard AppLock.weakLAContext == nil else { return }
 
         let useBiometricsOrAccountPassword = rules.useBiometricsOrAccountPassword
         let context: LAContext = LAContext()
@@ -105,6 +96,10 @@ final public class AppLock {
             zmLog.error("Local authentication error: \(String(describing: error?.localizedDescription))")
         }
     }
+    
+    open class func persistBiometrics() {
+        BiometricsState.persist()
+    }
 }
 
 public class BiometricsState {
@@ -132,7 +127,7 @@ public class BiometricsState {
     
     /// Persists the state of the biometric credentials.
     /// Should be called after a successful unlock with account password
-    public static func persistCurrentState() {
+    public static func persist() {
         lastPolicyDomainState = currentPolicyDomainState
     }
 }
