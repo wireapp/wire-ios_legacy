@@ -840,6 +840,7 @@
 "profile.details.title" = "Details";
 "profile.details.guest" = "Guest";
 "profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Display name";

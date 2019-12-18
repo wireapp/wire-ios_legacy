@@ -33,6 +33,18 @@ enum LabelIndicatorContext {
             return .externalPartner
         }
     }
+    
+    var title: String {
+        switch self {
+        case .guest:
+            return "profile.details.guest"
+        case .groupRole:
+            return "profile.details.group_admin"
+        case .external:
+            return "profile.details.partner"
+        }
+
+    }
 }
 
 final class LabelIndicator: UIView, Themeable {
@@ -71,25 +83,21 @@ final class LabelIndicator: UIView, Themeable {
     
     private func setupViews() {
         var accessibilityString: String
-        var title: String
         
         switch context {
         case .guest:
             accessibilityString = "guest"
-            title = "profile.details.guest".localized(uppercased: true)
         case .groupRole:
             accessibilityString = "group_role"
-            title = "profile.details.group_admin".localized(uppercased: true)
         case .external:
-            accessibilityString = "group_role"
-            title = "profile.details.group_admin".localized(uppercased: true)
+            accessibilityString = "team_role"
         }
         titleLabel.accessibilityIdentifier = "label." + accessibilityString
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .left
         titleLabel.font = FontSpec(.medium, .semibold, .inputText).font
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)
-        titleLabel.text = title
+        titleLabel.text = context.title.localized(uppercased: true)
         
         indicatorIcon.accessibilityIdentifier =  "img." + accessibilityString
         indicatorIcon.setIcon(context.icon, size: .nano, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
