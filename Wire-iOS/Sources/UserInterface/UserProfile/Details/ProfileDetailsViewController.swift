@@ -84,20 +84,21 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         profileHeaderOptions.insert(.hideAvailability)
         
         self.user = user
-        isAdminRole = user.isAdminGroup(conversation: conversation)
+        isAdminRole = conversation.map(user.isAdminGroup) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
-        self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
+        profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
+        contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
         
         super.init(nibName: nil, bundle: nil)
         
-        self.contentController.delegate = self
+        contentController.delegate = self
 
         IconToggleSubtitleCell.register(in: tableView)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

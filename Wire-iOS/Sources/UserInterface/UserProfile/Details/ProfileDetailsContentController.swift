@@ -97,7 +97,8 @@ final class ProfileDetailsContentController: NSObject,
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
-        isAdminState = user.isAdminGroup(conversation: conversation)
+        
+        isAdminState = conversation.map(user.isAdminGroup) ?? false
 
         super.init()
         configureObservers()
@@ -147,7 +148,7 @@ final class ProfileDetailsContentController: NSObject,
         
         switch conversation?.conversationType ?? .group {
         case .group:
-            let groupAdminEnabled = user.isAdminGroup(conversation: conversation)
+            let groupAdminEnabled = conversation.map(user.isAdminGroup) ?? false
             
             ///Do not show group admin toggle for self user or requesting connection user
             var items: [ProfileDetailsContentController.Content] = []
