@@ -49,8 +49,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 {
     self = [super init];
 
-    self.addressBookHelper = [AddressBookHelper sharedHelper];
-
     [self setupViews];
 
     return self;

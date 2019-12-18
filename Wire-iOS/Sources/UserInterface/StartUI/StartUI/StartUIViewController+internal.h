@@ -26,7 +26,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 @class EmptySearchResultsView;
 
 @protocol UserType;
-@protocol AddressBookHelperProtocol;
 @protocol SearchHeaderViewControllerDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -37,7 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) SearchGroupSelector *groupSelector;
 @property (nonatomic) SearchResultsViewController *searchResultsViewController;
 @property (nonatomic) BOOL addressBookUploadLogicHandled;
-@property (nonatomic, null_unspecified) id<AddressBookHelperProtocol> addressBookHelper;
 @property (nonatomic) StartUIInviteActionBar *quickActionsBar;
 
 -(instancetype) init;
