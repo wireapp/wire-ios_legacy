@@ -40,10 +40,8 @@ final class AddressBookHelper : AddressBookHelperProtocol {
     
     /// Configuration override (used for testing)
     var configuration : AddressBookHelperConfiguration!
-}
 
 // MARK: - Permissions
-extension AddressBookHelper {
     
     var isAddressBookAccessUnknown : Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
@@ -103,10 +101,8 @@ extension AddressBookHelper {
             UserDefaults.standard.set(newValue, forKey: addressBookSearchWasPostponedKey)
         }
     }
-}
 
 // MARK: – Access Status Change Detection
-extension AddressBookHelper {
 
     func persistCurrentAccessStatus() {
         let status = CNContactStore.authorizationStatus(for: .contacts).rawValue as Int
@@ -123,10 +119,8 @@ extension AddressBookHelper {
         return CNContactStore.authorizationStatus(for: .contacts) != lastStatus && isAddressBookAccessGranted
     }
 
-}
 
 // MARK: - Upload
-extension AddressBookHelper {
     
     /// Starts an address book search, if enough time has passed since last search
     func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
