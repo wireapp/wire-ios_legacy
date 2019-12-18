@@ -24,7 +24,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 final class AppLockViewController: UIViewController {
     private var lockView: AppLockView!
-    private var loadingActivity: UIActivityIndicatorView!
+    private let spinner = UIActivityIndicatorView(style: .white)
 
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
@@ -62,18 +62,18 @@ final class AppLockViewController: UIViewController {
             self.appLockPresenter?.requireAuthentication()
         }
         
-        self.loadingActivity = UIActivityIndicatorView(style: .white)
+        self.spinner.hidesWhenStopped = true
+        self.spinner.translatesAutoresizingMaskIntoConstraints = false
         
         self.view.addSubview(self.lockView)
+        self.view.addSubview(self.spinner)
+
         constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
         }
-        
-        self.view.addSubview(self.loadingActivity)
-        
-        NSLayoutConstraint.activate([
-            self.loadingActivity.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            self.loadingActivity.centerXAnchor.constraint(equalTo: view.centerXAnchor)])
+        constrain(self.view, self.spinner) { view, spinner in
+            spinner.center == view.center
+        }
 
         self.dimContents = false
     }
@@ -87,12 +87,11 @@ extension AppLockViewController: AppLockUserInterface {
         self.present(passwordController.alertController, animated: true, completion: nil)
     }
     
-    func setLoadingActivity(visible: Bool) {
-        self.loadingActivity.isHidden = !visible
-        if visible {
-            self.loadingActivity.startAnimating()
+    func setSpinner(animating: Bool) {
+        if animating {
+            self.spinner.startAnimating()
         } else {
-            self.loadingActivity.stopAnimating()
+            self.spinner.stopAnimating()
         }
     }
     

@@ -24,7 +24,7 @@ extension Notification.Name {
 
 protocol AppLockUserInterface: class {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback)
-    func setLoadingActivity(visible: Bool)
+    func setSpinner(animating: Bool)
     func setContents(dimmed: Bool)
     func setReauth(visible: Bool)
 }
@@ -95,7 +95,7 @@ extension AppLockPresenter {
                     self.setContents(dimmed: true, withReauth: true)
                     return
                 }
-                self.userInterface?.setLoadingActivity(visible: true)
+                self.userInterface?.setSpinner(animating: true)
                 self.appLockService.verify(password: password)
             }
         }
@@ -118,7 +118,7 @@ extension AppLockPresenter: AppLockServiceOutput {
     }
     
     func passwordVerified(with result: VerifyPasswordResult?) {
-        userInterface?.setLoadingActivity(visible: false)
+        userInterface?.setSpinner(animating: false)
         guard let result = result else {
             self.setContents(dimmed: true, withReauth: true)
             return
