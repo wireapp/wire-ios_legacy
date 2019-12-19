@@ -222,7 +222,8 @@ final class ConversationTableViewDataSource: NSObject {
         completion?(indexPath)
     }
     
-    public func loadMessages(offset: Int = 0, limit: Int = ConversationTableViewDataSource.defaultBatchSize) {
+    public func loadMessages(offset: Int = 0,
+                             limit: Int = ConversationTableViewDataSource.defaultBatchSize) {
         let fetchRequest = self.fetchRequest()
         fetchRequest.fetchLimit = limit + 5 // We need to fetch a bit more than requested so that there is overlap between messages in different fetches
         fetchRequest.fetchOffset = offset

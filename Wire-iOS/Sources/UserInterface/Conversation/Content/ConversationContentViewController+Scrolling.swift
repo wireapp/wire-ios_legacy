@@ -45,7 +45,7 @@ extension ConversationContentViewController {
                 }
             }
         } else {
-            dataSource?.loadMessages()
+            dataSource?.loadMessages() ///TODO: load when role change?
         }
         
         updateTableViewHeaderView()
