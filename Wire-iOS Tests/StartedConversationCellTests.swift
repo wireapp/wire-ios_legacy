@@ -176,7 +176,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
     }
     
-    func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
+    func disable_testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
             createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
