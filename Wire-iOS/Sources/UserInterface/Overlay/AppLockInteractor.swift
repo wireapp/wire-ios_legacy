@@ -18,15 +18,23 @@
 
 import Foundation
 
-protocol AppLockServiceOutput: class {
+protocol AppLockInteractorInput: class {
+    var isLockTimeoutReached: Bool { get }
+    func evaluateAuthentication()
+    func verify(password: String)
+}
+
+protocol AppLockInteractorOutput: class {
     func authenticationEvaluated(with result: AppLock.AuthenticationResult)
     func passwordVerified(with result: VerifyPasswordResult?)
 }
 
-class AppLockService {
-    weak var output: AppLockServiceOutput?
+class AppLockInteractor {
+    weak var output: AppLockInteractorOutput?
     
+    // For tests
     var appLock: AppLock.Type = AppLock.self
+    var dispatchQueue: DispatchQueue = DispatchQueue.main
     
     init() {
         VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)))
@@ -34,7 +42,7 @@ class AppLockService {
 }
 
 // MARK: - Interface
-extension AppLockService {
+extension AppLockInteractor: AppLockInteractorInput {
     var isLockTimeoutReached: Bool {
         let lastAuthDate = appLock.lastUnlockedDate
         
@@ -47,9 +55,9 @@ extension AppLockService {
     }
     
     func evaluateAuthentication() {
-        appLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` = self else { return }
+        appLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { [weak self] result in
+            guard let `self` = self else { return }
+            self.dispatchQueue.async {
                 self.output?.authenticationEvaluated(with: result)
             }
         }
@@ -64,7 +72,7 @@ extension AppLockService {
 }
 
 // MARK: - Notification Observer
-extension AppLockService {
+extension AppLockInteractor {
     @objc private func passwordVerified(with notification: Notification) {
         guard let result = notification.userInfo?[VerifyPasswordRequestStrategy.verificationResultKey] as? VerifyPasswordResult else {
             notifyPasswordVerified(with: nil)
@@ -77,9 +85,8 @@ extension AppLockService {
     }
     
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.output?.passwordVerified(with: result)
+        self.dispatchQueue.async { [weak self] in
+            self?.output?.passwordVerified(with: result)
         }
     }
 }

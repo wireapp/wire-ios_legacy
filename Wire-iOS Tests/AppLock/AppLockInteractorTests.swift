@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 @testable import WireCommonComponents
 
-private final class AppLockServiceOutputMock: AppLockServiceOutput {
+private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
     
     var authenticationResult: AppLock.AuthenticationResult?
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
@@ -46,19 +46,21 @@ private final class AppLockMock: AppLock {
     }
 }
 
-final class AppLockServiceTests: XCTestCase {
-    var sut: AppLockService!
-    private var appLockServiceOutputMock: AppLockServiceOutputMock!
+final class AppLockInteractorTests: XCTestCase {
+    var sut: AppLockInteractor!
+    private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
     
     override func setUp() {
         super.setUp()
-        appLockServiceOutputMock = AppLockServiceOutputMock()
-        sut = AppLockService()
-        sut.output = appLockServiceOutputMock
+        appLockInteractorOutputMock = AppLockInteractorOutputMock()
+        sut = AppLockInteractor()
+        sut.output = appLockInteractorOutputMock
         sut.appLock = AppLockMock.self
     }
     
     override func tearDown() {
+        appLockInteractorOutputMock = nil
+        sut = nil
         super.tearDown()
     }
     
@@ -83,39 +85,46 @@ final class AppLockServiceTests: XCTestCase {
     }
     
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
+        //given
+        let queue = DispatchQueue(label: "Evaluate authentication test queue", qos: .background)
+        sut.dispatchQueue = queue
+        AppLockMock.authenticationResult = .granted
+        appLockInteractorOutputMock.authenticationResult = nil
+        let expectation = XCTestExpectation(description: "evaluate authentication")
+
         //when
         sut.evaluateAuthentication()
-        AppLockMock.authenticationResult = .granted
-        
-        let expectation = XCTestExpectation(description: "evaluate authentication")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            //then
-            XCTAssertNotNil(self.appLockServiceOutputMock.authenticationResult)
-            XCTAssertEqual(self.appLockServiceOutputMock.authenticationResult, AppLockMock.authenticationResult)
-           
+
+        //then
+        queue.async {
+            XCTAssertNotNil(self.appLockInteractorOutputMock.authenticationResult)
+            XCTAssertEqual(self.appLockInteractorOutputMock.authenticationResult, AppLockMock.authenticationResult)
+            
             expectation.fulfill()
-        })
+        }
         
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 0.5)
     }
     
     func testThatItNotifiesOutputWhenPasswordWasVerified() {
         //given
+        let queue = DispatchQueue(label: "Verify password test queue", qos: .background)
+        sut.dispatchQueue = queue
+        appLockInteractorOutputMock.passwordVerificationResult = nil
         let expectation = XCTestExpectation(description: "verify password")
         
         //when
         VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied)
         
         //then
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            XCTAssertNotNil(self.appLockServiceOutputMock.passwordVerificationResult)
-            XCTAssertEqual(self.appLockServiceOutputMock.passwordVerificationResult, VerifyPasswordResult.denied)
+        queue.async {
+            XCTAssertNotNil(self.appLockInteractorOutputMock.passwordVerificationResult)
+            XCTAssertEqual(self.appLockInteractorOutputMock.passwordVerificationResult, VerifyPasswordResult.denied)
             
             expectation.fulfill()
-        })
+        }
         
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 0.5)
     }
     
     func testThatItPersistsBiometricsWhenPasswordIsValid() {

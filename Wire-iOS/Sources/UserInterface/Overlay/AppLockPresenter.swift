@@ -29,13 +29,13 @@ protocol AppLockUserInterface: class {
     func setReauth(visible: Bool)
 }
 
-private enum AuthenticationState {
+enum AuthenticationState {
     case needed
     case cancelled
     case authenticated
     case pendingPassword
 
-    mutating func update(with result: AppLock.AuthenticationResult) {
+    fileprivate mutating func update(with result: AppLock.AuthenticationResult) {
         switch result {
         case .denied:
             self = .cancelled
@@ -49,15 +49,24 @@ private enum AuthenticationState {
 
 // MARK: - AppLockPresenter
 class AppLockPresenter {
-    weak var userInterface: AppLockUserInterface?
+    private weak var userInterface: AppLockUserInterface?
     private var authenticationState: AuthenticationState
-    private var appLockService: AppLockService
+    private var appLockInteractorInput: AppLockInteractorInput
     
-    init(userInterface: AppLockUserInterface) {
+    var dispatchQueue: DispatchQueue = DispatchQueue.main
+    
+    convenience init(userInterface: AppLockUserInterface) {
+        let appLockInteractor = AppLockInteractor()
+        self.init(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
+        appLockInteractor.output = self
+    }
+    
+    init(userInterface: AppLockUserInterface,
+         appLockInteractorInput: AppLockInteractorInput,
+         authenticationState: AuthenticationState = .needed) {
         self.userInterface = userInterface
-        self.authenticationState = .needed
-        self.appLockService = AppLockService()
-        self.appLockService.output = self
+        self.appLockInteractorInput = appLockInteractorInput
+        self.authenticationState = authenticationState
         self.addApplicationStateObservers()
     }
     
@@ -66,8 +75,8 @@ class AppLockPresenter {
         requireAuthenticationIfNeeded()
     }
     
-    private func requireAuthenticationIfNeeded() {
-        guard AppLock.isActive, appLockService.isLockTimeoutReached else {
+    func requireAuthenticationIfNeeded() {
+        guard AppLock.isActive, appLockInteractorInput.isLockTimeoutReached else {
             setContents(dimmed: false)
             return
         }
@@ -75,7 +84,7 @@ class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockService.evaluateAuthentication()
+            appLockInteractorInput.evaluateAuthentication()
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
@@ -87,23 +96,23 @@ class AppLockPresenter {
 // MARK: - Account password helper
 extension AppLockPresenter {
     private func requestAccountPassword(with message: String) {
-        userInterface?.presentRequestPasswordController(with: message) { password in
-            DispatchQueue.main.async { [weak self] in
-                guard let `self` = self else { return }
+        userInterface?.presentRequestPasswordController(with: message) { [weak self] password in
+            guard let `self` = self else { return }
+            self.dispatchQueue.async {
                 guard let password = password, !password.isEmpty else {
                     self.authenticationState = .cancelled
                     self.setContents(dimmed: true, withReauth: true)
                     return
                 }
                 self.userInterface?.setSpinner(animating: true)
-                self.appLockService.verify(password: password)
+                self.appLockInteractorInput.verify(password: password)
             }
         }
     }
 }
 
-// MARK: - AppLockServiceOutput
-extension AppLockPresenter: AppLockServiceOutput {
+// MARK: - AppLockInteractorOutput
+extension AppLockPresenter: AppLockInteractorOutput {
     func authenticationEvaluated(with result: AppLock.AuthenticationResult) {
         authenticationState.update(with: result)
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)

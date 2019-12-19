@@ -416,9 +416,11 @@
 		5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */; };
 		5EFE9BFF21246483007932A6 /* RegistrationFinalErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */; };
 		5EFE9C19212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */; };
+		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
+		6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903723AA8D480081802B /* AppLockPresenterTests.swift */; };
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
 		636AD79A23A916CB004A3050 /* AppLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79923A916CB004A3050 /* AppLockPresenter.swift */; };
-		636AD79C23A91A57004A3050 /* AppLockService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79B23A91A57004A3050 /* AppLockService.swift */; };
+		636AD79C23A91A57004A3050 /* AppLockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79B23A91A57004A3050 /* AppLockInteractor.swift */; };
 		636E57BD2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */; };
 		7C0BB6E61FE682A200386A19 /* AccountSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */; };
 		7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */; };
@@ -2001,9 +2003,11 @@
 		5EFD915821CBCB5300080599 /* UIResponder+VoiceOver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+VoiceOver.swift"; sourceTree = "<group>"; };
 		5EFE9BFE21246483007932A6 /* RegistrationFinalErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationFinalErrorHandler.swift; sourceTree = "<group>"; };
 		5EFE9C18212C1D6E007932A6 /* RegistrationActivationCodeSentEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationActivationCodeSentEventHandler.swift; sourceTree = "<group>"; };
+		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
+		6306903723AA8D480081802B /* AppLockPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenterTests.swift; sourceTree = "<group>"; };
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
 		636AD79923A916CB004A3050 /* AppLockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenter.swift; sourceTree = "<group>"; };
-		636AD79B23A91A57004A3050 /* AppLockService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockService.swift; sourceTree = "<group>"; };
+		636AD79B23A91A57004A3050 /* AppLockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractor.swift; sourceTree = "<group>"; };
 		636E57BC2386BFD9005B4FD8 /* AvailabilityStringBuilderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityStringBuilderTests.swift; sourceTree = "<group>"; };
 		7C0BB6E41FE680F200386A19 /* AccountSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSelectionViewController.swift; sourceTree = "<group>"; };
 		7C17ECA71F7508980056600C /* PreviewHeightCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewHeightCalculator.swift; sourceTree = "<group>"; };
@@ -4214,6 +4218,16 @@
 			path = Input;
 			sourceTree = "<group>";
 		};
+		6306902E23AA5D4A0081802B /* AppLock */ = {
+			isa = PBXGroup;
+			children = (
+				EFD4B9CA22F09C3D008CA042 /* AppLockTests.swift */,
+				6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */,
+				6306903723AA8D480081802B /* AppLockPresenterTests.swift */,
+			);
+			path = AppLock;
+			sourceTree = "<group>";
+		};
 		6340EF8E237AE90700EF8506 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
@@ -5645,7 +5659,7 @@
 				8736F1C11E4DCEB8001CBA62 /* AppLockViewController.swift */,
 				8736F1831E4B67F0001CBA62 /* AppLockView.swift */,
 				636AD79923A916CB004A3050 /* AppLockPresenter.swift */,
-				636AD79B23A91A57004A3050 /* AppLockService.swift */,
+				636AD79B23A91A57004A3050 /* AppLockInteractor.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -5762,11 +5776,11 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				6306902E23AA5D4A0081802B /* AppLock */,
 				A97284092384245F00AFEFC6 /* Backup */,
 				A9E844F723730CC7001D1C47 /* Color */,
 				6340EF8E237AE90700EF8506 /* Calling */,
 				EF37AB742366F6BA00C1F5D9 /* Status */,
-				EFD4B9CA22F09C3D008CA042 /* AppLockTests.swift */,
 				EFD4B9C922F082BE008CA042 /* UIImage */,
 				8787BDD31BF374420096B1B5 /* Settings */,
 				EF2121982292EEA4006C4293 /* SwiftSnapshotTesting */,
@@ -8170,7 +8184,7 @@
 				8775BF1E2007CFB200A8AD93 /* UIControlBlockAPI.swift in Sources */,
 				EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */,
 				5EE73BF3212323C70032986D /* RegistrationCredentialsVerifiedEventHandler.swift in Sources */,
-				636AD79C23A91A57004A3050 /* AppLockService.swift in Sources */,
+				636AD79C23A91A57004A3050 /* AppLockInteractor.swift in Sources */,
 				EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */,
 				F12CDAE01E43868200CEFCEB /* ConfirmEmailViewController.swift in Sources */,
 				7CCFC10F228AFCC0007C365B /* ConversationLegalHoldCell.swift in Sources */,
@@ -8510,6 +8524,7 @@
 				5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */,
 				7C6A69051FDFD80E007EBE41 /* AvailabilityLabelTests.swift in Sources */,
 				BF0BDF8A1DABF32B003C61DE /* DestructionCountdownViewTests.swift in Sources */,
+				6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */,
 				EF98987220C5A47A005680C5 /* SettingsClientViewControllerTests.swift in Sources */,
 				8742FB801E8BD18900D046BC /* ConversationListAccessoryViewTests.swift in Sources */,
 				162AE73A219AC4C100581D98 /* ConversationTextMessageTests.swift in Sources */,
@@ -8572,6 +8587,7 @@
 				876041551F5451EA003CB161 /* AccountViewSnapshotTests.swift in Sources */,
 				EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */,
 				87656FD11FB5FF0300D5286C /* FilePreviewGeneratorTests.swift in Sources */,
+				6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */,
 				BFAAB23F1DED95B100CBC096 /* UserNameDetailViewTests.swift in Sources */,
 				5E65A79A212FF7CD008BFCC0 /* AuthenticationStateControllerTests.swift in Sources */,
 				BF808B511DE605DF00718076 /* ChangeHandleViewControllerTests.swift in Sources */,
