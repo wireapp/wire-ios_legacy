@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 - (void)createOutgoingConnectionViewController;
+- (void)updateInputBarVisibility;
+- (void)setupNavigatiomItem;
 
 @end
 

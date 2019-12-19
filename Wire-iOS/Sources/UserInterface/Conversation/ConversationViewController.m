@@ -64,10 +64,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
 
@@ -665,39 +661,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
-@implementation ConversationViewController (ZMConversationObserver)
-
-- (void)conversationDidChange:(ConversationChangeInfo *)note
-{
-    if (note.causedByConversationPrivacyChange) {
-        [self presentPrivacyWarningAlertForChange:note];
-    }
-    
-    if (note.participantsChanged || note.connectionStateChanged) {
-        [self updateRightNavigationItemsButtons];
-        [self updateLeftNavigationBarItems];
-        [self updateOutgoingConnectionVisibility];
-        [self.contentViewController updateTableViewHeaderView];
-        [self updateInputBarVisibility];
-    }
-
-    if (note.participantsChanged || note.externalParticipantsStateChanged) {
-        [self updateGuestsBarVisibility];
-    }
-
-    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged || note.legalHoldStatusChanged) {
-        [self setupNavigatiomItem];
-    }
-}
-
-- (void)dismissProfileClientViewController:(UIBarButtonItem *)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
 
 @implementation ConversationViewController (ConversationListObserver)
 
