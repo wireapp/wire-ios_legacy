@@ -257,7 +257,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     }
 
     private func updateGroupRoleIndicator() {
-        groupRoleIndicator.isHidden = !(conversation.map(user.isAdminGroup) ?? false)
+        groupRoleIndicator.isHidden = !(conversation.map(user.isAdminGroup) ?? false) || (conversation?.conversationType != .group)
     }
     
     private func applyOptions() {
