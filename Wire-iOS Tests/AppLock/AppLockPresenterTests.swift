@@ -22,7 +22,9 @@ import XCTest
 
 private final class AppLockUserInterfaceMock: AppLockUserInterface {
     var passwordInput: String?
+    var requestPasswordMessage: String?
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
+        requestPasswordMessage = message
         callback(passwordInput)
     }
     
@@ -57,7 +59,9 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
     }
     
     var didCallEvaluateAuthentication: Bool = false
-    func evaluateAuthentication() {
+    var authDescription: String?
+    func evaluateAuthentication(description: String) {
+        authDescription = description
         didCallEvaluateAuthentication = true
     }
 }
@@ -91,6 +95,7 @@ class AppLockPresenterTests: XCTestCase {
         sut.requireAuthenticationIfNeeded()
         
         //then
+        XCTAssertEqual(appLockInteractor.authDescription, "self.settings.privacy_security.lock_app.description")
         XCTAssertTrue(appLockInteractor.didCallEvaluateAuthentication)
         assert(contentsDimmed: true, reauthVisibile: false)
         
@@ -223,7 +228,7 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: true, reauthVisibile: false)
     }
     
-    func testThatItVerifiesPasswordWhenNeeded() {
+    func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
         //given
         let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
@@ -235,7 +240,7 @@ class AppLockPresenterTests: XCTestCase {
 
         //then
         assertPasswordVerification(on: queue)
-        
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.unlock")
         
         //given
         setupPasswordVerificationTest()
@@ -245,18 +250,9 @@ class AppLockPresenterTests: XCTestCase {
         
         //then
         assertPasswordVerification(on: queue)
-        
-        
-        //given
-        setupPasswordVerificationTest()
-        
-        //when
-        sut.passwordVerified(with: .timeout)
-        
-        //then
-        assertPasswordVerification(on: queue)
-        
-        
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+
+
         //given
         setupPasswordVerificationTest()
         
@@ -265,6 +261,18 @@ class AppLockPresenterTests: XCTestCase {
         
         //then
         assertPasswordVerification(on: queue)
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
+
+
+        //given
+        setupPasswordVerificationTest()
+        
+        //when
+        sut.passwordVerified(with: .timeout)
+        
+        //then
+        assertPasswordVerification(on: queue)
+        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_offline_password")
     }
 
     func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
@@ -365,6 +373,7 @@ extension AppLockPresenterTests {
     func setupPasswordVerificationTest() {
         userInterface.passwordInput = "password"
         appLockInteractor.passwordToVerify = nil
+        userInterface.requestPasswordMessage = nil
     }
     
     func assert(contentsDimmed: Bool?, reauthVisibile: Bool?) {

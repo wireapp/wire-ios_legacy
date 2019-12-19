@@ -82,7 +82,7 @@ final class AppLockViewController: UIViewController {
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
-        let passwordController = RequestPasswordController(context: .unlock(message), callback: callback)
+        let passwordController = RequestPasswordController(context: .unlock(message.localized), callback: callback)
         self.passwordController = passwordController
         self.present(passwordController.alertController, animated: true, completion: nil)
     }

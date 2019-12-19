@@ -20,7 +20,7 @@ import Foundation
 
 protocol AppLockInteractorInput: class {
     var isLockTimeoutReached: Bool { get }
-    func evaluateAuthentication()
+    func evaluateAuthentication(description: String)
     func verify(password: String)
 }
 
@@ -54,8 +54,8 @@ extension AppLockInteractor: AppLockInteractorInput {
         return true
     }
     
-    func evaluateAuthentication() {
-        appLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { [weak self] result in
+    func evaluateAuthentication(description: String) {
+        appLock.evaluateAuthentication(description: description.localized) { [weak self] result in
             guard let `self` = self else { return }
             self.dispatchQueue.async {
                 self.output?.authenticationEvaluated(with: result)

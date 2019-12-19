@@ -93,7 +93,7 @@ final class AppLockInteractorTests: XCTestCase {
         let expectation = XCTestExpectation(description: "evaluate authentication")
 
         //when
-        sut.evaluateAuthentication()
+        sut.evaluateAuthentication(description: "")
 
         //then
         queue.async {

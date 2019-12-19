@@ -47,6 +47,13 @@ enum AuthenticationState {
     }
 }
 
+private struct AuthenticationMessageKey {
+    static let accountPassword = "self.settings.privacy_security.lock_password.description.unlock"
+    static let wrongPassword = "self.settings.privacy_security.lock_password.description.wrong_password"
+    static let wrongOfflinePassword = "self.settings.privacy_security.lock_password.description.wrong_offline_password"
+    static let deviceAuthentication = "self.settings.privacy_security.lock_app.description"
+}
+
 // MARK: - AppLockPresenter
 class AppLockPresenter {
     private weak var userInterface: AppLockUserInterface?
@@ -84,7 +91,7 @@ class AppLockPresenter {
         case .needed, .authenticated:
             authenticationState = .needed
             setContents(dimmed: true)
-            appLockInteractorInput.evaluateAuthentication()
+            appLockInteractorInput.evaluateAuthentication(description: AuthenticationMessageKey.deviceAuthentication)
         case .cancelled:
             setContents(dimmed: true, withReauth: true)
         case .pendingPassword:
@@ -118,7 +125,7 @@ extension AppLockPresenter: AppLockInteractorOutput {
         setContents(dimmed: result != .granted, withReauth: result == .unavailable)
 
         if case .needAccountPassword = result {
-            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.unlock".localized)
+            requestAccountPassword(with: AuthenticationMessageKey.accountPassword)
         }
         
         if case .granted = result {
@@ -137,9 +144,9 @@ extension AppLockPresenter: AppLockInteractorOutput {
         case .validated:
             appUnlocked()
         case .denied, .unknown:
-            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.wrong_password".localized)
+            requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
         case .timeout:
-            requestAccountPassword(with: "self.settings.privacy_security.lock_password.description.wrong_offline_password".localized)
+            requestAccountPassword(with: AuthenticationMessageKey.wrongOfflinePassword)
         }
     }
 }
