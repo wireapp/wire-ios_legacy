@@ -18,6 +18,13 @@
 
 import Foundation
 
+extension ConversationContentViewController: ZMConversationObserver {
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
+        ///TODO: reload when role change
+         dataSource?.loadMessages()
+    }
+}
+
 extension ConversationContentViewController {
     @objc
     func setDataSource() {
