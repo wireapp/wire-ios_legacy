@@ -20,6 +20,13 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
+// TODO: tests for group role label:
+//
+// - viewer is admin and other user is/isn't a admin
+// - other is external and admin (labels don't overlap)
+// - profile is from 1:1 (no admin label)
+// - hide admin label if the other user is a wireless user
+
 final class ProfileDetailsViewControllerTests: XCTestCase {
 
     var selfUserTeam: UUID!
@@ -502,8 +509,6 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
             ])
     }
 
-    ///TODO: add test for viewer is admin and other user is/isn't a admin
-    
     func test_Group_OtherUser_NoSCIM_NoEmail() {
         // GIVEN
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
