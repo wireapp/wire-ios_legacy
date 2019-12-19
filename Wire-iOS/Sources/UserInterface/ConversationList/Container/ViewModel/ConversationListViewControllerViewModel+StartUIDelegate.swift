@@ -22,7 +22,7 @@ fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
     func startUI(_ startUI: StartUIViewController, didSelect users: Set<ZMUser>) {
-        guard users.count > 0 else {
+        guard !users.isEmpty else {
             return
         }
         
@@ -61,7 +61,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
                 userSession.enqueueChanges({
-                    oneToOneConversation = user.oneToOneConversation
+                    oneToOneConversation = user.oneToOneConversation ///TODO: nil for ext??
                 }, completionHandler: {
                     delay(0.3) {
                         onConversationCreated(oneToOneConversation)
