@@ -64,6 +64,7 @@
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
+@property (nonatomic) id userObserverToken;
 @end
 
 
@@ -96,6 +97,8 @@
         self.messagePresenter.targetViewController = self;
         self.messagePresenter.modalTargetController = self.parentViewController;
         self.session = session;
+        
+        self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
     }
     
     return self;
