@@ -65,6 +65,6 @@ extension ConversationContentViewController: ZMConversationObserver {
     public func conversationDidChange(_ note: ConversationChangeInfo) {
         guard note.createdRemotelyChanged else { return }
         
-        dataSource?.loadMessages()
+        dataSource?.loadMessages(forceRecalculate: true)
     }
 }
