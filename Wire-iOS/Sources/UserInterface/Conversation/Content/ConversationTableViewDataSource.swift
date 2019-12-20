@@ -108,9 +108,9 @@ final class ConversationTableViewDataSource: NSObject {
             let sectionController = self.sectionController(for: tuple.element, at: tuple.offset)
             
             // Re-create cell description if the context has changed (message has been moved around or received new neighbours).
-            if sectionController.context != context {
+//            if sectionController.context != context {
                 sectionController.recreateCellDescriptions(in: context)
-            }
+//            }
             
             return ArraySection(model: sectionIdentifier, elements: sectionController.tableViewCellDescriptions)
         }
