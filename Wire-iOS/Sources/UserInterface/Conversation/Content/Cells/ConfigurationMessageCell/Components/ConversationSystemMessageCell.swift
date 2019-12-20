@@ -263,7 +263,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 // MARK: - Factory
 
-class ConversationSystemMessageCellDescription {
+final class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
@@ -352,8 +352,12 @@ class ConversationSystemMessageCellDescription {
             let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
             let selfCanAddUsers = ZMUser.selfUser()?.canAddUser(to: conversation) ?? false
             
-            if selfCanAddUsers && isOpenGroup {
-                cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
+            if isOpenGroup {
+                if selfCanAddUsers {
+                    cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
+                } else {
+                    ///TODO: observe for user change
+                }
             }
             
             return cells
