@@ -62,19 +62,9 @@ extension ConversationContentViewController {
 }
 
 extension ConversationContentViewController: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {//1. createdRemotelyChanged 2. conversationListIndicatorChanged, unreadCountChanged
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
         guard note.createdRemotelyChanged else { return }
         
         dataSource?.loadMessages()
     }
-}
-
-    ///TODO: should observe self role change -> reload
-
-extension ConversationContentViewController: ZMUserObserver {
-    public func userDidChange(_ changeInfo: WireDataModel.UserChangeInfo) {
-            guard changeInfo.roleChanged else { return }
-    
-                dataSource?.loadMessages() ///TODO: load only if top cell is shown.
-        }
 }
