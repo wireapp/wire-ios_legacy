@@ -18,7 +18,6 @@
 
 import Foundation
 
-
 /// a new simple Mock User without objc
 final class SwiftMockUser: NSObject, UserType {
     var name: String? = nil
@@ -99,8 +98,16 @@ final class SwiftMockUser: NSObject, UserType {
         
     }
     
+    var isGuestInConversation: Bool = false {
+        didSet {
+            if isGuestInConversation {
+                isTeamMember = false
+            }
+        }
+    }
+    
     func isGuest(in conversation: ZMConversation) -> Bool {
-        return false
+        return isGuestInConversation
     }
     
     func imageData(for size: ProfileImageSize, queue: DispatchQueue, completion: @escaping (Data?) -> Void) {
@@ -117,16 +124,19 @@ final class SwiftMockUser: NSObject, UserType {
     
     var managedByWire: Bool = false
     
+    var canCreateConversation: Bool = true
+    
     func canCreateConversation(type: ZMConversationType) -> Bool {
-        return true
+        return canCreateConversation
     }
     
     var canCreateService: Bool = true
     
     var canManageTeam: Bool = true
     
+    var canAccessCompanyInformation: Bool = true
     func canAccessCompanyInformation(of user: UserType) -> Bool {
-        return true
+        return canAccessCompanyInformation
     }
     
     func canAddService(to conversation: ZMConversation) -> Bool {
@@ -141,8 +151,10 @@ final class SwiftMockUser: NSObject, UserType {
         return true
     }
     
+    var canRemoveUserFromConversation: Bool = true
+    
     func canRemoveUser(from conversation: ZMConversation) -> Bool {
-        return true
+        return canRemoveUserFromConversation
     }
     
     func canDeleteConversation(_ conversation: ZMConversation) -> Bool {
