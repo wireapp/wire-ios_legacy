@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Aucun résultat.";
 "peoplepicker.no_matching_results_message" = "Veuillez saisir une adresse e-mail complète.";
+"peoplepicker.no_search_results" = "Aucun résultat. Essayez avec un nom différent.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Envoyer une invitation";
 "peoplepicker.no_matching_results.action.share_contacts" = "Partager vos contacts";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Options";
 "participants.footer.add_title" = "Ajouter des contacts";
 "participants.section.name.footer" = "Les conversations de groupe peuvent contenir jusqu'à %1$d participants. Les appels vidéo fonctionnent avec jusqu'à %2$d destinataires.";
+"participants.section.admins.footer" = "Il n'y a aucun administrateur.";
+"participants.section.members.footer" = "Il n'y a aucun participant.";
+
+"profile.profile.group_admin_options.title" = "Admin du groupe";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Plus d’actions";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "VOUS AVEZ DÉSACTIVÉ LES ACCUSÉS DE LECTURE";
 "profile.read_receipts_memo.body" = "Si les deux participants activent les accusés de lecture, vous pourrez voir quand les messages sont lus.\n\nVous pouvez changer cette option dans les paramètres de votre compte.";
 
+"profile.group_admin_status_memo.body" = "Lorsque cette option est activée, l'administrateur peut ajouter ou supprimer des contacts et des services, mettre à jour les paramètres du groupe et modifier le rôle des participants.";
+
 "profile.extended_metadata.header" = "Informations";
 
 // User Details
 "profile.details.title" = "Détails";
 "profile.details.guest" = "Contact externe";
+"profile.details.group_admin" = "Admin du groupe";
+"profile.details.partner" = "externe";
 
 "profile_view.accessibility.handle" = "Nom d'utilisateur";
 "profile_view.accessibility.name" = "Nom affiché";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "Vous pouvez être notifié pour tout (y compris les appels audio et vidéo) ou seulement quand quelqu'un vous mentionne ou répond à un de vos messages.";
 "group_details.receipt_options_cell.title" = "Accusés de lecture";
 "group_details.receipt_options_cell.description" = "Quand cette option est activée, les participants peuvent voir quand leurs messages ont été lus dans cette conversation.";
+
+"group_details.conversation_admins_header.title" = "Admins du groupe";
+"group_details.conversation_members_header.title" = "Participants à la conversation";
+
 
 // Legal hold details
 

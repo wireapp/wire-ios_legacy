@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Ничего не найдено.";
 "peoplepicker.no_matching_results_message" = "Введите полный адрес электронной почты.";
+"peoplepicker.no_search_results" = "Нет подходящих результатов. Попробуйте ввести другое имя.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Отправить приглашение";
 "peoplepicker.no_matching_results.action.share_contacts" = "Пригласить друзей";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Настройки";
 "participants.footer.add_title" = "Добавить участников";
 "participants.section.name.footer" = "К групповой беседе может присоединиться до %1$d участников. Видеозвонки возможны между вами и еще %2$d участниками.";
+"participants.section.admins.footer" = "Здесь нет администраторов.";
+"participants.section.members.footer" = "Здесь нет участников.";
+
+"profile.profile.group_admin_options.title" = "Администратор группы";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Дополнительные действия";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "У ВАС ОТКЛЮЧЕНЫ ОТЧЕТЫ О ПРОЧТЕНИИ";
 "profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы сможете видеть когда были прочитаны ваши сообщения.\n\nЭтот параметр можно изменить в настройках вашего аккаунта.";
 
+"profile.group_admin_status_memo.body" = "Если эта опция включена, администратор может добавлять или удалять пользователей и сервисы, обновлять настройки групп и изменять роль участников.";
+
 "profile.extended_metadata.header" = "Информация";
 
 // User Details
 "profile.details.title" = "Детали";
 "profile.details.guest" = "Гость";
+"profile.details.group_admin" = "Администратор группы";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Имя пользователя";
 "profile_view.accessibility.name" = "Отображаемое имя";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "Вы можете получать уведомления обо всем (включая аудио- и видеовызовы) или только когда кто-то упоминает вас или отвечает на одно из ваших сообщений.";
 "group_details.receipt_options_cell.title" = "Отчеты о прочтении";
 "group_details.receipt_options_cell.description" = "При включении ваши собеседники смогут видеть когда было прочитано их сообщение.";
+
+"group_details.conversation_admins_header.title" = "Администраторы группы";
+"group_details.conversation_members_header.title" = "Участники группы";
+
 
 // Legal hold details
 
@@ -969,12 +982,12 @@
 
 "self.settings.privacy_section_group.title" = "Конфиденциальность";
 "self.settings.enable_read_receipts.title" = "Отправлять отчеты о прочтении";
-"self.settings.privacy_section_group.subtitle" = "Если этот параметр выключен, вы не сможете увидеть отчеты о прочтении от ваших собеседников.\n\nЭтот параметр не применяется к групповым беседам.";
+"self.settings.privacy_section_group.subtitle" = "При отключении этой настройки, вы не сможете видеть отчеты о прочтении от ваших собеседников.\n\nЭтот параметр не применяется к групповым беседам.";
 
 "self.settings.account_picture_group.picture" = "Изображение";
 "self.settings.account_picture_group.color" = "Цвет";
 
-"self.settings.account_personal_information_group.title" = "Личная информация";
+"self.settings.account_personal_information_group.title" = "Личные данные";
 
 "self.settings.account_picture_group.theme" = "Темная тема";
 
@@ -1676,11 +1689,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "Сообщение еще никому не понравилось.";
+"message_details.empty_likes" = "Это сообщение никому еще не понравилось.";
 "message_details.empty_read_receipts" = "Сообщение еще никем не прочитано.";
 "message_details.read_receipts_disabled" = "Отчетов о прочтении не существовало, когда это сообщение было отправлено.";
 "message_details.combined_title" = "Сведения о сообщении";
-"message_details.likes_title" = "Понравилось";
+"message_details.likes_title" = "Нравится";
 "message_details.receipts_title" = "Прочитано";
 "message_details.tabs.seen" = "Прочитано (%d)";
 "message_details.tabs.likes" = "Понравилось (%d)";

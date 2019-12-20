@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Nessun risultato.";
 "peoplepicker.no_matching_results_message" = "Metti un indirizzo email completo.";
+"peoplepicker.no_search_results" = "Nessun risultato corrispondente. Provare ad inserire un nome diverso.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Manda un invito";
 "peoplepicker.no_matching_results.action.share_contacts" = "Condividi contatti";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
 "participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo. Le videochiamate funzionano con altre %2$d persone oltre a te.";
+"participants.section.admins.footer" = "Non ci sono amministratori.";
+"participants.section.members.footer" = "Non ci sono membri.";
+
+"profile.profile.group_admin_options.title" = "Amministratore del gruppo";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Altre azioni";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "HAI DISABILITATO LE CONFERME DI LETTURA";
 "profile.read_receipts_memo.body" = "Se entrambe le parti attivano le conferme di lettura, è possibile vedere quando vengono letti i messaggi.\nPuoi cambiare questa opzione nelle impostazioni del tuo account.";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "Informazioni";
 
 // User Details
 "profile.details.title" = "Dettagli";
 "profile.details.guest" = "Ospite";
+"profile.details.group_admin" = "Amministratore del gruppo";
+"profile.details.partner" = "esterno";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Nome visualizzato";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "È possibile ricevere notifiche su tutto (comprese le chiamate audio e video) o solo quando qualcuno parla di te o risponde a uno dei tuoi messaggi.";
 "group_details.receipt_options_cell.title" = "Conferme di lettura";
 "group_details.receipt_options_cell.description" = "Quando è attivo, le persone potranno vedere quando i loro messaggi vengono letti in questa conversazione.";
+
+"group_details.conversation_admins_header.title" = "Amministratori del gruppo";
+"group_details.conversation_members_header.title" = "Membri del gruppo";
+
 
 // Legal hold details
 

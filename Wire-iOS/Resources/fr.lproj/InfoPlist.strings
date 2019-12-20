@@ -16,13 +16,13 @@
  *  along with this program. If not, see http://www.gnu.org/licenses/.
  */
 
-"NSContactsUsageDescription" = "Permet à Wire d'accéder à vos contacts pour vous connecter à d’autres personnes. Nous anonymisons toutes les informations avant de les envoyer à notre serveur et ne les partageons avec personne d'autre.";
-"NSMicrophoneUsageDescription" = "Permet à Wire d'accéder à votre microphone afin que vous puissiez téléphoner et envoyer des messages vocaux.";
-"NSLocationWhenInUseUsageDescription" = "Permet à Wire d'accéder à votre position afin que vous puissiez la partager avec vos contacts.";
-"NSCameraUsageDescription" = "Permet à Wire d'accéder à votre appareil photo afin que vous puissiez passer des appels vidéo et envoyer des photos.";
+"NSContactsUsageDescription" = "Autorisez Wire à accéder à vos contactes pour vous connecter à d’autres personnes. Nous anonymisons toutes les informations avant de les envoyer à notre serveur et ne les partageons avec personne d'autre.";
+"NSMicrophoneUsageDescription" = "Autorisez Wire à accéder à votre microphone afin que vous puissiez téléphoner et envoyer des messages vocaux.";
+"NSLocationWhenInUseUsageDescription" = "Autorisez Wire à accéder à votre localisation afin que vous puissiez la partager avec vos contactes.";
+"NSCameraUsageDescription" = "Autorisez Wire à accéder à votre appareil photo afin que vous puissiez passer des appels vidéo et envoyer des photos.";
 /* Showed after taking a picture with camera, but only when NSPhotoLibraryUsageDescription permission was declined. Asks permission for only writing to photo library. */
-"NSPhotoLibraryAddUsageDescription" = "Permet à Wire d'enregistrer les photos que vous prenez dans la photothèque.";
+"NSPhotoLibraryAddUsageDescription" = "Autorisez Wire à enregistrer les photos que vous prenez dans la bibliothèque de photos.";
 /* Showed when trying to send picture from conversaiton list. Asks permissions for reading and writing to photo library */
-"NSPhotoLibraryUsageDescription" = "Permet à Wire d'accéder aux images enregistrées dans la photothèque.";
+"NSPhotoLibraryUsageDescription" = "Autorisez Wire à accéder aux images enregistrées dans la bibliothèque de photos.";
 /* Is shown to the user when app is locked with AppLock feature on the phone that supports Face ID */
 "NSFaceIDUsageDescription" = "Pour vous authentifier dans l'application, veuillez autoriser Wire à utiliser Face ID.";

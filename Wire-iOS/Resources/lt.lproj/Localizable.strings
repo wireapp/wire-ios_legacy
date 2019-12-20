@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Rezultatų nėra.";
 "peoplepicker.no_matching_results_message" = "Įveskite pilną el. pašto adresą.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Siųsti pakvietimą";
 "peoplepicker.no_matching_results.action.share_contacts" = "Dalintis kontaktais";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Parinktys";
 "participants.footer.add_title" = "Pridėti dalyvių";
 "participants.section.name.footer" = "Prie grupės susirašinėjimo gali prisijungti iki %1$d dalyvių. Bendrauti vaizdu gali iki %2$d žmonių ir jumis.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Daugiau veiksmų";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "JŪS IŠUNGĖTE PERSKAITYMO PATVIRTINIMUS";
 "profile.read_receipts_memo.body" = "Jei abi pusės įjungia perskaitymo patvirtinimus, jūs galite matyti kai žinutė buvo perskaityta. \n\nGalite tai pakeisti paskyros nustatymuose.";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "Informacija";
 
 // User Details
 "profile.details.title" = "Išsamiau";
 "profile.details.guest" = "Svečias";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Naudotojo vardas";
 "profile_view.accessibility.name" = "Vardas pavardė";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "Jūms bus pranešta apie viską (įskaitant garso ir vaizdo skambučius) arba tik kai kažkas jus pamini arba atsako į jūsų žinutę.";
 "group_details.receipt_options_cell.title" = "Perskaitymo patvirtinimai";
 "group_details.receipt_options_cell.description" = "Įjungus, žmonės gali matyti ar jų žinutės buvo perskaitytos.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
 
 // Legal hold details
 
