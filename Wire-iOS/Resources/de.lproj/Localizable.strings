@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Keine Ergebnisse";
 "peoplepicker.no_matching_results_message" = "Bitte gib eine vollständige \nE-Mail-Adresse ein";
+"peoplepicker.no_search_results" = "Keine passenden Ergebnisse. Bitte einen anderen Namen eingeben.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Einladung versenden";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kontakte teilen";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
 "participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und dir.";
+"participants.section.admins.footer" = "Es gibt keine Admins.";
+"participants.section.members.footer" = "Es gibt keine Mitglieder.";
+
+"profile.profile.group_admin_options.title" = "Gruppen-Admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Weitere Aktionen";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "LESEBESTÄTIGUNGEN AUS";
 "profile.read_receipts_memo.body" = "Wenn beide Seiten Lesebestätigungen aktivieren, können alle sehen, wenn Nachrichten gelesen werden.\nDiese Option kann in den Kontoeinstellungen geändert werden.";
 
+"profile.group_admin_status_memo.body" = "Wenn diese Option aktiviert ist, kann der Admin Personen und Dienste hinzufügen oder entfernen, Einstellungen aktualisieren und die Rolle eines Teilnehmers ändern.";
+
 "profile.extended_metadata.header" = "Informationen";
 
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Gast";
+"profile.details.group_admin" = "Gruppen-Admin";
+"profile.details.partner" = "extern";
 
 "profile_view.accessibility.handle" = "Benutzername";
 "profile_view.accessibility.name" = "Angezeigter Name";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine deiner Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
 "group_details.receipt_options_cell.description" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
+
+"group_details.conversation_admins_header.title" = "Gruppen-Admins";
+"group_details.conversation_members_header.title" = "Gruppen-Mitglieder";
+
 
 // Legal hold details
 
