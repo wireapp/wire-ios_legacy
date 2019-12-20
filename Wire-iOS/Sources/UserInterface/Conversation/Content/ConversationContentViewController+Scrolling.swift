@@ -60,3 +60,21 @@ extension ConversationContentViewController {
         updateTableViewHeaderView()
     }
 }
+
+extension ConversationContentViewController: ZMConversationObserver {
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
+//        guard note.
+        ///TODO: reload when role change
+         dataSource?.loadMessages()
+    }
+}
+
+    ///TODO: should observe self role change -> reload
+
+extension ConversationContentViewController: ZMUserObserver {
+    public func userDidChange(_ changeInfo: WireDataModel.UserChangeInfo) {
+            guard changeInfo.roleChanged else { return }
+    
+                dataSource?.loadMessages() ///TODO: load only if top cell is shown.
+        }
+}
