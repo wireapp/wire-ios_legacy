@@ -185,12 +185,10 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
     }
     
-    func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {///TODO: crash?
-        recordMode = true
+    func testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .youAndAnother, allowGuests: true)
             selfUser.membership!.setTeamRole(.partner)
-            createARoleForSelfUserWith(["add_conversation_member", "modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
         }
     }
