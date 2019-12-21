@@ -257,6 +257,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         adminRole.actions = Set(actions)
         participantRole.role = adminRole
         
+        ///TODO: we should not edit self user everytime, inject UserType instead.
         selfUser.participantRoles = Set([participantRole])
     }
 
