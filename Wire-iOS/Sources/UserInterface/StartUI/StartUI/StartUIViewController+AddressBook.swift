@@ -44,10 +44,13 @@ final class StartUIViewController: UIViewController {
     }()
     
     private var addressBookUploadLogicHandled = false
-    var addressBookHelper: AddressBookHelperProtocol? {
-        return AddressBookHelper.sharedHelper
+    
+    var addressBookHelperType: AddressBookHelperProtocol.Type
+
+    var addressBookHelper: AddressBookHelperProtocol {
+        return addressBookHelperType.sharedHelper
     }
-    private var quickActionsBar: StartUIInviteActionBar?
+    let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
 
     let profilePresenter: ProfilePresenter = ProfilePresenter()
     private let emptyResultView: EmptySearchResultsView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
@@ -57,17 +60,20 @@ final class StartUIViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// init method for injecting mock addressBookHelper
+    ///
+    /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
+        self.addressBookHelperType = addressBookHelperType
+        super.init(nibName: nil, bundle: nil)
+    }
+
     // MARK: - Overloaded methods
     override func loadView() {
         setupViews()
         view = StartUIView(frame: CGRect.zero)
     }
-    
-//    convenience init() {
-//        self.init(nibName: nil, bundle: nil)
-//
-//    }
-    
+
     func setupViews() {
         let team = ZMUser.selfUser().team
         
@@ -81,39 +87,36 @@ final class StartUIViewController: UIViewController {
         addToSelf(searchHeader)
         
         groupSelector.onGroupSelected = { [weak self] group in
-            if SearchGroupServices == group {///TODO: ??
+            if .services == group {///TODO: ??
                 // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
                 // not going to be added to the new conversation with the bot.
                 self?.searchHeader.clearInput()
             }
             
-            self?.searchResultsViewController.searchGroup = group
+            self?.searchResults.searchGroup = group
             self?.performSearch()
         }
         
-        if showsGroupSelector() {
+        if showsGroupSelector {
             view.addSubview(groupSelector)
         }
         
-        searchResultsViewController.delegate = self
-        addChildViewController(searchResultsViewController)
-        view.addSubview(searchResultsViewController.view)
-        searchResultsViewController.didMove(toParent: self)
-        searchResultsViewController.searchResultsView.emptyResultView = emptyResultView
-        searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = "search.list"
+        searchResults.delegate = self
+        addToSelf(searchResults)
+        searchResults.searchResultsView?.emptyResultView = emptyResultView
+        searchResults.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
         
-        quickActionsBar = StartUIInviteActionBar()
         quickActionsBar.inviteButton.addTarget(self, action: #selector(inviteMoreButtonTapped(_:)), for: .touchUpInside)
         
         view.backgroundColor = UIColor.clear
         
         createConstraints()
         updateActionBar()
-        searchResultsViewController.searchContactList()
+        searchResults.searchContactList()
         
-        let closeButton = UIBarButtonItem(icon: WRStyleKitIconCross, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onDismissPressed))
+        let closeButton = UIBarButtonItem(icon: .cross, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onDismissPressed))
         
-        closeButton.accessibilityLabel = NSLocalizedString("general.close", comment: "")
+        closeButton.accessibilityLabel = "general.close".localized
         closeButton.accessibilityIdentifier = "close"
         
         navigationItem.rightBarButtonItem = closeButton
@@ -122,7 +125,7 @@ final class StartUIViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared().wr_updateStatusBarForCurrentController(animated: animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         handleUploadAddressBookLogicIfNeeded()
     }
     
@@ -134,31 +137,32 @@ final class StartUIViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .dark)
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
         
-        UIApplication.shared().wr_updateStatusBarForCurrentController(animated: animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
-    func preferredStatusBarStyle() -> UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
     func showKeyboardIfNeeded() {
-        let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()).count
+        let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count ///TODO: unwrap
         if conversationCount > StartUIViewController.StartUIInitiallyShowsKeyboardConversationThreshold {
-            searchHeaderViewController.tokenField.becomeFirstResponder()
+            searchHeader.tokenField.becomeFirstResponder()
         }
         
     }
     
     func updateActionBar() {
-        if searchHeaderViewController.query.length != 0 || ZMUser.selfUser.hasTeam {
-            searchResultsViewController.searchResultsView.accessoryView = nil
+        if !searchHeader.query.isEmpty || ZMUser.selfUser().hasTeam {
+            searchResults.searchResultsView?.accessoryView = nil
         } else {
-            searchResultsViewController.searchResultsView.accessoryView = quickActionsBar
+            searchResults.searchResultsView?.accessoryView = quickActionsBar
         }
         
         view.setNeedsLayout()
     }
     
+    @objc
     func onDismissPressed() {
         searchHeader.tokenField.resignFirstResponder()
         navigationController?.dismiss(animated: true)
@@ -170,61 +174,35 @@ final class StartUIViewController: UIViewController {
     }
     
     // MARK: - Instance methods
-    @objc func performSearch() {
+    @objc
+    func performSearch() {
         let searchString = searchHeader.query
-        zmLog.info("Search for %@", searchString)
+        zmLog.info("Search for \(searchString)")
         
-        if groupSelector.group == SearchGroupPeople {
+        if groupSelector.group == .people {
             if searchString.count == 0 {
-                searchResultsViewController.mode = SearchResultsViewControllerModeList
-                searchResultsViewController.searchContactList()
+                searchResults.mode = .list
+                searchResults.searchContactList()
             } else {
-                searchResultsViewController.mode = SearchResultsViewControllerModeSearch
-                searchResultsViewController.searchForUsers(withQuery: searchString)
+                searchResults.mode = .search
+                searchResults.searchForUsers(withQuery: searchString)
             }
         } else {
-            searchResultsViewController.searchForServices(withQuery: searchString)
+            searchResults.searchForServices(withQuery: searchString)
         }
-        
-        emptyResultView.updateStatusWithSearching(forServices: groupSelector.group == SearchGroupServices, hasFilter: searchString.count != 0)
+        emptyResultView.updateStatus(searchingForServices: groupSelector.group == .services,
+                                     hasFilter: !searchString.isEmpty)
     }
     
     // MARK: - Action bar
+    @objc
     func inviteMoreButtonTapped(_ sender: UIButton?) {
         let inviteContactsViewController = InviteContactsViewController()
         inviteContactsViewController.delegate = self
         navigationController?.pushViewController(inviteContactsViewController, animated: true)
     }
     
-}
-
-
-extension  StartUIViewController: SearchHeaderViewControllerDelegate {
-    func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
-        searchResults.cancelPreviousSearch()
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
-        perform(#selector(performSearch), with: nil, afterDelay: 0.2)
-    }
-    
-    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController) {
-        searchHeaderViewController.resetQuery()
-    }
-}
-
-
-extension StartUIViewController {
-
-    /// init method for injecting mock addressBookHelper
-    ///
-    /// - Parameter addressBookHelper: an object conforms AddressBookHelperProtocol 
-    convenience init(addressBookHelper: AddressBookHelperProtocol) {
-        self.init()
-
-        self.addressBookHelper = addressBookHelper ///TODO: inject class
-    }
-
-    @objc
-    func handleUploadAddressBookLogicIfNeeded() {
+    private func handleUploadAddressBookLogicIfNeeded() {
         guard !addressBookUploadLogicHandled else { return }
 
         addressBookUploadLogicHandled = true
@@ -244,6 +222,18 @@ extension StartUIViewController {
                 }
             })
         }
+    }
+}
+
+extension  StartUIViewController: SearchHeaderViewControllerDelegate {
+    func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
+        searchResults.cancelPreviousSearch()
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
+        perform(#selector(performSearch), with: nil, afterDelay: 0.2)
+    }
+    
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController) {
+        searchHeaderViewController.resetQuery()
     }
 }
 

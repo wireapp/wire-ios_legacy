@@ -43,7 +43,8 @@ extension EmptySearchResultsViewAction {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView)
 }
 
-@objc final class EmptySearchResultsView: UIView {
+@objc
+final class EmptySearchResultsView: UIView {
     
     private var state: EmptySearchResultsViewState = .noUsersOrServices {
         didSet {
@@ -67,7 +68,7 @@ extension EmptySearchResultsViewAction {
         }
     }
     
-    @objc public func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
+    func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
         switch (searchingForServices, hasFilter) {
         case (true, false):
             self.state = .noServicesEnabled
