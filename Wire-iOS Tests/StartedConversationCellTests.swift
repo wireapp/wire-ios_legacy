@@ -164,7 +164,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
-            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -172,7 +171,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, fillUsers: .many, allowGuests: true)
-            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -180,7 +178,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersNewConversationCellWithoutParticipants_AllowGuests() {
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true)
-            createARoleForSelfUserWith(["add_conversation_member"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -197,7 +194,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         nonTeamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", allowGuests: true, numberOfGuests: 1)
             message.conversation?.teamRemoteIdentifier = .create()
-            createARoleForSelfUserWith(["modify_conversation_access"], conversation: message.conversation!)
             verify(message: message)
         }
     }
@@ -229,36 +225,13 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }()
         
         let users = Array(message.users).filter { $0 != selfUser }
-        let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: users, team: team)
+        let conversation = ZMConversation.insertGroupConversation(into: uiMOC, withParticipants: users, in: team)
         conversation?.allowGuests = allowGuests
         conversation?.remoteIdentifier = .create()
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier
-        createARoleForSelfUserWith(["add_conversation_member", "modify_conversation_access"], conversation: conversation!)
         message.visibleInConversation = conversation
         
         return message
-    }
-    
-    private func createARoleForSelfUserWith(_ actionNames: [String], conversation: ZMConversation) {
-        let participantRole = ParticipantRole.insertNewObject(in: uiMOC)
-        participantRole.conversation = conversation
-        participantRole.user = selfUser
-        
-        var actions: [Action] = []
-        actionNames.forEach { (actionName) in
-            let action = Action.insertNewObject(in: uiMOC)
-            action.name = actionName
-            actions.append(action)
-        }
-        
-        
-        let adminRole = Role.insertNewObject(in: uiMOC)
-        adminRole.name = "wire_admin"
-        adminRole.actions = Set(actions)
-        participantRole.role = adminRole
-        
-        ///TODO: we should not edit self user everytime, inject UserType instead.
-        selfUser.participantRoles = Set([participantRole])
     }
 
 }
