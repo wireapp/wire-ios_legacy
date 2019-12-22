@@ -209,21 +209,12 @@ final class StartUIViewController: UIViewController {
 }
 
 
-//#pragma clang diagnostic push
-// To get rid of 'No protocol definition found' warnings which are not accurate
-//#pragma clang diagnostic ignored "-Weverything"
 extension  StartUIViewController: SearchHeaderViewControllerDelegate {
     private var profilePresenter: ProfilePresenter?
     private var emptyResultView: EmptySearchResultsView?
 }
-//#pragma clang diagnostic pop
 
 
-protocol StartUIDelegate: NSObjectProtocol {
-    func startUI(_ startUI: StartUIViewController, didSelectUsers users: Set<ZMUser>)
-    func startUI(_ startUI: StartUIViewController, createConversationWithUsers users: Set<ZMUser>, name: String, allowGuests: Bool, enableReceipts: Bool)
-    func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation)
-}
 extension StartUIViewController {
 
     /// init method for injecting mock addressBookHelper
@@ -257,4 +248,18 @@ extension StartUIViewController {
             })
         }
     }
+}
+
+extension StartUIViewController: ContactsViewControllerDelegate {
+    
+    public func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
+        dismiss(animated: true)
+    }
+    
+    public func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
+        dismiss(animated: true) {
+            UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
+        }
+    }
+    
 }
