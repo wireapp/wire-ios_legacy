@@ -45,7 +45,7 @@ final class StartUIViewController: UIViewController {
     
     private var addressBookUploadLogicHandled = false
     var addressBookHelper: AddressBookHelperProtocol? {
-        return AddressBookHelper.sharedHelper()
+        return AddressBookHelper.sharedHelper
     }
     private var quickActionsBar: StartUIInviteActionBar?
 
@@ -59,14 +59,14 @@ final class StartUIViewController: UIViewController {
     
     // MARK: - Overloaded methods
     override func loadView() {
+        setupViews()
         view = StartUIView(frame: CGRect.zero)
     }
     
-    convenience init() {
-        self.init(nibName: nil, bundle: nil)
-        
-        setupViews()
-    }
+//    convenience init() {
+//        self.init(nibName: nil, bundle: nil)
+//
+//    }
     
     func setupViews() {
         let team = ZMUser.selfUser().team
@@ -77,15 +77,14 @@ final class StartUIViewController: UIViewController {
         searchHeader.delegate = self
         searchHeader.allowsMultipleSelection = false
         searchHeader.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-        addChildViewController(searchHeaderViewController)
-        view.addSubview(searchHeaderViewController.view)
-        searchHeaderViewController.didMove(toParent: self)
+        
+        addToSelf(searchHeader)
         
         groupSelector.onGroupSelected = { [weak self] group in
-            if SearchGroupServices == group {
+            if SearchGroupServices == group {///TODO: ??
                 // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
                 // not going to be added to the new conversation with the bot.
-                self?.searchHeaderViewController.clearInput()
+                self?.searchHeader.clearInput()
             }
             
             self?.searchResultsViewController.searchGroup = group
@@ -194,7 +193,7 @@ final class StartUIViewController: UIViewController {
     func inviteMoreButtonTapped(_ sender: UIButton?) {
         let inviteContactsViewController = InviteContactsViewController()
         inviteContactsViewController.delegate = self
-        navigationController.pushViewController(inviteContactsViewController, animated: true)
+        navigationController?.pushViewController(inviteContactsViewController, animated: true)
     }
     
 }
@@ -202,7 +201,7 @@ final class StartUIViewController: UIViewController {
 
 extension  StartUIViewController: SearchHeaderViewControllerDelegate {
     func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
-        searchResultsViewController.cancelPreviousSearch()
+        searchResults.cancelPreviousSearch()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
         perform(#selector(performSearch), with: nil, afterDelay: 0.2)
     }
@@ -221,7 +220,7 @@ extension StartUIViewController {
     convenience init(addressBookHelper: AddressBookHelperProtocol) {
         self.init()
 
-        self.addressBookHelper = addressBookHelper
+        self.addressBookHelper = addressBookHelper ///TODO: inject class
     }
 
     @objc
