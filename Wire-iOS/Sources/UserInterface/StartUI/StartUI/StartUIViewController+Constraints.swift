@@ -19,26 +19,25 @@
 import Foundation
 
 extension StartUIViewController {
-    @objc
     func createConstraints() {
-        [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach{ $0?.translatesAutoresizingMaskIntoConstraints = false }
+        [searchHeader.view, groupSelector, searchResults.view].forEach{ $0?.translatesAutoresizingMaskIntoConstraints = false }
 
-        searchHeaderViewController.view.fitInSuperview(exclude: [.bottom])
+        searchHeader.view.fitInSuperview(exclude: [.bottom])
 
         if showsGroupSelector {
             NSLayoutConstraint.activate([
-                groupSelector.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor),
-                searchResultsViewController.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
+                groupSelector.topAnchor.constraint(equalTo: searchHeader.view.bottomAnchor),
+                searchResults.view.topAnchor.constraint(equalTo: groupSelector.bottomAnchor)
                 ])
 
             groupSelector.fitInSuperview(exclude: [.bottom, .top])
         } else {
             NSLayoutConstraint.activate([
-            searchResultsViewController.view.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor)
+            searchResults.view.topAnchor.constraint(equalTo: searchHeader.view.bottomAnchor)
                 ])
         }
 
-        searchResultsViewController.view.fitInSuperview(exclude: [.top])
+        searchHeader.view.fitInSuperview(exclude: [.top])
     }
 
     @objc

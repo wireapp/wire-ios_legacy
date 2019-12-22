@@ -86,7 +86,7 @@ extension ContactsViewController {
     }
 
     func showKeyboardIfNeeded() {
-        if numTableRows > Int(StartUIInitiallyShowsKeyboardConversationThreshold) {
+        if numTableRows > StartUIViewController.StartUIInitiallyShowsKeyboardConversationThreshold {
             searchHeaderViewController.tokenField.becomeFirstResponder()
         }
     }

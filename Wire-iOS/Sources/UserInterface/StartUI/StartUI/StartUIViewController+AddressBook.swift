@@ -18,83 +18,84 @@
 
 import UIKit
 
-private let StartUIInitiallyShowsKeyboardConversationThreshold = 10
-private var ZM_UNUSED = "UI"
+private let zmLog = ZMSLog(tag: "StartUIViewController")
 
 final class StartUIViewController: UIViewController {
+    static let StartUIInitiallyShowsKeyboardConversationThreshold = 10
+    
     weak var delegate: StartUIDelegate?
     private(set) var scrollView: UIScrollView?
 
-    private var searchHeaderViewController: SearchHeaderViewController?
-    private var groupSelector: SearchGroupSelector?
-    private var searchResultsViewController: SearchResultsViewController?
+    let searchHeader: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+    
+    let groupSelector: SearchGroupSelector = {
+        let searchGroupSelector = SearchGroupSelector(style: .dark)
+        searchGroupSelector.translatesAutoresizingMaskIntoConstraints = false
+        searchGroupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+
+        return searchGroupSelector
+    }()
+    
+    let searchResults: SearchResultsViewController = {
+        let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
+        viewController.mode = .list
+        
+        return viewController
+    }()
+    
     private var addressBookUploadLogicHandled = false
-    private weak var addressBookHelper: AddressBookHelperProtocol?
+    var addressBookHelper: AddressBookHelperProtocol? {
+        return AddressBookHelper.sharedHelper()
+    }
     private var quickActionsBar: StartUIInviteActionBar?
 
-    func showKeyboardIfNeeded() {
-    }
-    
-    private init() {
-    }
-    
+    let profilePresenter: ProfilePresenter = ProfilePresenter()
+    private let emptyResultView: EmptySearchResultsView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Overloaded methods
-    func loadView() {
+    override func loadView() {
         view = StartUIView(frame: CGRect.zero)
     }
     
-    init() {
-        super.init()
-        
-        addressBookHelper = AddressBookHelper.shared()
+    convenience init() {
+        self.init(nibName: nil, bundle: nil)
         
         setupViews()
     }
     
     func setupViews() {
-        let team = ZMUser.selfUser.team
+        let team = ZMUser.selfUser().team
         
-        profilePresenter = ProfilePresenter()
-        
-        emptyResultView = EmptySearchResultsView(variant: ColorSchemeVariantDark, isSelfUserAdmin: ZMUser.selfUser().canManageTeam())
         emptyResultView.delegate = self
         
-        searchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: ColorSchemeVariantDark)
-        title = (team != nil ? team?.name : ZMUser.selfUser.displayName)?.localizedUppercase
-        searchHeaderViewController.delegate = self
-        searchHeaderViewController.allowsMultipleSelection = false
-        searchHeaderViewController.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: ColorSchemeVariantDark)
+        title = (team != nil ? team?.name : ZMUser.selfUser().displayName)?.localizedUppercase
+        searchHeader.delegate = self
+        searchHeader.allowsMultipleSelection = false
+        searchHeader.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
         addChildViewController(searchHeaderViewController)
         view.addSubview(searchHeaderViewController.view)
         searchHeaderViewController.didMove(toParent: self)
         
-        groupSelector = SearchGroupSelector(style: ColorSchemeVariantDark)
-        groupSelector.translatesAutoresizingMaskIntoConstraints = false
-        groupSelector.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorSearchBarBackground, variant: ColorSchemeVariantDark)
-        ZM_WEAK(self)
-        groupSelector.onGroupSelected = { group in
-            ZM_STRONG(self)
+        groupSelector.onGroupSelected = { [weak self] group in
             if SearchGroupServices == group {
                 // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
                 // not going to be added to the new conversation with the bot.
-                self.searchHeaderViewController.clearInput()
+                self?.searchHeaderViewController.clearInput()
             }
             
-            self.searchResultsViewController.searchGroup = group
-            self.performSearch()
+            self?.searchResultsViewController.searchGroup = group
+            self?.performSearch()
         }
         
         if showsGroupSelector() {
             view.addSubview(groupSelector)
         }
         
-        searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
-        searchResultsViewController.mode = SearchResultsViewControllerModeList
         searchResultsViewController.delegate = self
         addChildViewController(searchResultsViewController)
         view.addSubview(searchResultsViewController.view)
@@ -120,21 +121,21 @@ final class StartUIViewController: UIViewController {
         view.accessibilityViewIsModal = true
     }
     
-    func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
+        UIApplication.shared().wr_updateStatusBarForCurrentController(animated: animated)
         handleUploadAddressBookLogicIfNeeded()
     }
     
-    func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        navigationController.navigationBar.barTintColor = UIColor.clear
-        navigationController.navigationBar.isTranslucent = true
-        navigationController.navigationBar.tintColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: ColorSchemeVariantDark)
-        navigationController.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: ColorSchemeVariantDark)
+        navigationController?.navigationBar.barTintColor = UIColor.clear
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
         
-        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: animated)
+        UIApplication.shared().wr_updateStatusBarForCurrentController(animated: animated)
     }
     
     func preferredStatusBarStyle() -> UIStatusBarStyle {
@@ -143,7 +144,7 @@ final class StartUIViewController: UIViewController {
     
     func showKeyboardIfNeeded() {
         let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()).count
-        if conversationCount > Int(StartUIInitiallyShowsKeyboardConversationThreshold) {
+        if conversationCount > StartUIViewController.StartUIInitiallyShowsKeyboardConversationThreshold {
             searchHeaderViewController.tokenField.becomeFirstResponder()
         }
         
@@ -160,19 +161,19 @@ final class StartUIViewController: UIViewController {
     }
     
     func onDismissPressed() {
-        searchHeaderViewController.tokenField.resignFirstResponder()
-        navigationController.dismiss(animated: true)
+        searchHeader.tokenField.resignFirstResponder()
+        navigationController?.dismiss(animated: true)
     }
     
-    func accessibilityPerformEscape() -> Bool {
+    override func accessibilityPerformEscape() -> Bool {
         onDismissPressed()
         return true
     }
     
     // MARK: - Instance methods
     @objc func performSearch() {
-        let searchString = searchHeaderViewController.query
-        ZMLogInfo("Search for %@", searchString)
+        let searchString = searchHeader.query
+        zmLog.info("Search for %@", searchString)
         
         if groupSelector.group == SearchGroupPeople {
             if searchString.count == 0 {
@@ -196,22 +197,19 @@ final class StartUIViewController: UIViewController {
         navigationController.pushViewController(inviteContactsViewController, animated: true)
     }
     
-    // MARK: - SearchHeaderViewControllerDelegate
-    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController?) {
-        self.searchHeaderViewController.resetQuery()
-    }
-    
-    func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController?, updatedSearchQuery query: String?) {
-        searchResultsViewController.cancelPreviousSearch()
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
-        perform(#selector(performSearch), with: nil, afterDelay: 0.2)
-    }
 }
 
 
 extension  StartUIViewController: SearchHeaderViewControllerDelegate {
-    private var profilePresenter: ProfilePresenter?
-    private var emptyResultView: EmptySearchResultsView?
+    func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
+        searchResultsViewController.cancelPreviousSearch()
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
+        perform(#selector(performSearch), with: nil, afterDelay: 0.2)
+    }
+    
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController) {
+        searchHeaderViewController.resetQuery()
+    }
 }
 
 

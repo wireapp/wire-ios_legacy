@@ -23,18 +23,18 @@ final class StartUIView : UIView { }
 extension StartUIViewController {
     private func presentProfileViewController(for bareUser: UserType,
                                               at indexPath: IndexPath?) {
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        searchHeader.tokenField.resignFirstResponder()
 
         guard let indexPath = indexPath,
-            let cell = searchResultsViewController.searchResultsView?.collectionView.cellForItem(at: indexPath) else { return }
+            let cell = searchResults.searchResultsView?.collectionView.cellForItem(at: indexPath) else { return }
 
 
         profilePresenter.presentProfileViewController(for: bareUser, in: self, from: view.convert(cell.bounds, from: cell), onDismiss: {
             if self.isIPadRegular(),
-                let indexPaths = self.searchResultsViewController.searchResultsView?.collectionView.indexPathsForVisibleItems {
-                self.searchResultsViewController.searchResultsView?.collectionView.reloadItems(at: indexPaths)
+                let indexPaths = self.searchResults.searchResultsView?.collectionView.indexPathsForVisibleItems {
+                self.searchResults.searchResultsView?.collectionView.reloadItems(at: indexPaths)
             } else if self.profilePresenter.keyboardPersistedAfterOpeningProfile {
-                    self.searchHeaderViewController.tokenField.becomeFirstResponder()
+                    self.searchHeader.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
         }, arrowDirection: .left)
