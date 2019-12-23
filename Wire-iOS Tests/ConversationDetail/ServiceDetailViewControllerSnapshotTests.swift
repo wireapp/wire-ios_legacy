@@ -65,7 +65,7 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForTeamPartner() {
         teamTest {
             groupConversation.teamRemoteIdentifier = team?.remoteIdentifier
-            selfUser.membership?.setTeamRole(.partner)
+            mockSelfUser.canRemoveService = false
             createSut()
             verify(view: sut.view)
         }
