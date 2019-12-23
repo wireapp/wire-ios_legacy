@@ -23,8 +23,8 @@ extension ConversationContentViewController {
     func updateTableViewHeaderView() {
         guard let userSession = ZMUserSession.shared() else { return }
         
-        if dataSource?.hasOlderMessagesToLoad != nil {
-            // Don't display the conversation header if the message window doesn't include the first message.
+        if dataSource?.hasOlderMessagesToLoad != nil, conversation.conversationType != .connection {
+            // Don't display the conversation header if the message window doesn't include the first message and it is not a connection
             return
         }
         
