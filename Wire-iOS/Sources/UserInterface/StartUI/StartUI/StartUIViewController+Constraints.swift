@@ -41,7 +41,7 @@ extension StartUIViewController {
     }
 
     @objc
-    var showsGroupSelector: Bool {
-        return SearchGroup.all.count > 1 && ZMUser.selfUser().canSeeServices
+    var showsGroupSelector: Bool { ///TODO: inject
+        return SearchGroup.all().count > 1 && ZMUser.selfUser().canSeeServices
     }
 }

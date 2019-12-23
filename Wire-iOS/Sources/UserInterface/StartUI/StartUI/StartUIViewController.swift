@@ -25,16 +25,11 @@ final class StartUIViewController: UIViewController {
     
     weak var delegate: StartUIDelegate?
     private(set) var scrollView: UIScrollView?
+    let selfUser: UserType
 
     let searchHeader: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
     
-    let groupSelector: SearchGroupSelector = {
-        let searchGroupSelector = SearchGroupSelector(style: .dark)
-        searchGroupSelector.translatesAutoresizingMaskIntoConstraints = false
-        searchGroupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-
-        return searchGroupSelector
-    }()
+    let groupSelector: SearchGroupSelector
     
     let searchResults: SearchResultsViewController = {
         let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
@@ -63,9 +58,19 @@ final class StartUIViewController: UIViewController {
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
-    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self) {
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
+         selfUser: UserType = ZMUser.selfUser()) {
+        self.selfUser = selfUser
+        groupSelector = SearchGroupSelector(style: .dark, selfUser: selfUser)
         self.addressBookHelperType = addressBookHelperType
         super.init(nibName: nil, bundle: nil)
+        
+        configGroupSelector()
+    }
+    
+    private func configGroupSelector() {
+        groupSelector.translatesAutoresizingMaskIntoConstraints = false
+        groupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
     }
 
     // MARK: - Overloaded methods

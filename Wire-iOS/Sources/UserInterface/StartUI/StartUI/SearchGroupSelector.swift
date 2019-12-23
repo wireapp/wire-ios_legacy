@@ -37,8 +37,8 @@ final class SearchGroupSelector: UIView, TabBarDelegate {
 
     // MARK: - Initialization
     
-    init(style: ColorSchemeVariant) {
-        groups = SearchGroup.all()
+    init(style: ColorSchemeVariant, selfUser: UserType = ZMUser.selfUser()) {
+        groups = SearchGroup.all(selfUser: selfUser)
         self.style = style
 
         let groupItems: [UITabBarItem] = groups.enumerated().map { index, group in
