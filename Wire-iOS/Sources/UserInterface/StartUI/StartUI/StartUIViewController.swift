@@ -87,7 +87,7 @@ final class StartUIViewController: UIViewController {
         addToSelf(searchHeader)
         
         groupSelector.onGroupSelected = { [weak self] group in
-            if .services == group {///TODO: ??
+            if .services == group {
                 // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
                 // not going to be added to the new conversation with the bot.
                 self?.searchHeader.clearInput()
