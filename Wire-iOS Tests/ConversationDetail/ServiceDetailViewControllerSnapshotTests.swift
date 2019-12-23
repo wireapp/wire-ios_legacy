@@ -25,17 +25,20 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     var sut: ServiceDetailViewController!
     var serviceUser: ZMUser!
     var groupConversation: ZMConversation!
+    var mockSelfUser: SwiftMockUser!
 
     override func setUp() {
         super.setUp()
         serviceUser = createServiceUser()
         groupConversation = createGroupConversation()
+        mockSelfUser = SwiftMockUser()
     }
     
     override func tearDown() {
         sut = nil
         serviceUser = nil
         groupConversation = nil
+        mockSelfUser = nil
 
         super.tearDown()
     }
@@ -45,12 +48,14 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut = ServiceDetailViewController(serviceUser: serviceUser,
                                           actionType: .removeService(groupConversation),
-                                          variant: variant)
+                                          variant: variant,
+                                          selfUser: mockSelfUser)
     }
 
     func testForTeamMemberWrappedInNavigationController() {
         teamTest {
             groupConversation.teamRemoteIdentifier = team?.remoteIdentifier
+            mockSelfUser.canRemoveService = true
             createSut()
             let navigationController = sut.wrapInNavigationController()
             verify(view: navigationController.view)
@@ -60,7 +65,7 @@ final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     func testForTeamPartner() {
         teamTest {
             groupConversation.teamRemoteIdentifier = team?.remoteIdentifier
-            selfUser.membership?.setTeamRole(.partner)
+            mockSelfUser.canRemoveService = false
             createSut()
             verify(view: sut.view)
         }
