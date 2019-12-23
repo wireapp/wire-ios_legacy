@@ -19,28 +19,30 @@
 import Foundation
 import WireSyncEngine
 
-@objc enum SearchGroup: Int {
+enum SearchGroup {
     case people
     case services
 }
 
 extension SearchGroup {
     
-    var accessible: Bool {
+    func accessible(selfUser: UserType = ZMUser.selfUser()) -> Bool {
         switch self {
         case .people:
             return true
         case .services:
-            return ZMUser.selfUser().canCreateService
+            return selfUser.canCreateService
         }
     }
 
 #if ADD_SERVICE_DISABLED
     // remove service from the tab
-    static let all: [SearchGroup] = [.people]
+    static func all(selfUser: UserType = ZMUser.selfUser()) -> [SearchGroup] {
+        return [.people]
+    }
 #else
-    static var all: [SearchGroup] {
-        return [.people, .services].filter { $0.accessible }
+    static func all(selfUser: UserType = ZMUser.selfUser()) -> [SearchGroup] {
+        return [.people, .services].filter { $0.accessible(selfUser: selfUser) }
     }
 #endif
 
