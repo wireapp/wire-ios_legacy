@@ -62,6 +62,7 @@ import Cartography
         conversationController.didMove(toParent: self)
 
         conversationViewController = conversationController
+        conversation.refreshDataIfNeeded()
 
         configure()
     }
@@ -138,6 +139,18 @@ extension ConversationRootViewController: NetworkStatusBarDelegate {
     func showInIPad(networkStatusViewController: NetworkStatusViewController, with orientation: UIInterfaceOrientation) -> Bool {
         // always show on iPad for any orientation in regular mode
         return true
+    }
+}
+
+extension ZMConversation {
+    
+    /// Check if the conversation data is out of date, and in case update it.
+    /// This in an opportunistic update of the data, with an on-demand strategy.
+    /// Whenever the conversation is opened by the user, we check if anything is missing.
+    fileprivate func refreshDataIfNeeded() {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.markToDownloadRolesIfNeeded()
+        }
     }
 }
 

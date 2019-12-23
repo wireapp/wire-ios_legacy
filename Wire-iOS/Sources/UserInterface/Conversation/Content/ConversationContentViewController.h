@@ -56,7 +56,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
-- (void)updateTableViewHeaderView;
 - (void)highlightMessage:(id<ZMConversationMessage>)message;
 
 @end
