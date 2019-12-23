@@ -143,8 +143,9 @@ final class SwiftMockUser: NSObject, UserType {
         return true
     }
     
+    var canRemoveService = true
     func canRemoveService(from conversation: ZMConversation) -> Bool {
-        return true
+        return canRemoveService
     }
     
     func canAddUser(to conversation: ZMConversation) -> Bool {
