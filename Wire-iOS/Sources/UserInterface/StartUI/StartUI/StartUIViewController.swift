@@ -68,6 +68,7 @@ final class StartUIViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         configGroupSelector()
+        setupViews()
     }
     
     private func configGroupSelector() {
@@ -77,7 +78,6 @@ final class StartUIViewController: UIViewController {
 
     // MARK: - Overloaded methods
     override func loadView() {
-        setupViews()
         view = StartUIView(frame: CGRect.zero)
     }
 
