@@ -48,7 +48,7 @@ final class StartUIViewController: UIViewController {
     let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
 
     let profilePresenter: ProfilePresenter = ProfilePresenter()
-    private let emptyResultView: EmptySearchResultsView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
+    private let emptyResultView: EmptySearchResultsView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -80,11 +80,11 @@ final class StartUIViewController: UIViewController {
     }
 
     func setupViews() {
-        let team = ZMUser.selfUser().team
+        let team = selfUser.team
         
         emptyResultView.delegate = self
         
-        title = (team != nil ? team?.name : ZMUser.selfUser().displayName)?.localizedUppercase
+        title = (team != nil ? team?.name : selfUser.displayName)?.localizedUppercase
         searchHeader.delegate = self
         searchHeader.allowsMultipleSelection = false
         searchHeader.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
@@ -158,7 +158,7 @@ final class StartUIViewController: UIViewController {
     }
     
     func updateActionBar() {
-        if !searchHeader.query.isEmpty || ZMUser.selfUser().hasTeam {
+        if !searchHeader.query.isEmpty || selfUser.hasTeam {
             searchResults.searchResultsView?.accessoryView = nil
         } else {
             searchResults.searchResultsView?.accessoryView = quickActionsBar
@@ -213,7 +213,7 @@ final class StartUIViewController: UIViewController {
         addressBookUploadLogicHandled = true
 
         // We should not even try to access address book when in a team
-        guard !ZMUser.selfUser().hasTeam else { return }
+        guard !selfUser.hasTeam else { return }
 
         if addressBookHelper.isAddressBookAccessGranted {
             // Re-check if we need to start AB search

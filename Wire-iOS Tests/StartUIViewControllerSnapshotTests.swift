@@ -19,59 +19,29 @@
 import XCTest
 @testable import Wire
 
-final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
-    var addressBookSearchPerformedAtLeastOnce : Bool = true
-    var isAddressBookAccessDisabled : Bool = true
-    var accessStatusDidChangeToGranted: Bool = true
-    var addressBookSearchWasPostponed : Bool = true
-    
-    /// Configuration override (used for testing)
-    var configuration : AddressBookHelperConfiguration! = nil
-    
-    static var sharedHelper : AddressBookHelperProtocol = MockAddressBookHelper()
-    
-    
-    func persistCurrentAccessStatus() {
-        
-    }
-
-    var isAddressBookAccessGranted: Bool {
-        return false
-    }
-
-    var isAddressBookAccessUnknown: Bool {
-        return true
-    }
-
-    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
-        //no-op
-    }
-
-    func requestPermissions(_ callback: ((Bool) -> ())?) {
-        //no-op
-        callback?(false)
-    }
-}
-
 final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: StartUIViewController!
     var mockAddressBookHelper: MockAddressBookHelper!
+    var mockSelfUser: SwiftMockUser!
 
     override func setUp() {
         super.setUp()
-
+        
+        mockSelfUser = SwiftMockUser()
         mockAddressBookHelper = MockAddressBookHelper()
     }
 
     override func tearDown() {
         sut = nil
         mockAddressBookHelper = nil
+        mockSelfUser = nil
+        
         super.tearDown()
     }
 
     func setupSut() {
-        sut = StartUIViewController(addressBookHelperType: MockAddressBookHelper.self)
+        sut = StartUIViewController(addressBookHelperType: MockAddressBookHelper.self, selfUser: mockSelfUser)
         sut.view.backgroundColor = .black
     }
 
