@@ -170,7 +170,10 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(optionsSectionController)
         }
         
-        if let selfUser = ZMUser.selfUser(), selfUser.canModifyReceiptMode(in: conversation) {
+        if let selfUser = ZMUser.selfUser(),
+            conversation.teamRemoteIdentifier != nil,
+            selfUser.canModifyReceiptMode(in: conversation)
+        {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,
