@@ -127,61 +127,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.accessibilityViewIsModal = YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
-    [self handleUploadAddressBookLogicIfNeeded];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-
-    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
-    [self.navigationController.navigationBar setTranslucent:YES];
-    self.navigationController.navigationBar.tintColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorTextForeground variant:ColorSchemeVariantDark];
-    self.navigationController.navigationBar.titleTextAttributes = [DefaultNavigationBar titleTextAttributesFor:ColorSchemeVariantDark];
-
-    [UIApplication.sharedApplication wr_updateStatusBarForCurrentControllerAnimated:animated];
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
-- (void)showKeyboardIfNeeded
-{
-    NSUInteger conversationCount = [ZMConversationList conversationsInUserSession:[ZMUserSession sharedSession]].count;
-    if (conversationCount > StartUIInitiallyShowsKeyboardConversationThreshold) {
-        [self.searchHeaderViewController.tokenField becomeFirstResponder];
-    }
-    
-}
-
-- (void)updateActionBar
-{
-    if (self.searchHeaderViewController.query.length != 0 || ZMUser.selfUser.hasTeam) {
-        self.searchResultsViewController.searchResultsView.accessoryView = nil;
-    } else {
-        self.searchResultsViewController.searchResultsView.accessoryView = self.quickActionsBar;
-    }
-    
-    [self.view setNeedsLayout];
-}
-
-- (void)onDismissPressed
-{
-    [self.searchHeaderViewController.tokenField resignFirstResponder];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (BOOL)accessibilityPerformEscape
-{
-    [self onDismissPressed];
-    return YES;
-}
 
 #pragma mark - Instance methods
 

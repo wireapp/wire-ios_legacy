@@ -757,6 +757,7 @@
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
+		A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FA6FB23B57067005257A8 /* StartUIViewController.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A9C7BEC0237C0FFB005D676A /* ColorSchemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C7BEBF237C0FFB005D676A /* ColorSchemeTests.swift */; };
@@ -2470,6 +2471,7 @@
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
 		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
+		A97FA6FB23B57067005257A8 /* StartUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewController.swift; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
@@ -5111,6 +5113,7 @@
 				164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */,
 				8775BF1B2007C6B900A8AD93 /* SearchGroupSelector.swift */,
 				EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */,
+				A97FA6FB23B57067005257A8 /* StartUIViewController.swift */,
 			);
 			path = StartUI;
 			sourceTree = "<group>";
@@ -8146,6 +8149,7 @@
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
 				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */,
 				5EA952C722647B3100C83FDB /* IconButton+Helpers.swift in Sources */,
+				A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */,
 				EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */,
 				EF527E362111B74100F7AE15 /* UIViewController+IsVisible.swift in Sources */,
 				5E8DA76C211B2EC200360979 /* AuthenticationEventResponderChain.swift in Sources */,
