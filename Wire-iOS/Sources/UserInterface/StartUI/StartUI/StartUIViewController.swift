@@ -18,6 +18,8 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "StartUIViewController")
+
 extension StartUIViewController {
     
     ///TODO: tmp
@@ -85,4 +87,34 @@ extension StartUIViewController {
         onDismissPressed()
         return true
     }
+
+    // MARK: - Instance methods
+    @objc
+    func performSearch() {
+        let searchString = searchHeader.query
+        zmLog.info("Search for \(searchString)")
+        
+        if groupSelector.group == .people {
+            if searchString.count == 0 {
+                searchResults.mode = .list
+                searchResults.searchContactList()
+            } else {
+                searchResults.mode = .search
+                searchResults.searchForUsers(withQuery: searchString)
+            }
+        } else {
+            searchResults.searchForServices(withQuery: searchString)
+        }
+        emptyResultView.updateStatus(searchingForServices: groupSelector.group == .services,
+                                     hasFilter: !searchString.isEmpty)
+    }
+    
+    // MARK: - Action bar
+    @objc
+    func inviteMoreButtonTapped(_ sender: UIButton?) {
+        let inviteContactsViewController = InviteContactsViewController()
+        inviteContactsViewController.delegate = self
+        navigationController?.pushViewController(inviteContactsViewController, animated: true)
+    }
+    
 }

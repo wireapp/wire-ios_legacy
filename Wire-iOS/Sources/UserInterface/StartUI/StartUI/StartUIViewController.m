@@ -128,38 +128,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 
-#pragma mark - Instance methods
-
-- (void)performSearch
-{
-    NSString *searchString = self.searchHeaderViewController.query;
-    ZMLogInfo(@"Search for %@", searchString);
-    
-    if (self.groupSelector.group == SearchGroupPeople) {
-        if (searchString.length == 0) {
-            self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
-            [self.searchResultsViewController searchContactList];
-        } else {
-            self.searchResultsViewController.mode = SearchResultsViewControllerModeSearch;
-            [self.searchResultsViewController searchForUsersWithQuery:searchString];
-        }
-    }
-    else {
-        [self.searchResultsViewController searchForServicesWithQuery:searchString];
-    }
-    
-    [self.emptyResultView updateStatusWithSearchingForServices:self.groupSelector.group == SearchGroupServices
-                                                     hasFilter:searchString.length != 0];
-}
-
-#pragma mark - Action bar
-
-- (void)inviteMoreButtonTapped:(UIButton *)sender
-{
-    InviteContactsViewController *inviteContactsViewController = [[InviteContactsViewController alloc] init];
-    inviteContactsViewController.delegate = self;
-    [self.navigationController pushViewController:inviteContactsViewController animated:true];
-}
 
 #pragma mark - SearchHeaderViewControllerDelegate
 
