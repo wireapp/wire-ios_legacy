@@ -27,7 +27,6 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 @protocol UserType;
 @protocol AddressBookHelperProtocol;
-@protocol SearchHeaderViewControllerDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
 
-@interface StartUIViewController () <SearchHeaderViewControllerDelegate>
+@interface StartUIViewController ()
 
 @property (nonatomic) ProfilePresenter *profilePresenter;
 @property (nonatomic) EmptySearchResultsView *emptyResultView;

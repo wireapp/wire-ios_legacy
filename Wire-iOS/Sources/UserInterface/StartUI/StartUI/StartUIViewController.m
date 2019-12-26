@@ -127,20 +127,4 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.view.accessibilityViewIsModal = YES;
 }
 
-
-
-#pragma mark - SearchHeaderViewControllerDelegate
-
-- (void)searchHeaderViewControllerDidConfirmAction:(SearchHeaderViewController *)searchHeaderViewController
-{
-    [self.searchHeaderViewController resetQuery];
-}
-
-- (void)searchHeaderViewController:(SearchHeaderViewController *)searchHeaderViewController updatedSearchQuery:(NSString *)query
-{
-    [self.searchResultsViewController cancelPreviousSearch];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(performSearch) object:nil];
-    [self performSelector:@selector(performSearch) withObject:nil afterDelay:0.2f];
-}
-
 @end
