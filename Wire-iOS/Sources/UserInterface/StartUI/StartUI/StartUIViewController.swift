@@ -37,6 +37,11 @@ extension StartUIViewController {
     
     static let StartUIInitiallyShowsKeyboardConversationThreshold = 10
 
+    // MARK: - Overloaded methods
+    override open func loadView() {
+        view = StartUIView(frame: CGRect.zero)
+    }
+
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
@@ -58,6 +63,79 @@ extension StartUIViewController {
         return .lightContent
     }
     
+    private func configGroupSelector() {
+        groupSelector.translatesAutoresizingMaskIntoConstraints = false
+        groupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+    }
+
+    @objc
+    func setupViews() {
+        ///TODO: mv to init
+        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
+        configGroupSelector()
+        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+
+        emptyResultView.delegate = self
+        
+        searchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+        
+        searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
+        searchResultsViewController.mode = .list
+        searchResultsViewController.searchResultsView?.emptyResultView = self.emptyResultView
+        searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
+
+
+        if let team = (selfUser as? ZMUser)?.team {
+            title = team.name?.uppercased()
+        } else {
+            title = selfUser.displayName.uppercased()
+        }
+        
+        searchHeader.delegate = self
+        searchHeader.allowsMultipleSelection = false
+        searchHeader.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
+        
+        addToSelf(searchHeader)
+        
+        groupSelector.onGroupSelected = { [weak self] group in
+            if .services == group {
+                // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
+                // not going to be added to the new conversation with the bot.
+                self?.searchHeader.clearInput()
+            }
+            
+            self?.searchResults.searchGroup = group
+            self?.performSearch()
+        }
+        
+        if showsGroupSelector {
+            view.addSubview(groupSelector)
+        }
+        
+        searchResults.delegate = self
+        addToSelf(searchResults)
+        searchResults.searchResultsView?.emptyResultView = emptyResultView
+        searchResults.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
+        
+        quickActionsBar = StartUIInviteActionBar()
+        
+        quickActionsBar.inviteButton.addTarget(self, action: #selector(inviteMoreButtonTapped(_:)), for: .touchUpInside)
+        
+        view.backgroundColor = UIColor.clear
+        
+        createConstraints()
+        updateActionBar()
+        searchResults.searchContactList()
+        
+        let closeButton = UIBarButtonItem(icon: .cross, style: UIBarButtonItem.Style.plain, target: self, action: #selector(onDismissPressed))
+        
+        closeButton.accessibilityLabel = "general.close".localized
+        closeButton.accessibilityIdentifier = "close"
+        
+        navigationItem.rightBarButtonItem = closeButton
+        view.accessibilityViewIsModal = true
+    }
+
     func showKeyboardIfNeeded() {
         let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count ///TODO: unwrap
         if conversationCount > StartUIViewController.StartUIInitiallyShowsKeyboardConversationThreshold {
@@ -66,7 +144,6 @@ extension StartUIViewController {
         
     }
     
-    @objc
     func updateActionBar() {
         if !searchHeader.query.isEmpty || (selfUser as? ZMUser)?.hasTeam == true {
             searchResults.searchResultsView?.accessoryView = nil

@@ -38,13 +38,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation StartUIViewController
 
-#pragma mark - Overloaded methods
-
--(void)loadView
-{
-    self.view = [[StartUIView alloc] initWithFrame:CGRectZero];
-}
-
 -(instancetype) init
 {
     self = [super init];
@@ -56,75 +49,5 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     return self;
 }
 
--(void)setupViews
-{
-    Team *team = ZMUser.selfUser.team;
-
-    self.profilePresenter = [[ProfilePresenter alloc] init];
-
-    self.emptyResultView = [[EmptySearchResultsView alloc] initWithVariant:ColorSchemeVariantDark
-                                                           isSelfUserAdmin:[[ZMUser selfUser] canManageTeam]];
-    self.emptyResultView.delegate = self;
-
-    self.searchHeaderViewController = [[SearchHeaderViewController alloc] initWithUserSelection:[[UserSelection alloc] init] variant:ColorSchemeVariantDark];
-    self.title = (team != nil ? team.name : ZMUser.selfUser.displayName).localizedUppercaseString;
-    self.searchHeaderViewController.delegate = self;
-    self.searchHeaderViewController.allowsMultipleSelection = NO;
-    self.searchHeaderViewController.view.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
-    [self addChildViewController:self.searchHeaderViewController];
-    [self.view addSubview:self.searchHeaderViewController.view];
-    [self.searchHeaderViewController didMoveToParentViewController:self];
-
-    self.groupSelector = [[SearchGroupSelector alloc] initWithStyle:ColorSchemeVariantDark];
-    self.groupSelector.translatesAutoresizingMaskIntoConstraints = NO;
-    self.groupSelector.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorSearchBarBackground variant:ColorSchemeVariantDark];
-    ZM_WEAK(self);
-    self.groupSelector.onGroupSelected = ^(SearchGroup group) {
-        ZM_STRONG(self);
-        if (SearchGroupServices == group) {
-            // Remove selected users when switching to services tab to avoid the user confusion: users in the field are
-            // not going to be added to the new conversation with the bot.
-            [self.searchHeaderViewController clearInput];
-        }
-
-        self.searchResultsViewController.searchGroup = group;
-        [self performSearch];
-    };
-
-    if ([self showsGroupSelector]) {
-        [self.view addSubview:self.groupSelector];
-    }
-
-    self.searchResultsViewController = [[SearchResultsViewController alloc] initWithUserSelection:[[UserSelection alloc] init]
-                                                                             isAddingParticipants:NO
-                                                                              shouldIncludeGuests:YES];
-    self.searchResultsViewController.mode = SearchResultsViewControllerModeList;
-    self.searchResultsViewController.delegate = self;
-    [self addChildViewController:self.searchResultsViewController];
-    [self.view addSubview:self.searchResultsViewController.view];
-    [self.searchResultsViewController didMoveToParentViewController:self];
-    self.searchResultsViewController.searchResultsView.emptyResultView = self.emptyResultView;
-    self.searchResultsViewController.searchResultsView.collectionView.accessibilityIdentifier = @"search.list";
-
-    self.quickActionsBar = [[StartUIInviteActionBar alloc] init];
-    [self.quickActionsBar.inviteButton addTarget:self action:@selector(inviteMoreButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-
-    self.view.backgroundColor = [UIColor clearColor];
-
-    [self createConstraints];
-    [self updateActionBar];
-    [self.searchResultsViewController searchContactList];
-
-    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc] initWithIcon:WRStyleKitIconCross
-                                                                   style:UIBarButtonItemStylePlain
-                                                                  target:self
-                                                                  action:@selector(onDismissPressed)];
-
-    closeButton.accessibilityLabel = NSLocalizedString(@"general.close", @"");
-    closeButton.accessibilityIdentifier = @"close";
-
-    self.navigationItem.rightBarButtonItem = closeButton;
-    self.view.accessibilityViewIsModal = YES;
-}
 
 @end

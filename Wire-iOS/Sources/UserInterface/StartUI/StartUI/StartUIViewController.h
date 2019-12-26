@@ -29,9 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak, nullable) id <StartUIDelegate> delegate;
 @property (nonatomic, readonly) UIScrollView *scrollView;
-
-- (void)showKeyboardIfNeeded;
-
 @end
 
 
