@@ -87,13 +87,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         otherUser.setHandle("bruno")
         otherUser.accentColorValue = .brightOrange
 
-        otherUserConversation = ZMConversation.insertNewObject(in: uiMOC)
-        otherUserConversation.conversationType = .oneOnOne
-        otherUserConversation.remoteIdentifier = UUID.create()
-        let connection = ZMConnection.insertNewObject(in: uiMOC)
-        connection.to = otherUser
-        connection.status = .accepted
-        connection.conversation = otherUserConversation
+        otherUserConversation = ZMConversation.createOtherUserConversation(moc: uiMOC, otherUser: otherUser)
 
         uiMOC.saveOrRollback()
     }
@@ -109,21 +103,6 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
             teamMember = nil
             team = nil
         }
-    }
-
-    func createGroupConversation() -> ZMConversation {
-        let conversation = ZMConversation.insertNewObject(in: uiMOC)
-        conversation.remoteIdentifier = UUID.create()
-        conversation.conversationType = .group
-        conversation.internalAddParticipants([selfUser, otherUser])
-        return conversation
-    }
-    
-    func createTeamGroupConversation() -> ZMConversation {
-        let conversation = createGroupConversation()
-        conversation.teamRemoteIdentifier = UUID.create()
-        conversation.userDefinedName = "Group conversation"
-        return conversation
     }
     
     func createUser(name: String) -> ZMUser {
@@ -159,11 +138,23 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
     }
 
-}
+
+//MARK: - mock conversation
+    
+    func createGroupConversation() -> ZMConversation {
+        return ZMConversation.createGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
+    }
+    
+    func createTeamGroupConversation() -> ZMConversation {
+        return ZMConversation.createTeamGroupConversation(moc: uiMOC, otherUser: otherUser, selfUser: selfUser)
+    }
+    
+    func createGroupConversationOnlyAdmin() -> ZMConversation {
+        return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
+    }
 
 //MARK: - mock service user
 
-extension CoreDataSnapshotTestCase {
     func createServiceUser() -> ZMUser {
         let serviceUser = ZMUser.insertNewObject(in: uiMOC)
         serviceUser.remoteIdentifier = UUID()

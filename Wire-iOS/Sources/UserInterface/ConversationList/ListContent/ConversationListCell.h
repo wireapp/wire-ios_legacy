@@ -43,4 +43,5 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 @interface ConversationListCell () <SectionListCellType>
 #pragma clang diagnostic pop
 @property (nonatomic, copy, nullable) NSString *sectionName;
+@property (nonatomic, copy, nullable) NSString *cellIdentifier;
 @end

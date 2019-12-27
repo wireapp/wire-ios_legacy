@@ -24,7 +24,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "Message+UI.h"
+
 
 // UI
 #import "ParticipantDeviceHeaderView.h"
@@ -51,8 +51,6 @@
 #import "TokenField.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
-#import "ProfileViewController.h"
-#import "ProfileViewController+internal.h"
 #import "StartUIViewController.h"
 #import "StartUIViewController+internal.h"
 
@@ -135,7 +133,6 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "AccentColorChangeHandler.h"
 #import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
@@ -157,7 +154,6 @@
 
 #import "CABasicAnimation+Rotation.h"
 #import "DeveloperMenuState.h"
-#import "ColorScheme.h"
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"

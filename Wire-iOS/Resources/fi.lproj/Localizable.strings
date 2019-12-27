@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Ei tuloksia.";
 "peoplepicker.no_matching_results_message" = "Anna kelvollinen sähköpostiosoite.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Lähetä kutsu";
 "peoplepicker.no_matching_results.action.share_contacts" = "Jaa yhteystietoja";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Valinnat";
 "participants.footer.add_title" = "Add Participants";
 "participants.section.name.footer" = "Up to %1$d participants can join a group conversation. Video calls work with up to %2$d other people and you.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Lisää toimintoja";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
 "profile.read_receipts_memo.body" = "If both sides turn on read receipts, you can see when messages are read.\n\nYou can change this option in your account settings.";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "Information";
 
 // User Details
 "profile.details.title" = "Lisätietoja";
 "profile.details.guest" = "Vieras";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Käyttäjänimi";
 "profile_view.accessibility.name" = "Näyttönimi";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "You can be notified about everything (including audio and video calls) or only when someone mentions you or replies to one of your messages.";
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
 
 // Legal hold details
 

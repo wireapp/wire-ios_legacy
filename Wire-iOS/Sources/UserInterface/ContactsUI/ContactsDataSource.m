@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_END
     
     _searchQuery = searchQuery;
     
-    [self searchWithQuery:searchQuery];
+    [self searchWithQuery:searchQuery searchDirectory:self.searchDirectory];
 }
 
 #pragma mark - Grouping

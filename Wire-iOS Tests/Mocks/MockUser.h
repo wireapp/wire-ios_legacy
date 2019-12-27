@@ -52,6 +52,7 @@
 @property (nonatomic, readwrite) BOOL canModifyNotificationSettingsInConversation;
 @property (nonatomic, readwrite) BOOL canModifyAccessControlSettingsInConversation;
 @property (nonatomic, readwrite) BOOL canAddUserToConversation;
+@property (nonatomic, readwrite) BOOL canModifyOtherMemberInConversation;
 @property (nonatomic, readwrite) BOOL canRemoveUserFromConversation;
 @property (nonatomic, readwrite) BOOL untrusted;
 @property (nonatomic, readwrite) BOOL trusted;
@@ -92,6 +93,7 @@
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 @property (nonatomic) UIImage * profileImage;
+@property (nonatomic) NSSet<ParticipantRole *> *  participantRoles;
 
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

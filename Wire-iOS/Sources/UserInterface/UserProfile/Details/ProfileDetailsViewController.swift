@@ -34,6 +34,13 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
     let conversation: ZMConversation?
 
     let context: ProfileViewControllerContext
+    
+    /// The current group admin status.
+    var isAdminRole: Bool {
+        didSet {
+            profileHeaderViewController.isAdminRole = self.isAdminRole
+        }
+    }
 
     /**
      * The object that calculates and controls the content to display in the user
@@ -73,22 +80,25 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         
         var profileHeaderOptions: ProfileHeaderViewController.Options = [.hideUsername, .hideHandle, .hideTeamName]
         
-        if user.isSelfUser || !viewer.canAccessCompanyInformation(of: user) {
-            profileHeaderOptions.insert(.hideAvailability)
-        }
+        // The availability status has been moved to the left of the user name, so now we can always hide this status in the user's profile.
+        profileHeaderOptions.insert(.hideAvailability)
         
         self.user = user
+        isAdminRole = conversation.map(user.isAdminGroup) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.context = context
-        self.profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
-        self.contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
+        profileHeaderViewController = ProfileHeaderViewController(user: user, viewer: viewer, conversation: conversation, options: profileHeaderOptions)
+        contentController = ProfileDetailsContentController(user: user, viewer: viewer, conversation: conversation)
         
         super.init(nibName: nil, bundle: nil)
         
-        self.contentController.delegate = self
+        contentController.delegate = self
+
+        IconToggleSubtitleCell.register(in: tableView)
     }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -171,6 +181,10 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
 // MARK: - ProfileDetailsContentController
 
 extension ProfileDetailsViewController: ProfileDetailsContentControllerDelegate {
+    
+    func profileGroupRoleDidChange(isAdminRole: Bool) {
+        self.isAdminRole = isAdminRole
+    }
     
     func profileDetailsContentDidChange() {
         tableView.reloadData()

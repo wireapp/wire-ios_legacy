@@ -49,7 +49,6 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
         subtitleLabel.numberOfLines = 0
         subtitleLabel.font = FontSpec(.medium, .regular).font
         titleLabel.font = FontSpec(.normal, .light).font
-        titleLabel.accessibilityIdentifier = "label.guestoptions.description"
         accessibilityElements = [titleLabel, toggle]
     }
     
@@ -85,11 +84,12 @@ final class ToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurable {
     }
     
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant) {
-        guard case let .toggle(title, subtitle, identifier, get, set) = configuration else { preconditionFailure() }
+        guard case let .toggle(title, subtitle, identifier, titleIdentifier, get, set) = configuration else { preconditionFailure() }
         titleLabel.text = title
         subtitleLabel.text = subtitle
         action = set
         toggle.accessibilityIdentifier = identifier
+        titleLabel.accessibilityIdentifier = titleIdentifier
         toggle.isOn = get()
         self.variant = variant
     }

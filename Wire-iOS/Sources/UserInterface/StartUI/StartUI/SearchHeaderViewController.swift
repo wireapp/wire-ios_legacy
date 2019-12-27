@@ -47,7 +47,7 @@ protocol SearchHeaderViewControllerDelegate : class {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public init(userSelection: UserSelection, variant: ColorSchemeVariant) {
+    init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         self.colorSchemeVariant = variant
         self.clearButton = IconButton(style: .default, variant: variant)

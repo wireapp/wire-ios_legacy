@@ -19,6 +19,43 @@
 import Foundation
 
 extension Button {
+    @objc
+    convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
+        self.init()
+        
+        textTransform = .upper
+        titleLabel?.font = .smallLightFont
+        layer.cornerRadius = 4
+        contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        
+        switch style {
+        case .full:
+            setBackgroundImageColor(.accent(), for: .normal)
+            setTitleColor(UIColor.white, for: .normal)
+            setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
+        case .fullMonochrome:
+            setBackgroundImageColor(UIColor.white, for: .normal)
+            setTitleColor(UIColor.from(scheme: .textForeground, variant: .light), for: .normal)
+            setTitleColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
+        case .empty:
+            layer.borderWidth = 1
+            setTitleColor(UIColor.buttonEmptyText(variant: variant), for: .normal)
+            setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
+            setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .disabled)
+            setBorderColor(UIColor.accent(), for: .normal)
+            setBorderColor(UIColor.accentDarken, for: .highlighted)
+            setBorderColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .disabled)
+        case .emptyMonochrome:
+            setBackgroundImageColor(UIColor.clear, for: .normal)
+            setTitleColor(UIColor.white, for: .normal)
+            setTitleColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
+            setBorderColor(UIColor(white: 1.0, alpha: 0.32), for: .normal)
+            setBorderColor(UIColor(white: 1.0, alpha: 0.16), for: .highlighted)
+        default:
+            break
+        }
+    }
+
     open override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
         state.expanded.forEach(){ expandedState in

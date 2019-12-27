@@ -263,7 +263,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 // MARK: - Factory
 
-class ConversationSystemMessageCellDescription {
+final class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,

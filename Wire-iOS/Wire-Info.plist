@@ -24,7 +24,7 @@
 		</dict>
 	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -40,7 +40,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcenter-$(APP_CENTER_APP_ID_KEY)</string>
+				<string>appcenter-${APP_CENTER_APP_ID_KEY}</string>
 			</array>
 		</dict>
 		<dict>
@@ -179,9 +179,9 @@
 		</dict>
 	</array>
 	<key>UseAppCenter</key>
-	<string>$(USE_APP_CENTER_KEY)</string>
+	<string>${USE_APP_CENTER_KEY}</string>
 	<key>Wire SSO URL Scheme</key>
-	<string>$(WIRE_SSO_URL_SCHEME)</string>
+	<string>${WIRE_SSO_URL_SCHEME}</string>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
 </dict>

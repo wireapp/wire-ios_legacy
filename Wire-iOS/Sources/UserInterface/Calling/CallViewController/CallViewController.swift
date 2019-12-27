@@ -224,7 +224,7 @@ final class CallViewController: UIViewController {
     }
 
     fileprivate func alertVideoUnavailable() {
-        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.activeParticipants.count > 4 {
+        if voiceChannel.videoState == .stopped, voiceChannel.conversation?.localParticipants.count > 4 {
             showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
         }
     }

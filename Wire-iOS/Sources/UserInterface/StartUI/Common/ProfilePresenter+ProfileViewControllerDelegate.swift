@@ -18,12 +18,49 @@
 
 import Foundation
 
+extension ProfilePresenter {
+    func presentProfileViewController(for user: UserType,
+                                      in controller: UIViewController?,
+                                      from rect: CGRect,
+                                      onDismiss: @escaping () -> (),
+                                      arrowDirection: UIPopoverArrowDirection) {
+        profileOpenedFromPeoplePicker = true
+        viewToPresentOn = controller?.view
+        controllerToPresentOn = controller
+        presentedFrame = rect
+        
+        self.onDismiss = onDismiss
+        
+        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .search)
+        profileViewController.delegate = self
+        profileViewController.viewControllerDismisser = self
+        
+        let navigationController = profileViewController.wrapInNavigationController()
+        navigationController.transitioningDelegate = transitionDelegate
+        navigationController.modalPresentationStyle = .formSheet
+        
+        controller?.present(navigationController, animated: true)
+        
+        ///TODO: config with presentationController?.config
+        // Get the popover presentation controller and configure it.
+        let presentationController = navigationController.popoverPresentationController
+                
+        presentationController?.permittedArrowDirections = arrowDirection
+        presentationController?.sourceView = viewToPresentOn
+        presentationController?.sourceRect = rect
+    }
+}
+
 extension ProfilePresenter: ProfileViewControllerDelegate {
-    public func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         guard let controller = controller else { return }
         
         dismiss(controller) {
             ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
         }
+    }
+
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+        //no-op.
     }
 }

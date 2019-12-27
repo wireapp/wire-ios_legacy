@@ -39,17 +39,20 @@ extension ZMConversation {
                 listOfPeople.append(connectedUser)
             }
             
-            return ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: listOfPeople, in: ZMUser.selfUser().team)
+            return ZMConversation.insertGroupConversation(session: userSession,
+                                                          participants: listOfPeople,
+                                                          team: ZMUser.selfUser().team)
         default:
             return self
         }
     }
 
+    ///TODO: move to DM
     @objc
     var firstActiveParticipantOtherThanSelf: ZMUser? {
-        guard let selfUser = ZMUser.selfUser() else { return activeParticipants.first }
+        guard let selfUser = ZMUser.selfUser() else { return localParticipants.first }
         
-        return activeParticipants.first(where: {$0 != selfUser} )
+        return localParticipants.first(where: {$0 != selfUser} )
     }
 
 }

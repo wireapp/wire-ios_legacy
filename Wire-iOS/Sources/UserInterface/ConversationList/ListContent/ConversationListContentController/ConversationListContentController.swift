@@ -186,6 +186,7 @@ final class ConversationListContentController: UICollectionViewController {
         }
     }
 
+    @discardableResult
     func selectInboxAndFocus(onView focus: Bool) -> Bool {
         // If there is anything in the inbox, select it
         if listViewModel.numberOfItems(inSection: 0) > 0 {
@@ -270,7 +271,8 @@ final class ConversationListContentController: UICollectionViewController {
         }
 
         (cell as? SectionListCellType)?.sectionName = listViewModel.sectionCanonicalName(of: indexPath.section)
-
+        (cell as? SectionListCellType)?.cellIdentifier = "conversation_list_cell"
+        
         cell.autoresizingMask = .flexibleWidth
 
         return cell

@@ -57,7 +57,6 @@ enum CancelConnectionRequestResult {
 }
 
 extension UIAlertController {
-    @objc(cancelConnectionRequestControllerForUser:completion:)
     static func cancelConnectionRequest(for user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
         return CancelConnectionRequestResult.controller(for: user) { result in
             completion(result == .cancel)

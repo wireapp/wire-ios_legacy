@@ -60,33 +60,6 @@
     return self;
 }
 
-- (void)presentProfileViewControllerForUser:(id<UserType>)user inController:(UIViewController *)controller fromRect:(CGRect)rect onDismiss:(dispatch_block_t)onDismiss arrowDirection:(UIPopoverArrowDirection)arrowDirection
-{
-    self.profileOpenedFromPeoplePicker = YES;
-    self.viewToPresentOn = controller.view;
-    self.controllerToPresentOn = controller;
-    self.presentedFrame = rect;
-    
-    self.onDismiss = onDismiss;
-    
-    ProfileViewController *profileViewController = [[ProfileViewController alloc] initWithUser:user viewer:[ZMUser selfUser] context:ProfileViewControllerContextSearch];
-    profileViewController = profileViewController;
-    profileViewController.delegate = self;
-    profileViewController.viewControllerDismisser = self;
-
-    UINavigationController *navigationController = profileViewController.wrapInNavigationController;
-    navigationController.transitioningDelegate = self.transitionDelegate;
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-
-    [controller presentViewController:navigationController animated:YES completion:nil];
-    
-    // Get the popover presentation controller and configure it.
-    UIPopoverPresentationController *presentationController = [navigationController popoverPresentationController];
-    presentationController.permittedArrowDirections = arrowDirection;
-    presentationController.sourceView = self.viewToPresentOn;
-    presentationController.sourceRect = rect;
-}
-
 #pragma mark - ViewControllerDismisser
 
 - (void)dismissViewController:(UIViewController *)profileViewController completion:(dispatch_block_t)completion

@@ -16,10 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: ZMSnapshotTestCase {
+final class ProfileViewControllerTests: XCTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
@@ -54,7 +55,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForContextProfileViewerForSelfUser() {
@@ -64,21 +65,34 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
 
-        verify(view: sut.view)
+        verify(matching: sut)
+    }
+    
+    func testForUserName() {
+        selfUser.teamRole = .member
+        selfUser.emailAddress = nil
+        selfUser.availability = .busy
+        selfUser.trusted = true
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        sut.updateShowVerifiedShield()
+        let navWrapperController = sut.wrapInNavigationController()
+        verify(matching: navWrapperController)
     }
 
     func testForContextOneToOneConversation() {
-        selfUser.teamRole = .member
-        selfUser.canCreateConversation = true
+        let swiftSelfUser = SwiftMockUser()
+        swiftSelfUser.teamRole = .member
         mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [selfUser, mockUser]
+        conversation.activeParticipants = [swiftSelfUser, mockUser]
 
-        sut = ProfileViewController(user: mockUser, viewer: selfUser,
+        sut = ProfileViewController(user: mockUser, viewer: swiftSelfUser,
                                     conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForContextOneToOneConversationForPartnerRole() {
@@ -92,12 +106,12 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         sut = ProfileViewController(user: mockUser, viewer: selfUser,
                                     conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForDeviceListContext() {
         sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
 
@@ -117,14 +131,14 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     conversation: conversation.convertToRegularConversation(), context: .groupConversation)
 
         // THEN
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForWrapInNavigationController() {
         sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         let navWrapperController = sut.wrapInNavigationController()
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
     
     func testForContextProfileViewerUnderLegalHold() {
@@ -136,7 +150,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
         
-        verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
     
     func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
@@ -151,7 +165,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
         
-        verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
     
     
@@ -164,7 +178,6 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
         
-        verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
-
 }

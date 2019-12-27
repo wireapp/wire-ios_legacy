@@ -18,15 +18,19 @@
 
 import UIKit
 
-final class GroupParticipantsDetailViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+final class GroupParticipantsDetailViewController: UIViewController {
 
     private let collectionView = UICollectionView(forGroupedSections: ())
     private let searchViewController = SearchHeaderViewController(userSelection: .init(), variant: ColorScheme.default.variant)
-    private let viewModel: GroupParticipantsDetailViewModel
+    let viewModel: GroupParticipantsDetailViewModel
+    private let collectionViewController: SectionCollectionViewController
+    private let variant: ColorSchemeVariant
     
     // used for scrolling and fading selected cells
     private var firstLayout = true
     private var firstLoad = true
+    
+    private var sections: [CollectionViewSectionController] = []
     
     weak var delegate: GroupDetailsUserDetailPresenter?
     
@@ -38,14 +42,23 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         return ColorScheme.default.statusBarStyle
     }
     
-    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
+    init(selectedParticipants: [UserType],
+         conversation: ZMConversation,
+         variant: ColorSchemeVariant = ColorScheme.default.variant) {
+        
+        self.variant = variant
+        
+        let allParticipants = conversation.sortedOtherParticipants
+        
         viewModel = GroupParticipantsDetailViewModel(
-            participants: participants,
+            participants: allParticipants,
             selectedParticipants: selectedParticipants,
             conversation: conversation
         )
-
+        collectionViewController = SectionCollectionViewController()
+        
         super.init(nibName: nil, bundle: nil)
+        sections = computeSections()
     }
     
     @available(*, unavailable)
@@ -64,7 +77,8 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         
         if firstLayout {
             firstLayout = false
-            scrollToFirstHighlightedUser()
+            ///TODO: Katarina this need to be restored?
+//            scrollToFirstHighlightedUser()
         }
     }
     
@@ -73,17 +87,29 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         firstLoad = false
     }
     
-    private func setupViews() {
+    override func viewWillAppear(_ animated: Bool) {
+        collectionViewController.collectionView?.reloadData()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionViewController.collectionView?.collectionViewLayout.invalidateLayout()
+        })
+    }
+    
+    func setupViews() {
         addToSelf(searchViewController)
         searchViewController.view.translatesAutoresizingMaskIntoConstraints = false
         searchViewController.delegate = viewModel
-        viewModel.participantsDidChange = collectionView.reloadData
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(SelectedUserCell.self, forCellWithReuseIdentifier: SelectedUserCell.reuseIdentifier)
+        
+        collectionViewController.collectionView = collectionView
+        collectionViewController.sections = sections
+        viewModel.participantsDidChange = self.participantsDidChange
+        
         collectionView.accessibilityIdentifier = "group_details.full_list"
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         title = "participants.all.title".localized(uppercased: true)
         view.backgroundColor = UIColor.from(scheme: .contentBackground)
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
@@ -101,6 +127,14 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         ])
     }
     
+     func participantsDidChange() {
+        collectionViewController.sections = computeSections()
+        collectionViewController.collectionView?.reloadData()
+        
+        let emptyResultMessage = (viewModel.admins.isEmpty && viewModel.members.isEmpty) ? "peoplepicker.no_search_results".localized() : ""
+        collectionViewController.collectionView?.setEmptyMessage(emptyResultMessage, variant: self.variant)
+    }
+    
     private func scrollToFirstHighlightedUser() {
         if let idx = viewModel.indexOfFirstSelectedParticipant {
             let indexPath = IndexPath(row: idx, section: 0)
@@ -108,42 +142,24 @@ final class GroupParticipantsDetailViewController: UIViewController, UICollectio
         }
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout & UICollectionViewDataSource
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.participants.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelectedUserCell.reuseIdentifier, for: indexPath) as! SelectedUserCell
-        let user = viewModel.participants[indexPath.row]
+    private func computeSections() -> [CollectionViewSectionController] {
+        sections = []
+        if !viewModel.admins.isEmpty {
+            sections.append(ParticipantsSectionController(participants: viewModel.admins, conversationRole: .admin, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.admins.count, clipSection: false, showSectionCount: false))
+        }
         
-        cell.configure(
-            with: .user(user),
-            conversation: viewModel.conversation,
-            showSeparator: viewModel.participants.count - 1 != indexPath.row
-        )
-        
-        cell.configureContentBackground(preselected: viewModel.isUserSelected(user), animated: firstLoad)
+        if !viewModel.members.isEmpty { sections.append(ParticipantsSectionController(participants: viewModel.members, conversationRole: .member, conversation: viewModel.conversation, delegate: self, totalParticipantsCount: viewModel.members.count, clipSection: false, showSectionCount: false))
+        }
 
-        return cell
+        return sections
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let user = viewModel.participants[indexPath.row] as? ZMUser else { return }
-        delegate?.presentDetails(for: user)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.bounds.size.width, height: 56)
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return viewModel.participants[indexPath.row].isSelfUser == false
     }
 }
 
-private class SelectedUserCell: UserCell {
+private final class SelectedUserCell: UserCell {
 
     func configureContentBackground(preselected: Bool, animated: Bool) {
         contentView.backgroundColor = .clear
@@ -163,5 +179,57 @@ private class SelectedUserCell: UserCell {
         } else {
             changes()
         }
+    }
+}
+
+extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
+    
+    func presentDetails(for user: ZMUser) {
+        let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
+            user: user,
+            conversation: viewModel.conversation,
+            profileViewControllerDelegate: self,
+            viewControllerDismisser: self
+        )
+        if !user.isSelfUser {
+            navigationController?.pushViewController(viewController, animated: true)
+        }
+    }
+    
+    func presentFullParticipantsList(for users: [UserType], in conversation: ZMConversation) {
+        presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
+    }
+    
+    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
+    func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
+        let detailsViewController = GroupParticipantsDetailViewController(
+            selectedParticipants: selectedUsers,
+            conversation: viewModel.conversation
+        )
+        
+        detailsViewController.delegate = self
+        navigationController?.pushViewController(detailsViewController, animated: animated)
+    }
+    
+}
+
+extension GroupParticipantsDetailViewController: ViewControllerDismisser {
+    
+    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
+        navigationController?.popViewController(animated: true, completion: completion)
+    }
+
+}
+
+extension GroupParticipantsDetailViewController: ProfileViewControllerDelegate {
+    
+    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
+        dismiss(animated: true) {
+            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+        }
+    }
+
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+            //no-op
     }
 }

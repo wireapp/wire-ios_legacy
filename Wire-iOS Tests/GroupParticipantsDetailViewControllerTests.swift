@@ -19,7 +19,22 @@
 import XCTest
 @testable import Wire
 
-class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
+extension ZMConversation {
+
+    func add(participants: Set<ZMUser>) {
+        addParticipantsAndUpdateConversationState(users: participants, role: nil)
+    }
+
+    func add(participants: [ZMUser]) {
+        add(participants: Set(participants))
+    }
+
+    func add(participants: ZMUser...) {
+        add(participants: Set(participants))
+    }
+}
+
+final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
     
     override func tearDown() {
         resetColorScheme()
@@ -31,10 +46,10 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
@@ -47,14 +62,31 @@ class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants(users)
+        conversation.add(participants: users)
         
         // when
-        let sut = GroupParticipantsDetailViewController(participants: users, selectedParticipants: selected, conversation: conversation)
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
         
         // then
         let wrapped = sut.wrapInNavigationController()
         verify(view: wrapped.view)
         ColorScheme.default.variant = .light
+    }
+    
+    func testEmptyState() {
+        // given
+        let selected:[ZMUser] = []
+        let conversation = createGroupConversation()
+        
+        // when
+        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+        sut.viewModel.admins = []
+        sut.viewModel.members = []
+        sut.setupViews()
+        sut.participantsDidChange()
+
+        // then
+        let wrapped = sut.wrapInNavigationController()
+        verify(view: wrapped.view)
     }
 }

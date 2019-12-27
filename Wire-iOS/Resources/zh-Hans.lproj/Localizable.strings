@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "没有结果。";
 "peoplepicker.no_matching_results_message" = "输入完整的电邮箱地址。";
+"peoplepicker.no_search_results" = "没有匹配结果。请尝试输入不同的名称。";
 
 "peoplepicker.no_matching_results.action.send_invite" = "发送邀请";
 "peoplepicker.no_matching_results.action.share_contacts" = "共享联络人";
@@ -159,7 +160,7 @@
 "conversation_list.voiceover.status.mention" = "您被提及";
 "conversation_list.voiceover.status.reply" = "回复";
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "最近";
-"conversation_list.voiceover.bottom_bar.recent_button.hint" = "list of recent conversations";
+"conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近的聊天列表";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "文件夹";
 "conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已归档";
@@ -191,14 +192,14 @@
 
 // Folders
 
-"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.title" = "建立新资料夹";
 "folder.creation.name.button.create" = "创建";
 "folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
 "folder.creation.name.footer" = "Maximum 64 characters";
 "folder.creation.name.placeholder" = "Folder name";
 
-"folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.title" = "移动到";
+"folder.picker.empty.hint" = "按 + 按钮创建新文件夹";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -220,7 +221,7 @@
 
 "list.section.groups" = "群组";
 "list.section.contacts" = "联系人";
-"list.section.requests" = "Requests";
+"list.section.requests" = "请求";
 "list.section.favorites" = "收藏夾";
 
 "conversation.voiceover.verified" = "已验证";
@@ -306,7 +307,7 @@
 "conversation.connection_view.in_address_book" = "在联系人中";
 
 "conversation.input_bar.shortcut.send" = "发送消息";
-"conversation.input_bar.shortcut.newline" = "Insert line break";
+"conversation.input_bar.shortcut.newline" = "插入换行符";
 "conversation.input_bar.shortcut.edit_last_message" = "编辑最后一条消息";
 "conversation.input_bar.shortcut.cancel_editing_message" = "取消";
 
@@ -712,6 +713,10 @@
 "participants.section.settings" = "选项";
 "participants.footer.add_title" = "添加参与者";
 "participants.section.name.footer" = "一个群组最多%1$d个人，您最多可与%2$d个人同时视频通话。";
+"participants.section.admins.footer" = "没有管理员。";
+"participants.section.members.footer" = "暂时还没有成员";
+
+"profile.profile.group_admin_options.title" = "群组管理员";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "更多操作";
@@ -721,7 +726,7 @@
 "meta.menu.unarchive" = "取消归档";
 "meta.menu.delete" = "删除群聊...";
 "meta.menu.clear_content" = "清除内容…";
-"meta.menu.move_to_folder" = "Move to…";
+"meta.menu.move_to_folder" = "移至 ...";
 "meta.menu.remove_from_folder" = "Remove from \"%@\"";
 "meta.menu.silence.mute" = "静音";
 "meta.menu.silence.unmute" = "关闭静音";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "YOU HAVE DISABLED READ RECEIPTS";
 "profile.read_receipts_memo.body" = "如果双方都打开已读回执，你可以查看消息的阅读时间。\n\n您可以在帐户设置中更改此选项。";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "信息";
 
 // User Details
 "profile.details.title" = "详细信息";
 "profile.details.guest" = "游客";
+"profile.details.group_admin" = "群组管理员";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "用户名";
 "profile_view.accessibility.name" = "昵称";
@@ -875,6 +884,10 @@
 "group_details.receipt_options_cell.title" = "Read receipts";
 "group_details.receipt_options_cell.description" = "When this is on, people can see when their messages in this conversation are read.";
 
+"group_details.conversation_admins_header.title" = "群组管理员";
+"group_details.conversation_members_header.title" = "群组成员";
+
+
 // Legal hold details
 
 "legalhold.participants.section.title" = "Legal hold subjects";
@@ -904,7 +917,7 @@
 "self.add_phone_number" = "新增手机号码";
 "self.add_email_password" = "新增邮箱地址和密码";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
+"self.accessibility.profile_photo_image" = "个人图像";
 "self.accessibility.profile_photo_edit_button" = "Change profile picture";
 
 // About screen

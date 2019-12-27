@@ -44,7 +44,8 @@ protocol ConversationMessageSectionControllerDelegate: class {
  * the cells from the table or collection view and configuring them with a message.
  */
 
-@objc class ConversationMessageSectionController: NSObject, ZMMessageObserver, ZMUserObserver {
+@objc
+final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
     @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
@@ -306,9 +307,11 @@ protocol ConversationMessageSectionControllerDelegate: class {
         
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
+}
 
+extension ConversationMessageSectionController: ZMUserObserver {
     func userDidChange(_ changeInfo: UserChangeInfo) {
         sectionDelegate?.messageSectionController(self, didRequestRefreshForMessage: self.message)
     }
-
 }
+

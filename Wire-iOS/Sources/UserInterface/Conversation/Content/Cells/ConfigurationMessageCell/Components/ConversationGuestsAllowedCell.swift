@@ -18,7 +18,7 @@
 
 import Foundation
 
-class GuestsAllowedCellDescription: ConversationMessageCellDescription {
+final class GuestsAllowedCellDescription: ConversationMessageCellDescription {
     
     typealias View = GuestsAllowedCell
     let configuration: View.Configuration
@@ -48,7 +48,7 @@ class GuestsAllowedCellDescription: ConversationMessageCellDescription {
     
 }
 
-class GuestsAllowedCell: UIView, ConversationMessageCell {
+final class GuestsAllowedCell: UIView, ConversationMessageCell {
     
     struct GuestsAllowedCellConfiguration { }
     

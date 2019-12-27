@@ -24,7 +24,6 @@
 
 // ui
 #import "TextView.h"
-#import "ProfileViewController.h"
 #import "ProfilePresenter.h"
 #import "Wire-Swift.h"
 

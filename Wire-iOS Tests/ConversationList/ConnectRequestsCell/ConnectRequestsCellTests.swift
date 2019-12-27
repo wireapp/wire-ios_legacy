@@ -37,6 +37,7 @@ final class ConnectRequestsCellTests: XCTestCase {
 
     func testThatAccessIDIsGenerated() {
         sut.sectionName = "request"
+        sut.cellIdentifier = "conversation_list_cell"
         XCTAssertEqual(sut.accessibilityIdentifier, "request - conversation_list_cell")
     }
 }

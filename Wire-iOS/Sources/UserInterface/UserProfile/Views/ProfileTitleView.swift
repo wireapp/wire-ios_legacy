@@ -60,13 +60,15 @@ import Cartography
             titleLabel.trailing == container.trailing
             
             verifiedImageView.centerY == titleLabel.centerY
-            verifiedImageView.trailing == titleLabel.leading - 16
+            verifiedImageView.leading == titleLabel.trailing + 10
         }
     }
     
-    @objc(configureWithViewModel:)
-    public func configure(with model: UserNameDetailViewModel) {
-        titleLabel.attributedText = model.title
+    @objc(configureWithViewModel::)
+    public func configure(with user: UserType, variant: ColorSchemeVariant) {
+        let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant))
+        titleLabel.attributedText = attributedTitle
+        titleLabel.font = FontSpec(.normal, .medium).font!
     }
     
     private func updateVerifiedShield() {

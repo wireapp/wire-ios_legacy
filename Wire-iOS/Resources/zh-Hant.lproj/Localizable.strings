@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "沒有結果。";
 "peoplepicker.no_matching_results_message" = "請輸入完整的電子郵件地址。";
+"peoplepicker.no_search_results" = "沒有符合的結果。請試試別的名稱。";
 
 "peoplepicker.no_matching_results.action.send_invite" = "發送邀請";
 "peoplepicker.no_matching_results.action.share_contacts" = "分享通訊錄";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "選項";
 "participants.footer.add_title" = "加入參與者";
 "participants.section.name.footer" = "最多%1$d參與者可以加入群組對話。視像通話可用以你與另外%2$d人。";
+"participants.section.admins.footer" = "沒有管理員";
+"participants.section.members.footer" = "沒有成員";
+
+"profile.profile.group_admin_options.title" = "群組管理員";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "更多動作";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "您已停用讀取回條";
 "profile.read_receipts_memo.body" = "如果雙方都打開讀取回條，則可以查看何時讀取信息。您可以在帳戶設置中更改此選項。";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "資訊";
 
 // User Details
 "profile.details.title" = "詳細資訊";
 "profile.details.guest" = "訪客";
+"profile.details.group_admin" = "群組管理員";
+"profile.details.partner" = "外部合作者";
 
 "profile_view.accessibility.handle" = "使用者名稱";
 "profile_view.accessibility.name" = "暱稱";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "您可以收到有關所有內容 (包括音訊和視頻通話) 的通知, 或者僅當有人提及您或回復您的訊息時才會收到通知。";
 "group_details.receipt_options_cell.title" = "讀取回條";
 "group_details.receipt_options_cell.description" = "當這啓用時, 參與者可以看到他們在此對話中的消息何時已閱讀。";
+
+"group_details.conversation_admins_header.title" = "群組管理員";
+"group_details.conversation_members_header.title" = "群組成員";
+
 
 // Legal hold details
 
@@ -1614,11 +1627,11 @@
 "availability.away.placeholder" = "%@已離開";
 "availability.busy.placeholder" = "%@忙碌中";
 
-"availability.reminder.away.title" = "You are set to Away";
+"availability.reminder.away.title" = "您設置為離開";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
 "availability.reminder.busy.title" = "您設置為忙碌";
 "availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
-"availability.reminder.available.title" = "You are set to Available";
+"availability.reminder.available.title" = "您設置為在線";
 "availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
 "availability.reminder.none.title" = "目前沒有設定狀態";
 "availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
@@ -1702,8 +1715,8 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
 "share_extension.voiceover.conversation_under_legal_hold" = "在合法保留之下。";
-"share_extension.voiceover.conversation_secure" = "All clients verified.";
-"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+"share_extension.voiceover.conversation_secure" = "所有設備都已驗證。";
+"share_extension.voiceover.conversation_secure_with_ignored" = "沒有驗證所有設備。";
 
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "等待核准";

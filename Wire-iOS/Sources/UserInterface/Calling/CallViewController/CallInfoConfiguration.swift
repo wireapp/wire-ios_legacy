@@ -224,7 +224,7 @@ fileprivate extension VoiceChannel {
     
     var canUpgradeToVideo: Bool {
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
-        guard conversation.activeParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
+        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
         return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
     }
     
@@ -245,7 +245,9 @@ fileprivate extension VoiceChannel {
     }
 
     var firstDegradedUser: ZMUser? {
-        return conversation?.activeParticipants.first(where: { $0.untrusted() })
+        return conversation?.localParticipants.first(where: {
+            $0.untrusted()            
+        })
     }
 
     private var isIncomingVideoCall: Bool {

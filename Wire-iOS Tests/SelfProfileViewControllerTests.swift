@@ -23,10 +23,6 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     
     var sut: SelfProfileViewController!
 
-    override func setUp() {
-        super.setUp()
-    }
-
     override func tearDown() {
         sut = nil
         super.tearDown()

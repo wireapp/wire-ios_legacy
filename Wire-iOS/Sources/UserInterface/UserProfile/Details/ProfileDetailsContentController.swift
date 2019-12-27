@@ -27,13 +27,19 @@ protocol ProfileDetailsContentControllerDelegate: class {
     
     /// Called when the profile details change.
     func profileDetailsContentDidChange()
+    
+    /// Called when the group role change.
+    func profileGroupRoleDidChange(isAdminRole: Bool)
 }
 
 /**
  * An object that controls the content to display in the user details screen.
  */
 
-final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UITableViewDelegate, ZMUserObserver {
+final class ProfileDetailsContentController: NSObject,
+                                             UITableViewDataSource,
+                                             UITableViewDelegate,
+                                             ZMUserObserver {
     
     /**
      * The type of content that can be displayed in the profile details.
@@ -45,6 +51,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         
         /// Display the status of read receipts for a 1:1 conversation.
         case readReceiptsStatus(enabled: Bool)
+        
+        /// Display the status of groud admin enabled for a group conversation.
+        case groupAdminStatus(enabled: Bool)
     }
     
     /// The user to display the details of.
@@ -55,6 +64,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
     
     /// The conversation where the profile details will be displayed.
     let conversation: ZMConversation?
+    
+    /// The current group admin status for UI.
+    private var isAdminState: Bool
 
     // MARK: - Accessing the Content
     
@@ -85,6 +97,8 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         self.user = user
         self.viewer = viewer
         self.conversation = conversation
+        
+        isAdminState = conversation.map(user.isAdminGroup) ?? false
 
         super.init()
         configureObservers()
@@ -134,13 +148,24 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         
         switch conversation?.conversationType ?? .group {
         case .group:
+            let groupAdminEnabled = conversation.map(user.isAdminGroup) ?? false
+            
+            ///Do not show group admin toggle for self user or requesting connection user
+            var items: [ProfileDetailsContentController.Content] = []
+            if let conversation = conversation {
+                let viewerCanChangeOtherRoles = viewer.zmUser?.canModifyOtherMember(in: conversation) ?? false
+                let userCanHaveRoleChanged = !user.isWirelessUser
+                if viewerCanChangeOtherRoles && userCanHaveRoleChanged {
+                    items.append(.groupAdminStatus(enabled: groupAdminEnabled))
+                }
+            }
+            
             if let richProfile = richProfileInfoWithEmail {
                 // If there is rich profile data and the user is allowed to see it, display it.
-                contents = [richProfile]
-            } else {
-                // If there is no rich profile data, show nothing.
-                contents = []
+                items.append(richProfile)
             }
+
+            contents = items
 
         case .oneOnOne:
             let readReceiptsEnabled = viewer.readReceiptsEnabled
@@ -176,6 +201,8 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
             return fields.count
         case .readReceiptsStatus:
             return 0
+        case .groupAdminStatus:
+            return 1
         }
     }
 
@@ -183,7 +210,9 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         let header = SectionTableHeader()
 
         switch contents[section] {
-
+        case .groupAdminStatus:
+            header.titleLabel.text = nil
+            header.accessibilityIdentifier = nil
         case .richProfile:
             header.titleLabel.text = "profile.extended_metadata.header".localized(uppercased: true)
             header.accessibilityIdentifier = "InformationHeader"
@@ -201,6 +230,18 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch contents[indexPath.section] {
+        case .groupAdminStatus(let groupAdminEnabled):
+            let cell = tableView.dequeueReusableCell(withIdentifier: IconToggleSubtitleCell.zm_reuseIdentifier, for: indexPath) as! IconToggleSubtitleCell
+            
+            cell.configure(with: CellConfiguration.groupAdminToogle(get: {
+                return groupAdminEnabled
+            }, set: {_ in
+                self.isAdminState.toggle()
+                self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
+                self.updateConversationRole()
+            }), variant: ColorScheme.default.variant)
+            
+            return cell
         case .richProfile(let fields):
             let field = fields[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: userPropertyCellID) as? UserPropertyCell ?? UserPropertyCell(style: .default, reuseIdentifier: userPropertyCellID)
@@ -208,7 +249,7 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
             cell.propertyValue = field.value
             cell.showSeparator = indexPath.row < fields.count - 1
             return cell
-
+            
         case .readReceiptsStatus:
             fatalError("We do not create cells for the readReceiptsStatus section.")
         }
@@ -223,6 +264,11 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
             footer.titleLabel.text = "profile.read_receipts_memo.body".localized
             footer.accessibilityIdentifier = "ReadReceiptsStatusFooter"
             return footer
+        case .groupAdminStatus:
+            let footer = SectionTableFooter()
+            footer.titleLabel.text = "profile.group_admin_status_memo.body".localized
+            footer.accessibilityIdentifier = "GroupAdminStatusFooter"
+            return footer
         }
     }
 
@@ -234,4 +280,28 @@ final class ProfileDetailsContentController: NSObject, UITableViewDataSource, UI
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    private func updateConversationRole() {
+        let groupRoles = self.conversation?.getRoles()
+        let newParticipantRole = groupRoles?.first {
+            $0.name == (self.isAdminState ? ZMConversation.defaultAdminRoleName : ZMConversation.defaultMemberRoleName)
+        }
+        
+        guard
+            let role = newParticipantRole,
+            let session = ZMUserSession.shared(),
+            let user = user.zmUser
+            else { return }
+        
+        conversation?.updateRole(of: user, to: role, session: session) { (result) in
+            if case .failure = result {
+                self.isAdminState.toggle()
+                self.updateUI()
+            }
+        }
+    }
+    
+    private func updateUI() {
+        self.delegate?.profileGroupRoleDidChange(isAdminRole: self.isAdminState)
+        self.delegate?.profileDetailsContentDidChange()
+    }
 }

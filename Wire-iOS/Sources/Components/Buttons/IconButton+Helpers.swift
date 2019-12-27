@@ -33,6 +33,34 @@ extension IconButton {
         }
     }
 
+    @objc
+    convenience init(style: IconButtonStyle, variant: ColorSchemeVariant) {
+        self.init()
+        
+        setIconColor(UIColor.from(scheme: .iconNormal, variant: variant), for: .normal)
+        setIconColor(UIColor.from(scheme: .iconSelected, variant: variant), for: .selected)
+        setIconColor(UIColor.from(scheme: .iconHighlighted, variant: variant), for: .highlighted)
+        setBackgroundImageColor(UIColor.from(scheme: .iconBackgroundSelected, variant: variant), for: .selected)
+        
+        switch style {
+        case .default:
+            break
+        case .circular:
+            circular = true
+            borderWidth = 0
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            contentHorizontalAlignment = .center
+        case .navigation:
+            titleEdgeInsets = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
+            titleLabel?.font = UIFont.smallLightFont
+            adjustsImageWhenDisabled = false
+            borderWidth = 0
+            contentHorizontalAlignment = .left
+        default:
+            break
+        }
+    }
+    
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
         state.expanded.forEach(){ expandedState in
             if color != nil {

@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Sonuç yok.";
 "peoplepicker.no_matching_results_message" = "Tam bir e-posta adresi giriniz.";
+"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Davet gönder";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kişileri paylaş";
@@ -712,6 +713,10 @@
 "participants.section.settings" = "Ayarlar";
 "participants.footer.add_title" = "Katılımcı ekle";
 "participants.section.name.footer" = "%1$d kişiye kadar katılımcı grup sohbetine katılabilir. Video görüşmeleri ise %2$d kişiyle ve birlikte çalışır.";
+"participants.section.admins.footer" = "There are no admins.";
+"participants.section.members.footer" = "There are no members.";
+
+"profile.profile.group_admin_options.title" = "Group admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Diğer işlemler";
@@ -827,11 +832,15 @@
 "profile.read_receipts_disabled_memo.header" = "OKUNDU BİLGİLERİNİ DEVRE DIŞI BIRAKTINIZ";
 "profile.read_receipts_memo.body" = "Her iki taraf da okundu bilgisini açarsa, mesajların ne zaman okunduğunu görebilirsiniz.\n\nBu seçeneği hesap ayarlarınızdan değiştirebilirsiniz.";
 
+"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+
 "profile.extended_metadata.header" = "Bilgi";
 
 // User Details
 "profile.details.title" = "Ayrıntılar";
 "profile.details.guest" = "Misafir";
+"profile.details.group_admin" = "Group admin";
+"profile.details.partner" = "external";
 
 "profile_view.accessibility.handle" = "Kullanıcı Adı";
 "profile_view.accessibility.name" = "Görünen İsim";
@@ -874,6 +883,10 @@
 "group_details.notification_options_cell.description" = "Her şeyden (sesli ve görüntülü aramalar dahil) veya yalnızca biri sizden bahsettiğinde veya mesajlarınızdan birini yanıtladığında size bildirim gelebilir.";
 "group_details.receipt_options_cell.title" = "Okundu bilgisi";
 "group_details.receipt_options_cell.description" = "Bu açıkken, insanlar bu görüşmedeki mesajlarının ne zaman okunduğunu görebilir.";
+
+"group_details.conversation_admins_header.title" = "Group admins";
+"group_details.conversation_members_header.title" = "Group members";
+
 
 // Legal hold details
 

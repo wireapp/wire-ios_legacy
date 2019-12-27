@@ -182,9 +182,11 @@ platform :ios do
           api_token: ENV["APPCENTER_API_TOKEN"],
           owner_name: ENV["APPCENTER_OWNER_NAME"],
           app_name: app_name,
-          ipa: "#{build.artifact_path(with_filename: true)}.ipa",
+          file: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
-          notify_testers: true
+          notify_testers: true,
+          mandatory_update: true,
+          dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip"
         )
     end
 

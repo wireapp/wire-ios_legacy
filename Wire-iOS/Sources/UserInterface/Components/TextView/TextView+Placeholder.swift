@@ -19,7 +19,17 @@
 import Foundation
 
 extension TextView {
-
+    override open var text: String! {
+        didSet {
+            showOrHidePlaceholder()
+        }
+    }
+    
+    override open var attributedText: NSAttributedString! {
+        didSet {
+            showOrHidePlaceholder()
+        }
+    }
 
     /// custom inset for placeholder, only left and right inset value is applied (The placeholder is align center vertically)
     @objc

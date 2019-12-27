@@ -20,7 +20,6 @@ protocol ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation)
 }
 
-
 // a ConversationOptionsCell that with a disclosure indicator on the right
 typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell
 
