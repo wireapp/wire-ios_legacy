@@ -165,10 +165,19 @@ final class ConversationAvatarView: UIView {
                 return
             }
 
+            accessibilityLabel = "Avatar for \(conversation.displayName)"
+
+            let usersOnAvatar: [ZMUser]
             let stableRandomParticipants = conversation.stableRandomParticipants.filter { !$0.isSelfUser }
 
-            accessibilityLabel = "Avatar for \(self.conversation?.displayName ?? "")"
-            users = stableRandomParticipants
+            if stableRandomParticipants.isEmpty,
+                let connectedUser = conversation.connectedUser {
+                usersOnAvatar = [connectedUser]
+            } else {
+                usersOnAvatar = stableRandomParticipants
+            }
+            
+            users = usersOnAvatar
         }
     }
     

@@ -62,7 +62,6 @@
 @property (nonatomic) NSMutableDictionary *cachedRowHeights;
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) BOOL onScreen;
-@property (nonatomic) UserConnectionViewController *connectionViewController;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
 @property (nonatomic) id conversationObserverToken;
 @end
@@ -248,30 +247,6 @@
 {
     ZMLogWarn(@"Received system memory warning.");
     [super didReceiveMemoryWarning];
-}
-
-- (void)updateTableViewHeaderView
-{
-    if (self.dataSource.hasOlderMessagesToLoad) {
-        // Don't display the conversation header if the message window doesn't include the first message.
-        return;
-    }
-    
-    UIView *headerView = nil;
-    ZMUser *otherParticipant = self.conversation.firstActiveParticipantOtherThanSelf;
-    BOOL connectionOrOneOnOne = self.conversation.conversationType == ZMConversationTypeConnection || self.conversation.conversationType == ZMConversationTypeOneOnOne;
-
-    if (connectionOrOneOnOne && nil != otherParticipant) {
-        self.connectionViewController = [[UserConnectionViewController alloc] initWithUserSession:[ZMUserSession sharedSession] user:otherParticipant];
-        headerView = self.connectionViewController.view;
-    }
-    
-    if (headerView) {
-        headerView.layoutMargins = UIEdgeInsetsMake(0, 20, 0, 20);
-        [self setConversationHeaderView:headerView];
-    } else {
-        self.tableView.tableHeaderView = nil;
-    }
 }
 
 - (void)setConversationHeaderView:(UIView *)headerView
