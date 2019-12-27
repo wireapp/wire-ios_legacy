@@ -5100,8 +5100,8 @@
 			isa = PBXGroup;
 			children = (
 				87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */,
-				A97FA6FB23B57067005257A8 /* StartUIViewController.swift */,
 				A97FA6FD23B5883A005257A8 /* StartUIDelegate.swift */,
+				A97FA6FB23B57067005257A8 /* StartUIViewController.swift */,
 				EF298BD2228D9BB20078BE68 /* StartUIViewController+AddressBook.swift */,
 				7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */,
 				EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */,

@@ -237,7 +237,7 @@ final class StartUIViewController: UIViewController {
     
 }
 
-extension  StartUIViewController: SearchHeaderViewControllerDelegate {
+extension StartUIViewController: SearchHeaderViewControllerDelegate {
     func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String) {
         searchResults.cancelPreviousSearch()
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(performSearch), object: nil)
