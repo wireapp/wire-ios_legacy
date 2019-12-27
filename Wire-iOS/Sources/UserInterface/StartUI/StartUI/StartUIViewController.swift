@@ -20,9 +20,8 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
-//final
-open class StartUIViewController: UIViewController {
-    static let StartUIInitiallyShowsKeyboardConversationThreshold = 10
+final class StartUIViewController: UIViewController {
+    static let InitiallyShowsKeyboardConversationThreshold = 10
     
     weak var delegate: StartUIDelegate?
     private(set) var scrollView: UIScrollView?
@@ -88,17 +87,17 @@ open class StartUIViewController: UIViewController {
     }
     
     // MARK: - Overloaded methods
-    override open func loadView() {
+    override func loadView() {
         view = StartUIView(frame: CGRect.zero)
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         handleUploadAddressBookLogicIfNeeded()
     }
     
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         navigationController?.navigationBar.barTintColor = UIColor.clear
@@ -109,7 +108,7 @@ open class StartUIViewController: UIViewController {
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
@@ -120,14 +119,11 @@ open class StartUIViewController: UIViewController {
 
     @objc
     func setupViews() {
-        ///TODO: mv to init
-//        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
         configGroupSelector()
         emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
 
         emptyResultView.delegate = self
         
-//        searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
         searchResultsViewController.mode = .list
         searchResultsViewController.searchResultsView?.emptyResultView = self.emptyResultView
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
@@ -165,8 +161,6 @@ open class StartUIViewController: UIViewController {
         searchResults.searchResultsView?.emptyResultView = emptyResultView
         searchResults.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
         
-//        quickActionsBar = StartUIInviteActionBar()
-        
         quickActionsBar.inviteButton.addTarget(self, action: #selector(inviteMoreButtonTapped(_:)), for: .touchUpInside)
         
         view.backgroundColor = UIColor.clear
@@ -186,7 +180,7 @@ open class StartUIViewController: UIViewController {
 
     func showKeyboardIfNeeded() {
         let conversationCount = ZMConversationList.conversations(inUserSession: ZMUserSession.shared()!).count ///TODO: unwrap
-        if conversationCount > StartUIViewController.StartUIInitiallyShowsKeyboardConversationThreshold {
+        if conversationCount > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
             searchHeader.tokenField.becomeFirstResponder()
         }
         
@@ -208,7 +202,7 @@ open class StartUIViewController: UIViewController {
         navigationController?.dismiss(animated: true)
     }
     
-    override open func accessibilityPerformEscape() -> Bool {
+    override func accessibilityPerformEscape() -> Bool {
         onDismissPressed()
         return true
     }
