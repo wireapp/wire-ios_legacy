@@ -20,16 +20,6 @@ import Foundation
 
 extension StartUIViewController {
 
-    /// init method for injecting mock addressBookHelper
-    ///
-    /// - Parameter addressBookHelper: an object conforms AddressBookHelperProtocol 
-//    convenience init(addressBookHelper: AddressBookHelperProtocol) {
-//        self.init()
-//
-//        self.addressBookHelper = addressBookHelper
-//    }
-
-    @objc
     func handleUploadAddressBookLogicIfNeeded() {
         guard !addressBookUploadLogicHandled else { return }
 
