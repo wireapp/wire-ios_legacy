@@ -26,7 +26,7 @@ open class StartUIViewController: UIViewController {
     
     weak var delegate: StartUIDelegate?
     private(set) var scrollView: UIScrollView?
-    let selfUser: UserType
+    //TODO:    let selfUser: UserType
     
     let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
     
@@ -50,7 +50,7 @@ open class StartUIViewController: UIViewController {
     let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
     
     let profilePresenter: ProfilePresenter = ProfilePresenter()
-    private let emptyResultView: EmptySearchResultsView
+    private var emptyResultView: EmptySearchResultsView!
     
     @available(*, unavailable)
     required public init?(coder aDecoder: NSCoder) {
@@ -60,13 +60,13 @@ open class StartUIViewController: UIViewController {
     /// init method for injecting mock addressBookHelper
     ///
     /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
-    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
-         selfUser: UserType = ZMUser.selfUser()) {
-        self.selfUser = selfUser
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self/*,
+         selfUser: UserType = ZMUser.selfUser()*/) {
+//        self.selfUser = selfUser
         self.addressBookHelperType = addressBookHelperType
         
         groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
-        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+//        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
         
         super.init(nibName: nil, bundle: nil)
         
@@ -87,8 +87,6 @@ open class StartUIViewController: UIViewController {
         return ZMUser.selfUser()
     }
     
-    static let StartUIInitiallyShowsKeyboardConversationThreshold = 10
-
     // MARK: - Overloaded methods
     override open func loadView() {
         view = StartUIView(frame: CGRect.zero)
@@ -167,7 +165,7 @@ open class StartUIViewController: UIViewController {
         searchResults.searchResultsView?.emptyResultView = emptyResultView
         searchResults.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"
         
-        quickActionsBar = StartUIInviteActionBar()
+//        quickActionsBar = StartUIInviteActionBar()
         
         quickActionsBar.inviteButton.addTarget(self, action: #selector(inviteMoreButtonTapped(_:)), for: .touchUpInside)
         
