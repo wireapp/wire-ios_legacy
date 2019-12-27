@@ -20,16 +20,17 @@
 #import <UIKit/UIKit.h>
 
 @class ZMConversation, PeopleInputController, UserSelection, ZMUser;
+@class StartUIViewController;
 
 @protocol StartUIDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StartUIViewController : UIViewController
-
-@property (nonatomic, weak, nullable) id <StartUIDelegate> delegate;
-@property (nonatomic, readonly) UIScrollView *scrollView;
-@end
+//@interface StartUIViewController : UIViewController
+//
+//@property (nonatomic, weak, nullable) id <StartUIDelegate> delegate;
+//@property (nonatomic, readonly) UIScrollView *scrollView;
+//@end
 
 
 @protocol StartUIDelegate <NSObject>

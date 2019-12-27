@@ -708,7 +708,6 @@
 		87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */; };
 		87DCF4E91D34EA4500BB420F /* ProfilePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4BC1D34EA4500BB420F /* ProfilePresenter.m */; };
 		87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4CC1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m */; };
-		87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */; };
 		87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */; };
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
 		87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E3C5071FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift */; };
@@ -2396,7 +2395,6 @@
 		87DCF4CC1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPeopleLineCollectionViewController.m; sourceTree = "<group>"; };
 		87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartUIInviteActionBar.swift; sourceTree = "<group>"; };
 		87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartUIViewController.h; sourceTree = "<group>"; };
-		87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartUIViewController.m; sourceTree = "<group>"; };
 		87DE06AF1D252B3D0009411F /* ConversationInputBarViewController+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ConversationInputBarViewController+Private.h"; sourceTree = "<group>"; };
 		87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioEffectsPickerViewControllerTests.swift; sourceTree = "<group>"; };
 		87E0D6D41CD3978900C54196 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
@@ -5104,7 +5102,6 @@
 				87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */,
 				87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */,
 				EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */,
-				87DCF4DD1D34EA4500BB420F /* StartUIViewController.m */,
 				EF298BD2228D9BB20078BE68 /* StartUIViewController+AddressBook.swift */,
 				7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */,
 				EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */,
@@ -7920,7 +7917,6 @@
 				87A773CF1DD0B48400ACAA73 /* ObfuscationView.swift in Sources */,
 				BFAC71FB20A1CDAF002711C4 /* VoiceChannel+Helper.swift in Sources */,
 				871BC22D1D34F8F800DF0793 /* RotationAwareNavigationController.swift in Sources */,
-				87DCF4F51D34EA4500BB420F /* StartUIViewController.m in Sources */,
 				8793250A1E83BB5C00190067 /* ZMConversation+Status.swift in Sources */,
 				D58191FD2091CAE8003BA7EC /* CallActionsView.swift in Sources */,
 				5EB45761204EA75300BA217A /* CallQualityDismissalTransition.swift in Sources */,

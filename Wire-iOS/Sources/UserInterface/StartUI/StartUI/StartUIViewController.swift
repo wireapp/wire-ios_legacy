@@ -20,8 +20,60 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
-extension StartUIViewController {
+//final
+open class StartUIViewController: UIViewController {
+    static let StartUIInitiallyShowsKeyboardConversationThreshold = 10
     
+    weak var delegate: StartUIDelegate?
+    private(set) var scrollView: UIScrollView?
+    let selfUser: UserType
+    
+    let searchHeaderViewController: SearchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
+    
+    let groupSelector: SearchGroupSelector
+    
+    let searchResultsViewController: SearchResultsViewController = {
+        let viewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
+        viewController.mode = .list
+        
+        return viewController
+    }()
+    
+    var addressBookUploadLogicHandled = false
+    
+    var addressBookHelperType: AddressBookHelperProtocol.Type
+    
+    var addressBookHelper: AddressBookHelperProtocol {
+        return addressBookHelperType.sharedHelper
+    }
+    
+    let quickActionsBar: StartUIInviteActionBar = StartUIInviteActionBar()
+    
+    let profilePresenter: ProfilePresenter = ProfilePresenter()
+    private let emptyResultView: EmptySearchResultsView
+    
+    @available(*, unavailable)
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    /// init method for injecting mock addressBookHelper
+    ///
+    /// - Parameter addressBookHelperType: a class type conforms AddressBookHelperProtocol
+    init(addressBookHelperType: AddressBookHelperProtocol.Type = AddressBookHelper.self,
+         selfUser: UserType = ZMUser.selfUser()) {
+        self.selfUser = selfUser
+        self.addressBookHelperType = addressBookHelperType
+        
+        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
+        emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        configGroupSelector()
+        setupViews()
+    }
+
     ///TODO: tmp
     var searchHeader: SearchHeaderViewController {
         return self.searchHeaderViewController
@@ -71,15 +123,13 @@ extension StartUIViewController {
     @objc
     func setupViews() {
         ///TODO: mv to init
-        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
+//        groupSelector = SearchGroupSelector(style: .dark/*, selfUser: selfUser*/)
         configGroupSelector()
         emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
 
         emptyResultView.delegate = self
         
-        searchHeaderViewController = SearchHeaderViewController(userSelection: UserSelection(), variant: .dark)
-        
-        searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
+//        searchResultsViewController = SearchResultsViewController(userSelection: UserSelection(), isAddingParticipants: false, shouldIncludeGuests: true)
         searchResultsViewController.mode = .list
         searchResultsViewController.searchResultsView?.emptyResultView = self.emptyResultView
         searchResultsViewController.searchResultsView?.collectionView.accessibilityIdentifier = "search.list"

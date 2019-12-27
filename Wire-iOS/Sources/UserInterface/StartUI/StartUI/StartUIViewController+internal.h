@@ -30,30 +30,30 @@ static NSUInteger const StartUIInitiallyShowsKeyboardConversationThreshold = 10;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface StartUIViewController ()
-
-@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
-@property (nonatomic) SearchGroupSelector *groupSelector;
-@property (nonatomic) SearchResultsViewController *searchResultsViewController;
-@property (nonatomic) BOOL addressBookUploadLogicHandled;
-@property (nonatomic, null_unspecified) id<AddressBookHelperProtocol> addressBookHelper;
-@property (nonatomic) StartUIInviteActionBar *quickActionsBar;
-
--(instancetype) init;
-
-
-@end
+//@interface StartUIViewController ()
+//
+//@property (nonatomic) SearchHeaderViewController *searchHeaderViewController;
+//@property (nonatomic) SearchGroupSelector *groupSelector;
+//@property (nonatomic) SearchResultsViewController *searchResultsViewController;
+//@property (nonatomic) BOOL addressBookUploadLogicHandled;
+//@property (nonatomic, null_unspecified) id<AddressBookHelperProtocol> addressBookHelper;
+//@property (nonatomic) StartUIInviteActionBar *quickActionsBar;
+//
+//-(instancetype) init;
+//
+//
+//@end
 
 #pragma clang diagnostic push
 // To get rid of 'No protocol definition found' warnings which are not accurate
 #pragma clang diagnostic ignored "-Weverything"
 
-@interface StartUIViewController ()
-
-@property (nonatomic) ProfilePresenter *profilePresenter;
-@property (nonatomic) EmptySearchResultsView *emptyResultView;
-
-@end
+//@interface StartUIViewController ()
+//
+//@property (nonatomic) ProfilePresenter *profilePresenter;
+//@property (nonatomic) EmptySearchResultsView *emptyResultView;
+//
+//@end
 
 #pragma clang diagnostic pop
 
