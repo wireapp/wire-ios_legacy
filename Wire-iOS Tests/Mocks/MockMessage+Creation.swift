@@ -26,7 +26,7 @@ final class MockMessageFactory: NSObject {
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
     ///
     /// - Returns: a MockMessage with default values
-    class func messageTemplate(sender: UserType? = nil) -> MockMessage {
+    final class func messageTemplate(sender: UserType? = nil) -> MockMessage {
         let message = MockMessage()
 
         let conversation = MockLoader.mockObjects(of: MockConversation.self, fromFile: "conversations-01.json")[0] as? MockConversation

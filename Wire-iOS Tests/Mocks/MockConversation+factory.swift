@@ -31,9 +31,9 @@ extension MockConversation {
     }
     
     @objc
-    var activeParticipants: [AnyHashable] {
+    var activeParticipants: [UserType] {
         get {
-            return sortedActiveParticipants as! [AnyHashable]
+            return sortedActiveParticipants as? [UserType] ?? []
         }
         
         set {
