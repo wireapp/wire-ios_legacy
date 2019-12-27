@@ -117,7 +117,6 @@ final class StartUIViewController: UIViewController {
         groupSelector.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
     }
 
-    @objc
     func setupViews() {
         configGroupSelector()
         emptyResultView = EmptySearchResultsView(variant: .dark, isSelfUserAdmin: selfUser.canManageTeam)
