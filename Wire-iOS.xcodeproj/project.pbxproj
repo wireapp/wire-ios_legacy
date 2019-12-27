@@ -3053,7 +3053,6 @@
 		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
 		EF701A31223BE005007165E4 /* DummyComponentsVersions.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = DummyComponentsVersions.plist; sourceTree = "<group>"; };
 		EF701A34223C00E0007165E4 /* ConversationContentViewController+CreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+CreateView.swift"; sourceTree = "<group>"; };
-		EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StartUIViewController+internal.h"; sourceTree = "<group>"; };
 		EF71BFD320EBC39000894A7C /* ConversationInputBarViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Location.swift"; sourceTree = "<group>"; };
 		EF71BFD520EBCC5F00894A7C /* UIView+IPadPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+IPadPopover.swift"; sourceTree = "<group>"; };
 		EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+config.swift"; sourceTree = "<group>"; };
@@ -5101,7 +5100,6 @@
 			children = (
 				87DCF4D71D34EA4500BB420F /* StartUIInviteActionBar.swift */,
 				87DCF4DC1D34EA4500BB420F /* StartUIViewController.h */,
-				EF70E202201F7B7600083BCB /* StartUIViewController+internal.h */,
 				EF298BD2228D9BB20078BE68 /* StartUIViewController+AddressBook.swift */,
 				7C6878D7201B3785003A0C7A /* StartUIViewController+SearchResults.swift */,
 				EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */,
