@@ -120,6 +120,20 @@ platform :ios do
         )
     end
 
+    desc "Create a new version but not submit for review. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane create_version app_version:X.XX"
+    lane :create_version do |options|
+        deliver(
+            app_version: options[:app_version],
+            submit_for_review: false,
+            automatic_release: false,
+            skip_metadata: false,
+            skip_screenshots: true,
+            skip_binary_upload: true,
+            skip_app_version_update: false,
+            force: true
+        )
+    end
+
     desc "Submit for review"
     lane :submit_review do |options|
         deliver(
@@ -130,10 +144,6 @@ platform :ios do
             skip_screenshots: true,
             skip_binary_upload: true,
             skip_app_version_update: false,
-            release_notes: {
-                'en-US' => "bug fix",
-                'de-DE' => "bug fix"
-            },
             force: true,
             submission_information: {
                 add_id_info_serves_ads: false,
