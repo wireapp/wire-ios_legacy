@@ -43,12 +43,12 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
     struct Configuration {
         let title: NSAttributedString?
         let message: NSAttributedString
-        let selectedUsers: [ZMUser]
+        let selectedUsers: [UserType]
         let icon: UIImage?
     }
     
     private let titleLabel = UILabel()
-    private var selectedUsers: [ZMUser] = []
+    private var selectedUsers: [UserType] = []
     
     override func configureSubviews() {
         super.configureSubviews()
@@ -424,7 +424,10 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
+    init(message: ZMConversationMessage,
+         data: ZMSystemMessageData,
+         sender: UserType,
+         newName: String) {
         let senderText = message.senderName
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
 
@@ -498,7 +501,10 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
+    init(message: ZMConversationMessage,
+         data: ZMSystemMessageData,
+         timer: NSNumber,
+         sender: UserType) {
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
@@ -711,7 +717,10 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
+    init(message: ZMConversationMessage,
+         data: ZMSystemMessageData,
+         sender: UserType,
+         remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
         let icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: exclamationColor)
         let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
@@ -734,7 +743,10 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static let BaseLocalizationString = "content.system.cannot_decrypt"
     private static let IdentityString = ".identity"
 
-    private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: ZMUser, remoteIDChanged: Bool, link: URL) -> NSAttributedString {
+    private static func makeAttributedString(systemMessage: ZMSystemMessageData,
+                                             sender: UserType,
+                                             remoteIDChanged: Bool,
+                                             link: URL) -> NSAttributedString {
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
 
         let why = NSAttributedString(string: localizedWhyPart(remoteIDChanged),
@@ -755,7 +767,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }
 
-    private static func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {
+    private static func localizedWhoPart(_ sender: UserType, remoteIDChanged: Bool) -> String {
         switch (sender.isSelfUser, remoteIDChanged) {
         case (true, _):
             return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "") + ".you_part").localized

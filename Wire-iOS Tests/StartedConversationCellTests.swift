@@ -98,7 +98,10 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
         teamTest {
-            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow, allTeamUsers: true)
+            let message = cell(for: .newConversation,
+                               text: "Italy Trip",
+                               fillUsers: .overflow,
+                               allTeamUsers: true)
             verify(message: message)
         }
     }
@@ -200,9 +203,23 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     // MARK: - Helper
 
-    private func cell(for type: ZMSystemMessageType, text: String? = nil, fromSelf: Bool = false, fillUsers: Users = .one, allowGuests: Bool = false, allTeamUsers: Bool = false, numberOfGuests: Int16 = 0) -> ZMConversationMessage {
+    private func cell(for type: ZMSystemMessageType,
+                      text: String? = nil,
+                      fromSelf: Bool = false,
+                      fillUsers: Users = .one,
+                      allowGuests: Bool = false,
+                      allTeamUsers: Bool = false,
+                      numberOfGuests: Int16 = 0,
+                      otherUser: UserType? = nil) -> ZMConversationMessage {
+        let otherUserInMessage: UserType
+        if let otherUser = otherUser {
+            otherUserInMessage = otherUser
+        } else {
+            otherUserInMessage = self.otherUser
+        }
+        
         let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        message.sender = fromSelf ? selfUser : otherUser
+        message.sender = fromSelf ? selfUser : otherUserInMessage
         message.systemMessageType = type
         message.text = text
         message.numberOfGuestsAdded = numberOfGuests
@@ -211,10 +228,15 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         message.users = {
             // We add the sender to ensure it is removed
             let users = usernames.map(createUser)
-            let additionalUsers = [selfUser as ZMUser, otherUser as ZMUser]
+            let additionalUsers: [ZMUser]
+            if let otherZMUser = otherUserInMessage as? ZMUser {
+                additionalUsers = [selfUser as ZMUser, otherZMUser]
+            } else {
+                additionalUsers = [selfUser as ZMUser]
+            }
             switch fillUsers {
             case .none: return []
-            case .sender: return [message.sender!]
+            case .sender: return [message.sender as! ZMUser]
             case .justYou: return Set([selfUser])
             case .youAndAnother: return Set(users[0..<1] + [selfUser])
             case .one: return Set(users[0...1] + additionalUsers)

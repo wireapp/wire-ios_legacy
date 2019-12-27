@@ -591,13 +591,13 @@ final class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-extension ZMUser {
+extension UserType {
     func nameAsSender(in conversation: ZMConversation) -> String {
-        if self.isSelfUser {
+        if isSelfUser {
             return "conversation.status.you".localized
         }
         else {
-            return self.displayName(in: conversation)
+            return displayName(in: conversation)
         }
     }
 }

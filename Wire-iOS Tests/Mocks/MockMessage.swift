@@ -231,7 +231,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
 }
 
 
-@objcMembers class MockMessage: NSObject, ZMConversationMessage {
+@objcMembers
+final class MockMessage: NSObject, ZMConversationMessage {
     
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
@@ -239,7 +240,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var nonce: UUID? = UUID()
     var isEncrypted: Bool = false
     var isPlainText: Bool = true
-    var sender: ZMUser? = .none
+    var sender: UserType? = .none
     var serverTimestamp: Date? = .none
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none

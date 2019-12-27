@@ -171,12 +171,13 @@ final class ParticipantsStringFormatter {
     /// Returns a `FormatSequence` describing a list of names. The list is comprised
     /// of usernames for shown users (complete with punctuation) and a count string
     /// for collapsed users, if any. E.g: "x, y, z, and 3 others"
-    private func format(_ nameList: NameList) -> FormatSequence {
+    private func format(_ nameList: NameList,
+                        selfUser: UserType = ZMUser.selfUser()) -> FormatSequence {
         guard !nameList.names.isEmpty else { preconditionFailure() }
         let result = FormatSequence()
         
         // all team users added?
-        if let linkText = linkTextForWholeTeam(nameList) {
+        if let linkText = linkTextForWholeTeam(nameList, selfUser: selfUser) {
             result.append(linkText, with: linkAttributes)
             return result
         }
@@ -217,11 +218,13 @@ final class ParticipantsStringFormatter {
         return result
     }
     
-    private func linkTextForWholeTeam(_ nameList: NameList) -> String? {
+    private func linkTextForWholeTeam(_ nameList: NameList,
+                                      selfUser: UserType = ZMUser.selfUser()) -> String? {
         guard
             let systemMessage = message as? ZMSystemMessage,
             systemMessage.allTeamUsersAdded,
-            message.conversation?.canManageAccess ?? false
+            let conversation = systemMessage.conversation,
+            selfUser.canModifyAccessControlSettings(in: conversation)
             else { return nil }
         
         // we only collapse whole team if there are more than 10 participants

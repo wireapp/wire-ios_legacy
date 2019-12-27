@@ -18,12 +18,18 @@
 
 import WireDataModel
 
+extension UserType {
+    var nameAccentColor: UIColor? {
+        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
+    }
+
+    var pov: PointOfView {
+        return isSelfUser ? .secondPerson : .thirdPerson
+    }
+}
 
 extension ZMUser {
-    var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
-    }
-        
+    
     var hasUntrustedClients: Bool {
         return nil != self.clients.first { !$0.verified }
     }
@@ -34,10 +40,6 @@ extension ZMUser {
         #else
         return hasTeam
         #endif
-    }
-
-    var nameAccentColor: UIColor? {
-        return UIColor.nameColor(for: accentColorValue, variant: ColorScheme.default.variant)
     }
 
     /// Blocks user if not already blocked and vice versa.

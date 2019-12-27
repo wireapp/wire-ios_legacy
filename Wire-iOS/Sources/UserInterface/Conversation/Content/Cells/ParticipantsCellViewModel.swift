@@ -98,23 +98,24 @@ class ParticipantsCellViewModel {
     
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
-    lazy var shownUsers: [ZMUser] = {
+    lazy var shownUsers: [UserType] = {
         let users = sortedUsersWithoutSelf
         let boundary = users.count > maxShownUsers && action.allowsCollapsing ? maxShownUsersWhenCollapsed : users.count
         let result = users[..<boundary]
-        return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
+        let selfUser: UserType = ZMUser.selfUser()
+        return Array(result) + (isSelfIncludedInUsers ? [selfUser] : [])
     }()
     
     /// Users not displayed in the system message but collapsed into a link.
     /// E.g. `and 5 others`.
-    private lazy var collapsedUsers: [ZMUser] = {
+    private lazy var collapsedUsers: [UserType] = {
         let users = sortedUsersWithoutSelf
         guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }()
     
     /// The users to display when opening the participants details screen.
-    var selectedUsers: [ZMUser] {
+    var selectedUsers: [UserType] {
         switch action {
         case .added: return sortedUsers
         default: return []
@@ -127,21 +128,19 @@ class ParticipantsCellViewModel {
     
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
-    lazy var sortedUsers: [ZMUser] = {
-        guard let sender = message.sender else { return [] }
+    lazy var sortedUsers: [UserType] = {
+        guard let sender = message.sender as? ZMUser else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
         return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
     }()
 
-    init(
-        font: UIFont?,
+    init(font: UIFont?,
         boldFont: UIFont?,
         largeFont: UIFont?,
         textColor: UIColor,
         iconColor: UIColor,
-        message: ZMConversationMessage
-        ) {
+        message: ZMConversationMessage) {
         self.font = font
         self.boldFont = boldFont
         self.largeFont = largeFont
@@ -150,11 +149,11 @@ class ParticipantsCellViewModel {
         self.message = message
     }
     
-    lazy var sortedUsersWithoutSelf: [ZMUser] = {
+    lazy var sortedUsersWithoutSelf: [UserType] = {
         return sortedUsers.filter { !$0.isSelfUser }
     }()
 
-    private func name(for user: ZMUser) -> String {
+    private func name(for user: UserType) -> String {
         if user.isSelfUser {
             return "content.system.you_\(grammaticalCase(for: user))".localized
         }
@@ -170,9 +169,9 @@ class ParticipantsCellViewModel {
     
     /// The user will, depending on the context, be in a specific case within the
     /// sentence. This is important for localization of "you".
-    private func grammaticalCase(for user: ZMUser) -> String {
+    private func grammaticalCase(for user: UserType) -> String {
         // user is always the subject
-        if user == message.sender { return "nominative" }
+        if user as? ZMUser == message.sender as? ZMUser { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
         return "accusative"
@@ -204,7 +203,7 @@ class ParticipantsCellViewModel {
         let senderName = name(for: sender).capitalized
         
         if action.involvesUsersOtherThanSender {
-            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)///TODO: pass mock sender
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }

@@ -21,8 +21,8 @@ import Foundation
 import Cartography
 
 
-public final class TextSearchResultFooter: UIView {
-    public var message: ZMConversationMessage? {
+final class TextSearchResultFooter: UIView {
+    var message: ZMConversationMessage? {
         didSet {
             guard let message = self.message, let serverTimestamp = message.serverTimestamp, let sender = message.sender else {
                 return

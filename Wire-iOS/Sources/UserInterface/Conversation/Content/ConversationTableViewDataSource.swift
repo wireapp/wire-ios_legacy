@@ -452,7 +452,6 @@ extension ConversationTableViewDataSource: ConversationMessageSectionControllerD
     
 }
 
-
 extension ConversationTableViewDataSource {
     
     func messagePrevious(to message: ZMConversationMessage, at index: Int) -> ZMConversationMessage? {
@@ -469,7 +468,7 @@ extension ConversationTableViewDataSource {
             !Message.isKnock(message) else { return false }
         
         guard let previousMessage = messagePrevious(to: message, at: index),
-            previousMessage.sender == message.sender,
+            previousMessage.sender as? ZMUser == message.sender as? ZMUser,
             Message.isNormal(previousMessage) else { return false }
         
         return true
