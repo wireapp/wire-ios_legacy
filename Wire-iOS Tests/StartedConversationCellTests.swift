@@ -98,10 +98,12 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
         teamTest {
+            let otherUser = SwiftMockUser()
             let message = cell(for: .newConversation,
                                text: "Italy Trip",
                                fillUsers: .overflow,
-                               allTeamUsers: true)
+                               allTeamUsers: true,
+                               otherUser:otherUser)
             verify(message: message)
         }
     }
@@ -219,7 +221,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
         
         let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        message.sender = fromSelf ? selfUser : otherUserInMessage
+        message.sender = fromSelf ? selfUser : otherUserInMessage ///TODO: crash for Swift Mock User has no moc
         message.systemMessageType = type
         message.text = text
         message.numberOfGuestsAdded = numberOfGuests
