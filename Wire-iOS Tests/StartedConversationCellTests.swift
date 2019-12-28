@@ -233,6 +233,12 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
         
         let message = MockSystemMessage()
+        
+        let mockSystemMessageData = MockSystemMessageData(systemMessageType: .newConversation)
+        mockSystemMessageData.text = text
+        
+        message.systemMessageData = mockSystemMessageData
+        
         let sender = SwiftMockUser()
         sender.displayNameInConversation = "Bruno"
         sender.name = "Bruno"
@@ -240,7 +246,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         
         message.sender = sender
         message.systemMessageType = type
-        message.text = text
+//        message.text = text
         ///TODO: allTeamUsers
         
         message.users = {
