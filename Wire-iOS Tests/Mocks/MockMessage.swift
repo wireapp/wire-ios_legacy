@@ -345,7 +345,7 @@ final class MockSystemMessage: NSObject,
     var imageMessageData: ZMImageMessageData?
 
     /// isSystem == true when this is non nil
-    var systemMessageData: ZMSystemMessageData? = MockSystemMessageData(systemMessageType: .invalid)
+    var systemMessageData: ZMSystemMessageData? = MockSystemMessageData(systemMessageType: .newConversation)
 
     var knockMessageData: ZMKnockMessageData?
 

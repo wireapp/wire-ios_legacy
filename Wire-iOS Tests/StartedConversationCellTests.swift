@@ -253,6 +253,8 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier
 //        message.visibleInConversation = conversation
         
+        message.conversation = conversation
+
         return message
     }
 
