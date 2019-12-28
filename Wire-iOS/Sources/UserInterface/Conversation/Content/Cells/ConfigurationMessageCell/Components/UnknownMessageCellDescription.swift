@@ -33,7 +33,7 @@ extension CustomMessageView: ConversationMessageCell {
  * A description for a message cell that informs the user a message cannot be rendered.
  */
 
-class UnknownMessageCellDescription: ConversationMessageCellDescription {
+final class UnknownMessageCellDescription: ConversationMessageCellDescription {
     typealias View = CustomMessageView
     let configuration: String
 
@@ -52,7 +52,7 @@ class UnknownMessageCellDescription: ConversationMessageCellDescription {
     let containsHighlightableContent = false
 
     init() {
-        self.configuration = "content.system.unknown_message.body".localized
+        configuration = "content.system.unknown_message.body".localized
     }
 
 }

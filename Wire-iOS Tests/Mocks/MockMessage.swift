@@ -321,77 +321,81 @@ class MockMessage: NSObject, ZMConversationMessage {
     var systemMessageType: ZMSystemMessageType = ZMSystemMessageType.invalid
 }
 
-final class MockSystemMessage: NSObject,/* ZMConversationMessage,*/ ZMSystemMessageData {
-//    var nonce: UUID?
-//
-//    var sender: UserType?
-//
-//    var serverTimestamp: Date?
-//
-//    var conversation: ZMConversation?
-//
-//    var deliveryState: ZMDeliveryState = .delivered
-//
-//    var isSent: Bool = true
-//
-//    var readReceipts: [ReadReceipt] = []
-//
-//    var needsReadConfirmation: Bool = false
-//
-//    var textMessageData: ZMTextMessageData?
-//
-//    var imageMessageData: ZMImageMessageData?
-//
-//    var systemMessageData: ZMSystemMessageData?
-//
-//    var knockMessageData: ZMKnockMessageData?
-//
-//    var fileMessageData: ZMFileMessageData?
-//
-//    var locationMessageData: LocationMessageData?
-//
-//    var usersReaction: Dictionary<String, [ZMUser]> = [:]
-//
-//    func resend() {
-//
-//    }
-//
-//    var canBeDeleted: Bool = true
-//
-//    var hasBeenDeleted: Bool = false
-//
-//    var updatedAt: Date?
-//
-//    func startSelfDestructionIfNeeded() -> Bool {
-//        return false
-//    }
-//
-//    var isEphemeral: Bool = false
-//
-//    var deletionTimeout: TimeInterval = 0
-//
-//    var isObfuscated: Bool = false
-//
-//    var destructionDate: Date?
-//
-//    var causedSecurityLevelDegradation: Bool = false
-//
-//    func markAsUnread() {
-//
-//    }
-//
-//    var canBeMarkedUnread: Bool = true
-//
-//    var replies: Set<ZMMessage> = Set()
-//
-//    var objectIdentifier: String = ""
-//
-//    var linkAttachments: [LinkAttachment]?
-//
-//    var needsLinkAttachmentsUpdate: Bool = false
-//
+final class MockSystemMessage: NSObject,
+                               ZMConversationMessage,
+                               ZMSystemMessageData {
+    var nonce: UUID?
+
+    var sender: UserType? = SwiftMockUser()
+
+    var serverTimestamp: Date?
+
+    var conversation: ZMConversation? = ZMConversation()
+
+    var deliveryState: ZMDeliveryState = .delivered
+
+    var isSent: Bool = true
+
+    var readReceipts: [ReadReceipt] = []
+
+    var needsReadConfirmation: Bool = false
+
+    var textMessageData: ZMTextMessageData?
+
+    var imageMessageData: ZMImageMessageData?
+
+    /// isSystem == true when this is non nil
+    var systemMessageData: ZMSystemMessageData? = MockSystemMessageData(systemMessageType: .invalid)
+
+    var knockMessageData: ZMKnockMessageData?
+
+    var fileMessageData: ZMFileMessageData?
+
+    var locationMessageData: LocationMessageData?
+
+    var usersReaction: Dictionary<String, [ZMUser]> = [:]
+
+    func resend() {
+
+    }
+
+    var canBeDeleted: Bool = true
+
+    var hasBeenDeleted: Bool = false
+
+    var updatedAt: Date?
+
+    func startSelfDestructionIfNeeded() -> Bool {
+        return false
+    }
+
+    var isEphemeral: Bool = false
+
+    var deletionTimeout: TimeInterval = 0
+
+    var isObfuscated: Bool = false
+
+    var destructionDate: Date?
+
+    var causedSecurityLevelDegradation: Bool = false
+
+    func markAsUnread() {
+
+    }
+
+    var canBeMarkedUnread: Bool = true
+
+    var replies: Set<ZMMessage> = Set()
+
+    var objectIdentifier: String = ""
+
+    var linkAttachments: [LinkAttachment]?
+
+    var needsLinkAttachmentsUpdate: Bool = false
+
     var systemMessageType: ZMSystemMessageType = .invalid
     
+    //MARK: - ZMSystemMessageData
     var users: Set<ZMUser> = Set()
     
     var clients: Set<AnyHashable> = Set()
