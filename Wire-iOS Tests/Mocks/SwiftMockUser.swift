@@ -20,8 +20,9 @@ import Foundation
 
 /// a new simple Mock User without objc
 final class SwiftMockUser: NSObject, UserType {
+    var displayNameInConversation: String = ""
     func displayName(in conversation: ZMConversation?) -> String {
-        return ""
+        return displayNameInConversation
     }
     
     var remoteIdentifier: UUID?

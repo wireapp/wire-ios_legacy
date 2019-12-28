@@ -21,7 +21,7 @@ import Foundation
 extension ZMConversationMessage {
 
     var senderName: String {
-        guard let sender = self.sender else { return "conversation.status.someone".localized }
+        guard let sender = sender else { return "conversation.status.someone".localized }
         if sender.isSelfUser {
             return "conversation.status.you".localized
         } else if let conversation = self.conversation {

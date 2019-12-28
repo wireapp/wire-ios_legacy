@@ -326,11 +326,11 @@ final class MockSystemMessage: NSObject,
                                ZMSystemMessageData {
     var nonce: UUID?
 
-    var sender: UserType? = SwiftMockUser()
+    var sender: UserType?
 
     var serverTimestamp: Date?
 
-    var conversation: ZMConversation? = ZMConversation()
+    var conversation: ZMConversation?
 
     var deliveryState: ZMDeliveryState = .delivered
 

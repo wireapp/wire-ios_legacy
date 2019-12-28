@@ -95,14 +95,23 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
             verify(message: message)
         }
     }
-    
-    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
+
+    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers_debug() {
         teamTest {
-            let otherUser = SwiftMockUser()
-            let message = cell(for: .newConversation,
-//            let message = cellForMockSystemMessage(for: .newConversation,
-                               text: "Italy Trip",
+            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow, allTeamUsers: true)
+            
+            verify(message: message)
+        }
+    }
+
+    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
+        recordMode = true
+        teamTest {
+//            let otherUser = SwiftMockUser()
+            let message = cellForMockSystemMessage(for: .newConversation,
+                                                   text: "Italy Trip", ///TODO: add.
                                fillUsers: .overflow,
+                               allowGuests: true,
                                allTeamUsers: true//,
 //                               otherUser:otherUser
             )
@@ -208,12 +217,14 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helper
     private func cellForMockSystemMessage(for type: ZMSystemMessageType,
                       text: String? = nil,
-                      fromSelf: Bool = false,
+//                      fromSelf: Bool = false,
                       fillUsers: Users = .one,
                       allowGuests: Bool = false,
                       allTeamUsers: Bool = false,
                       numberOfGuests: Int16 = 0,
-                      otherUser: UserType? = nil) -> ZMConversationMessage {
+                      otherUser: UserType? = nil,
+                      sender: UserType? = nil
+        ) -> ZMConversationMessage {
         let otherUserInMessage: UserType
         if let otherUser = otherUser {
             otherUserInMessage = otherUser
@@ -222,8 +233,15 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
         
         let message = MockSystemMessage()
+        let sender = SwiftMockUser()
+        sender.displayNameInConversation = "Bruno"
+        sender.name = "Bruno"
+        sender.isSelfUser = false
+        
+        message.sender = sender
         message.systemMessageType = type
         message.text = text
+        ///TODO: allTeamUsers
         
         message.users = {
             // We add the sender to ensure it is removed
@@ -264,8 +282,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
                       fillUsers: Users = .one,
                       allowGuests: Bool = false,
                       allTeamUsers: Bool = false,
-                      numberOfGuests: Int16 = 0,
-                      otherUser: UserType? = nil) -> ZMConversationMessage {
+                      numberOfGuests: Int16 = 0) -> ZMConversationMessage {
         let otherUserInMessage: UserType
         if let otherUser = otherUser {
             otherUserInMessage = otherUser
