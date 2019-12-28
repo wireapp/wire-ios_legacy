@@ -577,12 +577,13 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
+    init(message: ZMConversationMessage,
+         data: ZMSystemMessageData) {
         let color = UIColor.from(scheme: .textForeground)
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
-        
+        ///TODO: action?
         actionController = nil
-        configuration =  View.Configuration(title: model.attributedHeading(),
+        configuration = View.Configuration(title: model.attributedHeading(),
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())

@@ -236,6 +236,8 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: .newConversation)
         mockSystemMessageData.text = text
+        let otherUsers = usernames.map(createUser)
+        mockSystemMessageData.users = Set(otherUsers)
         
         message.systemMessageData = mockSystemMessageData
         

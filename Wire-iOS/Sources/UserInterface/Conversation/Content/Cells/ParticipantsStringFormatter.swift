@@ -125,7 +125,9 @@ final class ParticipantsStringFormatter {
     }
     
     /// This is only used when a conversation (with a name) is started.
-    func heading(senderName: String, senderIsSelf: Bool, convName: String) -> NSAttributedString {
+    func heading(senderName: String,
+                 senderIsSelf: Bool,
+                 convName: String) -> NSAttributedString {
         // "You/Bob started the conversation"
         let key = senderIsSelf ? Key.youStartedTheConversation : Key.xStartedTheConversation
         var text = key.localized(args: senderName) && font

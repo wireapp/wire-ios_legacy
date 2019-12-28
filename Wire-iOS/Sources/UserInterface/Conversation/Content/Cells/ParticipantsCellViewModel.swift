@@ -129,10 +129,12 @@ class ParticipantsCellViewModel {
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
     lazy var sortedUsers: [UserType] = {
-        guard let sender = message.sender as? ZMUser else { return [] }
+        guard let sender = message.sender else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
-        return systemMessage.users.subtracting([sender]).sorted { name(for: $0) < name(for: $1) }
+        
+        return systemMessage.users.subtracting(sender as? ZMUser == nil ? [] : [sender as! ZMUser]).sorted { name(for: $0) < name(for: $1) }
+
     }()
 
     init(font: UIFont?,
@@ -203,7 +205,7 @@ class ParticipantsCellViewModel {
         let senderName = name(for: sender).capitalized
         
         if action.involvesUsersOtherThanSender {
-            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)///TODO: pass mock sender
+            return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser, names: nameList)
         } else {
             return formatter.title(senderName: senderName, senderIsSelf: sender.isSelfUser)
         }
