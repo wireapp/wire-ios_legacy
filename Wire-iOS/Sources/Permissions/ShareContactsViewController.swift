@@ -41,7 +41,7 @@ final class ShareContactsViewController: UIViewController {
     private func createHeroLabel() {
         heroLabel = UILabel()
         heroLabel.font = UIFont.largeSemiboldFont
-        heroLabel.textColor = UIColor.wr_color(fromColorScheme: .textForeground, variant: .dark)
+        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         heroLabel.attributedText = attributedHeroText()
         heroLabel.numberOfLines = 0
         
@@ -54,7 +54,7 @@ final class ShareContactsViewController: UIViewController {
         
         let text = [title, paragraph].joined(separator: "\u{2029}")
         
-        var paragraphStyle = NSParagraphStyle.default as? NSMutableParagraphStyle
+        let paragraphStyle: NSMutableParagraphStyle? = NSParagraphStyle.default as? NSMutableParagraphStyle
         paragraphStyle?.paragraphSpacing = 10
         
         var attributedText: NSMutableAttributedString? = nil
@@ -64,7 +64,7 @@ final class ShareContactsViewController: UIViewController {
                 ])
         }
         attributedText?.addAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.wr_color(fromColorScheme: .TextForeground, variant: .dark),
+            NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
             NSAttributedString.Key.font: UIFont.largeThinFont
             ], range: (text as NSString).range(of: paragraph))
         
@@ -75,7 +75,7 @@ final class ShareContactsViewController: UIViewController {
     }
 
     private func createShareContactsButton() {
-        shareContactsButton = Button(style: monochromeStyle ? ButtonStyleFullMonochrome : ButtonStyleFull)
+        shareContactsButton = Button(style: monochromeStyle ? .fullMonochrome : .full)
         shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
         shareContactsButton.addTarget(self, action: #selector(shareContacts(_:)), for: .touchUpInside)
         
@@ -85,8 +85,8 @@ final class ShareContactsViewController: UIViewController {
     private func createNotNowButton() {
         notNowButton = UIButton(type: .custom)
         notNowButton.titleLabel?.font = UIFont.smallLightFont
-        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: .buttonFaded, variant: .dark), for: .normal)
-        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
+        notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark), for: .normal)
+        notNowButton.setTitleColor(UIColor.from(scheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
         notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
         notNowButton.isHidden = notNowButtonHidden
@@ -102,17 +102,17 @@ final class ShareContactsViewController: UIViewController {
         addChild(addressBookAccessDeniedViewController)
         view.addSubview(addressBookAccessDeniedViewController.view)
         addressBookAccessDeniedViewController.didMove(toParent: self)
-        addressBookAccessDeniedViewController.view.hidden = true
+        addressBookAccessDeniedViewController.view.isHidden = true
     }
     
-    func setBackgroundBlurDisabled(_ backgroundBlurDisabled: Bool) {
+    private func setBackgroundBlurDisabled(_ backgroundBlurDisabled: Bool) {
         self.backgroundBlurDisabled = backgroundBlurDisabled
-        backgroundBlurView.hidden = self.backgroundBlurDisabled
+        backgroundBlurView.isHidden = backgroundBlurDisabled
     }
     
-    func setNotNowButtonHidden(_ notNowButtonHidden: Bool) {
+    private func setNotNowButtonHidden(_ notNowButtonHidden: Bool) {
         self.notNowButtonHidden = notNowButtonHidden
-        notNowButton.hidden = self.notNowButtonHidden
+        notNowButton.isHidden = notNowButtonHidden
     }
 
     override func viewDidLoad() {
@@ -140,12 +140,12 @@ final class ShareContactsViewController: UIViewController {
     
     // MARK: - Actions
     @objc
-    func shareContacts(_ sender: Any?) {
+    private func shareContacts(_ sender: Any?) {
         AddressBookHelper.sharedHelper.requestPermissions({ [weak self] success in
             guard let weakSelf = self else { return }
             if success {
                 AddressBookHelper.sharedHelper.startRemoteSearch( weakSelf.uploadAddressBookImmediately)
-                weakSelf.delegate?.shareContactsViewControllerDidFinish(weakSelf)
+                weakSelf.delegate?.shareDidFinish(weakSelf)
             } else {
                 weakSelf.displayContactsAccessDeniedMessage(animated: true)
             }
@@ -153,22 +153,22 @@ final class ShareContactsViewController: UIViewController {
     }
     
     @objc
-    func shareContactsLater(_ sender: Any?) {
+    private func shareContactsLater(_ sender: Any?) {
         AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
-        delegate?.shareContactsViewControllerDidSkip(self)
+        delegate?.shareDidSkip(self)
     }
 
     // MARK: - UIApplication notifications
     @objc
-    func applicationDidBecomeActive(_ notification: Notification) {
+    private func applicationDidBecomeActive(_ notification: Notification) {
         if AddressBookHelper.sharedHelper.isAddressBookAccessGranted {
             AddressBookHelper.sharedHelper.startRemoteSearch(true)
-            delegate?.shareContactsViewControllerDidFinish(self)
+            delegate?.shareDidFinish(self)
         }
     }
 
     // MARK: - Constraints
-    func createConstraints() {
+    private func createConstraints() {
         [backgroundBlurView,
          shareContactsContainerView,
          addressBookAccessDeniedViewController.view,
@@ -226,6 +226,6 @@ final class ShareContactsViewController: UIViewController {
 extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
     public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
         AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
-        delegate?.shareContactsViewControllerDidSkip(self)
+        delegate?.shareDidSkip(self)
     }
 }

@@ -18,7 +18,6 @@
 
 
 #import "ContactsViewController+ShareContacts.h"
-#import "ShareContactsViewController.h"
 #import "ContactsDataSource.h"
 #import "Wire-Swift.h"
 
