@@ -266,7 +266,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 final class ConversationSystemMessageCellDescription {
 
     static func cells(for message: ZMConversationMessage,
-                      selfUser: UserType = ZMUser.selfUser()) -> [AnyConversationMessageCellDescription] { ///TODO: inject self user
+                      selfUser: UserType = ZMUser.selfUser()) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.sender,
             let conversation = message.conversation else {
@@ -390,7 +390,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage, data: ZMSystemMessageData) {///TODO: inject self user
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = UIColor.from(scheme: .textForeground)
 
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
