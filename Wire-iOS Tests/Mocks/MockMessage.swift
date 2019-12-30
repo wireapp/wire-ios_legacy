@@ -232,7 +232,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 
 
 @objcMembers
-class MockMessage: NSObject, ZMConversationMessage {
+final class MockMessage: NSObject, ZMConversationMessage {
     
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     

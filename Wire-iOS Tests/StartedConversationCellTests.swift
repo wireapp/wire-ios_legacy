@@ -208,21 +208,10 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helper
     private func cellForMockSystemMessage(for type: ZMSystemMessageType,
                       text: String? = nil,
-//                      fromSelf: Bool = false,
                       fillUsers: Users = .one,
                       allowGuests: Bool = false,
                       allTeamUsers: Bool = false,
-                      numberOfGuests: Int16 = 0,
-                      otherUser: UserType? = nil,
-                      sender: UserType? = nil
-        ) -> ZMConversationMessage {
-        let otherUserInMessage: UserType
-        if let otherUser = otherUser {
-            otherUserInMessage = otherUser
-        } else {
-            otherUserInMessage = self.otherUser
-        }
-        
+                      numberOfGuests: Int16 = 0) -> ZMConversationMessage {
         let message = MockSystemMessage()
         
         let mockSystemMessageData = MockSystemMessageData(systemMessageType: .newConversation)
@@ -234,23 +223,17 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         
         let sender = SwiftMockUser()
         sender.displayNameInConversation = "Bruno"
-//        sender.name = "Bruno"
         sender.isSelfUser = false
         
         message.sender = sender
         message.systemMessageType = type
-//        message.text = text
-        ///TODO: allTeamUsers
         
         message.users = {
             // We add the sender to ensure it is removed
             let users = usernames.map(createUser)
             let additionalUsers: [ZMUser]
-            if let otherZMUser = otherUserInMessage as? ZMUser {
-                additionalUsers = [selfUser as ZMUser, otherZMUser]
-            } else {
-                additionalUsers = [selfUser as ZMUser]
-            }
+            additionalUsers = [selfUser as ZMUser, otherUser]
+            
             switch fillUsers {
             case .none: return []
             case .sender: return [] //TODO: mock sender //[message.sender as! ZMUser]
@@ -268,7 +251,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         conversation?.allowGuests = allowGuests
         conversation?.remoteIdentifier = .create()
         conversation?.teamRemoteIdentifier = team?.remoteIdentifier
-//        message.visibleInConversation = conversation
         
         message.conversation = conversation
 
@@ -282,15 +264,8 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
                       allowGuests: Bool = false,
                       allTeamUsers: Bool = false,
                       numberOfGuests: Int16 = 0) -> ZMConversationMessage {
-        let otherUserInMessage: UserType
-        if let otherUser = otherUser {
-            otherUserInMessage = otherUser
-        } else {
-            otherUserInMessage = self.otherUser
-        }
-        
         let message = ZMSystemMessage(nonce: UUID(), managedObjectContext: uiMOC)
-        message.sender = fromSelf ? selfUser : otherUserInMessage ///TODO: crash for Swift Mock User has no moc
+        message.sender = fromSelf ? selfUser : otherUser
         message.systemMessageType = type
         message.text = text
         message.numberOfGuestsAdded = numberOfGuests
@@ -299,12 +274,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         message.users = {
             // We add the sender to ensure it is removed
             let users = usernames.map(createUser)
-            let additionalUsers: [ZMUser]
-            if let otherZMUser = otherUserInMessage as? ZMUser {
-                additionalUsers = [selfUser as ZMUser, otherZMUser]
-            } else {
-                additionalUsers = [selfUser as ZMUser]
-            }
+            let additionalUsers = [selfUser as ZMUser, otherUser as ZMUser]
             switch fillUsers {
             case .none: return []
             case .sender: return [message.sender as! ZMUser]
