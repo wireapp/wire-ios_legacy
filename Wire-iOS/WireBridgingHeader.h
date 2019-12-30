@@ -107,9 +107,6 @@
 
 #import "PermissionDeniedViewController.h"
 
-#import "ShareContactsViewController.h"
-#import "ShareContactsViewController+Internal.h"
-
 #import "PermissionDeniedViewController+Internal.h"
 
 // Helper objects

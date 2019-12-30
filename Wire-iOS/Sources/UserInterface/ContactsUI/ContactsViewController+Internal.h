@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "ShareContactsViewController.h"
 
 @class IconButton;
 @class SearchHeaderViewController;
@@ -73,7 +72,3 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 @end
 
 NS_ASSUME_NONNULL_END
-
-@interface ContactsViewController (ShareContactsDelegate)  <ShareContactsViewControllerDelegate>
-
-@end

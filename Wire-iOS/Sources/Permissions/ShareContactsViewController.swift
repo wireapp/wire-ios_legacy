@@ -18,14 +18,103 @@
 
 import Foundation
 
-extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
-    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
-        AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
-        delegate?.shareContactsViewControllerDidSkip(self)
-    }
+protocol ShareContactsViewControllerDelegate: NSObjectProtocol {
+    func shareContactsViewControllerDidSkip(_ viewController: UIViewController)
+    func shareContactsViewControllerDidFinish(_ viewController: UIViewController)
 }
 
-extension ShareContactsViewController {
+final class ShareContactsViewController: UIViewController {
+    weak var delegate: ShareContactsViewControllerDelegate?
+    var uploadAddressBookImmediately = false
+    var backgroundBlurDisabled = false
+    var notNowButtonHidden = false
+    var monochromeStyle = false
+    private(set) var showingAddressBookAccessDeniedViewController = false
+    
+    private var notNowButton: UIButton?
+    private var heroLabel: UILabel?
+    private var shareContactsButton: Button!
+    private var shareContactsContainerView: UIView!
+    private var addressBookAccessDeniedViewController: PermissionDeniedViewController!
+    private var backgroundBlurView: UIVisualEffectView!
+    private var showingAddressBookAccessDeniedViewController = false
+    
+    private func createHeroLabel() {
+        heroLabel = UILabel()
+        heroLabel.font = UIFont.largeSemiboldFont
+        heroLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: ColorSchemeVariantDark)
+        heroLabel.attributedText = attributedHeroText()
+        heroLabel.numberOfLines = 0
+        
+        shareContactsContainerView.addSubview(heroLabel)
+    }
+    
+    private func attributedHeroText() -> NSAttributedString? {
+        let title = NSLocalizedString("registration.share_contacts.hero.title", comment: "")
+        let paragraph = NSLocalizedString("registration.share_contacts.hero.paragraph", comment: "")
+        
+        let text = [title, paragraph].joined(separator: "\u{2029}")
+        
+        var paragraphStyle = NSParagraphStyle.default as? NSMutableParagraphStyle
+        paragraphStyle?.paragraphSpacing = 10
+        
+        var attributedText: NSMutableAttributedString? = nil
+        if let paragraphStyle = paragraphStyle {
+            attributedText = NSMutableAttributedString(string: text, attributes: [
+                NSAttributedString.Key.paragraphStyle: paragraphStyle
+                ])
+        }
+        attributedText?.addAttributes([
+            NSAttributedString.Key.foregroundColor: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: ColorSchemeVariantDark),
+            NSAttributedString.Key.font: UIFont.largeThinFont
+            ], range: (text as NSString).range(of: paragraph))
+        
+        if let attributedText = attributedText {
+            return NSAttributedString(attributedString: attributedText)
+        }
+        return nil
+    }
+
+    private func createShareContactsButton() {
+        shareContactsButton = Button(style: monochromeStyle ? ButtonStyleFullMonochrome : ButtonStyleFull)
+        shareContactsButton.setTitle(NSLocalizedString("registration.share_contacts.find_friends_button.title", comment: "").uppercasedWithCurrentLocale(), for: .normal)
+        shareContactsButton.addTarget(self, action: #selector(shareContacts(_:)), for: .touchUpInside)
+        
+        shareContactsContainerView.addSubview(shareContactsButton)
+    }
+    
+    private func createNotNowButton() {
+        notNowButton = UIButton(type: .custom)
+        notNowButton.titleLabel?.font = UIFont.smallLightFont
+        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorButtonFaded, variant: ColorSchemeVariantDark), for: .normal)
+        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorButtonFaded, variant: ColorSchemeVariantDark).withAlphaComponent(0.2), for: .highlighted)
+        notNowButton.setTitle(NSLocalizedString("registration.share_contacts.skip_button.title", comment: "").uppercasedWithCurrentLocale(), for: .normal)
+        notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
+        notNowButton.hidden = notNowButtonHidden
+        
+        shareContactsContainerView.addSubview(notNowButton)
+    }
+    
+    private func createAddressBookAccessDeniedViewController() {
+        addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController(withMonochromeStyle: monochromeStyle)
+        addressBookAccessDeniedViewController.delegate = self
+        addressBookAccessDeniedViewController.backgroundBlurDisabled = backgroundBlurDisabled
+        
+        addChild(addressBookAccessDeniedViewController)
+        view.addSubview(addressBookAccessDeniedViewController.view)
+        addressBookAccessDeniedViewController.didMove(toParent: self)
+        addressBookAccessDeniedViewController.view.hidden = true
+    }
+    
+    func setBackgroundBlurDisabled(_ backgroundBlurDisabled: Bool) {
+        self.backgroundBlurDisabled = backgroundBlurDisabled
+        backgroundBlurView.hidden = self.backgroundBlurDisabled
+    }
+    
+    func setNotNowButtonHidden(_ notNowButtonHidden: Bool) {
+        self.notNowButtonHidden = notNowButtonHidden
+        notNowButton.hidden = self.notNowButtonHidden
+    }
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -136,4 +225,9 @@ extension ShareContactsViewController {
     }
 }
 
-
+extension ShareContactsViewController: PermissionDeniedViewControllerDelegate {
+    public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
+        AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
+        delegate?.shareContactsViewControllerDidSkip(self)
+    }
+}

@@ -694,7 +694,6 @@
 		87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D7AF661DF5A158001A1CD7 /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */; };
 		87DCF4791D34E95B00BB420F /* PermissionDeniedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */; };
-		87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */; };
 		87DCF48E1D34E9BA00BB420F /* ContactsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */; };
 		87DCF4921D34E9BA00BB420F /* ContactsViewController+ShareContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4891D34E9BA00BB420F /* ContactsViewController+ShareContacts.m */; };
 		87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */; };
@@ -763,6 +762,7 @@
 		A9C7BEC0237C0FFB005D676A /* ColorSchemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C7BEBF237C0FFB005D676A /* ColorSchemeTests.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
 		A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */; };
+		A9D51B8C23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */; };
 		AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */; };
 		AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */; };
 		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */; };
@@ -1188,7 +1188,7 @@
 		EF3BA5D421075FC60093048F /* ConversationInputBarViewController+Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */; };
 		EF3BA5D72107688D0093048F /* InputLanguageSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */; };
 		EF3BD69D225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */; };
-		EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */; };
+		EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController.swift */; };
 		EF3CB75321DD0F0C0030C3E8 /* ConversationViewController+ParticipantsPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */; };
 		EF3CB75521DD157B0030C3E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CB75421DD157B0030C3E8 /* ProfileViewController.swift */; };
 		EF3CBC0A2147D81800566295 /* ConversationListViewController+PushPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */; };
@@ -2369,8 +2369,6 @@
 		87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerTests.swift; sourceTree = "<group>"; };
 		87DCF4751D34E95B00BB420F /* PermissionDeniedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PermissionDeniedViewController.h; sourceTree = "<group>"; };
 		87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PermissionDeniedViewController.m; sourceTree = "<group>"; };
-		87DCF4771D34E95B00BB420F /* ShareContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareContactsViewController.h; sourceTree = "<group>"; };
-		87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareContactsViewController.m; sourceTree = "<group>"; };
 		87DCF47E1D34E9BA00BB420F /* ContactsDataSource+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ContactsDataSource+Private.h"; sourceTree = "<group>"; };
 		87DCF47F1D34E9BA00BB420F /* ContactsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsDataSource.h; sourceTree = "<group>"; };
 		87DCF4801D34E9BA00BB420F /* ContactsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsDataSource.m; sourceTree = "<group>"; };
@@ -2477,6 +2475,7 @@
 		A9C7BEBF237C0FFB005D676A /* ColorSchemeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSchemeTests.swift; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerViewModel.swift; sourceTree = "<group>"; };
+		A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ShareContactsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireCanvas.framework; path = Carthage/Build/iOS/WireCanvas.framework; sourceTree = "<group>"; };
 		AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+StorableTrackingEvent.swift"; sourceTree = "<group>"; };
 		B40CD0961DB7967B0008DA45 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -2988,8 +2987,7 @@
 		EF3BA5D62107688D0093048F /* InputLanguageSettable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLanguageSettable.swift; sourceTree = "<group>"; };
 		EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PermissionDeniedViewController+Extension.swift"; sourceTree = "<group>"; };
 		EF3BD69C225CC53B00ABB9B6 /* PermissionDeniedViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PermissionDeniedViewController+Internal.h"; sourceTree = "<group>"; };
-		EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareContactsViewController+Extension.swift"; sourceTree = "<group>"; };
-		EF3BD69F225CD4FE00ABB9B6 /* ShareContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ShareContactsViewController+Internal.h"; sourceTree = "<group>"; };
+		EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContactsViewController.swift; sourceTree = "<group>"; };
 		EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ParticipantsPopover.swift"; sourceTree = "<group>"; };
 		EF3CB75421DD157B0030C3E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		EF3CBC092147D81700566295 /* ConversationListViewController+PushPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+PushPermissions.swift"; sourceTree = "<group>"; };
@@ -4949,10 +4947,7 @@
 				EF3BD69C225CC53B00ABB9B6 /* PermissionDeniedViewController+Internal.h */,
 				87DCF4761D34E95B00BB420F /* PermissionDeniedViewController.m */,
 				EF3BD69B225CC53B00ABB9B6 /* PermissionDeniedViewController+Extension.swift */,
-				87DCF4771D34E95B00BB420F /* ShareContactsViewController.h */,
-				EF3BD69F225CD4FE00ABB9B6 /* ShareContactsViewController+Internal.h */,
-				87DCF4781D34E95B00BB420F /* ShareContactsViewController.m */,
-				EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift */,
+				EF3BD69E225CD4FE00ABB9B6 /* ShareContactsViewController.swift */,
 				EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */,
 			);
 			path = Permissions;
@@ -4973,6 +4968,7 @@
 				87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */,
 				EF297DDC213209220002983A /* ContactsViewController+Internal.h */,
 				87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */,
+				A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */,
 				EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */,
 				EFBCC91421551694006AAB70 /* ContactsViewController+ViewLifeCycle.swift */,
 				EF297DDB213209220002983A /* ContactsViewController+Style.swift */,
@@ -7714,7 +7710,6 @@
 				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
 				8711A5A01E0C320100043ACF /* FloatingPoint.swift in Sources */,
 				5E90418B21F61CBF00C3B413 /* ReauthenticateStepDescription.swift in Sources */,
-				87DCF47A1D34E95B00BB420F /* ShareContactsViewController.m in Sources */,
 				871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */,
 				87D5E4421C3E79C600EB8289 /* Data+Fingerprint.swift in Sources */,
 				1682AEC120483FA5003A052A /* GroupDetailsSectionController.swift in Sources */,
@@ -7753,6 +7748,7 @@
 				87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */,
 				16DD6EB8228431030090A74C /* LegalHoldHeaderView.swift in Sources */,
 				5EDD25442141555600C0E254 /* LicensesLoader.swift in Sources */,
+				A9D51B8C23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift in Sources */,
 				F15650ED21DD1B4100210504 /* Reusable.swift in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				871BC2941D34F8F800DF0793 /* UIView+Zeta.m in Sources */,
@@ -7901,7 +7897,7 @@
 				8742F2EB2191DCDF00D2E40F /* ZMConversationMessage+DeliveryState.swift in Sources */,
 				EF6E9FEE231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift in Sources */,
 				162917C91F8BB991000F3E92 /* NetworkStatusView.swift in Sources */,
-				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController+Extension.swift in Sources */,
+				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
 				5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */,
