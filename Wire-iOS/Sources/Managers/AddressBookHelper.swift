@@ -20,7 +20,7 @@
 import Foundation
 import Contacts
 
-protocol AddressBookHelperProtocol {
+protocol AddressBookHelperProtocol: class {
     var isAddressBookAccessGranted : Bool { get }
     var isAddressBookAccessUnknown : Bool { get }
     var addressBookSearchPerformedAtLeastOnce : Bool { get set }
@@ -33,7 +33,6 @@ protocol AddressBookHelperProtocol {
     
     static var sharedHelper : AddressBookHelperProtocol { get }
     
-    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
     func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool)
     
     func requestPermissions(_ callback: ((Bool)->())?)

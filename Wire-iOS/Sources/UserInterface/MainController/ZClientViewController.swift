@@ -20,6 +20,20 @@
 import Foundation
 
 extension ZClientViewController {
+    
+    // MARK: - Adressbook Upload
+    
+    @objc
+    func uploadAddressBookIfNeeded() {
+        // We should not even try to access address book when in a team
+        if nil == ZMUser.selfUser() || ZMUser.selfUser().hasTeam == true {
+            return
+        }
+        
+        let addressBookDidBecomeGranted = AddressBookHelper.sharedHelper.accessStatusDidChangeToGranted
+        AddressBookHelper.sharedHelper.startRemoteSearch(!addressBookDidBecomeGranted)
+        AddressBookHelper.sharedHelper.persistCurrentAccessStatus()
+    }
 
     // MARK: - Setup methods
     
