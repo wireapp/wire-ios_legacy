@@ -90,4 +90,8 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         delegate?.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
     }
 
+    func conversationMessageShouldUpdate() {
+        dataSource?.loadMessages(forceRecalculate: true)
+    }
+    
 }

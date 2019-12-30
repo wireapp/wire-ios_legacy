@@ -552,7 +552,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     }
 }
 
-class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDescription {
+class ConversationStartedSystemMessageCellDescription: NSObject, ConversationMessageCellDescription {
     
     typealias View = ConversationStartedSystemMessageCell
     let configuration: View.Configuration
@@ -569,7 +569,7 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
     let containsHighlightableContent: Bool = false
     
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    var conversationObserverToken: Any?
     
     init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = UIColor.from(scheme: .textForeground)
@@ -580,8 +580,21 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())
+        super.init()
+        if let conversation = message.conversation {
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
     }
     
+}
+
+extension ConversationStartedSystemMessageCellDescription: ZMConversationObserver {
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
+        guard note.createdRemotelyChanged else { return }
+        if let conversation = message?.conversation, conversation.conversationType == .group, conversation.localParticipants.count == 1 {
+            delegate?.conversationMessageShouldUpdate()
+        }
+    }
 }
 
 class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
