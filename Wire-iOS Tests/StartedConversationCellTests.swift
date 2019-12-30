@@ -101,7 +101,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
             let message = cellForMockSystemMessage(for: .newConversation,
                                                    text: "Italy Trip",
                                                    fillUsers: .overflow,
-                                                   allowGuests: true,
                                                    allTeamUsers: true)
             
             let selfUser = SwiftMockUser()
@@ -242,8 +241,26 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         mockSystemMessageData.text = text
         let otherUsers = usernames.map(createUser)
         mockSystemMessageData.users = Set(otherUsers)
-        message.numberOfGuestsAdded = numberOfGuests
+        
+        mockSystemMessageData.users = {
+            // We add the sender to ensure it is removed
+            let users = usernames.map(createUser)
+            let additionalUsers: [ZMUser]
+            additionalUsers = [selfUser as ZMUser]
 
+            switch fillUsers {
+            case .none: return []
+            case .sender: return []
+            case .justYou: return Set([selfUser])
+            case .youAndAnother: return Set(users[0..<1] + [selfUser])
+            case .one: return Set(users[0...1] + additionalUsers)
+            case .some: return Set(users[0...4] + additionalUsers)
+            case .many: return Set(users[0..<11] + additionalUsers)
+            case .overflow: return Set(users + additionalUsers)
+            }
+        }()
+
+        message.numberOfGuestsAdded = numberOfGuests
         message.systemMessageData = mockSystemMessageData
         message.allTeamUsersAdded = allTeamUsersAdded
         
@@ -253,24 +270,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         
         message.sender = sender
         message.systemMessageType = type
-        
-        message.users = {
-            // We add the sender to ensure it is removed
-            let users = usernames.map(createUser)
-            let additionalUsers: [ZMUser]
-            additionalUsers = [selfUser as ZMUser, otherUser]
-            
-            switch fillUsers {
-            case .none: return []
-            case .sender: return [] //TODO: mock sender //[message.sender as! ZMUser]
-            case .justYou: return Set([selfUser])
-            case .youAndAnother: return Set(users[0..<1] + [selfUser])
-            case .one: return Set(users[0...1] + additionalUsers)
-            case .some: return Set(users[0...4] + additionalUsers)
-            case .many: return Set(users[0..<11] + additionalUsers)
-            case .overflow: return Set(users + additionalUsers)
-            }
-        }()
         
         let users = Array(message.users).filter { $0 != selfUser }
         let conversation = ZMConversation.insertGroupConversation(moc: uiMOC, participants: users, team: team)
