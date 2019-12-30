@@ -31,8 +31,8 @@ final class ShareContactsViewController: UIViewController {
     var monochromeStyle = false
     private(set) var showingAddressBookAccessDeniedViewController = false
     
-    private var notNowButton: UIButton?
-    private var heroLabel: UILabel?
+    private var notNowButton: UIButton! ///TODO:
+    private var heroLabel: UILabel!
     private var shareContactsButton: Button!
     private var shareContactsContainerView: UIView!
     private var addressBookAccessDeniedViewController: PermissionDeniedViewController!
@@ -41,7 +41,7 @@ final class ShareContactsViewController: UIViewController {
     private func createHeroLabel() {
         heroLabel = UILabel()
         heroLabel.font = UIFont.largeSemiboldFont
-        heroLabel.textColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: ColorSchemeVariantDark)
+        heroLabel.textColor = UIColor.wr_color(fromColorScheme: .textForeground, variant: .dark)
         heroLabel.attributedText = attributedHeroText()
         heroLabel.numberOfLines = 0
         
@@ -49,8 +49,8 @@ final class ShareContactsViewController: UIViewController {
     }
     
     private func attributedHeroText() -> NSAttributedString? {
-        let title = NSLocalizedString("registration.share_contacts.hero.title", comment: "")
-        let paragraph = NSLocalizedString("registration.share_contacts.hero.paragraph", comment: "")
+        let title = "registration.share_contacts.hero.title".localized
+        let paragraph = "registration.share_contacts.hero.paragraph".localized
         
         let text = [title, paragraph].joined(separator: "\u{2029}")
         
@@ -64,7 +64,7 @@ final class ShareContactsViewController: UIViewController {
                 ])
         }
         attributedText?.addAttributes([
-            NSAttributedString.Key.foregroundColor: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground, variant: ColorSchemeVariantDark),
+            NSAttributedString.Key.foregroundColor: UIColor.wr_color(fromColorScheme: .TextForeground, variant: .dark),
             NSAttributedString.Key.font: UIFont.largeThinFont
             ], range: (text as NSString).range(of: paragraph))
         
@@ -76,7 +76,7 @@ final class ShareContactsViewController: UIViewController {
 
     private func createShareContactsButton() {
         shareContactsButton = Button(style: monochromeStyle ? ButtonStyleFullMonochrome : ButtonStyleFull)
-        shareContactsButton.setTitle(NSLocalizedString("registration.share_contacts.find_friends_button.title", comment: "").uppercasedWithCurrentLocale(), for: .normal)
+        shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
         shareContactsButton.addTarget(self, action: #selector(shareContacts(_:)), for: .touchUpInside)
         
         shareContactsContainerView.addSubview(shareContactsButton)
@@ -85,11 +85,11 @@ final class ShareContactsViewController: UIViewController {
     private func createNotNowButton() {
         notNowButton = UIButton(type: .custom)
         notNowButton.titleLabel?.font = UIFont.smallLightFont
-        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorButtonFaded, variant: ColorSchemeVariantDark), for: .normal)
-        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: ColorSchemeColorButtonFaded, variant: ColorSchemeVariantDark).withAlphaComponent(0.2), for: .highlighted)
-        notNowButton.setTitle(NSLocalizedString("registration.share_contacts.skip_button.title", comment: "").uppercasedWithCurrentLocale(), for: .normal)
+        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: .buttonFaded, variant: .dark), for: .normal)
+        notNowButton.setTitleColor(UIColor.wr_color(fromColorScheme: .buttonFaded, variant: .dark).withAlphaComponent(0.2), for: .highlighted)
+        notNowButton.setTitle("registration.share_contacts.skip_button.title".localized.uppercased(), for: .normal)
         notNowButton.addTarget(self, action: #selector(shareContactsLater(_:)), for: .touchUpInside)
-        notNowButton.hidden = notNowButtonHidden
+        notNowButton.isHidden = notNowButtonHidden
         
         shareContactsContainerView.addSubview(notNowButton)
     }
@@ -115,7 +115,7 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.hidden = self.notNowButtonHidden
     }
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         let blurEffect = UIBlurEffect(style: .dark)
         backgroundBlurView = UIVisualEffectView(effect: blurEffect)
