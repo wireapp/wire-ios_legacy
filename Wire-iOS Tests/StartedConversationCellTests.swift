@@ -110,10 +110,17 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
     }
     
-    func disable_testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests() {
+    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests() {
         teamTest {
-            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allTeamUsers: true, numberOfGuests: 5)
-            verify(message: message)
+            let message = cellForMockSystemMessage(for: .newConversation,
+                                                   text: "Italy Trip",
+                                                   fillUsers: .many,
+                                                   allTeamUsers: true,
+                                                   numberOfGuests: 5)
+            
+            let selfUser = SwiftMockUser()
+            
+            verify(message: message, selfUser: selfUser)
         }
     }
     
@@ -218,7 +225,8 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         mockSystemMessageData.text = text
         let otherUsers = usernames.map(createUser)
         mockSystemMessageData.users = Set(otherUsers)
-        
+        message.numberOfGuestsAdded = numberOfGuests
+
         message.systemMessageData = mockSystemMessageData
         
         let sender = SwiftMockUser()
