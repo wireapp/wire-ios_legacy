@@ -96,14 +96,17 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         changeObservers.removeAll()
     }
 
-    init(message: ZMConversationMessage, context: ConversationMessageContext, selected: Bool = false) {
+    init(message: ZMConversationMessage,
+         context: ConversationMessageContext,
+         selected: Bool = false,
+         selfUser: UserType = ZMUser.selfUser()) {
         self.message = message
         self.context = context
         self.selected = selected
         
         super.init()
         
-        createCellDescriptions(in: context)
+        createCellDescriptions(in: context, selfUser: selfUser)
         
         startObservingChanges(for: message)
         
@@ -114,7 +117,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     
     // MARK: - Content Types
     
-    private func addContent(context: ConversationMessageContext, isSenderVisible: Bool) {
+    private func addContent(context: ConversationMessageContext, isSenderVisible: Bool, selfUser: UserType = ZMUser.selfUser()) {
         
         messageCellIndex = cellDescriptions.count
         
@@ -135,7 +138,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         } else if message.isFile {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
-            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
+            contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message, selfUser: selfUser)
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -189,7 +192,8 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         selected = false
     }
     
-    private func createCellDescriptions(in context: ConversationMessageContext) {
+    private func createCellDescriptions(in context: ConversationMessageContext,
+                                        selfUser: UserType = ZMUser.selfUser()) {
         cellDescriptions.removeAll()
         
         let isSenderVisible = self.isSenderVisible(in: context) && message.sender != nil
@@ -198,10 +202,10 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             add(description: BurstTimestampSenderMessageCellDescription(message: message, context: context))
         }
         if isSenderVisible, let sender = message.sender {
-            add(description: ConversationSenderMessageCellDescription(sender: sender, message: message))
+            add(description: ConversationSenderMessageCellDescription(sender: sender, message: message, selfUser: selfUser))
         }
         
-        addContent(context: context, isSenderVisible: isSenderVisible)
+        addContent(context: context, isSenderVisible: isSenderVisible, selfUser: selfUser)
         
         if isToolboxVisible(in: context) {
             add(description: ConversationMessageToolboxCellDescription(message: message, selected: selected))

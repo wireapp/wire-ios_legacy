@@ -97,6 +97,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     }
 
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers_debug() {
+//        recordMode = true
         teamTest {
             let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow, allTeamUsers: true)
             
@@ -115,7 +116,10 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
                                allTeamUsers: true//,
 //                               otherUser:otherUser
             )
-            verify(message: message)
+            
+            let selfUser = SwiftMockUser()
+            
+            verify(message: message, selfUser: selfUser)
         }
     }
     
@@ -243,7 +247,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         
         let sender = SwiftMockUser()
         sender.displayNameInConversation = "Bruno"
-        sender.name = "Bruno"
+//        sender.name = "Bruno"
         sender.isSelfUser = false
         
         message.sender = sender

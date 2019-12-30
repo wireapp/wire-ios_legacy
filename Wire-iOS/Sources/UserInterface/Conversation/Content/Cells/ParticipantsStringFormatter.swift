@@ -116,12 +116,20 @@ final class ParticipantsStringFormatter {
         return [.link: ParticipantsCellViewModel.showMoreLinkURL]
     }
     
-    init(message: ZMConversationMessage, font: UIFont = .mediumFont, boldFont: UIFont = .mediumSemiboldFont, largeFont: UIFont = .largeSemiboldFont, textColor: UIColor = .from(scheme: .textForeground)) {
+    private let selfUser: UserType
+    
+    init(message: ZMConversationMessage,
+         font: UIFont = .mediumFont,
+         boldFont: UIFont = .mediumSemiboldFont,
+         largeFont: UIFont = .largeSemiboldFont,
+         textColor: UIColor = .from(scheme: .textForeground),
+         selfUser: UserType = ZMUser.selfUser()) {
         self.message = message
         self.font = font
         self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
+        self.selfUser = selfUser
     }
     
     /// This is only used when a conversation (with a name) is started.
@@ -154,7 +162,7 @@ final class ParticipantsStringFormatter {
         
         var result: NSAttributedString
         let formatKey = message.actionType.formatKey
-        let nameSequence = format(names)
+        let nameSequence = format(names, selfUser: selfUser)
         
         switch message.actionType {
         case .removed, .added(herself: false), .started(withName: .none):
@@ -222,11 +230,10 @@ final class ParticipantsStringFormatter {
     
     private func linkTextForWholeTeam(_ nameList: NameList,
                                       selfUser: UserType = ZMUser.selfUser()) -> String? {
-        guard
-            let systemMessage = message as? ZMSystemMessage,
-            systemMessage.allTeamUsersAdded,
-            let conversation = systemMessage.conversation,
-            selfUser.canModifyAccessControlSettings(in: conversation)
+        guard let systemMessage = message as? (SystemMessageNewConversationProperties & ZMConversationMessage),
+              systemMessage.allTeamUsersAdded,
+              let conversation = systemMessage.conversation,
+              selfUser.canModifyAccessControlSettings(in: conversation)
             else { return nil }
         
         // we only collapse whole team if there are more than 10 participants

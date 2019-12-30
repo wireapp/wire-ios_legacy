@@ -73,12 +73,13 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 waitForTextViewToLoad: Bool = false,
                 tolerance: CGFloat = 0,
                 colorSchemes: Set<ColorSchemeVariant> = [],
+                selfUser: UserType = ZMUser.selfUser(),
                 file: StaticString = #file,
                 line: UInt = #line) {
 
         verifyInAllPhoneWidths(initialization:{
             let context = (context ?? defaultContext)!
-            let section = ConversationMessageSectionController(message: message, context: context)
+            let section = ConversationMessageSectionController(message: message, context: context, selfUser: selfUser)
             let views = section.cellDescriptions.map({ $0.makeView() })
             let stackView = UIStackView(arrangedSubviews: views)
             stackView.axis = .vertical

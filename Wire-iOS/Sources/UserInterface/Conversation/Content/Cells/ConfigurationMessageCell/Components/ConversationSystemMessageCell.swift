@@ -265,7 +265,8 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 final class ConversationSystemMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage,
+                      selfUser: UserType = ZMUser.selfUser()) -> [AnyConversationMessageCellDescription] { ///TODO: inject self user
         guard let systemMessageData = message.systemMessageData,
             let sender = message.sender,
             let conversation = message.conversation else {
@@ -293,7 +294,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(callCell)]
 
         case .messageDeletedForEveryone:
-            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message, selfUser: selfUser)
             return [AnyConversationMessageCellDescription(senderCell)]
 
         case .messageTimerUpdate:
@@ -346,7 +347,7 @@ final class ConversationSystemMessageCellDescription {
             
         case .newConversation:
             var cells: [AnyConversationMessageCellDescription] = []
-            let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
+            let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData, selfUser: selfUser)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
             
             let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
@@ -389,7 +390,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {///TODO: inject self user
         let color = UIColor.from(scheme: .textForeground)
 
         let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
@@ -558,7 +559,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     }
 }
 
-class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = ConversationStartedSystemMessageCell
     let configuration: View.Configuration
@@ -578,10 +579,16 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
     let accessibilityLabel: String? = nil
     
     init(message: ZMConversationMessage,
-         data: ZMSystemMessageData) {
+         data: ZMSystemMessageData,
+         selfUser: UserType) {
         let color = UIColor.from(scheme: .textForeground)
-        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
-        ///TODO: action?
+        let model = ParticipantsCellViewModel(font: .mediumFont,
+                                              boldFont: .mediumSemiboldFont,
+                                              largeFont: .largeSemiboldFont,
+                                              textColor: color,
+                                              iconColor: color,
+                                              message: message,
+                                              selfUser: selfUser)
         actionController = nil
         configuration = View.Configuration(title: model.attributedHeading(),
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
@@ -591,7 +598,7 @@ class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDe
     
 }
 
-class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration

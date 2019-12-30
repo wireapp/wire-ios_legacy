@@ -63,7 +63,7 @@ extension ZMConversationMessage {
     }
 }
 
-class ParticipantsCellViewModel {
+final class ParticipantsCellViewModel {
     
     private typealias NameList = ParticipantsStringFormatter.NameList
     static let showMoreLinkURL = NSURL(string: "action://show-all")!
@@ -137,18 +137,21 @@ class ParticipantsCellViewModel {
 
     }()
 
+    private let selfUser: UserType
     init(font: UIFont?,
         boldFont: UIFont?,
         largeFont: UIFont?,
         textColor: UIColor,
         iconColor: UIColor,
-        message: ZMConversationMessage) {
+        message: ZMConversationMessage,
+        selfUser: UserType = ZMUser.selfUser()) {
         self.font = font
         self.boldFont = boldFont
         self.largeFont = largeFont
         self.textColor = textColor
         self.iconColor = iconColor
         self.message = message
+        self.selfUser = selfUser
     }
     
     lazy var sortedUsersWithoutSelf: [UserType] = {
@@ -221,7 +224,7 @@ class ParticipantsCellViewModel {
         
         return ParticipantsStringFormatter(
             message: message, font: font, boldFont: boldFont,
-            largeFont: largeFont, textColor: textColor
+            largeFont: largeFont, textColor: textColor, selfUser: selfUser
         )
     }
 }

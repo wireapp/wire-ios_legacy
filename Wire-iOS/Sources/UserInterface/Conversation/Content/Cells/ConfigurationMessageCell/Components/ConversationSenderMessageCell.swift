@@ -103,7 +103,9 @@ class ConversationSenderMessageCellDescription: ConversationMessageCellDescripti
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(sender: UserType, message: ZMConversationMessage) {
+    init(sender: UserType,
+         message: ZMConversationMessage,
+         selfUser: UserType) {
         self.message = message
         
         var icon: UIImage? = nil
