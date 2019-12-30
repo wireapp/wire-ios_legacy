@@ -96,17 +96,8 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
     }
 
-    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers_debug() {
-//        recordMode = true
-        teamTest {
-            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .overflow, allTeamUsers: true)
-            
-            verify(message: message)
-        }
-    }
-
     func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsers() {
-        recordMode = true
+//        recordMode = true
         teamTest {
 //            let otherUser = SwiftMockUser()
             let message = cellForMockSystemMessage(for: .newConversation,
