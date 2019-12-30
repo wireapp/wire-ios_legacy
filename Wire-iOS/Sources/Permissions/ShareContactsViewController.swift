@@ -32,46 +32,40 @@ final class ShareContactsViewController: UIViewController {
     private(set) var showingAddressBookAccessDeniedViewController = false
     
     private var notNowButton: UIButton! ///TODO:
-    private var heroLabel: UILabel!
+    private let heroLabel: UILabel = {
+        let heroLabel = UILabel()
+        heroLabel.font = UIFont.largeSemiboldFont
+        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        heroLabel.attributedText = ShareContactsViewController.attributedHeroText
+        heroLabel.numberOfLines = 0
+        
+        return heroLabel
+    }()
+    
     private var shareContactsButton: Button!
     private var shareContactsContainerView: UIView!
     private var addressBookAccessDeniedViewController: PermissionDeniedViewController!
     private var backgroundBlurView: UIVisualEffectView!
     
-    private func createHeroLabel() {
-        heroLabel = UILabel()
-        heroLabel.font = UIFont.largeSemiboldFont
-        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
-        heroLabel.attributedText = attributedHeroText()
-        heroLabel.numberOfLines = 0
-        
-        shareContactsContainerView.addSubview(heroLabel)
-    }
-    
-    private func attributedHeroText() -> NSAttributedString? {
+    private static var attributedHeroText: NSAttributedString {
         let title = "registration.share_contacts.hero.title".localized
         let paragraph = "registration.share_contacts.hero.paragraph".localized
         
         let text = [title, paragraph].joined(separator: "\u{2029}")
         
-        let paragraphStyle: NSMutableParagraphStyle? = NSParagraphStyle.default as? NSMutableParagraphStyle
-        paragraphStyle?.paragraphSpacing = 10
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 10
         
-        var attributedText: NSMutableAttributedString? = nil
-        if let paragraphStyle = paragraphStyle {
-            attributedText = NSMutableAttributedString(string: text, attributes: [
+        let attributedText = NSMutableAttributedString(string: text, attributes: [
                 NSAttributedString.Key.paragraphStyle: paragraphStyle
                 ])
-        }
-        attributedText?.addAttributes([
+        
+        attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
             NSAttributedString.Key.font: UIFont.largeThinFont
             ], range: (text as NSString).range(of: paragraph))
         
-        if let attributedText = attributedText {
-            return NSAttributedString(attributedString: attributedText)
-        }
-        return nil
+        return attributedText
     }
 
     private func createShareContactsButton() {
@@ -125,7 +119,8 @@ final class ShareContactsViewController: UIViewController {
         shareContactsContainerView = UIView()
         view.addSubview(shareContactsContainerView)
         
-        createHeroLabel()
+        shareContactsContainerView.addSubview(heroLabel)
+
         createNotNowButton()
         createShareContactsButton()
         createAddressBookAccessDeniedViewController()
