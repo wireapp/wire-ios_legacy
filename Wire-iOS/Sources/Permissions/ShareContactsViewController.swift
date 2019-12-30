@@ -67,7 +67,7 @@ final class ShareContactsViewController: UIViewController {
         return addressBookAccessDeniedViewController
     }()
     
-    private var backgroundBlurView: UIVisualEffectView!
+    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
     private static var attributedHeroText: NSAttributedString {
         let title = "registration.share_contacts.hero.title".localized
@@ -102,8 +102,6 @@ final class ShareContactsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let blurEffect = UIBlurEffect(style: .dark)
-        backgroundBlurView = UIVisualEffectView(effect: blurEffect)
         view.addSubview(backgroundBlurView)
         backgroundBlurView.isHidden = backgroundBlurDisabled
         
