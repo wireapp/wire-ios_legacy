@@ -63,7 +63,6 @@
 @property (nonatomic) BOOL hasDoneInitialLayout;
 @property (nonatomic) BOOL onScreen;
 @property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
-@property (nonatomic) id conversationObserverToken;
 @end
 
 
