@@ -26,9 +26,7 @@ extension ZClientViewController {
     @objc
     func uploadAddressBookIfNeeded() {
         // We should not even try to access address book when in a team
-        if nil == ZMUser.selfUser() || ZMUser.selfUser().hasTeam == true {
-            return
-        }
+        guard ZMUser.selfUser().hasTeam == false else { return }
         
         let addressBookDidBecomeGranted = AddressBookHelper.sharedHelper.accessStatusDidChangeToGranted
         AddressBookHelper.sharedHelper.startRemoteSearch(!addressBookDidBecomeGranted)

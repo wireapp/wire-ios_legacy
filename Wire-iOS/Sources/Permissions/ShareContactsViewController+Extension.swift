@@ -20,6 +20,29 @@ import Foundation
 
 extension ShareContactsViewController {
 
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        let blurEffect = UIBlurEffect(style: .dark)
+        backgroundBlurView = UIVisualEffectView(effect: blurEffect)
+        view.addSubview(backgroundBlurView)
+        backgroundBlurView.isHidden = backgroundBlurDisabled
+        
+        shareContactsContainerView = UIView()
+        view.addSubview(shareContactsContainerView)
+        
+        createHeroLabel()
+        createNotNowButton()
+        createShareContactsButton()
+        createAddressBookAccessDeniedViewController()
+        createConstraints()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        if AddressBookHelper.shared().isAddressBookAccessDisabled() {
+            displayContactsAccessDeniedMessage(animated: false)
+        }
+    }
+
     // MARK: - Constraints
     @objc
     func createConstraints() {

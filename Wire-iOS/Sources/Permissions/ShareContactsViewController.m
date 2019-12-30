@@ -27,30 +27,6 @@
 
 @implementation ShareContactsViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-    self.backgroundBlurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    [self.view addSubview:self.backgroundBlurView];
-    self.backgroundBlurView.hidden = self.backgroundBlurDisabled;
-    
-    self.shareContactsContainerView = [[UIView alloc] init];
-    [self.view addSubview:self.shareContactsContainerView];
-    
-    [self createHeroLabel];
-    [self createNotNowButton];
-    [self createShareContactsButton];
-    [self createAddressBookAccessDeniedViewController];
-    [self createConstraints];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
-    if ([[AddressBookHelper sharedHelper] isAddressBookAccessDisabled]) {
-        [self displayContactsAccessDeniedMessageAnimated:NO];
-    }
-}
-
 - (void)createHeroLabel
 {
     self.heroLabel = [[UILabel alloc] init];
