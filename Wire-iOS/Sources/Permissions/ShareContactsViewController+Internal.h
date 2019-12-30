@@ -29,11 +29,11 @@
 @property (nonatomic) UIView *shareContactsContainerView;
 @property (nonatomic) PermissionDeniedViewController *addressBookAccessDeniedViewController;
 @property (nonatomic) UIVisualEffectView *backgroundBlurView;
-
-@end
-
-@interface ShareContactsViewController () <PermissionDeniedViewControllerDelegate>
-
 @property (nonatomic) BOOL showingAddressBookAccessDeniedViewController;
+
+- (void)createHeroLabel;
+- (void)createNotNowButton;
+- (void)createShareContactsButton;
+- (void)createAddressBookAccessDeniedViewController;
 
 @end
