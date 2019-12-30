@@ -67,7 +67,7 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 - (NSArray *) actionButtonTitles;
-
+- (void)dismissChildViewController:(UIViewController *)viewController;
 
 @end
 

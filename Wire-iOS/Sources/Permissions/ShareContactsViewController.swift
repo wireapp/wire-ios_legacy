@@ -19,8 +19,8 @@
 import Foundation
 
 protocol ShareContactsViewControllerDelegate: NSObjectProtocol {
-    func shareContactsViewControllerDidSkip(_ viewController: UIViewController)
-    func shareContactsViewControllerDidFinish(_ viewController: UIViewController)
+    func shareDidSkip(_ viewController: UIViewController)
+    func shareDidFinish(_ viewController: UIViewController)
 }
 
 final class ShareContactsViewController: UIViewController {
@@ -37,7 +37,6 @@ final class ShareContactsViewController: UIViewController {
     private var shareContactsContainerView: UIView!
     private var addressBookAccessDeniedViewController: PermissionDeniedViewController!
     private var backgroundBlurView: UIVisualEffectView!
-    private var showingAddressBookAccessDeniedViewController = false
     
     private func createHeroLabel() {
         heroLabel = UILabel()
@@ -207,7 +206,6 @@ final class ShareContactsViewController: UIViewController {
 
     // MARK: - AddressBook Access Denied ViewController
 
-    @objc(displayContactsAccessDeniedMessageAnimated:)
     func displayContactsAccessDeniedMessage(animated: Bool) {
         endEditing()
 

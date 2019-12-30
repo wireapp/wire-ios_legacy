@@ -37,24 +37,3 @@
 }
 
 @end
-
-//#pragma mark - ShareContactsViewControllerDelegate
-//
-//@implementation ContactsViewController (ShareContactsDelegate)
-//
-//- (void)shareContactsViewControllerDidFinish:(UIViewController *)viewController
-//{
-//    // Reload data source
-//    [self.dataSource searchWithQuery:@"" searchDirectory:self.dataSource.searchDirectory];
-//    
-//    [self dismissChildViewController:viewController];
-//}
-//
-//- (void)shareContactsViewControllerDidSkip:(UIViewController *)viewController
-//{
-//    if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidNotShareContacts:)]) {
-//        [self.delegate contactsViewControllerDidNotShareContacts:self];
-//    }
-//}
-//
-//@end

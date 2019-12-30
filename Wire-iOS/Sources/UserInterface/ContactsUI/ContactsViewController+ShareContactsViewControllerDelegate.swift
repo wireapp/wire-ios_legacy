@@ -20,16 +20,14 @@ import Foundation
 
 import Foundation
 extension ContactsViewController: ShareContactsViewControllerDelegate {
-    func shareDidFinish(_ viewController: UIViewController?) {
+    func shareDidFinish(_ viewController: UIViewController) {
         // Reload data source
-        dataSource.search(withQuery: "", searchDirectory: dataSource.searchDirectory)
+        dataSource?.search(withQuery: "", searchDirectory: dataSource?.searchDirectory)
         
         dismissChildViewController(viewController)
     }
     
-    func shareDidSkip(_ viewController: UIViewController?) {
-        if delegate.responds(to: #selector(contactsViewControllerDidNotShareContacts(_:))) {
-            delegate.contactsViewControllerDidNotShareContacts(self)
-        }
+    func shareDidSkip(_ viewController: UIViewController) {
+        delegate?.contactsViewControllerDidNotShareContacts?(self)
     }
 }
