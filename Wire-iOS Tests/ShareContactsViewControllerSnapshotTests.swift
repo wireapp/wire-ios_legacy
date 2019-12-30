@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ShareContactsViewControllerSnapshotTests: XCTestCase {
 
     var sut: ShareContactsViewController!
 
@@ -34,6 +35,6 @@ final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState() {
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
