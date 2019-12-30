@@ -60,9 +60,3 @@ extension ConversationContentViewController {
         updateTableViewHeaderView()
     }
 }
-
-extension ConversationContentViewController: ZMConversationObserver {
-    public func conversationDidChange(_ note: ConversationChangeInfo) {
-        guard note.createdRemotelyChanged else { return }        
-    }
-}

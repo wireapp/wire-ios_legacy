@@ -97,7 +97,6 @@
         self.messagePresenter.modalTargetController = self.parentViewController;
         self.session = session;
 
-        self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
     }
     
     return self;
