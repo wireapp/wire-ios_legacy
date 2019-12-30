@@ -182,7 +182,6 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Invite Guests
     
     func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
-        recordMode = true
         teamTest {
             let message = cellForMockSystemMessage(for: .newConversation,
                                                    text: "Italy Trip",

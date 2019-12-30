@@ -50,7 +50,8 @@ import WireLinkPreview
     }
 }
 
-@objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
+@objcMembers
+final class MockSystemMessageData: NSObject, ZMSystemMessageData {
 
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
