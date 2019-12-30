@@ -131,10 +131,17 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         }
     }
     
-    func disable_testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests() {
+    func testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests() {
         teamTest {
-            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .some, allTeamUsers: true, numberOfGuests: 10)
-            verify(message: message)
+            let message = cellForMockSystemMessage(for: .newConversation,
+                                                   text: "Italy Trip",
+                                                   fillUsers: .some,
+                                                   allTeamUsers: true,
+                                                   numberOfGuests: 10)
+            
+            let selfUser = SwiftMockUser()
+            
+            verify(message: message, selfUser: selfUser)
         }
     }
 
@@ -175,10 +182,19 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
     
     // MARK: - Invite Guests
     
-    func disable_testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
+    func testThatItRendersNewConversationCellWithParticipantsAndName_AllowGuests() {
+        recordMode = true
         teamTest {
-            let message = cell(for: .newConversation, text: "Italy Trip", fillUsers: .many, allowGuests: true)
-            verify(message: message)
+            let message = cellForMockSystemMessage(for: .newConversation,
+                                                   text: "Italy Trip",
+                                                   fillUsers: .many,
+                                                   allowGuests: true,
+                                                   allTeamUsersAdded: false)
+            
+            let selfUser = SwiftMockUser()
+            
+            verify(message: message, selfUser: selfUser)
+
         }
     }
     
@@ -218,6 +234,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
                       fillUsers: Users = .one,
                       allowGuests: Bool = false,
                       allTeamUsers: Bool = false,
+                      allTeamUsersAdded: Bool = true,
                       numberOfGuests: Int16 = 0) -> ZMConversationMessage {
         let message = MockSystemMessage()
         
@@ -228,6 +245,7 @@ final class StartedConversationCellTests: ConversationCellSnapshotTestCase {
         message.numberOfGuestsAdded = numberOfGuests
 
         message.systemMessageData = mockSystemMessageData
+        message.allTeamUsersAdded = allTeamUsersAdded
         
         let sender = SwiftMockUser()
         sender.displayNameInConversation = "Bruno"
