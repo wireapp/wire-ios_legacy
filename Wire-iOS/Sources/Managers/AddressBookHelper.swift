@@ -23,10 +23,21 @@ import Contacts
 protocol AddressBookHelperProtocol {
     var isAddressBookAccessGranted : Bool { get }
     var isAddressBookAccessUnknown : Bool { get }
-
+    var addressBookSearchPerformedAtLeastOnce : Bool { get set }
+    var isAddressBookAccessDisabled : Bool { get }
+    var accessStatusDidChangeToGranted: Bool { get }
+    var addressBookSearchWasPostponed : Bool { get set }
+    
+    /// Configuration override (used for testing)
+    var configuration : AddressBookHelperConfiguration! { get set }
+    
+    static var sharedHelper : AddressBookHelperProtocol { get }
+    
+    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
     func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool)
-
+    
     func requestPermissions(_ callback: ((Bool)->())?)
+    func persistCurrentAccessStatus()
 }
 
 /// Allows access to address book for search
@@ -36,7 +47,7 @@ final class AddressBookHelper : AddressBookHelperProtocol {
     let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
     
     /// Singleton
-    static let sharedHelper : AddressBookHelper = AddressBookHelper()
+    static var sharedHelper : AddressBookHelperProtocol = AddressBookHelper()
     
     /// Configuration override (used for testing)
     var configuration : AddressBookHelperConfiguration!

@@ -200,6 +200,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         stackView.wr_addCustomSpacing(32, after: teamNameLabel)
         stackView.wr_addCustomSpacing(24, after: imageView)
         stackView.wr_addCustomSpacing(20, after: guestIndicatorStack)
+        stackView.wr_addCustomSpacing(20, after: externalIndicator)
         
         view.addSubview(stackView)
         applyColorScheme(colorSchemeVariant)
@@ -256,7 +257,15 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     }
 
     private func updateGroupRoleIndicator() {
-        groupRoleIndicator.isHidden = !(conversation.map(user.isAdminGroup) ?? false)
+        let groupRoleIndicatorHidden: Bool
+        switch conversation?.conversationType {
+        case .group?:
+            groupRoleIndicatorHidden = !(conversation.map(user.isAdminGroup) ?? false)
+        default:
+            groupRoleIndicatorHidden = true
+        }
+        groupRoleIndicator.isHidden = groupRoleIndicatorHidden
+
     }
     
     private func applyOptions() {

@@ -122,7 +122,6 @@ extension ConversationViewController {
             navigationController.modalPresentationStyle = .formSheet
             present(navigationController, animated: true)
         } else if conversation.conversationType == .group {
-            let participants = conversation.sortedOtherParticipants
             let participantsViewController = GroupParticipantsDetailViewController(selectedParticipants: [], conversation: conversation)
             let navigationController = participantsViewController.wrapInNavigationController()
             navigationController.modalPresentationStyle = .formSheet

@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FLAnimatedImageView;
 @class ConversationTableViewDataSource;
 @class DeletionDialogPresenter;
+@class UserConnectionViewController;
 @protocol SelectableView;
 @protocol ZMUserSessionInterface;
 
@@ -51,8 +52,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) id<ZMUserSessionInterface> session;
 
+@property (nonatomic) UserConnectionViewController *connectionViewController;
+
 - (void)removeHighlightsAndMenu;
 - (NSIndexPath * _Nullable)willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
+- (void)setConversationHeaderView:(UIView *)headerView;
 
 @end
 

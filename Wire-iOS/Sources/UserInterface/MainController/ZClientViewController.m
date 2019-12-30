@@ -37,8 +37,6 @@
 
 #import "Wire-Swift.h"
 
-#import "StartUIViewController.h"
-
 @interface ZClientViewController (InitialState)
 
 - (void)restoreStartupState;

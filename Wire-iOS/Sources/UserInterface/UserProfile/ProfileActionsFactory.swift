@@ -80,7 +80,7 @@ enum ProfileAction: Equatable {
  * of a conversation.
  */
 
-final class ProfileActionsFactory: NSObject {
+final class ProfileActionsFactory {
 
     // MARK: - Environmemt
 
@@ -155,7 +155,7 @@ final class ProfileActionsFactory: NSObject {
         switch (context, conversation?.conversationType) {
         case (_, .oneOnOne?):
 
-            if viewer.canCreateConversation {
+            if viewer.canCreateConversation(type: .group) {
                 actions.append(.createGroup)
             }
 

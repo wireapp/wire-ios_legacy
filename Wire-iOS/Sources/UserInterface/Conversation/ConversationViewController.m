@@ -198,7 +198,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         [ZMUserSession.sharedSession enqueueChanges:^{
             switch (action) {
                 case OutgoingConnectionBottomBarActionCancel:
-                    [self.conversation.firstActiveParticipantOtherThanSelf cancelConnectionRequest];
+                    [self.conversation.connectedUser cancelConnectionRequest];
                     break;
                 case OutgoingConnectionBottomBarActionArchive:
                     self.conversation.isArchived = YES;

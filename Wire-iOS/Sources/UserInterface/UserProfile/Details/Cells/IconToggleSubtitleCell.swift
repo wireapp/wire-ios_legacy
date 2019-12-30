@@ -33,6 +33,10 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             styleViews()
         }
     }
+
+    private var subtitleTopConstraint: NSLayoutConstraint?
+    private var subtitleBottomConstraint: NSLayoutConstraint?
+    private let subtitleInsets = UIEdgeInsets(top: 16, left: 16, bottom: 24, right: 16)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,10 +78,10 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
             topContainer.trailing == contentView.trailing
             topContainer.height == 56
             
-            subtitleLabel.leading == contentView.leading + 16
-            subtitleLabel.trailing == contentView.trailing - 16
-            subtitleLabel.top == topContainer.bottom + 16
-            subtitleLabel.bottom == contentView.bottom - 24
+            subtitleLabel.leading == contentView.leading + self.subtitleInsets.leading
+            subtitleLabel.trailing == contentView.trailing - self.subtitleInsets.trailing
+            self.subtitleTopConstraint = subtitleLabel.top == topContainer.bottom + self.subtitleInsets.top
+            self.subtitleBottomConstraint = subtitleLabel.bottom == contentView.bottom - self.subtitleInsets.bottom
         }
     }
     
@@ -109,6 +113,17 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         titleLabel.textColor = mainColor
 
         subtitleLabel.text = subtitle
+
+        if subtitle.isEmpty {
+            subtitleLabel.isHidden = true
+            subtitleTopConstraint?.constant = 0
+            subtitleBottomConstraint?.constant = 0
+        } else {
+            subtitleLabel.isHidden = false
+            subtitleTopConstraint?.constant = subtitleInsets.top
+            subtitleBottomConstraint?.constant = -(subtitleInsets.bottom)
+        }
+
         action = set
         toggle.accessibilityIdentifier = identifier
         titleLabel.accessibilityIdentifier = titleIdentifier

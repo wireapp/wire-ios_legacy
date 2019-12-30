@@ -227,7 +227,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
         updateTitleLabel()
 
         if let conversation = conversation {
-            guestIconView.isHidden = !user.isGuest(in: conversation)
+            guestIconView.isHidden = !user.isGuest(in: conversation) || user.isSelfUser
         } else {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
         }

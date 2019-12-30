@@ -101,14 +101,19 @@ final class ConversationTableViewDataSource: NSObject {
     var previousSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
     var currentSections: [ArraySection<String, AnyConversationMessageCellDescription>] = []
     
-    func calculateSections() -> [ArraySection<String, AnyConversationMessageCellDescription>] {
+    
+    /// calculate cell sections
+    ///
+    /// - Parameter forceRecalculate: true if force recreate cell with context check
+    /// - Returns: arraySection of cell desctiptions
+    func calculateSections(forceRecalculate: Bool = false) -> [ArraySection<String, AnyConversationMessageCellDescription>] {
         return messages.enumerated().map { tuple in
             let sectionIdentifier = tuple.element.objectIdentifier
             let context = self.context(for: tuple.element, at: tuple.offset, firstUnreadMessage: firstUnreadMessage, searchQueries: searchQueries)
             let sectionController = self.sectionController(for: tuple.element, at: tuple.offset)
             
             // Re-create cell description if the context has changed (message has been moved around or received new neighbours).
-            if sectionController.context != context {
+            if sectionController.context != context || forceRecalculate {
                 sectionController.recreateCellDescriptions(in: context)
             }
             
@@ -192,7 +197,9 @@ final class ConversationTableViewDataSource: NSObject {
         return sectionController(for: message, at: sectionIndex)
     }
         
-    public func loadMessages(near message: ZMConversationMessage, completion: ((IndexPath?)->())? = nil) {
+    func loadMessages(near message: ZMConversationMessage,
+                      forceRecalculate: Bool = false,
+                      completion: ((IndexPath?)->())? = nil) {
         guard let moc = conversation.managedObjectContext, let serverTimestamp = message.serverTimestamp else {
             if message.hasBeenDeleted {
                 completion?(nil)
@@ -216,13 +223,15 @@ final class ConversationTableViewDataSource: NSObject {
         let offset = max(0, index - ConversationTableViewDataSource.defaultBatchSize)
         let limit = ConversationTableViewDataSource.defaultBatchSize * 2
         
-        loadMessages(offset: offset, limit: limit)
+        loadMessages(offset: offset, limit: limit, forceRecalculate: forceRecalculate)
         
         let indexPath = self.topIndexPath(for: message)
         completion?(indexPath)
     }
     
-    public func loadMessages(offset: Int = 0, limit: Int = ConversationTableViewDataSource.defaultBatchSize) {
+    func loadMessages(offset: Int = 0,
+                             limit: Int = ConversationTableViewDataSource.defaultBatchSize,
+                             forceRecalculate: Bool = false) {
         let fetchRequest = self.fetchRequest()
         fetchRequest.fetchLimit = limit + 5 // We need to fetch a bit more than requested so that there is overlap between messages in different fetches
         fetchRequest.fetchOffset = offset
@@ -239,7 +248,7 @@ final class ConversationTableViewDataSource: NSObject {
         hasOlderMessagesToLoad = messages.count == fetchRequest.fetchLimit
         hasNewerMessagesToLoad = offset > 0
         firstUnreadMessage = conversation.firstUnreadMessage
-        currentSections = calculateSections()
+        currentSections = calculateSections(forceRecalculate: forceRecalculate)
         tableView.reloadData()
     }
     
