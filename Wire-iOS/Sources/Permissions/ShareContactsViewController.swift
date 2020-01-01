@@ -23,6 +23,33 @@ protocol ShareContactsViewControllerDelegate: class {
     func shareDidFinish(_ viewController: UIViewController)
 }
 
+extension String {
+    func withCustomParagraphSpacing() -> NSMutableAttributedString {
+        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.paragraphSpacing = 10
+        
+        let attributedText = NSMutableAttributedString(string: self,
+                                                       attributes: [
+            NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        
+        return attributedText
+    }
+}
+
+extension UILabel {
+    static let heroLabel: UILabel = {
+        let heroLabel = UILabel()
+        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+        heroLabel.numberOfLines = 0
+        
+        return heroLabel
+    }()
+}
+
+extension UIVisualEffectView {
+    static let backgroundBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+}
+
 final class ShareContactsViewController: UIViewController {
     weak var delegate: ShareContactsViewControllerDelegate?
     var uploadAddressBookImmediately = false
@@ -43,11 +70,9 @@ final class ShareContactsViewController: UIViewController {
     }()
     
     private let heroLabel: UILabel = {
-        let heroLabel = UILabel()
+        let heroLabel = UILabel.heroLabel
         heroLabel.font = UIFont.largeSemiboldFont
-        heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         heroLabel.attributedText = ShareContactsViewController.attributedHeroText
-        heroLabel.numberOfLines = 0
         
         return heroLabel
     }()
@@ -62,12 +87,11 @@ final class ShareContactsViewController: UIViewController {
     private let shareContactsContainerView: UIView = UIView()
     private let addressBookAccessDeniedViewController: PermissionDeniedViewController = {
         let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController(withMonochromeStyle: monochromeStyle)
-        addressBookAccessDeniedViewController.view.isHidden = true
 
         return addressBookAccessDeniedViewController
-    }()
+    }()///TODO: lazy
     
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.backgroundBlurView
     
     private static var attributedHeroText: NSAttributedString {
         let title = "registration.share_contacts.hero.title".localized
@@ -75,12 +99,7 @@ final class ShareContactsViewController: UIViewController {
         
         let text = [title, paragraph].joined(separator: "\u{2029}")
         
-        let paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = 10
-        
-        let attributedText = NSMutableAttributedString(string: text, attributes: [
-                NSAttributedString.Key.paragraphStyle: paragraphStyle
-                ])
+        let attributedText = text.withCustomParagraphSpacing()
         
         attributedText.addAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground, variant: .dark),
@@ -100,29 +119,41 @@ final class ShareContactsViewController: UIViewController {
         notNowButton.isHidden = notNowButtonHidden
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    required init() {
+        super.init(nibName:nil, bundle:nil)
+        
         view.addSubview(backgroundBlurView)
         backgroundBlurView.isHidden = backgroundBlurDisabled
         
         view.addSubview(shareContactsContainerView)
         
         shareContactsContainerView.addSubview(heroLabel)
-
+        
         notNowButton.isHidden = notNowButtonHidden
         shareContactsContainerView.addSubview(notNowButton)
-
+        
         shareContactsButton.addTarget(self, action: #selector(shareContacts(_:)), for: .touchUpInside)
         
         shareContactsContainerView.addSubview(shareContactsButton)
-
+        
         addToSelf(addressBookAccessDeniedViewController)
         addressBookAccessDeniedViewController.delegate = self
         addressBookAccessDeniedViewController.backgroundBlurDisabled = backgroundBlurDisabled
-
+        
         createConstraints()
         
+        addressBookAccessDeniedViewController.view.isHidden = true
+
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         if AddressBookHelper.sharedHelper.isAddressBookAccessDisabled {
             displayContactsAccessDeniedMessage(animated: false)
