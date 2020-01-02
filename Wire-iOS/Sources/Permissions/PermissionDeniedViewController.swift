@@ -62,7 +62,7 @@ final class PermissionDeniedViewController: UIViewController {
         return vc
     }
     
-    class func push() -> PermissionDeniedViewController {
+    class func pushDeniedViewController() -> PermissionDeniedViewController {
         let vc = PermissionDeniedViewController()
         let title = "registration.push_access_denied.hero.title".localized
         let paragraph1 = "registration.push_access_denied.hero.paragraph1".localized
