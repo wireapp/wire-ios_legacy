@@ -34,17 +34,14 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     var participantsDidChange: (() -> Void)? = nil
     
     fileprivate var token: NSObjectProtocol?
-
-    var indexOfFirstSelectedParticipant: Int? {
-        guard let first = selectedParticipants.first as? ZMUser else { return nil }
-        return internalParticipants.firstIndex {
-            ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
-        }
-    }
     
-    var sectionOfFirstSelectedParticipant: Int? {
-        guard let first = selectedParticipants.first as? ZMUser else { return nil }
-        return first.isAdminGroup(conversation: conversation) ? 0 : 1
+    var indexPathOfFirstSelectedParticipant: IndexPath? {
+        guard let user = selectedParticipants.first as? ZMUser else { return nil }
+        guard let row = (internalParticipants.firstIndex {
+            ($0 as? ZMUser)?.remoteIdentifier == user.remoteIdentifier
+        }) else { return nil }
+        let section = user.isAdminGroup(conversation: conversation) ? 0 : 1
+        return IndexPath(row: row, section: section)
     }
     
     var participants = [UserType]() {
