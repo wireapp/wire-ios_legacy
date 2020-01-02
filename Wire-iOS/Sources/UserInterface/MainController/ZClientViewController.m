@@ -359,15 +359,6 @@
     return [ZMUserSession sharedSession];
 }
 
-#pragma mark - Application State
-
-- (void)applicationWillEnterForeground:(NSNotification *)notification
-{
-    [self uploadAddressBookIfNeeded];
-    [self trackShareExtensionEventsIfNeeded];
-}
-
-
 #pragma mark - ColorSchemeControllerDidApplyChangesNotification
 
 - (void)reloadCurrentConversation
@@ -397,18 +388,6 @@
 - (void)inconsistentStateNotification:(NSNotification *)notification;
 {
     [DebugAlert showSendLogsMessageWithMessage:[NSString stringWithFormat:@"We detected an inconsistent state: %@", notification.userInfo[ZMLoggingDescriptionKey]]];
-}
-
-#pragma mark -  Share extension analytics
-
-- (void)trackShareExtensionEventsIfNeeded
-{
-    NSArray<StorableTrackingEvent *> *events = self.analyticsEventPersistence.storedTrackingEvents.copy;
-    [self.analyticsEventPersistence clear];
-    
-    for (StorableTrackingEvent *event in events) {
-        [Analytics.shared tagStorableEvent:event];
-    }
 }
 
 @end

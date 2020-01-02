@@ -85,7 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setupAppearance;
 - (void)reloadCurrentConversation;
-- (void)applicationWillEnterForeground:(NSNotification *)notification;
 
 @end
 

@@ -74,8 +74,7 @@ extension ZClientViewController {
     
     // MARK: - Adressbook Upload
     
-    @objc
-    func uploadAddressBookIfNeeded() {
+    private func uploadAddressBookIfNeeded() {
         // We should not even try to access address book when in a team
         guard ZMUser.selfUser().hasTeam == false else { return }
         
@@ -320,6 +319,23 @@ extension ZClientViewController {
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+    }
+
+    // MARK: - Application State
+    @objc
+    private func applicationWillEnterForeground(_ notification: Notification?) {
+        uploadAddressBookIfNeeded()
+        trackShareExtensionEventsIfNeeded()
+    }
+    
+    // MARK: -  Share extension analytics
+    private func trackShareExtensionEventsIfNeeded() {
+        let events = analyticsEventPersistence.storedTrackingEvents
+        analyticsEventPersistence.clear()
+        
+        for event in events {
+            Analytics.shared.tagStorableEvent(event)
+        }
     }
 
 }

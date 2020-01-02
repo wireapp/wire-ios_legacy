@@ -25,7 +25,7 @@ final class ZClientViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        let mockSelfUser = SwiftMockUser()
+        let mockSelfUser = MockSelfUser()
         
         sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData),
                                     selfUser: mockSelfUser
