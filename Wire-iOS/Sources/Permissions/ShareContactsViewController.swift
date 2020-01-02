@@ -30,7 +30,7 @@ extension String {
         
         let attributedText = NSMutableAttributedString(string: self,
                                                        attributes: [
-            NSAttributedString.Key.paragraphStyle: paragraphStyle])
+                                                        NSAttributedString.Key.paragraphStyle: paragraphStyle])
         
         return attributedText
     }
@@ -89,7 +89,7 @@ final class ShareContactsViewController: UIViewController {
     private let shareContactsContainerView: UIView = UIView()
     private let addressBookAccessDeniedViewController: PermissionDeniedViewController = {
         let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController(withMonochromeStyle: monochromeStyle)
-
+        
         return addressBookAccessDeniedViewController
     }()
     
@@ -120,7 +120,7 @@ final class ShareContactsViewController: UIViewController {
         self.notNowButtonHidden = notNowButtonHidden
         notNowButton.isHidden = notNowButtonHidden
     }
-
+    
     required init() {
         super.init(nibName:nil, bundle:nil)
         
@@ -145,7 +145,7 @@ final class ShareContactsViewController: UIViewController {
         createConstraints()
         
         addressBookAccessDeniedViewController.view.isHidden = true
-
+        
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
@@ -153,7 +153,7 @@ final class ShareContactsViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -181,7 +181,7 @@ final class ShareContactsViewController: UIViewController {
         AddressBookHelper.sharedHelper.addressBookSearchWasPostponed = true
         delegate?.shareDidSkip(self)
     }
-
+    
     // MARK: - UIApplication notifications
     @objc
     private func applicationDidBecomeActive(_ notification: Notification) {
@@ -190,7 +190,7 @@ final class ShareContactsViewController: UIViewController {
             delegate?.shareDidFinish(self)
         }
     }
-
+    
     // MARK: - Constraints
     private func createConstraints() {
         [backgroundBlurView,
@@ -198,43 +198,44 @@ final class ShareContactsViewController: UIViewController {
          addressBookAccessDeniedViewController.view,
          heroLabel,
          shareContactsButton].forEach(){ $0.translatesAutoresizingMaskIntoConstraints = false }
-
-        let constraints: [NSLayoutConstraint] = [shareContactsContainerView.topAnchor.constraint(equalTo: shareContactsContainerView.superview!.topAnchor),
-                                                 shareContactsContainerView.bottomAnchor.constraint(equalTo: shareContactsContainerView.superview!.bottomAnchor),
-                                                 shareContactsContainerView.leadingAnchor.constraint(equalTo: shareContactsContainerView.superview!.leadingAnchor),
-                                                 shareContactsContainerView.trailingAnchor.constraint(equalTo: shareContactsContainerView.superview!.trailingAnchor),
-
-                                                 backgroundBlurView.topAnchor.constraint(equalTo: backgroundBlurView.superview!.topAnchor),
-                                                 backgroundBlurView.bottomAnchor.constraint(equalTo: backgroundBlurView.superview!.bottomAnchor),
-                                                 backgroundBlurView.leadingAnchor.constraint(equalTo: backgroundBlurView.superview!.leadingAnchor),
-                                                 backgroundBlurView.trailingAnchor.constraint(equalTo: backgroundBlurView.superview!.trailingAnchor),
-
-                                                 addressBookAccessDeniedViewController.view.topAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.topAnchor),
-                                                 addressBookAccessDeniedViewController.view.bottomAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.bottomAnchor),
-                                                 addressBookAccessDeniedViewController.view.leadingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.leadingAnchor),
-                                                 addressBookAccessDeniedViewController.view.trailingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.trailingAnchor),
-
-                                                 heroLabel.leadingAnchor.constraint(equalTo: heroLabel.superview!.leadingAnchor, constant: 28),
-                                                 heroLabel.trailingAnchor.constraint(equalTo: heroLabel.superview!.trailingAnchor, constant: -28),
-
-                                                 shareContactsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 24),
-                                                 shareContactsButton.heightAnchor.constraint(equalToConstant: 40),
-
-                                                 shareContactsButton.bottomAnchor.constraint(equalTo: shareContactsButton.superview!.bottomAnchor, constant: -28),
-                                                 shareContactsButton.leadingAnchor.constraint(equalTo: shareContactsButton.superview!.leadingAnchor, constant: 28),
-                                                 shareContactsButton.trailingAnchor.constraint(equalTo: shareContactsButton.superview!.trailingAnchor, constant: -28)
+        
+        let constraints: [NSLayoutConstraint] = [
+            shareContactsContainerView.topAnchor.constraint(equalTo: shareContactsContainerView.superview!.topAnchor),
+            shareContactsContainerView.bottomAnchor.constraint(equalTo: shareContactsContainerView.superview!.bottomAnchor),
+            shareContactsContainerView.leadingAnchor.constraint(equalTo: shareContactsContainerView.superview!.leadingAnchor),
+            shareContactsContainerView.trailingAnchor.constraint(equalTo: shareContactsContainerView.superview!.trailingAnchor),
+            
+            backgroundBlurView.topAnchor.constraint(equalTo: backgroundBlurView.superview!.topAnchor),
+            backgroundBlurView.bottomAnchor.constraint(equalTo: backgroundBlurView.superview!.bottomAnchor),
+            backgroundBlurView.leadingAnchor.constraint(equalTo: backgroundBlurView.superview!.leadingAnchor),
+            backgroundBlurView.trailingAnchor.constraint(equalTo: backgroundBlurView.superview!.trailingAnchor),
+            
+            addressBookAccessDeniedViewController.view.topAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.topAnchor),
+            addressBookAccessDeniedViewController.view.bottomAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.bottomAnchor),
+            addressBookAccessDeniedViewController.view.leadingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.leadingAnchor),
+            addressBookAccessDeniedViewController.view.trailingAnchor.constraint(equalTo: addressBookAccessDeniedViewController.view.superview!.trailingAnchor),
+            
+            heroLabel.leadingAnchor.constraint(equalTo: heroLabel.superview!.leadingAnchor, constant: 28),
+            heroLabel.trailingAnchor.constraint(equalTo: heroLabel.superview!.trailingAnchor, constant: -28),
+            
+            shareContactsButton.topAnchor.constraint(equalTo: heroLabel.bottomAnchor, constant: 24),
+            shareContactsButton.heightAnchor.constraint(equalToConstant: 40),
+            
+            shareContactsButton.bottomAnchor.constraint(equalTo: shareContactsButton.superview!.bottomAnchor, constant: -28),
+            shareContactsButton.leadingAnchor.constraint(equalTo: shareContactsButton.superview!.leadingAnchor, constant: 28),
+            shareContactsButton.trailingAnchor.constraint(equalTo: shareContactsButton.superview!.trailingAnchor, constant: -28)
         ]
-
+        
         NSLayoutConstraint.activate(constraints)
     }
-
+    
     // MARK: - AddressBook Access Denied ViewController
-
+    
     func displayContactsAccessDeniedMessage(animated: Bool) {
         endEditing()
-
+        
         showingAddressBookAccessDeniedViewController = true
-
+        
         if animated {
             UIView.transition(from: shareContactsContainerView,
                               to: addressBookAccessDeniedViewController.view,
