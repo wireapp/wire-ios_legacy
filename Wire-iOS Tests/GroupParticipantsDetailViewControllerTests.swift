@@ -46,9 +46,7 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        let role = Role(context: uiMOC)
-        role.name = ZMConversation.defaultAdminRoleName
-        conversation.addParticipantsAndUpdateConversationState(users: Set(users), role: role)
+        conversation.add(participants: users)
         
         // when
         let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
@@ -64,9 +62,7 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         let users = (0..<20).map { createUser(name: "User #\($0)") }
         let selected = Array(users.dropLast(15))
         let conversation = createGroupConversation()
-        let role = Role(context: uiMOC)
-        role.name = ZMConversation.defaultAdminRoleName
-        conversation.addParticipantsAndUpdateConversationState(users: Set(users), role: role)
+       conversation.add(participants: users)
         
         // when
         let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)

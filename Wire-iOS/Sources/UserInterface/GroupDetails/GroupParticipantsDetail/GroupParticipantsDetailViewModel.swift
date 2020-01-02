@@ -42,6 +42,11 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         }
     }
     
+    var sectionOfFirstSelectedParticipant: Int? {
+        guard let first = selectedParticipants.first as? ZMUser else { return nil }
+        return first.isAdminGroup(conversation: conversation) ? 0 : 1
+    }
+    
     var participants = [UserType]() {
         didSet {
             computeParticipantGroups()
