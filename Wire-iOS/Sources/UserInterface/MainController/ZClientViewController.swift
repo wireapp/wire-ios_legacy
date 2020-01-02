@@ -330,11 +330,11 @@ extension ZClientViewController {
     
     // MARK: -  Share extension analytics
     private func trackShareExtensionEventsIfNeeded() {
-        let events = analyticsEventPersistence.storedTrackingEvents
+        let events: [StorableTrackingEvent] = analyticsEventPersistence.storedTrackingEvents.map { $0 }
         analyticsEventPersistence.clear()
         
         for event in events {
-            Analytics.shared.tagStorableEvent(event)
+            Analytics.shared().tag(event)
         }
     }
 

@@ -19,8 +19,7 @@
 import Foundation
 
 final class MockSelfUser: SwiftMockUser, SelfLegalHoldSubject {
-    //MARK: - SelfLegalHoldSubject
-    
+
     var legalHoldStatus: UserLegalHoldStatus = .enabled
     
     var needsToAcknowledgeLegalHoldStatus: Bool = true
