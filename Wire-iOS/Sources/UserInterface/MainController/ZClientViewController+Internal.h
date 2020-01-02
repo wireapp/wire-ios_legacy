@@ -27,8 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class ColorSchemeController;
 @class ShareExtensionAnalyticsPersistence;
 
-@protocol ZMNetworkAvailabilityObserver;
-
 /**
  * Protected methods for zclientviewcontroller.
  */
@@ -83,7 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) SplitViewController *splitViewController;
 @property (nonatomic) id userObserverToken;
 
-- (void)setupAppearance;
 - (void)reloadCurrentConversation;
 
 @end
