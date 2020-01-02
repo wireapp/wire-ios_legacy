@@ -36,8 +36,9 @@ class AppLockInteractor {
     var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
     
-    init() {
-        VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)))
+    private var isObserverSetup: Bool = false
+    private var moc: NSManagedObjectContext? {
+        return ZMUserSession.shared()?.storeProvider.contextDirectory.syncContext
     }
 }
 
@@ -64,9 +65,15 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func verify(password: String) {
+        guard let moc = self.moc else { return }
+        if !isObserverSetup {
+            VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)), context: moc)
+            isObserverSetup = true
+        }
+        
         ZMUserSession.shared()?.enqueueChanges {
             // Will send .passwordVerified notification when completed
-            VerifyPasswordRequestStrategy.triggerPasswordVerification(with: password)
+            VerifyPasswordRequestStrategy.triggerPasswordVerification(with: password, context: moc)
         }
     }
 }

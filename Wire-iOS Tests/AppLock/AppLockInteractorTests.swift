@@ -49,11 +49,13 @@ private final class AppLockMock: AppLock {
 final class AppLockInteractorTests: XCTestCase {
     var sut: AppLockInteractor!
     private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
-    
+    var moc: NSManagedObjectContext!
+
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        sut = AppLockInteractor()
+        moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        sut = AppLockInteractor(context: moc)
         sut.output = appLockInteractorOutputMock
         sut.appLock = AppLockMock.self
     }
@@ -61,6 +63,7 @@ final class AppLockInteractorTests: XCTestCase {
     override func tearDown() {
         appLockInteractorOutputMock = nil
         sut = nil
+        moc = nil
         super.tearDown()
     }
     
@@ -114,7 +117,7 @@ final class AppLockInteractorTests: XCTestCase {
         let expectation = XCTestExpectation(description: "verify password")
         
         //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied)
+        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied, context: moc)
         
         //then
         queue.async {
@@ -129,7 +132,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatItPersistsBiometricsWhenPasswordIsValid() {
         //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .validated)
+        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .validated, context: moc)
         
         //then
         XCTAssertTrue(AppLockMock.didPersistBiometrics)
@@ -137,7 +140,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatItDoesntPersistBiometricsWhenPasswordIsInvalid() {
         //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied)
+        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied, context: moc)
         
         //then
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
