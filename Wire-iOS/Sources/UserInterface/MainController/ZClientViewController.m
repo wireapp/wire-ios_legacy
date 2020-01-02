@@ -500,15 +500,3 @@
     }
 }
 @end
-
-
-@implementation ZClientViewController (NetworkAvailabilityObserver)
-
-- (void)didChangeAvailabilityWithNewState:(ZMNetworkState)newState
-{
-    if (newState == ZMNetworkStateOnline && [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
-        [self uploadAddressBookIfNeeded];
-    }
-}
-
-@end

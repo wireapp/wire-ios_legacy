@@ -323,3 +323,13 @@ extension ZClientViewController {
     }
 
 }
+
+//MARK: - ZMNetworkAvailabilityObserver
+
+extension ZClientViewController: ZMNetworkAvailabilityObserver {
+    public func didChangeAvailability(newState: ZMNetworkState) {
+        if newState == .online && UIApplication.shared.applicationState == .active {
+            uploadAddressBookIfNeeded()
+        }
+    }
+}
