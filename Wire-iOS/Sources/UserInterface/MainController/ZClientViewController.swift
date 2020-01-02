@@ -27,7 +27,8 @@ extension ZClientViewController {
     /// - Parameters:
     ///   - account: an Account object
     ///   - selfUser: a SelfUserType object
-    public convenience init(account: Account, selfUser: SelfUserType) {
+    public convenience init(account: Account,
+                            selfUser: SelfUserType) {
         self.init(nibName:nil, bundle:nil)
         
         proximityMonitorManager = ProximityMonitorManager()
@@ -57,7 +58,7 @@ extension ZClientViewController {
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         setupAppearance()
         
