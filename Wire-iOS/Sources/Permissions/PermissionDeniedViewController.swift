@@ -105,14 +105,14 @@ final class PermissionDeniedViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createSettingsButton() {
+    private func createSettingsButton() {
         settingsButton = Button(style: .full)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
         
         view.addSubview(settingsButton)
     }
     
-    func createLaterButton() {
+    private func createLaterButton() {
         laterButton = UIButton(type: .custom)
         laterButton.titleLabel?.font = UIFont.smallLightFont
         laterButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: .dark), for: .normal)
@@ -124,19 +124,19 @@ final class PermissionDeniedViewController: UIViewController {
     
     // MARK: - Actions
     @objc
-    func openSettings(_ sender: Any?) {
+    private func openSettings(_ sender: Any?) {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
     @objc
-    func continueWithoutAccess(_ sender: Any?) {
+    private func continueWithoutAccess(_ sender: Any?) {
         delegate?.continueWithoutPermission(self)
     }
 
     
-    func createConstraints() {
+    private func createConstraints() {
         backgroundBlurView.translatesAutoresizingMaskIntoConstraints = false
         backgroundBlurView.fitInSuperview()
     }
