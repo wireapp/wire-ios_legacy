@@ -136,7 +136,6 @@ final class GroupParticipantsDetailViewController: UIViewController {
     
     private func scrollToFirstHighlightedUser() {
         if let indexPath = viewModel.indexPathOfFirstSelectedParticipant {
-            let indexPath = IndexPath(row: indexPath.row, section: indexPath.section)
             collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
         }
     }
