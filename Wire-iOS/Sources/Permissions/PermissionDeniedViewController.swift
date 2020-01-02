@@ -37,11 +37,8 @@ final class PermissionDeniedViewController: UIViewController {
     private var laterButton: UIButton!
     private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
-    private var monochromeStyle = false
-
-    class func addressBookAccessDeniedViewController(withMonochromeStyle monochromeStyle: Bool) -> PermissionDeniedViewController {
+    class func addressBookAccessDeniedViewController() -> PermissionDeniedViewController {
         let vc = PermissionDeniedViewController()
-        vc.monochromeStyle = monochromeStyle
         let title = "registration.address_book_access_denied.hero.title".localized
         let paragraph1 = "registration.address_book_access_denied.hero.paragraph1".localized
         let paragraph2 = "registration.address_book_access_denied.hero.paragraph2".localized
@@ -107,14 +104,9 @@ final class PermissionDeniedViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
+
     func createSettingsButton() {
-        settingsButton = Button(style: monochromeStyle ? .fullMonochrome : .full)
+        settingsButton = Button(style: .full)
         settingsButton.addTarget(self, action: #selector(openSettings(_:)), for: .touchUpInside)
         
         view.addSubview(settingsButton)

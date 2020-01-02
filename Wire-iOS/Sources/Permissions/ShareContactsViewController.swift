@@ -57,7 +57,6 @@ final class ShareContactsViewController: UIViewController {
     var uploadAddressBookImmediately = false
     var backgroundBlurDisabled = false
     var notNowButtonHidden = false
-    static private let monochromeStyle = false
     private(set) var showingAddressBookAccessDeniedViewController = false
     
     private let notNowButton: UIButton = {
@@ -80,7 +79,7 @@ final class ShareContactsViewController: UIViewController {
     }()
     
     private let shareContactsButton: Button = {
-        let shareContactsButton = Button(style: monochromeStyle ? .fullMonochrome : .full)
+        let shareContactsButton = Button(style: .full)
         shareContactsButton.setTitle("registration.share_contacts.find_friends_button.title".localized.uppercased(), for: .normal)
         
         return shareContactsButton
@@ -88,7 +87,7 @@ final class ShareContactsViewController: UIViewController {
     
     private let shareContactsContainerView: UIView = UIView()
     private let addressBookAccessDeniedViewController: PermissionDeniedViewController = {
-        let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController(withMonochromeStyle: monochromeStyle)
+        let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController()
         
         return addressBookAccessDeniedViewController
     }()
