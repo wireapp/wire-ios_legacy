@@ -86,8 +86,7 @@ extension ZClientViewController {
 
     // MARK: - Setup methods
     
-    @objc
-    func setupAddressBookHelper() {
+    private func setupAddressBookHelper() {
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
     }
 
@@ -208,14 +207,14 @@ extension ZClientViewController {
         }
     }
 
-    @objc
-    func createLegalHoldDisclosureController() {
+    private func createLegalHoldDisclosureController() {
         legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { viewController, animated, completion in
             viewController.presentTopmost(animated: animated, completion: completion)
         })
     }
     
-    @objc func createTopViewConstraints() {
+    @objc
+    func createTopViewConstraints() {
         topOverlayContainer = UIView()
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
