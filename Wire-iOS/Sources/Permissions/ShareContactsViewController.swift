@@ -89,7 +89,7 @@ final class ShareContactsViewController: UIViewController {
         let addressBookAccessDeniedViewController = PermissionDeniedViewController.addressBookAccessDeniedViewController(withMonochromeStyle: monochromeStyle)
 
         return addressBookAccessDeniedViewController
-    }()///TODO: lazy
+    }()
     
     private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.backgroundBlurView
     

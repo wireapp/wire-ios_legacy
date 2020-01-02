@@ -37,4 +37,9 @@ final class ShareContactsViewControllerSnapshotTests: XCTestCase {
     func testForInitState() {
         verify(matching: sut)
     }
+
+    func testForContactsPermissionDenied() {
+        sut.displayContactsAccessDeniedMessage(animated: false)
+        verify(matching: sut)
+    }
 }
