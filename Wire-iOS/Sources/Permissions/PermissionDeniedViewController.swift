@@ -32,10 +32,10 @@ final class PermissionDeniedViewController: UIViewController {
     weak var delegate: PermissionDeniedViewControllerDelegate?
     
     private var initialConstraintsCreated = false
-    private let heroLabel: UILabel = UILabel.heroLabel
+    private let heroLabel: UILabel = UILabel.createHeroLabel()
     private var settingsButton: Button!
     private var laterButton: UIButton!
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.backgroundBlurView
+    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
 
     private var monochromeStyle = false
 
@@ -92,7 +92,6 @@ final class PermissionDeniedViewController: UIViewController {
     required init() {
         super.init(nibName:nil, bundle:nil)
 
-        
         view.addSubview(backgroundBlurView)
         backgroundBlurView.isHidden = backgroundBlurDisabled
         

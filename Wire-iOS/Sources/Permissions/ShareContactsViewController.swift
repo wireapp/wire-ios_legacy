@@ -37,17 +37,19 @@ extension String {
 }
 
 extension UILabel {
-    static let heroLabel: UILabel = {
+    static func createHeroLabel() -> UILabel {
         let heroLabel = UILabel()
         heroLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         heroLabel.numberOfLines = 0
         
         return heroLabel
-    }()
+    }
 }
 
 extension UIVisualEffectView {
-    static let backgroundBlurView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    static func createBackgroundBlurView() -> UIVisualEffectView {
+        return UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    }
 }
 
 final class ShareContactsViewController: UIViewController {
@@ -70,7 +72,7 @@ final class ShareContactsViewController: UIViewController {
     }()
     
     private let heroLabel: UILabel = {
-        let heroLabel = UILabel.heroLabel
+        let heroLabel = UILabel.createHeroLabel()
         heroLabel.font = UIFont.largeSemiboldFont
         heroLabel.attributedText = ShareContactsViewController.attributedHeroText
         
@@ -91,7 +93,7 @@ final class ShareContactsViewController: UIViewController {
         return addressBookAccessDeniedViewController
     }()
     
-    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.backgroundBlurView
+    private let backgroundBlurView: UIVisualEffectView = UIVisualEffectView.createBackgroundBlurView()
     
     private static var attributedHeroText: NSAttributedString {
         let title = "registration.share_contacts.hero.title".localized
