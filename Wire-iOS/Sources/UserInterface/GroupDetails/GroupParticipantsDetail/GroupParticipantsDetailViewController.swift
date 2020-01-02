@@ -77,8 +77,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         if firstLayout {
             firstLayout = false
-            ///TODO: Katarina this need to be restored?
-//            scrollToFirstHighlightedUser()
+            scrollToFirstHighlightedUser()
         }
     }
     
