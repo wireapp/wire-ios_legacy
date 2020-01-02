@@ -55,16 +55,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
 
-
-/**
- init method for testing allows injecting an Account object and self user
-
- @param account an Account object
- @param selfUser an UserType object
- @return a ZClientViewController instance
- */
-- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser;
-
 + (__nullable instancetype)sharedZClientViewController;
 
 /**

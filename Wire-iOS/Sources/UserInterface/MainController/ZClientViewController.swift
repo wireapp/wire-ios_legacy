@@ -21,6 +21,56 @@ import Foundation
 
 extension ZClientViewController {
     
+    
+    /// init method for testing allows injecting an Account object and self user
+    ///
+    /// - Parameters:
+    ///   - account: an Account object
+    ///   - selfUser: a SelfUserType object
+    public convenience init(account: Account, selfUser: SelfUserType) {
+        self.init(nibName:nil, bundle:nil)
+        
+        proximityMonitorManager = ProximityMonitorManager()
+        mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
+        dataUsagePermissionDialogDisplayed = false
+        needToShowDataUsagePermissionDialog = false
+        
+        AVSMediaManager.sharedInstance().register(mediaPlaybackManager, withOptions: [
+            "media": "external "
+            ])
+        
+        
+        setupAddressBookHelper()
+        
+        if let appGroupIdentifier = Bundle.main.appGroupIdentifier,            
+            let remoteIdentifier = ZMUser.selfUser().remoteIdentifier {
+            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+            
+            let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
+            analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
+        }
+        
+        if let userSession = ZMUserSession.shared() {
+            networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
+        }
+        
+        NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        setupAppearance()
+        
+        createLegalHoldDisclosureController()
+        setupConversationListViewController(account: account, selfUser: selfUser)
+    }
+    
+    @objc
+    func contentSizeCategoryDidChange(_ notification: Notification?) {
+        reloadCurrentConversation()
+    }
+
+    
     // MARK: - Adressbook Upload
     
     @objc
@@ -40,11 +90,7 @@ extension ZClientViewController {
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
     }
 
-    ///TODO: caller to Swift and accept SelfUserType as paramenter
-    @objc
-    func setupConversationListViewController(account: Account, selfUser: UserType) {
-        guard let selfUser = selfUser as? SelfUserType else { return }
-        
+    private func setupConversationListViewController(account: Account, selfUser: SelfUserType) {
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 

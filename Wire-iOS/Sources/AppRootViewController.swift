@@ -242,18 +242,21 @@ final class AppRootViewController: UIViewController {
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
 
-            let clientViewController = ZClientViewController()
-            clientViewController.isComingFromRegistration = completedRegistration
+            if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount {
+                let clientViewController = ZClientViewController(account: selectedAccount,
+                                                                 selfUser: ZMUser.selfUser())
+                clientViewController.isComingFromRegistration = completedRegistration
 
-            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
-            clientViewController.needToShowDataUsagePermissionDialog = false
-            if case .unauthenticated(_) = appStateController.lastAppState {
-                clientViewController.needToShowDataUsagePermissionDialog = true
+                /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+                clientViewController.needToShowDataUsagePermissionDialog = false
+                if case .unauthenticated(_) = appStateController.lastAppState {
+                    clientViewController.needToShowDataUsagePermissionDialog = true
+                }
+
+                Analytics.shared().setTeam(ZMUser.selfUser().team)
+
+                viewController = clientViewController
             }
-
-            Analytics.shared().setTeam(ZMUser.selfUser().team)
-
-            viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):

@@ -45,30 +45,6 @@
 @end
 
 
-@interface ZClientViewController (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
-
-@end
-
-
-@interface ZClientViewController ()
-
-@property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic, readwrite) UIViewController *conversationRootViewController;
-@property (nonatomic, readwrite) ZMConversation *currentConversation;
-@property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
-
-@property (nonatomic) id incomingApnsObserver;
-@property (nonatomic) id networkAvailabilityObserverToken;
-
-@property (nonatomic) BOOL pendingInitialStateRestore;
-@property (nonatomic) SplitViewController *splitViewController;
-@property (nonatomic) id userObserverToken;
-
-@end
-
-
-
 @implementation ZClientViewController
 
 #pragma mark - Overloaded methods
@@ -76,48 +52,6 @@
 - (void)dealloc
 {
     [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-}
-
-- (instancetype)init
-{
-    return [self initWithAccount:SessionManager.shared.accountManager.selectedAccount selfUser:ZMUser.selfUser];
-}
-
-- (instancetype)initWithAccount:(Account *)account selfUser:(id<UserType>)selfUser
-{
-    self = [super init];
-    if (self) {
-        self.proximityMonitorManager = [ProximityMonitorManager new];
-        self.mediaPlaybackManager = [[MediaPlaybackManager alloc] initWithName:@"conversationMedia"];
-        self.dataUsagePermissionDialogDisplayed = NO;
-        self.needToShowDataUsagePermissionDialog = NO;
-
-        [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
-        
-        
-        [self setupAddressBookHelper];
-        
-        NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
-        NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
-        if (ZMUser.selfUser.remoteIdentifier != nil) {
-            NSURL *accountContainerURL = [[sharedContainerURL URLByAppendingPathComponent:@"AccountData" isDirectory:YES]
-                                          URLByAppendingPathComponent:ZMUser.selfUser.remoteIdentifier.UUIDString isDirectory:YES];
-            self.analyticsEventPersistence = [[ShareExtensionAnalyticsPersistence alloc] initWithAccountContainer:accountContainerURL];
-        }
-
-        self.networkAvailabilityObserverToken = [ZMNetworkAvailabilityChangeNotification addNetworkAvailabilityObserver:self userSession:[ZMUserSession sharedSession]];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:ZMUserSessionDidBecomeAvailableNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(contentSizeCategoryDidChange:) name:UIContentSizeCategoryDidChangeNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-                
-        [self setupAppearance];
-
-        [self createLegalHoldDisclosureController];
-        [self setupConversationListViewControllerWithAccount:account selfUser: selfUser];
-    }
-    return self;
 }
 
 - (void)setupAppearance
@@ -448,11 +382,6 @@
 }
 
 - (void)colorSchemeControllerDidApplyChanges:(NSNotification *)notification
-{
-    [self reloadCurrentConversation];
-}
-
-- (void)contentSizeCategoryDidChange:(NSNotification *)notification
 {
     [self reloadCurrentConversation];
 }

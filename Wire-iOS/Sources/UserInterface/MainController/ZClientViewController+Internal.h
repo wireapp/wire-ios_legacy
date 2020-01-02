@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class ZMConversation;
 @class BackgroundViewController;
+@class ColorSchemeController;
+@class ShareExtensionAnalyticsPersistence;
+
+@protocol ZMNetworkAvailabilityObserver;
 
 /**
  * Protected methods for zclientviewcontroller.
@@ -65,6 +69,26 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
 
 @property (nonatomic) BackgroundViewController *backgroundViewController;
+
+@property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
+@property (nonatomic) ColorSchemeController *colorSchemeController;
+@property (nonatomic, readwrite) UIViewController *conversationRootViewController;
+@property (nonatomic, readwrite) ZMConversation *currentConversation;
+@property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
+
+@property (nonatomic) id incomingApnsObserver;
+@property (nonatomic) id networkAvailabilityObserverToken;
+
+@property (nonatomic) BOOL pendingInitialStateRestore;
+@property (nonatomic) SplitViewController *splitViewController;
+@property (nonatomic) id userObserverToken;
+
+- (void)setupAppearance;
+- (void)reloadCurrentConversation;
+
+@end
+
+@interface ZClientViewController (NetworkAvailabilityObserver) <ZMNetworkAvailabilityObserver>
 
 @end
 
