@@ -37,62 +37,62 @@
 
 #import "Wire-Swift.h"
 
-@interface ZClientViewController (InitialState)
-
-- (void)restoreStartupState;
-- (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
-
-@end
+//@interface ZClientViewController (InitialState)
+//
+//- (void)restoreStartupState;
+//- (BOOL)attemptToLoadLastViewedConversationWithFocus:(BOOL)focus animated:(BOOL)animated;
+//
+//@end
 
 
 @implementation ZClientViewController
 
 #pragma mark - Overloaded methods
 
-- (void)dealloc
-{
-    [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.colorSchemeController = [[ColorSchemeController alloc] init];
-    self.pendingInitialStateRestore = YES;
-    
-    self.view.backgroundColor = [UIColor blackColor];
-
-    [self.conversationListViewController view];
-
-    self.splitViewController = [[SplitViewController alloc] init];
-    self.splitViewController.delegate = self;
-    [self addChildViewController:self.splitViewController];
-    
-    self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.splitViewController.view];
-    
-    [self createTopViewConstraints];
-    [self.splitViewController didMoveToParentViewController:self];
-    [self updateSplitViewTopConstraint];
-
-    self.splitViewController.view.backgroundColor = [UIColor clearColor];
-    
-    [self createBackgroundViewController];
-    
-    if (self.pendingInitialStateRestore) {
-        [self restoreStartupState];
-    }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:NSNotification.colorSchemeControllerDidApplyColorSchemeChange object:nil];
-
-    if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
-    }
-
-    [self setupUserChangeInfoObserver];
-}
+//- (void)dealloc
+//{
+//    [AVSMediaManager.sharedInstance unregisterMedia:self.mediaPlaybackManager];
+//}
+//
+//- (void)viewDidLoad
+//{
+//    [super viewDidLoad];
+//    
+//    self.colorSchemeController = [[ColorSchemeController alloc] init];
+//    self.pendingInitialStateRestore = YES;
+//    
+//    self.view.backgroundColor = [UIColor blackColor];
+//
+//    [self.conversationListViewController view];
+//
+//    self.splitViewController = [[SplitViewController alloc] init];
+//    self.splitViewController.delegate = self;
+//    [self addChildViewController:self.splitViewController];
+//    
+//    self.splitViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+//    [self.view addSubview:self.splitViewController.view];
+//    
+//    [self createTopViewConstraints];
+//    [self.splitViewController didMoveToParentViewController:self];
+//    [self updateSplitViewTopConstraint];
+//
+//    self.splitViewController.view.backgroundColor = [UIColor clearColor];
+//    
+//    [self createBackgroundViewController];
+//    
+//    if (self.pendingInitialStateRestore) {
+//        [self restoreStartupState];
+//    }
+//    
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(colorSchemeControllerDidApplyChanges:) name:NSNotification.colorSchemeControllerDidApplyColorSchemeChange object:nil];
+//
+//    if ([DeveloperMenuState developerMenuEnabled]) { //better way of dealing with this?
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestLoopNotification:) name:ZMLoggingRequestLoopNotificationName object:nil];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(inconsistentStateNotification:) name:ZMLoggingInconsistentStateNotificationName object:nil];
+//    }
+//
+//    [self setupUserChangeInfoObserver];
+//}
 
 - (void)createBackgroundViewController
 {

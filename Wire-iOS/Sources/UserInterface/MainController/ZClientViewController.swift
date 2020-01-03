@@ -19,7 +19,169 @@
 
 import Foundation
 
-extension ZClientViewController {
+final class ZClientViewController: UIViewController {
+    private(set) var conversationRootViewController: UIViewController?
+    private(set) var currentConversation: ZMConversation?
+    var isComingFromRegistration = false
+    var needToShowDataUsagePermissionDialog = false
+    private(set) var splitViewController: SplitViewController?
+    private(set) var mediaPlaybackManager: MediaPlaybackManager?
+    private(set) var conversationListViewController: ConversationListViewController?
+    var proximityMonitorManager: ProximityMonitorManager?
+    var legalHoldDisclosureController: LegalHoldDisclosureController?
+    
+    var userObserverToken: Any?
+    
+    private var topOverlayContainer: UIView!
+    private var topOverlayViewController: UIViewController?
+    private var contentTopRegularConstraint: NSLayoutConstraint?
+    private var contentTopCompactConstraint: NSLayoutConstraint?
+    // init value = false which set to true, set to false after data usage permission dialog is displayed
+    private var dataUsagePermissionDialogDisplayed = false
+    private var backgroundViewController: BackgroundViewController?
+    private var colorSchemeController: ColorSchemeController?
+    private var analyticsEventPersistence: ShareExtensionAnalyticsPersistence?
+    private var incomingApnsObserver: Any?
+    private var networkAvailabilityObserverToken: Any?
+    private var pendingInitialStateRestore = false
+    
+    func restoreStartupState() {
+        pendingInitialStateRestore = false
+        attemptToPresentInitialConversation()
+    }
+    
+    func attemptToPresentInitialConversation() -> Bool {
+        var stateRestored = false
+        
+        let lastViewedScreen = Settings.shared().lastViewedScreen
+        switch lastViewedScreen {
+        case SettingsLastScreenList:
+            
+            transitionToList(animated: false, completion: nil)
+            
+            // only attempt to show content vc if it would be visible
+            if isConversationViewVisible {
+                stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
+            }
+        case SettingsLastScreenConversation:
+            
+            stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
+        default:
+            // If there's no previously selected screen
+            if isConversationViewVisible {
+                selectListItemWhenNoPreviousItemSelected()
+            }
+        }
+        return stateRestored
+    }
+
+    // MARK: - Overloaded methods
+    deinit {
+        AVSMediaManager.sharedInstance.unregisterMedia(mediaPlaybackManager)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        colorSchemeController = ColorSchemeController()
+        pendingInitialStateRestore = true
+        
+        view.backgroundColor = UIColor.black
+        
+        conversationListViewController.view()
+        
+        splitViewController = SplitViewController()
+        splitViewController.delegate = self
+        addChildViewController(splitViewController)
+        
+        splitViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(splitViewController.view)
+        
+        createTopViewConstraints()
+        splitViewController.didMove(toParent: self)
+        updateSplitViewTopConstraint()
+        
+        splitViewController.view.backgroundColor = UIColor.clear
+        
+        createBackgroundViewController()
+        
+        if pendingInitialStateRestore {
+            restoreStartupState()
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(colorSchemeControllerDidApplyChanges(_:)), name: NSNotification.colorSchemeControllerDidApplyColorSchemeChange, object: nil)
+        
+        if DeveloperMenuState.developerMenuEnabled() {
+            //better way of dealing with this?
+            NotificationCenter.default.addObserver(self, selector: #selector(requestLoopNotification(_:)), name: ZMLoggingRequestLoopNotificationName, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(inconsistentStateNotification(_:)), name: ZMLoggingInconsistentStateNotificationName, object: nil)
+        }
+        
+        setupUserChangeInfoObserver()
+    }
+
+    private func reloadCurrentConversation() {
+    }
+    
+    /**
+     * Load and optionally show a conversation, but don't change the list selection.  This is the place to put
+     * stuff if you definitely need it to happen when a conversation is selected and/or presented
+     *
+     * This method should only be called when the list selection changes, or internally by other zclientviewcontroller
+     * methods.
+     *
+     * @return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
+     */
+    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool) -> Bool {
+    }
+    
+    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: () -> ()? = nil) -> Bool {
+    }
+    
+    func loadPlaceholderConversationController(animated: Bool) {
+    }
+    
+    func loadPlaceholderConversationController(animated: Bool, completion: () -> ()? = nil) {
+    }
+    
+    func loadIncomingContactRequestsAndFocus(onView focus: Bool, animated: Bool) {
+    }
+    
+    func dismissClientListController(_ sender: Any?) {
+    }
+
+    class func shared() -> Self? {
+    }
+    
+    /**
+     * Select a conversation and move the focus to the conversation view.
+     *
+     * @return YES if it will actually switch, NO if the conversation is already selected.
+     */
+    func select(_ conversation: ZMConversation?, focusOnView focus: Bool, animated: Bool) {
+    }
+    
+    /**
+     * Open the user clients detail screen
+     */
+    func openDetailScreen(for conversation: ZMConversation?) {
+    }
+    
+    /**
+     * Select the connection inbox and optionally move focus to it.
+     */
+    func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
+    }
+    
+    /**
+     * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
+     * have no more connection requests.
+     */
+    func hideIncomingContactRequests(withCompletion completion: () -> ()? = nil) {
+    }
+    
+    func dismissAllModalControllers(withCallback callback: () -> ()? = nil) {
+    }
     
     
     /// init method for testing allows injecting an Account object and self user

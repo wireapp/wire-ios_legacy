@@ -35,53 +35,53 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZClientViewController : UIViewController
-
-@property (nonatomic, readonly) UIViewController *conversationRootViewController;
-
-@property (nonatomic, readonly) ZMConversation *currentConversation;
-
-@property (nonatomic) BOOL isComingFromRegistration;
-
-@property (nonatomic) BOOL needToShowDataUsagePermissionDialog;
-
-@property (nonatomic, readonly) SplitViewController *splitViewController;
-
-@property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
-
-@property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
-
-@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
-
-@property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
-
-+ (__nullable instancetype)sharedZClientViewController;
-
-/**
- * Select a conversation and move the focus to the conversation view.
- *
- * @return YES if it will actually switch, NO if the conversation is already selected.
- */
-- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
-
-/**
- * Open the user clients detail screen
- */
-- (void)openDetailScreenForConversation:(ZMConversation *)conversation;
-
-/**
- * Select the connection inbox and optionally move focus to it.
- */
-- (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus;
-
-/**
- * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
- * have no more connection requests.
- */
-- (void)hideIncomingContactRequestsWithCompletion:(__nullable dispatch_block_t)completion;
-
-- (void)dismissAllModalControllersWithCallback:(__nullable dispatch_block_t)callback;
-
-@end
+//@interface ZClientViewController : UIViewController
+//
+//@property (nonatomic, readonly) UIViewController *conversationRootViewController;
+//
+//@property (nonatomic, readonly) ZMConversation *currentConversation;
+//
+//@property (nonatomic) BOOL isComingFromRegistration;
+//
+//@property (nonatomic) BOOL needToShowDataUsagePermissionDialog;
+//
+//@property (nonatomic, readonly) SplitViewController *splitViewController;
+//
+//@property (nonatomic, readonly) MediaPlaybackManager *mediaPlaybackManager;
+//
+//@property (nonatomic, readonly) ConversationListViewController *conversationListViewController;
+//
+//@property (nonatomic) ProximityMonitorManager *proximityMonitorManager;
+//
+//@property (nonatomic, nullable) LegalHoldDisclosureController *legalHoldDisclosureController;
+//
+//+ (__nullable instancetype)sharedZClientViewController;
+//
+///**
+// * Select a conversation and move the focus to the conversation view.
+// *
+// * @return YES if it will actually switch, NO if the conversation is already selected.
+// */
+//- (void)selectConversation:(ZMConversation *)conversation focusOnView:(BOOL)focus animated:(BOOL)animated;
+//
+///**
+// * Open the user clients detail screen
+// */
+//- (void)openDetailScreenForConversation:(ZMConversation *)conversation;
+//
+///**
+// * Select the connection inbox and optionally move focus to it.
+// */
+//- (void)selectIncomingContactRequestsAndFocusOnView:(BOOL)focus;
+//
+///**
+// * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
+// * have no more connection requests.
+// */
+//- (void)hideIncomingContactRequestsWithCompletion:(__nullable dispatch_block_t)completion;
+//
+//- (void)dismissAllModalControllersWithCallback:(__nullable dispatch_block_t)callback;
+//
+//@end
 
 NS_ASSUME_NONNULL_END

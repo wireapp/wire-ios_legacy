@@ -31,58 +31,58 @@ NS_ASSUME_NONNULL_BEGIN
  * Protected methods for zclientviewcontroller.
  */
 
-@interface ZClientViewController (Internal)
-
-@property (nonatomic) id userObserverToken;
-
-/**
- * Load and optionally show a conversation, but don't change the list selection.  This is the place to put 
- * stuff if you definitely need it to happen when a conversation is selected and/or presented
- *
- * This method should only be called when the list selection changes, or internally by other zclientviewcontroller
- * methods.
- *
- * @return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
- */
-- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
-- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-
-- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated;
-- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-
-- (void)loadIncomingContactRequestsAndFocusOnView:(BOOL)focus animated:(BOOL)animated;
-- (void)dismissClientListController:(id)sender;
-@end
-
-@interface ZClientViewController ()
-
-@property (nonatomic, nonnull) UIView *topOverlayContainer;
-@property (nonatomic, nullable) UIViewController *topOverlayViewController;
-@property (nonatomic) NSLayoutConstraint *contentTopRegularConstraint;
-@property (nonatomic) NSLayoutConstraint *contentTopCompactConstraint;
-
-// init value = false which set to true, set to false after data usage permission dialog is displayed
-@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
-
-@property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
-
-@property (nonatomic) BackgroundViewController *backgroundViewController;
-
-@property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) ColorSchemeController *colorSchemeController;
-@property (nonatomic, readwrite) UIViewController *conversationRootViewController;
-@property (nonatomic, readwrite) ZMConversation *currentConversation;
-@property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
-
-@property (nonatomic) id incomingApnsObserver;
-@property (nonatomic) id networkAvailabilityObserverToken;
-
-@property (nonatomic) BOOL pendingInitialStateRestore;
-@property (nonatomic) SplitViewController *splitViewController;
-@property (nonatomic) id userObserverToken;
-
-- (void)reloadCurrentConversation;
-
-@end
+//@interface ZClientViewController (Internal)
+//
+//@property (nonatomic) id userObserverToken;
+//
+///**
+// * Load and optionally show a conversation, but don't change the list selection.  This is the place to put 
+// * stuff if you definitely need it to happen when a conversation is selected and/or presented
+// *
+// * This method should only be called when the list selection changes, or internally by other zclientviewcontroller
+// * methods.
+// *
+// * @return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
+// */
+//- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated;
+//- (BOOL)loadConversation:(ZMConversation *)conversation scrollToMessage:(nullable id<ZMConversationMessage>)message focusOnView:(BOOL)focus animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+//
+//- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated;
+//- (void)loadPlaceholderConversationControllerAnimated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+//
+//- (void)loadIncomingContactRequestsAndFocusOnView:(BOOL)focus animated:(BOOL)animated;
+//- (void)dismissClientListController:(id)sender;
+//@end
+//
+//@interface ZClientViewController ()
+//
+//@property (nonatomic, nonnull) UIView *topOverlayContainer;
+//@property (nonatomic, nullable) UIViewController *topOverlayViewController;
+//@property (nonatomic) NSLayoutConstraint *contentTopRegularConstraint;
+//@property (nonatomic) NSLayoutConstraint *contentTopCompactConstraint;
+//
+//// init value = false which set to true, set to false after data usage permission dialog is displayed
+//@property (nonatomic) BOOL dataUsagePermissionDialogDisplayed;
+//
+//@property (nonatomic, readwrite) ConversationListViewController *conversationListViewController;
+//
+//@property (nonatomic) BackgroundViewController *backgroundViewController;
+//
+//@property (nonatomic, readwrite) MediaPlaybackManager *mediaPlaybackManager;
+//@property (nonatomic) ColorSchemeController *colorSchemeController;
+//@property (nonatomic, readwrite) UIViewController *conversationRootViewController;
+//@property (nonatomic, readwrite) ZMConversation *currentConversation;
+//@property (nonatomic) ShareExtensionAnalyticsPersistence *analyticsEventPersistence;
+//
+//@property (nonatomic) id incomingApnsObserver;
+//@property (nonatomic) id networkAvailabilityObserverToken;
+//
+//@property (nonatomic) BOOL pendingInitialStateRestore;
+//@property (nonatomic) SplitViewController *splitViewController;
+//@property (nonatomic) id userObserverToken;
+//
+//- (void)reloadCurrentConversation;
+//
+//@end
 
 NS_ASSUME_NONNULL_END
