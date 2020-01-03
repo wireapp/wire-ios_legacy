@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 extension ZMConversation {
 
@@ -34,10 +35,33 @@ extension ZMConversation {
     }
 }
 
-final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase {
+extension ColorSchemeVariant {
+    var name: String {
+        switch self {
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
+        }
+    }
+}
+
+final class GroupParticipantsDetailViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    
+    var coreDataFixture: CoreDataFixture!
+
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+    }
     
     override func tearDown() {
         resetColorScheme()
+        coreDataFixture = nil
+
+        /// restore to default light scheme
+        ColorScheme.default.variant = .light
+
         super.tearDown()
     }
     
@@ -48,29 +72,17 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
         let conversation = createGroupConversation()
         conversation.add(participants: users)
         
-        // when
-        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+        let colorSchemes: [ColorSchemeVariant] = [.dark, .light]
         
-        // then
-        let wrapped = sut.wrapInNavigationController()
-        verify(view: wrapped.view)
-    }
-    
-    func testThatItRendersALotOfUsers_Dark() {
-        // given
-        ColorScheme.default.variant = .dark
-        let users = (0..<20).map { createUser(name: "User #\($0)") }
-        let selected = Array(users.dropLast(15))
-        let conversation = createGroupConversation()
-        conversation.add(participants: users)
-        
-        // when
-        let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
-        
-        // then
-        let wrapped = sut.wrapInNavigationController()
-        verify(view: wrapped.view)
-        ColorScheme.default.variant = .light
+        for colorScheme in colorSchemes {
+            ColorScheme.default.variant = colorScheme
+            // when
+            let sut = GroupParticipantsDetailViewController(selectedParticipants: selected, conversation: conversation)
+            
+            // then
+            let wrapped = sut.wrapInNavigationController()
+            verify(matching: wrapped, testName: #function + colorScheme.name)
+        }
     }
     
     func testEmptyState() {
@@ -87,6 +99,6 @@ final class GroupParticipantsDetailViewControllerTests: CoreDataSnapshotTestCase
 
         // then
         let wrapped = sut.wrapInNavigationController()
-        verify(view: wrapped.view)
+        verify(matching: wrapped.view)
     }
 }
