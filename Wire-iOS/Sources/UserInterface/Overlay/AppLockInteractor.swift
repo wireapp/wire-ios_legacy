@@ -65,32 +65,18 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func verify(password: String) {
-        guard let moc = self.moc else { return }
-        if !isObserverSetup {
-            VerifyPasswordRequestStrategy.addPasswordVerifiedObserver(self, selector: #selector(passwordVerified(with:)), context: moc)
-            isObserverSetup = true
-        }
-        
-        ZMUserSession.shared()?.enqueueChanges {
-            // Will send .passwordVerified notification when completed
-            VerifyPasswordRequestStrategy.triggerPasswordVerification(with: password, context: moc)
+        ZMUserSession.shared()?.verify(password: password) { [weak self] result in
+            guard let `self` = self else { return }
+            self.notifyPasswordVerified(with: result)
+            if case .validated? = result {
+                self.appLock.persistBiometrics()
+            }
         }
     }
 }
 
-// MARK: - Notification Observer
+// MARK: - Helpers
 extension AppLockInteractor {
-    @objc private func passwordVerified(with notification: Notification) {
-        guard let result = notification.userInfo?[VerifyPasswordRequestStrategy.verificationResultKey] as? VerifyPasswordResult else {
-            notifyPasswordVerified(with: nil)
-            return
-        }
-        notifyPasswordVerified(with: result)
-        if case .validated = result {
-            appLock.persistBiometrics()
-        }
-    }
-    
     private func notifyPasswordVerified(with result: VerifyPasswordResult?) {
         self.dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
