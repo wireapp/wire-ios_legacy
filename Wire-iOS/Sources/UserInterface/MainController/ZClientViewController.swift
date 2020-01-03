@@ -24,7 +24,7 @@ final class ZClientViewController: UIViewController {
     private(set) var currentConversation: ZMConversation?
     var isComingFromRegistration = false
     var needToShowDataUsagePermissionDialog = false
-    private(set) var splitViewController: SplitViewController?
+    let splitViewController: SplitViewController = SplitViewController()
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
     private(set) var conversationListViewController: ConversationListViewController?
     var proximityMonitorManager: ProximityMonitorManager?
@@ -55,7 +55,7 @@ final class ZClientViewController: UIViewController {
         
         let lastViewedScreen = Settings.shared().lastViewedScreen
         switch lastViewedScreen {
-        case SettingsLastScreenList:
+        case .list:
             
             transitionToList(animated: false, completion: nil)
             
@@ -63,7 +63,7 @@ final class ZClientViewController: UIViewController {
             if isConversationViewVisible {
                 stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
-        case SettingsLastScreenConversation:
+        case .conversation:
             
             stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
         default:
@@ -90,7 +90,6 @@ final class ZClientViewController: UIViewController {
         
         conversationListViewController.view()
         
-        splitViewController = SplitViewController()
         splitViewController.delegate = self
         addChildViewController(splitViewController)
         
@@ -119,9 +118,324 @@ final class ZClientViewController: UIViewController {
         
         setupUserChangeInfoObserver()
     }
-
-    private func reloadCurrentConversation() {
+    
+    func createBackgroundViewController() {
+        backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+        
+        backgroundViewController.addChild(conversationListViewController)
+        backgroundViewController.view.addSubview(conversationListViewController.view)
+        conversationListViewController.didMove(toParent: backgroundViewController)
+        conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        conversationListViewController.view.frame = backgroundViewController.view.bounds
+        
+        splitViewController?.leftViewController = backgroundViewController
     }
+
+    override var shouldAutorotate: Bool {
+        if presentedViewController != nil {
+            return presentedViewController.shouldAutorotate
+        } else {
+            return true
+        }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if nil != topOverlayViewController {
+            return topOverlayViewController.preferredStatusBarStyle
+        } else if traitCollection.horizontalSizeClass == .compact {
+            if presentedViewController != nil {
+                if !(presentedViewController is UIAlertController) {
+                    return presentedViewController.preferredStatusBarStyle
+                }
+            }
+            
+            return (splitViewController?.preferredStatusBarStyle)!
+        } else {
+            return .lightContent
+        }
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        if nil != topOverlayViewController {
+            return topOverlayViewController.prefersStatusBarHidden
+        } else if traitCollection.horizontalSizeClass == .compact {
+            if presentedViewController != nil {
+                return presentedViewController.prefersStatusBarHidden
+            } else {
+                return splitViewController?.prefersStatusBarHidden ?? false
+            }
+        } else {
+            return false
+        }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        // if changing from compact width to regular width, make sure current conversation is loaded
+        if previousTraitCollection?.horizontalSizeClass == .compact && traitCollection.horizontalSizeClass == .regular {
+            if currentConversation {
+                selectConversation(currentConversation)
+            } else {
+                attemptToLoadLastViewedConversation(withFocus: false, animated: false)
+            }
+        }
+        
+        updateSplitViewTopConstraint()
+        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: true, onlyFullScreen: false)
+        view.setNeedsLayout()
+    }
+    
+    // MARK: - Public API
+    class func sharedZClientViewController() -> Self {
+        let appDelegate = AppDelegate.shared()
+        
+        for controller in appDelegate?.rootViewController?.children ?? [] {
+            if (controller is ZClientViewController) {
+                return controller as? ZClientViewController
+            }
+        }
+        
+        return nil
+    }
+
+    func select(_ conversation: ZMConversation?, focusOnView focus: Bool, animated: Bool) {
+        select(conversation, scrollToMessage: nil, focusOnView: focus, animated: animated, completion: nil)
+    }
+    
+    func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
+        conversationListViewController.selectInboxAndFocus(onView: focus)
+    }
+    
+    func hideIncomingContactRequests(withCompletion completion: () -> ()) {
+        let conversationsList = ZMConversationList.conversations(inUserSession: ZMUserSession.shared())
+        if conversationsList.count != 0 {
+            selectConversation(conversationsList.first)
+        }
+        
+        splitViewController?.setLeftViewControllerRevealed(true, animated: true, completion: completion)
+    }
+    
+    func pushContentViewController(_ viewController: UIViewController?, focusOnView focus: Bool, animated: Bool, completion: () -> ()) -> Bool {
+        conversationRootViewController = viewController
+        splitViewController?.setRight(conversationRootViewController, animated: animated, completion: completion)
+        
+        if focus {
+            splitViewController?.setLeftViewControllerRevealed(false, animated: animated, completion: nil)
+        }
+        
+        return true
+    }
+    
+    func loadPlaceholderConversationController(animated: Bool) {
+        loadPlaceholderConversationController(animated: animated) { }
+    }
+    
+    func loadPlaceholderConversationController(animated: Bool, completion: () -> ()) {
+        currentConversation = nil
+        pushContentViewController(nil, focusOnView: false, animated: animated, completion: completion)
+    }
+    
+    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool) -> Bool {
+        return load(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: nil)
+    }
+    
+    
+    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: () -> ()) -> Bool {
+        var conversationRootController: ConversationRootViewController? = nil
+        if conversation == currentConversation {
+            conversationRootController = conversationRootViewController as? ConversationRootViewController
+            if message != nil {
+                conversationRootController?.scroll(to: message)
+            }
+        } else {
+            conversationRootController = ConversationRootViewController(conversation: conversation, message: message, clientViewController: self)
+        }
+        
+        currentConversation = conversation
+        conversationRootController?.conversationViewController.focused = focus
+        
+        conversationListViewController.hideArchivedConversations()
+        pushContentViewController(conversationRootController, focusOnView: focus, animated: animated, completion: completion)
+        
+        return false
+    }
+    
+    func loadIncomingContactRequestsAndFocus(onView focus: Bool, animated: Bool) {
+        currentConversation = nil
+        
+        let inbox = ConnectRequestsViewController()
+        pushContentViewController(inbox, focusOnView: focus, animated: animated, completion: nil)
+    }
+    
+    func setConversationListViewController(_ conversationListViewController: ConversationListViewController?) {
+        if conversationListViewController == self.conversationListViewController {
+            return
+        }
+        
+        self.conversationListViewController = conversationListViewController
+        
+    }
+    
+    func openDetailScreen(for conversation: ZMConversation?) {
+        let controller = GroupDetailsViewController(conversation: conversation)
+        let navController = controller.wrapInNavigationController
+        navController?.modalPresentationStyle = .formSheet
+        if let navController = navController {
+            present(navController, animated: true)
+        }
+    }
+    
+    func dismissClientListController(_ sender: Any?) {
+        dismiss(animated: true)
+    }
+    
+    // MARK: - Animated conversation switch
+    func dismissAllModalControllers(withCallback callback: () -> ()) {
+        let dismissAction = {
+            if self.splitViewController?.rightViewController.presentedViewController != nil {
+                self.splitViewController?.rightViewController.dismiss(animated: false, completion: callback)
+            } else if self.conversationListViewController.presentedViewController != nil {
+                // This is a workaround around the fact that the transitioningDelegate of the settings
+                // view controller is not called when the transition is not being performed animated.
+                // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
+                // being called with `transitionContext.isAnimated == false`. As this is not the case
+                // we have to restore the proper pre-presentation state here.
+                let conversationView = self.conversationListViewController.view
+                if let transform = conversationView?.layer.transform {
+                    if !CATransform3DIsIdentity(transform) || 1 != conversationView?.alpha {
+                        conversationView?.layer.transform = CATransform3DIdentity
+                        conversationView?.alpha = 1
+                    }
+                }
+                
+                self.conversationListViewController.presentedViewController.dismiss(animated: false, completion: callback)
+            } else if self.presentedViewController != nil {
+                self.dismiss(animated: false, completion: callback)
+            } else if callback != nil {
+                callback()
+            }
+        }
+        
+        let ringingCallConversation = ZMUserSession.shared().ringingCallConversation()
+        
+        if ringingCallConversation != nil {
+            dismissAction()
+        } else {
+            minimizeCallOverlayWith(animated: true, withCompletion: {
+                dismissAction()
+            })
+        }
+    }
+    
+    // MARK: - Getters/Setters
+    func setCurrentConversation(_ currentConversation: ZMConversation?) {
+        if self.currentConversation != currentConversation {
+            self.currentConversation = currentConversation
+        }
+    }
+    
+    func context() -> ZMUserSession? {
+        return ZMUserSession.shared()
+    }
+    
+    // MARK: - ColorSchemeControllerDidApplyChangesNotification
+    private func reloadCurrentConversation() {
+        // Need to reload conversation to apply color scheme changes
+        if currentConversation {
+            let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
+            pushContentViewController(currentConversationViewController, focusOnView: false, animated: false, completion: nil)
+        }
+    }
+    
+    func colorSchemeControllerDidApplyChanges(_ notification: Notification?) {
+        reloadCurrentConversation()
+    }
+    
+    // MARK: - Debug logging notifications
+    func requestLoopNotification(_ notification: Notification?) {
+        let path = notification?.userInfo?["path"] as? String
+        DebugAlert.showSendLogsMessage(withMessage: "A request loop is going on at \(path ?? "")")
+    }
+    
+    func inconsistentStateNotification(_ notification: Notification?) {
+        if let userInfo = notification?.userInfo?[ZMLoggingDescriptionKey] {
+            DebugAlert.showSendLogsMessage(withMessage: "We detected an inconsistent state: \(userInfo)")
+        }
+    }
+
+    
+    func restoreStartupState() {
+        pendingInitialStateRestore = false
+        attemptToPresentInitialConversation()
+    }
+    
+    func attemptToPresentInitialConversation() -> Bool {
+        var stateRestored = false
+        
+        let lastViewedScreen = Settings.shared().lastViewedScreen
+        switch lastViewedScreen {
+        case .list:
+            
+            transitionToList(animated: false, completion: nil)
+            
+            // only attempt to show content vc if it would be visible
+            if isConversationViewVisible {
+                stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
+            }
+        case .conversation:
+            
+            stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
+        default:
+            // If there's no previously selected screen
+            if isConversationViewVisible {
+                selectListItemWhenNoPreviousItemSelected()
+            }
+        }
+        return stateRestored
+    }
+
+    /// Attempt to load the last viewed conversation associated with the current account.
+    /// If no info is available, we attempt to load the first conversation in the list.
+    /// In the first case, YES is returned, otherwise NO.
+    ///
+    
+    func attemptToLoadLastViewedConversation(withFocus focus: Bool, animated: Bool) -> Bool {
+        let currentAccount = SessionManager.shared.accountManager.selectedAccount
+        let conversation = Settings.shared().lastViewedConversation(for: currentAccount)
+        
+        if conversation != nil {
+            select(conversation, focusOnView: focus, animated: animated)
+            
+            // dispatch async here because it has to happen after the collection view has finished
+            // laying out for the first time
+            DispatchQueue.main.async(execute: {
+                self.conversationListViewController.scrollToCurrentSelection(animated: false)
+            })
+            
+            return true
+        } else {
+            selectListItemWhenNoPreviousItemSelected()
+            return false
+        }
+    }
+    
+    /**
+     * This handles the case where we have to select a list item on startup but there is no previous item saved
+     */
+    func selectListItemWhenNoPreviousItemSelected() {
+        // check for conversations and pick the first one.. this can be tricky if there are pending updates and
+        // we haven't synced yet, but for now we just pick the current first item
+        let list = ZMConversationList.conversations(inUserSession: ZMUserSession.shared())
+        
+        if list.count > 0 {
+            // select the first conversation and don't focus on it
+            selectConversation(list[0])
+        } else {
+            loadPlaceholderConversationController(animated: true)
+        }
+    }
+
     
     /**
      * Load and optionally show a conversation, but don't change the list selection.  This is the place to put
