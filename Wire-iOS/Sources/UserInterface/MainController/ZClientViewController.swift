@@ -25,6 +25,8 @@ final class ZClientViewController: UIViewController {
     var isComingFromRegistration = false
     var needToShowDataUsagePermissionDialog = false
     let wireSplitViewController: SplitViewController = SplitViewController()
+    
+    @objc
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
     private(set) var conversationListViewController: ConversationListViewController!
     var proximityMonitorManager: ProximityMonitorManager?
@@ -185,6 +187,7 @@ final class ZClientViewController: UIViewController {
     /// Select the connection inbox and optionally move focus to it.
     ///
     /// - Parameter focus: focus or not
+    @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController?.selectInboxAndFocusOnView(focus: focus)
     }
@@ -681,6 +684,13 @@ final class ZClientViewController: UIViewController {
 
     ///MARK: - select conversation
 
+    @objc(selectConversation:focusOnView:animated:)
+    func select(_ conversation: ZMConversation,
+                focusOnView focus: Bool,
+                animated: Bool) {
+        select(conversation, scrollTo: nil, focusOnView: focus, animated: animated, completion: nil)
+    }
+
     
     /// Select a conversation and move the focus to the conversation view.
     ///
@@ -690,7 +700,7 @@ final class ZClientViewController: UIViewController {
     ///   - focus: focus on the view or not
     ///   - animated: perform animation or not
     ///   - completion: the completion block
-    @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
+//    @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
     func select(_ conversation: ZMConversation,
                 scrollTo message: ZMConversationMessage? = nil,
                 focusOnView focus: Bool,
@@ -716,7 +726,6 @@ final class ZClientViewController: UIViewController {
             (wireSplitViewController.isLeftViewControllerRevealed && conversationListViewController?.presentedViewController == nil)
     }
 
-    @objc
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
