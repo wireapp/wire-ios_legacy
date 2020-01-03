@@ -48,14 +48,16 @@ extension AppDelegate {
             UIApplication.shared.resetRunDuration()
         }
         
-        MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
         
         if appCenterTrackingEnabled {
             MSAppCenter.start()
             
             MSCrashes.setDelegate(self)
             MSAppCenter.setLogLevel(.verbose)
-        }
+            
+            // This method must only be used after Services have been started.
+            MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled)
+        }        
         
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
