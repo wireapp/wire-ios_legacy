@@ -48,13 +48,10 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        let allParticipants = conversation.sortedOtherParticipants
-        
         viewModel = GroupParticipantsDetailViewModel(
-            participants: allParticipants,
             selectedParticipants: selectedParticipants,
-            conversation: conversation
-        )
+            conversation: conversation)
+        
         collectionViewController = SectionCollectionViewController()
         
         super.init(nibName: nil, bundle: nil)
