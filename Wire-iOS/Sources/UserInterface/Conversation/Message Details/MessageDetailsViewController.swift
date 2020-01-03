@@ -221,6 +221,10 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
     override var shouldAutorotate: Bool {
         return false
     }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
 }
 
 // MARK: - MessageDetailsDataSourceObserver
