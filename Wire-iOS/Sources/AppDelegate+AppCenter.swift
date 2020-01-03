@@ -29,7 +29,8 @@ extension AppDelegate {
         return ZMSLog(tag: "UI")
     }
     
-    @objc func setupAppCenter(completion: @escaping () -> ()) {
+    @objc
+    func setupAppCenter(completion: @escaping () -> ()) {
         
         let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter
         
@@ -43,9 +44,6 @@ extension AppDelegate {
         
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
-        MSCrashes.setDelegate(self)
-        MSAppCenter.setLogLevel(.verbose)
-        
         if !MSCrashes.hasCrashedInLastSession() {
             UIApplication.shared.resetRunDuration()
         }
@@ -54,6 +52,9 @@ extension AppDelegate {
         
         if appCenterTrackingEnabled {
             MSAppCenter.start()
+            
+            MSCrashes.setDelegate(self)
+            MSAppCenter.setLogLevel(.verbose)
         }
         
         if appCenterTrackingEnabled &&
