@@ -172,7 +172,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         
         if let selfUser = ZMUser.selfUser(),
             conversation.teamRemoteIdentifier != nil,
-            selfUser.canModifyReceiptMode(in: conversation)
+            selfUser.canModifyReadReceiptSettings(in: conversation)
         {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
