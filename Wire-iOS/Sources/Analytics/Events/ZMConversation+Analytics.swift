@@ -68,17 +68,20 @@ extension ZMConversation {
         return participants.any { $0.isServiceUser }
     }
     
+    static let userNameSorter: (UserType, UserType) -> Bool = { user0, user1 in
+        user0.displayName != user1.displayName ? user0.displayName < user1.displayName :
+                                                 user0.name < user1.name
+    }
+    
     ///TODO: move to DM
     var sortedServiceUsers: [UserType] {
-        let participants = Array(localParticipants)
-        return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
+        return localParticipants.filter { $0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
     ///TODO: move to DM
     @objc
     var sortedOtherParticipants: [UserType] {
-        let participants = Array(localParticipants)
-        return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
+        return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
 }
