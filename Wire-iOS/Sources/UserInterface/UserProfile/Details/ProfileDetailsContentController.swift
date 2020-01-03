@@ -289,7 +289,7 @@ final class ProfileDetailsContentController: NSObject,
         guard
             let role = newParticipantRole,
             let session = ZMUserSession.shared(),
-            let user = user.zmUser
+            let user = (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
             else { return }
         
         conversation?.updateRole(of: user, to: role, session: session) { (result) in
