@@ -345,7 +345,7 @@ final class AppRootViewController: UIViewController {
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
-            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
@@ -470,7 +470,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
             selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
             else { return true }
         
-        guard let clientVC = ZClientViewController.shared() else {
+        guard let clientVC = ZClientViewController.shared else {
             return true
         }
 
@@ -485,7 +485,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
         // conversation view is visible for another conversation
         guard
             let convID = userInfo.conversationID,
-            convID != clientVC.currentConversation.remoteIdentifier
+            convID != clientVC.currentConversation?.remoteIdentifier
             else { return false }
         
         return true

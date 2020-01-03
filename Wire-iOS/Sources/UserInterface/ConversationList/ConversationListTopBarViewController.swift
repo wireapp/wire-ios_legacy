@@ -199,7 +199,7 @@ final class ConversationListTopBarViewController: UIViewController {
             return
         }
 
-        ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
+        ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc

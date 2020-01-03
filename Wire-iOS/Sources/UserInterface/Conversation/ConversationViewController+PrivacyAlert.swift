@@ -113,7 +113,7 @@ extension ConversationViewController {
         guard let selfUser = ZMUser.selfUser() else { return }
 
         if selfUser.hasUntrustedClients {
-            ZClientViewController.shared()?.openClientListScreen(for: selfUser)
+            ZClientViewController.shared?.openClientListScreen(for: selfUser)
         } else if let connectedUser = conversation.connectedUser, conversation.conversationType == .oneOnOne {
             let profileViewController = ProfileViewController(user: connectedUser, viewer: selfUser, conversation: conversation, context: .deviceList)
             profileViewController.delegate = self

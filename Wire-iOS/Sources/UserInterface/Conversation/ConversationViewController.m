@@ -35,7 +35,6 @@
 #import "ConversationContentViewController.h"
 #import "TextView.h"
 
-#import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"

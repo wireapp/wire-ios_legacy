@@ -77,9 +77,6 @@
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
 
-#import "ZClientViewController.h"
-#import "ZClientViewController+Internal.h"
-
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"

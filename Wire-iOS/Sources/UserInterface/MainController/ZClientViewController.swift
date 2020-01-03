@@ -26,19 +26,19 @@ final class ZClientViewController: UIViewController {
     var needToShowDataUsagePermissionDialog = false
     let wireSplitViewController: SplitViewController = SplitViewController()
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
-    private(set) var conversationListViewController: ConversationListViewController?
+    private(set) var conversationListViewController: ConversationListViewController!
     var proximityMonitorManager: ProximityMonitorManager?
     var legalHoldDisclosureController: LegalHoldDisclosureController?
     
     var userObserverToken: Any?
     
-    private var topOverlayContainer: UIView!
+    private let topOverlayContainer: UIView = UIView()
     private var topOverlayViewController: UIViewController?
-    private var contentTopRegularConstraint: NSLayoutConstraint?
-    private var contentTopCompactConstraint: NSLayoutConstraint?
+    private var contentTopRegularConstraint: NSLayoutConstraint!
+    private var contentTopCompactConstraint: NSLayoutConstraint!
     // init value = false which set to true, set to false after data usage permission dialog is displayed
-    private var dataUsagePermissionDialogDisplayed = false
-    private let backgroundViewController: BackgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
+    var dataUsagePermissionDialogDisplayed = false
+    let backgroundViewController: BackgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
 
     private let colorSchemeController: ColorSchemeController = ColorSchemeController()
     private var analyticsEventPersistence: ShareExtensionAnalyticsPersistence?
@@ -126,38 +126,37 @@ final class ZClientViewController: UIViewController {
         wireSplitViewController.leftViewController = backgroundViewController
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+    
+
     override var shouldAutorotate: Bool {
         return presentedViewController?.shouldAutorotate ?? true
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        if nil != topOverlayViewController {
+        if let topOverlayViewController = topOverlayViewController {
             return topOverlayViewController.preferredStatusBarStyle
         } else if traitCollection.horizontalSizeClass == .compact {
-            if presentedViewController != nil {
-                if !(presentedViewController is UIAlertController) {
-                    return presentedViewController.preferredStatusBarStyle
-                }
+            if let presentedViewController = presentedViewController as? UIAlertController {
+                return presentedViewController.preferredStatusBarStyle
             }
             
-            return (wireSplitViewController.preferredStatusBarStyle)!
-        } else {
-            return .lightContent
+            return wireSplitViewController.preferredStatusBarStyle
         }
+        
+        return .lightContent
     }
     
     override var prefersStatusBarHidden: Bool {
-        if let topOverlayViewController= topOverlayViewController {
+        if let topOverlayViewController = topOverlayViewController {
             return topOverlayViewController.prefersStatusBarHidden
         } else if traitCollection.horizontalSizeClass == .compact {
-            if let presentedViewController = presentedViewController {
-                return presentedViewController.prefersStatusBarHidden
-            } else {
-                return wireSplitViewController.prefersStatusBarHidden
-            }
-        } else {
-            return false
+                return presentedViewController?.prefersStatusBarHidden ?? wireSplitViewController.prefersStatusBarHidden
         }
+        
+        return false
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -166,50 +165,51 @@ final class ZClientViewController: UIViewController {
         // if changing from compact width to regular width, make sure current conversation is loaded
         if previousTraitCollection?.horizontalSizeClass == .compact && traitCollection.horizontalSizeClass == .regular {
             if let currentConversation = currentConversation {
-                selectConversation(currentConversation)
+                select(currentConversation)
             } else {
                 attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
         }
         
         updateSplitViewTopConstraint()
-        UIApplication.shared.wr_updateStatusBarForCurrentController(animated: true, onlyFullScreen: false)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         view.setNeedsLayout()
     }
     
     // MARK: - Public API
     @objc(sharedZClientViewController)
-    class var shared: ZClientViewController? {
-        return AppDelegate.shared().rootViewController.children.first(where: {$0 is ZClientViewController})
-    }
-
-    /// Select a conversation and move the focus to the conversation view.
-    ///
-    /// @return YES if it will actually switch, NO if the conversation is already selected.
-    ///
-    /// - Parameters:
-    ///   - conversation: <#conversation description#>
-    ///   - focus: <#focus description#>
-    ///   - animated: <#animated description#>
-    func select(_ conversation: ZMConversation?, focusOnView focus: Bool, animated: Bool) {
-        select(conversation, scrollToMessage: nil, focusOnView: focus, animated: animated, completion: nil)
+    static var shared: ZClientViewController? {
+        return AppDelegate.shared().rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }
     
+    /// Select the connection inbox and optionally move focus to it.
+    ///
+    /// - Parameter focus: focus or not
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController?.selectInboxAndFocusOnView(focus: focus)
     }
     
-    func hideIncomingContactRequests(withCompletion completion: () -> ()) {
-        let conversationsList = ZMConversationList.conversations(inUserSession: ZMUserSession.shared())
-        if !conversationsList.isEmpty {
-            selectConversation(conversationsList.first)
+    /// Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
+    /// have no more connection requests.
+    ///
+    /// - Parameter completion: completion handler
+    @objc(hideIncomingContactRequestsWithCompletion:)
+    func hideIncomingContactRequests(withCompletion completion: @escaping () -> ()) {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        let conversationsList = ZMConversationList.conversations(inUserSession: userSession)
+        if conversationsList.count != 0 {
+            select(conversationsList.first)
         }
         
         wireSplitViewController.setLeftViewControllerRevealed(true, animated: true, completion: completion)
     }
     
     @discardableResult
-    private func pushContentViewController(_ viewController: UIViewController?, focusOnView focus: Bool, animated: Bool, completion: () -> ()) -> Bool {
+    private func pushContentViewController(_ viewController: UIViewController?,
+                                           focusOnView focus: Bool,
+                                           animated: Bool,
+                                           completion: Completion?) -> Bool {
         conversationRootViewController = viewController
         wireSplitViewController.setRight(conversationRootViewController, animated: animated, completion: completion)
         
@@ -219,12 +219,12 @@ final class ZClientViewController: UIViewController {
         
         return true
     }
-    
+
     func loadPlaceholderConversationController(animated: Bool) {
         loadPlaceholderConversationController(animated: animated) { }
     }
     
-    func loadPlaceholderConversationController(animated: Bool, completion: () -> ()) {
+    func loadPlaceholderConversationController(animated: Bool, completion: @escaping Completion) {
         currentConversation = nil
         pushContentViewController(nil, focusOnView: false, animated: animated, completion: completion)
     }
@@ -240,15 +240,18 @@ final class ZClientViewController: UIViewController {
     ///   - focus: <#focus description#>
     ///   - animated: <#animated description#>
     /// - Returns: return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
-    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool) -> Bool {
-        return load(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: nil)
-    }
+//    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool) -> Bool {
+//        return load(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: nil)
+//    }
     
-    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool, completion: () -> ()) -> Bool {
+    func load(_ conversation: ZMConversation,
+              scrollTo message: ZMConversationMessage?,
+              focusOnView focus: Bool,
+              animated: Bool,
+              completion: Completion? = nil) -> Bool {
         var conversationRootController: ConversationRootViewController? = nil
         if conversation == currentConversation {
-            conversationRootController = conversationRootViewController as? ConversationRootViewController
-            if message != nil {
+            if let message = message {
                 conversationRootController?.scroll(to: message)
             }
         } else {
@@ -256,9 +259,9 @@ final class ZClientViewController: UIViewController {
         }
         
         currentConversation = conversation
-        conversationRootController?.conversationViewController.focused = focus
+        conversationRootController?.conversationViewController?.isFocused = focus
         
-        conversationListViewController.hideArchivedConversations()
+        conversationListViewController?.hideArchivedConversations()
         pushContentViewController(conversationRootController, focusOnView: focus, animated: animated, completion: completion)
         
         return false
@@ -271,21 +274,24 @@ final class ZClientViewController: UIViewController {
         pushContentViewController(inbox, focusOnView: focus, animated: animated, completion: nil)
     }
     
-    func openDetailScreen(for conversation: ZMConversation?) {
+    /// Open the user clients detail screen
+    ///
+    /// - Parameter conversation: conversation to open
+    func openDetailScreen(for conversation: ZMConversation) {
         let controller = GroupDetailsViewController(conversation: conversation)
-        let navController = controller.wrapInNavigationController
-        navController?.modalPresentationStyle = .formSheet
-        if let navController = navController {
-            present(navController, animated: true)
-        }
+        let navController = controller.wrapInNavigationController()
+        navController.modalPresentationStyle = .formSheet
+
+        present(navController, animated: true)
     }
     
-    func dismissClientListController(_ sender: Any?) {
+    @objc
+    private func dismissClientListController(_ sender: Any?) {
         dismiss(animated: true)
     }
     
     // MARK: - Animated conversation switch
-    func dismissAllModalControllers(withCallback callback: () -> ()) {
+    func dismissAllModalControllers(callback: Completion?) {
         let dismissAction = {
             if let rightViewController = self.wireSplitViewController.rightViewController,
                 rightViewController.presentedViewController != nil {
@@ -307,40 +313,36 @@ final class ZClientViewController: UIViewController {
                 presentedViewController.dismiss(animated: false, completion: callback)
             } else if self.presentedViewController != nil {
                 self.dismiss(animated: false, completion: callback)
-            } else if callback != nil {
-                callback()
+            } else {
+                callback?()
             }
         }
         
-        let ringingCallConversation = ZMUserSession.shared().ringingCallConversation()
+        let ringingCallConversation = ZMUserSession.shared()?.ringingCallConversation
         
         if ringingCallConversation != nil {
             dismissAction()
         } else {
-            minimizeCallOverlayWith(animated: true, withCompletion: {
+            minimizeCallOverlay(animated: true, withCompletion: {
                 dismissAction()
             })
         }
     }
     
     // MARK: - Getters/Setters
-    func setCurrentConversation(_ currentConversation: ZMConversation?) {
-        if self.currentConversation != currentConversation {
-            self.currentConversation = currentConversation
-        }
-    }
     
-    func context() -> ZMUserSession? {
+    var context: ZMUserSession? {
         return ZMUserSession.shared()
     }
     
     // MARK: - ColorSchemeControllerDidApplyChangesNotification
     private func reloadCurrentConversation() {
+        guard let currentConversation = currentConversation else { return }
+
+        let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
+        
         // Need to reload conversation to apply color scheme changes
-        if currentConversation {
-            let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
-            pushContentViewController(currentConversationViewController, focusOnView: false, animated: false, completion: nil)
-        }
+        pushContentViewController(currentConversationViewController, focusOnView: false, animated: false, completion: nil)
     }
     
     @objc
@@ -372,19 +374,20 @@ final class ZClientViewController: UIViewController {
     /// - Returns: In the first case, YES is returned, otherwise NO.
     @discardableResult
     private func attemptToLoadLastViewedConversation(withFocus focus: Bool, animated: Bool) -> Bool {
-        let currentAccount = SessionManager.shared?.accountManager.selectedAccount
-        let conversation = Settings.shared().lastViewedConversation(for: currentAccount)
-        
-        if conversation != nil {
+
+        if let currentAccount = SessionManager.shared?.accountManager.selectedAccount {
+            if let conversation = Settings.shared().lastViewedConversation(for: currentAccount) {
             select(conversation, focusOnView: focus, animated: animated)
+            }
             
             // dispatch async here because it has to happen after the collection view has finished
             // laying out for the first time
             DispatchQueue.main.async(execute: {
-                self.conversationListViewController.scrollToCurrentSelection(animated: false)
+                self.conversationListViewController?.scrollToCurrentSelection(animated: false)
             })
             
             return true
+
         } else {
             selectListItemWhenNoPreviousItemSelected()
             return false
@@ -395,56 +398,18 @@ final class ZClientViewController: UIViewController {
      * This handles the case where we have to select a list item on startup but there is no previous item saved
      */
     func selectListItemWhenNoPreviousItemSelected() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
         // check for conversations and pick the first one.. this can be tricky if there are pending updates and
         // we haven't synced yet, but for now we just pick the current first item
-        let list = ZMConversationList.conversations(inUserSession: ZMUserSession.shared())
+        let list = ZMConversationList.conversations(inUserSession: userSession)
         
-        if list.count > 0 {
-            // select the first conversation and don't focus on it
-            selectConversation(list[0])
-        } else {
+        if list.count <= 0 {
             loadPlaceholderConversationController(animated: true)
+        } else {
+            // select the first conversation and don't focus on it
+            select(list[0])
         }
-    }
-
-    
-
-    
-    func loadPlaceholderConversationController(animated: Bool) {
-    }
-    
-    func loadPlaceholderConversationController(animated: Bool, completion: () -> ()? = nil) {
-    }
-    
-    func loadIncomingContactRequestsAndFocus(onView focus: Bool, animated: Bool) {
-    }
-    
-    func dismissClientListController(_ sender: Any?) {
-    }
-
-    class func shared() -> Self? {
-    }
-    
-    /**
-     * Open the user clients detail screen
-     */
-    func openDetailScreen(for conversation: ZMConversation?) {
-    }
-    
-    /**
-     * Select the connection inbox and optionally move focus to it.
-     */
-    func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
-    }
-    
-    /**
-     * Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
-     * have no more connection requests.
-     */
-    func hideIncomingContactRequests(withCompletion completion: () -> ()? = nil) {
-    }
-    
-    func dismissAllModalControllers(withCallback callback: () -> ()? = nil) {
     }
     
     
@@ -530,10 +495,6 @@ final class ZClientViewController: UIViewController {
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return wr_supportedInterfaceOrientations
-    }
-
     @objc(transitionToListAnimated:completion:)
     func transitionToList(animated: Bool, completion: (() -> ())?) {
         transitionToList(animated: animated,
@@ -543,14 +504,17 @@ final class ZClientViewController: UIViewController {
 
     func transitionToList(animated: Bool,
                           leftViewControllerRevealed: Bool = true,
-                          completion: (() -> ())?) {
-        if let presentedViewController = splitViewController.rightViewController?.presentedViewController {
-            presentedViewController.dismiss(animated: animated) {
-                self.splitViewController.setLeftViewControllerRevealed(leftViewControllerRevealed, animated: animated, completion: completion)
-            }
-        } else {
-            splitViewController.setLeftViewControllerRevealed(leftViewControllerRevealed, animated: animated, completion: completion)
+                          completion: Completion?) {
+        let action: Completion = { [weak self] in
+            self?.wireSplitViewController.setLeftViewControllerRevealed(leftViewControllerRevealed, animated: animated, completion: completion)
         }
+        
+        if let presentedViewController = wireSplitViewController.rightViewController?.presentedViewController {
+            presentedViewController.dismiss(animated: animated, completion: action)
+        } else {
+            action()
+        }
+        
     }
 
 
@@ -649,9 +613,8 @@ final class ZClientViewController: UIViewController {
         })
     }
     
-    @objc
-    func createTopViewConstraints() {
-        topOverlayContainer = UIView()
+    private func createTopViewConstraints() {
+        
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
 
@@ -661,10 +624,10 @@ final class ZClientViewController: UIViewController {
         NSLayoutConstraint.activate([
             topOverlayContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             topOverlayContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topOverlayContainer.bottomAnchor.constraint(equalTo: splitViewController.view.topAnchor),
-            splitViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            splitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            splitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topOverlayContainer.bottomAnchor.constraint(equalTo: wireSplitViewController.view.topAnchor),
+            wireSplitViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            wireSplitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            wireSplitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
 
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
@@ -672,7 +635,7 @@ final class ZClientViewController: UIViewController {
         heightConstraint.isActive = true
     }
 
-    @objc func updateSplitViewTopConstraint() {
+    private func updateSplitViewTopConstraint() {
 
         let isRegularContainer = traitCollection.horizontalSizeClass == .regular
         
@@ -729,27 +692,28 @@ final class ZClientViewController: UIViewController {
     ///   - completion: the completion block
     @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
     func select(_ conversation: ZMConversation,
-                scrollTo message: ZMConversationMessage?,
+                scrollTo message: ZMConversationMessage? = nil,
                 focusOnView focus: Bool,
                 animated: Bool,
-                completion: Completion?) {
+                completion: Completion? = nil) {
         dismissAllModalControllers(callback: { [weak self] in
-            self?.conversationListViewController.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            self?.conversationListViewController?.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 
     @objc(selectConversation:)
     func select(_ conversation: ZMConversation) {
-        conversationListViewController.viewModel.select(conversation)
+        conversationListViewController?.viewModel.select(conversation)
     }
 
     @objc
     var isConversationViewVisible: Bool {
-        return splitViewController.isConversationViewVisible
+        return wireSplitViewController.isConversationViewVisible
     }
 
     var isConversationListVisible: Bool {
-        return (splitViewController.layoutSize == .regularLandscape) || (splitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
+        return (wireSplitViewController.layoutSize == .regularLandscape) ||
+            (wireSplitViewController.isLeftViewControllerRevealed && conversationListViewController?.presentedViewController == nil)
     }
 
     @objc
@@ -767,11 +731,11 @@ final class ZClientViewController: UIViewController {
     
     // MARK: -  Share extension analytics
     private func trackShareExtensionEventsIfNeeded() {
-        let events: [StorableTrackingEvent] = analyticsEventPersistence.storedTrackingEvents.map { $0 }
-        analyticsEventPersistence.clear()
+        let events: [StorableTrackingEvent]? = analyticsEventPersistence?.storedTrackingEvents.map { $0 }
+        analyticsEventPersistence?.clear()
         
-        for event in events {
-            Analytics.shared().tag(event)
+        events?.forEach() {
+            Analytics.shared().tag($0)
         }
     }
 

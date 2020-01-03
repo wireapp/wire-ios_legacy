@@ -181,7 +181,7 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Helpers
     
     func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true,
+        ZClientViewController.shared?.transitionToList(animated: true,
                                                          leftViewControllerRevealed: leftViewControllerRevealed) {
                                                             ZMUserSession.shared()?.enqueueChanges(block)
         }
