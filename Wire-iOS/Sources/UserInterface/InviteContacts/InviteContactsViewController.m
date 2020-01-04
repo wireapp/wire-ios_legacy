@@ -53,35 +53,6 @@
     return YES;
 }
 
-- (void)inviteUserOrOpenConversation:(ZMSearchUser *)user fromView:(UIView *)view
-{
-    if (user.isConnected) {
-        [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
-                                                                    focusOnView:YES
-                                                                       animated:YES];
-    } else if (user.user.isPendingApprovalBySelfUser && ! user.user.isIgnored) {
-        [[ZClientViewController sharedZClientViewController] selectIncomingContactRequestsAndFocusOnView:YES];
-    } else if (user.user.isPendingApprovalByOtherUser && ! user.user.isIgnored) {
-        [[ZClientViewController sharedZClientViewController] selectConversation:user.user.oneToOneConversation
-                                                                    focusOnView:YES
-                                                                       animated:YES];
-        
-    } else if (user.user != nil && ! user.user.isIgnored && ! user.user.isPendingApprovalByOtherUser) {
-        NSString *messageText = [NSString stringWithFormat:NSLocalizedString(@"missive.connection_request.default_message",@"Default connect message to be shown"), user.user.displayName, [ZMUser selfUser].name];
-        
-        [[ZMUserSession sharedSession] enqueueChanges:^{
-            [user connectWithMessage:messageText];
-        } completionHandler:^{
-            [self.tableView reloadData];
-        }];
-    } else {
-        UIAlertController * alertController = [self inviteContact:user.contact fromView:view];
-
-        if (alertController) {
-            [alertController presentInNotificationsWindow];
-        }
-    }
-}
 
 #pragma mark - ContactsViewControllerDelegate
 

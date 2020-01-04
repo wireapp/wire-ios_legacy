@@ -2926,7 +2926,6 @@
 		EF297DDB213209220002983A /* ContactsViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DDC213209220002983A /* ContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF297DE121320AC20002983A /* InviteContactsViewController+Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InviteContactsViewController+Swift.swift"; sourceTree = "<group>"; };
-		EF297DE221320AC20002983A /* InviteContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InviteContactsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantDeviceHeaderView+Style.swift"; sourceTree = "<group>"; };
 		EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceHeaderView+Internal.h"; sourceTree = "<group>"; };
 		EF298BD0228D942A0078BE68 /* ImageManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManagerProtocol.swift; sourceTree = "<group>"; };
@@ -3350,7 +3349,6 @@
 			isa = PBXGroup;
 			children = (
 				163BB6121BEAA52A00606381 /* InviteContactsViewController.h */,
-				EF297DE221320AC20002983A /* InviteContactsViewController+Internal.h */,
 				163BB6131BEAA52A00606381 /* InviteContactsViewController.m */,
 				EF297DE121320AC20002983A /* InviteContactsViewController+Swift.swift */,
 			);

@@ -76,10 +76,47 @@ extension InviteContactsViewController {
         // Prevent the overlapped visual artifact when opening a conversation
         if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
             navigationController.popToRootViewController(animated: false) {
-                self.inviteUserOrOpenConversation(user, from:view)
+                inviteUserOrOpenConversation(user, from:view)
             }
         } else {
             inviteUserOrOpenConversation(user, from:view)
         }
     }
+    
+    func inviteUserOrOpenConversation(_ user: ZMSearchUser, from view: UIView) {
+        let searchUser: ZMUser? = user.user
+        let isIgnored: Bool? = searchUser?.isIgnored
+        
+        let selectOneToOneConversation: Completion = {
+            if let oneToOneConversation = searchUser?.oneToOneConversation {
+                ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
+            }
+        }
+        
+        if user.isConnected {
+            selectOneToOneConversation()
+        } else if searchUser?.isPendingApprovalBySelfUser == true &&
+            isIgnored == false {
+            ZClientViewController.shared?.selectIncomingContactRequestsAndFocus(onView: true)
+        } else if searchUser?.isPendingApprovalByOtherUser == true &&
+            isIgnored == false {
+            selectOneToOneConversation()
+        } else if let unwrappedSearchUser = searchUser &&
+               !unwrappedSearchUser.isIgnored &&
+               !unwrappedSearchUser.isPendingApprovalByOtherUser {
+            let displayName = unwrappedSearchUser.displayName ?? ""
+            let messageText = String(format: "missive.connection_request.default_message".localized, displayName, ZMUser.selfUser().name)
+            
+            ZMUserSession.shared().enqueueChanges({
+                user?.connect(withMessage: messageText)
+            }, completionHandler: {
+                self.tableView.reloadData()
+            })
+        } else {
+            let alertController = inviteContact(user.contact, from: view)
+            
+            alertController?.presentInNotificationsWindow()
+        }
+    }
+
 }

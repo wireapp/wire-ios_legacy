@@ -187,7 +187,6 @@ final class ZClientViewController: UIViewController {
     /// Select the connection inbox and optionally move focus to it.
     ///
     /// - Parameter focus: focus or not
-    @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController?.selectInboxAndFocusOnView(focus: focus)
     }
