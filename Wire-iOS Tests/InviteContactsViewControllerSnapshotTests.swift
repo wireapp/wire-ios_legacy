@@ -86,7 +86,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
 
     func testForContactsAndIndexSectionBarAreShown() {
         let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json")
-        sut.dataSource?.ungroupedSearchResults = mockUsers
+        sut.dataSource?.ungroupedSearchResults = mockUsers ///TODO: inject ZMSearchUsers instead
 
         snapshotWithNavigationBarWithBackButton()
     }
