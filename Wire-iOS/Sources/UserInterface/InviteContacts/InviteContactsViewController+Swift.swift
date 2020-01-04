@@ -18,72 +18,93 @@
 
 import Foundation
 
-extension InviteContactsViewController {
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+final class InviteContactsViewController: ContactsViewController {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        delegate = self
+        contentDelegate = self
+        dataSource = ContactsDataSource()
+        dataSource?.searchQuery = ""
+        
+        title = "contacts_ui.title".localized.uppercased()
+        
+        setupStyle()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func sharingContactsRequired() -> Bool {
+        return true
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
-    open override func viewWillAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
-
+        
         let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
-
+        
         if navigationController != nil {
             titleLabel.isHidden = true
-
+            
             cancelButton.isHidden = true
             closeButtonHeightConstraint.constant = 0
             subViewConstraints.forEach(){ $0.isActive = false }
-
+            
             topContainerHeightConstraint.isActive = true
             searchHeaderWithNavigatorBarTopConstraint.isActive = true
         } else {
             titleLabel.isHidden = false
-
+            
             cancelButton.isHidden = false
-
+            
             closeButtonHeightConstraint.constant = 16
             topContainerHeightConstraint.isActive = false
             searchHeaderWithNavigatorBarTopConstraint.isActive = false
-
+            
             subViewConstraints.forEach(){ $0.isActive = true }
         }
-
+        
         view.layoutIfNeeded()
     }
-
-    @objc override func setupStyle() {
+    
+    override func setupStyle() {
         super.setupStyle()
-
+        
         view.backgroundColor = .clear
-
+        
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.sectionIndexBackgroundColor = .clear
         tableView.sectionIndexColor = .accent()
-
+        
         bottomContainerSeparatorView.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
         bottomContainerView.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-
+        
         titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
-
-    @objc(inviteUser:fromView:)
-    func invite(user: ZMSearchUser, from view: UIView) {
-
+    
+    private func invite(user: ZMSearchUser, from view: UIView) {
+        
         // Prevent the overlapped visual artifact when opening a conversation
         if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
             navigationController.popToRootViewController(animated: false) {
-                inviteUserOrOpenConversation(user, from:view)
+                self.inviteUserOrOpenConversation(user, from:view)
             }
         } else {
             inviteUserOrOpenConversation(user, from:view)
         }
     }
     
-    func inviteUserOrOpenConversation(_ user: ZMSearchUser, from view: UIView) {
+    private func inviteUserOrOpenConversation(_ user: ZMSearchUser, from view: UIView) {
         let searchUser: ZMUser? = user.user
         let isIgnored: Bool? = searchUser?.isIgnored
         
@@ -101,22 +122,66 @@ extension InviteContactsViewController {
         } else if searchUser?.isPendingApprovalByOtherUser == true &&
             isIgnored == false {
             selectOneToOneConversation()
-        } else if let unwrappedSearchUser = searchUser &&
-               !unwrappedSearchUser.isIgnored &&
-               !unwrappedSearchUser.isPendingApprovalByOtherUser {
-            let displayName = unwrappedSearchUser.displayName ?? ""
-            let messageText = String(format: "missive.connection_request.default_message".localized, displayName, ZMUser.selfUser().name)
+        } else if let unwrappedSearchUser = searchUser,
+            !unwrappedSearchUser.isIgnored &&
+                !unwrappedSearchUser.isPendingApprovalByOtherUser {
+            let displayName = unwrappedSearchUser.displayName
+            let messageText = String(format: "missive.connection_request.default_message".localized, displayName, ZMUser.selfUser().name ?? "")
             
-            ZMUserSession.shared().enqueueChanges({
-                user?.connect(withMessage: messageText)
+            ZMUserSession.shared()?.enqueueChanges({
+                user.connect(message: messageText)
             }, completionHandler: {
                 self.tableView.reloadData()
             })
         } else {
-            let alertController = inviteContact(user.contact, from: view)
+            let alertController = invite(user.contact!, from: view)
             
             alertController?.presentInNotificationsWindow()
         }
     }
-
 }
+
+extension InviteContactsViewController: ContactsViewControllerContentDelegate {
+    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool {
+        return true
+    }
+    
+    func actionButtonTitles(for controller: ContactsViewController!) -> Any! {
+        return ["contacts_ui.action_button.open".localized,
+                "contacts_ui.action_button.invite".localized,
+                "connection_request.send_button_title".localized]
+    }
+    
+    func contactsViewController(_ controller: ContactsViewController!, actionButtonTitleIndexFor user: ZMSearchUser!) -> Any! {
+//    func contactsViewController(_ controller: ContactsViewController?, actionButtonTitleIndexFor user: ZMSearchUser?) -> Int {
+        let searchUser: ZMUser? = user?.user
+        let isIgnored: Bool? = searchUser?.isIgnored
+        
+        if user?.isConnected == true || ((searchUser?.isPendingApprovalByOtherUser == true || searchUser?.isPendingApprovalBySelfUser == true) && isIgnored == false) {
+            return 0
+        } else if searchUser != nil && isIgnored == false && searchUser?.isPendingApprovalByOtherUser == false {
+            return 2
+        } else {
+            return 1
+        }
+    }
+    
+    func contactsViewController(_ controller: ContactsViewController, actionButton: UIButton, pressedFor user: ZMSearchUser) {
+        invite(user: user, from: actionButton)
+    }
+    
+    func contactsViewController(_ controller: ContactsViewController, didSelect cell: ContactsCell, for user: ZMSearchUser) {
+        invite(user: user, from: cell)
+    }
+}
+
+extension InviteContactsViewController: ContactsViewControllerDelegate {
+    func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
+        controller.dismiss(animated: true)
+    }
+    
+    func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
+        controller.dismiss(animated: true)
+    }
+}
+
