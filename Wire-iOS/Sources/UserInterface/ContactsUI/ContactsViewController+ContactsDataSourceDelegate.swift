@@ -21,7 +21,7 @@ import Foundation
 extension ContactsViewController: ContactsDataSourceDelegate {
 
     func actionButtonHidden(user: ZMSearchUser) -> Bool {
-        if let shouldDisplayActionButtonForUser = contentDelegate?.contactsViewController?(self, shouldDisplayActionButtonFor: user) {
+        if let shouldDisplayActionButtonForUser = contentDelegate?.contactsViewController(self, shouldDisplayActionButtonFor: user) {
             return !shouldDisplayActionButtonForUser
         } else {
             return true
@@ -42,7 +42,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 let cell = cell,
                 let user = user else { return }
 
-            self.contentDelegate?.contactsViewController!(self, actionButton: cell.actionButton, pressedFor: user)
+            self.contentDelegate?.contactsViewController(self, actionButton: cell.actionButton, pressedFor: user)
 
             cell.actionButton.isHidden = self.actionButtonHidden(user: user)
         }
@@ -50,7 +50,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         cell.actionButton.isHidden = actionButtonHidden(user: user)
 
         if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController?(self, actionButtonTitleIndexFor: user),
+            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: user),
             let actionButtonTitles = self.actionButtonTitles() as? [String] {
 
                 let titleString = actionButtonTitles[Int(index)]

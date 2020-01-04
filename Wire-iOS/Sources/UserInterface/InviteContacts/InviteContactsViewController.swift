@@ -142,18 +142,22 @@ final class InviteContactsViewController: ContactsViewController {
 }
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
-    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool {
+    
+    func contactsViewController(_ controller: ContactsViewController!, shouldSelect user: ZMSearchUser!) -> Bool {
+        return true
+    }
+
+    func contactsViewController(_ controller: ContactsViewController!, shouldDisplayActionButtonFor user: ZMSearchUser!) -> Bool {
         return true
     }
     
-    func actionButtonTitles(for controller: ContactsViewController!) -> Any! {
+    func actionButtonTitles(for controller: ContactsViewController!) -> [String] {
         return ["contacts_ui.action_button.open".localized,
                 "contacts_ui.action_button.invite".localized,
                 "connection_request.send_button_title".localized]
     }
     
-    func contactsViewController(_ controller: ContactsViewController!, actionButtonTitleIndexFor user: ZMSearchUser!) -> Any! {
-//    func contactsViewController(_ controller: ContactsViewController?, actionButtonTitleIndexFor user: ZMSearchUser?) -> Int {
+    func contactsViewController(_ controller: ContactsViewController!, actionButtonTitleIndexFor user: ZMSearchUser!) -> Int {
         let searchUser: ZMUser? = user?.user
         let isIgnored: Bool? = searchUser?.isIgnored
         
@@ -166,7 +170,7 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         }
     }
     
-    func contactsViewController(_ controller: ContactsViewController, actionButton: UIButton, pressedFor user: ZMSearchUser) {
+    func contactsViewController(_ controller: ContactsViewController!, actionButton: UIButton, pressedFor user: ZMSearchUser!) {
         invite(user: user, from: actionButton)
     }
     
@@ -183,5 +187,8 @@ extension InviteContactsViewController: ContactsViewControllerDelegate {
     func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
         controller.dismiss(animated: true)
     }
-}
 
+    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController!) {
+        //no-op
+    }
+}

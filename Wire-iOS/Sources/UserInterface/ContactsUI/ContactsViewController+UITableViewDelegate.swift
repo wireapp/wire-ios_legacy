@@ -55,12 +55,12 @@ extension ContactsViewController: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         guard let user = dataSource?.user(at: indexPath) else { return nil }
 
-        if let shouldSelect = contentDelegate?.contactsViewController?(self, shouldSelect: user),
+        if let shouldSelect = contentDelegate?.contactsViewController(self, shouldSelect: user),
             shouldSelect{
             return indexPath
         } else {
             if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
-                contentDelegate?.contactsViewController?(self, didSelect: cell, for: user)
+                contentDelegate?.contactsViewController(self, didSelect: cell, for: user)
             }
         }
 

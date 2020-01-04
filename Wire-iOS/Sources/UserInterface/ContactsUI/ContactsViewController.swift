@@ -1,5 +1,6 @@
+//
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,16 +18,9 @@
 
 import Foundation
 
-import Foundation
-extension ContactsViewController: ShareContactsViewControllerDelegate {
-    func shareDidFinish(_ viewController: UIViewController) {
-        // Reload data source
-        dataSource?.search(withQuery: "", searchDirectory: dataSource?.searchDirectory)
-        
-        dismissChildViewController(viewController)
-    }
-    
-    func shareDidSkip(_ viewController: UIViewController) {
-        delegate?.contactsViewControllerDidNotShareContacts(self)
+extension ContactsViewController {
+    @objc
+    func updateActionButtonTitles() {
+        actionButtonTitles = contentDelegate?.actionButtonTitles(for: self)
     }
 }

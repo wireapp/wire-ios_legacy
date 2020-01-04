@@ -64,11 +64,13 @@ static NSString * const ContactsViewControllerSectionHeaderID = @"ContactsSectio
 /// if he/she hasn't already done so. Override this property in subclasses to override
 /// the default behaviour which is false.
 @property (nonatomic, readonly) BOOL sharingContactsRequired;
+@property (nonatomic, nullable) NSArray *actionButtonTitles;
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated;
 - (NSArray *) actionButtonTitles;
 - (void)dismissChildViewController:(UIViewController *)viewController;
 
 @end
+
 
 NS_ASSUME_NONNULL_END
