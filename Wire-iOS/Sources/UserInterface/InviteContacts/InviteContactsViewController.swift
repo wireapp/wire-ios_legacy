@@ -143,6 +143,7 @@ final class InviteContactsViewController: ContactsViewController {
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     
+    
     func contactsViewController(_ controller: ContactsViewController!, shouldSelect user: ZMSearchUser!) -> Bool {
         return true
     }
@@ -157,24 +158,25 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
                 "connection_request.send_button_title".localized]
     }
     
-    func contactsViewController(_ controller: ContactsViewController!, actionButtonTitleIndexFor user: ZMSearchUser!) -> Int {
-        let searchUser: ZMUser? = user?.user///TODO: wait for this method update
+    func contactsViewController(_ controller: ContactsViewController!,
+                                actionButtonTitleIndexFor user: SearchUser) -> Int {
+        let searchUser: ZMUser? = user.user///TODO: wait for this method update
         let isIgnored: Bool? = searchUser?.isIgnored
         
-        if user?.isConnected == true || ((searchUser?.isPendingApprovalByOtherUser == true || searchUser?.isPendingApprovalBySelfUser == true) && isIgnored == false) {
+        if user.isConnected || ((searchUser?.isPendingApprovalByOtherUser == true || searchUser?.isPendingApprovalBySelfUser == true) && isIgnored == false) {
             return 0
         } else if searchUser != nil && isIgnored == false && searchUser?.isPendingApprovalByOtherUser == false {
             return 2
-        } else {
-            return 1
         }
+        
+        return 1
     }
     
     func contactsViewController(_ controller: ContactsViewController!, actionButton: UIButton, pressedFor user: ZMSearchUser!) {
         invite(user: user, from: actionButton)
     }
     
-    func contactsViewController(_ controller: ContactsViewController, didSelect cell: ContactsCell, for user: ZMSearchUser) {
+    func contactsViewController(_ controller: ContactsViewController!, didSelect cell: ContactsCell, for user: ZMSearchUser!) {
         invite(user: user, from: cell)
     }
 }
@@ -192,3 +194,9 @@ extension InviteContactsViewController: ContactsViewControllerDelegate {
         //no-op
     }
 }
+
+protocol SearchUserType {
+    var user: ZMUser? { get }
+}
+
+extension ZMSearchUser: SearchUserType { }

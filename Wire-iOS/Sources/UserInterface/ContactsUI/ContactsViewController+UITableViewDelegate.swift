@@ -58,10 +58,8 @@ extension ContactsViewController: UITableViewDelegate {
         if let shouldSelect = contentDelegate?.contactsViewController(self, shouldSelect: user),
             shouldSelect{
             return indexPath
-        } else {
-            if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
-                contentDelegate?.contactsViewController(self, didSelect: cell, for: user)
-            }
+        } else if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
+            contentDelegate?.contactsViewController(self, didSelect: cell, for: user)
         }
 
         return nil
