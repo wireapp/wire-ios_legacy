@@ -139,15 +139,9 @@ final class InviteContactsViewController: ContactsViewController {
             alertController?.presentInNotificationsWindow()
         }
     }
-    
-//    @objc
-//    override func updateActionButtonTitles() {
-//        actionButtonTitles = contentDelegate?.actionButtonTitles(for: self)
-//    }
 }
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
-    
     
     func contactsViewController(_ controller: ContactsViewController!, shouldSelect user: ZMSearchUser!) -> Bool {
         return true
@@ -165,12 +159,13 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     
     func contactsViewController(_ controller: ContactsViewController!,
                                 actionButtonTitleIndexFor user: SearchUser) -> Int {
-        let searchUser: ZMUser? = user.user///TODO: wait for this method update
+        let searchUser: ZMUser? = user.user
         let isIgnored: Bool? = searchUser?.isIgnored
         
         if user.isConnected || ((searchUser?.isPendingApprovalByOtherUser == true || searchUser?.isPendingApprovalBySelfUser == true) && isIgnored == false) {
             return 0
-        } else if searchUser != nil && isIgnored == false && searchUser?.isPendingApprovalByOtherUser == false {
+        } else if isIgnored == false,
+            searchUser?.isPendingApprovalByOtherUser == false {
             return 2
         }
         
