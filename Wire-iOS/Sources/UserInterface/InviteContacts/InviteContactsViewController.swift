@@ -139,6 +139,11 @@ final class InviteContactsViewController: ContactsViewController {
             alertController?.presentInNotificationsWindow()
         }
     }
+    
+//    @objc
+//    override func updateActionButtonTitles() {
+//        actionButtonTitles = contentDelegate?.actionButtonTitles(for: self)
+//    }
 }
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
@@ -152,7 +157,7 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         return true
     }
     
-    func actionButtonTitles(for controller: ContactsViewController!) -> [String] {
+    func actionButtonTitles(for controller: ContactsViewController) -> [String] {
         return ["contacts_ui.action_button.open".localized,
                 "contacts_ui.action_button.invite".localized,
                 "connection_request.send_button_title".localized]
@@ -194,9 +199,3 @@ extension InviteContactsViewController: ContactsViewControllerDelegate {
         //no-op
     }
 }
-
-protocol SearchUserType {
-    var user: ZMUser? { get }
-}
-
-extension ZMSearchUser: SearchUserType { }

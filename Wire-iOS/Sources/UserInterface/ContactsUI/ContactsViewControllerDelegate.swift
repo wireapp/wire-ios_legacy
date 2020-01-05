@@ -29,9 +29,15 @@ protocol ContactsViewControllerDelegate: NSObjectProtocol {
     func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController!)
 }
 
+@objc protocol SearchUserType {
+    var user: ZMUser? { get }
+}
+
+extension ZMSearchUser: SearchUserType { }
+
 typealias SearchUser = UserType & SearchUserType
 
-//@objc
+@objc
 protocol ContactsViewControllerContentDelegate: NSObjectProtocol {
     
     
@@ -45,8 +51,7 @@ protocol ContactsViewControllerContentDelegate: NSObjectProtocol {
     
     
     // This API might look strange, but we need it for making all the buttons to have same width
-    func actionButtonTitles(for controller: ContactsViewController!) -> [String]
+    func actionButtonTitles(for controller: ContactsViewController) -> [String]
     
-//    @nonobjc
     func contactsViewController(_ controller: ContactsViewController!, actionButtonTitleIndexFor user: SearchUser) -> Int
 }
