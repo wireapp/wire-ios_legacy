@@ -22,14 +22,15 @@ import Foundation
 protocol ContactsViewControllerDelegate: NSObjectProtocol {
     
     
-    func contactsViewControllerDidCancel(_ controller: ContactsViewController!)
+    func contactsViewControllerDidCancel(_ controller: ContactsViewController)
     
-    func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController!)
+    func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController)
     
-    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController!)
+    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController)
 }
 
-@objc protocol SearchUserType {
+@objc
+protocol SearchUserType {
     var user: ZMUser? { get }
 }
 
@@ -41,13 +42,15 @@ typealias SearchUser = UserType & SearchUserType
 protocol ContactsViewControllerContentDelegate: NSObjectProtocol {
     
     
-    func contactsViewController(_ controller: ContactsViewController!, shouldDisplayActionButtonFor user: ZMSearchUser!) -> Bool
+    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool
     
-    func contactsViewController(_ controller: ContactsViewController!, actionButton: UIButton, pressedFor user: ZMSearchUser!)
+    func contactsViewController(_ controller: ContactsViewController,
+                                actionButton: UIButton, pressedFor user: ZMSearchUser)
     
-    func contactsViewController(_ controller: ContactsViewController!, didSelect cell: ContactsCell, for user: ZMSearchUser!)
+    func contactsViewController(_ controller: ContactsViewController,
+                                didSelect cell: ContactsCell, for user: ZMSearchUser)
     
-    func contactsViewController(_ controller: ContactsViewController!, shouldSelect user: ZMSearchUser!) -> Bool
+    func contactsViewController(_ controller: ContactsViewController, shouldSelect user: ZMSearchUser) -> Bool
     
     
     // This API might look strange, but we need it for making all the buttons to have same width

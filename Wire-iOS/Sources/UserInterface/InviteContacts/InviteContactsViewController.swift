@@ -37,7 +37,11 @@ final class InviteContactsViewController: ContactsViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func sharingContactsRequired() -> Bool {
+    
+    /// If sharingContactsRequired is true the user will be prompted to share his address book
+    /// if he/she hasn't already done so. Override this property in subclasses to override
+    /// the default behaviour which is false.
+    override var sharingContactsRequired: Bool {
         return true
     }
     
@@ -123,7 +127,7 @@ final class InviteContactsViewController: ContactsViewController {
             isIgnored == false {
             selectOneToOneConversation()
         } else if let unwrappedSearchUser = searchUser,
-            !unwrappedSearchUser.isIgnored &&
+                !unwrappedSearchUser.isIgnored &&
                 !unwrappedSearchUser.isPendingApprovalByOtherUser {
             let displayName = unwrappedSearchUser.displayName
             let messageText = String(format: "missive.connection_request.default_message".localized, displayName, ZMUser.selfUser().name ?? "")
@@ -143,11 +147,11 @@ final class InviteContactsViewController: ContactsViewController {
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     
-    func contactsViewController(_ controller: ContactsViewController!, shouldSelect user: ZMSearchUser!) -> Bool {
+    func contactsViewController(_ controller: ContactsViewController, shouldSelect user: ZMSearchUser) -> Bool {
         return true
     }
 
-    func contactsViewController(_ controller: ContactsViewController!, shouldDisplayActionButtonFor user: ZMSearchUser!) -> Bool {
+    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool {
         return true
     }
     
@@ -157,7 +161,7 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
                 "connection_request.send_button_title".localized]
     }
     
-    func contactsViewController(_ controller: ContactsViewController!,
+    func contactsViewController(_ controller: ContactsViewController,
                                 actionButtonTitleIndexFor user: SearchUser) -> Int {
         let searchUser: ZMUser? = user.user
         let isIgnored: Bool? = searchUser?.isIgnored
@@ -172,11 +176,11 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         return 1
     }
     
-    func contactsViewController(_ controller: ContactsViewController!, actionButton: UIButton, pressedFor user: ZMSearchUser!) {
+    func contactsViewController(_ controller: ContactsViewController, actionButton: UIButton, pressedFor user: ZMSearchUser) {
         invite(user: user, from: actionButton)
     }
     
-    func contactsViewController(_ controller: ContactsViewController!, didSelect cell: ContactsCell, for user: ZMSearchUser!) {
+    func contactsViewController(_ controller: ContactsViewController, didSelect cell: ContactsCell, for user: ZMSearchUser) {
         invite(user: user, from: cell)
     }
 }
@@ -190,7 +194,7 @@ extension InviteContactsViewController: ContactsViewControllerDelegate {
         controller.dismiss(animated: true)
     }
 
-    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController!) {
+    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController) {
         //no-op
     }
 }
