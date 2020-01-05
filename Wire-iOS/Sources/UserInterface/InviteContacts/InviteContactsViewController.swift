@@ -38,10 +38,7 @@ final class InviteContactsViewController: ContactsViewController {
     }
     
     
-    /// If sharingContactsRequired is true the user will be prompted to share his address book
-    /// if he/she hasn't already done so. Override this property in subclasses to override
-    /// the default behaviour which is false.
-    override var sharingContactsRequired: Bool {
+    override func sharingContactsRequired() -> Bool {
         return true
     }
     
