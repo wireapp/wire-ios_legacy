@@ -20,6 +20,22 @@ import XCTest
 @testable import Wire
 
 final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
+    var addressBookSearchPerformedAtLeastOnce: Bool = true
+    
+    var isAddressBookAccessDisabled: Bool = false
+    
+    var accessStatusDidChangeToGranted: Bool = true
+    
+    var addressBookSearchWasPostponed: Bool = false
+    
+    var configuration: AddressBookHelperConfiguration!
+    
+    static var sharedHelper: AddressBookHelperProtocol = MockAddressBookHelper()
+    
+    func persistCurrentAccessStatus() {
+        
+    }
+    
     var isAddressBookAccessGranted: Bool {
         return false
     }
@@ -56,7 +72,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     }
 
     func setupSut() {
-        sut = StartUIViewController(addressBookHelper: mockAddressBookHelper)
+        sut = StartUIViewController(addressBookHelperType: MockAddressBookHelper.self)
         sut.view.backgroundColor = .black
     }
 

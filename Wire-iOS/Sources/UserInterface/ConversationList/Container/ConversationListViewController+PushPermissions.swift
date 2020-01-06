@@ -49,7 +49,7 @@ extension ConversationListViewController {
     func showPermissionDeniedViewController() {
         observeApplicationDidBecomeActive()
 
-        let permissions = PermissionDeniedViewController.push()
+        let permissions = PermissionDeniedViewController.pushDeniedViewController()
 
         permissions.delegate = self
 

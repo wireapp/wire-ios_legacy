@@ -16,12 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface PermissionDeniedViewController ()
+import Foundation
 
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic) UILabel *heroLabel;
-@property (nonatomic) Button *settingsButton;
-@property (nonatomic) UIButton *laterButton;
-@property (nonatomic) UIVisualEffectView *backgroundBlurView;
-
-@end
+protocol StartUIDelegate: class {
+    func startUI(_ startUI: StartUIViewController, didSelect users: Set<ZMUser>)
+    func startUI(_ startUI: StartUIViewController,
+                 createConversationWith users: Set<ZMUser>,
+                 name: String,
+                 allowGuests: Bool,
+                 enableReceipts: Bool)
+    func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation)
+}

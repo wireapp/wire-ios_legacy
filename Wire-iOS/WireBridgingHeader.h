@@ -51,8 +51,6 @@
 #import "TokenField.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
-#import "StartUIViewController.h"
-#import "StartUIViewController+internal.h"
 
 #import "TopPeopleLineCollectionViewController.h"
 #import "TopPeopleCell.h"
@@ -105,15 +103,7 @@
 #import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
 #import "ContactsDataSource.h"
-#import "StartUIViewController.h"
 #import "Button.h"
-
-#import "PermissionDeniedViewController.h"
-
-#import "ShareContactsViewController.h"
-#import "ShareContactsViewController+Internal.h"
-
-#import "PermissionDeniedViewController+Internal.h"
 
 // Helper objects
 #import "PushTransition.h"

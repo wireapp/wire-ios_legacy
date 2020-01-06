@@ -43,12 +43,12 @@ class ConversationStartedSystemMessageCell: ConversationIconBasedCell, Conversat
     struct Configuration {
         let title: NSAttributedString?
         let message: NSAttributedString
-        let selectedUsers: [UserType]
+        let selectedUsers: [ZMUser]
         let icon: UIImage?
     }
     
     private let titleLabel = UILabel()
-    private var selectedUsers: [UserType] = []
+    private var selectedUsers: [ZMUser] = []
     
     override func configureSubviews() {
         super.configureSubviews()
@@ -265,8 +265,7 @@ class ConversationRenamedSystemMessageCell: ConversationIconBasedCell, Conversat
 
 final class ConversationSystemMessageCellDescription {
 
-    static func cells(for message: ZMConversationMessage,
-                      selfUser: UserType = ZMUser.selfUser()) -> [AnyConversationMessageCellDescription] {
+    static func cells(for message: ZMConversationMessage) -> [AnyConversationMessageCellDescription] {
         guard let systemMessageData = message.systemMessageData,
             let sender = message.sender,
             let conversation = message.conversation else {
@@ -294,7 +293,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(callCell)]
 
         case .messageDeletedForEveryone:
-            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message, selfUser: selfUser)
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
             return [AnyConversationMessageCellDescription(senderCell)]
 
         case .messageTimerUpdate:
@@ -347,11 +346,11 @@ final class ConversationSystemMessageCellDescription {
             
         case .newConversation:
             var cells: [AnyConversationMessageCellDescription] = []
-            let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData, selfUser: selfUser)
+            let startedConversationCell = ConversationStartedSystemMessageCellDescription(message: message, data: systemMessageData)
             cells.append(AnyConversationMessageCellDescription(startedConversationCell))
             
             let isOpenGroup = conversation.conversationType == .group && conversation.allowGuests
-            let selfCanAddUsers = selfUser.canAddUser(to: conversation)
+            let selfCanAddUsers = ZMUser.selfUser()?.canAddUser(to: conversation) ?? false
             
             if selfCanAddUsers && isOpenGroup {
                 cells.append(AnyConversationMessageCellDescription(GuestsAllowedCellDescription()))
@@ -425,10 +424,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage,
-         data: ZMSystemMessageData,
-         sender: UserType,
-         newName: String) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
         let senderText = message.senderName
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
 
@@ -502,10 +498,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage,
-         data: ZMSystemMessageData,
-         timer: NSNumber,
-         sender: UserType) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
@@ -559,7 +552,7 @@ class ConversationVerifiedSystemMessageSectionDescription: ConversationMessageCe
     }
 }
 
-final class ConversationStartedSystemMessageCellDescription: ConversationMessageCellDescription {
+class ConversationStartedSystemMessageCellDescription: NSObject, ConversationMessageCellDescription {
     
     typealias View = ConversationStartedSystemMessageCell
     let configuration: View.Configuration
@@ -576,29 +569,35 @@ final class ConversationStartedSystemMessageCellDescription: ConversationMessage
     let containsHighlightableContent: Bool = false
     
     let accessibilityIdentifier: String? = nil
-    let accessibilityLabel: String? = nil
+    var conversationObserverToken: Any?
     
-    init(message: ZMConversationMessage,
-         data: ZMSystemMessageData,
-         selfUser: UserType) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData) {
         let color = UIColor.from(scheme: .textForeground)
-        let model = ParticipantsCellViewModel(font: .mediumFont,
-                                              boldFont: .mediumSemiboldFont,
-                                              largeFont: .largeSemiboldFont,
-                                              textColor: color,
-                                              iconColor: color,
-                                              message: message,
-                                              selfUser: selfUser)
+        let model = ParticipantsCellViewModel(font: .mediumFont, boldFont: .mediumSemiboldFont, largeFont: .largeSemiboldFont, textColor: color, iconColor: color, message: message)
+        
         actionController = nil
-        configuration = View.Configuration(title: model.attributedHeading(),
+        configuration =  View.Configuration(title: model.attributedHeading(),
                                             message: model.attributedTitle() ?? NSAttributedString(string: ""),
                                             selectedUsers: model.selectedUsers,
                                             icon: model.image())
+        super.init()
+        if let conversation = message.conversation {
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+        }
     }
     
 }
 
-final class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
+extension ConversationStartedSystemMessageCellDescription: ZMConversationObserver {
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
+        guard note.createdRemotelyChanged else { return }
+        if let conversation = message?.conversation, conversation.conversationType == .group, conversation.localParticipants.count == 1 {
+            delegate?.conversationMessageShouldUpdate()
+        }
+    }
+}
+
+class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessageCellDescription {
     
     typealias View = ConversationSystemMessageCell
     let configuration: View.Configuration
@@ -725,10 +724,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage,
-         data: ZMSystemMessageData,
-         sender: UserType,
-         remoteIdentityChanged: Bool) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
         let icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: exclamationColor)
         let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
@@ -751,10 +747,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     private static let BaseLocalizationString = "content.system.cannot_decrypt"
     private static let IdentityString = ".identity"
 
-    private static func makeAttributedString(systemMessage: ZMSystemMessageData,
-                                             sender: UserType,
-                                             remoteIDChanged: Bool,
-                                             link: URL) -> NSAttributedString {
+    private static func makeAttributedString(systemMessage: ZMSystemMessageData, sender: ZMUser, remoteIDChanged: Bool, link: URL) -> NSAttributedString {
         let name = localizedWhoPart(sender, remoteIDChanged: remoteIDChanged)
 
         let why = NSAttributedString(string: localizedWhyPart(remoteIDChanged),
@@ -775,7 +768,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         return fullString.addAttributes([.font: UIFont.mediumSemiboldFont], toSubstring:name)
     }
 
-    private static func localizedWhoPart(_ sender: UserType, remoteIDChanged: Bool) -> String {
+    private static func localizedWhoPart(_ sender: ZMUser, remoteIDChanged: Bool) -> String {
         switch (sender.isSelfUser, remoteIDChanged) {
         case (true, _):
             return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "") + ".you_part").localized

@@ -37,8 +37,6 @@
 
 #import "Wire-Swift.h"
 
-#import "StartUIViewController.h"
-
 @interface ZClientViewController (InitialState)
 
 - (void)restoreStartupState;
@@ -96,7 +94,8 @@
 
         [AVSMediaManager.sharedInstance registerMedia:self.mediaPlaybackManager withOptions:@{ @"media" : @"external "}];
         
-        AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper;
+        
+        [self setupAddressBookHelper];
         
         NSString *appGroupIdentifier = NSBundle.mainBundle.appGroupIdentifier;
         NSURL *sharedContainerURL = [NSFileManager sharedContainerDirectoryForAppGroupIdentifier:appGroupIdentifier];
@@ -434,19 +433,6 @@
     [self trackShareExtensionEventsIfNeeded];
 }
 
-#pragma mark - Adressbook Upload
-
-- (void)uploadAddressBookIfNeeded
-{
-    // We should not even try to access address book when in a team
-    if (nil == ZMUser.selfUser || ZMUser.selfUser.hasTeam) {
-        return;
-    }
-    
-    BOOL addressBookDidBecomeGranted = [AddressBookHelper.sharedHelper accessStatusDidChangeToGranted];
-    [AddressBookHelper.sharedHelper startRemoteSearchWithCheckingIfEnoughTimeSinceLast:!addressBookDidBecomeGranted];
-    [AddressBookHelper.sharedHelper persistCurrentAccessStatus];
-}
 
 #pragma mark - ColorSchemeControllerDidApplyChangesNotification
 
