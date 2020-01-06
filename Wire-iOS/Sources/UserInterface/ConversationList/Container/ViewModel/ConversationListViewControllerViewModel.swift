@@ -108,18 +108,6 @@ extension ConversationListViewController.ViewModel {
 
     /// Select a conversation and move the focus to the conversation view.
     ///
-    /// @return YES if it will actually switch, NO if the conversation is already selected.
-    ///
-    /// - Parameters:
-    ///   - conversation: <#conversation description#>
-    ///   - focus: <#focus description#>
-    ///   - animated: <#animated description#>
-//    func select(_ conversation: ZMConversation?, focusOnView focus: Bool, animated: Bool) {
-//        select(conversation, scrollTo: nil, focusOnView: focus, animated: animated, completion: nil)
-//    }
-
-    /// Select a conversation and move the focus to the conversation view.
-    ///
     /// - Parameters:
     ///   - conversation: the conversation to select
     ///   - message: scroll to  this message
