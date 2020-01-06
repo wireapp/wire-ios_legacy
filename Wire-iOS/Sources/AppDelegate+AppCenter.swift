@@ -50,13 +50,19 @@ extension AppDelegate {
         
         
         if appCenterTrackingEnabled {
+            MSCrashes.setDelegate(self)
+
             MSAppCenter.start()
             
-            MSCrashes.setDelegate(self)
             MSAppCenter.setLogLevel(.verbose)
             
             // This method must only be used after Services have been started.
             MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled)
+            
+            ///debug: test crash is recorded?
+            delay(15) {
+                MSCrashes.generateTestCrash()
+            }
         }        
         
         if appCenterTrackingEnabled &&
