@@ -49,10 +49,8 @@ extension AppLockInteractor: AppLockInteractorInput {
         
         // The app was authenticated at least N seconds ago
         let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(appLock.rules.appLockTimeout) {
-            return false
-        }
-        return true
+        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        return !isWithinTimeoutWindow
     }
     
     func evaluateAuthentication(description: String) {

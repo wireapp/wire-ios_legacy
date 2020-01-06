@@ -26,6 +26,8 @@ final class AppLockViewController: UIViewController {
     private var lockView: AppLockView!
     private let spinner = UIActivityIndicatorView(style: .white)
 
+    // need to hold a reference onto `passwordController`,
+    // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
     private var passwordController: RequestPasswordController?
     private var appLockPresenter: AppLockPresenter?
     
@@ -82,7 +84,7 @@ final class AppLockViewController: UIViewController {
 // MARK: - AppLockManagerDelegate
 extension AppLockViewController: AppLockUserInterface {
     func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
-        let passwordController = RequestPasswordController(context: .unlock(message.localized), callback: callback)
+        let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
         self.passwordController = passwordController
         self.present(passwordController.alertController, animated: true, completion: nil)
     }

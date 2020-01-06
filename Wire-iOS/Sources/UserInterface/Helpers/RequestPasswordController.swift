@@ -25,7 +25,7 @@ final class RequestPasswordController {
     enum RequestPasswordContext {
         case removeDevice
         case logout
-        case unlock(String)
+        case unlock(message: String)
     }
     
     var alertController: UIAlertController
