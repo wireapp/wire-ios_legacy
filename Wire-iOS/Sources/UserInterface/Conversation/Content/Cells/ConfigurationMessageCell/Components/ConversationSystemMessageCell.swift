@@ -293,7 +293,7 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(callCell)]
 
         case .messageDeletedForEveryone:
-            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message)
+            let senderCell = ConversationSenderMessageCellDescription(sender: sender, message: message, selfUser: selfUser)
             return [AnyConversationMessageCellDescription(senderCell)]
 
         case .messageTimerUpdate:
@@ -406,7 +406,7 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
     }
 }
 
-class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationRenamedSystemMessageCell
     let configuration: View.Configuration
 
@@ -424,7 +424,7 @@ class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, newName: String) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType, newName: String) {
         let senderText = message.senderName
         let titleString = "content.system.renamed_conv.title".localized(pov: sender.pov, args: senderText)
 
@@ -498,7 +498,7 @@ class ConversationMessageTimerCellDescription: ConversationMessageCellDescriptio
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: ZMUser) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, timer: NSNumber, sender: UserType) {
         let senderText = message.senderName
         let timeoutValue = MessageDestructionTimeoutValue(rawValue: timer.doubleValue)
 
@@ -703,7 +703,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     
 }
 
-class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
+final class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessageCellDescription {
     typealias View = LinkConversationSystemMessageCell
     let configuration: View.Configuration
 
@@ -724,7 +724,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: ZMUser, remoteIdentityChanged: Bool) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, sender: UserType, remoteIdentityChanged: Bool) {
         let exclamationColor = UIColor(for: .vividRed)
         let icon = StyleKitIcon.exclamationMark.makeImage(size: 16, color: exclamationColor)
         let link: URL = remoteIdentityChanged ? .wr_cannotDecryptNewRemoteIDHelp : .wr_cannotDecryptHelp
