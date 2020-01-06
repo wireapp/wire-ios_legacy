@@ -498,8 +498,7 @@ final class ZClientViewController: UIViewController {
         conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 
-    @objc(transitionToListAnimated:completion:)
-    func transitionToList(animated: Bool, completion: (() -> ())?) {
+    func transitionToList(animated: Bool, completion: Completion?) {
         transitionToList(animated: animated,
                          leftViewControllerRevealed: true,
                          completion: completion)
@@ -656,7 +655,6 @@ final class ZClientViewController: UIViewController {
     /// Open the user client list screen
     ///
     /// - Parameter user: the ZMUser with client list to show
-    @objc(openClientListScreenForUser:)
     func openClientListScreen(for user: ZMUser) {
         var viewController: UIViewController?
 
@@ -700,7 +698,6 @@ final class ZClientViewController: UIViewController {
     ///   - focus: focus on the view or not
     ///   - animated: perform animation or not
     ///   - completion: the completion block
-//    @objc(selectConversation:scrollToMessage:focusOnView:animated:completion:)
     func select(_ conversation: ZMConversation,
                 scrollTo message: ZMConversationMessage? = nil,
                 focusOnView focus: Bool,
@@ -711,12 +708,10 @@ final class ZClientViewController: UIViewController {
         })
     }
 
-    @objc(selectConversation:)
     func select(_ conversation: ZMConversation) {
         conversationListViewController?.viewModel.select(conversation)
     }
 
-    @objc
     var isConversationViewVisible: Bool {
         return wireSplitViewController.isConversationViewVisible
     }
