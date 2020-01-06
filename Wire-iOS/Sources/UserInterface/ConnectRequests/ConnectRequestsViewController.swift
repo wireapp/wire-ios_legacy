@@ -21,7 +21,7 @@ import Foundation
 private var ConnectionRequestCellIdentifier = "ConnectionRequestCell"
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private var connectionRequests: ZMConversationList?
+    var connectionRequests: [ZMConversation]?
     
     private var userObserverToken: Any?
     private var pendingConnectionsListObserverToken: Any?
@@ -48,7 +48,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             
             userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
 
-            connectionRequests = pendingConnectionsList
+            connectionRequests = pendingConnectionsList as? [ZMConversation]
         }
         
         
@@ -115,7 +115,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     // MARK: - Helpers
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
         guard let count = connectionRequests?.count,
-              let request = connectionRequests?[(count - 1) - (indexPath.row)] as? ZMConversation else { return }
+            let request = connectionRequests?[(count - 1) - (indexPath.row)] else { return }
         
         let user = request.connectedUser
         cell.user = user
@@ -142,7 +142,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
     }
     
-    private func reload() {
+    func reload() {
         tableView.reloadData()
         
         if let count = connectionRequests?.count,
