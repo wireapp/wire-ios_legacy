@@ -21,6 +21,6 @@ import Foundation
 extension AppDelegate {
     @objc
     var mediaPlaybackManager: MediaPlaybackManager? {
-        return (rootViewController?.visibleViewController as? ZClientViewController).mediaPlaybackManager
+        return (rootViewController.visibleViewController as? ZClientViewController)?.mediaPlaybackManager
     }
 }
