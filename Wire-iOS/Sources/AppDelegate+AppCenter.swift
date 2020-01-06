@@ -51,7 +51,10 @@ extension AppDelegate {
         
         if appCenterTrackingEnabled {
             MSCrashes.setDelegate(self)
-
+            
+            let alert = UIAlertController.alertWithOKButton(message: Bundle.appCenterAppId!)
+            self.rootViewController.present(alert, animated: true)
+            
             MSAppCenter.start()
             
             MSAppCenter.setLogLevel(.verbose)
@@ -63,7 +66,7 @@ extension AppDelegate {
             delay(15) {
                 MSCrashes.generateTestCrash()
             }
-        }        
+        }  
         
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
