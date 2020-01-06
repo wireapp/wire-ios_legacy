@@ -196,8 +196,7 @@ final class ZClientViewController: UIViewController {
     /// have no more connection requests.
     ///
     /// - Parameter completion: completion handler
-    @objc(hideIncomingContactRequestsWithCompletion:)
-    func hideIncomingContactRequests(withCompletion completion: @escaping Completion) {
+    func hideIncomingContactRequests(withCompletion completion: Completion?) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationsList = ZMConversationList.conversations(inUserSession: userSession)

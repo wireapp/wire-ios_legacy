@@ -101,7 +101,6 @@
 #import "CountryCodeTableViewController.h"
 #import "ContactsDataSource.h"
 #import "Button.h"
-#import "ConnectRequestsViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
