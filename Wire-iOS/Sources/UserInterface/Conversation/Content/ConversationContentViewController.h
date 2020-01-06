@@ -50,8 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
                 mediaPlaybackManager:(MediaPlaybackManager * _Nullable)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface> _Nullable)session;
 - (instancetype)initWithConversation:(ZMConversation *)conversation
-                             message:(id<ZMConversationMessage>)message
-                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
+                             message:(id<ZMConversationMessage> _Nullable)message
+                mediaPlaybackManager:(MediaPlaybackManager * _Nullable)mediaPlaybackManager
                              session:(id<ZMUserSessionInterface>) session NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
 - (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;

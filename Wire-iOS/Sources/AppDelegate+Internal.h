@@ -18,8 +18,8 @@
 
 @interface AppDelegate ()
 
-@property (nonatomic) AppRootViewController *rootViewController;
+@property (nonatomic, nullable) AppRootViewController *rootViewController;
 @property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
-@property (nonatomic, copy) NSDictionary *launchOptions;
+@property (nonatomic, copy, nonnull) NSDictionary *launchOptions;
 
 @end

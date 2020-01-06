@@ -18,6 +18,7 @@
 
 
 #import "AppDelegate.h"
+#import "AppDelegate+Internal.h"
 
 #import "Wire-Swift.h"
 

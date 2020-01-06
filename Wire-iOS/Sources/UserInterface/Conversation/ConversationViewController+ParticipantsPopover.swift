@@ -30,7 +30,10 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         present(controller, animated: true)
     }
 
-    @objc func didTap(onUserAvatar user: UserType, view: UIView?, frame: CGRect) {
+    ///TODO: undo
+    /*
+    @objc
+    func didTap(onUserAvatar user: UserType, view: UIView?, frame: CGRect) {
         if view == nil {
             return
         }
@@ -46,7 +49,7 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         endEditing()
 
         createAndPresentParticipantsPopoverController(with: frame, from: view!, contentViewController: profileViewController.wrapInNavigationController())
-    }
+    }*/
 
 }
 

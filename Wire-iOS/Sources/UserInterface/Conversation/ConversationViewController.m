@@ -53,50 +53,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
-
-@end
-
-@interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
-@end
-
-@interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
-@end
-
-@interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-
-@interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
-@end
-
-@interface ConversationViewController ()
-
-@property (nonatomic) BarController *conversationBarController;
-@property (nonatomic) MediaBarViewController *mediaBarViewController;
-
-@property (nonatomic) ConversationContentViewController *contentViewController;
-@property (nonatomic) UIViewController *participantsController;
-
-@property (nonatomic) ConversationInputBarViewController *inputBarController;
-@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
-
-@property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
-@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
-@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
-@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
-
-@property (nonatomic) id voiceChannelStateObserverToken;
-@property (nonatomic) id conversationObserverToken;
-
-@property (nonatomic) ConversationTitleView *titleView;
-@property (nonatomic) CollectionsViewController *collectionController;
-@property (nonatomic) id conversationListObserverToken;
-@property (nonatomic, readwrite) ConversationCallController *startCallController;
-
-@end
-
-
 
 @implementation ConversationViewController
 
@@ -174,19 +130,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.inputBarController.inputBar.invisibleInputAccessoryView = self.invisibleInputAccessoryView;
 }
 
-- (void)createContentViewController
-{
-    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
-                                                                                         message:self.visibleMessage
-                                                                            mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
-                                                                                         session: self.session];
-    self.contentViewController.delegate = self;
-    self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.contentViewController.bottomMargin = 16;
-    self.inputBarController.mentionsView = self.contentViewController.mentionsSearchResultsViewController;
-    self.contentViewController.mentionsSearchResultsViewController.delegate = self.inputBarController;
-}
-
 - (void)createOutgoingConnectionViewController
 {
     self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
@@ -212,12 +155,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createConversationBarController
 {
     self.conversationBarController = [[BarController alloc] init];
-}
-
-- (void)createMediaBarViewController
-{
-    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager];
-    [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
 }
     
 - (void)createGuestsBarController
@@ -389,16 +326,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _participantsController = viewController.wrapInNavigationController;
 
     return _participantsController;
-}
-
-- (void)didTapMediaBar:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-
-    if ([self.conversation isEqual:mediaPlayingMessage.conversation]) {
-        [self.contentViewController scrollToMessage:mediaPlayingMessage completion:nil];
-    }
 }
 
 - (void)addParticipants:(NSSet *)participants
