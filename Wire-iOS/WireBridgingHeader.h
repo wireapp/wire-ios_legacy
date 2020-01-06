@@ -24,6 +24,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
+#import "AppDelegate+Internal.h"
 
 
 // UI
