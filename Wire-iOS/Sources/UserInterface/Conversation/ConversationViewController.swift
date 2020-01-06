@@ -34,7 +34,7 @@ extension ConversationViewController {
     
     @objc
     func createMediaBarViewController() {
-        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared().mediaPlaybackManager)
+        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
 
