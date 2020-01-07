@@ -143,10 +143,8 @@ extension AppLockPresenter: AppLockInteractorOutput {
         switch result {
         case .validated:
             appUnlocked()
-        case .denied, .unknown:
+        case .denied, .unknown, .timeout:
             requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
-        case .timeout:
-            requestAccountPassword(with: AuthenticationMessageKey.wrongOfflinePassword)
         }
     }
 }

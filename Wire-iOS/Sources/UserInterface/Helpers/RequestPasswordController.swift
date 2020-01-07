@@ -57,7 +57,7 @@ final class RequestPasswordController {
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .destructive
         case .unlock(let unlockMessage):
-            title = "self.settings.account_details.log_out.alert.title".localized
+            title = "self.settings.privacy_security.lock_app.description".localized
             message = unlockMessage
             placeholder = "self.settings.account_details.log_out.alert.password".localized
             okActionStyle = .default
