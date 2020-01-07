@@ -262,17 +262,6 @@ class AppLockPresenterTests: XCTestCase {
         //then
         assertPasswordVerification(on: queue)
         XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_password")
-
-
-        //given
-        setupPasswordVerificationTest()
-        
-        //when
-        sut.passwordVerified(with: .timeout)
-        
-        //then
-        assertPasswordVerification(on: queue)
-        XCTAssertEqual(userInterface.requestPasswordMessage, "self.settings.privacy_security.lock_password.description.wrong_offline_password")
     }
 
     func testThatApplicationWillResignActiveDimsContentIfAppLockIsActive() {
