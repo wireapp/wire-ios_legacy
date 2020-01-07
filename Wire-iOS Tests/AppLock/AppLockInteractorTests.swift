@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireSyncEngine
 @testable import Wire
 @testable import WireCommonComponents
 
@@ -30,6 +31,13 @@ private final class AppLockInteractorOutputMock: AppLockInteractorOutput {
     var passwordVerificationResult: VerifyPasswordResult?
     func passwordVerified(with result: VerifyPasswordResult?) {
         passwordVerificationResult = result
+    }
+}
+
+private final class UserSessionMock: UserSessionVerifyPasswordInterface {
+    var result: VerifyPasswordResult? = .denied
+    func verify(password: String, completion: @escaping (VerifyPasswordResult?) -> Void) {
+        completion(result)
     }
 }
 
@@ -49,13 +57,14 @@ private final class AppLockMock: AppLock {
 final class AppLockInteractorTests: XCTestCase {
     var sut: AppLockInteractor!
     private var appLockInteractorOutputMock: AppLockInteractorOutputMock!
-    var moc: NSManagedObjectContext!
-
+    private var userSessionMock: UserSessionMock!
+    
     override func setUp() {
         super.setUp()
         appLockInteractorOutputMock = AppLockInteractorOutputMock()
-        moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        sut = AppLockInteractor(context: moc)
+        userSessionMock = UserSessionMock()
+        sut = AppLockInteractor()
+        sut._userSession = userSessionMock
         sut.output = appLockInteractorOutputMock
         sut.appLock = AppLockMock.self
     }
@@ -63,7 +72,6 @@ final class AppLockInteractorTests: XCTestCase {
     override func tearDown() {
         appLockInteractorOutputMock = nil
         sut = nil
-        moc = nil
         super.tearDown()
     }
     
@@ -113,11 +121,12 @@ final class AppLockInteractorTests: XCTestCase {
         //given
         let queue = DispatchQueue(label: "Verify password test queue", qos: .background)
         sut.dispatchQueue = queue
+        userSessionMock.result = .denied
         appLockInteractorOutputMock.passwordVerificationResult = nil
         let expectation = XCTestExpectation(description: "verify password")
         
         //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied, context: moc)
+        sut.verify(password: "")
         
         //then
         queue.async {
@@ -131,17 +140,23 @@ final class AppLockInteractorTests: XCTestCase {
     }
     
     func testThatItPersistsBiometricsWhenPasswordIsValid() {
+        //given
+        userSessionMock.result = .validated
+
         //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .validated, context: moc)
+        sut.verify(password: "")
         
         //then
         XCTAssertTrue(AppLockMock.didPersistBiometrics)
     }
     
     func testThatItDoesntPersistBiometricsWhenPasswordIsInvalid() {
-        //when
-        VerifyPasswordRequestStrategy.notifyPasswordVerified(with: .denied, context: moc)
+        //given
+        userSessionMock.result = .denied
         
+        //when
+        sut.verify(password: "")
+
         //then
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
     }

@@ -35,10 +35,12 @@ class AppLockInteractor {
     // For tests
     var appLock: AppLock.Type = AppLock.self
     var dispatchQueue: DispatchQueue = DispatchQueue.main
+    var _userSession: UserSessionVerifyPasswordInterface?
     
-    private var isObserverSetup: Bool = false
-    private var moc: NSManagedObjectContext? {
-        return ZMUserSession.shared()?.storeProvider.contextDirectory.syncContext
+    // Workaround because accessing `ZMUserSession.shared()` crashes
+    // if done at init (AppRootViewController won't be instantianted)
+    private var userSession: UserSessionVerifyPasswordInterface? {
+        return _userSession ?? ZMUserSession.shared()
     }
 }
 
@@ -63,7 +65,7 @@ extension AppLockInteractor: AppLockInteractorInput {
     }
     
     func verify(password: String) {
-        ZMUserSession.shared()?.verify(password: password) { [weak self] result in
+        userSession?.verify(password: password) { [weak self] result in
             guard let `self` = self else { return }
             self.notifyPasswordVerified(with: result)
             if case .validated? = result {
