@@ -114,7 +114,7 @@ final class AppLockInteractorTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.5)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     func testThatItNotifiesOutputWhenPasswordWasVerified() {
@@ -136,7 +136,7 @@ final class AppLockInteractorTests: XCTestCase {
             expectation.fulfill()
         }
         
-        wait(for: [expectation], timeout: 0.5)
+        wait(for: [expectation], timeout: 1.0)
     }
     
     func testThatItPersistsBiometricsWhenPasswordIsValid() {
