@@ -75,6 +75,30 @@ final class AppLockInteractorTests: XCTestCase {
         super.tearDown()
     }
     
+    func testThatIsAuthenticationNeededReturnsTrueIfNeeded() {
+        //given
+        set(appLockActive: true, timeoutReached: true)
+        
+        //when / then
+        XCTAssertTrue(sut.isAuthenticationNeeded)
+    }
+    
+    func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
+        //given
+        set(appLockActive: true, timeoutReached: false)
+        
+        //when / then
+        XCTAssertFalse(sut.isAuthenticationNeeded)
+    }
+    
+    func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
+        //given - appLock not active
+        set(appLockActive: false, timeoutReached: true)
+        
+        //when / then
+        XCTAssertFalse(sut.isAuthenticationNeeded)
+    }
+    
     func testThatIsTimeoutReachedReturnsFalseIfTimeoutNotReached() {
         //given
         AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
@@ -159,5 +183,14 @@ final class AppLockInteractorTests: XCTestCase {
 
         //then
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
+    }
+}
+
+extension AppLockInteractorTests {
+    func set(appLockActive: Bool, timeoutReached: Bool) {
+        AppLock.isActive = appLockActive
+        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
+        let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
+        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
     }
 }

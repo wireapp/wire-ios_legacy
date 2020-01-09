@@ -45,12 +45,11 @@ private final class AppLockUserInterfaceMock: AppLockUserInterface {
 }
 
 private final class AppLockInteractorMock: AppLockInteractorInput {
-    var _isLockTimeoutReached: Bool = false
-    
-    var didCallIsLockTimeoutReached: Bool = false
-    var isLockTimeoutReached: Bool {
-        didCallIsLockTimeoutReached = true
-        return _isLockTimeoutReached
+    var _isAuthenticationNeeded: Bool = false
+    var didCallIsAuthenticationNeeded: Bool = false
+    var isAuthenticationNeeded: Bool {
+        didCallIsAuthenticationNeeded = true
+        return _isAuthenticationNeeded
     }
     
     var passwordToVerify: String?
@@ -88,7 +87,7 @@ class AppLockPresenterTests: XCTestCase {
     
     func testThatItEvaluatesAuthenticationOrUpdatesUIIfNeeded() {
         //given
-        set(appLockActive: true, timeoutReached: true, authenticationState: .needed)
+        set(authNeeded: true, authenticationState: .needed)
         resetMocksValues()
         
         //when
@@ -100,7 +99,7 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: true, reauthVisibile: false)
         
         //given
-        set(appLockActive: true, timeoutReached: true, authenticationState: .authenticated)
+        set(authNeeded: true, authenticationState: .authenticated)
         resetMocksValues()
         
         //when
@@ -113,7 +112,7 @@ class AppLockPresenterTests: XCTestCase {
     
     func testThatItDoesntEvaluateAuthenticationOrUpdateUIIfNotNeeded() {
         //given
-        set(appLockActive: true, timeoutReached: false, authenticationState: .needed)
+        set(authNeeded: false, authenticationState: .needed)
         resetMocksValues()
         
         //when
@@ -124,18 +123,7 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: false, reauthVisibile: false)
         
         //given
-        set(appLockActive: false, timeoutReached: true, authenticationState: .needed)
-        resetMocksValues()
-        
-        //when
-        sut.requireAuthenticationIfNeeded()
-        
-        //then
-        XCTAssertFalse(appLockInteractor.didCallEvaluateAuthentication)
-        assert(contentsDimmed: false, reauthVisibile: false)
-        
-        //given
-        set(appLockActive: true, timeoutReached: true, authenticationState: .cancelled)
+        set(authNeeded: true, authenticationState: .cancelled)
         resetMocksValues()
         
         //when
@@ -146,7 +134,7 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: true, reauthVisibile: true)
         
         //given
-        set(appLockActive: true, timeoutReached: true, authenticationState: .pendingPassword)
+        set(authNeeded: true, authenticationState: .pendingPassword)
         resetMocksValues()
         
         //when
@@ -341,15 +329,14 @@ class AppLockPresenterTests: XCTestCase {
         //when
         sut.applicationDidBecomeActive()
         //then
-        XCTAssertTrue(appLockInteractor.didCallIsLockTimeoutReached)
+        XCTAssertTrue(appLockInteractor.didCallIsAuthenticationNeeded)
     }
 }
 
 extension AppLockPresenterTests {
-    func set(appLockActive: Bool, timeoutReached: Bool, authenticationState: AuthenticationState) {
+    func set(authNeeded: Bool, authenticationState: AuthenticationState) {
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
-        AppLock.isActive = appLockActive
-        appLockInteractor._isLockTimeoutReached = timeoutReached
+        appLockInteractor._isAuthenticationNeeded = authNeeded
     }
     
     func resetMocksValues() {
