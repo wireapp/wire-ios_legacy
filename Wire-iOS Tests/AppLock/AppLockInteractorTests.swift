@@ -99,26 +99,6 @@ final class AppLockInteractorTests: XCTestCase {
         XCTAssertFalse(sut.isAuthenticationNeeded)
     }
     
-    func testThatIsTimeoutReachedReturnsFalseIfTimeoutNotReached() {
-        //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
-        AppLock.isActive = true
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -Double(AppLock.rules.appLockTimeout)-100)
-        
-        //when/then
-        XCTAssertTrue(sut.isLockTimeoutReached)
-    }
-    
-    func testThatIsTimeoutReachedReturnsTrueIfTimeoutReached() {
-        //given
-        AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
-        AppLock.isActive = true
-        AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: -10)
-        
-        //when/then
-        XCTAssertFalse(sut.isLockTimeoutReached)
-    }
-    
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
         //given
         let queue = DispatchQueue(label: "Evaluate authentication test queue", qos: .background)
