@@ -19,7 +19,7 @@
 import Foundation
 
 protocol AppLockInteractorInput: class {
-    var isLockTimeoutReached: Bool { get }
+    var isAuthenticationNeeded: Bool { get }
     func evaluateAuthentication(description: String)
     func verify(password: String)
 }
@@ -46,13 +46,8 @@ class AppLockInteractor {
 
 // MARK: - Interface
 extension AppLockInteractor: AppLockInteractorInput {
-    var isLockTimeoutReached: Bool {
-        let lastAuthDate = appLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
-        return !isWithinTimeoutWindow
+    var isAuthenticationNeeded: Bool {
+        return appLock.isActive && isLockTimeoutReached && isUserSessionActive
     }
     
     func evaluateAuthentication(description: String) {
@@ -81,5 +76,18 @@ extension AppLockInteractor {
         self.dispatchQueue.async { [weak self] in
             self?.output?.passwordVerified(with: result)
         }
+    }
+    
+    private var isUserSessionActive: Bool {
+        return userSession != nil
+    }
+    
+    private var isLockTimeoutReached: Bool {
+        let lastAuthDate = appLock.lastUnlockedDate
+        
+        // The app was authenticated at least N seconds ago
+        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
+        let isWithinTimeoutWindow = (0..<Double(appLock.rules.appLockTimeout)).contains(timeSinceAuth)
+        return !isWithinTimeoutWindow
     }
 }

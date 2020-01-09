@@ -83,7 +83,7 @@ class AppLockPresenter {
     }
     
     func requireAuthenticationIfNeeded() {
-        guard AppLock.isActive, appLockInteractorInput.isLockTimeoutReached else {
+        guard appLockInteractorInput.isAuthenticationNeeded else {
             setContents(dimmed: false)
             return
         }
