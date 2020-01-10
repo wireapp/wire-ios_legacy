@@ -101,7 +101,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatEvaluateAuthenticationCompletesWithCorrectResult() {
         //given
-        let queue = DispatchQueue(label: "Evaluate authentication test queue", qos: .background)
+        let queue = DispatchQueue.main
         sut.dispatchQueue = queue
         AppLockMock.authenticationResult = .granted
         appLockInteractorOutputMock.authenticationResult = nil
@@ -123,7 +123,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatItNotifiesOutputWhenPasswordWasVerified() {
         //given
-        let queue = DispatchQueue(label: "Verify password test queue", qos: .background)
+        let queue = DispatchQueue.main
         sut.dispatchQueue = queue
         userSessionMock.result = .denied
         appLockInteractorOutputMock.passwordVerificationResult = nil
