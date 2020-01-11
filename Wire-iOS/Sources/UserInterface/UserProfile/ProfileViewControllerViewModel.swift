@@ -65,7 +65,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     var fullUser: ZMUser? {
-        return bareUser.zmUser
+        return (bareUser as? ZMUser) ?? (bareUser as? ZMSearchUser)?.user
     }
 
     var hasLegalHoldItem: Bool {
@@ -73,7 +73,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     var showVerifiedShield: Bool {
-        if let user = bareUser.zmUser {
+        if let user = fullUser {
             let showShield = user.trusted() &&
                 !user.clients.isEmpty &&
                 context != .deviceList &&

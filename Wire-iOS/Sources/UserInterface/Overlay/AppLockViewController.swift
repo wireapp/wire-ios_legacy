@@ -18,20 +18,20 @@
 
 import Foundation
 import Cartography
-
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
-extension Notification.Name {
-    static let appUnlocked = Notification.Name("AppUnlocked")
-}
-
 final class AppLockViewController: UIViewController {
-    fileprivate var lockView: AppLockView!
-    fileprivate var localAuthenticationCancelled: Bool = false
-    fileprivate var localAuthenticationNeeded: Bool = true
+    private var lockView: AppLockView!
+    private let spinner = UIActivityIndicatorView(style: .white)
 
-    fileprivate var dimContents: Bool = false {
+    // need to hold a reference onto `passwordController`,
+    // otherwise it will be deallocated and `passwordController.alertController` reference will be lost
+    private var passwordController: RequestPasswordController?
+    private var appLockPresenter: AppLockPresenter?
+    
+    private var dimContents: Bool = false {
         didSet {
             view.window?.isHidden = !dimContents
             
@@ -51,121 +51,58 @@ final class AppLockViewController: UIViewController {
 
     convenience init() {
         self.init(nibName:nil, bundle:nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockViewController.applicationWillResignActive),
-                                               name: UIApplication.willResignActiveNotification,
-                                               object: .none)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockViewController.applicationDidEnterBackground),
-                                               name: UIApplication.didEnterBackgroundNotification,
-                                               object: .none)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(AppLockViewController.applicationDidBecomeActive),
-                                               name: UIApplication.didBecomeActiveNotification,
-                                               object: .none)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.appLockPresenter = AppLockPresenter(userInterface: self)
+        
         self.lockView = AppLockView()
         self.lockView.onReauthRequested = { [weak self] in
-            guard let `self` = self else {
-                return
-            }
-            
-            self.localAuthenticationCancelled = false
-            self.localAuthenticationNeeded = true
-            self.showUnlockIfNeeded()
+            guard let `self` = self else { return }
+            self.appLockPresenter?.requireAuthentication()
         }
         
-        self.view.addSubview(self.lockView)
+        self.spinner.hidesWhenStopped = true
+        self.spinner.translatesAutoresizingMaskIntoConstraints = false
         
+        self.view.addSubview(self.lockView)
+        self.view.addSubview(self.spinner)
+
         constrain(self.view, self.lockView) { view, lockView in
             lockView.edges == view.edges
         }
-        
+        constrain(self.view, self.spinner) { view, spinner in
+            spinner.center == view.center
+        }
+
         self.dimContents = false
     }
+}
+
+// MARK: - AppLockManagerDelegate
+extension AppLockViewController: AppLockUserInterface {
+    func presentRequestPasswordController(with message: String, callback: @escaping RequestPasswordController.Callback) {
+        let passwordController = RequestPasswordController(context: .unlock(message: message.localized), callback: callback)
+        self.passwordController = passwordController
+        self.present(passwordController.alertController, animated: true, completion: nil)
+    }
     
-    fileprivate func showUnlockIfNeeded() {
-        if AppLock.isActive && self.localAuthenticationNeeded {
-            self.dimContents = true
-        
-            if self.localAuthenticationCancelled {
-                self.lockView.showReauth = true
-            } else {
-                self.lockView.showReauth = false
-                self.requireLocalAuthenticationIfNeeded { result in
-                    
-                    let granted = result == .granted
-                    
-                    self.dimContents = !granted
-                    self.localAuthenticationCancelled = !granted
-                    self.localAuthenticationNeeded = !granted
-                    
-                    if case .unavailable = result {
-                        self.lockView.showReauth = true
-                    }
-                }
-            }
+    func setSpinner(animating: Bool) {
+        if animating {
+            self.spinner.startAnimating()
         } else {
-            self.lockView.showReauth = false
-            self.dimContents = false
-        }
-    }
-
-    /// @param callback confirmation; if the auth is not needed or is not possible on the current device called with '.none'
-    func requireLocalAuthenticationIfNeeded(with callback: @escaping (AppLock.AuthenticationResult)->()) {
-        guard AppLock.isActive else {
-            return callback(.granted)
-        }
-        
-        let lastAuthDate = AppLock.lastUnlockedDate
-        
-        // The app was authenticated at least N seconds ago
-        let timeSinceAuth = -lastAuthDate.timeIntervalSinceNow
-        if timeSinceAuth >= 0 && timeSinceAuth < Double(AppLock.rules.appLockTimeout) {
-            callback(.granted)
-            return
-        }
-
-        AppLock.evaluateAuthentication(description: "self.settings.privacy_security.lock_app.description".localized) { result in
-            DispatchQueue.main.async {
-                callback(result)
-                if case .granted = result {
-                    AppLock.lastUnlockedDate = Date()
-                    NotificationCenter.default.post(name: .appUnlocked, object: self, userInfo: nil)
-                }
-            }
-        }
-    }
-
-    // MARK: - Application state observators
-
-    @objc func applicationWillResignActive() {
-        if AppLock.isActive {
-            self.dimContents = true
+            self.spinner.stopAnimating()
         }
     }
     
-    @objc func applicationDidEnterBackground() {
-        if !self.localAuthenticationNeeded {
-            AppLock.lastUnlockedDate = Date()
-        }
-
-        self.localAuthenticationCancelled = false
-
-        self.localAuthenticationNeeded = true
-        if AppLock.isActive {
-            self.dimContents = true
-        }
+    func setReauth(visible: Bool) {
+        self.lockView.showReauth = visible
     }
     
-    @objc func applicationDidBecomeActive() {
-        showUnlockIfNeeded()
+    func setContents(dimmed: Bool) {
+        self.dimContents = dimmed
     }
 }
+

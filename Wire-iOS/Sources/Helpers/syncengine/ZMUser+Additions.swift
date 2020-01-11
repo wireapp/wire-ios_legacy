@@ -49,7 +49,4 @@ extension ZMUser {
         }
     }
 
-    var isPendingApproval: Bool {
-        return isPendingApprovalBySelfUser || isPendingApprovalByOtherUser
-    }
 }
