@@ -18,7 +18,7 @@
 
 import UIKit
 
-typealias SelfUserType = UserType & SelfLegalHoldSubject
+public typealias SelfUserType = UserType & SelfLegalHoldSubject
 
 final class ConversationListTopBarViewController: UIViewController {
     
@@ -199,7 +199,7 @@ final class ConversationListTopBarViewController: UIViewController {
             return
         }
 
-        ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
+        ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc

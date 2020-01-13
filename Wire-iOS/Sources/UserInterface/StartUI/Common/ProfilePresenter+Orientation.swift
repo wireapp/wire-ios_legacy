@@ -25,7 +25,7 @@ extension ProfilePresenter {
         guard let controllerToPresentOn = controllerToPresentOn,
             controllerToPresentOn.isIPadRegular() else { return }
 
-        ZClientViewController.shared()?.transitionToList(animated: false, completion: nil)
+        ZClientViewController.shared?.transitionToList(animated: false, completion: nil)
 
         if let _ = viewToPresentOn,
             let presentedViewController = controllerToPresentOn.presentedViewController {

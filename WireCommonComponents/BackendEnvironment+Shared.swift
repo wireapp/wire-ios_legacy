@@ -24,12 +24,11 @@ extension BackendEnvironment {
     public static let backendSwitchNotification = Notification.Name("backendEnvironmentSwitchNotification")
     
     public static var shared: BackendEnvironment = {
-        let bundle = Bundle.backendBundle
-        guard let environment = BackendEnvironment(userDefaults: .standard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
+        guard let environment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
         return environment
         }() {
         didSet {
-            shared.save(in: .standard)
+            shared.save(in: .applicationGroup)
             NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
     }

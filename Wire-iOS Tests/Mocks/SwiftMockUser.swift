@@ -18,8 +18,31 @@
 
 import Foundation
 
+final class MockSelfUser: SwiftMockUser, SelfLegalHoldSubject {
+
+    var legalHoldStatus: UserLegalHoldStatus = .enabled
+    
+    var needsToAcknowledgeLegalHoldStatus: Bool = true
+    
+    func legalHoldRequestWasCancelled() {
+        
+    }
+    
+    func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
+        
+    }
+    
+    func userDidAcceptLegalHoldRequest(_ request: LegalHoldRequest) {
+        
+    }
+    
+    func acknowledgeLegalHoldStatus() {
+        
+    }
+}
+
 /// a new simple Mock User without objc
-final class SwiftMockUser: NSObject, UserType {
+class SwiftMockUser: NSObject, UserType {
     var name: String? = nil
     
     var displayName: String = ""
@@ -161,6 +184,10 @@ final class SwiftMockUser: NSObject, UserType {
     func canDeleteConversation(_ conversation: ZMConversation) -> Bool {
         return true
     }
+
+    func canModifyOtherMember(in conversation: ZMConversation) -> Bool {
+      return true
+    }
     
     func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
         return true
@@ -179,6 +206,10 @@ final class SwiftMockUser: NSObject, UserType {
     }
     
     func canModifyTitle(in conversation: ZMConversation) -> Bool {
+        return true
+    }
+
+    func canLeave(_ conversation: ZMConversation) -> Bool {
         return true
     }
     

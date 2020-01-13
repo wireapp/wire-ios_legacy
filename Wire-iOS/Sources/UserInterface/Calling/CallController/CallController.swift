@@ -34,9 +34,9 @@ final class CallController: NSObject {
             if let conversation = topOverlayCall {
                 let callTopOverlayController = CallTopOverlayController(conversation: conversation)
                 callTopOverlayController.delegate = self
-                ZClientViewController.shared()?.setTopOverlay(to: callTopOverlayController)
+                ZClientViewController.shared?.setTopOverlay(to: callTopOverlayController)
             } else {
-                ZClientViewController.shared()?.setTopOverlay(to: nil)
+                ZClientViewController.shared?.setTopOverlay(to: nil)
             }
         }
     }

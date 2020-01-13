@@ -172,7 +172,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         
         if let selfUser = ZMUser.selfUser(),
             conversation.teamRemoteIdentifier != nil,
-            selfUser.canModifyReceiptMode(in: conversation)
+            selfUser.canModifyReadReceiptSettings(in: conversation)
         {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
@@ -262,7 +262,7 @@ extension GroupDetailsViewController: ViewControllerDismisser {
 extension GroupDetailsViewController: ProfileViewControllerDelegate {    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     
