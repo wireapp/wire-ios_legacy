@@ -18,15 +18,20 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-
-final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
+final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var sut: ConnectRequestsViewController!
     var mockConversation: ZMConversation!
 
+    var coreDataFixture: CoreDataFixture!
+    
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
+
         sut = ConnectRequestsViewController()
 
         sut.loadViewIfNeeded()
@@ -42,11 +47,12 @@ final class ConnectRequestsViewControllerSnapshotTests: CoreDataSnapshotTestCase
     override func tearDown() {
         sut = nil
         mockConversation = nil
-        
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
-    func testForInitState(){
-        verifyInIPhoneSize(view: sut.view)
+    func testForInitState() {
+        verify(matching: sut)
     }
 }
