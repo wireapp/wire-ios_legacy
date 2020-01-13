@@ -236,22 +236,18 @@ final class ZClientViewController: UIViewController {
     /// stuff if you definitely need it to happen when a conversation is selected and/or presented
     ///
     /// This method should only be called when the list selection changes, or internally by other zclientviewcontroller
-    /// methods.
+    ///
     /// - Parameters:
-    ///   - conversation: <#conversation description#>
-    ///   - message: <#message description#>
-    ///   - focus: <#focus description#>
-    ///   - animated: <#animated description#>
-    /// - Returns: return YES if it actually switched views, NO if nothing changed (ie: we were already looking at the conversation)
-//    func load(_ conversation: ZMConversation?, scrollTo message: ZMConversationMessage?, focusOnView focus: Bool, animated: Bool) -> Bool {
-//        return load(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: nil)
-//    }
-    
+    ///   - conversation: conversation to load
+    ///   - message: scroll to a specific message
+    ///   - focus: focus on view or not
+    ///   - animated: animated or not
+    ///   - completion: optional completion handler
     func load(_ conversation: ZMConversation,
               scrollTo message: ZMConversationMessage?,
               focusOnView focus: Bool,
               animated: Bool,
-              completion: Completion? = nil) -> Bool {
+              completion: Completion? = nil) {
         var conversationRootController: ConversationRootViewController? = nil
         if conversation == currentConversation {
             if let message = message {
@@ -266,8 +262,6 @@ final class ZClientViewController: UIViewController {
         
         conversationListViewController?.hideArchivedConversations()
         pushContentViewController(conversationRootController, focusOnView: focus, animated: animated, completion: completion)
-        
-        return false
     }
     
     func loadIncomingContactRequestsAndFocus(onView focus: Bool, animated: Bool) {
@@ -421,9 +415,9 @@ final class ZClientViewController: UIViewController {
     /// - Parameters:
     ///   - account: an Account object
     ///   - selfUser: a SelfUserType object
-    public convenience init(account: Account,
-                            selfUser: SelfUserType) {
-        self.init(nibName:nil, bundle:nil)
+    required init(account: Account,
+                  selfUser: SelfUserType) {
+        super.init(nibName:nil, bundle:nil)
         
         proximityMonitorManager = ProximityMonitorManager()
         mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
@@ -458,6 +452,12 @@ final class ZClientViewController: UIViewController {
         
         createLegalHoldDisclosureController()
         setupConversationListViewController(account: account, selfUser: selfUser)
+    }
+    
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     @objc
