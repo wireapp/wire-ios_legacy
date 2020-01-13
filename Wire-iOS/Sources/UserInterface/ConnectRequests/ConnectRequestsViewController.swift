@@ -130,8 +130,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
                 ZClientViewController.shared?.hideIncomingContactRequests() {
                     if let oneToOneConversation = user?.oneToOneConversation {
                         ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
-                    }
-                }
+                    }               }
             }
         }
         
@@ -150,7 +149,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // Scroll to bottom of inbox
-            tableView.scrollToRow(at: IndexPath(row: connectionRequests.count - 1, section: 0), at: .bottom, animated: true) //TODO: convert to a method
+            tableView.scrollToLastRow(animated: true)
         }
     }
 }
@@ -168,5 +167,12 @@ extension ConnectRequestsViewController: ZMConversationListObserver {
 extension ConnectRequestsViewController: ZMUserObserver {
     func userDidChange(_ change: UserChangeInfo) {
         tableView.reloadData() //may need a slightly different approach, like enumerating through table cells of type FirstTimeTableViewCell and setting their bgColor property
+    }
+}
+
+extension UITableView {
+    func scrollToLastRow(animated: Bool) {
+        let rowCount = numberOfRows(inSection: numberOfSections - 1)
+        scrollToRow(at: IndexPath(row: rowCount - 1, section: numberOfSections - 1), at: .bottom, animated: animated)
     }
 }
