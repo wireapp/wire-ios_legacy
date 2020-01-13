@@ -21,7 +21,7 @@ import Foundation
 private var ConnectionRequestCellIdentifier = "ConnectionRequestCell"
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var connectionRequests: [ZMConversation]?
+    var connectionRequests: [ZMConversation] = []
     
     private var userObserverToken: Any?
     private var pendingConnectionsListObserverToken: Any?
@@ -48,7 +48,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             
             userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
 
-            connectionRequests = pendingConnectionsList as? [ZMConversation]
+            connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
         }
         
         
@@ -92,7 +92,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return connectionRequests?.count ?? 0
+        return connectionRequests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -114,8 +114,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - Helpers
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
-        guard let count = connectionRequests?.count,
-            let request = connectionRequests?[(count - 1) - (indexPath.row)] else { return }
+        guard let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)] else { return }
         
         let user = request.connectedUser
         cell.user = user
@@ -125,18 +124,18 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         
         cell.acceptBlock = { [weak self] in
-            if self?.connectionRequests?.count == 0 {
-                ZClientViewController.shared?.hideIncomingContactRequests(withCompletion: {
+            if self?.connectionRequests.isEmpty == true {
+                ZClientViewController.shared?.hideIncomingContactRequests() {
                     if let oneToOneConversation = user?.oneToOneConversation {
                         ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
                     }
-                })
+                }
             }
         }
         
         cell.ignoreBlock = { [weak self] in
-            if self?.connectionRequests?.count == 0 {
-                ZClientViewController.shared?.hideIncomingContactRequests(withCompletion: nil)
+            if self?.connectionRequests.isEmpty == true {
+                ZClientViewController.shared?.hideIncomingContactRequests()
             }
         }
         
@@ -145,12 +144,11 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     func reload() {
         tableView.reloadData()
         
-        if let count = connectionRequests?.count,
-            count != 0 {
-            // Scroll to bottom of inbox
-            tableView.scrollToRow(at: IndexPath(row: count - 1, section: 0), at: .bottom, animated: true)
+        if connectionRequests.isEmpty {
+            ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
-            ZClientViewController.shared?.hideIncomingContactRequests(withCompletion: nil)
+            // Scroll to bottom of inbox
+            tableView.scrollToRow(at: IndexPath(row: connectionRequests.count - 1, section: 0), at: .bottom, animated: true)
         }
     }
 }
