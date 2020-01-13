@@ -109,12 +109,14 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         if tableView.bounds.size.height <= 0 {
             return UIScreen.main.bounds.size.height
         }
+        
+        ///TODO: not to user magic number, it is the height of the navi bar?
         return tableView.bounds.size.height - 48
     }
     
     // MARK: - Helpers
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
-        guard let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)] else { return }
+        let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
         
         let user = request.connectedUser
         cell.user = user
@@ -148,7 +150,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // Scroll to bottom of inbox
-            tableView.scrollToRow(at: IndexPath(row: connectionRequests.count - 1, section: 0), at: .bottom, animated: true)
+            tableView.scrollToRow(at: IndexPath(row: connectionRequests.count - 1, section: 0), at: .bottom, animated: true) //TODO: convert to a method
         }
     }
 }
