@@ -28,7 +28,7 @@ final class ZClientViewController: UIViewController {
     
     @objc
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
-    private(set) var conversationListViewController: ConversationListViewController!
+    let conversationListViewController: ConversationListViewController
     var proximityMonitorManager: ProximityMonitorManager?
     var legalHoldDisclosureController: LegalHoldDisclosureController?
     
@@ -48,6 +48,61 @@ final class ZClientViewController: UIViewController {
     private var networkAvailabilityObserverToken: Any?
     private var pendingInitialStateRestore = false
     
+    /// init method for testing allows injecting an Account object and self user
+    ///
+    /// - Parameters:
+    ///   - account: an Account object
+    ///   - selfUser: a SelfUserType object
+    required init(account: Account,
+                  selfUser: SelfUserType) {
+        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
+        
+        super.init(nibName:nil, bundle:nil)
+        
+        proximityMonitorManager = ProximityMonitorManager()
+        mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
+        dataUsagePermissionDialogDisplayed = false
+        needToShowDataUsagePermissionDialog = false
+        
+        AVSMediaManager.sharedInstance().register(mediaPlaybackManager, withOptions: [
+            "media": "external "
+            ])
+        
+        
+        setupAddressBookHelper()
+        
+        if let appGroupIdentifier = Bundle.main.appGroupIdentifier,
+            let remoteIdentifier = ZMUser.selfUser().remoteIdentifier {
+            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
+            
+            let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
+            analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
+        }
+        
+        if let userSession = ZMUserSession.shared() {
+            networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
+        }
+        
+        NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        setupAppearance()
+        
+        createLegalHoldDisclosureController()
+    }
+    
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        AVSMediaManager.sharedInstance().unregisterMedia(mediaPlaybackManager)
+    }
+
     private func restoreStartupState() {
         pendingInitialStateRestore = false
         attemptToPresentInitialConversation()
@@ -80,9 +135,6 @@ final class ZClientViewController: UIViewController {
     }
 
     // MARK: - Overloaded methods
-    deinit {
-        AVSMediaManager.sharedInstance().unregisterMedia(mediaPlaybackManager)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,12 +171,11 @@ final class ZClientViewController: UIViewController {
     }
     
     private func createBackgroundViewController() {
-        if let conversationListViewController = conversationListViewController {
         backgroundViewController.addToSelf(conversationListViewController)
 
         conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         conversationListViewController.view.frame = backgroundViewController.view.bounds
-        }
+
         wireSplitViewController.leftViewController = backgroundViewController
     }
 
@@ -189,7 +240,7 @@ final class ZClientViewController: UIViewController {
     /// - Parameter focus: focus or not
     @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
-        conversationListViewController?.selectInboxAndFocusOnView(focus: focus)
+        conversationListViewController.selectInboxAndFocusOnView(focus: focus)
     }
     
     /// Exit the connection inbox.  This contains special logic for reselecting another conversation etc when you
@@ -260,7 +311,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = conversation
         conversationRootController?.conversationViewController?.isFocused = focus
         
-        conversationListViewController?.hideArchivedConversations()
+        conversationListViewController.hideArchivedConversations()
         pushContentViewController(conversationRootController, focusOnView: focus, animated: animated, completion: completion)
     }
     
@@ -293,13 +344,13 @@ final class ZClientViewController: UIViewController {
             if let rightViewController = self.wireSplitViewController.rightViewController,
                 rightViewController.presentedViewController != nil {
                 rightViewController.dismiss(animated: false, completion: callback)
-            } else if let presentedViewController = self.conversationListViewController?.presentedViewController {
+            } else if let presentedViewController = self.conversationListViewController.presentedViewController {
                 // This is a workaround around the fact that the transitioningDelegate of the settings
                 // view controller is not called when the transition is not being performed animated.
                 // This sounds like a bug in UIKit (Radar incoming) as I would expect the custom animator
                 // being called with `transitionContext.isAnimated == false`. As this is not the case
                 // we have to restore the proper pre-presentation state here.
-                let conversationView = self.conversationListViewController?.view
+                let conversationView = self.conversationListViewController.view
                 if let transform = conversationView?.layer.transform {
                     if !CATransform3DIsIdentity(transform) || 1 != conversationView?.alpha {
                         conversationView?.layer.transform = CATransform3DIdentity
@@ -380,7 +431,7 @@ final class ZClientViewController: UIViewController {
             // dispatch async here because it has to happen after the collection view has finished
             // laying out for the first time
             DispatchQueue.main.async(execute: {
-                self.conversationListViewController?.scrollToCurrentSelection(animated: false)
+                self.conversationListViewController.scrollToCurrentSelection(animated: false)
             })
             
             return true
@@ -407,57 +458,6 @@ final class ZClientViewController: UIViewController {
             // select the first conversation and don't focus on it
             select(list[0])
         }
-    }
-    
-    
-    /// init method for testing allows injecting an Account object and self user
-    ///
-    /// - Parameters:
-    ///   - account: an Account object
-    ///   - selfUser: a SelfUserType object
-    required init(account: Account,
-                  selfUser: SelfUserType) {
-        super.init(nibName:nil, bundle:nil)
-        
-        proximityMonitorManager = ProximityMonitorManager()
-        mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
-        dataUsagePermissionDialogDisplayed = false
-        needToShowDataUsagePermissionDialog = false
-        
-        AVSMediaManager.sharedInstance().register(mediaPlaybackManager, withOptions: [
-            "media": "external "
-            ])
-        
-        
-        setupAddressBookHelper()
-        
-        if let appGroupIdentifier = Bundle.main.appGroupIdentifier,            
-            let remoteIdentifier = ZMUser.selfUser().remoteIdentifier {
-            let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
-            
-            let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
-            analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
-        }
-        
-        if let userSession = ZMUserSession.shared() {
-            networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
-        }
-        
-        NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(contentSizeCategoryDidChange(_:)), name: UIContentSizeCategory.didChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
-        
-        setupAppearance()
-        
-        createLegalHoldDisclosureController()
-        setupConversationListViewController(account: account, selfUser: selfUser)
-    }
-    
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     @objc
@@ -492,10 +492,6 @@ final class ZClientViewController: UIViewController {
     
     private func setupAddressBookHelper() {
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
-    }
-
-    private func setupConversationListViewController(account: Account, selfUser: SelfUserType) {
-        conversationListViewController = ConversationListViewController(account: account, selfUser: selfUser)
     }
 
     func transitionToList(animated: Bool, completion: Completion?) {
@@ -704,12 +700,12 @@ final class ZClientViewController: UIViewController {
                 animated: Bool,
                 completion: Completion? = nil) {
         dismissAllModalControllers(callback: { [weak self] in
-            self?.conversationListViewController?.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            self?.conversationListViewController.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 
     func select(_ conversation: ZMConversation) {
-        conversationListViewController?.viewModel.select(conversation)
+        conversationListViewController.viewModel.select(conversation)
     }
 
     var isConversationViewVisible: Bool {
@@ -718,7 +714,7 @@ final class ZClientViewController: UIViewController {
 
     var isConversationListVisible: Bool {
         return (wireSplitViewController.layoutSize == .regularLandscape) ||
-            (wireSplitViewController.isLeftViewControllerRevealed && conversationListViewController?.presentedViewController == nil)
+            (wireSplitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
     }
 
     func minimizeCallOverlay(animated: Bool,
