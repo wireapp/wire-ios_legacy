@@ -105,7 +105,7 @@ public final class UserConnectionView: UIView, Copyable {
     private var correlationLabelText: NSAttributedString? {
         return type(of: self).correlationFormatter.correlationText(
             for: user,
-            addressBookName: user.zmUser?.addressBookEntry?.cachedName
+            addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
     }
     

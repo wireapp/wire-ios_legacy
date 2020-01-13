@@ -19,6 +19,7 @@
 
 import Foundation
 import SafariServices
+import AppCenterCrashes
 
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -260,6 +261,12 @@ class SettingsCellDescriptorFactory {
             developerCellDescriptors.append(resetSurveyMuteButton)
 
         }
+        
+        let generateCrashButton = SettingsButtonCellDescriptor(title: "Generate test crash", isDestructive: false, selectAction: SettingsCellDescriptorFactory.generateTestCrash)
+        developerCellDescriptors.append(generateCrashButton)
+        
+        let triggerSlowSyncButton = SettingsButtonCellDescriptor(title: "Trigger slow sync", isDestructive: false, selectAction: SettingsCellDescriptorFactory.triggerSlowSync)
+        developerCellDescriptors.append(triggerSlowSyncButton)
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
@@ -525,6 +532,16 @@ class SettingsCellDescriptorFactory {
         userSession.enqueueChanges {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
+    }
+    
+    private static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
+        ZMUserSession.shared()?.syncManagedObjectContext.performGroupedBlock {
+            ZMUserSession.shared()?.applicationStatusDirectory.requestSlowSync()
+        }
+    }
+    
+    private static func generateTestCrash(_ type: SettingsCellDescriptorType) {
+        MSCrashes.generateTestCrash()
     }
     
     private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {

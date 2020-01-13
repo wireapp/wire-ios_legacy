@@ -141,13 +141,11 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Returns the placeholder background color for the user.
     private func containerBackgroundColor(for user: UserType) -> UIColor? {
-        let isWireless = user.zmUser?.isWirelessUser == true
-
         switch self.avatar {
         case .image?, nil:
             return user.isServiceUser ? .white : .clear
         case .text?:
-            if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
+            if user.isConnected || user.isSelfUser || user.isTeamMember || user.isWirelessUser {
                 return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)

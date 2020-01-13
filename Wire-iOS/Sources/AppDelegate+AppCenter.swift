@@ -29,7 +29,8 @@ extension AppDelegate {
         return ZMSLog(tag: "UI")
     }
     
-    @objc func setupAppCenter(completion: @escaping () -> ()) {
+    @objc
+    func setupAppCenter(completion: @escaping () -> ()) {
         
         let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter
         
@@ -43,17 +44,20 @@ extension AppDelegate {
         
         let appCenterTrackingEnabled = !TrackingManager.shared.disableCrashAndAnalyticsSharing
         
-        MSCrashes.setDelegate(self)
-        MSAppCenter.setLogLevel(.verbose)
-        
         if !MSCrashes.hasCrashedInLastSession() {
             UIApplication.shared.resetRunDuration()
         }
         
-        MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled) // We need to disable tracking before starting the manager!
         
         if appCenterTrackingEnabled {
+            MSCrashes.setDelegate(self)
+            
             MSAppCenter.start()
+            
+            MSAppCenter.setLogLevel(.verbose)
+            
+            // This method must only be used after Services have been started.
+            MSAppCenter.setTrackingEnabled(appCenterTrackingEnabled)
         }
         
         if appCenterTrackingEnabled &&

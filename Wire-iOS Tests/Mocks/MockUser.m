@@ -138,6 +138,11 @@ static id<UserType> mockSelfUser = nil;
 @synthesize readReceiptsEnabled;
 @synthesize activeConversations;
 @synthesize isUnderLegalHold;
+@synthesize richProfile;
+@synthesize needsRichProfileUpdate;
+@synthesize canCreateService;
+@synthesize oneToOneConversation;
+@synthesize shouldHideAvailability;
 
 #pragma mark - ZMBareUserConnection
 
@@ -334,18 +339,46 @@ static id<UserType> mockSelfUser = nil;
     return self.canAddUserToConversation;
 }
 
-- (BOOL)canModifyOtherMemberInConversation:(ZMConversation * _Nonnull)conversation
-{
-    return self.canModifyOtherMemberInConversation;
-}
 
 - (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
 {
     return self.canRemoveUserFromConversation;
 }
 
-@synthesize richProfile;
+- (BOOL)canAddServiceToConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canAddServiceToConversation;
+}
 
-@synthesize needsRichProfileUpdate;
+- (BOOL)canRemoveServiceFromConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canRemoveUserFromConversation;
+}
+
+- (BOOL)canModifyOtherMemberInConversation:(ZMConversation * _Nonnull)conversation
+{
+    return self.canModifyOtherMemberInConversation;
+}
+
+
+- (BOOL)canCreateConversationWithType:(ZMConversationType)type {
+    return self.canCreateConversation;
+}
+
+
+- (BOOL)canDeleteConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canDeleteConversation;
+}
+
+
+- (BOOL)canLeave:(ZMConversation * _Nonnull)conversation {
+    return self.canLeaveConversation;
+}
+
+
+- (Role * _Nullable)roleInConversation:(ZMConversation * _Nonnull)conversation {
+  return [[self.participantRoles allObjects] firstObjectMatchingWithBlock:^BOOL(ParticipantRole *role) {
+    return role.conversation == conversation;
+  }];
+}
+
 
 @end
