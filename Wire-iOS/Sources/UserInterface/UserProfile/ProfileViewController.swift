@@ -355,7 +355,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         
         dismiss(animated: true){ [weak self] in
             self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
-                ZClientViewController.shared?.conversationListViewController?.topBarViewController.presentSettings()
+                ZClientViewController.shared?.conversationListViewController.topBarViewController.presentSettings()
             }
         }
     }

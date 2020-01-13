@@ -24,7 +24,6 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 #import "AppDelegate.h"
-#import "AppDelegate+Internal.h"
 
 
 // UI
@@ -103,7 +102,6 @@
 #import "ContactsDataSource.h"
 #import "Button.h"
 #import "ConnectRequestsViewController.h"
-#import "MediaBarViewController.h"
 
 // Helper objects
 #import "PushTransition.h"

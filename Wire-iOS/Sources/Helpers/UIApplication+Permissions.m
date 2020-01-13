@@ -69,21 +69,23 @@ NSString * const UserGrantedAudioPermissionsNotification = @"UserGrantedAudioPer
 + (void)wr_requestOrWarnAboutPhotoLibraryAccess:(void(^)(BOOL granted))grantedHandler
 {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status)
-    {
-        switch (status) {
-            case PHAuthorizationStatusRestricted:
-                [self wr_warnAboutPhotoLibraryRestricted];
-                grantedHandler(NO);
-            case PHAuthorizationStatusDenied:
-                [self wr_warnAboutPhotoLibaryDenied];
-                grantedHandler(NO);
-            case PHAuthorizationStatusNotDetermined:
-                [self wr_warnAboutPhotoLibaryDenied];
-                grantedHandler(NO);
-            case PHAuthorizationStatusAuthorized:
-                grantedHandler(YES);
-        }
-    }];
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+             switch (status) {
+                 case PHAuthorizationStatusRestricted:
+                     [self wr_warnAboutPhotoLibraryRestricted];
+                     grantedHandler(NO);
+                 case PHAuthorizationStatusDenied:
+                     [self wr_warnAboutPhotoLibaryDenied];
+                     grantedHandler(NO);
+                 case PHAuthorizationStatusNotDetermined:
+                     [self wr_warnAboutPhotoLibaryDenied];
+                     grantedHandler(NO);
+                 case PHAuthorizationStatusAuthorized:
+                     grantedHandler(YES);
+             }
+         });
+     }];
 }
 
 + (void)wr_requestVideoAccess:(void(^)(BOOL granted))grantedHandler
