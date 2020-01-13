@@ -38,7 +38,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
 
         mockConversation = otherUserConversation
 
-        sut.connectionRequests = [mockConversation!]
+        sut.connectionRequests = [mockConversation]
         sut.reload()
 
         sut.view.frame = CGRect(origin: .zero, size: CGSize.iPhoneSize.iPhone4_7)
@@ -54,5 +54,24 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
 
     func testForInitState() {
         verify(matching: sut)
+    }
+
+    func testForTwoRequests() {
+        let otherUser = ZMUser.insertNewObject(in: coreDataFixture.uiMOC)
+        otherUser.remoteIdentifier = UUID()
+        otherUser.name = "Bill"
+        otherUser.setHandle("bill")
+        otherUser.accentColorValue = .brightYellow
+        
+        let requestConversation = ZMConversation.createOtherUserConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser)
+        
+        sut.connectionRequests = [requestConversation, mockConversation]
+        sut.reload(animated: false)
+        
+        verify(matching: sut)
+    }
+
+    func testForWrapInNavigationController() {
+        verify(matching: sut.wrapInNavigationController())
     }
 }

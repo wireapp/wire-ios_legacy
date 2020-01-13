@@ -106,24 +106,20 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView.bounds.size.height <= 0 {
-            return UIScreen.main.bounds.size.height
-        }
-        
-        ///TODO: not to user magic number, it is the height of the navi bar?
-        return tableView.bounds.size.height - 48
+        return max(0, tableView.bounds.size.height)
     }
     
     // MARK: - Helpers
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
+        /// get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
         
         let user = request.connectedUser
         cell.user = user
-        cell.selectionStyle = UITableViewCell.SelectionStyle.none
-        cell.separatorInset = UIEdgeInsets.zero
+        cell.selectionStyle = .none
+        cell.separatorInset = .zero
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
+        cell.layoutMargins = .zero
         
         cell.acceptBlock = { [weak self] in
             if self?.connectionRequests.isEmpty == true {
@@ -142,14 +138,14 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
     }
     
-    func reload() {
+    func reload(animated: Bool = true) {
         tableView.reloadData()
         
         if connectionRequests.isEmpty {
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // Scroll to bottom of inbox
-            tableView.scrollToLastRow(animated: true)
+            tableView.scrollToLastRow(animated: animated)
         }
     }
 }
