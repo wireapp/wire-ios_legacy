@@ -264,7 +264,6 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 
         accessoryStack.translatesAutoresizingMaskIntoConstraints = false
-        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.addSubview(accessoryStack)
 
         NSLayoutConstraint.activate([

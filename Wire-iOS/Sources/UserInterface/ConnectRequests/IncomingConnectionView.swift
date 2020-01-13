@@ -87,7 +87,7 @@ public final class IncomingConnectionView: UIView {
         let viewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: "",
-            addressBookName: user.zmUser?.addressBookEntry?.cachedName
+            addressBookName: user.addressBookEntry?.cachedName
         )
         
         usernameLabel.attributedText = viewModel.title
