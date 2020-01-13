@@ -52,7 +52,7 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         super.tearDown()
     }
 
-    func testForInitState() {
+    func testForOneRequest() {
         verify(matching: sut)
     }
 
@@ -69,9 +69,5 @@ final class ConnectRequestsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         sut.reload(animated: false)
         
         verify(matching: sut)
-    }
-
-    func testForWrapInNavigationController() {
-        verify(matching: sut.wrapInNavigationController())
     }
 }

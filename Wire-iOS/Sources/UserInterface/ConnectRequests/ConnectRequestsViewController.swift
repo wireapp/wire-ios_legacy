@@ -106,7 +106,11 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return max(0, tableView.bounds.size.height)
+        /// if there are more than one request, reduce the cell height to give user a hint
+        
+        let inset: CGFloat = connectionRequests.count > 1 ? 48 : 0
+        
+        return max(0, tableView.bounds.size.height - inset)
     }
     
     // MARK: - Helpers
