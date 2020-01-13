@@ -30,27 +30,37 @@ extension ConversationViewController: UIPopoverPresentationControllerDelegate {
         present(controller, animated: true)
     }
 
-    ///TODO: undo
-    /*
+
+}
+
+extension ConversationViewController {
+    
+    
+    /// To prevent compiler error about objc optional delegate method
+    /// didTapOnUserAvatar, create a wrapper method to be called from objc catagory
+    ///
+    /// - Parameters:
+    ///   - user: user to tap
+    ///   - view: view triggers the action
+    ///   - frame: frame to create the popover
     @objc
-    func didTap(onUserAvatar user: UserType, view: UIView?, frame: CGRect) {
+    func tapOn(user: UserType, view: UIView?, frame: CGRect) {
         if view == nil {
             return
         }
-
+        
         let profileViewController = ProfileViewController(user: user,
                                                           viewer: ZMUser.selfUser(),
                                                           conversation: conversation,
                                                           viewControllerDismisser: self)
         profileViewController.preferredContentSize = CGSize.IPadPopover.preferredContentSize
-
+        
         profileViewController.delegate = self
-
+        
         endEditing()
-
+        
         createAndPresentParticipantsPopoverController(with: frame, from: view!, contentViewController: profileViewController.wrapInNavigationController())
-    }*/
-
+    }
 }
 
 extension ConversationViewController: ViewControllerDismisser {

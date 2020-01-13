@@ -385,6 +385,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 #pragma mark - Categories
 
 @implementation ConversationViewController (Content)
+- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame {
+    [self tapOnUser:user view:view frame:frame];
+}
 
 - (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
 {

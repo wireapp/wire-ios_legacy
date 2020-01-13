@@ -102,6 +102,7 @@
 #import "ContactsDataSource.h"
 #import "Button.h"
 #import "ConnectRequestsViewController.h"
+#import "MediaBarViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
