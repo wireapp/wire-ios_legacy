@@ -936,6 +936,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
 
         selfUser.conversationRole = adminRole
+        selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.conversationRole = adminRole
