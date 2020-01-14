@@ -122,12 +122,20 @@ final class AppStateController : NSObject {
             zmLog.debug("transitioning to app state: \(newAppState)")
             lastAppState = appState
             appState = newAppState
+            
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
             }
+            notifyTransition()
         } else {
             completion?()
         }
+    }
+    
+    private func notifyTransition() {
+        NotificationCenter.default.post(name: AppStateController.appStateDidTransition,
+                                        object: nil,
+                                        userInfo: [AppStateController.appStateKey: appState])
     }
 
 }
@@ -245,4 +253,9 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         updateAppState()
     }
     
+}
+
+extension AppStateController {
+    static let appStateDidTransition = Notification.Name(rawValue: "AppStateDidTransitionNotification")
+    static let appStateKey = "AppState"
 }
