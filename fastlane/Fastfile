@@ -163,7 +163,7 @@ platform :ios do
           file: "#{build.artifact_path(with_filename: true)}.ipa",
           release_notes: changelog,
           notify_testers: true,
-          mandatory_update: true,
+          mandatory_update: false,
           dsym: "#{build.artifact_path(with_filename: true)}.app.dSYM.zip"
         )
     end
