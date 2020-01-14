@@ -28,7 +28,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
-    private var conversationRole: Role?
 
     var didCompleteInitialSync = false {
         didSet {
@@ -48,7 +47,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
-        conversationRole = ZMUser.selfUser().role(in: conversation)
         
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
