@@ -997,6 +997,7 @@
 		EE7E0E762109FE9200787C65 /* ParticipantsStringFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */; };
 		EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */; };
 		EE8E926E2024F085000F4752 /* MarkdownTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE8E926D2024F085000F4752 /* MarkdownTextView.swift */; };
+		EE92732023CE049C001FBC7C /* MockRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE92731F23CE049C001FBC7C /* MockRole.swift */; };
 		EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */; };
 		EEA9A76121B0244D001F7B5C /* ConversationCreateErrorSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */; };
 		EEAC0A1221AD875900BE5F5D /* ConversationCreateNameSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */; };
@@ -2799,6 +2800,7 @@
 		EE7E0E752109FE9200787C65 /* ParticipantsStringFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsStringFormatter.swift; sourceTree = "<group>"; };
 		EE8E9266202496C2000F4752 /* NSAttributedString+Down.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Down.swift"; sourceTree = "<group>"; };
 		EE8E926D2024F085000F4752 /* MarkdownTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextView.swift; sourceTree = "<group>"; };
+		EE92731F23CE049C001FBC7C /* MockRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRole.swift; sourceTree = "<group>"; };
 		EEA9A75E21B01F28001F7B5C /* ConversationCreateErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateErrorCell.swift; sourceTree = "<group>"; };
 		EEA9A76021B0244D001F7B5C /* ConversationCreateErrorSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateErrorSectionController.swift; sourceTree = "<group>"; };
 		EEAC0A1121AD875900BE5F5D /* ConversationCreateNameSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateNameSectionController.swift; sourceTree = "<group>"; };
@@ -4921,6 +4923,7 @@
 				EFDBA241229414E100874A15 /* Account+Mock.swift */,
 				EF2D6D37228C1FB300D8DBF4 /* MockPhotoLibrary.swift */,
 				1659FCCC234E415200D06C1F /* MockLabel.swift */,
+				EE92731F23CE049C001FBC7C /* MockRole.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -7733,6 +7736,7 @@
 				5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */,
 				BF4D99CD1E79AAD400A7B08F /* ParticipantsCellViewModel.swift in Sources */,
 				16A94AF8209B5334008A5718 /* VideoGridView.swift in Sources */,
+				EE92732023CE049C001FBC7C /* MockRole.swift in Sources */,
 				7C440E7A23472E9900D91B5F /* FolderCreationNameCell.swift in Sources */,
 				16719A101D99647D00AA6B63 /* GiphySearchViewController.swift in Sources */,
 				EF2E2F6E223BAF410038D7D9 /* MediaBar.swift in Sources */,

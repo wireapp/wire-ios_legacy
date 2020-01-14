@@ -23,6 +23,7 @@
 
 @class MockConversation;
 @class MockLegalHoldDataSource;
+@class MockRole;
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
@@ -67,6 +68,7 @@
 @property (nonatomic, assign) BOOL isServiceUser;
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
+@property (nonatomic, readwrite, nullable) MockRole *conversationRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
 @property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *teamName;
@@ -98,7 +100,6 @@
 @property (nonatomic, readwrite, copy) NSArray<UserRichProfileField *> *richProfile;
 
 @property (nonatomic) UIImage * profileImage;
-@property (nonatomic) NSSet<ParticipantRole *> *  participantRoles;
 
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;

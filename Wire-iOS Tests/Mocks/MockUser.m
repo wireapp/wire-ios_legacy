@@ -373,12 +373,8 @@ static id<UserType> mockSelfUser = nil;
     return self.canLeaveConversation;
 }
 
-
-- (Role * _Nullable)roleInConversation:(ZMConversation * _Nonnull)conversation {
-  return [[self.participantRoles allObjects] firstObjectMatchingWithBlock:^BOOL(ParticipantRole *role) {
-    return role.conversation == conversation;
-  }];
+- (id<RoleType> _Nullable)roleInConversation:(ZMConversation * _Nonnull)conversation {
+    return (id<RoleType>)self.conversationRole;
 }
-
 
 @end
