@@ -69,7 +69,7 @@ final public class AutomationEmailCredentials: NSObject {
     /// Whether we should disable the call quality survey.
     public let disableCallQualitySurvey: Bool
     
-    /// Wheater we should disable dismissing the conversation input bar keyboard by dragging it downwards.
+    /// Whether we should disable dismissing the conversation input bar keyboard by dragging it downwards.
     public let disableInteractiveKeyboardDismissal: Bool
     
     /// Delay in address book remote search override
