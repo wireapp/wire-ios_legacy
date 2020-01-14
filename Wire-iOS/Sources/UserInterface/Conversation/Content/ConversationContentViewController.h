@@ -18,8 +18,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ConversationContentViewControllerDelegate.h"
-
 
 @class ZMConversation;
 @class ConversationMediaController;
@@ -30,6 +28,7 @@
 
 @protocol ZMUserSessionInterface;
 @protocol ConversationContentViewControllerDelegate;
+@protocol ZMConversationMessage;
 
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController

@@ -2443,7 +2443,6 @@
 		8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "ConversationContentViewController+Private.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851A9199245760008B66B /* ConversationContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationContentViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851AA199245760008B66B /* ConversationContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationContentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8FC851AB199245760008B66B /* ConversationContentViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationContentViewControllerDelegate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851AE199245760008B66B /* ConversationViewController+ParticipantsPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+ParticipantsPopover.h"; sourceTree = "<group>"; };
 		8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationViewController+ParticipantsPopover.m"; sourceTree = "<group>"; };
 		8FC851B0199245760008B66B /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -5509,7 +5508,6 @@
 			children = (
 				5E3A6C23206A4DDF00907484 /* Previews */,
 				8FC85181199245760008B66B /* Cells */,
-				8FC851AB199245760008B66B /* ConversationContentViewControllerDelegate.h */,
 				A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */,
 				8FC851A9199245760008B66B /* ConversationContentViewController.h */,
 				8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */,

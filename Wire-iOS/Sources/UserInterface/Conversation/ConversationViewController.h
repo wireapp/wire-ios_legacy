@@ -17,13 +17,12 @@
 //
 
 
-#import "ConversationContentViewControllerDelegate.h"
-
 @class ZMConversation;
 @class ZClientViewController;
 @class ConversationCallController;
 
 @protocol ZMUserSessionInterface;
+@protocol ZMConversationMessage;
 
 NS_ASSUME_NONNULL_BEGIN
 

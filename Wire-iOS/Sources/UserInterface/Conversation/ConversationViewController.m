@@ -279,16 +279,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateRightNavigationItemsButtons];
 }
     
-- (void)presentParticipantsViewController:(UIViewController *)viewController fromView:(UIView *)sourceView
-{
-    [ConversationInputBarViewController endEditingMessage];
-    [self.inputBarController.inputBar.textView resignFirstResponder];
-
-    [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
-                                                       fromView:sourceView
-                                          contentViewController:viewController];
-}
-
 - (void)updateInputBarVisibility
 {
     if (self.conversation.isReadOnly) {

@@ -18,6 +18,8 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "ConversationViewController+ConversationContentViewControllerDelegate")
+
 extension ConversationViewController: ConversationContentViewControllerDelegate {
     func didTap(onUserAvatar user: UserType, view: UIView, frame: CGRect) {
         let profileViewController = ProfileViewController(user: user,
@@ -93,32 +95,38 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
         openConversationList()
     }
     
-    func conversationContentViewController(_ controller: ConversationContentViewController?, presentGuestOptionsFrom sourceView: UIView?) {
-        if conversation.conversationType != ZMConversationTypeGroup {
-            ZMLogError("Illegal Operation: Trying to show guest options for non-group conversation")
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentGuestOptionsFrom sourceView: UIView) {
+        guard conversation.conversationType == .group else {
+            zmLog.error("Illegal Operation: Trying to show guest options for non-group conversation")
             return
         }
+        
         let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
-        let navigationController = groupDetailsViewController.wrapInNavigationController
+        let navigationController = groupDetailsViewController.wrapInNavigationController()
         groupDetailsViewController.presentGuestOptions(animated: false)
         presentParticipantsViewController(navigationController, from: sourceView)
     }
     
-    func conversationContentViewController(_ controller: ConversationContentViewController?, presentParticipantsDetailsWithSelectedUsers selectedUsers: [ZMUser]?, from sourceView: UIView?) {
-        let participantsController = self.participantsController
-        if (participantsController is UINavigationController) {
-            let navigationController = participantsController as? UINavigationController
-            if (navigationController?.topViewController is GroupDetailsViewController) {
-                (navigationController?.topViewController as? GroupDetailsViewController)?.presentParticipantsDetails(withUsers: conversation.sortedOtherParticipants, selectedUsers: selectedUsers, animated: false)
-            }
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [ZMUser], from sourceView: UIView) {
+        if let groupDetailsViewController = (participantsController as? UINavigationController)?.topViewController as? GroupDetailsViewController {
+                groupDetailsViewController.presentParticipantsDetails(with: conversation.sortedOtherParticipants, selectedUsers: selectedUsers, animated: false)            
         }
         presentParticipantsViewController(participantsController, from: sourceView)
     }
 }
 
-//MARK: - Application Events & Notifications
-
 extension ConversationViewController {
+    
+    @objc(presentParticipantsViewController:fromView:)
+    func presentParticipantsViewController(_ viewController: UIViewController, from sourceView: UIView) {
+        ConversationInputBarViewController.endEditingMessage()
+        inputBarController.inputBar.textView.resignFirstResponder()
+        
+        createAndPresentParticipantsPopoverController(with: sourceView.bounds, from: sourceView, contentViewController: viewController)
+    }
+    
+    //MARK: - Application Events & Notifications
+
     @objc
     func menuDidHide(_ notification: Notification?) {
         inputBarController.inputBar.textView.overrideNextResponder = nil
