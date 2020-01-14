@@ -190,7 +190,7 @@ final class SwiftMockUser: NSObject, UserType {
         return true
     }
     
-    func role(in conversation: ZMConversation) -> Role? {
+    func role(in conversation: ZMConversation) -> RoleType? {
         return nil
     }
 }
