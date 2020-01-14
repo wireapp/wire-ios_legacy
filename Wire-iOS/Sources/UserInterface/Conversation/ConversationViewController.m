@@ -373,17 +373,17 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self openConversationList];
 }
 
-- (void)menuDidHide:(NSNotification *)notification
-{
-    self.inputBarController.inputBar.textView.overrideNextResponder = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
-}
+//- (void)menuDidHide:(NSNotification *)notification
+//{
+//    self.inputBarController.inputBar.textView.overrideNextResponder = nil;
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
+//}
 
 @end
 
 
 #pragma mark - Categories
-
+/*
 @implementation ConversationViewController (Content)
 - (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame {
     [self tapOnUser:user view:view frame:frame];
@@ -490,7 +490,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
+*/
 
 
 @implementation ConversationViewController (Keyboard)

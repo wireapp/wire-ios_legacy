@@ -19,39 +19,39 @@
 import Foundation
 
 @objc
-public protocol ConversationContentViewControllerDelegate : NSObjectProtocol {
+protocol ConversationContentViewControllerDelegate : NSObjectProtocol {
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, willDisplayActiveMediaPlayerFor message: ZMConversationMessage!)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, willDisplayActiveMediaPlayerFor message: ZMConversationMessage?)
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, didEndDisplayingActiveMediaPlayerFor message: ZMConversationMessage!)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, didEndDisplayingActiveMediaPlayerFor message: ZMConversationMessage)
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, didTriggerResending message: ZMConversationMessage!)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerResending message: ZMConversationMessage)
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, didTriggerEditing message: ZMConversationMessage!)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerEditing message: ZMConversationMessage)
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, didTriggerReplyingTo message: ZMConversationMessage!)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerReplyingTo message: ZMConversationMessage)
     
     
-    func conversationContentViewController(_ contentViewController: ConversationContentViewController!, performImageSaveAnimation snapshotView: UIView!, sourceRect: CGRect)
+    func conversationContentViewController(_ contentViewController: ConversationContentViewController, performImageSaveAnimation snapshotView: UIView?, sourceRect: CGRect)
     
     
-    func conversationContentViewController(_ controller: ConversationContentViewController!, shouldBecomeFirstResponderWhenShowMenuFromCell cell: UIView!) -> Bool
+    func conversationContentViewController(_ controller: ConversationContentViewController, shouldBecomeFirstResponderWhenShowMenuFromCell cell: UIView) -> Bool
     
     
-    func conversationContentViewControllerWants(toDismiss controller: ConversationContentViewController!)
+    func conversationContentViewControllerWants(toDismiss controller: ConversationContentViewController)
     
     
-    func conversationContentViewController(_ controller: ConversationContentViewController!, presentGuestOptionsFrom sourceView: UIView!)
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentGuestOptionsFrom sourceView: UIView)
     
     
-    func conversationContentViewController(_ controller: ConversationContentViewController!, presentParticipantsDetailsWithSelectedUsers selectedUsers: [ZMUser]!, from sourceView: UIView!)
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [ZMUser], from sourceView: UIView)
     
     
-    func didTap(onUserAvatar user: UserType!, view: UIView!, frame: CGRect)
+    func didTap(onUserAvatar user: UserType, view: UIView, frame: CGRect)
 }
 
