@@ -1026,6 +1026,29 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
                        expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
+    func test_Group_ViewerIsMember_OtherIsAdmin() {
+        // GIVEN
+        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
+        let memberRole = MockRole(name: ZMConversation.defaultMemberRoleName)
+
+        selfUser.conversationRole = memberRole
+        selfUser.canModifyOtherMemberInConversation = false
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.conversationRole = adminRole
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
 
     // MARK: - Pending Connection
 
