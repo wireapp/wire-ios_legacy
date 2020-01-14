@@ -945,7 +945,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser,
                        viewer: selfUser,
                        conversation: group,
-                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+                       expectedContents: [.groupAdminStatus(enabled: true), richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
     func test_Group_ViewerIsAdmin_OtherIsNotAdmin() {
@@ -969,7 +969,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser,
                        viewer: selfUser,
                        conversation: group,
-                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+                       expectedContents: [.groupAdminStatus(enabled: false), richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
     func test_Group_ViewerIsAdmin_OtherIsExternalAdmin() {
@@ -993,7 +993,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: otherUser,
                        viewer: selfUser,
                        conversation: group,
-                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+                       expectedContents: [.groupAdminStatus(enabled: true), richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
     func test_Group_ViewerIsAdmin_OtherIsWirelessAdmin() {
