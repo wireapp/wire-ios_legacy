@@ -29,6 +29,7 @@
 @class MediaPlaybackManager;
 
 @protocol ZMUserSessionInterface;
+@protocol ConversationContentViewControllerDelegate;
 
 /// The main conversation view controller
 @interface ConversationContentViewController : UIViewController

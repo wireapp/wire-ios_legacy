@@ -17,42 +17,42 @@
 // 
 
 
-#import <Foundation/Foundation.h>
-
-@protocol ZMConversationMessage;
-@class ZMUser;
-@class ZMMessage;
-@class ConversationContentViewController;
-@protocol MediaPlayer;
-@protocol UserType;
-
-
-@protocol ConversationContentViewControllerDelegate <NSObject>
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
-  willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
-didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController performImageSaveAnimation:(UIView *)snapshotView sourceRect:(CGRect)sourceRect;
-
-- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UIView *)cell;
-
-- (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller;
-    
-- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView;
-
-- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
-
-@optional
-
-- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame;
-
-@end
+//#import <Foundation/Foundation.h>
+//
+//@protocol ZMConversationMessage;
+//@class ZMUser;
+//@class ZMMessage;
+//@class ConversationContentViewController;
+//@protocol MediaPlayer;
+//@protocol UserType;
+//
+//
+//@protocol ConversationContentViewControllerDelegate <NSObject>
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
+//  willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
+//didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id<ZMConversationMessage>)message;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id<ZMConversationMessage>)message;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController performImageSaveAnimation:(UIView *)snapshotView sourceRect:(CGRect)sourceRect;
+//
+//- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UIView *)cell;
+//
+//- (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller;
+//    
+//- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView;
+//
+//- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray <ZMUser *>*)selectedUsers fromView:(UIView *)sourceView;
+//
+//@optional
+//
+//- (void)didTapOnUserAvatar:(id<UserType>)user view:(UIView *)view frame:(CGRect)frame;
+//
+//@end

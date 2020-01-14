@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class GuestsBarController;
 @class ConversationTitleView;
 @class MediaBarViewController;
+@class ConversationContentViewController;
 
 @protocol InvisibleInputAccessoryViewDelegate;
 @protocol ConversationInputBarViewControllerDelegate;
@@ -84,9 +85,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
-@end
-
-@interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
 @end
 
 @interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
