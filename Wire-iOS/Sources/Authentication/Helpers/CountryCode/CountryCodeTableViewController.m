@@ -58,6 +58,7 @@
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO;
     self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.backgroundColor = UIColor.whiteColor;
 
     self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
     

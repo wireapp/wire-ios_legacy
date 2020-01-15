@@ -20,12 +20,6 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-// TODO: tests for group role label:
-//
-// - viewer is admin and other user is/isn't a admin
-// - other is external and admin (labels don't overlap)
-// - profile is from 1:1 (no admin label)
-// - hide admin label if the other user is a wireless user
 
 final class ProfileDetailsViewControllerTests: XCTestCase {
 
@@ -927,6 +921,115 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         verifyContents(user: guest, viewer: otherUser, conversation: group, expectedContents: [
             .richProfile(defaultRichProfile)
             ])
+    }
+
+    // MARK: Conversation Roles
+
+    func test_Group_ViewerIsAdmin_OtherIsAdmin() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [.groupAdminStatus(enabled: true), richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
+    func test_Group_ViewerIsAdmin_OtherIsNotAdmin() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = false
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [.groupAdminStatus(enabled: false), richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
+    func test_Group_ViewerIsAdmin_OtherIsExternalAdmin() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = true
+        otherUser.isGuestInConversation = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [.groupAdminStatus(enabled: true), richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
+    func test_Group_ViewerIsAdmin_OtherIsWirelessAdmin() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = true
+        selfUser.canModifyOtherMemberInConversation = true
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = true
+        otherUser.isWirelessUser = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
+    }
+
+    func test_Group_ViewerIsMember_OtherIsAdmin() {
+        // GIVEN
+        selfUser.isGroupAdminInConversation = false
+        selfUser.canModifyOtherMemberInConversation = false
+
+        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        otherUser.isGroupAdminInConversation = true
+        otherUser.availability = .busy
+        otherUser.richProfile = defaultRichProfile
+
+        let group = MockConversation.groupConversation()
+        group.activeParticipants = [selfUser, otherUser]
+
+        // THEN
+        verifyProfile(user: otherUser, viewer: selfUser, conversation: group, context: .groupConversation)
+        verifyContents(user: otherUser,
+                       viewer: selfUser,
+                       conversation: group,
+                       expectedContents: [richProfileItemWithEmailAndDefaultData(for: otherUser)])
     }
 
     // MARK: - Pending Connection

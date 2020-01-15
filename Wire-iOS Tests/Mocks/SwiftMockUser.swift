@@ -213,7 +213,7 @@ class SwiftMockUser: NSObject, UserType {
         return true
     }
     
-    func role(in conversation: ZMConversation) -> Role? {
-        return nil
+    func isGroupAdmin(in conversation: ZMConversation) -> Bool {
+        return true
     }
 }
