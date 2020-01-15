@@ -40,7 +40,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
         guard let row = (internalParticipants.firstIndex {
             ($0 as? ZMUser)?.remoteIdentifier == user.remoteIdentifier
         }) else { return nil }
-        let section = user.isAdminGroup(conversation: conversation) ? 0 : 1
+        let section = user.isGroupAdmin(in: conversation) ? 0 : 1
         return IndexPath(row: row, section: section)
     }
     
@@ -75,8 +75,8 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     }
     
     private func computeParticipantGroups()  {
-        admins = participants.filter({$0.isAdminGroup(conversation: conversation)})
-        members = participants.filter({!$0.isAdminGroup(conversation: conversation)})
+        admins = participants.filter({$0.isGroupAdmin(in: conversation)})
+        members = participants.filter({!$0.isGroupAdmin(in: conversation)})
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {

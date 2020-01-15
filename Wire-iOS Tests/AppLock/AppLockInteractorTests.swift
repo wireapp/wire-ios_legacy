@@ -77,7 +77,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatIsAuthenticationNeededReturnsTrueIfNeeded() {
         //given
-        set(appLockActive: true, timeoutReached: true)
+        set(appLockActive: true, timeoutReached: true, authenticatedAppState: true)
         
         //when / then
         XCTAssertTrue(sut.isAuthenticationNeeded)
@@ -85,7 +85,7 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatIsAuthenticationNeededReturnsFalseIfTimeoutNotReached() {
         //given
-        set(appLockActive: true, timeoutReached: false)
+        set(appLockActive: true, timeoutReached: false, authenticatedAppState: true)
         
         //when / then
         XCTAssertFalse(sut.isAuthenticationNeeded)
@@ -93,7 +93,15 @@ final class AppLockInteractorTests: XCTestCase {
     
     func testThatIsAuthenticationNeededReturnsFalseIfAppLockNotActive() {
         //given - appLock not active
-        set(appLockActive: false, timeoutReached: true)
+        set(appLockActive: false, timeoutReached: true, authenticatedAppState: true)
+        
+        //when / then
+        XCTAssertFalse(sut.isAuthenticationNeeded)
+    }
+    
+    func testThatIsAuthenticationNeededReturnsFalseIfAppStateNotAuthenticated() {
+        //given
+        set(appLockActive: true, timeoutReached: true, authenticatedAppState: false)
         
         //when / then
         XCTAssertFalse(sut.isAuthenticationNeeded)
@@ -164,13 +172,34 @@ final class AppLockInteractorTests: XCTestCase {
         //then
         XCTAssertFalse(AppLockMock.didPersistBiometrics)
     }
+    
+    func testThatAppStateDidTransitionToNewAppStateUpdatesAppState() {
+        //given
+        sut.appState = nil
+        let appState = AppState.authenticated(completedRegistration: false)
+        //when
+        sut.appStateDidTransition(to: appState)
+        //the
+        XCTAssertEqual(sut.appState, appState)
+    }
+    
+    func testThatStateChangeFromUnauthenticatedToAuthenticationUpdatesLastUnlockedDate() {
+        //given
+        AppLock.lastUnlockedDate = Date(timeIntervalSince1970: 0)
+        sut.appState = AppState.unauthenticated(error: nil)
+        //when
+        sut.appStateDidTransition(to: AppState.authenticated(completedRegistration: false))
+        //then
+        XCTAssert(AppLock.lastUnlockedDate > Date(timeIntervalSince1970: 0))
+    }
 }
 
 extension AppLockInteractorTests {
-    func set(appLockActive: Bool, timeoutReached: Bool) {
+    func set(appLockActive: Bool, timeoutReached: Bool, authenticatedAppState: Bool) {
         AppLock.isActive = appLockActive
         AppLock.rules = AppLockRules(useBiometricsOrAccountPassword: false, forceAppLock: false, appLockTimeout: 900)
         let timeInterval = timeoutReached ? -Double(AppLock.rules.appLockTimeout)-100 : -10
         AppLock.lastUnlockedDate = Date(timeIntervalSinceNow: timeInterval)
+        sut.appState = authenticatedAppState ? AppState.authenticated(completedRegistration: false) : AppState.unauthenticated(error: nil)
     }
 }

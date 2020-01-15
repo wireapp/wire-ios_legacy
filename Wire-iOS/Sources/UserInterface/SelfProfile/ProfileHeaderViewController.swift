@@ -119,7 +119,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     
     init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
         self.user = user
-        isAdminRole = conversation.map(self.user.isAdminGroup) ?? false
+        isAdminRole = conversation.map(self.user.isGroupAdmin) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.options = options
@@ -260,7 +260,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         let groupRoleIndicatorHidden: Bool
         switch conversation?.conversationType {
         case .group?:
-            groupRoleIndicatorHidden = !(conversation.map(user.isAdminGroup) ?? false)
+            groupRoleIndicatorHidden = !(conversation.map(user.isGroupAdmin) ?? false)
         default:
             groupRoleIndicatorHidden = true
         }
