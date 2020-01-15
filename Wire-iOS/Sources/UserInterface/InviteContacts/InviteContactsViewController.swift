@@ -148,7 +148,7 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         return true
     }
 
-    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool {
+    var shouldDisplayActionButton: Bool {
         return true
     }
     

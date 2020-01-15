@@ -20,15 +20,17 @@ import Foundation
 
 extension ContactsViewController: ContactsDataSourceDelegate {
 
-    func actionButtonHidden(user: ZMSearchUser) -> Bool {
-        if let shouldDisplayActionButtonForUser = contentDelegate?.contactsViewController(self, shouldDisplayActionButtonFor: user) {
+    func actionButtonHidden() -> Bool {
+        if let shouldDisplayActionButtonForUser = contentDelegate?.shouldDisplayActionButton {
             return !shouldDisplayActionButtonForUser
         } else {
             return true
         }
     }
 
-    public func dataSource(_ dataSource: ContactsDataSource, cellFor user: ZMSearchUser, at indexPath: IndexPath) -> UITableViewCell {
+    public func dataSource(_ dataSource: ContactsDataSource,
+                           cellFor user: UserType,
+                           at indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
             fatal("Cannot create cell")
         }
@@ -44,13 +46,13 @@ extension ContactsViewController: ContactsDataSourceDelegate {
 
             self.contentDelegate?.contactsViewController(self, actionButton: cell.actionButton, pressedFor: user)
 
-            cell.actionButton.isHidden = self.actionButtonHidden(user: user)
+            cell.actionButton.isHidden = actionButtonHidden()
         }
 
-        cell.actionButton.isHidden = actionButtonHidden(user: user)
+        cell.actionButton.isHidden = actionButtonHidden()
 
         if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: user.user, isIgnored: user.user?.isIgnored ?? false),
+            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false),
             let actionButtonTitles = self.actionButtonTitles() as? [String] {
 
                 let titleString = actionButtonTitles[Int(index)]

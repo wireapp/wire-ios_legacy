@@ -30,8 +30,7 @@ protocol ContactsViewControllerDelegate: NSObjectProtocol {
 @objc
 protocol ContactsViewControllerContentDelegate: NSObjectProtocol {
     
-    
-    func contactsViewController(_ controller: ContactsViewController, shouldDisplayActionButtonFor user: ZMSearchUser) -> Bool
+    var shouldDisplayActionButton: Bool { get }
     
     func contactsViewController(_ controller: ContactsViewController,
                                 actionButton: UIButton, pressedFor user: ZMSearchUser)
