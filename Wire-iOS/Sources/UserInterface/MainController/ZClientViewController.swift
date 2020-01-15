@@ -679,6 +679,7 @@ final class ZClientViewController: UIViewController {
 
     ///MARK: - select conversation
 
+    ///TODO: no objc
     @objc(selectConversation:focusOnView:animated:)
     func select(_ conversation: ZMConversation,
                 focusOnView focus: Bool,

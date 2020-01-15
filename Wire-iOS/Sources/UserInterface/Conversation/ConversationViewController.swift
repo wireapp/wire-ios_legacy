@@ -20,6 +20,19 @@ import Foundation
 
 extension ConversationViewController {
     @objc
+    func addParticipants(_ participants: Set<ZMUser>) {
+        var newConversation: ZMConversation? = nil
+        
+        ZMUserSession.shared()?.enqueueChanges({
+            newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
+        }, completionHandler: { [weak self] in
+            if let newConversation = newConversation {
+                self?.zClientViewController?.select(newConversation, focusOnView: true, animated: true)
+            }
+        })
+    }
+    
+    @objc
     func createContentViewController() {
         contentViewController = ConversationContentViewController(conversation: conversation,
                                                                   message: visibleMessage,
