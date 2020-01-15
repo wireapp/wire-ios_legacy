@@ -23,11 +23,13 @@ public extension UIApplication {
     
     static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
-    @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
+    @objc
+    func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
         wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
     }
 
-    @objc func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
+    @objc
+    func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
         let statusBarHidden: Bool
         let statusBarStyle: UIStatusBarStyle
         

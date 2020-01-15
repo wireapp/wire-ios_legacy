@@ -86,7 +86,7 @@ final class LinkInteractionTextView: UITextView {
     fileprivate func showAlertIfNeeded(for url: URL, in range: NSRange) -> Bool {
         // only show alert if the link is a markdown link
         guard attributedText.ranges(containing: .link, inRange: range) == [range] else { return false }
-        ZClientViewController.shared()?.present(confirmationAlert(for: url), animated: true, completion: nil)
+        ZClientViewController.shared?.present(confirmationAlert(for: url), animated: true, completion: nil)
         return true
     }
 }

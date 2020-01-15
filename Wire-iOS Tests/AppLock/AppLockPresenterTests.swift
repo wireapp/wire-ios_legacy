@@ -63,6 +63,11 @@ private final class AppLockInteractorMock: AppLockInteractorInput {
         authDescription = description
         didCallEvaluateAuthentication = true
     }
+    
+    var appState: AppState?
+    func appStateDidTransition(to newState: AppState) {
+        appState = newState
+    }
 }
 
 class AppLockPresenterTests: XCTestCase {
@@ -331,9 +336,56 @@ class AppLockPresenterTests: XCTestCase {
         //then
         XCTAssertTrue(appLockInteractor.didCallIsAuthenticationNeeded)
     }
+    
+    func testThatAppStateDidTransitionNotifiesInteractorWithState() {
+        //given
+        let appState = AppState.authenticated(completedRegistration: true)
+        //when
+        sut.appStateDidTransition(notification(for: appState))
+        //then
+        XCTAssertNotNil(appLockInteractor.appState)
+        XCTAssertEqual(appLockInteractor.appState, appState)
+    }
+    
+    func testThatAppStateDidTransitionToAuthenticatedAsksIfApplockIsNeeded() {
+        //given
+        let appState = AppState.authenticated(completedRegistration: true)
+        //when
+        sut.appStateDidTransition(notification(for: appState))
+        //then
+        XCTAssertTrue(appLockInteractor.didCallIsAuthenticationNeeded)
+    }
+    
+    func testThatAppStateDidTransitionToNotAuthenticatedRevealsContent() {
+        //when
+        sut.appStateDidTransition(notification(for: AppState.unauthenticated(error: nil)))
+        //then
+        assert(contentsDimmed: false, reauthVisibile: false)
+
+        //when
+        sut.appStateDidTransition(notification(for: AppState.headless))
+        //then
+        assert(contentsDimmed: false, reauthVisibile: false)
+        
+        //when
+        sut.appStateDidTransition(notification(for: AppState.migrating))
+        //then
+        assert(contentsDimmed: false, reauthVisibile: false)
+        
+        //when
+        sut.appStateDidTransition(notification(for: AppState.blacklisted(jailbroken: true)))
+        //then
+        assert(contentsDimmed: false, reauthVisibile: false)
+    }
 }
 
 extension AppLockPresenterTests {
+    func notification(for appState: AppState) -> Notification {
+        return Notification(name: AppStateController.appStateDidTransition,
+                            object: nil,
+                            userInfo: [AppStateController.appStateKey: appState])
+    }
+    
     func set(authNeeded: Bool, authenticationState: AuthenticationState) {
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor, authenticationState: authenticationState)
         appLockInteractor._isAuthenticationNeeded = authNeeded

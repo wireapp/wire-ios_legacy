@@ -4,8 +4,6 @@
 <dict>
 	<key>AppIdentifierPrefix</key>
 	<string>${AppIdentifierPrefix}</string>
-	<key>ApplicationGroupIdentifier</key>
-	<string>group.${WIRE_BUNDLE_ID}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>

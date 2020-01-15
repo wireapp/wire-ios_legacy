@@ -207,7 +207,7 @@ extension NewDeviceSystemMessageCell {
 
         guard let linkTarget = linkTarget,
               url == type(of: self).userClientURL,
-              let zClientViewController = ZClientViewController.shared() else { return false }
+              let zClientViewController = ZClientViewController.shared else { return false }
 
         switch linkTarget {
         case .user(let user):

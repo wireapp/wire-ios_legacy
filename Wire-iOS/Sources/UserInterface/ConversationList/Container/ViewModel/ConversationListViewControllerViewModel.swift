@@ -106,7 +106,6 @@ extension ConversationListViewController.ViewModel {
         })
     }
 
-
     /// Select a conversation and move the focus to the conversation view.
     ///
     /// - Parameters:
@@ -149,7 +148,7 @@ extension ConversationListViewController.ViewModel {
     }
 
     private var isComingFromRegistration: Bool {
-        return ZClientViewController.shared()?.isComingFromRegistration ?? false
+        return ZClientViewController.shared?.isComingFromRegistration ?? false
     }
 
 

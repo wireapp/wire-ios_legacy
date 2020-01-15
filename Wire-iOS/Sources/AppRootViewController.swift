@@ -242,18 +242,21 @@ final class AppRootViewController: UIViewController {
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
 
-            let clientViewController = ZClientViewController()
-            clientViewController.isComingFromRegistration = completedRegistration
+            if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount {
+                let clientViewController = ZClientViewController(account: selectedAccount,
+                                                                 selfUser: ZMUser.selfUser())
+                clientViewController.isComingFromRegistration = completedRegistration
 
-            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
-            clientViewController.needToShowDataUsagePermissionDialog = false
-            if case .unauthenticated(_) = appStateController.lastAppState {
-                clientViewController.needToShowDataUsagePermissionDialog = true
+                /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+                clientViewController.needToShowDataUsagePermissionDialog = false
+                if case .unauthenticated(_) = appStateController.lastAppState {
+                    clientViewController.needToShowDataUsagePermissionDialog = true
+                }
+
+                Analytics.shared().setTeam(ZMUser.selfUser().team)
+
+                viewController = clientViewController
             }
-
-            Analytics.shared().setTeam(ZMUser.selfUser().team)
-
-            viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
@@ -342,7 +345,7 @@ final class AppRootViewController: UIViewController {
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
-            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
@@ -467,7 +470,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
             selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
             else { return true }
         
-        guard let clientVC = ZClientViewController.shared() else {
+        guard let clientVC = ZClientViewController.shared else {
             return true
         }
 
@@ -482,7 +485,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
         // conversation view is visible for another conversation
         guard
             let convID = userInfo.conversationID,
-            convID != clientVC.currentConversation.remoteIdentifier
+            convID != clientVC.currentConversation?.remoteIdentifier
             else { return false }
         
         return true

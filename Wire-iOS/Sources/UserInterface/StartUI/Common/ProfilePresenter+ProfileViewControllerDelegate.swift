@@ -56,7 +56,7 @@ extension ProfilePresenter: ProfileViewControllerDelegate {
         guard let controller = controller else { return }
         
         dismiss(controller) {
-            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared?.select(conversation, focusOnView: true, animated: true)
         }
     }
 

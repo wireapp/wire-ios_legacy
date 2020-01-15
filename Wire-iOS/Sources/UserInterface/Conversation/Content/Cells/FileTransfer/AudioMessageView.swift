@@ -81,7 +81,7 @@ final class AudioMessageView: UIView, TransferView {
     private var expectingDownload: Bool = false
     
     private var proximityMonitorManager: ProximityMonitorManager? {
-        return ZClientViewController.shared()?.proximityMonitorManager
+        return ZClientViewController.shared?.proximityMonitorManager
     }
 
 
