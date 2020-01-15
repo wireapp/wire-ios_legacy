@@ -931,7 +931,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.isGroupAdminInConversation
+        otherUser.isGroupAdminInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
