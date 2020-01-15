@@ -53,50 +53,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
-
-@end
-
-@interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
-@end
-
-@interface ConversationViewController (Content) <ConversationContentViewControllerDelegate>
-@end
-
-@interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-
-@interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
-@end
-
-@interface ConversationViewController ()
-
-@property (nonatomic) BarController *conversationBarController;
-@property (nonatomic) MediaBarViewController *mediaBarViewController;
-
-@property (nonatomic) ConversationContentViewController *contentViewController;
-@property (nonatomic) UIViewController *participantsController;
-
-@property (nonatomic) ConversationInputBarViewController *inputBarController;
-@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
-
-@property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
-@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
-@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
-@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
-
-@property (nonatomic) id voiceChannelStateObserverToken;
-@property (nonatomic) id conversationObserverToken;
-
-@property (nonatomic) ConversationTitleView *titleView;
-@property (nonatomic) CollectionsViewController *collectionController;
-@property (nonatomic) id conversationListObserverToken;
-@property (nonatomic, readwrite) ConversationCallController *startCallController;
-
-@end
-
-
 
 @implementation ConversationViewController
 
@@ -177,19 +133,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)createContentViewController
-{
-    self.contentViewController = [[ConversationContentViewController alloc] initWithConversation:self.conversation
-                                                                                         message:self.visibleMessage
-                                                                            mediaPlaybackManager:self.zClientViewController.mediaPlaybackManager
-                                                                                         session: self.session];
-    self.contentViewController.delegate = self;
-    self.contentViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-    self.contentViewController.bottomMargin = 16;
-    self.inputBarController.mentionsView = self.contentViewController.mentionsSearchResultsViewController;
-    self.contentViewController.mentionsSearchResultsViewController.delegate = self.inputBarController;
-}
-
 - (void)createOutgoingConnectionViewController
 {
     self.outgoingConnectionViewController = [[OutgoingConnectionViewController alloc] init];
@@ -215,12 +158,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)createConversationBarController
 {
     self.conversationBarController = [[BarController alloc] init];
-}
-
-- (void)createMediaBarViewController
-{
-    self.mediaBarViewController = [[MediaBarViewController alloc] initWithMediaPlaybackManager:[ZClientViewController sharedZClientViewController].mediaPlaybackManager];
-    [self.mediaBarViewController.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTapMediaBar:)]];
 }
     
 - (void)createGuestsBarController
@@ -345,16 +282,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateRightNavigationItemsButtons];
 }
     
-- (void)presentParticipantsViewController:(UIViewController *)viewController fromView:(UIView *)sourceView
-{
-    [ConversationInputBarViewController endEditingMessage];
-    [self.inputBarController.inputBar.textView resignFirstResponder];
-
-    [self createAndPresentParticipantsPopoverControllerWithRect:sourceView.bounds
-                                                       fromView:sourceView
-                                          contentViewController:viewController];
-}
-
 - (void)updateInputBarVisibility
 {
     if (self.conversation.isReadOnly) {
@@ -392,16 +319,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _participantsController = viewController.wrapInNavigationController;
 
     return _participantsController;
-}
-
-- (void)didTapMediaBar:(UITapGestureRecognizer *)tapGestureRecognizer
-{
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    id<ZMConversationMessage>mediaPlayingMessage = mediaPlaybackManager.activeMediaPlayer.sourceMessage;
-
-    if ([self.conversation isEqual:mediaPlayingMessage.conversation]) {
-        [self.contentViewController scrollToMessage:mediaPlayingMessage completion:nil];
-    }
 }
 
 - (void)addParticipants:(NSSet *)participants
@@ -449,121 +366,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self openConversationList];
 }
 
-- (void)menuDidHide:(NSNotification *)notification
-{
-    self.inputBarController.inputBar.textView.overrideNextResponder = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIMenuControllerDidHideMenuNotification object:nil];
-}
-
 @end
-
-
-#pragma mark - Categories
-
-@implementation ConversationViewController (Content)
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController willDisplayActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
-{
-    [self.conversationBarController dismissBar:self.mediaBarViewController];
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didEndDisplayingActiveMediaPlayerForMessage:(id<ZMConversationMessage>)message
-{
-    [self.conversationBarController presentBar:self.mediaBarViewController];
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerResendingMessage:(id <ZMConversationMessage>)message
-{
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        [message resend];
-    }];
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerEditingMessage:(id <ZMConversationMessage>)message
-{
-    NSString *text = message.textMessageData.messageText;
-    
-    if (nil != text) {
-        [self.inputBarController editMessage:message];
-    }
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController didTriggerReplyingToMessage:(id<ZMConversationMessage>)message
-{
-    ReplyComposingView *replyComposingView = [contentViewController createReplyComposingViewForMessage:message];
-    [self.inputBarController replyToMessage:message composingView:replyComposingView];
-}
-
-- (BOOL)conversationContentViewController:(ConversationContentViewController *)controller shouldBecomeFirstResponderWhenShowMenuFromCell:(UIView *)cell
-{
-    if ([self.inputBarController.inputBar.textView isFirstResponder]) {
-        self.inputBarController.inputBar.textView.overrideNextResponder = cell;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(menuDidHide:)
-                                                     name:UIMenuControllerDidHideMenuNotification
-                                                   object:nil];
-        
-        return NO;
-    }
-    else {
-        return YES;
-    }
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)contentViewController
-                performImageSaveAnimation:(UIView *)snapshotView
-                               sourceRect:(CGRect)sourceRect
-{
-    [self.view addSubview:snapshotView];
-    snapshotView.frame = [self.view convertRect:sourceRect fromView:contentViewController.view];
-
-    UIView *targetView = self.inputBarController.photoButton;
-    CGPoint targetCenter = [self.view convertPoint:targetView.center fromView:targetView.superview];
-    
-    [UIView animateWithDuration:0.33 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        snapshotView.center = targetCenter;
-        snapshotView.alpha = 0;
-        snapshotView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    } completion:^(__unused BOOL finished) {
-        [snapshotView removeFromSuperview];
-        [self.inputBarController bounceCameraIcon];
-    }];
-}
-
-- (void)conversationContentViewControllerWantsToDismiss:(ConversationContentViewController *)controller
-{
-    [self openConversationList];
-}
-    
-- (void)conversationContentViewController:(ConversationContentViewController *)controller presentGuestOptionsFromView:(UIView *)sourceView
-{
-    if (self.conversation.conversationType != ZMConversationTypeGroup) {
-        ZMLogError(@"Illegal Operation: Trying to show guest options for non-group conversation");
-        return;
-    }
-    GroupDetailsViewController *groupDetailsViewController = [[GroupDetailsViewController alloc] initWithConversation:self.conversation];
-    UINavigationController *navigationController = groupDetailsViewController.wrapInNavigationController;
-    [groupDetailsViewController presentGuestOptionsAnimated:NO];
-    [self presentParticipantsViewController:navigationController fromView:sourceView];
-}
-
-- (void)conversationContentViewController:(ConversationContentViewController *)controller presentParticipantsDetailsWithSelectedUsers:(NSArray<ZMUser *> *)selectedUsers fromView:(UIView *)sourceView
-{
-    UIViewController *participantsController = self.participantsController;
-    if ([participantsController isKindOfClass:UINavigationController.class]) {
-        UINavigationController *navigationController = (UINavigationController *)participantsController;
-        if ([navigationController.topViewController isKindOfClass:GroupDetailsViewController.class]) {
-            [(GroupDetailsViewController *)navigationController.topViewController presentParticipantsDetailsWithUsers:self.conversation.sortedOtherParticipants
-                                                                                                        selectedUsers:selectedUsers
-                                                                                                             animated:NO];
-        }
-    }
-    [self presentParticipantsViewController:participantsController fromView:sourceView];
-}
-
-@end
-
 
 
 @implementation ConversationViewController (Keyboard)
