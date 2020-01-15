@@ -927,13 +927,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ViewerIsAdmin_OtherIsAdmin() {
         // GIVEN
-        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
-
-        selfUser.conversationRole = adminRole
+        selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.conversationRole = adminRole
+        otherUser.isGroupAdminInConversation
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
@@ -950,14 +948,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ViewerIsAdmin_OtherIsNotAdmin() {
         // GIVEN
-        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
-        let memberRole = MockRole(name: ZMConversation.defaultMemberRoleName)
-
-        selfUser.conversationRole = adminRole
+        selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.conversationRole = memberRole
+        otherUser.isGroupAdminInConversation = false
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
@@ -974,13 +969,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ViewerIsAdmin_OtherIsExternalAdmin() {
         // GIVEN
-        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
-
-        selfUser.conversationRole = adminRole
+        selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.conversationRole = adminRole
+        otherUser.isGroupAdminInConversation = true
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -998,13 +991,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ViewerIsAdmin_OtherIsWirelessAdmin() {
         // GIVEN
-        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
-
-        selfUser.conversationRole = adminRole
+        selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.conversationRole = adminRole
+        otherUser.isGroupAdminInConversation = true
         otherUser.isWirelessUser = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -1022,14 +1013,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ViewerIsMember_OtherIsAdmin() {
         // GIVEN
-        let adminRole = MockRole(name: ZMConversation.defaultAdminRoleName)
-        let memberRole = MockRole(name: ZMConversation.defaultMemberRoleName)
-
-        selfUser.conversationRole = memberRole
+        selfUser.isGroupAdminInConversation = false
         selfUser.canModifyOtherMemberInConversation = false
 
         let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-        otherUser.conversationRole = adminRole
+        otherUser.isGroupAdminInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
