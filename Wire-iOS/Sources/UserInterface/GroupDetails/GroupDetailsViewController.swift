@@ -126,8 +126,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             
-            let admins = participants.filter({$0.isAdminGroup(conversation: conversation)})
-            let members = participants.filter({!$0.isAdminGroup(conversation: conversation)})
+            let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
+            let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
             
             if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
                 if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section

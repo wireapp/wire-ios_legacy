@@ -49,7 +49,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             actionModifyName.name = "modify_conversation_name"
             
             selfUser.membership?.setTeamRole(.member)
-            let groupRole = selfUser.role(in: groupConversation) as? Role
+            let groupRole = selfUser.role(in: groupConversation)
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
             
@@ -86,7 +86,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             selfUser.membership?.setTeamRole(.member)
             groupConversation.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            let groupRole = selfUser.role(in: groupConversation) as? Role
+            let groupRole = selfUser.role(in: groupConversation)
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName, actionModifyAccess, actionReceiptMode])
             sut = GroupDetailsViewController(conversation: groupConversation)
             
@@ -117,7 +117,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         actionModifyName.name = "modify_conversation_name"
         
         nonTeamTest {
-            let groupRole = selfUser.role(in: groupConversation) as? Role
+            let groupRole = selfUser.role(in: groupConversation)
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversation)
             
@@ -160,7 +160,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
             selfUser.membership?.setTeamRole(.admin)
             groupConversationAdmin.team =  selfUser.team
             groupConversation.teamRemoteIdentifier = selfUser.team?.remoteIdentifier
-            let groupRole = selfUser.role(in: groupConversationAdmin) as? Role
+            let groupRole = selfUser.role(in: groupConversationAdmin)
             groupRole?.actions = Set([actionAddMember, actionModifyTimer, actionModifyName])
             sut = GroupDetailsViewController(conversation: groupConversationAdmin)
             

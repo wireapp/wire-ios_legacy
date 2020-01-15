@@ -84,7 +84,7 @@ final class ProfileDetailsViewController: UIViewController, Themeable {
         profileHeaderOptions.insert(.hideAvailability)
         
         self.user = user
-        isAdminRole = conversation.map(user.isAdminGroup) ?? false
+        isAdminRole = conversation.map(user.isGroupAdmin) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.context = context

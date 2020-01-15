@@ -68,8 +68,8 @@
 @property (nonatomic, assign) BOOL isServiceUser;
 @property (nonatomic, readwrite) BOOL isTeamMember;
 @property (nonatomic, readwrite) TeamRole teamRole;
-@property (nonatomic, readwrite, nullable) MockRole *conversationRole;
 @property (nonatomic, assign) BOOL isGuestInConversation;
+@property (nonatomic, assign) BOOL isGroupAdminInConversation;
 @property (nonatomic, copy) NSString *displayName;
 @property (nonatomic, copy) NSString *teamName;
 @property (nonatomic, readwrite) BOOL canManageTeam;

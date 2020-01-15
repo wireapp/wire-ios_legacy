@@ -373,8 +373,9 @@ static id<UserType> mockSelfUser = nil;
     return self.canLeaveConversation;
 }
 
-- (id<RoleType> _Nullable)roleInConversation:(ZMConversation * _Nonnull)conversation {
-    return (id<RoleType>)self.conversationRole;
+- (BOOL)isGroupAdminInConversation:(ZMConversation *)conversation
+{
+    return self.isGroupAdminInConversation;
 }
 
 @end
