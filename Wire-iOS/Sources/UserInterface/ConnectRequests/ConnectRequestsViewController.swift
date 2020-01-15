@@ -123,21 +123,22 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.selectionStyle = .none
         cell.separatorInset = .zero
         cell.preservesSuperviewLayoutMargins = false
-        cell.layoutMargins = .zero
+        cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         
         cell.acceptBlock = { [weak self] in
-            if self?.connectionRequests.isEmpty == true {
-                ZClientViewController.shared?.hideIncomingContactRequests() {
-                    if let oneToOneConversation = user?.oneToOneConversation {
-                        ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
-                    }               }
+            guard self?.connectionRequests.isEmpty == true else { return }
+
+            ZClientViewController.shared?.hideIncomingContactRequests() {
+                if let oneToOneConversation = user?.oneToOneConversation {
+                    ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
+                }
             }
         }
         
         cell.ignoreBlock = { [weak self] in
-            if self?.connectionRequests.isEmpty == true {
-                ZClientViewController.shared?.hideIncomingContactRequests()
-            }
+            guard self?.connectionRequests.isEmpty == true else { return }
+
+            ZClientViewController.shared?.hideIncomingContactRequests()
         }
         
     }
