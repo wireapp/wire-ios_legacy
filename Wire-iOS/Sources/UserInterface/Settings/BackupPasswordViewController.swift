@@ -20,12 +20,14 @@ import UIKit
 import WireUtilities
 
 struct Password {
-    static let minimumCharacters = 8
     let value: String
     
     init?(_ value: String) {
-        guard value.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count >= Password.minimumCharacters else { return nil }
-        self.value = value
+        if case PasswordValidationResult.valid = PasswordRuleSet.shared.validatePassword(value) {
+            self.value = value
+        } else {
+            return nil
+        }
     }
 }
 
@@ -62,9 +64,15 @@ final class BackupPasswordViewController: UIViewController {
         key: "self.settings.history_backup.password.description",
         size: .medium,
         weight: .regular,
-        color: .textForeground,
+        color: .textDimmed,
         variant: .light
     )
+    
+    private let passwordRulesLabel = UILabel(key: nil,
+                                             size: .medium,
+                                             weight: .regular,
+                                             color: .textDimmed,
+                                             variant: .light)
     
     init(completion: @escaping Completion) {
         self.completion = completion
@@ -96,8 +104,11 @@ final class BackupPasswordViewController: UIViewController {
         view.backgroundColor = UIColor.from(scheme: .contentBackground, variant: .light)
         
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.textColor = UIColor.from(scheme: .textDimmed, variant: .light)
-        [passwordView, subtitleLabel].forEach {
+        
+        passwordRulesLabel.numberOfLines = 0
+        passwordRulesLabel.text = PasswordRuleSet.localizedErrorMessage
+
+        [passwordView, subtitleLabel, passwordRulesLabel].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -116,9 +127,12 @@ final class BackupPasswordViewController: UIViewController {
             passwordView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             passwordView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             passwordView.heightAnchor.constraint(equalToConstant: 56),
-            subtitleLabel.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 16),
+            subtitleLabel.bottomAnchor.constraint(equalTo: passwordView.topAnchor, constant: -16),
             subtitleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            subtitleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            passwordRulesLabel.topAnchor.constraint(equalTo: passwordView.bottomAnchor, constant: 16),
+            passwordRulesLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            passwordRulesLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
@@ -162,8 +176,12 @@ final class BackupPasswordViewController: UIViewController {
 
 extension BackupPasswordViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-     
-        if let _ = string.rangeOfCharacter(from: CharacterSet.newlines) {
+        
+        if string.containsCharacters(from: .whitespaces) {
+            return false
+        }
+        
+        if string.containsCharacters(from: .newlines) {
             if let _ = password {
                 completeWithCurrentResult()
             }

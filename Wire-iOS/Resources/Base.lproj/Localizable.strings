@@ -1197,7 +1197,7 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Cancel";
 "self.settings.history_backup.password.next" = "Next";
-"self.settings.history_backup.password.placeholder" = "At least 8 characters";
+"self.settings.history_backup.password.placeholder" = "Password";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
