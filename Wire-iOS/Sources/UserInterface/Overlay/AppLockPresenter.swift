@@ -166,6 +166,11 @@ extension AppLockPresenter {
                                                selector: #selector(AppLockPresenter.applicationDidBecomeActive),
                                                name: UIApplication.didBecomeActiveNotification,
                                                object: .none)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appStateDidTransition(_:)),
+                                               name: AppStateController.appStateDidTransition,
+                                               object: .none)
     }
     
     @objc func applicationWillResignActive() {
@@ -185,6 +190,18 @@ extension AppLockPresenter {
     
     @objc func applicationDidBecomeActive() {
         requireAuthenticationIfNeeded()
+    }
+
+    @objc func appStateDidTransition(_ notification: Notification) {
+        guard let appState = notification.userInfo?[AppStateController.appStateKey] as? AppState else { return }
+    
+        appLockInteractorInput.appStateDidTransition(to: appState)
+        switch appState {
+        case .authenticated(completedRegistration: _):
+            requireAuthenticationIfNeeded()
+        default:
+            setContents(dimmed: false)
+        }
     }
 }
 

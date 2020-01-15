@@ -39,12 +39,12 @@ class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
         guard let selfUser = ZMUser.selfUser() else { return }
     
         if selfUser.usesCompanyLogin || password != nil {
-            ZClientViewController.shared()?.showLoadingView = true
+            ZClientViewController.shared?.showLoadingView = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
-                ZClientViewController.shared()?.showLoadingView = false
+                ZClientViewController.shared?.showLoadingView = false
                 
                 if case .failure(let error) = result {
-                    ZClientViewController.shared()?.showAlert(forError: error)
+                    ZClientViewController.shared?.showAlert(forError: error)
                 }
             })
         } else {

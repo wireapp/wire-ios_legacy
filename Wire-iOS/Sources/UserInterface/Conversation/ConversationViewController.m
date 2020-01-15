@@ -35,7 +35,6 @@
 #import "ConversationContentViewController.h"
 #import "TextView.h"
 
-#import "ZClientViewController.h"
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
 #import "MediaBarViewController.h"
@@ -172,7 +171,10 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.invisibleInputAccessoryView.delegate = self;
     self.invisibleInputAccessoryView.userInteractionEnabled = NO; // make it not block touch events
     self.invisibleInputAccessoryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    self.inputBarController.inputBar.invisibleInputAccessoryView = self.invisibleInputAccessoryView;
+    
+    if (!AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal) {
+        self.inputBarController.inputBar.invisibleInputAccessoryView = self.invisibleInputAccessoryView;
+    }
 }
 
 - (void)createContentViewController

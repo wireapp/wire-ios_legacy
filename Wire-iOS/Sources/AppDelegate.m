@@ -24,7 +24,6 @@
 // Helpers
 
 #import "Application+runDuration.h"
-#import "ZClientViewController.h"
 #import "Analytics.h"
 
 NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDidBecomeAvailableNotification";

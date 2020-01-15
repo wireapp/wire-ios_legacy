@@ -29,7 +29,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         withConversationForUsers(users, callback: { conversation in
             guard let conversation = conversation else { return }
             
-            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared?.select(conversation, focusOnView: true, animated: true)
         })
     }
     
@@ -41,7 +41,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     }
 
     func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation) {
-        ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+        ZClientViewController.shared?.select(conversation, focusOnView: true, animated: true)
     }
     
     
@@ -101,7 +101,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                                                                          readReceipts: enableReceipts)
         }, completionHandler:{
             delay(0.3) {
-                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+                ZClientViewController.shared?.select(conversation, focusOnView: true, animated: true)
             }
         })
     }

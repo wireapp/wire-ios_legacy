@@ -297,7 +297,7 @@ extension MessageDetailsContentViewController: ViewControllerDismisser {
 extension MessageDetailsContentViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
 

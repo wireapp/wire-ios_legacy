@@ -52,7 +52,7 @@ final class CallViewController: UIViewController {
     }
     
     init(voiceChannel: VoiceChannel,
-         proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared()?.proximityMonitorManager,
+         proximityMonitorManager: ProximityMonitorManager? = ZClientViewController.shared?.proximityMonitorManager,
          mediaManager: AVSMediaManagerInterface = AVSMediaManager.sharedInstance(),
          permissionsConfiguration: CallPermissionsConfiguration = CallPermissions()) {
         
