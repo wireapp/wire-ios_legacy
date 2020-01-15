@@ -19,6 +19,11 @@
 import Foundation
 
 extension CGFloat {
+    enum IconCell {
+        static let IconWidth: CGFloat = 64
+        static let IconSpacing: CGFloat = 16
+    }
+
     enum StartUI {
         static public let CellHeight: CGFloat = 56
     }

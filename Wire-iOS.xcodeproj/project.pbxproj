@@ -971,7 +971,6 @@
 		D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */; };
 		D5943440203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */; };
 		D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */; };
-		D5C34E91203D7AEA004A0986 /* ToggleSubtitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */; };
 		D5C34E93203D7B2E004A0986 /* CellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */; };
 		D5CA8E572045718900D2F16E /* UINavigationController+CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */; };
 		D5CEBFC3202CA3BA00AFBD3A /* AddParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */; };
@@ -2772,7 +2771,6 @@
 		D5943439203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewModel.swift; sourceTree = "<group>"; };
 		D594343F203DCECA006AA0C0 /* ConversationOptionsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewControllerTests.swift; sourceTree = "<group>"; };
 		D5C34E8D203D75C5004A0986 /* ConversationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationOptionsViewController.swift; sourceTree = "<group>"; };
-		D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSubtitleCell.swift; sourceTree = "<group>"; };
 		D5C34E92203D7B2E004A0986 /* CellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellConfiguration.swift; sourceTree = "<group>"; };
 		D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+CloseButton.swift"; sourceTree = "<group>"; };
 		D5CEBFC2202CA3BA00AFBD3A /* AddParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewModel.swift; sourceTree = "<group>"; };
@@ -6238,7 +6236,6 @@
 				D54224C520513BFD00526A57 /* CellConfiguration+ConversationOptions.swift */,
 				D53DB9A4203EE03400655CB4 /* Conversation+OptionsConfiguration.swift */,
 				D5CA8E562045718900D2F16E /* UINavigationController+CloseButton.swift */,
-				D5C34E90203D7AEA004A0986 /* ToggleSubtitleCell.swift */,
 				D5189476205045A100C095C1 /* LinkHeaderCell.swift */,
 				D518947A20504C6A00C095C1 /* LoadingIndicatorCell.swift */,
 				D54224C320513A9800526A57 /* TextCell.swift */,
@@ -7384,7 +7381,6 @@
 				875E7D192188BCA500E571B7 /* MessagePreviewView.swift in Sources */,
 				D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */,
 				16325E651EE03CC4000E72EB /* SearchResultsView.swift in Sources */,
-				D5C34E91203D7AEA004A0986 /* ToggleSubtitleCell.swift in Sources */,
 				5EFD914421C918E400080599 /* AuthenticationCodeVerificationInputHandler.swift in Sources */,
 				EF883F292151190900B440CC /* UserCellSubtitleProtocol.swift in Sources */,
 				EFDC36DB2257A8F300F916F3 /* CollectionViewContainerCell.swift in Sources */,

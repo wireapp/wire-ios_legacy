@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
+final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
 
     typealias SetHandler = (Bool, (VoidResult) -> Void) -> Void
     var allowGuests: Bool
