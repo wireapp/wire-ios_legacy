@@ -34,6 +34,9 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         }
     }
 
+    private var imageContainerWidthConstraint: NSLayoutConstraint?
+    private var iconImageViewLeadingConstraint: NSLayoutConstraint?
+
     private var subtitleTopConstraint: NSLayoutConstraint?
     private var subtitleBottomConstraint: NSLayoutConstraint?
     private let subtitleInsets = UIEdgeInsets(top: 16, left: 16, bottom: 24, right: 16)
@@ -61,17 +64,15 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         accessibilityElements = [titleLabel, toggle]
     }
     
-    var imageContainerWidthConstraint: NSLayoutConstraint?
-
     private func createConstraints() {
         constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
             self.imageContainerWidthConstraint = imageContainer.width == CGFloat.IconCell.IconWidth
             iconImageView.centerY == topContainer.centerY
-            titleLabel.leading == iconImageView.trailing + CGFloat.ToggleCell.IconSpacing
-            iconImageView.leading == topContainer.leading + CGFloat.ToggleCell.IconSpacing
+            titleLabel.leading == iconImageView.trailing + CGFloat.IconCell.IconSpacing
+            self.iconImageViewLeadingConstraint = iconImageView.leading == topContainer.leading + CGFloat.IconCell.IconSpacing
 
             toggle.centerY == topContainer.centerY
-            toggle.trailing == topContainer.trailing - CGFloat.ToggleCell.IconSpacing
+            toggle.trailing == topContainer.trailing - CGFloat.IconCell.IconSpacing
             titleLabel.centerY == topContainer.centerY
         }
         constrain(contentView, topContainer, subtitleLabel) { contentView, topContainer, subtitleLabel in
@@ -112,9 +113,11 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         
         if let icon = icon {
             iconImageView.setIcon(icon, size: .tiny, color: mainColor)
-            imageContainerWidthConstraint?.constant = 64
+            imageContainerWidthConstraint?.constant = CGFloat.IconCell.IconWidth
+            iconImageViewLeadingConstraint?.constant = CGFloat.IconCell.IconSpacing
         } else {
             imageContainerWidthConstraint?.constant = 0
+            iconImageViewLeadingConstraint?.constant = 0
         }
         
         

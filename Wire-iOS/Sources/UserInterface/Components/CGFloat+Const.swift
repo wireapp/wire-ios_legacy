@@ -20,11 +20,8 @@ import Foundation
 
 extension CGFloat {
     enum IconCell {
-        static public let IconWidth: CGFloat = 64
-    }
-
-    enum ToggleCell {
-        static public let IconSpacing: CGFloat = 16
+        static let IconWidth: CGFloat = 64
+        static let IconSpacing: CGFloat = 16
     }
 
     enum StartUI {
