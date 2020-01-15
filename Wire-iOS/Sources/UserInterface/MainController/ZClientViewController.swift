@@ -300,7 +300,8 @@ final class ZClientViewController: UIViewController {
               animated: Bool,
               completion: Completion? = nil) {
         var conversationRootController: ConversationRootViewController? = nil
-        if conversation == currentConversation {
+        if conversation === currentConversation,
+           conversationRootController != nil {
             if let message = message {
                 conversationRootController?.scroll(to: message)
             }

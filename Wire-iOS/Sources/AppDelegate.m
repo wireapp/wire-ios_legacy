@@ -18,6 +18,7 @@
 
 
 #import "AppDelegate.h"
+#import "AppDelegate+Internal.h"
 
 #import "Wire-Swift.h"
 
@@ -30,15 +31,6 @@ NSString *const ZMUserSessionDidBecomeAvailableNotification = @"ZMUserSessionDid
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 static AppDelegate *sharedAppDelegate = nil;
-
-
-@interface AppDelegate ()
-
-@property (nonatomic) AppRootViewController *rootViewController;
-@property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
-@property (nonatomic, copy) NSDictionary *launchOptions;
-
-@end
 
 
 @interface AppDelegate (PushNotifications)
@@ -242,16 +234,6 @@ performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
 - (UIWindow *)notificationsWindow
 {
     return self.rootViewController.overlayWindow;
-}
-
-- (MediaPlaybackManager *)mediaPlaybackManager
-{
-    if ([self.rootViewController.visibleViewController isKindOfClass:ZClientViewController.class]) {
-        ZClientViewController *clientViewController = (ZClientViewController *)self.rootViewController.visibleViewController;
-        return clientViewController.mediaPlaybackManager;
-    }
-    
-    return nil;
 }
 
 @end

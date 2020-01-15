@@ -25,6 +25,14 @@ NS_ASSUME_NONNULL_BEGIN
 @class BarController;
 @class InvisibleInputAccessoryView;
 @class GuestsBarController;
+@class ConversationTitleView;
+@class MediaBarViewController;
+@class ConversationContentViewController;
+
+@protocol InvisibleInputAccessoryViewDelegate;
+@protocol ConversationInputBarViewControllerDelegate;
+@protocol ZMConversationObserver;
+@protocol ZMConversationListObserver;
 
 @interface ConversationViewController (Private)
 
@@ -42,11 +50,50 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)onBackButtonPressed:(UIButton *)backButton;
 - (void)createOutgoingConnectionViewController;
+- (void)openConversationList;
 
 @end
 
 @interface ConversationViewController ()
 @property (nonatomic) BOOL isAppearing;
+
+@property (nonatomic) BarController *conversationBarController;
+@property (nonatomic, readwrite) MediaBarViewController *mediaBarViewController;
+
+@property (nonatomic) ConversationContentViewController *contentViewController;
+@property (nonatomic) UIViewController *participantsController;
+
+@property (nonatomic) ConversationInputBarViewController *inputBarController;
+@property (nonatomic) OutgoingConnectionViewController *outgoingConnectionViewController;
+
+@property (nonatomic) NSLayoutConstraint *inputBarBottomMargin;
+@property (nonatomic) NSLayoutConstraint *inputBarZeroHeight;
+@property (nonatomic, readwrite) InvisibleInputAccessoryView *invisibleInputAccessoryView;
+@property (nonatomic, readwrite) GuestsBarController *guestsBarController;
+
+@property (nonatomic) id voiceChannelStateObserverToken;
+@property (nonatomic) id conversationObserverToken;
+
+@property (nonatomic) ConversationTitleView *titleView;
+@property (nonatomic) CollectionsViewController *collectionController;
+@property (nonatomic) id conversationListObserverToken;
+@property (nonatomic, readwrite) ConversationCallController *startCallController;
+
 @end
+
+@interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
+
+@end
+
+@interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
+@end
+
+@interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
+@end
+
+
+@interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
+@end
+
 
 NS_ASSUME_NONNULL_END

@@ -41,7 +41,6 @@ FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotif
 
 @property (readonly, nullable) CallWindowRootViewController *callWindowRootViewController;
 @property (readonly, nullable) UIWindow *notificationsWindow;
-@property (readonly, nullable) MediaPlaybackManager *mediaPlaybackManager;
 
 @property (readonly) ApplicationLaunchType launchType;
 

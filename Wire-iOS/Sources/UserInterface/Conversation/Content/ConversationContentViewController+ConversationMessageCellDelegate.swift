@@ -71,7 +71,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
-        delegate?.didTap?(onUserAvatar: user, view: sourceView, frame: frame)
+        delegate?.didTap(onUserAvatar: user, view: sourceView, frame: frame)
     }
 
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
