@@ -159,14 +159,16 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     }
     
     func contactsViewController(_ controller: ContactsViewController,
-                                actionButtonTitleIndexFor user: SearchUser) -> Int {
-        let searchUser: ZMUser? = user.user
-        let isIgnored: Bool? = searchUser?.isIgnored
+                                actionButtonTitleIndexFor user: UserType?,
+                                isIgnored: Bool) -> Int {
+        guard let user = user else { return 1 }
         
-        if user.isConnected || ((searchUser?.isPendingApprovalByOtherUser == true || searchUser?.isPendingApprovalBySelfUser == true) && isIgnored == false) {
+        if user.isConnected ||
+           ((user.isPendingApprovalByOtherUser ||
+             user.isPendingApprovalBySelfUser) && isIgnored) {
             return 0
-        } else if isIgnored == false,
-            searchUser?.isPendingApprovalByOtherUser == false {
+        } else if !isIgnored,
+            !user.isPendingApprovalByOtherUser {
             return 2
         }
         
