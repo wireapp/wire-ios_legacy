@@ -679,7 +679,7 @@ final class ZClientViewController: UIViewController {
 
     ///MARK: - select conversation
 
-    ///TODO: no objc
+    ///TODO: no objc, remove this interface.
     @objc(selectConversation:focusOnView:animated:)
     func select(_ conversation: ZMConversation,
                 focusOnView focus: Bool,
