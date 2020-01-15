@@ -18,8 +18,7 @@
 
 import Foundation
 
-extension ContactsViewController: ContactsDataSourceDelegate {
-
+extension ContactsViewController {
     func actionButtonHidden() -> Bool {
         if let shouldDisplayActionButtonForUser = contentDelegate?.shouldDisplayActionButton {
             return !shouldDisplayActionButtonForUser
@@ -27,7 +26,10 @@ extension ContactsViewController: ContactsDataSourceDelegate {
             return true
         }
     }
+}
 
+extension ContactsViewController: ContactsDataSourceDelegate {
+    
     public func dataSource(_ dataSource: ContactsDataSource,
                            cellFor user: UserType,
                            at indexPath: IndexPath) -> UITableViewCell {
@@ -46,7 +48,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
 
             self.contentDelegate?.contactsViewController(self, actionButton: cell.actionButton, pressedFor: user)
 
-            cell.actionButton.isHidden = actionButtonHidden()
+            cell.actionButton.isHidden = self.actionButtonHidden()
         }
 
         cell.actionButton.isHidden = actionButtonHidden()

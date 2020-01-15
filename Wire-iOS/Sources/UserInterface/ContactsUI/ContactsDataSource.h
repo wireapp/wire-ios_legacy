@@ -27,6 +27,8 @@
 @class ContactsDataSource;
 @class SearchDirectory;
 
+@protocol UserType;
+
 extern const NSUInteger MinimumNumberOfContactsToDisplaySections;
 
 
@@ -36,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ContactsDataSourceDelegate <NSObject>
 
 @required
-- (UITableViewCell *)dataSource:(ContactsDataSource *)dataSource cellForUser:(ZMSearchUser *)user atIndexPath:(NSIndexPath *)indexPath;
+- (UITableViewCell *)dataSource:(ContactsDataSource *)dataSource cellForUser:(id<UserType>)user atIndexPath:(NSIndexPath *)indexPath;
 @optional
 - (void)dataSource:(ContactsDataSource *)dataSource didReceiveSearchResult:(NSArray *)newUsers;
 - (void)dataSource:(ContactsDataSource *)dataSource didSelectUser:(ZMSearchUser *)user;
