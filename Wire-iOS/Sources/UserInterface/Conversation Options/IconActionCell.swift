@@ -51,7 +51,7 @@ final class IconActionCell: UITableViewCell, CellConfigurationConfigurable {
             imageContainer.top == contentView.top
             imageContainer.bottom == contentView.bottom
             imageContainer.leading == contentView.leading
-            imageContainer.width == 64
+            imageContainer.width == CGFloat.IconCell.IconWidth
             imageView.center == imageContainer.center
             
             label.leading == imageContainer.trailing

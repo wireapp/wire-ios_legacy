@@ -18,7 +18,7 @@
 
 import UIKit
 
-class IconToggleCell: DetailsCollectionViewCell {
+final class IconToggleCell: DetailsCollectionViewCell {
     var isOn: Bool {
         set {
             toggle.isOn = newValue

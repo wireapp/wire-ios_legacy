@@ -61,15 +61,17 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
         accessibilityElements = [titleLabel, toggle]
     }
     
-    private func createConstraints() { ///fixme: no cartography
+    var imageContainerWidthConstraint: NSLayoutConstraint?
+
+    private func createConstraints() {
         constrain(topContainer, titleLabel, toggle, iconImageView, imageContainer) { topContainer, titleLabel, toggle, iconImageView, imageContainer in
-            imageContainer.width == 64 ///TODO: constant share with IconActionCell
+            self.imageContainerWidthConstraint = imageContainer.width == CGFloat.IconCell.IconWidth
             iconImageView.centerY == topContainer.centerY
-            titleLabel.leading == iconImageView.trailing + 16 ///FIXME: constant share with toggle cell
-            iconImageView.leading == topContainer.leading + 16
+            titleLabel.leading == iconImageView.trailing + CGFloat.ToggleCell.IconSpacing
+            iconImageView.leading == topContainer.leading + CGFloat.ToggleCell.IconSpacing
 
             toggle.centerY == topContainer.centerY
-            toggle.trailing == topContainer.trailing - 16
+            toggle.trailing == topContainer.trailing - CGFloat.ToggleCell.IconSpacing
             titleLabel.centerY == topContainer.centerY
         }
         constrain(contentView, topContainer, subtitleLabel) { contentView, topContainer, subtitleLabel in
@@ -105,12 +107,20 @@ final class IconToggleSubtitleCell: UITableViewCell, CellConfigurationConfigurab
                                    color,
                                    get,
                                    set) = configuration else { preconditionFailure() }
-        let mainColor = variant.mainColor(color: color)
 
-        iconImageView.setIcon(icon, size: .tiny, color: mainColor)
+        let mainColor = variant.mainColor(color: color)
+        
+        if let icon = icon {
+            iconImageView.setIcon(icon, size: .tiny, color: mainColor)
+            imageContainerWidthConstraint?.constant = 64
+        } else {
+            imageContainerWidthConstraint?.constant = 0
+        }
+        
+        
+        titleLabel.textColor = mainColor
 
         titleLabel.text = title
-        titleLabel.textColor = mainColor
 
         subtitleLabel.text = subtitle
 
