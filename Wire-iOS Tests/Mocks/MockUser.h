@@ -23,7 +23,6 @@
 
 @class MockConversation;
 @class MockLegalHoldDataSource;
-@class MockRole;
 
 @interface MockUser : NSObject<UserType, Mockable>
 + (NSArray <ZMUser *> *)mockUsers;
