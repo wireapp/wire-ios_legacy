@@ -129,7 +129,6 @@
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
-#import "KeyboardFrameObserver.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"
 
