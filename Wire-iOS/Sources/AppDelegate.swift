@@ -46,7 +46,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Singletons
-    private(set) var unauthenticatedSession: UnauthenticatedSession?
+    private(set) var unauthenticatedSession: UnauthenticatedSession {
+        return SessionManager.shared().unauthenticatedSession()
+    }
+    
     private(set) var rootViewController: AppRootViewController!
     private(set) var callWindowRootViewController: CallWindowRootViewController?
     private(set) var notificationsWindow: UIWindow?
@@ -118,13 +121,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupAppCenter() {
             self.rootViewController?.launch(with: launchOptions ?? [:])
-        })
+        }
         
         if let launchOptions = launchOptions {
             self.launchOptions = launchOptions
         }
         
-        zmLog.info("application:didFinishLaunchingWithOptions END \(launchOptions)")
+        zmLog.info("application:didFinishLaunchingWithOptions END \(String(describing: launchOptions))")
         zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
         
         return true
@@ -138,7 +141,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         zmLog.info("applicationDidBecomeActive (applicationState = \(application.applicationState.rawValue))")
         
         switch launchType {
-        case .url, .push:
+        case .url,
+             .push:
             break
         default:
             launchType = .direct
@@ -158,7 +162,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return open(with: url, options: options)
+        return open(url: url, options: options)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
@@ -183,8 +187,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let trackingManager = TrackingManager.shared
         
-        AnalyticsProviderFactory.shared().useConsoleAnalytics = containsConsoleAnalytics
-        Analytics.loadShared(withOptedOut: trackingManager?.disableCrashAndAnalyticsSharing)
+        AnalyticsProviderFactory.shared.useConsoleAnalytics = containsConsoleAnalytics
+        Analytics.loadShared(withOptedOut: trackingManager.disableCrashAndAnalyticsSharing)
     }
     
     @objc
@@ -203,13 +207,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - URL handling
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
-        return SessionManager.shared.continue(userActivity, restorationHandler: restorationHandler)
+        return SessionManager.shared.continueUserActivity(userActivity, restorationHandler: restorationHandler)
     }
     
     // MARK: - AppController
-    func unauthenticatedSession() -> UnauthenticatedSession? {
-        return SessionManager.shared().unauthenticatedSession()
-    }
     
     func callWindowRootViewController() -> CallWindowRootViewController? {
         return rootViewController?.callWindow.rootViewController as? CallWindowRootViewController
