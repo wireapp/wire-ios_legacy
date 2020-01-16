@@ -104,6 +104,6 @@ extension ContactsViewController: SearchHeaderViewControllerDelegate {
             return
         }
 
-        delegate?.contactsViewControllerDidConfirmSelection!(self)
+        delegate?.contactsViewControllerDidConfirmSelection(self)
     }
 }
