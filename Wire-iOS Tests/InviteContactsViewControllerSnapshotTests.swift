@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class InviteContactsViewControllerSnapshotTests: XCTestCase {
 
     var sut: InviteContactsViewController!
 
@@ -53,7 +54,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
         wrapInNavigationControllerWithDummyPerviousViewController()
 
-        verify(view: sut.view, file: file, line: line)
+        verify(matching: sut, file: file, line: line)
     }
 
     func testForNoContacts() {
@@ -73,7 +74,9 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         snapshotWithNavigationBarWithBackButton()
     }
 
+    ///TODO: restore this after fixed Alert tests in SwiftSnapshot 
     /// CI server produce empty snapshot but it works on local machine. It seems the alert with type UIAlertControllerStyleAlert is not shown on CI server.
+    /*
     func DISABLE_testForNoEmailClientAlert() {
         let contact = ZMAddressBookContact()
 
@@ -82,7 +85,7 @@ final class InviteContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
         }
 
         verifyAlertController(alert)
-    }
+    }*/
 
     func testForContactsAndIndexSectionBarAreShown() {
         let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json")

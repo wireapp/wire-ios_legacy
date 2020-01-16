@@ -30,4 +30,8 @@ extension StartUIViewController: ContactsViewControllerDelegate {
         }
     }
 
+    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController!) {
+        // no-op
+    }
+
 }

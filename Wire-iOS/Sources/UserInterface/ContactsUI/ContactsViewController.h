@@ -26,31 +26,10 @@
 @class ZMAddressBookContact;
 @class Button;
 
+@protocol ContactsViewControllerDelegate;
+@protocol ContactsViewControllerContentDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
-
-
-@protocol ContactsViewControllerDelegate <NSObject>
-@optional
-- (void)contactsViewControllerDidCancel:(ContactsViewController * )controller;
-- (void)contactsViewControllerDidNotShareContacts:(ContactsViewController * )controller;
-- (void)contactsViewControllerDidConfirmSelection:(ContactsViewController *)controller;
-@end
-
-
-@protocol ContactsViewControllerContentDelegate <NSObject>
-@optional
-- (BOOL)contactsViewController:(ContactsViewController *)controller shouldDisplayActionButtonForUser:(ZMSearchUser *)user;
-- (void)contactsViewController:(ContactsViewController *)controller actionButton:(UIButton *)actionButton pressedForUser:(ZMSearchUser *)user;
-- (void)contactsViewController:(ContactsViewController *)controller didSelectCell:(ContactsCell *)cell forUser:(ZMSearchUser *)user;
-- (BOOL)contactsViewController:(ContactsViewController *)controller shouldSelectUser:(ZMSearchUser *)user;
-
-// This API might look strange, but we need it for making all the buttons to have same width
-- (NSArray *)actionButtonTitlesForContactsViewController:(ContactsViewController *)controller;
-- (NSUInteger)contactsViewController:(ContactsViewController *)controller actionButtonTitleIndexForUser:(ZMSearchUser *)user;
-@end
-
-
 
 @interface ContactsViewController : UIViewController
 

@@ -27,6 +27,6 @@ extension ContactsViewController: ShareContactsViewControllerDelegate {
     }
     
     func shareDidSkip(_ viewController: UIViewController) {
-        delegate?.contactsViewControllerDidNotShareContacts?(self)
+        delegate?.contactsViewControllerDidNotShareContacts(self)
     }
 }
