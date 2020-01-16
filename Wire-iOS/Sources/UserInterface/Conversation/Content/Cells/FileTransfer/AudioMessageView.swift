@@ -28,7 +28,7 @@ final class AudioMessageView: UIView, TransferView {
     var audioTrackPlayer: AudioTrackPlayer? {
         get {
             if _audioTrackPlayer == nil {
-                _audioTrackPlayer = AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer
+                _audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
                 
                 setupAudioPlayerObservers()
             }

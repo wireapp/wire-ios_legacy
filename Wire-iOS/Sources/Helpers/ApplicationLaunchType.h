@@ -19,11 +19,11 @@
 
 
 
-typedef enum ApplicationLaunchType {
-    ApplicationLaunchUnknown,
-    ApplicationLaunchDirect,
-    ApplicationLaunchPush,
-    ApplicationLaunchURL,
-    ApplicationLaunchRegistration,
-    ApplicationLaunchPasswordReset
-} ApplicationLaunchType;
+//typedef enum ApplicationLaunchType {
+//    ApplicationLaunchUnknown,
+//    ApplicationLaunchDirect,
+//    ApplicationLaunchPush,
+//    ApplicationLaunchURL,
+//    ApplicationLaunchRegistration,
+//    ApplicationLaunchPasswordReset
+//} ApplicationLaunchType;

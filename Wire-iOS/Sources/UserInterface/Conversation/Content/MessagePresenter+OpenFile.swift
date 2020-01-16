@@ -27,7 +27,7 @@ extension MessagePresenter {
     ///
     /// - Parameter mediaPlaybackManager: for testing only
     @objc
-    convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared().mediaPlaybackManager) {
+    convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
         self.init()
 
         self.mediaPlaybackManager = mediaPlaybackManager

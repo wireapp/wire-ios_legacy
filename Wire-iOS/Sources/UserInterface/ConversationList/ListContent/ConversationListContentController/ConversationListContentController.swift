@@ -77,7 +77,7 @@ final class ConversationListContentController: UICollectionViewController {
 
         scrollToCurrentSelection(animated: false)
 
-        if let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager {
+        if let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager {
             activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)))
 
             self.mediaPlaybackManager = mediaPlaybackManager

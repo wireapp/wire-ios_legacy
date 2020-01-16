@@ -133,7 +133,7 @@ final class SavableImage: NSObject {
             cancelButtonTitle: "general.ok".localized
         )
 
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true)
+        AppDelegate.shared.notificationsWindow?.rootViewController?.present(alert, animated: true)
     }
 
 }

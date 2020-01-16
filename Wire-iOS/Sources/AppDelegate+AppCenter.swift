@@ -24,7 +24,7 @@ import AppCenterDistribute
 
 
 extension AppDelegate {
-
+    
     var zmLog: ZMSLog {
         return ZMSLog(tag: "UI")
     }
@@ -71,14 +71,15 @@ extension AppDelegate {
         }
     }
     
-    @objc func crashReportUploadDone() {
+    @objc
+    private func crashReportUploadDone() {
         
         zmLog.error("AppCenterIntegration: finished or timed out sending the crash report")
         
-        if self.appCenterInitCompletion != nil {
-            self.appCenterInitCompletion?()
+        if appCenterInitCompletion != nil {
+            appCenterInitCompletion?()
             zmLog.error("AppCenterIntegration: END Waiting for the crash log upload...")
-            self.appCenterInitCompletion = nil
+            appCenterInitCompletion = nil
         }
         
     }
@@ -97,5 +98,5 @@ extension AppDelegate: MSCrashesDelegate {
     public func crashes(_ crashes: MSCrashes!, didSucceedSending errorReport: MSErrorReport!) {
         crashReportUploadDone()
     }
-
+    
 }

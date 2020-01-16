@@ -36,9 +36,9 @@ final class AppLockViewController: UIViewController {
             view.window?.isHidden = !dimContents
             
             if dimContents {
-                AppDelegate.shared().notificationsWindow?.makeKey()
+                AppDelegate.shared.notificationsWindow?.makeKey()
             } else {
-                AppDelegate.shared().window.makeKey()
+                AppDelegate.shared.window?.makeKey()
             }
         }
     }
