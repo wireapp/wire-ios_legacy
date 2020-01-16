@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
+/*
 @import UIKit;
 
 #import "ApplicationLaunchType.h"
@@ -49,3 +49,4 @@ FOUNDATION_EXPORT NSString * _Nonnull const ZMUserSessionDidBecomeAvailableNotif
 + (instancetype _Nonnull )sharedAppDelegate;
 
 @end
+*/

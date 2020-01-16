@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+/*
 @interface AppDelegate ()
 
 @property (nonatomic, nullable) AppRootViewController *rootViewController;
@@ -23,3 +24,4 @@
 @property (nonatomic, copy, nonnull) NSDictionary *launchOptions;
 
 @end
+*/
