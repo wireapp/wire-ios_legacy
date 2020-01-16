@@ -50,7 +50,7 @@ final class MediaBarViewController: UIViewController {
         updatePlayPauseButton()
     }
     
-    func updateTitleLabel() {
+    private func updateTitleLabel() {
         mediaBarView?.titleLabel.text = mediaPlaybackManager?.activeMediaPlayer?.title?.uppercasedWithCurrentLocale
     }
     
@@ -90,7 +90,7 @@ final class MediaBarViewController: UIViewController {
 extension MediaBarViewController: MediaPlaybackManagerChangeObserver {
     
     func activeMediaPlayerTitleDidChange() {
-        mediaBarView?.titleLabel?.text = mediaPlaybackManager?.activeMediaPlayer?.title?.uppercasedWithCurrentLocale
+        updateTitleLabel()
     }
     
     func activeMediaPlayerStateDidChange() {
