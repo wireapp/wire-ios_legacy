@@ -64,6 +64,8 @@ static Analytics *sharedAnalytics = nil;
     if (self) {
         ZMLogInfo(@"Analytics initWithOptedOut: %lu", (unsigned long)optedOut);
         self.provider = optedOut ? nil : [[AnalyticsProviderFactory shared] analyticsProvider];
+        
+        ///TODO:
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
     }
     return self;

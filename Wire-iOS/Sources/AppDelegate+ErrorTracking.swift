@@ -21,7 +21,7 @@ import Foundation
 
 extension AppDelegate {
     
-    @objc public func trackErrors() {
+    func trackErrors() {
         ZMUserSession.shared()?.registerForSaveFailure(handler: { (metadata, type, error, userInfo) in
             let name = "debug.database_context_save_failure"
             let attributes = [
