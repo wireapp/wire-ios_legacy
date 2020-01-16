@@ -93,8 +93,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "KeyboardAvoidingViewController.h"
-#import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
 #import "ContactsDataSource.h"
 #import "Button.h"

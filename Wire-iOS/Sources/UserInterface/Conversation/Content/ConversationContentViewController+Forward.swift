@@ -156,12 +156,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         )
 
         let keyboardAvoiding = KeyboardAvoidingViewController(viewController: shareViewController)
-        
-        keyboardAvoiding.shouldAdjustFrame = { controller in
-            // We do not want to adjust the keyboard frame when we are being presented in a popover.
-            controller.popoverPresentationController?.arrowDirection == .unknown
-        }
-        
+        keyboardAvoiding.disabledWhenInsidePopover = true
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
