@@ -218,7 +218,7 @@ final class ZClientViewController: UIViewController {
         // if changing from compact width to regular width, make sure current conversation is loaded
         if previousTraitCollection?.horizontalSizeClass == .compact && traitCollection.horizontalSizeClass == .regular {
             if let currentConversation = currentConversation {
-                select(currentConversation)
+                select(conversation: currentConversation)
             } else {
                 attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
@@ -251,8 +251,8 @@ final class ZClientViewController: UIViewController {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationsList = ZMConversationList.conversations(inUserSession: userSession)
-        if conversationsList.count != 0 {
-            select(conversationsList.first)
+        if let conversation = (conversationsList as? [ZMConversation])?.first {
+            select(conversation: conversation)
         }
         
         wireSplitViewController.setLeftViewControllerRevealed(true, animated: true, completion: completion)
@@ -696,7 +696,7 @@ final class ZClientViewController: UIViewController {
         })
     }
 
-    func select(_ conversation: ZMConversation) {
+    func select(conversation: ZMConversation) {
         conversationListViewController.viewModel.select(conversation)
     }
 
