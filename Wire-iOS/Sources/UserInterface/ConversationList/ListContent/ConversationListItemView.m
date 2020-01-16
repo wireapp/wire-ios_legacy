@@ -50,10 +50,7 @@ NSString * const ConversationListItemDidScrollNotification = @"ConversationListI
                                                      name:UIContentSizeCategoryDidChangeNotification
                                                    object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(mediaPlayerStateChanged:)
-                                                     name:MediaPlaybackManagerPlayerStateChangedNotification
-                                                   object:nil];
+        [self addMediaPlaybackManagerPlayerStateObserver];
 
         [self setupStyle];
     }

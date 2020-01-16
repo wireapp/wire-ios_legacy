@@ -41,7 +41,6 @@
 #import "UIView+Zeta.h"
 #import "Analytics.h"
 #import "AppDelegate.h"
-#import "MediaPlaybackManager.h"
 #import "MessagePresenter.h"
 #import "UIViewController+WR_Additions.h"
 

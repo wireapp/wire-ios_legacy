@@ -25,7 +25,6 @@
 
 #import "Settings.h"
 
-#import "MediaPlaybackManager.h"
 #import "MediaPlayer.h"
 #import "AppDelegate.h"
 
@@ -121,7 +120,7 @@
 {
     MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
     
-    if (mediaPlaybackManager.activeMediaPlayer != nil &&
+    if (mediaPlaybackManager.activeMediaPlayer != nil && ///TODO: swift
         mediaPlaybackManager.activeMediaPlayer.sourceMessage.conversation == self.conversation) {
         [self toggleMediaPlayer];
     }
