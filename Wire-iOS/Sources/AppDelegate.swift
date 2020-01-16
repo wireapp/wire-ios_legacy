@@ -35,6 +35,7 @@ private let zmLog = ZMSLog(tag: "AppDelegate")
 
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    @objc
     var window: UIWindow? {
         get {
             return rootViewController?.mainWindow
@@ -46,20 +47,27 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Singletons
-    private(set) var unauthenticatedSession: UnauthenticatedSession {
-        return SessionManager.shared().unauthenticatedSession()
+    var unauthenticatedSession: UnauthenticatedSession? {
+        return SessionManager.shared?.unauthenticatedSession
     }
     
+    var callWindowRootViewController: CallWindowRootViewController? {
+        return rootViewController?.callWindow.rootViewController as? CallWindowRootViewController
+    }
+    
+    var notificationsWindow: UIWindow? {
+        return rootViewController?.overlayWindow
+    }
+
     private(set) var rootViewController: AppRootViewController!
-    private(set) var callWindowRootViewController: CallWindowRootViewController?
-    private(set) var notificationsWindow: UIWindow?
-    private(set) var launchType: ApplicationLaunchType?
+    private(set) var launchType: ApplicationLaunchType = .unknown
     var appCenterInitCompletion: Completion?
     
     var launchOptions: [AnyHashable : Any] = [:]
     
     private static var sharedAppDelegate: AppDelegate!
 
+    @objc(sharedAppDelegate)
     static var shared: AppDelegate {
         return sharedAppDelegate!
     }
@@ -161,6 +169,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         UserDefaults.standard.synchronize()
     }
     
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         return open(url: url, options: options)
     }
@@ -178,7 +187,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupTracking() {
         let containsConsoleAnalytics = (ProcessInfo.processInfo.arguments as NSArray).indexOfObject(passingTest: { obj, idx, stop in
-            if (obj == AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey) {
+            if (obj as? String == AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey) {
                 //TODO:                stop = true
                 return true
             }
@@ -205,41 +214,32 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - URL handling
+    
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
-        return SessionManager.shared.continueUserActivity(userActivity, restorationHandler: restorationHandler)
+        return (SessionManager.shared?.continueUserActivity(userActivity, restorationHandler: restorationHandler as! ([AnyObject]?) -> Void)) ?? false ///TODO:
     }
     
-    // MARK: - AppController
-    
-    func callWindowRootViewController() -> CallWindowRootViewController? {
-        return rootViewController?.callWindow.rootViewController as? CallWindowRootViewController
-    }
-    
-    func notificationsWindow() -> UIWindow? {
-        return rootViewController?.overlayWindow
-    }
-
     // MARK : - BackgroundUpdates
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        zmLog.info("application:didReceiveRemoteNotification:fetchCompletionHandler: notification: %@", userInfo)
-        launchType = (application.applicationState == .inactive || application.applicationState == .background) ? ApplicationLaunchPush : ApplicationLaunchDirect
+        zmLog.info("application:didReceiveRemoteNotification:fetchCompletionHandler: notification: \(userInfo)")
+        launchType = (application.applicationState == .inactive || application.applicationState == .background) ? .push : .direct
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
         
-        rootViewController?.perform(whenAuthenticated: {
-            ZMUserSession.shared().application(application, performFetchWithCompletionHandler: completionHandler)
-        })
+        rootViewController?.performWhenAuthenticated(){
+            ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
+        }
     }
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
         
-        rootViewController?.perform(whenAuthenticated: {
+        rootViewController?.performWhenAuthenticated(){
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
-        })
+        }
     }
 }

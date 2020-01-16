@@ -198,11 +198,12 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
 
 extension SoundEventListener {
     
-    @objc func applicationWillEnterForeground() {
+    @objc
+    func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
-        if AppDelegate.shared.launchType == ApplicationLaunchPush {
+        if AppDelegate.shared.launchType == .push {
             soundEventWatchDog.ignoreTime = SoundEventListener.SoundEventListenerIgnoreTimeForPushStart
         } else {
             soundEventWatchDog.ignoreTime = 0.0
