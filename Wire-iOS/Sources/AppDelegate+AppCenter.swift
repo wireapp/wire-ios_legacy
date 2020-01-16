@@ -29,7 +29,6 @@ extension AppDelegate {
         return ZMSLog(tag: "UI")
     }
     
-    @objc
     func setupAppCenter(completion: @escaping () -> ()) {
         
         let shouldUseAppCenter = AutomationHelper.sharedHelper.useAppCenter || Bundle.useAppCenter

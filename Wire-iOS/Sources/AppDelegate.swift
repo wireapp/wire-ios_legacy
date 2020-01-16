@@ -33,7 +33,6 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
-//@UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow? {
@@ -85,7 +84,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             backendEnvironment == "default" {
             let defaultBackend = Bundle.defaultBackend
             
-            zmLog.info("Backend environment is <not defined>. Using '\(defaultBackend)'.")
+            zmLog.info("Backend environment is <not defined>. Using '\(String(describing: defaultBackend))'.")
             UserDefaults.standard.set(defaultBackend, forKey: BackendEnvironmentTypeKey)
             UserDefaults.shared().set(defaultBackend, forKey: BackendEnvironmentTypeKey)
         } else {
@@ -115,45 +114,45 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         setupBackendEnvironment()
         
         setupTracking()
-        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.  userSessionDidBecomeAvailableNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
         
-        setupAppCenterWithCompletion() {
+        setupAppCenter() {
             self.rootViewController?.launch(with: launchOptions ?? [:])
         })
         
         if let launchOptions = launchOptions {
-            launchOptions = launchOptions
+            self.launchOptions = launchOptions
         }
         
-        zmLog.info("application:didFinishLaunchingWithOptions END %@", launchOptions)
-        zmLog.info("Application was launched with arguments: %@", ProcessInfo.processInfo.arguments)
+        zmLog.info("application:didFinishLaunchingWithOptions END \(launchOptions)")
+        zmLog.info("Application was launched with arguments: \(ProcessInfo.processInfo.arguments)")
         
         return true
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
-        zmLog.info("applicationWillEnterForeground: (applicationState = %ld)", application.applicationState.rawValue)
+        zmLog.info("applicationWillEnterForeground: (applicationState = \(application.applicationState.rawValue)")
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        zmLog.info("applicationDidBecomeActive (applicationState = %ld)", application.applicationState.rawValue)
+        zmLog.info("applicationDidBecomeActive (applicationState = \(application.applicationState.rawValue))")
         
         switch launchType {
-        case ApplicationLaunchURL, ApplicationLaunchPush:
+        case .url, .push:
             break
         default:
-            launchType = ApplicationLaunchDirect
+            launchType = .direct
         }
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        zmLog.info("applicationWillResignActive:  (applicationState = %ld)", application.applicationState.rawValue)
+        zmLog.info("applicationWillResignActive:  (applicationState = \(application.applicationState.rawValue))")
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        zmLog.info("applicationDidEnterBackground:  (applicationState = %ld)", application.applicationState.rawValue)
+        zmLog.info("applicationDidEnterBackground:  (applicationState = \(application.applicationState.rawValue))")
         
-        launchType = ApplicationLaunchUnknown
+        launchType = .unknown
         
         UserDefaults.standard.synchronize()
     }
@@ -163,20 +162,20 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        zmLog.info("applicationWillTerminate:  (applicationState = %ld)", application.applicationState.rawValue)
+        zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
         
         // In case of normal termination we do not need the run duration to persist
         UIApplication.shared.resetRunDuration()
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        rootViewController?.quickActionsManager.performAction(for: shortcutItem, completionHandler: completionHandler)
+        rootViewController?.quickActionsManager?.performAction(for: shortcutItem, completionHandler: completionHandler)
     }
     
     func setupTracking() {
         let containsConsoleAnalytics = (ProcessInfo.processInfo.arguments as NSArray).indexOfObject(passingTest: { obj, idx, stop in
             if (obj == AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey) {
-                stop = true
+                //TODO:                stop = true
                 return true
             }
             return false
