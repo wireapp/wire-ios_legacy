@@ -27,6 +27,4 @@
 @property (nonatomic) UILabel *subtitleField;
 @property (nonatomic) UIView *lineView;
 
-- (void)mediaPlayerStateChanged:(NSNotification *)notification;
-
 @end
