@@ -186,13 +186,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func setupTracking() {
-        let containsConsoleAnalytics = (ProcessInfo.processInfo.arguments as NSArray).indexOfObject(passingTest: { obj, idx, stop in
-            if (obj as? String == AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey) {
-                //TODO:                stop = true
-                return true
-            }
-            return false
-        }) != NSNotFound
+        let containsConsoleAnalytics = ProcessInfo.processInfo.arguments.contains(AnalyticsProviderFactory.ZMConsoleAnalyticsArgumentKey)
         
         let trackingManager = TrackingManager.shared
         
