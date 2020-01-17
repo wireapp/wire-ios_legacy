@@ -749,6 +749,7 @@
 		A90E4ABF2381CD0200468F31 /* AccentColorChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4ABE2381CD0200468F31 /* AccentColorChangeHandler.swift */; };
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
+		A9150DB523D1B6B900844185 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9150DB423D1B6B800844185 /* Analytics.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
 		A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */; };
@@ -2454,6 +2455,7 @@
 		A90E4AC22381EE0C00468F31 /* IconButton+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IconButton+Internal.h"; path = "Wire-iOS/Sources/Components/IconButton+Internal.h"; sourceTree = SOURCE_ROOT; };
 		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A90E4AC52381F09000468F31 /* Button+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Button+Internal.h"; sourceTree = "<group>"; };
+		A9150DB423D1B6B800844185 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A93E6103233B870200CEA65F /* ConversationListHeaderViewSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListHeaderViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4341,9 +4343,10 @@
 				8712134A1FA37881008B6767 /* TrackingManager.swift */,
 				EFBCC90E2152A93F006AAB70 /* AnalyticsProvider.swift */,
 				871BBFA81D34F56300DF0793 /* Analytics.h */,
-				871BBFA91D34F56300DF0793 /* Analytics.m */,
-				EF883F2C215144B800B440CC /* Analytics+OptOut.swift */,
 				EF883F2D215144B800B440CC /* Analytics+Internal.h */,
+				871BBFA91D34F56300DF0793 /* Analytics.m */,
+				A9150DB423D1B6B800844185 /* Analytics.swift */,
+				EF883F2C215144B800B440CC /* Analytics+OptOut.swift */,
 				871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */,
 				871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */,
 				16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */,
@@ -7333,6 +7336,7 @@
 				8708C6831F50860100845C7D /* AccountView.swift in Sources */,
 				EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */,
 				EFDBA24522941FE800874A15 /* UIAccessibilityIdentification+LegalHold.swift in Sources */,
+				A9150DB523D1B6B900844185 /* Analytics.swift in Sources */,
 				87A6BD0F1F0D2A58006A3232 /* UIApplication+StatusBar.m in Sources */,
 				BFFA182B20FDE93400F64377 /* CompanyLoginController.swift in Sources */,
 				87A1F9DB200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift in Sources */,

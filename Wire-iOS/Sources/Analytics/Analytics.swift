@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,20 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
-@class AnalyticsCallingTracker;
-@class AnalyticsDecryptionFailedObserver;
 
-@protocol AnalyticsProvider;
+import Foundation
 
-@interface Analytics ()
+extension Analytics {
+    @objc
+    func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
 
-@property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
+    }
+    
+    @objc
+    private func userSessionDidBecomeAvailable(_ note: Notification?) {
+        callingTracker = AnalyticsCallingTracker(analytics: self)
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
+        team = ZMUser.selfUser().team()
+    }
 
-@property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
-@property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
-@property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
-
-@property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
-
-@end
-
+}

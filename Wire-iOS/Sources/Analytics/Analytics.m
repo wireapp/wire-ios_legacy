@@ -31,16 +31,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"Analytics";
 NSString * PersistedAttributesKey = @"AnalyticsPersistedEventAttributes";
 BOOL UseAnalytics = USE_ANALYTICS;
 
-@interface Analytics ()
-
-@property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
-@property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
-@property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
-
-@property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
-
-@end
-
 static Analytics *sharedAnalytics = nil;
 
 @implementation Analytics
@@ -65,8 +55,7 @@ static Analytics *sharedAnalytics = nil;
         ZMLogInfo(@"Analytics initWithOptedOut: %lu", (unsigned long)optedOut);
         self.provider = optedOut ? nil : [[AnalyticsProviderFactory shared] analyticsProvider];
         
-        ///TODO:
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSessionDidBecomeAvailable:) name:ZMUserSessionDidBecomeAvailableNotification object:nil];
+        [self setupObserver];
     }
     return self;
 }
@@ -86,13 +75,6 @@ static Analytics *sharedAnalytics = nil;
         [self.provider setSuperProperty:@"team.size" value:[NSString stringWithFormat:@"%lu", (unsigned long)[team.members count]]];
         [self.provider setSuperProperty:@"team.in_team" value:@(YES)];
     }
-}
-
-- (void)userSessionDidBecomeAvailable:(NSNotification *)note
-{
-    self.callingTracker                 = [[AnalyticsCallingTracker alloc] initWithAnalytics:self];
-    self.decryptionFailedObserver       = [[AnalyticsDecryptionFailedObserver alloc] initWithAnalytics:self];
-    self.team = [[ZMUser selfUser] team];
 }
 
 - (void)tagEvent:(NSString *)event

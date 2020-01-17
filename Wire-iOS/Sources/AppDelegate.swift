@@ -215,15 +215,21 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - URL handling
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
-        return (SessionManager.shared?.continueUserActivity(userActivity, restorationHandler: restorationHandler as! ([AnyObject]?) -> Void)) ?? false ///TODO:
+        
+        guard let restorationHandler = restorationHandler as? (([AnyObject]?) -> Void) else { return false }
+        
+        return (SessionManager.shared?.continueUserActivity(userActivity, restorationHandler: restorationHandler)) ?? false
     }
     
     // MARK : - BackgroundUpdates
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:didReceiveRemoteNotification:fetchCompletionHandler: notification: \(userInfo)")
+        
         launchType = (application.applicationState == .inactive || application.applicationState == .background) ? .push : .direct
     }
     

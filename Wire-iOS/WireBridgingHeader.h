@@ -113,6 +113,8 @@
 // Utils
 #import "Analytics.h"
 #import "Analytics+Internal.h"
+#import "AnalyticsDecryptionFailedObserver.h"
+
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
@@ -147,4 +149,3 @@
 
 // Invite
 #import "ShareItemProvider.h"
-
