@@ -36,7 +36,6 @@
 
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
-#import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
 #import "MediaPlaybackManager.h"
@@ -110,24 +109,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     if (self.conversation.draftMessage.quote != nil && !self.conversation.draftMessage.quote.hasBeenDeleted) {
         [self.inputBarController addReplyComposingView:[self.contentViewController createReplyComposingViewForMessage:self.conversation.draftMessage.quote]];
-    }
-}
-
-- (void)createInputBarController
-{
-    self.inputBarController = [[ConversationInputBarViewController alloc] initWithConversation:self.conversation];
-    self.inputBarController.delegate = self;
-    self.inputBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-
-    // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
-    // dragging and sizing of the scrollview
-    self.invisibleInputAccessoryView = [[InvisibleInputAccessoryView alloc] init];
-    self.invisibleInputAccessoryView.delegate = self;
-    self.invisibleInputAccessoryView.userInteractionEnabled = NO; // make it not block touch events
-    self.invisibleInputAccessoryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    if (!AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal) {
-        self.inputBarController.inputBar.invisibleInputAccessoryView = self.invisibleInputAccessoryView;
     }
 }
 
@@ -349,48 +330,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)onBackButtonPressed:(UIButton *)backButton
 {
     [self openConversationList];
-}
-
-@end
-
-
-@implementation ConversationViewController (Keyboard)
-
-- (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view didMoveToWindow:(UIWindow *)window
-{
-}
-
-// WARNING: DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-- (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view superviewFrameChanged:(CGRect)frame
-{
-    // Adjust the input bar distance from bottom based on the invisibleAccessoryView
-    CGFloat distanceFromBottom = 0;
-
-    // On iOS 8, the frame goes to zero when the accessory view is hidden
-    if ( ! CGRectEqualToRect(frame, CGRectZero)) {
-
-        CGRect convertedFrame = [self.view convertRect:view.superview.frame fromView:view.superview.superview];
-
-        // We have to use intrinsicContentSize here because the frame may not have actually been updated yet
-        CGFloat newViewHeight = view.intrinsicContentSize.height;
-
-        distanceFromBottom = self.view.frame.size.height - convertedFrame.origin.y - newViewHeight;
-        distanceFromBottom = MAX(0, distanceFromBottom);
-    }
-
-    if (self.isAppearing) {
-        [UIView performWithoutAnimation:^{
-            self.inputBarBottomMargin.constant = -distanceFromBottom;
-
-            [self.view layoutIfNeeded];
-        }];
-    }
-    else {
-        self.inputBarBottomMargin.constant = -distanceFromBottom;
-
-        [self.view layoutIfNeeded];
-    }
-
 }
 
 @end

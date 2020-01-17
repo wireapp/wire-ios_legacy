@@ -29,7 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 @class MediaBarViewController;
 @class ConversationContentViewController;
 
-@protocol InvisibleInputAccessoryViewDelegate;
 @protocol ConversationInputBarViewControllerDelegate;
 @protocol ZMConversationObserver;
 @protocol ZMConversationListObserver;
@@ -78,10 +77,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CollectionsViewController *collectionController;
 @property (nonatomic) id conversationListObserverToken;
 @property (nonatomic, readwrite) ConversationCallController *startCallController;
-
-@end
-
-@interface ConversationViewController (Keyboard) <InvisibleInputAccessoryViewDelegate>
 
 @end
 
