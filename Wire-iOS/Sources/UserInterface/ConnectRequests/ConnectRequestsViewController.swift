@@ -91,7 +91,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return connectionRequests.count ?? 0
+        return connectionRequests.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
