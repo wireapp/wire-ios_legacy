@@ -238,7 +238,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         zmLog.info("application:handleEventsForBackgroundURLSession:completionHandler: session identifier: \(identifier)")
         
-        rootViewController?.performWhenAuthenticated(){
+        rootViewController?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)
         }
     }
