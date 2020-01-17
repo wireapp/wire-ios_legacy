@@ -93,12 +93,9 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "KeyboardAvoidingViewController.h"
-#import "KeyboardAvoidingViewController+Internal.h"
 #import "CountryCodeTableViewController.h"
 #import "ContactsDataSource.h"
 #import "Button.h"
-#import "ConnectRequestsViewController.h"
 #import "MediaBarViewController.h"
 
 // Helper objects
@@ -131,7 +128,6 @@
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
-#import "KeyboardFrameObserver.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"
 
