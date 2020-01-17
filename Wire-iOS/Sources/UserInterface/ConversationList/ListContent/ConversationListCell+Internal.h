@@ -29,6 +29,4 @@ static const NSTimeInterval OverscrollRatio = 2.5;
 
 @property (nonatomic) id conversationObserverToken;
 
-- (void)toggleMediaPlayer;
-
 @end

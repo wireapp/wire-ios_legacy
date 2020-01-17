@@ -95,4 +95,16 @@ extension ConversationListCell {
             delegate?.conversationListCellJoinCallButtonTapped(self)
         }
     }
+    
+    func toggleMediaPlayer() {
+        let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager
+        
+        if mediaPlaybackManager?.activeMediaPlayer?.state == .playing {
+            mediaPlaybackManager?.pause()
+        } else {
+            mediaPlaybackManager?.play()
+        }
+        
+        updateAppearance()
+    }
 }

@@ -115,19 +115,6 @@
 {
     [self.itemView updateForConversation:self.conversation];
 }
-
-- (void)toggleMediaPlayer
-{
-    MediaPlaybackManager *mediaPlaybackManager = [AppDelegate sharedAppDelegate].mediaPlaybackManager;
-    
-    if (mediaPlaybackManager.activeMediaPlayer.state == MediaPlayerStatePlaying) {
-        [mediaPlaybackManager pause];
-    } else {
-        [mediaPlaybackManager play];
-    }
-    
-    [self updateAppearance];
-}
     
 - (BOOL)canOpenDrawer
 {
