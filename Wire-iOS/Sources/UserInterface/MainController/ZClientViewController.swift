@@ -247,8 +247,7 @@ final class ZClientViewController: UIViewController {
     /// have no more connection requests.
     ///
     /// - Parameter completion: completion handler
-    @objc(hideIncomingContactRequestsWithCompletion:)
-    func hideIncomingContactRequests(withCompletion completion: @escaping Completion) {
+    func hideIncomingContactRequests(completion: Completion? = nil) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationsList = ZMConversationList.conversations(inUserSession: userSession)
@@ -679,14 +678,6 @@ final class ZClientViewController: UIViewController {
 
     ///MARK: - select conversation
 
-    @objc(selectConversation:focusOnView:animated:)
-    func select(_ conversation: ZMConversation,
-                focusOnView focus: Bool,
-                animated: Bool) {
-        select(conversation, scrollTo: nil, focusOnView: focus, animated: animated, completion: nil)
-    }
-
-    
     /// Select a conversation and move the focus to the conversation view.
     ///
     /// - Parameters:
