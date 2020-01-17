@@ -47,7 +47,7 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
 
         /// WHEN
         mockConversation = ZMConversation()
-        sut.select(mockConversation)
+        sut.select(conversation: mockConversation)
 
         /// THEN
         XCTAssertEqual(mockConversation, sut.selectedConversation)

@@ -22,7 +22,6 @@
 
 #import "Settings.h"
 
-#import "AppDelegate.h"
 
 // helpers
 #import "Analytics.h"

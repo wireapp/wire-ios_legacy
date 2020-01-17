@@ -85,7 +85,7 @@ extension ConversationListItemView {
 
         // Configure the accessory
         let statusIcon: ConversationStatusIcon?
-        if let player = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer,
+        if let player = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer,
             let message = player.sourceMessage,
             message.conversation == conversation {
             statusIcon = .playingMedia

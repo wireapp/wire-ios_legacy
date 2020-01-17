@@ -27,7 +27,6 @@
 
 #import "Analytics.h"
 
-#import "AppDelegate.h"
 
 #import "Wire-Swift.h"
 

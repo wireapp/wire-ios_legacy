@@ -342,7 +342,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     let player : AVAudioPlayer
     weak var delegate : AudioPlayerControllerDelegate?
-    weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared().mediaPlaybackManager
+    weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared.mediaPlaybackManager
     
     init(contentOf URL: URL) throws {
         player = try AVAudioPlayer(contentsOf: URL)

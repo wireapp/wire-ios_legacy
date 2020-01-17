@@ -129,7 +129,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
 
             ZClientViewController.shared?.hideIncomingContactRequests() {
                 if let oneToOneConversation = user?.oneToOneConversation {
-                    ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
+                    ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
                 }
             }
         }

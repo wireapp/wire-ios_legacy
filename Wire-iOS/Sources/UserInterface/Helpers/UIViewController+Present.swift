@@ -31,6 +31,6 @@ extension UIViewController {
 
     @objc
     func presentInNotificationsWindow() {
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(self, animated: true)
+        AppDelegate.shared.notificationsWindow?.rootViewController?.present(self, animated: true)
     }
 }

@@ -30,7 +30,6 @@
 @import FLAnimatedImage;
 #import "MediaAsset.h"
 
-#import "AppDelegate.h"
 
 // helpers
 #import "Analytics.h"

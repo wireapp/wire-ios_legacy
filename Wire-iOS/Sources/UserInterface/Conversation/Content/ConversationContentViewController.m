@@ -40,7 +40,6 @@
 
 #import "UIView+Zeta.h"
 #import "Analytics.h"
-#import "AppDelegate.h"
 #import "MessagePresenter.h"
 #import "UIViewController+WR_Additions.h"
 
