@@ -53,7 +53,7 @@ extension ConversationViewController {
 
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
-        if let mediaPlayingMessage = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
+        if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
             conversation == mediaPlayingMessage.conversation {
             contentViewController.scroll(to: mediaPlayingMessage, completion: nil)
         }

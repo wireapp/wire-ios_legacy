@@ -94,7 +94,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             let feedbackGenerator = UINotificationFeedbackGenerator()
             feedbackGenerator.prepare()
             feedbackGenerator.notificationOccurred(.success)
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
             
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
         }

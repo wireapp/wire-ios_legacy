@@ -23,8 +23,6 @@
 @import avs;
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
-#import "AppDelegate.h"
-
 
 // UI
 #import "ParticipantDeviceHeaderView.h"
@@ -112,6 +110,8 @@
 // Utils
 #import "Analytics.h"
 #import "Analytics+Internal.h"
+#import "AnalyticsDecryptionFailedObserver.h"
+
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
@@ -146,4 +146,3 @@
 
 // Invite
 #import "ShareItemProvider.h"
-

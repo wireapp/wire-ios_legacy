@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+@class AnalyticsCallingTracker;
+@class AnalyticsDecryptionFailedObserver;
 
 @protocol AnalyticsProvider;
 
@@ -22,4 +24,11 @@
 
 @property (nonatomic, strong, nullable) id<AnalyticsProvider> provider;
 
+@property (nonatomic, strong) AnalyticsSessionSummaryEvent *sessionSummary;
+@property (nonatomic, strong) AnalyticsCallingTracker *callingTracker;
+@property (nonatomic, strong) AnalyticsDecryptionFailedObserver *decryptionFailedObserver;
+
+@property (nonatomic, strong, readwrite) AnalyticsRegistration *analyticsRegistration;
+
 @end
+

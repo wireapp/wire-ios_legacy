@@ -24,7 +24,7 @@ extension UnauthenticatedSession {
     @objc
     static var sharedSession : UnauthenticatedSession? {
         
-        return AppDelegate.shared().unauthenticatedSession
+        return AppDelegate.shared.unauthenticatedSession
         
     }
     

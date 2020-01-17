@@ -232,7 +232,7 @@ final class ZClientViewController: UIViewController {
     // MARK: - Public API
     @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
-        return AppDelegate.shared().rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
+        return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }
     
     /// Select the connection inbox and optionally move focus to it.
@@ -711,7 +711,7 @@ final class ZClientViewController: UIViewController {
 
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
-        AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+        AppDelegate.shared.callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
     }
 
     // MARK: - Application State

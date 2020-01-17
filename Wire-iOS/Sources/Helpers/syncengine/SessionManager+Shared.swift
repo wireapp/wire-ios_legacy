@@ -22,7 +22,7 @@ import AVFoundation
 
 extension SessionManager {
     @objc static var shared : SessionManager? {
-        return AppDelegate.shared().sessionManager
+        return AppDelegate.shared.sessionManager
     }
     
     @objc public func updateCallNotificationStyleFromSettings() {
