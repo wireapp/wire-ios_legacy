@@ -31,7 +31,7 @@ extension ConversationListItemView {
     private func mediaPlayerStateChanged(_ notification: Notification?) {
         DispatchQueue.main.async(execute: {
             if self.conversation != nil &&
-                AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == self.conversation {
+                AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == self.conversation {
                 self.update(for: self.conversation)
             }
         })

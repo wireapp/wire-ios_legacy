@@ -86,7 +86,7 @@ extension ConversationListCell {
     }
     
     func onRightAccessorySelected(_ sender: UIButton?) {
-        let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager
+        let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
         
         if mediaPlaybackManager?.activeMediaPlayer != nil &&
             mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == conversation {
@@ -97,7 +97,7 @@ extension ConversationListCell {
     }
     
     func toggleMediaPlayer() {
-        let mediaPlaybackManager = AppDelegate.shared().mediaPlaybackManager
+        let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
         
         if mediaPlaybackManager?.activeMediaPlayer?.state == .playing {
             mediaPlaybackManager?.pause()
