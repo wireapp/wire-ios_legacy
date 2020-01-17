@@ -230,7 +230,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         zmLog.info("application:performFetchWithCompletionHandler:")
         
-        rootViewController?.performWhenAuthenticated(){
+        rootViewController?.performWhenAuthenticated() {
             ZMUserSession.shared()?.application(application, performFetchWithCompletionHandler: completionHandler)
         }
     }
