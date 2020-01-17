@@ -27,7 +27,7 @@ extension ConversationViewController {
             newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
-                self?.zClientViewController?.select(newConversation, focusOnView: true, animated: true)
+                self?.zClientViewController?.select(conversation: newConversation, focusOnView: true, animated: true)
             }
         })
     }
