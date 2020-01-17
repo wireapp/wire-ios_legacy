@@ -108,7 +108,7 @@ extension ConversationViewController {
     }
 }
 
-
+//MARK: - InvisibleInputAccessoryViewDelegate
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     
     // WARNING: DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING
@@ -143,6 +143,8 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     }
 }
 
+//MARK: - ZMConversationObserver
+
 extension ConversationViewController: ZMConversationObserver {
     public func conversationDidChange(_ note: ConversationChangeInfo) {
         if note.causedByConversationPrivacyChange {
@@ -173,5 +175,17 @@ extension ConversationViewController: ZMConversationObserver {
     
     func dismissProfileClientViewController(_ sender: UIBarButtonItem?) {
         dismiss(animated: true)
+    }
+}
+
+//MARK: - ZMConversationListObserver
+
+extension ConversationViewController: ZMConversationListObserver {
+    public func conversationListDidChange(_ changeInfo: ConversationListChangeInfo) {
+        updateLeftNavigationBarItems()
+    }
+    
+    public func conversation(inside list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+        updateLeftNavigationBarItems()
     }
 }

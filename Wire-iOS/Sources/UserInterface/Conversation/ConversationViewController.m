@@ -366,18 +366,3 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-
-@implementation ConversationViewController (ConversationListObserver)
-
-- (void)conversationListDidChange:(ConversationListChangeInfo *)changeInfo
-{
-    [self updateLeftNavigationBarItems];
-}
-
-- (void)conversationInsideList:(ZMConversationList * _Nonnull)list didChange:(ConversationChangeInfo * _Nonnull)changeInfo
-{
-    [self updateLeftNavigationBarItems];
-}
-
-@end
-
