@@ -137,22 +137,23 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         }
         
         cell.ignoreBlock = { [weak self] in
-            guard self?.connectionRequests?.count == 0 else { return } ///TODO: copy below
-
-            ZClientViewController.shared?.hideIncomingContactRequests()
+            self?.hideRequestsOrShowNextRequest()
         }
         
     }
     
-    func reload(animated: Bool = true) {
-        tableView.reloadData()
-        
+    private func hideRequestsOrShowNextRequest() {
         if connectionRequests?.count == 0 {
             ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
             // Scroll to bottom of inbox
             tableView.scrollToLastRow(animated: animated)
         }
+    }
+    
+    func reload(animated: Bool = true) {
+        tableView.reloadData()
+        hideRequestsOrShowNextRequest()
     }
 }
 
