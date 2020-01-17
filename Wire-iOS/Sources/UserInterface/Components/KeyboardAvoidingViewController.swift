@@ -83,6 +83,7 @@ class KeyboardAvoidingViewController: UIViewController {
         view.isOpaque = false
         addChild(viewController)
         view.addSubview(viewController.view)
+        view.backgroundColor = viewController.view.backgroundColor
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         viewController.didMove(toParent: self)
         
@@ -114,11 +115,18 @@ class KeyboardAvoidingViewController: UIViewController {
         }
         
         guard let userInfo = notification?.userInfo,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
-            else { return }
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval
+        else { return }
         
         let keyboardFrameInView = UIView.keyboardFrame(in: self.view, forKeyboardNotification: notification)
-        var bottomOffset: CGFloat = -abs(keyboardFrameInView.size.height)
+        var bottomOffset: CGFloat
+        
+        if #available(iOS 11.0, *) {
+            // The keyboard frame includes the safe area so we need to substract it since the bottomEdgeConstraint is attached to the safe area.
+            bottomOffset = -keyboardFrameInView.intersection(view.safeAreaLayoutGuide.layoutFrame).height
+        } else {
+            bottomOffset = -abs(keyboardFrameInView.size.height)
+        }
         
         // When this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.
         if modalPresentationStyle == .formSheet, let frame = presentationController?.frameOfPresentedViewInContainerView {
