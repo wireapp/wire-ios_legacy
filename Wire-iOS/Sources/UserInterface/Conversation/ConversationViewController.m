@@ -36,7 +36,6 @@
 
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
-#import "MediaBarViewController.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"

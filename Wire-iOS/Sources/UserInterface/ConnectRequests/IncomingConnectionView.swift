@@ -133,11 +133,13 @@ public final class IncomingConnectionView: UIView {
 
     // MARK: - Actions
 
-    @objc func onAcceptButton(sender: AnyObject!) {
-        self.onAccept?(self.user)
+    @objc
+    private func onAcceptButton(sender: AnyObject!) {
+        onAccept?(self.user)
     }
 
-    @objc func onIgnoreButton(sender: AnyObject!) {
-        self.onIgnore?(self.user)
+    @objc
+    private func onIgnoreButton(sender: AnyObject!) {
+        onIgnore?(user)
     }
 }
