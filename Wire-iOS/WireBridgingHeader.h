@@ -96,7 +96,6 @@
 #import "CountryCodeTableViewController.h"
 #import "ContactsDataSource.h"
 #import "Button.h"
-#import "MediaBarViewController.h"
 
 // Helper objects
 #import "PushTransition.h"
