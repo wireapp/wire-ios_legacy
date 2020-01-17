@@ -22,8 +22,8 @@ extension AppDelegate {
 
     func open(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         guard let urlHandler = sessionManager?.urlHandler else { return false }
-
-        return urlHandler.openURL(url, options: options as! [UIApplication.OpenURLOptionsKey : AnyObject])
+        
+        return urlHandler.openURL(url, options: options as [UIApplication.OpenURLOptionsKey : AnyObject])
     }
 }
 
