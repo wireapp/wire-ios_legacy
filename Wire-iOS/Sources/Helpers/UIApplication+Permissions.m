@@ -18,7 +18,6 @@
 
 
 #import "UIApplication+Permissions.h"
-#import "AppDelegate.h"
 #import "UIAlertController+Wire.h"
 #import "UIResponder+FirstResponder.h"
 #import "Wire-Swift.h"

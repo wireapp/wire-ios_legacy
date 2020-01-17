@@ -29,7 +29,7 @@ extension Analytics {
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
         callingTracker = AnalyticsCallingTracker(analytics: self)
         decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        team = ZMUser.selfUser().team()
+        setTeam(ZMUser.selfUser().team)
     }
 
 }

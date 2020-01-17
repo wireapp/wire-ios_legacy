@@ -23,8 +23,6 @@
 @import avs;
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
-#import "AppDelegate.h"
-
 
 // UI
 #import "ParticipantDeviceHeaderView.h"

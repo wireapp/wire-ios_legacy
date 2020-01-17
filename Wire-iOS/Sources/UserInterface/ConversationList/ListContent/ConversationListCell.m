@@ -27,7 +27,6 @@
 
 #import "MediaPlaybackManager.h"
 #import "MediaPlayer.h"
-#import "AppDelegate.h"
 
 
 #import "AnimatedListMenuView.h"
