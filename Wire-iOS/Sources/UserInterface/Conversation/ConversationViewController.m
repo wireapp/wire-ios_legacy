@@ -37,7 +37,6 @@
 
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
-#import "MediaBarViewController.h"
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
@@ -318,19 +317,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _participantsController = viewController.wrapInNavigationController;
 
     return _participantsController;
-}
-
-- (void)addParticipants:(NSSet *)participants
-{
-    ZMConversation __block *newConversation = nil;
-
-    ZM_WEAK(self);
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        newConversation = [self.conversation addParticipantsOrCreateConversation:participants];
-    } completionHandler:^{
-        ZM_STRONG(self);
-        [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
-    }];
 }
 
 - (void)setCollectionController:(CollectionsViewController *)collectionController
