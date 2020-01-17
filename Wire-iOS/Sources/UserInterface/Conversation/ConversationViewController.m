@@ -243,36 +243,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
     }
 }
-
-- (void)setupNavigatiomItem
-{
-    self.titleView = [[ConversationTitleView alloc] initWithConversation:self.conversation interactive:YES];
     
-    ZM_WEAK(self);
-    self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
-        ZM_STRONG(self);
-        [self presentParticipantsViewController:self.participantsController fromView:self.titleView.superview];
-    };
-    [self.titleView configure];
-    
-    self.navigationItem.titleView = self.titleView;
-    self.navigationItem.leftItemsSupplementBackButton = NO;
-
-    [self updateRightNavigationItemsButtons];
-}
-    
-- (void)updateInputBarVisibility
-{
-    if (self.conversation.isReadOnly) {
-        [self.inputBarController.inputBar.textView resignFirstResponder];
-        [self.inputBarController dismissMentionsIfNeeded];
-        [self.inputBarController removeReplyComposingView];
-    }
-
-    self.inputBarZeroHeight.active = self.conversation.isReadOnly;
-    [self.view setNeedsLayout];
-}
-
 - (UIViewController *)participantsController
 {
     UIViewController *viewController = nil;
@@ -391,38 +362,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerEditLastMessage
 {
     [self.contentViewController editLastMessage];
-}
-
-@end
-
-@implementation ConversationViewController (ZMConversationObserver)
-
-- (void)conversationDidChange:(ConversationChangeInfo *)note
-{
-    if (note.causedByConversationPrivacyChange) {
-        [self presentPrivacyWarningAlertForChange:note];
-    }
-    
-    if (note.participantsChanged || note.connectionStateChanged) {
-        [self updateRightNavigationItemsButtons];
-        [self updateLeftNavigationBarItems];
-        [self updateOutgoingConnectionVisibility];
-        [self.contentViewController updateTableViewHeaderView];
-        [self updateInputBarVisibility];
-    }
-
-    if (note.participantsChanged || note.externalParticipantsStateChanged) {
-        [self updateGuestsBarVisibility];
-    }
-
-    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged || note.legalHoldStatusChanged) {
-        [self setupNavigatiomItem];
-    }
-}
-
-- (void)dismissProfileClientViewController:(UIBarButtonItem *)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

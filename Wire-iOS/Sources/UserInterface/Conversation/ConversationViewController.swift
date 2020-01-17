@@ -76,6 +76,36 @@ extension ConversationViewController {
             inputBarController.inputBar.invisibleInputAccessoryView = invisibleInputAccessoryView
         }
     }
+    
+    @objc
+    func updateInputBarVisibility() {
+        if conversation.isReadOnly {
+            inputBarController.inputBar.textView.resignFirstResponder()
+            inputBarController.dismissMentionsIfNeeded()
+            inputBarController.removeReplyComposingView()
+        }
+        
+        inputBarZeroHeight?.isActive = conversation.isReadOnly
+        view.setNeedsLayout()
+    }
+    
+    @objc
+    func setupNavigatiomItem() {
+        titleView = ConversationTitleView(conversation: conversation, interactive: true)
+        
+        titleView.tapHandler = { [weak self] button in
+            if let superview = self?.titleView.superview,
+                let participantsController = self?.participantsController {
+                self?.presentParticipantsViewController(participantsController, from: superview)
+            }
+        }
+        titleView.configure()
+        
+        navigationItem.titleView = titleView
+        navigationItem.leftItemsSupplementBackButton = false
+        
+        updateRightNavigationItemsButtons()
+    }
 }
 
 
@@ -110,5 +140,38 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             closure()
         }
         
+    }
+}
+
+extension ConversationViewController: ZMConversationObserver {
+    public func conversationDidChange(_ note: ConversationChangeInfo) {
+        if note.causedByConversationPrivacyChange {
+            presentPrivacyWarningAlert(for: note)
+        }
+        
+        if note.participantsChanged ||
+           note.connectionStateChanged {
+            updateRightNavigationItemsButtons()
+            updateLeftNavigationBarItems()
+            updateOutgoingConnectionVisibility()
+            contentViewController.updateTableViewHeaderView()
+            updateInputBarVisibility()
+        }
+        
+        if note.participantsChanged ||
+           note.externalParticipantsStateChanged {
+            updateGuestsBarVisibility()
+        }
+        
+        if note.nameChanged ||
+           note.securityLevelChanged ||
+           note.connectionStateChanged ||
+           note.legalHoldStatusChanged {
+            setupNavigatiomItem()
+        }
+    }
+    
+    func dismissProfileClientViewController(_ sender: UIBarButtonItem?) {
+        dismiss(animated: true)
     }
 }

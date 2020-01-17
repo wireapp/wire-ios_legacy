@@ -83,9 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
 @end
 
-@interface ConversationViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
 
 @interface ConversationViewController (ConversationListObserver) <ZMConversationListObserver>
 @end
