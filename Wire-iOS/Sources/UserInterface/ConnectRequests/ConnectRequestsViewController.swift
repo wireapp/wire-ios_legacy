@@ -21,7 +21,7 @@ import Foundation
 private var ConnectionRequestCellIdentifier = "ConnectionRequestCell"
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var connectionRequests: ZMConversationList?
+    var connectionRequests: [ZMConversation] = []
     
     private var userObserverToken: Any?
     private var pendingConnectionsListObserverToken: Any?
@@ -48,7 +48,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
             
             userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
 
-            connectionRequests = pendingConnectionsList
+            connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
         }
         
         reload()
@@ -91,7 +91,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     // MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return connectionRequests?.count ?? 0
+        return connectionRequests.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,15 +107,13 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         /// if there are more than one request, reduce the cell height to give user a hint
         
-        let inset: CGFloat = connectionRequests?.count > 1 ? 48 : 0
+        let inset: CGFloat = connectionRequests.count > 1 ? 48 : 0
         
         return max(0, tableView.bounds.size.height - inset)
     }
     
     // MARK: - Helpers
     private func configureCell(_ cell: ConnectRequestCell, for indexPath: IndexPath) {
-        guard let connectionRequests = connectionRequests else { return }
-        
         /// get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
         
@@ -127,7 +125,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         
         cell.acceptBlock = { [weak self] in
-            guard self?.connectionRequests?.count == 0 else { return }
+            guard self?.connectionRequests.count == 0 else { return }
 
             ZClientViewController.shared?.hideIncomingContactRequests() {
                 if let oneToOneConversation = user?.oneToOneConversation {
@@ -142,9 +140,9 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
     }
     
-    private func hideRequestsOrShowNextRequest() {
-        if connectionRequests?.count == 0 {
-            ZClientViewController.shared?.hideIncomingContactRequests()
+    private func hideRequestsOrShowNextRequest(animated: Bool = true) {
+        if connectionRequests.count == 0 {
+            ZClientViewController.shared?.hideIncomingContactRequests(completion: nil)
         } else {
             // Scroll to bottom of inbox
             tableView.scrollToLastRow(animated: animated)
@@ -152,6 +150,12 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
     
     func reload(animated: Bool = true) {
+        if let userSession = ZMUserSession.shared() {
+        let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
+        
+        connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
+        }
+        
         tableView.reloadData()
         hideRequestsOrShowNextRequest()
     }
