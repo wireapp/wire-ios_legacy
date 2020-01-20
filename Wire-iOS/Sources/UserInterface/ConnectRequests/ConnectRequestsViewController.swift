@@ -18,7 +18,6 @@
 
 import Foundation
 
-
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var connectionRequests: [ZMConversation] = []
     
@@ -144,7 +143,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         }
     }
     
-    private func reload(animated: Bool = true) {
+    func reload(animated: Bool = true) {
         if let userSession = ZMUserSession.shared() {
             let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
             
