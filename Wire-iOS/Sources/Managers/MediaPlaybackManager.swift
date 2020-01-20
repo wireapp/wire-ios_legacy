@@ -32,10 +32,10 @@ extension Notification.Name {
     static let mediaPlaybackManagerPlayerStateChanged = Notification.Name("MediaPlaybackManagerPlayerStateChangedNotification")
 }
 
-/// This object is an interface for AVS to control conversation media playback;
+/// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
-    var audioTrackPlayer:AudioTrackPlayer = AudioTrackPlayer()    
-    private(set) var activeMediaPlayer: MediaPlayer?
+    var audioTrackPlayer:AudioTrackPlayer = AudioTrackPlayer()
+    private(set) weak var activeMediaPlayer: MediaPlayer?
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     private var titleObserver: NSObject?
     var name: String!
@@ -61,9 +61,9 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
             return false
         }
     }
-
+    
     var recordingMuted: Bool = false
-
+    
     init(name: String?) {
         super.init()
         
@@ -113,11 +113,11 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     }
     
     // MARK: - Active Media Player State
-    func startObservingMediaPlayerChanges() {
-        titleObserver = KeyValueObserver.observe(activeMediaPlayer, keyPath: "title", target: self, selector: #selector(activeMediaPlayerTitleChanged(_:)), options: [.initial, .new])
+    private func startObservingMediaPlayerChanges() {
+        titleObserver = KeyValueObserver.observe(activeMediaPlayer as Any, keyPath: "title", target: self, selector: #selector(activeMediaPlayerTitleChanged(_:)), options: [.initial, .new])
     }
-
-    func stopObservingMediaPlayerChanges(_ mediaPlayer: MediaPlayer?) {
+    
+    private func stopObservingMediaPlayerChanges(_ mediaPlayer: MediaPlayer?) {
         titleObserver = nil
     }
     
@@ -130,5 +130,32 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 extension MediaPlaybackManager: MediaPlayerDelegate {
     func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
+        
+        changeObserver?.activeMediaPlayerStateDidChange()
+        
+        switch state {
+        case .playing:
+            if activeMediaPlayer !== mediaPlayer {
+                activeMediaPlayer?.pause()
+            }
+            delegate?.didStartPlaying(self)
+            activeMediaPlayer = mediaPlayer
+            startObservingMediaPlayerChanges()
+        case .paused:
+            delegate?.didPausePlaying(self)
+        case .completed:
+            if activeMediaPlayer === mediaPlayer {
+                activeMediaPlayer = nil
+            }
+            stopObservingMediaPlayerChanges(mediaPlayer)
+            delegate?.didFinishPlaying(self) // this interfers with the audio session
+        case .error:
+            delegate?.didFinishPlaying(self) // this interfers with the audio session
+        default:
+            break
+        }
+        
+        NotificationCenter.default.post(name: .mediaPlaybackManagerPlayerStateChanged, object: mediaPlayer)
+        
     }
 }
