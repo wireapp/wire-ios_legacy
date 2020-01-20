@@ -120,7 +120,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
         // On iOS 8, the frame goes to zero when the accessory view is hidden
         if frame?.equalTo(.zero) == false {
             
-            let convertedFrame = view.convert(view.superview?.frame ?? CGRect.zero, from: view.superview?.superview)
+            let convertedFrame = view.convert(view.superview?.frame ?? .zero, from: view.superview?.superview)
             
             // We have to use intrinsicContentSize here because the frame may not have actually been updated yet
             let newViewHeight = view.intrinsicContentSize.height
@@ -130,7 +130,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
         }
         
         let closure: () -> () = {
-            self.inputBarBottomMargin?.constant = -distanceFromBottom
+            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
             
             view.layoutIfNeeded()
         }
