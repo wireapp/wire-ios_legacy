@@ -39,7 +39,6 @@
 #import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
-#import "MediaPlaybackManager.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
