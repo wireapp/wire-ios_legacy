@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "%@'a bağlan"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Selam %@,\nHaydi Wire'da bağlanalım.\n%@";
 
 "connection_request_pending_title" = "Bağlantı İsteği";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Şifre Ayarla";
 "self.settings.history_backup.password.cancel" = "İptal";
 "self.settings.history_backup.password.next" = "İleri";
-"self.settings.history_backup.password.placeholder" = "En az 8 karakter";
+"self.settings.history_backup.password.placeholder" = "Parola";
 "self.settings.history_backup.password.description" = "Yedekleme burada belirlediğiniz parola ile sıkıştırılacak ve şifrelenecektir.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
