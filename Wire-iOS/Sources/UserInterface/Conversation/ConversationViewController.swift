@@ -50,7 +50,7 @@ extension ConversationViewController {
         mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
-
+    
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
         if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
@@ -153,7 +153,7 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.connectionStateChanged {
+            note.connectionStateChanged {
             updateRightNavigationItemsButtons()
             updateLeftNavigationBarItems()
             updateOutgoingConnectionVisibility()
@@ -162,14 +162,14 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.externalParticipantsStateChanged {
+            note.externalParticipantsStateChanged {
             updateGuestsBarVisibility()
         }
         
         if note.nameChanged ||
-           note.securityLevelChanged ||
-           note.connectionStateChanged ||
-           note.legalHoldStatusChanged {
+            note.securityLevelChanged ||
+            note.connectionStateChanged ||
+            note.legalHoldStatusChanged {
             setupNavigatiomItem()
         }
     }
@@ -189,4 +189,56 @@ extension ConversationViewController: ZMConversationListObserver {
     public func conversation(inside list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
+}
+
+//MARK: - InputBar
+
+extension ConversationViewController: ConversationInputBarViewControllerDelegate {
+    func conversationInputBarViewControllerDidComposeText(_ text: String?, mentions: [Mention]?, replyingTo message: ZMConversationMessage?) {
+        contentViewController.scrollToBottom()
+        inputBarController.sendController.sendTextMessage(text, mentions: mentions, replyingTo: message)
+    }
+    
+    func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController?) -> Bool {
+        if !contentViewController.isScrolledToBottom && controller?.isEditingMessage == nil && controller?.isReplyingToMessage == nil {
+            collectionController = nil
+            contentViewController.searchQueries = []
+            contentViewController.scrollToBottom()
+        }
+        
+        self.guestBarForceHidden = true
+        return true
+    }
+    
+    func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController?) -> Bool {
+        self.guestBarForceHidden = false
+        return true
+    }
+    
+    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage?, withText newText: String?, mentions: [Mention]?) {
+        contentViewController.didFinishEditing(message)
+        ZMUserSession.shared().enqueueChanges({
+            if newText == nil || (newText == "") {
+                ZMMessage.delete(forEveryone: message)
+            } else {
+                let fetchLinkPreview = !Settings.shared().disableLinkPreviews()
+                message?.textMessageData.editText(newText, mentions: mentions, fetchLinkPreview: fetchLinkPreview)
+            }
+        })
+    }
+    
+    func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage?) {
+        contentViewController.didFinishEditing(message)
+    }
+    
+    func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage?) {
+        contentViewController.scroll(to: message) { cell in
+            self.contentViewController.highlight(message)
+        }
+    }
+    
+    func conversationInputBarViewControllerEditLastMessage() {
+        contentViewController.editLastMessage()
+    }
+    
 }
