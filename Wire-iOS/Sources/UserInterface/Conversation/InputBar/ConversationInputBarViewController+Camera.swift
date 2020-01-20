@@ -283,3 +283,26 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
     }
     
 }
+
+
+//MARK: - CameraViewController
+
+extension ConversationInputBarViewController {
+    @objc
+    func cameraButtonPressed(_ sender: Any?) {
+        if mode == ConversationInputBarViewControllerModeCamera {
+            inputBar.textView.resignFirstResponder()
+            cameraKeyboardViewController = nil
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(0.3 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+                self.mode = ConversationInputBarViewControllerModeTextInput
+            })
+        } else {
+            UIApplication.wr_requestVideoAccess({ granted in
+                self.execute(withCameraRollPermission: { success in
+                    self.mode = ConversationInputBarViewControllerModeCamera
+                    self.inputBar.textView.becomeFirstResponder()
+                })
+            })
+        }
+    }
+}
