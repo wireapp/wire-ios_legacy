@@ -17,3 +17,17 @@
 //
 
 import Foundation
+
+extension ConversationInputBarViewController {
+    func execute(videoPermissions toExecute: @escaping () -> ()) {
+        UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in
+            if granted {
+                UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ granted in
+                    if granted {
+                        toExecute()
+                    }
+                })
+            }
+        })
+    }
+}

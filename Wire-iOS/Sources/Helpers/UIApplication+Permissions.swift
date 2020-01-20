@@ -149,6 +149,8 @@ extension UIApplication {
                                                 }
         }))
         
-        AppDelegate.shared.window?.rootViewController?.present(deniedAlert, animated: true)
+        DispatchQueue.main.async(execute: {
+            AppDelegate.shared.window?.rootViewController?.present(deniedAlert, animated: true)
+        })
     }
 }
