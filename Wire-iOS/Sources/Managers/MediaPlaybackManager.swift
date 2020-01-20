@@ -36,7 +36,7 @@ extension Notification.Name {
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
     @objc
-    private(set) weak var activeMediaPlayer: MediaPlayer?
+    dynamic private(set) weak var activeMediaPlayer: MediaPlayer?
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     private var titleObserver: NSObject?
     var name: String!
