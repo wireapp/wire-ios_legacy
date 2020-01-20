@@ -109,7 +109,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
         let inset: CGFloat = connectionRequests.count > 1 ? 48 : 0
         
-        return max(0, tableView.bounds.size.height - inset)
+        return max(0, view.safeAreaHeight - inset)
     }
     
     // MARK: - Helpers
@@ -117,7 +117,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         /// get the user in reversed order, newer request is shown on top
         let request = connectionRequests[(connectionRequests.count - 1) - (indexPath.row)]
         
-        let user = (request as? ZMConversation)?.connectedUser
+        let user = request.connectedUser
         cell.user = user
         cell.selectionStyle = .none
         cell.separatorInset = .zero
