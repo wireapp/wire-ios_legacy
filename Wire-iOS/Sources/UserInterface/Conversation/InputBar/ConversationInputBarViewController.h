@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol UserList;
 @protocol KeyboardCollapseObserver;
 @protocol AVAudioSessionType;
+@protocol ConversationInputBarViewControllerDelegate;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
