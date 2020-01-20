@@ -108,7 +108,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
         let inset: CGFloat = connectionRequests.count > 1 ? 48 : 0
         
-        return max(0, view.safeAreaHeight - inset)
+        return max(0, view.safeAreaLayoutGuideOrFallback.layoutFrame.size.height - inset)
     }
     
     // MARK: - Helpers

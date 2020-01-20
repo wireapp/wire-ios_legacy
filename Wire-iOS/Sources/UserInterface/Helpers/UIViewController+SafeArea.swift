@@ -50,10 +50,6 @@ extension UIViewController {
 }
 
 extension UIView {
-    var safeAreaHeight: CGFloat {
-        return safeAreaLayoutGuideOrFallback.layoutFrame.size.height
-    }
-
     var safeAreaLayoutGuideOrFallback: UILayoutGuide {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide
