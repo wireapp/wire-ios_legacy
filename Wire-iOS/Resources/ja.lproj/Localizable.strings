@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "%@とつながる"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "こんにちは。%@\nWireでつながりましょう。\n%@";
 
 "connection_request_pending_title" = "接続リクエスト";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "パスワードを設定";
 "self.settings.history_backup.password.cancel" = "キャンセル";
 "self.settings.history_backup.password.next" = "次へ";
-"self.settings.history_backup.password.placeholder" = "8 文字以上";
+"self.settings.history_backup.password.placeholder" = "パスワード";
 "self.settings.history_backup.password.description" = "バックアップは圧縮され、ここで設定したパスワードで暗号化されます。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

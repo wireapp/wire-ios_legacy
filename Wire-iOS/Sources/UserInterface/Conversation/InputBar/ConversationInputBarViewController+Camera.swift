@@ -205,7 +205,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    @objc public func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool)->()) {
+    private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool)->()) {
         PHPhotoLibrary.requestAuthorization { status in
             DispatchQueue.main.async {
             switch status {
@@ -282,4 +282,27 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
         }
     }
     
+}
+
+
+//MARK: - CameraViewController
+
+extension ConversationInputBarViewController {
+    @objc
+    func cameraButtonPressed(_ sender: Any?) {
+        if mode == .camera {
+            inputBar.textView.resignFirstResponder()
+            cameraKeyboardViewController = nil
+            delay(0.3) {
+                self.mode = .textInput
+            }
+        } else {
+            UIApplication.wr_requestVideoAccess({ granted in
+                self.executeWithCameraRollPermission() { success in
+                    self.mode = .camera
+                    self.inputBar.textView.becomeFirstResponder()
+                }
+            })
+        }
+    }
 }

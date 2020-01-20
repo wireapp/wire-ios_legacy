@@ -156,7 +156,7 @@ final class SearchResultsView : UIView {
             return
         }
         
-        let firstResponder = UIResponder.wr_currentFirst()
+        let firstResponder = UIResponder.currentFirst
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
         UIView.animate(withKeyboardNotification: notification, in: self, animations: { (keyboardFrameInView) in

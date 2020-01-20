@@ -109,6 +109,7 @@ extension ConversationViewController {
 }
 
 //MARK: - InvisibleInputAccessoryViewDelegate
+
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     
     // WARNING: DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING

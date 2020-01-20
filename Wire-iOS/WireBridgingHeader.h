@@ -114,14 +114,12 @@
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
@@ -141,7 +139,6 @@
 // Audio player
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
-#import "MediaPlaybackManager.h"
 
 // Invite
 #import "ShareItemProvider.h"

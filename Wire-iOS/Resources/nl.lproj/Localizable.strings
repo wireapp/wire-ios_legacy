@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Verbind met %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Hallo %@, \nLaten we chatten via Wire.\n%@";
 
 "connection_request_pending_title" = "Connectie verzoek";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Wachtwoord instellen";
 "self.settings.history_backup.password.cancel" = "Annuleer";
 "self.settings.history_backup.password.next" = "Volgende";
-"self.settings.history_backup.password.placeholder" = "Minimaal 8 tekens";
+"self.settings.history_backup.password.placeholder" = "Wachtwoord";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
