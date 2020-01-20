@@ -125,7 +125,9 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             // We have to use intrinsicContentSize here because the frame may not have actually been updated yet
             let newViewHeight = view.intrinsicContentSize.height
             
-            distanceFromBottom = view.frame.size.height - convertedFrame.origin.y - newViewHeight
+            distanceFromBottom = view.frame.size.height - convertedFrame.origin.y - newViewHeight //convertedFrame = (0.0, 0.0, 320.0, 365.0), same
+            
+            //newViewHeight = 112
             distanceFromBottom = max(0, distanceFromBottom)
         }
         
@@ -136,9 +138,18 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
         }
         
         if isAppearing {
-            UIView.performWithoutAnimation(closure)
+            UIView.performWithoutAnimation() {
+                self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
+                
+                view.layoutIfNeeded()
+
+            }
         } else {
-            closure()
+//            closure()
+            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
+            
+            view.layoutIfNeeded()
+
         }
         
     }

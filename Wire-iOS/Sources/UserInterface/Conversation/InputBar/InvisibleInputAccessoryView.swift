@@ -43,12 +43,8 @@ final class InvisibleInputAccessoryView: UIView {
     override func didMoveToWindow() {
         super.didMoveToWindow()
         
-        if window != nil,
-           let superview = superview {
-            
-            let keypath = "center"
-            
-            frameObserver = KeyValueObserver.observe(superview, keyPath: keypath, target: self, selector: #selector(superviewFrameChanged(_:)))
+        if window != nil {
+            frameObserver = KeyValueObserver.observe(superview!, keyPath: #keyPath(UIView.center), target: self, selector: #selector(superviewFrameChanged(_:)))
         } else {
             frameObserver = nil
         }
