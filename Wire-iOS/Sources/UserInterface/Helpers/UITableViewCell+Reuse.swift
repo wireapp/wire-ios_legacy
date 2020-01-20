@@ -28,7 +28,7 @@ extension NSObject {
 }
 
 extension UITableViewCell {
-    @objc static func register(in tableView: UITableView) {
+    static func register(in tableView: UITableView) {
         tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }

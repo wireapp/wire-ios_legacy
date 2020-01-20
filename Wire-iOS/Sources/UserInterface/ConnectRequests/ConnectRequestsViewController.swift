@@ -33,8 +33,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.register(ConnectRequestCell.self, forCellReuseIdentifier: ConnectRequestCell.identifier)
+        ConnectRequestCell.register(in: tableView)
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -94,9 +93,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConnectRequestCell.identifier) as? ConnectRequestCell else {
-            fatal("Cannot create cell")
-        }
+        let cell = tableView.dequeueReusableCell(ofType: ConnectRequestCell.self, for: indexPath)
         
         configureCell(cell, for: indexPath)
         return cell
