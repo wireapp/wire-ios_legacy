@@ -27,11 +27,17 @@ protocol InvisibleInputAccessoryViewDelegate: class {
 
 final class InvisibleInputAccessoryView: UIView {
     weak var delegate: InvisibleInputAccessoryViewDelegate?
-    var contentSize: CGSize = .zero {
+    
+    var overriddenIntrinsicContentSize: CGSize = .zero {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
+    
+    override public var intrinsicContentSize: CGSize {
+        return overriddenIntrinsicContentSize
+    }
+        
     private var frameObserver: NSObject?
     
     override func didMoveToWindow() {

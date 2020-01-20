@@ -194,7 +194,7 @@ final class InputBar: UIView {
     
     override public var bounds: CGRect {
         didSet {
-            invisibleInputAccessoryView?.contentSize = CGSize(width: UIView.noIntrinsicMetric, height: bounds.height)
+            invisibleInputAccessoryView?.overriddenIntrinsicContentSize = CGSize(width: UIView.noIntrinsicMetric, height: bounds.height)
         }
     }
         
