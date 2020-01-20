@@ -44,7 +44,7 @@ extension ConversationInputBarViewController {
     
     @objc func endEditingMessageIfNeeded() {
         guard let message = editingMessage else { return }
-        delegate?.conversationInputBarViewControllerDidCancelEditing?(message)
+        delegate?.conversationInputBarViewControllerDidCancelEditing(message)
         editingMessage = nil
         ZMUserSession.shared()?.enqueueChanges {
             self.conversation.draftMessage = nil

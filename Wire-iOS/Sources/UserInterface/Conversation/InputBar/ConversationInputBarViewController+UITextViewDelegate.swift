@@ -103,7 +103,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:))) == true else { return true }
 
         triggerMentionsIfNeeded(from: textView)
-        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self) ?? true
+        return delegate?.conversationInputBarViewControllerShouldBeginEditing(self) ?? true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -115,7 +115,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
         guard delegate?.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) == true else { return true }
 
-        return delegate?.conversationInputBarViewControllerShouldEndEditing?(self) ?? true
+        return delegate?.conversationInputBarViewControllerShouldEndEditing(self) ?? true
     }
 
     public func textViewDidEndEditing(_ textView: UITextView) {
