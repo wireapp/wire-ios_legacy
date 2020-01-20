@@ -162,7 +162,7 @@
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "最近更新";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "最近更新對話列表";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "資料夾";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "文件夾中已整理的對話列表";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "已封存";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "已封存對話";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "連絡人";
@@ -199,7 +199,7 @@
 "folder.creation.name.placeholder" = "資料夾名稱";
 
 "folder.picker.title" = "移動到";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.empty.hint" = "按+按鈕創建一個新文件夾";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "連接到%@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "%@您好，\n在Wire和我一起聊天吧。\n%@";
 
 "connection_request_pending_title" = "連接請求";
@@ -1136,8 +1138,8 @@
 "self.settings.privacy_security.lock_app.subtitle.none" = "輸入密碼解鎖。";
 
 "self.settings.privacy_security.lock_app.description" = "解鎖Wire";
-"self.settings.privacy_security.lock_password.description.unlock" = "Unlock with your password.";
-"self.settings.privacy_security.lock_password.description.wrong_password" = "Wrong password. Please try again.";
+"self.settings.privacy_security.lock_password.description.unlock" = "用您的密碼解鎖。";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "密碼錯誤，請再試一次。";
 "self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "設置密碼";
 "self.settings.history_backup.password.cancel" = "取消";
 "self.settings.history_backup.password.next" = "下一步";
-"self.settings.history_backup.password.placeholder" = "至少8個字元";
+"self.settings.history_backup.password.placeholder" = "密碼";
 "self.settings.history_backup.password.description" = "備份會被壓縮，並使用你輸入的密碼加密。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

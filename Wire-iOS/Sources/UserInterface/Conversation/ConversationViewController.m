@@ -38,13 +38,11 @@
 #import "MediaPlayer.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
-#import "MediaPlaybackManager.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
 

@@ -50,7 +50,6 @@ extension UIViewController {
 }
 
 extension UIView {
-
     var safeAreaLayoutGuideOrFallback: UILayoutGuide {
         if #available(iOS 11, *) {
             return safeAreaLayoutGuide

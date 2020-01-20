@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Poveži s/z %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Hej %@,\npoveživa se na Wire.\n%@";
 
 "connection_request_pending_title" = "Connection Request";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Prekliči";
 "self.settings.history_backup.password.next" = "Next";
-"self.settings.history_backup.password.placeholder" = "Vsaj 8 znakov";
+"self.settings.history_backup.password.placeholder" = "Geslo";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

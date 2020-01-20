@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Conectar a %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Olá %@,\nVamos nos conectar no Wire.\n%@";
 
 "connection_request_pending_title" = "Solicitação de Conexão";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Definir Senha";
 "self.settings.history_backup.password.cancel" = "Cancelar";
 "self.settings.history_backup.password.next" = "Próximo";
-"self.settings.history_backup.password.placeholder" = "Pelo menos 8 caracteres";
+"self.settings.history_backup.password.placeholder" = "Senha";
 "self.settings.history_backup.password.description" = "O backup será compactado e criptografado com a senha que você definiu aqui.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
