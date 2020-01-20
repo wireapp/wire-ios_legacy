@@ -39,13 +39,13 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         
         if let userSession = ZMUserSession.shared() {
             let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
-        
+            
             pendingConnectionsListObserverToken = ConversationListChangeInfo.add(observer: self,
                                                                                  for: pendingConnectionsList,
                                                                                  userSession: userSession)
             
             userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
-
+            
             connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
         }
         
@@ -64,7 +64,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         super.viewDidAppear(animated)
         UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -121,8 +121,8 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         cell.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0)
         
         cell.acceptBlock = { [weak self] in
-            guard self?.connectionRequests.count == 0 else { return }
-
+            guard self?.connectionRequests.isEmpty == true else { return }
+            
             ZClientViewController.shared?.hideIncomingContactRequests() {
                 if let oneToOneConversation = user?.oneToOneConversation {
                     ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
@@ -137,19 +137,18 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
     
     private func hideRequestsOrShowNextRequest(animated: Bool = true) {
-        if connectionRequests.count == 0 {
-            ZClientViewController.shared?.hideIncomingContactRequests(completion: nil)
+        if connectionRequests.isEmpty {
+            ZClientViewController.shared?.hideIncomingContactRequests()
         } else {
-            // Scroll to bottom of inbox
             tableView.scrollToLastRow(animated: animated)
         }
     }
     
-    func reload(animated: Bool = true) {
+    private func reload(animated: Bool = true) {
         if let userSession = ZMUserSession.shared() {
-        let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
-        
-        connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
+            let pendingConnectionsList = ZMConversationList.pendingConnectionConversations(inUserSession: userSession)
+            
+            connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
         }
         
         tableView.reloadData()
