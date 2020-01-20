@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Yhdistä %@een"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Hei, %@.\nOta yhteys minuun Wiressä.\n%@";
 
 "connection_request_pending_title" = "Connection Request";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Peruuta";
 "self.settings.history_backup.password.next" = "Seuraava";
-"self.settings.history_backup.password.placeholder" = "Vähintään 8 merkkiä";
+"self.settings.history_backup.password.placeholder" = "Salasana";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

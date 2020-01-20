@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Połącz z %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Cześć %@,\nDołącz do grona użytkowników Wire.\n%@";
 
 "connection_request_pending_title" = "Connection Request";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Set Password";
 "self.settings.history_backup.password.cancel" = "Anuluj";
 "self.settings.history_backup.password.next" = "Dalej";
-"self.settings.history_backup.password.placeholder" = "Co najmniej 8 znaków";
+"self.settings.history_backup.password.placeholder" = "Hasło";
 "self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
