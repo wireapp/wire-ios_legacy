@@ -118,7 +118,7 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
         var distanceFromBottom: CGFloat = 0
         
         // On iOS 8, the frame goes to zero when the accessory view is hidden
-        if frame?.equalTo(.zero) == false {
+        if frame?.equalTo(.zero) == false {//frame = (0.0, 568.0, 320.0, 365.0), (0.0, 203.0, 320.0, 365.0)
             
             let convertedFrame = view.convert(view.superview?.frame ?? .zero, from: view.superview?.superview)
             
@@ -131,11 +131,11 @@ extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
             distanceFromBottom = max(0, distanceFromBottom)
         }
         
-        let closure: () -> () = {
-            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
-            
-            view.layoutIfNeeded()
-        }
+//        let closure: () -> () = {
+//            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
+//
+//            view.layoutIfNeeded()
+//        }
         
         if isAppearing {
             UIView.performWithoutAnimation() {
