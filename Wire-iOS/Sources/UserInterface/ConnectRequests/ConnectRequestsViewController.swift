@@ -18,7 +18,6 @@
 
 import Foundation
 
-private var ConnectionRequestCellIdentifier = "ConnectionRequestCell"
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var connectionRequests: [ZMConversation] = []
@@ -35,7 +34,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(ConnectRequestCell.self, forCellReuseIdentifier: ConnectionRequestCellIdentifier)
+        tableView.register(ConnectRequestCell.self, forCellReuseIdentifier: ConnectRequestCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -95,7 +94,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConnectionRequestCellIdentifier) as? ConnectRequestCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ConnectRequestCell.identifier) as? ConnectRequestCell else {
             fatal("Cannot create cell")
         }
         

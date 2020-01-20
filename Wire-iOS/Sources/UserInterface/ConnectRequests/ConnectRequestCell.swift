@@ -19,6 +19,7 @@
 import UIKit
 
 final class ConnectRequestCell: UITableViewCell {
+    static var identifier = "ConnectRequestCell"
 
     var acceptBlock: (() -> Void)?
     var ignoreBlock: (() -> Void)?
