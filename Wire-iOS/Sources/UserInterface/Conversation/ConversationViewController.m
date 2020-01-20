@@ -45,7 +45,6 @@
 
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
 

@@ -77,7 +77,7 @@ final class FolderCreationController: UIViewController {
         setupViews()
         
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.wr_currentFirst() {
+        if let _ = UIResponder.currentFirst {
             nameSection.becomeFirstResponder()
         }
     }

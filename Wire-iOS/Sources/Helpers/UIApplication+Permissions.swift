@@ -87,7 +87,7 @@ extension UIApplication {
     }
     
     private class func wr_warnAboutCameraPermission(withCompletion completion: @escaping () -> ()) {
-        let currentResponder = UIResponder.wr_currentFirst()
+        let currentResponder = UIResponder.currentFirst
         (currentResponder as? UIView)?.endEditing(true)
         
         let noVideoAlert = UIAlertController.alertWithOKButton(title: "voice.alert.camera_warning.title".localized,
