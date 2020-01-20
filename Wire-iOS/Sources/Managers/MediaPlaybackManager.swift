@@ -35,6 +35,7 @@ extension Notification.Name {
 /// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
+    @objc
     private(set) weak var activeMediaPlayer: MediaPlayer?
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     private var titleObserver: NSObject?
