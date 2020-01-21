@@ -113,45 +113,33 @@ extension ConversationViewController {
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
     
     // WARNING: DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-    func invisibleInputAccessoryView(_ view: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?) {
+    func invisibleInputAccessoryView(_ invisibleInputAccessoryView: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?) {
         // Adjust the input bar distance from bottom based on the invisibleAccessoryView
         var distanceFromBottom: CGFloat = 0
         
         // On iOS 8, the frame goes to zero when the accessory view is hidden
-        if frame?.equalTo(.zero) == false {//frame = (0.0, 568.0, 320.0, 365.0), (0.0, 203.0, 320.0, 365.0)
+        if frame?.equalTo(.zero) == false {
             
-            let convertedFrame = view.convert(view.superview?.frame ?? .zero, from: view.superview?.superview)
+            let convertedFrame = view.convert(invisibleInputAccessoryView.superview?.frame ?? .zero, from: invisibleInputAccessoryView.superview?.superview)
             
             // We have to use intrinsicContentSize here because the frame may not have actually been updated yet
-            let newViewHeight = view.intrinsicContentSize.height
+            let newViewHeight = invisibleInputAccessoryView.intrinsicContentSize.height
             
-            distanceFromBottom = view.frame.size.height - convertedFrame.origin.y - newViewHeight //convertedFrame = (0.0, 0.0, 320.0, 365.0), same
+            distanceFromBottom = view.frame.size.height - convertedFrame.origin.y - newViewHeight
             
-            //newViewHeight = 112
             distanceFromBottom = max(0, distanceFromBottom)
         }
         
-//        let closure: () -> () = {
-//            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
-//
-//            view.layoutIfNeeded()
-//        }
-        
-        if isAppearing {
-            UIView.performWithoutAnimation() {
-                self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
-                
-                view.layoutIfNeeded()
-
-            }
-        } else {
-//            closure()
-            self.inputBarBottomMargin?.constant = -distanceFromBottom ///TODO: 0?
-            
-            view.layoutIfNeeded()
-
+        let closure: () -> () = {
+            self.inputBarBottomMargin?.constant = -distanceFromBottom
+            self.view.layoutIfNeeded()
         }
         
+        if isAppearing {
+            UIView.performWithoutAnimation(closure)
+        } else {
+            closure()
+        }        
     }
 }
 

@@ -22,7 +22,7 @@ import Foundation
 // is being done to us and report back
 
 protocol InvisibleInputAccessoryViewDelegate: class {
-    func invisibleInputAccessoryView(_ view: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?)
+    func invisibleInputAccessoryView(_ invisibleInputAccessoryView: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?)
 }
 
 final class InvisibleInputAccessoryView: UIView {
