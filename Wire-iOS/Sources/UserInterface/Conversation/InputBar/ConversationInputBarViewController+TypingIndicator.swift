@@ -24,9 +24,7 @@ extension ConversationInputBarViewController {
     func updateTypingIndicator() {
         guard let typingIndicatorView = typingIndicatorView else { return }
 
-        let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
-        let otherTypingUsers = typingUsers.filter { !$0.isSelfUser }
-
+        let otherTypingUsers = conversation.typingUsers.filter { !$0.isSelfUser }
         let shouldHide = otherTypingUsers.isEmpty
 
         if !shouldHide {

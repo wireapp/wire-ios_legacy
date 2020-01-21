@@ -133,7 +133,7 @@ class AnimatedPenView : UIView {
 
     private var expandingLineWidth : NSLayoutConstraint?
     
-    public var typingUsers : [ZMUser] = [] {
+    public var typingUsers: [UserType] = [] {
         didSet {
             updateNameLabel()
         }
