@@ -24,14 +24,16 @@ extension ConversationInputBarViewController {
     func updateTypingIndicatorVisibility(animated: Bool) {
         guard let typingIndicatorView = typingIndicatorView else { return }
 
-        let count = typingUsers?.count ?? 0
+        let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
+        let otherTypingUsers = typingUsers.filter { !$0.isSelfUser }
 
-        if let typingUsers = typingUsers, count > 0 {
-            typingIndicatorView.typingUsers = Array(typingUsers)
+
+        if !otherTypingUsers.isEmpty {
+            typingIndicatorView.typingUsers = Array(otherTypingUsers)
             typingIndicatorView.layoutIfNeeded()
         }
 
-        typingIndicatorView.setHidden(count == 0, animated: animated)
+        typingIndicatorView.setHidden(otherTypingUsers.isEmpty, animated: animated)
     }
 }
 
