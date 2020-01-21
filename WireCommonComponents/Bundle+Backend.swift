@@ -25,7 +25,8 @@ extension Bundle {
         return bundle
     }
     
-    @objc static var defaultBackend: String? {
+    @objc
+    static public var defaultBackend: String? {
         return Bundle.appMainBundle.infoForKey("DefaultBackend")
     }
 }

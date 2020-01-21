@@ -1,6 +1,6 @@
-////
+
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,14 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <UIKit/UIKit.h>
+import Foundation
 
-@interface KeyboardAvoidingViewController ()
-
-@property (nonatomic, nullable) UIViewPropertyAnimator *animator;
-@property (nonatomic, readwrite, nonnull) UIViewController *viewController;
-
-@property (nonatomic, nullable) NSLayoutConstraint *bottomEdgeConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *topEdgeConstraint;
-
-@end
+extension ConversationInputBarViewController {
+    func execute(videoPermissions toExecute: @escaping () -> ()) {
+        UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in
+            if granted {
+                UIApplication.wr_requestOrWarnAboutMicrophoneAccess({ granted in
+                    if granted {
+                        toExecute()
+                    }
+                })
+            }
+        })
+    }
+}

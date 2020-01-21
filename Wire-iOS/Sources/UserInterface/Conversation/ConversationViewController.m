@@ -22,7 +22,6 @@
 
 #import "Settings.h"
 
-#import "AppDelegate.h"
 
 // helpers
 #import "Analytics.h"
@@ -37,17 +36,13 @@
 
 #import "ConversationViewController+ParticipantsPopover.h"
 #import "MediaPlayer.h"
-#import "MediaBarViewController.h"
-#import "InvisibleInputAccessoryView.h"
 #import "UIView+Zeta.h"
 #import "ConversationInputBarViewController.h"
-#import "MediaPlaybackManager.h"
 #import "ContactsDataSource.h"
 #import "VerticalTransition.h"
 
 #import "UIViewController+Errors.h"
 #import "SplitViewController.h"
-#import "UIResponder+FirstResponder.h"
 
 #import "Wire-Swift.h"
 
@@ -112,24 +107,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     if (self.conversation.draftMessage.quote != nil && !self.conversation.draftMessage.quote.hasBeenDeleted) {
         [self.inputBarController addReplyComposingView:[self.contentViewController createReplyComposingViewForMessage:self.conversation.draftMessage.quote]];
-    }
-}
-
-- (void)createInputBarController
-{
-    self.inputBarController = [[ConversationInputBarViewController alloc] initWithConversation:self.conversation];
-    self.inputBarController.delegate = self;
-    self.inputBarController.view.translatesAutoresizingMaskIntoConstraints = NO;
-
-    // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
-    // dragging and sizing of the scrollview
-    self.invisibleInputAccessoryView = [[InvisibleInputAccessoryView alloc] init];
-    self.invisibleInputAccessoryView.delegate = self;
-    self.invisibleInputAccessoryView.userInteractionEnabled = NO; // make it not block touch events
-    self.invisibleInputAccessoryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    
-    if (!AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal) {
-        self.inputBarController.inputBar.invisibleInputAccessoryView = self.invisibleInputAccessoryView;
     }
 }
 
@@ -264,36 +241,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.startCallController = [[ConversationCallController alloc] initWithConversation:self.conversation target: self];
     }
 }
-
-- (void)setupNavigatiomItem
-{
-    self.titleView = [[ConversationTitleView alloc] initWithConversation:self.conversation interactive:YES];
     
-    ZM_WEAK(self);
-    self.titleView.tapHandler = ^(UIButton * _Nonnull button) {
-        ZM_STRONG(self);
-        [self presentParticipantsViewController:self.participantsController fromView:self.titleView.superview];
-    };
-    [self.titleView configure];
-    
-    self.navigationItem.titleView = self.titleView;
-    self.navigationItem.leftItemsSupplementBackButton = NO;
-
-    [self updateRightNavigationItemsButtons];
-}
-    
-- (void)updateInputBarVisibility
-{
-    if (self.conversation.isReadOnly) {
-        [self.inputBarController.inputBar.textView resignFirstResponder];
-        [self.inputBarController dismissMentionsIfNeeded];
-        [self.inputBarController removeReplyComposingView];
-    }
-
-    self.inputBarZeroHeight.active = self.conversation.isReadOnly;
-    [self.view setNeedsLayout];
-}
-
 - (UIViewController *)participantsController
 {
     UIViewController *viewController = nil;
@@ -319,19 +267,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     _participantsController = viewController.wrapInNavigationController;
 
     return _participantsController;
-}
-
-- (void)addParticipants:(NSSet *)participants
-{
-    ZMConversation __block *newConversation = nil;
-
-    ZM_WEAK(self);
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        newConversation = [self.conversation addParticipantsOrCreateConversation:participants];
-    } completionHandler:^{
-        ZM_STRONG(self);
-        [self.zClientViewController selectConversation:newConversation focusOnView:YES animated:YES];
-    }];
 }
 
 - (void)setCollectionController:(CollectionsViewController *)collectionController
@@ -364,48 +299,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)onBackButtonPressed:(UIButton *)backButton
 {
     [self openConversationList];
-}
-
-@end
-
-
-@implementation ConversationViewController (Keyboard)
-
-- (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view didMoveToWindow:(UIWindow *)window
-{
-}
-
-// WARNING: DO NOT TOUCH THIS UNLESS YOU KNOW WHAT YOU ARE DOING
-- (void)invisibleInputAccessoryView:(InvisibleInputAccessoryView *)view superviewFrameChanged:(CGRect)frame
-{
-    // Adjust the input bar distance from bottom based on the invisibleAccessoryView
-    CGFloat distanceFromBottom = 0;
-
-    // On iOS 8, the frame goes to zero when the accessory view is hidden
-    if ( ! CGRectEqualToRect(frame, CGRectZero)) {
-
-        CGRect convertedFrame = [self.view convertRect:view.superview.frame fromView:view.superview.superview];
-
-        // We have to use intrinsicContentSize here because the frame may not have actually been updated yet
-        CGFloat newViewHeight = view.intrinsicContentSize.height;
-
-        distanceFromBottom = self.view.frame.size.height - convertedFrame.origin.y - newViewHeight;
-        distanceFromBottom = MAX(0, distanceFromBottom);
-    }
-
-    if (self.isAppearing) {
-        [UIView performWithoutAnimation:^{
-            self.inputBarBottomMargin.constant = -distanceFromBottom;
-
-            [self.view layoutIfNeeded];
-        }];
-    }
-    else {
-        self.inputBarBottomMargin.constant = -distanceFromBottom;
-
-        [self.view layoutIfNeeded];
-    }
-
 }
 
 @end
@@ -467,53 +360,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)conversationInputBarViewControllerEditLastMessage
 {
     [self.contentViewController editLastMessage];
-}
-
-@end
-
-@implementation ConversationViewController (ZMConversationObserver)
-
-- (void)conversationDidChange:(ConversationChangeInfo *)note
-{
-    if (note.causedByConversationPrivacyChange) {
-        [self presentPrivacyWarningAlertForChange:note];
-    }
-    
-    if (note.participantsChanged || note.connectionStateChanged) {
-        [self updateRightNavigationItemsButtons];
-        [self updateLeftNavigationBarItems];
-        [self updateOutgoingConnectionVisibility];
-        [self.contentViewController updateTableViewHeaderView];
-        [self updateInputBarVisibility];
-    }
-
-    if (note.participantsChanged || note.externalParticipantsStateChanged) {
-        [self updateGuestsBarVisibility];
-    }
-
-    if (note.nameChanged || note.securityLevelChanged || note.connectionStateChanged || note.legalHoldStatusChanged) {
-        [self setupNavigatiomItem];
-    }
-}
-
-- (void)dismissProfileClientViewController:(UIBarButtonItem *)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
-
-@implementation ConversationViewController (ConversationListObserver)
-
-- (void)conversationListDidChange:(ConversationListChangeInfo *)changeInfo
-{
-    [self updateLeftNavigationBarItems];
-}
-
-- (void)conversationInsideList:(ZMConversationList * _Nonnull)list didChange:(ConversationChangeInfo * _Nonnull)changeInfo
-{
-    [self updateLeftNavigationBarItems];
 }
 
 @end

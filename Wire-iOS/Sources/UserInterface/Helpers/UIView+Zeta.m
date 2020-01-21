@@ -18,7 +18,6 @@
 
 
 #import "UIView+Zeta.h"
-#import "UIResponder+FirstResponder.h"
 #import "Wire-Swift.h"
 
 static NSString * const WireLastCachedKeyboardHeightKey = @"WireLastCachedKeyboardHeightKey";

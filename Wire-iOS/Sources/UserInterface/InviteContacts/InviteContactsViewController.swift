@@ -111,7 +111,7 @@ final class InviteContactsViewController: ContactsViewController {
         
         let selectOneToOneConversation: Completion = {
             if let oneToOneConversation = searchUser?.oneToOneConversation {
-                ZClientViewController.shared?.select(oneToOneConversation, focusOnView: true, animated: true)
+                ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
             }
         }
         

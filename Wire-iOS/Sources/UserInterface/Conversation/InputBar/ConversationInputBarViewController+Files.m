@@ -33,18 +33,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController (Files)
 
-- (void)executeWithVideoPermissions:(dispatch_block_t)toExecute {
-    [UIApplication wr_requestOrWarnAboutVideoAccess:^(BOOL granted) {
-        if (granted) {
-            [UIApplication wr_requestOrWarnAboutMicrophoneAccess:^(BOOL granted) {
-                if (granted) {
-                    toExecute();
-                }
-            }];
-        }
-    }];
-}
-
 - (void)uploadItemAtURL:(NSURL *)itemURL
 {
     NSString *itemPath = itemURL.path;

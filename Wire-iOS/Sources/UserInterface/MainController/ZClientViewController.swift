@@ -218,7 +218,7 @@ final class ZClientViewController: UIViewController {
         // if changing from compact width to regular width, make sure current conversation is loaded
         if previousTraitCollection?.horizontalSizeClass == .compact && traitCollection.horizontalSizeClass == .regular {
             if let currentConversation = currentConversation {
-                select(currentConversation)
+                select(conversation: currentConversation)
             } else {
                 attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
@@ -232,7 +232,7 @@ final class ZClientViewController: UIViewController {
     // MARK: - Public API
     @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
-        return AppDelegate.shared().rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
+        return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }
     
     /// Select the connection inbox and optionally move focus to it.
@@ -247,13 +247,12 @@ final class ZClientViewController: UIViewController {
     /// have no more connection requests.
     ///
     /// - Parameter completion: completion handler
-    @objc(hideIncomingContactRequestsWithCompletion:)
-    func hideIncomingContactRequests(withCompletion completion: @escaping Completion) {
+    func hideIncomingContactRequests(completion: Completion? = nil) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationsList = ZMConversationList.conversations(inUserSession: userSession)
-        if conversationsList.count != 0 {
-            select(conversationsList.first)
+        if let conversation = (conversationsList as? [ZMConversation])?.first {
+            select(conversation: conversation)
         }
         
         wireSplitViewController.setLeftViewControllerRevealed(true, animated: true, completion: completion)
@@ -426,7 +425,7 @@ final class ZClientViewController: UIViewController {
 
         if let currentAccount = SessionManager.shared?.accountManager.selectedAccount {
             if let conversation = Settings.shared().lastViewedConversation(for: currentAccount) {
-            select(conversation, focusOnView: focus, animated: animated)
+                select(conversation: conversation, focusOnView: focus, animated: animated)
             }
             
             // dispatch async here because it has to happen after the collection view has finished
@@ -451,13 +450,13 @@ final class ZClientViewController: UIViewController {
         
         // check for conversations and pick the first one.. this can be tricky if there are pending updates and
         // we haven't synced yet, but for now we just pick the current first item
-        let list = ZMConversationList.conversations(inUserSession: userSession)
+        let list = ZMConversationList.conversations(inUserSession: userSession) as? [ZMConversation]
         
-        if list.count <= 0 {
-            loadPlaceholderConversationController(animated: true)
-        } else {
+        if let conversation = list?.first {
             // select the first conversation and don't focus on it
-            select(list[0])
+            select(conversation: conversation)
+        } else {
+            loadPlaceholderConversationController(animated: true)
         }
     }
     
@@ -679,14 +678,6 @@ final class ZClientViewController: UIViewController {
 
     ///MARK: - select conversation
 
-    @objc(selectConversation:focusOnView:animated:)
-    func select(_ conversation: ZMConversation,
-                focusOnView focus: Bool,
-                animated: Bool) {
-        select(conversation, scrollTo: nil, focusOnView: focus, animated: animated, completion: nil)
-    }
-
-    
     /// Select a conversation and move the focus to the conversation view.
     ///
     /// - Parameters:
@@ -695,18 +686,18 @@ final class ZClientViewController: UIViewController {
     ///   - focus: focus on the view or not
     ///   - animated: perform animation or not
     ///   - completion: the completion block
-    func select(_ conversation: ZMConversation,
+    func select(conversation: ZMConversation,
                 scrollTo message: ZMConversationMessage? = nil,
                 focusOnView focus: Bool,
                 animated: Bool,
                 completion: Completion? = nil) {
         dismissAllModalControllers(callback: { [weak self] in
-            self?.conversationListViewController.viewModel.select(conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
+            self?.conversationListViewController.viewModel.select(conversation: conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
 
-    func select(_ conversation: ZMConversation) {
-        conversationListViewController.viewModel.select(conversation)
+    func select(conversation: ZMConversation) {
+        conversationListViewController.viewModel.select(conversation: conversation)
     }
 
     var isConversationViewVisible: Bool {
@@ -720,7 +711,7 @@ final class ZClientViewController: UIViewController {
 
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
-        AppDelegate.shared().callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
+        AppDelegate.shared.callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
     }
 
     // MARK: - Application State

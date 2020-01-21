@@ -22,6 +22,5 @@
 @interface ConversationInputBarViewController (Files) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (void)uploadFileAtURL:(NSURL *)URL;
-- (void)executeWithVideoPermissions:(dispatch_block_t)toExecute;
 - (void)uploadItemAtURL:(NSURL *)itemURL;
 @end

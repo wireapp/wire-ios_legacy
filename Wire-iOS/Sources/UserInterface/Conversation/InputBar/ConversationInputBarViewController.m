@@ -39,11 +39,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-
-@interface ConversationInputBarViewController (CameraViewController)
-- (void)cameraButtonPressed:(id)sender;
-@end
-
 @interface ConversationInputBarViewController (Ping)
 
 - (void)pingButtonPressed:(UIButton *)button;
@@ -605,30 +600,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)postImage:(id<MediaAsset>)image
 {
     [self.sendController sendMessageWithImageData:image.data completion:^() {}];
-}
-
-@end
-
-
-@implementation ConversationInputBarViewController (CameraViewController)
-
-- (void)cameraButtonPressed:(id)sender
-{
-    if (self.mode == ConversationInputBarViewControllerModeCamera) {
-        [self.inputBar.textView resignFirstResponder];
-        self.cameraKeyboardViewController = nil;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.mode = ConversationInputBarViewControllerModeTextInput;
-        });
-    }
-    else {
-        [UIApplication wr_requestVideoAccess:^(BOOL granted) {
-            [self executeWithCameraRollPermission:^(BOOL success){
-                self.mode = ConversationInputBarViewControllerModeCamera;
-                [self.inputBar.textView becomeFirstResponder];
-            }];
-        }];
-    }
 }
 
 @end

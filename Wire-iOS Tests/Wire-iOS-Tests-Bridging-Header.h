@@ -31,5 +31,3 @@
 
 #import "MockConversation.h"
 #import "EmoticonSubstitutionConfiguration+Tests.h"
-#import "ConnectRequestsViewController.h"
-#import "ConnectRequestsViewController+Internal.h"
