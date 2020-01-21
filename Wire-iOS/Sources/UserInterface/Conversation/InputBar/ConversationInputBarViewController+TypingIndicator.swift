@@ -21,19 +21,20 @@ import Foundation
 extension ConversationInputBarViewController {
 
     @objc
-    func updateTypingIndicatorVisibility(animated: Bool) {
+    func updateTypingIndicator() {
         guard let typingIndicatorView = typingIndicatorView else { return }
 
         let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
         let otherTypingUsers = typingUsers.filter { !$0.isSelfUser }
 
+        let shouldHide = otherTypingUsers.isEmpty
 
-        if !otherTypingUsers.isEmpty {
+        if !shouldHide {
             typingIndicatorView.typingUsers = Array(otherTypingUsers)
             typingIndicatorView.layoutIfNeeded()
         }
 
-        typingIndicatorView.setHidden(otherTypingUsers.isEmpty, animated: animated)
+        typingIndicatorView.setHidden(shouldHide, animated: !shouldHide)
     }
 }
 

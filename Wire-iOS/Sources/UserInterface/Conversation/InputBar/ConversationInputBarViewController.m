@@ -200,7 +200,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateTypingIndicatorVisibilityWithAnimated:false];
+    [self updateTypingIndicator];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
@@ -761,7 +761,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSArray<id<UserType>> *)typingUsers
 {
-    [self updateTypingIndicatorVisibilityWithAnimated:YES];
+    [self updateTypingIndicator];
 }
 
 @end
