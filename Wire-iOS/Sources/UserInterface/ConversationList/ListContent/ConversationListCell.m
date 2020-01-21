@@ -200,7 +200,7 @@ static CGSize cachedSize = {0, 0};
 
 @implementation ConversationListCell (Typing)
 
-- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
+- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSArray<id<UserType>> *)typingUsers
 {
     [self updateAppearance];
 }
