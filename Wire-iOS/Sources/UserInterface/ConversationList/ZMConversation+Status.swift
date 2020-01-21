@@ -350,7 +350,8 @@ final class TypingMatcher: ConversationStatusMatcher {
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         let statusString: NSAttributedString
         if status.isGroup {
-            let typingUsersString = conversation.typingUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+          let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
+            let typingUsersString = typingUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
