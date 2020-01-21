@@ -84,4 +84,27 @@ extension ConversationListCell {
             NSLayoutConstraint.activate(menuDotsViewEdges)
         }
     }
+    
+    func onRightAccessorySelected(_ sender: UIButton?) {
+        let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
+        
+        if mediaPlaybackManager?.activeMediaPlayer != nil &&
+            mediaPlaybackManager?.activeMediaPlayer?.sourceMessage?.conversation == conversation {
+            toggleMediaPlayer()
+        } else if conversation?.canJoinCall == true {
+            delegate?.conversationListCellJoinCallButtonTapped(self)
+        }
+    }
+    
+    func toggleMediaPlayer() {
+        let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
+        
+        if mediaPlaybackManager?.activeMediaPlayer?.state == .playing {
+            mediaPlaybackManager?.pause()
+        } else {
+            mediaPlaybackManager?.play()
+        }
+        
+        updateAppearance()
+    }
 }

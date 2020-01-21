@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Ühendu kasutajaga %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Hei, %@.\nSuhtleme Wire's edasi.\n%@";
 
 "connection_request_pending_title" = "Connection Request";
@@ -1197,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Määra salasõna";
 "self.settings.history_backup.password.cancel" = "Tühista";
 "self.settings.history_backup.password.next" = "Järgmine";
-"self.settings.history_backup.password.placeholder" = "Vähemalt 8 tähte";
+"self.settings.history_backup.password.placeholder" = "Parool";
 "self.settings.history_backup.password.description" = "Varukoopia pakitakse ja krüpteeritakse sinu seatud parooliga.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++

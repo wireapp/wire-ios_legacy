@@ -226,8 +226,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     }
     
     @objc func keyboardFrameWillChange(notification: Notification) {
-        let firstResponder = UIResponder.wr_currentFirst()
-        let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
+        let inputAccessoryHeight = UIResponder.currentFirst?.inputAccessoryView?.bounds.size.height ?? 0
         
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight

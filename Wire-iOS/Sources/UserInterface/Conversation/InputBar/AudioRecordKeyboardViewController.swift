@@ -410,7 +410,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.recorder.startRecording { success in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
         }
     }
     

@@ -26,7 +26,7 @@ extension ConversationContentViewController {
 
     @objc
     func updateMediaBar() {
-        let mediaPlayingMessage = AppDelegate.shared().mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
+        let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
 
         if let mediaPlayingMessage = mediaPlayingMessage,
             mediaPlayingMessage.conversation == conversation,

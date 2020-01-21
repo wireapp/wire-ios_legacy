@@ -117,7 +117,6 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
 
 extension ConversationViewController {
     
-    @objc(presentParticipantsViewController:fromView:)
     func presentParticipantsViewController(_ viewController: UIViewController, from sourceView: UIView) {
         ConversationInputBarViewController.endEditingMessage()
         inputBarController.inputBar.textView.resignFirstResponder()

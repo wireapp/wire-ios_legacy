@@ -16,10 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface AppDelegate ()
+import Foundation
 
-@property (nonatomic, nullable) AppRootViewController *rootViewController;
-@property (nonatomic, assign, readwrite) ApplicationLaunchType launchType;
-@property (nonatomic, copy, nonnull) NSDictionary *launchOptions;
+extension Analytics {
+    @objc
+    func setupObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
 
-@end
+    }
+    
+    @objc
+    private func userSessionDidBecomeAvailable(_ note: Notification?) {
+        callingTracker = AnalyticsCallingTracker(analytics: self)
+        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
+        setTeam(ZMUser.selfUser().team)
+    }
+
+}

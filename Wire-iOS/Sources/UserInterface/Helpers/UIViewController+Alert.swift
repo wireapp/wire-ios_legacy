@@ -28,7 +28,8 @@ extension UIAlertController {
     ///   - message: message of the alert
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
-    @objc static func alertWithOKButton(title: String? = nil,
+    @objc
+    static func alertWithOKButton(title: String? = nil,
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,

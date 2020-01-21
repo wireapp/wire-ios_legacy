@@ -23,8 +23,6 @@
 @import avs;
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
-#import "AppDelegate.h"
-
 
 // UI
 #import "ParticipantDeviceHeaderView.h"
@@ -38,7 +36,6 @@
 #import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
-#import "InvisibleInputAccessoryView.h"
 #import "SCSiriWaveformView.h"
 #import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
@@ -112,17 +109,17 @@
 // Utils
 #import "Analytics.h"
 #import "Analytics+Internal.h"
+#import "AnalyticsDecryptionFailedObserver.h"
+
 #import "Application+runDuration.h"
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
-#import "UIApplication+Permissions.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "UIResponder+FirstResponder.h"
 #import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
@@ -142,8 +139,6 @@
 // Audio player
 #import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
-#import "MediaPlaybackManager.h"
 
 // Invite
 #import "ShareItemProvider.h"
-
