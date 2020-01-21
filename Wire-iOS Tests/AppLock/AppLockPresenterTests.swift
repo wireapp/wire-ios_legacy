@@ -200,7 +200,21 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: false, reauthVisibile: false)
     }
     
-    func testThatPasswordVerifiedWithNotValidatedResultDimsContents() {
+    func testThatPasswordVerifiedDoesntDimContentIfAuthIsNotNeeded() {
+        //given
+        appLockInteractor._isAuthenticationNeeded = false
+        
+        //when
+        sut.passwordVerified(with: .denied)
+        
+        //then
+        assert(contentsDimmed: false, reauthVisibile: false)
+    }
+    
+    func testThatPasswordVerifiedWithNotValidatedResultDimsContentsIfAuthNeeded() {
+        //given
+        appLockInteractor._isAuthenticationNeeded = true
+        
         //when
         sut.passwordVerified(with: .denied)
         //then
@@ -221,8 +235,26 @@ class AppLockPresenterTests: XCTestCase {
         assert(contentsDimmed: true, reauthVisibile: false)
     }
     
+    func testThatItOnlyAsksForPasswordWhenNeeded() {
+        //given
+        appLockInteractor._isAuthenticationNeeded = true
+        //when
+        sut.passwordVerified(with: .denied)
+        //then
+        XCTAssertNotNil(userInterface.requestPasswordMessage)
+        
+        //given
+        userInterface.requestPasswordMessage = nil
+        appLockInteractor._isAuthenticationNeeded = false
+        //when
+        sut.passwordVerified(with: .denied)
+        //then
+        XCTAssertNil(userInterface.requestPasswordMessage)
+    }
+    
     func testThatItVerifiesPasswordWithCorrectMessageWhenNeeded() {
         //given
+        appLockInteractor._isAuthenticationNeeded = true
         let queue = DispatchQueue(label: "Password verification tests queue", qos: .background)
         sut = AppLockPresenter(userInterface: userInterface, appLockInteractorInput: appLockInteractor)
         sut.dispatchQueue = queue
