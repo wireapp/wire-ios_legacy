@@ -190,10 +190,8 @@ extension ZMSnapshotTestCase {
         if let errorDescription = snapshotVerifyViewOrLayer(view,
                                                             identifier: identifier,
                                                             suffixes: suffix,
-                                                            perPixelTolerance: tolerance,
-                                                            overallTolerance: tolerance,
-                                                            defaultReferenceDirectory: FB_REFERENCE_IMAGE_DIR,
-                                                            defaultImageDiffDirectory: IMAGE_DIFF_DIR) {
+                                                            tolerance: tolerance,
+                                                            defaultReferenceDirectory: FB_REFERENCE_IMAGE_DIR) {
 
             XCTFail("\(errorDescription)", file:file, line:line)
         } else {
