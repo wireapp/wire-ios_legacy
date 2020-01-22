@@ -38,8 +38,6 @@ import UIKit
     }
 
     private func setup() {
-        isSelectable = true
-        isEditable = false
         isScrollEnabled = false
         bounces = false
         backgroundColor = UIColor.clear
