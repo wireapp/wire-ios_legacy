@@ -40,14 +40,14 @@ extension ZMConversation {
         return type(of: self).maxParticipants - localParticipants.count
     }
     
-    func addOrShowError(participants: Set<ZMUser>) {
+    func addOrShowError(participants: [UserType]) {
         guard let session = ZMUserSession.shared(),
                 session.networkState != .offline else {
             self.showAlertForAdding(for: NetworkError.offline)
             return
         }
         
-        self.addParticipants(Array(participants),
+        self.addParticipants(participants,
                              userSession: ZMUserSession.shared()!) { result in
                                 switch result {
                                 case .failure(let error):
@@ -58,11 +58,11 @@ extension ZMConversation {
     }
     
     @objc (removeParticipantOrShowError:)
-    func removeOrShowError(participnant user: ZMUser) {
+    func removeOrShowError(participnant user: UserType) {
         removeOrShowError(participnant: user, completion: nil)
     }
     
-    func removeOrShowError(participnant user: ZMUser, completion: ((VoidResult)->())? = nil) {
+    func removeOrShowError(participnant user: UserType, completion: ((VoidResult)->())? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {
             self.showAlertForRemoval(for: NetworkError.offline)
@@ -75,7 +75,7 @@ extension ZMConversation {
                                 switch result {
                                 case .success:
                                     if user.isServiceUser {
-                                        Analytics.shared().tagDidRemoveService(user)
+                                        Analytics.shared().tagDidRemoveService(user as! ServiceUser)
                                     }
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)
