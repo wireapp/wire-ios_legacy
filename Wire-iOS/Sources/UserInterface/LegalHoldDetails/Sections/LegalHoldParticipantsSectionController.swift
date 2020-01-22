@@ -56,7 +56,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         super.init()
         
         if let userSession = ZMUserSession.shared() {
-            token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
+            token = UserChangeInfo.add(userObserver: self, in: userSession)
         }
     }
     
