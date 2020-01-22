@@ -28,10 +28,6 @@ set -e
 
 function die { ( >&2 echo "$*"); exit 1; }
 
-# TODO: remove this after CI server build done
-echo "🕚 set DEVELOPER_DIR to XCode 11"
-export DEVELOPER_DIR="/Applications/Xcode_11.3.1.app/Contents/Developer"
-
 # CHECK PREREQUISITES
 hash carthage 2>/dev/null || die "Can't find Carthage, please install from https://github.com/Carthage/Carthage"
 hash xcodebuild 2>/dev/null || die "Can't find Xcode, please install from the App Store"
