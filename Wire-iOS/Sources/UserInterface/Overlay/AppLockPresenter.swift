@@ -139,12 +139,18 @@ extension AppLockPresenter: AppLockInteractorOutput {
             self.setContents(dimmed: true, withReauth: true)
             return
         }
-        setContents(dimmed: result != .validated)
+        let authNeeded = appLockInteractorInput.isAuthenticationNeeded
+        setContents(dimmed: result != .validated && authNeeded)
         switch result {
         case .validated:
             appUnlocked()
         case .denied, .unknown, .timeout:
-            requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
+            if authNeeded {
+                requestAccountPassword(with: AuthenticationMessageKey.wrongPassword)
+            }
+            else {
+                authenticationState = .needed
+            }
         }
     }
 }
