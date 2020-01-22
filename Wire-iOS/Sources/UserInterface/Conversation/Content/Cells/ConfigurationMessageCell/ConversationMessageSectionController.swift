@@ -287,13 +287,13 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             changeObservers.append(observer)
 
             if let sender = message.sender {
-                let observer = UserChangeInfo.add(observer: self, for: sender, userSession: userSession)!
+                let observer = UserChangeInfo.add(observer: self, for: sender, in: userSession)!
                 changeObservers.append(observer)
             }
 
             if let users = message.systemMessageData?.users {
                 for user in users where user.remoteIdentifier != message.sender?.remoteIdentifier {
-                    let observer = UserChangeInfo.add(observer: self, for: user, userSession: userSession)!
+                    let observer = UserChangeInfo.add(observer: self, for: user, in: userSession)!
                     changeObservers.append(observer)
                 }
             }

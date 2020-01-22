@@ -75,7 +75,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         super.init()
         
         if let sharedSession = ZMUserSession.shared() {
-            self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
+            self.observerToken = UserChangeInfo.add(observer: self, for: user, in: sharedSession)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),

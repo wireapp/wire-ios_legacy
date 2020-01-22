@@ -220,7 +220,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!
+            UserChangeInfo.add(observer: self, for: selfUser, in: sharedSession)!
         ]
     }
 

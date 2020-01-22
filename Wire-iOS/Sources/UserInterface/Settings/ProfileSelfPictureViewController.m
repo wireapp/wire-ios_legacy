@@ -53,7 +53,7 @@
         };
 
         if ([ZMUserSession sharedSession] != nil) {
-            self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] userSession:[ZMUserSession sharedSession]];
+            self.userObserverToken = [UserChangeInfo addObserver:self forUser:[ZMUser selfUser] inUserSession:[ZMUserSession sharedSession]];
         }
     }
     

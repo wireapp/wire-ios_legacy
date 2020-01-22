@@ -64,7 +64,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
         if let userSession = ZMUserSession.shared() {
-            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
         }
         startTimer()
     }
