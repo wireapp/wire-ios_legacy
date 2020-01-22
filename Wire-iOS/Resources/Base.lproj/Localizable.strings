@@ -1229,12 +1229,13 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.create_account.title" = "Personal";
+"landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "Already have an account?";
 "landing.login.button.title" = "Log in";
+"landing.enterprise.login.button.title" = "Enterprise log in";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
