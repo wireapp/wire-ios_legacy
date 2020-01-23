@@ -51,7 +51,7 @@ extension ConversationViewController {
         mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
-    
+
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
         if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
@@ -153,7 +153,7 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-            note.connectionStateChanged {
+           note.connectionStateChanged {
             updateRightNavigationItemsButtons()
             updateLeftNavigationBarItems()
             updateOutgoingConnectionVisibility()
@@ -162,14 +162,14 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-            note.externalParticipantsStateChanged {
+           note.externalParticipantsStateChanged {
             updateGuestsBarVisibility()
         }
         
         if note.nameChanged ||
-            note.securityLevelChanged ||
-            note.connectionStateChanged ||
-            note.legalHoldStatusChanged {
+           note.securityLevelChanged ||
+           note.connectionStateChanged ||
+           note.legalHoldStatusChanged {
             setupNavigatiomItem()
         }
     }
