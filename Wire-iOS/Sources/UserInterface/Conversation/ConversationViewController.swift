@@ -43,25 +43,25 @@ final class ConversationViewController: UIViewController {
     
     var isFocused = false
     
-    ///TODO: create when init
     private(set) var startCallController: ConversationCallController!
     
-    private(set) var contentViewController: ConversationContentViewController!
-    private(set) var inputBarController: ConversationInputBarViewController!
+    let contentViewController: ConversationContentViewController
+    let inputBarController: ConversationInputBarViewController
 
     var collectionController: CollectionsViewController?
     var outgoingConnectionViewController: OutgoingConnectionViewController!
-    private(set) var conversationBarController: BarController!
-    private(set) var guestsBarController: GuestsBarController!
-    private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView!
+    let conversationBarController: BarController = BarController()
+    let guestsBarController: GuestsBarController = GuestsBarController()
+    let invisibleInputAccessoryView: InvisibleInputAccessoryView = InvisibleInputAccessoryView()
+    let mediaBarViewController: MediaBarViewController
+    private let titleView: ConversationTitleView
+
     var inputBarBottomMargin: NSLayoutConstraint?
     var inputBarZeroHeight: NSLayoutConstraint?
     
     var isAppearing = false
-    var mediaBarViewController: MediaBarViewController!
     private var voiceChannelStateObserverToken: Any?
     private var conversationObserverToken: Any?
-    private var titleView: ConversationTitleView!
     private var conversationListObserverToken: Any?
     
     var participantsController: UIViewController? {
@@ -96,7 +96,21 @@ final class ConversationViewController: UIViewController {
         self.visibleMessage = visibleMessage
         self.zClientViewController = zClientViewController
         
+        
+        contentViewController = ConversationContentViewController(conversation: conversation,
+                                                                  message: visibleMessage,
+                                                                  mediaPlaybackManager: zClientViewController.mediaPlaybackManager,
+                                                                  session: session)
+
+        inputBarController = ConversationInputBarViewController(conversation: conversation)
+
+        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: zClientViewController.mediaPlaybackManager)
+        
+        titleView = ConversationTitleView(conversation: conversation, interactive: true)
+        
         super.init(nibName: nil, bundle: nil)
+        
+        definesPresentationContext = true
     }
     
     @available(*, unavailable)
@@ -129,16 +143,13 @@ final class ConversationViewController: UIViewController {
         
         contentViewController.tableView.pannableView = inputBarController.view
         
-        createConversationBarController()
         createMediaBarViewController()
-        createGuestsBarController()
         
         addToSelf(contentViewController)
         addToSelf(inputBarController)
         addToSelf(conversationBarController)
         
         updateOutgoingConnectionVisibility()
-        isAppearing = false
         createConstraints()
         updateInputBarVisibility()
         
@@ -164,10 +175,6 @@ final class ConversationViewController: UIViewController {
             
             self?.openConversationList()
         }
-    }
-    
-    func createGuestsBarController() {
-        guestsBarController = GuestsBarController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -196,16 +203,12 @@ final class ConversationViewController: UIViewController {
         contentViewController.scroll(to: message, completion: nil)
     }
     
-    func createConversationBarController() {
-        conversationBarController = BarController()
-    }
-    
     // MARK: - Device orientation
-    func shouldAutorotate() -> Bool {
+    override var shouldAutorotate : Bool {
         return true
     }
     
-    func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .portrait
         } else {
@@ -223,10 +226,6 @@ final class ConversationViewController: UIViewController {
         super.viewWillTransition(to: size, with: coordinator)
         
         hideAndDestroyParticipantsPopover()
-    }
-    
-    func definesPresentationContext() -> Bool {
-        return true
     }
     
     override func didReceiveMemoryWarning() {
@@ -250,7 +249,7 @@ final class ConversationViewController: UIViewController {
     }
     
     // MARK: - SwipeNavigationController's panning
-    ///TODO: still needed?
+    ///TODO: still support pan gesture?
     /*
     func frameworkShouldRecognizePan(_ gestureRecognizer: UIPanGestureRecognizer?) -> Bool {
         let location = gestureRecognizer?.location(in: view)
@@ -286,10 +285,6 @@ final class ConversationViewController: UIViewController {
     }
     
     private func createContentViewController() {
-        contentViewController = ConversationContentViewController(conversation: conversation,
-                                                                  message: visibleMessage,
-                                                                  mediaPlaybackManager: zClientViewController.mediaPlaybackManager,
-                                                                  session: session)
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentViewController.bottomMargin = 16
@@ -298,7 +293,6 @@ final class ConversationViewController: UIViewController {
     }
     
     private func createMediaBarViewController() {
-        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
     
@@ -311,13 +305,11 @@ final class ConversationViewController: UIViewController {
     }
     
     private func createInputBarController() {
-        inputBarController = ConversationInputBarViewController(conversation: conversation)
         inputBarController.delegate = self
         inputBarController.view.translatesAutoresizingMaskIntoConstraints = false
         
         // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
         // dragging and sizing of the scrollview
-        invisibleInputAccessoryView = InvisibleInputAccessoryView()
         invisibleInputAccessoryView.delegate = self
         invisibleInputAccessoryView.isUserInteractionEnabled = false // make it not block touch events
         invisibleInputAccessoryView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -339,8 +331,6 @@ final class ConversationViewController: UIViewController {
     }
     
     private func setupNavigatiomItem() {
-        titleView = ConversationTitleView(conversation: conversation, interactive: true)
-        
         titleView.tapHandler = { [weak self] button in
             if let superview = self?.titleView.superview,
                 let participantsController = self?.participantsController {
@@ -449,7 +439,7 @@ extension ConversationViewController: ZMConversationListObserver {
         updateLeftNavigationBarItems()
     }
     
-    public func conversation(inside list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
 }
