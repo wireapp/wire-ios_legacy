@@ -88,8 +88,9 @@ class LandingViewController: AuthenticationStepViewController {
     }()
     
     let messageLabel: UILabel = {
-        let label = UILabel(key: "Welcome to Wire", size: .large, weight: .medium, color: .textForeground, variant: .light)
+        let label = UILabel(key: "landing.welcome_message".localized, size: .large, weight: .light, color: .textForeground, variant: .light)
         label.textAlignment = .center
+        label.numberOfLines = 2
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         
         return label
@@ -112,7 +113,6 @@ class LandingViewController: AuthenticationStepViewController {
         button.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction), for: .normal)
         button.accessibilityIdentifier = "EnterpriseLoginButton"
         button.setTitle("landing.enterprise.login.button.title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.smallSemiboldFont
         button.addTarget(self, action: #selector(LandingViewController.enterpriseLoginButtonTapped(_:)
             ), for: .touchUpInside)
         
@@ -123,7 +123,6 @@ class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .empty, variant: .light)
         button.accessibilityIdentifier = "LoginButton"
         button.setTitle("landing.login.button.title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.smallSemiboldFont
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
         
         return button
@@ -133,7 +132,6 @@ class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .full, variant: .light)
         button.accessibilityIdentifier = "CreateAccountButton"
         button.setTitle("landing.create_account.title".localized, for: .normal)
-        button.titleLabel?.font = UIFont.smallSemiboldFont
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
         return button
@@ -260,7 +258,7 @@ class LandingViewController: AuthenticationStepViewController {
         topStack.addArrangedSubview(customBackendStack)
         contentView.addSubview(topStack)
 
-        buttonStackView.addArrangedSubview(messageLabel)
+        contentView.addSubview(messageLabel)
         buttonStackView.addArrangedSubview(createAccountButton)
         buttonStackView.addArrangedSubview(personalLoginButton)
         buttonStackView.addArrangedSubview(createTeamButton)
@@ -278,19 +276,32 @@ class LandingViewController: AuthenticationStepViewController {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         buttonStackView.translatesAutoresizingMaskIntoConstraints = false
         enterpriseLoginButton.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        var widthConstraint: NSLayoutConstraint
+        if traitCollection.horizontalSizeClass == .regular {
+            widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
+        } else {
+            widthConstraint = contentView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -64)
+        }
         
         NSLayoutConstraint.activate([
             // content view
+            widthConstraint,
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             // top stack view
             topStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
             topStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-
+            
+            // message label
+            messageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            messageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            messageLabel.bottomAnchor.constraint(equalTo: buttonStackView.topAnchor, constant: -40),
+            
             // buttons stack view
             buttonStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             buttonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),

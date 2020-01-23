@@ -1229,6 +1229,7 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
+"landing.welcome_message" = "Welcome to Wire";
 "landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
