@@ -25,7 +25,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
     var mockCallDuration: TimeInterval?
     var mockParticipants: [CallParticipant] = []
     var mockIsConstantBitRateAudioActive: Bool = false
-    var mockInitiator: ZMUser? = nil
+    var mockInitiator: UserType? = nil
     var mockIsVideoCall: Bool = false
     var mockVideoState: VideoState = .stopped
     var mockNetworkQuality: NetworkQuality = .normal
@@ -86,7 +86,7 @@ class MockVoiceChannel: NSObject, VoiceChannel {
         return mockIsVideoCall
     }
     
-    var initiator: ZMUser? {
+    var initiator: UserType? {
         return mockInitiator
     }
     
