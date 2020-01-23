@@ -25,7 +25,7 @@ extension ConversationViewController {
         }
 
         let outgoingConnection: Bool = conversation.relatedConnectionState == .sent
-        contentViewController.tableView.isScrollEnabled = !outgoingConnection
+        contentViewController?.tableView.isScrollEnabled = !outgoingConnection
 
 
         if outgoingConnection {

@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 
 // This class wraps the conversation content view controller in order to display the navigation bar on the top
-@objcMembers class ConversationRootViewController: UIViewController {
+final class ConversationRootViewController: UIViewController {
 
     let navBarContainer: UINavigationBarContainer
     fileprivate var contentView = UIView()
@@ -30,19 +30,24 @@ import Cartography
     /// for NetworkStatusViewDelegate
     var shouldAnimateNetworkStatusView = false
 
-    fileprivate let networkStatusViewController: NetworkStatusViewController
+    fileprivate let networkStatusViewController: NetworkStatusViewController = NetworkStatusViewController()
 
-    @objc fileprivate(set) weak var conversationViewController: ConversationViewController?
+    fileprivate(set) weak var conversationViewController: ConversationViewController?
 
-    init(conversation: ZMConversation, message: ZMConversationMessage?, clientViewController: ZClientViewController) {
-        let conversationController = ConversationViewController()
-        conversationController.session = ZMUserSession.shared()
-        conversationController.conversation = conversation
-        conversationController.visibleMessage = message
-        conversationController.zClientViewController = clientViewController
+    init(conversation: ZMConversation,
+         message: ZMConversationMessage?,
+         clientViewController: ZClientViewController) {
+        if let userSession = ZMUserSession.shared() {
+        let conversationController = ConversationViewController(session: userSession,
+                                                                conversation: conversation,
+                                                                visibleMessage: message as? ZMMessage,
+                                                                zClientViewController: clientViewController)
 
-        networkStatusViewController = NetworkStatusViewController()
 
+
+        conversationViewController = conversationController
+        }
+        
         let navbar = UINavigationBar()
         navbar.isTranslucent = false
         navbar.isOpaque = true
@@ -50,18 +55,19 @@ import Cartography
         navbar.shadowImage = UIImage()
         navbar.barTintColor = UIColor.from(scheme: .barBackground)
         navbar.tintColor = UIColor.from(scheme: .textForeground)
-
+        
         navBarContainer = UINavigationBarContainer(navbar)
 
         super.init(nibName: .none, bundle: .none)
 
         networkStatusViewController.delegate = self
+        
+        if let conversationViewController = conversationViewController {
+        addChild(conversationViewController)
+        contentView.addSubview(conversationViewController.view)
+        conversationViewController.didMove(toParent: self)
+        }
 
-        self.addChild(conversationController)
-        self.contentView.addSubview(conversationController.view)
-        conversationController.didMove(toParent: self)
-
-        conversationViewController = conversationController
         conversation.refreshDataIfNeeded()
 
         configure()

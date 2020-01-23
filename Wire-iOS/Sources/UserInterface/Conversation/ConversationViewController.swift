@@ -20,7 +20,10 @@ import Foundation
 import WireDataModel
 
 final class ConversationViewController: UIViewController {
-    weak var zClientViewController: ZClientViewController?
+    unowned let zClientViewController: ZClientViewController
+    private let session: ZMUserSessionInterface
+    private let visibleMessage: ZMConversationMessage? ///TODO: ZMConversationMessage?
+
     var conversation: ZMConversation! { ///TODO: change to optional
         didSet {
             if oldValue == conversation {
@@ -37,9 +40,7 @@ final class ConversationViewController: UIViewController {
             }
         }
     }
-
-    weak var session: ZMUserSessionInterface?
-    weak var visibleMessage: ZMConversationMessage?
+    
     var isFocused = false
     
     ///TODO: create when init
@@ -85,7 +86,24 @@ final class ConversationViewController: UIViewController {
         return _participantsController
         
     }
-
+    
+    required init(session: ZMUserSessionInterface,
+                 conversation: ZMConversation,
+                 visibleMessage: ZMMessage?,
+                 zClientViewController: ZClientViewController) {
+        self.session = session
+        self.conversation = conversation
+        self.visibleMessage = visibleMessage
+        self.zClientViewController = zClientViewController
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     deinit {
         dismissCollectionIfNecessary()
         
@@ -133,7 +151,7 @@ final class ConversationViewController: UIViewController {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         outgoingConnectionViewController.buttonCallback = { [weak self] action in
-            self?.session?.enqueueChanges({
+            self?.session.enqueueChanges({
                 switch action {
                 case .cancel:
                     self?.conversation.connectedUser?.cancelConnectionRequest()
@@ -258,11 +276,11 @@ final class ConversationViewController: UIViewController {
     func addParticipants(_ participants: Set<ZMUser>) {
         var newConversation: ZMConversation? = nil
         
-        session?.enqueueChanges({
+        session.enqueueChanges({
             newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
-                self?.zClientViewController?.select(conversation: newConversation, focusOnView: true, animated: true)
+                self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
             }
         })
     }
@@ -270,8 +288,8 @@ final class ConversationViewController: UIViewController {
     private func createContentViewController() {
         contentViewController = ConversationContentViewController(conversation: conversation,
                                                                   message: visibleMessage,
-                                                                  mediaPlaybackManager: zClientViewController?.mediaPlaybackManager,
-                                                                  session: session!)
+                                                                  mediaPlaybackManager: zClientViewController.mediaPlaybackManager,
+                                                                  session: session)
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentViewController.bottomMargin = 16
@@ -463,7 +481,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     
     func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention]) {
         contentViewController.didFinishEditing(message)
-        session?.enqueueChanges({
+        session.enqueueChanges({
             if let newText = newText,
                 !newText.isEmpty {
                 let fetchLinkPreview = !Settings.shared().disableLinkPreviews
