@@ -19,7 +19,6 @@
 import Foundation
 
 extension ConversationViewController {
-    @objc
     func updateOutgoingConnectionVisibility() {
         guard let conversation = conversation else {
             return
@@ -50,7 +49,7 @@ extension ConversationViewController {
         }
     }
 
-    private func createConstraints() {
+    func createConstraints() {
         [conversationBarController.view,
          contentViewController.view,
          inputBarController.view].forEach(){$0?.translatesAutoresizingMaskIntoConstraints = false}

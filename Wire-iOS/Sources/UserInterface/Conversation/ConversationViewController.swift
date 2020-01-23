@@ -31,7 +31,29 @@ final class ConversationViewController: UIViewController {
     
     private(set) var contentViewController: ConversationContentViewController!
     private(set) var inputBarController: ConversationInputBarViewController!
-    private(set) var participantsController: UIViewController!
+    var participantsController: UIViewController? {
+        
+        var viewController: UIViewController? = nil
+        
+        switch conversation.conversationType {
+        case .group:
+            let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
+            viewController = groupDetailsViewController
+        case .`self`, .oneOnOne, .connection:
+            viewController = createUserDetailViewController()
+        case .invalid:
+            fatal("Trying to open invalid conversation")
+        default:
+            break
+        }
+        
+        
+        let _participantsController = viewController?.wrapInNavigationController()
+        
+        return _participantsController
+        
+    }
+
     var collectionController: CollectionsViewController?
     var outgoingConnectionViewController: OutgoingConnectionViewController!
     private(set) var conversationBarController: BarController!
@@ -94,12 +116,12 @@ final class ConversationViewController: UIViewController {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         outgoingConnectionViewController.buttonCallback = { [weak self] action in
-            session.enqueueChanges({
+            self?.session?.enqueueChanges({
                 switch action {
-                case OutgoingConnectionBottomBarActionCancel:
-                    self.conversation.connectedUser.cancelConnectionRequest()
-                case OutgoingConnectionBottomBarActionArchive:
-                    self.conversation.isArchived = true
+                case .cancel:
+                    self?.conversation.connectedUser?.cancelConnectionRequest()
+                case .archive:
+                    self?.conversation.isArchived = true
                 default:
                     break
                 }
@@ -127,7 +149,7 @@ final class ConversationViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateLeftNavigationBarItems()
-        session.didClose(withConversation: conversation)
+        ZMUserSession.shared()?.didClose(conversation: conversation)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -174,17 +196,19 @@ final class ConversationViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        if collectionController.view.window == nil {
+        if collectionController?.view.window == nil {
             collectionController = nil
         }
     }
     
     func openConversationList() {
-        let leftControllerRevealed = wr_splitViewController.leftViewControllerRevealed
-        wr_splitViewController.setLeftViewControllerRevealed(!leftControllerRevealed, animated: true, completion: nil)
+        guard let leftControllerRevealed = wr_splitViewController?.isLeftViewControllerRevealed else { return }
+        wr_splitViewController?.setLeftViewControllerRevealed(!leftControllerRevealed, animated: true, completion: nil)
     }
     
     // MARK: - Getters, setters
+    
+    ///TODO: change callers
     func setConversation(_ conversation: ZMConversation?) {
         if self.conversation == conversation {
             return
@@ -196,31 +220,9 @@ final class ConversationViewController: UIViewController {
         
         if self.conversation != nil {
             voiceChannelStateObserverToken = addCallStateObserver()
-            conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: self.conversation)
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: self.conversation)
             startCallController = ConversationCallController(conversation: self.conversation, target: self)
         }
-    }
-    
-    func participantsController() -> UIViewController? {
-        var viewController: UIViewController? = nil
-        
-        switch conversation.conversationType {
-        case ZMConversationTypeGroup:
-            let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
-            viewController = groupDetailsViewController
-        case ZMConversationTypeSelf, ZMConversationTypeOneOnOne, ZMConversationTypeConnection:
-            viewController = createUserDetail()
-        case ZMConversationTypeInvalid:
-            RequireString(false, "Trying to open invalid conversation")
-        default:
-            break
-        }
-        
-        
-        _participantsController = viewController.wrapInNavigationController
-        
-        return _participantsController
-        
     }
     
     func setCollection(_ collectionController: CollectionsViewController?) {
@@ -230,6 +232,8 @@ final class ConversationViewController: UIViewController {
     }
     
     // MARK: - SwipeNavigationController's panning
+    ///TODO: still needed?
+    /*
     func frameworkShouldRecognizePan(_ gestureRecognizer: UIPanGestureRecognizer?) -> Bool {
         let location = gestureRecognizer?.location(in: view)
         if view.convert(inputBarController.view.bounds, from: inputBarController.view).contains(location) {
@@ -237,7 +241,7 @@ final class ConversationViewController: UIViewController {
         }
         
         return true
-    }
+    }*/
     
     // MARK: - Application Events & Notifications
     override func accessibilityPerformEscape() -> Bool {
@@ -267,7 +271,7 @@ final class ConversationViewController: UIViewController {
         contentViewController = ConversationContentViewController(conversation: conversation,
                                                                   message: visibleMessage,
                                                                   mediaPlaybackManager: zClientViewController?.mediaPlaybackManager,
-                                                                  session: session)
+                                                                  session: session!)
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentViewController.bottomMargin = 16
