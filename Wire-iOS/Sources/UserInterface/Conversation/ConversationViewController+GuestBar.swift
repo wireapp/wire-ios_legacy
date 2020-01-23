@@ -36,7 +36,7 @@ extension ConversationViewController {
     }
 
     /// Updates the visibility of the guest bar.
-    @objc func updateGuestsBarVisibility() {
+    func updateGuestsBarVisibility() {
         let currentState = self.currentGuestBarState
         guestsBarController.state = currentState
 

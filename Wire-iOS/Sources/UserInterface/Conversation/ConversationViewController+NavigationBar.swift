@@ -22,7 +22,7 @@ import WireSyncEngine
 // MARK: - Update left navigator bar item when size class changes
 extension ConversationViewController {
 
-    override open func willTransition(to newCollection: UITraitCollection,
+    override func willTransition(to newCollection: UITraitCollection,
                                       with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         self.updateLeftNavigationBarItems()
@@ -30,7 +30,7 @@ extension ConversationViewController {
 
 }
 
-public extension ConversationViewController {
+extension ConversationViewController {
     @objc func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }

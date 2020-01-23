@@ -21,19 +21,20 @@ import WireDataModel
 
 final class ConversationViewController: UIViewController {
     weak var zClientViewController: ZClientViewController?
-    var conversation: ZMConversation?
+    var conversation: ZMConversation!
     weak var session: ZMUserSessionInterface?
     weak var visibleMessage: ZMConversationMessage?
     var focused = false
     private(set) var startCallController: ConversationCallController?
     
-    private(set) var contentViewController: ConversationContentViewController?
-    private(set) var inputBarController: ConversationInputBarViewController?
+    ///TODO: create when init
+    private(set) var contentViewController: ConversationContentViewController!
+    private(set) var inputBarController: ConversationInputBarViewController!
     private(set) var participantsController: UIViewController?
     var collectionController: CollectionsViewController?
     var outgoingConnectionViewController: OutgoingConnectionViewController?
     private(set) var conversationBarController: BarController?
-    private(set) var guestsBarController: GuestsBarController?
+    private(set) var guestsBarController: GuestsBarController!
     private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView?
     var inputBarBottomMargin: NSLayoutConstraint?
     var inputBarZeroHeight: NSLayoutConstraint?
@@ -65,8 +66,8 @@ final class ConversationViewController: UIViewController {
             self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
         })
         
-        createInputBar()
-        createContent()
+        createInputBarViewController()
+        createContentViewController()
         
         contentViewController.tableView.pannableView = inputBarController.view
         
@@ -270,8 +271,7 @@ final class ConversationViewController: UIViewController {
         })
     }
     
-    @objc
-    func createContentViewController() {
+    private func createContentViewController() {
         contentViewController = ConversationContentViewController(conversation: conversation,
                                                                   message: visibleMessage,
                                                                   mediaPlaybackManager: zClientViewController?.mediaPlaybackManager,
@@ -297,8 +297,7 @@ final class ConversationViewController: UIViewController {
         }
     }
     
-    @objc
-    func createInputBarController() {
+    private func createInputBarController() {
         inputBarController = ConversationInputBarViewController(conversation: conversation)
         inputBarController.delegate = self
         inputBarController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -348,7 +347,7 @@ final class ConversationViewController: UIViewController {
     
     //MARK: - ParticipantsPopover
     
-    private func hideAndDestroyParticipantsPopoverController() {
+    private func hideAndDestroyParticipantsPopover() {
         if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
             dismiss(animated: true)
         }
