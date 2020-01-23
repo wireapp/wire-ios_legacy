@@ -194,9 +194,7 @@ extension ConversationViewController: ZMConversationListObserver {
 //MARK: - InputBar
 
 extension ConversationViewController: ConversationInputBarViewControllerDelegate {
-    func conversationInputBarViewControllerDidComposeText(_ text: String?,
-                                                          mentions: [Mention]?,
-                                                          replyingTo message: ZMConversationMessage?) {
+    func inputBar(didComposeText text: String?, mentions: [Mention]?, replyingTo message: ZMConversationMessage?) {
         contentViewController.scrollToBottom()
         inputBarController.sendController.sendTextMessage(text, mentions: mentions, replyingTo: message)
     }
