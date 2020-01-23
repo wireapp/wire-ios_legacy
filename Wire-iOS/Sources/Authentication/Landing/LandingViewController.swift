@@ -37,6 +37,7 @@ class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - UI Styles
 
+    static let headlineFont = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.light)
     static let semiboldFont = FontSpec(.large, .semibold).font!
     static let regularFont = FontSpec(.normal, .regular).font!
 
@@ -89,6 +90,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let messageLabel: UILabel = {
         let label = UILabel(key: "landing.welcome_message".localized, size: .large, weight: .light, color: .textForeground, variant: .light)
+        label.font = LandingViewController.headlineFont
         label.textAlignment = .center
         label.numberOfLines = 2
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
