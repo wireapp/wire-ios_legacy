@@ -21,7 +21,23 @@ import WireDataModel
 
 final class ConversationViewController: UIViewController {
     weak var zClientViewController: ZClientViewController?
-    var conversation: ZMConversation!
+    var conversation: ZMConversation! { ///TODO: change to optional
+        didSet {
+            if oldValue == conversation {
+                return
+            }
+
+            setupNavigatiomItem()
+            updateOutgoingConnectionVisibility()
+            
+            if let conversation = conversation {
+                voiceChannelStateObserverToken = addCallStateObserver()
+                conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+                startCallController = ConversationCallController(conversation: conversation, target: self)
+            }
+        }
+    }
+
     weak var session: ZMUserSessionInterface?
     weak var visibleMessage: ZMConversationMessage?
     var isFocused = false
@@ -31,6 +47,22 @@ final class ConversationViewController: UIViewController {
     
     private(set) var contentViewController: ConversationContentViewController!
     private(set) var inputBarController: ConversationInputBarViewController!
+
+    var collectionController: CollectionsViewController?
+    var outgoingConnectionViewController: OutgoingConnectionViewController!
+    private(set) var conversationBarController: BarController!
+    private(set) var guestsBarController: GuestsBarController!
+    private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView!
+    var inputBarBottomMargin: NSLayoutConstraint?
+    var inputBarZeroHeight: NSLayoutConstraint?
+    
+    var isAppearing = false
+    var mediaBarViewController: MediaBarViewController!
+    private var voiceChannelStateObserverToken: Any?
+    private var conversationObserverToken: Any?
+    private var titleView: ConversationTitleView!
+    private var conversationListObserverToken: Any?
+    
     var participantsController: UIViewController? {
         
         var viewController: UIViewController? = nil
@@ -54,21 +86,6 @@ final class ConversationViewController: UIViewController {
         
     }
 
-    var collectionController: CollectionsViewController?
-    var outgoingConnectionViewController: OutgoingConnectionViewController!
-    private(set) var conversationBarController: BarController!
-    private(set) var guestsBarController: GuestsBarController!
-    private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView!
-    var inputBarBottomMargin: NSLayoutConstraint?
-    var inputBarZeroHeight: NSLayoutConstraint?
-    
-    var isAppearing = false
-    var mediaBarViewController: MediaBarViewController!
-    private var voiceChannelStateObserverToken: Any?
-    private var conversationObserverToken: Any?
-    private var titleView: ConversationTitleView!
-    private var conversationListObserverToken: Any?
-    
     deinit {
         dismissCollectionIfNecessary()
         
@@ -207,23 +224,6 @@ final class ConversationViewController: UIViewController {
     }
     
     // MARK: - Getters, setters
-    
-    ///TODO: change callers
-    func setConversation(_ conversation: ZMConversation?) {
-        if self.conversation == conversation {
-            return
-        }
-        
-        self.conversation = conversation
-        setupNavigatiomItem()
-        updateOutgoingConnectionVisibility()
-        
-        if self.conversation != nil {
-            voiceChannelStateObserverToken = addCallStateObserver()
-            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: self.conversation)
-            startCallController = ConversationCallController(conversation: self.conversation, target: self)
-        }
-    }
     
     func setCollection(_ collectionController: CollectionsViewController?) {
         self.collectionController = collectionController
