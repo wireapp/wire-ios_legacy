@@ -16,9 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-enum CallInfoViewControllerAccessoryType: Equatable {
+enum CallInfoViewControllerAccessoryType {
+
     case none
-    case avatar(ZMUser)
+    case avatar(UserType)
     case participantsList(CallParticipantsList)
     
     var showParticipantList: Bool {
@@ -45,5 +46,18 @@ enum CallInfoViewControllerAccessoryType: Equatable {
             return []
         }
     }
-    
+
+}
+
+extension CallInfoViewControllerAccessoryType: Equatable {
+
+    static func == (lhs: CallInfoViewControllerAccessoryType, rhs: CallInfoViewControllerAccessoryType) -> Bool {
+        switch (lhs, rhs) {
+        case (.avatar(let lhsUser), .avatar(let rhsUser)):
+            // UserType is not equatable, but it should be sufficient to equate references.
+            return lhsUser === rhsUser
+        default:
+            return lhs == rhs
+        }
+    }
 }
