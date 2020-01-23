@@ -21,7 +21,7 @@ import Foundation
 extension ConversationViewController {
     @objc
     func createUserDetailViewController() -> UIViewController {
-        guard let user = conversation.firstActiveParticipantOtherThanSelf else {
+        guard let user = (conversation.firstActiveParticipantOtherThanSelf ?? conversation.connectedUser) else {
             fatal("no firstActiveParticipantOtherThanSelf!")            
         }
 

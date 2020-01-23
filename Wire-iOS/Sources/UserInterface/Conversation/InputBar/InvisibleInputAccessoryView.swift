@@ -22,11 +22,12 @@ import Foundation
 // is being done to us and report back
 
 protocol InvisibleInputAccessoryViewDelegate: class {
-    func invisibleInputAccessoryView(_ view: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?)
+    func invisibleInputAccessoryView(_ invisibleInputAccessoryView: InvisibleInputAccessoryView, superviewFrameChanged frame: CGRect?)
 }
 
 final class InvisibleInputAccessoryView: UIView {
     weak var delegate: InvisibleInputAccessoryViewDelegate?
+    private var frameObserver: NSKeyValueObservation?
     
     var overriddenIntrinsicContentSize: CGSize = .zero {
         didSet {
@@ -37,25 +38,23 @@ final class InvisibleInputAccessoryView: UIView {
     override public var intrinsicContentSize: CGSize {
         return overriddenIntrinsicContentSize
     }
-        
-    private var frameObserver: NSObject?
     
     override func didMoveToWindow() {
         super.didMoveToWindow()
         
-        if window != nil,
-           let superview = superview {
-            
-            let keypath = "center"
-            
-            frameObserver = KeyValueObserver.observe(superview, keyPath: keypath, target: self, selector: #selector(superviewFrameChanged(_:)))
+        if window != nil {
+            frameObserver = superview!.observe(
+                \UIView.center,
+                options: []
+            ) { [weak self] _, _ in
+                self?.superviewFrameChanged()
+            }
         } else {
             frameObserver = nil
         }
     }
     
-    @objc
-    private func superviewFrameChanged(_ changes: [AnyHashable : Any]?) {
+    private func superviewFrameChanged() {
         delegate?.invisibleInputAccessoryView(self, superviewFrameChanged: superview?.frame)
     }
 }

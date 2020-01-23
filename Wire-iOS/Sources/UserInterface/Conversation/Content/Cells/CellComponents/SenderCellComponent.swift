@@ -116,7 +116,7 @@ class SenderCellComponent: UIView {
         configureNameLabel(for: user, conversation: conversation)
         
         if let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            observerToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
     }
     

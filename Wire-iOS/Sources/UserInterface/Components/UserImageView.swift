@@ -231,7 +231,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         setAvatar(defaultAvatar, user: user, animated: false)
 
         if let userSession = userSession as? ZMUserSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 
         updateForServiceUserIfNeeded(user)
