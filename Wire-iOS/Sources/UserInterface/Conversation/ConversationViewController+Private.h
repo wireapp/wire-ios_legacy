@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
+/*
 NS_ASSUME_NONNULL_BEGIN
 
 @class ConversationInputBarViewController;
@@ -81,3 +81,4 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 NS_ASSUME_NONNULL_END
+*/

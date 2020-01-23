@@ -17,26 +17,26 @@
 //
 
 
-@class ZMConversation;
-@class ZClientViewController;
-@class ConversationCallController;
-
-@protocol ZMUserSessionInterface;
-@protocol ZMConversationMessage;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface ConversationViewController : UIViewController
-
-@property (nonatomic, weak, nullable) ZClientViewController *zClientViewController;
-@property (nonatomic, null_unspecified) ZMConversation *conversation;
-@property (nonatomic, null_unspecified) id<ZMUserSessionInterface> session;
-@property (nonatomic, nullable) id<ZMConversationMessage> visibleMessage;
-@property (nonatomic, getter=isFocused) BOOL focused;
-@property (nonatomic, readonly) ConversationCallController *startCallController;
-
-- (void)scrollToMessage:(id<ZMConversationMessage>)message;
-
-@end
-
-NS_ASSUME_NONNULL_END
+//@class ZMConversation;
+//@class ZClientViewController;
+//@class ConversationCallController;
+//
+//@protocol ZMUserSessionInterface;
+//@protocol ZMConversationMessage;
+//
+//NS_ASSUME_NONNULL_BEGIN
+//
+//@interface ConversationViewController : UIViewController
+//
+//@property (nonatomic, weak, nullable) ZClientViewController *zClientViewController;
+//@property (nonatomic, null_unspecified) ZMConversation *conversation;
+//@property (nonatomic, null_unspecified) id<ZMUserSessionInterface> session;
+//@property (nonatomic, nullable) id<ZMConversationMessage> visibleMessage;
+//@property (nonatomic, getter=isFocused) BOOL focused;
+//@property (nonatomic, readonly) ConversationCallController *startCallController;
+//
+//- (void)scrollToMessage:(id<ZMConversationMessage>)message;
+//
+//@end
+//
+//NS_ASSUME_NONNULL_END

@@ -45,7 +45,7 @@
 #import "SplitViewController.h"
 
 #import "Wire-Swift.h"
-
+/*
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
@@ -302,3 +302,4 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
+*/
