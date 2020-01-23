@@ -50,7 +50,7 @@ final public class BackgroundViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self,

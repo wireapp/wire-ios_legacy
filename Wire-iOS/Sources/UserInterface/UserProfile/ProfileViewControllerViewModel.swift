@@ -60,7 +60,7 @@ final class ProfileViewControllerViewModel: NSObject {
         
         if let fullUser = fullUser,
            let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: fullUser, userSession: userSession)
+            observerToken = UserChangeInfo.add(observer: self, for: fullUser, in: userSession)
         }
     }
     

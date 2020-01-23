@@ -141,7 +141,7 @@ final class ClientListViewController: UIViewController,
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
         self.clientsObserverToken = ZMUserSession.shared()?.add(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: session)
         }
         
         if clientsList == nil {

@@ -143,7 +143,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.user = user
                 
         if let session = session {
-            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: session))
+            tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
         
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized

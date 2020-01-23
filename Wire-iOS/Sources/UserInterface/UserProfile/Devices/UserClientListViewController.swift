@@ -43,7 +43,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
         super.init(nibName: nil, bundle: nil)
         
         if let userSession = ZMUserSession.shared() {
-            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: userSession))
+            tokens.append(UserChangeInfo.add(observer: self, for: user, in: userSession))
         }
 
         self.headerView.delegate = self

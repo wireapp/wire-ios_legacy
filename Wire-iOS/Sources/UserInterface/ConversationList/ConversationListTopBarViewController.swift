@@ -44,7 +44,7 @@ final class ConversationListTopBarViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         if let sharedSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: sharedSession)
         }
         
         if #available(iOS 11.0, *) {
