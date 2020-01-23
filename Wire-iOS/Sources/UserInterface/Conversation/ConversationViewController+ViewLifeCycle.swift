@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationViewController {
-    override open func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         updateLeftNavigationBarItems()

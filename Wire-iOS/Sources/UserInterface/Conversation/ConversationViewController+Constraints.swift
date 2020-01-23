@@ -50,8 +50,7 @@ extension ConversationViewController {
         }
     }
 
-    @objc
-    func createConstraints() {
+    private func createConstraints() {
         [conversationBarController.view,
          contentViewController.view,
          inputBarController.view].forEach(){$0?.translatesAutoresizingMaskIntoConstraints = false}

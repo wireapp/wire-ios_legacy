@@ -24,26 +24,27 @@ final class ConversationViewController: UIViewController {
     var conversation: ZMConversation!
     weak var session: ZMUserSessionInterface?
     weak var visibleMessage: ZMConversationMessage?
-    var focused = false
-    private(set) var startCallController: ConversationCallController?
+    var isFocused = false
     
     ///TODO: create when init
+    private(set) var startCallController: ConversationCallController!
+    
     private(set) var contentViewController: ConversationContentViewController!
     private(set) var inputBarController: ConversationInputBarViewController!
-    private(set) var participantsController: UIViewController?
+    private(set) var participantsController: UIViewController!
     var collectionController: CollectionsViewController?
-    var outgoingConnectionViewController: OutgoingConnectionViewController?
-    private(set) var conversationBarController: BarController?
+    var outgoingConnectionViewController: OutgoingConnectionViewController!
+    private(set) var conversationBarController: BarController!
     private(set) var guestsBarController: GuestsBarController!
-    private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView?
+    private(set) var invisibleInputAccessoryView: InvisibleInputAccessoryView!
     var inputBarBottomMargin: NSLayoutConstraint?
     var inputBarZeroHeight: NSLayoutConstraint?
     
-    private var isAppearing = false
-    private var mediaBarViewController: MediaBarViewController?
+    var isAppearing = false
+    var mediaBarViewController: MediaBarViewController!
     private var voiceChannelStateObserverToken: Any?
     private var conversationObserverToken: Any?
-    private var titleView: ConversationTitleView?
+    private var titleView: ConversationTitleView!
     private var conversationListObserverToken: Any?
     
     deinit {
@@ -56,54 +57,44 @@ final class ConversationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (session is ZMUserSession) {
-            conversationListObserverToken = ConversationListChangeInfo.addObserver(self, forList: ZMConversationList.conversations(in: session as? ZMUserSession), userSession: session as? ZMUserSession)
+        if let session = session as? ZMUserSession {
+            conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: session), userSession: session)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         UIView.performWithoutAnimation({
-            self.view.backgroundColor = UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+            self.view.backgroundColor = UIColor.from(scheme: .textBackground)
         })
         
-        createInputBarViewController()
+        createInputBarController()
         createContentViewController()
         
         contentViewController.tableView.pannableView = inputBarController.view
         
         createConversationBarController()
-        createMediaBar()
+        createMediaBarViewController()
         createGuestsBarController()
         
-        addChildViewController(contentViewController)
-        view.addSubview(contentViewController.view)
-        contentViewController.didMove(toParent: self)
-        
-        addChildViewController(inputBarController)
-        view.addSubview(inputBarController.view)
-        inputBarController.didMove(toParent: self)
-        
-        addChildViewController(conversationBarController)
-        view.addSubview(conversationBarController.view)
-        conversationBarController.didMove(toParent: self)
+        addToSelf(contentViewController)
+        addToSelf(inputBarController)
+        addToSelf(conversationBarController)
         
         updateOutgoingConnectionVisibility()
         isAppearing = false
         createConstraints()
         updateInputBarVisibility()
         
-        if conversation.draftMessage.quote != nil && !conversation.draftMessage.quote.hasBeenDeleted {
-            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(forMessage: conversation.draftMessage.quote))
+        if let quote = conversation.draftMessage?.quote,
+            !quote.hasBeenDeleted {            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
         }
     }
     
     func createOutgoingConnectionViewController() {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        ZM_WEAK(self)
-        outgoingConnectionViewController.buttonCallback = { action in
-            ZM_STRONG(self)
-            ZMUserSession.sharedSession.enqueueChanges({
+        outgoingConnectionViewController.buttonCallback = { [weak self] action in
+            session.enqueueChanges({
                 switch action {
                 case OutgoingConnectionBottomBarActionCancel:
                     self.conversation.connectedUser.cancelConnectionRequest()
@@ -114,32 +105,32 @@ final class ConversationViewController: UIViewController {
                 }
             })
             
-            self.openConversationList()
+            self?.openConversationList()
         }
     }
-
+    
     func createGuestsBarController() {
         guestsBarController = GuestsBarController()
     }
     
-    func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isAppearing = true
         updateGuestsBarVisibility()
     }
     
-    func didMove(toParentViewController parent: UIViewController?) {
+    override func didMove(toParent parent: UIViewController?) {
         super.didMove(toParent: parent)
         updateGuestsBarVisibility()
     }
     
-    func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         updateLeftNavigationBarItems()
-        ZMUserSession.shared().didClose(withConversation: conversation)
+        session.didClose(withConversation: conversation)
     }
     
-    func viewDidDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         updateLeftNavigationBarItems()
     }
@@ -151,7 +142,7 @@ final class ConversationViewController: UIViewController {
     func createConversationBarController() {
         conversationBarController = BarController()
     }
-
+    
     // MARK: - Device orientation
     func shouldAutorotate() -> Bool {
         return true
@@ -165,7 +156,7 @@ final class ConversationViewController: UIViewController {
         }
     }
     
-    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { context in
             
         }) { context in
@@ -180,19 +171,19 @@ final class ConversationViewController: UIViewController {
     func definesPresentationContext() -> Bool {
         return true
     }
-
-        func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            if collectionController.view.window == nil {
-                collectionController = nil
-            }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        if collectionController.view.window == nil {
+            collectionController = nil
         }
-        
-        func openConversationList() {
-            let leftControllerRevealed = wr_splitViewController.leftViewControllerRevealed
-            wr_splitViewController.setLeftViewControllerRevealed(!leftControllerRevealed, animated: true, completion: nil)
-        }
-
+    }
+    
+    func openConversationList() {
+        let leftControllerRevealed = wr_splitViewController.leftViewControllerRevealed
+        wr_splitViewController.setLeftViewControllerRevealed(!leftControllerRevealed, animated: true, completion: nil)
+    }
+    
     // MARK: - Getters, setters
     func setConversation(_ conversation: ZMConversation?) {
         if self.conversation == conversation {
@@ -229,7 +220,7 @@ final class ConversationViewController: UIViewController {
         _participantsController = viewController.wrapInNavigationController
         
         return _participantsController
-
+        
     }
     
     func setCollection(_ collectionController: CollectionsViewController?) {
@@ -254,15 +245,16 @@ final class ConversationViewController: UIViewController {
         return true
     }
     
+    @objc
     func onBackButtonPressed(_ backButton: UIButton?) {
         openConversationList()
     }
-
+    
     @objc
     func addParticipants(_ participants: Set<ZMUser>) {
         var newConversation: ZMConversation? = nil
         
-        ZMUserSession.shared()?.enqueueChanges({
+        session?.enqueueChanges({
             newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
@@ -283,12 +275,11 @@ final class ConversationViewController: UIViewController {
         contentViewController.mentionsSearchResultsViewController.delegate = inputBarController
     }
     
-    @objc
-    func createMediaBarViewController() {
+    private func createMediaBarViewController() {
         mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
-
+    
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
         if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
@@ -314,8 +305,7 @@ final class ConversationViewController: UIViewController {
         }
     }
     
-    @objc
-    func updateInputBarVisibility() {
+    private func updateInputBarVisibility() {
         if conversation.isReadOnly {
             inputBarController.inputBar.textView.resignFirstResponder()
             inputBarController.dismissMentionsIfNeeded()
@@ -326,8 +316,7 @@ final class ConversationViewController: UIViewController {
         view.setNeedsLayout()
     }
     
-    @objc
-    func setupNavigatiomItem() {
+    private func setupNavigatiomItem() {
         titleView = ConversationTitleView(conversation: conversation, interactive: true)
         
         titleView.tapHandler = { [weak self] button in
@@ -343,7 +332,7 @@ final class ConversationViewController: UIViewController {
         
         updateRightNavigationItemsButtons()
     }
-
+    
     
     //MARK: - ParticipantsPopover
     
@@ -405,7 +394,7 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.connectionStateChanged {
+            note.connectionStateChanged {
             updateRightNavigationItemsButtons()
             updateLeftNavigationBarItems()
             updateOutgoingConnectionVisibility()
@@ -414,14 +403,14 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.externalParticipantsStateChanged {
+            note.externalParticipantsStateChanged {
             updateGuestsBarVisibility()
         }
         
         if note.nameChanged ||
-           note.securityLevelChanged ||
-           note.connectionStateChanged ||
-           note.legalHoldStatusChanged {
+            note.securityLevelChanged ||
+            note.connectionStateChanged ||
+            note.legalHoldStatusChanged {
             setupNavigatiomItem()
         }
     }
@@ -470,7 +459,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     
     func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention]) {
         contentViewController.didFinishEditing(message)
-        ZMUserSession.shared()?.enqueueChanges({
+        session?.enqueueChanges({
             if let newText = newText,
                 !newText.isEmpty {
                 let fetchLinkPreview = !Settings.shared().disableLinkPreviews
