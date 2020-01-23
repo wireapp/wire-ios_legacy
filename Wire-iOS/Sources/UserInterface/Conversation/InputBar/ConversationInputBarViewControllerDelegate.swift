@@ -19,13 +19,12 @@
 import Foundation
 
 @objc protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {
-    ///TODO: rm conversationInputBarViewController
     func conversationInputBarViewControllerDidComposeText(_ text: String?, mentions: [Mention]?, replyingTo message: ZMConversationMessage?)
     
-    /*@objc optional*/ func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool
-    /*@objc optional*/ func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool
-    /*@objc optional*/ func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention])
-    /*@objc optional*/ func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage)
-    /*@objc optional*/ func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage)
-    /*@objc optional*/ func conversationInputBarViewControllerEditLastMessage()
+    func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool
+    func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool
+    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention])
+    func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage)
+    func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage)
+    func conversationInputBarViewControllerEditLastMessage()
 }
