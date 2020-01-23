@@ -524,7 +524,7 @@ extension CameraKeyboardViewController: AssetLibraryDelegate {
 }
 
 extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?)  {
+    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
         /// TODO fix undesired camera keyboard openings here
         self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
     }

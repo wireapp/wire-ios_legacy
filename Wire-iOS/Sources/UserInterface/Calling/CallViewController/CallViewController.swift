@@ -264,7 +264,7 @@ final class CallViewController: UIViewController {
 
 extension CallViewController: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateConfiguration()
         hideOverlayAfterCallEstablishedIfNeeded()
         hapticsController.updateCallState(callState)
