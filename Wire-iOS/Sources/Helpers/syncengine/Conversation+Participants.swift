@@ -74,8 +74,8 @@ extension ZMConversation {
                                userSession: ZMUserSession.shared()!) { result in
                                 switch result {
                                 case .success:
-                                    if user.isServiceUser {
-                                        Analytics.shared().tagDidRemoveService(user as! ServiceUser)
+                                    if let serviceUser = user as? ServiceUser, user.isServiceUser {
+                                        Analytics.shared().tagDidRemoveService(serviceUser)
                                     }
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)
