@@ -733,8 +733,6 @@
 		8F8914111A9F287E0056AB0C /* ConversationListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F21A9F287E0056AB0C /* ConversationListCell.m */; };
 		8F8914131A9F287E0056AB0C /* ConversationListItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913F61A9F287E0056AB0C /* ConversationListItemView.m */; };
 		8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AA199245760008B66B /* ConversationContentViewController.m */; };
-		8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */; };
-		8FC85455199245770008B66B /* ConversationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851B1199245760008B66B /* ConversationViewController.m */; };
 		8FC85458199245770008B66B /* ConversationInputBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FC851B9199245760008B66B /* ConversationInputBarViewController.m */; };
 		8FC8563E19924CBA0008B66B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8FC8564019924CBA0008B66B /* Localizable.strings */; };
 		A904740F23CF645F00A4453A /* MediaBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A904740E23CF645F00A4453A /* MediaBarViewController.swift */; };
@@ -2426,10 +2424,6 @@
 		8FC851A6199245760008B66B /* ConversationContentViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "ConversationContentViewController+Private.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851A9199245760008B66B /* ConversationContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationContentViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		8FC851AA199245760008B66B /* ConversationContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationContentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		8FC851AE199245760008B66B /* ConversationViewController+ParticipantsPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+ParticipantsPopover.h"; sourceTree = "<group>"; };
-		8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ConversationViewController+ParticipantsPopover.m"; sourceTree = "<group>"; };
-		8FC851B0199245760008B66B /* ConversationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ConversationViewController.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		8FC851B1199245760008B66B /* ConversationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8FC851B8199245760008B66B /* ConversationInputBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationInputBarViewController.h; sourceTree = "<group>"; };
 		8FC851B9199245760008B66B /* ConversationInputBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ConversationInputBarViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		8FC8524A199245760008B66B /* MediaBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaBar.swift; sourceTree = "<group>"; };
@@ -2782,7 +2776,6 @@
 		DBCBD19019F10A1F000510C1 /* ConnectRequestCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectRequestCell.swift; sourceTree = "<group>"; };
 		DBD990481B39927A000ACF94 /* InputBarRightMenuButtonPresenterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputBarRightMenuButtonPresenterTests.m; sourceTree = "<group>"; };
 		DBF7235E1B5566B80036F4C5 /* a_lot_of_people.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = a_lot_of_people.json; sourceTree = "<group>"; };
-		EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationViewController+Private.h"; sourceTree = "<group>"; };
 		EE0DE1CC21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCreateGuestsSectionController.swift; sourceTree = "<group>"; };
 		EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownTextViewTests.swift; sourceTree = "<group>"; };
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
@@ -5452,9 +5445,6 @@
 				8FC85180199245760008B66B /* Content */,
 				8FC851B3199245760008B66B /* InputBar */,
 				875F89151D6F35DC00D8748E /* Message Details */,
-				8FC851B0199245760008B66B /* ConversationViewController.h */,
-				EA28157E1A0BA2C5001D6124 /* ConversationViewController+Private.h */,
-				8FC851B1199245760008B66B /* ConversationViewController.m */,
 				A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */,
 				A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */,
 				EFEE97C0232271FF007A4702 /* ConversationViewController+ViewLifeCycle.swift */,
@@ -5462,8 +5452,6 @@
 				5E423CD82295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift */,
 				EF1EE76E2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift */,
 				BF1A81271C9848DB00A96CAA /* ConversationViewController+NavigationBar.swift */,
-				8FC851AE199245760008B66B /* ConversationViewController+ParticipantsPopover.h */,
-				8FC851AF199245760008B66B /* ConversationViewController+ParticipantsPopover.m */,
 				EF3CB75221DD0F0B0030C3E8 /* ConversationViewController+ParticipantsPopover.swift */,
 				5E39FC6A225F81FD00C682B8 /* ConversationViewController+GuestBar.swift */,
 				87A752161E002F6C004317DB /* ConversationRootViewController.swift */,
@@ -7449,7 +7437,6 @@
 				D5694B5220441EE900C84C8F /* UILabel+Convenience.swift in Sources */,
 				EFA6E24C2056E0DB008AB47E /* UITraitEnvironment+SizeClass.swift in Sources */,
 				5EA73D8120D900A10001D106 /* GroupDetailsTimeoutOptionsCell.swift in Sources */,
-				8FC85455199245770008B66B /* ConversationViewController.m in Sources */,
 				5E65A7AF213450D2008BFCC0 /* TeamEmailVerificationErrorHandler.swift in Sources */,
 				BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */,
 				871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */,
@@ -8015,7 +8002,6 @@
 				EF6ACA7F21318A640064047B /* FullscreenImageViewController+Style.swift in Sources */,
 				5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */,
 				EF18D7C82102345B005B51A1 /* UpsideDownTableView.swift in Sources */,
-				8FC85454199245770008B66B /* ConversationViewController+ParticipantsPopover.m in Sources */,
 				5E33F0CC20AC39C800414EA6 /* CallVideoPlaceholderState.swift in Sources */,
 				5E8FFC0C21EDDB970052DF03 /* SolidButtonDescription.swift in Sources */,
 				5EA73D8A20D901000001D106 /* CheckmarkCell.swift in Sources */,

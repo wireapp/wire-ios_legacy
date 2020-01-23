@@ -20,9 +20,6 @@
 #import "ConversationContentViewController+Private.h"
 #import "ConversationContentViewController+PinchZoom.h"
 
-#import "ConversationViewController.h"
-#import "ConversationViewController+Private.h"
-
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
