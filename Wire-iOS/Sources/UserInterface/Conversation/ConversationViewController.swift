@@ -248,7 +248,7 @@ final class ConversationViewController: UIViewController {
     }
     
     // MARK: - Application Events & Notifications
-    func accessibilityPerformEscape() -> Bool {
+    override func accessibilityPerformEscape() -> Bool {
         openConversationList()
         return true
     }
@@ -344,8 +344,24 @@ final class ConversationViewController: UIViewController {
         
         updateRightNavigationItemsButtons()
     }
-}
 
+    
+    //MARK: - ParticipantsPopover
+    
+    private func hideAndDestroyParticipantsPopoverController() {
+        if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
+            dismiss(animated: true)
+        }
+    }
+    
+    // MARK: - UIPopoverPresentationControllerDelegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        if (controller.presentedViewController is AddParticipantsViewController) {
+            return .overFullScreen
+        }
+        return .fullScreen
+    }
+}
 //MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
