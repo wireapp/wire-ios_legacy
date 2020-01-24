@@ -22,6 +22,7 @@ import UIKit
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
+    func landingViewControllerDidChooseEnterpriseLogin()
 }
 
 /// Landing screen for choosing how to authenticate.
@@ -431,7 +432,8 @@ class LandingViewController: AuthenticationStepViewController {
     }
     
     @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
-        // TODO: Show enterprise login popup
+        // Do we need to log this into Analytics ??
+        delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
     
     @objc public func cancelButtonTapped() {
