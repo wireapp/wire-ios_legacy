@@ -18,13 +18,13 @@
 
 import Foundation
 
-///TODO: mv to constant
-private let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
-
-private let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
-private let OverscrollRatio: TimeInterval = 2.5
-
 final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, AVSMediaManagerClientObserver {
+    static let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
+    static let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
+    static let OverscrollRatio: CGFloat = 2.5
+
+    static var cachedSize: CGSize = .zero
+
     var conversation: ZMConversation! ///TODO: didSet
     private(set) var itemView: ConversationListItemView!
     weak var delegate: ConversationListCellDelegate?
@@ -61,7 +61,7 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
     
     private func setupConversationListCell() {
         separatorLineViewDisabled = true
-        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
+        maxVisualDrawerOffset = ConversationListCell.MaxVisualDrawerOffsetRevealDistance
         overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
         canOpenDrawer = false
         clipsToBounds = true
@@ -79,6 +79,23 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         AVSMediaManagerClientChangeNotification.add(self)
     }
     
+    override func drawerScrollingEnded(withOffset offset: CGFloat) {
+        if menuDotsView.progress >= 1 {
+            var overscrolled = false
+            if offset > frame.width / ConversationListCell.OverscrollRatio {
+                overscrolled = true
+            } else if let overscrollStartDate = overscrollStartDate {
+                let diff = Date().timeIntervalSince(overscrollStartDate)
+                overscrolled = diff > ConversationListCell.IgnoreOverscrollTimeInterval
+            }
+            
+            if overscrolled {
+                delegate?.conversationListCellOverscrolled(self)
+            }
+        }
+        overscrollStartDate = nil
+    }
+
     override var accessibilityValue: String? {
         get {
             return delegate?.indexPath(for: self)?.description
@@ -154,7 +171,7 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         super.setVisualDrawerOffset(visualDrawerOffset, updateUI: doUpdate)
         
         // After X % of reveal we consider animation should be finished
-        let progress = visualDrawerOffset / CGFloat(MaxVisualDrawerOffsetRevealDistance)
+        let progress = visualDrawerOffset / ConversationListCell.MaxVisualDrawerOffsetRevealDistance
         menuDotsView.setProgress(progress, animated: true)
         if progress >= 1 && overscrollStartDate != nil {
             overscrollStartDate = Date()
@@ -171,20 +188,19 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
             
             updateAppearance()
             
-            setupConversationObserver(with: conversation)
+            if let conversation = conversation {
+            setupConversationObserver(conversation: conversation)
+            }
         }
     }
     
     func updateAppearance() {
-        itemView.update(forConversation: conversation)
+        itemView.update(for: conversation)
     }
     
     func canOpenDrawer() -> Bool {
         return true
     }
-    
-    private let cachedSize: CGSize = [0, 0]
-
 
     func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
         if !cachedSize.equalTo(CGSize.zero) && cachedSize.width == collectionViewSize.width {
