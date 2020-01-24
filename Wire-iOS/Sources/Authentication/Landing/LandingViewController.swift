@@ -112,7 +112,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let enterpriseLoginButton: Button = {
         let button = Button(style: .fullMonochrome, variant: .light)
-        button.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction), for: .normal)
+        button.setBackgroundImageColor(UIColor.lightGraphiteAlpha24, for: .normal)
         button.accessibilityIdentifier = "EnterpriseLoginButton"
         button.setTitle("landing.enterprise.login.button.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.enterpriseLoginButtonTapped(_:)
