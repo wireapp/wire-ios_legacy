@@ -75,7 +75,7 @@ extension XCTestCase {
                 testName: String = #function,
                 line: UInt = #line) {
 
-        ///Reset default tint color to keep constant snapshot result
+        // Reset default tint color to keep constant snapshot result
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = value.view.tintColor
 
         let failure = verifySnapshot(matching: value,
