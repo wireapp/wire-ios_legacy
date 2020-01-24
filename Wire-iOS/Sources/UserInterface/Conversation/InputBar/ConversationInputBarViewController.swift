@@ -72,7 +72,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             if let image = image, let jpegData = image.jpegData(compressionQuality: 0.9) {
                 if picker.sourceType == UIImagePickerController.SourceType.camera {
                     UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
-                    // In case of picking from the camera, the iOS contorller is showing it's own confirmation screen.
+                    // In case of picking from the camera, the iOS controller is showing it's own confirmation screen.
                     parent?.dismiss(animated: true) {
                         self.sendController.sendMessage(withImageData: jpegData, completion: nil)
                     }
