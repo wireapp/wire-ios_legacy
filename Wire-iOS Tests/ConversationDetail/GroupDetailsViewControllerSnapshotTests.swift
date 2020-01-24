@@ -126,11 +126,11 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         }
     }
 
-    ///TODO: tint color?
-    func verifyConversationActionController() {
+    func verifyConversationActionController(file: StaticString = #file,
+                                            line: UInt = #line) {
         sut = GroupDetailsViewController(conversation: groupConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
-        verifyAlertController((sut?.actionController?.alertController)!)
+        verifyAlertController((sut?.actionController?.alertController)!, file: file, line: line)
     }
 
     func testForActionMenu() {
