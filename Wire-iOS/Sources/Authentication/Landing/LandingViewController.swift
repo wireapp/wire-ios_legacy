@@ -267,10 +267,12 @@ class LandingViewController: AuthenticationStepViewController {
             messageLabel
         ])
         
+        let widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
+        widthConstraint.priority = .defaultHigh
         NSLayoutConstraint.activate([
             // content view
+            widthConstraint,
             contentView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
-            contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: 375),
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
