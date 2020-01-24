@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol UserList;
 @protocol KeyboardCollapseObserver;
 @protocol AVAudioSessionType;
+@protocol ConversationInputBarViewControllerDelegate;
 
 typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeTextInput,
@@ -40,24 +41,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
     ConversationInputBarViewControllerModeCamera,
     ConversationInputBarViewControllerModeTimeoutConfguration
 };
-
-
-@protocol ConversationInputBarViewControllerDelegate <NSObject>
-
-- (void)conversationInputBarViewControllerDidComposeText:(NSString *)text
-                                                mentions:(NSArray<Mention *> *)mentions
-                                       replyingToMessage:(nullable id <ZMConversationMessage>)message;
-
-@optional
-- (BOOL)conversationInputBarViewControllerShouldBeginEditing:(ConversationInputBarViewController *)controller;
-- (BOOL)conversationInputBarViewControllerShouldEndEditing:(ConversationInputBarViewController *)controller;
-- (void)conversationInputBarViewControllerDidNotSendMessageConversationDegraded:(ConversationInputBarViewController *)controller;
-- (void)conversationInputBarViewControllerDidFinishEditingMessage:(id <ZMConversationMessage>)message withText:(NSString *)newText mentions:(NSArray <Mention *> *)mentions;
-- (void)conversationInputBarViewControllerDidCancelEditingMessage:(id <ZMConversationMessage>)message;
-- (void)conversationInputBarViewControllerWantsToShowMessage:(id <ZMConversationMessage>)message;
-- (void)conversationInputBarViewControllerEditLastMessage;
-
-@end
 
 
 @interface ConversationInputBarViewController : UIViewController <UIPopoverPresentationControllerDelegate>

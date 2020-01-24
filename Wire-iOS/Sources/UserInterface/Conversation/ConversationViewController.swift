@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ConversationViewController {
     @objc
@@ -188,4 +189,62 @@ extension ConversationViewController: ZMConversationListObserver {
     public func conversation(inside list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
+}
+
+//MARK: - InputBar
+
+extension ConversationViewController: ConversationInputBarViewControllerDelegate {
+    func conversationInputBarViewControllerDidComposeText(text: String,
+                                                          mentions: [Mention],
+                                                          replyingTo message: ZMConversationMessage?) {
+        contentViewController.scrollToBottom()
+        inputBarController.sendController.sendTextMessage(text, mentions: mentions, replyingTo: message)
+    }
+    
+    func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool {
+        if !contentViewController.isScrolledToBottom && !controller.isEditingMessage &&
+            !controller.isReplyingToMessage {
+            collectionController = nil
+            contentViewController.searchQueries = []
+            contentViewController.scrollToBottom()
+        }
+        
+        setGuestBarForceHidden(true)
+        return true
+    }
+    
+    func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool {
+        setGuestBarForceHidden(false)
+        return true
+    }
+    
+    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage,
+                                                            withText newText: String?,
+                                                            mentions: [Mention]) {
+        contentViewController.didFinishEditing(message)
+        ZMUserSession.shared()?.enqueueChanges({
+            if let newText = newText,
+                !newText.isEmpty {
+                let fetchLinkPreview = !Settings.shared().disableLinkPreviews
+                message.textMessageData?.editText(newText, mentions: mentions, fetchLinkPreview: fetchLinkPreview)
+            } else {
+                ZMMessage.deleteForEveryone(message)
+            }
+        })
+    }
+    
+    func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage) {
+        contentViewController.didFinishEditing(message)
+    }
+    
+    func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage) {
+        contentViewController.scroll(to: message) { cell in
+            self.contentViewController.highlight(message)
+        }
+    }
+    
+    func conversationInputBarViewControllerEditLastMessage() {
+        contentViewController.editLastMessage()
+    }
+    
 }

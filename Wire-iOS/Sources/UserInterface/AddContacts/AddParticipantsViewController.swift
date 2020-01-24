@@ -367,7 +367,7 @@ final public class AddParticipantsViewController: UIViewController {
     fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
         let selectedUsers = self.userSelection.users
         
-        conversation.addOrShowError(participants: selectedUsers)
+        conversation.addOrShowError(participants: Array(selectedUsers))
     }
 }
 

@@ -172,7 +172,7 @@ final class ProfileViewControllerViewModel: NSObject {
         transitionToListAndEnqueue {
             self.conversation?.clearMessageHistory()
             if leave {
-                self.conversation?.removeOrShowError(participnant: .selfUser())
+                self.conversation?.removeOrShowError(participnant: ZMUser.selfUser())
             }
         }
     }

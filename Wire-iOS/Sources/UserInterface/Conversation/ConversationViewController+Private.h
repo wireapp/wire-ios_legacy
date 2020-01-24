@@ -80,7 +80,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface ConversationViewController (InputBar) <ConversationInputBarViewControllerDelegate>
-@end
-
 NS_ASSUME_NONNULL_END
