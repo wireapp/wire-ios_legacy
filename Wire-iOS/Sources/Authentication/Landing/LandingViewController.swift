@@ -274,25 +274,23 @@ class LandingViewController: AuthenticationStepViewController {
     }
 
     private func createConstraints() {
-        topStack.translatesAutoresizingMaskIntoConstraints = false
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
-        enterpriseLoginButton.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        var widthConstraint: NSLayoutConstraint
-        if traitCollection.horizontalSizeClass == .regular {
-            widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 375)
-        } else {
-            widthConstraint = contentView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -64)
-        }
+        disableAutoresizingMaskTranslation(for: [
+            topStack,
+            contentView,
+            buttonStackView,
+            enterpriseLoginButton,
+            messageLabel
+        ])
         
         NSLayoutConstraint.activate([
             // content view
-            widthConstraint,
+            contentView.widthAnchor.constraint(lessThanOrEqualToConstant: 375),
+            contentView.widthAnchor.constraint(greaterThanOrEqualToConstant: 375),
             contentView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.safeBottomAnchor),
             contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            contentView.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 32),
+            contentView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -32),
             
             // top stack view
             topStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24),
@@ -321,6 +319,12 @@ class LandingViewController: AuthenticationStepViewController {
             // logoView
             logoView.heightAnchor.constraint(lessThanOrEqualToConstant: 31)
         ])
+    }
+    
+    private func disableAutoresizingMaskTranslation(for views: [UIView]) {
+        for view in views {
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
 
     // MARK: - Adaptivity Events
