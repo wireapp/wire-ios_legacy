@@ -60,7 +60,7 @@ final class ProfileViewControllerViewModel: NSObject {
         
         if let fullUser = fullUser,
            let userSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: fullUser, userSession: userSession)
+            observerToken = UserChangeInfo.add(observer: self, for: fullUser, in: userSession)
         }
     }
     
@@ -172,7 +172,7 @@ final class ProfileViewControllerViewModel: NSObject {
         transitionToListAndEnqueue {
             self.conversation?.clearMessageHistory()
             if leave {
-                self.conversation?.removeOrShowError(participnant: .selfUser())
+                self.conversation?.removeOrShowError(participnant: ZMUser.selfUser())
             }
         }
     }

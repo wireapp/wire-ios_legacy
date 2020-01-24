@@ -28,8 +28,6 @@
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
-#import "ConversationViewController.h"
-#import "ConversationViewController+Private.h"
 #import "ConversationListCell.h"
 #import "ConversationListCell+Internal.h"
 #import "ConversationListItemView.h"

@@ -22,16 +22,7 @@ import WireSyncEngine
 // MARK: - Update left navigator bar item when size class changes
 extension ConversationViewController {
 
-    override open func willTransition(to newCollection: UITraitCollection,
-                                      with coordinator: UIViewControllerTransitionCoordinator) {
-        super.willTransition(to: newCollection, with: coordinator)
-        self.updateLeftNavigationBarItems()
-    }
-
-}
-
-public extension ConversationViewController {
-    @objc func addCallStateObserver() -> Any? {
+    func addCallStateObserver() -> Any? {
         return conversation.voiceChannel?.addCallStateObserver(self)
     }
     
@@ -84,7 +75,7 @@ public extension ConversationViewController {
         return button
     }
 
-    @objc var collectionsBarButtonItem: UIBarButtonItem {
+    var collectionsBarButtonItem: UIBarButtonItem {
         let showingSearchResults = (self.collectionController?.isShowingSearchResults ?? false)
         let action = #selector(ConversationViewController.onCollectionButtonPressed(_:))
         let button = UIBarButtonItem(icon: showingSearchResults ? .activeSearch : .search, target: self, action: action)
@@ -98,7 +89,7 @@ public extension ConversationViewController {
         return button
     }
 
-    @objc func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    func rightNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         guard !conversation.isReadOnly, conversation.localParticipants.count != 0 else { return [] }
 
         if conversation.canJoinCall {
@@ -112,7 +103,7 @@ public extension ConversationViewController {
         }
     }
 
-    @objc func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
+    func leftNavigationItems(forConversation conversation: ZMConversation) -> [UIBarButtonItem] {
         var items: [UIBarButtonItem] = []
 
         if self.parent?.wr_splitViewController?.layoutSize != .regularLandscape {
@@ -126,7 +117,7 @@ public extension ConversationViewController {
         return items
     }
 
-    @objc func updateRightNavigationItemsButtons() {
+    func updateRightNavigationItemsButtons() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
         } else {
@@ -135,7 +126,7 @@ public extension ConversationViewController {
     }
 
     /// Update left navigation bar items
-    @objc func updateLeftNavigationBarItems() {
+    func updateLeftNavigationBarItems() {
         if UIApplication.isLeftToRightLayout {
             navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
         } else {
@@ -157,7 +148,8 @@ public extension ConversationViewController {
         }
     }
 
-    @objc func voiceCallItemTapped(_ sender: UIBarButtonItem) {
+    @objc
+    func voiceCallItemTapped(_ sender: UIBarButtonItem) {
         endEditing()
         startCallController.startAudioCall(started: ConversationInputBarViewController.endEditingMessage)
     }

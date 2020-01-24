@@ -17,27 +17,270 @@
 //
 
 import Foundation
+import WireDataModel
 
-extension ConversationViewController {
+final class ConversationViewController: UIViewController {
+    unowned let zClientViewController: ZClientViewController
+    private let session: ZMUserSessionInterface
+    private let visibleMessage: ZMConversationMessage?
+
+    var conversation: ZMConversation {
+        didSet {
+            if oldValue == conversation {
+                return
+            }
+
+            update(conversation: conversation)
+        }
+    }
+    
+    var isFocused = false
+    
+    private(set) var startCallController: ConversationCallController!
+    
+    let contentViewController: ConversationContentViewController
+    let inputBarController: ConversationInputBarViewController
+
+    var collectionController: CollectionsViewController?
+    var outgoingConnectionViewController: OutgoingConnectionViewController!
+    let conversationBarController: BarController = BarController()
+    let guestsBarController: GuestsBarController = GuestsBarController()
+    let invisibleInputAccessoryView: InvisibleInputAccessoryView = InvisibleInputAccessoryView()
+    let mediaBarViewController: MediaBarViewController
+    private let titleView: ConversationTitleView
+
+    var inputBarBottomMargin: NSLayoutConstraint?
+    var inputBarZeroHeight: NSLayoutConstraint?
+    
+    var isAppearing = false
+    private var voiceChannelStateObserverToken: Any?
+    private var conversationObserverToken: Any?
+    private var conversationListObserverToken: Any?
+    
+    var participantsController: UIViewController? {
+        
+        var viewController: UIViewController? = nil
+        
+        switch conversation.conversationType {
+        case .group:
+            let groupDetailsViewController = GroupDetailsViewController(conversation: conversation)
+            viewController = groupDetailsViewController
+        case .`self`, .oneOnOne, .connection:
+            viewController = createUserDetailViewController()
+        case .invalid:
+            fatal("Trying to open invalid conversation")
+        default:
+            break
+        }
+        
+        
+        let _participantsController = viewController?.wrapInNavigationController()
+        
+        return _participantsController
+        
+    }
+    
+    required init(session: ZMUserSessionInterface,
+                 conversation: ZMConversation,
+                 visibleMessage: ZMMessage?,
+                 zClientViewController: ZClientViewController) {
+        self.session = session
+        self.conversation = conversation
+        self.visibleMessage = visibleMessage
+        self.zClientViewController = zClientViewController
+        
+        
+        contentViewController = ConversationContentViewController(conversation: conversation,
+                                                                  message: visibleMessage,
+                                                                  mediaPlaybackManager: zClientViewController.mediaPlaybackManager,
+                                                                  session: session)
+
+        inputBarController = ConversationInputBarViewController(conversation: conversation)
+
+        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: zClientViewController.mediaPlaybackManager)
+        
+        titleView = ConversationTitleView(conversation: conversation, interactive: true)
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        definesPresentationContext = true
+        
+        update(conversation: conversation)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        dismissCollectionIfNecessary()
+        
+        hideAndDestroyParticipantsPopover()
+        contentViewController.delegate = nil
+    }
+    
+    private func update(conversation: ZMConversation) {
+        setupNavigatiomItem()
+        updateOutgoingConnectionVisibility()
+        
+        voiceChannelStateObserverToken = addCallStateObserver()
+        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+        startCallController = ConversationCallController(conversation: conversation, target: self)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if let session = session as? ZMUserSession {
+            conversationListObserverToken = ConversationListChangeInfo.add(observer: self, for: ZMConversationList.conversations(inUserSession: session), userSession: session)
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameWillChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        UIView.performWithoutAnimation({
+            self.view.backgroundColor = UIColor.from(scheme: .textBackground)
+        })
+        
+        setupInputBarController()
+        setupContentViewController()
+        
+        contentViewController.tableView.pannableView = inputBarController.view
+        
+        setupMediaBarViewController()
+        
+        addToSelf(contentViewController)
+        addToSelf(inputBarController)
+        addToSelf(conversationBarController)
+        
+        updateOutgoingConnectionVisibility()
+        createConstraints()
+        updateInputBarVisibility()
+        
+        if let quote = conversation.draftMessage?.quote, !quote.hasBeenDeleted {
+            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
+        }
+    }
+    
+    func createOutgoingConnectionViewController() {
+        outgoingConnectionViewController = OutgoingConnectionViewController()
+        outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        outgoingConnectionViewController.buttonCallback = { [weak self] action in
+            self?.session.enqueueChanges({
+                switch action {
+                case .cancel:
+                    self?.conversation.connectedUser?.cancelConnectionRequest()
+                case .archive:
+                    self?.conversation.isArchived = true
+                default:
+                    break
+                }
+            })
+            
+            self?.openConversationList()
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isAppearing = true
+        updateGuestsBarVisibility()
+    }
+    
+    override func didMove(toParent parent: UIViewController?) {
+        super.didMove(toParent: parent)
+        updateGuestsBarVisibility()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        updateLeftNavigationBarItems()
+        ZMUserSession.shared()?.didClose(conversation: conversation)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        updateLeftNavigationBarItems()
+    }
+    
+    func scroll(to message: ZMConversationMessage?) {
+        contentViewController.scroll(to: message, completion: nil)
+    }
+    
+    // MARK: - Device orientation
+    override var shouldAutorotate : Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .portrait
+        } else {
+            return .all
+        }
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: nil) { context in
+            self.updateLeftNavigationBarItems()
+        }
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        hideAndDestroyParticipantsPopover()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection,
+                                 with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        self.updateLeftNavigationBarItems()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        if collectionController?.view.window == nil {
+            collectionController = nil
+        }
+    }
+    
+    func openConversationList() {
+        guard let leftControllerRevealed = wr_splitViewController?.isLeftViewControllerRevealed else { return }
+        wr_splitViewController?.setLeftViewControllerRevealed(!leftControllerRevealed, animated: true, completion: nil)
+    }
+    
+    // MARK: - Getters, setters
+    
+    func setCollection(_ collectionController: CollectionsViewController?) {
+        self.collectionController = collectionController
+        
+        updateLeftNavigationBarItems()
+    }
+    
+    // MARK: - Application Events & Notifications
+    override func accessibilityPerformEscape() -> Bool {
+        openConversationList()
+        return true
+    }
+    
+    @objc
+    func onBackButtonPressed(_ backButton: UIButton?) {
+        openConversationList()
+    }
+    
     @objc
     func addParticipants(_ participants: Set<ZMUser>) {
         var newConversation: ZMConversation? = nil
         
-        ZMUserSession.shared()?.enqueueChanges({
+        session.enqueueChanges({
             newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
-                self?.zClientViewController?.select(conversation: newConversation, focusOnView: true, animated: true)
+                self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
             }
         })
     }
     
-    @objc
-    func createContentViewController() {
-        contentViewController = ConversationContentViewController(conversation: conversation,
-                                                                  message: visibleMessage,
-                                                                  mediaPlaybackManager: zClientViewController?.mediaPlaybackManager,
-                                                                  session: session)
+    private func setupContentViewController() {
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentViewController.bottomMargin = 16
@@ -45,12 +288,10 @@ extension ConversationViewController {
         contentViewController.mentionsSearchResultsViewController.delegate = inputBarController
     }
     
-    @objc
-    func createMediaBarViewController() {
-        mediaBarViewController = MediaBarViewController(mediaPlaybackManager: ZClientViewController.shared?.mediaPlaybackManager)
+    private func setupMediaBarViewController() {
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
-
+    
     @objc
     func didTapMediaBar(_ tapGestureRecognizer: UITapGestureRecognizer?) {
         if let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage,
@@ -59,15 +300,12 @@ extension ConversationViewController {
         }
     }
     
-    @objc
-    func createInputBarController() {
-        inputBarController = ConversationInputBarViewController(conversation: conversation)
+    private func setupInputBarController() {
         inputBarController.delegate = self
         inputBarController.view.translatesAutoresizingMaskIntoConstraints = false
         
         // Create an invisible input accessory view that will allow us to take advantage of built in keyboard
         // dragging and sizing of the scrollview
-        invisibleInputAccessoryView = InvisibleInputAccessoryView()
         invisibleInputAccessoryView.delegate = self
         invisibleInputAccessoryView.isUserInteractionEnabled = false // make it not block touch events
         invisibleInputAccessoryView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -77,8 +315,7 @@ extension ConversationViewController {
         }
     }
     
-    @objc
-    func updateInputBarVisibility() {
+    private func updateInputBarVisibility() {
         if conversation.isReadOnly {
             inputBarController.inputBar.textView.resignFirstResponder()
             inputBarController.dismissMentionsIfNeeded()
@@ -89,10 +326,7 @@ extension ConversationViewController {
         view.setNeedsLayout()
     }
     
-    @objc
-    func setupNavigatiomItem() {
-        titleView = ConversationTitleView(conversation: conversation, interactive: true)
-        
+    private func setupNavigatiomItem() {
         titleView.tapHandler = { [weak self] button in
             if let superview = self?.titleView.superview,
                 let participantsController = self?.participantsController {
@@ -106,8 +340,24 @@ extension ConversationViewController {
         
         updateRightNavigationItemsButtons()
     }
+    
+    
+    //MARK: - ParticipantsPopover
+    
+    private func hideAndDestroyParticipantsPopover() {
+        if (presentedViewController is GroupDetailsViewController) || (presentedViewController is ProfileViewController) {
+            dismiss(animated: true)
+        }
+    }
+    
+    // MARK: - UIPopoverPresentationControllerDelegate
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        if (controller.presentedViewController is AddParticipantsViewController) {
+            return .overFullScreen
+        }
+        return .fullScreen
+    }
 }
-
 //MARK: - InvisibleInputAccessoryViewDelegate
 
 extension ConversationViewController: InvisibleInputAccessoryViewDelegate {
@@ -152,7 +402,7 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.connectionStateChanged {
+            note.connectionStateChanged {
             updateRightNavigationItemsButtons()
             updateLeftNavigationBarItems()
             updateOutgoingConnectionVisibility()
@@ -161,14 +411,14 @@ extension ConversationViewController: ZMConversationObserver {
         }
         
         if note.participantsChanged ||
-           note.externalParticipantsStateChanged {
+            note.externalParticipantsStateChanged {
             updateGuestsBarVisibility()
         }
         
         if note.nameChanged ||
-           note.securityLevelChanged ||
-           note.connectionStateChanged ||
-           note.legalHoldStatusChanged {
+            note.securityLevelChanged ||
+            note.connectionStateChanged ||
+            note.legalHoldStatusChanged {
             setupNavigatiomItem()
         }
     }
@@ -185,7 +435,65 @@ extension ConversationViewController: ZMConversationListObserver {
         updateLeftNavigationBarItems()
     }
     
-    public func conversation(inside list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
+    public func conversationInsideList(_ list: ZMConversationList, didChange changeInfo: ConversationChangeInfo) {
         updateLeftNavigationBarItems()
     }
+}
+
+//MARK: - InputBar
+
+extension ConversationViewController: ConversationInputBarViewControllerDelegate {
+    func conversationInputBarViewControllerDidComposeText(text: String,
+                                                          mentions: [Mention],
+                                                          replyingTo message: ZMConversationMessage?) {
+        contentViewController.scrollToBottom()
+        inputBarController.sendController.sendTextMessage(text, mentions: mentions, replyingTo: message)
+    }
+    
+    func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool {
+        if !contentViewController.isScrolledToBottom && !controller.isEditingMessage &&
+            !controller.isReplyingToMessage {
+            collectionController = nil
+            contentViewController.searchQueries = []
+            contentViewController.scrollToBottom()
+        }
+        
+        setGuestBarForceHidden(true)
+        return true
+    }
+    
+    func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool {
+        setGuestBarForceHidden(false)
+        return true
+    }
+    
+    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage,
+                                                            withText newText: String?,
+                                                            mentions: [Mention]) {
+        contentViewController.didFinishEditing(message)
+        session.enqueueChanges({
+            if let newText = newText,
+                !newText.isEmpty {
+                let fetchLinkPreview = !Settings.shared().disableLinkPreviews
+                message.textMessageData?.editText(newText, mentions: mentions, fetchLinkPreview: fetchLinkPreview)
+            } else {
+                ZMMessage.deleteForEveryone(message)
+            }
+        })
+    }
+    
+    func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage) {
+        contentViewController.didFinishEditing(message)
+    }
+    
+    func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage) {
+        contentViewController.scroll(to: message) { cell in
+            self.contentViewController.highlight(message)
+        }
+    }
+    
+    func conversationInputBarViewControllerEditLastMessage() {
+        contentViewController.editLastMessage()
+    }
+    
 }

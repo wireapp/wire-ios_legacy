@@ -19,11 +19,7 @@
 import Foundation
 
 extension ConversationViewController {
-    @objc
     func updateOutgoingConnectionVisibility() {
-        guard let conversation = conversation else {
-            return
-        }
 
         let outgoingConnection: Bool = conversation.relatedConnectionState == .sent
         contentViewController.tableView.isScrollEnabled = !outgoingConnection
@@ -50,7 +46,6 @@ extension ConversationViewController {
         }
     }
 
-    @objc
     func createConstraints() {
         [conversationBarController.view,
          contentViewController.view,

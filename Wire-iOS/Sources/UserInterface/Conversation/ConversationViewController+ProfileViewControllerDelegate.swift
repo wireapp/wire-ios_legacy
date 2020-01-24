@@ -21,7 +21,7 @@ import Foundation
 extension ConversationViewController {
     @objc
     func createUserDetailViewController() -> UIViewController {
-        guard let user = conversation.firstActiveParticipantOtherThanSelf else {
+        guard let user = (conversation.firstActiveParticipantOtherThanSelf ?? conversation.connectedUser) else {
             fatal("no firstActiveParticipantOtherThanSelf!")            
         }
 
@@ -32,7 +32,7 @@ extension ConversationViewController {
 extension ConversationViewController: ProfileViewControllerDelegate {    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation){
         dismiss(animated: true) {
-            self.zClientViewController?.select(conversation: conversation, focusOnView: true, animated: true)
+            self.zClientViewController.select(conversation: conversation, focusOnView: true, animated: true)
         }
     }
     
@@ -51,7 +51,9 @@ extension ConversationViewController: ProfileViewControllerDelegate {
                                                                          team: ZMUser.selfUser().team)
 
             }, completionHandler: {
-                self?.zClientViewController?.select(conversation: newConversation, focusOnView: true, animated: true)
+                self?.zClientViewController.select(conversation: newConversation,
+                                                   focusOnView: true,
+                                                   animated: true)
             })
         }
         

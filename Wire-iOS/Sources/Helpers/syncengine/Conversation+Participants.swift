@@ -40,29 +40,28 @@ extension ZMConversation {
         return type(of: self).maxParticipants - localParticipants.count
     }
     
-    func addOrShowError(participants: Set<ZMUser>) {
+    func addOrShowError(participants: [UserType]) {
         guard let session = ZMUserSession.shared(),
                 session.networkState != .offline else {
             self.showAlertForAdding(for: NetworkError.offline)
             return
         }
         
-        self.addParticipants(participants,
-                             userSession: ZMUserSession.shared()!) { result in
-                                switch result {
-                                case .failure(let error):
-                                    self.showAlertForAdding(for: error)
-                                default: break
-                                }
+        addParticipants(participants, userSession: ZMUserSession.shared()!) { result in
+            switch result {
+            case .failure(let error):
+                self.showAlertForAdding(for: error)
+            default: break
+            }
         }
     }
     
     @objc (removeParticipantOrShowError:)
-    func removeOrShowError(participnant user: ZMUser) {
+    func removeOrShowError(participnant user: UserType) {
         removeOrShowError(participnant: user, completion: nil)
     }
     
-    func removeOrShowError(participnant user: ZMUser, completion: ((VoidResult)->())? = nil) {
+    func removeOrShowError(participnant user: UserType, completion: ((VoidResult)->())? = nil) {
         guard let session = ZMUserSession.shared(),
             session.networkState != .offline else {
             self.showAlertForRemoval(for: NetworkError.offline)
@@ -74,8 +73,8 @@ extension ZMConversation {
                                userSession: ZMUserSession.shared()!) { result in
                                 switch result {
                                 case .success:
-                                    if user.isServiceUser {
-                                        Analytics.shared().tagDidRemoveService(user)
+                                    if let serviceUser = user as? ServiceUser, user.isServiceUser {
+                                        Analytics.shared().tagDidRemoveService(serviceUser)
                                     }
                                 case .failure(let error):
                                     self.showAlertForRemoval(for: error)

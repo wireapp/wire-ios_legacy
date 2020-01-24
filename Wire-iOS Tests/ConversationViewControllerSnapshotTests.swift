@@ -35,11 +35,14 @@ final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         mockConversation = createTeamGroupConversation()
 
         mockZMUserSession = MockZMUserSession()
+    
+        let mockAccount = Account(userName: "mock user", userIdentifier: UUID())
+        let zClientViewController = ZClientViewController(account: mockAccount, selfUser: MockSelfUser())
 
-        sut = ConversationViewController()
-
-        sut.conversation = mockConversation
-        sut.session = mockZMUserSession
+        sut = ConversationViewController(session: mockZMUserSession,
+                                         conversation: mockConversation,
+                                         visibleMessage: nil,
+                                         zClientViewController: zClientViewController)
     }
     
     override func tearDown() {

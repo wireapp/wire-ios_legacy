@@ -38,7 +38,7 @@ version=`xcodebuild -version | head -n 1 | sed "s/Xcode //"`
 XCODE_VERSION=( ${version//./ } )
 
 [[ ${CARTHAGE_VERSION[0]} -gt 0 || ${CARTHAGE_VERSION[1]} -ge 29 ]] || die "Carthage should be at least version 0.29"
-[[ ${XCODE_VERSION[0]} -gt 9 || ( ${XCODE_VERSION[0]} -eq 9 && ${XCODE_VERSION[1]} -ge 3 ) ]] || die "Xcode version should be at least 9.3.0"
+[[ ${XCODE_VERSION[0]} -gt 10 || ( ${XCODE_VERSION[0]} -eq 10 && ${XCODE_VERSION[1]} -ge 2 ) ]] || die "Xcode version should be at least 10.2.0. The current version is ${XCODE_VERSION}"
 
 # SETUP
 echo "ℹ️  Carthage bootstrap. This might take a while..."

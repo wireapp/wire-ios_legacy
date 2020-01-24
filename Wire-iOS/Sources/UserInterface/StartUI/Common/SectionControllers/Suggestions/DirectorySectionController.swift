@@ -38,7 +38,7 @@ class DirectorySectionController: SearchSectionController {
         
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
         
-        self.token = UserChangeInfo.add(searchUserObserver: self, for: nil, userSession: ZMUserSession.shared()!)
+        self.token = UserChangeInfo.add(searchUserObserver: self, in: ZMUserSession.shared()!)
         
         self.collectionView = collectionView
     }
