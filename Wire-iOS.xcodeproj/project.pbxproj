@@ -1474,7 +1474,6 @@
 		F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
 		F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */; };
-		FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE996D9B2032039100BDE573 /* LandingViewControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3241,7 +3240,6 @@
 		F1FEA14D21DCEB1700790A54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
-		FE996D9B2032039100BDE573 /* LandingViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -5867,7 +5865,6 @@
 				16814841228C74C10069F16F /* UserClientCellTests.swift */,
 				5EE115E0204EEC7D002AD6C2 /* CallQualityControllerTests.swift */,
 				16C02A11204EE5EC00811912 /* GroupConversationCellTests.swift */,
-				FE996D9B2032039100BDE573 /* LandingViewControllerTests.swift */,
 				EF60FC402064FD400017D083 /* SplitViewControllerTests.swift */,
 				87C39A8F206BF00A008DA100 /* BackupViewControllerTests.swift */,
 				87AE8BDB207B99540058715E /* BackupPasswordViewControllerTests.swift */,
@@ -8303,7 +8300,6 @@
 				EF1FDC7E21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift in Sources */,
 				F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */,
 				5EDF03EA22453AE400C04007 /* ConversationLinkAttachmentMessageCellTests.swift in Sources */,
-				FE996D9C2032039100BDE573 /* LandingViewControllerTests.swift in Sources */,
 				876376881E840E9C00B2CCF0 /* ConversationStatusTests.swift in Sources */,
 				EF17175922D4990800697EB0 /* ConversationAvatarViewModeTests.swift in Sources */,
 				EF6251D621395F7F00943708 /* VideoGridViewControllerSnapshotTests.swift in Sources */,
