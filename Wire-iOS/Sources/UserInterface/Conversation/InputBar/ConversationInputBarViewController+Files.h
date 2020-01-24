@@ -19,7 +19,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ConversationInputBarViewController (Files) <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ConversationInputBarViewController (Files) < UINavigationControllerDelegate>
 
 - (void)uploadFileAtURL:(NSURL *)URL;
 - (void)uploadItemAtURL:(NSURL *)itemURL;

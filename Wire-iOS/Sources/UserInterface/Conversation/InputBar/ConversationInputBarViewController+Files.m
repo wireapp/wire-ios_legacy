@@ -143,59 +143,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    // Workaround http://stackoverflow.com/questions/26651355/
-    [[AVAudioSession sharedInstance] setActive:NO error:nil];
-    
-    NSString* mediaType = info[UIImagePickerControllerMediaType];
-    if ([mediaType isEqual:(id)kUTTypeMovie]) {
-        [self processVideoWithInfo: info picker:picker];
-    }
-    else if ([mediaType isEqual:(id)kUTTypeImage]) {
-        UIImage *image = info[UIImagePickerControllerEditedImage];
-        
-        if (image == nil) {
-            image = info[UIImagePickerControllerOriginalImage];
-        }
-        
-        if (image != nil) {
-            // In this case the completion was shown already by image picker
-            if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-                UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
-                // In case of picking from the camera, the iOS contorller is showing it's own confirmation screen.
-                [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    [self.sendController sendMessageWithImageData:UIImageJPEGRepresentation(image, 0.9)
-                                                       completion:nil];
-                }];
-            }
-            else {
-                [self.parentViewController dismissViewControllerAnimated:YES completion:^(){
-                    [self showConfirmationForImage:UIImageJPEGRepresentation(image, 0.9) isFromCamera:NO uti: mediaType];
-                }];
-            }
-            
-        }
-    }
-    else {
-        [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    // Workaround http://stackoverflow.com/questions/26651355/
-    [[AVAudioSession sharedInstance] setActive:NO error:nil];
-    [self.parentViewController dismissViewControllerAnimated:YES completion:^() {
-        
-        if (self.shouldRefocusKeyboardAfterImagePickerDismiss) {
-            self.shouldRefocusKeyboardAfterImagePickerDismiss = NO;
-            self.mode = ConversationInputBarViewControllerModeCamera;
-            [self.inputBar.textView becomeFirstResponder];
-        }
-    }];
-}
-
 #pragma mark - UIAdaptivePresentationControllerDelegate
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller
