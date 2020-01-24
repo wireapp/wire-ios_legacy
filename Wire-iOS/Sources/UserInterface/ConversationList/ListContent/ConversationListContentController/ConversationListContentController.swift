@@ -270,6 +270,7 @@ final class ConversationListContentController: UICollectionViewController {
             fatal("Unknown cell type")
         }
 
+        ///TODO: compile error?
         (cell as? SectionListCellType)?.sectionName = listViewModel.sectionCanonicalName(of: indexPath.section)
         (cell as? SectionListCellType)?.cellIdentifier = "conversation_list_cell"
         

@@ -203,8 +203,8 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
     }
 
     func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
-        if !cachedSize.equalTo(CGSize.zero) && cachedSize.width == collectionViewSize.width {
-            return cachedSize
+        if !ConversationListCell.cachedSize.equalTo(CGSize.zero) && ConversationListCell.cachedSize.width == collectionViewSize.width {
+            return ConversationListCell.cachedSize
         }
         
         let fullHeightString = "Ü"
@@ -216,7 +216,7 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         
         var cellSize = itemView.systemLayoutSizeFitting(fittingSize)
         cellSize.width = collectionViewSize.width
-        cachedSize = cellSize
+        ConversationListCell.cachedSize = cellSize
         return cellSize
     }
     
