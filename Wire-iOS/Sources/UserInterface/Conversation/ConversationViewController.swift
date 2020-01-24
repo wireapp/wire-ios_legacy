@@ -22,9 +22,9 @@ import WireDataModel
 final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
     private let session: ZMUserSessionInterface
-    private let visibleMessage: ZMConversationMessage? ///TODO: ZMConversationMessage?
+    private let visibleMessage: ZMConversationMessage?
 
-    var conversation: ZMConversation! { ///TODO: change to optional
+    var conversation: ZMConversation {
         didSet {
             if oldValue == conversation {
                 return
@@ -33,11 +33,9 @@ final class ConversationViewController: UIViewController {
             setupNavigatiomItem()
             updateOutgoingConnectionVisibility()
             
-            if let conversation = conversation {
-                voiceChannelStateObserverToken = addCallStateObserver()
-                conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
-                startCallController = ConversationCallController(conversation: conversation, target: self)
-            }
+            voiceChannelStateObserverToken = addCallStateObserver()
+            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+            startCallController = ConversationCallController(conversation: conversation, target: self)
         }
     }
     
@@ -153,8 +151,7 @@ final class ConversationViewController: UIViewController {
         createConstraints()
         updateInputBarVisibility()
         
-        if let quote = conversation.draftMessage?.quote,
-            !quote.hasBeenDeleted {            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
+        if let quote = conversation.draftMessage?.quote, !quote.hasBeenDeleted {            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
         }
     }
     
@@ -217,15 +214,19 @@ final class ConversationViewController: UIViewController {
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        coordinator.animate(alongsideTransition: { context in
-            
-        }) { context in
+        coordinator.animate(alongsideTransition: nil) { context in
             self.updateLeftNavigationBarItems()
         }
         
         super.viewWillTransition(to: size, with: coordinator)
         
         hideAndDestroyParticipantsPopover()
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection,
+                                 with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        self.updateLeftNavigationBarItems()
     }
     
     override func didReceiveMemoryWarning() {
@@ -247,18 +248,6 @@ final class ConversationViewController: UIViewController {
         
         updateLeftNavigationBarItems()
     }
-    
-    // MARK: - SwipeNavigationController's panning
-    ///TODO: still support pan gesture?
-    /*
-    func frameworkShouldRecognizePan(_ gestureRecognizer: UIPanGestureRecognizer?) -> Bool {
-        let location = gestureRecognizer?.location(in: view)
-        if view.convert(inputBarController.view.bounds, from: inputBarController.view).contains(location) {
-            return false
-        }
-        
-        return true
-    }*/
     
     // MARK: - Application Events & Notifications
     override func accessibilityPerformEscape() -> Bool {

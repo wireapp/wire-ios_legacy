@@ -47,13 +47,12 @@ extension ZMConversation {
             return
         }
         
-        addParticipants(participants,
-                         userSession: ZMUserSession.shared()!) { result in
-                            switch result {
-                            case .failure(let error):
-                                self.showAlertForAdding(for: error)
-                            default: break
-                            }
+        addParticipants(participants, userSession: ZMUserSession.shared()!) { result in
+            switch result {
+            case .failure(let error):
+                self.showAlertForAdding(for: error)
+            default: break
+            }
         }
     }
     
