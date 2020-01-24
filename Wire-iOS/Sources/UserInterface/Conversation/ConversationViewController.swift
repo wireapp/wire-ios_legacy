@@ -151,7 +151,8 @@ final class ConversationViewController: UIViewController {
         createConstraints()
         updateInputBarVisibility()
         
-        if let quote = conversation.draftMessage?.quote, !quote.hasBeenDeleted {            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
+        if let quote = conversation.draftMessage?.quote, !quote.hasBeenDeleted {
+            inputBarController.addReplyComposingView(contentViewController.createReplyComposingView(for: quote))
         }
     }
     
