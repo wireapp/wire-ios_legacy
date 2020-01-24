@@ -35,7 +35,6 @@
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
-#import "ConversationInputBarSendController.h"
 #import "ConversationContentViewController+Private.h"
 #import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"

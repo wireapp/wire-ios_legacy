@@ -276,8 +276,9 @@ extension ConversationInputBarViewController : CanvasViewControllerDelegate {
             guard let `self` = self else { return }
             
             self.dismiss(animated: true, completion: {
-                let imageData = image.pngData()
-                self.sendController.sendMessage(withImageData: imageData, completion: {})
+                if let imageData = image.pngData() {
+                    self.sendController.sendMessage(withImageData: imageData)
+                }
             })
         }
     }

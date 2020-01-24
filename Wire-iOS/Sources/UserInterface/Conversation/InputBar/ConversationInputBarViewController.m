@@ -32,7 +32,6 @@
 
 
 #import "Settings.h"
-#import "ConversationInputBarSendController.h"
 @import FLAnimatedImage;
 #import "MediaAsset.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
@@ -81,9 +80,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface ConversationInputBarViewController (GiphySearchViewController) <GiphySearchViewControllerDelegate>
-
-@end
 
 @interface ConversationInputBarViewController ()
 
@@ -597,11 +593,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateNewButtonTitleLabel];
 }
 
-- (void)postImage:(id<MediaAsset>)image
-{
-    [self.sendController sendMessageWithImageData:image.data completion:^() {}];
-}
-
 @end
 
 @interface ZMAssetMetaDataEncoder (Test)
@@ -777,26 +768,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     return [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
-}
-
-@end
-
-@implementation ConversationInputBarViewController (GiphySearchViewControllerDelegate)
-
-- (void)giphySearchViewController:(GiphySearchViewController *)giphySearchViewController didSelectImageData:(NSData *)imageData searchTerm:(NSString *)searchTerm
-{
-    [self clearInputBar];
-    [self dismissViewControllerAnimated:YES completion:^{
-        NSString *messageText = nil;
-        
-        if ([searchTerm isEqualToString:@""]) {
-            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.random_message", nil), searchTerm];
-        } else {
-            messageText = [NSString stringWithFormat:NSLocalizedString(@"giphy.conversation.message", nil), searchTerm];
-        }
-        
-        [self.sendController sendTextMessage:messageText mentions:@[] withImageData:imageData];
-    }];
 }
 
 @end
