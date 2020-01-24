@@ -19,13 +19,26 @@
 import Foundation
 
 final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, AVSMediaManagerClientObserver {
-    static let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
     static let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
     static let OverscrollRatio: CGFloat = 2.5
 
     static var cachedSize: CGSize = .zero
 
-    var conversation: ZMConversation! ///TODO: didSet
+    var conversation: ZMConversation? {
+        didSet {
+            if conversation != oldValue {
+                typingObserverToken = nil
+                typingObserverToken = conversation?.addTypingObserver(self)
+                
+                updateAppearance()
+                
+                if let conversation = conversation {
+                    setupConversationObserver(conversation: conversation)
+                }
+            }
+        }
+
+    }
     private(set) var itemView: ConversationListItemView!
     weak var delegate: ConversationListCellDelegate?
     
@@ -61,7 +74,7 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
     
     private func setupConversationListCell() {
         separatorLineViewDisabled = true
-        maxVisualDrawerOffset = ConversationListCell.MaxVisualDrawerOffsetRevealDistance
+        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
         overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
         canOpenDrawer = false
         clipsToBounds = true
@@ -171,27 +184,13 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         super.setVisualDrawerOffset(visualDrawerOffset, updateUI: doUpdate)
         
         // After X % of reveal we consider animation should be finished
-        let progress = visualDrawerOffset / ConversationListCell.MaxVisualDrawerOffsetRevealDistance
+        let progress = visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance
         menuDotsView.setProgress(progress, animated: true)
         if progress >= 1 && overscrollStartDate != nil {
             overscrollStartDate = Date()
         }
         
         itemView.visualDrawerOffset = visualDrawerOffset
-    }
-    
-    func setConversation(_ conversation: ZMConversation?) { ///TODO: did set
-        if self.conversation != conversation {
-            typingObserverToken = nil
-            self.conversation = conversation
-            typingObserverToken = self.conversation.addTypingObserver(self)
-            
-            updateAppearance()
-            
-            if let conversation = conversation {
-            setupConversationObserver(conversation: conversation)
-            }
-        }
     }
     
     func updateAppearance() {

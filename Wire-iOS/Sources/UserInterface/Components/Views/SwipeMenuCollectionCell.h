@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
+
 @interface SwipeMenuCollectionCell : UICollectionViewCell
 
 @property (nonatomic, assign) BOOL canOpenDrawer;
