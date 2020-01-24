@@ -197,7 +197,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
             let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
             navigationController.viewControllers = [viewController]
 
-            verify(view: navigationController.view, file: file, line: line)
+            verifyInAllIPhoneSizes(view: navigationController.view, file: file, line: line)
         } else {
             XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }
