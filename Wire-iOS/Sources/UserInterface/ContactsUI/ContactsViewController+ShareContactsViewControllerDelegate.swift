@@ -30,3 +30,19 @@ extension ContactsViewController: ShareContactsViewControllerDelegate {
         delegate?.contactsViewControllerDidNotShareContacts(self)
     }
 }
+
+//MARK: - ShareContacts
+
+extension ContactsViewController {
+    func dismissChildViewController(_ viewController: UIViewController?) {
+        if let view = viewController?.view {
+            UIView.transition(with: view, duration: 0.35, options: .transitionCrossDissolve, animations: {
+                viewController?.view.alpha = 0
+            }) { finished in
+                viewController?.willMove(toParent: nil)
+                viewController?.view.removeFromSuperview()
+                viewController?.removeFromParent()
+            }
+        }
+    }
+}
