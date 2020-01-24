@@ -235,6 +235,10 @@ class LandingViewController: AuthenticationStepViewController {
         return .default
     }
 
+    func configure(with featureProvider: AuthenticationFeatureProvider) {
+        enterpriseLoginButton.isHidden = !featureProvider.allowDirectCompanyLogin
+    }
+    
     private func configureSubviews() {
         if #available(iOS 11, *) {
             additionalSafeAreaInsets.top = -44

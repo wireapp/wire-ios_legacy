@@ -60,7 +60,9 @@ class AuthenticationInterfaceBuilder {
     func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
         switch step {
         case .landingScreen:
-            return LandingViewController()
+            let landingViewController = LandingViewController()
+            landingViewController.configure(with: featureProvider)
+            return landingViewController
 
         case .reauthenticate(let credentials, _, let isSignedOut):
             let viewController: AuthenticationStepController
