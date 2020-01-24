@@ -22,27 +22,36 @@ extension UIAlertController {
     
     /// Creates an `UIAlertController` with a textfield to get a SSO login code from the user.
     /// - parameter prefilledCode: A code which should be used to prefill the textfield of the controller (or `nil`).
+    /// - parameter errorMessage: An (optional) error message to display over the textfield
     /// - parameter validator: A validation closure which will be used to enable / disable the textfield.
     /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled.
     @objc static func companyLogin(
         prefilledCode: String?,
+        errorMessage: String? = nil,
         validator: @escaping (String) -> Bool,
         completion: @escaping (String?) -> Void
         ) -> UIAlertController {
-
+        
         var token: Any?
-
+        
         func complete(_ result: String?) {
             token.apply(NotificationCenter.default.removeObserver)
             completion(result)
         }
         
+        let message = "login.sso.alert.message".localized
+        
         let controller = UIAlertController(
             title: "login.sso.alert.title".localized,
-            message: "login.sso.alert.message".localized,
+            message: "\n\(message)",
             preferredStyle: .alert
         )
-
+        
+        if let errorMessage = errorMessage {
+            let attributedString = NSMutableAttributedString.companyLoginString(withMessage: message, error: errorMessage)
+            controller.setValue(attributedString, forKey: "attributedMessage")
+        }
+        
         let loginAction = UIAlertAction(title: "login.sso.alert.action".localized, style: .default) { [controller] _ in
             complete(controller.textFields?.first?.text)
         }

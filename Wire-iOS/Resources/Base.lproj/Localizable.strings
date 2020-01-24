@@ -1370,10 +1370,10 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Company Log In";
-"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.title" = "Enterprise Log In";
+"login.sso.alert.message" = "Enter your email or SSO access code here.";
 "login.sso.alert.action" = "Log in";
-"login.sso.alert.text_field.placeholder" = "SSO access code";
+"login.sso.alert.text_field.placeholder" = "email or SSO access code";
 
 "login.sso.start_error_title" = "Cannot Start Company Login";
 "login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
@@ -1385,6 +1385,7 @@
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
 "login.sso.error.alert.unknown.message" = "Please try again later.";
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.domain_not_registered.message" = "Sorry, this domain is not registered as enterprise. Enter SSO access code to log in.";
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
