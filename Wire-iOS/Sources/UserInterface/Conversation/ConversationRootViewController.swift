@@ -37,20 +37,15 @@ final class ConversationRootViewController: UIViewController {
     init(conversation: ZMConversation,
          message: ZMConversationMessage?,
          clientViewController: ZClientViewController) {
-        let conversationController: ConversationViewController?
         
-        if let userSession = ZMUserSession.shared() {
-            conversationController = ConversationViewController(session: userSession,
-                                                                    conversation: conversation,
-                                                                    visibleMessage: message as? ZMMessage,
-                                                                    zClientViewController: clientViewController)
+        let conversationController = ConversationViewController(session: ZMUserSession.shared()!,
+                                                                conversation: conversation,
+                                                                visibleMessage: message as? ZMMessage,
+                                                                zClientViewController: clientViewController)
 
 
 
-            conversationViewController = conversationController
-        } else {
-            conversationController = nil
-        }
+        conversationViewController = conversationController
         
         let navbar = UINavigationBar()
         navbar.isTranslucent = false
@@ -66,11 +61,9 @@ final class ConversationRootViewController: UIViewController {
 
         networkStatusViewController.delegate = self
         
-        if let conversationViewController = conversationController {
-            addChild(conversationViewController)
-            contentView.addSubview(conversationViewController.view)
-            conversationViewController.didMove(toParent: self)
-        }
+        addChild(conversationController)
+        contentView.addSubview(conversationController.view)
+        conversationController.didMove(toParent: self)
 
         conversation.refreshDataIfNeeded()
 
