@@ -30,7 +30,7 @@ final class ConversationInputBarSendController: NSObject {
     func sendMessage(withImageData imageData: Data, completion completionHandler: Completion? = nil) {
         feedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueueChanges({
-            self.conversation._append(imageFromData:imageData)
+            self.conversation.append(imageFromData:imageData)
             self.feedbackGenerator.impactOccurred()
         }, completionHandler: {
                 completionHandler?()
@@ -43,7 +43,7 @@ final class ConversationInputBarSendController: NSObject {
                          replyingTo message: ZMConversationMessage?) {
         ZMUserSession.shared()?.enqueueChanges({
             let shouldFetchLinkPreview = !Settings.shared().disableLinkPreviews
-            self.conversation.append(text:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview, nonce: UUID())
+            self.conversation.append(text:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
             self.conversation.draftMessage = nil
         }, completionHandler: {
             Analytics.shared().tagMediaActionCompleted(.text, inConversation: self.conversation)
@@ -52,14 +52,12 @@ final class ConversationInputBarSendController: NSObject {
     }
     
     func sendTextMessage(_ text: String, mentions: [Mention], withImageData data: Data) {
-        weak var textMessage: ZMConversationMessage? = nil
-        
         let shouldFetchLinkPreview = !Settings.shared().disableLinkPreviews
         
         ZMUserSession.shared()?.enqueueChanges({
-            textMessage = self.conversation.append(text: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
+            self.conversation.append(text: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
             
-            self.conversation._append(imageFromData: data)
+            self.conversation.append(imageFromData: data)
             self.conversation.draftMessage = nil
         }, completionHandler: {
             Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
