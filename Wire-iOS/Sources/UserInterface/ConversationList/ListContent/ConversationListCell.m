@@ -32,149 +32,149 @@
 #import "Wire-Swift.h"
 
 
-@interface ConversationListCell () <AVSMediaManagerClientObserver>
-
-@property (nonatomic) ConversationListItemView *itemView;
-
-@property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
-
-@property (nonatomic) id typingObserverToken;
-@end
-
-@interface ConversationListCell (Typing) <ZMTypingChangeObserver>
-@end
+//@interface ConversationListCell () <AVSMediaManagerClientObserver>
+//
+//@property (nonatomic) ConversationListItemView *itemView;
+//
+//@property (nonatomic) NSLayoutConstraint *titleBottomMarginConstraint;
+//
+//@property (nonatomic) id typingObserverToken;
+//@end
+//
+//@interface ConversationListCell (Typing) <ZMTypingChangeObserver>
+//@end
 
 @implementation ConversationListCell
 
-- (void)dealloc
-{
-    [AVSMediaManagerClientChangeNotification removeObserver:self];
-}
+//- (void)dealloc
+//{
+//    [AVSMediaManagerClientChangeNotification removeObserver:self];
+//}
+//
+//- (instancetype)initWithFrame:(CGRect)frame
+//{
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        [self setupConversationListCell];
+//    }
+//    return self;
+//}
+//
+//- (void)setupConversationListCell
+//{
+//    self.separatorLineViewDisabled = YES;
+//    self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
+//    self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
+//    self.canOpenDrawer = NO;
+//    self.clipsToBounds = YES;
+//
+//    self.itemView = [[ConversationListItemView alloc] init];
+//    
+//    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+//                                                                                           action:@selector(onRightAccessorySelected:)];
+//    [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
+//    [self.swipeView addSubview:self.itemView];
+//
+//    self.menuDotsView = [[AnimatedListMenuView alloc] init];
+//    [self.menuView addSubview:self.menuDotsView];
+//    
+//    [self setNeedsUpdateConstraints];
+//     
+//    [AVSMediaManagerClientChangeNotification addObserver:self];
+//}
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setupConversationListCell];
-    }
-    return self;
-}
+//- (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate
+//{
+//    [super setVisualDrawerOffset:visualDrawerOffset updateUI:doUpdate];
+//    
+//    // After X % of reveal we consider animation should be finished
+//    const CGFloat progress = (visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance);
+//    [self.menuDotsView setProgress:progress animated:YES];
+//    if (progress >= 1 && ! self.overscrollStartDate) {
+//        self.overscrollStartDate = [NSDate date];
+//    }
+//    
+//    self.itemView.visualDrawerOffset = visualDrawerOffset;
+//}
+//
+//- (void)setConversation:(ZMConversation *)conversation
+//{
+//    if (_conversation != conversation) {
+//        self.typingObserverToken = nil;
+//        _conversation = conversation;
+//        self.typingObserverToken = [_conversation addTypingObserver:self];
+//        
+//        [self updateAppearance];
+//
+//        [self setupConversationObserverWithConversation: conversation];
+//    }
+//}
+//    
+//- (void)updateAppearance
+//{
+//    [self.itemView updateForConversation:self.conversation];
+//}
+//    
+//- (BOOL)canOpenDrawer
+//{
+//    return YES;
+//}
+//
+//static CGSize cachedSize = {0, 0};
 
-- (void)setupConversationListCell
-{
-    self.separatorLineViewDisabled = YES;
-    self.maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance;
-    self.overscrollFraction = CGFLOAT_MAX; // Never overscroll
-    self.canOpenDrawer = NO;
-    self.clipsToBounds = YES;
+//- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
+//{
+//    if (!CGSizeEqualToSize(cachedSize, CGSizeZero) && cachedSize.width == collectionViewSize.width) {
+//        return cachedSize;
+//    }
+//        
+//    NSString *fullHeightString = @"Ü";
+//    [self.itemView configureWith:[[NSAttributedString alloc] initWithString:fullHeightString]
+//                        subtitle:[[NSAttributedString alloc] initWithString:fullHeightString attributes:[ZMConversation statusRegularStyle]]];
+//    
+//    CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
+//    
+//    self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
+//
+//    CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
+//    cellSize.width = collectionViewSize.width;
+//    cachedSize = cellSize;
+//    return cellSize;
+//}
+//
+//+ (void)invalidateCachedCellSize
+//{
+//    cachedSize = CGSizeZero;
+//}
 
-    self.itemView = [[ConversationListItemView alloc] init];
-    
-    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
-                                                                                           action:@selector(onRightAccessorySelected:)];
-    [self.itemView.rightAccessory addGestureRecognizer:tapGestureRecognizer];
-    [self.swipeView addSubview:self.itemView];
-
-    self.menuDotsView = [[AnimatedListMenuView alloc] init];
-    [self.menuView addSubview:self.menuDotsView];
-    
-    [self setNeedsUpdateConstraints];
-     
-    [AVSMediaManagerClientChangeNotification addObserver:self];
-}
-
-- (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate
-{
-    [super setVisualDrawerOffset:visualDrawerOffset updateUI:doUpdate];
-    
-    // After X % of reveal we consider animation should be finished
-    const CGFloat progress = (visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance);
-    [self.menuDotsView setProgress:progress animated:YES];
-    if (progress >= 1 && ! self.overscrollStartDate) {
-        self.overscrollStartDate = [NSDate date];
-    }
-    
-    self.itemView.visualDrawerOffset = visualDrawerOffset;
-}
-
-- (void)setConversation:(ZMConversation *)conversation
-{
-    if (_conversation != conversation) {
-        self.typingObserverToken = nil;
-        _conversation = conversation;
-        self.typingObserverToken = [_conversation addTypingObserver:self];
-        
-        [self updateAppearance];
-
-        [self setupConversationObserverWithConversation: conversation];
-    }
-}
-    
-- (void)updateAppearance
-{
-    [self.itemView updateForConversation:self.conversation];
-}
-    
-- (BOOL)canOpenDrawer
-{
-    return YES;
-}
-
-static CGSize cachedSize = {0, 0};
-
-- (CGSize)sizeInCollectionViewSize:(CGSize)collectionViewSize
-{
-    if (!CGSizeEqualToSize(cachedSize, CGSizeZero) && cachedSize.width == collectionViewSize.width) {
-        return cachedSize;
-    }
-        
-    NSString *fullHeightString = @"Ü";
-    [self.itemView configureWith:[[NSAttributedString alloc] initWithString:fullHeightString]
-                        subtitle:[[NSAttributedString alloc] initWithString:fullHeightString attributes:[ZMConversation statusRegularStyle]]];
-    
-    CGSize fittingSize = CGSizeMake(collectionViewSize.width, 0);
-    
-    self.itemView.frame = CGRectMake(0, 0, fittingSize.width, 0);
-
-    CGSize cellSize = [self.itemView systemLayoutSizeFittingSize:fittingSize];
-    cellSize.width = collectionViewSize.width;
-    cachedSize = cellSize;
-    return cellSize;
-}
-
-+ (void)invalidateCachedCellSize
-{
-    cachedSize = CGSizeZero;
-}
-
-#pragma mark - AVSMediaManagerClientChangeNotification
-
-- (void)mediaManagerDidChange:(AVSMediaManagerClientChangeNotification *)notification
-{
-    // AUDIO-548 AVMediaManager notifications arrive on a background thread.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (notification.microphoneMuteChanged) {
-            [self updateAppearance];
-        }
-    });
-}
-
-#pragma mark - DrawerOverrides
-
-- (void)drawerScrollingStarts
-{
-    self.overscrollStartDate = nil;
-}
+//#pragma mark - AVSMediaManagerClientChangeNotification
+//
+//- (void)mediaManagerDidChange:(AVSMediaManagerClientChangeNotification *)notification
+//{
+//    // AUDIO-548 AVMediaManager notifications arrive on a background thread.
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if (notification.microphoneMuteChanged) {
+//            [self updateAppearance];
+//        }
+//    });
+//}
+//
+//#pragma mark - DrawerOverrides
+//
+//- (void)drawerScrollingStarts
+//{
+//    self.overscrollStartDate = nil;
+//}
 
 @end
 
 
 @implementation ConversationListCell (Typing)
-
-- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
-{
-    [self updateAppearance];
-}
+//
+//- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
+//{
+//    [self updateAppearance];
+//}
 
 @end
 

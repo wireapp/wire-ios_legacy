@@ -23,7 +23,7 @@
 @class ConversationListItemView;
 @protocol ConversationListCellDelegate;
 @protocol SectionListCellType;
-
+/*
 static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 
 @interface ConversationListCell : SwipeMenuCollectionCell
@@ -45,3 +45,4 @@ static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
 @property (nonatomic, copy, nullable) NSString *sectionName;
 @property (nonatomic, copy, nullable) NSString *cellIdentifier;
 @end
+*/

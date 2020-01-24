@@ -18,13 +18,6 @@
 
 import Foundation
 
-extension ConversationListCell {
-    @objc
-    func setupConversationObserver(conversation: ZMConversation) {
-        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
-    }
-}
-
 extension ConversationListCell: ZMConversationObserver {
     public func conversationDidChange(_ change: ConversationChangeInfo) {
         guard change.conversation == self.conversation,

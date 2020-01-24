@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationListCell {
-    override open func drawerScrollingEnded(withOffset offset: CGFloat) {
+    override func drawerScrollingEnded(withOffset offset: CGFloat) {
         if menuDotsView.progress >= 1 {
             var overscrolled = false
             if offset > frame.width / CGFloat(OverscrollRatio) {

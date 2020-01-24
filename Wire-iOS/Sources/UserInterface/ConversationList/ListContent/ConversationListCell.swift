@@ -18,9 +18,68 @@
 
 import Foundation
 
-extension ConversationListCell {
+///TODO: mv to constant
+private let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
 
-    override open var accessibilityValue: String? {
+private let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
+private let OverscrollRatio: TimeInterval = 2.5
+
+final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, AVSMediaManagerClientObserver {
+    var conversation: ZMConversation! ///TODO: didSet
+    private(set) var itemView: ConversationListItemView!
+    weak var delegate: ConversationListCellDelegate?
+    
+    private var titleBottomMarginConstraint: NSLayoutConstraint?
+    private var typingObserverToken: Any?
+
+    //MARK: - SectionListCellType
+    var sectionName: String?
+    var cellIdentifier: String?
+
+    private var hasCreatedInitialConstraints = false
+    let menuDotsView: AnimatedListMenuView = AnimatedListMenuView()
+    private var overscrollStartDate: Date?
+    private var conversationObserverToken: Any?
+
+    deinit {
+        AVSMediaManagerClientChangeNotification.remove(self)
+    }
+    
+    init() {
+        super.init(frame: .zero)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupConversationListCell()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupConversationListCell() {
+        separatorLineViewDisabled = true
+        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
+        overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
+        canOpenDrawer = false
+        clipsToBounds = true
+        
+        itemView = ConversationListItemView()
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onRightAccessorySelected(_:)))
+        itemView.rightAccessory.addGestureRecognizer(tapGestureRecognizer)
+        swipeView.addSubview(itemView)
+        
+        menuView.addSubview(menuDotsView)
+        
+        setNeedsUpdateConstraints()
+        
+        AVSMediaManagerClientChangeNotification.add(self)
+    }
+    
+    override var accessibilityValue: String? {
         get {
             return delegate?.indexPath(for: self)?.description
         }
@@ -30,7 +89,7 @@ extension ConversationListCell {
         }
     }
 
-    override open var accessibilityIdentifier: String? {
+    override var accessibilityIdentifier: String? {
         get {
             return identifier
         }
@@ -40,7 +99,7 @@ extension ConversationListCell {
         }
     }
 
-    override open var isSelected: Bool {
+    override var isSelected: Bool {
         didSet {
             if isIPadRegular() {
                 itemView.selected  = isSelected || isHighlighted
@@ -48,7 +107,7 @@ extension ConversationListCell {
         }
     }
 
-    override open var isHighlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
             if isIPadRegular() {
                 itemView.selected  = isSelected || isHighlighted
@@ -58,7 +117,7 @@ extension ConversationListCell {
         }
     }
     
-    override open func updateConstraints() {
+    override func updateConstraints() {
         super.updateConstraints()
 
         if hasCreatedInitialConstraints {
@@ -85,7 +144,73 @@ extension ConversationListCell {
         }
     }
     
-    func onRightAccessorySelected(_ sender: UIButton?) {
+    // MARK: - DrawerOverrides
+    override func drawerScrollingStarts() {
+        overscrollStartDate = nil
+    }
+    
+    
+    override func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, updateUI doUpdate: Bool) {
+        super.setVisualDrawerOffset(visualDrawerOffset, updateUI: doUpdate)
+        
+        // After X % of reveal we consider animation should be finished
+        let progress = visualDrawerOffset / CGFloat(MaxVisualDrawerOffsetRevealDistance)
+        menuDotsView.setProgress(progress, animated: true)
+        if progress >= 1 && overscrollStartDate != nil {
+            overscrollStartDate = Date()
+        }
+        
+        itemView.visualDrawerOffset = visualDrawerOffset
+    }
+    
+    func setConversation(_ conversation: ZMConversation?) { ///TODO: did set
+        if self.conversation != conversation {
+            typingObserverToken = nil
+            self.conversation = conversation
+            typingObserverToken = self.conversation.addTypingObserver(self)
+            
+            updateAppearance()
+            
+            setupConversationObserver(with: conversation)
+        }
+    }
+    
+    func updateAppearance() {
+        itemView.update(forConversation: conversation)
+    }
+    
+    func canOpenDrawer() -> Bool {
+        return true
+    }
+    
+    private let cachedSize: CGSize = [0, 0]
+
+
+    func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
+        if !cachedSize.equalTo(CGSize.zero) && cachedSize.width == collectionViewSize.width {
+            return cachedSize
+        }
+        
+        let fullHeightString = "Ü"
+        itemView.configure(with: NSAttributedString(string: fullHeightString), subtitle: NSAttributedString(string: fullHeightString, attributes: ZMConversation.statusRegularStyle()))
+        
+        let fittingSize = CGSize(width: collectionViewSize.width, height: 0)
+        
+        itemView.frame = CGRect(x: 0, y: 0, width: fittingSize.width, height: 0)
+        
+        var cellSize = itemView.systemLayoutSizeFitting(fittingSize)
+        cellSize.width = collectionViewSize.width
+        cachedSize = cellSize
+        return cellSize
+    }
+    
+    class func invalidateCachedCellSize() {
+        cachedSize = CGSize.zero
+    }
+
+
+    @objc
+    private func onRightAccessorySelected(_ sender: UIButton?) {
         let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
         
         if mediaPlaybackManager?.activeMediaPlayer != nil &&
@@ -105,6 +230,30 @@ extension ConversationListCell {
             mediaPlaybackManager?.play()
         }
         
+        updateAppearance()
+    }
+    
+    // MARK: - AVSMediaManagerClientChangeNotification
+    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification?) {
+        // AUDIO-548 AVMediaManager notifications arrive on a background thread.
+        DispatchQueue.main.async(execute: {
+            if notification?.microphoneMuteChanged != nil {
+                self.updateAppearance()
+            }
+        })
+    }
+    
+
+    // MARK: - ConversationChangeInfo
+    func setupConversationObserver(conversation: ZMConversation) {
+        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+    }
+}
+
+// MARK: - Typing
+
+extension ConversationListCell: ZMTypingChangeObserver {
+    func typingDidChange(conversation: ZMConversation, typingUsers: Set<ZMUser>) {
         updateAppearance()
     }
 }

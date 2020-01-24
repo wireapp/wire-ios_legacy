@@ -16,17 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class AnimatedListMenuView;
-
-static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
-static const NSTimeInterval OverscrollRatio = 2.5;
-
-@interface ConversationListCell ()
-
-@property (nonatomic) BOOL hasCreatedInitialConstraints;
-@property (nonatomic) AnimatedListMenuView *menuDotsView;
-@property (nonatomic) NSDate *overscrollStartDate;
-
-@property (nonatomic) id conversationObserverToken;
-
-@end
+//@class AnimatedListMenuView;
+//
+//static const NSTimeInterval IgnoreOverscrollTimeInterval = 0.005;
+//static const NSTimeInterval OverscrollRatio = 2.5;
+//
+//@interface ConversationListCell ()
+//
+//@property (nonatomic) BOOL hasCreatedInitialConstraints;
+//@property (nonatomic) AnimatedListMenuView *menuDotsView;
+//@property (nonatomic) NSDate *overscrollStartDate;
+//
+//@property (nonatomic) id conversationObserverToken;
+//
+//@end
