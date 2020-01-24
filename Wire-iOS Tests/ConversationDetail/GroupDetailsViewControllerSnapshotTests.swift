@@ -126,6 +126,7 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         }
     }
 
+    ///TODO: tint color?
     func verifyConversationActionController() {
         sut = GroupDetailsViewController(conversation: groupConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
