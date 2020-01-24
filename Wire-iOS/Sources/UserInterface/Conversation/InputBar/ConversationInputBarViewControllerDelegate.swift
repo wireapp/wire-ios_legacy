@@ -18,9 +18,9 @@
 
 import Foundation
 
-@objc protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {
-    func inputBar(didComposeText text: String?, mentions: [Mention]?, replyingTo message: ZMConversationMessage?)
-    
+@objc
+protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {
+    func conversationInputBarViewControllerDidComposeText(text: String, mentions: [Mention], replyingTo message: ZMConversationMessage?)    
     func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool
     func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool
     func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention])
