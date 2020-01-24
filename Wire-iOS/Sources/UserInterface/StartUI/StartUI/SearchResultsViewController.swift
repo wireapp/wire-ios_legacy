@@ -261,7 +261,8 @@ extension UIViewController {
 
     @objc
     public func searchForUsers(withQuery query: String) {
-        self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
+        let trimmedQuery = query.trimmingCharacters(in: .whitespaces)
+        self.performSearch(query: trimmedQuery, options: [.conversations, .contacts, .teamMembers, .directory])
     }
 
     @objc
