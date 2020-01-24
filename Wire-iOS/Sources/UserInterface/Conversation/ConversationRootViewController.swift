@@ -37,8 +37,10 @@ final class ConversationRootViewController: UIViewController {
     init(conversation: ZMConversation,
          message: ZMConversationMessage?,
          clientViewController: ZClientViewController) {
+        let conversationController: ConversationViewController?
+        
         if let userSession = ZMUserSession.shared() {
-            let conversationController = ConversationViewController(session: userSession,
+            conversationController = ConversationViewController(session: userSession,
                                                                     conversation: conversation,
                                                                     visibleMessage: message as? ZMMessage,
                                                                     zClientViewController: clientViewController)
@@ -46,6 +48,8 @@ final class ConversationRootViewController: UIViewController {
 
 
             conversationViewController = conversationController
+        } else {
+            conversationController = nil
         }
         
         let navbar = UINavigationBar()
@@ -62,7 +66,7 @@ final class ConversationRootViewController: UIViewController {
 
         networkStatusViewController.delegate = self
         
-        if let conversationViewController = conversationViewController {
+        if let conversationViewController = conversationController {
             addChild(conversationViewController)
             contentView.addSubview(conversationViewController.view)
             conversationViewController.didMove(toParent: self)

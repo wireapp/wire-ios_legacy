@@ -30,12 +30,7 @@ final class ConversationViewController: UIViewController {
                 return
             }
 
-            setupNavigatiomItem()
-            updateOutgoingConnectionVisibility()
-            
-            voiceChannelStateObserverToken = addCallStateObserver()
-            conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
-            startCallController = ConversationCallController(conversation: conversation, target: self)
+            update(conversation: conversation)
         }
     }
     
@@ -109,6 +104,8 @@ final class ConversationViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         definesPresentationContext = true
+        
+        update(conversation: conversation)
     }
     
     @available(*, unavailable)
@@ -121,6 +118,15 @@ final class ConversationViewController: UIViewController {
         
         hideAndDestroyParticipantsPopover()
         contentViewController.delegate = nil
+    }
+    
+    private func update(conversation: ZMConversation) {
+        setupNavigatiomItem()
+        updateOutgoingConnectionVisibility()
+        
+        voiceChannelStateObserverToken = addCallStateObserver()
+        conversationObserverToken = ConversationChangeInfo.add(observer: self, for: conversation)
+        startCallController = ConversationCallController(conversation: conversation, target: self)
     }
     
     override func viewDidLoad() {
@@ -136,12 +142,12 @@ final class ConversationViewController: UIViewController {
             self.view.backgroundColor = UIColor.from(scheme: .textBackground)
         })
         
-        createInputBarController()
-        createContentViewController()
+        setupInputBarController()
+        setupContentViewController()
         
         contentViewController.tableView.pannableView = inputBarController.view
         
-        createMediaBarViewController()
+        setupMediaBarViewController()
         
         addToSelf(contentViewController)
         addToSelf(inputBarController)
@@ -273,7 +279,7 @@ final class ConversationViewController: UIViewController {
         })
     }
     
-    private func createContentViewController() {
+    private func setupContentViewController() {
         contentViewController.delegate = self
         contentViewController.view.translatesAutoresizingMaskIntoConstraints = false
         contentViewController.bottomMargin = 16
@@ -281,7 +287,7 @@ final class ConversationViewController: UIViewController {
         contentViewController.mentionsSearchResultsViewController.delegate = inputBarController
     }
     
-    private func createMediaBarViewController() {
+    private func setupMediaBarViewController() {
         mediaBarViewController.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapMediaBar(_:))))
     }
     
@@ -293,7 +299,7 @@ final class ConversationViewController: UIViewController {
         }
     }
     
-    private func createInputBarController() {
+    private func setupInputBarController() {
         inputBarController.delegate = self
         inputBarController.view.translatesAutoresizingMaskIntoConstraints = false
         
