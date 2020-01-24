@@ -139,17 +139,6 @@ class LandingViewController: AuthenticationStepViewController {
         return button
     }()
 
-    let createTeamButton: LandingButton = {
-        let button = LandingButton(title: createTeamButtonTitle, icon: .team, iconBackgroundColor: UIColor.Team.createAccountBlue)
-        button.accessibilityIdentifier = "CreateTeamButton"
-        button.addTapTarget(self, action: #selector(LandingViewController.createTeamButtonTapped(_:)))
-        button.setContentCompressionResistancePriority(.required, for: .vertical)
-        button.setContentCompressionResistancePriority(.required, for: .horizontal)
-        button.setContentHuggingPriority(.required, for: .vertical)
-
-        return button
-    }()
-
     let loginButtonsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .fill
@@ -263,12 +252,8 @@ class LandingViewController: AuthenticationStepViewController {
         contentView.addSubview(messageLabel)
         buttonStackView.addArrangedSubview(createAccountButton)
         buttonStackView.addArrangedSubview(personalLoginButton)
-        buttonStackView.addArrangedSubview(createTeamButton)
         contentView.addSubview(buttonStackView)
         contentView.addSubview(enterpriseLoginButton)
-        
-        // Hide team creation for now
-        createTeamButton.isHidden = true
 
         view.addSubview(contentView)
     }
@@ -308,7 +293,6 @@ class LandingViewController: AuthenticationStepViewController {
             buttonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             createAccountButton.heightAnchor.constraint(equalToConstant: 48),
             personalLoginButton.heightAnchor.constraint(equalToConstant: 48),
-            createTeamButton.widthAnchor.constraint(lessThanOrEqualToConstant: 256),
             
             // enterprise login stack view
             enterpriseLoginButton.heightAnchor.constraint(equalToConstant: 48),
@@ -377,7 +361,6 @@ class LandingViewController: AuthenticationStepViewController {
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
             buttonStackView.alpha = 0
-            createTeamButton.isHidden = false
         }
         updateLogoView()
     }
