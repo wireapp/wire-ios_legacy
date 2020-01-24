@@ -21,7 +21,6 @@
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
-#import "ContactsViewController+ShareContacts.h"
 #import "UIView+Zeta.h"
 
 #import "UITableView+RowCount.h"

@@ -54,7 +54,7 @@ final class CallController: NSObject {
 
 extension CallController: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateState()
     }
     
