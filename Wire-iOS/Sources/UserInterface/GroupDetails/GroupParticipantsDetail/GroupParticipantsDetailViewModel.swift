@@ -80,7 +80,7 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {
-        let trimmedQuery = query.trimmingCharacters(in: .whitespaces)
+        let trimmedQuery = query.trim()
         var predicates = [
             NSPredicate(format: "name contains[cd] %@", trimmedQuery),
             NSPredicate(format: "handle contains[cd] %@", trimmedQuery)

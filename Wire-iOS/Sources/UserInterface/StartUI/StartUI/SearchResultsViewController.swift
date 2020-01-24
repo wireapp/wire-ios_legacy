@@ -250,7 +250,7 @@ extension UIViewController {
         var options = options
         options.updateForSelfUserTeamRole(selfUser: ZMUser.selfUser())
 
-        let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
+        let request = SearchRequest(query: query.trim(), searchOptions: options, team: ZMUser.selfUser().team)
         if let task = searchDirectory?.perform(request) {
             task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
             task.start()
@@ -261,8 +261,7 @@ extension UIViewController {
 
     @objc
     public func searchForUsers(withQuery query: String) {
-        let trimmedQuery = query.trimmingCharacters(in: .whitespaces)
-        self.performSearch(query: trimmedQuery, options: [.conversations, .contacts, .teamMembers, .directory])
+        self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
     }
 
     @objc
