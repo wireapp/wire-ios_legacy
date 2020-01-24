@@ -432,7 +432,6 @@ class LandingViewController: AuthenticationStepViewController {
     }
     
     @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
-        // Do we need to log this into Analytics ??
         delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
     
