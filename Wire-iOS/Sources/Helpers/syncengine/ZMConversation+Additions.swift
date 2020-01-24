@@ -29,7 +29,7 @@ extension ZMConversation {
 
         switch conversationType {
         case .group:
-            addOrShowError(participants: participants)
+            addOrShowError(participants: Array(participants))
             return self
         case .oneOnOne where participants.count > 1 || (participants.count == 1 && !(connectedUser == participants.first)):
             
