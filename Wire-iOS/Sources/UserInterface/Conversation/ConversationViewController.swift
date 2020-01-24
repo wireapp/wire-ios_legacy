@@ -194,9 +194,9 @@ extension ConversationViewController: ZMConversationListObserver {
 //MARK: - InputBar
 
 extension ConversationViewController: ConversationInputBarViewControllerDelegate {
-    func inputBar(didComposeText text: String,
-                  mentions: [Mention],
-                  replyingTo message: ZMConversationMessage?) {
+    func conversationInputBarViewControllerDidComposeText(text: String,
+                                                          mentions: [Mention],
+                                                          replyingTo message: ZMConversationMessage?) {
         contentViewController.scrollToBottom()
         inputBarController.sendController.sendTextMessage(text, mentions: mentions, replyingTo: message)
     }
@@ -218,7 +218,9 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         return true
     }
     
-    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage, withText newText: String?, mentions: [Mention]) {
+    func conversationInputBarViewControllerDidFinishEditing(_ message: ZMConversationMessage,
+                                                            withText newText: String?,
+                                                            mentions: [Mention]) {
         contentViewController.didFinishEditing(message)
         ZMUserSession.shared()?.enqueueChanges({
             if let newText = newText,

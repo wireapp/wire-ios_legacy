@@ -100,8 +100,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
-        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:))) == true else { return true }
-
         triggerMentionsIfNeeded(from: textView)
         return delegate?.conversationInputBarViewControllerShouldBeginEditing(self) ?? true
     }
@@ -113,8 +111,6 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard delegate?.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) == true else { return true }
-
         return delegate?.conversationInputBarViewControllerShouldEndEditing(self) ?? true
     }
 
