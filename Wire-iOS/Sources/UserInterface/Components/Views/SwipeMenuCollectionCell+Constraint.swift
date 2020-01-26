@@ -20,9 +20,6 @@ import Foundation
 
 private let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
 
-extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
-}
-
 final class SwipeMenuCollectionCell: UICollectionViewCell {
     var canOpenDrawer = false
     var overscrollFraction: CGFloat = 0.0
@@ -34,10 +31,12 @@ final class SwipeMenuCollectionCell: UICollectionViewCell {
     // If this is set to some value, all cells with the same value will close when another one
     // with the same value opens
     var mutuallyExclusiveSwipeIdentifier: String?
+    
     /// Main view to add subviews to
-    private(set) var swipeView: UIView?
+    let swipeView: UIView = UIView()
+    
     /// View to add menu items to
-    private(set) var menuView: UIView?
+    let menuView: UIView = UIView()
     // @m called when cell's content is overscrolled by user to the side. General use case for dismissing the cell off the screen.
     var overscrollAction: ((_ cell: SwipeMenuCollectionCell?) -> Void)?
     
@@ -76,11 +75,9 @@ final class SwipeMenuCollectionCell: UICollectionViewCell {
         /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
         maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
         
-        swipeView = UIView()
-        swipeView.backgroundColor = UIColor.clear
+        swipeView.backgroundColor = .clear
         contentView.addSubview(swipeView)
         
-        menuView = UIView()
         menuView.backgroundColor = UIColor.clear
         contentView.addSubview(menuView)
         
@@ -286,61 +283,16 @@ final class SwipeMenuCollectionCell: UICollectionViewCell {
         }
     }
     
-    // MARK: - UIGestureRecognizerDelegate
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        var result = true
-        
-        if gestureRecognizer == revealDrawerGestureRecognizer {
-            
-            let offset = revealDrawerGestureRecognizer.translation(in: self)
-            if swipeViewHorizontalConstraint.constant == 0 && offset.x < 0 {
-                result = false
-            } else {
-                result = fabs(Float(offset.x)) > fabs(Float(offset.y))
-            }
-        }
-        return result
-    }
+    //MARK: - DrawerOverrides
 
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // all other recognizers require this pan recognizer to fail
-        return gestureRecognizer == revealDrawerGestureRecognizer
-    }
-    
-    // NOTE:
-    // In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
-    // the pan gesture recognizer used for the swipeable cell. The fix to this problem
-    // however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
-    // was now blocking the force touch recognizer). Although Apple documentation suggests
-    // getting the reference to the force recognizer and using delegate methods to create
-    // failure requirements, setting the delegate raised an exception (???). Here we
-    // simply apply the fix for iOS 11 and above.
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // for iOS version >= 11
-        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
-            // pan recognizer should not require failure of any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
-        } else {
-            return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
-        }
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        // iOS version >= 11
-        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
-            // pan recognizer should not recognize simultaneously with any other recognizer
-            return !(gestureRecognizer is UIPanGestureRecognizer)
-        } else {
-            return true
-        }
+    /// No need to call super, void implementation
+    override func drawerScrollingStarts() {
+        // Intentionally left empty. No need to call super on it
     }
     
     /// No need to call super, void implementation
-    func drawerScrollingStarts() {
-    }
-    
-    /// No need to call super, void implementation
-    func drawerScrollingEnded(withOffset offset: CGFloat) {
+    override func drawerScrollingEnded(withOffset offset: CGFloat) {
+        // Intentionally left empty. No need to call super on it
     }
 
     override func updateConstraints() {
@@ -404,13 +356,58 @@ final class SwipeMenuCollectionCell: UICollectionViewCell {
         menuViewToSwipeViewLeftConstraint?.isActive = true
     }
     
-    //MARK: - DrawerOverrides
+}
 
-    override func drawerScrollingEnded(withOffset offset: CGFloat) {
-        // Intentionally left empty. No need to call super on it
+// MARK: - UIGestureRecognizerDelegate
+
+extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        var result = true
+        
+        if gestureRecognizer == revealDrawerGestureRecognizer {
+            
+            let offset = revealDrawerGestureRecognizer.translation(in: self)
+            if swipeViewHorizontalConstraint.constant == 0 && offset.x < 0 {
+                result = false
+            } else {
+                result = fabs(Float(offset.x)) > fabs(Float(offset.y))
+            }
+        }
+        return result
     }
     
-    override func drawerScrollingStarts() {
-        // Intentionally left empty. No need to call super on it
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // all other recognizers require this pan recognizer to fail
+        return gestureRecognizer == revealDrawerGestureRecognizer
     }
+    
+    // NOTE:
+    // In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
+    // the pan gesture recognizer used for the swipeable cell. The fix to this problem
+    // however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
+    // was now blocking the force touch recognizer). Although Apple documentation suggests
+    // getting the reference to the force recognizer and using delegate methods to create
+    // failure requirements, setting the delegate raised an exception (???). Here we
+    // simply apply the fix for iOS 11 and above.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // for iOS version >= 11
+        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+            // pan recognizer should not require failure of any other recognizer
+            return !(gestureRecognizer is UIPanGestureRecognizer)
+        } else {
+            return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
+        }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // iOS version >= 11
+        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+            // pan recognizer should not recognize simultaneously with any other recognizer
+            return !(gestureRecognizer is UIPanGestureRecognizer)
+        } else {
+            return true
+        }
+    }
+    
 }
+
