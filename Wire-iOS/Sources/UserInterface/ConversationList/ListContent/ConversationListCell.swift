@@ -268,7 +268,7 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
 // MARK: - Typing
 
 extension ConversationListCell: ZMTypingChangeObserver {
-    func typingDidChange(conversation: ZMConversation, typingUsers: Set<ZMUser>) {
+    func typingDidChange(conversation: ZMConversation, typingUsers: [UserType]) {
         updateAppearance()
     }
 }
