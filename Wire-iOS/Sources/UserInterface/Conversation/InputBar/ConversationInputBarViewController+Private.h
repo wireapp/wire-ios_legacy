@@ -76,8 +76,6 @@
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
 
-@property (nonatomic, nullable) NSSet<ZMUser *> *typingUsers;
-
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
 - (void)updateAccessoryViews;

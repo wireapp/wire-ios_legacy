@@ -349,8 +349,9 @@ final class TypingMatcher: ConversationStatusMatcher {
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         let statusString: NSAttributedString
-        if status.isGroup, let typingUsers = conversation.typingUsers() {
-            let typingUsersString = typingUsers.compactMap { $0 as? ZMUser }.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+        if status.isGroup {
+            let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
+            let typingUsersString = typingUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
@@ -787,7 +788,7 @@ extension ZMConversation {
             hasUnsentMessages: hasUnreadUnsentMessage,
             messagesRequiringAttention: messagesRequiringAttention,
             messagesRequiringAttentionByType: messagesRequiringAttentionByType,
-            isTyping: typingUsers().count > 0,
+            isTyping: typingUsers.count > 0,
             mutedMessageTypes: mutedMessageTypes,
             isOngoingCall: isOngoingCall,
             isBlocked: connectedUser?.isBlocked ?? false,

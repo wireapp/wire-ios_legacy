@@ -200,8 +200,8 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
-        otherUserConversation.managedObjectContext?.typingUsers.update([otherUser], in: otherUserConversation)
-        
+        otherUserConversation.setTypingUsers([otherUser])
+
         // then
         verify(otherUserConversation)
     }

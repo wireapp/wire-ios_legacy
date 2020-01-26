@@ -368,7 +368,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // GIVEN
         let sut = self.createGroupConversation()
         sut.managedObjectContext?.saveOrRollback()
-        sut.managedObjectContext?.typingUsers.update([otherUser], in: sut)
+        sut.setTypingUsers([otherUser])
         
         let selfMention = Mention(range: NSRange(location: 0, length: 5), user: self.selfUser)
         (sut.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser

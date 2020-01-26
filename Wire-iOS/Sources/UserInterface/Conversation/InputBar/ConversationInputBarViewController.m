@@ -120,7 +120,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             self.sendController = [[ConversationInputBarSendController alloc] initWithConversation:self.conversation];
             self.conversationObserverToken = [ConversationChangeInfo addObserver:self forConversation:self.conversation];
             self.typingObserverToken = [conversation addTypingObserver:self];
-            self.typingUsers = conversation.typingUsers;
         }
 
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
@@ -192,7 +191,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     [self updateAccessoryViews];
     [self updateInputBarVisibility];
-    [self updateTypingIndicatorVisibilityWithAnimated:false];
+    [self updateTypingIndicator];
     [self updateWritingStateAnimated:NO];
     [self updateButtonIcons];
     [self updateAvailabilityPlaceholder];
@@ -346,13 +345,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.replyComposingView removeFromSuperview];
     self.replyComposingView = nil;
     self.quotedMessage = nil;
-}
-
-- (void)setTypingUsers:(NSSet *)typingUsers
-{
-    _typingUsers = typingUsers;
-    
-    [self updateTypingIndicatorVisibilityWithAnimated:true];
 }
 
 - (void)updateInputBarVisibility
@@ -729,12 +721,9 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @implementation ConversationInputBarViewController (ZMTypingChangeObserver)
 
-- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSSet<ZMUser *> *)typingUsers
+- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSArray<id<UserType>> *)typingUsers
 {
-    NSPredicate *filterSelfUserPredicate = [NSPredicate predicateWithFormat:@"SELF != %@", [ZMUser selfUser]];
-    NSSet *filteredSet = [typingUsers filteredSetUsingPredicate:filterSelfUserPredicate];
-    
-    self.typingUsers = filteredSet;
+    [self updateTypingIndicator];
 }
 
 @end
