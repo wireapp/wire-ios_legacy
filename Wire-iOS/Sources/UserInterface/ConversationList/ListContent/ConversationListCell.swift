@@ -18,7 +18,8 @@
 
 import Foundation
 
-final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, AVSMediaManagerClientObserver {
+final class ConversationListCell: SwipeMenuCollectionCell,
+                                  SectionListCellType {
     static let IgnoreOverscrollTimeInterval: TimeInterval = 0.005
     static let OverscrollRatio: CGFloat = 2.5
 
@@ -242,17 +243,6 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         
         updateAppearance()
     }
-    
-    // MARK: - AVSMediaManagerClientChangeNotification
-    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification?) {
-        // AUDIO-548 AVMediaManager notifications arrive on a background thread.
-        DispatchQueue.main.async(execute: {
-            if notification?.microphoneMuteChanged != nil {
-                self.updateAppearance()
-            }
-        })
-    }
-    
 
     // MARK: - ConversationChangeInfo
     func setupConversationObserver(conversation: ZMConversation) {
@@ -267,3 +257,17 @@ extension ConversationListCell: ZMTypingChangeObserver {
         updateAppearance()
     }
 }
+
+// MARK: - AVSMediaManagerClientChangeNotification
+
+extension ConversationListCell: AVSMediaManagerClientObserver {
+    func mediaManagerDidChange(_ notification: AVSMediaManagerClientChangeNotification?) {
+        // AUDIO-548 AVMediaManager notifications arrive on a background thread.
+        DispatchQueue.main.async(execute: {
+            if notification?.microphoneMuteChanged != nil {
+                self.updateAppearance()
+            }
+        })
+    }
+}
+
