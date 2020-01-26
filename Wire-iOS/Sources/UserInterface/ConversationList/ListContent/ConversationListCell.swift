@@ -27,18 +27,17 @@ final class ConversationListCell: SwipeMenuCollectionCell,
 
     var conversation: ZMConversation? {
         didSet {
-            if conversation != oldValue {
-                typingObserverToken = nil
-                typingObserverToken = conversation?.addTypingObserver(self)
-                
-                updateAppearance()
-                
-                if let conversation = conversation {
-                    setupConversationObserver(conversation: conversation)
-                }
+            guard conversation != oldValue else { return }
+
+            typingObserverToken = nil
+            typingObserverToken = conversation?.addTypingObserver(self)
+            
+            updateAppearance()
+            
+            if let conversation = conversation {
+                setupConversationObserver(conversation: conversation)
             }
         }
-
     }
     
     let itemView: ConversationListItemView = ConversationListItemView()
@@ -57,10 +56,6 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     private var overscrollStartDate: Date?
     private var conversationObserverToken: Any?
 
-    deinit {
-        AVSMediaManagerClientChangeNotification.remove(self)
-    }
-    
     convenience init() {
         self.init(frame: .zero)
     }
@@ -68,6 +63,10 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupConversationListCell()
+    }
+    
+    deinit {
+        AVSMediaManagerClientChangeNotification.remove(self)
     }
     
     @available(*, unavailable)
