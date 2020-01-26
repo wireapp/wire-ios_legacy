@@ -60,8 +60,8 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         AVSMediaManagerClientChangeNotification.remove(self)
     }
     
-    init() {
-        super.init(frame: .zero)
+    convenience init() {
+        self.init(frame: .zero)
     }
     
     override init(frame: CGRect) {
@@ -78,7 +78,6 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         separatorLineViewDisabled = true
         maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
         overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
-        canOpenDrawer = false
         clipsToBounds = true
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onRightAccessorySelected(_:)))
@@ -197,10 +196,6 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         itemView.update(for: conversation)
     }
     
-    func canOpenDrawer() -> Bool {
-        return true
-    }
-
     func size(inCollectionViewSize collectionViewSize: CGSize) -> CGSize {
         if !ConversationListCell.cachedSize.equalTo(CGSize.zero) && ConversationListCell.cachedSize.width == collectionViewSize.width {
             return ConversationListCell.cachedSize
