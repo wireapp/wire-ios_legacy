@@ -17,48 +17,48 @@
 // 
 
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
 
-static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
-
-@interface SwipeMenuCollectionCell : UICollectionViewCell
-
-@property (nonatomic, assign) BOOL canOpenDrawer;
-@property (nonatomic, assign) CGFloat overscrollFraction;
-@property (nonatomic, assign) CGFloat visualDrawerOffset;
-/// Controls how far (distance) the @c menuView is revealed per swipe gesture. Default CGFLOAT_MAX, means all the way
-@property (nonatomic) CGFloat maxVisualDrawerOffset;
-/// Disabled and enables the separator line on the left of the @c menuView
-@property (nonatomic) BOOL separatorLineViewDisabled;
-
-// If this is set to some value, all cells with the same value will close when another one
-// with the same value opens
-@property (nonatomic, copy) NSString *mutuallyExclusiveSwipeIdentifier;
-
-/// Main view to add subviews to
-@property (nonatomic, readonly) UIView *swipeView;
-
-/// View to add menu items to
-@property (nonatomic, readonly) UIView *menuView;
-
-// @m called when cell's content is overscrolled by user to the side. General use case for dismissing the cell off the screen.
-@property (nonatomic, copy) void (^overscrollAction)(SwipeMenuCollectionCell *cell);
-
-
-- (CGFloat)drawerWidth;
-- (void)setDrawerOpen:(BOOL)open animated:(BOOL)animated;
-- (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate;
-
-@end
-
-
-
-@interface SwipeMenuCollectionCell (DrawerOverrides)
-
-/// No need to call super, void implementation
-- (void)drawerScrollingStarts;
-
-/// No need to call super, void implementation
-- (void)drawerScrollingEndedWithOffset:(CGFloat)offset;
-
-@end
+//static const CGFloat MaxVisualDrawerOffsetRevealDistance = 21;
+//
+//@interface SwipeMenuCollectionCell : UICollectionViewCell
+//
+//@property (nonatomic, assign) BOOL canOpenDrawer;
+//@property (nonatomic, assign) CGFloat overscrollFraction;
+//@property (nonatomic, assign) CGFloat visualDrawerOffset;
+///// Controls how far (distance) the @c menuView is revealed per swipe gesture. Default CGFLOAT_MAX, means all the way
+//@property (nonatomic) CGFloat maxVisualDrawerOffset;
+///// Disabled and enables the separator line on the left of the @c menuView
+//@property (nonatomic) BOOL separatorLineViewDisabled;
+//
+//// If this is set to some value, all cells with the same value will close when another one
+//// with the same value opens
+//@property (nonatomic, copy) NSString *mutuallyExclusiveSwipeIdentifier;
+//
+///// Main view to add subviews to
+//@property (nonatomic, readonly) UIView *swipeView;
+//
+///// View to add menu items to
+//@property (nonatomic, readonly) UIView *menuView;
+//
+//// @m called when cell's content is overscrolled by user to the side. General use case for dismissing the cell off the screen.
+//@property (nonatomic, copy) void (^overscrollAction)(SwipeMenuCollectionCell *cell);
+//
+//
+//- (CGFloat)drawerWidth;
+//- (void)setDrawerOpen:(BOOL)open animated:(BOOL)animated;
+//- (void)setVisualDrawerOffset:(CGFloat)visualDrawerOffset updateUI:(BOOL)doUpdate;
+//
+//@end
+//
+//
+//
+//@interface SwipeMenuCollectionCell (DrawerOverrides)
+//
+///// No need to call super, void implementation
+//- (void)drawerScrollingStarts;
+//
+///// No need to call super, void implementation
+//- (void)drawerScrollingEndedWithOffset:(CGFloat)offset;
+//
+//@end

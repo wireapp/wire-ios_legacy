@@ -18,8 +18,332 @@
 
 import Foundation
 
-extension SwipeMenuCollectionCell {
-    open override func updateConstraints() {
+private let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
+
+extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
+}
+
+final class SwipeMenuCollectionCell: UICollectionViewCell {
+    var canOpenDrawer = false
+    var overscrollFraction: CGFloat = 0.0
+    var visualDrawerOffset: CGFloat = 0.0
+    /// Controls how far (distance) the @c menuView is revealed per swipe gesture. Default CGFLOAT_MAX, means all the way
+    var maxVisualDrawerOffset: CGFloat = 0.0
+    /// Disabled and enables the separator line on the left of the @c menuView
+    var separatorLineViewDisabled = false
+    // If this is set to some value, all cells with the same value will close when another one
+    // with the same value opens
+    var mutuallyExclusiveSwipeIdentifier: String?
+    /// Main view to add subviews to
+    private(set) var swipeView: UIView?
+    /// View to add menu items to
+    private(set) var menuView: UIView?
+    // @m called when cell's content is overscrolled by user to the side. General use case for dismissing the cell off the screen.
+    var overscrollAction: ((_ cell: SwipeMenuCollectionCell?) -> Void)?
+    
+    private var hasCreatedSwipeMenuConstraints = false
+    private var swipeViewHorizontalConstraint: NSLayoutConstraint?
+    private var menuViewToSwipeViewLeftConstraint: NSLayoutConstraint?
+    private var maxMenuViewToSwipeViewLeftConstraint: NSLayoutConstraint?
+    private var separatorLine: UIView!
+
+    private var initialDrawerWidth: CGFloat = 0.0
+    private var initialDrawerOffset: CGFloat = 0.0
+    private var initialDragPoint = CGPoint.zero
+    private var revealDrawerOverscrolled = false
+    private var revealAnimationPerforming = false
+    private var scrollingFraction: CGFloat = 0.0
+    private var userInteractionHorizontalOffset: CGFloat = 0.0
+    private var revealDrawerGestureRecognizer: UIPanGestureRecognizer?
+    private var openedFeedbackGenerator: UIImpactFeedbackGenerator?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupSwipeMenuCollectionCell()
+    }
+    
+    convenience init() {
+        self.init(frame: .zero)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupSwipeMenuCollectionCell() {
+        canOpenDrawer = true
+        overscrollFraction = 0.6
+        /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
+        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
+        
+        swipeView = UIView()
+        swipeView.backgroundColor = UIColor.clear
+        contentView.addSubview(swipeView)
+        
+        menuView = UIView()
+        menuView.backgroundColor = UIColor.clear
+        contentView.addSubview(menuView)
+        
+        separatorLine = UIView()
+        separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
+        swipeView.addSubview(separatorLine)
+        separatorLine.hidden = separatorLineViewDisabled
+        
+        revealDrawerGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onDrawerScroll(_:)))
+        revealDrawerGestureRecognizer.delegate = self
+        revealDrawerGestureRecognizer.delaysTouchesEnded = false
+        revealDrawerGestureRecognizer.delaysTouchesBegan = false
+        
+        contentView.addGestureRecognizer(revealDrawerGestureRecognizer)
+        
+        setNeedsUpdateConstraints()
+        
+        if nil != UIImpactFeedbackGenerator.self {
+            openedFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        }
+    }
+
+    func setSeparatorLineViewDisabled(_ separatorLineViewDisabled: Bool) {
+        self.separatorLineViewDisabled = separatorLineViewDisabled
+        separatorLine.hidden = separatorLineViewDisabled
+    }
+    
+    func setMaxVisualDrawerOffset(_ maxVisualDrawerOffset: CGFloat) {
+        self.maxVisualDrawerOffset = maxVisualDrawerOffset
+        maxMenuViewToSwipeViewLeftConstraint.constant = maxVisualDrawerOffset
+    }
+    
+    @objc
+    func onDrawerScroll(_ pan: UIPanGestureRecognizer) {
+        let location = pan?.location(in: self)
+        let offset = CGPoint(x: (location?.x ?? 0.0) - initialDragPoint.x, y: (location?.y ?? 0.0) - initialDragPoint.y)
+        
+        if !canOpenDrawer || revealAnimationPerforming {
+            return
+        }
+        
+        switch pan?.state {
+        case .began:
+            // reset gesture state
+            drawerScrollingStarts()
+            initialDrawerOffset = visualDrawerOffset
+            initialDragPoint = pan?.location(in: self)
+        case .changed:
+            userInteractionHorizontalOffset = offset.x
+            if initialDrawerWidth == 0 {
+                initialDrawerWidth = menuView.bounds.size.width
+            }
+            openedFeedbackGenerator.prepare()
+        case .ended, .failed, .cancelled:
+            drawerScrollingEnded(withOffset: offset.x)
+            
+            if offset.x + initialDrawerOffset > bounds.size.width * overscrollFraction {
+                // overscrolled
+                if overscrollAction != nil {
+                    overscrollAction(self)
+                }
+                
+                separatorLine.alpha = 0.0
+                setVisualDrawerOffset(0, updateUI: false)
+                NotificationCenter.default.removeObserver(self)
+            } else {
+                if visualDrawerOffset > drawerWidth / 2.0 {
+                    openedFeedbackGenerator.impactOccurred()
+                    setDrawerOpen(true, animated: true)
+                } else {
+                    setDrawerOpen(false, animated: true)
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    func drawerWidth() -> CGFloat {
+        return initialDrawerWidth
+    }
+    
+    /**
+     *  Apply the apple-style rubber banding on the offset
+     *
+     *  @param offset    User-interaction offset
+     *  @param viewWidth Total container size
+     *  @param coef      Coefficient (from very hard (<0.1) to very easy (>0.9))
+     *
+     *  @return New offset
+     */
+    class func rubberBandOffset(_ offset: CGFloat, viewWidth: CGFloat, coefficient coef: CGFloat) -> CGFloat {
+        return (1.0 - (1.0 / ((offset * coef / viewWidth) + 1.0))) * viewWidth
+    }
+    
+    class func calculateViewOffset(forUserOffset offsetX: CGFloat, initialOffset initialDrawerOffset: CGFloat, drawerWidth: CGFloat, viewWidth: CGFloat) -> CGFloat {
+        if offsetX + initialDrawerOffset < 0 {
+            return self.rubberBandOffset(offsetX + initialDrawerOffset, viewWidth: viewWidth, coefficient: 0.15)
+        } else {
+            return initialDrawerOffset + offsetX
+        }
+        
+        return offsetX
+    }
+    
+    func setUserInteractionHorizontalOffset(_ userInteractionHorizontalOffset: CGFloat) {
+        self.userInteractionHorizontalOffset = userInteractionHorizontalOffset
+        
+        if bounds.size.width == 0 {
+            return
+        }
+        
+        if revealDrawerOverscrolled {
+            if self.userInteractionHorizontalOffset + initialDrawerOffset < bounds.size.width * overscrollFraction {
+                // overscroll cancelled
+                revealAnimationPerforming = true
+                let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
+                
+                UIView.wr_animate(withEasing: WREasingFunctionEaseOutExpo, duration: 0.35, animations: {
+                    self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
+                    self.layoutIfNeeded()
+                }) { finished in
+                    // reset gesture state
+                    let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
+                    
+                    // we need to adjust the drag point to avoid the jump after the animation was ended
+                    // between the animation's final state and user new finger position
+                    let offsetInteractionBeforeAfterAnimation = animEndInteractionPosition.x - animStartInteractionPosition.x
+                    self.initialDragPoint = CGPoint(x: offsetInteractionBeforeAfterAnimation + self.initialDragPoint.x, y: self.initialDragPoint.y)
+                    self.revealAnimationPerforming = false
+                    
+                    let newOffset = CGPoint(x: animEndInteractionPosition.x - self.initialDragPoint.x, y: animEndInteractionPosition.y - self.initialDragPoint.y)
+                    
+                    self.scrollingFraction = newOffset.x / self.bounds.size.width
+                    self.layoutIfNeeded()
+                }
+                
+                revealDrawerOverscrolled = false
+            }
+        } else {
+            if self.userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
+                // overscrolled
+                
+                UIView.wr_animate(withEasing: WREasingFunctionEaseOutExpo, duration: 0.35, animations: {
+                    self.scrollingFraction = 1.0
+                    self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width
+                    self.layoutIfNeeded()
+                })
+                
+                revealDrawerOverscrolled = true
+            } else {
+                scrollingFraction = self.userInteractionHorizontalOffset / bounds.size.width
+            }
+        }
+    }
+    
+    func setScrollingFraction(_ scrollingFraction: CGFloat) {
+        self.scrollingFraction = scrollingFraction
+        
+        visualDrawerOffset = calculateViewOffset(forUserOffset: self.scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
+    }
+    
+    func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat) {
+        setVisualDrawerOffset(visualDrawerOffset, updateUI: true)
+    }
+    
+    func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, updateUI doUpdate: Bool) {
+        if self.visualDrawerOffset == visualDrawerOffset {
+            if doUpdate {
+                swipeViewHorizontalConstraint.constant = self.visualDrawerOffset
+                checkAndUpdateMaxVisualDrawerOffsetConstraints(visualDrawerOffset)
+            }
+            return
+        }
+        
+        self.visualDrawerOffset = visualDrawerOffset
+        if doUpdate {
+            swipeViewHorizontalConstraint.constant = self.visualDrawerOffset
+            checkAndUpdateMaxVisualDrawerOffsetConstraints(visualDrawerOffset)
+        }
+    }
+
+    func setDrawerOpen(_ `open`: Bool, animated: Bool) {
+        if `open` && visualDrawerOffset == drawerWidth {
+            return
+        }
+        
+        if !`open` && visualDrawerOffset == 0 {
+            return
+        }
+        
+        let action = {
+            self.visualDrawerOffset = 0
+            self.layoutIfNeeded()
+        }
+        
+        if animated {
+            UIView.wr_animate(withEasing: WREasingFunctionEaseOutExpo, duration: 0.35, animations: {
+                action()
+            })
+        } else {
+            action()
+        }
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        var result = true
+        
+        if gestureRecognizer == revealDrawerGestureRecognizer {
+            
+            let offset = revealDrawerGestureRecognizer.translation(in: self)
+            if swipeViewHorizontalConstraint.constant == 0 && offset.x < 0 {
+                result = false
+            } else {
+                result = fabs(Float(offset.x)) > fabs(Float(offset.y))
+            }
+        }
+        return result
+    }
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // all other recognizers require this pan recognizer to fail
+        return gestureRecognizer == revealDrawerGestureRecognizer
+    }
+    
+    // NOTE:
+    // In iOS 11, the force touch gesture recognizer used for peek & pop was blocking
+    // the pan gesture recognizer used for the swipeable cell. The fix to this problem
+    // however broke the correct behaviour for iOS 10 (namely, the pan gesture recognizer
+    // was now blocking the force touch recognizer). Although Apple documentation suggests
+    // getting the reference to the force recognizer and using delegate methods to create
+    // failure requirements, setting the delegate raised an exception (???). Here we
+    // simply apply the fix for iOS 11 and above.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // for iOS version >= 11
+        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+            // pan recognizer should not require failure of any other recognizer
+            return !(gestureRecognizer is UIPanGestureRecognizer)
+        } else {
+            return !(gestureRecognizer is UIPanGestureRecognizer) || !(otherGestureRecognizer is UIPanGestureRecognizer)
+        }
+    }
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        // iOS version >= 11
+        if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
+            // pan recognizer should not recognize simultaneously with any other recognizer
+            return !(gestureRecognizer is UIPanGestureRecognizer)
+        } else {
+            return true
+        }
+    }
+    
+    /// No need to call super, void implementation
+    func drawerScrollingStarts() {
+    }
+    
+    /// No need to call super, void implementation
+    func drawerScrollingEnded(withOffset offset: CGFloat) {
+    }
+
+    override func updateConstraints() {
 
         if hasCreatedSwipeMenuConstraints {
             super.updateConstraints()
@@ -66,7 +390,7 @@ extension SwipeMenuCollectionCell {
     }
 
     /// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
-    @objc func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
+    private func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
         if visualDrawerOffset >= menuView.frame.width + maxVisualDrawerOffset {
             menuViewToSwipeViewLeftConstraint?.isActive = false
             maxMenuViewToSwipeViewLeftConstraint?.isActive = true
@@ -75,8 +399,18 @@ extension SwipeMenuCollectionCell {
         }
     }
 
-    @objc func disableMaxVisualDrawerOffsetConstraints() {
+    private func disableMaxVisualDrawerOffsetConstraints() {
         maxMenuViewToSwipeViewLeftConstraint?.isActive = false
         menuViewToSwipeViewLeftConstraint?.isActive = true
+    }
+    
+    //MARK: - DrawerOverrides
+
+    override func drawerScrollingEnded(withOffset offset: CGFloat) {
+        // Intentionally left empty. No need to call super on it
+    }
+    
+    override func drawerScrollingStarts() {
+        // Intentionally left empty. No need to call super on it
     }
 }

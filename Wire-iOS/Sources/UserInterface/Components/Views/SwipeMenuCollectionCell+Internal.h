@@ -16,14 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface SwipeMenuCollectionCell ()
-
-@property (nonatomic) BOOL hasCreatedSwipeMenuConstraints;
-
-@property (nonatomic, nullable) NSLayoutConstraint *swipeViewHorizontalConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
-@property (nonatomic, nullable) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
-
-@property (nonatomic, nonnull) UIView *separatorLine;
-
-@end
+//@interface SwipeMenuCollectionCell ()
+//
+//@property (nonatomic) BOOL hasCreatedSwipeMenuConstraints;
+//
+//@property (nonatomic, nullable) NSLayoutConstraint *swipeViewHorizontalConstraint;
+//@property (nonatomic, nullable) NSLayoutConstraint *menuViewToSwipeViewLeftConstraint;
+//@property (nonatomic, nullable) NSLayoutConstraint *maxMenuViewToSwipeViewLeftConstraint;
+//
+//@property (nonatomic, nonnull) UIView *separatorLine;
+//
+//@end
