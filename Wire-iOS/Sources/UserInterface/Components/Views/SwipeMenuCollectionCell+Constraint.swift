@@ -24,14 +24,18 @@ let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
 class SwipeMenuCollectionCell: UICollectionViewCell {
     var canOpenDrawer = false
     var overscrollFraction: CGFloat = 0.0
-    var visualDrawerOffset: CGFloat = 0.0
+    var visualDrawerOffset: CGFloat = 0.0 {
+        didSet {
+            setVisualDrawerOffset(visualDrawerOffset, updateUI: true)
+        }
+    }
     /// Controls how far (distance) the @c menuView is revealed per swipe gesture. Default CGFLOAT_MAX, means all the way
     var maxVisualDrawerOffset: CGFloat = 0.0 {
         didSet {
             maxMenuViewToSwipeViewLeftConstraint?.constant = maxVisualDrawerOffset
         }
     }
-
+    
     /// Disabled and enables the separator line on the left of the @c menuView
     var separatorLineViewDisabled = false {
         didSet {
@@ -50,22 +54,80 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     // @m called when cell's content is overscrolled by user to the side. General use case for dismissing the cell off the screen.
     var overscrollAction: ((_ cell: SwipeMenuCollectionCell?) -> Void)?
     
+    
     private var hasCreatedSwipeMenuConstraints = false
     private var swipeViewHorizontalConstraint: NSLayoutConstraint?
     private var menuViewToSwipeViewLeftConstraint: NSLayoutConstraint?
     private var maxMenuViewToSwipeViewLeftConstraint: NSLayoutConstraint?
     private let separatorLine: UIView = UIView()
-
+    
     private var initialDrawerWidth: CGFloat = 0.0
     private var initialDrawerOffset: CGFloat = 0.0
     private var initialDragPoint = CGPoint.zero
     private var revealDrawerOverscrolled = false
     private var revealAnimationPerforming = false
-    private var scrollingFraction: CGFloat = 0.0
-    private var userInteractionHorizontalOffset: CGFloat = 0.0
-    private let revealDrawerGestureRecognizer: UIPanGestureRecognizer
-    private let openedFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    private var scrollingFraction: CGFloat = 0.0 {
+        didSet {
+            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: self.scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
+        }
+    }
 
+    private var userInteractionHorizontalOffset: CGFloat = 0.0 {
+        didSet {
+            
+            if bounds.size.width == 0 {
+                return
+            }
+            
+            if revealDrawerOverscrolled {
+                if self.userInteractionHorizontalOffset + initialDrawerOffset < bounds.size.width * overscrollFraction {
+                    // overscroll cancelled
+                    revealAnimationPerforming = true
+                    let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
+                    
+                    UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                        self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
+                        self.layoutIfNeeded()
+                    }) { finished in
+                        // reset gesture state
+                        let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
+                        
+                        // we need to adjust the drag point to avoid the jump after the animation was ended
+                        // between the animation's final state and user new finger position
+                        let offsetInteractionBeforeAfterAnimation = animEndInteractionPosition.x - animStartInteractionPosition.x
+                        self.initialDragPoint = CGPoint(x: offsetInteractionBeforeAfterAnimation + self.initialDragPoint.x, y: self.initialDragPoint.y)
+                        self.revealAnimationPerforming = false
+                        
+                        let newOffset = CGPoint(x: animEndInteractionPosition.x - self.initialDragPoint.x, y: animEndInteractionPosition.y - self.initialDragPoint.y)
+                        
+                        self.scrollingFraction = newOffset.x / self.bounds.size.width
+                        self.layoutIfNeeded()
+                    }
+                    
+                    revealDrawerOverscrolled = false
+                }
+            } else {
+                if self.userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
+                    // overscrolled
+                    
+                    UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                        self.scrollingFraction = 1.0
+                        self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width
+                        self.layoutIfNeeded()
+                    })
+                    
+                    revealDrawerOverscrolled = true
+                } else {
+                    scrollingFraction = self.userInteractionHorizontalOffset / bounds.size.width
+                }
+            }
+            
+        }
+    }
+    
+    private var revealDrawerGestureRecognizer: UIPanGestureRecognizer!
+    private let openedFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupSwipeMenuCollectionCell()
@@ -81,7 +143,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         self.init(frame: .zero)
     }
     
-//    @available(*, unavailable)
+    //    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -106,7 +168,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         
         setNeedsUpdateConstraints()
     }
-
+    
     @objc
     func onDrawerScroll(_ pan: UIPanGestureRecognizer) {
         let location = pan.location(in: self)
@@ -178,67 +240,6 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         return offsetX
     }
     
-    func setUserInteractionHorizontalOffset(_ userInteractionHorizontalOffset: CGFloat) {
-        self.userInteractionHorizontalOffset = userInteractionHorizontalOffset
-        
-        if bounds.size.width == 0 {
-            return
-        }
-        
-        if revealDrawerOverscrolled {
-            if self.userInteractionHorizontalOffset + initialDrawerOffset < bounds.size.width * overscrollFraction {
-                // overscroll cancelled
-                revealAnimationPerforming = true
-                let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
-                
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
-                    self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
-                    self.layoutIfNeeded()
-                }) { finished in
-                    // reset gesture state
-                    let animEndInteractionPosition = self.revealDrawerGestureRecognizer.location(in: self)
-                    
-                    // we need to adjust the drag point to avoid the jump after the animation was ended
-                    // between the animation's final state and user new finger position
-                    let offsetInteractionBeforeAfterAnimation = animEndInteractionPosition.x - animStartInteractionPosition.x
-                    self.initialDragPoint = CGPoint(x: offsetInteractionBeforeAfterAnimation + self.initialDragPoint.x, y: self.initialDragPoint.y)
-                    self.revealAnimationPerforming = false
-                    
-                    let newOffset = CGPoint(x: animEndInteractionPosition.x - self.initialDragPoint.x, y: animEndInteractionPosition.y - self.initialDragPoint.y)
-                    
-                    self.scrollingFraction = newOffset.x / self.bounds.size.width
-                    self.layoutIfNeeded()
-                }
-                
-                revealDrawerOverscrolled = false
-            }
-        } else {
-            if self.userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
-                // overscrolled
-                
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
-                    self.scrollingFraction = 1.0
-                    self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width
-                    self.layoutIfNeeded()
-                })
-                
-                revealDrawerOverscrolled = true
-            } else {
-                scrollingFraction = self.userInteractionHorizontalOffset / bounds.size.width
-            }
-        }
-    }
-    
-    func setScrollingFraction(_ scrollingFraction: CGFloat) {
-        self.scrollingFraction = scrollingFraction
-        
-        visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: self.scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
-    }
-    
-    func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat) {
-        setVisualDrawerOffset(visualDrawerOffset, updateUI: true)
-    }
-    
     func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, updateUI doUpdate: Bool) {
         if self.visualDrawerOffset == visualDrawerOffset {
             if doUpdate {
@@ -254,7 +255,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
             checkAndUpdateMaxVisualDrawerOffsetConstraints(visualDrawerOffset)
         }
     }
-
+    
     func setDrawerOpen(_ `open`: Bool, animated: Bool) {
         if `open` && visualDrawerOffset == drawerWidth {
             return
@@ -270,7 +271,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         }
         
         if animated {
-            UIView.wr_animate(withEasing: .easeOutExpo, duration: 0.35, animations: {
+            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 action()
             })
         } else {
@@ -279,7 +280,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     }
     
     //MARK: - DrawerOverrides
-
+    
     /// No need to call super, void implementation
     func drawerScrollingStarts() {
         // Intentionally left empty. No need to call super on it
@@ -289,48 +290,48 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     func drawerScrollingEnded(withOffset offset: CGFloat) {
         // Intentionally left empty. No need to call super on it
     }
-
+    
     override func updateConstraints() {
-
+        
         if hasCreatedSwipeMenuConstraints {
             super.updateConstraints()
             return
         }
-
+        
         hasCreatedSwipeMenuConstraints = true
-
+        
         swipeViewHorizontalConstraint = swipeView.leftAnchor.constraint(equalTo: contentView.leftAnchor)
-
+        
         /// menu view attachs to swipeView before reaching max offset
         menuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: swipeView.leftAnchor)
-
+        
         /// menu view attachs to content view after reaching max offset
         maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: maxVisualDrawerOffset)
-
+        
         [swipeView, separatorLine, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
-
+        
         let constraints : [NSLayoutConstraint] = [
             swipeViewHorizontalConstraint!,
             swipeView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             swipeView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-
+            
             swipeView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-
+            
             separatorLine.widthAnchor.constraint(equalToConstant: UIScreen.hairline),
             separatorLine.heightAnchor.constraint(equalToConstant: 25),
             separatorLine.centerYAnchor.constraint(equalTo: swipeView.centerYAnchor),
             separatorLine.rightAnchor.constraint(equalTo: menuView.rightAnchor),
-
+            
             menuView.topAnchor.constraint(equalTo: swipeView.topAnchor),
             menuView.bottomAnchor.constraint(equalTo: swipeView.bottomAnchor),
             menuViewToSwipeViewLeftConstraint!,
         ]
-
+        
         NSLayoutConstraint.activate(constraints)
-
+        
         super.updateConstraints()
     }
-
+    
     /// Checks on the @c maxVisualDrawerOffset and switches the prio's of the constraint
     private func checkAndUpdateMaxVisualDrawerOffsetConstraints(_ visualDrawerOffset: CGFloat) {
         if visualDrawerOffset >= menuView.frame.width + maxVisualDrawerOffset {
@@ -340,7 +341,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
             disableMaxVisualDrawerOffsetConstraints()
         }
     }
-
+    
     private func disableMaxVisualDrawerOffsetConstraints() {
         maxMenuViewToSwipeViewLeftConstraint?.isActive = false
         menuViewToSwipeViewLeftConstraint?.isActive = true
