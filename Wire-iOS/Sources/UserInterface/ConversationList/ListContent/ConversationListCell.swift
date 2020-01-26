@@ -39,7 +39,9 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         }
 
     }
-    private(set) var itemView: ConversationListItemView!
+    
+    let itemView: ConversationListItemView = ConversationListItemView()
+    
     weak var delegate: ConversationListCellDelegate?
     
     private var titleBottomMarginConstraint: NSLayoutConstraint?
@@ -78,8 +80,6 @@ final class ConversationListCell: SwipeMenuCollectionCell, SectionListCellType, 
         overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
         canOpenDrawer = false
         clipsToBounds = true
-        
-        itemView = ConversationListItemView()
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onRightAccessorySelected(_:)))
         itemView.rightAccessory.addGestureRecognizer(tapGestureRecognizer)
