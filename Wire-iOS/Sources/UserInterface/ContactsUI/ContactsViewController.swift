@@ -26,11 +26,13 @@ extension ContactsViewController {
     
     @objc
     func keyboardFrameDidChange(_ notification: Notification) {
-        UIView.animate(withKeyboardNotification: notification, in: view, animations: { keyboardFrameInView in
-            let offset = self.wr_isInsidePopoverPresentation() ? 0.0 : -keyboardFrameInView.size.height
-            self.bottomContainerBottomConstraint.constant = offset
-            self.emptyResultsBottomConstraint.constant = offset
-            self.view.layoutIfNeeded()
+        UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrameInView in
+            guard let weakSelf = self else { return }
+
+            let offset = weakSelf.wr_isInsidePopoverPresentation() ? 0.0 : -keyboardFrameInView.size.height
+            weakSelf.bottomContainerBottomConstraint.constant = offset
+            weakSelf.emptyResultsBottomConstraint.constant = offset
+            weakSelf.view.layoutIfNeeded()
         })
     }
 }

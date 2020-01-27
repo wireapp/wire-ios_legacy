@@ -333,16 +333,18 @@ final public class AddParticipantsViewController: UIViewController {
         let firstResponder = UIResponder.currentFirst
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
-        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { [weak self] (keyboardFrameInView) in
+            guard let weakSelf = self else { return }
+
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
             let margin: CGFloat = {
-                guard UIScreen.hasNotch, keyboardHeight > 0 else { return self.bottomMargin }
-                return -self.bottomMargin
+                guard UIScreen.hasNotch, keyboardHeight > 0 else { return weakSelf.bottomMargin }
+                return -weakSelf.bottomMargin
             }()
             
-            self.bottomConstraint?.constant = -(keyboardHeight + margin)
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+            weakSelf.bottomConstraint?.constant = -(keyboardHeight + margin)
+            weakSelf.view.layoutIfNeeded()
+        })
     }
     
     fileprivate func performSearch() {
