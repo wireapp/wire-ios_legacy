@@ -76,7 +76,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
     
     private func setupConversationListCell() {
         separatorLineViewDisabled = true
-        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
+        maxVisualDrawerOffset = SwipeMenuCollectionCell.MaxVisualDrawerOffsetRevealDistance
         overscrollFraction = CGFloat.greatestFiniteMagnitude // Never overscroll
         clipsToBounds = true
         
@@ -183,7 +183,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         super.setVisualDrawerOffset(visualDrawerOffset, updateUI: doUpdate)
         
         // After X % of reveal we consider animation should be finished
-        let progress = visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance
+        let progress = visualDrawerOffset / SwipeMenuCollectionCell.MaxVisualDrawerOffsetRevealDistance
         menuDotsView.setProgress(progress, animated: true)
         if progress >= 1 && overscrollStartDate == nil {
             overscrollStartDate = Date()
