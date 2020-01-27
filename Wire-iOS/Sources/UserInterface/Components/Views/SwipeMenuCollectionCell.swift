@@ -18,19 +18,18 @@
 
 import Foundation
 
-///TODO: class let
-let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
-
 class SwipeMenuCollectionCell: UICollectionViewCell {
+    static let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21
+
     var canOpenDrawer = false
-    var overscrollFraction: CGFloat = 0.0
-    var visualDrawerOffset: CGFloat = 0.0 {
+    var overscrollFraction: CGFloat = 0
+    var visualDrawerOffset: CGFloat = 0 {
         didSet {
             setVisualDrawerOffset(visualDrawerOffset, updateUI: true)
         }
     }
     /// Controls how far (distance) the @c menuView is revealed per swipe gesture. Default CGFLOAT_MAX, means all the way
-    var maxVisualDrawerOffset: CGFloat = 0.0 {
+    var maxVisualDrawerOffset: CGFloat = 0 {
         didSet {
             maxMenuViewToSwipeViewLeftConstraint?.constant = maxVisualDrawerOffset
         }
@@ -61,18 +60,18 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     private var maxMenuViewToSwipeViewLeftConstraint: NSLayoutConstraint?
     private let separatorLine: UIView = UIView()
     
-    private var initialDrawerWidth: CGFloat = 0.0
-    private var initialDrawerOffset: CGFloat = 0.0
+    private var initialDrawerWidth: CGFloat = 0
+    private var initialDrawerOffset: CGFloat = 0
     private var initialDragPoint = CGPoint.zero
     private var revealDrawerOverscrolled = false
     private var revealAnimationPerforming = false
-    private var scrollingFraction: CGFloat = 0.0 {
+    private var scrollingFraction: CGFloat = 0 {
         didSet {
-            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: self.scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
+            visualDrawerOffset = SwipeMenuCollectionCell.calculateViewOffset(forUserOffset: scrollingFraction * bounds.size.width, initialOffset: initialDrawerOffset, drawerWidth: drawerWidth, viewWidth: bounds.size.width)
         }
     }
 
-    private var userInteractionHorizontalOffset: CGFloat = 0.0 {
+    private var userInteractionHorizontalOffset: CGFloat = 0 {
         didSet {
             
             if bounds.size.width == 0 {
@@ -80,7 +79,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
             }
             
             if revealDrawerOverscrolled {
-                if self.userInteractionHorizontalOffset + initialDrawerOffset < bounds.size.width * overscrollFraction {
+                if userInteractionHorizontalOffset + initialDrawerOffset < bounds.size.width * overscrollFraction {
                     // overscroll cancelled
                     revealAnimationPerforming = true
                     let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
@@ -107,7 +106,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     revealDrawerOverscrolled = false
                 }
             } else {
-                if self.userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
+                if userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
                     // overscrolled
                     
                     UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
@@ -118,10 +117,9 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     
                     revealDrawerOverscrolled = true
                 } else {
-                    scrollingFraction = self.userInteractionHorizontalOffset / bounds.size.width
+                    scrollingFraction = userInteractionHorizontalOffset / bounds.size.width
                 }
             }
-            
         }
     }
     
@@ -133,26 +131,30 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         setupSwipeMenuCollectionCell()
         
         revealDrawerGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(onDrawerScroll(_:)))
-        
-        revealDrawerGestureRecognizer.delegate = self
-        revealDrawerGestureRecognizer.delaysTouchesEnded = false
-        revealDrawerGestureRecognizer.delaysTouchesBegan = false
+        setupRecognizer()
     }
     
     convenience init() {
         self.init(frame: .zero)
     }
     
-    //    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupRecognizer() {
+        revealDrawerGestureRecognizer.delegate = self
+        revealDrawerGestureRecognizer.delaysTouchesEnded = false
+        revealDrawerGestureRecognizer.delaysTouchesBegan = false
+        
+        contentView.addGestureRecognizer(revealDrawerGestureRecognizer)
     }
     
     private func setupSwipeMenuCollectionCell() {
         canOpenDrawer = true
         overscrollFraction = 0.6
         /// When the swipeView is swiped and excesses this offset, the "3 dots" stays at left.
-        maxVisualDrawerOffset = MaxVisualDrawerOffsetRevealDistance
+        maxVisualDrawerOffset = SwipeMenuCollectionCell.MaxVisualDrawerOffsetRevealDistance
         
         swipeView.backgroundColor = .clear
         contentView.addSubview(swipeView)
@@ -163,8 +165,6 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         separatorLine.backgroundColor = UIColor(white: 1.0, alpha: 0.4)
         swipeView.addSubview(separatorLine)
         separatorLine.isHidden = separatorLineViewDisabled
-        
-        contentView.addGestureRecognizer(revealDrawerGestureRecognizer)
         
         setNeedsUpdateConstraints()
     }
@@ -254,12 +254,9 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         }
     }
     
-    private func setDrawerOpen(_ `open`: Bool, animated: Bool) {
-        if `open` && visualDrawerOffset == drawerWidth {
-            return
-        }
-        
-        if !`open` && visualDrawerOffset == 0 {
+    private func setDrawerOpen(_ isOpened: Bool, animated: Bool) {
+        if isOpened && visualDrawerOffset == drawerWidth ||
+           !isOpened && visualDrawerOffset == 0 {
             return
         }
         
@@ -304,7 +301,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         menuViewToSwipeViewLeftConstraint = menuView.rightAnchor.constraint(equalTo: swipeView.leftAnchor)
         
         /// menu view attachs to content view after reaching max offset
-        maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: maxVisualDrawerOffset)
+        maxMenuViewToSwipeViewLeftConstraint = menuView.leftAnchor.constraint(equalTo: leftAnchor, constant: maxVisualDrawerOffset)
         
         [swipeView, separatorLine, menuView].forEach{$0.translatesAutoresizingMaskIntoConstraints = false}
         
