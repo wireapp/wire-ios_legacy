@@ -81,25 +81,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@interface ConversationInputBarViewController ()
-
-@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
-
-@property (nonatomic) UserImageView *authorImageView;
-
-@property (nonatomic) ZMConversation *conversation;
-
-@property (nonatomic) id conversationObserverToken;
-@property (nonatomic) id userObserverToken;
-
-@property (nonatomic) UIViewController *inputController;
-
-@property (nonatomic) id typingObserverToken;
-
-@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
-@end
-
-
 @implementation ConversationInputBarViewController
 
 
@@ -413,6 +394,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     
     switch (mode) {
         case ConversationInputBarViewControllerModeTextInput:
+            [self asssignInputController: nil];
             self.inputController = nil;
             self.singleTapGestureRecognizer.enabled = NO;
             [self selectInputControllerButton:nil];
@@ -427,7 +409,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     self.audioRecordKeyboardViewController.delegate = self;
                 }
 
-                self.inputController = self.audioRecordKeyboardViewController;
+                [self asssignInputController: self.audioRecordKeyboardViewController];
             }
 
             self.singleTapGestureRecognizer.enabled = YES;
@@ -442,7 +424,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     [self createCameraKeyboardViewController];
                 }
 
-                self.inputController = self.cameraKeyboardViewController;
+                [self asssignInputController: self.cameraKeyboardViewController];
             }
             
             self.singleTapGestureRecognizer.enabled = YES;
@@ -457,7 +439,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                     [self createEphemeralKeyboardViewController];
                 }
 
-                self.inputController = self.ephemeralKeyboardViewController;
+                [self asssignInputController: self.ephemeralKeyboardViewController];
             }
 
             self.singleTapGestureRecognizer.enabled = YES;
@@ -483,51 +465,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         UITextInputAssistantItem *item = self.inputBar.textView.inputAssistantItem;
         item.leadingBarButtonGroups = @[];
         item.trailingBarButtonGroups = @[];
-    }
-}
-
-- (void)setInputController:(UIViewController *)inputController
-{
-    [_inputController.view removeFromSuperview];
-    
-    _inputController = inputController;
-    [self deallocateUnusedInputControllers];
-
-    
-    if (inputController != nil) {
-        CGSize inputViewSize = [UIView wr_lastKeyboardSize];
-
-        CGRect inputViewFrame = (CGRect) {CGPointZero, inputViewSize};
-        UIInputView *inputView = [[UIInputView alloc] initWithFrame:inputViewFrame
-                                                     inputViewStyle:UIInputViewStyleKeyboard];
-        if (@selector(allowsSelfSizing) != nil && [inputView respondsToSelector:@selector(allowsSelfSizing)]) {
-            inputView.allowsSelfSizing = YES;
-        }
-
-        inputView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        inputController.view.frame = inputView.frame;
-        inputController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [inputView addSubview:inputController.view];
-
-        self.inputBar.textView.inputView = inputView;
-    }
-    else {
-        self.inputBar.textView.inputView = nil;
-    }
-    
-    [self.inputBar.textView reloadInputViews];
-}
-
-- (void)deallocateUnusedInputControllers
-{
-    if (! [self.cameraKeyboardViewController isEqual:self.inputController]) {
-        self.cameraKeyboardViewController = nil;
-    }
-    if (! [self.audioRecordKeyboardViewController isEqual:self.inputController]) {
-        self.audioRecordKeyboardViewController = nil;
-    }
-    if (! [self.ephemeralKeyboardViewController isEqual:self.inputController]) {
-        self.ephemeralKeyboardViewController = nil;
     }
 }
 
