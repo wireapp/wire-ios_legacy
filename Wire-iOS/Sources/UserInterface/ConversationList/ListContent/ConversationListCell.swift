@@ -185,7 +185,7 @@ final class ConversationListCell: SwipeMenuCollectionCell,
         // After X % of reveal we consider animation should be finished
         let progress = visualDrawerOffset / MaxVisualDrawerOffsetRevealDistance
         menuDotsView.setProgress(progress, animated: true)
-        if progress >= 1 && overscrollStartDate != nil {
+        if progress >= 1 && overscrollStartDate == nil {
             overscrollStartDate = Date()
         }
         
