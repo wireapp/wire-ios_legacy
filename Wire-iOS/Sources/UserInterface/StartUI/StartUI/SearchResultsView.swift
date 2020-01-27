@@ -151,7 +151,8 @@ final class SearchResultsView : UIView {
         }
     }
     
-    @objc func keyboardFrameDidChange(notification: Notification) {
+    @objc
+    private func keyboardFrameDidChange(notification: Notification) {
         if let parentViewController = parentViewController, parentViewController.isContainedInPopover() {
             return
         }
@@ -159,10 +160,10 @@ final class SearchResultsView : UIView {
         let firstResponder = UIResponder.currentFirst
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
-        UIView.animate(withKeyboardNotification: notification, in: self, animations: { (keyboardFrameInView) in
+        UIView.animate(withKeyboardNotification: notification, in: self, animations: {[weak self] (keyboardFrameInView) in
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
-            self.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
-            self.layoutIfNeeded()
+            self?.accessoryViewBottomOffsetConstraint?.constant = -keyboardHeight
+            self?.layoutIfNeeded()
         }, completion: nil)
     }
 
