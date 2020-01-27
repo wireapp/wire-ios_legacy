@@ -54,7 +54,7 @@ class BuildSettingAuthenticationFeatureProvider: AuthenticationFeatureProvider {
     }
 
     var allowDirectCompanyLogin: Bool {
-        return allowCompanyLogin && !allowOnlyEmailLogin && false
+        return allowCompanyLogin && !allowOnlyEmailLogin
     }
 
 }
