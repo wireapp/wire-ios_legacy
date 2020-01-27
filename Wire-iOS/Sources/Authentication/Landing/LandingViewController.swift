@@ -22,6 +22,7 @@ import UIKit
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
+    func landingViewControllerDidChooseEnterpriseLogin()
 }
 
 /// Landing screen for choosing how to authenticate.
@@ -234,6 +235,10 @@ class LandingViewController: AuthenticationStepViewController {
         return .default
     }
 
+    func configure(with featureProvider: AuthenticationFeatureProvider) {
+        enterpriseLoginButton.isHidden = !featureProvider.allowDirectCompanyLogin
+    }
+    
     private func configureSubviews() {
         if #available(iOS 11, *) {
             additionalSafeAreaInsets.top = -44
@@ -431,7 +436,7 @@ class LandingViewController: AuthenticationStepViewController {
     }
     
     @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
-        // TODO: Show enterprise login popup
+        delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
     
     @objc public func cancelButtonTapped() {
