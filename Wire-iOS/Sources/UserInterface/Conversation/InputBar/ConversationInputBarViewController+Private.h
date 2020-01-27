@@ -27,6 +27,7 @@
 @class ReplyComposingView;
 @class TypingIndicatorView;
 @class ZMUser;
+@class UserImageView;
 
 @interface ConversationInputBarViewController ()
 
@@ -75,6 +76,21 @@
 // PopoverPresenter
 @property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
 @property (nonatomic, nullable, weak) UIView *popoverPointToView;
+
+@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
+
+@property (nonatomic) UserImageView *authorImageView;
+
+@property (nonatomic) ZMConversation *conversation;
+
+@property (nonatomic) id conversationObserverToken;
+@property (nonatomic) id userObserverToken;
+
+@property (nonatomic) UIViewController *inputController;
+
+@property (nonatomic) id typingObserverToken;
+
+@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 
 - (void)updateRightAccessoryView;
 - (void)updateButtonIcons;
