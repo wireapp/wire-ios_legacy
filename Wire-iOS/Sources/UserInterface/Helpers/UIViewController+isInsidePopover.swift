@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,12 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-#import <UIKit/UIKit.h>
-
-@interface UIViewController (WR_Additions)
-
-/// Returns true if the view controller is presented inside a popover
-- (BOOL)wr_isInsidePopoverPresentation;
-
-@end
+extension UIViewController {
+    
+    /// Returns true if the view controller is presented inside a popover
+    var isInsidePopover: Bool {
+        guard let popoverPresentationController = popoverPresentationController else { return false }
+        
+        return popoverPresentationController.arrowDirection != .unknown
+    }
+}
+    
