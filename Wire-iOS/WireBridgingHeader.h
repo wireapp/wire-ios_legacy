@@ -127,7 +127,6 @@
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
-#import "UIViewController+WR_Additions.h"
 
 // Audio player
 #import "AudioTrack.h"
