@@ -211,6 +211,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self updateRightAccessoryView];
     [self.inputBar updateReturnKey];
     [self.inputBar updateEphemeralState];
+    [self updateMentionList];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -350,6 +351,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)updateInputBarVisibility
 {
     self.view.hidden = self.conversation.isReadOnly;
+}
+
+- (void)updateMentionList
+{
+    [self triggerMentionsIfNeededFrom: self.inputBar.textView with:nil];
 }
 
 #pragma mark - Keyboard Shortcuts

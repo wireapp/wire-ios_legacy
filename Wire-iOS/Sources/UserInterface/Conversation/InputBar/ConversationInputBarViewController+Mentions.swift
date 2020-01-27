@@ -81,7 +81,7 @@ extension ConversationInputBarViewController {
         mentionsView?.dismiss()
     }
 
-    func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
+    @objc func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
         if let position = MentionsHandler.cursorPosition(in: textView, range: selection) {
             mentionsHandler = MentionsHandler(text: textView.text, cursorPosition: position)
         }
