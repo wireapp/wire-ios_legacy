@@ -50,7 +50,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     
     weak var user: UserType? = nil
     
-    private var showVerifiedShield: Bool {
+    private var shouldShowVerifiedShield: Bool {
         if let user = user as? ZMUser {
             let showShield = user.trusted() &&
                 !user.clients.isEmpty &&
@@ -242,7 +242,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
         }
 
-        verifiedIconView.isHidden = !showVerifiedShield
+        verifiedIconView.isHidden = !shouldShowVerifiedShield
         externalUserIconView.isHidden = !user.isExternalPartner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
