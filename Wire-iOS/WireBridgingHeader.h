@@ -56,8 +56,6 @@
 #import "UITableView+RowCount.h"
 #import "AnimatedListMenuView.h"
 #import "AnimatedListMenuView+Internal.h"
-#import "SwipeMenuCollectionCell.h"
-#import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ColorKnobView.h"
