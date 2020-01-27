@@ -29,7 +29,7 @@ extension ContactsViewController {
         UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrameInView in
             guard let weakSelf = self else { return }
 
-            let offset = weakSelf.wr_isInsidePopoverPresentation() ? 0.0 : -keyboardFrameInView.size.height
+            let offset = weakSelf.isInsidePopover ? 0.0 : -keyboardFrameInView.size.height
             weakSelf.bottomContainerBottomConstraint.constant = offset
             weakSelf.emptyResultsBottomConstraint.constant = offset
             weakSelf.view.layoutIfNeeded()

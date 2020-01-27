@@ -20,7 +20,6 @@
 #import "MessagePresenter+Internal.h"
 #import "Analytics.h"
 #import "Wire-Swift.h"
-#import "UIViewController+WR_Additions.h"
 
 @import AVKit;
 @import AVFoundation;

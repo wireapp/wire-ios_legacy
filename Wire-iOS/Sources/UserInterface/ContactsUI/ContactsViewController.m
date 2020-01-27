@@ -24,7 +24,6 @@
 
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
-#import "UIViewController+WR_Additions.h"
 
 #import "Wire-Swift.h"
 
