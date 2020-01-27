@@ -170,7 +170,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     }
     
     @objc
-    func onDrawerScroll(_ pan: UIPanGestureRecognizer) {
+    private func onDrawerScroll(_ pan: UIPanGestureRecognizer) {
         let location = pan.location(in: self)
         let offset = CGPoint(x: location.x - initialDragPoint.x, y: location.y - initialDragPoint.y)
         
@@ -226,18 +226,16 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
     ///   - viewWidth: Total container size
     ///   - coef: Coefficient (from very hard (<0.1) to very easy (>0.9))
     /// - Returns: New offset
-    class func rubberBandOffset(_ offset: CGFloat, viewWidth: CGFloat, coefficient coef: CGFloat) -> CGFloat {
+    class private func rubberBandOffset(_ offset: CGFloat, viewWidth: CGFloat, coefficient coef: CGFloat) -> CGFloat {
         return (1.0 - (1.0 / ((offset * coef / viewWidth) + 1.0))) * viewWidth
     }
     
-    class func calculateViewOffset(forUserOffset offsetX: CGFloat, initialOffset initialDrawerOffset: CGFloat, drawerWidth: CGFloat, viewWidth: CGFloat) -> CGFloat {
+    class private func calculateViewOffset(forUserOffset offsetX: CGFloat, initialOffset initialDrawerOffset: CGFloat, drawerWidth: CGFloat, viewWidth: CGFloat) -> CGFloat {
         if offsetX + initialDrawerOffset < 0 {
-            return self.rubberBandOffset(offsetX + initialDrawerOffset, viewWidth: viewWidth, coefficient: 0.15)
-        } else {
-            return initialDrawerOffset + offsetX
+            return rubberBandOffset(offsetX + initialDrawerOffset, viewWidth: viewWidth, coefficient: 0.15)
         }
         
-        return offsetX
+        return initialDrawerOffset + offsetX
     }
     
     func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, updateUI doUpdate: Bool) {
@@ -256,7 +254,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         }
     }
     
-    func setDrawerOpen(_ `open`: Bool, animated: Bool) {
+    private func setDrawerOpen(_ `open`: Bool, animated: Bool) {
         if `open` && visualDrawerOffset == drawerWidth {
             return
         }
@@ -361,7 +359,7 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
             if swipeViewHorizontalConstraint?.constant == 0 && offset.x < 0 {
                 result = false
             } else {
-                result = fabs(Float(offset.x)) > fabs(Float(offset.y))
+                result = abs(offset.x) > abs(offset.y)
             }
         }
         return result
@@ -380,6 +378,7 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     // getting the reference to the force recognizer and using delegate methods to create
     // failure requirements, setting the delegate raised an exception (???). Here we
     // simply apply the fix for iOS 11 and above.
+    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         // for iOS version >= 11
         if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
@@ -391,13 +390,14 @@ extension SwipeMenuCollectionCell: UIGestureRecognizerDelegate {
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+
         // iOS version >= 11
         if UIDevice.current.systemVersion.compare("11", options: .numeric, range: nil, locale: .current) != .orderedAscending {
             // pan recognizer should not recognize simultaneously with any other recognizer
             return !(gestureRecognizer is UIPanGestureRecognizer)
-        } else {
-            return true
         }
+        
+        return true
     }
     
 }
