@@ -75,7 +75,7 @@ extension ConversationViewController {
             let height = currentFirstResponder.inputAccessoryView?.bounds.size.height {
 
                 let keyboardSize = CGSize(width: screenRect.size.width, height: height)
-                UIView.wr_setLastKeyboardSize(keyboardSize)
+                UIView.setLastKeyboardSize(keyboardSize)
             }
         }
     }

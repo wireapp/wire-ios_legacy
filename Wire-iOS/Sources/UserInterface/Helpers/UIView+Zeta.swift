@@ -30,35 +30,39 @@ extension UIView {
         
         
         if let currentFirstResponder = UIResponder.currentFirst {
-            let keyboardSize = CGSize(width: keyboardFrame.size.width, height: keyboardFrame.size.height - (currentFirstResponder.inputAccessoryView?.bounds.size.height ?? 0.0))
-            self.wr_setLastKeyboardSize(keyboardSize)
+            let keyboardSize = CGSize(width: keyboardFrame.size.width, height: keyboardFrame.size.height - (currentFirstResponder.inputAccessoryView?.bounds.size.height ?? 0))
+            setLastKeyboardSize(keyboardSize)
         }
         
         let userInfo = notification?.userInfo
-        let animationLength: Double = (userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0.0
-        let animationCurve = UIView.AnimationCurve(rawValue: (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as AnyObject).intValue ?? 0)
+        let animationLength: TimeInterval = (userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+        let animationCurve: AnimationCurve = AnimationCurve(rawValue: (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as AnyObject).intValue ?? 0) ?? .easeInOut
         
         var animationOptions: UIView.AnimationOptions = .beginFromCurrentState
-        if animationCurve == .easeIn {
+        
+        switch animationCurve {
+        case .easeIn:
             animationOptions.insert(.curveEaseIn)
-        } else if animationCurve == .easeInOut {
+        case .easeInOut:
             animationOptions.insert(.curveEaseInOut)
-        } else if animationCurve == .easeOut {
+        case  .easeOut:
             animationOptions.insert(.curveEaseOut)
-        } else if animationCurve == .linear {
+        case  .linear:
             animationOptions.insert(.curveLinear)
+        default:
+            break
         }
         
-        UIView.animate(withDuration: TimeInterval(animationLength), delay: delay, options: animationOptions, animations: {
+        UIView.animate(withDuration: animationLength, delay: delay, options: animationOptions, animations: {
             animations(keyboardFrame)
         }, completion: completion)
     }
     
-    class func wr_setLastKeyboardSize(_ lastSize: CGSize) {
+    class func setLastKeyboardSize(_ lastSize: CGSize) {
         UserDefaults.standard.set(NSCoder.string(for: lastSize), forKey: WireLastCachedKeyboardHeightKey)
     }
     
-    class var wr_lastKeyboardSize: CGSize {
+    class var lastKeyboardSize: CGSize {
         
         if let currentLastValue = UserDefaults.standard.object(forKey: WireLastCachedKeyboardHeightKey) as? String {
             var keyboardSize = NSCoder.cgSize(for: currentLastValue)

@@ -35,7 +35,7 @@ extension ConversationInputBarViewController {
         
         
         if let inputController = inputController {
-            let inputViewSize = UIView.wr_lastKeyboardSize
+            let inputViewSize = UIView.lastKeyboardSize
             
             let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
             let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
