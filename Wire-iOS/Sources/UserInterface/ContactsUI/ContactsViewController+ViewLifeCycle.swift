@@ -58,7 +58,7 @@ extension ContactsViewController {
         UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in
             self.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
             self.view.layoutIfNeeded()
-        }, completion: nil)
+        })
     }
 
     private func presentShareContactsViewController() {

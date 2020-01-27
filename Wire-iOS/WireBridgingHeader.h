@@ -110,7 +110,6 @@
 #import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "MessagePresenter.h"
@@ -130,6 +129,7 @@
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
+#import "UIViewController+WR_Additions.h"
 
 // Audio player
 #import "AudioTrack.h"

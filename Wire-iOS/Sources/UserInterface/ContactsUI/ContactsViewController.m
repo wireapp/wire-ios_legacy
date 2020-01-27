@@ -21,7 +21,6 @@
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
 #import "ContactsDataSource.h"
-#import "UIView+Zeta.h"
 
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
@@ -194,20 +193,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if ([self.delegate respondsToSelector:@selector(contactsViewControllerDidCancel:)]) {
         [self.delegate contactsViewControllerDidCancel:self];
     }
-}
-
-- (void)keyboardFrameDidChange:(NSNotification *)notification
-{
-    [UIView animateWithKeyboardNotification:notification
-                                     inView:self.view
-                                 animations:^(CGRect keyboardFrameInView) {
-                                     CGFloat offset = self.wr_isInsidePopoverPresentation ? 0.0f : - keyboardFrameInView.size.height;
-                                     self.bottomContainerBottomConstraint.constant = offset;
-                                     self.emptyResultsBottomConstraint.constant = offset;
-                                     [self.view layoutIfNeeded];
-                                 }
-                                 completion:^(BOOL finished) {
-                                 }];
 }
 
 - (void)setEmptyResultsHidden:(BOOL)hidden animated:(BOOL)animated

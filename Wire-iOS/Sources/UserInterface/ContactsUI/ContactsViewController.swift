@@ -23,4 +23,14 @@ extension ContactsViewController {
     func updateActionButtonTitles() {
         actionButtonTitles = contentDelegate?.actionButtonTitles(for: self)
     }
+    
+    @objc
+    func keyboardFrameDidChange(_ notification: Notification) {
+        UIView.animate(withKeyboardNotification: notification, in: view, animations: { keyboardFrameInView in
+            let offset = self.wr_isInsidePopoverPresentation() ? 0.0 : -keyboardFrameInView.size.height
+            self.bottomContainerBottomConstraint.constant = offset
+            self.emptyResultsBottomConstraint.constant = offset
+            self.view.layoutIfNeeded()
+        })
+    }
 }

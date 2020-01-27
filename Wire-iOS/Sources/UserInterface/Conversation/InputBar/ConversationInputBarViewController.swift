@@ -24,6 +24,50 @@ extension ConversationInputBarViewController {
     func postImage(_ image: MediaAsset) {
         sendController.sendMessage(withImageData: image.data())
     }
+    
+    ///TODO: chnage to didSet after ConversationInputBarViewController is converted to Swift
+    @objc
+    func asssignInputController(_ inputController: UIViewController?) {
+        self.inputController?.view.removeFromSuperview()
+        
+        self.inputController = inputController
+        deallocateUnusedInputControllers()
+        
+        
+        if let inputController = inputController {
+            let inputViewSize = UIView.wr_lastKeyboardSize
+            
+            let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
+            let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
+            inputView.allowsSelfSizing = true
+            
+            inputView.autoresizingMask = .flexibleWidth
+            inputController.view.frame = inputView.frame
+            inputController.view.autoresizingMask = .flexibleWidth
+            if let view = inputController.view {
+                inputView.addSubview(view)
+            }
+            
+            inputBar.textView.inputView = inputView
+        } else {
+            inputBar.textView.inputView = nil
+        }
+        
+        inputBar.textView.reloadInputViews()
+    }
+
+    func deallocateUnusedInputControllers() {
+        if cameraKeyboardViewController != inputController {
+            cameraKeyboardViewController = nil
+        }
+        if audioRecordKeyboardViewController != inputController {
+            audioRecordKeyboardViewController = nil
+        }
+        if ephemeralKeyboardViewController != inputController {
+            ephemeralKeyboardViewController = nil
+        }
+    }
+
 }
 
 //MARK: - GiphySearchViewControllerDelegate
