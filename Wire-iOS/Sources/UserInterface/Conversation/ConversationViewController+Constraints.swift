@@ -66,16 +66,18 @@ extension ConversationViewController {
     func keyboardFrameWillChange(_ notification: Notification) {
         // We only respond to keyboard will change frame if the first responder is not the input bar
         if invisibleInputAccessoryView.window == nil {
-            UIView.animate(withKeyboardNotification: notification, in: view, animations: { keyboardFrameInView in
-                self.inputBarBottomMargin?.constant = -keyboardFrameInView.size.height
-            }, completion: nil)
+            UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrameInView in
+                guard let weakSelf = self else { return }
+
+                weakSelf.inputBarBottomMargin?.constant = -keyboardFrameInView.size.height
+            })
         } else {
             if let screenRect: CGRect = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
                 let currentFirstResponder = UIResponder.currentFirst,
             let height = currentFirstResponder.inputAccessoryView?.bounds.size.height {
 
                 let keyboardSize = CGSize(width: screenRect.size.width, height: height)
-                UIView.wr_setLastKeyboardSize(keyboardSize)
+                UIView.setLastKeyboardSize(keyboardSize)
             }
         }
     }

@@ -70,13 +70,7 @@ class KeyboardAvoidingViewController: UIViewController {
             viewController.title = newValue
         }
     }
-    
-    private var isInsidePopover: Bool {
-        guard let popoverPresentationController = popoverPresentationController else { return false }
         
-        return popoverPresentationController.arrowDirection != .unknown
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
