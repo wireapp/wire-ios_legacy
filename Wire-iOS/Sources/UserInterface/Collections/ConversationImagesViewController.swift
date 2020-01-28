@@ -478,11 +478,6 @@ extension ConversationImagesViewController: MenuVisibilityController {
 
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
-        
-        // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
-        if !UIScreen.hasNotch {
-            UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
-        }
     }
 
     private func showNavigationBarVisible(hidden: Bool) {
