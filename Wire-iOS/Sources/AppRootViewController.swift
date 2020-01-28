@@ -399,14 +399,21 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return visibleViewController?.prefersStatusBarHidden ?? false
+//    override var prefersStatusBarHidden: Bool {
+//        return visibleViewController?.prefersStatusBarHidden ?? false
+//    }
+//
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return visibleViewController?.preferredStatusBarStyle ?? .default
+//    }
+
+    override var childForStatusBarStyle: UIViewController? {
+        return visibleViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleViewController?.preferredStatusBarStyle ?? .default
+    override var childForStatusBarHidden: UIViewController? {
+        return visibleViewController
     }
-
 }
 
 extension AppRootViewController: AppStateControllerDelegate {

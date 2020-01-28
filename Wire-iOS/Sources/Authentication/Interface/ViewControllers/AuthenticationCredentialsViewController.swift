@@ -144,6 +144,10 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
 
     func configure(with featureProvider: AuthenticationFeatureProvider) {
         if case .reauthentication? = flowType {

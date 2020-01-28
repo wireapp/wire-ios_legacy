@@ -240,6 +240,10 @@ class LandingViewController: AuthenticationStepViewController {
         return .default
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         let isRegular = traitCollection.horizontalSizeClass == .regular
