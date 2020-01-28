@@ -24,8 +24,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
 #import "UIViewController+Errors.h"
-#import "Analytics.h"
-#import "Analytics.h"
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 

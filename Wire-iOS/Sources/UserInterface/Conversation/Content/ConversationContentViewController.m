@@ -35,7 +35,6 @@
 // helpers
 
 
-#import "Analytics.h"
 #import "MessagePresenter.h"
 
 #import "Wire-Swift.h"

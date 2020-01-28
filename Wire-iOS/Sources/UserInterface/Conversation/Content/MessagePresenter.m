@@ -18,7 +18,6 @@
 
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "Analytics.h"
 #import "Wire-Swift.h"
 
 @import AVKit;
