@@ -501,7 +501,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateShowVerifiedShield() {
-        profileTitleView.showVerifiedShield = viewModel.showVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
+        profileTitleView.showVerifiedShield = viewModel.shouldShowVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
     }
 
     func setupNavigationItems() {

@@ -109,6 +109,8 @@ class SwiftMockUser: NSObject, UserType {
     
     var needsRichProfileUpdate: Bool = false
     
+    var isVerified : Bool = false
+    
     var activeConversations: Set<ZMConversation> = []
     
     var allClients: [UserClientType] = []

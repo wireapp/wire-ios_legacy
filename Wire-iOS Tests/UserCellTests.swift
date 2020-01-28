@@ -79,6 +79,7 @@ final class UserCellTests: ZMSnapshotTestCase {
     func testTrustedNonTeamUser() {
         let mockUser = MockUser.firstMockUser()
 
+        mockUser.isVerified = true
         mockUser.trusted = true
         _ = mockUser.feature(withUserClients: 1)
         
@@ -112,11 +113,14 @@ final class UserCellTests: ZMSnapshotTestCase {
     
     func testTrustedGuestUser() {
         MockUser.mockSelf().isTeamMember = true
+        
         let mockUser = MockUser.firstMockUser()
         mockUser.trusted = true
+        mockUser.isVerified = true
+
         mockUser.isGuestInConversation = true
         _ = mockUser.feature(withUserClients: 1)
-        
+
         verifyInAllColorSchemes(view: cell({ (cell) in
             cell.configure(with: mockUser, conversation: conversation)
         }))
