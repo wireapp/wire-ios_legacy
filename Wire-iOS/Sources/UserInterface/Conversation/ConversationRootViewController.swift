@@ -54,6 +54,7 @@ final class ConversationRootViewController: UIViewController {
         navbar.shadowImage = UIImage()
         navbar.barTintColor = UIColor.from(scheme: .barBackground)
         navbar.tintColor = UIColor.from(scheme: .textForeground)
+        navbar.barStyle = ColorScheme.default.variant == .dark ? .black : .default
         
         navBarContainer = UINavigationBarContainer(navbar)
 
@@ -114,19 +115,18 @@ final class ConversationRootViewController: UIViewController {
         shouldAnimateNetworkStatusView = true
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
+    private var child: UIViewController? {
+        return conversationViewController?.contentViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        switch ColorScheme.default.variant {
-        case .light:
-            return .default
-        case .dark:
-            return .lightContent
-        }
+    override var childForStatusBarStyle: UIViewController? {
+        return child
     }
     
+    override var childForStatusBarHidden: UIViewController? {
+        return child
+    }
+
     @objc (scrollToMessage:)
     func scroll(to message: ZMConversationMessage) {
         conversationViewController?.scroll(to: message)
