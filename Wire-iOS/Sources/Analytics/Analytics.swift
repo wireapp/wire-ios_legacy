@@ -17,13 +17,10 @@
 //
 
 import Foundation
-import WireSyncEngine
 
 final class Analytics: NSObject, AnalyticsType {
     
     var provider: AnalyticsProvider?
-    private var callingTracker: AnalyticsCallingTracker?
-//    private var decryptionFailedObserver: AnalyticsDecryptionFailedObserver?
 
     private static let sharedAnalytics = Analytics()
     
@@ -82,9 +79,6 @@ final class Analytics: NSObject, AnalyticsType {
     @objc
     private func userSessionDidBecomeAvailable(_ note: Notification?) {
         //no-op
-//        callingTracker = AnalyticsCallingTracker(analytics: self)
-//        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-//        setTeam(ZMUser.selfUser().team)
     }
 
 
