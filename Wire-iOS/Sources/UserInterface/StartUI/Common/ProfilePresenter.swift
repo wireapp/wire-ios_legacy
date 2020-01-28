@@ -38,11 +38,28 @@ class ProfilePresenter: NSObject, ViewControllerDismisser {
                                                object: nil)
     }
 
+    @objc
+    func deviceOrientationChanged(_ notification: Notification?) {
+        guard
+            let controllerToPresentOn = controllerToPresentOn,
+            controllerToPresentOn.isIPadRegular()
+            else { return }
+
+        ZClientViewController.shared?.transitionToList(animated: false, completion: nil)
+
+        guard
+            viewToPresentOn != nil,
+            let presentedViewController = controllerToPresentOn.presentedViewController
+            else { return }
+
+        presentedViewController.popoverPresentationController?.sourceRect = presentedFrame
+        presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
+    }
+
     func presentProfileViewController(for user: UserType,
                                       in controller: UIViewController?,
                                       from rect: CGRect,
-                                      onDismiss: @escaping () -> (),
-                                      arrowDirection: UIPopoverArrowDirection) {
+                                      onDismiss: @escaping () -> ()) {
 
         profileOpenedFromPeoplePicker = true
         viewToPresentOn = controller?.view
@@ -72,39 +89,8 @@ class ProfilePresenter: NSObject, ViewControllerDismisser {
             self.onDismiss = nil
         }
     }
-
-    @objc
-    func deviceOrientationChanged(_ notification: Notification?) {
-        guard let controllerToPresentOn = controllerToPresentOn,
-            controllerToPresentOn.isIPadRegular() else { return }
-
-        ZClientViewController.shared?.transitionToList(animated: false, completion: nil)
-
-        if let _ = viewToPresentOn,
-            let presentedViewController = controllerToPresentOn.presentedViewController {
-
-            presentedViewController.popoverPresentationController?.sourceRect = presentedFrame
-            presentedViewController.preferredContentSize = presentedViewController.view.frame.insetBy(dx: -0.01, dy: 0.0).size
-        }
-    }
 }
 
-
-
-extension ProfilePresenter: ProfileViewControllerDelegate {
-    
-    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
-        guard let controller = controller else { return }
-
-        dismiss(viewController: controller) {
-            ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
-        }
-    }
-
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
-        //no-op.
-    }
-}
 
 private class TransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 

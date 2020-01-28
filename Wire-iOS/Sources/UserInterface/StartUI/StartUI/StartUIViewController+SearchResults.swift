@@ -37,7 +37,7 @@ extension StartUIViewController {
                     self.searchHeaderViewController.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
-        }, arrowDirection: .left)
+        })
     }
 }
 
