@@ -43,14 +43,6 @@ class TopPeopleCell: UICollectionViewCell {
         }
     }
 
-    private var initialConstraintsCreated = false
-    private let badgeUserImageView = BadgeUserImageView()
-    private let conversationImageView = UIImageView()
-    private let nameLabel = UILabel()
-    private let avatarContainer = UIView()
-    private var avatarViewSizeConstraint: NSLayoutConstraint?
-    private var conversationImageViewSize: NSLayoutConstraint?
-
     override var isSelected: Bool {
         didSet {
             if isSelected {
@@ -61,32 +53,25 @@ class TopPeopleCell: UICollectionViewCell {
         }
     }
 
+    private let badgeUserImageView = BadgeUserImageView()
+    private let conversationImageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let avatarContainer = UIView()
+
+    private var avatarViewSizeConstraint: NSLayoutConstraint?
+    private var conversationImageViewSize: NSLayoutConstraint?
+    private var initialConstraintsCreated = false
+
+
     // MARK: - Life Cycle
 
     override init(frame: CGRect) {
-
         super.init(frame: frame)
 
         accessibilityIdentifier = "TopPeopleCell"
         isAccessibilityElement = true
 
-        contentView.addSubview(avatarContainer)
-
-        nameLabel.lineBreakMode = .byTruncatingTail
-        nameLabel.textAlignment = .center
-        contentView.addSubview(nameLabel)
-
-        // Create UserImageView
-        badgeUserImageView.removeFromSuperview()
-        badgeUserImageView.initialsFont = .systemFont(ofSize: 11, weight: .light)
-        badgeUserImageView.userSession = ZMUserSession.shared()
-        badgeUserImageView.isUserInteractionEnabled = false
-        badgeUserImageView.wr_badgeIconSize = 16
-        badgeUserImageView.accessibilityIdentifier = "TopPeopleAvatar"
-        avatarContainer.addSubview(badgeUserImageView)
-
-        contentView.addSubview(conversationImageView)
-
+        setupViews()
         setNeedsUpdateConstraints()
         updateForContext()
     }
@@ -98,40 +83,59 @@ class TopPeopleCell: UICollectionViewCell {
 
     // MARK: - Methods
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        conversationImageView.image = nil
+        conversationImageView.isHidden = false
+        badgeUserImageView.isHidden = false
+    }
+
+    private func setupViews() {
+        nameLabel.lineBreakMode = .byTruncatingTail
+        nameLabel.textAlignment = .center
+
+        badgeUserImageView.removeFromSuperview()
+        badgeUserImageView.initialsFont = .systemFont(ofSize: 11, weight: .light)
+        badgeUserImageView.userSession = ZMUserSession.shared()
+        badgeUserImageView.isUserInteractionEnabled = false
+        badgeUserImageView.wr_badgeIconSize = 16
+        badgeUserImageView.accessibilityIdentifier = "TopPeopleAvatar"
+        avatarContainer.addSubview(badgeUserImageView)
+
+        [avatarContainer, nameLabel, conversationImageView].forEach(contentView.addSubview)
+    }
+
     override func updateConstraints() {
-        if !initialConstraintsCreated {
-            [contentView, badgeUserImageView, avatarContainer, conversationImageView, nameLabel].forEach() {
-                $0.translatesAutoresizingMaskIntoConstraints = false
-            }
+        guard !initialConstraintsCreated else { return super.updateConstraints() }
 
-            var constraints: [NSLayoutConstraint] = []
-
-            constraints.append(contentsOf: contentView.fitInSuperview(activate: false).values)
-            constraints.append(contentsOf: badgeUserImageView.fitInSuperview(activate: false).values)
-
-            conversationImageViewSize = conversationImageView.setDimensions(length: 80, activate: false)[.width]
-            avatarViewSizeConstraint = avatarContainer.setDimensions(length: 80, activate: false)[.width]
-
-            constraints.append(conversationImageViewSize!)
-            constraints.append(avatarViewSizeConstraint!)
-
-            constraints.append(contentsOf: avatarContainer.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
-            constraints.append(contentsOf: conversationImageView.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
-
-            constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
-
-            constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,
-                                                         with: EdgeInsets(top: .nan, leading: 0, bottom: .nan, trailing: 0),
-                                                         exclude: [.top, .bottom], activate: false).values)
-
-            NSLayoutConstraint.activate(constraints)
-
-            initialConstraintsCreated = true
-
-            updateForContext()
+        [contentView, badgeUserImageView, avatarContainer, conversationImageView, nameLabel].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
         }
 
-        super.updateConstraints()
+        var constraints: [NSLayoutConstraint] = []
+
+        constraints.append(contentsOf: contentView.fitInSuperview(activate: false).values)
+        constraints.append(contentsOf: badgeUserImageView.fitInSuperview(activate: false).values)
+
+        conversationImageViewSize = conversationImageView.setDimensions(length: 80, activate: false)[.width]
+        avatarViewSizeConstraint = avatarContainer.setDimensions(length: 80, activate: false)[.width]
+
+        constraints.append(conversationImageViewSize!)
+        constraints.append(avatarViewSizeConstraint!)
+
+        constraints.append(contentsOf: avatarContainer.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
+        constraints.append(contentsOf: conversationImageView.fitInSuperview(exclude: [.bottom, .trailing], activate: false).values)
+
+        constraints.append(nameLabel.topAnchor.constraint(equalTo: avatarContainer.bottomAnchor, constant: 8))
+
+        constraints.append(contentsOf: nameLabel.pin(to: avatarContainer,
+                                                     with: EdgeInsets(top: .nan, leading: 0, bottom: .nan, trailing: 0),
+                                                     exclude: [.top, .bottom], activate: false).values)
+
+        NSLayoutConstraint.activate(constraints)
+        initialConstraintsCreated = true
+
+        updateForContext()
     }
 
     private func updateForContext() {
@@ -143,13 +147,6 @@ class TopPeopleCell: UICollectionViewCell {
         let squareImageWidth: CGFloat = 56
         avatarViewSizeConstraint?.constant = squareImageWidth
         conversationImageViewSize?.constant = squareImageWidth
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        conversationImageView.image = nil
-        conversationImageView.isHidden = false
-        badgeUserImageView.isHidden = false
     }
 
 }
