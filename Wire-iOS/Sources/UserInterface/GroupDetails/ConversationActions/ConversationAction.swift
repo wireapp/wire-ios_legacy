@@ -121,7 +121,7 @@ extension ZMConversation {
     }
     
     private func markAsReadAction() -> Action? {
-        guard DeveloperMenuState.developerMenuEnabled() else { return nil }
+        guard Bundle.enableDeveloperMenu else { return nil }
         if unreadMessages.count > 0 {
             return .markRead
         } else if unreadMessages.count == 0 && canMarkAsUnread() {

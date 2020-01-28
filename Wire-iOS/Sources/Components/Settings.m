@@ -123,11 +123,7 @@ NSString * const UserDefaultDisableLinkPreviews = @"DisableLinkPreviews";
         [self migrateAppCenterAndOptOutSettingsToSharedDefaults];
         [self restoreLastUsedAVSSettings];
         
-#if !(TARGET_OS_SIMULATOR)
-        [self loadEnabledLogs];
-#else
-        [ZMSLog startRecordingWithIsInternal:[DeveloperMenuState developerMenuEnabled]];
-#endif
+        [self startLogging];
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(applicationDidEnterBackground:)

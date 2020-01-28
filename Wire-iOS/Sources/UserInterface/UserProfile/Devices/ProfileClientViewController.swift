@@ -243,7 +243,7 @@ import Cartography
     }
     
     private func setupDeleteButton() {
-        guard DeveloperMenuState.developerMenuEnabled() else { return }
+        guard Bundle.enableDeveloperMenu else { return }
         let deleteButton = ButtonWithLargerHitArea()
         deleteButton.setTitleColor(UIColor.accent(), for: .normal)
         deleteButton.titleLabel?.font = FontSpec(.small, .light).font!

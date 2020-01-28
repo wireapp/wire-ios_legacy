@@ -57,6 +57,9 @@ public extension Bundle {
         return Bundle.appMainBundle.infoForKey("UseAppCenter") == "1"
     }
 
+    static var enableDeveloperMenu: Bool {
+        return Bundle.appMainBundle.infoForKey("EnableDeveloperMenu") == "1"
+    }
 }
 
 

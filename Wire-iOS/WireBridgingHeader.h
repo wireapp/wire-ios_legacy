@@ -100,7 +100,7 @@
 #import "Analytics+Internal.h"
 #import "AnalyticsDecryptionFailedObserver.h"
 
-#import "DeveloperMenuState.h"
+#import "Application+runDuration.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
@@ -118,7 +118,6 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "DeveloperMenuState.h"
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
