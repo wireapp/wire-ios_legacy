@@ -238,8 +238,6 @@ protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
-
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

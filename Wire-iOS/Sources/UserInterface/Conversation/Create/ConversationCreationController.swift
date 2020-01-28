@@ -159,11 +159,6 @@ final class ConversationCreationController: UIViewController {
         return colorSchemeVariant == .light ? .default : .lightContent
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         nameSection.becomeFirstResponder()

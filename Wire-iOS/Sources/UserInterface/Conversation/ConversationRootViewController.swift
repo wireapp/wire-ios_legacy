@@ -108,9 +108,6 @@ final class ConversationRootViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        delay(0.4) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
 
         shouldAnimateNetworkStatusView = true
     }

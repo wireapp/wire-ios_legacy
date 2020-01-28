@@ -129,16 +129,6 @@ final class BackupViewController: UIViewController {
         return .lightContent
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
     private func setupViews() {
         view.backgroundColor = .clear
         

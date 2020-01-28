@@ -219,7 +219,6 @@ final class ZClientViewController: UIViewController {
         }
         
         updateSplitViewTopConstraint()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         view.setNeedsLayout()
     }
     
@@ -232,7 +231,6 @@ final class ZClientViewController: UIViewController {
     /// Select the connection inbox and optionally move focus to it.
     ///
     /// - Parameter focus: focus or not
-    @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController.selectInboxAndFocusOnView(focus: focus)
     }
@@ -529,15 +527,13 @@ final class ZClientViewController: UIViewController {
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
                             self.updateSplitViewTopConstraint()
-                            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                })
+                            })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                updateSplitViewTopConstraint()
+                        updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {
@@ -588,12 +584,10 @@ final class ZClientViewController: UIViewController {
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                 }) { _ in
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                }
+                            }
             }
             else {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                topOverlayViewController = viewController
+                        topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }
         }

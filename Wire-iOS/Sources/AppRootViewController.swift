@@ -316,8 +316,7 @@ final class AppRootViewController: UIViewController {
                     viewController.didMove(toParent: self)
                     previousViewController.removeFromParent()
                     self.visibleViewController = viewController
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                    completionHandler?()
+                        completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {
@@ -328,7 +327,6 @@ final class AppRootViewController: UIViewController {
                 view.addSubview(viewController.view)
                 viewController.didMove(toParent: self)
                 visibleViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }

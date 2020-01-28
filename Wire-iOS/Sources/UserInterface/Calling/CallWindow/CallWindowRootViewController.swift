@@ -36,14 +36,6 @@ final class CallWindowRootViewController: UIViewController {
         return callController?.activeCallViewController != nil
     }
     
-//    override var prefersStatusBarHidden: Bool {
-//        return callController?.activeCallViewController?.prefersStatusBarHidden ?? false
-//    }
-//
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return callController?.activeCallViewController?.preferredStatusBarStyle ?? .default
-//    }
-    
     private var child: UIViewController? {
         return callController?.activeCallViewController ?? topmostViewController()
     }

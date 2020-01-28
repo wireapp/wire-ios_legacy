@@ -59,11 +59,6 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
         tableView.estimatedSectionFooterHeight = 0
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-    }
-    
     override var prefersStatusBarHidden: Bool {
         return true
     }

@@ -85,7 +85,6 @@ extension MessagePresenter {
             observePlayerDismissial()
 
             targetViewController?.present(playerViewController, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 player.play()
             }
         } else {

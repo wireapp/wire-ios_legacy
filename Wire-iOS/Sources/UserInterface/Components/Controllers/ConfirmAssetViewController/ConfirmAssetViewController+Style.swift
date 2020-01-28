@@ -20,17 +20,6 @@ import Foundation
 import AVKit
 
 extension ConfirmAssetViewController {
-
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateStatusBar()
-    }
-
-    override open func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar()
-    }
-
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }

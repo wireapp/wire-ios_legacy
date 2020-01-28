@@ -82,7 +82,6 @@ final class CallTopOverlayController: UIViewController {
     deinit {
         stopCallDurationTimer()
         AVSMediaManagerClientChangeNotification.remove(self)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     init(conversation: ZMConversation) {

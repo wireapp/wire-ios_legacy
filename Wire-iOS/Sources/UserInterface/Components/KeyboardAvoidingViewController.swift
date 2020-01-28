@@ -54,14 +54,6 @@ final class KeyboardAvoidingViewController: UIViewController {
         return viewController.navigationItem
     }
     
-//    override var prefersStatusBarHidden: Bool {
-//        return viewController.prefersStatusBarHidden
-//    }
-//
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return viewController.preferredStatusBarStyle
-//    }
-    
     override var childForStatusBarStyle: UIViewController? {
         return viewController
     }

@@ -115,19 +115,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             navigationBar.isTranslucent = true
             navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
         }
-
-        updateStatusBar()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()

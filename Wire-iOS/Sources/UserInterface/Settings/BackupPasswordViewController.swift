@@ -88,7 +88,6 @@ final class BackupPasswordViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {

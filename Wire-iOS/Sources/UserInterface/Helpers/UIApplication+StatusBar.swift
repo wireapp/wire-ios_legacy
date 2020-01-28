@@ -23,16 +23,6 @@ extension UIApplication {
     
     static let wr_statusBarStyleChangeNotification: Notification.Name = Notification.Name("wr_statusBarStyleChangeNotification")
 
-    @objc
-    func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool) {
-        wr_updateStatusBarForCurrentControllerAnimated(animated, onlyFullScreen: true)
-    }
-
-    @objc
-    func wr_updateStatusBarForCurrentControllerAnimated(_ animated: Bool, onlyFullScreen: Bool) {
-        ///TODO: rm
-    }
-
     /// return the visible window on the top most which fulfills these conditions:
     /// 1. the windows has rootViewController
     /// 2. CallWindowRootViewController is in use and voice channel controller is active

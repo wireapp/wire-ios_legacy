@@ -30,20 +30,9 @@ extension ProfileSelfPictureViewController {
         setupTopView()
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateStatusBar()
-    }
-
-    override open func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar()
-    }
-
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
 
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -200,10 +189,7 @@ extension ProfileSelfPictureViewController {
             popover?.backgroundColor = UIColor.white
         }
 
-        // update status bar style for the top view controller (UIImagePickerController)
-        present(imagePickerController, animated: true) { [weak self] in
-            self?.updateStatusBar()
-        }
+        present(imagePickerController, animated: true)
     }
 
     @objc
