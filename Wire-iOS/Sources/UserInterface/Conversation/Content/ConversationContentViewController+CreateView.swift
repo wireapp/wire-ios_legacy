@@ -20,10 +20,6 @@ import Foundation
 
 extension ConversationContentViewController {
     
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-    
     @objc
     func setDataSource() {
         dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
