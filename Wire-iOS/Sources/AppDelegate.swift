@@ -176,9 +176,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         zmLog.info("applicationWillTerminate:  (applicationState = \(application.applicationState.rawValue))")
-        
-        // In case of normal termination we do not need the run duration to persist
-        UIApplication.shared.resetRunDuration()
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {

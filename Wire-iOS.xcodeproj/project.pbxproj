@@ -498,7 +498,6 @@
 		8719FD671C88802C005FBEC0 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8719FD661C88802C005FBEC0 /* Delay.swift */; };
 		871BBFFF1D34F56300DF0793 /* Analytics.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFA91D34F56300DF0793 /* Analytics.m */; };
 		871BC0021D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */; };
-		871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFB91D34F56300DF0793 /* Application+runDuration.m */; };
 		871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */; };
 		871BC00F1D34F56300DF0793 /* Analytics+OTREvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */; };
 		871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */; };
@@ -2092,8 +2091,6 @@
 		871BBFA91D34F56300DF0793 /* Analytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Analytics.m; sourceTree = "<group>"; };
 		871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsDecryptionFailedObserver.h; sourceTree = "<group>"; };
 		871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsDecryptionFailedObserver.m; sourceTree = "<group>"; };
-		871BBFB81D34F56300DF0793 /* Application+runDuration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Application+runDuration.h"; sourceTree = "<group>"; };
-		871BBFB91D34F56300DF0793 /* Application+runDuration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Application+runDuration.m"; sourceTree = "<group>"; };
 		871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+MediaActionEvents.swift"; sourceTree = "<group>"; };
 		871BBFCB1D34F56300DF0793 /* Analytics+OTREvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Analytics+OTREvents.h"; sourceTree = "<group>"; };
 		871BBFCC1D34F56300DF0793 /* Analytics+OTREvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Analytics+OTREvents.m"; sourceTree = "<group>"; };
@@ -4325,8 +4322,6 @@
 				871BBFAE1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.h */,
 				871BBFAF1D34F56300DF0793 /* AnalyticsDecryptionFailedObserver.m */,
 				16E2A0A31F6BF0C6005F4DB1 /* AnalyticsCallingTracker.swift */,
-				871BBFB81D34F56300DF0793 /* Application+runDuration.h */,
-				871BBFB91D34F56300DF0793 /* Application+runDuration.m */,
 				87E3C5071FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift */,
 				CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */,
 				5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */,
@@ -8042,7 +8037,6 @@
 				8FC85452199245770008B66B /* ConversationContentViewController.m in Sources */,
 				87E8D0BD21821E6F00BD26AC /* ConversationContentViewController+Reply.swift in Sources */,
 				D525426D209363AF001C04C1 /* IconLabelButton.swift in Sources */,
-				871BC0071D34F56300DF0793 /* Application+runDuration.m in Sources */,
 				F12CDAEB1E43886A00CEFCEB /* DecriptionHeaderView.swift in Sources */,
 				EF1FDC8021DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift in Sources */,
 				5E8DA751211AEFC800360979 /* AuthenticationStatusProvider.swift in Sources */,
