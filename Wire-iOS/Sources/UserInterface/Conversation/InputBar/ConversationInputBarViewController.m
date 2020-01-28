@@ -54,9 +54,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationInputBarViewController (ZMUserObserver) <ZMUserObserver>
 @end
 
-@interface ConversationInputBarViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
-@end
-
 @interface ConversationInputBarViewController (Giphy)
 
 - (void)giphyButtonPressed:(id)sender;
