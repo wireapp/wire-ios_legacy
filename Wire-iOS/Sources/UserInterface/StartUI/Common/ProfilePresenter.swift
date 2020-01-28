@@ -59,15 +59,7 @@ class ProfilePresenter: NSObject, ViewControllerDismisser {
         navigationController.transitioningDelegate = transitionDelegate
         navigationController.modalPresentationStyle = .formSheet
 
-        controller?.present(navigationController, animated: true)
-
-        ///TODO: config with presentationController?.config
-        // Get the popover presentation controller and configure it.
-        let presentationController = navigationController.popoverPresentationController
-
-        presentationController?.permittedArrowDirections = arrowDirection
-        presentationController?.sourceView = viewToPresentOn
-        presentationController?.sourceRect = rect
+        controllerToPresentOn?.present(navigationController, animated: true)
     }
 
     func dismiss(viewController: UIViewController, completion: (() -> Void)? = nil) {
