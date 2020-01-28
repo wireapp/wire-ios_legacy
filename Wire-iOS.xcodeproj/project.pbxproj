@@ -698,7 +698,6 @@
 		87DCF49E1D34E9E600BB420F /* ModalTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4991D34E9E600BB420F /* ModalTopBar.swift */; };
 		87DCF49F1D34E9E600BB420F /* NSUserDefaults+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF49A1D34E9E600BB420F /* NSUserDefaults+Location.swift */; };
 		87DCF4E61D34EA4500BB420F /* ShareItemProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4B61D34EA4500BB420F /* ShareItemProvider.m */; };
-		87DCF4EE1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4CC1D34EA4500BB420F /* TopPeopleLineCollectionViewController.m */; };
 		87DE06B41D2663960009411F /* AudioEffectsPickerViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DE06B21D26632E0009411F /* AudioEffectsPickerViewControllerTests.swift */; };
 		87E0D6D51CD3978900C54196 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E0D6D41CD3978900C54196 /* AVKit.framework */; };
 		87E3C5081FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87E3C5071FA76B7C008D1FC3 /* AnalyticsProviderFactory.swift */; };
