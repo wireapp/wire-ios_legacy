@@ -36,7 +36,12 @@ final class AppRootViewController: UIViewController {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController?
+    public fileprivate(set) var visibleViewController: UIViewController? {
+        didSet {
+            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
