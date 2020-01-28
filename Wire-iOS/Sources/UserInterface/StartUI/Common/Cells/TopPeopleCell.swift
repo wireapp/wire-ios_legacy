@@ -43,8 +43,6 @@ class TopPeopleCell: UICollectionViewCell {
         }
     }
 
-    var doubleTapAction: ((TopPeopleCell) -> Void)?
-
     private var initialConstraintsCreated = false
     private let badgeUserImageView = BadgeUserImageView()
     private let conversationImageView = UIImageView()
@@ -77,12 +75,6 @@ class TopPeopleCell: UICollectionViewCell {
         nameLabel.lineBreakMode = .byTruncatingTail
         nameLabel.textAlignment = .center
         contentView.addSubview(nameLabel)
-
-        let doubleTapper = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap))
-        doubleTapper.numberOfTapsRequired = 2
-        doubleTapper.numberOfTouchesRequired = 1
-        doubleTapper.delaysTouchesBegan = true
-        contentView.addGestureRecognizer(doubleTapper)
 
         // Create UserImageView
         badgeUserImageView.removeFromSuperview()
@@ -140,11 +132,6 @@ class TopPeopleCell: UICollectionViewCell {
         }
 
         super.updateConstraints()
-    }
-
-    @objc
-    private func handleDoubleTap(_ sender: UITapGestureRecognizer) {
-        //doubleTapAction?(self)
     }
 
     private func updateForContext() {
