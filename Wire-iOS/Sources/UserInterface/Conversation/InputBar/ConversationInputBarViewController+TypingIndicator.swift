@@ -18,7 +18,11 @@
 
 import Foundation
 
-extension ConversationInputBarViewController {
+extension ConversationInputBarViewController: ZMTypingChangeObserver {
+
+    public func typingDidChange(conversation: ZMConversation, typingUsers: [UserType]) {
+        updateTypingIndicator()
+    }
 
     @objc
     func updateTypingIndicator() {

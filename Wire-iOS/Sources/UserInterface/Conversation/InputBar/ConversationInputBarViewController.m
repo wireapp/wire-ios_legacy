@@ -54,9 +54,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationInputBarViewController (ZMUserObserver) <ZMUserObserver>
 @end
 
-@interface ConversationInputBarViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
-@end
-
 @interface ConversationInputBarViewController (Giphy)
 
 - (void)giphyButtonPressed:(id)sender;
@@ -657,16 +654,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     if (changeInfo.availabilityChanged) {
         [self updateAvailabilityPlaceholder];
     }
-}
-
-@end
-
-
-@implementation ConversationInputBarViewController (ZMTypingChangeObserver)
-
-- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSArray<id<UserType>> *)typingUsers
-{
-    [self updateTypingIndicator];
 }
 
 @end
