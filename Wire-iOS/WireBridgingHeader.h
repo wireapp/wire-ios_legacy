@@ -44,10 +44,6 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 
-#import "TopPeopleLineCollectionViewController.h"
-#import "TopPeopleCell.h"
-#import "TopPeopleCell+Internal.h"
-
 #import "IconButton.h"
 #import "IconButton+Internal.h"
 #import "Button.h"
