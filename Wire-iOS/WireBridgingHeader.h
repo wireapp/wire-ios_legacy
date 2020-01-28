@@ -100,7 +100,6 @@
 #import "Analytics+Internal.h"
 #import "AnalyticsDecryptionFailedObserver.h"
 
-#import "Application+runDuration.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
