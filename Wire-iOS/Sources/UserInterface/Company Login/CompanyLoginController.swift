@@ -158,7 +158,6 @@ import WireCommonComponents
     private func presentLoginAlert(prefilledCode: String?) {
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
-            validator: CompanyLoginRequestDetector.isValidRequestCode,
             completion: { [attemptLogin] code in code.apply(attemptLogin) }
         )
 

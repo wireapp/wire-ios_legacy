@@ -28,16 +28,8 @@ extension UIAlertController {
     @objc static func companyLogin(
         prefilledCode: String?,
         errorMessage: String? = nil,
-        validator: @escaping (String) -> Bool,
         completion: @escaping (String?) -> Void
         ) -> UIAlertController {
-        
-        var token: Any?
-        
-        func complete(_ result: String?) {
-            token.apply(NotificationCenter.default.removeObserver)
-            completion(result)
-        }
         
         let message = "login.sso.alert.message".localized
         
@@ -53,22 +45,16 @@ extension UIAlertController {
         }
         
         let loginAction = UIAlertAction(title: "login.sso.alert.action".localized, style: .default) { [controller] _ in
-            complete(controller.textFields?.first?.text)
+            completion(controller.textFields?.first?.text)
         }
         
         controller.addTextField { textField in
             textField.text = prefilledCode
             textField.accessibilityIdentifier = "textfield.sso.code"
             textField.placeholder = "login.sso.alert.text_field.placeholder".localized
-            token = NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: .main) { _ in
-                loginAction.isEnabled = textField.text.map(validator) ?? false
-            }
-
-            // Enable the login button initially if the prefilled code is valid.
-            loginAction.isEnabled = prefilledCode.map(validator) ?? false
         }
         
-        controller.addAction(.cancel { complete(nil) })
+        controller.addAction(.cancel { completion(nil) })
         controller.addAction(loginAction)
         return controller
     }
