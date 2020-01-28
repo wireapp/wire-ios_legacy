@@ -43,16 +43,6 @@ class TopPeopleCell: UICollectionViewCell {
         }
     }
 
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                badgeUserImageView.badgeIcon = .checkmark
-            } else {
-                badgeUserImageView.removeBadgeIcon()
-            }
-        }
-    }
-
     private let badgeUserImageView = BadgeUserImageView()
     private let conversationImageView = UIImageView()
     private let nameLabel = UILabel()

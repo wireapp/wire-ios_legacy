@@ -22,7 +22,6 @@ import Foundation
 class TopPeopleLineCollectionViewController: NSObject {
 
     var topPeople = [ZMConversation]()
-    private let userSelection = UserSelection()
 
     weak var delegate: TopPeopleLineCollectionViewControllerDelegate?
 
@@ -41,17 +40,7 @@ extension TopPeopleLineCollectionViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(ofType: TopPeopleCell.self, for: indexPath)
-
-        let conversation = self.conversation(at: indexPath)
-        let isSelected = conversation.connectedUser.map(userSelection.users.contains) ?? false
-
-        cell.conversation = conversation
-        cell.isSelected = isSelected
-
-        if isSelected {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
-        }
-
+        cell.conversation = conversation(at: indexPath)
         return cell
     }
 }
@@ -62,14 +51,9 @@ extension TopPeopleLineCollectionViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let conversation = self.conversation(at: indexPath)
-        conversation.connectedUser.map(userSelection.add)
         delegate?.topPeopleLineCollectionViewControllerDidSelect(conversation)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let conversation = self.conversation(at: indexPath)
-        conversation.connectedUser.map(userSelection.remove)
-    }
 }
 
 // MARK: - Flow Layout
