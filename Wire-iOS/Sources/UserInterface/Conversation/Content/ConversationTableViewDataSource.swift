@@ -411,6 +411,8 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard currentSections.indices.contains(section) else { return 0 }
+        
         return currentSections[section].elements.count
     }
     
