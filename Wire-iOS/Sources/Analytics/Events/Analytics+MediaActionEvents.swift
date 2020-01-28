@@ -30,7 +30,7 @@ fileprivate extension ZMConversation {
     }
 }
 
-public extension Analytics {
+extension Analytics {
 
     @objc func tagMediaActionCompleted(_ action: ConversationMediaAction, inConversation conversation: ZMConversation) {
         var attributes = conversation.ephemeralTrackingAttributes
