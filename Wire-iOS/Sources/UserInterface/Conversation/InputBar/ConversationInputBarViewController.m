@@ -725,16 +725,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@implementation ConversationInputBarViewController (ZMTypingChangeObserver)
-
-- (void)typingDidChangeWithConversation:(ZMConversation *)conversation typingUsers:(NSArray<id<UserType>> *)typingUsers
-{
-    [self updateTypingIndicator];
-}
-
-@end
-
-
 @implementation ConversationInputBarViewController (UIGestureRecognizerDelegate)
 
 #pragma mark - UIGestureRecognizerDelegate
