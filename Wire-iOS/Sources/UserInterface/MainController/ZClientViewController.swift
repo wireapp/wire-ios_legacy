@@ -188,43 +188,14 @@ final class ZClientViewController: UIViewController {
         return presentedViewController?.shouldAutorotate ?? true
     }
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        if let topOverlayViewController = topOverlayViewController {
-//            return topOverlayViewController.preferredStatusBarStyle
-//        } else if traitCollection.horizontalSizeClass == .compact {
-//            if let presentedViewController = presentedViewController as? UIAlertController {
-//                return presentedViewController.preferredStatusBarStyle
-//            }
-//
-//            return wireSplitViewController.preferredStatusBarStyle
-//        }
-//
-//        return .lightContent
-//    }
-//
-//    override var prefersStatusBarHidden: Bool {
-//        if let topOverlayViewController = topOverlayViewController {
-//            return topOverlayViewController.prefersStatusBarHidden
-//        } else if traitCollection.horizontalSizeClass == .compact {
-//                return presentedViewController?.prefersStatusBarHidden ?? wireSplitViewController.prefersStatusBarHidden
-//        }
-//
-//        return false
-//    }
-    
     private var child: UIViewController? {
         if nil != topOverlayViewController {
             return topOverlayViewController
         } else if traitCollection.horizontalSizeClass == .compact {
-            if presentedViewController != nil {
-                return presentedViewController
-            } else {
-                return splitViewController
-            }
-        } else {
-            return nil
+            return presentedViewController ?? wireSplitViewController
         }
         
+        return nil
     }
     
     override var childForStatusBarStyle: UIViewController? {

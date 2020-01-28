@@ -20,12 +20,7 @@ import Foundation
 
 extension SplitViewController {
     private var childViewController : UIViewController? {
-        if openPercentage > 0 {
-            return leftViewController
-        }
-        else {
-            return rightViewController
-        }
+        return openPercentage > 0 ? leftViewController : rightViewController
     }
     
     override open var childForStatusBarStyle: UIViewController? {

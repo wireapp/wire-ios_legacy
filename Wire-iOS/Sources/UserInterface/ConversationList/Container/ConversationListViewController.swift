@@ -175,11 +175,11 @@ final class ConversationListViewController: UIViewController {
     }
 
     override var prefersStatusBarHidden: Bool {
-        return true
+        return false
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent ///TODO: status bar is dark
+        return .lightContent
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
