@@ -59,8 +59,8 @@
 @property (nonatomic, readwrite) BOOL canModifyOtherMemberInConversation;
 @property (nonatomic, readwrite) BOOL canLeaveConversation;
 
-@property (nonatomic, readwrite) BOOL untrusted;
-@property (nonatomic, readwrite) BOOL trusted;
+//@property (nonatomic, readwrite) BOOL untrusted;
+@property (nonatomic, readwrite) BOOL isTrusted;
 @property (nonatomic, readwrite) BOOL isVerified;
 @property (nonatomic, readwrite) NSUInteger totalCommonConnections;
 @property (nonatomic, readwrite) NSTimeInterval expiresAfter;
