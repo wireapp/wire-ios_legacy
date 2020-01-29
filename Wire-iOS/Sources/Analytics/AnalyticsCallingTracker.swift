@@ -116,7 +116,7 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
     }
     
     func presentIOErrorAlertIfAllowed() {
-        guard Bundle.enableDeveloperMenu else { return }
+        guard Bundle.developerModeEnabled else { return }
         
         let alert = UIAlertController(title: "Calling Error", message: "AVS I/O error", cancelButtonTitle: "OK")
         alert.presentTopmost()

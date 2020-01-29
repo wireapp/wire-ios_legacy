@@ -754,7 +754,7 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
                                      attributes: [.font: UIFont.mediumFont, .link: link as AnyObject, .foregroundColor: UIColor.from(scheme: .textForeground)])
 
         let device : NSAttributedString
-        if Bundle.enableDeveloperMenu {
+        if Bundle.developerModeEnabled {
             device = "\n" + NSAttributedString(string: localizedDevice(systemMessage.clients.first as? UserClient),
                                                attributes: [.font: UIFont.mediumFont, .foregroundColor: UIColor.from(scheme: .textDimmed)])
         } else {

@@ -34,7 +34,7 @@ extension ZMConversation {
             newItems.append(.unsupportedValue(value))
         }
         
-        if Bundle.enableDeveloperMenu {
+        if Bundle.developerModeEnabled {
             newItems.append(.customValue)
         }
         

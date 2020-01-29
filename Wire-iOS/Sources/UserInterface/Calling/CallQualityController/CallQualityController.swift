@@ -62,7 +62,7 @@ final class CallQualityController: NSObject {
      */
 
     var canPresentCallQualitySurvey: Bool {
-        return Bundle.enableDeveloperMenu && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+        return Bundle.developerModeEnabled && !AutomationHelper.sharedHelper.disableCallQualitySurvey
     }
 
     // MARK: - Events

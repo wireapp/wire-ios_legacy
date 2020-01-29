@@ -41,7 +41,7 @@ import Foundation
 
     /// Starts tracking performance issues.
     @objc func start() {
-        guard Bundle.enableDeveloperMenu else {
+        guard Bundle.developerModeEnabled else {
             return
         }
 

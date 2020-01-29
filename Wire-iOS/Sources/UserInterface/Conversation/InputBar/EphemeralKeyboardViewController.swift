@@ -123,7 +123,7 @@ extension UIAlertController {
     /// - Parameter conversation: nil for testing only
     public init(conversation: ZMConversation!) {
         self.conversation = conversation
-        if Bundle.enableDeveloperMenu {
+        if Bundle.developerModeEnabled {
             timeouts = MessageDestructionTimeoutValue.all + [nil]
         }
         else {

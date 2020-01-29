@@ -72,6 +72,6 @@ extension Settings {
     }
     
     private var isInternal: Bool {
-        return Bundle.enableDeveloperMenu
+        return Bundle.developerModeEnabled
     }
 }
