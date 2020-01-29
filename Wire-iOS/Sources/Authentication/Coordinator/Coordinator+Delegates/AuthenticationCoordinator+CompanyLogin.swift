@@ -36,9 +36,14 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController) {
         stateController.transition(to: .companyLogin)
     }
-
+    
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController) {
         cancelCompanyLogin()
     }
 
+    func controllerDidAskToProvideCredentials(_ controller: CompanyLoginController) {
+        DispatchQueue.main.async { [stateController] in
+            stateController.transition(to: .provideCredentials(.email, nil))
+        }
+    }
 }

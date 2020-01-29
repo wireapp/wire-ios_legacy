@@ -35,6 +35,8 @@ import WireCommonComponents
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
 
+    /// Called when the company login controller asks the presenter to show the login screen
+    func controllerDidAskToProvideCredentials(_ controller: CompanyLoginController)
 }
 
 ///
@@ -142,7 +144,7 @@ import WireCommonComponents
             guard isAutoDetectionEnabled else { return }
 
             guard let result = result, !onlyNew || result.isNew else { return }
-            presentLoginAlert(result.code)
+            presentLoginAlert(result.code, nil)
         }
     }
 
@@ -150,14 +152,15 @@ import WireCommonComponents
     /// Call this method when you need to present the alert in response to user interaction.
     @objc func displayLoginCodePrompt() {
         detector.detectCopiedRequestCode { [presentLoginAlert] result in
-            presentLoginAlert(result?.code)
+            presentLoginAlert(result?.code, nil)
         }
     }
-
-    /// Presents the SSO login alert with an optional prefilled code.
-    private func presentLoginAlert(prefilledCode: String?) {
+    
+    /// Presents the SSO login alert with an optional prefilled code and optional error message
+    private func presentLoginAlert(prefilledCode: String?, errorMessage: String?) {
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
+            errorMessage: errorMessage,
             completion: { [attemptLogin] code in code.apply(attemptLogin) }
         )
 
@@ -169,13 +172,49 @@ import WireCommonComponents
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
     private func attemptLogin(using code: String) {
-        guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
-            return requireInternalFailure("Should never try to login with invalid code.")
+        // Parse input to detect code, email or wrong input
+        let parsingResult = CompanyLoginRequestDetector.parse(input: code)
+        
+        switch parsingResult {
+        case .ssoCode(let uuid):
+            attemptLoginWithCode(uuid)
+        case .domain(let domain):
+            lookup(domain: domain)
+        case .unknown:
+            break
+            // show error / can't understand code
         }
-
-        attemptLoginWithCode(uuid)
     }
 
+    private func lookup(domain: String) {
+        SessionManager.shared?.unauthenticatedSession?.lookup(domain: domain) {
+            [updateBackendEnvironment, presentLoginAlert] result in
+            guard result.error == nil, let domainInfo = result.value else {
+                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
+                return
+            }
+            updateBackendEnvironment(domainInfo.configurationURL)
+        }
+    }
+    
+    private func updateBackendEnvironment(with url: URL) {
+        func showProvideCredentialsScreen() {
+            DispatchQueue.main.async {
+                self.delegate?.controllerDidAskToProvideCredentials(self)
+            }
+        }
+        
+        SessionManager.shared?.switchBackend(configuration: url) {
+            [presentLoginAlert] result in
+            guard result.error == nil, let backendEnvironment = result.value else {
+                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
+                return
+            }
+            BackendEnvironment.shared = backendEnvironment
+            showProvideCredentialsScreen()
+        }
+    }
+    
     /**
      * Attemts to login with a SSO login code.
      * - parameter code: The SSO team code that was extracted from the link.

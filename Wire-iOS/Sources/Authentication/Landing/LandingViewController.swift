@@ -228,6 +228,7 @@ class LandingViewController: AuthenticationStepViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        updateCustomBackendLabel()
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
 
