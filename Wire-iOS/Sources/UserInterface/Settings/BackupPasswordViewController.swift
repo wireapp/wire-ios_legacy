@@ -56,10 +56,6 @@ final class BackupPasswordViewController: UIViewController {
         return false
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
     private let subtitleLabel = UILabel(
         key: "self.settings.history_backup.password.description",
         size: .medium,

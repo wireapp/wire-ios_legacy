@@ -55,10 +55,6 @@ final class BrowserViewController: SFSafariViewController {
         }
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
 }
 
 extension BrowserViewController: SFSafariViewControllerDelegate {

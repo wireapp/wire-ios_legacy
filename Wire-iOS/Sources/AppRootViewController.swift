@@ -316,7 +316,7 @@ final class AppRootViewController: UIViewController {
                     viewController.didMove(toParent: self)
                     previousViewController.removeFromParent()
                     self.visibleViewController = viewController
-                        completionHandler?()
+                    completionHandler?()
             })
         } else {
             UIView.performWithoutAnimation {

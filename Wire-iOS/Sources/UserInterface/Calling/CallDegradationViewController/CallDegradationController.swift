@@ -67,10 +67,6 @@ final class CallDegradationController: UIViewController {
         presentAlertIfNeeded()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = false
