@@ -703,7 +703,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-    // MARK: - Backup
 
     // MARK: - Company Login
 
