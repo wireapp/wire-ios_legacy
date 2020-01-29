@@ -80,14 +80,6 @@ final class ClearBackgroundNavigationController: UINavigationController {
         super.pushViewController(viewController, animated: animated)
     }
     
-    override var childForStatusBarStyle: UIViewController? {
-        return topViewController
-    }
-    
-    override var childForStatusBarHidden: UIViewController? {
-        return topViewController
-    }
-
     @objc func onEdgeSwipe(gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
         if gestureRecognizer.state == .recognized {
             self.popViewController(animated: true)
