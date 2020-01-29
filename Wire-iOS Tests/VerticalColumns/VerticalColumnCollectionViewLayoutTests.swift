@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
+final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
 
     var tiles: [ColorTile]! = [
         // square, downscale
@@ -47,11 +48,9 @@ class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
     }
 
     func testThatVerticalLayoutAdaptsToDeviceSize() {
-        let sut = ColorTilesViewController(tiles: tiles)
+        let sut = ColorTilesViewController(tiles: tiles, device: MockDevice())
 
-        verifyInAllDeviceSizes(view: sut.view) { _, isTablet in
-            sut.isTablet = isTablet
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
 
 }

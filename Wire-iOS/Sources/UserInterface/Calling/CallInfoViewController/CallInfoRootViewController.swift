@@ -68,7 +68,11 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         createConstraints()
         updateConfiguration()
     }
-        
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     private func setupViews() {
         addToSelf(contentNavigationController)
         addToSelf(callDegradationController)

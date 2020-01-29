@@ -45,12 +45,35 @@ extension XCTestCase {
         .iPhoneX: "iPhone-5_8_Inch",
         .iPhoneXsMax: "iPhone-6_5_Inch"]
 
+    static let padConfigNames: [SnapshotTesting.ViewImageConfig: String] = [
+        .iPadMini(.landscape): "iPad-landscape",
+        .iPadMini(.portrait): "iPad-portrait"]
+
     func verifyAllIPhoneSizes(matching value: UIViewController,
                               file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
 
         for(config, name) in XCTestCase.phoneConfigNames {
+            verify(matching: value, as: .image(on: config), named: name,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+
+    func verifyInAllDeviceSizes(matching value: UIViewController,
+                              file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+        
+        let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
+        
+        for(config, name) in allDevices {
+            if let deviceMockable = value as? DeviceMockable {
+                (deviceMockable.device as? MockDevice)?.userInterfaceIdiom = config.traits.userInterfaceIdiom
+            }
+            
             verify(matching: value, as: .image(on: config), named: name,
                    file: file,
                    testName: testName,
