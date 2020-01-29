@@ -52,14 +52,6 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
     }
     
-    override var childForStatusBarStyle: UIViewController? {
-        return viewControllers.last
-    }
-
-    override var childForStatusBarHidden: UIViewController? {
-        return viewControllers.last
-    }
-    
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         viewControllers.forEach { $0.hideDefaultButtonTitle() }
         
