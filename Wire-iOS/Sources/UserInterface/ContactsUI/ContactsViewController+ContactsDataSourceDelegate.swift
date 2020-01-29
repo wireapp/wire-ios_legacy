@@ -29,8 +29,8 @@ extension ContactsViewController {
 }
 
 extension ContactsViewController: ContactsDataSourceDelegate {
-    
-    public func dataSource(_ dataSource: ContactsDataSource,
+
+    func dataSource(_ dataSource: ContactsDataSource,
                            cellFor user: UserType,
                            at indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
@@ -63,12 +63,23 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 cell.actionButton.setTitle(titleString, for: .normal)
         }
 
-        if dataSource.selection.contains(user) {
+        if dataSource.selection.contains(user as! ZMSearchUser) { // FIXME
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
 
         return cell
+    }
 
+    func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType]) {
+        // No op
+    }
+
+    func dataSource(_ dataSource: ContactsDataSource, didSelect user: UserType) {
+        // No op
+    }
+
+    func dataSource(_ dataSource: ContactsDataSource, didDeselect user: UserType) {
+        // No op
     }
 
     

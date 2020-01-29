@@ -20,7 +20,6 @@
 
 #import "ContactsViewController.h"
 #import "ContactsViewController+Internal.h"
-#import "ContactsDataSource.h"
 
 #import "UITableView+RowCount.h"
 #import "Analytics.h"
@@ -98,7 +97,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.tableView.allowsMultipleSelection = YES;
     self.tableView.rowHeight = 52.0f;
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
-    self.tableView.sectionIndexMinimumDisplayRowCount = MinimumNumberOfContactsToDisplaySections;
+    self.tableView.sectionIndexMinimumDisplayRowCount = 15; //FIXME: ContactsDataSource.MinimumNumberOfContactsToDisplaySections;
     [self.tableView registerClass:[ContactsCell class] forCellReuseIdentifier:ContactsViewControllerCellID];
     [self.tableView registerClass:[ContactsSectionHeaderView class] forHeaderFooterViewReuseIdentifier:ContactsViewControllerSectionHeaderID];
     [self.view addSubview:self.tableView];

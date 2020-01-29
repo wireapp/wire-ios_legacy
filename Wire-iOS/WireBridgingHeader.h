@@ -80,7 +80,6 @@
 #import "FullscreenImageViewController+internal.h"
 
 #import "CountryCodeTableViewController.h"
-#import "ContactsDataSource.h"
 #import "Button.h"
 
 // Helper objects

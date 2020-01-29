@@ -32,7 +32,7 @@ extension ContactsDataSource {
         task.onResult { [weak self] (searchResult, _) in
             guard let `self` = self else { return }
             self.ungroupedSearchResults = searchResult.addressBook
-            self.delegate?.dataSource?(self, didReceiveSearchResult: searchResult.addressBook)
+            self.delegate?.dataSource(self, didReceiveSearchResult: searchResult.addressBook)
         }
         
         task.start()

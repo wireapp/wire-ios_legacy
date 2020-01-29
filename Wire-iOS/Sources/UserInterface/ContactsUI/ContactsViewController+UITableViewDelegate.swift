@@ -48,7 +48,7 @@ extension ContactsViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let user = dataSource?.user(at: indexPath) {
-            dataSource?.select(user)
+            dataSource?.select(user: user)
         }
     }
 
@@ -67,7 +67,7 @@ extension ContactsViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let user = dataSource?.user(at: indexPath) {
-            dataSource?.deselect(user)
+            dataSource?.deselect(user: user)
         }
     }
 }
