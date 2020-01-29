@@ -33,7 +33,7 @@ protocol CallDegradationControllerDelegate: class {
     
 }
 
-class CallDegradationController: UIViewController {
+final class CallDegradationController: UIViewController {
 
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil
@@ -67,6 +67,10 @@ class CallDegradationController: UIViewController {
         presentAlertIfNeeded()
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isUserInteractionEnabled = false
