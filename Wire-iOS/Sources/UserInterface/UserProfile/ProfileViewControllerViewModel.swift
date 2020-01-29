@@ -73,10 +73,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     var shouldShowVerifiedShield: Bool {
-        guard let user = fullUser else {
-            return false
-        }
-        return user.isVerified && context != .deviceList
+        return bareUser.isVerified && context != .deviceList
     }
     
     var hasUserClientListTab: Bool {
