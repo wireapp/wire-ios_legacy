@@ -35,7 +35,7 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForAlert(){
+    func testForAlert() {
         verify(matching: sut)
     }
 

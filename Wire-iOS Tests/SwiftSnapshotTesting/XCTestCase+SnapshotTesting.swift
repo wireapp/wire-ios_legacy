@@ -77,6 +77,9 @@ extension XCTestCase {
 
         // Reset default tint color to keep constant snapshot result
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = value.view.tintColor
+        
+        // Prevent showing cursor
+        value.setEditing(false, animated: false)
 
         let failure = verifySnapshot(matching: value,
                                      as: .image,

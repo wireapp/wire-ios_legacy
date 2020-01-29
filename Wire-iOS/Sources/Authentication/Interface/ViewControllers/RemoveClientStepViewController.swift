@@ -64,6 +64,10 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         updateBackButton()
     }
 
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     private func configureSubviews() {
         view.backgroundColor = UIColor.Team.background
 
