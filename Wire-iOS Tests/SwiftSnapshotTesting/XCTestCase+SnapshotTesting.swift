@@ -74,8 +74,6 @@ extension XCTestCase {
                 (deviceMockable.device as? MockDevice)?.userInterfaceIdiom = config.traits.userInterfaceIdiom
             }
             
-            value.setNeedsStatusBarAppearanceUpdate()
-            
             verify(matching: value, as: .image(on: config), named: name,
                    file: file,
                    testName: testName,
