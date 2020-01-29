@@ -116,7 +116,6 @@
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player
-#import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
 
 // Invite

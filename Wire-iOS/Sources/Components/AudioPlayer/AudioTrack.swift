@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,21 +17,15 @@
 // 
 
 
-#import <Foundation/Foundation.h>
-
-@protocol AudioTrack <NSObject>
-
-@property (nonatomic, readonly) NSString *title;
-@property (nonatomic, readonly) NSString *author;
-@property (nonatomic, readonly) UIImage *artwork;
-@property (nonatomic, readonly) NSTimeInterval duration;
-
-@property (nonatomic, readonly) NSURL *artworkURL;
-@property (nonatomic, readonly) NSURL *streamURL;
-@property (nonatomic, readonly) NSURL *previewStreamURL;
-@property (nonatomic, readonly) NSURL *externalURL;
-@property (nonatomic) BOOL failedToLoad;
-
-- (void)fetchArtwork;
-
-@end
+protocol AudioTrack: NSObjectProtocol {
+    var title: String? { get }
+    var author: String? { get }
+    var artwork: UIImage? { get }
+    var duration: TimeInterval { get }
+    var artworkURL: URL? { get }
+    var streamURL: URL? { get }
+    var previewStreamURL: URL? { get }
+    var externalURL: URL? { get }
+    var failedToLoad: Bool { get set }
+    func fetchArtwork()
+}

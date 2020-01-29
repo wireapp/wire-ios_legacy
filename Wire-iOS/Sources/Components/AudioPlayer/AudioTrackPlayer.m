@@ -37,27 +37,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
 @import AVFoundation;
 @import MediaPlayer;
 
-
-@interface AudioTrackPlayer () <ZMMessageObserver>
-
-@property (nonatomic) AVPlayer *avPlayer;
-@property (nonatomic) NSObject<AudioTrack> *audioTrack;
-@property (nonatomic) CGFloat progress;
-@property (nonatomic) id timeObserverToken;
-@property (nonatomic) id messageObserverToken;
-@property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
-@property (nonatomic) MediaPlayerState state;
-@property (nonatomic) id<ZMConversationMessage> sourceMessage;
-@property (nonatomic) NSObject *artworkObserver;
-@property (nonatomic) NSDictionary *nowPlayingInfo;
-@property (nonatomic) id playHandler;
-@property (nonatomic) id pauseHandler;
-@property (nonatomic) id nextTrackHandler;
-@property (nonatomic) id previousTrackHandler;
-
-
-@end
-
 @implementation AudioTrackPlayer
 
 - (void)dealloc
@@ -293,21 +272,21 @@ static NSString* EmptyStringIfNil(NSString *string) {
 
 #pragma mark - MPNowPlayingInfoCenter
 
-- (void)populateNowPlayingState
-{
-    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
-    
-    NSMutableDictionary *nowPlayingInfo =
-    [NSMutableDictionary dictionaryWithDictionary:@{ MPMediaItemPropertyTitle : EmptyStringIfNil(self.audioTrack.title),
-                                                     MPMediaItemPropertyArtist : EmptyStringIfNil(self.audioTrack.author),
-                                                     MPNowPlayingInfoPropertyPlaybackRate : @(self.avPlayer.rate),
-                                                     MPMediaItemPropertyPlaybackDuration : @(CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration)) }];
-    
-    info.nowPlayingInfo = nowPlayingInfo;
-    self.nowPlayingInfo = nowPlayingInfo;
-    
-    self.artworkObserver = [KeyValueObserver observeObject:self.audioTrack keyPath:@"artwork" target:self selector:@selector(artworkChanged:) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-}
+//- (void)populateNowPlayingState
+//{
+//    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
+//    
+//    NSMutableDictionary *nowPlayingInfo =
+//    [NSMutableDictionary dictionaryWithDictionary:@{ MPMediaItemPropertyTitle : EmptyStringIfNil(self.audioTrack.title),
+//                                                     MPMediaItemPropertyArtist : EmptyStringIfNil(self.audioTrack.author),
+//                                                     MPNowPlayingInfoPropertyPlaybackRate : @(self.avPlayer.rate),
+//                                                     MPMediaItemPropertyPlaybackDuration : @(CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration)) }];
+//    
+//    info.nowPlayingInfo = nowPlayingInfo;
+//    self.nowPlayingInfo = nowPlayingInfo;
+//    
+//    self.artworkObserver = [KeyValueObserver observeObject:self.audioTrack keyPath:@"artwork" target:self selector:@selector(artworkChanged:) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
+//}
 
 - (void)clearNowPlayingState
 {
