@@ -77,11 +77,6 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
 
     // MARK: - View lifecycle
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateLayout()
-    }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             self.updateLayout(for: size)
@@ -90,7 +85,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateLayout()
+        updateLayout()
     }
 
     // MARK: - Size Changes
