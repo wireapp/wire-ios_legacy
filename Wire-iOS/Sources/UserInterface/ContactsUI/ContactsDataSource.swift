@@ -30,7 +30,28 @@ import Foundation
 
     static let MinimumNumberOfContactsToDisplaySections: UInt = 15
 
+    @objc weak var delegate: ContactsDataSourceDelegate?
+
     private(set) var searchDirectory: SearchDirectory?
+    private var sections = [[ZMSearchUser]]()
+    private var collation: UILocalizedIndexedCollation { return .current() }
+
+    // MARK: - Life Cycle
+
+    override init() {
+        super.init()
+
+        // FIXME: I think we could require a non nil search directory.
+        if let userSession = ZMUserSession.shared() {
+            searchDirectory = SearchDirectory(userSession: userSession)
+        }
+    }
+
+    deinit {
+        searchDirectory?.tearDown()
+    }
+
+    // MARK: - Getters / Setters
 
     var ungroupedSearchResults = [ZMSearchUser]() {
         didSet {
@@ -47,59 +68,26 @@ import Foundation
 
     var selection = Set<ZMSearchUser>() {
         didSet {
+            guard let delegate = delegate else { return }
             let removedUsers = oldValue.subtracting(selection)
             let addedUsers = selection.subtracting(oldValue)
-            removedUsers.forEach { delegate?.dataSource(self, didDeselect: $0) }
-            addedUsers.forEach { delegate?.dataSource(self, didSelect: $0) }
+            removedUsers.forEach { delegate.dataSource(self, didDeselect: $0) }
+            addedUsers.forEach { delegate.dataSource(self, didSelect: $0) }
         }
     }
 
-    var shouldShowSectionIndex: Bool {
+    private var shouldShowSectionIndex: Bool {
         return ungroupedSearchResults.count >= type(of: self).MinimumNumberOfContactsToDisplaySections
-    }
-
-    private var collation: UILocalizedIndexedCollation {
-        return .current()
-    }
-
-    private var sections = [[ZMSearchUser]]()
-
-    @objc weak var delegate: ContactsDataSourceDelegate?
-
-    // MARK: - Life Cycle
-
-    convenience override init() {
-        if let userSession = ZMUserSession.shared() {
-            self.init(searchDirectory: SearchDirectory(userSession: userSession))
-        } else {
-            self.init(searchDirectory: nil)
-        }
-    }
-
-    private init(searchDirectory: SearchDirectory?) {
-        super.init()
-
-        // Not sure if this is necessary.
-        if ZMUserSession.shared() != nil {
-            self.searchDirectory = searchDirectory
-        }
-
-        // sections
-        // mutable selection
-    }
-
-    deinit {
-        searchDirectory?.tearDown()
     }
 
     // MARK: - Methods
 
-    func section(at index: Int) -> [ZMSearchUser] {
-        return sections[index]
-    }
-
     func user(at indexPath: IndexPath) -> ZMSearchUser {
         return section(at: indexPath.section)[indexPath.row]
+    }
+
+    private func section(at index: Int) -> [ZMSearchUser] {
+        return sections[index]
     }
 
     func select(user: ZMSearchUser) {
@@ -116,18 +104,17 @@ import Foundation
 
     private func recalculateSections() {
         let nameSelector = #selector(getter: ZMSearchUser.displayName)
+
         guard shouldShowSectionIndex else {
-            // If user has almost empty contact list, no need to display contacts grouped with section index.
             let sortedResults = collation.sortedArray(from: ungroupedSearchResults, collationStringSelector: nameSelector)
             sections = [sortedResults] as! [[ZMSearchUser]] // FIXME: don't force unwrap
             return
         }
 
-        // Initialize empty sections.
         let numberOfSections = collation.sectionTitles.count
-        let accumulator = Array(repeating: [ZMSearchUser](), count: numberOfSections)
+        let emptySections = Array(repeating: [ZMSearchUser](), count: numberOfSections)
 
-        let unsortedSections = ungroupedSearchResults.reduce(into: accumulator) { (sections, user) in
+        let unsortedSections = ungroupedSearchResults.reduce(into: emptySections) { (sections, user) in
             let index = collation.section(for: user, collationStringSelector: nameSelector)
             sections[index].append(user)
         }
@@ -138,7 +125,6 @@ import Foundation
 
         sections = sortedSections as! [[ZMSearchUser]] // FIXME
     }
-
 }
 
 extension ContactsDataSource: UITableViewDataSource {

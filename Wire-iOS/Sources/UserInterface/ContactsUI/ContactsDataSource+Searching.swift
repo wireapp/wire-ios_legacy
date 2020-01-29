@@ -20,10 +20,10 @@
 import Foundation
 
 extension ContactsDataSource {
-    
+
+    // FIXME: We don't need to pass arguments here.
     @objc
-    public func search(withQuery query: String,
-                       searchDirectory: SearchDirectory?) {
+    public func search(withQuery query: String, searchDirectory: SearchDirectory?) {
         guard let searchDirectory = searchDirectory else { return }
         
         let request = SearchRequest(query: query, searchOptions: [.contacts, .addressBook])
@@ -37,6 +37,4 @@ extension ContactsDataSource {
         
         task.start()
     }
-    
-    
 }
