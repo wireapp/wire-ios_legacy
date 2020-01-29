@@ -161,7 +161,7 @@ final class ZClientViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(colorSchemeControllerDidApplyChanges(_:)), name: NSNotification.colorSchemeControllerDidApplyColorSchemeChange, object: nil)
         
-        if DeveloperMenuState.developerMenuEnabled() {
+        if Bundle.developerModeEnabled {
             //better way of dealing with this?
             NotificationCenter.default.addObserver(self, selector: #selector(requestLoopNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingRequestLoopNotificationName), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(inconsistentStateNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingInconsistentStateNotificationName), object: nil)
