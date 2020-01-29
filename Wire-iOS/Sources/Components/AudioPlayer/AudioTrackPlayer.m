@@ -265,22 +265,6 @@
 
 #pragma mark - MPNowPlayingInfoCenter
 
-//- (void)populateNowPlayingState
-//{
-//    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
-//    
-//    NSMutableDictionary *nowPlayingInfo =
-//    [NSMutableDictionary dictionaryWithDictionary:@{ MPMediaItemPropertyTitle : EmptyStringIfNil(self.audioTrack.title),
-//                                                     MPMediaItemPropertyArtist : EmptyStringIfNil(self.audioTrack.author),
-//                                                     MPNowPlayingInfoPropertyPlaybackRate : @(self.avPlayer.rate),
-//                                                     MPMediaItemPropertyPlaybackDuration : @(CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration)) }];
-//    
-//    info.nowPlayingInfo = nowPlayingInfo;
-//    self.nowPlayingInfo = nowPlayingInfo;
-//    
-//    self.artworkObserver = [KeyValueObserver observeObject:self.audioTrack keyPath:@"artwork" target:self selector:@selector(artworkChanged:) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-//}
-
 - (void)clearNowPlayingState
 {
     MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];

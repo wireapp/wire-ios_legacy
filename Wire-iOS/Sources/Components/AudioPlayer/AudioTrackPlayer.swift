@@ -20,6 +20,9 @@ import Foundation
 import MediaPlayer
 
 extension AudioTrackPlayer {
+    
+    //MARK: -  MPNowPlayingInfoCenter
+
     @objc
     func populateNowPlayingState() {
         let playbackDuration: NSNumber
