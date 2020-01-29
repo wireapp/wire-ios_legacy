@@ -131,14 +131,14 @@ import WireCommonComponents
 
     // MARK: - Login Prompt Presentation
     
-    @objc func detectLoginCode() {
+    func detectLoginCode() {
         internalDetectLoginCode(onlyNew: false)
     }
 
     /// This method will be called when the app comes back to the foreground.
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
-    @objc func internalDetectLoginCode(onlyNew: Bool) {
+    private func internalDetectLoginCode(onlyNew: Bool) {
         guard isAutoDetectionEnabled else { return }
         detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentLoginAlert] result in
             // This might have changed in the meantime.
@@ -151,7 +151,7 @@ import WireCommonComponents
 
     /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
     /// Call this method when you need to present the alert in response to user interaction.
-    @objc func displayLoginCodePrompt() {
+    func displayLoginCodePrompt() {
         detector.detectCopiedRequestCode { [presentLoginAlert] result in
             presentLoginAlert(result?.code, nil)
         }
@@ -162,19 +162,25 @@ import WireCommonComponents
         let alertController = UIAlertController.companyLogin(
             prefilledCode: prefilledCode,
             errorMessage: errorMessage,
-            completion: { [attemptLogin] code in code.apply(attemptLogin) }
+            completion: { [parseAndHandle] input in input.apply(parseAndHandle) }
         )
-
+        
         delegate?.controller(self, presentAlert: alertController)
     }
-
+    
     // MARK: - Login Handling
 
+//    private func attemptLogin(using code: String) {
+//        guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
+//            return requireInternalFailure("Should never try to login with invalid code")
+//        }
+//        attemptLoginWithCode(uuid)
+//    }
+    
     /// Attempt to login using the requester specified in `init`
     /// - parameter code: the code used to attempt the SSO login.
-    private func attemptLogin(using code: String) {
-        // Parse input to detect code, email or wrong input
-        let parsingResult = CompanyLoginRequestDetector.parse(input: code)
+    private func parseAndHandle(input: String) {
+        let parsingResult = CompanyLoginRequestDetector.parse(input: input)
         
         switch parsingResult {
         case .ssoCode(let uuid):
