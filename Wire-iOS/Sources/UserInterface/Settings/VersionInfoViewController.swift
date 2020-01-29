@@ -94,9 +94,5 @@ final class VersionInfoViewController: UIViewController {
     private func closeButtonTapped(_ close: Any?) {
         dismiss(animated: true)
     }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
 }
 

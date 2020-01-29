@@ -52,10 +52,6 @@ final class BackupPasswordViewController: UIViewController {
     fileprivate var password: Password?
     private let passwordView = SimpleTextField()
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     private let subtitleLabel = UILabel(
         key: "self.settings.history_backup.password.description",
         size: .medium,

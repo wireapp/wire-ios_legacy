@@ -102,11 +102,7 @@ final class CallTopOverlayController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
+     
     override func loadView() {
         view = TapableAccessibleView(onAccessibilityActivate: { [weak self] in
             self?.openCall(nil)

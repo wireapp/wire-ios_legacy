@@ -80,10 +80,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(initialMessage.isImage)
         
