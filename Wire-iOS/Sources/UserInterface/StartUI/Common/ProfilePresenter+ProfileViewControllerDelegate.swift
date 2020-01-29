@@ -1,6 +1,6 @@
-
+//
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,44 +18,12 @@
 
 import Foundation
 
-extension ProfilePresenter {
-    func presentProfileViewController(for user: UserType,
-                                      in controller: UIViewController?,
-                                      from rect: CGRect,
-                                      onDismiss: @escaping () -> (),
-                                      arrowDirection: UIPopoverArrowDirection) {
-        profileOpenedFromPeoplePicker = true
-        viewToPresentOn = controller?.view
-        controllerToPresentOn = controller
-        presentedFrame = rect
-        
-        self.onDismiss = onDismiss
-        
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .search)
-        profileViewController.delegate = self
-        profileViewController.viewControllerDismisser = self
-        
-        let navigationController = profileViewController.wrapInNavigationController()
-        navigationController.transitioningDelegate = transitionDelegate
-        navigationController.modalPresentationStyle = .formSheet
-        
-        controller?.present(navigationController, animated: true)
-        
-        ///TODO: config with presentationController?.config
-        // Get the popover presentation controller and configure it.
-        let presentationController = navigationController.popoverPresentationController
-                
-        presentationController?.permittedArrowDirections = arrowDirection
-        presentationController?.sourceView = viewToPresentOn
-        presentationController?.sourceRect = rect
-    }
-}
-
 extension ProfilePresenter: ProfileViewControllerDelegate {
+
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         guard let controller = controller else { return }
-        
-        dismiss(controller) {
+
+        dismiss(viewController: controller) {
             ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
         }
     }

@@ -232,12 +232,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
         }
 
-        if let user = user as? ZMUser {
-            verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
-        } else {
-            verifiedIconView.isHidden = true
-        }
-
+        verifiedIconView.isHidden = !user.isVerified
         externalUserIconView.isHidden = !user.isExternalPartner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
