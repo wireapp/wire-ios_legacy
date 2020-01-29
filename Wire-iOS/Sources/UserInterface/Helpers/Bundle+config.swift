@@ -1,6 +1,6 @@
-//
+
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,20 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class BadgeUserImageView;
+import Foundation
 
-@interface TopPeopleCell ()
-
-@property (nonatomic, assign) BOOL initialConstraintsCreated;
-
-@property (nonatomic, strong) BadgeUserImageView *badgeUserImageView;
-@property (nonatomic, strong) UIImageView *conversationImageView;
-@property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UIView *avatarContainer;
-
-@property (nonatomic, strong) NSLayoutConstraint *avatarViewSizeConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *conversationImageViewSize;
-
-- (void)updateForContext;
-
-@end
+extension Bundle {    
+    static var developerModeEnabled: Bool {
+        return Bundle.appMainBundle.infoForKey("EnableDeveloperMenu") == "1"
+    }
+}

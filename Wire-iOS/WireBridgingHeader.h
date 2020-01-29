@@ -44,10 +44,6 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 
-#import "TopPeopleLineCollectionViewController.h"
-#import "TopPeopleCell.h"
-#import "TopPeopleCell+Internal.h"
-
 #import "IconButton.h"
 #import "IconButton+Internal.h"
 #import "Button.h"
@@ -96,13 +92,9 @@
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"
-#import "ProfilePresenter.h"
-#import "ProfilePresenter+Internal.h"
 
 // Utils
 
-#import "Application+runDuration.h"
-#import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
@@ -120,7 +112,6 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "DeveloperMenuState.h"
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
