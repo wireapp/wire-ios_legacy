@@ -29,7 +29,6 @@ final class ColorTilesViewController: VerticalColumnCollectionViewController, De
     let tiles: [ColorTile]
     var device: DeviceProtocol = UIDevice.current
 
-
     init(tiles: [ColorTile], device: DeviceProtocol = UIDevice.current) {
         self.tiles = tiles
         self.device = device
@@ -41,7 +40,7 @@ final class ColorTilesViewController: VerticalColumnCollectionViewController, De
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "tile")

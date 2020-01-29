@@ -66,14 +66,14 @@ extension XCTestCase {
                               file: StaticString = #file,
                               testName: String = #function,
                               line: UInt = #line) {
-        
+
         let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
-        
+
         for(config, name) in allDevices {
             if let deviceMockable = value as? DeviceMockable {
                 (deviceMockable.device as? MockDevice)?.userInterfaceIdiom = config.traits.userInterfaceIdiom
             }
-            
+
             verify(matching: value, as: .image(on: config), named: name,
                    file: file,
                    testName: testName,
@@ -90,7 +90,6 @@ extension XCTestCase {
         return path
     }
 
-
     /// verify for a UIAlertController
     /// NOTICE: UIAlertController actionSheet not work may crash for fatal error
     func verify(matching value: UIAlertController,
@@ -100,7 +99,7 @@ extension XCTestCase {
 
         // Reset default tint color to keep constant snapshot result
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = value.view.tintColor
-        
+
         // Prevent showing cursor
         value.setEditing(false, animated: false)
 

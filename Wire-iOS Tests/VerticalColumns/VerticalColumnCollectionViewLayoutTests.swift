@@ -39,7 +39,7 @@ final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
         ColorTile(color: .vividRed, size: CGSize(width: 1000, height: 1000)),
         ColorTile(color: .strongLimeGreen, size: CGSize(width: 10, height: 15)),
         ColorTile(color: .violet, size: CGSize(width: 10, height: 10)),
-        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500)),
+        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500))
     ]
 
     override func tearDown() {
@@ -54,4 +54,3 @@ final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
     }
 
 }
-
