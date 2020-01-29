@@ -52,22 +52,12 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
     }
     
-    override var prefersStatusBarHidden: Bool {
-        if let topController = self.viewControllers.last {
-            return topController.prefersStatusBarHidden
-        }
-        else {
-            return super.prefersStatusBarHidden
-        }
+    override var childForStatusBarStyle: UIViewController? {
+        return viewControllers.last
     }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let topController = self.viewControllers.last {
-            return topController.preferredStatusBarStyle
-        }
-        else {
-            return super.preferredStatusBarStyle
-        }
+
+    override var childForStatusBarHidden: UIViewController? {
+        return viewControllers.last
     }
     
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
