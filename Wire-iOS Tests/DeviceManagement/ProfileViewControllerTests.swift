@@ -72,7 +72,7 @@ final class ProfileViewControllerTests: XCTestCase {
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
         selfUser.availability = .busy
-        selfUser.trusted = true
+        selfUser.isTrusted = true
         sut = ProfileViewController(user: selfUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
