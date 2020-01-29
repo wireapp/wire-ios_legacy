@@ -35,8 +35,9 @@ import WireCommonComponents
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
 
-    /// Called when the company login controller asks the presenter to show the login screen
-    func controllerDidAskToProvideCredentials(_ controller: CompanyLoginController)
+    /// Called when the company login controller updated to a different backend environment.
+    /// It will need the delegate to present the landing screen
+    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController)
 }
 
 ///
@@ -185,35 +186,6 @@ import WireCommonComponents
             // show error / can't understand code
         }
     }
-
-    private func lookup(domain: String) {
-        SessionManager.shared?.unauthenticatedSession?.lookup(domain: domain) {
-            [updateBackendEnvironment, presentLoginAlert] result in
-            guard result.error == nil, let domainInfo = result.value else {
-                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
-                return
-            }
-            updateBackendEnvironment(domainInfo.configurationURL)
-        }
-    }
-    
-    private func updateBackendEnvironment(with url: URL) {
-        func showProvideCredentialsScreen() {
-            DispatchQueue.main.async {
-                self.delegate?.controllerDidAskToProvideCredentials(self)
-            }
-        }
-        
-        SessionManager.shared?.switchBackend(configuration: url) {
-            [presentLoginAlert] result in
-            guard result.error == nil, let backendEnvironment = result.value else {
-                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
-                return
-            }
-            BackendEnvironment.shared = backendEnvironment
-            showProvideCredentialsScreen()
-        }
-    }
     
     /**
      * Attemts to login with a SSO login code.
@@ -260,6 +232,37 @@ import WireCommonComponents
         return true
     }
 
+    // MARK: - Custom Backend Switch Handling
+    
+    private func lookup(domain: String) {
+        SessionManager.shared?.unauthenticatedSession?.lookup(domain: domain) {
+            [updateBackendEnvironment, presentLoginAlert] result in
+            guard result.error == nil, let domainInfo = result.value else {
+                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
+                return
+            }
+            updateBackendEnvironment(domainInfo.configurationURL)
+        }
+    }
+    
+    private func updateBackendEnvironment(with url: URL) {
+        func notifyDelegate() {
+            DispatchQueue.main.async {
+                self.delegate?.controllerDidUpdateBackendEnvironment(self)
+            }
+        }
+        
+        SessionManager.shared?.switchBackend(configuration: url) {
+            [presentLoginAlert] result in
+            guard result.error == nil, let backendEnvironment = result.value else {
+                presentLoginAlert(nil, "login.sso.error.alert.domain_not_registered.message".localized)
+                return
+            }
+            BackendEnvironment.shared = backendEnvironment
+            notifyDelegate()
+        }
+    }
+    
     // MARK: - Flow
 
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {

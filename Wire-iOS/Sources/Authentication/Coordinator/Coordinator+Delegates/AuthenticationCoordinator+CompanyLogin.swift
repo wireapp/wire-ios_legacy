@@ -41,9 +41,7 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
         cancelCompanyLogin()
     }
 
-    func controllerDidAskToProvideCredentials(_ controller: CompanyLoginController) {
-        DispatchQueue.main.async { [stateController] in
-            stateController.transition(to: .provideCredentials(.email, nil))
-        }
+    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController) {
+        stateController.transition(to: .landingScreen, mode: .reset)
     }
 }
