@@ -20,9 +20,9 @@
 protocol AudioTrack: NSObjectProtocol {
     var title: String? { get }
     var author: String? { get }
-    var artwork: UIImage? { get }
+    dynamic var artwork: UIImage? { get }
     var duration: TimeInterval { get }
-    var artworkURL: URL? { get }
+    var artworkURL: URL! { get }
     var streamURL: URL? { get }
     var previewStreamURL: URL? { get }
     var externalURL: URL? { get }

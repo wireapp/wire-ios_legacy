@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
 @property (nonatomic) MediaPlayerState state;
 @property (nonatomic, nullable) id<ZMConversationMessage> sourceMessage;
-@property (nonatomic) NSObject *artworkObserver;
+@property (nonatomic) NSObject *artworkObserver;///TODO: NSKeyValueObservation
 @property (nonatomic) NSDictionary *nowPlayingInfo;
 @property (nonatomic) id playHandler;
 @property (nonatomic) id pauseHandler;

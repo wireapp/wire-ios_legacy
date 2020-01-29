@@ -62,7 +62,8 @@ extension ZMAssetClientMessage: AudioTrack {
         }
     }
     
-    public var artwork: UIImage? {
+    @objc dynamic
+    var artwork: UIImage? {
         get {
             return .none
         }

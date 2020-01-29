@@ -21,7 +21,7 @@ import MediaPlayer
 
 extension AudioTrackPlayer {
     @objc
-    func populateNowPlayingState() {        
+    func populateNowPlayingState() {
         let playbackDuration: NSNumber
         if let duration: CMTime = avPlayer.currentItem?.asset.duration {
             playbackDuration = NSNumber(value: CMTimeGetSeconds(duration))
@@ -39,7 +39,7 @@ extension AudioTrackPlayer {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         self.nowPlayingInfo = nowPlayingInfo
         
-        artworkObserver = (audioTrack as? NSObject)?.observe(
+        artworkObserver = audioTrack.observe(
             \AudioTrack.artwork,
             options: [.initial, .new]
         ) { [weak self] _, _ in
