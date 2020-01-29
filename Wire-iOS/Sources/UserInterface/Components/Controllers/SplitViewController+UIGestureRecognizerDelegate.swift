@@ -74,8 +74,7 @@ extension SplitViewController {
                         offset.x = width
                     }
                     openPercentage = abs(offset.x) / width
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                }
+                    }
                 view.layoutIfNeeded()
             }
         case .cancelled,

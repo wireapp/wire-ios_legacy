@@ -191,6 +191,10 @@ final class ClientListViewController: UIViewController,
         ///prevent more then one removalObserver in self and SettingsClientViewController
         removalObserver = nil
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 
     func openDetailsOfClient(_ client: UserClient) {
         if let navigationController = self.navigationController {

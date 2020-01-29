@@ -22,7 +22,6 @@ extension ContactsViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         showKeyboardIfNeeded()
     }
 

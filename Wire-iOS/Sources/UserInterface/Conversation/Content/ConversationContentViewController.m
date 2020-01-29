@@ -35,7 +35,6 @@
 // helpers
 
 
-#import "Analytics.h"
 #import "MessagePresenter.h"
 
 #import "Wire-Swift.h"
@@ -192,6 +191,7 @@
 
     [self updateHeaderHeight];
     
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewDidAppear:(BOOL)animated

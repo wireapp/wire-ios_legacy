@@ -183,14 +183,8 @@ final class ProfileViewController: UIViewController {
         updateShowVerifiedShield()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: navigationItem.titleView)
     }
     

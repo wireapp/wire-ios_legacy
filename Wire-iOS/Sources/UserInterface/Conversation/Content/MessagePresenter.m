@@ -18,7 +18,6 @@
 
 #import "MessagePresenter.h"
 #import "MessagePresenter+Internal.h"
-#import "Analytics.h"
 #import "Wire-Swift.h"
 
 @import AVKit;
@@ -89,9 +88,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 - (void)documentInteractionControllerWillBeginPreview:(UIDocumentInteractionController *)controller
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-    });
 }
 
 - (void)documentInteractionControllerDidEndPreview:(UIDocumentInteractionController *)controller

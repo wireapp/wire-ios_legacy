@@ -41,15 +41,11 @@ final class BrowserViewController: SFSafariViewController {
         originalStatusBarStyle = UIApplication.shared.statusBarStyle
         originalStatusBarVisibility = UIApplication.shared.isStatusBarHidden
         overrider.override()
-        UIApplication.shared.wr_setStatusBarStyle(.default, animated: true)
-        UIApplication.shared.wr_setStatusBarHidden(false, with: .fade)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         overrider.restore()
-        UIApplication.shared.wr_setStatusBarStyle(originalStatusBarStyle, animated: true)
-        UIApplication.shared.wr_setStatusBarHidden(originalStatusBarVisibility, with: .fade)
     }
 
     override func dismiss(animated flag: Bool, completion defaultBlock: (() -> Void)? = nil) {
@@ -57,10 +53,6 @@ final class BrowserViewController: SFSafariViewController {
             self.onDismiss?()
             defaultBlock?()
         }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return false
     }
 
 }

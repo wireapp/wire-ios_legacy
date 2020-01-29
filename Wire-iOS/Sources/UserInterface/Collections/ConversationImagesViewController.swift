@@ -80,10 +80,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(initialMessage.isImage)
         
@@ -115,19 +111,11 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             navigationBar.isTranslucent = true
             navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
         }
-
-        updateStatusBar()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -478,11 +466,6 @@ extension ConversationImagesViewController: MenuVisibilityController {
 
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
-        
-        // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
-        if !UIScreen.hasNotch {
-            UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
-        }
     }
 
     private func showNavigationBarVisible(hidden: Bool) {

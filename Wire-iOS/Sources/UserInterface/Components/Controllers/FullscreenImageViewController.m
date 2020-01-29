@@ -32,7 +32,6 @@
 
 
 // helpers
-#import "Analytics.h"
 
 // model
 #import "Wire-Swift.h"

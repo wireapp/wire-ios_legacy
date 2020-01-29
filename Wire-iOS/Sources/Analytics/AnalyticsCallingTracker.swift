@@ -32,7 +32,7 @@ struct CallInfo {
     let video: Bool
 }
 
-@objcMembers class AnalyticsCallingTracker : NSObject {
+final class AnalyticsCallingTracker : NSObject {
     
     private static let conversationIdKey = "conversationId"
     

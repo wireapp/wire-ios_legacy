@@ -25,8 +25,6 @@ extension FullscreenImageViewController {
         if parent != nil {
             updateZoom()
         }
-
-        updateStatusBar()
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {

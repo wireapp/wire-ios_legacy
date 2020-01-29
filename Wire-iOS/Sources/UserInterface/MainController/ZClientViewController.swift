@@ -188,28 +188,22 @@ final class ZClientViewController: UIViewController {
         return presentedViewController?.shouldAutorotate ?? true
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let topOverlayViewController = topOverlayViewController {
-            return topOverlayViewController.preferredStatusBarStyle
+    private var child: UIViewController? {
+        if nil != topOverlayViewController {
+            return topOverlayViewController
         } else if traitCollection.horizontalSizeClass == .compact {
-            if let presentedViewController = presentedViewController as? UIAlertController {
-                return presentedViewController.preferredStatusBarStyle
-            }
-            
-            return wireSplitViewController.preferredStatusBarStyle
+            return presentedViewController ?? wireSplitViewController
         }
         
-        return .lightContent
+        return nil
     }
     
-    override var prefersStatusBarHidden: Bool {
-        if let topOverlayViewController = topOverlayViewController {
-            return topOverlayViewController.prefersStatusBarHidden
-        } else if traitCollection.horizontalSizeClass == .compact {
-                return presentedViewController?.prefersStatusBarHidden ?? wireSplitViewController.prefersStatusBarHidden
-        }
-        
-        return false
+    override var childForStatusBarStyle: UIViewController? {
+        return child
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return child
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -225,7 +219,6 @@ final class ZClientViewController: UIViewController {
         }
         
         updateSplitViewTopConstraint()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         view.setNeedsLayout()
     }
     
@@ -238,7 +231,6 @@ final class ZClientViewController: UIViewController {
     /// Select the connection inbox and optionally move focus to it.
     ///
     /// - Parameter focus: focus or not
-    @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController.selectInboxAndFocusOnView(focus: focus)
     }
@@ -535,15 +527,13 @@ final class ZClientViewController: UIViewController {
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
                             self.updateSplitViewTopConstraint()
-                            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                })
+                            })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                updateSplitViewTopConstraint()
+                        updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {
@@ -594,12 +584,10 @@ final class ZClientViewController: UIViewController {
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                 }) { _ in
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                }
+                            }
             }
             else {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                topOverlayViewController = viewController
+                        topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }
         }

@@ -35,7 +35,7 @@ protocol Event {
 extension Analytics {
     
     func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes ?? [:])
+        tagEvent(event.name, attributes: event.attributes as? [String : NSObject] ?? [:])
     }
     
 }

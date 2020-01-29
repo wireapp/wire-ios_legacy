@@ -23,7 +23,6 @@
 #import "ContactsDataSource.h"
 
 #import "UITableView+RowCount.h"
-#import "Analytics.h"
 
 #import "Wire-Swift.h"
 

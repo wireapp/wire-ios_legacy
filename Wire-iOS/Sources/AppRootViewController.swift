@@ -22,7 +22,6 @@ import SafariServices
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-@objcMembers
 final class AppRootViewController: UIViewController {
 
     public let mainWindow: UIWindow
@@ -36,7 +35,12 @@ final class AppRootViewController: UIViewController {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController?
+    public fileprivate(set) var visibleViewController: UIViewController? {
+        didSet {
+            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
     fileprivate let avsLogObserver: AVSLogObserver
@@ -312,7 +316,6 @@ final class AppRootViewController: UIViewController {
                     viewController.didMove(toParent: self)
                     previousViewController.removeFromParent()
                     self.visibleViewController = viewController
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
@@ -324,7 +327,6 @@ final class AppRootViewController: UIViewController {
                 view.addSubview(viewController.view)
                 viewController.didMove(toParent: self)
                 visibleViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }
@@ -385,11 +387,7 @@ final class AppRootViewController: UIViewController {
         enqueueTransition(to: self.appStateController.appState)
     }
 
-}
-
-// MARK: - Status Bar / Supported Orientations
-
-extension AppRootViewController {
+    // MARK: - Status Bar / Supported Orientations
 
     override var shouldAutorotate: Bool {
         return true
@@ -399,14 +397,13 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return visibleViewController?.prefersStatusBarHidden ?? false
+    override var childForStatusBarStyle: UIViewController? {
+        return visibleViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleViewController?.preferredStatusBarStyle ?? .default
+    override var childForStatusBarHidden: UIViewController? {
+        return visibleViewController
     }
-
 }
 
 extension AppRootViewController: AppStateControllerDelegate {
@@ -585,7 +582,6 @@ extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
 
-    @objc(firstAuthenticatedAccountExcludingCredentials:)
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
             if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
@@ -602,11 +598,11 @@ public extension SessionManager {
         return nil
     }
 
-    @objc var firstAuthenticatedAccount: Account? {
+    var firstAuthenticatedAccount: Account? {
         return firstAuthenticatedAccount(excludingCredentials: nil)
     }
 
-    @objc static var numberOfAccounts: Int {
+    static var numberOfAccounts: Int {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 

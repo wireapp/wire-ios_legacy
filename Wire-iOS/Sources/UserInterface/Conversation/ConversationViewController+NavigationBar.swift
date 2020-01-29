@@ -175,8 +175,7 @@ extension ConversationViewController {
                 }
 
                 collectionController.dismiss(animated: true, completion: {
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                })
+                    })
             }
             self.collectionController = collections
         } else {
@@ -187,9 +186,7 @@ extension ConversationViewController {
 
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
 
-        ZClientViewController.shared?.present(navigationController, animated: true, completion: {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        })
+        ZClientViewController.shared?.present(navigationController, animated: true)
     }
 
     @objc func dismissCollectionIfNecessary() {

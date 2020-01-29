@@ -174,14 +174,11 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         
         shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> () in
             shareController.presentingViewController?.dismiss(animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
 
 
-        (presenter ?? self).present(keyboardAvoiding, animated: true) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
+        (presenter ?? self).present(keyboardAvoiding, animated: true)
     }
     
     public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {

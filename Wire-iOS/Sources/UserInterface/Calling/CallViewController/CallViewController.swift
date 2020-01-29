@@ -210,7 +210,6 @@ final class CallViewController: UIViewController {
         updateOverlayAfterStateChanged()
         updateAppearance()
         updateIdleTimer()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     private func updateIdleTimer() {

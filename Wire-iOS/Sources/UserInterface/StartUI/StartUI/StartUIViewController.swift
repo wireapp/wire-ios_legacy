@@ -93,7 +93,6 @@ final class StartUIViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         handleUploadAddressBookLogicIfNeeded()
     }
     
@@ -105,7 +104,6 @@ final class StartUIViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.from(scheme: .textForeground, variant: .dark)
         navigationController?.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
         
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

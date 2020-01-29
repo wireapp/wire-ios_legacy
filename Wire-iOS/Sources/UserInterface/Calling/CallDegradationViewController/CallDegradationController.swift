@@ -33,7 +33,7 @@ protocol CallDegradationControllerDelegate: class {
     
 }
 
-class CallDegradationController: UIViewController {
+final class CallDegradationController: UIViewController {
 
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil

@@ -236,10 +236,6 @@ class LandingViewController: AuthenticationStepViewController {
         UIAccessibility.post(notification: .screenChanged, argument: logoView)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
     public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         let isRegular = traitCollection.horizontalSizeClass == .regular
