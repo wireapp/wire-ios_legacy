@@ -92,13 +92,11 @@ import Foundation
     func select(user: ZMSearchUser) {
         guard !selection.contains(user) else { return }
         selection.insert(user)
-        delegate?.dataSource(self, didSelect: user)
     }
 
     func deselect(user: ZMSearchUser) {
         guard selection.contains(user) else { return }
         selection.remove(user)
-        delegate?.dataSource(self, didDeselect: user)
     }
 
     private func recalculateSections() {
