@@ -226,33 +226,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)dataSource:(ContactsDataSource * __nonnull)dataSource didReceiveSearchResult:(NSArray * __nonnull)newUsers
-{
-    self.searchResultsReceived = YES;
-    [self.tableView reloadData];
-    
-    [self updateEmptyResults];
-}
-
-- (void)dataSource:(ContactsDataSource * __nonnull)dataSource didSelectUser:(ZMSearchUser *)user
-{
-    [self.searchHeaderViewController.tokenField addToken:[[Token alloc] initWithTitle:user.displayName representedObject:user]];
-    [UIView performWithoutAnimation:^{
-        [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
-    }];
-}
-
-- (void)dataSource:(ContactsDataSource * __nonnull)dataSource didDeselectUser:(ZMSearchUser *)user
-{
-    Token *token = [self.searchHeaderViewController.tokenField tokenForRepresentedObject:user];
-    
-    if (token != nil) {
-        [self.searchHeaderViewController.tokenField removeToken:token];
-    }
-    [UIView performWithoutAnimation:^{
-        [self.tableView reloadRowsAtIndexPaths:self.tableView.indexPathsForVisibleRows withRowAnimation:UITableViewRowAnimationNone];
-    }];
-}
 
 #pragma mark - Send Invite
 

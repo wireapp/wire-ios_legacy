@@ -71,16 +71,29 @@ extension ContactsViewController: ContactsDataSourceDelegate {
     }
 
     func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType]) {
-        // No op
+        searchResultsReceived = true
+        tableView.reloadData()
+        updateEmptyResults()
     }
 
     func dataSource(_ dataSource: ContactsDataSource, didSelect user: UserType) {
-        // No op
+        searchHeaderViewController.tokenField.addToken(Token(title: user.displayName, representedObject: user))
+        reloadVisibleRows()
     }
 
     func dataSource(_ dataSource: ContactsDataSource, didDeselect user: UserType) {
-        // No op
+        if let token = searchHeaderViewController.tokenField.token(forRepresentedObject: user) {
+            searchHeaderViewController.tokenField.removeToken(token)
+        }
+
+        reloadVisibleRows()
     }
 
-    
+    private func reloadVisibleRows() {
+        guard let visibleRows = tableView.indexPathsForVisibleRows else { return }
+
+        UIView.performWithoutAnimation {
+            tableView.reloadRows(at: visibleRows, with: .none)
+        }
+    }
 }
