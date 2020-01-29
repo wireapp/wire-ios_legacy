@@ -24,7 +24,7 @@ extension Settings {
         #if targetEnvironment(simulator)
         loadEnabledLogs()
         #else
-        ZMSLog.startRecording(withIsInternal: Bundle.enableDeveloperMenu)
+        ZMSLog.startRecording(withIsInternal: Bundle.developerModeEnabled)
         #endif
     }
 }
