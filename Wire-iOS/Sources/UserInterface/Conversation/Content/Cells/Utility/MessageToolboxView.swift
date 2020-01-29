@@ -123,6 +123,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "EphemeralCountdown"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
