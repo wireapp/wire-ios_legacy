@@ -42,10 +42,6 @@ final class ColorTilesViewController: VerticalColumnCollectionViewController, De
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "tile")
