@@ -114,7 +114,7 @@ class LandingViewController: AuthenticationStepViewController {
     let enterpriseLoginButton: Button = {
         let button = Button(style: .fullMonochrome, variant: .light)
         button.setBackgroundImageColor(UIColor.lightGraphiteAlpha24, for: .normal)
-        button.accessibilityIdentifier = "EnterpriseLoginButton"
+        button.accessibilityIdentifier = "Enterprise Login"
         button.setTitle("landing.enterprise.login.button.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.enterpriseLoginButtonTapped(_:)
             ), for: .touchUpInside)
@@ -124,7 +124,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     let personalLoginButton: Button = {
         let button = Button(style: .empty, variant: .light)
-        button.accessibilityIdentifier = "LoginButton"
+        button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
         
@@ -133,7 +133,7 @@ class LandingViewController: AuthenticationStepViewController {
 
     let createAccountButton: Button = {
         let button = Button(style: .full, variant: .light)
-        button.accessibilityIdentifier = "CreateAccountButton"
+        button.accessibilityIdentifier = "Create An Account"
         button.setTitle("landing.create_account.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.createAccountButtonTapped(_:)), for: .touchUpInside)
 
