@@ -19,7 +19,6 @@
 
 
 #import "AudioTrackPlayer.h"
-#import "AudioTrack.h"
 #import "UIImage+ImageUtilities.h"
 
 @import WireCommonComponents;
@@ -27,12 +26,6 @@
 @import WireSyncEngine;
 #import "KeyValueObserver.h"
 #import "Wire-Swift.h"
-
-static NSString* EmptyStringIfNil(NSString *string) {
-    return string == nil ? @"" : string;
-}
-
-
 
 @import AVFoundation;
 @import MediaPlayer;

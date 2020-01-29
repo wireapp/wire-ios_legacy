@@ -30,19 +30,20 @@ extension AudioTrackPlayer {
         }
         
         let nowPlayingInfo: [String : Any] = [
-                MPMediaItemPropertyTitle: audioTrack.title ?? "",
-                MPMediaItemPropertyArtist: audioTrack.author ?? "",
-                MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer.rate),
-                MPMediaItemPropertyPlaybackDuration: playbackDuration]
-
+            MPMediaItemPropertyTitle: audioTrack?.title ?? "",
+            MPMediaItemPropertyArtist: audioTrack?.author ?? "",
+            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer.rate),
+            MPMediaItemPropertyPlaybackDuration: playbackDuration]
+        
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         self.nowPlayingInfo = nowPlayingInfo
         
-        artworkObserver = audioTrack.observe(
-            \AudioTrack.artwork,
-            options: [.initial, .new]
-        ) { [weak self] _, _ in
+        setObserver(audioTrack as? NSObject & AudioTrack)
+    }
+    
+    func setObserver<T>(_ audioTrack: T?) where T: NSObject & AudioTrack {
+        artworkObserver = audioTrack?.observe(\.artwork, options: [.initial, .new]) { [weak self] _, _ in
             self?.updateNowPlayingArtwork()
         }
     }

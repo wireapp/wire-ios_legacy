@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:( void(^ _Nullable )(BOOL loaded, NSError *error))completionHandler;
 
-@property (nonatomic, readonly) NSObject<AudioTrack> *audioTrack;
+@property (nonatomic, readonly, nullable) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic, readonly) CGFloat progress;
 @property (nonatomic, readonly) CGFloat duration;
 @property (nonatomic, readonly) NSTimeInterval elapsedTime;
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
 @property (nonatomic) MediaPlayerState state;
 @property (nonatomic, nullable) id<ZMConversationMessage> sourceMessage;
-@property (nonatomic) NSObject *artworkObserver;///TODO: NSKeyValueObservation
+@property (nonatomic, nullable) NSObject *artworkObserver;///TODO: NSKeyValueObservation
 @property (nonatomic) NSDictionary *nowPlayingInfo;
 @property (nonatomic) id playHandler;
 @property (nonatomic) id pauseHandler;
