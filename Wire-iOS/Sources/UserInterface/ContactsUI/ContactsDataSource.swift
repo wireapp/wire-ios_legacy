@@ -61,7 +61,6 @@ import Foundation
 
     var searchQuery: String = "" {
         didSet {
-            guard searchQuery != oldValue else { return }
             search(withQuery: searchQuery, searchDirectory: searchDirectory)
         }
     }
