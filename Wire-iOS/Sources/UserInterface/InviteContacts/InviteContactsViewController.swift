@@ -94,7 +94,7 @@ final class InviteContactsViewController: ContactsViewController {
     }
     
     private func invite(user: ZMSearchUser, from view: UIView) {
-        
+        // FIXME: This code prevents the alert from appearing.
         // Prevent the overlapped visual artifact when opening a conversation
         if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
             navigationController.popToRootViewController(animated: false) {

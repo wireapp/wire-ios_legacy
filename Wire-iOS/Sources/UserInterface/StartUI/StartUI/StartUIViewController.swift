@@ -230,6 +230,7 @@ final class StartUIViewController: UIViewController {
     // MARK: - Action bar
     @objc
     func inviteMoreButtonTapped(_ sender: UIButton?) {
+        // FIXME: Request permissions if needed.
         let inviteContactsViewController = InviteContactsViewController()
         inviteContactsViewController.delegate = self
         navigationController?.pushViewController(inviteContactsViewController, animated: true)
