@@ -16,10 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
-
 
 final class ConversationPreviewViewController: TintColorCorrectedViewController {
 
@@ -56,7 +54,7 @@ final class ConversationPreviewViewController: TintColorCorrectedViewController 
             conversationView.edges == view.edges
         }
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
