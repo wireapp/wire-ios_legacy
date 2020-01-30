@@ -16,23 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@import UIKit
-@import Foundation
+@import UIKit;
+@import Foundation;
 
 @interface AudioTrackPlayer () <ZMMessageObserver>
 
-@property (nonatomic) AVPlayer *avPlayer
-@property (nonatomic) NSObject<AudioTrack> *audioTrack
-@property (nonatomic) CGFloat progress
-@property (nonatomic) id timeObserverToken
-@property (nonatomic) id messageObserverToken
-@property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error)
-@property (nonatomic) MediaPlayerState state
-@property (nonatomic, nullable) id<ZMConversationMessage> sourceMessage
-@property (nonatomic, nullable) NSDictionary *nowPlayingInfo
-@property (nonatomic) id playHandler
-@property (nonatomic) id pauseHandler
-@property (nonatomic) id nextTrackHandler
-@property (nonatomic) id previousTrackHandler
+@property (nonatomic) AVPlayer *avPlayer;
+@property (nonatomic) NSObject<AudioTrack> *audioTrack;
+@property (nonatomic) CGFloat progress;
+@property (nonatomic) id timeObserverToken;
+@property (nonatomic) id messageObserverToken;
+@property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
+@property (nonatomic) MediaPlayerState state;
+@property (nonatomic, nullable) id<ZMConversationMessage> sourceMessage;
+@property (nonatomic, nullable) NSDictionary *nowPlayingInfo;
+@property (nonatomic) id playHandler;
+@property (nonatomic) id pauseHandler;
+@property (nonatomic) id nextTrackHandler;
+@property (nonatomic) id previousTrackHandler;
+
 
 @end
