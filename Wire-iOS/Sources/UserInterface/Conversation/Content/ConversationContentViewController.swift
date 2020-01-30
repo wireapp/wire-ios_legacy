@@ -19,6 +19,26 @@
 import Foundation
 
 extension ConversationContentViewController {
+    convenience init(conversation: ZMConversation,
+                     message: ZMConversationMessage? = nil,
+                     mediaPlaybackManager: MediaPlaybackManager?,
+                     session: ZMUserSessionInterface) {
+
+        self.init(nibName: nil, bundle: nil)
+
+        messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
+        cachedRowHeights = NSMutableDictionary()
+        messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
+
+
+        self.mediaPlaybackManager = mediaPlaybackManager
+        self.conversation = conversation
+
+        messagePresenter.targetViewController = self
+        messagePresenter.modalTargetController = parent
+        self.session = session
+    }
+    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         

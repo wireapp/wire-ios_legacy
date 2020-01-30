@@ -25,11 +25,9 @@ private let zmLog = ZMSLog(tag: "MessagePresenter")
 final class MessagePresenter: NSObject {
     
     /// Container of the view that hosts popover controller.
-    @objc
     weak var targetViewController: UIViewController?
     
     /// Controller that would be the modal parent of message details.
-    @objc
     weak var modalTargetController: UIViewController?
     private(set) var waitingForFileDownload = false
     
@@ -43,6 +41,7 @@ final class MessagePresenter: NSObject {
     /// init method for injecting MediaPlaybackManager for testing
     ///
     /// - Parameter mediaPlaybackManager: for testing only
+    @objc
     convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
         self.init()
         
