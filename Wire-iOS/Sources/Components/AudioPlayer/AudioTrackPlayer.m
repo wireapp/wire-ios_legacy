@@ -19,7 +19,8 @@
 
 
 #import "AudioTrackPlayer.h"
-#import "AudioTrack.h"
+#import "AudioTrackPlayer+Private.h"
+
 #import "UIImage+ImageUtilities.h"
 
 @import WireCommonComponents;
@@ -28,35 +29,8 @@
 #import "KeyValueObserver.h"
 #import "Wire-Swift.h"
 
-static NSString* EmptyStringIfNil(NSString *string) {
-    return string == nil ? @"" : string;
-}
-
-
-
 @import AVFoundation;
 @import MediaPlayer;
-
-
-@interface AudioTrackPlayer () <ZMMessageObserver>
-
-@property (nonatomic) AVPlayer *avPlayer;
-@property (nonatomic) NSObject<AudioTrack> *audioTrack;
-@property (nonatomic) CGFloat progress;
-@property (nonatomic) id timeObserverToken;
-@property (nonatomic) id messageObserverToken;
-@property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
-@property (nonatomic) MediaPlayerState state;
-@property (nonatomic) id<ZMConversationMessage> sourceMessage;
-@property (nonatomic) NSObject *artworkObserver;
-@property (nonatomic) NSDictionary *nowPlayingInfo;
-@property (nonatomic) id playHandler;
-@property (nonatomic) id pauseHandler;
-@property (nonatomic) id nextTrackHandler;
-@property (nonatomic) id previousTrackHandler;
-
-
-@end
 
 @implementation AudioTrackPlayer
 
@@ -74,14 +48,9 @@ static NSString* EmptyStringIfNil(NSString *string) {
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
 {
     _progress = 0;
-    self.artworkObserver = nil;
     self.audioTrack = track;
     self.sourceMessage = sourceMessage;
     self.loadAudioTrackCompletionHandler = completionHandler;
-    
-    if (self.audioTrack.artwork == nil) {
-        [self.audioTrack fetchArtwork];
-    }
     
     if (self.avPlayer == nil) {
         self.avPlayer = [AVPlayer playerWithURL:track.streamURL];
@@ -192,7 +161,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
 {
     [self.avPlayer pause];
     [self.avPlayer replaceCurrentItemWithPlayerItem:nil];
-    self.artworkObserver = nil;
     self.audioTrack = nil;
     self.messageObserverToken = nil;
     _sourceMessage = nil;
@@ -286,28 +254,7 @@ static NSString* EmptyStringIfNil(NSString *string) {
     
 }
 
-- (void)artworkChanged:(NSDictionary *)changed
-{
-    [self updateNowPlayingArtwork];
-}
-
 #pragma mark - MPNowPlayingInfoCenter
-
-- (void)populateNowPlayingState
-{
-    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
-    
-    NSMutableDictionary *nowPlayingInfo =
-    [NSMutableDictionary dictionaryWithDictionary:@{ MPMediaItemPropertyTitle : EmptyStringIfNil(self.audioTrack.title),
-                                                     MPMediaItemPropertyArtist : EmptyStringIfNil(self.audioTrack.author),
-                                                     MPNowPlayingInfoPropertyPlaybackRate : @(self.avPlayer.rate),
-                                                     MPMediaItemPropertyPlaybackDuration : @(CMTimeGetSeconds(self.avPlayer.currentItem.asset.duration)) }];
-    
-    info.nowPlayingInfo = nowPlayingInfo;
-    self.nowPlayingInfo = nowPlayingInfo;
-    
-    self.artworkObserver = [KeyValueObserver observeObject:self.audioTrack keyPath:@"artwork" target:self selector:@selector(artworkChanged:) options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-}
 
 - (void)clearNowPlayingState
 {
@@ -327,30 +274,6 @@ static NSString* EmptyStringIfNil(NSString *string) {
     self.nowPlayingInfo = newInfo;
 }
         
-- (void)updateNowPlayingArtwork
-{
-    if (self.audioTrack.artwork == nil) {
-        return;
-    }
-    
-    CGSize boundSize = self.audioTrack.artwork.size;
-
-    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:boundSize
-                                                                  requestHandler:^UIImage * _Nonnull(CGSize size)
-    {
-        CGFloat scale = size.width / boundSize.width;
-        UIImage *scaledImage = [self.audioTrack.artwork imageScaledWithFactor:scale];
-        return scaledImage;
-    }];
-    
-    NSMutableDictionary *newInfo = [self.nowPlayingInfo mutableCopy];
-    [newInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
-    
-    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
-    info.nowPlayingInfo = newInfo;
-    self.nowPlayingInfo = newInfo;
-}
-
 #pragma mark AVPlayer notifications
 
 - (void)itemDidPlayToEndTime:(NSNotification *)notification

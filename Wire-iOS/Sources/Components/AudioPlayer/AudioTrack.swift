@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,22 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+@objc
+protocol AudioTrack: NSObjectProtocol {
+    var title: String? { get }
+    var author: String? { get }
 
-#import <Foundation/Foundation.h>
+    var duration: TimeInterval { get }
 
-@protocol AudioTrack <NSObject>
+    @objc
+    var streamURL: URL? { get }
 
-@property (nonatomic, readonly) NSString *title;
-@property (nonatomic, readonly) NSString *author;
-@property (nonatomic, readonly) UIImage *artwork;
-@property (nonatomic, readonly) NSTimeInterval duration;
-
-@property (nonatomic, readonly) NSURL *artworkURL;
-@property (nonatomic, readonly) NSURL *streamURL;
-@property (nonatomic, readonly) NSURL *previewStreamURL;
-@property (nonatomic, readonly) NSURL *externalURL;
-@property (nonatomic) BOOL failedToLoad;
-
-- (void)fetchArtwork;
-
-@end
+    var failedToLoad: Bool { get set }
+}

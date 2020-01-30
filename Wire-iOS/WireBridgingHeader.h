@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 // Data model
 @import WireSyncEngine;
 @import avs;
@@ -116,8 +114,8 @@
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player
-#import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
+#import "AudioTrackPlayer+Private.h"
 
 // Invite
 #import "ShareItemProvider.h"
