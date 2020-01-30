@@ -451,12 +451,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 extension ConversationImagesViewController: MenuVisibilityController {
     
     var menuVisible: Bool {
-        var isVisible = buttonsBar.isHidden && separator.isHidden
-        if !UIScreen.hasNotch {
-            isVisible = isVisible && UIApplication.shared.isStatusBarHidden
-        }
-
-        return isVisible
+        return buttonsBar.isHidden && separator.isHidden
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
@@ -485,5 +480,5 @@ extension ConversationImagesViewController {
     override var previewActionItems: [UIPreviewActionItem] {
         return currentActionController?.makePreviewActions() ?? []
     }
-
+ 
 }

@@ -27,8 +27,6 @@ final class BrowserViewController: SFSafariViewController {
     // MARK: - Tint Color
 
     private var overrider = TintColorOverrider()
-    private var originalStatusBarStyle: UIStatusBarStyle = .default
-    private var originalStatusBarVisibility: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +36,6 @@ final class BrowserViewController: SFSafariViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        originalStatusBarStyle = UIApplication.shared.statusBarStyle
-        originalStatusBarVisibility = UIApplication.shared.isStatusBarHidden
         overrider.override()
     }
 
