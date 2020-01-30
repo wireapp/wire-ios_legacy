@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,10 +18,6 @@
 import Foundation
 
 extension ConversationContentViewController {
-    @objc
-    func activeMediaPlayerChanged(_ change: NSDictionary) {
-        updateMediaBar()
-    }
 
     @objc
     func updateMediaBar() {

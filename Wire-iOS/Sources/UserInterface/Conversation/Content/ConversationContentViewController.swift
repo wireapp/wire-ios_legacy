@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -30,7 +29,6 @@ extension ConversationContentViewController {
         cachedRowHeights = NSMutableDictionary()
         messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
 
-
         self.mediaPlaybackManager = mediaPlaybackManager
         self.conversation = conversation
 
@@ -38,29 +36,31 @@ extension ConversationContentViewController {
         messagePresenter.modalTargetController = parent
         self.session = session
     }
-    
+
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         onScreen = true
-        activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager as Any, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)), options: [.initial, .new])
-        
+        activeMediaPlayerObserver = mediaPlaybackManager?.observe(\.activeMediaPlayer, options: [.initial, .new]) { [weak self] _, _ in
+            self?.updateMediaBar()
+        }
+
         for cell in tableView.visibleCells {
             cell.willDisplayCell()
         }
-        
+
         messagePresenter.modalTargetController = parent
-        
+
         updateHeaderHeight()
-        
+
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
