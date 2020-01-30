@@ -102,9 +102,7 @@ class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptor
             self.viewController?.present(controllerToShow, animated: true, completion: .none)
             
         case .navigation:
-            if let navigationController = self.viewController?.navigationController {
-                navigationController.pushViewController(controllerToShow, animated: true)
-            }
+            viewController?.navigationController?.pushViewController(controllerToShow, animated: true)
         }
     }
     

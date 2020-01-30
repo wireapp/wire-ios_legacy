@@ -66,26 +66,6 @@
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    if(UIScreen.hasNotch) {
-        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-    }
-
-    [self updateStatusBar];
-}
-
--(void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    if(UIScreen.hasNotch) {
-        [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:NO];
-    }
-
-    [self updateStatusBar];
-}
-
 - (void)createDataSource
 {
     NSArray *countries = [Country allCountries];

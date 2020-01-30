@@ -22,7 +22,7 @@ import Foundation
  * The view controller to use to ask the user to enter their credentials.
  */
 
-class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
+final class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -139,6 +139,10 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         }
 
         return contentStack
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     func configure(with featureProvider: AuthenticationFeatureProvider) {

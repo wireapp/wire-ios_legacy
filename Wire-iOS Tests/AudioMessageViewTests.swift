@@ -20,11 +20,6 @@ import XCTest
 @testable import Wire
 
 extension MockMessage: AudioTrack {
-    public var artworkURL: URL! {
-        get {
-            return .none
-        }
-    }
 
     public var title: String? {
         get {
@@ -32,12 +27,6 @@ extension MockMessage: AudioTrack {
         }
     }
     public var author: String? {
-        get {
-            return .none
-        }
-    }
-
-    public var artwork: UIImage? {
         get {
             return .none
         }
@@ -61,12 +50,6 @@ extension MockMessage: AudioTrack {
         }
     }
 
-    public var externalURL: URL? {
-        get {
-            return .none
-        }
-    }
-
     public var failedToLoad: Bool {
         get {
             return false
@@ -75,11 +58,6 @@ extension MockMessage: AudioTrack {
             // no-op
         }
     }
-
-    public func fetchArtwork() {
-        // no-op
-    }
-
 }
 
 final class AudioMessageViewTests: XCTestCase {

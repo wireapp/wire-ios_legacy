@@ -16,12 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import Cartography
 
-
-@objcMembers class ConversationPreviewViewController: TintColorCorrectedViewController {
+final class ConversationPreviewViewController: TintColorCorrectedViewController {
 
     let conversation: ZMConversation
     fileprivate let actionController: ConversationActionController
@@ -30,7 +28,7 @@ import Cartography
     init(conversation: ZMConversation, presentingViewController: UIViewController) {
         self.conversation = conversation
         self.actionController = ConversationActionController(conversation: conversation, target: presentingViewController)
-        contentViewController = ConversationContentViewController(conversation: conversation, mediaPlaybackManager: nil, session: ZMUserSession.shared())
+        contentViewController = ConversationContentViewController(conversation: conversation, mediaPlaybackManager: nil, session: ZMUserSession.shared()!)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -56,7 +54,7 @@ import Cartography
             conversationView.edges == view.edges
         }
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }

@@ -149,7 +149,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -184,5 +184,7 @@
 	<string>${WIRE_SSO_URL_SCHEME}</string>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
+	<key>EnableDeveloperMenu</key>
+	<string>${ENABLE_DEVELOPER_MENU}</string>
 </dict>
 </plist>

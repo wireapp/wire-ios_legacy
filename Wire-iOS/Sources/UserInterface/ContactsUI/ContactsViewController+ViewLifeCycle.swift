@@ -22,7 +22,6 @@ extension ContactsViewController {
 
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         showKeyboardIfNeeded()
     }
 
@@ -55,10 +54,12 @@ extension ContactsViewController {
         let diff = beginOrigin - endOrigin
         let padding: CGFloat = 12
 
-        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrame) in
-            self.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { [weak self]  (keyboardFrame) in
+            guard let weakSelf = self else { return }
+
+            weakSelf.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            weakSelf.view.layoutIfNeeded()
+        })
     }
 
     private func presentShareContactsViewController() {

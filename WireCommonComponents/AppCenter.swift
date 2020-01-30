@@ -56,7 +56,4 @@ public extension Bundle {
     static var useAppCenter: Bool {
         return Bundle.appMainBundle.infoForKey("UseAppCenter") == "1"
     }
-
 }
-
-

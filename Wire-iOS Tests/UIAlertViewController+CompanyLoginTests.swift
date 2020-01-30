@@ -40,7 +40,7 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
         sut = UIAlertController.companyLogin(prefilledCode: nil, errorMessage: "Something went wrong", validator: {_ -> Bool in
             return true
         }, completion: {_ in })
-
+        
         verify(matching: sut)
     }
 

@@ -52,14 +52,6 @@ final class BackupPasswordViewController: UIViewController {
     fileprivate var password: Password?
     private let passwordView = SimpleTextField()
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
-    }
-
     private let subtitleLabel = UILabel(
         key: "self.settings.history_backup.password.description",
         size: .medium,
@@ -88,7 +80,6 @@ final class BackupPasswordViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override func viewDidAppear(_ animated: Bool) {

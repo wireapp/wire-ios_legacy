@@ -102,16 +102,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         createConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateStatusBar(onlyFullScreen: false)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar(onlyFullScreen: false)
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }

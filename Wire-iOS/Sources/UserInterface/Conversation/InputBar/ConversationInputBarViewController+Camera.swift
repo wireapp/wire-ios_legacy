@@ -37,14 +37,6 @@ private let zmLog = ZMSLog(tag: "UI")
 
 
 final class StatusBarVideoEditorController: UIVideoEditorController {
-    override var prefersStatusBarHidden : Bool {
-        return false
-    }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.default
-    }
-
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
     }
@@ -91,8 +83,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 }
             default:
                 self.present(videoEditor, animated: true) {
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
-                }
+                    }
             }
         }
         else {
@@ -115,7 +106,6 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             
             
             self.present(confirmVideoViewController, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
     }
@@ -200,9 +190,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         }
         
-        self.present(confirmImageViewController, animated: true) {
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-        }
+        present(confirmImageViewController, animated: true)
     }
     
     private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool)->()) {

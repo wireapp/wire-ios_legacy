@@ -246,7 +246,7 @@ fileprivate extension VoiceChannel {
 
     var firstDegradedUser: ZMUser? {
         return conversation?.localParticipants.first(where: {
-            $0.untrusted()            
+            !$0.isTrusted
         })
     }
 

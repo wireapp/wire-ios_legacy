@@ -161,7 +161,7 @@ final class ZClientViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(colorSchemeControllerDidApplyChanges(_:)), name: NSNotification.colorSchemeControllerDidApplyColorSchemeChange, object: nil)
         
-        if DeveloperMenuState.developerMenuEnabled() {
+        if Bundle.developerModeEnabled {
             //better way of dealing with this?
             NotificationCenter.default.addObserver(self, selector: #selector(requestLoopNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingRequestLoopNotificationName), object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(inconsistentStateNotification(_:)), name: NSNotification.Name(rawValue: ZMLoggingInconsistentStateNotificationName), object: nil)
@@ -188,29 +188,35 @@ final class ZClientViewController: UIViewController {
         return presentedViewController?.shouldAutorotate ?? true
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let topOverlayViewController = topOverlayViewController {
-            return topOverlayViewController.preferredStatusBarStyle
+    // MARK: Status bar
+    private var child: UIViewController? {
+        if nil != topOverlayViewController {
+            return topOverlayViewController
         } else if traitCollection.horizontalSizeClass == .compact {
-            if let presentedViewController = presentedViewController as? UIAlertController {
-                return presentedViewController.preferredStatusBarStyle
-            }
-            
-            return wireSplitViewController.preferredStatusBarStyle
+            return presentedViewController ?? wireSplitViewController
         }
         
-        return .lightContent
+        return nil
     }
     
-    override var prefersStatusBarHidden: Bool {
-        if let topOverlayViewController = topOverlayViewController {
-            return topOverlayViewController.prefersStatusBarHidden
-        } else if traitCollection.horizontalSizeClass == .compact {
-                return presentedViewController?.prefersStatusBarHidden ?? wireSplitViewController.prefersStatusBarHidden
-        }
-        
-        return false
+    private var childForStatusBar: UIViewController? {
+        // For iPad regular mode, there is a black bar area and we always use light style and non hidden status bar
+        return isIPadRegular() ? nil : child
     }
+    
+    override var childForStatusBarStyle: UIViewController? {
+        return childForStatusBar
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return childForStatusBar
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    // MARK: trait
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -225,11 +231,10 @@ final class ZClientViewController: UIViewController {
         }
         
         updateSplitViewTopConstraint()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true, onlyFullScreen: false)
         view.setNeedsLayout()
     }
     
-    // MARK: - Public API
+    // MARK: - Singleton
     @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
         return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
@@ -238,7 +243,6 @@ final class ZClientViewController: UIViewController {
     /// Select the connection inbox and optionally move focus to it.
     ///
     /// - Parameter focus: focus or not
-    @objc(selectIncomingContactRequestsAndFocusOnView:)
     func selectIncomingContactRequestsAndFocus(onView focus: Bool) {
         conversationListViewController.selectInboxAndFocusOnView(focus: focus)
     }
@@ -535,15 +539,13 @@ final class ZClientViewController: UIViewController {
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
                             self.updateSplitViewTopConstraint()
-                            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                })
+                            })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                updateSplitViewTopConstraint()
+                        updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {
@@ -594,12 +596,10 @@ final class ZClientViewController: UIViewController {
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                 }) { _ in
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                }
+                            }
             }
             else {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-                topOverlayViewController = viewController
+                        topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }
         }

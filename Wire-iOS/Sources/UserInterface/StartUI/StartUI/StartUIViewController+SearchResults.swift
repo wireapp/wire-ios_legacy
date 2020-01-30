@@ -37,7 +37,7 @@ extension StartUIViewController {
                     self.searchHeaderViewController.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
-        }, arrowDirection: .left)
+        })
     }
 }
 
@@ -117,7 +117,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         if self.traitCollection.horizontalSizeClass == .compact {
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
             self.navigationController?.pushViewController(avoiding, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
         else {
@@ -151,7 +150,6 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
     func dismiss(controller: ConversationCreationController, completion: (() -> Void)? = nil) {
         if traitCollection.horizontalSizeClass == .compact {
             navigationController?.popToRootViewController(animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 completion?()
             }
         } else {

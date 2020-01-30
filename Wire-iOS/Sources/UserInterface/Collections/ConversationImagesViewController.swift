@@ -80,10 +80,6 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
         }
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     init(collection: AssetCollectionWrapper, initialMessage: ZMConversationMessage, inverse: Bool = false) {
         assert(initialMessage.isImage)
         
@@ -115,19 +111,19 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
             navigationBar.isTranslucent = true
             navigationBar.barTintColor = UIColor.from(scheme: .barBackground)
         }
-
-        updateStatusBar()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
+    
+    override var prefersStatusBarHidden: Bool {
+        return navigationController?.isNavigationBarHidden ?? false
+    }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -463,12 +459,7 @@ extension ConversationImagesViewController: UIPageViewControllerDelegate, UIPage
 extension ConversationImagesViewController: MenuVisibilityController {
     
     var menuVisible: Bool {
-        var isVisible = buttonsBar.isHidden && separator.isHidden
-        if !UIScreen.hasNotch {
-            isVisible = isVisible && UIApplication.shared.isStatusBarHidden
-        }
-
-        return isVisible
+        return buttonsBar.isHidden && separator.isHidden
     }
     
     func fadeAndHideMenu(_ hidden: Bool) {
@@ -478,21 +469,14 @@ extension ConversationImagesViewController: MenuVisibilityController {
 
         buttonsBar.fadeAndHide(hidden, duration: duration)
         separator.fadeAndHide(hidden, duration: duration)
-        
-        // Don't hide the status bar on iPhone X, otherwise the navbar will go behind the notch
-        if !UIScreen.hasNotch {
-            UIApplication.shared.wr_setStatusBarHidden(hidden, with: .fade)
-        }
     }
 
     private func showNavigationBarVisible(hidden: Bool) {
-        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+        guard let view = navigationController?.view else { return }
 
-        UIView.animate(withDuration: duration, animations: {
-            self.navigationController?.navigationBar.alpha = hidden ? 0 : 1
-        }) { _ in
+        UIView.transition(with: view, duration: UIApplication.shared.statusBarOrientationAnimationDuration, animations: {
             self.navigationController?.setNavigationBarHidden(hidden, animated: false)
-        }
+        })
     }
 }
 
@@ -502,5 +486,5 @@ extension ConversationImagesViewController {
     override var previewActionItems: [UIPreviewActionItem] {
         return currentActionController?.makePreviewActions() ?? []
     }
-
+ 
 }

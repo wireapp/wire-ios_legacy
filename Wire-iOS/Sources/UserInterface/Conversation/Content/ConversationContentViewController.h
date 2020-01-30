@@ -46,15 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
 @property (nonatomic, nullable) ConversationTableViewDataSource* dataSource;
 
-- (instancetype)initWithConversation:(ZMConversation *)conversation
-                mediaPlaybackManager:(MediaPlaybackManager * _Nullable)mediaPlaybackManager
-                             session:(id<ZMUserSessionInterface> _Nullable)session;
-- (instancetype)initWithConversation:(ZMConversation *)conversation
-                             message:(id<ZMConversationMessage> _Nullable)message
-                mediaPlaybackManager:(MediaPlaybackManager * _Nullable)mediaPlaybackManager
-                             session:(id<ZMUserSessionInterface>) session NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-- (instancetype)initWithNibName:(nullable NSString *)nibNameOrNil bundle:(nullable NSBundle *)nibBundleOrNil NS_UNAVAILABLE;
 
 - (void)highlightMessage:(id<ZMConversationMessage>)message;
 

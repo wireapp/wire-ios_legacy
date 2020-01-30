@@ -61,7 +61,7 @@ import MessageUI
         cancelText: String? = "Cancel"
         ) {
 
-        guard DeveloperMenuState.developerMenuEnabled() else { return }
+        guard Bundle.developerModeEnabled else { return }
         guard let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false), !isShown else { return }
         isShown = true
         

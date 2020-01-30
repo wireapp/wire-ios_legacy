@@ -174,16 +174,7 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let presentedViewController = presentedViewController,
-            presentedViewController is UIAlertController {
-            return presentedViewController.preferredStatusBarStyle
-        }
-
         return .lightContent
     }
 
@@ -336,7 +327,6 @@ final class ConversationListViewController: UIViewController {
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not
-    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         listContentController.scrollToCurrentSelection(animated: animated)
     }
@@ -361,7 +351,6 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    @objc
     func hideArchivedConversations() {
         setState(.conversationList, animated:true)
     }

@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 // Data model
 @import WireSyncEngine;
 @import avs;
@@ -44,10 +42,6 @@
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 
-#import "TopPeopleLineCollectionViewController.h"
-#import "TopPeopleCell.h"
-#import "TopPeopleCell+Internal.h"
-
 #import "IconButton.h"
 #import "IconButton+Internal.h"
 #import "Button.h"
@@ -56,8 +50,6 @@
 #import "UITableView+RowCount.h"
 #import "AnimatedListMenuView.h"
 #import "AnimatedListMenuView+Internal.h"
-#import "SwipeMenuCollectionCell.h"
-#import "SwipeMenuCollectionCell+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ColorKnobView.h"
@@ -98,24 +90,13 @@
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"
-#import "ProfilePresenter.h"
-#import "ProfilePresenter+Internal.h"
 
 // Utils
-#import "Analytics.h"
-#import "Analytics+Internal.h"
-#import "AnalyticsDecryptionFailedObserver.h"
 
-#import "Application+runDuration.h"
-#import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "UIView+Zeta.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "MessagePresenter.h"
-#import "MessagePresenter+Internal.h"
-#import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
@@ -126,14 +107,13 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "DeveloperMenuState.h"
 #import "UIImage+ImageUtilities.h"
 #import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player
-#import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
+#import "AudioTrackPlayer+Private.h"
 
 // Invite
 #import "ShareItemProvider.h"

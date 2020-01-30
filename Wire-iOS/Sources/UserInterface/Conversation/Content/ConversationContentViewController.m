@@ -34,12 +34,6 @@
 
 // helpers
 
-
-#import "UIView+Zeta.h"
-#import "Analytics.h"
-#import "MessagePresenter.h"
-#import "UIViewController+WR_Additions.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
@@ -48,52 +42,8 @@
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
-@interface ConversationContentViewController () 
-
-@property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
-@property (nonatomic) NSObject *activeMediaPlayerObserver;
-@property (nonatomic) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) NSMutableDictionary *cachedRowHeights;
-@property (nonatomic) BOOL hasDoneInitialLayout;
-@property (nonatomic) BOOL onScreen;
-@property (nonatomic) id<ZMConversationMessage> messageVisibleOnLoad;
-@end
-
-
 
 @implementation ConversationContentViewController
-
-- (instancetype)initWithConversation:(ZMConversation *)conversation
-                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
-                             session:(id<ZMUserSessionInterface>)session
-{
-    return [self initWithConversation:conversation
-                              message:conversation.firstUnreadMessage
-                 mediaPlaybackManager:mediaPlaybackManager
-                              session:session];
-}
-
-- (instancetype)initWithConversation:(ZMConversation *)conversation
-                             message:(id<ZMConversationMessage>)message
-                mediaPlaybackManager:(MediaPlaybackManager *)mediaPlaybackManager
-                             session:(id<ZMUserSessionInterface>)session
-{
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (self) {
-        _conversation = conversation;
-        self.mediaPlaybackManager = mediaPlaybackManager;
-        self.messageVisibleOnLoad = message ?: conversation.firstUnreadMessage;
-        self.cachedRowHeights = [NSMutableDictionary dictionary];
-        self.messagePresenter = [[MessagePresenter alloc] initWithMediaPlaybackManager:mediaPlaybackManager];
-        self.messagePresenter.targetViewController = self;
-        self.messagePresenter.modalTargetController = self.parentViewController;
-        self.session = session;
-
-    }
-    
-    return self;
-}
 
 - (void)dealloc
 {
@@ -171,29 +121,6 @@
 {
     [self.dataSource resetSectionControllers];
     [self.tableView reloadData];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.onScreen = YES;
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                             keyPath:@"activeMediaPlayer"
-                                                              target:self
-                                                            selector:@selector(activeMediaPlayerChanged:)
-
-                                                             options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-
-    for (UITableViewCell *cell in self.tableView.visibleCells) {        
-        if ([cell respondsToSelector:@selector(willDisplayCell)]) {
-            [cell willDisplayCell];
-        }
-    }
-    
-    self.messagePresenter.modalTargetController = self.parentViewController;
-
-    [self updateHeaderHeight];
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated

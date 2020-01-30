@@ -22,7 +22,7 @@ private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
-@objcMembers class AnalyticsProviderFactory: NSObject {
+final class AnalyticsProviderFactory: NSObject {
     @objc public static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
     @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
 
@@ -39,7 +39,7 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
-        else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
+        else if AutomationHelper.sharedHelper.useAnalytics {
             // Create & return valid provider, when available.
             return nil
         }

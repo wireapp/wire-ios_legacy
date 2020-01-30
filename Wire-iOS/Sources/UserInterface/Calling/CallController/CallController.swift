@@ -139,9 +139,7 @@ extension CallController: ViewControllerDismisser {
         guard let callViewController = viewController as? CallViewController, let conversation = callViewController.conversation else { return }
         
         minimizedCall = conversation
-        activeCallViewController = nil
-        
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        activeCallViewController = nil        
     }
     
 }

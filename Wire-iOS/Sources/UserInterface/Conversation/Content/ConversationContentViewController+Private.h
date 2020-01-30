@@ -54,13 +54,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) UserConnectionViewController *connectionViewController;
 
+@property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
+@property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
+@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
+@property (nonatomic) NSMutableDictionary *cachedRowHeights;
+@property (nonatomic) BOOL hasDoneInitialLayout;
+@property (nonatomic) BOOL onScreen;
+@property (nonatomic, nullable) id<ZMConversationMessage> messageVisibleOnLoad;
+@property (nonatomic, readwrite) ZMConversation *conversation;
+
+
 - (void)removeHighlightsAndMenu;
 - (NSIndexPath * _Nullable)willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 - (void)setConversationHeaderView:(UIView *)headerView;
 
+
 @end
-
-
-
 
 NS_ASSUME_NONNULL_END

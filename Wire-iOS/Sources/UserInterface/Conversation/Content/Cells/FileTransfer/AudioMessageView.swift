@@ -399,7 +399,7 @@ final class AudioMessageView: UIView, TransferView {
         }
         
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
-        return audioTrackPlayingSame && audioTrackPlayer.audioTrack.isEqual(audioTrack)
+        return audioTrackPlayingSame && (audioTrackPlayer.audioTrack?.isEqual(audioTrack) ?? false)
     }
     
     func setupAudioPlayerObservers() {
