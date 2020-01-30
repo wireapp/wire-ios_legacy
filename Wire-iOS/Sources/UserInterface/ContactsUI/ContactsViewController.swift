@@ -127,15 +127,7 @@ class ContactsViewController: UIViewController {
         dataSource.delegate = self
         tableView.dataSource = dataSource
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameWillChange),
-                                               name: UIResponder.keyboardWillChangeFrameNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameDidChange),
-                                               name: UIResponder.keyboardDidChangeFrameNotification,
-                                               object: nil)
+        observeKeyboardFrame()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -233,18 +225,6 @@ class ContactsViewController: UIViewController {
     func updateActionButtonTitles() {
         actionButtonTitles = contentDelegate?.actionButtonTitles(for: self) ?? []
     }
-    
-    @objc
-    func keyboardFrameDidChange(_ notification: Notification) {
-        UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrameInView in
-            guard let weakSelf = self else { return }
-
-            let offset = weakSelf.isInsidePopover ? 0.0 : -keyboardFrameInView.size.height
-            weakSelf.bottomContainerBottomConstraint.constant = offset
-            weakSelf.emptyResultsBottomConstraint.constant = offset
-            weakSelf.view.layoutIfNeeded()
-        })
-    }
 
     func invite(contact: ZMAddressBookContact, from view: UIView) -> UIAlertController? {
         if contact.contactDetails.count == 1 {
@@ -332,5 +312,51 @@ class ContactsViewController: UIViewController {
         }
 
         return nil
+    }
+
+    // MARK: - Keyboard Observation
+
+    private func observeKeyboardFrame() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameWillChange),
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardFrameDidChange),
+                                               name: UIResponder.keyboardDidChangeFrameNotification,
+                                               object: nil)
+    }
+
+    @objc
+    func keyboardFrameWillChange(_ notification: Notification) {
+        guard
+            let userInfo = notification.userInfo,
+            let beginFrame = userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as? CGRect,
+            let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+            else { return }
+
+        let beginY = beginFrame.origin.y
+        let endY = endFrame.origin.y
+
+        let diff = beginY - endY
+        let padding: CGFloat = 12
+
+        UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrame in
+            guard let weakSelf = self else { return }
+            weakSelf.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            weakSelf.view.layoutIfNeeded()
+        })
+    }
+
+    @objc
+    func keyboardFrameDidChange(_ notification: Notification) {
+        UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrame in
+            guard let weakSelf = self else { return }
+            let offset = weakSelf.isInsidePopover ? 0 : -keyboardFrame.size.height
+            weakSelf.bottomContainerBottomConstraint.constant = offset
+            weakSelf.emptyResultsBottomConstraint.constant = offset
+            weakSelf.view.layoutIfNeeded()
+        })
     }
 }
