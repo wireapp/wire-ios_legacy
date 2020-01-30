@@ -76,7 +76,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         createConstraints()
         updateConfiguration()
     }
-        
+
     private func setupViews() {
         addToSelf(contentNavigationController)
         addToSelf(callDegradationController)
