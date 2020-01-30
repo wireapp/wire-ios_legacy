@@ -188,6 +188,7 @@ final class ZClientViewController: UIViewController {
         return presentedViewController?.shouldAutorotate ?? true
     }
     
+    // MARK: Status bar
     private var child: UIViewController? {
         if nil != topOverlayViewController {
             return topOverlayViewController
@@ -198,13 +199,24 @@ final class ZClientViewController: UIViewController {
         return nil
     }
     
+    private var childForStatusBar: UIViewController? {
+        // For iPad regular mode, there is a black bar area and we always use light style and non hidden status bar
+        return isIPadRegular() ? nil : child
+    }
+    
     override var childForStatusBarStyle: UIViewController? {
-        return child
+        return childForStatusBar
     }
     
     override var childForStatusBarHidden: UIViewController? {
-        return child
+        return childForStatusBar
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
+    // MARK: trait
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -222,7 +234,7 @@ final class ZClientViewController: UIViewController {
         view.setNeedsLayout()
     }
     
-    // MARK: - Public API
+    // MARK: - Singleton
     @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
         return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
