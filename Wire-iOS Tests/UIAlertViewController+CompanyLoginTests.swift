@@ -29,18 +29,14 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
     }
 
     func testForAlertWithoutError(){
-        sut = UIAlertController.companyLogin(prefilledCode: nil, validator: {_ -> Bool in
-            return true
-        }, completion: {_ in })
+        sut = UIAlertController.companyLogin(prefilledCode: nil, completion: {_ in })
 
         verify(matching: sut)
     }
     
     func testForAlertWithError() {
-        sut = UIAlertController.companyLogin(prefilledCode: nil, errorMessage: "Something went wrong", validator: {_ -> Bool in
-            return true
-        }, completion: {_ in })
-        
+        sut = UIAlertController.companyLogin(prefilledCode: nil, errorMessage: "Something went wrong", completion: {_ in })
+
         verify(matching: sut)
     }
 
