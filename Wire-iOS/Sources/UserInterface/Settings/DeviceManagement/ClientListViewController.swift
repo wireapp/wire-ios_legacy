@@ -26,7 +26,7 @@ private let zmLog = ZMSLog(tag: "UI")
 final class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
-                                ZMClientUpdateObserver,
+                                ClientUpdateObserver,
                                 ClientColorVariantProtocol {
     var removalObserver: ClientRemovalObserver?
 
@@ -139,7 +139,7 @@ final class ClientListViewController: UIViewController,
         title = "registration.devices.title".localized(uppercased: true)
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
-        self.clientsObserverToken = ZMUserSession.shared()?.add(self)
+        self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
             self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: session)
         }
@@ -266,15 +266,15 @@ final class ClientListViewController: UIViewController,
         delegate?.finishedDeleting(self)
     }
     
-    // MARK: - ZMClientRegistrationObserver
-
+    // MARK: - ClientRegistrationObserver
+    
     func finishedFetching(_ userClients: [UserClient]) {
         self.showLoadingView = false
         
         self.clients = userClients.filter { !$0.isSelfClient() }
     }
     
-    func failedToFetchClientsWithError(_ error: Error) {
+    func failedToFetchClients(_ error: Error) {
         self.showLoadingView = false
         
         zmLog.error("Clients request failed: \(error.localizedDescription)")
@@ -288,7 +288,7 @@ final class ClientListViewController: UIViewController,
         editingList = false
     }
     
-    func failedToDeleteClientsWithError(_ error: Error) {
+    func failedToDeleteClients(_ error: Error) {
 
     }
     
