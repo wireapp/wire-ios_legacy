@@ -291,6 +291,8 @@ protocol CoreDataFixtureTestHelper {
     func createTeamGroupConversation() -> ZMConversation
     
     func createUser(name: String) -> ZMUser
+    
+    func teamTest(_ block: () -> Void)
 }
 
 
@@ -318,5 +320,9 @@ extension CoreDataFixtureTestHelper {
     
     func createUser(name: String) -> ZMUser {
         return coreDataFixture.createUser(name: name)
+    }
+
+    func teamTest(_ block: () -> Void) {
+        coreDataFixture.teamTest(block)
     }
 }
