@@ -34,9 +34,6 @@
 
 // helpers
 
-
-#import "MessagePresenter.h"
-
 #import "Wire-Swift.h"
 
 @interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>

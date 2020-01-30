@@ -53,7 +53,7 @@ extension MessagePresenter {
 
 extension MessagePresenter {
 
-    @objc func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
+    func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
         
         if !message.isFileDownloaded() {
             message.fileMessageData?.requestFileDownload()

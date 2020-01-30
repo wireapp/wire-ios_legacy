@@ -18,60 +18,73 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "MessagePresenter")
+
 final class MessagePresenter: NSObject {
+    
     /// Container of the view that hosts popover controller.
+    @objc
     weak var targetViewController: UIViewController?
+    
     /// Controller that would be the modal parent of message details.
+    @objc
     weak var modalTargetController: UIViewController?
     private(set) var waitingForFileDownload = false
     
-    private var mediaPlayerController: MediaPlayerController?
-    private var mediaPlaybackManager: MediaPlaybackManager?
-    private weak var videoPlayerObserver: NSObjectProtocol?
-    private var fileAvailabilityObserver: Any?
+    var mediaPlayerController: MediaPlayerController?
+    var mediaPlaybackManager: MediaPlaybackManager?
+    var videoPlayerObserver: NSObjectProtocol?
+    var fileAvailabilityObserver: MessageKeyPathObserver?
     
     private var documentInteractionController: UIDocumentInteractionController?
-
-    func openDocumentController(for message: ZMConversationMessage?, targetView: UIView?, withPreview preview: Bool) {
-        if message?.fileMessageData.fileURL == nil || message?.fileMessageData.fileURL.isFileURL() == nil || message?.fileMessageData.fileURL.path.length == 0 {
-            if let fileURL = message?.fileMessageData.fileURL, let fileMessageData = message?.fileMessageData {
-                assert(false, "File URL is missing: \(fileURL) (\(fileMessageData))")
-            }
-            ZMLogError("File URL is missing: %@ (%@)", message?.fileMessageData.fileURL, message?.fileMessageData)
-            ZMUserSession.shared().enqueueChanges({
-                message?.fileMessageData.requestFileDownload()
+    
+    func openDocumentController(for message: ZMConversationMessage,
+                                targetView: UIView,
+                                withPreview preview: Bool) {
+        let fileURL = message.fileMessageData?.fileURL
+        
+        if fileURL == nil ||
+            fileURL?.isFileURL == false ||
+            fileURL?.path.isEmpty == true {
+            
+            let errorMessage = "File URL is missing: \(fileURL?.debugDescription) (\(message.fileMessageData.debugDescription))"
+            assert(false, errorMessage)
+            
+            zmLog.error(errorMessage)
+            ZMUserSession.shared()?.enqueueChanges({
+                message.fileMessageData?.requestFileDownload()
             })
             return
         }
         
         // Need to create temporary hardlink to make sure the UIDocumentInteractionController shows the correct filename
-        var error: Error? = nil
-        var tmpPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(message?.fileMessageData.filename ?? "").absoluteString
-        do {
-            try FileManager.default.linkItem(atPath: message?.fileMessageData.fileURL.path ?? "", toPath: tmpPath)
-        } catch {
-        }
-        if nil != error {
-            ZMLogError("Cannot symlink %@ to %@: %@", message?.fileMessageData.fileURL.path, tmpPath, error)
-            tmpPath = message?.fileMessageData.fileURL.path ?? ""
+        var tmpPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(message.fileMessageData?.filename ?? "").absoluteString
+        
+        if let path = fileURL?.path {
+            do {
+                try FileManager.default.linkItem(atPath: path, toPath: tmpPath)
+            } catch {
+                zmLog.error("Cannot symlink \(path) to \(tmpPath): \(error)")
+                tmpPath = path
+            }
         }
         
         documentInteractionController = UIDocumentInteractionController(url: URL(fileURLWithPath: tmpPath))
-        documentInteractionController.delegate = self
-        if !preview || !documentInteractionController.presentPreview(animated: true) {
+        documentInteractionController?.delegate = self
+        if (!preview || false == documentInteractionController?.presentPreview(animated: true)),
+            let rect = targetViewController?.view.convert(targetView.bounds, from: targetView),
+        let view = targetViewController?.view {
             
-            documentInteractionController.presentOptionsMenu(from: targetViewController.view.convert(targetView?.bounds ?? CGRect.zero, from: targetView), in: targetViewController.view, animated: true)
+            documentInteractionController?.presentOptionsMenu(from: rect, in: view, animated: true)
         }
     }
     
     func cleanupTemporaryFileLink() {
-        var linkDeleteError: Error? = nil
+        guard let url = documentInteractionController?.url else { return }
         do {
-            try FileManager.default.removeItem(at: documentInteractionController.url)
+            try FileManager.default.removeItem(at: url)
         } catch let linkDeleteError {
-        }
-        if linkDeleteError != nil {
-            ZMLogError("Cannot delete temporary link %@: %@", documentInteractionController.url, linkDeleteError)
+            zmLog.error("Cannot delete temporary link \(url): \(linkDeleteError)")
         }
     }
     
@@ -79,10 +92,7 @@ final class MessagePresenter: NSObject {
 
 extension MessagePresenter: UIDocumentInteractionControllerDelegate {
     func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-        return modalTargetController
-    }
-    
-    func documentInteractionControllerWillBeginPreview(_ controller: UIDocumentInteractionController) {
+        return modalTargetController!
     }
     
     func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
