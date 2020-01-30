@@ -20,7 +20,7 @@ import Foundation
 
 extension ContactsViewController: UITableViewDelegate {
     func headerTitle(section: Int) -> String? {
-        return dataSource?.tableView(tableView, titleForHeaderInSection: section)
+        return dataSource.tableView(tableView, titleForHeaderInSection: section)
     }
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -47,13 +47,12 @@ extension ContactsViewController: UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let user = dataSource?.user(at: indexPath) {
-            dataSource?.select(user: user)
-        }
+        let user = dataSource.user(at: indexPath)
+        dataSource.select(user: user)
     }
 
     public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        guard let user = dataSource?.user(at: indexPath) else { return nil }
+        let user = dataSource.user(at: indexPath)
 
         if let shouldSelect = contentDelegate?.contactsViewController(self, shouldSelect: user),
             shouldSelect{
@@ -66,8 +65,7 @@ extension ContactsViewController: UITableViewDelegate {
     }
 
     public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if let user = dataSource?.user(at: indexPath) {
-            dataSource?.deselect(user: user)
-        }
+        let user = dataSource.user(at: indexPath)
+        dataSource.deselect(user: user)
     }
 }

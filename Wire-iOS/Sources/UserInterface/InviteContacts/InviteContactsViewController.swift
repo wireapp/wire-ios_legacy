@@ -19,13 +19,13 @@
 import Foundation
 
 final class InviteContactsViewController: ContactsViewController {
-    init() {
-        super.init(nibName: nil, bundle: nil)
+
+    override init() {
+        super.init()
         
         delegate = self
         contentDelegate = self
-        dataSource = ContactsDataSource()
-        dataSource?.searchQuery = ""
+        dataSource.searchQuery = ""
         
         title = "contacts_ui.title".localized.uppercased()
         
@@ -37,8 +37,8 @@ final class InviteContactsViewController: ContactsViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    override func sharingContactsRequired() -> Bool {
+
+    override var sharingContactsRequired: Bool {
         return true
     }
     
@@ -51,7 +51,7 @@ final class InviteContactsViewController: ContactsViewController {
         
         ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
         
-        let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
+        let subViewConstraints: [NSLayoutConstraint] = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
         
         if navigationController != nil {
             titleLabel.isHidden = true
@@ -135,8 +135,7 @@ final class InviteContactsViewController: ContactsViewController {
                 self.tableView.reloadData()
             })
         } else {
-            let alertController = invite(user.contact!, from: view)
-            
+            let alertController = invite(contact: user.contact!, from: view)
             alertController?.presentInNotificationsWindow()
         }
     }

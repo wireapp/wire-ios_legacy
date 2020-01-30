@@ -57,8 +57,6 @@
 #import "ColorKnobView.h"
 
 // View Controllers
-#import "ContactsViewController.h"
-#import "ContactsViewController+Internal.h"
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"

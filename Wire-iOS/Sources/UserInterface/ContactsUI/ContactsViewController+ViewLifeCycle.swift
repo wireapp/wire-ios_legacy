@@ -34,7 +34,7 @@ extension ContactsViewController {
 
     private func presentShareContactsViewControllerIfNeeded() {
         let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
-        if sharingContactsRequired() &&
+        if sharingContactsRequired &&
             !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
             !shouldSkip &&
             shouldShowShareContactsViewController {

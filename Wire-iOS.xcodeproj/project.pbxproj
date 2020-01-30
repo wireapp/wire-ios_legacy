@@ -689,7 +689,6 @@
 		87D679E61EBC8002005BEB4C /* String+Compatibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D679E51EBC8002005BEB4C /* String+Compatibility.swift */; };
 		87D7AF671DF5A158001A1CD7 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87D7AF661DF5A158001A1CD7 /* Contacts.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		87D7E1C520CACA820064C03D /* CallViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */; };
-		87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */; };
 		87DCF4941D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */; };
 		87DCF49B1D34E9E600BB420F /* LocationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4961D34E9E600BB420F /* LocationSelectionViewController.swift */; };
 		87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4971D34E9E600BB420F /* LocationSendViewController.swift */; };
@@ -2353,8 +2352,6 @@
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerTests.swift; sourceTree = "<group>"; };
 		87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsEmptyResultView.swift; sourceTree = "<group>"; };
-		87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactsViewController.h; sourceTree = "<group>"; };
-		87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactsViewController.m; sourceTree = "<group>"; };
 		87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMAddressBookContact+LocalInvitation.swift"; sourceTree = "<group>"; };
 		87DCF4961D34E9E600BB420F /* LocationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSelectionViewController.swift; sourceTree = "<group>"; };
 		87DCF4971D34E9E600BB420F /* LocationSendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSendViewController.swift; sourceTree = "<group>"; };
@@ -2904,7 +2901,6 @@
 		EF297DD72131FABE0002983A /* LocationPreviewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationPreviewControllerTests.swift; sourceTree = "<group>"; };
 		EF297DD92131FF310002983A /* ConversationInputBarViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Style.swift"; sourceTree = "<group>"; };
 		EF297DDB213209220002983A /* ContactsViewController+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Style.swift"; sourceTree = "<group>"; };
-		EF297DDC213209220002983A /* ContactsViewController+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ContactsViewController+Internal.h"; sourceTree = "<group>"; };
 		EF297DE121320AC20002983A /* InviteContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteContactsViewController.swift; sourceTree = "<group>"; };
 		EF297DEA213340CF0002983A /* ParticipantDeviceHeaderView+Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ParticipantDeviceHeaderView+Style.swift"; sourceTree = "<group>"; };
 		EF297DEB213340CF0002983A /* ParticipantDeviceHeaderView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ParticipantDeviceHeaderView+Internal.h"; sourceTree = "<group>"; };
@@ -4911,9 +4907,6 @@
 				163BB80F1EE1648100DF9384 /* ContactsDataSource+Searching.swift */,
 				87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */,
 				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */,
-				87DCF48A1D34E9BA00BB420F /* ContactsViewController.h */,
-				EF297DDC213209220002983A /* ContactsViewController+Internal.h */,
-				87DCF48B1D34E9BA00BB420F /* ContactsViewController.m */,
 				A9EB722223C1581A00DA8240 /* ContactsViewController.swift */,
 				A9EB722023C1522000DA8240 /* ContactsViewControllerDelegate.swift */,
 				A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */,
@@ -8111,7 +8104,6 @@
 				16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */,
 				5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */,
 				5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */,
-				87DCF4931D34E9BA00BB420F /* ContactsViewController.m in Sources */,
 				EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */,
 				EFEE97C823229CF5007A4702 /* ConversationListCellDelegate.swift in Sources */,
 				7CED30721FD97748009F0DAC /* IconStringsBuilder.swift in Sources */,

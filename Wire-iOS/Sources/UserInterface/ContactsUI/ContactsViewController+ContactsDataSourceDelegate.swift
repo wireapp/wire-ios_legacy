@@ -54,8 +54,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         cell.actionButton.isHidden = actionButtonHidden()
 
         if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false),
-            let actionButtonTitles = self.actionButtonTitles() as? [String] {
+            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false) {
 
                 let titleString = actionButtonTitles[Int(index)]
 

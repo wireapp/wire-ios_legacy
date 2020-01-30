@@ -69,14 +69,7 @@ extension ContactsViewController {
     }
 
     @objc func updateEmptyResults() {
-
-        let searchQueryCount: Int
-        if let dataSource = dataSource {
-            searchQueryCount = dataSource.searchQuery.count
-        } else {
-            searchQueryCount = 0
-        }
-
+        let searchQueryCount = dataSource.searchQuery.count
         let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
         let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController.tokenField.userDidConfirmInput)
         noContactsLabel.isHidden = !showNoContactsLabel
@@ -94,7 +87,7 @@ extension ContactsViewController {
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-        dataSource?.searchQuery = query
+        dataSource.searchQuery = query
         updateEmptyResults()
     }
 
