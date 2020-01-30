@@ -21,7 +21,6 @@ import Foundation
 /**
  Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
  */
-@objcMembers
 final class MediaPlayerController: NSObject {
 
     let message: ZMConversationMessage
