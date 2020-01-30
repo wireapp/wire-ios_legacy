@@ -712,7 +712,6 @@
 		87F18BC01E017B7F00C69D9B /* UIView+VisibleViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BBF1E017B7F00C69D9B /* UIView+VisibleViews.swift */; };
 		87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC11E02E4B600C69D9B /* CollectionVideoCell.swift */; };
 		87F18BC41E02E4C200C69D9B /* CollectionAudioCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */; };
-		87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BCF1E02F63700C69D9B /* MessagePresenter.m */; };
 		87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */; };
 		87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */; };
 		87F280AA1D080E8400F813CA /* AVSMediaManager+CustomSounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */; };
@@ -1210,7 +1209,6 @@
 		EF471BE4232658A9008E11A5 /* ConversationListViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF471BE3232658A9008E11A5 /* ConversationListViewControllerViewModel.swift */; };
 		EF471BE62326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF471BE52326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift */; };
 		EF4795AD2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */; };
-		EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */; };
 		EF4C5D4A23351CF00092CA38 /* ConversationListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */; };
 		EF4C5D4E23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4D23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift */; };
 		EF4C5D50233A17680092CA38 /* ConversationListContentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4C5D4F233A17680092CA38 /* ConversationListContentController.swift */; };
@@ -1276,7 +1274,6 @@
 		EF883F8C215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF883F8B215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift */; };
 		EF8D7D4920D8FCA500F98666 /* MockConversation+TimedMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */; };
 		EF8DD90A211C840800E970F1 /* 20000x20000.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD909211C840800E970F1 /* 20000x20000.gif */; };
-		EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */; };
 		EF8DD90E211DE14300E970F1 /* MessagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */; };
 		EF8DD911211E02BE00E970F1 /* MockMessage+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */; };
 		EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */ = {isa = PBXBuildFile; fileRef = EF8DD916211E2BD200E970F1 /* sample.pkpass */; };
@@ -2379,7 +2376,6 @@
 		87F18BC31E02E4C200C69D9B /* CollectionAudioCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionAudioCell.swift; sourceTree = "<group>"; };
 		87F18BC71E02E7BF00C69D9B /* Reusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		87F18BCE1E02F63700C69D9B /* MessagePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagePresenter.swift; sourceTree = "<group>"; };
-		87F18BCF1E02F63700C69D9B /* MessagePresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagePresenter.m; sourceTree = "<group>"; };
 		87F18BD11E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMLocationMessageData+Coordinates.swift"; sourceTree = "<group>"; };
 		87F18BD61E04035500C69D9B /* CollectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionHeaderView.swift; sourceTree = "<group>"; };
 		87F280A91D080E8400F813CA /* AVSMediaManager+CustomSounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVSMediaManager+CustomSounds.swift"; sourceTree = "<group>"; };
@@ -2972,7 +2968,6 @@
 		EF471BE3232658A9008E11A5 /* ConversationListViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModel.swift; sourceTree = "<group>"; };
 		EF471BE52326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
-		EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+OpenFile.swift"; sourceTree = "<group>"; };
 		EF4C5D4923351CF00092CA38 /* ConversationListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewModelTests.swift; sourceTree = "<group>"; };
 		EF4C5D4D23391C7E0092CA38 /* ConversationListCell+ZMConversationObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListCell+ZMConversationObserver.swift"; sourceTree = "<group>"; };
 		EF4C5D4F233A17680092CA38 /* ConversationListContentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListContentController.swift; sourceTree = "<group>"; };
@@ -3042,7 +3037,6 @@
 		EF883F8B215250B000B440CC /* AddParticipantsViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddParticipantsViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF8D7D4720D8FC7100F98666 /* MockConversation+TimedMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockConversation+TimedMessage.swift"; sourceTree = "<group>"; };
 		EF8DD909211C840800E970F1 /* 20000x20000.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = 20000x20000.gif; sourceTree = "<group>"; };
-		EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MessagePresenter+Pass.swift"; sourceTree = "<group>"; };
 		EF8DD90D211DE14300E970F1 /* MessagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePresenterTests.swift; sourceTree = "<group>"; };
 		EF8DD910211E02BE00E970F1 /* MockMessage+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockMessage+Creation.swift"; sourceTree = "<group>"; };
 		EF8DD916211E2BD200E970F1 /* sample.pkpass */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample.pkpass; sourceTree = "<group>"; };
@@ -5434,9 +5428,6 @@
 				D567460F208F39D200DC7F26 /* TintColorCorrectedViewController.swift */,
 				87633B6C21145B640030DB65 /* ConversationTableViewDataSource.swift */,
 				87F18BCE1E02F63700C69D9B /* MessagePresenter.swift */,
-				87F18BCF1E02F63700C69D9B /* MessagePresenter.m */,
-				EF8DD90B211DAFE500E970F1 /* MessagePresenter+Pass.swift */,
-				EF47971D211E398000EDFC15 /* MessagePresenter+OpenFile.swift */,
 				EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */,
 				87AAE4221E43234A00E1D13A /* MessagePresenter+ConversationImages.swift */,
 			);
@@ -7425,7 +7416,6 @@
 				5E8C38BA212FE106002AE12B /* AuthenticationStateController.swift in Sources */,
 				EF1EE76F2253AE2800E7B6E3 /* ConversationViewController+Constraints.swift in Sources */,
 				871BC3621D34F94200DF0793 /* Settings.m in Sources */,
-				EF47971E211E398000EDFC15 /* MessagePresenter+OpenFile.swift in Sources */,
 				7C17ECA81F7508980056600C /* PreviewHeightCalculator.swift in Sources */,
 				5E769C5C21AEA3CB00785EB7 /* MessageDetailsContentViewController.swift in Sources */,
 				EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */,
@@ -7586,7 +7576,6 @@
 				5E21344421CCED3B00273D0D /* PhoneNumberInputView.swift in Sources */,
 				F12CDADF1E43868200CEFCEB /* ChangePhoneViewController.swift in Sources */,
 				8751A6CB1FF6573D00804A58 /* QuickActionsManager.swift in Sources */,
-				87F18BD01E02F63700C69D9B /* MessagePresenter.m in Sources */,
 				BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */,
 				871BC3581D34F94200DF0793 /* AudioTrackPlayer.m in Sources */,
 				5E35F7482180A26900D3F4FE /* ConversationTextMessageCell.swift in Sources */,
@@ -7649,7 +7638,6 @@
 				BF2A74711CEB466A002608BF /* ConversationInputBarViewController+Audio.swift in Sources */,
 				EF44784F20906DDD00BD9827 /* FullscreenImageViewController+Zoom.swift in Sources */,
 				BF5FAC0520B6C6E9004CEB45 /* ConversationCallController.swift in Sources */,
-				EF8DD90C211DAFE500E970F1 /* MessagePresenter+Pass.swift in Sources */,
 				5E65A7A021303FCE008BFCC0 /* AuthenticationCoordinator+CompanyLogin.swift in Sources */,
 				5E8C38B0212DC472002AE12B /* AuthenticationCoordinator+LandingScreen.swift in Sources */,
 				7C4789852021F40E00A38442 /* AddBotError+UIHandler.swift in Sources */,

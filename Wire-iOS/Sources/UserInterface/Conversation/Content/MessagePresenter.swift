@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import AVKit
+import PassKit
 
 private let zmLog = ZMSLog(tag: "MessagePresenter")
 
@@ -38,6 +40,15 @@ final class MessagePresenter: NSObject {
     
     private var documentInteractionController: UIDocumentInteractionController?
     
+    /// init method for injecting MediaPlaybackManager for testing
+    ///
+    /// - Parameter mediaPlaybackManager: for testing only
+    convenience init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
+        self.init()
+        
+        self.mediaPlaybackManager = mediaPlaybackManager
+    }
+
     func openDocumentController(for message: ZMConversationMessage,
                                 targetView: UIView,
                                 withPreview preview: Bool) {
@@ -47,7 +58,7 @@ final class MessagePresenter: NSObject {
             fileURL?.isFileURL == false ||
             fileURL?.path.isEmpty == true {
             
-            let errorMessage = "File URL is missing: \(fileURL?.debugDescription) (\(message.fileMessageData.debugDescription))"
+            let errorMessage = "File URL is missing: \(fileURL?.debugDescription ?? "") (\(message.fileMessageData.debugDescription))"
             assert(false, errorMessage)
             
             zmLog.error(errorMessage)
@@ -88,6 +99,131 @@ final class MessagePresenter: NSObject {
         }
     }
     
+// MARK: - AVPlayerViewController dismissial
+    
+    fileprivate func observePlayerDismissial() {
+        videoPlayerObserver = NotificationCenter.default.addObserver(forName: .dismissingAVPlayer, object: nil, queue: OperationQueue.main) { notification in
+            self.mediaPlayerController?.tearDown()
+            
+            UIViewController.attemptRotationToDeviceOrientation()
+            
+            if let videoPlayerObserver = self.videoPlayerObserver {
+                NotificationCenter.default.removeObserver(videoPlayerObserver)
+                self.videoPlayerObserver = nil
+            }
+        }
+    }
+
+    //MARK: - File
+    
+    func openFileMessage(_ message: ZMConversationMessage, targetView: UIView) {
+        
+        if !message.isFileDownloaded() {
+            message.fileMessageData?.requestFileDownload()
+            
+            fileAvailabilityObserver = MessageKeyPathObserver(message: message, keypath: \.fileAvailabilityChanged) { [weak self] (message) in
+                guard message.isFileDownloaded() else { return }
+                
+                self?.openFileMessage(message, targetView: targetView)
+            }
+            
+            return
+        }
+        
+        guard let fileURL = message.fileMessageData?.fileURL else { return }
+        
+        _ = message.startSelfDestructionIfNeeded()
+        
+        if let fileMessageData = message.fileMessageData, fileMessageData.isPass,
+            let addPassesViewController = createAddPassesViewController(fileMessageData: fileMessageData) {
+            targetViewController?.present(addPassesViewController, animated: true)
+            
+        } else if let fileMessageData = message.fileMessageData, fileMessageData.isVideo,
+            let mediaPlaybackManager = mediaPlaybackManager {
+            let player = AVPlayer(url: fileURL)
+            mediaPlayerController = MediaPlayerController(player: player, message: message, delegate: mediaPlaybackManager)
+            let playerViewController = AVPlayerViewController()
+            playerViewController.player = player
+            
+            observePlayerDismissial()
+            
+            targetViewController?.present(playerViewController, animated: true) {
+                player.play()
+            }
+        } else {
+            openDocumentController(for: message, targetView: targetView, withPreview: true)
+        }
+    }
+    
+    /// Target view must be container in @c targetViewController's view.
+    ///
+    /// - Parameters:
+    ///   - message: message to open
+    ///   - targetView: target view when opens the message
+    ///   - delegate: the receiver of action callbacks for the message. Currently only forward and reveal in conversation actions are supported.
+    func open(_ message: ZMConversationMessage, targetView: UIView, actionResponder delegate: MessageActionResponder) {
+        fileAvailabilityObserver = nil
+        modalTargetController?.view.window?.endEditing(true)
+        
+        if Message.isLocation(message) {
+            openLocationMessage(message)
+        } else if Message.isFileTransfer(message) {
+            openFileMessage(message, targetView: targetView)
+        } else if Message.isImage(message) {
+            openImageMessage(message, actionResponder: delegate)
+        } else if let openableURL = message.textMessageData?.linkPreview?.openableURL {
+            openableURL.open()
+        }
+    }
+    
+    func openLocationMessage(_ message: ZMConversationMessage) {
+        if let locationMessageData = message.locationMessageData {
+            Message.openInMaps(locationMessageData)
+        }
+    }
+    
+    func openImageMessage(_ message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) {
+        let imageViewController = viewController(forImageMessage: message, actionResponder: delegate)
+        if let imageViewController = imageViewController {
+            modalTargetController?.present(imageViewController, animated: true)
+        }
+    }
+    
+    func viewController(forImageMessage message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) -> UIViewController? {
+        guard Message.isImage(message),
+            message.imageMessageData != nil else {
+                return nil
+        }
+        
+        return imagesViewController(for: message, actionResponder: delegate, isPreviewing: false)
+    }
+    
+    func viewController(forImageMessagePreview message: ZMConversationMessage, actionResponder delegate: MessageActionResponder) -> UIViewController? {
+        guard Message.isImage(message),
+            message.imageMessageData != nil else {
+                return nil
+        }
+        
+        return imagesViewController(for: message, actionResponder: delegate, isPreviewing: true)
+    }
+    
+
+    //MARK: - Pass
+    
+    func createAddPassesViewController(fileMessageData: ZMFileMessageData) -> PKAddPassesViewController? {
+        guard let fileURL = fileMessageData.fileURL,
+            let passData = try? Data.init(contentsOf: fileURL) else {
+                return nil
+        }
+        
+        guard let pass = try? PKPass.init(data: passData) else { return nil }
+        
+        if PKAddPassesViewController.canAddPasses() {
+            return PKAddPassesViewController(pass: pass)
+        } else {
+            return nil
+        }
+    }
 }
 
 extension MessagePresenter: UIDocumentInteractionControllerDelegate {
@@ -109,4 +245,6 @@ extension MessagePresenter: UIDocumentInteractionControllerDelegate {
         cleanupTemporaryFileLink()
         documentInteractionController = nil
     }
+    
 }
+
