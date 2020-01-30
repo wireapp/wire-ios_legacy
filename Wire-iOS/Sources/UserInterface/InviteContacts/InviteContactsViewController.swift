@@ -135,9 +135,110 @@ final class InviteContactsViewController: ContactsViewController {
                 self.tableView.reloadData()
             })
         } else {
-            let alertController = invite(contact: user.contact!, from: view)
-            alertController?.presentInNotificationsWindow()
+            do {
+                try invite(contact: user.contact!, from: view) // FIXME: Force unwrap
+            } catch InvitationError.missingClient(let client) {
+                unableToSendController(client: client).presentInNotificationsWindow()
+
+            } catch {
+                // log
+            }
         }
+    }
+
+    private let canInviteByEmail = ZMAddressBookContact.canInviteLocallyWithEmail()
+    private let canInviteByPhone = ZMAddressBookContact.canInviteLocallyWithPhoneNumber()
+
+    enum InvitationError: Error {
+        enum Client {
+            case email, phone, both
+
+            var messageKey: String {
+                switch self {
+                case .email, .both:
+                    return "error.invite.no_email_provider"
+                case .phone:
+                    return "error.invite.no_messaging_provider"
+                }
+            }
+        }
+
+        case missingClient(Client)
+        case noContactInformation
+    }
+
+    func invite(contact: ZMAddressBookContact, from view: UIView) throws {
+        switch contact.contactDetails.count {
+        case 1:
+            try inviteWithSingleAddress(for: contact)
+        case 2...:
+            try addressActionSheet(for: contact, in: view).presentInNotificationsWindow()
+        default:
+            throw InvitationError.noContactInformation
+        }
+    }
+
+
+    private func inviteWithSingleAddress(for contact: ZMAddressBookContact) throws {
+        if let emailAddress = contact.emailAddresses.first {
+            guard canInviteByEmail else { throw InvitationError.missingClient(.email) }
+            contact.inviteLocallyWithEmail(emailAddress)
+
+        } else if let phoneNumber = contact.rawPhoneNumbers.first {
+            guard canInviteByPhone else { throw InvitationError.missingClient(.phone) }
+            contact.inviteLocallyWithPhoneNumber(phoneNumber)
+
+        } else {
+            throw InvitationError.noContactInformation
+        }
+    }
+
+    private func addressActionSheet(for contact: ZMAddressBookContact, in view: UIView) throws -> UIAlertController {
+        guard canInviteByEmail || canInviteByPhone else { throw InvitationError.missingClient(.both) }
+
+        let chooseContactDetailController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let presentationController = chooseContactDetailController.popoverPresentationController
+        presentationController?.sourceView = view
+        presentationController?.sourceRect = view.bounds
+
+        var actions = [UIAlertAction]()
+
+        if canInviteByEmail {
+            actions.append(contentsOf: contact.emailAddresses.map { address in
+                UIAlertAction(title: address, style: .default) { _ in
+                    contact.inviteLocallyWithEmail(address)
+                    chooseContactDetailController.dismiss(animated: true)
+                }
+            })
+        }
+
+        if canInviteByPhone {
+            actions.append(contentsOf: contact.rawPhoneNumbers.map { number in
+                UIAlertAction(title: number, style: .default) { _ in
+                    contact.inviteLocallyWithPhoneNumber(number)
+                    chooseContactDetailController.dismiss(animated: true)
+                }
+            })
+        }
+
+        actions.append(UIAlertAction(title: "contacts_ui.invite_sheet.cancel_button_title".localized, style: .cancel) { action in
+            chooseContactDetailController.dismiss(animated: true)
+        })
+
+        actions.forEach(chooseContactDetailController.addAction)
+        return chooseContactDetailController
+    }
+
+    private func unableToSendController(client: InvitationError.Client) -> UIAlertController {
+        let unableToSendController = UIAlertController(title: nil, message: client.messageKey.localized, preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { action in
+            unableToSendController.dismiss(animated: true)
+        }
+
+        unableToSendController.addAction(okAction)
+        return unableToSendController
     }
 }
 
