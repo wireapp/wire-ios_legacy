@@ -18,16 +18,14 @@
 
 import Foundation
 
-/**
- Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
- */
-@objcMembers
-class MediaPlayerController: NSObject {
+/// For playing videos in conversation
+/// Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
+final class MediaPlayerController: NSObject {
 
     let message: ZMConversationMessage
     var player: AVPlayer?
     weak var delegate: MediaPlayerDelegate?
-    fileprivate var playerRateObserver : Any?
+    fileprivate var playerRateObserver : NSKeyValueObservation!
 
     init(player: AVPlayer, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
         self.player = player
@@ -36,13 +34,22 @@ class MediaPlayerController: NSObject {
 
         super.init()
 
-        self.playerRateObserver = KeyValueObserver.observe(player, keyPath: "rate", target: self, selector: #selector(playerRateChanged))
+        playerRateObserver = player.observe(\AVPlayer.rate) { [weak self] _, _ in
+            self?.playerRateChanged()
+        }
     }
 
     func tearDown() {
         self.delegate?.mediaPlayer(self, didChangeTo: .completed)
     }
 
+    private func playerRateChanged() {
+        if player?.rate > 0 {
+            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
+        } else {
+            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
+        }
+    }
 }
 
 extension MediaPlayerController: MediaPlayer {
@@ -74,17 +81,4 @@ extension MediaPlayerController: MediaPlayer {
     func pause() {
         player?.pause()
     }
-
-}
-
-extension MediaPlayerController {
-
-    @objc func playerRateChanged() {
-        if player?.rate > 0 {
-            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
-        } else {
-            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
-        }
-    }
-
 }
