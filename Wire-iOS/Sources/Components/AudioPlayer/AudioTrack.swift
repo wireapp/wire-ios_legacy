@@ -22,17 +22,10 @@ protocol AudioTrack: NSObjectProtocol {
     var title: String? { get }
     var author: String? { get }
     
-    @objc
-    dynamic var artwork: UIImage? { get }
-    
     var duration: TimeInterval { get }
-    var artworkURL: URL! { get }
 
     @objc
     var streamURL: URL? { get }
 
-    var previewStreamURL: URL? { get }
-    var externalURL: URL? { get }
     var failedToLoad: Bool { get set }
-    func fetchArtwork()
 }

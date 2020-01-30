@@ -41,13 +41,5 @@ extension AudioTrackPlayer {
         
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         self.nowPlayingInfo = nowPlayingInfo
-        
-        setObserver(audioTrack as? NSObject & AudioTrack)
-    }
-    
-    func setObserver<T>(_ audioTrack: T?) where T: NSObject & AudioTrack {
-        artworkObserver = audioTrack?.observe(\.artwork, options: [.initial, .new]) { [weak self] _, _ in
-            self?.updateNowPlayingArtwork()
-        }
     }
 }

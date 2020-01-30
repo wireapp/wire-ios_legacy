@@ -45,28 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Pause the currently playing track.
 - (void)pause;
 
-- (void)updateNowPlayingArtwork;
-
-@end
-
-@interface AudioTrackPlayer () <ZMMessageObserver>
-
-@property (nonatomic) AVPlayer *avPlayer;
-@property (nonatomic) NSObject<AudioTrack> *audioTrack;
-@property (nonatomic) CGFloat progress;
-@property (nonatomic) id timeObserverToken;
-@property (nonatomic) id messageObserverToken;
-@property (nonatomic, copy) void (^loadAudioTrackCompletionHandler)(BOOL loaded, NSError *error);
-@property (nonatomic) MediaPlayerState state;
-@property (nonatomic, nullable) id<ZMConversationMessage> sourceMessage;
-@property (nonatomic, nullable) NSObject *artworkObserver;///TODO: NSKeyValueObservation
-@property (nonatomic) NSDictionary *nowPlayingInfo;
-@property (nonatomic) id playHandler;
-@property (nonatomic) id pauseHandler;
-@property (nonatomic) id nextTrackHandler;
-@property (nonatomic) id previousTrackHandler;
-
-
 @end
 
 NS_ASSUME_NONNULL_END

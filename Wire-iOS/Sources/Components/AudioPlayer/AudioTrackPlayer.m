@@ -19,6 +19,8 @@
 
 
 #import "AudioTrackPlayer.h"
+#import "AudioTrackPlayer+Private.h"
+
 #import "UIImage+ImageUtilities.h"
 
 @import WireCommonComponents;
@@ -46,14 +48,9 @@
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:(void(^)(BOOL loaded, NSError *error))completionHandler
 {
     _progress = 0;
-    self.artworkObserver = nil;
     self.audioTrack = track;
     self.sourceMessage = sourceMessage;
     self.loadAudioTrackCompletionHandler = completionHandler;
-    
-    if (self.audioTrack.artwork == nil) {
-        [self.audioTrack fetchArtwork];
-    }
     
     if (self.avPlayer == nil) {
         self.avPlayer = [AVPlayer playerWithURL:track.streamURL];
@@ -164,7 +161,6 @@
 {
     [self.avPlayer pause];
     [self.avPlayer replaceCurrentItemWithPlayerItem:nil];
-    self.artworkObserver = nil;
     self.audioTrack = nil;
     self.messageObserverToken = nil;
     _sourceMessage = nil;
@@ -258,11 +254,6 @@
     
 }
 
-- (void)artworkChanged:(NSDictionary *)changed
-{
-    [self updateNowPlayingArtwork];
-}
-
 #pragma mark - MPNowPlayingInfoCenter
 
 - (void)clearNowPlayingState
@@ -283,30 +274,6 @@
     self.nowPlayingInfo = newInfo;
 }
         
-- (void)updateNowPlayingArtwork
-{
-    if (self.audioTrack.artwork == nil) {
-        return;
-    }
-    
-    CGSize boundSize = self.audioTrack.artwork.size;
-
-    MPMediaItemArtwork *artwork = [[MPMediaItemArtwork alloc] initWithBoundsSize:boundSize
-                                                                  requestHandler:^UIImage * _Nonnull(CGSize size)
-    {
-        CGFloat scale = size.width / boundSize.width;
-        UIImage *scaledImage = [self.audioTrack.artwork imageScaledWithFactor:scale];
-        return scaledImage;
-    }];
-    
-    NSMutableDictionary *newInfo = [self.nowPlayingInfo mutableCopy];
-    [newInfo setObject:artwork forKey:MPMediaItemPropertyArtwork];
-    
-    MPNowPlayingInfoCenter* info = [MPNowPlayingInfoCenter defaultCenter];
-    info.nowPlayingInfo = newInfo;
-    self.nowPlayingInfo = newInfo;
-}
-
 #pragma mark AVPlayer notifications
 
 - (void)itemDidPlayToEndTime:(NSNotification *)notification

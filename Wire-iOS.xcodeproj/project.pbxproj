@@ -2421,6 +2421,7 @@
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
 		A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMockUser.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
+		A963643123E2E52F00190992 /* AudioTrackPlayer+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackPlayer+Private.h"; sourceTree = "<group>"; };
 		A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewController.swift; sourceTree = "<group>"; };
 		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
 		A9681D8523884FF1004FE917 /* Message+DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+DateFormatter.swift"; sourceTree = "<group>"; };
@@ -4610,6 +4611,7 @@
 			children = (
 				871BC3271D34F94200DF0793 /* AudioTrack.swift */,
 				871BC32A1D34F94200DF0793 /* AudioTrackPlayer.h */,
+				A963643123E2E52F00190992 /* AudioTrackPlayer+Private.h */,
 				871BC32B1D34F94200DF0793 /* AudioTrackPlayer.m */,
 				A9806A3A23E2024E00691DFE /* AudioTrackPlayer.swift */,
 				1660F2391FBF32D400A0EE54 /* MediaPlayerController.swift */,
