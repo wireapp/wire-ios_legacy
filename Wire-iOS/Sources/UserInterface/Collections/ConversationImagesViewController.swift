@@ -120,6 +120,10 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     override var prefersStatusBarHidden: Bool {
         return navigationController?.isNavigationBarHidden ?? false
     }
+    
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -468,13 +472,11 @@ extension ConversationImagesViewController: MenuVisibilityController {
     }
 
     private func showNavigationBarVisible(hidden: Bool) {
-        let duration = UIApplication.shared.statusBarOrientationAnimationDuration
+        guard let view = navigationController?.view else { return }
 
-        UIView.animate(withDuration: duration, animations: {
-            self.navigationController?.navigationBar.alpha = hidden ? 0 : 1
-        }) { _ in
+        UIView.transition(with: view, duration: UIApplication.shared.statusBarOrientationAnimationDuration, animations: {
             self.navigationController?.setNavigationBarHidden(hidden, animated: false)
-        }
+        })
     }
 }
 
