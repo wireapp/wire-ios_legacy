@@ -20,8 +20,8 @@ import Foundation
 import MediaPlayer
 
 extension AudioTrackPlayer {
-    
-    //MARK: -  MPNowPlayingInfoCenter
+
+    // MARK: - MPNowPlayingInfoCenter
 
     @objc
     func populateNowPlayingState() {
@@ -31,14 +31,13 @@ extension AudioTrackPlayer {
         } else {
             playbackDuration = 0
         }
-        
-        let nowPlayingInfo: [String : Any] = [
+
+        let nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: audioTrack?.title ?? "",
             MPMediaItemPropertyArtist: audioTrack?.author ?? "",
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer.rate),
             MPMediaItemPropertyPlaybackDuration: playbackDuration]
-        
-        
+
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         self.nowPlayingInfo = nowPlayingInfo
     }

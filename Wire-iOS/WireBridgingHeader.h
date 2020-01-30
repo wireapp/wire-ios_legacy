@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 // Data model
-@import WireSyncEngine;
-@import avs;
+@import WireSyncEngine
+@import avs
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 
