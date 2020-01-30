@@ -51,32 +51,30 @@ final class MessagePresenter: NSObject {
     func openDocumentController(for message: ZMConversationMessage,
                                 targetView: UIView,
                                 withPreview preview: Bool) {
-        let fileURL = message.fileMessageData?.fileURL
-
-        if fileURL == nil ||
-            fileURL?.isFileURL == false ||
-            fileURL?.path.isEmpty == true {
-
-            let errorMessage = "File URL is missing: \(fileURL?.debugDescription ?? "") (\(message.fileMessageData.debugDescription))"
+        guard let fileURL = message.fileMessageData?.fileURL,
+              fileURL.isFileURL,
+              !fileURL.path.isEmpty else {
+            let errorMessage = "File URL is missing: \(message.fileMessageData?.fileURL.debugDescription ?? "") (\(message.fileMessageData.debugDescription))"
             assert(false, errorMessage)
-
+            
             zmLog.error(errorMessage)
             ZMUserSession.shared()?.enqueueChanges({
                 message.fileMessageData?.requestFileDownload()
             })
+
             return
         }
 
         // Need to create temporary hardlink to make sure the UIDocumentInteractionController shows the correct filename
         var tmpPath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(message.fileMessageData?.filename ?? "").absoluteString
 
-        if let path = fileURL?.path {
-            do {
-                try FileManager.default.linkItem(atPath: path, toPath: tmpPath)
-            } catch {
-                zmLog.error("Cannot symlink \(path) to \(tmpPath): \(error)")
-                tmpPath = path
-            }
+        let path = fileURL.path
+
+        do {
+            try FileManager.default.linkItem(atPath: path, toPath: tmpPath)
+        } catch {
+            zmLog.error("Cannot symlink \(path) to \(tmpPath): \(error)")
+            tmpPath = path
         }
 
         documentInteractionController = UIDocumentInteractionController(url: URL(fileURLWithPath: tmpPath))
