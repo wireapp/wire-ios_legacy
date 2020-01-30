@@ -18,9 +18,8 @@
 
 import Foundation
 
-/**
- Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
- */
+/// For playing videos in conversation
+/// Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager
 final class MediaPlayerController: NSObject {
 
     let message: ZMConversationMessage
@@ -44,6 +43,13 @@ final class MediaPlayerController: NSObject {
         self.delegate?.mediaPlayer(self, didChangeTo: .completed)
     }
 
+    private func playerRateChanged() {
+        if player?.rate > 0 {
+            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
+        } else {
+            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
+        }
+    }
 }
 
 extension MediaPlayerController: MediaPlayer {
@@ -75,13 +81,4 @@ extension MediaPlayerController: MediaPlayer {
     func pause() {
         player?.pause()
     }
-
-    private func playerRateChanged() {
-        if player?.rate > 0 {
-            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.playing)
-        } else {
-            delegate?.mediaPlayer(self, didChangeTo: MediaPlayerState.paused)
-        }
-    }
-
 }
