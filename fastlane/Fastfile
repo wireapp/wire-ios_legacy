@@ -44,7 +44,6 @@ platform :ios do
             scheme: "Wire-iOS",
             configuration: "Debug",
             build_for_testing: true,
-            devices: "iPhone 8",
             sdk:"iphonesimulator",
             code_coverage: true,
             derived_data_path: "DerivedData",
