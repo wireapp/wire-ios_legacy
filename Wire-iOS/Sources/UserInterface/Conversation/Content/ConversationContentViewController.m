@@ -123,30 +123,6 @@
     [self.tableView reloadData];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.onScreen = YES;
-    self.activeMediaPlayerObserver = [KeyValueObserver observeObject:self.mediaPlaybackManager
-                                                             keyPath:@"activeMediaPlayer"
-                                                              target:self
-                                                            selector:@selector(activeMediaPlayerChanged:)
-
-                                                             options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew];
-
-    for (UITableViewCell *cell in self.tableView.visibleCells) {        
-        if ([cell respondsToSelector:@selector(willDisplayCell)]) {
-            [cell willDisplayCell];
-        }
-    }
-    
-    self.messagePresenter.modalTargetController = self.parentViewController;
-
-    [self updateHeaderHeight];
-    
-    [self setNeedsStatusBarAppearanceUpdate];
-}
-
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];

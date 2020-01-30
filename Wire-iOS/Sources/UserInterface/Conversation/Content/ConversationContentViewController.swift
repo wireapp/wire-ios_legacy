@@ -39,6 +39,22 @@ extension ConversationContentViewController {
         self.session = session
     }
     
+    override open func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        onScreen = true
+        activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager as Any, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)), options: [.initial, .new])
+        
+        for cell in tableView.visibleCells {
+            cell.willDisplayCell()
+        }
+        
+        messagePresenter.modalTargetController = parent
+        
+        updateHeaderHeight()
+        
+        setNeedsStatusBarAppearanceUpdate()
+    }
+    
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
