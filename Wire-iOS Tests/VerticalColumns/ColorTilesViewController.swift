@@ -24,13 +24,15 @@ struct ColorTile {
     let size: CGSize
 }
 
-final class ColorTilesViewController: VerticalColumnCollectionViewController {
+final class ColorTilesViewController: VerticalColumnCollectionViewController, DeviceMockable {
 
     let tiles: [ColorTile]
-    var isTablet: Bool = false
+    var device: DeviceProtocol = UIDevice.current
 
-    init(tiles: [ColorTile]) {
+    init(tiles: [ColorTile], device: DeviceProtocol = UIDevice.current) {
         self.tiles = tiles
+        self.device = device
+
         let columnCount = AdaptiveColumnCount(compact: 2, regular: 3, large: 4)
         super.init(interItemSpacing: 1, interColumnSpacing: 1, columnCount: columnCount)
     }
@@ -67,7 +69,7 @@ final class ColorTilesViewController: VerticalColumnCollectionViewController {
     }
 
     override var isRegularLayout: Bool {
-        return isTablet
+        return isIPadRegular(device: device)
     }
 
 }
