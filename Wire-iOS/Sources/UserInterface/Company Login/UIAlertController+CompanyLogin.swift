@@ -19,56 +19,100 @@
 import Foundation
 
 extension UIAlertController {
+
+  fileprivate enum CompanyLoginCopy: String {
+        case ssoAndEmail
+        case ssoOnly
+        
+        init(ssoOnly: Bool) {
+            self = ssoOnly ? .ssoOnly : .ssoAndEmail
+        }
+
+        var action: String {
+            return "login.sso.alert.action".localized
+        }
+
+        var title: String {
+            return "login.sso.alert.title".localized
+        }
+        
+        var message: String {
+            return "login.sso.alert.message.\(self.rawValue)".localized
+        }
+        
+        var placeholder: String {
+            return "login.sso.alert.text_field.placeholder.\(self.rawValue)".localized
+        }
+    }
+    
+    enum CompanyLoginError {
+        // Input doesn't match an email or SSO code format
+        case invalidFormat
+        // SSO code is invalid
+        case invalidCode
+        // SSO code validation failed
+        case invalidStatus(StatusCode)
+        // Domain is not registered
+        case domainNotRegistered
+        // Unknown error
+        case unknown
+        
+        fileprivate func description(for copy: CompanyLoginCopy) -> String {
+            switch self {
+            case .invalidFormat:
+                return "login.sso.error.alert.invalid_format.message.\(copy.rawValue)".localized
+            case .domainNotRegistered:
+                return "login.sso.error.alert.domain_not_registered.message".localized
+            case .invalidCode:
+                return "login.sso.error.alert.invalid_code.message".localized
+            case .invalidStatus(let status):
+                return "login.sso.error.alert.invalid_status.message".localized(args: String(status))
+            case .unknown:
+                return "login.sso.error.alert.unknown.message".localized
+            }
+        }
+    }
     
     /// Creates an `UIAlertController` with a textfield to get a SSO login code from the user.
     /// - parameter prefilledCode: A code which should be used to prefill the textfield of the controller (or `nil`).
     /// - parameter errorMessage: An (optional) error message to display over the textfield
     /// - parameter validator: A validation closure which will be used to enable / disable the textfield.
     /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled.
-    @objc static func companyLogin(
-        prefilledCode: String?,
-        errorMessage: String? = nil,
+    static func companyLogin(
+        prefilledInput: String?,
+        ssoOnly: Bool = false,
+        error: CompanyLoginError? = nil,
         completion: @escaping (String?) -> Void
         ) -> UIAlertController {
         
-        let message = "login.sso.alert.message".localized
+        let copy = CompanyLoginCopy(ssoOnly: ssoOnly)
         
         let controller = UIAlertController(
-            title: "login.sso.alert.title".localized,
-            message: "\n\(message)",
+            title: copy.title,
+            message: "\n\(copy.message)",
             preferredStyle: .alert
         )
         
-        if let errorMessage = errorMessage {
-            let attributedString = NSMutableAttributedString.companyLoginString(withMessage: message, error: errorMessage)
+        if let error = error {
+            let attributedString = NSMutableAttributedString.companyLoginString(
+                withMessage: copy.message,
+                error: error.description(for: copy)
+            )
             controller.setValue(attributedString, forKey: "attributedMessage")
         }
         
-        let loginAction = UIAlertAction(title: "login.sso.alert.action".localized, style: .default) { [controller] _ in
+        let loginAction = UIAlertAction(title: copy.action, style: .default) { [controller] _ in
             completion(controller.textFields?.first?.text)
         }
         
         controller.addTextField { textField in
-            textField.text = prefilledCode
+            textField.text = prefilledInput
             textField.accessibilityIdentifier = "textfield.sso.code"
-            textField.placeholder = "login.sso.alert.text_field.placeholder".localized
+            textField.placeholder = copy.placeholder
         }
         
         controller.addAction(.cancel { completion(nil) })
         controller.addAction(loginAction)
-        return controller
-    }
-
-    /// Creates an `UIAlertController` with a generic error title, a single OK button and the provided message.
-    /// - parameter message: The error message that should be used as the message of the controller.
-    static func companyLoginError(_ message: String) -> UIAlertController {
-        let controller = UIAlertController(
-            title: "login.sso.error.alert.title".localized,
-            message: message,
-            preferredStyle: .alert
-        )
-        
-        controller.addAction(.ok())
         return controller
     }
 
@@ -82,17 +126,5 @@ extension UIAlertController {
 
         controller.addAction(.ok())
         return controller
-    }
-
-    static func invalidCodeError() -> UIAlertController {
-        let controller = UIAlertController(
-            title: "login.sso.error.alert.invalid_code.title".localized,
-            message: "login.sso.error.alert.invalid_code.message".localized,
-            preferredStyle: .alert
-        )
-
-        controller.addAction(.ok())
-        return controller
-    }
-    
+    }    
 }

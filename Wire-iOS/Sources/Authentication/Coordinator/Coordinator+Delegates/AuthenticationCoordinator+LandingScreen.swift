@@ -40,7 +40,7 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     }
     
     func landingViewControllerDidChooseEnterpriseLogin() {
-        executeActions([.startCompanyLogin(code: nil)])
+        executeActions([.startCompanyLogin(code: nil, ssoOnly: false)])
     }
 
     func landingViewControllerDidChooseSSOLogin() {
@@ -49,6 +49,6 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
         // 2. if no code, prompt user
         
         // Starting company login flow for now
-        executeActions([.startCompanyLogin(code: nil)])
+        executeActions([.startCompanyLogin(code: nil, ssoOnly: true)])
     }
 }

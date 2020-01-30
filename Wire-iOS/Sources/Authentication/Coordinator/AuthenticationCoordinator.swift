@@ -311,8 +311,8 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .setUserPassword(let password):
                 updateUnregisteredUser(\.password, password)
 
-            case .startCompanyLogin(let code):
-                startCompanyLoginFlowIfPossible(linkCode: code)
+            case .startCompanyLogin(let code, let ssoOnly):
+                startCompanyLoginFlowIfPossible(linkCode: code, ssoOnly: ssoOnly)
 
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
@@ -717,11 +717,11 @@ extension AuthenticationCoordinator {
     }
 
     /// Manually start the company login flow.
-    private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
+    private func startCompanyLoginFlowIfPossible(linkCode: UUID?, ssoOnly: Bool) {
         if let linkCode = linkCode {
             companyLoginController?.attemptLoginWithCode(linkCode)
         } else {
-            companyLoginController?.displayLoginCodePrompt()
+            companyLoginController?.displayLoginCodePrompt(ssoOnly: ssoOnly)
         }
     }
 
