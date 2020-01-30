@@ -18,7 +18,30 @@
 
 import Foundation
 
+private enum InvitationError: Error {
+
+    case missingClient(Client)
+    case noContactInformation
+
+    enum Client {
+
+        case email, phone, both
+
+        var messageKey: String {
+            switch self {
+            case .email, .both:
+                return "error.invite.no_email_provider"
+            case .phone:
+                return "error.invite.no_messaging_provider"
+            }
+        }
+    }
+}
+
 final class InviteContactsViewController: ContactsViewController {
+
+    private let canInviteByEmail = ZMAddressBookContact.canInviteLocallyWithEmail()
+    private let canInviteByPhone = ZMAddressBookContact.canInviteLocallyWithPhoneNumber()
 
     override init() {
         super.init()
@@ -36,7 +59,6 @@ final class InviteContactsViewController: ContactsViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override var sharingContactsRequired: Bool {
         return true
@@ -146,28 +168,7 @@ final class InviteContactsViewController: ContactsViewController {
         }
     }
 
-    private let canInviteByEmail = ZMAddressBookContact.canInviteLocallyWithEmail()
-    private let canInviteByPhone = ZMAddressBookContact.canInviteLocallyWithPhoneNumber()
-
-    enum InvitationError: Error {
-        enum Client {
-            case email, phone, both
-
-            var messageKey: String {
-                switch self {
-                case .email, .both:
-                    return "error.invite.no_email_provider"
-                case .phone:
-                    return "error.invite.no_messaging_provider"
-                }
-            }
-        }
-
-        case missingClient(Client)
-        case noContactInformation
-    }
-
-    func invite(contact: ZMAddressBookContact, from view: UIView) throws {
+    private func invite(contact: ZMAddressBookContact, from view: UIView) throws {
         switch contact.contactDetails.count {
         case 1:
             try inviteWithSingleAddress(for: contact)
@@ -177,7 +178,6 @@ final class InviteContactsViewController: ContactsViewController {
             throw InvitationError.noContactInformation
         }
     }
-
 
     private func inviteWithSingleAddress(for contact: ZMAddressBookContact) throws {
         if let emailAddress = contact.emailAddresses.first {
@@ -242,6 +242,8 @@ final class InviteContactsViewController: ContactsViewController {
     }
 }
 
+// MARK: - Contacts View Controller Content Delegate
+
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     
     func contactsViewController(_ controller: ContactsViewController, shouldSelect user: ZMSearchUser) -> Bool {
@@ -253,26 +255,24 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     }
     
     func actionButtonTitles(for controller: ContactsViewController) -> [String] {
-        return ["contacts_ui.action_button.open".localized,
-                "contacts_ui.action_button.invite".localized,
-                "connection_request.send_button_title".localized]
+        return ["contacts_ui.action_button.open",
+                "contacts_ui.action_button.invite",
+                "connection_request.send_button_title"].map(\.localized)
     }
     
     func contactsViewController(_ controller: ContactsViewController,
                                 actionButtonTitleIndexFor user: UserType?,
                                 isIgnored: Bool) -> Int {
+
         guard let user = user else { return 1 }
-        
-        if user.isConnected ||
-           ((user.isPendingApprovalByOtherUser ||
-             user.isPendingApprovalBySelfUser) && isIgnored) {
+
+        if user.isConnected || user.isPendingApproval && isIgnored {
             return 0
-        } else if !isIgnored,
-            !user.isPendingApprovalByOtherUser {
+        } else if !isIgnored && !user.isPendingApprovalByOtherUser {
             return 2
+        } else {
+            return 1
         }
-        
-        return 1
     }
     
     func contactsViewController(_ controller: ContactsViewController, actionButton: UIButton, pressedFor user: ZMSearchUser) {
@@ -283,6 +283,8 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         invite(user: user, from: cell)
     }
 }
+
+// MARK: - Contacts View Controller Delegate
 
 extension InviteContactsViewController: ContactsViewControllerDelegate {
     func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
