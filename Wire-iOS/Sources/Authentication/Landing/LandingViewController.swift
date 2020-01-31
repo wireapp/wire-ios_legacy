@@ -91,7 +91,7 @@ class LandingViewController: AuthenticationStepViewController {
     }()
     
     let messageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_message".localized, size: .large, weight: .light, color: .textForeground, variant: .light)
+        let label = UILabel(key: "landing.welcome_message".localized(args: BackendEnvironment.shared.title), size: .large, weight: .light, color: .textForeground, variant: .light)
         label.font = LandingViewController.headlineFont
         label.textAlignment = .center
         label.numberOfLines = 2
@@ -401,6 +401,7 @@ class LandingViewController: AuthenticationStepViewController {
         createAccountButton.isHidden = isCustomBackend
         loginWithSSOButton.isHidden = !isCustomBackend
         loginWithEmailButton.isHidden = !isCustomBackend
+        messageLabel.text = "landing.welcome_message".localized(args: BackendEnvironment.shared.title)
     }
     
     private func disableTrackingIfNeeded() {
