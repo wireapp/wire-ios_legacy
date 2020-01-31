@@ -32,26 +32,21 @@ extension UIImage {
         return scaledImage
     }
     
-    func desaturatedImage(with context: CIContext?, saturation: NSNumber?) -> UIImage? {
-        var i: CIImage? = nil
-        if let cg = self.cgImage {
-            i = CIImage(cgImage: cg)
-        }
-        var filter = CIFilter(name: "CIColorControls")
-        filter?.setValue(i, forKey: kCIInputImageKey)
-        filter?.setValue(saturation, forKey: "InputSaturation")
-        let result = filter?.value(forKey: kCIOutputImageKey) as? CIImage
-        var cgImage: CGImage? = nil
-        if let result = result {
-            cgImage = context?.createCGImage(result, from: result?.extent ?? CGRect.zero)
-        }
-        var processed: UIImage? = nil
-        if let cgImage = cgImage {
-            processed = UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
-        }
-        CGImageRelease(cgImage)
+    func desaturatedImage(with context: CIContext, saturation: NSNumber) -> UIImage? {
+        guard let filter = CIFilter(name: "CIColorControls"),
+              let cg = self.cgImage
+              else { return nil }
+
+        let i: CIImage = CIImage(cgImage: cg)
+
+        filter.setValue(i, forKey: kCIInputImageKey)
+        filter.setValue(saturation, forKey: "InputSaturation")
         
-        return processed
+        guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage,
+              let cgImage: CGImage = context.createCGImage(result, from: result.extent) else { return nil }
+        
+        
+        return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
 
     ///TODO: init
@@ -70,12 +65,12 @@ extension UIImage {
         return colorImage
     }
 
-    class func singlePixelImage(with color: UIColor?) -> UIImage? {
+    class func singlePixelImage(with color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
         
-        context?.setFillColor(color?.cgColor)
+        context?.setFillColor(color.cgColor)
         context?.fill(rect)
         
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -84,29 +79,17 @@ extension UIImage {
         return image
     }
 
-    class func deviceOptimizedImage(from imageData: Data?) -> UIImage? {
-        return self.image(from: imageData, withMaxSize: UIScreen.main.nativeBounds.size.height)
+    class func deviceOptimizedImage(from imageData: Data) -> UIImage? {
+        return UIImage(fromData: imageData, withMaxSize: UIScreen.main.nativeBounds.size.height)
     }
 
-    convenience init(fromData imageData: Data, withMaxSize maxSize: CGFloat) {
-        if imageData == nil {
-            return nil
-        }
+    convenience init?(fromData imageData: Data, withMaxSize maxSize: CGFloat) {
+        guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return nil }
         
-        var source: CGImageSource? = nil
-        if let data = imageData as? CFData? {
-            source = CGImageSourceCreateWithData(data, nil)
-        }
-        if source == nil {
-            return nil
-        }
+        let options = UIImage.thumbnailOptions(withMaxSize: maxSize)
         
-        let options = self.thumbnailOptions(withMaxSize: maxSize)
+        let scaledImage: CGImage? = CGImageSourceCreateThumbnailAtIndex(source, 0, options)
         
-        var scaledImage: CGImage? = nil
-        if let source = source {
-            scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options)
-        }
         if scaledImage == nil {
             return nil
         }
@@ -124,7 +107,7 @@ extension UIImage {
             kCGImageSourceCreateThumbnailWithTransform : kCFBooleanTrue,
             kCGImageSourceCreateThumbnailFromImageIfAbsent : kCFBooleanTrue,
             kCGImageSourceCreateThumbnailFromImageAlways : kCFBooleanTrue,
-            kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: maxSize)
+            kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: Float(maxSize))
             ] as? CFDictionary?
     }
     
