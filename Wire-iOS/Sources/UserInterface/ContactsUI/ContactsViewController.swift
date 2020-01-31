@@ -84,6 +84,18 @@ class ContactsViewController: UIViewController {
         }
     }
 
+
+    /// If sharingContactsRequired is true the user will be prompted to share his address book
+    /// if he/she hasn't already done so. Override this property in subclasses to override
+    /// the default behaviour which is false.
+    var sharingContactsRequired: Bool {
+        return false
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+
     // MARK: - Life Cycle
 
     init() {
@@ -120,36 +132,9 @@ class ContactsViewController: UIViewController {
         searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
-    private func presentShareContactsViewControllerIfNeeded() {
-        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
-        if sharingContactsRequired &&
-            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
-            !shouldSkip &&
-            shouldShowShareContactsViewController {
-            presentShareContactsViewController()
-        }
-    }
+    // MARK: - Setup
 
-    private func presentShareContactsViewController() {
-        let shareContactsViewController = ShareContactsViewController()
-        shareContactsViewController.delegate = self
-
-        addToSelf(shareContactsViewController)
-    }
-
-    /// If sharingContactsRequired is true the user will be prompted to share his address book
-    /// if he/she hasn't already done so. Override this property in subclasses to override
-    /// the default behaviour which is false.
-    var sharingContactsRequired: Bool {
-        return false
-    }
-
-    open override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
-    @objc
-    func setupViews() {
+    private func setupViews() {
         let colorScheme = ColorScheme.default
 
         view.backgroundColor = colorScheme.color(named: .background)
@@ -218,12 +203,15 @@ class ContactsViewController: UIViewController {
         updateEmptyResults()
     }
 
+    // MARK: - Actions
+
     @objc
     func cancelPressed() {
         delegate?.contactsViewControllerDidCancel(self)
     }
 
-    @objc
+    // MARK: - Methods
+
     func updateActionButtonTitles() {
         actionButtonTitles = contentDelegate?.actionButtonTitles(for: self) ?? []
     }
@@ -258,6 +246,23 @@ class ContactsViewController: UIViewController {
             animationBlock()
             completion(true)
         }
+    }
+
+    private func presentShareContactsViewControllerIfNeeded() {
+        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        if sharingContactsRequired &&
+            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
+            !shouldSkip &&
+            shouldShowShareContactsViewController {
+            presentShareContactsViewController()
+        }
+    }
+
+    private func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+
+        addToSelf(shareContactsViewController)
     }
 
     // MARK: - Keyboard Observation
