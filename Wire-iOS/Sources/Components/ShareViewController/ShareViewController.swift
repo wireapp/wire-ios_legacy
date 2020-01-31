@@ -32,7 +32,18 @@ protocol Shareable {
     func previewView() -> UIView?
 }
 
-final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, TokenFieldDelegate, UIViewControllerTransitioningDelegate {
+extension ShareViewController: TokenFieldDelegate {
+    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
+        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
+        self.destinationsTableView.reloadData()
+    }
+    
+    public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+        self.filterString = text
+    }
+}
+
+final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate {
     public let destinations: [D]
     public let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -204,17 +215,6 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         self.topSeparatorView.scrollViewDidScroll(scrollView: scrollView)
     }
 
-    // MARK: - TokenFieldDelegate
-
-    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
-        self.destinationsTableView.reloadData()
-    }
-    
-    public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
-        self.filterString = text
-    }
-    
     // MARK: - UIViewControllerTransitioningDelegate
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {

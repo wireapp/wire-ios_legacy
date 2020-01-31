@@ -180,14 +180,6 @@ extension SearchHeaderViewController : TokenFieldDelegate {
         updateClearIndicator(for: tokenField)
     }
     
-    public func tokenFieldDidBeginEditing(_ tokenField: TokenField) {
-        
-    }
-    
-    public func tokenFieldWillScroll(_ tokenField: TokenField) {
-        
-    }
-    
     public func tokenFieldDidConfirmSelection(_ controller: TokenField) {
         delegate?.searchHeaderViewControllerDidConfirmAction(self)
     }
