@@ -757,6 +757,7 @@
 		A97FA6FE23B5883A005257A8 /* StartUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97FA6FD23B5883A005257A8 /* StartUIDelegate.swift */; };
 		A9806A3B23E2024E00691DFE /* AudioTrackPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3A23E2024E00691DFE /* AudioTrackPlayer.swift */; };
 		A9806A3C23E209FC00691DFE /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3271D34F94200DF0793 /* AudioTrack.swift */; };
+		A9806A3E23E41EF400691DFE /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3D23E41EF400691DFE /* Token.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
@@ -929,7 +930,6 @@
 		D5168F542010F24500F8222A /* TokenizedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB21B5F9A6D00E347DF /* TokenizedTextView.m */; };
 		D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB01B5F9A6D00E347DF /* TokenTextAttachment.m */; };
 		D5168F562010F25000F8222A /* TokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */; };
-		D5168F572010F25400F8222A /* Token.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAC1B5F9A6D00E347DF /* Token.m */; };
 		D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */; };
 		D5173573201764DD00B473CE /* UIAlertAction+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5173572201764DD00B473CE /* UIAlertAction+Convenience.swift */; };
 		D5189473204D543C00C095C1 /* InitialSyncObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5189472204D543C00C095C1 /* InitialSyncObserver.swift */; };
@@ -1722,8 +1722,6 @@
 		1EC71A271B6A1B9200700A14 /* WireImages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireImages.framework; path = Carthage/Build/iOS/WireImages.framework; sourceTree = "<group>"; };
 		1EE9DCA81B5F9A6D00E347DF /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		1EE9DCA91B5F9A6D00E347DF /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
-		1EE9DCAB1B5F9A6D00E347DF /* Token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Token.h; sourceTree = "<group>"; };
-		1EE9DCAC1B5F9A6D00E347DF /* Token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Token.m; sourceTree = "<group>"; };
 		1EE9DCAD1B5F9A6D00E347DF /* TokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenField.h; sourceTree = "<group>"; };
 		1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenField.m; sourceTree = "<group>"; };
 		1EE9DCAF1B5F9A6D00E347DF /* TokenTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenTextAttachment.h; sourceTree = "<group>"; };
@@ -2430,6 +2428,7 @@
 		A97FA6FB23B57067005257A8 /* StartUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIViewController.swift; sourceTree = "<group>"; };
 		A97FA6FD23B5883A005257A8 /* StartUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartUIDelegate.swift; sourceTree = "<group>"; };
 		A9806A3A23E2024E00691DFE /* AudioTrackPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrackPlayer.swift; sourceTree = "<group>"; };
+		A9806A3D23E41EF400691DFE /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
@@ -3568,8 +3567,7 @@
 		1EE9DCAA1B5F9A6D00E347DF /* TokenField */ = {
 			isa = PBXGroup;
 			children = (
-				1EE9DCAB1B5F9A6D00E347DF /* Token.h */,
-				1EE9DCAC1B5F9A6D00E347DF /* Token.m */,
+				A9806A3D23E41EF400691DFE /* Token.swift */,
 				1EE9DCAD1B5F9A6D00E347DF /* TokenField.h */,
 				1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */,
 				D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */,
@@ -7219,6 +7217,7 @@
 				166264F32179D3CF00300F45 /* SenderCellComponent.swift in Sources */,
 				EF42658B2333DB9800DDAD0A /* ConversationListViewModelDelegate.swift in Sources */,
 				BFE3FEEA209747D6003D9AB5 /* CallStatusView.swift in Sources */,
+				A9806A3E23E41EF400691DFE /* Token.swift in Sources */,
 				A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */,
 				5E8DA75A211B075E00360979 /* AuthenticationNoCredentialsErrorHandler.swift in Sources */,
 				551CD27822BA288B00EE9AE5 /* LegalHoldDisclosureController.swift in Sources */,
@@ -7582,7 +7581,6 @@
 				F15650D421DD0FAB00210504 /* VerticalColumnPositioning.swift in Sources */,
 				5EA73D7F20D900A10001D106 /* GroupDetailsGuestOptionsCell.swift in Sources */,
 				871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */,
-				D5168F572010F25400F8222A /* Token.m in Sources */,
 				5E3FB06D206BC7AF0075E910 /* TabBarController.swift in Sources */,
 				166264F62179E63F00300F45 /* ImageMessageContentView.swift in Sources */,
 				EF2C59ED20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift in Sources */,

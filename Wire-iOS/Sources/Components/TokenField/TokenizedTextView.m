@@ -19,7 +19,6 @@
 
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
-#import "Token.h"
 
 @interface TokenizedTextView () <UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UITapGestureRecognizer *tapSelectionGestureRecognizer;

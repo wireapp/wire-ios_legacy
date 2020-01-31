@@ -19,7 +19,6 @@
 
 
 #import "TokenTextAttachment.h"
-#import "Token.h"
 #import "TokenField.h"
 #import "Wire-Swift.h"
 

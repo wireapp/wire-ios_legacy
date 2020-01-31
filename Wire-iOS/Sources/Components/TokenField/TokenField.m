@@ -18,7 +18,6 @@
 
 
 #import "TokenField.h"
-#import "Token.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
