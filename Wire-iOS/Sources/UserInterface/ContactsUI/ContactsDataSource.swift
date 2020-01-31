@@ -146,7 +146,7 @@ extension ContactsDataSource: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return delegate!.dataSource(self, cellFor: user(at: indexPath), at: indexPath) // FIXME
+        return delegate?.dataSource(self, cellFor: user(at: indexPath), at: indexPath) ?? UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

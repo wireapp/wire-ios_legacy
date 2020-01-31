@@ -62,7 +62,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 cell.actionButton.setTitle(titleString, for: .normal)
         }
 
-        if dataSource.selection.contains(user as! ZMSearchUser) { // FIXME
+        if let user = user as? ZMSearchUser, dataSource.selection.contains(user) {
             tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
 
