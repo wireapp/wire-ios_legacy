@@ -23,32 +23,32 @@ extension UIImage {
         let size = self.size.applying(CGAffineTransform(scaleX: scaleFactor, y: scaleFactor))
         let scale: CGFloat = 0 // Automatically use scale factor of main screens
         let hasAlpha = false
-
+        
         UIGraphicsBeginImageContextWithOptions(size, _: !hasAlpha, _: scale)
         draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return scaledImage
     }
     
     func desaturatedImage(with context: CIContext, saturation: NSNumber) -> UIImage? {
         guard let filter = CIFilter(name: "CIColorControls"),
-              let cg = self.cgImage
-              else { return nil }
-
+            let cg = self.cgImage
+            else { return nil }
+        
         let i: CIImage = CIImage(cgImage: cg)
-
+        
         filter.setValue(i, forKey: kCIInputImageKey)
         filter.setValue(saturation, forKey: "InputSaturation")
         
         guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage,
-              let cgImage: CGImage = context.createCGImage(result, from: result.extent) else { return nil }
+            let cgImage: CGImage = context.createCGImage(result, from: result.extent) else { return nil }
         
         
         return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
-
+    
     ///TODO: init
     func image(with insets: UIEdgeInsets, backgroundColor: UIColor?) -> UIImage? {
         let newSize = CGSize(width: size.width + insets.left + insets.right, height: size.height + insets.top + insets.bottom)
@@ -64,7 +64,7 @@ extension UIImage {
         
         return colorImage
     }
-
+    
     class func singlePixelImage(with color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
         UIGraphicsBeginImageContext(rect.size)
@@ -78,85 +78,70 @@ extension UIImage {
         
         return image
     }
-
+    
     class func deviceOptimizedImage(from imageData: Data) -> UIImage? {
         return UIImage(fromData: imageData, withMaxSize: UIScreen.main.nativeBounds.size.height)
     }
-
+    
     convenience init?(fromData imageData: Data, withMaxSize maxSize: CGFloat) {
-        guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return nil }
+        guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil),
+            let scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, UIImage.thumbnailOptions(withMaxSize: maxSize)) else { return nil }
         
-        let options = UIImage.thumbnailOptions(withMaxSize: maxSize)
         
-        let scaledImage: CGImage? = CGImageSourceCreateThumbnailAtIndex(source, 0, options)
-        
-        if scaledImage == nil {
-            return nil
-        }
-        
-        var image: UIImage? = nil
-        if let scaledImage = scaledImage {
-            image = UIImage(cgImage: scaledImage, scale: 2.0, orientation: .up)
-        }
-        
-        return image
+        self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
     }
     
-    private class func thumbnailOptions(withMaxSize maxSize: CGFloat) -> CFDictionary? {
+    private class func thumbnailOptions(withMaxSize maxSize: CGFloat) -> CFDictionary {
         return [
             kCGImageSourceCreateThumbnailWithTransform : kCFBooleanTrue,
             kCGImageSourceCreateThumbnailFromImageIfAbsent : kCFBooleanTrue,
             kCGImageSourceCreateThumbnailFromImageAlways : kCFBooleanTrue,
             kCGImageSourceThumbnailMaxPixelSize : NSNumber(value: Float(maxSize))
-            ] as? CFDictionary?
+            ] as CFDictionary
     }
     
-
-    convenience init(fromData imageData: Data, withShorterSideLength shorterSideLength: CGFloat) {
-            if imageData == nil {
-                return nil
-            }
-            
-            var source: CGImageSource? = nil
-            if let data = imageData as? CFData? {
-                source = CGImageSourceCreateWithData(data, nil)
-            }
-            if source == nil {
-                return nil
-            }
-            
-            let size = self.size(for: source)
-            if size.width <= 0 || size.height <= 0 {
-                return nil
-            }
-            
-            var longSideLength = shorterSideLength
-            
-            if size.width > size.height {
-                longSideLength = shorterSideLength * (size.width / size.height)
-            } else if size.height > size.width {
-                longSideLength = shorterSideLength * (size.height / size.width)
-            }
-            
-            let options = self.thumbnailOptions(withMaxSize: longSideLength)
-            
-            var scaledImage: CGImage? = nil
-            if let source = source {
-                scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options)
-            }
-            if scaledImage == nil {
-                return nil
-            }
-            
-            var image: UIImage? = nil
-            if let scaledImage = scaledImage {
-                image = UIImage(cgImage: scaledImage, scale: 2.0, orientation: .up)
-            }
-            
-            return image
+    private class func size(for source: CGImageSource) -> CGSize {
+        
+        let options = [
+            kCGImageSourceShouldCache: kCFBooleanTrue
+            ] as CFDictionary
+        
+        
+        guard let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, options) as? [CFString: Any] else {
+            return .zero
         }
-
-    convenience init(color: UIColor, andSize size: CGSize) {
+        
+        if let height = properties[kCGImagePropertyPixelHeight] as? CGFloat,
+            let width = properties[kCGImagePropertyPixelWidth] as? CGFloat {
+            return CGSize(width: width, height: height)
+        }
+        
+        return .zero
+    }
+    
+    convenience init?(fromData imageData: Data, withShorterSideLength shorterSideLength: CGFloat) {
+        guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return nil }
+        
+        let size = UIImage.size(for: source)
+        if size.width <= 0 || size.height <= 0 {
+            return nil
+        }
+        
+        var longSideLength = shorterSideLength
+        
+        if size.width > size.height {
+            longSideLength = shorterSideLength * (size.width / size.height)
+        } else if size.height > size.width {
+            longSideLength = shorterSideLength * (size.height / size.width)
+        }
+        
+        guard let scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, UIImage.thumbnailOptions(withMaxSize: longSideLength)) else { return nil }
+        
+        ///TODO: read screen scale
+        self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
+    }
+    
+    class func image(with color: UIColor, andSize size: CGSize) -> UIImage? {
         let rect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
