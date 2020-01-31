@@ -49,8 +49,7 @@ extension UIImage {
         return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
     }
     
-    ///TODO: init
-    func image(with insets: UIEdgeInsets, backgroundColor: UIColor?) -> UIImage? {
+    func with(insets: UIEdgeInsets, backgroundColor: UIColor?) -> UIImage? {
         let newSize = CGSize(width: size.width + insets.left + insets.right, height: size.height + insets.top + insets.bottom)
         
         UIGraphicsBeginImageContextWithOptions(newSize, _: 0.0 != 0, _: 0.0)
@@ -80,10 +79,10 @@ extension UIImage {
     }
     
     class func deviceOptimizedImage(from imageData: Data) -> UIImage? {
-        return UIImage(fromData: imageData, withMaxSize: UIScreen.main.nativeBounds.size.height)
+        return UIImage(from: imageData, withMaxSize: UIScreen.main.nativeBounds.size.height)
     }
     
-    convenience init?(fromData imageData: Data, withMaxSize maxSize: CGFloat) {
+    convenience init?(from imageData: Data, withMaxSize maxSize: CGFloat) {
         guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil),
             let scaledImage = CGImageSourceCreateThumbnailAtIndex(source, 0, UIImage.thumbnailOptions(withMaxSize: maxSize)) else { return nil }
         
@@ -119,7 +118,7 @@ extension UIImage {
         return .zero
     }
     
-    convenience init?(fromData imageData: Data, withShorterSideLength shorterSideLength: CGFloat) {
+    convenience init?(from imageData: Data, withShorterSideLength shorterSideLength: CGFloat) {
         guard let source: CGImageSource = CGImageSourceCreateWithData(imageData as CFData, nil) else { return nil }
         
         let size = UIImage.size(for: source)
@@ -141,7 +140,7 @@ extension UIImage {
         self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
     }
     
-    class func image(with color: UIColor, andSize size: CGSize) -> UIImage? {
+    class func image(color: UIColor, andSize size: CGSize) -> UIImage? {
         let rect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
