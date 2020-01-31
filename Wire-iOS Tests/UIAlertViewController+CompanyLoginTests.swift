@@ -28,15 +28,18 @@ final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForAlertWithoutError(){
-        sut = UIAlertController.companyLogin(prefilledCode: nil, completion: {_ in })
-
+    func testForSSOAndEmailAlert() {
+        sut = UIAlertController.companyLogin(ssoOnly: false, completion: {_ in})
+        verify(matching: sut)
+    }
+    
+    func testForSSOOnlyAlert() {
+        sut = UIAlertController.companyLogin(ssoOnly: true, completion: {_ in})
         verify(matching: sut)
     }
     
     func testForAlertWithError() {
-        sut = UIAlertController.companyLogin(prefilledCode: nil, errorMessage: "Something went wrong", completion: {_ in })
-
+        sut = UIAlertController.companyLogin(error: .unknown) {_ in}
         verify(matching: sut)
     }
 

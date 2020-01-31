@@ -159,7 +159,7 @@ import WireCommonComponents
     
     /// Presents the email/SSO login alert
     /// - parameter prefilledInput: fills the alert input field (optional)
-    /// - parameter errorMessage: displays error message in the alert (optional)
+    /// - parameter error: displays error in the alert (optional)
     /// - parameter ssoOnly: determines the copy and inputHandler of the alert. default: false
     private func presentCompanyLoginAlert(
         prefilledInput: String? = nil,
