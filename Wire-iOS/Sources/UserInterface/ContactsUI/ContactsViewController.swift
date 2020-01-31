@@ -82,7 +82,7 @@ class ContactsViewController: UIViewController {
         }
     }
 
-    var shouldShowShareContactsViewController = true // What's this?
+    var shouldShowShareContactsViewController = true
 
     let ContactsViewControllerCellID = "ContactsCell"
     let ContactsViewControllerSectionHeaderID = "ContactsSectionHeaderView"
@@ -134,7 +134,6 @@ class ContactsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    // What's this about?
     /// If sharingContactsRequired is true the user will be prompted to share his address book
     /// if he/she hasn't already done so. Override this property in subclasses to override
     /// the default behaviour which is false.
@@ -182,9 +181,9 @@ class ContactsViewController: UIViewController {
         tableView.allowsMultipleSelection = true
         tableView.rowHeight = 52
         tableView.keyboardDismissMode = .onDrag
-        tableView.sectionIndexMinimumDisplayRowCount = 15 // FIXME: ContactsDataSource.MinimumNumberOfContactsToDisplaySections
-        tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsViewControllerCellID) // FIXME: id in cell
-        tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsViewControllerSectionHeaderID) // FIXME: id in header
+        tableView.sectionIndexMinimumDisplayRowCount = Int(ContactsDataSource.MinimumNumberOfContactsToDisplaySections)
+        tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsViewControllerCellID)
+        tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsViewControllerSectionHeaderID)
         view.addSubview(tableView)
 
         setupTableView()
@@ -193,7 +192,7 @@ class ContactsViewController: UIViewController {
         emptyResultsView = ContactsEmptyResultView()
         emptyResultsView.messageLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
         emptyResultsView.actionButton.setTitle("peoplepicker.no_matching_results.action.send_invite".localized, for: .normal)
-        emptyResultsView.actionButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside) // TODO: What is this?
+        emptyResultsView.actionButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
         view.addSubview(emptyResultsView)
 
         // No contacts label
