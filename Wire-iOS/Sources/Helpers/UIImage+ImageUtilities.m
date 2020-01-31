@@ -39,22 +39,6 @@
     return processed;
 }
 
-- (instancetype)imageWithColor:(UIColor *)color
-{
-    CGRect rect = CGRectMake(0, 0, self.size.width, self.size.height);
-    
-    UIGraphicsBeginImageContextWithOptions(rect.size, 0.0f, 0.0f);
-    
-    [self drawInRect:rect];
-    [color setFill];
-    UIRectFillUsingBlendMode(rect, kCGBlendModeSourceAtop);
-    
-    UIImage * colorImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return colorImage;
-}
-
 - (UIImage *)imageWithInsets:(UIEdgeInsets)insets backgroundColor:(UIColor *)backgroundColor
 {
     CGSize newSize = CGSizeMake(self.size.width + insets.left + insets.right, self.size.height + insets.top + insets.bottom);
@@ -79,46 +63,6 @@
     
     CGContextSetFillColorWithColor(context, [color CGColor]);
     CGContextFillRect(context, rect);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return image;
-}
-
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius
-{
-    CIImage *outputImage = [CIImage imageWithCGImage:[self CGImage]];
-    
-    CGRect extent = outputImage.extent;
-    
-    // Blur
-    CIFilter *blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [blurFilter setValue:@(radius) forKey:kCIInputRadiusKey];
-    [blurFilter setValue:outputImage forKey:kCIInputImageKey];
-    outputImage = blurFilter.outputImage;
-    
-    CIImage *result = [outputImage imageByCroppingToRect:extent];
-    
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *processed = [UIImage imageWithCGImage:cgImage scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(cgImage);
-    
-    return processed;
-}
-
-+ (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color
-{
-    const CGFloat middleSize = 10.0f;
-    
-    CGRect rect = CGRectMake(0.0f, 0.0f, ceilf(inset * 2.0f + middleSize), 1.0f);
-    UIGraphicsBeginImageContextWithOptions(rect.size, NO, 1.0f);
-
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetFillColorWithColor(context, [color CGColor]);
-    CGContextFillRect(context, CGRectMake(inset, 0, middleSize, 1.0f));
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

@@ -23,16 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIImage (ImageUtilities)
 
-- (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation;
+- (UIImage *)desaturatedImageWithContext:(CIContext *)context saturation:(NSNumber *)saturation;//needed
 
-- (instancetype)imageWithColor:(UIColor *)color;
+- (UIImage *)imageWithInsets:(UIEdgeInsets)insets backgroundColor:(UIColor *)backgroundColor;//needed
 
-- (UIImage *)imageWithInsets:(UIEdgeInsets)insets backgroundColor:(UIColor *)backgroundColor;
-
-+ (UIImage *)singlePixelImageWithColor:(UIColor *)color;
-+ (UIImage *)shadowImageWithInset:(CGFloat)inset color:(UIColor *)color;
-- (UIImage *)blurredImageWithContext:(CIContext *)context
-                          blurRadius:(CGFloat)radius;
++ (UIImage *)singlePixelImageWithColor:(UIColor *)color;//needed
 + (nullable UIImage *)deviceOptimizedImageFromData:(NSData *)imageData;
 + (nullable UIImage *)imageFromData:(NSData *)imageData withMaxSize:(CGFloat)maxSize;
 + (nullable UIImage *)imageFromData:(NSData *)imageData withShorterSideLength:(CGFloat)shorterSideLength;
