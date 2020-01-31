@@ -69,7 +69,7 @@ final class InviteContactsViewControllerSnapshotTests: XCTestCase {
 
     func testForContactsWithoutSectionBar() {
         let mockUsers = MockUser.mockUsers()
-        sut.dataSource?.ungroupedSearchResults = mockUsers
+        sut.dataSource.ungroupedSearchResults = mockUsers ?? []
 
         snapshotWithNavigationBarWithBackButton()
     }
@@ -88,8 +88,8 @@ final class InviteContactsViewControllerSnapshotTests: XCTestCase {
     }*/
 
     func testForContactsAndIndexSectionBarAreShown() {
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json")
-        sut.dataSource?.ungroupedSearchResults = mockUsers
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json") as? [MockUser]
+        sut.dataSource.ungroupedSearchResults = mockUsers ?? []
 
         snapshotWithNavigationBarWithBackButton()
     }

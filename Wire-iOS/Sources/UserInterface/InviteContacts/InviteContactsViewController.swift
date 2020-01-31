@@ -18,14 +18,37 @@
 
 import Foundation
 
+private enum InvitationError: Error {
+
+    case missingClient(Client)
+    case noContactInformation
+
+    enum Client {
+
+        case email, phone, both
+
+        var messageKey: String {
+            switch self {
+            case .email, .both:
+                return "error.invite.no_email_provider"
+            case .phone:
+                return "error.invite.no_messaging_provider"
+            }
+        }
+    }
+}
+
 final class InviteContactsViewController: ContactsViewController {
-    init() {
-        super.init(nibName: nil, bundle: nil)
+
+    private let canInviteByEmail = ZMAddressBookContact.canInviteLocallyWithEmail()
+    private let canInviteByPhone = ZMAddressBookContact.canInviteLocallyWithPhoneNumber()
+
+    override init() {
+        super.init()
         
         delegate = self
         contentDelegate = self
-        dataSource = ContactsDataSource()
-        dataSource?.searchQuery = ""
+        dataSource.searchQuery = ""
         
         title = "contacts_ui.title".localized.uppercased()
         
@@ -36,9 +59,8 @@ final class InviteContactsViewController: ContactsViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    override func sharingContactsRequired() -> Bool {
+
+    override var sharingContactsRequired: Bool {
         return true
     }
     
@@ -51,7 +73,7 @@ final class InviteContactsViewController: ContactsViewController {
         
         ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
         
-        let subViewConstraints = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
+        let subViewConstraints: [NSLayoutConstraint] = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
         
         if navigationController != nil {
             titleLabel.isHidden = true
@@ -94,7 +116,9 @@ final class InviteContactsViewController: ContactsViewController {
     }
     
     private func invite(user: ZMSearchUser, from view: UIView) {
-        
+        // FIXME: The following code smoothens the transition when opening a conversation, but prevents the
+        // invite alerts / screens from opening. We need to distinguish between these two types of actions.
+
         // Prevent the overlapped visual artifact when opening a conversation
         if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
             navigationController.popToRootViewController(animated: false) {
@@ -135,12 +159,94 @@ final class InviteContactsViewController: ContactsViewController {
                 self.tableView.reloadData()
             })
         } else {
-            let alertController = invite(user.contact!, from: view)
-            
-            alertController?.presentInNotificationsWindow()
+            do {
+                if let contact = user.contact {
+                    try invite(contact: contact, from: view)
+                }
+            } catch InvitationError.missingClient(let client) {
+                present(unableToSendController(client: client), animated: true)
+            } catch {
+                // log
+            }
         }
     }
+
+    private func invite(contact: ZMAddressBookContact, from view: UIView) throws {
+        switch contact.contactDetails.count {
+        case 1:
+            try inviteWithSingleAddress(for: contact)
+        case 2...:
+            let actionSheet = try addressActionSheet(for: contact, in: view)
+            present(actionSheet, animated: true)
+        default:
+            throw InvitationError.noContactInformation
+        }
+    }
+
+    private func inviteWithSingleAddress(for contact: ZMAddressBookContact) throws {
+        if let emailAddress = contact.emailAddresses.first {
+            guard canInviteByEmail else { throw InvitationError.missingClient(.email) }
+            contact.inviteLocallyWithEmail(emailAddress)
+
+        } else if let phoneNumber = contact.rawPhoneNumbers.first {
+            guard canInviteByPhone else { throw InvitationError.missingClient(.phone) }
+            contact.inviteLocallyWithPhoneNumber(phoneNumber)
+
+        } else {
+            throw InvitationError.noContactInformation
+        }
+    }
+
+    private func addressActionSheet(for contact: ZMAddressBookContact, in view: UIView) throws -> UIAlertController {
+        guard canInviteByEmail || canInviteByPhone else { throw InvitationError.missingClient(.both) }
+
+        let chooseContactDetailController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        let presentationController = chooseContactDetailController.popoverPresentationController
+        presentationController?.sourceView = view
+        presentationController?.sourceRect = view.bounds
+
+        var actions = [UIAlertAction]()
+
+        if canInviteByEmail {
+            actions.append(contentsOf: contact.emailAddresses.map { address in
+                UIAlertAction(title: address, style: .default) { _ in
+                    contact.inviteLocallyWithEmail(address)
+                    chooseContactDetailController.dismiss(animated: true)
+                }
+            })
+        }
+
+        if canInviteByPhone {
+            actions.append(contentsOf: contact.rawPhoneNumbers.map { number in
+                UIAlertAction(title: number, style: .default) { _ in
+                    contact.inviteLocallyWithPhoneNumber(number)
+                    chooseContactDetailController.dismiss(animated: true)
+                }
+            })
+        }
+
+        actions.append(UIAlertAction(title: "contacts_ui.invite_sheet.cancel_button_title".localized, style: .cancel) { action in
+            chooseContactDetailController.dismiss(animated: true)
+        })
+
+        actions.forEach(chooseContactDetailController.addAction)
+        return chooseContactDetailController
+    }
+
+    private func unableToSendController(client: InvitationError.Client) -> UIAlertController {
+        let unableToSendController = UIAlertController(title: nil, message: client.messageKey.localized, preferredStyle: .alert)
+
+        let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { action in
+            unableToSendController.dismiss(animated: true)
+        }
+
+        unableToSendController.addAction(okAction)
+        return unableToSendController
+    }
 }
+
+// MARK: - Contacts View Controller Content Delegate
 
 extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     
@@ -153,26 +259,24 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
     }
     
     func actionButtonTitles(for controller: ContactsViewController) -> [String] {
-        return ["contacts_ui.action_button.open".localized,
-                "contacts_ui.action_button.invite".localized,
-                "connection_request.send_button_title".localized]
+        return ["contacts_ui.action_button.open",
+                "contacts_ui.action_button.invite",
+                "connection_request.send_button_title"].map(\.localized)
     }
     
     func contactsViewController(_ controller: ContactsViewController,
                                 actionButtonTitleIndexFor user: UserType?,
                                 isIgnored: Bool) -> Int {
+
         guard let user = user else { return 1 }
-        
-        if user.isConnected ||
-           ((user.isPendingApprovalByOtherUser ||
-             user.isPendingApprovalBySelfUser) && isIgnored) {
+
+        if user.isConnected || user.isPendingApproval && isIgnored {
             return 0
-        } else if !isIgnored,
-            !user.isPendingApprovalByOtherUser {
+        } else if !isIgnored && !user.isPendingApprovalByOtherUser {
             return 2
+        } else {
+            return 1
         }
-        
-        return 1
     }
     
     func contactsViewController(_ controller: ContactsViewController, actionButton: UIButton, pressedFor user: ZMSearchUser) {
@@ -183,6 +287,8 @@ extension InviteContactsViewController: ContactsViewControllerContentDelegate {
         invite(user: user, from: cell)
     }
 }
+
+// MARK: - Contacts View Controller Delegate
 
 extension InviteContactsViewController: ContactsViewControllerDelegate {
     func contactsViewControllerDidCancel(_ controller: ContactsViewController) {

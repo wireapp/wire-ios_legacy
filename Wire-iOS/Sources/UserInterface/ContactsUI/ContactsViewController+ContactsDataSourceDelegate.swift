@@ -29,8 +29,8 @@ extension ContactsViewController {
 }
 
 extension ContactsViewController: ContactsDataSourceDelegate {
-    
-    public func dataSource(_ dataSource: ContactsDataSource,
+
+    func dataSource(_ dataSource: ContactsDataSource,
                            cellFor user: UserType,
                            at indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
@@ -54,8 +54,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         cell.actionButton.isHidden = actionButtonHidden()
 
         if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false),
-            let actionButtonTitles = self.actionButtonTitles() as? [String] {
+            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false) {
 
                 let titleString = actionButtonTitles[Int(index)]
 
@@ -63,13 +62,33 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 cell.actionButton.setTitle(titleString, for: .normal)
         }
 
-        if dataSource.selection.contains(user) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-
         return cell
-
     }
 
-    
+    func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType]) {
+        searchResultsReceived = true
+        tableView.reloadData()
+        updateEmptyResults()
+    }
+
+    func dataSource(_ dataSource: ContactsDataSource, didSelect user: UserType) {
+        searchHeaderViewController.tokenField.addToken(Token(title: user.displayName, representedObject: user))
+        reloadVisibleRows()
+    }
+
+    func dataSource(_ dataSource: ContactsDataSource, didDeselect user: UserType) {
+        if let token = searchHeaderViewController.tokenField.token(forRepresentedObject: user) {
+            searchHeaderViewController.tokenField.removeToken(token)
+        }
+
+        reloadVisibleRows()
+    }
+
+    private func reloadVisibleRows() {
+        guard let visibleRows = tableView.indexPathsForVisibleRows else { return }
+
+        UIView.performWithoutAnimation {
+            tableView.reloadRows(at: visibleRows, with: .none)
+        }
+    }
 }
