@@ -18,10 +18,9 @@
 
 import Foundation
 
-///TODO: non optional
 @objc
 protocol TokenFieldDelegate: NSObjectProtocol {
-    @objc optional func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token])
-    @objc optional func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String)
-    @objc optional func tokenFieldDidConfirmSelection(_ controller: TokenField)
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token])
+    func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String)
+    func tokenFieldDidConfirmSelection(_ controller: TokenField)
 }

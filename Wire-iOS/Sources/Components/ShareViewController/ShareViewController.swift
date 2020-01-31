@@ -32,18 +32,8 @@ protocol Shareable {
     func previewView() -> UIView?
 }
 
-extension ShareViewController: TokenFieldDelegate {
-    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
-        self.destinationsTableView.reloadData()
-    }
-    
-    public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
-        self.filterString = text
-    }
-}
-
-final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate {
+final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate,
+    TokenFieldDelegate {
     public let destinations: [D]
     public let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -241,4 +231,18 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     @objc func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
+
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
+        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
+        self.destinationsTableView.reloadData()
+    }
+    
+    func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+        self.filterString = text
+    }
+    
+    func tokenFieldDidConfirmSelection(_ controller: TokenField) {
+        //no-op
+    }
 }
+
