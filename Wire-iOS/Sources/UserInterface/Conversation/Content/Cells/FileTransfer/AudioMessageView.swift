@@ -420,8 +420,7 @@ final class AudioMessageView: UIView, TransferView {
                     self?.updateProximityObserverState()
                 }
                     /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
-                else if let state = change.newValue,
-                     state == .completed {
+                else if change.newValue == .completed {
                     self?.updateTimeLabel()
                 } else {
                     self?.updateInactivePlayer()
