@@ -84,6 +84,8 @@ class ContactsViewController: UIViewController {
         }
     }
 
+    // MARK: - Life Cycle
+
     init() {
         super.init(nibName: nil, bundle: nil)
 
@@ -99,6 +101,40 @@ class ContactsViewController: UIViewController {
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        presentShareContactsViewControllerIfNeeded()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        showKeyboardIfNeeded()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchHeaderViewController.tokenField.resignFirstResponder()
+    }
+
+    private func presentShareContactsViewControllerIfNeeded() {
+        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        if sharingContactsRequired &&
+            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
+            !shouldSkip &&
+            shouldShowShareContactsViewController {
+            presentShareContactsViewController()
+        }
+    }
+
+    private func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+
+        addToSelf(shareContactsViewController)
     }
 
     /// If sharingContactsRequired is true the user will be prompted to share his address book
