@@ -21,7 +21,6 @@
 #import "AudioTrackPlayer.h"
 #import "AudioTrackPlayer+Private.h"
 
-#import "UIImage+ImageUtilities.h"
 
 @import WireCommonComponents;
 @import WireUtilities;
