@@ -21,7 +21,7 @@ import Cartography
 
 extension ContactsViewController {
 
-    @objc func createSearchHeader() {
+    @objc func setupSearchHeader() {
         let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false

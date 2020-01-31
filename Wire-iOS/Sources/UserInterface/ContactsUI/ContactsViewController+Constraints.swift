@@ -84,9 +84,4 @@ extension ContactsViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
-    @objc
-    func setupTableView() {
-        let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomContainerHeight, right: 0)
-    }
 }

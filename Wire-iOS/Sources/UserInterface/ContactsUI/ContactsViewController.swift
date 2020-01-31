@@ -39,14 +39,14 @@ class ContactsViewController: UIViewController {
 
     var searchResultsReceived = false
 
-    var bottomContainerView: UIView!
-    var bottomContainerSeparatorView: UIView!
-    var noContactsLabel: UILabel!
+    var bottomContainerView = UIView()
+    var bottomContainerSeparatorView = UIView()
+    var noContactsLabel = UILabel()
     var searchHeaderViewController: SearchHeaderViewController!
-    var separatorView: UIView!
-    var tableView: UITableView!
+    var separatorView = UIView()
+    var tableView = UITableView()
     var inviteOthersButton: Button!
-    var emptyResultsView: ContactsEmptyResultView!
+    var emptyResultsView = ContactsEmptyResultView()
 
     var bottomEdgeConstraint: NSLayoutConstraint!
     var bottomContainerBottomConstraint: NSLayoutConstraint!
@@ -97,18 +97,20 @@ class ContactsViewController: UIViewController {
     // MARK: - Setup
 
     private func setupViews() {
-        let colorScheme = ColorScheme.default
+        view.backgroundColor = ColorScheme.default.color(named: .background)
 
-        view.backgroundColor = colorScheme.color(named: .background)
+        setupSearchHeader()
 
-        createSearchHeader()
-
-        // Separator
-        separatorView = UIView()
         view.addSubview(separatorView)
 
-        // Table view
-        tableView = UITableView()
+        setupTableView()
+        setupEmptyResultsView()
+        setupNoContactsLabel()
+        setupBottomContainer()
+        updateEmptyResults()
+    }
+
+    private func setupTableView() {
         tableView.dataSource = dataSource
         tableView.delegate = self
         tableView.allowsSelection = false
@@ -117,35 +119,32 @@ class ContactsViewController: UIViewController {
         tableView.sectionIndexMinimumDisplayRowCount = Int(ContactsDataSource.MinimumNumberOfContactsToDisplaySections)
         tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsViewControllerCellID)
         tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsViewControllerSectionHeaderID)
+
+        let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomContainerHeight, right: 0)
         view.addSubview(tableView)
+    }
 
-        setupTableView()
-
-        // Empty results view
-        emptyResultsView = ContactsEmptyResultView()
+    private func setupEmptyResultsView() {
         emptyResultsView.messageLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
         emptyResultsView.actionButton.setTitle("peoplepicker.no_matching_results.action.send_invite".localized, for: .normal)
         emptyResultsView.actionButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
         view.addSubview(emptyResultsView)
+    }
 
-        // No contacts label
-        noContactsLabel = UILabel()
+    private func setupNoContactsLabel() {
         noContactsLabel.text = "peoplepicker.no_contacts_title".localized
         view.addSubview(noContactsLabel)
+    }
 
-        // Bottom views
-        bottomContainerView = UIView()
+    private func setupBottomContainer() {
         view.addSubview(bottomContainerView)
-
-        bottomContainerSeparatorView = UIView()
         bottomContainerView.addSubview(bottomContainerSeparatorView)
 
-        inviteOthersButton = Button(style: .empty, variant: colorScheme.variant)
+        inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
         inviteOthersButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
         inviteOthersButton.setTitle("contacts_ui.invite_others".localized, for: .normal)
         bottomContainerView.addSubview(inviteOthersButton)
-
-        updateEmptyResults()
     }
 
     // MARK: - Methods
