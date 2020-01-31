@@ -40,11 +40,7 @@ import Foundation
 
     override init() {
         super.init()
-
-        // FIXME: I think we could require a non nil search directory.
-        if let userSession = ZMUserSession.shared() {
-            searchDirectory = SearchDirectory(userSession: userSession)
-        }
+        searchDirectory = ZMUserSession.shared().map(SearchDirectory.init)
     }
 
     deinit {
@@ -61,7 +57,7 @@ import Foundation
 
     var searchQuery: String = "" {
         didSet {
-            search(withQuery: searchQuery, searchDirectory: searchDirectory)
+            performSearch()
         }
     }
 
@@ -80,6 +76,21 @@ import Foundation
     }
 
     // MARK: - Methods
+
+    private func performSearch() {
+        guard let searchDirectory = searchDirectory else { return }
+
+        let request = SearchRequest(query: searchQuery, searchOptions: [.contacts, .addressBook])
+        let task = searchDirectory.perform(request)
+
+        task.onResult { [weak self] (searchResult, _) in
+            guard let `self` = self else { return }
+            self.ungroupedSearchResults = searchResult.addressBook
+            self.delegate?.dataSource(self, didReceiveSearchResult: searchResult.addressBook)
+        }
+
+        task.start()
+    }
 
     func user(at indexPath: IndexPath) -> ZMSearchUser {
         return section(at: indexPath.section)[indexPath.row]
@@ -104,7 +115,7 @@ import Foundation
 
         guard shouldShowSectionIndex else {
             let sortedResults = collation.sortedArray(from: ungroupedSearchResults, collationStringSelector: nameSelector)
-            sections = [sortedResults] as! [[ZMSearchUser]] // FIXME: don't force unwrap
+            sections = [sortedResults] as? [[ZMSearchUser]] ?? []
             return
         }
 
@@ -120,7 +131,7 @@ import Foundation
             collation.sortedArray(from: $0, collationStringSelector: nameSelector)
         }
 
-        sections = sortedSections as! [[ZMSearchUser]] // FIXME
+        sections = sortedSections as? [[ZMSearchUser]] ?? []
     }
 }
 
