@@ -160,8 +160,7 @@ final class InviteContactsViewController: ContactsViewController {
             do {
                 try invite(contact: user.contact!, from: view) // FIXME: Force unwrap
             } catch InvitationError.missingClient(let client) {
-                unableToSendController(client: client).presentInNotificationsWindow()
-
+                present(unableToSendController(client: client), animated: true)
             } catch {
                 // log
             }
@@ -173,7 +172,8 @@ final class InviteContactsViewController: ContactsViewController {
         case 1:
             try inviteWithSingleAddress(for: contact)
         case 2...:
-            try addressActionSheet(for: contact, in: view).presentInNotificationsWindow()
+            let actionSheet = try addressActionSheet(for: contact, in: view)
+            present(actionSheet, animated: true)
         default:
             throw InvitationError.noContactInformation
         }
