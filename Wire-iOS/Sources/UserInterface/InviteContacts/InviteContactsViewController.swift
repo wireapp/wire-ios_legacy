@@ -116,7 +116,9 @@ final class InviteContactsViewController: ContactsViewController {
     }
     
     private func invite(user: ZMSearchUser, from view: UIView) {
-        // FIXME: This code prevents the alert from appearing.
+        // FIXME: The following code smoothens the transition when opening a conversation, but prevents the
+        // invite alerts / screens from opening. We need to distinguish between these two types of actions.
+
         // Prevent the overlapped visual artifact when opening a conversation
         if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
             navigationController.popToRootViewController(animated: false) {
