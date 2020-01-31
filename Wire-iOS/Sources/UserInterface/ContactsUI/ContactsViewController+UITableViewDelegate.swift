@@ -46,26 +46,4 @@ extension ContactsViewController: UITableViewDelegate {
         return CGFloat.StartUI.CellHeight
     }
 
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = dataSource.user(at: indexPath)
-        dataSource.select(user: user)
-    }
-
-    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let user = dataSource.user(at: indexPath)
-
-        if let shouldSelect = contentDelegate?.contactsViewController(self, shouldSelect: user),
-            shouldSelect{
-            return indexPath
-        } else if let cell = tableView.cellForRow(at: indexPath) as? ContactsCell {
-            contentDelegate?.contactsViewController(self, didSelect: cell, for: user)
-        }
-
-        return nil
-    }
-
-    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let user = dataSource.user(at: indexPath)
-        dataSource.deselect(user: user)
-    }
 }

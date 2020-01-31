@@ -22,8 +22,7 @@ import Foundation
 
     func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell
     func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType])
-    func dataSource(_ dataSource: ContactsDataSource, didSelect user: UserType)
-    func dataSource(_ dataSource: ContactsDataSource, didDeselect user: UserType)
+
 }
 
 @objc class ContactsDataSource: NSObject {
@@ -61,16 +60,6 @@ import Foundation
         }
     }
 
-    var selection = Set<ZMSearchUser>() {
-        didSet {
-            guard let delegate = delegate else { return }
-            let removedUsers = oldValue.subtracting(selection)
-            let addedUsers = selection.subtracting(oldValue)
-            removedUsers.forEach { delegate.dataSource(self, didDeselect: $0) }
-            addedUsers.forEach { delegate.dataSource(self, didSelect: $0) }
-        }
-    }
-
     private var shouldShowSectionIndex: Bool {
         return ungroupedSearchResults.count >= type(of: self).MinimumNumberOfContactsToDisplaySections
     }
@@ -98,16 +87,6 @@ import Foundation
 
     private func section(at index: Int) -> [ZMSearchUser] {
         return sections[index]
-    }
-
-    func select(user: ZMSearchUser) {
-        guard !selection.contains(user) else { return }
-        selection.insert(user)
-    }
-
-    func deselect(user: ZMSearchUser) {
-        guard selection.contains(user) else { return }
-        selection.remove(user)
     }
 
     private func recalculateSections() {

@@ -75,7 +75,7 @@ class ContactsViewController: UIViewController {
             createBottomButtonConstraints()
         }
     }
-    
+
     override var title: String? {
         didSet {
             titleLabel.text = title
@@ -145,7 +145,7 @@ class ContactsViewController: UIViewController {
         tableView = UITableView()
         tableView.dataSource = dataSource
         tableView.delegate = self
-        tableView.allowsMultipleSelection = true
+        tableView.allowsSelection = false
         tableView.rowHeight = 52
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionIndexMinimumDisplayRowCount = Int(ContactsDataSource.MinimumNumberOfContactsToDisplaySections)

@@ -62,10 +62,6 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 cell.actionButton.setTitle(titleString, for: .normal)
         }
 
-        if let user = user as? ZMSearchUser, dataSource.selection.contains(user) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-
         return cell
     }
 
