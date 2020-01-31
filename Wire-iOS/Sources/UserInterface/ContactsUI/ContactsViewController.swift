@@ -32,56 +32,6 @@ class ContactsViewController: UIViewController {
         }
     }
 
-    /// Button displayed at the bottom of the screen. If nil a default button is displayed.
-    var bottomButton: Button? {
-        didSet {
-            guard let bottomButton = bottomButton else { return }
-            oldValue?.removeFromSuperview()
-            bottomContainerView.addSubview(bottomButton)
-            createBottomButtonConstraints()
-        }
-    }
-
-    override var title: String? {
-        didSet {
-            titleLabel.text = title
-            titleLabelHeightConstraint.isActive = titleLabel.text != nil
-            closeButtonTopConstraint.isActive = !(titleLabel.text?.isEmpty ?? true)
-        }
-    }
-
-    func setEmptyResultsHidden(_ hidden: Bool, animated: Bool) {
-        let hiddenBlock: (Bool) -> Void = {
-            self.emptyResultsView.isHidden = $0
-            self.tableView.isHidden = !$0
-        }
-
-        if hidden {
-            hiddenBlock(false)
-        }
-
-        let animationBlock: () -> Void = {
-            self.emptyResultsView.alpha = hidden ? 0 : 1
-        }
-
-        let completion: (_ finished: Bool) -> Void = { finished in
-            if hidden {
-                hiddenBlock(true)
-            }
-        }
-
-        if animated {
-            UIView.animate(withDuration: 0.25,
-                           delay: 0,
-                           options: .beginFromCurrentState,
-                           animations: animationBlock,
-                           completion: completion)
-        } else {
-            animationBlock()
-            completion(true)
-        }
-    }
-
     var shouldShowShareContactsViewController = true
 
     let ContactsViewControllerCellID = "ContactsCell"
@@ -116,6 +66,23 @@ class ContactsViewController: UIViewController {
 
     var actionButtonTitles = [String]()
 
+    /// Button displayed at the bottom of the screen. If nil a default button is displayed.
+    var bottomButton: Button? {
+        didSet {
+            guard let bottomButton = bottomButton else { return }
+            oldValue?.removeFromSuperview()
+            bottomContainerView.addSubview(bottomButton)
+            createBottomButtonConstraints()
+        }
+    }
+    
+    override var title: String? {
+        didSet {
+            titleLabel.text = title
+            titleLabelHeightConstraint.isActive = titleLabel.text != nil
+            closeButtonTopConstraint.isActive = !(titleLabel.text?.isEmpty ?? true)
+        }
+    }
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -223,6 +190,38 @@ class ContactsViewController: UIViewController {
     @objc
     func updateActionButtonTitles() {
         actionButtonTitles = contentDelegate?.actionButtonTitles(for: self) ?? []
+    }
+
+    func setEmptyResultsHidden(_ hidden: Bool, animated: Bool) {
+        let hiddenBlock: (Bool) -> Void = {
+            self.emptyResultsView.isHidden = $0
+            self.tableView.isHidden = !$0
+        }
+
+        if hidden {
+            hiddenBlock(false)
+        }
+
+        let animationBlock: () -> Void = {
+            self.emptyResultsView.alpha = hidden ? 0 : 1
+        }
+
+        let completion: (_ finished: Bool) -> Void = { finished in
+            if hidden {
+                hiddenBlock(true)
+            }
+        }
+
+        if animated {
+            UIView.animate(withDuration: 0.25,
+                           delay: 0,
+                           options: .beginFromCurrentState,
+                           animations: animationBlock,
+                           completion: completion)
+        } else {
+            animationBlock()
+            completion(true)
+        }
     }
 
     // MARK: - Keyboard Observation
