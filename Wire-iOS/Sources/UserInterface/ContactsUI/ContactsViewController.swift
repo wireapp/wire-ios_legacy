@@ -198,7 +198,7 @@ class ContactsViewController: UIViewController {
             self.tableView.isHidden = !$0
         }
 
-        if hidden {
+        if !hidden {
             hiddenBlock(false)
         }
 
