@@ -160,7 +160,9 @@ final class InviteContactsViewController: ContactsViewController {
             })
         } else {
             do {
-                try invite(contact: user.contact!, from: view) // FIXME: Force unwrap
+                if let contact = user.contact {
+                    try invite(contact: contact, from: view)
+                }
             } catch InvitationError.missingClient(let client) {
                 present(unableToSendController(client: client), animated: true)
             } catch {
