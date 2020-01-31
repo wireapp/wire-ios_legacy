@@ -60,7 +60,7 @@ import Foundation
         }
     }
 
-    private var shouldShowSectionIndex: Bool {
+    var shouldShowSectionIndex: Bool {
         return ungroupedSearchResults.count >= type(of: self).MinimumNumberOfContactsToDisplaySections
     }
 
