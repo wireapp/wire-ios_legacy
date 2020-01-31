@@ -39,58 +39,20 @@ class ContactsViewController: UIViewController {
 
     var searchResultsReceived = false
 
-    var titleLabel: TransformLabel!
     var bottomContainerView: UIView!
     var bottomContainerSeparatorView: UIView!
     var noContactsLabel: UILabel!
-    var cancelButton: IconButton!
     var searchHeaderViewController: SearchHeaderViewController!
-    var topContainerView: UIView!
     var separatorView: UIView!
     var tableView: UITableView!
     var inviteOthersButton: Button!
     var emptyResultsView: ContactsEmptyResultView!
 
-    var titleLabelHeightConstraint: NSLayoutConstraint!
-    var titleLabelTopConstraint: NSLayoutConstraint!
-    var titleLabelBottomConstraint: NSLayoutConstraint!
-    var closeButtonHeightConstraint: NSLayoutConstraint!
-    var closeButtonTopConstraint: NSLayoutConstraint!
-    var closeButtonBottomConstraint: NSLayoutConstraint!
-    var topContainerHeightConstraint: NSLayoutConstraint!
-    var searchHeaderTopConstraint: NSLayoutConstraint!
-    var searchHeaderWithNavigatorBarTopConstraint: NSLayoutConstraint!
     var bottomEdgeConstraint: NSLayoutConstraint!
     var bottomContainerBottomConstraint: NSLayoutConstraint!
     var emptyResultsBottomConstraint: NSLayoutConstraint!
 
     var actionButtonTitles = [String]()
-
-    /// Button displayed at the bottom of the screen. If nil a default button is displayed.
-    var bottomButton: Button? {
-        didSet {
-            guard let bottomButton = bottomButton else { return }
-            oldValue?.removeFromSuperview()
-            bottomContainerView.addSubview(bottomButton)
-            createBottomButtonConstraints()
-        }
-    }
-
-    override var title: String? {
-        didSet {
-            titleLabel.text = title
-            titleLabelHeightConstraint.isActive = titleLabel.text != nil
-            closeButtonTopConstraint.isActive = !(titleLabel.text?.isEmpty ?? true)
-        }
-    }
-
-
-    /// If sharingContactsRequired is true the user will be prompted to share his address book
-    /// if he/she hasn't already done so. Override this property in subclasses to override
-    /// the default behaviour which is false.
-    var sharingContactsRequired: Bool {
-        return false
-    }
 
     override var prefersStatusBarHidden: Bool {
         return false
@@ -139,24 +101,7 @@ class ContactsViewController: UIViewController {
 
         view.backgroundColor = colorScheme.color(named: .background)
 
-        // Top views
-        topContainerView = UIView()
-        topContainerView.backgroundColor = .clear
-        view.addSubview(topContainerView)
-
-        titleLabel = TransformLabel()
-        titleLabel.numberOfLines = 1
-        titleLabel.text = title
-        titleLabel.textColor = colorScheme.color(named: .textForeground)
-        topContainerView.addSubview(titleLabel)
-
         createSearchHeader()
-
-        cancelButton = IconButton()
-        cancelButton.setIcon(.cross, size: .custom(14), for: .normal)
-        cancelButton.accessibilityIdentifier = "ContactsViewCloseButton"
-        cancelButton.addTarget(self, action: #selector(cancelPressed), for: .touchUpInside)
-        topContainerView.addSubview(cancelButton)
 
         // Separator
         separatorView = UIView()
@@ -203,13 +148,6 @@ class ContactsViewController: UIViewController {
         updateEmptyResults()
     }
 
-    // MARK: - Actions
-
-    @objc
-    func cancelPressed() {
-        delegate?.contactsViewControllerDidCancel(self)
-    }
-
     // MARK: - Methods
 
     func updateActionButtonTitles() {
@@ -250,10 +188,8 @@ class ContactsViewController: UIViewController {
 
     private func presentShareContactsViewControllerIfNeeded() {
         let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
-        if sharingContactsRequired &&
-            !AddressBookHelper.sharedHelper.isAddressBookAccessGranted &&
-            !shouldSkip &&
-            shouldShowShareContactsViewController {
+
+        if !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip && shouldShowShareContactsViewController {
             presentShareContactsViewController()
         }
     }

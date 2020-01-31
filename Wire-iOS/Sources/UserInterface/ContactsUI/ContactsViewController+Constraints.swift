@@ -22,32 +22,17 @@ extension ContactsViewController {
 
     @objc
     func setupLayout() {
-        createTopContainerConstraints()
-
-        [titleLabel,
-         separatorView,
+        [separatorView,
          tableView,
          emptyResultsView,
          inviteOthersButton,
          noContactsLabel,
-         cancelButton,
          bottomContainerSeparatorView,
          bottomContainerView].forEach(){$0.translatesAutoresizingMaskIntoConstraints = false}
 
         let standardOffset: CGFloat = 24.0
 
-        titleLabelTopConstraint = titleLabel.topAnchor.constraint(equalTo: titleLabel.superview!.topAnchor, constant: UIScreen.safeArea.top)
-        titleLabelBottomConstraint = titleLabel.bottomAnchor.constraint(equalTo: titleLabel.superview!.bottomAnchor, constant: -standardOffset)
-
-        var constraints: [NSLayoutConstraint] = [
-            titleLabelTopConstraint,
-            titleLabelBottomConstraint,
-            titleLabel.leadingAnchor.constraint(equalTo: titleLabel.superview!.leadingAnchor, constant: standardOffset),
-            titleLabel.trailingAnchor.constraint(equalTo: titleLabel.superview!.trailingAnchor, constant: -standardOffset),
-            ]
-
-        titleLabelHeightConstraint = titleLabel.heightAnchor.constraint(equalToConstant: 44)
-        titleLabelHeightConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
+        var constraints: [NSLayoutConstraint] = []
 
         createSearchHeaderConstraints()
 
@@ -87,21 +72,6 @@ extension ContactsViewController {
 
                         bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
 
-
-        closeButtonTopConstraint = cancelButton.topAnchor.constraint(equalTo: cancelButton.superview!.topAnchor, constant: 16 + UIScreen.safeArea.top)
-        closeButtonTopConstraint.isActive = (titleLabel.text?.count ?? 0) > 0
-
-        closeButtonBottomConstraint = cancelButton.bottomAnchor.constraint(equalTo: cancelButton.superview!.bottomAnchor, constant: -8)
-        closeButtonBottomConstraint.priority = .defaultLow
-
-        closeButtonHeightConstraint = cancelButton.heightAnchor.constraint(equalToConstant: 16)
-
-        constraints += [closeButtonBottomConstraint,
-                        cancelButton.trailingAnchor.constraint(equalTo: cancelButton.superview!.trailingAnchor, constant: -16),
-                        cancelButton.widthAnchor.constraint(equalToConstant: 16),
-                        closeButtonHeightConstraint]
-
-
         bottomEdgeConstraint = inviteOthersButton.bottomAnchor.constraint(equalTo: inviteOthersButton.superview!.bottomAnchor, constant: -(standardOffset / 2.0 + UIScreen.safeArea.bottom))
 
         constraints += [bottomEdgeConstraint,
@@ -112,18 +82,6 @@ extension ContactsViewController {
         constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
 
         NSLayoutConstraint.activate(constraints)
-    }
-
-    @objc
-    func createBottomButtonConstraints() {
-        guard let bottomButton = bottomButton else { return }
-
-        bottomButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            bottomButton.rightAnchor.constraint(equalTo: bottomButton.superview!.rightAnchor, constant: 24),
-            bottomButton.leftAnchor.constraint(equalTo: bottomButton.superview!.leftAnchor, constant: 24),
-            bottomButton.centerXAnchor.constraint(equalTo: bottomButton.superview!.centerXAnchor)])
     }
 
     @objc

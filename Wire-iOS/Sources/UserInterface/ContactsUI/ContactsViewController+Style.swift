@@ -20,10 +20,6 @@ import Foundation
 
 extension ContactsViewController {
     @objc func setupStyle() {
-        titleLabel.textAlignment = .center
-        titleLabel.font = .smallLightFont
-        titleLabel.textTransform = .upper
-
         bottomContainerView.backgroundColor = .from(scheme: .background)
 
         noContactsLabel.font = .normalLightFont

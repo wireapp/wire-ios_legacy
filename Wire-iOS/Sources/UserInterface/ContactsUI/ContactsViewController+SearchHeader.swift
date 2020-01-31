@@ -32,37 +32,16 @@ extension ContactsViewController {
         self.searchHeaderViewController = searchHeaderViewController
     }
 
-    func createTopContainerConstraints() {
-        constrain(self.view, topContainerView) {selfView, topContainerView in
-            topContainerView.leading == selfView.leading
-            topContainerView.trailing == selfView.trailing
-            topContainerView.top == selfView.topMargin
-            topContainerHeightConstraint = topContainerView.height == 0
-        }
-
-        topContainerHeightConstraint.isActive = false
-    }
-
     func createSearchHeaderConstraints() {
-        guard let searchHeaderViewControllerView = searchHeaderViewController.view
-            else { return }
+        guard let searchHeaderViewControllerView = searchHeaderViewController.view else { return }
 
-        constrain(searchHeaderViewControllerView, self.view, topContainerView, separatorView) { searchHeader, selfView, topContainerView, separatorView in
+        constrain(searchHeaderViewControllerView, self.view, separatorView) { searchHeader, selfView, separatorView in
             searchHeader.leading == selfView.leading
             searchHeader.trailing == selfView.trailing
-            searchHeaderTopConstraint = searchHeader.top == topContainerView.bottom
+            searchHeader.top == selfView.top
             searchHeader.bottom == separatorView.top
         }
-
-        constrain(searchHeaderViewController.view, self.view) {
-            searchHeader, selfView in
-            searchHeaderWithNavigatorBarTopConstraint = searchHeader.top == selfView.top
-        }
-
-        searchHeaderTopConstraint.isActive = false
-        searchHeaderWithNavigatorBarTopConstraint.isActive = true
     }
-
 
     var numTableRows: UInt {
         return tableView.numberOfTotalRows()

@@ -60,43 +60,8 @@ final class InviteContactsViewController: ContactsViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override var sharingContactsRequired: Bool {
-        return true
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        ///hide titleLabel and cancel cross button, which is duplicated in the navi bar
-        
-        let subViewConstraints: [NSLayoutConstraint] = [titleLabelHeightConstraint, titleLabelTopConstraint, titleLabelBottomConstraint, closeButtonTopConstraint, closeButtonBottomConstraint, searchHeaderTopConstraint]
-        
-        if navigationController != nil {
-            titleLabel.isHidden = true
-            
-            cancelButton.isHidden = true
-            closeButtonHeightConstraint.constant = 0
-            subViewConstraints.forEach(){ $0.isActive = false }
-            
-            topContainerHeightConstraint.isActive = true
-            searchHeaderWithNavigatorBarTopConstraint.isActive = true
-        } else {
-            titleLabel.isHidden = false
-            
-            cancelButton.isHidden = false
-            
-            closeButtonHeightConstraint.constant = 16
-            topContainerHeightConstraint.isActive = false
-            searchHeaderWithNavigatorBarTopConstraint.isActive = false
-            
-            subViewConstraints.forEach(){ $0.isActive = true }
-        }
-        
-        view.layoutIfNeeded()
     }
     
     override func setupStyle() {
@@ -111,8 +76,6 @@ final class InviteContactsViewController: ContactsViewController {
         
         bottomContainerSeparatorView.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
         bottomContainerView.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-        
-        titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
     }
     
     private func invite(user: ZMSearchUser, from view: UIView) {
