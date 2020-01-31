@@ -207,11 +207,6 @@ class ContactsViewController: UIViewController {
                                                selector: #selector(keyboardFrameWillChange),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardFrameDidChange),
-                                               name: UIResponder.keyboardDidChangeFrameNotification,
-                                               object: nil)
     }
 
     @objc
@@ -222,27 +217,15 @@ class ContactsViewController: UIViewController {
             let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
             else { return }
 
-        let beginY = beginFrame.origin.y
-        let endY = endFrame.origin.y
-
-        let diff = beginY - endY
+        let willAppear = (beginFrame.minY - endFrame.minY) > 0
         let padding: CGFloat = 12
 
         UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrame in
             guard let weakSelf = self else { return }
-            weakSelf.bottomEdgeConstraint.constant = -padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            weakSelf.bottomContainerBottomConstraint.constant = -(willAppear ? keyboardFrame.height : 0)
+            weakSelf.bottomEdgeConstraint.constant = -padding - (willAppear ? 0 : UIScreen.safeArea.bottom)
             weakSelf.view.layoutIfNeeded()
         })
     }
 
-    @objc
-    func keyboardFrameDidChange(_ notification: Notification) {
-        UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrame in
-            guard let weakSelf = self else { return }
-            let offset = weakSelf.isInsidePopover ? 0 : -keyboardFrame.size.height
-            weakSelf.bottomContainerBottomConstraint.constant = offset
-            weakSelf.emptyResultsBottomConstraint.constant = offset
-            weakSelf.view.layoutIfNeeded()
-        })
-    }
 }
