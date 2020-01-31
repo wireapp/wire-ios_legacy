@@ -18,13 +18,17 @@
 
 public final class Token: NSObject {
     
+    @objc
     let representedObject: Any
     
     @objc
     let title: String
+
     // if title render is longer than this length, it is trimmed with "..."
+    @objc
     var maxTitleWidth: CGFloat = 0
     
+    @objc
     init(title: String, representedObject: Any) {
         self.title = title
         self.representedObject = representedObject

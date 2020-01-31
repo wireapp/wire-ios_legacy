@@ -170,8 +170,8 @@ extension SearchHeaderViewController : UserSelectionObserver {
 
 extension SearchHeaderViewController : TokenFieldDelegate {
 
-    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        userSelection.replace(tokens.map { $0.representedObject as! ZMUser })
+    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
+        userSelection.replace(tokens.compactMap { $0.representedObject as? ZMUser })
         updateClearIndicator(for: tokenField)
     }
     
