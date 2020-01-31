@@ -32,7 +32,7 @@ import Foundation
     @objc weak var delegate: ContactsDataSourceDelegate?
 
     private(set) var searchDirectory: SearchDirectory?
-    private var sections = [[ZMSearchUser]]()
+    private var sections = [[UserType]]()
     private var collation: UILocalizedIndexedCollation { return .current() }
 
     // MARK: - Life Cycle
@@ -48,7 +48,7 @@ import Foundation
 
     // MARK: - Getters / Setters
 
-    var ungroupedSearchResults = [ZMSearchUser]() {
+    var ungroupedSearchResults = [UserType]() {
         didSet {
             recalculateSections()
         }
@@ -81,25 +81,25 @@ import Foundation
         task.start()
     }
 
-    func user(at indexPath: IndexPath) -> ZMSearchUser {
+    func user(at indexPath: IndexPath) -> UserType {
         return section(at: indexPath.section)[indexPath.row]
     }
 
-    private func section(at index: Int) -> [ZMSearchUser] {
+    private func section(at index: Int) -> [UserType] {
         return sections[index]
     }
 
     private func recalculateSections() {
-        let nameSelector = #selector(getter: ZMSearchUser.displayName)
+        let nameSelector = #selector(getter: UserType.displayName)
 
         guard shouldShowSectionIndex else {
             let sortedResults = collation.sortedArray(from: ungroupedSearchResults, collationStringSelector: nameSelector)
-            sections = [sortedResults] as? [[ZMSearchUser]] ?? []
+            sections = [sortedResults] as? [[UserType]] ?? []
             return
         }
 
         let numberOfSections = collation.sectionTitles.count
-        let emptySections = Array(repeating: [ZMSearchUser](), count: numberOfSections)
+        let emptySections = Array(repeating: [UserType](), count: numberOfSections)
 
         let unsortedSections = ungroupedSearchResults.reduce(into: emptySections) { (sections, user) in
             let index = collation.section(for: user, collationStringSelector: nameSelector)
@@ -110,7 +110,7 @@ import Foundation
             collation.sortedArray(from: $0, collationStringSelector: nameSelector)
         }
 
-        sections = sortedSections as? [[ZMSearchUser]] ?? []
+        sections = sortedSections as? [[UserType]] ?? []
     }
 }
 
