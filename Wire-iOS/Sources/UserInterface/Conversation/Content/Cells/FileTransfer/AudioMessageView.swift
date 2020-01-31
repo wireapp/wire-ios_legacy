@@ -74,8 +74,8 @@ final class AudioMessageView: UIView, TransferView {
     }()
     private let loadingView = ThreeDotsLoadingView()
     
-    private var audioPlayerProgressObserver: NSObject? = .none
-    private var audioPlayerStateObserver: NSObject? = .none
+    private var audioPlayerProgressObserver: NSKeyValueObservation?
+    private var audioPlayerStateObserver: NSKeyValueObservation?
     private var allViews : [UIView] = []
     
     private var expectingDownload: Bool = false
