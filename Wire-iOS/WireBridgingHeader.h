@@ -105,7 +105,6 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "UIImage+ImageUtilities.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

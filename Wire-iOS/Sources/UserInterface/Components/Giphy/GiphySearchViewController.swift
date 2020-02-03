@@ -132,9 +132,9 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     @objc func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
-        var backButtonImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black)
-        backButtonImage = backButtonImage.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
-        backButtonImage = backButtonImage.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        let backButtonImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black)
+            .with(insets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)?
+            .withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
         navigationController.navigationBar.backIndicatorImage = backButtonImage
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 
