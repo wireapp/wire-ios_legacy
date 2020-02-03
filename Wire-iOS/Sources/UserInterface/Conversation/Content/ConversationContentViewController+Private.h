@@ -65,7 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 - (void)removeHighlightsAndMenu;
-- (NSIndexPath * _Nullable)willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView;
 - (void)setConversationHeaderView:(UIView *)headerView;
 
 

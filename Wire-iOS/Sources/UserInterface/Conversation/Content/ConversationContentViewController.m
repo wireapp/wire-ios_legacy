@@ -263,35 +263,6 @@
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
 }
 
-- (NSIndexPath *) willSelectRowAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
-{
-    ZMMessage *message = (ZMMessage *)[self.dataSource.messages objectAtIndex:indexPath.section];
-    NSIndexPath *selectedIndexPath = nil;
-
-    // If the menu is visible, hide it and do nothing
-    if (UIMenuController.sharedMenuController.isMenuVisible) {
-        [UIMenuController.sharedMenuController setMenuVisible:NO animated:YES];
-        return nil;
-    }
-
-    if ([message isEqual:self.dataSource.selectedMessage]) {
-
-        // If this cell is already selected, deselect it.
-        self.dataSource.selectedMessage  = nil;
-        [self.dataSource deselectWithIndexPath:indexPath];
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    } else {
-        if (tableView.indexPathForSelectedRow != nil) {
-            [self.dataSource deselectWithIndexPath:tableView.indexPathForSelectedRow];
-        }
-        self.dataSource.selectedMessage = message;
-        [self.dataSource selectWithIndexPath:indexPath];
-        selectedIndexPath = indexPath;
-    }
-
-    return selectedIndexPath;
-}
-
 @end
 
 
@@ -336,7 +307,7 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self willSelectRowAtIndexPath:indexPath tableView:tableView];
+    return [self willSelectRowAtIndexPath:indexPath tableView:tableView]; ///TODO:
 }
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
