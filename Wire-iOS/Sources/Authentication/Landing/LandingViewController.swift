@@ -384,7 +384,7 @@ class LandingViewController: AuthenticationStepViewController {
     }
     
     private var productName: String {
-        guard let name = Bundle.main.infoForKey("CFBundleDisplayName") else {
+        guard let name = Bundle.appMainBundle.infoForKey("CFBundleDisplayName") else {
             fatal("unable to access CFBundleDisplayName")
         }
         return name
