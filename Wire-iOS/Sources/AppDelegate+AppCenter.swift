@@ -83,8 +83,8 @@ extension AppDelegate {
 extension AppDelegate: MSDistributeDelegate {
     func distribute(_ distribute: MSDistribute!, releaseAvailableWith details: MSReleaseDetails!) -> Bool {
         
-        let alertController = UIAlertController(title: "Update available. \(details?.shortVersion ?? "") (\(details?.version ?? ""))",
-            message: "Release Note:\n\(details?.releaseNotes ?? "")\nDo you want to update?",
+        let alertController = UIAlertController(title: "Update available \(details?.shortVersion ?? "") (\(details?.version ?? ""))",
+            message: "Release Note:\n\n\(details?.releaseNotes ?? "")\n\nDo you want to update?",
                                                 preferredStyle:.actionSheet)
         
         alertController.addAction(UIAlertAction(title: "Update", style: .cancel) {_ in
@@ -102,8 +102,10 @@ extension AppDelegate: MSDistributeDelegate {
         }
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default) {_ in })
-
+        
+        window?.endEditing(true)
         window?.rootViewController?.present(alertController, animated: true)
+        
         return true
     }
 }
