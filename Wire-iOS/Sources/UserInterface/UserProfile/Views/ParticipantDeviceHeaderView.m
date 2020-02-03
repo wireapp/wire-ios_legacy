@@ -19,7 +19,6 @@
 
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
-#import "NSAttributedString+Wire.h"
 #import "Wire-Swift.h"
 
 @interface ParticipantDeviceHeaderView ()
@@ -64,67 +63,6 @@
 - (void)setShowUnencryptedLabel:(BOOL)showUnencryptedLabel
 {
     self.textView.attributedText = [self attributedExplanationTextForUserName:self.userName showUnencryptedLabel:showUnencryptedLabel];
-}
-
-#pragma mark - Attributed Text
-
-- (NSAttributedString *)attributedExplanationTextForUserName:(NSString *)userName showUnencryptedLabel:(BOOL)unencrypted
-{
-    if (unencrypted) {
-        NSString *message = NSLocalizedString(@"profile.devices.fingerprint_message_unencrypted", nil);
-        return [self attributedFingerprintForUserName:userName message:message];
-    }
-    else {
-        NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"profile.devices.fingerprint_message.title", nil), NSLocalizedString(@"general.space_between_words", nil)];
-
-        NSMutableAttributedString * mutableAttributedString = [[NSMutableAttributedString alloc] initWithAttributedString: [self attributedFingerprintForUserName:userName message:message]];
-
-        NSString *fingerprintLearnMoreLink = NSLocalizedString(@"profile.devices.fingerprint_message.link", nil);
-
-        [mutableAttributedString appendString:fingerprintLearnMoreLink attributes:[self linkAttributes]];
-
-        return mutableAttributedString;
-    }
-}
-
-- (NSMutableParagraphStyle *)paragraphStyleForFingerprint
-{
-    NSMutableParagraphStyle *paragraphStyle = NSParagraphStyle.defaultParagraphStyle.mutableCopy;
-    paragraphStyle.lineSpacing = 2;
-
-    return paragraphStyle;
-}
-
-- (NSAttributedString *)attributedFingerprintForUserName:(NSString *)userName message:(NSString *)message
-{
-    NSString *fingerprintExplanation = [NSString stringWithFormat:message, userName];
-
-    NSMutableParagraphStyle *paragraphStyle = [self paragraphStyleForFingerprint];
-
-    NSDictionary *textAttributes = @{
-                                     NSForegroundColorAttributeName: self.textColor,
-                                     NSFontAttributeName: self.font,
-                                     NSParagraphStyleAttributeName: paragraphStyle
-                                     };
-
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:fingerprintExplanation
-                                                                                       attributes:textAttributes];
-
-    return [[NSAttributedString alloc] initWithAttributedString:attributedText];
-}
-
-- (NSDictionary *)linkAttributes
-{
-    NSMutableParagraphStyle *paragraphStyle = [self paragraphStyleForFingerprint];
-
-    NSDictionary *linkAttributes = @{
-                                     NSFontAttributeName: self.font,
-                                     NSForegroundColorAttributeName: self.linkAttributeColor,
-                                     NSLinkAttributeName: NSURL.wr_fingerprintLearnMoreURL,
-                                     NSParagraphStyleAttributeName: paragraphStyle
-                                     };
-
-    return linkAttributes;
 }
 
 @end

@@ -18,9 +18,9 @@
 
 @interface ParticipantDeviceHeaderView ()
 
-@property (strong, nonatomic) UIFont *font;
-@property (strong, nonatomic) UIColor *textColor;
-@property (strong, nonatomic) UIColor *linkAttributeColor;
+@property (strong, nonatomic, nonnull) UIFont *font;
+@property (strong, nonatomic, nonnull) UIColor *textColor;
+@property (strong, nonatomic, nonnull) UIColor *linkAttributeColor;
 
 @property (strong, nonatomic) UITextView *textView;
 
