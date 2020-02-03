@@ -383,11 +383,18 @@ class LandingViewController: AuthenticationStepViewController {
         }
     }
     
+    private var productName: String {
+        guard let name = Bundle.main.infoForKey("CFBundleDisplayName") else {
+            fatal("unable to access CFBundleDisplayName")
+        }
+        return name
+    }
+    
     private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
             customBackendStack.isHidden = true
-            messageLabel.text = "landing.welcome_message".localized(args: "Wire")
+            messageLabel.text = "landing.welcome_message".localized(args: productName)
         case .custom(url: let url):
             messageLabel.text = "landing.welcome_message".localized(args: BackendEnvironment.shared.title)
             customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
