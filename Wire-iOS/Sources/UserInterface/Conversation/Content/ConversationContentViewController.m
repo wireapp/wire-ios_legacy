@@ -307,7 +307,7 @@
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self willSelectRowAtIndexPath:indexPath tableView:tableView]; ///TODO:
+    return [self willSelectRowAtIndexPath:indexPath tableView:tableView];
 }
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
