@@ -232,6 +232,8 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         updatePopoverFrame()
     }
 
+    // MARK: - TokenFieldDelegate
+        
     func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
         self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
         self.destinationsTableView.reloadData()
