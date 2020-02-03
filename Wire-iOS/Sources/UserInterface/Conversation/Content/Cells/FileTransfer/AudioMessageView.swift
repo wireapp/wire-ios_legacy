@@ -74,8 +74,8 @@ final class AudioMessageView: UIView, TransferView {
     }()
     private let loadingView = ThreeDotsLoadingView()
     
-    private var audioPlayerProgressObserver: NSObject? = .none
-    private var audioPlayerStateObserver: NSObject? = .none
+    private var audioPlayerProgressObserver: NSKeyValueObservation?
+    private var audioPlayerStateObserver: NSKeyValueObservation?
     private var allViews : [UIView] = []
     
     private var expectingDownload: Bool = false
@@ -403,10 +403,30 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     func setupAudioPlayerObservers() {
-        guard let audioTrackPlayer = _audioTrackPlayer else { return }
-        
-        audioPlayerProgressObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "progress", target: self, selector: #selector(audioProgressChanged(_:)), options: [.initial, .new])
-        audioPlayerStateObserver = KeyValueObserver.observe(audioTrackPlayer, keyPath: "state", target: self, selector: #selector(audioPlayerStateChanged(_:)), options: [.initial, .new])
+        audioPlayerProgressObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.progress, options: [.initial, .new]) { [weak self] _, _ in
+            self?.audioProgressChanged()
+        }
+
+        audioPlayerStateObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.state, options: [.initial, .new]) { [weak self] _, change in
+            
+            ///  Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+            ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+            ///          This function may called from background thread (in case incoming call).
+            DispatchQueue.main.async {
+                if self?.isOwnTrackPlayingInAudioPlayer() == true {
+                    self?.updateActivePlayerProgressAnimated(false)
+                    self?.updateActivePlayButton()
+                    self?.updateTimeLabel()
+                    self?.updateProximityObserverState()
+                }
+                    /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+                else if change.newValue == .completed {
+                    self?.updateTimeLabel()
+                } else {
+                    self?.updateInactivePlayer()
+                }
+            }
+        }
     }
 
     // MARK: - Actions
@@ -440,36 +460,11 @@ final class AudioMessageView: UIView, TransferView {
     }
     
     // MARK: - Audio state observer
-    @objc dynamic private func audioProgressChanged(_ change: NSDictionary) {
+    private func audioProgressChanged() {
         DispatchQueue.main.async {
             if self.isOwnTrackPlayingInAudioPlayer() {
                 self.updateActivePlayerProgressAnimated(false)
                 self.updateTimeLabel()
-            }
-        }
-    }
-    
-    
-    ///  Observer function for audioTrackPlayer's keyPath "state".
-    ///  This function updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
-    ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
-    ///          This function may called from background thread (in case incoming call).
-    ///
-    /// - Parameter change: a dictionary with KVP kind and new (enum MediaPlayerState: 0 = ready, 1 = play, 2 = pause, 3 = completed, 4 = error)
-    @objc dynamic private func audioPlayerStateChanged(_ change: NSDictionary) {
-        DispatchQueue.main.async {
-            if self.isOwnTrackPlayingInAudioPlayer() {
-                self.updateActivePlayerProgressAnimated(false)
-                self.updateActivePlayButton()
-                self.updateTimeLabel()
-                self.updateProximityObserverState()
-            }
-            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
-            else if let new = change["new"] as? Int, let state = MediaPlayerState(rawValue: new), state == .completed {
-                self.updateTimeLabel()
-            }
-            else {
-                self.updateInactivePlayer()
             }
         }
     }

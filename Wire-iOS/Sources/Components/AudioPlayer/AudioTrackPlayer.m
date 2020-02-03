@@ -26,7 +26,6 @@
 @import WireCommonComponents;
 @import WireUtilities;
 @import WireSyncEngine;
-#import "KeyValueObserver.h"
 #import "Wire-Swift.h"
 
 @import AVFoundation;

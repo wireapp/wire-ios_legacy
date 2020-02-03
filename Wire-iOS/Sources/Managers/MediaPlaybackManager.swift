@@ -35,10 +35,12 @@ extension Notification.Name {
 /// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
+    
     @objc
-    dynamic private(set) weak var activeMediaPlayer: MediaPlayer?
+    dynamic private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)?
+    
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
-    private var titleObserver: NSObject?
+    private var titleObserver: NSKeyValueObservation?
     var name: String!
     
     weak var delegate: AVSMediaDelegate?
@@ -115,21 +117,23 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     
     // MARK: - Active Media Player State
     private func startObservingMediaPlayerChanges() {
-        titleObserver = KeyValueObserver.observe(activeMediaPlayer as Any, keyPath: "title", target: self, selector: #selector(activeMediaPlayerTitleChanged(_:)), options: [.initial, .new])
+        setObserver(activeMediaPlayer)
+        
+    }
+    
+    private func setObserver<T>(_ mediaPlayerObject: T?) where T: NSObject & MediaPlayer {
+        titleObserver = mediaPlayerObject?.observe(\.title, options: [.initial, .new]) { [weak self] _, _ in
+            self?.changeObserver?.activeMediaPlayerTitleDidChange()
+        }
     }
     
     private func stopObservingMediaPlayerChanges(_ mediaPlayer: MediaPlayer?) {
         titleObserver = nil
     }
-    
-    @objc
-    private func activeMediaPlayerTitleChanged(_ change: [AnyHashable : Any]?) {
-        changeObserver?.activeMediaPlayerTitleDidChange()
-    }
 }
 
 extension MediaPlaybackManager: MediaPlayerDelegate {
-    func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState) {
+    func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
         
         changeObserver?.activeMediaPlayerStateDidChange()
