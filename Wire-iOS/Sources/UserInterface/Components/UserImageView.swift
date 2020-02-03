@@ -68,7 +68,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     }
 
     /// The user to display the avatar of.
-    @objc public var user: UserType? {
+    var user: UserType? {
         didSet {
             updateUser()
         }
