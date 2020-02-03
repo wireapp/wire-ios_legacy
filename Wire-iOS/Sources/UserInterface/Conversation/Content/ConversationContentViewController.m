@@ -36,9 +36,6 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationContentViewController (TableView) <UITableViewDataSourcePrefetching>
-@end
-
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
 @end
 
@@ -261,17 +258,6 @@
 - (void)removeHighlightsAndMenu
 {
     [[UIMenuController sharedMenuController] setMenuVisible:NO animated:YES];
-}
-
-@end
-
-
-
-@implementation ConversationContentViewController (TableView)
-
-
-- (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
-{
 }
 
 @end
