@@ -53,3 +53,35 @@ extension ConversationContentViewController {
     }
 
 }
+
+// MARK: - TableView
+extension ConversationContentViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if onScreen {
+            cell.willDisplayCell()
+        }
+        
+        // using dispatch_async because when this method gets run, the cell is not yet in visible cells,
+        // so the update will fail
+        // dispatch_async runs it with next runloop, when the cell has been added to visible cells
+        DispatchQueue.main.async(execute: {
+            self.updateVisibleMessagesWindow()
+        })
+        
+        cachedRowHeights[indexPath] = NSNumber(value: Float(cell.frame.size.height))
+    }
+    
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.didEndDisplayingCell()
+        
+        cachedRowHeights[indexPath] = NSNumber(value: Float(cell.frame.size.height))
+    }
+    
+    public func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cachedRowHeights[indexPath] as? CGFloat ?? UITableView.automaticDimension
+    }
+    
+    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        return willSelectRow(at: indexPath, tableView: tableView)
+    }
+}

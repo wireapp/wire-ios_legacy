@@ -36,7 +36,7 @@
 
 #import "Wire-Swift.h"
 
-@interface ConversationContentViewController (TableView) <UITableViewDelegate, UITableViewDataSourcePrefetching>
+@interface ConversationContentViewController (TableView) <UITableViewDataSourcePrefetching>
 @end
 
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
@@ -269,46 +269,6 @@
 
 @implementation ConversationContentViewController (TableView)
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([cell respondsToSelector:@selector(willDisplayCell)] && self.onScreen) {
-        [(id)cell willDisplayCell];
-    }
-    
-	// using dispatch_async because when this method gets run, the cell is not yet in visible cells,
-	// so the update will fail
-	// dispatch_async runs it with next runloop, when the cell has been added to visible cells
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self updateVisibleMessagesWindow];
-	});
-    
-    [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
-}
-
-- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([cell respondsToSelector:@selector(didEndDisplayingCell)]) {
-        [(id)cell didEndDisplayingCell];
-    }
-    
-    [self.cachedRowHeights setObject:@(cell.frame.size.height) forKey:indexPath];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSNumber *cachedHeight = [self.cachedRowHeights objectForKey:indexPath];
-    
-    if (cachedHeight != nil) {
-        return cachedHeight.floatValue;
-    } else {
-        return UITableViewAutomaticDimension;
-    }
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self willSelectRowAtIndexPath:indexPath tableView:tableView];
-}
 
 - (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {

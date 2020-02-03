@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeHighlightsAndMenu;
 - (void)setConversationHeaderView:(UIView *)headerView;
-
+- (void)updateVisibleMessagesWindow;
 
 @end
 

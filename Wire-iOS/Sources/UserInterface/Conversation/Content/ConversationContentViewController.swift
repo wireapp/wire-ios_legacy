@@ -65,7 +65,6 @@ extension ConversationContentViewController {
         return ColorScheme.default.statusBarStyle
     }
 
-    @objc(willSelectRowAtIndexPath:tableView:)
     func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
         guard dataSource?.messages.indices.contains(indexPath.section) == true else { return nil }
 
