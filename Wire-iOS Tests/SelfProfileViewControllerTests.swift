@@ -19,11 +19,18 @@
 import XCTest
 @testable import Wire
 
-final class SelfProfileViewControllerSnapshotTests: XCTestCase {
+final class SelfProfileViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var sut: SelfProfileViewController!
-
+    var coreDataFixture: CoreDataFixture!
+    
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+    }
+    
     override func tearDown() {
+        coreDataFixture = nil
         sut = nil
         super.tearDown()
     }
@@ -40,8 +47,8 @@ final class SelfProfileViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForDeviceAlert() {
-        let mockUserClientSet: Set<UserClient> = Set<UserClient>()
+    func testForSeldClientsAlert() {
+        let mockUserClientSet: Set<UserClient> = Set<UserClient>([coreDataFixture.uiMOC.mockUserClient()])
         
         let alert = UIAlertController(forNewSelfClients: mockUserClientSet)
         
@@ -53,7 +60,6 @@ final class SelfProfileViewControllerSnapshotTests: XCTestCase {
         selfUser.name = userName
         selfUser.isTeamMember = teamMember
         selfUser.accentColorValue = .vividRed
-        selfUser.initials = PersonName.person(withName: userName, schemeTagger: nil).initials
         
         sut = SelfProfileViewController(selfUser: selfUser,
                                         viewer: selfUser,

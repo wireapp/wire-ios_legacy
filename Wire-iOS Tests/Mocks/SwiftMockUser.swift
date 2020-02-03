@@ -43,7 +43,13 @@ final class MockSelfUser: SwiftMockUser, SelfLegalHoldSubject {
 
 /// a new simple Mock User without objc
 class SwiftMockUser: NSObject, UserType {
-    var name: String? = nil
+    var name: String? = nil {
+        didSet {
+            guard let name = name else { return }
+            
+            initials = PersonName.person(withName: name, schemeTagger: nil).initials
+        }
+    }
     
     var displayName: String = ""
     
