@@ -40,9 +40,9 @@ class AuthenticationStartCompanyLoginLinkEventHandler: AuthenticationEventHandle
         }
 
         if currentStep == .start {
-            return [.transition(.landingScreen, mode: .reset), .startCompanyLogin(code: code)]
+            return [.transition(.landingScreen, mode: .reset), .startCompanyLogin(code: code, ssoOnly: false)]
         } else {
-            return [.startCompanyLogin(code: code)]
+            return [.startCompanyLogin(code: code, ssoOnly: false)]
         }
     }
 

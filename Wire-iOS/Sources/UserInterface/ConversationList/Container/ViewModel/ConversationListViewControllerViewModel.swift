@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 typealias Completion = () -> ()
 typealias ResultHandler = (_ succeeded: Bool) -> Void

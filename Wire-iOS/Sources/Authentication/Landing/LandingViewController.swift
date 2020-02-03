@@ -23,6 +23,7 @@ import UIKit
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
     func landingViewControllerDidChooseEnterpriseLogin()
+    func landingViewControllerDidChooseSSOLogin()
 }
 
 /// Landing screen for choosing how to authenticate.
@@ -90,7 +91,7 @@ class LandingViewController: AuthenticationStepViewController {
     }()
     
     let messageLabel: UILabel = {
-        let label = UILabel(key: "landing.welcome_message".localized, size: .large, weight: .light, color: .textForeground, variant: .light)
+        let label = UILabel(key: "landing.welcome_message".localized(args: BackendEnvironment.shared.title), size: .large, weight: .light, color: .textForeground, variant: .light)
         label.font = LandingViewController.headlineFont
         label.textAlignment = .center
         label.numberOfLines = 2
@@ -115,18 +116,36 @@ class LandingViewController: AuthenticationStepViewController {
         let button = Button(style: .fullMonochrome, variant: .light)
         button.setBackgroundImageColor(UIColor.lightGraphiteAlpha24, for: .normal)
         button.accessibilityIdentifier = "Enterprise Login"
-        button.setTitle("landing.enterprise.login.button.title".localized, for: .normal)
+        button.setTitle("landing.login.enterprise.button.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.enterpriseLoginButtonTapped(_:)
             ), for: .touchUpInside)
         
         return button
     }()
-    
-    let personalLoginButton: Button = {
+
+    let loginButton: Button = {
         let button = Button(style: .empty, variant: .light)
         button.accessibilityIdentifier = "Login"
         button.setTitle("landing.login.button.title".localized, for: .normal)
         button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    let loginWithEmailButton: Button = {
+        let button = Button(style: .full, variant: .light)
+        button.accessibilityIdentifier = "Login with email"
+        button.setTitle("landing.login.email.button.title".localized, for: .normal)
+        button.addTarget(self, action: #selector(LandingViewController.loginButtonTapped(_:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    let loginWithSSOButton: Button = {
+        let button = Button(style: .empty, variant: .light)
+        button.accessibilityIdentifier = "Log in with SSO"
+        button.setTitle("landing.login.sso.button.title".localized, for: .normal)
+        button.addTarget(self, action: #selector(LandingViewController.ssoLoginButtonTapped(_:)), for: .touchUpInside)
         
         return button
     }()
@@ -211,6 +230,7 @@ class LandingViewController: AuthenticationStepViewController {
 
         updateBarButtonItem()
         disableTrackingIfNeeded()
+        updateButtons()
         updateCustomBackendLabel()
 
         NotificationCenter.default.addObserver(
@@ -223,6 +243,7 @@ class LandingViewController: AuthenticationStepViewController {
         
         NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification, object: nil, queue: .main) { _ in
             self.updateCustomBackendLabel()
+            self.updateButtons()
         }
     }
 
@@ -256,7 +277,9 @@ class LandingViewController: AuthenticationStepViewController {
 
         contentView.addSubview(messageLabel)
         buttonStackView.addArrangedSubview(createAccountButton)
-        buttonStackView.addArrangedSubview(personalLoginButton)
+        buttonStackView.addArrangedSubview(loginButton)
+        buttonStackView.addArrangedSubview(loginWithEmailButton)
+        buttonStackView.addArrangedSubview(loginWithSSOButton)
         contentView.addSubview(buttonStackView)
         contentView.addSubview(enterpriseLoginButton)
 
@@ -299,7 +322,9 @@ class LandingViewController: AuthenticationStepViewController {
             buttonStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             buttonStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             createAccountButton.heightAnchor.constraint(equalToConstant: 48),
-            personalLoginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginButton.heightAnchor.constraint(equalToConstant: 48),
+            loginWithEmailButton.heightAnchor.constraint(equalToConstant: 48),
+            loginWithSSOButton.heightAnchor.constraint(equalToConstant: 48),
             
             // enterprise login stack view
             enterpriseLoginButton.heightAnchor.constraint(equalToConstant: 48),
@@ -362,14 +387,21 @@ class LandingViewController: AuthenticationStepViewController {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
             customBackendStack.isHidden = true
-            buttonStackView.alpha = 1
         case .custom(url: let url):
             customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
-            buttonStackView.alpha = 0
         }
         updateLogoView()
+    }
+    
+    private func updateButtons() {
+        enterpriseLoginButton.isHidden = isCustomBackend
+        loginButton.isHidden = isCustomBackend
+        createAccountButton.isHidden = isCustomBackend
+        loginWithSSOButton.isHidden = !isCustomBackend
+        loginWithEmailButton.isHidden = !isCustomBackend
+        messageLabel.text = "landing.welcome_message".localized(args: BackendEnvironment.shared.title)
     }
     
     private func disableTrackingIfNeeded() {
@@ -437,6 +469,10 @@ class LandingViewController: AuthenticationStepViewController {
     
     @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseEnterpriseLogin()
+    }
+    
+    @objc public func ssoLoginButtonTapped(_ sender: AnyObject!) {
+        delegate?.landingViewControllerDidChooseSSOLogin()
     }
     
     @objc public func cancelButtonTapped() {
