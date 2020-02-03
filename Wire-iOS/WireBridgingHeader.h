@@ -23,8 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "ParticipantDeviceHeaderView.h"
-#import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
