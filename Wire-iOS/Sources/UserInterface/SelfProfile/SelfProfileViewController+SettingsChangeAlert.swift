@@ -18,12 +18,14 @@
 
 import Foundation
 
+
 extension SelfProfileViewController {
 
-    @discardableResult func presentUserSettingChangeControllerIfNeeded() -> Bool {
-        if ZMUser.selfUser()?.readReceiptsEnabledChangedRemotely ?? false {
-            let currentValue = ZMUser.selfUser()!.readReceiptsEnabled
-            self.presentReadReceiptsChangedAlert(with: currentValue)
+    @discardableResult
+    func presentUserSettingChangeControllerIfNeeded() -> Bool {
+        if selfUser.readReceiptsEnabledChangedRemotely {
+            let currentValue = selfUser.readReceiptsEnabled
+            presentReadReceiptsChangedAlert(with: currentValue)
             
             return true
         }

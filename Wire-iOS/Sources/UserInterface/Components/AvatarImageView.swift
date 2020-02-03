@@ -44,7 +44,7 @@ class AvatarImageView: UIControl {
     // MARK: - Properties
 
     /// The avatar to display.
-    public var avatar: Avatar? {
+    var avatar: Avatar? {
         didSet {
             if avatar != oldValue {
                 updateAvatar()
@@ -97,7 +97,7 @@ class AvatarImageView: UIControl {
     }
 
     /// The view that contains the avatar.
-    @objc public let container = RoundedView()
+    let container = RoundedView()
 
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()

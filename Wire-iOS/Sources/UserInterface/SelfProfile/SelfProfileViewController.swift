@@ -18,6 +18,13 @@
 
 import UIKit
 
+///TODO: add readReceiptsEnabledChangedRemotely to UserType
+protocol EditableUserReadReceiptsStatus {
+    var readReceiptsEnabledChangedRemotely: Bool { get }
+}
+
+extension ZMUser: EditableUserReadReceiptsStatus {}
+
 /**
  * The first page of the user settings.
  */
@@ -25,7 +32,7 @@ import UIKit
 final class SelfProfileViewController: UIViewController {
 
     /// The user that is viewing their settings.
-    let selfUser: SettingsSelfUser
+    let selfUser: SettingsSelfUser & EditableUserReadReceiptsStatus
 
     var userRightInterfaceType: UserRightInterface.Type = UserRight.self
     var settingsCellDescriptorFactory: SettingsCellDescriptorFactory? = nil
@@ -60,7 +67,9 @@ final class SelfProfileViewController: UIViewController {
      * - parameter userRightInterfaceType: The type of object to determine the user permissions.
      */
 
-    init(selfUser: SettingsSelfUser, userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
+    init(selfUser: SettingsSelfUser & EditableUserReadReceiptsStatus,
+         viewer: UserType = ZMUser.selfUser(),
+         userRightInterfaceType: UserRightInterface.Type = UserRight.self) {
         self.selfUser = selfUser
 
         // Create the settings hierarchy
@@ -68,7 +77,9 @@ final class SelfProfileViewController: UIViewController {
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
 		let rootGroup = settingsCellDescriptorFactory.rootGroup()
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        profileHeaderViewController = ProfileHeaderViewController(user: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileHeaderViewController = ProfileHeaderViewController(user: selfUser,
+                                                                  viewer: viewer,
+                                                                  options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
 
 		self.userRightInterfaceType = userRightInterfaceType
 		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory

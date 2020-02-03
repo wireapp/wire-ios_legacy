@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
+final class SelfProfileViewControllerTests: XCTestCase {
     
     var sut: SelfProfileViewController!
 
@@ -31,20 +31,44 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     func testTestForAUserWithNoTeam() {
         createSut(userName: "Tarja Turunen", teamMember: false)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testTestForAUserWithALongName() {
         createSut(userName: "Johannes Chrysostomus Wolfgangus Theophilus Mozart")
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     private func createSut(userName: String, teamMember: Bool = true) {
-        MockUser.mockSelf()?.name = userName
-        MockUser.mockSelf()?.isTeamMember = teamMember
+        let selfUser = MockSelfUser()
+        selfUser.name = userName
+        selfUser.isTeamMember = teamMember
+        selfUser.accentColorValue = .vividRed
         
-        sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
+        sut = SelfProfileViewController(selfUser: selfUser,
+                                        viewer: selfUser,
+                                        userRightInterfaceType: MockUserRight.self)
         sut.view.backgroundColor = .black
     }
 }
+
+extension MockSelfUser: ValidatorType, ZMEditableUser {
+    
+    static func validate(name: inout String?) throws -> Bool {
+        //no-op
+        return true
+    }
+    
+    var phoneNumber: String! {
+        //no-op
+        return ""
+    }
+}
+
+extension MockSelfUser : EditableUserReadReceiptsStatus {
+    var readReceiptsEnabledChangedRemotely: Bool {
+        return false
+    }
+}
+

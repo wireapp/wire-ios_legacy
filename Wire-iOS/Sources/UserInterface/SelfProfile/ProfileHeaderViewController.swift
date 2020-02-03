@@ -117,7 +117,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
+    init(user: UserType,
+         viewer: UserType = ZMUser.selfUser(),
+         conversation: ZMConversation? = nil,
+         options: Options) {
         self.user = user
         isAdminRole = conversation.map(self.user.isGroupAdmin) ?? false
         self.viewer = viewer
