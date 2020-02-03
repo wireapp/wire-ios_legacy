@@ -47,7 +47,7 @@ final class SelfProfileViewControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         verify(matching: sut)
     }
 
-    func testForSeldClientsAlert() {
+    func testForSelfClientsAlert() {
         let mockUserClientSet: Set<UserClient> = Set<UserClient>([coreDataFixture.uiMOC.mockUserClient()])
         
         let alert = UIAlertController(forNewSelfClients: mockUserClientSet)
