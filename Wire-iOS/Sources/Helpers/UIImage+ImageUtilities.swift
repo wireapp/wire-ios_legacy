@@ -137,7 +137,7 @@ extension UIImage {
         self.init(cgImage: scaledImage, scale: 2.0, orientation: .up)
     }
 
-    class func image(color: UIColor, andSize size: CGSize) -> UIImage? {
+    convenience init(color: UIColor, andSize size: CGSize) {
         let rect = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()
@@ -148,6 +148,6 @@ extension UIImage {
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
 
-        return image
+        self.init(cgImage: (image?.cgImage)!)
     }
 }

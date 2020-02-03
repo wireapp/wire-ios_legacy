@@ -18,11 +18,11 @@
 
 import Foundation
 
-class SettingsStyleNavigationController: UINavigationController {
+final class SettingsStyleNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationBar.setBackgroundImage(UIImage.image(color: .black, andSize: CGSize(width: 1,height: 1)), for:.default)
+        self.navigationBar.setBackgroundImage(UIImage(color: .black, andSize: CGSize(width: 1,height: 1)), for:.default)
         self.navigationBar.isTranslucent = false
         self.navigationBar.shadowImage = UIImage()
         self.navigationBar.titleTextAttributes = DefaultNavigationBar.titleTextAttributes(for: .dark)
