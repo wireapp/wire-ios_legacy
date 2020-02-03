@@ -98,10 +98,11 @@ extension UIAlertController {
         var deviceNamesAndDates: [String] = []
         
         for userClient in clients {
-            let deviceName: String?
+            let deviceName: String
             
-            if userClient.model?.isEmpty == false {
-                deviceName = userClient.model
+            if let model = userClient.model,
+                model.isEmpty == false {
+                deviceName = model
             } else {
                 deviceName = userClient.type.rawValue
             }
@@ -110,7 +111,7 @@ extension UIAlertController {
             let formattedDate = userClient.activationDate?.formattedDate
             let deviceDate = String(format: formatKey, formattedDate ?? "")
             
-            deviceNamesAndDates.append("\(deviceName ?? "")\n\(deviceDate)")
+            deviceNamesAndDates.append("\(deviceName)\n\(deviceDate)")
         }
         
         let title = "self.new_device_alert.title".localized
