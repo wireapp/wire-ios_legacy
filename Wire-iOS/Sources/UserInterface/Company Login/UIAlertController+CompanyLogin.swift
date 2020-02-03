@@ -21,8 +21,8 @@ import Foundation
 extension UIAlertController {
 
   fileprivate enum CompanyLoginCopy: String {
-        case ssoAndEmail
-        case ssoOnly
+        case ssoAndEmail = "sso_and_email"
+        case ssoOnly = "sso_only"
         
         init(ssoOnly: Bool) {
             self = ssoOnly ? .ssoOnly : .ssoAndEmail
