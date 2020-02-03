@@ -106,7 +106,6 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

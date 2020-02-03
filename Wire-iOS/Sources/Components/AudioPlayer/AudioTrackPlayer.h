@@ -25,6 +25,7 @@
 
 @protocol AudioTrack;
 @protocol ZMMessageObserver;
+@protocol MediaPlayerDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
