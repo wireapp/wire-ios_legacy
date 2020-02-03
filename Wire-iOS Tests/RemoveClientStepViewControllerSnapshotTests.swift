@@ -25,11 +25,11 @@ final class RemoveClientStepViewControllerSnapshotTests: ZMSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = RemoveClientStepViewController(clients: [mockUserClient(),
-                                                       mockUserClient(),
-                                                       mockUserClient(),
-                                                       mockUserClient(),
-                                                       mockUserClient()],
+        sut = RemoveClientStepViewController(clients: [uiMOC.mockUserClient(),
+                                                       uiMOC.mockUserClient(),
+                                                       uiMOC.mockUserClient(),
+                                                       uiMOC.mockUserClient(),
+                                                       uiMOC.mockUserClient()],
                                              credentials: ZMCredentials())
     }
     

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class SelfProfileViewControllerTests: XCTestCase {
+final class SelfProfileViewControllerSnapshotTests: XCTestCase {
     
     var sut: SelfProfileViewController!
 
@@ -28,16 +28,24 @@ final class SelfProfileViewControllerTests: XCTestCase {
         super.tearDown()
     }
   
-    func testTestForAUserWithNoTeam() {
+    func testForAUserWithNoTeam() {
         createSut(userName: "Tarja Turunen", teamMember: false)
 
         verify(matching: sut)
     }
 
-    func testTestForAUserWithALongName() {
+    func testForAUserWithALongName() {
         createSut(userName: "Johannes Chrysostomus Wolfgangus Theophilus Mozart")
 
         verify(matching: sut)
+    }
+
+    func testForDeviceAlert() {
+        let mockUserClientSet: Set<UserClient> = Set<UserClient>()
+        
+        let alert = UIAlertController(forNewSelfClients: mockUserClientSet)
+        
+        verify(matching: alert)
     }
 
     private func createSut(userName: String, teamMember: Bool = true) {

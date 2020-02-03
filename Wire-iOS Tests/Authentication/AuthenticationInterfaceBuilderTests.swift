@@ -141,7 +141,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     }
 
     func testClientRemovalScreen() {
-        runSnapshotTest(for: .deleteClient(clients: [mockUserClient()], credentials: nil))
+        runSnapshotTest(for: .deleteClient(clients: [uiMOC.mockUserClient()], credentials: nil))
     }
 
     func testAddEmailPasswordScreen() {

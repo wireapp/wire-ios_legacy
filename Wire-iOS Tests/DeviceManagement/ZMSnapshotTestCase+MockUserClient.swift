@@ -18,12 +18,12 @@
 
 import Foundation
 
-extension ZMSnapshotTestCase {
+extension NSManagedObjectContext {
     func mockUserClient(fingerprintString: String = "102030405060708090102030405060708090102030405060708090") -> UserClient! {
-        let client = UserClient.insertNewObject(in: uiMOC)
+        let client = UserClient.insertNewObject(in: self)
         client.remoteIdentifier = "102030405060708090"
 
-        client.user = ZMUser.insertNewObject(in: uiMOC)
+        client.user = ZMUser.insertNewObject(in: self)
         client.deviceClass = .tablet
         client.model = "Simulator"
         client.label = "Bill's MacBook Pro"

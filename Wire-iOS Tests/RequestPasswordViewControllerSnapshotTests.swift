@@ -26,7 +26,7 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-        fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+        fingerprint = uiMOC.mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
     }
 
 

@@ -31,7 +31,7 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
 
         XCTAssertEqual(otherYearFormatter.locale.identifier, "en_US", "otherYearFormatter.locale.identifier is \(otherYearFormatter.locale.identifier)")
 
-        client = mockUserClient()
+        client = uiMOC.mockUserClient()
     }
     
     override func tearDown() {

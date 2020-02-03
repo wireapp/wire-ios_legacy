@@ -33,8 +33,8 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
         mockUser = MockUser.firstMockUser()
 
-        selfClient = mockUserClient()
-        client = mockUserClient()
+        selfClient = uiMOC.mockUserClient()
+        client = uiMOC.mockUserClient()
     }
 
     override func tearDown() {
