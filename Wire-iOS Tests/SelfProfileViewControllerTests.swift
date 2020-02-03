@@ -45,6 +45,7 @@ final class SelfProfileViewControllerTests: XCTestCase {
         selfUser.name = userName
         selfUser.isTeamMember = teamMember
         selfUser.accentColorValue = .vividRed
+        selfUser.initials = PersonName.person(withName: userName, schemeTagger: nil).initials
         
         sut = SelfProfileViewController(selfUser: selfUser,
                                         viewer: selfUser,
