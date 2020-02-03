@@ -86,7 +86,6 @@
 #import "PopTransition.h"
 #import "ZoomTransition.h"
 #import "CrossfadeTransition.h"
-#import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"

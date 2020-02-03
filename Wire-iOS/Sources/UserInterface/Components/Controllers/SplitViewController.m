@@ -21,7 +21,6 @@
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
 #import "SwizzleTransition.h"
-#import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 
