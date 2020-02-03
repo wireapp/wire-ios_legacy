@@ -36,13 +36,6 @@ typedef NS_ENUM(NSInteger, MediaPlayerState)
 @protocol MediaPlayer;
 
 
-@protocol MediaPlayerDelegate <NSObject>
-
-- (void)mediaPlayer:(_Nonnull id<MediaPlayer>)mediaPlayer didChangeToState:(MediaPlayerState)state;
-
-@end
-
-
 @protocol MediaPlayer <NSObject>
 
 @property (nonatomic, readonly, nullable) NSString *title;

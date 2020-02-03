@@ -37,7 +37,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
     
     @objc
-    dynamic private(set) weak var activeMediaPlayer: MediaPlayer?
+    dynamic private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)?
     
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     private var titleObserver: NSKeyValueObservation?
@@ -117,7 +117,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     
     // MARK: - Active Media Player State
     private func startObservingMediaPlayerChanges() {
-        setObserver(activeMediaPlayer as? NSObject & MediaPlayer)
+        setObserver(activeMediaPlayer)
         
     }
     
@@ -133,7 +133,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 }
 
 extension MediaPlaybackManager: MediaPlayerDelegate {
-    func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState) {
+    func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
         
         changeObserver?.activeMediaPlayerStateDidChange()
