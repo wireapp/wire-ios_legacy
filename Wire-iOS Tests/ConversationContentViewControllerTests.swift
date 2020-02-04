@@ -58,6 +58,9 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         // Notice: view arguemnt is used for iPad idiom. We should think about test it with iPad simulator that the alert shows in a popover which points to the view.
         let view = UIView()
 
+        let message = MockMessageFactory.textMessage(withText: "test")!
+        sut.messageAction(actionId: .delete, for: message, view: UIView())
+
         verifyAlertController(sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
     }
 }
