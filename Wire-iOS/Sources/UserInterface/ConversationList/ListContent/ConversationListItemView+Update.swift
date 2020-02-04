@@ -20,11 +20,7 @@ import UIKit
 import FormatterKit
 
 extension ConversationListItemView {
-    @objc public func configureFont() {
-        self.titleField.font = FontSpec(.normal, .light).font!
-    }
-    
-    @objc func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
+    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
     }

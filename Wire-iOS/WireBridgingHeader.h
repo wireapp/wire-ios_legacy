@@ -26,8 +26,6 @@
 #import "ParticipantDeviceHeaderView.h"
 #import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
-#import "ConversationListItemView.h"
-#import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
