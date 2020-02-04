@@ -22,7 +22,7 @@ private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 /// The main conversation view controller
 final class ConversationContentViewController: UIViewController {
     weak var delegate: ConversationContentViewControllerDelegate?
-    private(set) var conversation: ZMConversation! ///TODO: let?
+    let conversation: ZMConversation
     var bottomMargin: CGFloat = 0 {
         didSet {
             setTableViewBottomMargin(bottomMargin)
@@ -103,15 +103,14 @@ final class ConversationContentViewController: UIViewController {
                      message: ZMConversationMessage? = nil,
                      mediaPlaybackManager: MediaPlaybackManager?,
                      session: ZMUserSessionInterface) {
-        self.messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
+        messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
         self.session = session
+        self.conversation = conversation
+        messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
 
         super.init(nibName: nil, bundle: nil)
 
-        messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
-
         self.mediaPlaybackManager = mediaPlaybackManager
-        self.conversation = conversation
 
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
@@ -211,6 +210,7 @@ final class ConversationContentViewController: UIViewController {
         tableView.tableHeaderView = headerView
     }
     
+    @discardableResult
     func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
         guard dataSource?.messages.indices.contains(indexPath.section) == true else { return nil }
 
