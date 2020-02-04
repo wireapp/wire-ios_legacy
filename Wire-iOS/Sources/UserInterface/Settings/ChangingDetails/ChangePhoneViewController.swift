@@ -182,7 +182,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 self.navigationController?.showLoadingView = true
                 })
             
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
