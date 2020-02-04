@@ -607,7 +607,6 @@
 		87797C0B1FF3C849009FC9A9 /* SearchServicesSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87797C0A1FF3C849009FC9A9 /* SearchServicesSectionController.swift */; };
 		877A325E1E8912500017DD9A /* RoundedBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325D1E8912500017DD9A /* RoundedBadge.swift */; };
 		877A32601E892A100017DD9A /* ConversationListAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */; };
-		877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */; };
 		877ABB471E8118E300CBCF2B /* BackgroundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */; };
 		877ABB491E8127B200CBCF2B /* BackgroundViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */; };
 		8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8784AE3D1FC2DE5300AAEAB8 /* MediaManagerLoader.swift */; };
@@ -2216,7 +2215,6 @@
 		87797C0A1FF3C849009FC9A9 /* SearchServicesSectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchServicesSectionController.swift; sourceTree = "<group>"; };
 		877A325D1E8912500017DD9A /* RoundedBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedBadge.swift; sourceTree = "<group>"; };
 		877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationListAccessoryView.swift; sourceTree = "<group>"; };
-		877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Update.swift"; sourceTree = "<group>"; };
 		877ABB461E8118E300CBCF2B /* BackgroundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewController.swift; sourceTree = "<group>"; };
 		877ABB481E8127B200CBCF2B /* BackgroundViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundViewControllerTests.swift; sourceTree = "<group>"; };
 		8781C94E1E2687590024F3F6 /* MessageAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAction.swift; sourceTree = "<group>"; };
@@ -5095,7 +5093,6 @@
 				EFEE97C723229CF5007A4702 /* ConversationListCellDelegate.swift */,
 				A9C33DFF23D078B80069C8BB /* ConversationListItemView.swift */,
 				EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */,
-				877A32611E892F950017DD9A /* ConversationListItemView+Update.swift */,
 				877A325F1E892A100017DD9A /* ConversationListAccessoryView.swift */,
 				EFEE97C523229768007A4702 /* ConversationListContentDelegate.swift */,
 				BAEF10F81B8C8849005BFA48 /* AnimatedListMenuView.h */,
@@ -7999,7 +7996,6 @@
 				BF1743742123060E008851CA /* AdditionalMenuItem.swift in Sources */,
 				F15E9BFD1E4878AC00EA207F /* UINavigationController+Additions.swift in Sources */,
 				EF1FDC7C21DE0E4100C9CEB1 /* UIViewController+PopoverFrame.swift in Sources */,
-				877A32621E892F950017DD9A /* ConversationListItemView+Update.swift in Sources */,
 				874B5DAE1CEDEB990010474C /* ZMConversationMessage+AudioMessage.swift in Sources */,
 				EF17B0D3223A6A36006252A8 /* LaunchImageViewController.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
