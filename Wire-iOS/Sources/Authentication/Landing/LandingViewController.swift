@@ -231,7 +231,7 @@ class LandingViewController: AuthenticationStepViewController {
         updateBarButtonItem()
         disableTrackingIfNeeded()
         updateButtons()
-        updateCustomBackendLabel()
+        updateCustomBackendLabels()
 
         NotificationCenter.default.addObserver(
             forName: AccountManagerDidUpdateAccountsNotificationName,
@@ -242,7 +242,7 @@ class LandingViewController: AuthenticationStepViewController {
         }
         
         NotificationCenter.default.addObserver(forName: BackendEnvironment.backendSwitchNotification, object: nil, queue: .main) { _ in
-            self.updateCustomBackendLabel()
+            self.updateCustomBackendLabels()
             self.updateButtons()
         }
     }
@@ -383,11 +383,20 @@ class LandingViewController: AuthenticationStepViewController {
         }
     }
     
-    private func updateCustomBackendLabel() {
+    private var productName: String {
+        guard let name = Bundle.appMainBundle.infoForKey("CFBundleDisplayName") else {
+            fatal("unable to access CFBundleDisplayName")
+        }
+        return name
+    }
+    
+    private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
         case .production, .staging:
             customBackendStack.isHidden = true
+            messageLabel.text = "landing.welcome_message".localized(args: productName)
         case .custom(url: let url):
+            messageLabel.text = "landing.welcome_message".localized(args: BackendEnvironment.shared.title)
             customBackendTitleLabel.text = "landing.custom_backend.title".localized(args: BackendEnvironment.shared.title)
             customBackendSubtitleLabel.text = url.absoluteString.uppercased()
             customBackendStack.isHidden = false
@@ -401,7 +410,6 @@ class LandingViewController: AuthenticationStepViewController {
         createAccountButton.isHidden = isCustomBackend
         loginWithSSOButton.isHidden = !isCustomBackend
         loginWithEmailButton.isHidden = !isCustomBackend
-        messageLabel.text = "landing.welcome_message".localized(args: BackendEnvironment.shared.title)
     }
     
     private func disableTrackingIfNeeded() {
