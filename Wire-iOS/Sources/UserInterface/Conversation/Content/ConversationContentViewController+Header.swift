@@ -19,7 +19,6 @@
 import Foundation
 
 extension ConversationContentViewController {
-    @objc
     func updateTableViewHeaderView() {
         guard let userSession = ZMUserSession.shared(),
               (dataSource?.hasOlderMessagesToLoad == false ||
@@ -41,7 +40,7 @@ extension ConversationContentViewController {
         
         if connectionOrOneOnOne, let otherParticipant = otherParticipant {
             connectionViewController = UserConnectionViewController(userSession: userSession, user: otherParticipant)
-            headerView = connectionViewController.view
+            headerView = connectionViewController?.view
         }
         
         if let headerView = headerView {

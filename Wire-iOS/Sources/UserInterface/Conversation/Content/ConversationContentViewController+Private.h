@@ -33,41 +33,41 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol SelectableView;
 @protocol ZMUserSessionInterface;
 
-@interface ConversationContentViewController ()
-
-/// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
-@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
-
-@property (nonatomic) MessagePresenter* messagePresenter;
-
-@property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
-@property (nonatomic, copy, nullable) void (^onMessageShown)(UIView *);
-@property (nonatomic, nullable, weak) UITableViewCell<SelectableView> *pinchImageCell;
-
-@property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
-@property (nonatomic, nullable) UIView *dimView;
-@property (nonatomic) CGPoint initialPinchLocation;
-
-@property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
-
-@property (nonatomic, nullable) id<ZMUserSessionInterface> session;
-
-@property (nonatomic) UserConnectionViewController *connectionViewController;
-
-@property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
-@property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
-@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
-@property (nonatomic) NSMutableDictionary *cachedRowHeights;
-@property (nonatomic) BOOL hasDoneInitialLayout;
-@property (nonatomic) BOOL onScreen;
-@property (nonatomic, nullable) id<ZMConversationMessage> messageVisibleOnLoad;
-@property (nonatomic, readwrite) ZMConversation *conversation;
-
-
-- (void)removeHighlightsAndMenu;
-- (void)setConversationHeaderView:(UIView *)headerView;
-- (void)updateVisibleMessagesWindow;
-
-@end
-
+//@interface ConversationContentViewController ()
+//
+///// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
+//@property (nonatomic, strong, readwrite, nullable) id<ZMConversationMessage> messageWithExpandedTools;
+//
+//@property (nonatomic) MessagePresenter* messagePresenter;
+//
+//@property (nonatomic, nullable) id<ZMConversationMessage> expectedMessageToShow;
+//@property (nonatomic, copy, nullable) void (^onMessageShown)(UIView *);
+//@property (nonatomic, nullable, weak) UITableViewCell<SelectableView> *pinchImageCell;
+//
+//@property (nonatomic, nullable) FLAnimatedImageView *pinchImageView;
+//@property (nonatomic, nullable) UIView *dimView;
+//@property (nonatomic) CGPoint initialPinchLocation;
+//
+//@property (nonatomic) DeletionDialogPresenter *deletionDialogPresenter;
+//
+//@property (nonatomic, nullable) id<ZMUserSessionInterface> session;
+//
+//@property (nonatomic) UserConnectionViewController *connectionViewController;
+//
+//@property (nonatomic, assign) BOOL wasScrolledToBottomAtStartOfUpdate;
+//@property (nonatomic, nullable) NSObject *activeMediaPlayerObserver;
+//@property (nonatomic, nullable) MediaPlaybackManager *mediaPlaybackManager;
+//@property (nonatomic) NSMutableDictionary *cachedRowHeights;
+//@property (nonatomic) BOOL hasDoneInitialLayout;
+//@property (nonatomic) BOOL onScreen;
+//@property (nonatomic, nullable) id<ZMConversationMessage> messageVisibleOnLoad;
+//@property (nonatomic, readwrite) ZMConversation *conversation;
+//
+//
+//- (void)removeHighlightsAndMenu;
+//- (void)setConversationHeaderView:(UIView *)headerView;
+//- (void)updateVisibleMessagesWindow;
+//
+//@end
+//
 NS_ASSUME_NONNULL_END

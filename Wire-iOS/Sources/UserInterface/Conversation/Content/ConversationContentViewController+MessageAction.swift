@@ -56,8 +56,6 @@ extension ConversationContentViewController {
     func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                view: UIView) {
-        guard let session = session else { return }
-
         switch actionId {
         case .cancel:
             session.enqueueChanges({
@@ -71,7 +69,7 @@ extension ConversationContentViewController {
             assert(message.canBeDeleted)
 
             deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: presentedViewController ?? self)
-            deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: view) { deleted in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: view) { deleted in
                 if deleted {
                     self.presentedViewController?.dismiss(animated: true)
                 }

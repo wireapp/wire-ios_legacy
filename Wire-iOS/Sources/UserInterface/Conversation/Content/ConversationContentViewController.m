@@ -17,16 +17,16 @@
 // 
 
 
-#import "ConversationContentViewController+Private.h"
-#import "ConversationContentViewController+PinchZoom.h"
-
-#import <MobileCoreServices/MobileCoreServices.h>
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-
-@import WireSyncEngine;
-
-@import AVKit;
+//#import "ConversationContentViewController+Private.h"
+//#import "ConversationContentViewController+PinchZoom.h"
+//
+//#import <MobileCoreServices/MobileCoreServices.h>
+//#import <UIKit/UIKit.h>
+//#import <Foundation/Foundation.h>
+//
+//@import WireSyncEngine;
+//
+//@import AVKit;
 
 // model
 
@@ -34,6 +34,7 @@
 
 // helpers
 
+/*
 #import "Wire-Swift.h"
 
 @interface ConversationContentViewController (ZMTypingChangeObserver) <ZMTypingChangeObserver>
@@ -270,3 +271,4 @@
 }
 
 @end
+*/

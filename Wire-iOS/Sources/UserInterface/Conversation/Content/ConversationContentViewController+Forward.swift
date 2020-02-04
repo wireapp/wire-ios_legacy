@@ -121,7 +121,7 @@ extension ZMConversationList {///TODO mv to DM
 
 extension ConversationContentViewController {
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
@@ -133,7 +133,7 @@ extension ConversationContentViewController {
         }
     }
 
-    @objc func updatePopover() {
+    func updatePopover() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenterViewController else { return }
 
         rootViewController.updatePopoverSourceRect()

@@ -20,15 +20,11 @@ import Foundation
 
 extension ConversationContentViewController {
     
-    @objc
     func setDataSource() {
         dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
     }
 
-    @objc
-    func createMentionsResultsView() {
-        mentionsSearchResultsViewController = UserSearchResultsViewController()
-        mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+    func createMentionsResultsView() {        mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         addChild(mentionsSearchResultsViewController)
         view.addSubview(mentionsSearchResultsViewController.view)
@@ -36,7 +32,7 @@ extension ConversationContentViewController {
         mentionsSearchResultsViewController.view.fitInSuperview()
     }
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 }

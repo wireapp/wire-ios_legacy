@@ -30,31 +30,31 @@
 @protocol ConversationContentViewControllerDelegate;
 @protocol ZMConversationMessage;
 
-/// The main conversation view controller
-@interface ConversationContentViewController : UIViewController
-
-NS_ASSUME_NONNULL_BEGIN
-
-@property (nonatomic, weak, nullable) id <ConversationContentViewControllerDelegate> delegate;
-@property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic) CGFloat bottomMargin;
-@property (nonatomic, readonly) BOOL isScrolledToBottom;
-@property (nonatomic, weak, nullable) ConversationMediaController *mediaController;
-@property (nonatomic, nonnull) UpsideDownTableView *tableView;
-@property (nonatomic) UIView *bottomContainer;
-@property (nonatomic) NSArray<NSString *> *searchQueries;
-@property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
-@property (nonatomic, nullable) ConversationTableViewDataSource* dataSource;
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
-
-- (void)highlightMessage:(id<ZMConversationMessage>)message;
-
-@end
-
-@interface ConversationContentViewController (EditMessages)
-
-- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
-NS_ASSUME_NONNULL_END
-
-@end
+///// The main conversation view controller
+//@interface ConversationContentViewController : UIViewController
+//
+//NS_ASSUME_NONNULL_BEGIN
+//
+//@property (nonatomic, weak, nullable) id <ConversationContentViewControllerDelegate> delegate;
+//@property (nonatomic, readonly) ZMConversation *conversation;
+//@property (nonatomic) CGFloat bottomMargin;
+//@property (nonatomic, readonly) BOOL isScrolledToBottom;
+//@property (nonatomic, weak, nullable) ConversationMediaController *mediaController;
+//@property (nonatomic, nonnull) UpsideDownTableView *tableView;
+//@property (nonatomic) UIView *bottomContainer;
+//@property (nonatomic) NSArray<NSString *> *searchQueries;
+//@property (nonatomic) UserSearchResultsViewController *mentionsSearchResultsViewController;
+//@property (nonatomic, nullable) ConversationTableViewDataSource* dataSource;
+//
+//- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_UNAVAILABLE;
+//
+//- (void)highlightMessage:(id<ZMConversationMessage>)message;
+//
+//@end
+//
+//@interface ConversationContentViewController (EditMessages)
+//
+//- (void)didFinishEditingMessage:(id<ZMConversationMessage>)message;
+//NS_ASSUME_NONNULL_END
+//
+//@end
