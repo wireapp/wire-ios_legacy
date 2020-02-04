@@ -41,7 +41,9 @@ final class ConversationContentViewController: UIViewController {
     }
 
     let mentionsSearchResultsViewController: UserSearchResultsViewController = UserSearchResultsViewController()
-    let dataSource: ConversationTableViewDataSource
+    lazy var dataSource: ConversationTableViewDataSource = {
+        return ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
+    }()
 
     /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
     private var messageWithExpandedTools: ZMConversationMessage?
@@ -69,11 +71,9 @@ final class ConversationContentViewController: UIViewController {
         self.session = session
         self.conversation = conversation
         messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
-                
-        dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
-
+        
         super.init(nibName: nil, bundle: nil)
-
+        
         self.mediaPlaybackManager = mediaPlaybackManager
         
         messagePresenter.targetViewController = self
