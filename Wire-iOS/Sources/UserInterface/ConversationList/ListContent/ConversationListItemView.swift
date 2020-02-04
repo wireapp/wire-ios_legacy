@@ -40,7 +40,7 @@ final class ConversationListItemView: UIView {
     let titleField: UILabel = UILabel()
     let avatarView: ConversationAvatarView = ConversationAvatarView()
     lazy var rightAccessory: ConversationListAccessoryView = {
-        return ConversationListAccessoryView(mediaPlaybackManager: AppDelegate.shared.mediaPlaybackManager!)
+        return ConversationListAccessoryView(mediaPlaybackManager: AppDelegate.shared.mediaPlaybackManager)
     }()
 
     var selected = false {
@@ -51,7 +51,7 @@ final class ConversationListItemView: UIView {
 
     var visualDrawerOffset: CGFloat = 0 {
         didSet {
-                setVisualDrawerOffset(visualDrawerOffset, notify: true)
+            setVisualDrawerOffset(visualDrawerOffset, notify: true)
         }
     }
 
@@ -157,12 +157,12 @@ final class ConversationListItemView: UIView {
 
     // MARK: - Observer
     @objc
-    func contentSizeCategoryDidChange(_ notification: Notification?) {
+    private func contentSizeCategoryDidChange(_ notification: Notification?) {
         configureFont()
     }
 
     @objc
-    func otherConversationListItemDidScroll(_ notification: Notification?) {
+    private func otherConversationListItemDidScroll(_ notification: Notification?) {
         guard notification?.object as? ConversationListItemView != self,
               let otherItem = notification?.object as? ConversationListItemView else {
             return
