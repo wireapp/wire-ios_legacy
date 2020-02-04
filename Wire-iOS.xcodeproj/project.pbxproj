@@ -1097,7 +1097,6 @@
 		EF21270F1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CF1FB9DFE300625A9B /* CountryCodeBaseTableViewController.m */; };
 		EF2127281FB9E06300625A9B /* LandingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2127271FB9E06300625A9B /* LandingViewController.swift */; };
 		EF2128EE2056D55400C1673B /* NetworkStatusViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */; };
-		EF215ADF2315575200A5C5E9 /* ConversationContentViewController+MediaPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF215ADE2315575200A5C5E9 /* ConversationContentViewController+MediaPlayer.swift */; };
 		EF2172EA21DF982400DA1671 /* URL+EncodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */; };
 		EF218AC520A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */; };
 		EF218AC720A9DDEF004977BF /* ZClientViewController+DataUsagePermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF218AC620A9DDEF004977BF /* ZClientViewController+DataUsagePermissions.swift */; };
@@ -2845,7 +2844,6 @@
 		EF2127271FB9E06300625A9B /* LandingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingViewController.swift; sourceTree = "<group>"; };
 		EF2128EC2056D51600C1673B /* NetworkStatusViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatusViewControllerTests.swift; sourceTree = "<group>"; };
 		EF2147DF219EE04000494FDE /* ZMSnapshotTestCase+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ZMSnapshotTestCase+Internal.h"; sourceTree = "<group>"; };
-		EF215ADE2315575200A5C5E9 /* ConversationContentViewController+MediaPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationContentViewController+MediaPlayer.swift"; sourceTree = "<group>"; };
 		EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+EncodeTests.swift"; sourceTree = "<group>"; };
 		EF218AC420A9C123004977BF /* SettingsCellDescriptorFactory+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsCellDescriptorFactory+DataUsagePermissions.swift"; sourceTree = "<group>"; };
 		EF218AC620A9DDEF004977BF /* ZClientViewController+DataUsagePermissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+DataUsagePermissions.swift"; sourceTree = "<group>"; };
@@ -5381,7 +5379,6 @@
 				A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */,
 				A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */,
 				A9076C8123B1047E004FD3C9 /* ConversationContentViewController+Header.swift */,
-				EF215ADE2315575200A5C5E9 /* ConversationContentViewController+MediaPlayer.swift */,
 				EFA06E4621FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift */,
 				EF80461D20CA8B67001A1C53 /* ConversationContentViewController+TableHeader.swift */,
 				EF15A7AF20BC08C000A045C7 /* ConversationContentViewController+SaveImage.swift */,
@@ -7839,7 +7836,6 @@
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
-				EF215ADF2315575200A5C5E9 /* ConversationContentViewController+MediaPlayer.swift in Sources */,
 				5EF4A6E420F3C4BD00A9EF22 /* GiphyNavigationController.swift in Sources */,
 				1633875B1F065A960015034C /* SessionManager+Shared.swift in Sources */,
 				BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */,

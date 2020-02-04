@@ -272,7 +272,7 @@ final class ConversationContentViewController: UIViewController {
     }
 
     private func updateVisibleMessagesWindow() {
-        if UIApplication.shared.applicationState != .active {
+        guard UIApplication.shared.applicationState == .active else {
             return // We only update the last read if the app is active
         }
 
@@ -282,11 +282,11 @@ final class ConversationContentViewController: UIViewController {
               window.convert(view.bounds, from: view).intersects(window.bounds) else {
             return
         }
-        
+
         guard !view.isHidden, view.alpha != 0 else {
                 return
         }
-        
+
         //  Workaround to fix incorrect first/last cells in conversation
         //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
         _ = tableView.visibleCells
@@ -311,6 +311,40 @@ final class ConversationContentViewController: UIViewController {
     func didFinishEditing(_ message: ZMConversationMessage?) {
         dataSource.editingMessage = nil
     }
+
+    // MARK: - MediaPlayer
+
+    private func updateMediaBar() {
+        let mediaPlayingMessage = AppDelegate.shared.mediaPlaybackManager?.activeMediaPlayer?.sourceMessage
+
+        if let mediaPlayingMessage = mediaPlayingMessage,
+            mediaPlayingMessage.conversation == conversation,
+            !displaysMessage(mediaPlayingMessage),
+            !mediaPlayingMessage.isVideo {
+            DispatchQueue.main.async(execute: {
+                self.delegate?.conversationContentViewController(self, didEndDisplayingActiveMediaPlayerFor: mediaPlayingMessage)
+            })
+        } else {
+            DispatchQueue.main.async(execute: {
+                self.delegate?.conversationContentViewController(self, willDisplayActiveMediaPlayerFor: mediaPlayingMessage)
+            })
+        }
+    }
+
+    private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
+        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
+
+        let index = dataSource.indexOfMessage(message)
+
+        for indexPath in indexPathsForVisibleRows {
+            if indexPath.section == index {
+                return true
+            }
+        }
+
+        return false
+    }
+
 }
 
 // MARK: - TableView
