@@ -30,7 +30,7 @@ final class ConversationContentViewController: UIViewController {
     }
 
     let tableView: UpsideDownTableView = UpsideDownTableView(frame: .zero, style: .plain)
-    var bottomContainer: UIView = UIView(frame: .zero)
+    let bottomContainer: UIView = UIView(frame: .zero)
     var searchQueries: [String]? {
         didSet {
             guard let searchQueries = searchQueries,
@@ -45,20 +45,14 @@ final class ConversationContentViewController: UIViewController {
         return ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
     }()
 
-    /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
-    private var messageWithExpandedTools: ZMConversationMessage?
     let messagePresenter: MessagePresenter
-    private weak var expectedMessageToShow: ZMConversationMessage?
-    private var onMessageShown: ((UIView?) -> Void)?
-    private weak var pinchImageCell: (UITableViewCell & SelectableView)?
-    private var initialPinchLocation = CGPoint.zero
     var deletionDialogPresenter: DeletionDialogPresenter?
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
-    private var wasScrolledToBottomAtStartOfUpdate = false
+    
     private var activeMediaPlayerObserver: NSKeyValueObservation?
     private var mediaPlaybackManager: MediaPlaybackManager?
-    private var cachedRowHeights: [AnyHashable: Any] = [:]
+    private var cachedRowHeights: [IndexPath: CGFloat] = [:]
     private var hasDoneInitialLayout = false
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
@@ -353,17 +347,17 @@ extension ConversationContentViewController: UITableViewDelegate {
             self.updateVisibleMessagesWindow()
         })
 
-        cachedRowHeights[indexPath] = NSNumber(value: Float(cell.frame.size.height))
+        cachedRowHeights[indexPath] = cell.frame.size.height
     }
 
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.didEndDisplayingCell()
 
-        cachedRowHeights[indexPath] = NSNumber(value: Float(cell.frame.size.height))
+        cachedRowHeights[indexPath] = cell.frame.size.height
     }
 
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return cachedRowHeights[indexPath] as? CGFloat ?? UITableView.automaticDimension
+        return cachedRowHeights[indexPath] ?? UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
