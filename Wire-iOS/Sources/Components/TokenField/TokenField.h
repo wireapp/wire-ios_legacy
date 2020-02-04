@@ -27,19 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class TextView;
 @class IconButton;
 
-
-@protocol TokenFieldDelegate <NSObject>
-
-@optional
-- (void)tokenField:(TokenField *)tokenField changedTokensTo:(NSArray <Token *> *)tokens;
-- (void)tokenField:(TokenField *)tokenField changedFilterTextTo:(NSString *)text;
-- (void)tokenFieldDidBeginEditing:(TokenField *)tokenField;
-- (void)tokenFieldWillScroll:(TokenField *)tokenField;
-- (void)tokenFieldDidConfirmSelection:(TokenField *)controller;
-- (NSString *)tokenFieldStringForCollapsedState:(TokenField *)tokenField;
-
-@end
-
+@protocol TokenFieldDelegate;
 
 @interface TokenField : UIView
 

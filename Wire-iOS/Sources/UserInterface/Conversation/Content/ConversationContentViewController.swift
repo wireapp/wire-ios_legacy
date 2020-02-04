@@ -64,4 +64,35 @@ extension ConversationContentViewController {
     open override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
+
+    @objc(willSelectRowAtIndexPath:tableView:)
+    func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
+        guard dataSource?.messages.indices.contains(indexPath.section) == true else { return nil }
+
+        // If the menu is visible, hide it and do nothing
+        if UIMenuController.shared.isMenuVisible {
+            UIMenuController.shared.setMenuVisible(false, animated: true)
+            return nil
+        }
+
+        let message = dataSource?.messages[indexPath.section] as? ZMMessage
+
+        if message == dataSource?.selectedMessage {
+
+            // If this cell is already selected, deselect it.
+            dataSource?.selectedMessage = nil
+            dataSource?.deselect(indexPath: indexPath)
+            tableView.deselectRow(at: indexPath, animated: true)
+
+            return nil
+        } else {
+            if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+                dataSource?.deselect(indexPath: indexPathForSelectedRow)
+            }
+            dataSource?.selectedMessage = message
+            dataSource?.select(indexPath: indexPath)
+
+            return indexPath
+        }
+    }
 }

@@ -1,6 +1,6 @@
-
+//
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,15 +18,9 @@
 
 import Foundation
 
-extension ConversationListContentController {
-
-    @objc
-    func activeMediaPlayerChanged(_ change: NSDictionary) {
-        DispatchQueue.main.async(execute: {
-            for cell in self.collectionView.visibleCells {
-                (cell as? ConversationListCell)?.updateAppearance()
-            }
-        })
-    }
-
+@objc
+protocol TokenFieldDelegate: NSObjectProtocol {
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token])
+    func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String)
+    func tokenFieldDidConfirmSelection(_ controller: TokenField)
 }

@@ -610,9 +610,7 @@ CGFloat const accessoryButtonSize = 32.0f;
 - (NSAttributedString *)collapsedString
 {
     NSString *collapsedText = NSLocalizedString(@" ...", nil);
-    if ([self.delegate respondsToSelector:@selector(tokenFieldStringForCollapsedState:)]) {
-        collapsedText = [self.delegate tokenFieldStringForCollapsedState:self];
-    }
+
     return [[NSAttributedString alloc] initWithString:collapsedText attributes:self.textAttributes];
 }
 
@@ -873,13 +871,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
-    if ([self.delegate respondsToSelector:@selector(tokenFieldDidBeginEditing:)]) {
-        [self.delegate tokenFieldDidBeginEditing:self];
-    }
-}
-
 NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 {
     return NSEqualRanges(range, NSUnionRange(range, includedRange));
@@ -915,13 +906,6 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
 }
 
 #pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    if ([self.delegate respondsToSelector:@selector(tokenFieldWillScroll:)]) {
-        [self.delegate tokenFieldWillScroll:self];
-    }
-}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
