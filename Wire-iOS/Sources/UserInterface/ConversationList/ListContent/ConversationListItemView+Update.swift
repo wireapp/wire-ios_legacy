@@ -25,7 +25,6 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
     }
 
-
     /// configure without a conversation, i.e. when displaying a pending user
     ///
     /// - Parameters:
@@ -37,14 +36,14 @@ extension ConversationListItemView {
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection
         avatarView.configure(context: .connect(users: users))
-        
+
         labelsStack.accessibilityLabel = title?.string
     }
-    
+
     @objc(updateForConversation:)
     func update(for conversation: ZMConversation?) {
         self.conversation = conversation
-        
+
         guard let conversation = conversation else {
             self.configure(with: nil, subtitle: nil)
             return
@@ -85,8 +84,7 @@ extension ConversationListItemView {
             let message = player.sourceMessage,
             message.conversation == conversation {
             statusIcon = .playingMedia
-        }
-        else {
+        } else {
             statusIcon = status.icon(for: conversation)
         }
         self.rightAccessory.icon = statusIcon
