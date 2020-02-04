@@ -16,13 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 import SafariServices
 
-
 private var lastPreviewURL: URL?
-
 
 extension ConversationContentViewController: UIViewControllerPreviewingDelegate {
 
@@ -34,7 +31,7 @@ extension ConversationContentViewController: UIViewControllerPreviewingDelegate 
               let cell = tableView.cellForRow(at: cellIndexPath) as? SelectableView & UIView else {
             return .none
         }
-        
+
         let message = dataSource.messages[cellIndexPath.section]
         guard !message.isObfuscated else {
             return nil

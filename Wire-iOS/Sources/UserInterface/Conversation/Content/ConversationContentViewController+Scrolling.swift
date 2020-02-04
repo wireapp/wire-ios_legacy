@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationContentViewController {
 
-    func scroll(to message: ZMConversationMessage?, completion: ((UIView)->Void)? = .none) {
+    func scroll(to message: ZMConversationMessage?, completion: ((UIView) -> Void)? = .none) {
         if let message = message {
 
             if message.hasBeenDeleted {

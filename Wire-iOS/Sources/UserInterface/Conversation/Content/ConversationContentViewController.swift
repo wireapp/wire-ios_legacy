@@ -71,15 +71,15 @@ final class ConversationContentViewController: UIViewController {
         self.session = session
         self.conversation = conversation
         messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         self.mediaPlaybackManager = mediaPlaybackManager
-        
+
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -131,7 +131,7 @@ final class ConversationContentViewController: UIViewController {
             tableView.backgroundColor = UIColor.from(scheme: .contentBackground)
             view.backgroundColor = UIColor.from(scheme: .contentBackground)
 
-        createMentionsResultsView()
+        setupMentionsResultsView()
 
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
@@ -182,6 +182,19 @@ final class ConversationContentViewController: UIViewController {
 
         scrollToFirstUnreadMessageIfNeeded()
         updatePopover()
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
+    func setupMentionsResultsView() {
+        mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
+        addChild(mentionsSearchResultsViewController)
+        view.addSubview(mentionsSearchResultsViewController.view)
+
+        mentionsSearchResultsViewController.view.fitInSuperview()
     }
 
     func scrollToFirstUnreadMessageIfNeeded() {

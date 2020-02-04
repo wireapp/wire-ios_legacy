@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
-    
+
     var sut: ConversationContentViewController!
     var mockConversation: ZMConversation!
     var mockZMUserSession: MockZMUserSession!
@@ -37,16 +37,14 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         mockMessage.deliveryState = .read
         mockMessage.needsReadConfirmation = true
 
-
         mockZMUserSession = MockZMUserSession()
-        
 
         sut = ConversationContentViewController(conversation: mockConversation, mediaPlaybackManager: nil, session: mockZMUserSession)
 
         ///Call the setup codes in viewDidLoad
         sut.loadViewIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         mockConversation = nil
@@ -56,10 +54,10 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         super.tearDown()
     }
 
-    func testThatDeletionDialogIsCreated(){
+    func testThatDeletionDialogIsCreated() {
         // Notice: view arguemnt is used for iPad idiom. We should think about test it with iPad simulator that the alert shows in a popover which points to the view.
         let view = UIView()
 
-        verifyAlertController((sut.deletionDialogPresenter?.deleteAlert(message: mockMessage, sourceView: view))!)
+        verifyAlertController(sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
     }
 }
