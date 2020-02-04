@@ -19,7 +19,7 @@
 import Foundation
 
 extension ConversationContentViewController {
-    
+
     func setDataSource() {
         dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
     }
@@ -36,5 +36,3 @@ extension ConversationContentViewController {
         return wr_supportedInterfaceOrientations
     }
 }
-
-

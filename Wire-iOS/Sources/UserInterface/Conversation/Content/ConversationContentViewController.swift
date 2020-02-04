@@ -28,21 +28,21 @@ final class ConversationContentViewController: UIViewController {
             setTableViewBottomMargin(bottomMargin)
         }
     }
-    
+
     let tableView: UpsideDownTableView = UpsideDownTableView(frame: .zero, style: .plain)
     var bottomContainer: UIView = UIView(frame: .zero)
     var searchQueries: [String]? {
         didSet {
             guard let searchQueries = searchQueries,
                 !searchQueries.isEmpty else { return }
-            
+
             dataSource?.searchQueries = searchQueries
         }
     }
-    
+
     let mentionsSearchResultsViewController: UserSearchResultsViewController = UserSearchResultsViewController()
     var dataSource: ConversationTableViewDataSource?
-    
+
     /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
     private var messageWithExpandedTools: ZMConversationMessage?
     let messagePresenter: MessagePresenter
@@ -56,11 +56,11 @@ final class ConversationContentViewController: UIViewController {
     private var wasScrolledToBottomAtStartOfUpdate = false
     private var activeMediaPlayerObserver: NSObject?
     private var mediaPlaybackManager: MediaPlaybackManager?
-    private var cachedRowHeights: [AnyHashable : Any] = [:]
+    private var cachedRowHeights: [AnyHashable: Any] = [:]
     private var hasDoneInitialLayout = false
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -70,19 +70,19 @@ final class ConversationContentViewController: UIViewController {
         // Observer must be deallocated before `mediaPlaybackManager`
         activeMediaPlayerObserver = nil
         mediaPlaybackManager = nil
-        
+
             tableView.delegate = nil
             tableView.dataSource = nil
     }
-    
+
     override func loadView() {
         super.loadView()
-        
+
         view.addSubview(tableView)
-        
+
         bottomContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bottomContainer)
-        
+
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -96,8 +96,6 @@ final class ConversationContentViewController: UIViewController {
         heightCollapsingConstraint.priority = .defaultHigh
         heightCollapsingConstraint.isActive = true
     }
-    
-
 
     init(conversation: ZMConversation,
                      message: ZMConversationMessage? = nil,
@@ -118,7 +116,7 @@ final class ConversationContentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setDataSource()
         tableView.estimatedRowHeight = 80
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -128,28 +126,28 @@ final class ConversationContentViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delaysContentTouches = false
         tableView.keyboardDismissMode = AutomationHelper.sharedHelper.disableInteractiveKeyboardDismissal ? .none : .interactive
-        
+
             tableView.backgroundColor = UIColor.from(scheme: .contentBackground)
             view.backgroundColor = UIColor.from(scheme: .contentBackground)
-        
+
         createMentionsResultsView()
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
-    
+
     @objc private func applicationDidBecomeActive(_ notification: Notification) {
         dataSource?.resetSectionControllers()
         tableView.reloadData()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateVisibleMessagesWindow()
-        
+
         if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: view)
         }
-        
+
         UIAccessibility.post(notification: .screenChanged, argument: nil)
         setNeedsStatusBarAppearanceUpdate()
     }
@@ -171,45 +169,45 @@ final class ConversationContentViewController: UIViewController {
 
         setNeedsStatusBarAppearanceUpdate()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         onScreen = false
         removeHighlightsAndMenu()
         super.viewWillDisappear(animated)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+
         scrollToFirstUnreadMessageIfNeeded()
         updatePopover()
     }
-    
+
     func scrollToFirstUnreadMessageIfNeeded() {
         if !hasDoneInitialLayout {
             hasDoneInitialLayout = true
             scroll(to: messageVisibleOnLoad)
         }
     }
-    
+
     override var shouldAutorotate: Bool {
         return true
     }
-    
+
     override func didReceiveMemoryWarning() {
         zmLog.warn("Received system memory warning.")
         super.didReceiveMemoryWarning()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-    
+
     func setConversationHeaderView(_ headerView: UIView) {
         headerView.frame = headerViewFrame(view: headerView)
         tableView.tableHeaderView = headerView
     }
-    
+
     @discardableResult
     func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
         guard dataSource?.messages.indices.contains(indexPath.section) == true else { return nil }
@@ -240,31 +238,30 @@ final class ConversationContentViewController: UIViewController {
             return indexPath
         }
     }
-    
+
     // MARK: - Get/set
 
-    
     func setTableViewBottomMargin(_ bottomMargin: CGFloat) {
         var insets = tableView.correctedContentInset
         insets.bottom = bottomMargin
         tableView.correctedContentInset = insets
         tableView.contentOffset = CGPoint(x: tableView.contentOffset.x, y: -bottomMargin)
     }
-    
+
     var isScrolledToBottom: Bool {
         return dataSource?.hasNewerMessagesToLoad == nil && tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
     }
-    
+
     // MARK: - Actions
     func highlight(_ message: ZMConversationMessage) {
         dataSource?.highlight(message: message)
     }
-    
+
     private func updateVisibleMessagesWindow() {
         if UIApplication.shared.applicationState != .active {
             return // We only update the last read if the app is active
         }
-        
+
         var isViewVisible = true
         if view.window == nil {
             isViewVisible = false
@@ -278,31 +275,30 @@ final class ConversationContentViewController: UIViewController {
                 isViewVisible = false
             }
         }
-        
+
         // We should not update last read if the view is not visible to the user
         if !isViewVisible {
             return
         }
-        
+
         //  Workaround to fix incorrect first/last cells in conversation
         //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
-        let _ = tableView.visibleCells
-        
+        _ = tableView.visibleCells
+
         let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows
-        
-        
+
         if let firstIndexPath = indexPathsForVisibleRows?.first,
            let lastVisibleMessage = dataSource?.messages[firstIndexPath.section] {
-            
+
             conversation.markMessagesAsRead(until: lastVisibleMessage)
         }
-        
+
         /// update media bar visiblity
         updateMediaBar()
     }
-    
+
     // MARK: - Custom UI, utilities
-    
+
     func removeHighlightsAndMenu() {
         UIMenuController.shared.setMenuVisible(false, animated: true)
     }

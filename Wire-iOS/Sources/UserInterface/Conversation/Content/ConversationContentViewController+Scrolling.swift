@@ -19,8 +19,8 @@
 import Foundation
 
 extension ConversationContentViewController {
-    
-    func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
+
+    func scroll(to message: ZMConversationMessage?, completion: ((UIView)->Void)? = .none) {
         if let message = message {
 
             if message.hasBeenDeleted {
@@ -46,16 +46,16 @@ extension ConversationContentViewController {
         } else {
             dataSource?.loadMessages()
         }
-        
+
         updateTableViewHeaderView()
     }
-    
-    @objc public func scrollToBottom() {
+
+    func scrollToBottom() {
         guard !isScrolledToBottom else { return }
-        
+
         dataSource?.loadMessages()
         tableView.scroll(toIndex: 0)
-        
+
         updateTableViewHeaderView()
     }
 }

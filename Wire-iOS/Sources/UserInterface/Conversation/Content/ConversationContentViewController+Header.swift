@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -28,21 +27,21 @@ extension ConversationContentViewController {
         }
 
         var headerView: UIView? = nil
-        
+
         let otherParticipant: ZMUser?
         if conversation.conversationType == .connection {
             otherParticipant = conversation.firstActiveParticipantOtherThanSelf ?? conversation.connectedUser
         } else {
             otherParticipant = conversation.firstActiveParticipantOtherThanSelf
         }
-        
+
         let connectionOrOneOnOne = conversation.conversationType == .connection || conversation.conversationType == .oneOnOne
-        
+
         if connectionOrOneOnOne, let otherParticipant = otherParticipant {
             connectionViewController = UserConnectionViewController(userSession: userSession, user: otherParticipant)
             headerView = connectionViewController?.view
         }
-        
+
         if let headerView = headerView {
             headerView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
             setConversationHeaderView(headerView)

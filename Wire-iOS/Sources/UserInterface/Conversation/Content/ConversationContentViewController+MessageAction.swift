@@ -52,7 +52,6 @@ extension ConversationContentViewController {
         present(canvasViewController.wrapInNavigationController(), animated: true)
     }
 
-
     func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                view: UIView) {

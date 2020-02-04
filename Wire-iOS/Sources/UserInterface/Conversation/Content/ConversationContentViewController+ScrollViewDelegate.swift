@@ -19,16 +19,16 @@
 import Foundation
 
 extension ConversationContentViewController: UIScrollViewDelegate {
-    
+
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         removeHighlightsAndMenu()
     }
-    
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         dataSource?.didScroll(tableView: scrollView as! UITableView)
     }
-    
-    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         dataSource?.scrollViewDidEndDecelerating(scrollView)
     }
 }

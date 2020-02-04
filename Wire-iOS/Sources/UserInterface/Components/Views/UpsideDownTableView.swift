@@ -64,7 +64,7 @@ final class UpsideDownTableView: UITableView {
     }
 
     var lockContentOffset: Bool = false
-    
+
     override var contentOffset: CGPoint {
         get {
             return super.contentOffset
@@ -123,7 +123,7 @@ final class UpsideDownTableView: UITableView {
 
     override func dequeueReusableCell(withIdentifier identifier: String, for indexPath: IndexPath) -> UITableViewCell {
         let cell = super.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
-        
+
         cell.transform = CGAffineTransform(scaleX: 1, y: -1)
 
         return cell
