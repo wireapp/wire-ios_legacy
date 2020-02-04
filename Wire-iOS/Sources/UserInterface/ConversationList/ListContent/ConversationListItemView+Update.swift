@@ -40,7 +40,6 @@ extension ConversationListItemView {
         labelsStack.accessibilityLabel = title?.string
     }
 
-    @objc(updateForConversation:)
     func update(for conversation: ZMConversation?) {
         self.conversation = conversation
 

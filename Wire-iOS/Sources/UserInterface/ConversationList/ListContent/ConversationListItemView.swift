@@ -51,7 +51,9 @@ final class ConversationListItemView: UIView {
 
     var visualDrawerOffset: CGFloat = 0 {
         didSet {
-            setVisualDrawerOffset(visualDrawerOffset, notify: true)
+            guard oldValue != visualDrawerOffset else { return }
+
+            NotificationCenter.default.post(name: .conversationListItemDidScroll, object: self)
         }
     }
 
@@ -141,14 +143,8 @@ final class ConversationListItemView: UIView {
         labelsStack.addArrangedSubview(subtitleField)
     }
 
-    func configureFont() {
-        self.titleField.font = FontSpec(.normal, .light).font!
-    }
-
-    func setVisualDrawerOffset(_ visualDrawerOffset: CGFloat, notify: Bool) {
-        if notify && self.visualDrawerOffset != visualDrawerOffset {
-            NotificationCenter.default.post(name: .conversationListItemDidScroll, object: self)
-        }
+    private func configureFont() {
+        titleField.font = FontSpec(.normal, .light).font!
     }
 
     func updateAppearance() {
