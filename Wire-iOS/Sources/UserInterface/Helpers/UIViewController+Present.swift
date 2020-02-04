@@ -28,9 +28,4 @@ extension UIViewController {
                         completion: (() -> Void)? = nil) {
         UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(self, animated: flag, completion: completion)
     }
-
-    @objc
-    func presentInNotificationsWindow() {
-        AppDelegate.shared.notificationsWindow?.rootViewController?.present(self, animated: true)
-    }
 }
