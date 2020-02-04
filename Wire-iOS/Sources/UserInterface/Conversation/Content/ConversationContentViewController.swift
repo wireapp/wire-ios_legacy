@@ -276,25 +276,17 @@ final class ConversationContentViewController: UIViewController {
             return // We only update the last read if the app is active
         }
 
-        var isViewVisible = true
-        if view.window == nil {
-            isViewVisible = false
-        } else if view.isHidden {
-            isViewVisible = false
-        } else if view.alpha == 0 {
-            isViewVisible = false
-        } else if let window = view.window {
-            let viewFrameInWindow = window.convert(view.bounds, from: view)
-            if !viewFrameInWindow.intersects(window.bounds) {
-                isViewVisible = false
-            }
-        }
-
         // We should not update last read if the view is not visible to the user
-        if !isViewVisible {
+
+        guard let window = view.window,
+              window.convert(view.bounds, from: view).intersects(window.bounds) else {
             return
         }
-
+        
+        guard !view.isHidden, view.alpha != 0 else {
+                return
+        }
+        
         //  Workaround to fix incorrect first/last cells in conversation
         //  As described in http://stackoverflow.com/questions/4099188/uitableviews-indexpathsforvisiblerows-incorrect
         _ = tableView.visibleCells
