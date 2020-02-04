@@ -56,7 +56,7 @@ final class ConversationContentViewController: UIViewController {
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
     private var wasScrolledToBottomAtStartOfUpdate = false
-    private var activeMediaPlayerObserver: NSObject?
+    private var activeMediaPlayerObserver: NSKeyValueObservation?
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [AnyHashable: Any] = [:]
     private var hasDoneInitialLayout = false
@@ -83,15 +83,6 @@ final class ConversationContentViewController: UIViewController {
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        // Observer must be deallocated before `mediaPlaybackManager`
-        activeMediaPlayerObserver = nil
-        mediaPlaybackManager = nil
-
-            tableView.delegate = nil
-            tableView.dataSource = nil
     }
 
     override func loadView() {
