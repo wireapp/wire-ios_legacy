@@ -20,10 +20,6 @@ import Foundation
 
 extension ConversationContentViewController {
 
-    func setDataSource() {
-        dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
-    }
-
     func createMentionsResultsView() {        mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
 
         addChild(mentionsSearchResultsViewController)

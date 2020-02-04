@@ -36,12 +36,12 @@ final class ConversationContentViewController: UIViewController {
             guard let searchQueries = searchQueries,
                 !searchQueries.isEmpty else { return }
 
-            dataSource?.searchQueries = searchQueries
+            dataSource.searchQueries = searchQueries
         }
     }
 
     let mentionsSearchResultsViewController: UserSearchResultsViewController = UserSearchResultsViewController()
-    var dataSource: ConversationTableViewDataSource?
+    let dataSource: ConversationTableViewDataSource
 
     /// The cell whose tools are expanded in the UI. Setting this automatically triggers the expanding in the UI.
     private var messageWithExpandedTools: ZMConversationMessage?
@@ -61,6 +61,25 @@ final class ConversationContentViewController: UIViewController {
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
 
+    init(conversation: ZMConversation,
+         message: ZMConversationMessage? = nil,
+         mediaPlaybackManager: MediaPlaybackManager?,
+         session: ZMUserSessionInterface) {
+        messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
+        self.session = session
+        self.conversation = conversation
+        messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
+                
+        dataSource = ConversationTableViewDataSource(conversation: conversation, tableView: tableView, actionResponder: self, cellDelegate: self)
+
+        super.init(nibName: nil, bundle: nil)
+
+        self.mediaPlaybackManager = mediaPlaybackManager
+        
+        messagePresenter.targetViewController = self
+        messagePresenter.modalTargetController = parent
+    }
+    
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -97,27 +116,9 @@ final class ConversationContentViewController: UIViewController {
         heightCollapsingConstraint.isActive = true
     }
 
-    init(conversation: ZMConversation,
-                     message: ZMConversationMessage? = nil,
-                     mediaPlaybackManager: MediaPlaybackManager?,
-                     session: ZMUserSessionInterface) {
-        messagePresenter = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
-        self.session = session
-        self.conversation = conversation
-        messageVisibleOnLoad = message ?? conversation.firstUnreadMessage
-
-        super.init(nibName: nil, bundle: nil)
-
-        self.mediaPlaybackManager = mediaPlaybackManager
-
-        messagePresenter.targetViewController = self
-        messagePresenter.modalTargetController = parent
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setDataSource()
         tableView.estimatedRowHeight = 80
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = true
@@ -136,7 +137,7 @@ final class ConversationContentViewController: UIViewController {
     }
 
     @objc private func applicationDidBecomeActive(_ notification: Notification) {
-        dataSource?.resetSectionControllers()
+        dataSource.resetSectionControllers()
         tableView.reloadData()
     }
 
@@ -210,7 +211,7 @@ final class ConversationContentViewController: UIViewController {
 
     @discardableResult
     func willSelectRow(at indexPath: IndexPath, tableView: UITableView) -> IndexPath? {
-        guard dataSource?.messages.indices.contains(indexPath.section) == true else { return nil }
+        guard dataSource.messages.indices.contains(indexPath.section) == true else { return nil }
 
         // If the menu is visible, hide it and do nothing
         if UIMenuController.shared.isMenuVisible {
@@ -218,22 +219,22 @@ final class ConversationContentViewController: UIViewController {
             return nil
         }
 
-        let message = dataSource?.messages[indexPath.section] as? ZMMessage
+        let message = dataSource.messages[indexPath.section] as? ZMMessage
 
-        if message == dataSource?.selectedMessage {
+        if message == dataSource.selectedMessage {
 
             // If this cell is already selected, deselect it.
-            dataSource?.selectedMessage = nil
-            dataSource?.deselect(indexPath: indexPath)
+            dataSource.selectedMessage = nil
+            dataSource.deselect(indexPath: indexPath)
             tableView.deselectRow(at: indexPath, animated: true)
 
             return nil
         } else {
             if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-                dataSource?.deselect(indexPath: indexPathForSelectedRow)
+                dataSource.deselect(indexPath: indexPathForSelectedRow)
             }
-            dataSource?.selectedMessage = message
-            dataSource?.select(indexPath: indexPath)
+            dataSource.selectedMessage = message
+            dataSource.select(indexPath: indexPath)
 
             return indexPath
         }
@@ -249,12 +250,12 @@ final class ConversationContentViewController: UIViewController {
     }
 
     var isScrolledToBottom: Bool {
-        return dataSource?.hasNewerMessagesToLoad == nil && tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
+        return dataSource.hasNewerMessagesToLoad == nil && tableView.contentOffset.y + tableView.correctedContentInset.bottom <= 0
     }
 
     // MARK: - Actions
     func highlight(_ message: ZMConversationMessage) {
-        dataSource?.highlight(message: message)
+        dataSource.highlight(message: message)
     }
 
     private func updateVisibleMessagesWindow() {
@@ -287,9 +288,8 @@ final class ConversationContentViewController: UIViewController {
 
         let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows
 
-        if let firstIndexPath = indexPathsForVisibleRows?.first,
-           let lastVisibleMessage = dataSource?.messages[firstIndexPath.section] {
-
+        if let firstIndexPath = indexPathsForVisibleRows?.first {
+                let lastVisibleMessage = dataSource.messages[firstIndexPath.section]
             conversation.markMessagesAsRead(until: lastVisibleMessage)
         }
 
@@ -304,7 +304,7 @@ final class ConversationContentViewController: UIViewController {
     }
 
     func didFinishEditing(_ message: ZMConversationMessage?) {
-        dataSource?.editingMessage = nil
+        dataSource.editingMessage = nil
     }
 }
 

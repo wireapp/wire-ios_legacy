@@ -40,7 +40,7 @@ extension ConversationContentViewController {
     private func displaysMessage(_ message: ZMConversationMessage) -> Bool {
         guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
 
-        let index = dataSource?.indexOfMessage(message)
+        let index = dataSource.indexOfMessage(message)
 
         for indexPath in indexPathsForVisibleRows {
             if indexPath.section == index {

@@ -89,7 +89,7 @@ extension ZMMessage: Shareable {
         forward(self, to: to as [AnyObject])
     }
 
-    public typealias I = ZMConversation
+    typealias I = ZMConversation
 
 }
 

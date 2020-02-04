@@ -18,8 +18,7 @@
 
 import Foundation
 
-@objc
-protocol ConversationContentViewControllerDelegate : NSObjectProtocol {
+protocol ConversationContentViewControllerDelegate : class {
     
     
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, willDisplayActiveMediaPlayerFor message: ZMConversationMessage?)

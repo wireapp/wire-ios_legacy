@@ -25,10 +25,10 @@ extension ConversationContentViewController: UIScrollViewDelegate {
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dataSource?.didScroll(tableView: scrollView as! UITableView)
+        dataSource.didScroll(tableView: scrollView as! UITableView)
     }
 
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        dataSource?.scrollViewDidEndDecelerating(scrollView)
+        dataSource.scrollViewDidEndDecelerating(scrollView)
     }
 }
