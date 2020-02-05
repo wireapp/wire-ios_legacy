@@ -18,8 +18,6 @@
 
 import Foundation
 
-//let CountryCodeCellIdentifier = "CountryCodeCellIdentifier"
-
 extension CountryCodeBaseTableViewController {
     
     override open func viewDidLoad() {

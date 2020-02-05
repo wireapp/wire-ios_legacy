@@ -19,6 +19,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class CountryCodeResultsTableViewController;
+
 #import "CountryCodeBaseTableViewController.h"
 
 
@@ -34,6 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CountryCodeTableViewController : CountryCodeBaseTableViewController
 
 @property (nonatomic, weak, nullable) id<CountryCodeTableViewControllerDelegate> delegate;
+
+@end
+
+@interface CountryCodeTableViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+
+@property (nonatomic) NSArray *sections;
+@property (nonatomic) NSArray *sectionTitles;
+
+@property (nonatomic) UISearchController *searchController;
+@property (nonatomic) CountryCodeResultsTableViewController *resultsTableViewController;
 
 @end
 

@@ -21,17 +21,6 @@
 
 #import "Wire-Swift.h"
 
-
-@interface CountryCodeTableViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
-
-@property (nonatomic) NSArray *sections;
-@property (nonatomic) NSArray *sectionTitles;
-
-@property (nonatomic) UISearchController *searchController;
-@property (nonatomic) CountryCodeResultsTableViewController *resultsTableViewController;
-
-@end
-
 @implementation CountryCodeTableViewController
 
 - (void)viewDidLoad
@@ -62,39 +51,6 @@
     
     self.definesPresentationContext = YES;
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
-}
-
-///TODO: swift
-- (void)createDataSource
-{
-    NSArray *countries = [Country allCountries];
-    
-    SEL selector = @selector(displayName);
-    NSInteger sectionTitlesCount = [[[UILocalizedIndexedCollation currentCollation] sectionTitles] count];
-    
-    
-    NSMutableArray *mutableSections = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
-    for  (NSInteger idx = 0; idx < sectionTitlesCount; idx++) {
-        [mutableSections addObject:[NSMutableArray array]];
-    }
-    
-    for (Country *country in countries) {
-        NSInteger sectionNumber = [[UILocalizedIndexedCollation currentCollation] sectionForObject:country collationStringSelector:selector];
-       [[mutableSections objectAtIndex:sectionNumber] addObject:country];
-    }
-
-    for (NSInteger idx = 0; idx < sectionTitlesCount; idx++) {
-        NSArray *objectsForSection = [mutableSections objectAtIndex:idx];
-        [mutableSections replaceObjectAtIndex:idx withObject:[[UILocalizedIndexedCollation currentCollation] sortedArrayFromArray:objectsForSection collationStringSelector:selector]];
-    }
-    //TODO: swift
-#if WIRESTAN
-    NSMutableArray * mutableArray = [[NSMutableArray alloc] initWithArray: [mutableSections objectAtIndex:0]];
-    [mutableArray insertObject:[Country countryWirestan] atIndex:0];
-    [mutableSections replaceObjectAtIndex:0 withObject:[mutableArray asArray]];
-#endif
-
-    self.sections = mutableSections;
 }
 
 - (void)dismiss:(id)sender

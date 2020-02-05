@@ -36,8 +36,7 @@ final class Country: NSObject {
     class var defaultCountry: Country {
         
         #if WIRESTAN
-        let backendEnvironment = UserDefaults.standard.string(forKey: "ZMBackendEnvironmentType")
-        if (backendEnvironment == "staging") {
+        if UserDefaults.standard.string(forKey: "ZMBackendEnvironmentType") == "staging" {
             return Country.countryWirestan
         }
         
