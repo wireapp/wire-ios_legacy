@@ -56,7 +56,7 @@ extension String {
 
         // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
 
-        let phoneNumberWithCountryCode = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
+        let phoneNumberWithCountryCode = String.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
 
         let result = UnregisteredUser.normalizedPhoneNumber(phoneNumberWithCountryCode)
 

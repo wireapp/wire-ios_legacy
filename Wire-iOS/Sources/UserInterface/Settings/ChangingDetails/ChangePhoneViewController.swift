@@ -27,7 +27,7 @@ struct ChangePhoneNumberState {
 
     var selectedCountry: Country {
         didSet {
-            let newCode = selectedCountry.e164.uintValue
+            let newCode = selectedCountry.e164
 
             if let visible = visibleNumber, visible.countryCode != newCode {
                 updatedNumber = PhoneNumber(countryCode: newCode, numberWithoutCode: visible.numberWithoutCode)
@@ -53,7 +53,7 @@ struct ChangePhoneNumberState {
     
     init(currentPhoneNumber: String? = ZMUser.selfUser().phoneNumber) {
         self.currentNumber = currentPhoneNumber.flatMap(PhoneNumber.init(fullNumber:))
-        self.selectedCountry = currentNumber?.country ?? .default
+        self.selectedCountry = currentNumber?.country ?? .defaultCountry
     }
     
 }

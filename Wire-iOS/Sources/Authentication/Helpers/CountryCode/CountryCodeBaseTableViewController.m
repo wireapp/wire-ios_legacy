@@ -18,7 +18,7 @@
 
 
 #import "CountryCodeBaseTableViewController.h"
-#import "Country.h"
+#import "Wire-Swift.h"
 
 
 
@@ -56,6 +56,7 @@ NSString * const CountryCodeCellIdentifier = @"CountryCodeCellIdentifier";
     [self.tableView registerClass:[CountryCell class] forCellReuseIdentifier:CountryCodeCellIdentifier];
 }
 
+//TODO: Swift
 - (void)configureCell:(UITableViewCell *)cell forCountry:(Country *)country
 {
     cell.textLabel.text = country.displayName;

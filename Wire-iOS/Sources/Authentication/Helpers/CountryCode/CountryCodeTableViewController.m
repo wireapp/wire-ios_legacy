@@ -20,7 +20,6 @@
 #import "CountryCodeTableViewController.h"
 
 #import "CountryCodeResultsTableViewController.h"
-#import "Country.h"
 #import "Wire-Swift.h"
 
 
@@ -66,6 +65,7 @@
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
 }
 
+///TODO: swift
 - (void)createDataSource
 {
     NSArray *countries = [Country allCountries];
