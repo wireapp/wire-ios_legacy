@@ -32,4 +32,12 @@ extension BackendEnvironment {
             NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
     }
+    
+    public static func set(withTypeDescription type: String) {
+        let environmentType = EnvironmentType(stringValue: type)
+        guard let backendEnvironment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle, environmentType: environmentType) else {
+            return
+        }
+        shared = backendEnvironment
+    }
 }
