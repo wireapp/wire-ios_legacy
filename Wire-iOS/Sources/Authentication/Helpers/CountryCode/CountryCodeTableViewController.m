@@ -19,7 +19,6 @@
 
 #import "CountryCodeTableViewController.h"
 
-#import "CountryCodeResultsTableViewController.h"
 #import "Wire-Swift.h"
 
 
@@ -161,7 +160,7 @@
 {
     Country *selectedCountry = nil;
     if (self.resultsTableViewController.tableView == tableView) {
-        selectedCountry = [self.resultsTableViewController.filteredCountries objectAtIndex:indexPath.row];
+        selectedCountry = (Country *)[self.resultsTableViewController.filteredCountries objectAtIndex:indexPath.row];
         self.searchController.active = NO;
     } else {
         selectedCountry = [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
