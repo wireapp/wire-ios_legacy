@@ -23,13 +23,13 @@ extension CountryCodeTableViewController {
     func createDataSource() {
         guard let countries = Country.allCountries else { return }
         
-        let selector = #selector(displayName)
+        let selector = #selector(getter: Country.displayName)
         let sectionTitlesCount = UILocalizedIndexedCollation.current().sectionTitles.count
         
         
-        var mutableSections = [AnyHashable](repeating: 0, count: sectionTitlesCount)
-        for idx in 0..<sectionTitlesCount {
-            mutableSections.append([AnyHashable]())
+        var mutableSections: [[Any]] = []//[AnyHashable](repeating: 0, count: sectionTitlesCount)
+        for _ in 0..<sectionTitlesCount {
+            mutableSections.append([Country]())
         }
         
         for country in countries {
@@ -38,18 +38,12 @@ extension CountryCodeTableViewController {
         }
         
         for idx in 0..<sectionTitlesCount {
-            let objectsForSection = mutableSections[idx] as? [AnyHashable]
-            if let objectsForSection = objectsForSection {
-                mutableSections[idx] = UILocalizedIndexedCollation.current().sortedArray(from: objectsForSection, collationStringSelector: selector)
-            }
+            let objectsForSection = mutableSections[idx]
+            mutableSections[idx] = UILocalizedIndexedCollation.current().sortedArray(from: objectsForSection, collationStringSelector: selector)
         }
 
         #if WIRESTAN
-        var mutableArray = mutableSections[0] as? [Any] as? [AnyHashable]
-        mutableArray?.insert(Country.countryWirestan, at: 0)
-        if let array = mutableArray?.asArray() {
-            mutableSections[0] = array
-        }
+        mutableSections[0].insert(Country.countryWirestan, at: 0)
         #endif
         
         sections = mutableSections
