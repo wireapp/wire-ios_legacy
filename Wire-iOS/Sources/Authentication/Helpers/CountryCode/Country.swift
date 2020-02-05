@@ -108,22 +108,19 @@ final class Country: NSObject {
         countries.append(Country.countryWirestan)
         #endif
 
-        guard let countryCodeDict: [String: Any] = Dictionary<String, AnyObject>.contentsOf(path: Bundle.main.url(forResource: "CountryCodes", withExtension: "plist")!) as? [String: Any] else {
+        guard let countryCodeDict = Dictionary<String, AnyObject>.contentsOf(url: Bundle.main.url(forResource: "CountryCodes", withExtension: "plist")!),
+              let countryCodes = countryCodeDict["countryCodes"] as? [[String: Any]] else {
             return countries
         }
 
-        if let countryCodes = countryCodeDict["countryCodes"] as? [String: Any] {
             for countryData in countryCodes {
-                if let countryData = countryData as? [String: Any] {
                 
                 if let iso = countryData["iso"] as? String,
                     let e164 = countryData["e164"] as? UInt {
                 
                 countries.append(Country(withISO: iso, e164: e164))
                 }
-                }
             }
-        }
         
         return countries
     }
@@ -197,8 +194,8 @@ final class Country: NSObject {
 }
 
 extension Dictionary {
-    static func contentsOf(path: URL) -> Dictionary<String, AnyObject>? {
-        let data = try! Data(contentsOf: path)
+    static func contentsOf(url: URL) -> Dictionary<String, AnyObject>? {
+        let data = try! Data(contentsOf: url)
         let plist = try! PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil)
         
         return plist as? [String: AnyObject]
