@@ -87,7 +87,7 @@
         NSArray *objectsForSection = [mutableSections objectAtIndex:idx];
         [mutableSections replaceObjectAtIndex:idx withObject:[[UILocalizedIndexedCollation currentCollation] sortedArrayFromArray:objectsForSection collationStringSelector:selector]];
     }
-
+    //TODO: swift
 #if WIRESTAN
     NSMutableArray * mutableArray = [[NSMutableArray alloc] initWithArray: [mutableSections objectAtIndex:0]];
     [mutableArray insertObject:[Country countryWirestan] atIndex:0];
