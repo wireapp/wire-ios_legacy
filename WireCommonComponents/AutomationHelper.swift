@@ -31,19 +31,6 @@ final public class AutomationEmailCredentials: NSObject {
     }
 }
 
-extension AutomationHelper {
-    private static let backendEnvironmentTypeOverrideKey = "BackendEnvironmentTypeOverrideKey"
-    
-    public func backendEnvironmentTypeOverride() -> String? {
-        return UserDefaults.standard.string(forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
-    }
-    
-    public func persistBackendTypeOverrideIfNeeded(with type: String?) {
-        guard shouldPersistBackendType else { return }
-        UserDefaults.standard.set(type, forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
-    }
-}
-
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.

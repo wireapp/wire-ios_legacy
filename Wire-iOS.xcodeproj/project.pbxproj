@@ -418,6 +418,7 @@
 		6306903623AA5D9C0081802B /* AppLockInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */; };
 		6306903823AA8D480081802B /* AppLockPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306903723AA8D480081802B /* AppLockPresenterTests.swift */; };
 		6340EF96237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */; };
+		63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */; };
 		6363EC9B23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */; };
 		636AD79A23A916CB004A3050 /* AppLockPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79923A916CB004A3050 /* AppLockPresenter.swift */; };
 		636AD79C23A91A57004A3050 /* AppLockInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 636AD79B23A91A57004A3050 /* AppLockInteractor.swift */; };
@@ -1983,6 +1984,7 @@
 		6306903523AA5D9C0081802B /* AppLockInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractorTests.swift; sourceTree = "<group>"; };
 		6306903723AA8D480081802B /* AppLockPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenterTests.swift; sourceTree = "<group>"; };
 		6340EF95237AE93500EF8506 /* VoiceChannelVideoStreamArrangmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceChannelVideoStreamArrangmentTests.swift; sourceTree = "<group>"; };
+		63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AutomationHelper+BackendEnvironment.swift"; sourceTree = "<group>"; };
 		6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+CompanyLogin.swift"; sourceTree = "<group>"; };
 		636AD79923A916CB004A3050 /* AppLockPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockPresenter.swift; sourceTree = "<group>"; };
 		636AD79B23A91A57004A3050 /* AppLockInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockInteractor.swift; sourceTree = "<group>"; };
@@ -6615,6 +6617,7 @@
 				F1FEA14C21DCEB1700790A54 /* WireCommonComponents.h */,
 				870534001DD6265100A7F822 /* AttributedStringOperators.swift */,
 				BF4A15D11D4900930051E8BA /* AutomationHelper.swift */,
+				63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */,
 				160782DF23C8ED950065392B /* UserDefaults+ApplicationGroup.swift */,
 				F15650B121DD018700210504 /* Bundle+Identifiers.swift */,
 				F1FEA14D21DCEB1700790A54 /* Info.plist */,
@@ -8457,6 +8460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63495DB423EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift in Sources */,
 				7C88BB8E235DE3EE0075BCC5 /* (null) in Sources */,
 				7CCFC111228B1E8E007C365B /* WireStyleKit.swift in Sources */,
 				5E001FA82298152200F22CDD /* UIColor+AccentColor.swift in Sources */,
