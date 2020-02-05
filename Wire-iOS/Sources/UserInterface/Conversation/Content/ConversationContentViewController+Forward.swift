@@ -22,15 +22,15 @@ import Cartography
 import WireCommonComponents
 
 extension ZMConversation: ShareDestination {
-    
-    public var showsGuestIcon: Bool {
+
+    var showsGuestIcon: Bool {
         return ZMUser.selfUser().hasTeam &&
             self.conversationType == .oneOnOne &&
             self.localParticipants.first {
                 $0.isGuest(in: self) } != nil
     }
-    
-    public var avatarView: UIView? {
+
+    var avatarView: UIView? {
         let avatarView = ConversationAvatarView()
         avatarView.configure(context: .conversation(conversation: self))
         return avatarView
@@ -53,7 +53,7 @@ extension Array where Element == ZMConversation {
 func forward(_ message: ZMMessage, to: [AnyObject]) {
 
     let conversations = to as! [ZMConversation]
-    
+
     if message.isText {
         let fetchLinkPreview = !Settings.shared().disableLinkPreviews
         ZMUserSession.shared()?.performChanges {
@@ -62,44 +62,39 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
                 _ = $0.append(text: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
             }
         }
-    }
-    else if message.isImage, let imageData = message.imageMessageData?.imageData {
+    } else if message.isImage, let imageData = message.imageMessageData?.imageData {
         ZMUserSession.shared()?.performChanges {
             conversations.forEachNonEphemeral { _ = $0.append(imageFromData: imageData) }
         }
-    }
-    else if message.isVideo || message.isAudio || message.isFile {
+    } else if message.isVideo || message.isAudio || message.isFile {
         let url  = message.fileMessageData!.fileURL!
         FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
             ZMUserSession.shared()?.performChanges {
                 conversations.forEachNonEphemeral { _ = $0.append(file: fileMetadata) }
             }
         }
-    }
-    else if message.isLocation {
+    } else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
         ZMUserSession.shared()?.performChanges {
             conversations.forEachNonEphemeral { _ = $0.append(location: locationData) }
         }
-    }
-    else {
+    } else {
         fatal("Cannot forward message")
     }
 }
 
 extension ZMMessage: Shareable {
-    
-    public func share<ZMConversation>(to: [ZMConversation]) {
+
+    func share<ZMConversation>(to: [ZMConversation]) {
         forward(self, to: to as [AnyObject])
     }
-    
-    public typealias I = ZMConversation
-    
-    
+
+    typealias I = ZMConversation
+
 }
 
 extension ZMConversationMessage {
-    public func previewView() -> UIView? {
+    func previewView() -> UIView? {
         let view = self.preparePreviewView(shouldDisplaySender: false)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -121,11 +116,10 @@ extension ZMConversationList {///TODO mv to DM
 
 extension ConversationContentViewController {
 
-    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
-
 
         if let keyboardAvoidingViewController = self.presentedViewController as? KeyboardAvoidingViewController,
            let shareViewController = keyboardAvoidingViewController.viewController as? ShareViewController<ZMConversation, ZMMessage> {
@@ -133,7 +127,7 @@ extension ConversationContentViewController {
         }
     }
 
-    @objc func updatePopover() {
+    func updatePopover() {
         guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController as? PopoverPresenterViewController else { return }
 
         rootViewController.updatePopoverSourceRect()
@@ -146,7 +140,7 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         guard let message = message else { return }
 
         endEditing()
-        
+
         let conversations = ZMConversationList.conversationsIncludingArchived(inUserSession: ZMUserSession.shared()!).shareableConversations(excluding: message.conversation!)
 
         let shareViewController = ShareViewController<ZMConversation, ZMMessage>(
@@ -169,19 +163,18 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         if let popoverPresentationController = keyboardAvoiding.popoverPresentationController {
             popoverPresentationController.backgroundColor = UIColor(white: 0, alpha: 0.5)
         }
-        
+
         keyboardAvoiding.presentationController?.delegate = self
-        
-        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> () in
+
+        shareViewController.onDismiss = { (shareController: ShareViewController<ZMConversation, ZMMessage>, _) -> Void in
             shareController.presentingViewController?.dismiss(animated: true) {
             }
         }
 
-
         (presenter ?? self).present(keyboardAvoiding, animated: true)
     }
-    
-    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return traitCollection.horizontalSizeClass == .regular ? .popover : .overFullScreen
     }
 }
