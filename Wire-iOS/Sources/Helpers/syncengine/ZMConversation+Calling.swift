@@ -101,13 +101,19 @@ extension ZMConversation {
     }
     
     func warnAboutNoInternetConnection() -> Bool {
-        if AppDelegate.isOffline {
-            let internetConnectionAlert = UIAlertController(title: "voice.network_error.title".localized, message: "voice.network_error.body".localized, cancelButtonTitle: "general.ok".localized)
-            AppDelegate.shared.window?.rootViewController?.present(internetConnectionAlert, animated: true)
-            return true
+        guard AppDelegate.isOffline else {
+            return false
         }
         
-        return false
+        let internetConnectionAlert = UIAlertController.alertWithOKButton(title: "voice.network_error.title".localized,
+                                                                          message: "voice.network_error.body".localized) { _ in
+            AppDelegate.shared.notificationsWindow?.isHidden = true
+        }
+        
+        AppDelegate.shared.notificationsWindow?.isHidden = false
+        AppDelegate.shared.notificationsWindow?.rootViewController?.present(internetConnectionAlert, animated: true)
+        
+        return true
     }
 
     func confirmJoiningCallIfNeeded(alertPresenter: UIViewController, forceAlertModal: Bool = false, completion: @escaping () -> Void) {
