@@ -27,7 +27,7 @@ extension String {
 
 @objc
 final class Country: NSObject {
-    let ISO: String
+    let iso: String
 
     @objc
     let e164: UInt
@@ -43,11 +43,11 @@ final class Country: NSObject {
         
         #endif
         
-        return Country.countryFromDevice() ?? Country(withISO: "us", e164: 1)
+        return Country.countryFromDevice() ?? Country(iso: "us", e164: 1)
     }
     
-    init(withISO ISO: String, e164: UInt) {
-        self.ISO = ISO
+    init(iso: String, e164: UInt) {
+        self.iso = iso
         self.e164 = e164
         
         super.init()
@@ -90,7 +90,7 @@ final class Country: NSObject {
         let priorityList = ["us", "it", "fi", "tz", "uk", "no", "ru"]
         
         for country in matches {
-            if priorityList.contains(country.ISO) {
+            if priorityList.contains(country.iso) {
                 return country
             }
         }
@@ -118,7 +118,7 @@ final class Country: NSObject {
                 if let iso = countryData["iso"] as? String,
                     let e164 = countryData["e164"] as? UInt {
                 
-                countries.append(Country(withISO: iso, e164: e164))
+                countries.append(Country(iso: iso, e164: e164))
                 }
             }
         
@@ -129,7 +129,7 @@ final class Country: NSObject {
     /// A fake country with +0 country code. Used only on edge and staging environments
     @objc
     class var countryWirestan: Country {
-        return Country(withISO: "WIS", e164: 0)
+        return Country(iso: "WIS", e164: 0)
     }
     
     #endif
@@ -137,21 +137,21 @@ final class Country: NSObject {
     @objc
     var displayName: String {
         #if WIRESTAN
-        if ISO == "WIS" {
+        if iso == "WIS" {
             return "Wirestan ☀️"
         }
         #endif
-        var localized = Locale.current.localizedString(forRegionCode: ISO)
+        var localized = Locale.current.localizedString(forRegionCode: iso)
         
         
         if (localized?.count ?? 0) == 0 {
             // Try the fallback locale
             let USLocale = NSLocale(localeIdentifier: "en_US")
-            localized = USLocale.displayName(forKey: .countryCode, value: ISO)
+            localized = USLocale.displayName(forKey: .countryCode, value: iso)
         }
         if (localized?.count ?? 0) == 0 {
             // Return something instead of just @c nil
-            return ISO.uppercased()
+            return iso.uppercased()
         }
         return localized ?? ""
     }
@@ -188,7 +188,7 @@ final class Country: NSObject {
     private class func country(with iso: String?) -> Country? {
         guard let iso = iso else { return nil }
         
-        return allCountries?.first(where: { $0.ISO == iso })
+        return allCountries?.first(where: { $0.iso == iso })
     }
     
 }
