@@ -26,7 +26,6 @@ final class ZClientViewController: UIViewController {
     var needToShowDataUsagePermissionDialog = false
     let wireSplitViewController: SplitViewController = SplitViewController()
     
-    @objc
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
     let conversationListViewController: ConversationListViewController
     var proximityMonitorManager: ProximityMonitorManager?

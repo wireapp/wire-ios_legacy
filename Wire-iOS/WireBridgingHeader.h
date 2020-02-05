@@ -31,8 +31,6 @@
 #import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
-#import "ConversationContentViewController+Private.h"
-#import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
 #import "Country.h"
 #import "PassthroughTouchesView.h"
@@ -85,7 +83,6 @@
 #import "PopTransition.h"
 #import "ZoomTransition.h"
 #import "CrossfadeTransition.h"
-#import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"
@@ -106,8 +103,6 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "UIImage+ImageUtilities.h"
-#import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

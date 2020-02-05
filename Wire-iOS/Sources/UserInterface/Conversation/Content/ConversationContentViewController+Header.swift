@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -19,31 +18,30 @@
 import Foundation
 
 extension ConversationContentViewController {
-    @objc
     func updateTableViewHeaderView() {
         guard let userSession = ZMUserSession.shared(),
-              (dataSource?.hasOlderMessagesToLoad == false ||
+            (dataSource.hasOlderMessagesToLoad == false ||
               conversation.conversationType == .connection) else {
                 // Don't display the conversation header if the message window doesn't include the first message and it is not a connection
             return
         }
 
         var headerView: UIView? = nil
-        
+
         let otherParticipant: ZMUser?
         if conversation.conversationType == .connection {
             otherParticipant = conversation.firstActiveParticipantOtherThanSelf ?? conversation.connectedUser
         } else {
             otherParticipant = conversation.firstActiveParticipantOtherThanSelf
         }
-        
+
         let connectionOrOneOnOne = conversation.conversationType == .connection || conversation.conversationType == .oneOnOne
-        
+
         if connectionOrOneOnOne, let otherParticipant = otherParticipant {
             connectionViewController = UserConnectionViewController(userSession: userSession, user: otherParticipant)
-            headerView = connectionViewController.view
+            headerView = connectionViewController?.view
         }
-        
+
         if let headerView = headerView {
             headerView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
             setConversationHeaderView(headerView)

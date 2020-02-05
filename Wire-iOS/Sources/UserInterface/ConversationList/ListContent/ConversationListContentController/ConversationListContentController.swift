@@ -77,16 +77,24 @@ final class ConversationListContentController: UICollectionViewController {
 
         scrollToCurrentSelection(animated: false)
 
-        if let mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager {
-            activeMediaPlayerObserver = KeyValueObserver.observe(mediaPlaybackManager, keyPath: "activeMediaPlayer", target: self, selector: #selector(activeMediaPlayerChanged(_:)))
-
-            self.mediaPlaybackManager = mediaPlaybackManager
+        activeMediaPlayerObserver = AppDelegate.shared.mediaPlaybackManager?.observe(\.activeMediaPlayer) { [weak self] _, _ in
+            self?.activeMediaPlayerChanged()
         }
+        
+        mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         activeMediaPlayerObserver = nil
+    }
+    
+    private func activeMediaPlayerChanged() {
+        DispatchQueue.main.async(execute: {
+            for cell in self.collectionView.visibleCells {
+                (cell as? ConversationListCell)?.updateAppearance()
+            }
+        })
     }
 
     func reload() {

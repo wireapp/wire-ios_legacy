@@ -21,12 +21,10 @@
 #import "AudioTrackPlayer.h"
 #import "AudioTrackPlayer+Private.h"
 
-#import "UIImage+ImageUtilities.h"
 
 @import WireCommonComponents;
 @import WireUtilities;
 @import WireSyncEngine;
-#import "KeyValueObserver.h"
 #import "Wire-Swift.h"
 
 @import AVFoundation;

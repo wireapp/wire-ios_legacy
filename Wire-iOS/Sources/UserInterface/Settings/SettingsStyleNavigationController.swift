@@ -18,7 +18,7 @@
 
 import Foundation
 
-class SettingsStyleNavigationController: UINavigationController {
+final class SettingsStyleNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
