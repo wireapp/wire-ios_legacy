@@ -24,20 +24,18 @@ extension BackendEnvironment {
     public static let backendSwitchNotification = Notification.Name("backendEnvironmentSwitchNotification")
     
     public static var shared: BackendEnvironment = {
-        guard let environment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle) else { fatalError("Malformed backend configuration data") }
+        var environmentType: EnvironmentType? = nil
+        if let typeOverride = AutomationHelper.sharedHelper.backendEnvironmentTypeOverride() {
+            environmentType = EnvironmentType(stringValue: typeOverride)
+        }
+        guard let environment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle, environmentType: environmentType) else {
+            fatalError("Malformed backend configuration data")
+        }
         return environment
         }() {
         didSet {
             shared.save(in: .applicationGroup)
             NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
-    }
-    
-    public static func set(withTypeDescription type: String) {
-        let environmentType = EnvironmentType(stringValue: type)
-        guard let backendEnvironment = BackendEnvironment(userDefaults: .applicationGroupCombinedWithStandard, configurationBundle: .backendBundle, environmentType: environmentType) else {
-            return
-        }
-        shared = backendEnvironment
     }
 }

@@ -87,7 +87,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         AutomationHelper.sharedHelper.persistBackendTypeOverrideIfNeeded(with: backendTypeOverride)
-        BackendEnvironment.set(withTypeDescription: backendTypeOverride)
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
