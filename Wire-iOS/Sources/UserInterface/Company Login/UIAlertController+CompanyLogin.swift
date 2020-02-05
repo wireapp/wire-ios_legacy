@@ -94,7 +94,7 @@ extension UIAlertController {
         )
         
         if let error = error {
-            let attributedString = NSMutableAttributedString.companyLoginString(
+            let attributedString = NSAttributedString.companyLoginString(
                 withMessage: copy.message,
                 error: error.description(for: copy)
             )
