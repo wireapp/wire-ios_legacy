@@ -37,13 +37,13 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         }
 
         if !cell.actionButton.isHidden {
+            let zmUser = (user as? ZMSearchUser)?.user
             let action: ContactsCell.Action
 
             // TODO: Add this to UserType
-            let isIgnored = (user as? ZMSearchUser)?.user?.isIgnored ?? false
-            if user.isConnected || user.isPendingApproval && isIgnored {
+            if user.isConnected || user.isPendingApproval && zmUser?.isIgnored == true {
                 action = .open
-            } else if !isIgnored && !user.isPendingApprovalByOtherUser {
+            } else if zmUser?.isIgnored == false && !user.isPendingApprovalByOtherUser {
                 action = .connect
             } else {
                 action = .invite
