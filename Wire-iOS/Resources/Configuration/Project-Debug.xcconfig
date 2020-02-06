@@ -51,9 +51,8 @@ SWIFT_OPTIMIZATION_LEVEL = -Onone
 // FT - feature toggle
 //
 // ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
-// WIRESTAN - Enabled the fake country in the phone number selection
 IS_INTERNAL_BUILD = 1
-FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=1 WIRESTAN=1
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=1
 
 ENABLE_DEVELOPER_MENU=1
 
@@ -64,6 +63,9 @@ ANALYTICS_FLAGS = USE_ANALYTICS=0
 
 GCC_PREPROCESSOR_DEFINITIONS = $(SHARED_CUSTOM_VALUES) $(FEATURE_FLAGS) $(ANALYTICS_FLAGS) $(OTHER_PREPROCESSOR_FLAGS) DEBUG=1
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(OTHER_PREPROCESSOR_FLAGS)
-OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000
+
+// WIRESTAN - Enabled the fake country in the phone number selection
+OTHER_SWIFT_FLAGS = -Xfrontend -warn-long-function-bodies=10000 -Xfrontend -warn-long-expression-type-checking=10000 -DWIRESTAN
+
 SWIFT_TREAT_WARNINGS_AS_ERRORS = NO
 

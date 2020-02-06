@@ -351,7 +351,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     var isCustomBackend: Bool {
         switch BackendEnvironment.shared.environmentType.value {
-        case .production, .staging:
+        case .production, .staging, .qaDemo:
             return false
         case .custom:
             return true
@@ -392,7 +392,7 @@ class LandingViewController: AuthenticationStepViewController {
     
     private func updateCustomBackendLabels() {
         switch BackendEnvironment.shared.environmentType.value {
-        case .production, .staging:
+        case .production, .staging, .qaDemo:
             customBackendStack.isHidden = true
             messageLabel.text = "landing.welcome_message".localized(args: productName)
         case .custom(url: let url):

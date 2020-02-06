@@ -18,49 +18,13 @@
 
 
 #import "CountryCodeBaseTableViewController.h"
-#import "Country.h"
+#import "Wire-Swift.h"
 
 
 
 NSString * const CountryCodeCellIdentifier = @"CountryCodeCellIdentifier";
 
 
-
-@interface CountryCell : UITableViewCell
-
-@end
-
-
-
-@implementation CountryCell
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    return [super initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:reuseIdentifier];
-}
-
-@end
-
-
-
-@interface CountryCodeBaseTableViewController ()
-
-@end
-
 @implementation CountryCodeBaseTableViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    [self.tableView registerClass:[CountryCell class] forCellReuseIdentifier:CountryCodeCellIdentifier];
-}
-
-- (void)configureCell:(UITableViewCell *)cell forCountry:(Country *)country
-{
-    cell.textLabel.text = country.displayName;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"+%@", country.e164];
-    cell.accessibilityHint = NSLocalizedString(@"registration.phone.country_code.hint", @"");
-}
 
 @end

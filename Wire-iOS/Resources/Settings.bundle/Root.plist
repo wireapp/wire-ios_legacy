@@ -55,13 +55,11 @@
 			<array>
 				<string>Production</string>
 				<string>Staging</string>
-				<string>Default (Depends on build)</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>production</string>
 				<string>staging</string>
-				<string>default</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>

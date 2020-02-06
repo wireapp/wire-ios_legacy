@@ -66,7 +66,6 @@ final class IncomingConnectionViewController: UIViewController {
     
 }
 
-@objcMembers
 final class UserConnectionViewController: UIViewController {
 
     fileprivate var userConnectionView: UserConnectionView!

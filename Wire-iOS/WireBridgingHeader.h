@@ -23,8 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "ParticipantDeviceHeaderView.h"
-#import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
@@ -32,7 +30,6 @@
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
-#import "Country.h"
 #import "PassthroughTouchesView.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"

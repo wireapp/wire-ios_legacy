@@ -23,7 +23,6 @@ extension String {
         return components(separatedBy: .whitespaces).joined()
     }
 
-
     /// Auto detect country for phone numbers beginning with "+"
     ///
     /// Notice: When pastedString is copied from phone app (self phone number section), it contains right/left handling symbols: \u202A\u202B\u202C\u202D or \u{e2}
@@ -56,7 +55,7 @@ extension String {
 
         // Just paste (if valid) for phone numbers not beginning with "+", or phones where country is not detected.
 
-        let phoneNumberWithCountryCode = NSString.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
+        let phoneNumberWithCountryCode = String.phoneNumber(withE164: presetCountry.e164, number: phoneNumber)
 
         let result = UnregisteredUser.normalizedPhoneNumber(phoneNumberWithCountryCode)
 
