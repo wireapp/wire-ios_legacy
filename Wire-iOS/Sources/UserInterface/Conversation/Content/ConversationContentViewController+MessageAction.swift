@@ -20,7 +20,6 @@ import Foundation
 
 extension ConversationContentViewController {
     // MARK: - EditMessages
-    @objc
     func editLastMessage() {
         if let lastEditableMessage = conversation.lastEditableMessage {
             perform(action: .edit, for: lastEditableMessage, view: tableView)
@@ -32,8 +31,7 @@ extension ConversationContentViewController {
         let isImage = Message.isImage(message)
         let isLocation = Message.isLocation(message)
 
-        guard isFile || isImage || isLocation,
-            let dataSource = dataSource else {
+        guard isFile || isImage || isLocation else {
             return
         }
 
@@ -52,12 +50,9 @@ extension ConversationContentViewController {
         present(canvasViewController.wrapInNavigationController(), animated: true)
     }
 
-
     func messageAction(actionId: MessageAction,
                                for message: ZMConversationMessage,
                                view: UIView) {
-        guard let session = session else { return }
-
         switch actionId {
         case .cancel:
             session.enqueueChanges({
@@ -71,19 +66,19 @@ extension ConversationContentViewController {
             assert(message.canBeDeleted)
 
             deletionDialogPresenter = DeletionDialogPresenter(sourceViewController: presentedViewController ?? self)
-            deletionDialogPresenter.presentDeletionAlertController(forMessage: message, source: view) { deleted in
+            deletionDialogPresenter?.presentDeletionAlertController(forMessage: message, source: view) { deleted in
                 if deleted {
                     self.presentedViewController?.dismiss(animated: true)
                 }
             }
         case .present:
-            dataSource?.selectedMessage = message
+            dataSource.selectedMessage = message
             presentDetails(for: message)
         case .save:
             if Message.isImage(message) {
                 saveImage(from: message, view: view)
             } else {
-                dataSource?.selectedMessage = message
+                dataSource.selectedMessage = message
 
                 let targetView: UIView
 
@@ -98,7 +93,7 @@ extension ConversationContentViewController {
                 }
             }
         case .edit:
-            dataSource?.editingMessage = message
+            dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
         case .sketchDraw:
             openSketch(for: message, in: .draw)
@@ -110,9 +105,9 @@ extension ConversationContentViewController {
         case .like:
             // The new liked state, the value is flipped
             let updatedLikedState = !Message.isLikedMessage(message)
-            guard let indexPath = dataSource?.topIndexPath(for: message) else { return }
+            guard let indexPath = dataSource.topIndexPath(for: message) else { return }
 
-            let selectedMessage = dataSource?.selectedMessage
+            let selectedMessage = dataSource.selectedMessage
 
             session.performChanges({
                 Message.setLikedMessage(message, liked: updatedLikedState)
@@ -135,7 +130,7 @@ extension ConversationContentViewController {
             showForwardFor(message: message, from: view)
         case .showInConversation:
             scroll(to: message) { cell in
-                self.dataSource?.highlight(message: message)
+                self.dataSource.highlight(message: message)
             }
         case .copy:
             message.copy(in: .general)
@@ -149,7 +144,7 @@ extension ConversationContentViewController {
         case .openQuote:
             if let quote = message.textMessageData?.quote {
                 scroll(to: quote) { cell in
-                    self.dataSource?.highlight(message: quote)
+                    self.dataSource.highlight(message: quote)
                 }
             }
         case .openDetails:

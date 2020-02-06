@@ -30,14 +30,14 @@ extension ConversationContentViewController {
         return tableView.bounds.size.height - height
     }
 
-    @objc func headerViewFrame(view: UIView) -> CGRect {
+    func headerViewFrame(view: UIView) -> CGRect {
         let fittingSize = CGSize(width: tableView.bounds.size.width, height: headerHeight)
         let requiredSize = view.systemLayoutSizeFitting(fittingSize, withHorizontalFittingPriority: UILayoutPriority.required, verticalFittingPriority: UILayoutPriority.defaultLow)
 
         return CGRect(origin: .zero, size: requiredSize)
     }
 
-    @objc func updateHeaderHeight() {
+    func updateHeaderHeight() {
         guard let headerView = tableView.tableHeaderView else { return }
 
         headerView.frame = headerViewFrame(view: headerView)

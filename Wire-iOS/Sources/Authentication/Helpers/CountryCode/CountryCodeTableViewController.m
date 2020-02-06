@@ -19,20 +19,7 @@
 
 #import "CountryCodeTableViewController.h"
 
-#import "CountryCodeResultsTableViewController.h"
-#import "Country.h"
 #import "Wire-Swift.h"
-
-
-@interface CountryCodeTableViewController () <UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
-
-@property (nonatomic) NSArray *sections;
-@property (nonatomic) NSArray *sectionTitles;
-
-@property (nonatomic) UISearchController *searchController;
-@property (nonatomic) CountryCodeResultsTableViewController *resultsTableViewController;
-
-@end
 
 @implementation CountryCodeTableViewController
 
@@ -64,38 +51,6 @@
     
     self.definesPresentationContext = YES;
     self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
-}
-
-- (void)createDataSource
-{
-    NSArray *countries = [Country allCountries];
-    
-    SEL selector = @selector(displayName);
-    NSInteger sectionTitlesCount = [[[UILocalizedIndexedCollation currentCollation] sectionTitles] count];
-    
-    
-    NSMutableArray *mutableSections = [[NSMutableArray alloc] initWithCapacity:sectionTitlesCount];
-    for  (NSInteger idx = 0; idx < sectionTitlesCount; idx++) {
-        [mutableSections addObject:[NSMutableArray array]];
-    }
-    
-    for (Country *country in countries) {
-        NSInteger sectionNumber = [[UILocalizedIndexedCollation currentCollation] sectionForObject:country collationStringSelector:selector];
-       [[mutableSections objectAtIndex:sectionNumber] addObject:country];
-    }
-
-    for (NSInteger idx = 0; idx < sectionTitlesCount; idx++) {
-        NSArray *objectsForSection = [mutableSections objectAtIndex:idx];
-        [mutableSections replaceObjectAtIndex:idx withObject:[[UILocalizedIndexedCollation currentCollation] sortedArrayFromArray:objectsForSection collationStringSelector:selector]];
-    }
-
-#if WIRESTAN
-    NSMutableArray * mutableArray = [[NSMutableArray alloc] initWithArray: [mutableSections objectAtIndex:0]];
-    [mutableArray insertObject:[Country countryWirestan] atIndex:0];
-    [mutableSections replaceObjectAtIndex:0 withObject:[mutableArray asArray]];
-#endif
-
-    self.sections = mutableSections;
 }
 
 - (void)dismiss:(id)sender
@@ -161,7 +116,7 @@
 {
     Country *selectedCountry = nil;
     if (self.resultsTableViewController.tableView == tableView) {
-        selectedCountry = [self.resultsTableViewController.filteredCountries objectAtIndex:indexPath.row];
+        selectedCountry = (Country *)[self.resultsTableViewController.filteredCountries objectAtIndex:indexPath.row];
         self.searchController.active = NO;
     } else {
         selectedCountry = [[self.sections objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];

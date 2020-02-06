@@ -134,10 +134,11 @@ final class InviteContactsViewController: ContactsViewController {
             }, completionHandler: {
                 self.tableView.reloadData()
             })
-        } else {
-            let alertController = invite(user.contact!, from: view)
+        } else if let contact = user.contact,
+                  let alertController = invite(contact, from: view) {
             
-            alertController?.presentInNotificationsWindow()
+            
+            AppDelegate.shared.window?.rootViewController?.present(alertController, animated: true)
         }
     }
 }

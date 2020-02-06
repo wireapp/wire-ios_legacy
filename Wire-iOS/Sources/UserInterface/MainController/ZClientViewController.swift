@@ -26,7 +26,6 @@ final class ZClientViewController: UIViewController {
     var needToShowDataUsagePermissionDialog = false
     let wireSplitViewController: SplitViewController = SplitViewController()
     
-    @objc
     private(set) var mediaPlaybackManager: MediaPlaybackManager?
     let conversationListViewController: ConversationListViewController
     var proximityMonitorManager: ProximityMonitorManager?
@@ -35,7 +34,11 @@ final class ZClientViewController: UIViewController {
     var userObserverToken: Any?
     
     private let topOverlayContainer: UIView = UIView()
-    private var topOverlayViewController: UIViewController?
+    private var topOverlayViewController: UIViewController? {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     private var contentTopRegularConstraint: NSLayoutConstraint!
     private var contentTopCompactConstraint: NSLayoutConstraint!
     // init value = false which set to true, set to false after data usage permission dialog is displayed
@@ -588,18 +591,13 @@ final class ZClientViewController: UIViewController {
                 self.topOverlayViewController = viewController
                 self.updateSplitViewTopConstraint()
                 
-                self.view.setNeedsLayout()
-                self.view.layoutIfNeeded()
-                
                 UIView.animate(withDuration: 0.35, delay: 0, options: [.curveEaseOut, .beginFromCurrentState], animations: {
                     heightConstraint.isActive = false
-                    self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
-                }) { _ in
-                            }
+                })
             }
             else {
-                        topOverlayViewController = viewController
+                topOverlayViewController = viewController
                 updateSplitViewTopConstraint()
             }
         }

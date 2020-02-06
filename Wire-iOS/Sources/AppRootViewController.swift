@@ -65,17 +65,20 @@ final class AppRootViewController: UIViewController {
 
     fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
 
-    func updateOverlayWindowFrame() {
-        self.overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+    func updateOverlayWindowFrame(size: CGSize? = nil) {
+        if let size = size {
+            overlayWindow.frame.size = size
+        } else {
+            overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+        }
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         mainWindow.frame.size = size
-
         coordinator.animate(alongsideTransition: nil, completion: { _ in
-            self.updateOverlayWindowFrame()
+            self.updateOverlayWindowFrame(size: size)
         })
     }
 
