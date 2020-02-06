@@ -22,21 +22,13 @@ import Cartography
 extension ContactsViewController {
 
     func setupSearchHeader() {
-        let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+        searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
         searchHeaderViewController.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-
         addToSelf(searchHeaderViewController)
-
-        self.searchHeaderViewController = searchHeaderViewController
     }
 
-    func showKeyboardIfNeeded() {
-        if tableView.numberOfTotalRows() > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
-            searchHeaderViewController.tokenField.becomeFirstResponder()
-        }
-    }
 }
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {

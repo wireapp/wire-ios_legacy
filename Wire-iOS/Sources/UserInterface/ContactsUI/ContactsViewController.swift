@@ -156,6 +156,12 @@ class ContactsViewController: UIViewController {
 
     // MARK: - Methods
 
+    private func showKeyboardIfNeeded() {
+        if tableView.numberOfTotalRows() > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
+            searchHeaderViewController.tokenField.becomeFirstResponder()
+        }
+    }
+
     func updateEmptyResults(hasResults: Bool) {
         let searchQueryExist = !dataSource.searchQuery.isEmpty
         noContactsLabel.isHidden = hasResults || searchQueryExist
