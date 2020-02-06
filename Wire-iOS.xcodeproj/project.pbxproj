@@ -1061,7 +1061,6 @@
 		EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */; };
 		EF1A461C21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */; };
 		EF1A461E21ADACF50009B6B9 /* RightIconDetailsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */; };
-		EF1ABCA623100E3F00496A1B /* ContactsViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */; };
 		EF1ABCA82310147C00496A1B /* UIViewController+Invite.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1ABCA72310147C00496A1B /* UIViewController+Invite.swift */; };
 		EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */; };
 		EF1C2E4D2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */; };
@@ -2823,7 +2822,6 @@
 		EF1A461921AD60510009B6B9 /* ReceiptOptionsSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptOptionsSectionController.swift; sourceTree = "<group>"; };
 		EF1A461B21AD955A0009B6B9 /* GroupDetailsDisclosureOptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsDisclosureOptionsCell.swift; sourceTree = "<group>"; };
 		EF1A461D21ADACF50009B6B9 /* RightIconDetailsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightIconDetailsCell.swift; sourceTree = "<group>"; };
-		EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Invite.swift"; sourceTree = "<group>"; };
 		EF1ABCA72310147C00496A1B /* UIViewController+Invite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Invite.swift"; sourceTree = "<group>"; };
 		EF1BEBCC21F5E8F5001128E0 /* StartUIViewController+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+Constraints.swift"; sourceTree = "<group>"; };
 		EF1C2E4C2254A1E2007E1CAC /* ConversationViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4895,7 +4893,6 @@
 				A9EB722223C1581A00DA8240 /* ContactsViewController.swift */,
 				A9EB722023C1522000DA8240 /* ContactsViewControllerDelegate.swift */,
 				A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */,
-				EF1ABCA523100E3F00496A1B /* ContactsViewController+Invite.swift */,
 				EF297DDB213209220002983A /* ContactsViewController+Style.swift */,
 				EF6DAD692150F2C400D9BA70 /* ContactsViewController+SearchHeader.swift */,
 				EF0154B6225B922200A77FB6 /* ContactsViewController+Constraints.swift */,
@@ -7747,7 +7744,6 @@
 				EF1DF675230E8D2000128BB8 /* ConversationListContentController+ActiveMediaPlayerObserver.swift in Sources */,
 				5E8DA762211B286900360979 /* AuthenticationBackupReadyEventHandler.swift in Sources */,
 				876113E21DD1DD4D007F5969 /* CanvasViewController.swift in Sources */,
-				EF1ABCA623100E3F00496A1B /* ContactsViewController+Invite.swift in Sources */,
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
 				5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */,

@@ -231,6 +231,15 @@ class ContactsViewController: UIViewController {
     private let canInviteByEmail = ZMAddressBookContact.canInviteLocallyWithEmail()
     private let canInviteByPhone = ZMAddressBookContact.canInviteLocallyWithPhoneNumber()
 
+    @objc
+    func sendIndirectInvite(_ sender: UIView) {
+        let shareItemProvider = ShareItemProvider(placeholderItem: "")
+        let activityController = UIActivityViewController(activityItems: [shareItemProvider], applicationActivities: nil)
+        activityController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+        activityController.configPopover(pointToView: sender)
+        present(activityController, animated: true)
+    }
+
     func invite(user: ZMSearchUser, from view: UIView) {
         // FIXME: The following code smoothens the transition when opening a conversation, but prevents the
         // invite alerts / screens from opening. We need to distinguish between these two types of actions.
