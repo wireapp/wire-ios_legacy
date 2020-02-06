@@ -185,9 +185,8 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
                 self.navigationController?.showLoadingView = true
-                })
-
-            present(alert, animated: true, completion: nil)
+                })            
+            present(alert, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: false)
     }
