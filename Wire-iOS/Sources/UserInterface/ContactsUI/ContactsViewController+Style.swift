@@ -19,7 +19,8 @@
 import Foundation
 
 extension ContactsViewController {
-    @objc func setupStyle() {
+
+    func setupStyle() {
         bottomContainerView.backgroundColor = .from(scheme: .background)
 
         noContactsLabel.font = .normalLightFont

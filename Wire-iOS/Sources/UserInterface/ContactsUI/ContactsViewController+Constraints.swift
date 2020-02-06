@@ -20,7 +20,6 @@ import Foundation
 
 extension ContactsViewController {
 
-    @objc
     func setupLayout() {
         [searchHeaderViewController.view,
          separatorView,
