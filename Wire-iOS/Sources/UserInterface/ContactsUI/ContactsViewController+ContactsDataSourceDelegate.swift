@@ -18,49 +18,39 @@
 
 import Foundation
 
-extension ContactsViewController {
-    func actionButtonHidden() -> Bool {
-        return false
-    }
-}
-
 extension ContactsViewController: ContactsDataSourceDelegate {
 
     func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: ContactsCell.self, for: indexPath)
         cell.contentBackgroundColor = .clear
         cell.colorSchemeVariant = .dark
-
         cell.user = user
 
         cell.actionButtonHandler = {[weak self, weak cell] user in
-            guard let `self` = self,
-                let cell = cell,
-                let user = user else { return }
+            guard
+                let `self` = self,
+                let user = user,
+                let cell = cell
+                else { return }
 
             self.invite(user: user, from: cell.actionButton)
-            cell.actionButton.isHidden = self.actionButtonHidden()
         }
 
-        cell.actionButton.isHidden = actionButtonHidden()
-
         if !cell.actionButton.isHidden {
-            let index: Int
+            let titleKey: String
+
             // TODO: Add this to UserType
             let isIgnored = (user as? ZMSearchUser)?.user?.isIgnored ?? false
             if user.isConnected || user.isPendingApproval && isIgnored {
-                index = 0
+                titleKey = "contacts_ui.action_button.open"
             } else if !isIgnored && !user.isPendingApprovalByOtherUser {
-                index = 2
+                titleKey = "connection_request.send_button_title"
             } else {
-                index = 1
+                titleKey = "contacts_ui.action_button.invite"
             }
 
-            // This is dangerous
-            let titleString = actionButtonTitles[Int(index)]
-
             cell.allActionButtonTitles = actionButtonTitles
-            cell.actionButton.setTitle(titleString, for: .normal)
+            cell.actionButton.setTitle(titleKey.localized, for: .normal)
         }
 
         return cell
