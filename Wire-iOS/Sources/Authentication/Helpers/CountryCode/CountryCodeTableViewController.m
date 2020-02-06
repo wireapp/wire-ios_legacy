@@ -23,92 +23,92 @@
 
 @implementation CountryCodeTableViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+//- (void)viewDidLoad
+//{
+//    [super viewDidLoad];
+//
+//    [self createDataSource];
+//
+//    self.resultsTableViewController = [[CountryCodeResultsTableViewController alloc] init];
+//    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.resultsTableViewController];
+//    self.searchController.searchResultsUpdater = self;
+//    [self.searchController.searchBar sizeToFit];
+//    if (@available(iOS 11.0, *)) {
+//        self.navigationItem.searchController = self.searchController;
+//        self.navigationItem.hidesSearchBarWhenScrolling = false;
+//    } else {
+//        self.tableView.tableHeaderView = self.searchController.searchBar;
+//    }
+//    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
+//
+//    self.resultsTableViewController.tableView.delegate = self;
+//    self.searchController.delegate = self;
+//    self.searchController.dimsBackgroundDuringPresentation = NO;
+//    self.searchController.searchBar.delegate = self;
+//    self.searchController.searchBar.backgroundColor = UIColor.whiteColor;
+//
+//    self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
+//
+//    self.definesPresentationContext = YES;
+//    self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
+//}
+//
+//- (void)dismiss:(id)sender
+//{
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
+//
+//#pragma mark - UISearchBarDelegate
+//
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+//{
+//    [searchBar resignFirstResponder];
+//}
 
-    [self createDataSource];
-
-    self.resultsTableViewController = [[CountryCodeResultsTableViewController alloc] init];
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:self.resultsTableViewController];
-    self.searchController.searchResultsUpdater = self;
-    [self.searchController.searchBar sizeToFit];
-    if (@available(iOS 11.0, *)) {
-        self.navigationItem.searchController = self.searchController;
-        self.navigationItem.hidesSearchBarWhenScrolling = false;
-    } else {
-        self.tableView.tableHeaderView = self.searchController.searchBar;
-    }
-    self.tableView.sectionIndexBackgroundColor = [UIColor clearColor];
-
-    self.resultsTableViewController.tableView.delegate = self;
-    self.searchController.delegate = self;
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.backgroundColor = UIColor.whiteColor;
-
-    self.navigationItem.rightBarButtonItem = [self.navigationController closeItem];
-    
-    self.definesPresentationContext = YES;
-    self.title = NSLocalizedString(@"registration.country_select.title", @"").localizedUppercaseString;
-}
-
-- (void)dismiss:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - UISearchBarDelegate
-
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-{
-    [searchBar resignFirstResponder];
-}
-
-#pragma mark - UISearchResultsUpdating
-
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
-{
-    // Update the filtered array based on the search text
-    NSString *searchText = searchController.searchBar.text;
-    NSArray *searchResults = [[self.sections valueForKeyPath:@"@unionOfArrays.self"] mutableCopy];
-
-    // Strip out all the leading and trailing spaces
-    NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-
-    // Break up the search terms (separated by spaces)
-    NSArray *searchItems = nil;
-    if (strippedString.length > 0) {
-        searchItems = [strippedString componentsSeparatedByString:@" "];
-    }
-
-    NSMutableArray *searchItemPredicates = [NSMutableArray array];
-    NSMutableArray *numberPredicates = [NSMutableArray array];
-    for (NSString *searchString in searchItems) {
-        NSPredicate *displayNamePredicate = [NSPredicate predicateWithFormat:@"displayName CONTAINS[cd] %@", searchString];
-        [searchItemPredicates addObject:displayNamePredicate];
-
-        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-        [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
-        NSNumber *targetNumber = [numberFormatter  numberFromString:searchString];
-
-        if (targetNumber != nil) {
-            NSPredicate *e164Predicate = [NSPredicate predicateWithFormat:@"e164 == %@", targetNumber];
-            [numberPredicates addObject:e164Predicate];
-        }
-    }
-
-    NSCompoundPredicate *andPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:searchItemPredicates];
-    NSCompoundPredicate *orPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:numberPredicates];
-    NSCompoundPredicate *finalPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[andPredicates, orPredicates]];
-
-    searchResults = [searchResults filteredArrayUsingPredicate:finalPredicate];
-
-    // Hand over the filtered results to our search results table
-    CountryCodeResultsTableViewController *tableController = (CountryCodeResultsTableViewController *)self.searchController.searchResultsController;
-    tableController.filteredCountries = searchResults;
-    [tableController.tableView reloadData];
-}
+//#pragma mark - UISearchResultsUpdating
+//
+//- (void)updateSearchResultsForSearchController:(UISearchController *)searchController
+//{
+//    // Update the filtered array based on the search text
+//    NSString *searchText = searchController.searchBar.text;
+//    NSArray *searchResults = [[self.sections valueForKeyPath:@"@unionOfArrays.self"] mutableCopy];
+//
+//    // Strip out all the leading and trailing spaces
+//    NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//
+//    // Break up the search terms (separated by spaces)
+//    NSArray *searchItems = nil;
+//    if (strippedString.length > 0) {
+//        searchItems = [strippedString componentsSeparatedByString:@" "];
+//    }
+//
+//    NSMutableArray *searchItemPredicates = [NSMutableArray array];
+//    NSMutableArray *numberPredicates = [NSMutableArray array];
+//    for (NSString *searchString in searchItems) {
+//        NSPredicate *displayNamePredicate = [NSPredicate predicateWithFormat:@"displayName CONTAINS[cd] %@", searchString];
+//        [searchItemPredicates addObject:displayNamePredicate];
+//
+//        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+//        [numberFormatter setNumberStyle:NSNumberFormatterNoStyle];
+//        NSNumber *targetNumber = [numberFormatter  numberFromString:searchString];
+//
+//        if (targetNumber != nil) {
+//            NSPredicate *e164Predicate = [NSPredicate predicateWithFormat:@"e164 == %@", targetNumber];
+//            [numberPredicates addObject:e164Predicate];
+//        }
+//    }
+//
+//    NSCompoundPredicate *andPredicates = [NSCompoundPredicate andPredicateWithSubpredicates:searchItemPredicates];
+//    NSCompoundPredicate *orPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:numberPredicates];
+//    NSCompoundPredicate *finalPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[andPredicates, orPredicates]];
+//
+//    searchResults = [searchResults filteredArrayUsingPredicate:finalPredicate];
+//
+//    // Hand over the filtered results to our search results table
+//    CountryCodeResultsTableViewController *tableController = (CountryCodeResultsTableViewController *)self.searchController.searchResultsController;
+//    tableController.filteredCountries = searchResults;
+//    [tableController.tableView reloadData];
+//}
 
 #pragma mark - UITableViewDelegate
 
