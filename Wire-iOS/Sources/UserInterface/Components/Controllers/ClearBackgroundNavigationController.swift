@@ -35,6 +35,10 @@ final class ClearBackgroundNavigationController: UINavigationController {
         self.setup()
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setup()
