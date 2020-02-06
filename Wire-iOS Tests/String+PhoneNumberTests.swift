@@ -64,7 +64,7 @@ final class String_PhoneNumberTests: XCTestCase {
         sut = "+49017612345678"
 
         // WHEN & THEN
-        let presetCountry = Country(iso: "", e164: 49)!
+        let presetCountry = Country(iso: "", e164: 49)
 
         if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
             XCTAssertEqual(country.iso, "de")
