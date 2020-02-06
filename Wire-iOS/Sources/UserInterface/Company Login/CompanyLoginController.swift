@@ -282,7 +282,13 @@ import WireCommonComponents
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
             guard result.error == nil, let backendEnvironment = result.value else {
-                self.presentCompanyLoginAlert(error: .domainNotRegistered)
+                
+                if case SessionManager.SwitchBackendError.loggedInAccounts? = result.error {
+                    self.presentCompanyLoginAlert(error: .domainAssociatedWithWrongServer)
+                } else {
+                    self.presentCompanyLoginAlert(error: .domainNotRegistered)
+                }
+                
                 return
             }
             BackendEnvironment.shared = backendEnvironment
