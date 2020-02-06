@@ -26,10 +26,8 @@ extension ContactsViewController {
 
 extension ContactsViewController: ContactsDataSourceDelegate {
 
-    func dataSource(_ dataSource: ContactsDataSource,
-                           cellFor user: UserType,
-                           at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
+    func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsCell.reuseIdentifier, for: indexPath) as? ContactsCell else {
             fatal("Cannot create cell")
         }
         cell.contentBackgroundColor = .clear

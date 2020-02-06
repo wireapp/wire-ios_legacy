@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers class ContactsSectionHeaderView: UITableViewHeaderFooterView {
+@objcMembers class ContactsSectionHeaderView: UITableViewHeaderFooterView, Reusable {
     let label: UILabel = {
         let label = UILabel()
         label.font = .smallSemiboldFont

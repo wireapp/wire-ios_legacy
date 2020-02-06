@@ -46,9 +46,6 @@ class ContactsViewController: UIViewController {
 
     weak var delegate: ContactsViewControllerDelegate?
 
-    let ContactsViewControllerCellID = "ContactsCell"
-    let ContactsViewControllerSectionHeaderID = "ContactsSectionHeaderView"
-
     var bottomContainerView = UIView()
     var bottomContainerSeparatorView = UIView()
     var noContactsLabel = UILabel()
@@ -131,8 +128,8 @@ class ContactsViewController: UIViewController {
         tableView.rowHeight = 52
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionIndexMinimumDisplayRowCount = Int(ContactsDataSource.MinimumNumberOfContactsToDisplaySections)
-        tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsViewControllerCellID)
-        tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsViewControllerSectionHeaderID)
+        tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsCell.reuseIdentifier)
+        tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsSectionHeaderView.reuseIdentifier)
 
         let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomContainerHeight, right: 0)
