@@ -54,17 +54,13 @@ extension ContactsViewController {
 }
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {
+
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         dataSource.searchQuery = query
         updateEmptyResults()
     }
 
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
-        if searchHeaderViewController.tokenField.tokens.count == 0 {
-            updateEmptyResults()
-            return
-        }
-
-        delegate?.contactsViewControllerDidConfirmSelection(self)
+        // No op
     }
 }

@@ -20,18 +20,10 @@ import Foundation
 
 extension StartUIViewController: ContactsViewControllerDelegate {
 
-    public func contactsViewControllerDidCancel(_ controller: ContactsViewController) {
-        dismiss(animated: true)
-    }
-
     public func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController) {
         dismiss(animated: true) {
             UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
         }
-    }
-
-    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController) {
-        // no-op
     }
 
 }

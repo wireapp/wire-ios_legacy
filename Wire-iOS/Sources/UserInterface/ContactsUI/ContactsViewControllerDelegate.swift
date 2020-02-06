@@ -18,11 +18,8 @@
 
 import Foundation
 
-@objc
-protocol ContactsViewControllerDelegate: NSObjectProtocol {
-    func contactsViewControllerDidCancel(_ controller: ContactsViewController)
-    
+protocol ContactsViewControllerDelegate: class {
+
     func contactsViewControllerDidNotShareContacts(_ controller: ContactsViewController)
-    
-    func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController)
+
 }
