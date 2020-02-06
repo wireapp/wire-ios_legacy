@@ -40,6 +40,7 @@ import Foundation
     override init() {
         super.init()
         searchDirectory = ZMUserSession.shared().map(SearchDirectory.init)
+        performSearch()
     }
 
     deinit {

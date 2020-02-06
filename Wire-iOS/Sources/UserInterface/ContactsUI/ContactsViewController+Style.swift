@@ -24,6 +24,16 @@ extension ContactsViewController {
 
         noContactsLabel.font = .normalLightFont
         noContactsLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
+
+        view.backgroundColor = .clear
+
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.sectionIndexBackgroundColor = .clear
+        tableView.sectionIndexColor = .accent()
+
+        bottomContainerSeparatorView.backgroundColor = UIColor.from(scheme: .separator, variant: .dark)
+        bottomContainerView.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {

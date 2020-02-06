@@ -20,11 +20,7 @@ import Foundation
 
 extension ContactsViewController {
     func actionButtonHidden() -> Bool {
-        if let shouldDisplayActionButtonForUser = contentDelegate?.shouldDisplayActionButton {
-            return !shouldDisplayActionButtonForUser
-        } else {
-            return true
-        }
+        return false
     }
 }
 
@@ -46,20 +42,29 @@ extension ContactsViewController: ContactsDataSourceDelegate {
                 let cell = cell,
                 let user = user else { return }
 
-            self.contentDelegate?.contactsViewController(self, actionButton: cell.actionButton, pressedFor: user)
-
+            self.invite(user: user, from: cell.actionButton)
             cell.actionButton.isHidden = self.actionButtonHidden()
         }
 
         cell.actionButton.isHidden = actionButtonHidden()
 
-        if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false) {
+        if !cell.actionButton.isHidden {
+            let index: Int
+            // TODO: Add this to UserType
+            let isIgnored = (user as? ZMSearchUser)?.user?.isIgnored ?? false
+            if user.isConnected || user.isPendingApproval && isIgnored {
+                index = 0
+            } else if !isIgnored && !user.isPendingApprovalByOtherUser {
+                index = 2
+            } else {
+                index = 1
+            }
 
-                let titleString = actionButtonTitles[Int(index)]
+            // This is dangerous
+            let titleString = actionButtonTitles[Int(index)]
 
-                cell.allActionButtonTitles = actionButtonTitles
-                cell.actionButton.setTitle(titleString, for: .normal)
+            cell.allActionButtonTitles = actionButtonTitles
+            cell.actionButton.setTitle(titleString, for: .normal)
         }
 
         return cell
