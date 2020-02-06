@@ -17,7 +17,10 @@
 
 import Foundation
 
-extension CountryCodeBaseTableViewController {
+let CountryCodeCellIdentifier = "CountryCodeCellIdentifier"
+
+
+class CountryCodeBaseTableViewController: UITableViewController {
 
     override open func viewDidLoad() {
         super.viewDidLoad()
