@@ -70,8 +70,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
-	<key>DefaultBackend</key>
-	<string>${DEFAULT_BACKEND}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>

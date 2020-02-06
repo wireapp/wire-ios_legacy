@@ -108,7 +108,7 @@ final class CallTopOverlayController: UIViewController {
             self?.openCall(nil)
         })
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))

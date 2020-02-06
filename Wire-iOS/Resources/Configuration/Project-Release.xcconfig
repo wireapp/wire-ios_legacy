@@ -37,8 +37,7 @@ ENABLE_NS_ASSERTIONS = NO
 // FT - feature toggle
 //
 // ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
-// WIRESTAN - Enabled the fake country in the phone number selection
-FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=0 WIRESTAN=0
+FEATURE_FLAGS = ENABLE_DEVELOPER_MENU=0
 
 // Use analytics / App Center for Release builds:
 USE_APP_CENTER=1

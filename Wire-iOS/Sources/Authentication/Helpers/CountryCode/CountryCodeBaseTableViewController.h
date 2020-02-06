@@ -31,6 +31,4 @@ FOUNDATION_EXTERN NSString * const CountryCodeCellIdentifier;
 
 @interface CountryCodeBaseTableViewController : UITableViewController
 
-- (void)configureCell:(UITableViewCell *)cell forCountry:(Country *)country;
-
 @end

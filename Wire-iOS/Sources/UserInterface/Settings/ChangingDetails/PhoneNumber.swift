@@ -52,18 +52,18 @@ struct PhoneNumber: Equatable {
     let numberWithoutCode: String
 
     var country: Country {
-        return Country.detect(fromCode: countryCode) ?? .default
+        return Country.detect(fromCode: countryCode) ?? .defaultCountry
     }
 
     init(countryCode: UInt, numberWithoutCode: String) {
         self.countryCode = countryCode
         self.numberWithoutCode = numberWithoutCode
-        fullNumber = NSString.phoneNumber(withE164: countryCode as NSNumber, number: numberWithoutCode)
+        fullNumber = String.phoneNumber(withE164: countryCode, number: numberWithoutCode)
     }
 
     init?(fullNumber: String) {
         guard let country = Country.detect(forPhoneNumber: fullNumber) else { return nil }
-        countryCode = country.e164.uintValue
+        countryCode = country.e164
         let prefix = country.e164PrefixString
         numberWithoutCode = String(fullNumber[prefix.endIndex...])
         self.fullNumber = fullNumber
