@@ -71,9 +71,8 @@ extension ContactsViewController: ContactsDataSourceDelegate {
     }
 
     func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType]) {
-        searchResultsReceived = true
         tableView.reloadData()
-        updateEmptyResults()
+        updateEmptyResults(hasResults: !newUser.isEmpty)
     }
 
     func dataSource(_ dataSource: ContactsDataSource, didSelect user: UserType) {

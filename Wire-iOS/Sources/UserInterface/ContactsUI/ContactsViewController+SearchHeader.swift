@@ -32,22 +32,8 @@ extension ContactsViewController {
         self.searchHeaderViewController = searchHeaderViewController
     }
 
-    var numTableRows: UInt {
-        return tableView.numberOfTotalRows()
-    }
-
-    @objc func updateEmptyResults() {
-        let searchQueryCount = dataSource.searchQuery.count
-        let showEmptyResults = searchResultsReceived && !(numTableRows != 0)
-        let showNoContactsLabel = !(numTableRows != 0) && (searchQueryCount == 0) && !(searchHeaderViewController.tokenField.userDidConfirmInput)
-        noContactsLabel.isHidden = !showNoContactsLabel
-        bottomContainerView.isHidden = (searchQueryCount > 0) || showEmptyResults
-
-        setEmptyResultsHidden(!showEmptyResults, animated: showEmptyResults)
-    }
-
     func showKeyboardIfNeeded() {
-        if numTableRows > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
+        if tableView.numberOfTotalRows() > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
             searchHeaderViewController.tokenField.becomeFirstResponder()
         }
     }
@@ -57,7 +43,6 @@ extension ContactsViewController: SearchHeaderViewControllerDelegate {
 
     public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         dataSource.searchQuery = query
-        updateEmptyResults()
     }
 
     public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {

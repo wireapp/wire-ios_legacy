@@ -49,8 +49,6 @@ class ContactsViewController: UIViewController {
     let ContactsViewControllerCellID = "ContactsCell"
     let ContactsViewControllerSectionHeaderID = "ContactsSectionHeaderView"
 
-    var searchResultsReceived = false
-
     var bottomContainerView = UIView()
     var bottomContainerSeparatorView = UIView()
     var noContactsLabel = UILabel()
@@ -124,7 +122,6 @@ class ContactsViewController: UIViewController {
         setupEmptyResultsView()
         setupNoContactsLabel()
         setupBottomContainer()
-        updateEmptyResults()
     }
 
     private func setupTableView() {
@@ -166,36 +163,24 @@ class ContactsViewController: UIViewController {
 
     // MARK: - Methods
 
-    func setEmptyResultsHidden(_ hidden: Bool, animated: Bool) {
-        let hiddenBlock: (Bool) -> Void = {
-            self.emptyResultsView.isHidden = $0
-            self.tableView.isHidden = !$0
+    func updateEmptyResults(hasResults: Bool) {
+        let searchQueryExist = !dataSource.searchQuery.isEmpty
+        noContactsLabel.isHidden = hasResults || searchQueryExist
+        bottomContainerView.isHidden = !hasResults || searchQueryExist
+        setEmptyResultsHidden(hasResults)
+    }
+
+    private func setEmptyResultsHidden(_ hidden: Bool) {
+        let completion: (Bool) -> Void = { finished in
+            self.emptyResultsView.isHidden = hidden
+            self.tableView.isHidden = !hidden
         }
 
-        if !hidden {
-            hiddenBlock(false)
-        }
-
-        let animationBlock: () -> Void = {
-            self.emptyResultsView.alpha = hidden ? 0 : 1
-        }
-
-        let completion: (_ finished: Bool) -> Void = { finished in
-            if hidden {
-                hiddenBlock(true)
-            }
-        }
-
-        if animated {
-            UIView.animate(withDuration: 0.25,
-                           delay: 0,
-                           options: .beginFromCurrentState,
-                           animations: animationBlock,
-                           completion: completion)
-        } else {
-            animationBlock()
-            completion(true)
-        }
+        UIView.animate(withDuration: 0.25,
+                       delay: 0,
+                       options: .beginFromCurrentState,
+                       animations: { self.emptyResultsView.alpha = hidden ? 0 : 1 },
+                       completion: completion)
     }
 
     private func presentShareContactsViewControllerIfNeeded() {
