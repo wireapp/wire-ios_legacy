@@ -32,17 +32,6 @@ extension ContactsViewController {
         self.searchHeaderViewController = searchHeaderViewController
     }
 
-    func createSearchHeaderConstraints() {
-        guard let searchHeaderViewControllerView = searchHeaderViewController.view else { return }
-
-        constrain(searchHeaderViewControllerView, self.view, separatorView) { searchHeader, selfView, separatorView in
-            searchHeader.leading == selfView.leading
-            searchHeader.trailing == selfView.trailing
-            searchHeader.top == selfView.top
-            searchHeader.bottom == separatorView.top
-        }
-    }
-
     var numTableRows: UInt {
         return tableView.numberOfTotalRows()
     }

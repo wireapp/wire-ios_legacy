@@ -22,7 +22,8 @@ extension ContactsViewController {
 
     @objc
     func setupLayout() {
-        [separatorView,
+        [searchHeaderViewController.view,
+         separatorView,
          tableView,
          emptyResultsView,
          inviteOthersButton,
@@ -34,7 +35,12 @@ extension ContactsViewController {
 
         var constraints: [NSLayoutConstraint] = []
 
-        createSearchHeaderConstraints()
+        constraints += [
+            searchHeaderViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchHeaderViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchHeaderViewController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            searchHeaderViewController.view.bottomAnchor.constraint(equalTo: separatorView.topAnchor)
+        ]
 
         constraints += [
             separatorView.leadingAnchor.constraint(equalTo: separatorView.superview!.leadingAnchor, constant: standardOffset),
