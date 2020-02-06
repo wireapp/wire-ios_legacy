@@ -71,7 +71,7 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "CountryCodeTableViewController.h"
+#import "CountryCodeBaseTableViewController.h"
 #import "ContactsDataSource.h"
 #import "Button.h"
 
