@@ -20,15 +20,15 @@ import XCTest
 @testable import Wire
 
 final class String_PhoneNumberTests: XCTestCase {
-    
+
     var sut: String!
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testThatPhoneNumberWithSpaceIsParsed(){
+    func testThatPhoneNumberWithSpaceIsParsed() {
         // GIVEN
         sut = "+41 86 079 209 36 37"
 
@@ -43,7 +43,7 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
-    func testThatPhoneNumberWithDash(){
+    func testThatPhoneNumberWithDash() {
         // GIVEN
         sut = "+41 86-079-209-36-37"
 
@@ -59,10 +59,9 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
-    func testThatPhoneNumberWithoutSpaceIsParsed(){
+    func testThatPhoneNumberWithoutSpaceIsParsed() {
         // GIVEN
         sut = "+41860792093637"
-
 
         // WHEN & THEN
         let presetCountry = Country(iso: "", e164:  49)
@@ -75,7 +74,7 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
-    func testThatPhoneNumberWithNoCountryCodeIsParsedAndNormized(){
+    func testThatPhoneNumberWithNoCountryCodeIsParsedAndNormized() {
         // GIVEN
         sut = "86 079 209 36 37"
 
@@ -90,7 +89,7 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
-    func testThatInvalidPhoneNumberIsNotParsed(){
+    func testThatInvalidPhoneNumberIsNotParsed() {
         // GIVEN
         sut = "860792093637860792093637860792093637"
 

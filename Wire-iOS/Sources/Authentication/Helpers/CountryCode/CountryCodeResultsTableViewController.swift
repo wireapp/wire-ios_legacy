@@ -16,27 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 final class CountryCodeResultsTableViewController: CountryCodeBaseTableViewController {
     @objc
     var filteredCountries: [AnyHashable]?
-    
+
     // MARK: - TableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredCountries?.count ?? 0
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeCellIdentifier, for: indexPath)
-        
+
         if let country = filteredCountries?[indexPath.row] as? Country {
             configureCell(cell, for: country)
         }
-        
+
         return cell
     }
 }

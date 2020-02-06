@@ -352,7 +352,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     func submitValue() {
         var phoneNumber = PhoneNumber(countryCode: country.e164, numberWithoutCode: textField.input)
         let validationResult = phoneNumber.validate()
-        
+
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
 
         if validationError == nil && validationResult == .valid {
