@@ -28,7 +28,7 @@ extension ContactsViewController {
          inviteOthersButton,
          noContactsLabel,
          bottomContainerSeparatorView,
-         bottomContainerView].forEach(){$0.translatesAutoresizingMaskIntoConstraints = false}
+         bottomContainerView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
 
         let standardOffset: CGFloat = 24.0
 
@@ -36,16 +36,18 @@ extension ContactsViewController {
 
         createSearchHeaderConstraints()
 
-        constraints += [separatorView.leadingAnchor.constraint(equalTo: separatorView.superview!.leadingAnchor, constant: standardOffset),
-                        separatorView.trailingAnchor.constraint(equalTo: separatorView.superview!.trailingAnchor, constant: -standardOffset),
+        constraints += [
+            separatorView.leadingAnchor.constraint(equalTo: separatorView.superview!.leadingAnchor, constant: standardOffset),
+            separatorView.trailingAnchor.constraint(equalTo: separatorView.superview!.trailingAnchor, constant: -standardOffset),
 
-                        separatorView.heightAnchor.constraint(equalToConstant: 0.5),
-                        separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
-                        separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor),
+            separatorView.heightAnchor.constraint(equalToConstant: 0.5),
+            separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
+            separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor),
 
-                        tableView.leadingAnchor.constraint(equalTo: tableView.superview!.leadingAnchor),
-                        tableView.trailingAnchor.constraint(equalTo: tableView.superview!.trailingAnchor),
-                        tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)]
+            tableView.leadingAnchor.constraint(equalTo: tableView.superview!.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: tableView.superview!.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)
+        ]
 
         emptyResultsBottomConstraint = emptyResultsView.bottomAnchor.constraint(equalTo: emptyResultsView.superview!.bottomAnchor)
 
@@ -54,30 +56,32 @@ extension ContactsViewController {
             emptyResultsView.trailingAnchor.constraint(equalTo: emptyResultsView.superview!.trailingAnchor),
             emptyResultsBottomConstraint]
 
-        constraints += [noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
-
-                        noContactsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: standardOffset),
-                        noContactsLabel.trailingAnchor.constraint(equalTo: noContactsLabel.superview!.trailingAnchor)]
-
+        constraints += [
+            noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),
+            noContactsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: standardOffset),
+            noContactsLabel.trailingAnchor.constraint(equalTo: noContactsLabel.superview!.trailingAnchor)
+        ]
 
         bottomContainerBottomConstraint = bottomContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.superview!.bottomAnchor)
 
-        constraints += [bottomContainerBottomConstraint,
-                        bottomContainerView.leadingAnchor.constraint(equalTo: bottomContainerView.superview!.leadingAnchor),
-                        bottomContainerView.trailingAnchor.constraint(equalTo: bottomContainerView.superview!.trailingAnchor),
-
-                        bottomContainerSeparatorView.topAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.topAnchor),
-                        bottomContainerSeparatorView.leadingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.leadingAnchor),
-                        bottomContainerSeparatorView.trailingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.trailingAnchor),
-
-                        bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)]
+        constraints += [
+            bottomContainerBottomConstraint,
+            bottomContainerView.leadingAnchor.constraint(equalTo: bottomContainerView.superview!.leadingAnchor),
+            bottomContainerView.trailingAnchor.constraint(equalTo: bottomContainerView.superview!.trailingAnchor),
+            bottomContainerSeparatorView.topAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.topAnchor),
+            bottomContainerSeparatorView.leadingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.leadingAnchor),
+            bottomContainerSeparatorView.trailingAnchor.constraint(equalTo: bottomContainerSeparatorView.superview!.trailingAnchor),
+            bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)
+        ]
 
         bottomEdgeConstraint = inviteOthersButton.bottomAnchor.constraint(equalTo: inviteOthersButton.superview!.bottomAnchor, constant: -(standardOffset / 2.0 + UIScreen.safeArea.bottom))
 
-        constraints += [bottomEdgeConstraint,
-                        inviteOthersButton.topAnchor.constraint(equalTo: inviteOthersButton.superview!.topAnchor, constant: standardOffset / CGFloat(2)),
-                        inviteOthersButton.leadingAnchor.constraint(equalTo: inviteOthersButton.superview!.leadingAnchor, constant: standardOffset),
-                        inviteOthersButton.trailingAnchor.constraint(equalTo: inviteOthersButton.superview!.trailingAnchor, constant: -standardOffset)]
+        constraints += [
+            bottomEdgeConstraint,
+            inviteOthersButton.topAnchor.constraint(equalTo: inviteOthersButton.superview!.topAnchor, constant: standardOffset / CGFloat(2)),
+            inviteOthersButton.leadingAnchor.constraint(equalTo: inviteOthersButton.superview!.leadingAnchor, constant: standardOffset),
+            inviteOthersButton.trailingAnchor.constraint(equalTo: inviteOthersButton.superview!.trailingAnchor, constant: -standardOffset)
+        ]
 
         constraints += [inviteOthersButton.heightAnchor.constraint(equalToConstant: 28)]
 
