@@ -128,8 +128,8 @@ class ContactsViewController: UIViewController {
         tableView.rowHeight = 52
         tableView.keyboardDismissMode = .onDrag
         tableView.sectionIndexMinimumDisplayRowCount = Int(ContactsDataSource.MinimumNumberOfContactsToDisplaySections)
-        tableView.register(ContactsCell.self, forCellReuseIdentifier: ContactsCell.reuseIdentifier)
-        tableView.register(ContactsSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: ContactsSectionHeaderView.reuseIdentifier)
+        ContactsCell.register(in: tableView)
+        ContactsSectionHeaderView.register(in: tableView)
 
         let bottomContainerHeight: CGFloat = 56.0 + UIScreen.safeArea.bottom
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomContainerHeight, right: 0)

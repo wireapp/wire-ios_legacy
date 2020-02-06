@@ -26,8 +26,8 @@ extension ContactsViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let title = headerTitle(section: section), title.count > 0 else { return nil }
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ContactsSectionHeaderView.reuseIdentifier) as? ContactsSectionHeaderView
-        headerView?.label.text = title
+        let headerView = tableView.dequeueReusableHeaderFooter(ofType: ContactsSectionHeaderView.self)
+        headerView.label.text = title
         return headerView
     }
 
