@@ -29,4 +29,8 @@ extension AutomationHelper {
         guard shouldPersistBackendType else { return }
         UserDefaults.standard.set(type, forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
     }
+    
+    public func disableBackendTypeOverride() {
+        UserDefaults.standard.removeObject(forKey: AutomationHelper.backendEnvironmentTypeOverrideKey)
+    }
 }

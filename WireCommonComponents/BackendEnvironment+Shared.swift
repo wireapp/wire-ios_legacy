@@ -34,6 +34,7 @@ extension BackendEnvironment {
         return environment
         }() {
         didSet {
+            AutomationHelper.sharedHelper.disableBackendTypeOverride()
             shared.save(in: .applicationGroup)
             NotificationCenter.default.post(name: backendSwitchNotification, object: shared)
         }
