@@ -46,13 +46,6 @@ class ContactsViewController: UIViewController {
 
     weak var delegate: ContactsViewControllerDelegate?
 
-    // I think we can get rid of this
-    weak var contentDelegate: ContactsViewControllerContentDelegate? {
-        didSet {
-            updateActionButtonTitles()
-        }
-    }
-
     var shouldShowShareContactsViewController = true
 
     let ContactsViewControllerCellID = "ContactsCell"
@@ -174,14 +167,6 @@ class ContactsViewController: UIViewController {
     }
 
     // MARK: - Methods
-
-    func updateActionButtonTitles() {
-        actionButtonTitles = [
-            "contacts_ui.action_button.open",
-            "contacts_ui.action_button.invite",
-            "connection_request.send_button_title"
-        ].map(\.localized)
-    }
 
     func setEmptyResultsHidden(_ hidden: Bool, animated: Bool) {
         let hiddenBlock: (Bool) -> Void = {

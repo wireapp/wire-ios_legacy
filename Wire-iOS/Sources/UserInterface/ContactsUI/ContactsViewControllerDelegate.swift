@@ -26,25 +26,3 @@ protocol ContactsViewControllerDelegate: NSObjectProtocol {
     
     func contactsViewControllerDidConfirmSelection(_ controller: ContactsViewController)
 }
-
-@objc
-protocol ContactsViewControllerContentDelegate: NSObjectProtocol {
-    
-    var shouldDisplayActionButton: Bool { get }
-    
-    func contactsViewController(_ controller: ContactsViewController,
-                                actionButton: UIButton, pressedFor user: ZMSearchUser)
-    
-    func contactsViewController(_ controller: ContactsViewController,
-                                didSelect cell: ContactsCell, for user: ZMSearchUser)
-    
-    func contactsViewController(_ controller: ContactsViewController, shouldSelect user: ZMSearchUser) -> Bool
-    
-    
-    // This API might look strange, but we need it for making all the buttons to have same width
-    func actionButtonTitles(for controller: ContactsViewController) -> [String]
-    
-    func contactsViewController(_ controller: ContactsViewController,
-                                actionButtonTitleIndexFor user: UserType?,
-                                isIgnored: Bool) -> Int
-}
