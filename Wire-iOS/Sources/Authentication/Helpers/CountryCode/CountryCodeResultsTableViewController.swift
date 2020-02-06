@@ -17,7 +17,6 @@
 // 
 
 final class CountryCodeResultsTableViewController: CountryCodeBaseTableViewController {
-    @objc
     var filteredCountries: [AnyHashable]?
 
     // MARK: - TableViewDataSource

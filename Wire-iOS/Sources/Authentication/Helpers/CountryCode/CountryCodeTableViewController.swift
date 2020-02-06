@@ -22,7 +22,9 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
     weak var delegate: CountryCodeTableViewControllerDelegate?
     private var sections: [[Any]]?
     private var sectionTitles: [AnyHashable]?
-    private var searchController: UISearchController?
+    lazy var searchController: UISearchController = {
+        return UISearchController(searchResultsController: resultsTableViewController)
+    }()
     private let resultsTableViewController: CountryCodeResultsTableViewController = CountryCodeResultsTableViewController()
     
     override func viewDidLoad() {
@@ -30,22 +32,22 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
         
         createDataSource()
         
-        searchController = UISearchController(searchResultsController: resultsTableViewController)
-        searchController?.searchResultsUpdater = self
-        searchController?.searchBar.sizeToFit()
+        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.sizeToFit()
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
         } else {
-            tableView.tableHeaderView = searchController?.searchBar
+            tableView.tableHeaderView = searchController.searchBar
         }
         tableView.sectionIndexBackgroundColor = UIColor.clear
         
         resultsTableViewController.tableView.delegate = self
-        searchController?.delegate = self
-        searchController?.dimsBackgroundDuringPresentation = false
-        searchController?.searchBar.delegate = self
-        searchController?.searchBar.backgroundColor = UIColor.white
+        searchController.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        searchController.searchBar.backgroundColor = UIColor.white
         
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         
@@ -111,7 +113,7 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
         searchResults = searchResults.filtered(using: finalPredicate) as NSArray
         
         // Hand over the filtered results to our search results table
-        let tableController = self.searchController?.searchResultsController as? CountryCodeResultsTableViewController
+        let tableController = self.searchController.searchResultsController as? CountryCodeResultsTableViewController
         tableController?.filteredCountries = searchResults as? [AnyHashable]
         tableController?.tableView.reloadData()
     }
@@ -121,7 +123,7 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
         let selectedCountry: Country?
         if resultsTableViewController.tableView == tableView {
             selectedCountry = resultsTableViewController.filteredCountries?[indexPath.row] as? Country
-            searchController?.isActive = false
+            searchController.isActive = false
         } else {
             selectedCountry = sections?[indexPath.section][indexPath.row] as? Country
         }

@@ -19,7 +19,6 @@ import Foundation
 
 let CountryCodeCellIdentifier = "CountryCodeCellIdentifier"
 
-
 class CountryCodeBaseTableViewController: UITableViewController {
 
     override open func viewDidLoad() {
@@ -28,7 +27,6 @@ class CountryCodeBaseTableViewController: UITableViewController {
         tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCodeCellIdentifier)
     }
 
-    @objc(configureCell:forCountry:)
     func configureCell(_ cell: UITableViewCell, for country: Country) {
         cell.textLabel?.text = country.displayName
         cell.detailTextLabel?.text = "+\(country.e164)"
