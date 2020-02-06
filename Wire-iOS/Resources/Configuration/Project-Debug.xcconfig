@@ -47,10 +47,6 @@ SWIFT_OPTIMIZATION_LEVEL = -Onone
 // LLVM compiler - Preprocessing
 //
 
-// Flags:
-// FT - feature toggle
-//
-// ENABLE_DEVELOPER_MENU - Enabled developer menu from self profile -> settings
 IS_INTERNAL_BUILD = 1
 
 DEVELOPER_MODE_ENABLED=1
