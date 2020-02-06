@@ -46,15 +46,17 @@ extension UIAlertController {
     }
     
     enum CompanyLoginError {
-        // Input doesn't match an email or SSO code format
+        /// Input doesn't match an email or SSO code format
         case invalidFormat
-        // SSO code is invalid
+        /// SSO code is invalid
         case invalidCode
-        // SSO code validation failed
+        /// SSO code validation failed
         case invalidStatus(StatusCode)
-        // Domain is not registered
+        /// Domain is not registered
         case domainNotRegistered
-        // Unknown error
+        //// Domain is associated with a different server than the already signed in account
+        case domainAssociatedWithWrongServer
+        /// Unknown error
         case unknown
         
         fileprivate func description(for copy: CompanyLoginCopy) -> String {
@@ -63,6 +65,8 @@ extension UIAlertController {
                 return "login.sso.error.alert.invalid_format.message.\(copy.rawValue)".localized
             case .domainNotRegistered:
                 return "login.sso.error.alert.domain_not_registered.message".localized
+            case .domainAssociatedWithWrongServer:
+                return "login.sso.error.alert.domain_associated_with_wrong_server.message".localized
             case .invalidCode:
                 return "login.sso.error.alert.invalid_code.message".localized
             case .invalidStatus(let status):
