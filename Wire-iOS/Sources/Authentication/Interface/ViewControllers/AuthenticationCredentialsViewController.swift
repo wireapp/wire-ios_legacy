@@ -148,7 +148,7 @@ final class AuthenticationCredentialsViewController: AuthenticationStepControlle
     func configure(with featureProvider: AuthenticationFeatureProvider) {
         if case .reauthentication? = flowType {
             tabBar.isHidden = prefilledCredentials != nil
-        } else if case .custom(url: _) = BackendEnvironment.shared.environmentType.value {
+        } else if case .custom = BackendEnvironment.shared.environmentType.value {
             tabBar.isHidden = true
         } else {
             tabBar.isHidden = featureProvider.allowOnlyEmailLogin
