@@ -58,7 +58,7 @@ struct ChangePhoneNumberState {
 
 }
 
-private enum Section: Int {
+fileprivate enum Section: Int {
     static var count: Int {
         return 2
     }

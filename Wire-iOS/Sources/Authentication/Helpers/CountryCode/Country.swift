@@ -28,7 +28,6 @@ extension String {
 final class Country: NSObject {
     let iso: String
 
-    @objc
     let e164: UInt
 
     class var defaultCountry: Country {
@@ -40,7 +39,7 @@ final class Country: NSObject {
 
         #endif
 
-        return Country.countryFromDevice() ?? Country(iso: "us", e164: 1)
+        return Country.countryFromDevice ?? Country(iso: "us", e164: 1)
     }
 
     init(iso: String, e164: UInt) {
@@ -79,7 +78,7 @@ final class Country: NSObject {
 
         // If country from device is in match list, probably it is desired by user
 
-        if let countryFromDevice = Country.countryFromDevice(), matches.contains(countryFromDevice) {
+        if let countryFromDevice = Country.countryFromDevice, matches.contains(countryFromDevice) {
             return countryFromDevice
         }
 
@@ -96,7 +95,6 @@ final class Country: NSObject {
         return matches.first
     }
 
-    @objc
     class var allCountries: [Country]? {
 
         var countries: [Country] = []
@@ -139,12 +137,13 @@ final class Country: NSObject {
         #endif
         var localized = Locale.current.localizedString(forRegionCode: iso)
 
-        if (localized?.count ?? 0) == 0 {
+        if localized?.isEmpty ?? true {
             // Try the fallback locale
             let USLocale = NSLocale(localeIdentifier: "en_US")
             localized = USLocale.displayName(forKey: .countryCode, value: iso)
         }
-        if (localized?.count ?? 0) == 0 {
+
+        if localized?.isEmpty ?? true {
             // Return something instead of just @c nil
             return iso.uppercased()
         }
@@ -159,7 +158,7 @@ final class Country: NSObject {
     ///  Return a Country form country code of carrier. If carrier not exists, get the country from current locale
     ///
     /// - Returns: a Country object
-    class func countryFromDevice() -> Country? {
+    class var countryFromDevice: Country? {
         let networkInfo = CTTelephonyNetworkInfo()
 
         let carrier: CTCarrier?
@@ -187,8 +186,10 @@ final class Country: NSObject {
 
 extension Dictionary {
     static func contentsOf(url: URL) -> Dictionary<String, AnyObject>? {
-        let data = try! Data(contentsOf: url)
-        let plist = try! PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil)
+        guard let data = try? Data(contentsOf: url),
+              let plist = try? PropertyListSerialization.propertyList(from: data, options: .mutableContainers, format: nil) else {
+                return nil
+        }
 
         return plist as? [String: AnyObject]
     }

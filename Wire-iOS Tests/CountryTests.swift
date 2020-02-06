@@ -23,7 +23,7 @@ final class CountryTests: XCTestCase {
 
     func testThatCountryFromDeviceGivesCurrentCountry(){
         // GIVEN
-        let countryFromDevice = Country.countryFromDevice()!
+        let countryFromDevice = Country.countryFromDevice!
 
         // WHEN & THEN
         XCTAssertEqual(countryFromDevice.iso, "us")
