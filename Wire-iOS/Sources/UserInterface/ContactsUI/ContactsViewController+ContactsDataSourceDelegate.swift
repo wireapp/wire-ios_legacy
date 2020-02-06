@@ -37,20 +37,19 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         }
 
         if !cell.actionButton.isHidden {
-            let titleKey: String
+            let action: ContactsCell.Action
 
             // TODO: Add this to UserType
             let isIgnored = (user as? ZMSearchUser)?.user?.isIgnored ?? false
             if user.isConnected || user.isPendingApproval && isIgnored {
-                titleKey = "contacts_ui.action_button.open"
+                action = .open
             } else if !isIgnored && !user.isPendingApprovalByOtherUser {
-                titleKey = "connection_request.send_button_title"
+                action = .connect
             } else {
-                titleKey = "contacts_ui.action_button.invite"
+                action = .invite
             }
 
-            cell.allActionButtonTitles = actionButtonTitles
-            cell.actionButton.setTitle(titleKey.localized, for: .normal)
+            cell.action = action
         }
 
         return cell

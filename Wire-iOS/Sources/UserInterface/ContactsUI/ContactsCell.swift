@@ -90,30 +90,31 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         return label
     }()
 
-    let actionButton: Button = {
-        let button = Button(style: .full)
-        button.setTitle("contacts_ui.action_button.invite".localized, for: .normal)
+    var action: Action? {
+        didSet {
+            actionButton.setTitle(action?.localizedDescription, for: .normal)
+        }
+    }
 
-        return button
-    }()
+    let actionButton: Button = Button(style: .full)
+
     var actionButtonHandler: ContactsCellActionButtonHandler?
 
+    private lazy var actionButtonWidth: CGFloat = {
+        guard let font = actionButton.titleLabel?.font else { return 0 }
 
-    /// needed to calculate button width
-    var allActionButtonTitles: [String] = [] {
-        didSet {
-            if let titleLabelFont = actionButton.titleLabel?.font {
-                actionButtonWidth = CGFloat(actionButtonWidth(forTitles: allActionButtonTitles, textTransform: actionButton.textTransform, contentInsets: actionButton.contentEdgeInsets, textAttributes: [NSAttributedString.Key.font: titleLabelFont]))
-            }
-        }
-    }
+        let transform = actionButton.textTransform
+        let insets = actionButton.contentEdgeInsets
 
-    var actionButtonWidth: CGFloat = 0 {
-        didSet {
-            actionButtonWidthConstraint.constant = actionButtonWidth
+        let titleWidths: [CGFloat] = [Action.open, .connect, .invite].map {
+            let title = $0.localizedDescription
+            let transformedTitle = title.applying(transform: transform)
+            return transformedTitle.size(withAttributes: [.font: font]).width
         }
-    }
-    var actionButtonWidthConstraint: NSLayoutConstraint!
+
+        let maxWidth = titleWidths.max()!
+        return CGFloat(ceilf(Float(insets.left + maxWidth + insets.right)))
+    }()
 
     var titleStackView: UIStackView!
     var contentStackView: UIStackView!
@@ -195,10 +196,9 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
             buttonSpacer.top == actionButton.top
             buttonSpacer.bottom == actionButton.bottom
 
-            actionButtonWidthConstraint = actionButton.width == actionButtonWidth
+            actionButton.width == actionButtonWidth
             buttonSpacer.trailing == actionButton.trailing
             buttonSpacer.leading == actionButton.leading - buttonMargin
-
         }
     }
 
@@ -247,4 +247,25 @@ extension ContactsCell: Themeable {
 
 extension ContactsCell: UserCellSubtitleProtocol {
     static var correlationFormatters:  [ColorSchemeVariant : AddressBookCorrelationFormatter] = [:]
+}
+
+extension ContactsCell {
+
+    enum Action {
+
+        case open
+        case connect
+        case invite
+
+        var localizedDescription: String {
+            switch self {
+            case .open:
+                return "contacts_ui.action_button.open".localized
+            case .connect:
+                return "connection_request.send_button_title".localized
+            case .invite:
+                return "contacts_ui.action_button.invite".localized
+            }
+        }
+    }
 }

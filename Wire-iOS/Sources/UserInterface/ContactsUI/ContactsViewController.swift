@@ -59,12 +59,6 @@ class ContactsViewController: UIViewController {
     var bottomContainerBottomConstraint: NSLayoutConstraint!
     var emptyResultsBottomConstraint: NSLayoutConstraint!
 
-    var actionButtonTitles = [
-        "contacts_ui.action_button.open",
-        "contacts_ui.action_button.invite",
-        "connection_request.send_button_title"
-    ].map(\.localized)
-
     // MARK: - Life Cycle
 
     init() {
