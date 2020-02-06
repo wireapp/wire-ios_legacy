@@ -46,8 +46,6 @@ class ContactsViewController: UIViewController {
 
     weak var delegate: ContactsViewControllerDelegate?
 
-    var shouldShowShareContactsViewController = true
-
     let ContactsViewControllerCellID = "ContactsCell"
     let ContactsViewControllerSectionHeaderID = "ContactsSectionHeaderView"
 
@@ -201,9 +199,9 @@ class ContactsViewController: UIViewController {
     }
 
     private func presentShareContactsViewControllerIfNeeded() {
-        let shouldSkip: Bool = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        let shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
 
-        if !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip && shouldShowShareContactsViewController {
+        if !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip {
             presentShareContactsViewController()
         }
     }
