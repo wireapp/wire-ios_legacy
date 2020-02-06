@@ -65,10 +65,6 @@ class ContactsViewController: UIViewController {
         "connection_request.send_button_title"
     ].map(\.localized)
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     // MARK: - Life Cycle
 
     init() {
