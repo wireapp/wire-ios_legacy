@@ -513,7 +513,6 @@
 		871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.m */; };
 		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.m */; };
-		871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.m */; };
 		871BC27D1D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F01D34F8F800DF0793 /* CAMediaTimingFunction+AdditionalEquations.m */; };
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
@@ -740,6 +739,7 @@
 		A949418D23E180FF001B0373 /* Bundle+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418C23E180FF001B0373 /* Bundle+config.swift */; };
 		A9536FD523ACE12900CFD528 /* SwiftMockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
+		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
 		A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */; };
 		A9614EF823C38C810012A718 /* ConnectRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */; };
 		A963643223E2F35200190992 /* MessagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F18BCE1E02F63700C69D9B /* MessagePresenter.swift */; };
@@ -2098,8 +2098,7 @@
 		871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleTransition.m; sourceTree = "<group>"; };
 		871BC1A41D34F8F800DF0793 /* ZoomTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomTransition.h; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomTransition.m; sourceTree = "<group>"; };
-		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassthroughTouchesView.h; sourceTree = "<group>"; };
-		871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassthroughTouchesView.m; sourceTree = "<group>"; };
+		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughTouchesView.swift; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
 		871BC1D21D34F8F800DF0793 /* ResizingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResizingTextView.h; sourceTree = "<group>"; };
 		871BC1D31D34F8F800DF0793 /* ResizingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResizingTextView.m; sourceTree = "<group>"; };
@@ -4419,8 +4418,7 @@
 				5E6280292224090D0039A8AB /* SeparatorTableViewCell.swift */,
 				EF2A8DEC214AA36E002C9058 /* SeparatorViewProtocol.swift */,
 				EF266C602003B75C00A8C136 /* BreathLoadingBar.swift */,
-				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.h */,
-				871BC1CF1D34F8F800DF0793 /* PassthroughTouchesView.m */,
+				871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */,
 				871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */,
 				871BC1D21D34F8F800DF0793 /* ResizingTextView.h */,
 				871BC1D31D34F8F800DF0793 /* ResizingTextView.m */,
@@ -7292,6 +7290,7 @@
 				F15650D721DD0FC800210504 /* VerticalColumnCollectionViewController.swift in Sources */,
 				8736F1841E4B67F0001CBA62 /* AppLockView.swift in Sources */,
 				D594343A203DCB8F006AA0C0 /* ConversationOptionsViewModel.swift in Sources */,
+				A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */,
 				EEFF3E7A21B67990000834A6 /* ConversationCreateOptionsCell.swift in Sources */,
 				5E8FFC2621F0879B0052DF03 /* ReauthenticateWithCompanyLoginStepDescription.swift in Sources */,
 				5E8C38B2212E9799002AE12B /* AuthenticationStartMissingCredentialsErrorHandler.swift in Sources */,
@@ -7379,7 +7378,6 @@
 				F15650DC21DD10A100210504 /* AvatarImageView.swift in Sources */,
 				D54224C820513EC100526A57 /* IconActionCell.swift in Sources */,
 				F1CB5D27215A3011001CCF5D /* NSAttributedString+Space.swift in Sources */,
-				871BC26D1D34F8F800DF0793 /* PassthroughTouchesView.m in Sources */,
 				16626500217DAC4F00300F45 /* ConversationMessageCell.swift in Sources */,
 				163E8C7921E363FE0030BD8D /* ConversationGuestsAllowedCell.swift in Sources */,
 				549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */,

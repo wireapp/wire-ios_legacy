@@ -30,7 +30,6 @@
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
-#import "PassthroughTouchesView.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"
 #import "TokenizedTextView.h"
