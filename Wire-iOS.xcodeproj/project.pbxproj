@@ -738,6 +738,7 @@
 		A949418B23E09AFB001B0373 /* ConversationContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */; };
 		A949418D23E180FF001B0373 /* Bundle+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418C23E180FF001B0373 /* Bundle+config.swift */; };
 		A9536FD523ACE12900CFD528 /* SwiftMockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */; };
+		A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
 		A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */; };
@@ -931,7 +932,6 @@
 		D5168F512010F20300F8222A /* ShareViewController+Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 872C2B7E1DD9C22B0086A574 /* ShareViewController+Views.swift */; };
 		D5168F522010F20700F8222A /* ShareDestinationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 876113E81DD1FC4F007F5969 /* ShareDestinationCell.swift */; };
 		D5168F532010F20B00F8222A /* BlurEffectTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3FD031E3BCCF80052A535 /* BlurEffectTransition.swift */; };
-		D5168F542010F24500F8222A /* TokenizedTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB21B5F9A6D00E347DF /* TokenizedTextView.m */; };
 		D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB01B5F9A6D00E347DF /* TokenTextAttachment.m */; };
 		D5168F562010F25000F8222A /* TokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */; };
 		D5168F592010F2F700F8222A /* TokenField+DefaultAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */; };
@@ -1715,8 +1715,7 @@
 		1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenField.m; sourceTree = "<group>"; };
 		1EE9DCAF1B5F9A6D00E347DF /* TokenTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenTextAttachment.h; sourceTree = "<group>"; };
 		1EE9DCB01B5F9A6D00E347DF /* TokenTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenTextAttachment.m; sourceTree = "<group>"; };
-		1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenizedTextView.h; sourceTree = "<group>"; };
-		1EE9DCB21B5F9A6D00E347DF /* TokenizedTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenizedTextView.m; sourceTree = "<group>"; };
+		1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenizedTextView.swift; sourceTree = "<group>"; };
 		1EFB23DD1ACEDE5400244571 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Base; path = Base.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		5407B8C21A643CCE009090C6 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		543E0C611E2394E7000E2161 /* ConversationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationSelectionViewController.swift; sourceTree = "<group>"; };
@@ -2394,6 +2393,7 @@
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A963643123E2E52F00190992 /* AudioTrackPlayer+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackPlayer+Private.h"; sourceTree = "<group>"; };
+		A965801323EDB17200EF345D /* TokenField+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TokenField+Internal.h"; sourceTree = "<group>"; };
 		A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewController.swift; sourceTree = "<group>"; };
 		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
 		A9681D8523884FF1004FE917 /* Message+DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+DateFormatter.swift"; sourceTree = "<group>"; };
@@ -3534,12 +3534,12 @@
 				A9806A3D23E41EF400691DFE /* Token.swift */,
 				A9806A3F23E4293400691DFE /* TokenFieldDelegate.swift */,
 				1EE9DCAD1B5F9A6D00E347DF /* TokenField.h */,
+				A965801323EDB17200EF345D /* TokenField+Internal.h */,
 				1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */,
 				D5168F582010F2F700F8222A /* TokenField+DefaultAppearance.swift */,
 				1EE9DCAF1B5F9A6D00E347DF /* TokenTextAttachment.h */,
 				1EE9DCB01B5F9A6D00E347DF /* TokenTextAttachment.m */,
-				1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.h */,
-				1EE9DCB21B5F9A6D00E347DF /* TokenizedTextView.m */,
+				1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */,
 			);
 			path = TokenField;
 			sourceTree = "<group>";
@@ -7653,7 +7653,6 @@
 				87BEB0401D3E44E600DE9575 /* AssetCell.swift in Sources */,
 				A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */,
 				BFCCA4FE20A0A03D000A4F33 /* CallInfoRootViewController.swift in Sources */,
-				D5168F542010F24500F8222A /* TokenizedTextView.m in Sources */,
 				7C52F723200CBE61009F85FB /* CameraKeyboardPermissionsCell.swift in Sources */,
 				160D6928212EFE4B00096EAD /* IconButton.m in Sources */,
 				D53D390C2057F8ED00B87DAD /* TintCorrectedActivityController.swift in Sources */,
@@ -7993,6 +7992,7 @@
 				A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */,
 				BFAF4CB51CECEF3C00780537 /* WaveFormView.swift in Sources */,
 				5E8FFC2B21F08D5B0052DF03 /* PhoneNumberInputCell.swift in Sources */,
+				A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */,
 				A9806A3B23E2024E00691DFE /* AudioTrackPlayer.swift in Sources */,
 				5E8FFC1C21EF7CB50052DF03 /* AddEmailPasswordStepDescription.swift in Sources */,
 				5E35F786218340EB00D3F4FE /* ConversationLocationMessageCell.swift in Sources */,
