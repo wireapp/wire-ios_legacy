@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,28 +17,21 @@
 // 
 
 
-#import "ResizingTextView.h"
-
-@implementation ResizingTextView
-
-- (void)setContentSize:(CGSize)contentSize
-{
-    [super setContentSize:contentSize];
-    [self invalidateIntrinsicContentSize];
-}
-
-- (CGSize)intrinsicContentSize
-{
-    return [self sizeThatFits:CGSizeMake(self.bounds.size.width, UIViewNoIntrinsicMetric)];
-}
-
-- (void)paste:(id)sender
-{
-    [super paste:sender];
+final class ResizingTextView: TextView {
+    func setContentSize(_ contentSize: CGSize) {
+        super.contentSize = contentSize
+        invalidateIntrinsicContentSize()
+    }
     
-    // Work-around for text view scrolling too far when pasting text smaller
-    // than the maximum height of the text view.
-    [self setContentOffset:CGPointMake(0, 0) animated:NO];
+    func intrinsicContentSize() -> CGSize {
+        return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
+    }
+    
+    func paste(_ sender: Any?) {
+        super.paste(sender)
+        
+        // Work-around for text view scrolling too far when pasting text smaller
+        // than the maximum height of the text view.
+        setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+    }
 }
-
-@end

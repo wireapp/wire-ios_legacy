@@ -17,11 +17,11 @@
 // 
 
 
-#import "TextView.h"
 
 
 
 @class TokenizedTextView;
+@class TextView;
 
 NS_ASSUME_NONNULL_BEGIN
 

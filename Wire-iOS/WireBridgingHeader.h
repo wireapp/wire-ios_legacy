@@ -26,7 +26,6 @@
 #import "UIViewController+Errors.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
-#import "ResizingTextView.h"
 #import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
@@ -44,8 +43,6 @@
 #import "UITableView+RowCount.h"
 #import "AnimatedListMenuView.h"
 #import "AnimatedListMenuView+Internal.h"
-#import "TextView+Internal.h"
-#import "TextView.h"
 #import "ColorKnobView.h"
 
 // View Controllers

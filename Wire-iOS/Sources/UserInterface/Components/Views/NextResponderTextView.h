@@ -16,7 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "ResizingTextView.h"
+@class ResizingTextView;
 
 @interface NextResponderTextView : ResizingTextView
 @property (nonatomic, weak, nullable) UIResponder *overrideNextResponder;
