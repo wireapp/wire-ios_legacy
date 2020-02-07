@@ -19,12 +19,12 @@
 import UIKit
 
 extension TokenField {
-    
+
     @objc
     func setupSubviews() {
         // this prevents accessoryButton to be visible sometimes on scrolling
         clipsToBounds = true
-        
+
         textView = TokenizedTextView()
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
@@ -34,14 +34,14 @@ extension TokenField {
             textView.textDragInteraction?.isEnabled = false
         }
         addSubview(textView)
-        
+
         toLabel = UILabel()
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.font = font
         toLabel.text = toLabelText
         toLabel.backgroundColor = UIColor.clear
         textView.addSubview(toLabel)
-        
+
         // Accessory button could be a subview of textView,
         // but there are bugs with setting constraints from subview to UITextView trailing.
         // So we add button as subview of self, and update its position on scrolling.
@@ -50,10 +50,10 @@ extension TokenField {
         accessoryButton.isHidden = !hasAccessoryButton
         addSubview(accessoryButton)
     }
-    
+
     @objc func setupStyle() {
         tokenOffset = 4
-        
+
         textView.tintColor = .accent()
         textView.autocorrectionType = .no
         textView.returnKeyType = .go
@@ -62,7 +62,7 @@ extension TokenField {
         textView.placeholderTextTransform = .upper
         textView.lineFragmentPadding = 0
     }
-    
+
     @objc func setupFonts() {
         // Dynamic Type is disabled for now until the separator dots
         // vertical alignment has been fixed for larger fonts.
@@ -80,12 +80,11 @@ extension TokenField: TokenizedTextViewDelegate {
             setCollapsed(false, animated: true)
             return
         }
-        
-        
+
         if fraction >= 1 && range.location == self.textView.textStorage.length - 1 {
             return
         }
-        
+
         if range.location < self.textView.textStorage.length {
             self.textView.attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { tokenAttachemnt, range, stop in
                 if (tokenAttachemnt is TokenTextAttachment) {
@@ -94,11 +93,11 @@ extension TokenField: TokenizedTextViewDelegate {
             })
         }
     }
-    
+
     func tokenizedTextView(_ textView: TokenizedTextView?, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
         invalidateIntrinsicContentSize()
         updateExcludePath()
         updateLayout()
     }
-    
+
 }

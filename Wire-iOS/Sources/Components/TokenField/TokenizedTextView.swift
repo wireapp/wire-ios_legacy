@@ -22,37 +22,36 @@ protocol TokenizedTextViewDelegate: class {
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
 }
 
-
 //! Custom UITextView subclass to be used in TokenField.
 //! Shouldn't be used anywhere else.
 // TODO: as a inner class of TokenField
 
 @objc
 final class TokenizedTextView: TextView {
-    
+
     @objc
     weak var tokenizedTextViewDelegate: TokenizedTextViewDelegate?
-    
+
     private lazy var tapSelectionGestureRecognizer: UITapGestureRecognizer = {
         return UITapGestureRecognizer(target: self, action: #selector(didTapText(_:)))
     }()
-    
+
     convenience init() {
         self.init(frame: .zero)
         setupGestureRecognizer()
     }
-    
+
     private func setupGestureRecognizer() {
         tapSelectionGestureRecognizer.delegate = self
         addGestureRecognizer(tapSelectionGestureRecognizer)
     }
-    
+
     // MARK: - Actions
     override var contentOffset: CGPoint {
         get {
             return super.contentOffset
         }
-        
+
         set(contentOffset) {
             // Text view require no scrolling in case the content size is not overflowing the bounds
             if contentSize.height > bounds.size.height {
@@ -60,54 +59,54 @@ final class TokenizedTextView: TextView {
             } else {
                 super.contentOffset = .zero
             }
-            
+
         }
     }
-    
+
     override var textContainerInset: UIEdgeInsets {
         didSet {
             tokenizedTextViewDelegate?.tokenizedTextView(self, textContainerInsetChanged: textContainerInset)
         }
     }
-    
+
     @objc
     private func didTapText(_ recognizer: UITapGestureRecognizer) {
         var location = recognizer.location(in: self)
         location.x -= textContainerInset.left
         location.y -= textContainerInset.top
-        
+
         // Find the character that's been tapped on
         var characterIndex: Int
         var fraction: CGFloat = 0
         characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: UnsafeMutablePointer<CGFloat>(mutating: &fraction))
-        
+
         tokenizedTextViewDelegate?.tokenizedTextView(self, didTapTextRange: NSRange(location: characterIndex, length: 1), fraction: fraction)
     }
-    
+
     override func copy(_ sender: Any?) {
         let stringToCopy = pasteboardString(from: selectedRange)
         super.copy(sender)
         UIPasteboard.general.string = stringToCopy
     }
-    
+
     override func cut(_ sender: Any?) {
         let stringToCopy = pasteboardString(from: selectedRange)
         super.cut(sender)
         UIPasteboard.general.string = stringToCopy
-        
+
         // To fix the iOS bug
         delegate?.textViewDidChange?(self)
     }
-    
+
     override func paste(_ sender: Any?) {
         super.paste(sender)
-        
+
         // To fix the iOS bug
         delegate?.textViewDidChange?(self)
     }
-    
+
     // MARK: - Utils
-    
+
     private func pasteboardString(from range: NSRange) -> String? {
         // enumerate range of current text, resolving person attachents with user name.
         var string = ""
@@ -117,7 +116,7 @@ final class TokenizedTextView: TextView {
             }
 
             if nsstring.character(at: i) == NSTextAttachment.character {
-                
+
                 if let tokenAttachemnt = attributedText?.attribute(.attachment, at: i, effectiveRange: nil) as? TokenTextAttachment {
                     string += tokenAttachemnt.token.title
                     if i < NSMaxRange(range) - 1 {
