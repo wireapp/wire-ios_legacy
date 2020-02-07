@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.create_account.title" = "Henkilökohtainen";
+"landing.welcome_message" = "Welcome to %@";
+"landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "Onko sinulla jo tili?";
 "landing.login.button.title" = "Kirjaudu sisään";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Show more";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "This backup was created by a newer or outdated version of Wire and cannot be restored here.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Company Log In";
-"login.sso.alert.message" = "Enter the company SSO access code.";
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Kirjaudu sisään";
-"login.sso.alert.text_field.placeholder" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "Cannot Start Company Login";
 "login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
 
-"login.sso.error.alert.title" = "Jokin meni pieleen";
-"login.sso.error.alert.invalid_code.title" = "Invalid code.";
-"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
 "login.sso.error.offline.alert.message" = "Tarkista internet-yhteytesi ja yritä uudelleen.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
-"login.sso.error.alert.unknown.message" = "Yritä myöhemmin uudelleen.";
+
+"login.sso.error.alert.invalid_code.message" = "Please verify your company SSO access code and try again.";
 "login.sso.error.alert.invalid_status.message" = "Please try again later (error %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Yritä myöhemmin uudelleen.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restoring…";
