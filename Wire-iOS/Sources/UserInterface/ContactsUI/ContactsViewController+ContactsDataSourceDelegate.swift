@@ -27,7 +27,12 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         cell.user = user
 
         cell.actionButtonHandler = { [weak self] user, action in
-            self?.execute(action: action, for: user)
+            switch action {
+            case .open:
+                self?.openConversation(for: user)
+            case .invite:
+                self?.invite(user: user)
+            }
         }
 
         if !cell.actionButton.isHidden {

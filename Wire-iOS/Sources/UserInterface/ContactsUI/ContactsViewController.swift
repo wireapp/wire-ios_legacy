@@ -233,63 +233,31 @@ class ContactsViewController: UIViewController {
         present(activityController, animated: true)
     }
 
-    func invite(user: ZMSearchUser, from view: UIView) {
-        // FIXME: The following code smoothens the transition when opening a conversation, but prevents the
-        // invite alerts / screens from opening. We need to distinguish between these two types of actions.
+    func openConversation(for user: UserType) {
+        guard
+            user.isConnected,
+            let conversation = user.oneToOneConversation
+            else { return }
 
-        // Prevent the overlapped visual artifact when opening a conversation
-        if let navigationController = self.navigationController, self == navigationController.topViewController && navigationController.viewControllers.count >= 2 {
-            navigationController.popToRootViewController(animated: false) {
-                self.inviteUserOrOpenConversation(user, from:view)
-            }
+        let showConversation: Completion = {
+            ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
+        }
+
+        if let navigationController = navigationController {
+            navigationController.popToRootViewController(animated: false, completion: showConversation)
         } else {
-            inviteUserOrOpenConversation(user, from:view)
+            showConversation()
         }
     }
 
-    func execute(action: ContactsCell.Action, for user: UserType) {
-
-    }
-
-    private func inviteUserOrOpenConversation(_ user: ZMSearchUser, from view: UIView) {
-        let searchUser: ZMUser? = user.user
-        let isIgnored: Bool? = searchUser?.isIgnored
-
-        let selectOneToOneConversation: Completion = {
-            if let oneToOneConversation = searchUser?.oneToOneConversation {
-                ZClientViewController.shared?.select(conversation: oneToOneConversation, focusOnView: true, animated: true)
-            }
-        }
-
-        if user.isConnected {
-            selectOneToOneConversation()
-        } else if searchUser?.isPendingApprovalBySelfUser == true &&
-            isIgnored == false {
-            ZClientViewController.shared?.selectIncomingContactRequestsAndFocus(onView: true)
-        } else if searchUser?.isPendingApprovalByOtherUser == true &&
-            isIgnored == false {
-            selectOneToOneConversation()
-        } else if let unwrappedSearchUser = searchUser,
-            !unwrappedSearchUser.isIgnored &&
-                !unwrappedSearchUser.isPendingApprovalByOtherUser {
-            let displayName = unwrappedSearchUser.displayName
-            let messageText = String(format: "missive.connection_request.default_message".localized, displayName, ZMUser.selfUser().name ?? "")
-
-            ZMUserSession.shared()?.enqueueChanges({
-                user.connect(message: messageText)
-            }, completionHandler: {
-                self.tableView.reloadData()
-            })
-        } else {
-            do {
-                if let contact = user.contact {
-                    try invite(contact: contact, from: view)
-                }
-            } catch InvitationError.missingClient(let client) {
-                present(unableToSendController(client: client), animated: true)
-            } catch {
-                // log
-            }
+    func invite(user: UserType) {
+        do {
+            guard let contact = (user as? ZMSearchUser)?.contact else { throw InvitationError.noContactInformation }
+            try invite(contact: contact, from: view)
+        } catch InvitationError.missingClient(let client) {
+            present(unableToSendController(client: client), animated: true)
+        } catch {
+            zmLog.error("Could not invite contact: \(error.localizedDescription)")
         }
     }
 
