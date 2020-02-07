@@ -60,7 +60,7 @@ extension ContactsViewController {
         do {
             guard let contact = (user as? ZMSearchUser)?.contact else { throw InvitationError.noContactInformation }
             try invite(contact: contact, from: view)
-        } catch InvitationError.missingClient(let client) {
+        } catch InvitationError.canNotSend(let client) {
             present(unableToSendController(client: client), animated: true)
         } catch {
             zmLog.error("Could not invite contact: \(error.localizedDescription)")
@@ -81,11 +81,11 @@ extension ContactsViewController {
 
     private func inviteWithSingleAddress(for contact: ZMAddressBookContact) throws {
         if let emailAddress = contact.emailAddresses.first {
-            guard canInviteByEmail else { throw InvitationError.missingClient(.email) }
+            guard canInviteByEmail else { throw InvitationError.canNotSend(.email) }
             contact.inviteLocallyWithEmail(emailAddress)
 
         } else if let phoneNumber = contact.rawPhoneNumbers.first {
-            guard canInviteByPhone else { throw InvitationError.missingClient(.phone) }
+            guard canInviteByPhone else { throw InvitationError.canNotSend(.sms) }
             contact.inviteLocallyWithPhoneNumber(phoneNumber)
 
         } else {
@@ -94,7 +94,7 @@ extension ContactsViewController {
     }
 
     private func addressActionSheet(for contact: ZMAddressBookContact, in view: UIView) throws -> UIAlertController {
-        guard canInviteByEmail || canInviteByPhone else { throw InvitationError.missingClient(.both) }
+        guard canInviteByEmail || canInviteByPhone else { throw InvitationError.canNotSend(.any) }
 
         let chooseContactDetailController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
@@ -130,7 +130,7 @@ extension ContactsViewController {
         return chooseContactDetailController
     }
 
-    private func unableToSendController(client: InvitationError.Client) -> UIAlertController {
+    private func unableToSendController(client: InvitationError.MessageType) -> UIAlertController {
         let unableToSendController = UIAlertController(title: nil, message: client.messageKey.localized, preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { action in
@@ -143,18 +143,18 @@ extension ContactsViewController {
 
     private enum InvitationError: Error {
 
-        case missingClient(Client)
+        case canNotSend(MessageType)
         case noContactInformation
 
-        enum Client {
+        enum MessageType {
 
-            case email, phone, both
+            case email, sms, any
 
             var messageKey: String {
                 switch self {
-                case .email, .both:
+                case .email, .any:
                     return "error.invite.no_email_provider"
-                case .phone:
+                case .sms:
                     return "error.invite.no_messaging_provider"
                 }
             }
