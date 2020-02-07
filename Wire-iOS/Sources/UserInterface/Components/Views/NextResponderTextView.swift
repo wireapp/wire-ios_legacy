@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "ResizingTextView.h"
-
-@interface NextResponderTextView : ResizingTextView
-@property (nonatomic, weak, nullable) UIResponder *overrideNextResponder;
-@end
+class NextResponderTextView: ResizingTextView {
+    weak var overrideNextResponder: UIResponder?
+    
+    override var next: UIResponder? {
+        return overrideNextResponder ?? super.next
+    }
+    
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return overrideNextResponder != nil ? false : super.canPerformAction(action, withSender: sender)
+    }
+}
