@@ -18,7 +18,31 @@
 
 import Foundation
 
+@objc protocol TextViewProtocol: NSObjectProtocol {
+    func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
+    
+    @objc optional func textView(_ textView: UITextView, firstResponderChanged resigned: NSNumber)
+}
+
 extension TextView {
+    
+    var placeholder: String?
+    var attributedPlaceholder: NSAttributedString?
+    var placeholderTextColor: UIColor?
+    var placeholderFont: UIFont?
+    var placeholderTextTransform: TextTransform?
+    var lineFragmentPadding: CGFloat = 0.0
+    var placeholderTextAlignment: NSTextAlignment!
+    var language: String?
+    
+    private var placeholderLabel: TransformLabel!
+    private var placeholderLabelLeftConstraint: NSLayoutConstraint?
+    private var placeholderLabelRightConstraint: NSLayoutConstraint?
+    private var _placeholderTextContainerInset: UIEdgeInsets!
+    
+    func showOrHidePlaceholder() {
+    }
+
     override open var text: String! {
         didSet {
             showOrHidePlaceholder()

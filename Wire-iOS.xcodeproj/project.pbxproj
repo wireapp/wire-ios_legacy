@@ -1302,7 +1302,7 @@
 		EFBCC917215548EE006AAB70 /* AVAudioSessionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */; };
 		EFBFABAA2257948F005D83C0 /* TopPeopleCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBFABA92257948F005D83C0 /* TopPeopleCellSnapshotTests.swift */; };
 		EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */; };
-		EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */; };
+		EFC57A0E21BAAF9A0008DBE6 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC57A0A21BAAE440008DBE6 /* TextView.swift */; };
 		EFC57A1021BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */; };
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
@@ -1711,7 +1711,6 @@
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsDataSourceTests.swift; sourceTree = "<group>"; };
 		1EBA8C721B74EAB10089CC44 /* WireUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireUtilities.framework; path = Carthage/Build/iOS/WireUtilities.framework; sourceTree = "<group>"; };
 		1EC71A271B6A1B9200700A14 /* WireImages.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireImages.framework; path = Carthage/Build/iOS/WireImages.framework; sourceTree = "<group>"; };
-		1EE9DCA81B5F9A6D00E347DF /* TextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextView.h; sourceTree = "<group>"; };
 		1EE9DCA91B5F9A6D00E347DF /* TextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextView.m; sourceTree = "<group>"; };
 		1EE9DCAD1B5F9A6D00E347DF /* TokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenField.h; sourceTree = "<group>"; };
 		1EE9DCAE1B5F9A6D00E347DF /* TokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenField.m; sourceTree = "<group>"; };
@@ -3038,8 +3037,7 @@
 		EFBCC916215548EE006AAB70 /* AVAudioSessionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVAudioSessionType.swift; sourceTree = "<group>"; };
 		EFBFABA92257948F005D83C0 /* TopPeopleCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPeopleCellSnapshotTests.swift; sourceTree = "<group>"; };
 		EFC0C7F021778FB000380C4B /* SettingsTextCellSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTextCellSnapshotTests.swift; sourceTree = "<group>"; };
-		EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextView+Placeholder.swift"; sourceTree = "<group>"; };
-		EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TextView+Internal.h"; sourceTree = "<group>"; };
+		EFC57A0A21BAAE440008DBE6 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3529,10 +3527,8 @@
 		1EE9DCA51B5F9A6D00E347DF /* TextView */ = {
 			isa = PBXGroup;
 			children = (
-				1EE9DCA81B5F9A6D00E347DF /* TextView.h */,
-				EFC57A0B21BAAE440008DBE6 /* TextView+Internal.h */,
 				1EE9DCA91B5F9A6D00E347DF /* TextView.m */,
-				EFC57A0A21BAAE440008DBE6 /* TextView+Placeholder.swift */,
+				EFC57A0A21BAAE440008DBE6 /* TextView.swift */,
 			);
 			path = TextView;
 			sourceTree = "<group>";
@@ -7303,7 +7299,7 @@
 				EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */,
 				A949418923E09489001B0373 /* SplitViewController.swift in Sources */,
 				A936A37F23D202F600136469 /* InvisibleInputAccessoryView.swift in Sources */,
-				EFC57A0E21BAAF9A0008DBE6 /* TextView+Placeholder.swift in Sources */,
+				EFC57A0E21BAAF9A0008DBE6 /* TextView.swift in Sources */,
 				87A15FCE1E07EAB400AED79B /* AssetCollectionWrapper.swift in Sources */,
 				871BC2821D34F8F800DF0793 /* UIAlertController+Wire.m in Sources */,
 				D5168F2C200CBBF300F8222A /* Analytics+TeamInvites.swift in Sources */,
