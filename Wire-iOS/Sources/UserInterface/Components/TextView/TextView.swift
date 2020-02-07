@@ -82,10 +82,9 @@ class TextView: UITextView {
     }
     var language: String?
     
-    private var placeholderLabel: TransformLabel!
+    private let placeholderLabel: TransformLabel = TransformLabel()
     private var placeholderLabelLeftConstraint: NSLayoutConstraint?
     private var placeholderLabelRightConstraint: NSLayoutConstraint?
-    private var _placeholderTextContainerInset: UIEdgeInsets!
     
     private var shouldDrawPlaceholder = false
 
@@ -124,7 +123,7 @@ class TextView: UITextView {
 
         NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: UITextView.textDidChangeNotification, object: self)
         
-        createPlaceholderLabel()
+        setupPlaceholderLabel()
         
         if AutomationHelper.sharedHelper.disableAutocorrection {
             autocorrectionType = .no
@@ -184,24 +183,16 @@ class TextView: UITextView {
     }
 
     /// custom inset for placeholder, only left and right inset value is applied (The placeholder is align center vertically)
-    @objc
-    var placeholderTextContainerInset: UIEdgeInsets {
-        set {
-            _placeholderTextContainerInset = newValue
-
-            placeholderLabelLeftConstraint?.constant = newValue.left
-            placeholderLabelRightConstraint?.constant = newValue.right
-        }
-
-        get {
-            return _placeholderTextContainerInset
+    var placeholderTextContainerInset: UIEdgeInsets = .zero {
+        didSet {
+            placeholderLabelLeftConstraint?.constant = placeholderTextContainerInset.left
+            placeholderLabelRightConstraint?.constant = placeholderTextContainerInset.right
         }
     }
 
 
-    @objc func createPlaceholderLabel() {
+    private func setupPlaceholderLabel() {
         let linePadding = textContainer.lineFragmentPadding
-        placeholderLabel = TransformLabel()
         placeholderLabel.font = placeholderFont
         placeholderLabel.textColor = placeholderTextColor
         placeholderLabel.textTransform = placeholderTextTransform
