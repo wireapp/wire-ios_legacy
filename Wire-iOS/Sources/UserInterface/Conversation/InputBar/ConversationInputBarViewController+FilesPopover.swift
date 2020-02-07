@@ -119,7 +119,6 @@ extension ConversationInputBarViewController {
             documentPickerViewController.delegate = self
 
             self.parent?.present(documentPickerViewController, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
 

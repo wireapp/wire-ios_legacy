@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "„Wire“. Pridėkite paskyrą.";
-"landing.create_account.title" = "Asmeninis";
+"landing.welcome_message" = "Welcome to %@";
+"landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Saugiai bendraukite su draugų grupėmis\U00A0ir\U00A0šeima";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Saugus bendradarbiavimas verslui, institucijoms ir profesionalioms\U00A0organizacijoms";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "Prisijungta prie „%@“";
 "landing.custom_backend.more_info.button.title" = "Rodyti daugiau";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Ši atsarginė kopija buvo sukurta naudojant arba naujesnę arba senesnę „Wire“ versiją, ir negali būti naudojama atkūrimui.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Įmonės prisijungimas";
-"login.sso.alert.message" = "Įrašykite įmonės SSO prieigos kodą.";
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Prisijungti";
-"login.sso.alert.text_field.placeholder" = "SSO prieigos kodas";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "Nepavyko pradėti kompanijos prisijungimo";
 "login.sso.link_error_message" = "Kompanijos prisijungimo nuoroda negalioja. Prašome susisiekti su savo komandos administratoriumi.";
 
-"login.sso.error.alert.title" = "Kažkas nutiko";
-"login.sso.error.alert.invalid_code.title" = "Neteisingas kodas.";
-"login.sso.error.alert.invalid_code.message" = "Įsitikinkite, kad jūsų įmonės SSO prieigos kodas be klaidos, ir bandykite dar kartą.";
 "login.sso.error.offline.alert.message" = "Patikrinkite savo interneto ryšį ir bandykite dar kartą.";
 "login.sso.error.alert.message" = "Papildomai informacijai susisiekite su savo komandos administratoriumi (klaida %@).";
-"login.sso.error.alert.unknown.message" = "Bandykite dar kartą vėliau.";
+
+"login.sso.error.alert.invalid_code.message" = "Įsitikinkite, kad jūsų įmonės SSO prieigos kodas be klaidos, ir bandykite dar kartą.";
 "login.sso.error.alert.invalid_status.message" = "Bandykite dar kartą vėliau (klaida %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Bandykite dar kartą vėliau.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Atkuriama…";

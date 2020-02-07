@@ -19,15 +19,14 @@
 import Foundation
 
 extension ConversationContentViewController {
-    
-    @objc(scrollToMessage:completion:)
-    public func scroll(to message: ZMConversationMessage?, completion: ((UIView)->())? = .none) {
+
+    func scroll(to message: ZMConversationMessage?, completion: ((UIView) -> Void)? = .none) {
         if let message = message {
 
             if message.hasBeenDeleted {
                 presentAlertWithOKButton(message: "conversation.alert.message_deleted".localized)
             } else {
-                dataSource?.loadMessages(near: message) { index in
+                dataSource.loadMessages(near: message) { index in
 
                     guard message.conversation == self.conversation else {
                         fatal("Message from the wrong conversation")
@@ -45,18 +44,18 @@ extension ConversationContentViewController {
                 }
             }
         } else {
-            dataSource?.loadMessages()
+            dataSource.loadMessages()
         }
-        
+
         updateTableViewHeaderView()
     }
-    
-    @objc public func scrollToBottom() {
+
+    func scrollToBottom() {
         guard !isScrolledToBottom else { return }
-        
-        dataSource?.loadMessages()
+
+        dataSource.loadMessages()
         tableView.scroll(toIndex: 0)
-        
+
         updateTableViewHeaderView()
     }
 }

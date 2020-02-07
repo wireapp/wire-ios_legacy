@@ -22,5 +22,7 @@
 	<string>1</string>
 	<key>NSPrincipalClass</key>
 	<string>Wire_iOS_Tests.TestSetup</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

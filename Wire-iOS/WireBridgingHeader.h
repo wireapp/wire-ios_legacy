@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-
 // Data model
 @import WireSyncEngine;
 @import avs;
@@ -25,21 +23,12 @@
 #import "Settings.h"
 
 // UI
-#import "ParticipantDeviceHeaderView.h"
-#import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
-#import "ResizingTextView.h"
-#import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
-#import "ConversationContentViewController+Private.h"
-#import "UIAlertController+NewSelfClients.h"
 #import "SwizzleTransition.h"
-#import "Country.h"
-#import "PassthroughTouchesView.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
-#import "Token.h"
 #import "TokenField.h"
 #import "TokenizedTextView.h"
 #import "TokenTextAttachment.h"
@@ -77,7 +66,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "CountryCodeTableViewController.h"
 #import "Button.h"
 
 // Helper objects
@@ -85,24 +73,16 @@
 #import "PopTransition.h"
 #import "ZoomTransition.h"
 #import "CrossfadeTransition.h"
-#import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"
 
 // Utils
-#import "Analytics.h"
-#import "Analytics+Internal.h"
-#import "AnalyticsDecryptionFailedObserver.h"
 
-#import "DeveloperMenuState.h"
 #import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "MessagePresenter.h"
-#import "MessagePresenter+Internal.h"
-#import "UIApplication+StatusBar.h"
 #import "AVSLogObserver.h"
 #import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
@@ -113,14 +93,11 @@
 #import "ProgressSpinner+Internal.h"
 
 #import "CABasicAnimation+Rotation.h"
-#import "DeveloperMenuState.h"
-#import "UIImage+ImageUtilities.h"
-#import "KeyValueObserver.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player
-#import "AudioTrack.h"
 #import "AudioTrackPlayer.h"
+#import "AudioTrackPlayer+Private.h"
 
 // Invite
 #import "ShareItemProvider.h"

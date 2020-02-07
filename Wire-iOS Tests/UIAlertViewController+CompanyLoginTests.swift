@@ -22,20 +22,24 @@ import SnapshotTesting
 
 final class UIAlertControllerCompanyLoginSnapshotTests: XCTestCase {
     var sut: UIAlertController!
-
-    override func setUp() {
-        super.setUp()
-        sut = UIAlertController.companyLogin(prefilledCode: nil, validator: {_ -> Bool in
-            return true
-        }, completion: {_ in })
-    }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForAlert(){
+    func testForSSOAndEmailAlert() {
+        sut = UIAlertController.companyLogin(ssoOnly: false, completion: {_ in})
+        verify(matching: sut)
+    }
+    
+    func testForSSOOnlyAlert() {
+        sut = UIAlertController.companyLogin(ssoOnly: true, completion: {_ in})
+        verify(matching: sut)
+    }
+    
+    func testForAlertWithError() {
+        sut = UIAlertController.companyLogin(error: .unknown) {_ in}
         verify(matching: sut)
     }
 

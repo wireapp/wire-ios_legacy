@@ -48,8 +48,7 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                         self.dismiss(animated: true)
                     }
                     self.present(confirmImageViewController, animated: true) {
-                        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-                    }
+                            }
                 }
             })
             ///TODO: it's a temporary solution to drag only one image, while we have no design for multiple images

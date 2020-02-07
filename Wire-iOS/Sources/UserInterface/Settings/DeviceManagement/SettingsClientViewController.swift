@@ -30,7 +30,7 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-class SettingsClientViewController: UIViewController,
+final class SettingsClientViewController: UIViewController,
                                     UITableViewDelegate,
                                     UITableViewDataSource,
                                     UserClientObserver,
@@ -92,6 +92,10 @@ class SettingsClientViewController: UIViewController,
         return [.portrait]
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

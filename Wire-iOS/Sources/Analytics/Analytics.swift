@@ -18,18 +18,62 @@
 
 import Foundation
 
-extension Analytics {
-    @objc
-    func setupObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(userSessionDidBecomeAvailable(_:)), name: Notification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
+final class Analytics: NSObject {
+    
+    var provider: AnalyticsProvider?
 
-    }
+    private static let sharedAnalytics = Analytics()
     
     @objc
-    private func userSessionDidBecomeAvailable(_ note: Notification?) {
-        callingTracker = AnalyticsCallingTracker(analytics: self)
-        decryptionFailedObserver = AnalyticsDecryptionFailedObserver(analytics: self)
-        setTeam(ZMUser.selfUser().team)
+    class func shared() -> Analytics {
+        return sharedAnalytics
     }
 
+    class func loadShared(withOptedOut optedOut: Bool) {
+        //no-op
+    }
+    
+    override init() {
+        //no-op
+    }
+    
+    required init(optedOut: Bool) {
+        //no-op
+    }
+    
+    func setTeam(_ team: Team?) {
+        //no-op
+    }
+    
+    func tagEvent(_ event: String, attributes: [String : Any]) {
+        guard let attributes = attributes as? [String : NSObject] else { return }
+        
+        tagEvent(event, attributes: attributes)
+    }
+
+    //MARK: - OTREvents
+    func tagCannotDecryptMessage(withAttributes userInfo: [AnyHashable : Any]?) {
+        //no-op
+    }
+}
+
+extension Analytics: AnalyticsType {
+    @objc(setPersistedAttributes:forEvent:) func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
+        //no-op
+    }
+    
+    @objc(persistedAttributesForEvent:) func persistedAttributes(for event: String) -> [String : NSObject]? {
+        //no-op
+        return nil
+    }
+    
+    /// Record an event with no attributes
+    func tagEvent(_ event: String) {
+        //no-op
+    }
+    
+    /// Record an event with optional attributes.
+    func tagEvent(_ event: String, attributes: [String : NSObject]) {
+        //no-op
+    }
 }

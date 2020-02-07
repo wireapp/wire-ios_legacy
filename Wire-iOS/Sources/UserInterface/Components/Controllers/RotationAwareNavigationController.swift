@@ -52,24 +52,6 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
     }
     
-    override var prefersStatusBarHidden: Bool {
-        if let topController = self.viewControllers.last {
-            return topController.prefersStatusBarHidden
-        }
-        else {
-            return super.prefersStatusBarHidden
-        }
-    }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let topController = self.viewControllers.last {
-            return topController.preferredStatusBarStyle
-        }
-        else {
-            return super.preferredStatusBarStyle
-        }
-    }
-    
     override func setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         viewControllers.forEach { $0.hideDefaultButtonTitle() }
         

@@ -72,16 +72,8 @@ final class ProfileViewControllerViewModel: NSObject {
         return bareUser.isUnderLegalHold || conversation?.isUnderLegalHold == true
     }
     
-    var showVerifiedShield: Bool {
-        if let user = fullUser {
-            let showShield = user.trusted() &&
-                !user.clients.isEmpty &&
-                context != .deviceList &&
-                ZMUser.selfUser().trusted()
-            return showShield
-        }
-
-        return false
+    var shouldShowVerifiedShield: Bool {
+        return bareUser.isVerified && context != .deviceList
     }
     
     var hasUserClientListTab: Bool {

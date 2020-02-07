@@ -19,9 +19,13 @@
 @import UIKit;
 @import Foundation;
 
+@class AVPlayer;
+
 #import "MediaPlayer.h"
 
 @protocol AudioTrack;
+@protocol ZMMessageObserver;
+@protocol MediaPlayerDelegate;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)loadTrack:(NSObject<AudioTrack> *)track sourceMessage:(id<ZMConversationMessage>)sourceMessage completionHandler:( void(^ _Nullable )(BOOL loaded, NSError *error))completionHandler;
 
-@property (nonatomic, readonly) NSObject<AudioTrack> *audioTrack;
+@property (nonatomic, readonly, nullable) NSObject<AudioTrack> *audioTrack;
 @property (nonatomic, readonly) CGFloat progress;
 @property (nonatomic, readonly) CGFloat duration;
 @property (nonatomic, readonly) NSTimeInterval elapsedTime;

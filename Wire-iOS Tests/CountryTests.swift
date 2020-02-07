@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -21,9 +20,9 @@ import XCTest
 
 final class CountryTests: XCTestCase {
 
-    func testThatCountryFromDeviceGivesCurrentCountry(){
+    func testThatCountryFromDeviceGivesCurrentCountry() {
         // GIVEN
-        let countryFromDevice = Country.countryFromDevice()!
+        let countryFromDevice = Country.countryFromDevice!
 
         // WHEN & THEN
         XCTAssertEqual(countryFromDevice.iso, "us")

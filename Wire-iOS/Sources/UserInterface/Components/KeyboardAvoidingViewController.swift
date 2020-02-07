@@ -18,7 +18,7 @@
 
 import Foundation
 
-class KeyboardAvoidingViewController: UIViewController {
+final class KeyboardAvoidingViewController: UIViewController {
     
     let viewController: UIViewController
     var disabledWhenInsidePopover: Bool = false
@@ -54,12 +54,12 @@ class KeyboardAvoidingViewController: UIViewController {
         return viewController.navigationItem
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return viewController.prefersStatusBarHidden
+    override var childForStatusBarStyle: UIViewController? {
+        return viewController
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return viewController.preferredStatusBarStyle
+    override var childForStatusBarHidden: UIViewController? {
+        return viewController
     }
     
     override var title: String? {

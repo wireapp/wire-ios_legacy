@@ -24,9 +24,4 @@ extension Bundle {
         guard let bundle = Bundle(path: backendBundlePath) else { fatalError("Could not load backend.bundle") }
         return bundle
     }
-    
-    @objc
-    static public var defaultBackend: String? {
-        return Bundle.appMainBundle.infoForKey("DefaultBackend")
-    }
 }

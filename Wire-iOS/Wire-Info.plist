@@ -70,8 +70,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
-	<key>DefaultBackend</key>
-	<string>${DEFAULT_BACKEND}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -149,7 +147,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -184,5 +182,7 @@
 	<string>${WIRE_SSO_URL_SCHEME}</string>
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
+	<key>EnableDeveloperMenu</key>
+	<string>${DEVELOPER_MODE_ENABLED}</string>
 </dict>
 </plist>

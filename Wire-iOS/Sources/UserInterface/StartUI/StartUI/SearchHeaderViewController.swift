@@ -170,29 +170,17 @@ extension SearchHeaderViewController : UserSelectionObserver {
 
 extension SearchHeaderViewController : TokenFieldDelegate {
 
-    public func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        let users = tokens.compactMap {
-            ($0.representedObject as? ZMSearchUser)?.user ?? $0.representedObject as? ZMUser
-        }
-
-        userSelection.replace(users)
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
+        userSelection.replace(tokens.compactMap { $0.representedObject as? ZMUser })
         updateClearIndicator(for: tokenField)
     }
     
-    public func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
+    func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
         delegate?.searchHeaderViewController(self, updatedSearchQuery: text)
         updateClearIndicator(for: tokenField)
     }
     
-    public func tokenFieldDidBeginEditing(_ tokenField: TokenField) {
-        
-    }
-    
-    public func tokenFieldWillScroll(_ tokenField: TokenField) {
-        
-    }
-    
-    public func tokenFieldDidConfirmSelection(_ controller: TokenField) {
+    func tokenFieldDidConfirmSelection(_ controller: TokenField) {
         delegate?.searchHeaderViewControllerDidConfirmAction(self)
     }
 }

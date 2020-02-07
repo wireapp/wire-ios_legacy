@@ -98,7 +98,7 @@ class SettingsCellDescriptorFactory {
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
-        if DeveloperMenuState.developerMenuEnabled() {
+        if Bundle.developerModeEnabled {
             topLevelElements.append(self.developerGroup())
         }
         

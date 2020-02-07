@@ -26,7 +26,7 @@ final class ProfileViewControllerTests: XCTestCase {
     var mockUser: MockUser!
     var selfUser: MockUser!
     var teamIdentifier: UUID!
-    
+
     override func setUp() {
         super.setUp()
         teamIdentifier = UUID()
@@ -38,7 +38,7 @@ final class ProfileViewControllerTests: XCTestCase {
         mockUser.handle = "catherinejackson"
         mockUser.feature(withUserClients: 6)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil
@@ -67,12 +67,12 @@ final class ProfileViewControllerTests: XCTestCase {
 
         verify(matching: sut)
     }
-    
+
     func testForUserName() {
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
         selfUser.availability = .busy
-        selfUser.trusted = true
+        selfUser.isTrusted = true
         sut = ProfileViewController(user: selfUser,
                                     viewer: selfUser,
                                     context: .profileViewer)
@@ -114,14 +114,13 @@ final class ProfileViewControllerTests: XCTestCase {
         verify(matching: sut)
     }
 
-
     func testForIncomingRequest() {
         // GIVEN
         mockUser.isConnected = false
         mockUser.canBeConnected = true
         mockUser.isPendingApprovalBySelfUser = true
         mockUser.emailAddress = nil
-        mockUser.teamIdentifier = nil;
+        mockUser.teamIdentifier = nil
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, mockUser]
@@ -140,7 +139,7 @@ final class ProfileViewControllerTests: XCTestCase {
 
         verify(matching: navWrapperController)
     }
-    
+
     func testForContextProfileViewerUnderLegalHold() {
         selfUser.teamRole = .member
         mockUser.emailAddress = nil
@@ -149,26 +148,25 @@ final class ProfileViewControllerTests: XCTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
+
         verify(matching: navWrapperController)
     }
-    
+
     func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
         let selfUserOutsideTeam = MockUser.createSelfUser(name: "John Johnson", inTeam: nil)
         selfUserOutsideTeam.handle = "johnjohnson"
         selfUserOutsideTeam.feature(withUserClients: 6)
-        
+
         mockUser.emailAddress = nil
         mockUser.isUnderLegalHold = true
         sut = ProfileViewController(user: mockUser,
                                     viewer: selfUserOutsideTeam,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
+
         verify(matching: navWrapperController)
     }
-    
-    
+
     func testForContextProfileViewerForSelfUserUnderLegalHold() {
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
@@ -177,7 +175,7 @@ final class ProfileViewControllerTests: XCTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
+
         verify(matching: navWrapperController)
     }
 }

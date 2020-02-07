@@ -16,22 +16,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCase {
-    
+final class ConversationCreationControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: ConversationCreationController!
     
     override func setUp() {
         super.setUp()
         sut = ConversationCreationController()
         accentColor = .violet
+        coreDataFixture = CoreDataFixture()
     }
     
     override func tearDown() {
         sut = nil
         ColorScheme.default.variant = .light
+        coreDataFixture = nil
         super.tearDown()
     }
 
@@ -43,7 +47,7 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
 
         sut.viewDidAppear(false)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testTeamGroupOptionsCollapsed() {
@@ -51,7 +55,7 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
             self.sut.loadViewIfNeeded()
             self.sut.viewDidAppear(false)
 
-            verify(view: self.sut.view)
+            verify(matching: sut)
         }
     }
 
@@ -63,7 +67,7 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
             self.sut.viewDidAppear(false)
 
             sut.view.backgroundColor = .black
-            verify(view: self.sut.view)
+            verify(matching: sut)
         }
     }
 
@@ -72,7 +76,7 @@ final class ConversationCreationControllerSnapshotTests: CoreDataSnapshotTestCas
             self.sut.loadViewIfNeeded()
             self.sut.optionsExpanded = true
             
-            verify(view: self.sut.view)
+            verify(matching: sut)
         }
     }
 }

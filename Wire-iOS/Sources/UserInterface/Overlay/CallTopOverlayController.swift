@@ -82,7 +82,6 @@ final class CallTopOverlayController: UIViewController {
     deinit {
         stopCallDurationTimer()
         AVSMediaManagerClientChangeNotification.remove(self)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     init(conversation: ZMConversation) {
@@ -103,17 +102,13 @@ final class CallTopOverlayController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
+     
     override func loadView() {
         view = TapableAccessibleView(onAccessibilityActivate: { [weak self] in
             self?.openCall(nil)
         })
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))

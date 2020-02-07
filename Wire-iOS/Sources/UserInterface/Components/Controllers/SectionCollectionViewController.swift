@@ -63,18 +63,26 @@ final class SectionCollectionViewController: NSObject {
 extension SectionCollectionViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard visibleSections.indices.contains(indexPath.section) else { return true }
+        
         return visibleSections[indexPath.section].collectionView?(collectionView, shouldHighlightItemAt: indexPath) ?? true
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard visibleSections.indices.contains(indexPath.section) else { return true }
+
         return visibleSections[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+
         visibleSections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+
         visibleSections[indexPath.section].collectionView?(collectionView, didDeselectItemAt: indexPath)
     }
     

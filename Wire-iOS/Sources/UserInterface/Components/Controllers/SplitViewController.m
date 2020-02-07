@@ -21,7 +21,6 @@
 #import "SplitViewController+internal.h"
 #import "CrossfadeTransition.h"
 #import "SwizzleTransition.h"
-#import "VerticalTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 
@@ -267,27 +266,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-
-- (UIStatusBarStyle)preferredStatusBarStyle
-{
-    if (self.openPercentage > 0) {
-        return self.leftViewController.preferredStatusBarStyle;
-    }
-    else {
-        return self.rightViewController.preferredStatusBarStyle;
-    }
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    if (self.openPercentage > 0) {
-        return self.leftViewController.prefersStatusBarHidden;
-    }
-    else {
-        return self.rightViewController.prefersStatusBarHidden;
-    }
-}
-
 - (NSArray *)constraintsActiveForCurrentLayout
 {
     NSMutableSet *constraints = [NSMutableSet set];
@@ -461,6 +439,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 {
     _openPercentage = percentage;
     [self updateRightAndLeftEdgeConstraints: percentage];
+    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage

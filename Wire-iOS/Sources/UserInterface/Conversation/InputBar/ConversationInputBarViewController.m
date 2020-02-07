@@ -27,7 +27,6 @@
 #import "TextView.h"
 #import "UIViewController+Errors.h"
 
-#import "Analytics.h"
 #import "Wire-Swift.h"
 
 
@@ -576,9 +575,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         
         GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:@"" conversation:self.conversation];
         giphySearchViewController.delegate = self;
-        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:^{
-            [[UIApplication sharedApplication] wr_updateStatusBarForCurrentControllerAnimated:YES];
-        }];
+        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
     }
 }
 

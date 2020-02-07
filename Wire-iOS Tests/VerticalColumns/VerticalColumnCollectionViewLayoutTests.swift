@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
+final class VerticalColumnCollectionViewLayoutTests: XCTestCase {
 
     var tiles: [ColorTile]! = [
         // square, downscale
@@ -38,7 +39,7 @@ class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
         ColorTile(color: .vividRed, size: CGSize(width: 1000, height: 1000)),
         ColorTile(color: .strongLimeGreen, size: CGSize(width: 10, height: 15)),
         ColorTile(color: .violet, size: CGSize(width: 10, height: 10)),
-        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500)),
+        ColorTile(color: .brightYellow, size: CGSize(width: 1000, height: 1500))
     ]
 
     override func tearDown() {
@@ -47,12 +48,9 @@ class VerticalColumnCollectionViewLayoutTests: ZMSnapshotTestCase {
     }
 
     func testThatVerticalLayoutAdaptsToDeviceSize() {
-        let sut = ColorTilesViewController(tiles: tiles)
+        let sut = ColorTilesViewController(tiles: tiles, device: MockDevice())
 
-        verifyInAllDeviceSizes(view: sut.view) { _, isTablet in
-            sut.isTablet = isTablet
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
 
 }
-

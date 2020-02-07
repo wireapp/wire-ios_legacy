@@ -183,8 +183,10 @@ final class CallViewController: UIViewController {
     }
     
     fileprivate func minimizeOverlay() {
+        weak var rootViewController = view.window?.rootViewController
         dismiss(animated: true, completion: {
             self.dismisser?.dismiss(viewController: self, completion: nil)
+            rootViewController?.setNeedsStatusBarAppearanceUpdate()
         })
     }
 
@@ -210,7 +212,6 @@ final class CallViewController: UIViewController {
         updateOverlayAfterStateChanged()
         updateAppearance()
         updateIdleTimer()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     private func updateIdleTimer() {

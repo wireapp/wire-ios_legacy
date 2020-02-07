@@ -55,12 +55,7 @@ extension SplitViewController {
             }
         }
 
-        if animated {
-            if self.isLeftViewControllerRevealed {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
-            }
-            UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
-
+        if animated {    
             UIView.wr_animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
                 self.view.layoutIfNeeded()
             }, completion: {(_ finished: Bool) -> Void in

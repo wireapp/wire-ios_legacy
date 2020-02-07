@@ -121,7 +121,6 @@ final class ActiveCallViewController : UIViewController {
             { (finished) in
                 toViewController.didMove(toParent: self)
                 fromViewController.removeFromParent()
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
         })
     }
     
