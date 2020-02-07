@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire。あなたのアカウントを追加します。";
-"landing.create_account.title" = "人";
+"landing.welcome_message" = "%@ へようこそ";
+"landing.create_account.title" = "アカウントを作成";
 "landing.create_account.subtitle" = "友人や家族のグループと個人的にチャット";
 "landing.create_team.title" = "プロ";
 "landing.create_team.subtitle" = "企業、団体、専門機関のためのセキュアなコラボレーション";
 "landing.login.hints" = "既にアカウントをお持ちですか？";
 "landing.login.button.title" = "ログイン";
+"landing.login.email.button.title" = "メールアドレスでログイン";
+"landing.login.enterprise.button.title" = "組織アカウントログイン";
+"landing.login.sso.button.title" = "シングルサインオンでログイン";
 
 "landing.custom_backend.title" = "%@ に接続しました";
 "landing.custom_backend.more_info.button.title" = "さらに表示";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "このバックアップデータは、新しいまたは古すぎる Wire で作成されたため、リストアできません。";
 
 // SSO – Company Login
-"login.sso.alert.title" = "企業ログイン";
-"login.sso.alert.message" = "企業用シングルサインオン アクセスコードを入力します。";
+"login.sso.alert.title" = "組織アカウントログイン";
+"login.sso.alert.message.sso_and_email" = "メールアドレスまたはシングルサインオンコードを入力してください";
+"login.sso.alert.message.sso_only" = "シングルサインオンコードを入力してください";
 "login.sso.alert.action" = "ログイン";
-"login.sso.alert.text_field.placeholder" = "シングルサインオン アクセスコード";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "メールアドレスまたはシングルサインオンアクセスコード";
+"login.sso.alert.text_field.placeholder.sso_only" = "シングルサインオンアクセスコード";
 
 "login.sso.start_error_title" = "企業アカウントでのログインを開始できませんでした。";
 "login.sso.link_error_message" = "あなたがクリックした企業ログインのリンクは無効です。問題を解決するにはあなたの管理者に問い合わせてください。";
 
-"login.sso.error.alert.title" = "何か問題があります";
-"login.sso.error.alert.invalid_code.title" = "コードが無効です。";
-"login.sso.error.alert.invalid_code.message" = "企業 シングルサインオン アクセスコードを確認して、もう一度やりなおしてください。";
 "login.sso.error.offline.alert.message" = "インターネット接続を確認して、もう一度やり直してください。";
 "login.sso.error.alert.message" = "詳細については、チームの管理者にお問い合わせください (Error %@)";
-"login.sso.error.alert.unknown.message" = "あとで再び試してください";
+
+"login.sso.error.alert.invalid_code.message" = "企業 シングルサインオン アクセスコードを確認して、もう一度やりなおしてください。";
 "login.sso.error.alert.invalid_status.message" = "しばらくしてからもう一度お試しください (Error %@)";
+"login.sso.error.alert.invalid_format.message.sso_only" = "有効なシングルサインオンアクセスコードを入力してください";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "有効なメールアドレスまたはシングルサインオンアクセスコードを入力してください";
+"login.sso.error.alert.domain_not_registered.message" = "このメールアドレスは組織アカウントログインには使用できません。続行するにはシングルサインオンアクセスコードを入力してください";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "このメールアドレスは他のサーバーにひも付けられています。このアプリでは、複数のサーバーへの同時接続はできません。この端末内のすべての Wire アカウントをいったんログアウトし、再度ログインしてください。";
+"login.sso.error.alert.unknown.message" = "あとで再び試してください";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "復元中…";

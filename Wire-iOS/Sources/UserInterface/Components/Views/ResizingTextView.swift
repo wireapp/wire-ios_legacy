@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,8 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "ResizingTextView.h"
+class ResizingTextView: TextView {
+    override var contentSize: CGSize {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
 
-@interface NextResponderTextView : ResizingTextView
-@property (nonatomic, weak, nullable) UIResponder *overrideNextResponder;
-@end
+    override var intrinsicContentSize: CGSize {
+        get {
+            return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
+        }
+    }
+
+    override func paste(_ sender: Any?) {
+        super.paste(sender)
+
+        // Work-around for text view scrolling too far when pasting text smaller
+        // than the maximum height of the text view.
+        setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+    }
+}

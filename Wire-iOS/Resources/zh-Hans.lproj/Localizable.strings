@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Add your Account.";
-"landing.create_account.title" = "个人信息";
+"landing.welcome_message" = "欢迎来到 %@";
+"landing.create_account.title" = "创建帐户";
 "landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
 "landing.create_team.title" = "专业版";
 "landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
 "landing.login.hints" = "已有帐户？";
 "landing.login.button.title" = "登录";
+"landing.login.email.button.title" = "使用电子邮件登录";
+"landing.login.enterprise.button.title" = "企业登录";
+"landing.login.sso.button.title" = "使用 SSO 登录";
 
 "landing.custom_backend.title" = "Connected to \"%@\"";
 "landing.custom_backend.more_info.button.title" = "显示更多";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "此备份是由更新版本或已过时的Wire创建的，无法在此恢复。";
 
 // SSO – Company Login
-"login.sso.alert.title" = "公司登录";
-"login.sso.alert.message" = "输入公司SSO访问代码。";
+"login.sso.alert.title" = "企业登录";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "登录";
-"login.sso.alert.text_field.placeholder" = "SSO 访问代码";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "无法启动公司登录";
 "login.sso.link_error_message" = "您点击的公司登录链接无效。请联系您的管理员解决问题。";
 
-"login.sso.error.alert.title" = "好像出了点问题。";
-"login.sso.error.alert.invalid_code.title" = "无效的代码。";
-"login.sso.error.alert.invalid_code.message" = "请验证您的公司SSO访问代码并重试。";
 "login.sso.error.offline.alert.message" = "请检查您的网络连接，然后重试";
 "login.sso.error.alert.message" = "请联系您的团队管理员详细信息 (错误 %@)。";
-"login.sso.error.alert.unknown.message" = "请稍后重试。";
+
+"login.sso.error.alert.invalid_code.message" = "请验证您的公司SSO访问代码并重试。";
 "login.sso.error.alert.invalid_status.message" = "请稍后再试 (错误 %@)。";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "请稍后重试。";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "正在恢复…";

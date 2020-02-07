@@ -59,6 +59,21 @@ final class String_PhoneNumberTests: XCTestCase {
         }
     }
 
+    func testThatPhoneNumberWithLeadingZeroIsParsed() {
+        // GIVEN
+        sut = "+49017612345678"
+
+        // WHEN & THEN
+        let presetCountry = Country(iso: "", e164: 49)
+
+        if let (country, phoneNumberWithoutCountryCode) = sut.shouldInsertAsPhoneNumber(presetCountry: presetCountry) {
+            XCTAssertEqual(country.iso, "de")
+            XCTAssertEqual(phoneNumberWithoutCountryCode, "017612345678")
+        } else {
+            XCTFail()
+        }
+    }
+
     func testThatPhoneNumberWithoutSpaceIsParsed() {
         // GIVEN
         sut = "+41860792093637"

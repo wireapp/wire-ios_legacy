@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import libPhoneNumberiOS
 
 struct PhoneNumber: Equatable {
     enum ValidationResult {
@@ -82,5 +83,20 @@ struct PhoneNumber: Equatable {
         fullNumber = validatedNumber ?? fullNumber
 
         return .valid
+    }
+
+    static func == (lhs: PhoneNumber, rhs: PhoneNumber) -> Bool {
+        if lhs.fullNumber == rhs.fullNumber { return true }
+
+        let phoneUtil = NBPhoneNumberUtil()
+        do {
+            let phoneNumberLhs: NBPhoneNumber = try phoneUtil.parse(lhs.fullNumber, defaultRegion: "DE")
+
+            let phoneNumberRhs: NBPhoneNumber = try phoneUtil.parse(rhs.fullNumber, defaultRegion: "DE")
+
+            return phoneNumberLhs == phoneNumberRhs
+        } catch {
+            return false
+        }
     }
 }

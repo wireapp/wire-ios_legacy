@@ -183,6 +183,6 @@
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
 	<key>EnableDeveloperMenu</key>
-	<string>${ENABLE_DEVELOPER_MENU}</string>
+	<string>${DEVELOPER_MODE_ENABLED}</string>
 </dict>
 </plist>
