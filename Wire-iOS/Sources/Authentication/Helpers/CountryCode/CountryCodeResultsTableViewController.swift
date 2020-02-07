@@ -21,10 +21,10 @@ final class CountryCodeResultsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         CountryCell.register(in: tableView)
     }
-    
+
     // MARK: - TableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
