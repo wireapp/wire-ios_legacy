@@ -17,23 +17,11 @@
 //
 
 import Foundation
-import Cartography
-
-extension ContactsViewController {
-
-    func setupSearchHeader() {
-        searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
-        searchHeaderViewController.delegate = self
-        searchHeaderViewController.allowsMultipleSelection = false
-        searchHeaderViewController.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
-        addToSelf(searchHeaderViewController)
-    }
-
-}
 
 extension ContactsViewController: SearchHeaderViewControllerDelegate {
 
-    public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
+    public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController,
+                                           updatedSearchQuery query: String) {
         dataSource.searchQuery = query
     }
 

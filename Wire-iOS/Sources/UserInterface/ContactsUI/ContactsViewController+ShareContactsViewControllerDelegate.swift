@@ -19,6 +19,7 @@ import Foundation
 
 import Foundation
 extension ContactsViewController: ShareContactsViewControllerDelegate {
+
     func shareDidFinish(_ viewController: UIViewController) {
         // Reload data source
         dataSource.searchQuery = ""
@@ -33,15 +34,18 @@ extension ContactsViewController: ShareContactsViewControllerDelegate {
 //MARK: - ShareContacts
 
 extension ContactsViewController {
+
     func dismissChildViewController(_ viewController: UIViewController?) {
-        if let view = viewController?.view {
-            UIView.transition(with: view, duration: 0.35, options: .transitionCrossDissolve, animations: {
-                viewController?.view.alpha = 0
-            }) { finished in
-                viewController?.willMove(toParent: nil)
-                viewController?.view.removeFromSuperview()
-                viewController?.removeFromParent()
-            }
+        guard let view = viewController?.view else { return }
+
+        UIView.transition(with: view,
+                          duration: 0.35,
+                          options: .transitionCrossDissolve,
+                          animations: { viewController?.view.alpha = 0}) { finished in
+
+            viewController?.willMove(toParent: nil)
+            viewController?.view.removeFromSuperview()
+            viewController?.removeFromParent()
         }
     }
 }
