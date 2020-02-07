@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class CountryCodeTableViewController: UITableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+final class CountryCodeTableViewController: UITableViewController, UISearchControllerDelegate {
     weak var delegate: CountryCodeTableViewControllerDelegate?
     private lazy var sections: [[Country]] = {
 
@@ -84,59 +84,6 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
         title = NSLocalizedString("registration.country_select.title", comment: "").localizedUppercase
     }
 
-    func dismiss(_ sender: Any?) {
-        dismiss(animated: true)
-    }
-
-    // MARK: - UISearchBarDelegate
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-    }
-
-    // MARK: - UISearchResultsUpdating
-    func updateSearchResults(for searchController: UISearchController) {
-        // Update the filtered array based on the search text
-        let searchText = searchController.searchBar.text
-        guard var searchResults: NSArray = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? NSArray else { return }
-
-        // Strip out all the leading and trailing spaces
-        let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
-
-        // Break up the search terms (separated by spaces)
-        let searchItems: [String]
-        if strippedString?.isEmpty == false {
-            searchItems = strippedString?.components(separatedBy: " ") ?? []
-        } else {
-            searchItems = []
-        }
-
-        var searchItemPredicates: [NSPredicate] = []
-        var numberPredicates: [NSPredicate] = []
-        for searchString in searchItems {
-            let displayNamePredicate = NSPredicate(format: "displayName CONTAINS[cd] %@", searchString)
-            searchItemPredicates.append(displayNamePredicate)
-
-            let numberFormatter = NumberFormatter()
-            numberFormatter.numberStyle = .none
-
-            if let targetNumber = numberFormatter.number(from: searchString) {
-                numberPredicates.append(NSPredicate(format: "e164 == %@", targetNumber))
-            }
-        }
-
-        let andPredicates: NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: searchItemPredicates)
-
-        let orPredicates = NSCompoundPredicate(orPredicateWithSubpredicates: numberPredicates)
-        let finalPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [andPredicates, orPredicates])
-
-        searchResults = searchResults.filtered(using: finalPredicate) as NSArray
-
-        // Hand over the filtered results to our search results table
-        let tableController = self.searchController.searchResultsController as? CountryCodeResultsTableViewController
-        tableController?.filteredCountries = searchResults as? [Country]
-        tableController?.tableView.reloadData()
-    }
-
     // MARK: - UITableViewDelegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry: Country?
@@ -176,4 +123,60 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return UILocalizedIndexedCollation.current().sectionIndexTitles
     }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension CountryCodeTableViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension CountryCodeTableViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        // Update the filtered array based on the search text
+        let searchText = searchController.searchBar.text
+        guard var searchResults: NSArray = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? NSArray else { return }
+        
+        // Strip out all the leading and trailing spaces
+        let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
+        
+        // Break up the search terms (separated by spaces)
+        let searchItems: [String]
+        if strippedString?.isEmpty == false {
+            searchItems = strippedString?.components(separatedBy: " ") ?? []
+        } else {
+            searchItems = []
+        }
+        
+        var searchItemPredicates: [NSPredicate] = []
+        var numberPredicates: [NSPredicate] = []
+        for searchString in searchItems {
+            let displayNamePredicate = NSPredicate(format: "displayName CONTAINS[cd] %@", searchString)
+            searchItemPredicates.append(displayNamePredicate)
+            
+            let numberFormatter = NumberFormatter()
+            numberFormatter.numberStyle = .none
+            
+            if let targetNumber = numberFormatter.number(from: searchString) {
+                numberPredicates.append(NSPredicate(format: "e164 == %@", targetNumber))
+            }
+        }
+        
+        let andPredicates: NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: searchItemPredicates)
+        
+        let orPredicates = NSCompoundPredicate(orPredicateWithSubpredicates: numberPredicates)
+        let finalPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [andPredicates, orPredicates])
+        
+        searchResults = searchResults.filtered(using: finalPredicate) as NSArray
+        
+        // Hand over the filtered results to our search results table
+        let tableController = self.searchController.searchResultsController as? CountryCodeResultsTableViewController
+        tableController?.filteredCountries = searchResults as? [Country]
+        tableController?.tableView.reloadData()
+    }
+
 }
