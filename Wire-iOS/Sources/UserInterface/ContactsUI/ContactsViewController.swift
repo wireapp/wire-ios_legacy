@@ -247,6 +247,10 @@ class ContactsViewController: UIViewController {
         }
     }
 
+    func execute(action: ContactsCell.Action, for user: UserType) {
+
+    }
+
     private func inviteUserOrOpenConversation(_ user: ZMSearchUser, from view: UIView) {
         let searchUser: ZMUser? = user.user
         let isIgnored: Bool? = searchUser?.isIgnored

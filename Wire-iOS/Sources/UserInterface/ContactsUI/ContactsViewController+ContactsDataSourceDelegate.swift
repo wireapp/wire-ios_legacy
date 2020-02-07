@@ -26,14 +26,8 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         cell.colorSchemeVariant = .dark
         cell.user = user
 
-        cell.actionButtonHandler = {[weak self, weak cell] user in
-            guard
-                let `self` = self,
-                let user = user,
-                let cell = cell
-                else { return }
-
-            self.invite(user: user, from: cell.actionButton)
+        cell.actionButtonHandler = { [weak self] user, action in
+            self?.execute(action: action, for: user)
         }
 
         if !cell.actionButton.isHidden {

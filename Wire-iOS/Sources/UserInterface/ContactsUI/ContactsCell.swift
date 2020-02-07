@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-typealias ContactsCellActionButtonHandler = (ZMSearchUser?) -> Void
+typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> Void
 
 /// A UITableViewCell version of UserCell, with simpler functionality for contact Screen with table view index bar
 class ContactsCell: UITableViewCell, SeparatorViewProtocol {
@@ -224,8 +224,8 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
     }
 
     @objc func actionButtonPressed(sender: Any?) {
-        if let user = user as? ZMSearchUser {
-            actionButtonHandler?(user)
+        if let user = user, let action = action {
+            actionButtonHandler?(user, action)
         }
     }
 }
