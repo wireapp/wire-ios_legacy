@@ -18,24 +18,68 @@
 
 import Foundation
 
+private let zmLog = ZMSLog(tag: "TextView")
+
 @objc protocol TextViewProtocol: NSObjectProtocol {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
     
-    @objc optional func textView(_ textView: UITextView, firstResponderChanged resigned: NSNumber)
+    func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
 // and by http://derpturkey.com/placeholder-in-uitextview/
-
-@objc class TextView {
+@objc
+class TextView: UITextView {
     
-    var placeholder: String?
-    var attributedPlaceholder: NSAttributedString?
-    var placeholderTextColor: UIColor?
-    var placeholderFont: UIFont?
-    var placeholderTextTransform: TextTransform?
-    var lineFragmentPadding: CGFloat = 0.0
-    var placeholderTextAlignment: NSTextAlignment!
+    weak var textViewProtocol: TextViewProtocol?
+    
+    var placeholder: String? {
+        didSet {
+            placeholderLabel.text = placeholder
+            placeholderLabel.sizeToFit()
+            showOrHidePlaceholder()
+        }
+    }
+    
+    var attributedPlaceholder: NSAttributedString? {
+        didSet {
+            let mutableCopy = attributedPlaceholder as? NSMutableAttributedString
+            mutableCopy?.addAttribute(.foregroundColor, value: placeholderTextColor, range: NSRange(location: 0, length: mutableCopy?.length ?? 0))
+            placeholderLabel.attributedText = mutableCopy
+            placeholderLabel.sizeToFit()
+            showOrHidePlaceholder()
+        }
+    }
+    
+    var placeholderTextColor: UIColor = .lightGray {
+        didSet {
+            placeholderLabel.textColor = placeholderTextColor
+        }
+    }
+    
+    var placeholderFont: UIFont? {
+        didSet {
+            placeholderLabel.font = placeholderFont
+        }
+    }
+    
+    var placeholderTextTransform: TextTransform = .upper {
+        didSet {
+            placeholderLabel.textTransform = placeholderTextTransform
+        }
+    }
+
+    var lineFragmentPadding: CGFloat = 0 {
+        didSet {
+            textContainer.lineFragmentPadding = lineFragmentPadding
+        }
+    }
+    
+    var placeholderTextAlignment: NSTextAlignment = NSTextAlignment.natural {
+        didSet {
+            placeholderLabel.textAlignment = placeholderTextAlignment
+        }
+    }
     var language: String?
     
     private var placeholderLabel: TransformLabel!
@@ -45,11 +89,6 @@ import Foundation
     
     private var shouldDrawPlaceholder = false
 
-    var lineFragmentPadding: CGFloat {
-        didSet {
-            textContainer.lineFragmentPadding = lineFragmentPadding
-        }
-    }
 
     override open var text: String! {
         didSet {
@@ -68,93 +107,49 @@ import Foundation
         setup()
     }
     
-    init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//
+//        setup()
+//    }
     
-    init(frame: CGRect, textContainer: NSTextContainer?) {
+    override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
     
     // MARK: Setup
-    func setup() {
-        NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: UITextView.textDidChangeNotification, object: self)
-        placeholderTextColor = UIColor.lightGray
+    private func setup() {
         placeholderTextContainerInset = textContainerInset
-        placeholderTextAlignment = NSTextAlignment.natural
+
+        NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: UITextView.textDidChangeNotification, object: self)
         
         createPlaceholderLabel()
         
-        if AutomationHelper.sharedHelper.disableAutocorrection() {
+        if AutomationHelper.sharedHelper.disableAutocorrection {
             autocorrectionType = .no
         }
     }
     
-    func setPlaceholder(_ placeholder: String?) {
-        self.placeholder = placeholder
-        placeholderLabel.text = placeholder
-        placeholderLabel.sizeToFit()
-        showOrHidePlaceholder()
-    }
-    
-    var attributedPlaceholder: NSAttributedString? {
-        get {
-            return super.attributedPlaceholder
-        }
-        set(attributedPlaceholder) {
-            var mutableCopy = attributedPlaceholder as? NSMutableAttributedString
-            mutableCopy?.addAttribute(.foregroundColor, value: placeholderTextColor, range: NSRange(location: 0, length: mutableCopy?.length ?? 0))
-            self.attributedPlaceholder = mutableCopy
-            placeholderLabel.attributedText = mutableCopy
-            placeholderLabel.sizeToFit()
-            showOrHidePlaceholder()
-        }
-    }
-    
-    func setPlaceholderTextAlignment(_ placeholderTextAlignment: NSTextAlignment) {
-        self.placeholderTextAlignment = placeholderTextAlignment
-        placeholderLabel.textAlignment = placeholderTextAlignment
-    }
-    
-    func setPlaceholderTextColor(_ placeholderTextColor: UIColor?) {
-        self.placeholderTextColor = placeholderTextColor
-        if let placeholderTextColor = placeholderTextColor {
-            placeholderLabel.textColor = placeholderTextColor
-        }
-    }
-    
-    func setPlaceholderFont(_ placeholderFont: UIFont?) {
-        self.placeholderFont = placeholderFont
-        placeholderLabel.font = self.placeholderFont
-    }
-    
-    func setPlaceholderTextTransform(_ placeholderTextTransform: TextTransform) {
-        self.placeholderTextTransform = placeholderTextTransform
-        placeholderLabel.textTransform = self.placeholderTextTransform
-    }
-    
+    @objc
     func textChanged(_ note: Notification?) {
         showOrHidePlaceholder()
     }
     
     
-    private func showOrHidePlaceholder() {
+    @objc
+    func showOrHidePlaceholder() {
             placeholderLabel.alpha = text.isEmpty ? 1 : 0
     }
     
     // MARK: - Copy/Pasting
-    @objc func paste(_ sender: Any?) {
+    override func paste(_ sender: Any?) {
         let pasteboard = UIPasteboard.general
-        ZMLogDebug("types available: %@", pasteboard.types)
+        zmLog.debug("types available: \(pasteboard.types)")
         
-        if (pasteboard.hasImages) && delegate.responds(to: #selector(textView(_:hasImageToPaste:))) {
-            weak var image = UIPasteboard.general.mediaAsset()
-            //#pragma clang diagnostic push
-            //#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            delegate.perform(#selector(textView(_:hasImageToPaste:)), with: self, with: image)
-            //#pragma clang diagnostic pop
+        if pasteboard.hasImages,
+            let image = UIPasteboard.general.mediaAsset() {
+            textViewProtocol?.textView(self, hasImageToPaste: image)
         } else if pasteboard.hasStrings {
             super.paste(sender)
         } else if pasteboard.hasURLs {
@@ -166,7 +161,7 @@ import Foundation
         }
     }
     
-    func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(paste(_:)) {
             let pasteboard = UIPasteboard.general
             return pasteboard.hasImages || pasteboard.hasStrings
@@ -175,20 +170,17 @@ import Foundation
         return super.canPerformAction(action, withSender: sender)
     }
     
-    func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
-        if delegate.responds(to: #selector(textView(_:firstResponderChanged:))) {
-            //#pragma clang diagnostic push
-            //#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            delegate.perform(#selector(textView(_:firstResponderChanged:)), with: self, with: NSNumber(value: resigned))
-            //#pragma clang diagnostic pop
-        }
+
+        textViewProtocol?.textView(self, firstResponderChanged: resigned)
+        
         return resigned
     }
     
     // MARK: Language
-    var textInputMode: UITextInputMode? {
-        return overriddenTextInputMode()
+    override var textInputMode: UITextInputMode? {
+        return overriddenTextInputMode
     }
 
     /// custom inset for placeholder, only left and right inset value is applied (The placeholder is align center vertically)

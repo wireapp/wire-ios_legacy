@@ -491,7 +491,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@implementation ConversationInputBarViewController(TextViewProtocol)
+@implementation ConversationInputBarViewController(TextViewProtocol)///TODO: swift
 #pragma mark - Informal TextView delegate methods
 
 - (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image
@@ -517,7 +517,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self presentViewController:confirmImageViewController animated:NO completion:nil];
 }
 
-- (void)textView:(UITextView *)textView firstResponderChanged:(NSNumber *)resigned
+- (void)textView:(UITextView *)textView firstResponderChanged:(Boolean)resigned
 {
     [self updateAccessoryViews];
     [self updateNewButtonTitleLabel];
