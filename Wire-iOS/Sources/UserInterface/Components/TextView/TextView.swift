@@ -24,7 +24,7 @@ import Foundation
     @objc optional func textView(_ textView: UITextView, firstResponderChanged resigned: NSNumber)
 }
 
-extension TextView {
+class TextView {
     
     var placeholder: String?
     var attributedPlaceholder: NSAttributedString?
@@ -40,6 +40,8 @@ extension TextView {
     private var placeholderLabelRightConstraint: NSLayoutConstraint?
     private var _placeholderTextContainerInset: UIEdgeInsets!
     
+    private var shouldDrawPlaceholder = false
+
     func showOrHidePlaceholder() {
     }
 

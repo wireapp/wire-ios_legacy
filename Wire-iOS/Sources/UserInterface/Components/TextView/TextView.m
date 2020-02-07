@@ -25,12 +25,6 @@
 #import "MediaAsset.h"
 #import "Wire-Swift.h"
 
-static NSString* ZMLogTag ZM_UNUSED = @"UI";
-
-@interface TextView ()
-
-@property (nonatomic) BOOL shouldDrawPlaceholder;
-@end
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
 // and by http://derpturkey.com/placeholder-in-uitextview/
