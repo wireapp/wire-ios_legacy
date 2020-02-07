@@ -17,15 +17,6 @@
 
 import Foundation
 
-extension UITableViewController {
-
-    func configureCell(_ cell: UITableViewCell, for country: Country) {
-        cell.textLabel?.text = country.displayName
-        cell.detailTextLabel?.text = "+\(country.e164)"
-
-        cell.accessibilityHint = "registration.phone.country_code.hint".localized
-    }
-}
 
 protocol CountryCodeTableViewControllerDelegate: class {
     func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country)
@@ -38,5 +29,12 @@ final class CountryCell: UITableViewCell {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+
+    func configure(for country: Country) {
+        textLabel?.text = country.displayName
+        detailTextLabel?.text = "+\(country.e164)"
+        
+        accessibilityHint = "registration.phone.country_code.hint".localized
     }
 }

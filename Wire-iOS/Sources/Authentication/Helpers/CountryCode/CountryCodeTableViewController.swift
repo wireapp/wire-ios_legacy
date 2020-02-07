@@ -111,7 +111,7 @@ final class CountryCodeTableViewController: UITableViewController, UISearchContr
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
 
-        configureCell(cell, for: sections[indexPath.section][indexPath.row])
+        cell.configure(for: sections[indexPath.section][indexPath.row])
 
         return cell
     }

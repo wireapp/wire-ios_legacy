@@ -38,7 +38,7 @@ final class CountryCodeResultsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
 
         if let country = filteredCountries?[indexPath.row] {
-            configureCell(cell, for: country)
+            cell.configure(for: country)
         }
 
         return cell
