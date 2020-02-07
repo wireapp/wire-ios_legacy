@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Adicione sua conta.";
-"landing.create_account.title" = "Pessoal";
+"landing.welcome_message" = "Welcome to %@";
+"landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Converse em privado com grupos de amigos\U00A0e\U00A0família";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Colaboração segura para empresas, instituições e organizações profissionais\U00A0";
 "landing.login.hints" = "Já tem uma conta?";
 "landing.login.button.title" = "Iniciar sessão";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "Conectado a \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Exibir mais";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Este backup foi criado por uma versão mais recente ou desatualizada do Wire e não pode ser restaurado aqui.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Entrar como Empresa";
-"login.sso.alert.message" = "Digite o código de acesso SSO da empresa.";
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Iniciar sessão";
-"login.sso.alert.text_field.placeholder" = "Código de acesso SSO";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "Não é possível iniciar o Login da Empresa";
 "login.sso.link_error_message" = "O link de login da empresa que você clicou não é válido. Por favor, contate o administrador para resolver o problema.";
 
-"login.sso.error.alert.title" = "Algo deu errado";
-"login.sso.error.alert.invalid_code.title" = "Código inválido.";
-"login.sso.error.alert.invalid_code.message" = "Por favor, verifique se o seu código de acesso SSO da empresa e tente novamente.";
 "login.sso.error.offline.alert.message" = "Por favor, verifique sua conexão de Internet e tente novamente.";
 "login.sso.error.alert.message" = "Por favor, contate o administrador de equipe para detalhes (erro %@).";
-"login.sso.error.alert.unknown.message" = "Por favor, tente novamente mais tarde.";
+
+"login.sso.error.alert.invalid_code.message" = "Por favor, verifique se o seu código de acesso SSO da empresa e tente novamente.";
 "login.sso.error.alert.invalid_status.message" = "Por favor, tente novamente mais tarde (erro %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Por favor, tente novamente mais tarde.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Restaurando…";

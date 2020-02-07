@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
-"landing.create_account.title" = "Personal";
+"landing.welcome_message" = "Добро пожаловать в %@";
+"landing.create_account.title" = "Создать аккаунт";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
+"landing.login.email.button.title" = "Войти с помощью email";
+"landing.login.enterprise.button.title" = "Вход для организаций";
+"landing.login.sso.button.title" = "Войти при помощи SSO";
 
 "landing.custom_backend.title" = "Подключен к \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Развернуть";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Эта резервная копия была создана в более новой или устаревшей версии Wire и не может быть восстановлена.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Вход для компаний";
-"login.sso.alert.message" = "Введите код доступа SSO вашей компании.";
+"login.sso.alert.title" = "Вход для организаций";
+"login.sso.alert.message.sso_and_email" = "Пожалуйста, введите ваш email или код SSO:";
+"login.sso.alert.message.sso_only" = "Пожалуйста, введите ваш код SSO:";
 "login.sso.alert.action" = "Войти";
-"login.sso.alert.text_field.placeholder" = "Код доступа SSO";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email или код доступа SSO";
+"login.sso.alert.text_field.placeholder.sso_only" = "Код доступа SSO";
 
 "login.sso.start_error_title" = "Не удается авторизоваться при входе для компании";
 "login.sso.link_error_message" = "Ссылка входа для компаний, на которую вы нажали, недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
 
-"login.sso.error.alert.title" = "Что-то пошло не так";
-"login.sso.error.alert.invalid_code.title" = "Неверный код.";
-"login.sso.error.alert.invalid_code.message" = "Проверьте код доступа SSO вашей компании и повторите попытку.";
 "login.sso.error.offline.alert.message" = "Пожалуйста, проверьте подключение к интернету и повторите попытку.";
 "login.sso.error.alert.message" = "Пожалуйста, свяжитесь с администратором вашей команды (ошибка %@).";
-"login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
+
+"login.sso.error.alert.invalid_code.message" = "Проверьте код доступа SSO вашей компании и повторите попытку.";
 "login.sso.error.alert.invalid_status.message" = "Пожалуйста, повторите попытку позже (ошибка %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Пожалуйста, введите действительный код доступа SSO";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Пожалуйста, введите действительный email или код доступа SSO";
+"login.sso.error.alert.domain_not_registered.message" = "Этот email не может быть использован при авторизации организации. Пожалуйста, введите код SSO для продолжения.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Восстановление…";
