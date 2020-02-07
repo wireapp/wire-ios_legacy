@@ -27,7 +27,6 @@
 #import "ConversationListItemView.h"
 #import "ConversationListItemView+Internal.h"
 #import "ResizingTextView.h"
-#import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
 #import "PassthroughTouchesView.h"
