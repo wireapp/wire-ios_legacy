@@ -31,19 +31,7 @@ extension ContactsViewController: ContactsDataSourceDelegate {
         }
 
         if !cell.actionButton.isHidden {
-            let zmUser = (user as? ZMSearchUser)?.user
-            let action: ContactsCell.Action
-
-            // TODO: Add this to UserType
-            if user.isConnected || user.isPendingApproval && zmUser?.isIgnored == true {
-                action = .open
-            } else if zmUser?.isIgnored == false && !user.isPendingApprovalByOtherUser {
-                action = .connect
-            } else {
-                action = .invite
-            }
-
-            cell.action = action
+            cell.action = user.isConnected ? .open : .invite
         }
 
         return cell

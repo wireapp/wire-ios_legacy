@@ -106,7 +106,7 @@ class ContactsCell: UITableViewCell, SeparatorViewProtocol {
         let transform = actionButton.textTransform
         let insets = actionButton.contentEdgeInsets
 
-        let titleWidths: [CGFloat] = [Action.open, .connect, .invite].map {
+        let titleWidths: [CGFloat] = [Action.open, .invite].map {
             let title = $0.localizedDescription
             let transformedTitle = title.applying(transform: transform)
             return transformedTitle.size(withAttributes: [.font: font]).width
@@ -254,15 +254,12 @@ extension ContactsCell {
     enum Action {
 
         case open
-        case connect
         case invite
 
         var localizedDescription: String {
             switch self {
             case .open:
                 return "contacts_ui.action_button.open".localized
-            case .connect:
-                return "connection_request.send_button_title".localized
             case .invite:
                 return "contacts_ui.action_button.invite".localized
             }
