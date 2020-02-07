@@ -20,18 +20,15 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class InviteContactsViewControllerSnapshotTests: XCTestCase {
+final class ContactsViewControllerSnapshotTests: XCTestCase {
 
-    var sut: InviteContactsViewController!
+    var sut: ContactsViewController!
 
     override func setUp() {
         super.setUp()
         ColorScheme.default.variant = .dark
-
-        sut = InviteContactsViewController()
+        sut = ContactsViewController()
         sut.view.backgroundColor = .black
-
-        sut.shouldShowShareContactsViewController = false
     }
 
     override func tearDown() {
@@ -39,42 +36,43 @@ final class InviteContactsViewControllerSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    fileprivate func wrapInNavigationControllerWithDummyPerviousViewController() {
-
-        let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
-
-        navigationController.pushViewController(sut, animated: false)
-
-        sut.viewWillAppear(false)
-
-        sut.updateEmptyResults()
-        sut.tableView.reloadData()
-    }
-
-    fileprivate func snapshotWithNavigationBarWithBackButton(file: StaticString = #file, line: UInt = #line) {
-        wrapInNavigationControllerWithDummyPerviousViewController()
-
-        verify(matching: sut, file: file, line: line)
-    }
-
     func testForNoContacts() {
-        snapshotWithNavigationBarWithBackButton()
+        // Given
+        sut.dataSource.ungroupedSearchResults = []
+
+        // When
+        simulateSearch(withResults: false)
+
+        // Then
+        wrapInNavigationController()
+        verify(matching: sut)
     }
 
     func testForNoSearchResult() {
-        sut.searchResultsReceived = true
+        // Given
+        sut.dataSource.searchQuery = "!!!"
 
-        snapshotWithNavigationBarWithBackButton()
+        // When
+        simulateSearch(withResults: false)
+
+        // Then
+        wrapInNavigationController()
+        verify(matching: sut)
     }
 
-    func testForContactsWithoutSectionBar() {
-        let mockUsers = MockUser.mockUsers()
-        sut.dataSource.ungroupedSearchResults = mockUsers ?? []
+    func testForContactsWithoutSections() {
+        // Given
+        sut.dataSource.ungroupedSearchResults = MockUser.mockUsers()
 
-        snapshotWithNavigationBarWithBackButton()
+        // When
+        simulateSearch(withResults: true)
+
+        // Then
+        wrapInNavigationController()
+        verify(matching: sut)
     }
 
-    ///TODO: restore this after fixed Alert tests in SwiftSnapshot 
+    ///TODO: restore this after fixed Alert tests in SwiftSnapshot
     /// CI server produce empty snapshot but it works on local machine. It seems the alert with type UIAlertControllerStyleAlert is not shown on CI server.
     /*
     func DISABLE_testForNoEmailClientAlert() {
@@ -88,10 +86,27 @@ final class InviteContactsViewControllerSnapshotTests: XCTestCase {
     }*/
 
     func testForContactsAndIndexSectionBarAreShown() {
+        // Given
         let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json") as? [MockUser]
         sut.dataSource.ungroupedSearchResults = mockUsers ?? []
 
-        snapshotWithNavigationBarWithBackButton()
+        // When
+        simulateSearch(withResults: true)
+
+        // Then
+        wrapInNavigationController()
+        verify(matching: sut)
+    }
+
+    private func simulateSearch(withResults: Bool) {
+        sut.updateEmptyResults(hasResults: withResults)
+    }
+
+    private func wrapInNavigationController() {
+        let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
+        navigationController.pushViewController(sut, animated: false)
+
+        sut.viewWillAppear(false)
+        sut.tableView.reloadData()
     }
 }
-
