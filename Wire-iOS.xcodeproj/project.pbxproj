@@ -762,7 +762,7 @@
 		A9806A4023E4293400691DFE /* TokenFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3F23E4293400691DFE /* TokenFieldDelegate.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
-		A9C3223F23EB200F00E17311 /* CountryCodeBaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCodeBaseTableViewController.swift */; };
+		A9C3223F23EB200F00E17311 /* UITableViewController+CountryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* UITableViewController+CountryCode.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
 		A9C33E0023D078B80069C8BB /* ConversationListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFF23D078B80069C8BB /* ConversationListItemView.swift */; };
@@ -2414,7 +2414,7 @@
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
-		A9C3223E23EB200E00E17311 /* CountryCodeBaseTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCodeBaseTableViewController.swift; sourceTree = "<group>"; };
+		A9C3223E23EB200E00E17311 /* UITableViewController+CountryCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewController+CountryCode.swift"; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
 		A9C33DFF23D078B80069C8BB /* ConversationListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListItemView.swift; sourceTree = "<group>"; };
 		A9C3EDF723DE624D0057B705 /* SwipeMenuCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeMenuCollectionCell.swift; sourceTree = "<group>"; };
@@ -6208,7 +6208,7 @@
 			children = (
 				EF2126C81FB9DFE300625A9B /* CountryCodes.plist */,
 				EF237411230D55B1006F53F3 /* Country.swift */,
-				A9C3223E23EB200E00E17311 /* CountryCodeBaseTableViewController.swift */,
+				A9C3223E23EB200E00E17311 /* UITableViewController+CountryCode.swift */,
 				A937863323EB3BF00039987B /* CountryCodeTableViewController.swift */,
 				EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */,
 			);
@@ -8111,7 +8111,7 @@
 				5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */,
 				1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */,
 				162917CE1F8CD327000F3E92 /* NetworkStatusViewController.swift in Sources */,
-				A9C3223F23EB200F00E17311 /* CountryCodeBaseTableViewController.swift in Sources */,
+				A9C3223F23EB200F00E17311 /* UITableViewController+CountryCode.swift in Sources */,
 				5E62802C222551CF0039A8AB /* IncomingRequestFooterView.swift in Sources */,
 				EF2F161E225748F100C44B88 /* ConnectRequestsCell.swift in Sources */,
 				5EFD914221C9065900080599 /* AuthenticationTeamCreationInputHandler.swift in Sources */,

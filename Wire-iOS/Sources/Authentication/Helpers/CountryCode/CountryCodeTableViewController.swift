@@ -18,7 +18,7 @@
 
 import Foundation
 
-final class CountryCodeTableViewController: CountryCodeBaseTableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
+final class CountryCodeTableViewController: UITableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CountryCodeTableViewControllerDelegate?
     private var sections: [[Any]]?
     private var sectionTitles: [AnyHashable]?
@@ -29,6 +29,8 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        CountryCell.register(in: tableView)
         
         createDataSource()
         
@@ -141,8 +143,8 @@ final class CountryCodeTableViewController: CountryCodeBaseTableViewController, 
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeCellIdentifier, for: indexPath)
-        
+        let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
+
         configureCell(cell, for: sections?[indexPath.section][indexPath.row] as! Country)
         
         return cell

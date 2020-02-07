@@ -17,15 +17,7 @@
 
 import Foundation
 
-let CountryCodeCellIdentifier = "CountryCodeCellIdentifier"
-
-class CountryCodeBaseTableViewController: UITableViewController {
-
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-
-        tableView.register(CountryCell.self, forCellReuseIdentifier: CountryCodeCellIdentifier)
-    }
+extension UITableViewController {
 
     func configureCell(_ cell: UITableViewCell, for country: Country) {
         cell.textLabel?.text = country.displayName
@@ -43,8 +35,8 @@ final class CountryCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 }
