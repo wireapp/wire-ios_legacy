@@ -75,14 +75,14 @@ extension TokenField {
 // MARK: - TokenizedTextViewDelegate
 
 extension TokenField: TokenizedTextViewDelegate {
-    func tokenizedTextView(_ textView: TokenizedTextView?, didTapTextRange range: NSRange, fraction: Float) {
+    func tokenizedTextView(_ textView: TokenizedTextView?, didTapTextRange range: NSRange, fraction: CGFloat) {
         if isCollapsed {
             setCollapsed(false, animated: true)
             return
         }
         
         
-        if fraction >= 1.0 && range.location == self.textView.textStorage.length - 1 {
+        if fraction >= 1 && range.location == self.textView.textStorage.length - 1 {
             return
         }
         

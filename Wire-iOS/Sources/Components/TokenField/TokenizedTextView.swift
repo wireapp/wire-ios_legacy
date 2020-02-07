@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 @objc
-protocol TokenizedTextViewDelegate: NSObjectProtocol {
-    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: Float)
+protocol TokenizedTextViewDelegate: class {
+    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat)
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
 }
 
@@ -30,27 +29,22 @@ protocol TokenizedTextViewDelegate: NSObjectProtocol {
 
 @objc
 final class TokenizedTextView: TextView {
+    
     @objc
-    public weak var tokenizedTextViewDelegate: TokenizedTextViewDelegate?
-    private var tapSelectionGestureRecognizer: UITapGestureRecognizer?
+    weak var tokenizedTextViewDelegate: TokenizedTextViewDelegate?
     
-    // MARK: - Init
-    override init(frame: CGRect, textContainer: NSTextContainer?) {
-        super.init(frame: frame, textContainer: textContainer)
-        setupGestureRecognizer()
-    }
+    private lazy var tapSelectionGestureRecognizer: UITapGestureRecognizer = {
+        return UITapGestureRecognizer(target: self, action: #selector(didTapText(_:)))
+    }()
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    convenience init() {
+        self.init(frame: .zero)
         setupGestureRecognizer()
     }
     
     private func setupGestureRecognizer() {
-        if tapSelectionGestureRecognizer == nil {
-            tapSelectionGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapText(_:)))
-            tapSelectionGestureRecognizer?.delegate = self
-            addGestureRecognizer(tapSelectionGestureRecognizer!)
-        }
+        tapSelectionGestureRecognizer.delegate = self
+        addGestureRecognizer(tapSelectionGestureRecognizer)
     }
     
     // MARK: - Actions
@@ -58,6 +52,7 @@ final class TokenizedTextView: TextView {
         get {
             return super.contentOffset
         }
+        
         set(contentOffset) {
             // Text view require no scrolling in case the content size is not overflowing the bounds
             if contentSize.height > bounds.size.height {
@@ -70,11 +65,7 @@ final class TokenizedTextView: TextView {
     }
     
     override var textContainerInset: UIEdgeInsets {
-        get {
-            return super.textContainerInset
-        }
-        set(textContainerInset) {///TODO: didSet
-            super.textContainerInset = textContainerInset
+        didSet {
             tokenizedTextViewDelegate?.tokenizedTextView(self, textContainerInsetChanged: textContainerInset)
         }
     }
@@ -90,7 +81,7 @@ final class TokenizedTextView: TextView {
         var fraction: CGFloat = 0
         characterIndex = layoutManager.characterIndex(for: location, in: textContainer, fractionOfDistanceBetweenInsertionPoints: UnsafeMutablePointer<CGFloat>(mutating: &fraction))
         
-        tokenizedTextViewDelegate?.tokenizedTextView(self, didTapTextRange: NSRange(location: characterIndex, length: 1), fraction: Float(fraction))
+        tokenizedTextViewDelegate?.tokenizedTextView(self, didTapTextRange: NSRange(location: characterIndex, length: 1), fraction: fraction)
     }
     
     override func copy(_ sender: Any?) {
@@ -121,7 +112,11 @@ final class TokenizedTextView: TextView {
         // enumerate range of current text, resolving person attachents with user name.
         var string = ""
         for i in range.location..<NSMaxRange(range) {
-            if (attributedText?.string as! NSString).character(at: i) == NSTextAttachment.character {
+            guard let nsstring = attributedText?.string as NSString? else {
+                continue
+            }
+
+            if nsstring.character(at: i) == NSTextAttachment.character {
                 
                 if let tokenAttachemnt = attributedText?.attribute(.attachment, at: i, effectiveRange: nil) as? TokenTextAttachment {
                     string += tokenAttachemnt.token.title
@@ -130,7 +125,7 @@ final class TokenizedTextView: TextView {
                     }
                 }
             } else {
-                string += (attributedText?.string as NSString?)?.substring(with: NSRange(location: i, length: 1)) ?? ""
+                string += nsstring.substring(with: NSRange(location: i, length: 1))
             }
         }
         return string
