@@ -20,7 +20,38 @@ import Foundation
 
 final class CountryCodeTableViewController: UITableViewController, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
     weak var delegate: CountryCodeTableViewControllerDelegate?
-    private var sections: [[Any]]?
+    private lazy var sections: [[Country]] = {
+        
+        guard let countries = Country.allCountries else { return [] }
+        
+        let selector = #selector(getter: Country.displayName)
+        let sectionTitlesCount = UILocalizedIndexedCollation.current().sectionTitles.count
+        
+        var mutableSections: [[Country]] = []
+        for _ in 0..<sectionTitlesCount {
+            mutableSections.append([Country]())
+        }
+        
+        for country in countries {
+            let sectionNumber = UILocalizedIndexedCollation.current().section(for: country, collationStringSelector: selector)
+            mutableSections[sectionNumber].append(country)
+        }
+        
+        for idx in 0..<sectionTitlesCount {
+            let objectsForSection = mutableSections[idx]
+            if let countries =  UILocalizedIndexedCollation.current().sortedArray(from: objectsForSection, collationStringSelector: selector) as? [Country] {
+                
+                mutableSections[idx] = countries
+            }
+        }
+        
+        #if WIRESTAN
+        mutableSections[0].insert(Country.countryWirestan, at: 0)
+        #endif
+        
+        return mutableSections
+    }()
+    
     private var sectionTitles: [AnyHashable]?
     lazy var searchController: UISearchController = {
         return UISearchController(searchResultsController: resultsTableViewController)
@@ -31,8 +62,6 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
         super.viewDidLoad()
         
         CountryCell.register(in: tableView)
-        
-        createDataSource()
         
         
         searchController.searchResultsUpdater = self
@@ -70,7 +99,7 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
     func updateSearchResults(for searchController: UISearchController) {
         // Update the filtered array based on the search text
         let searchText = searchController.searchBar.text
-        var searchResults: NSArray = (sections as NSArray?)?.value(forKeyPath: "@unionOfArrays.self") as! NSArray
+        guard var searchResults: NSArray = (sections as NSArray).value(forKeyPath: "@unionOfArrays.self") as? NSArray else { return }
         
         // Strip out all the leading and trailing spaces
         let strippedString = searchText?.trimmingCharacters(in: CharacterSet.whitespaces)
@@ -94,14 +123,8 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
             numberFormatter.numberStyle = .none
             let targetNumber = numberFormatter.number(from: searchString)
             
-            if targetNumber != nil {
-                var e164Predicate: NSPredicate? = nil
-                if let targetNumber = targetNumber {
-                    e164Predicate = NSPredicate(format: "e164 == %@", targetNumber)
-                }
-                if let e164Predicate = e164Predicate {
-                    numberPredicates.append(e164Predicate)
-                }
+            if let targetNumber = targetNumber {
+                numberPredicates.append(NSPredicate(format: "e164 == %@", targetNumber))
             }
         }
         
@@ -116,7 +139,7 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
         
         // Hand over the filtered results to our search results table
         let tableController = self.searchController.searchResultsController as? CountryCodeResultsTableViewController
-        tableController?.filteredCountries = searchResults as? [AnyHashable]
+        tableController?.filteredCountries = searchResults as? [Country]
         tableController?.tableView.reloadData()
     }
     
@@ -124,28 +147,30 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCountry: Country?
         if resultsTableViewController.tableView == tableView {
-            selectedCountry = resultsTableViewController.filteredCountries?[indexPath.row] as? Country
+            selectedCountry = resultsTableViewController.filteredCountries?[indexPath.row]
             searchController.isActive = false
         } else {
-            selectedCountry = sections?[indexPath.section][indexPath.row] as? Country
+            selectedCountry = sections[indexPath.section][indexPath.row]
         }
         
-        delegate?.countryCodeTableViewController(self, didSelect: selectedCountry!)
+        if let selectedCountry = selectedCountry {
+            delegate?.countryCodeTableViewController(self, didSelect: selectedCountry)
+        }
     }
     
     // MARK: - TableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return sections?.count ?? 0
+        return sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections?[section].count ?? 0
+        return sections[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
-
-        configureCell(cell, for: sections?[indexPath.section][indexPath.row] as! Country)
+        
+        configureCell(cell, for: sections[indexPath.section][indexPath.row])
         
         return cell
     }
@@ -156,33 +181,5 @@ final class CountryCodeTableViewController: UITableViewController, UISearchBarDe
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return UILocalizedIndexedCollation.current().sectionIndexTitles
-    }
-    
-    func createDataSource() {
-        guard let countries = Country.allCountries else { return }
-
-        let selector = #selector(getter: Country.displayName)
-        let sectionTitlesCount = UILocalizedIndexedCollation.current().sectionTitles.count
-
-        var mutableSections: [[Any]] = []
-        for _ in 0..<sectionTitlesCount {
-            mutableSections.append([Country]())
-        }
-
-        for country in countries {
-            let sectionNumber = UILocalizedIndexedCollation.current().section(for: country, collationStringSelector: selector)
-            mutableSections[sectionNumber].append(country)
-        }
-
-        for idx in 0..<sectionTitlesCount {
-            let objectsForSection = mutableSections[idx]
-            mutableSections[idx] = UILocalizedIndexedCollation.current().sortedArray(from: objectsForSection, collationStringSelector: selector)
-        }
-
-        #if WIRESTAN
-        mutableSections[0].insert(Country.countryWirestan, at: 0)
-        #endif
-
-        sections = mutableSections
     }
 }

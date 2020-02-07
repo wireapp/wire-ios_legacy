@@ -17,7 +17,7 @@
 // 
 
 final class CountryCodeResultsTableViewController: UITableViewController {
-    var filteredCountries: [AnyHashable]?
+    var filteredCountries: [Country]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ final class CountryCodeResultsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
 
-        if let country = filteredCountries?[indexPath.row] as? Country {
+        if let country = filteredCountries?[indexPath.row] {
             configureCell(cell, for: country)
         }
 
