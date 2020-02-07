@@ -18,6 +18,10 @@
 
 import Foundation
 
+protocol CountryCodeTableViewControllerDelegate: class {
+    func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country)
+}
+
 final class CountryCodeTableViewController: UITableViewController, UISearchControllerDelegate {
     weak var delegate: CountryCodeTableViewControllerDelegate?
     private lazy var sections: [[Country]] = {

@@ -17,11 +17,6 @@
 
 import Foundation
 
-
-protocol CountryCodeTableViewControllerDelegate: class {
-    func countryCodeTableViewController(_ viewController: UIViewController, didSelect country: Country)
-}
-
 final class CountryCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .value1, reuseIdentifier: reuseIdentifier)
