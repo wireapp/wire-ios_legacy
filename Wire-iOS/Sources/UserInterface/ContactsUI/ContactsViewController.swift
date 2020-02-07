@@ -48,23 +48,24 @@ class ContactsViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        setupViews()
-        setupLayout()
-        setupStyle()
-
         dataSource.delegate = self
         tableView.dataSource = dataSource
-
-        observeKeyboardFrame()
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        setupLayout()
+        setupStyle()
+        observeKeyboardFrame()
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         presentShareContactsViewControllerIfNeeded()
     }
 
@@ -197,6 +198,10 @@ class ContactsViewController: UIViewController {
     // MARK: - Keyboard Observation
 
     private func observeKeyboardFrame() {
+        // Subscribing to the notification may cause "zero frame" animations to occur before the initial layout
+        // of the view. We can avoid this by laying out the view first.
+        view.layoutIfNeeded()
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardFrameWillChange),
                                                name: UIResponder.keyboardWillChangeFrameNotification,
