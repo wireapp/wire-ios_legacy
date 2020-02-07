@@ -22,15 +22,10 @@ import XCTest
 final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
     var sut: ContactsCell!
-    let buttonTitles = ["contacts_ui.action_button.open".localized,
-                        "contacts_ui.action_button.invite".localized,
-                        "connection_request.send_button_title".localized]
 
     override func setUp() {
         super.setUp()
         sut = ContactsCell()
-
-        sut.allActionButtonTitles = buttonTitles
     }
 
     override func tearDown() {
@@ -42,8 +37,7 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
         let user = MockUser.mockUsers()[0]
         sut.user = user
-
-        sut.actionButton.setTitle(buttonTitles[1], for: .normal)
+        sut.action = .invite
 
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
@@ -52,8 +46,7 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
         let user = MockUser.mockUsers()[0]
         sut.user = user
-
-        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
+        sut.action = .open
 
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
@@ -63,8 +56,7 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         user.name = "A very long username which should be clipped at tail"
         sut.user = user
-
-        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
+        sut.action = .open
 
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
@@ -74,9 +66,8 @@ final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
         let user = MockUser.mockUsers()[0]
         (user as Any as! MockUser).handle = nil
         sut.user = user
-
-        sut.actionButton.setTitle(buttonTitles[0], for: .normal)
-
+        sut.action = .open
+        
         verifyInAllColorSchemes(view: sut.prepareForSnapshots())
     }
 }
