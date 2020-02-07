@@ -16,24 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-class ResizingTextView: TextView {
-    override var contentSize: CGSize {
-        didSet {
-            invalidateIntrinsicContentSize()
-        }
-    }
+@class TokenizedTextView;
 
-    override var intrinsicContentSize: CGSize {
-        get {
-            return sizeThatFits(CGSize(width: bounds.size.width, height: UIView.noIntrinsicMetric))
-        }
-    }
+@interface TokenField ()
 
-    override func paste(_ sender: Any?) {
-        super.paste(sender)
+@property (nonatomic) NSLayoutConstraint *accessoryButtonTopMargin;
+@property (nonatomic) NSLayoutConstraint *accessoryButtonRightMargin;
 
-        // Work-around for text view scrolling too far when pasting text smaller
-        // than the maximum height of the text view.
-        setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-    }
-}
+@property (nonatomic) UILabel *toLabel;
+@property (nonatomic) NSLayoutConstraint *toLabelLeftMargin;
+@property (nonatomic) NSLayoutConstraint *toLabelTopMargin;
+
+@property (nonatomic) NSMutableArray *currentTokens;
+@property (copy, readwrite, nonatomic) NSString *filterText;
+@property (readonly, nonatomic) NSDictionary *textAttributes;
+
+@property (nonatomic, readwrite) BOOL userDidConfirmInput;
+
+- (void)updateExcludePath;
+- (void)updateLayout;
+
+@end

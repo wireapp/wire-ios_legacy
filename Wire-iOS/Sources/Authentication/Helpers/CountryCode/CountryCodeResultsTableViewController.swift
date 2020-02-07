@@ -16,9 +16,14 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-final class CountryCodeResultsTableViewController: CountryCodeBaseTableViewController {
-    @objc
-    var filteredCountries: [AnyHashable]?
+final class CountryCodeResultsTableViewController: UITableViewController {
+    var filteredCountries: [Country]?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        CountryCell.register(in: tableView)
+    }
 
     // MARK: - TableViewDataSource
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -30,10 +35,10 @@ final class CountryCodeResultsTableViewController: CountryCodeBaseTableViewContr
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CountryCodeCellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(ofType: CountryCell.self, for: indexPath)
 
-        if let country = filteredCountries?[indexPath.row] as? Country {
-            configureCell(cell, for: country)
+        if let country = filteredCountries?[indexPath.row] {
+            cell.configure(for: country)
         }
 
         return cell
