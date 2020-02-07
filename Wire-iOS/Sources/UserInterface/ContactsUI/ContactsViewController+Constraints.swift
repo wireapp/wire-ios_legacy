@@ -24,7 +24,7 @@ extension ContactsViewController {
         [searchHeaderViewController.view,
          separatorView,
          tableView,
-         emptyResultsView,
+         emptyResultsLabel,
          inviteOthersButton,
          noContactsLabel,
          bottomContainerSeparatorView,
@@ -47,20 +47,16 @@ extension ContactsViewController {
 
             separatorView.heightAnchor.constraint(equalToConstant: 0.5),
             separatorView.bottomAnchor.constraint(equalTo: tableView.topAnchor),
-            separatorView.bottomAnchor.constraint(equalTo: emptyResultsView.topAnchor),
 
             tableView.leadingAnchor.constraint(equalTo: tableView.superview!.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: tableView.superview!.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)
         ]
 
-        let emptyResultsBottomConstraint = emptyResultsView.bottomAnchor.constraint(equalTo: emptyResultsView.superview!.bottomAnchor)
-        self.emptyResultsBottomConstraint = emptyResultsBottomConstraint
-
         constraints += [
-            emptyResultsView.leadingAnchor.constraint(equalTo: emptyResultsView.superview!.leadingAnchor),
-            emptyResultsView.trailingAnchor.constraint(equalTo: emptyResultsView.superview!.trailingAnchor),
-            emptyResultsBottomConstraint]
+            emptyResultsLabel.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            emptyResultsLabel.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+        ]
 
         constraints += [
             noContactsLabel.topAnchor.constraint(equalTo: searchHeaderViewController.view.bottomAnchor, constant: standardOffset),

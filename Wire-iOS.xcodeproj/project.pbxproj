@@ -1025,7 +1025,6 @@
 		EEFF3E7C21B6D1FB000834A6 /* ConversationCreateSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFF3E7B21B6D1FB000834A6 /* ConversationCreateSectionController.swift */; };
 		EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF00FD731FDA97BA0059FEDC /* UIViewController+Orientation.swift */; };
 		EF0154B7225B922200A77FB6 /* ContactsViewController+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0154B6225B922200A77FB6 /* ContactsViewController+Constraints.swift */; };
-		EF0154B8225B939200A77FB6 /* ContactsEmptyResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */; };
 		EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */; };
 		EF05948422DF07240079B8E1 /* XCTestCase+AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05948322DF07240079B8E1 /* XCTestCase+AccentColor.swift */; };
 		EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF05948522DF18290079B8E1 /* TeamAccountView.swift */; };
@@ -2346,7 +2345,6 @@
 		87D679E51EBC8002005BEB4C /* String+Compatibility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Compatibility.swift"; sourceTree = "<group>"; };
 		87D7AF661DF5A158001A1CD7 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		87D7E1C420CACA820064C03D /* CallViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallViewControllerTests.swift; sourceTree = "<group>"; };
-		87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsEmptyResultView.swift; sourceTree = "<group>"; };
 		87DCF48C1D34E9BA00BB420F /* ZMAddressBookContact+LocalInvitation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMAddressBookContact+LocalInvitation.swift"; sourceTree = "<group>"; };
 		87DCF4961D34E9E600BB420F /* LocationSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSelectionViewController.swift; sourceTree = "<group>"; };
 		87DCF4971D34E9E600BB420F /* LocationSendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSendViewController.swift; sourceTree = "<group>"; };
@@ -4888,7 +4886,6 @@
 			children = (
 				EF2A8DEA214A9AFD002C9058 /* ContactsCell.swift */,
 				EE948F1823E17778000A663E /* ContactsDataSource.swift */,
-				87DCF4811D34E9BA00BB420F /* ContactsEmptyResultView.swift */,
 				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */,
 				A9EB722223C1581A00DA8240 /* ContactsViewController.swift */,
 				EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */,
@@ -7277,7 +7274,6 @@
 				16719A1D1D9ABB7C00AA6B63 /* GiphyConfirmationViewController.swift in Sources */,
 				163495891F015389004E80DB /* AppDelegate+Network.swift in Sources */,
 				EF1EE76D225385CA00E7B6E3 /* UIViewController+StatusBar.swift in Sources */,
-				EF0154B8225B939200A77FB6 /* ContactsEmptyResultView.swift in Sources */,
 				F15650E321DD11D700210504 /* CABasicAnimation+Rotation.m in Sources */,
 				BFAF4CB71CEDB9FC00780537 /* AudioButtonOverlayState.swift in Sources */,
 				8758220921B6999E00D68266 /* SelfProfileViewController+SettingsChangeAlert.swift in Sources */,

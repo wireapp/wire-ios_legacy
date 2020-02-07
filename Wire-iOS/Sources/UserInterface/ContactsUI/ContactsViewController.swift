@@ -31,11 +31,10 @@ class ContactsViewController: UIViewController {
     var separatorView = UIView()
     var tableView = UITableView()
     var inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
-    var emptyResultsView = ContactsEmptyResultView()
+    var emptyResultsLabel = UILabel()
 
     var bottomEdgeConstraint: NSLayoutConstraint?
     var bottomContainerBottomConstraint: NSLayoutConstraint?
-    var emptyResultsBottomConstraint: NSLayoutConstraint?
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -84,7 +83,7 @@ class ContactsViewController: UIViewController {
         setupSearchHeader()
         view.addSubview(separatorView)
         setupTableView()
-        setupEmptyResultsView()
+        setupEmptyResultsLabel()
         setupNoContactsLabel()
         setupBottomContainer()
     }
@@ -111,11 +110,11 @@ class ContactsViewController: UIViewController {
         view.addSubview(tableView)
     }
 
-    private func setupEmptyResultsView() {
-        emptyResultsView.messageLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
-        emptyResultsView.actionButton.setTitle("peoplepicker.no_matching_results.action.send_invite".localized, for: .normal)
-        emptyResultsView.actionButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
-        view.addSubview(emptyResultsView)
+    private func setupEmptyResultsLabel() {
+        emptyResultsLabel.text = "peoplepicker.no_matching_results_after_address_book_upload_title".localized
+        emptyResultsLabel.textAlignment = .center
+        emptyResultsLabel.textColor = .from(scheme: .textForeground, variant: .dark)
+        view.addSubview(emptyResultsLabel)
     }
 
     private func setupNoContactsLabel() {
@@ -159,20 +158,19 @@ class ContactsViewController: UIViewController {
     func updateEmptyResults(hasResults: Bool) {
         let searchQueryExist = !dataSource.searchQuery.isEmpty
         noContactsLabel.isHidden = hasResults || searchQueryExist
-        bottomContainerView.isHidden = !hasResults || searchQueryExist
         setEmptyResultsHidden(hasResults)
     }
 
     private func setEmptyResultsHidden(_ hidden: Bool) {
         let completion: (Bool) -> Void = { finished in
-            self.emptyResultsView.isHidden = hidden
+            self.emptyResultsLabel.isHidden = hidden
             self.tableView.isHidden = !hidden
         }
 
         UIView.animate(withDuration: 0.25,
                        delay: 0,
                        options: .beginFromCurrentState,
-                       animations: { self.emptyResultsView.alpha = hidden ? 0 : 1 },
+                       animations: { self.emptyResultsLabel.alpha = hidden ? 0 : 1 },
                        completion: completion)
     }
 
