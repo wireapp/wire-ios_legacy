@@ -17,7 +17,6 @@
 
 import Foundation
 
-import Foundation
 extension ContactsViewController: ShareContactsViewControllerDelegate {
 
     func shareDidFinish(_ viewController: UIViewController) {
@@ -29,13 +28,8 @@ extension ContactsViewController: ShareContactsViewControllerDelegate {
     func shareDidSkip(_ viewController: UIViewController) {
         delegate?.contactsViewControllerDidNotShareContacts(self)
     }
-}
 
-//MARK: - ShareContacts
-
-extension ContactsViewController {
-
-    func dismissChildViewController(_ viewController: UIViewController?) {
+    private func dismissChildViewController(_ viewController: UIViewController?) {
         guard let view = viewController?.view else { return }
 
         UIView.transition(with: view,

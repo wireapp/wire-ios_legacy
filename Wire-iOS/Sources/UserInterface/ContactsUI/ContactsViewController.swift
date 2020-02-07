@@ -18,8 +18,6 @@
 
 import Foundation
 
-private let zmLog = ZMSLog(tag: "UI")
-
 class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
