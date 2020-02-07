@@ -652,7 +652,10 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
     
     func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
-        return ConversationStatusIcon.unreadMessages(count: 1)
+        return .unreadMessages(count: status.messagesRequiringAttention
+            .compactMap { StatusMessageType(message: $0) }
+            .filter { matchedTypes.contains($0) }
+            .count)
     }
 }
 
