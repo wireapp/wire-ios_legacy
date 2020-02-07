@@ -54,7 +54,8 @@ extension ContactsViewController {
             tableView.bottomAnchor.constraint(equalTo: bottomContainerView.topAnchor)
         ]
 
-        emptyResultsBottomConstraint = emptyResultsView.bottomAnchor.constraint(equalTo: emptyResultsView.superview!.bottomAnchor)
+        let emptyResultsBottomConstraint = emptyResultsView.bottomAnchor.constraint(equalTo: emptyResultsView.superview!.bottomAnchor)
+        self.emptyResultsBottomConstraint = emptyResultsBottomConstraint
 
         constraints += [
             emptyResultsView.leadingAnchor.constraint(equalTo: emptyResultsView.superview!.leadingAnchor),
@@ -67,7 +68,8 @@ extension ContactsViewController {
             noContactsLabel.trailingAnchor.constraint(equalTo: noContactsLabel.superview!.trailingAnchor)
         ]
 
-        bottomContainerBottomConstraint = bottomContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.superview!.bottomAnchor)
+        let bottomContainerBottomConstraint = bottomContainerView.bottomAnchor.constraint(equalTo: bottomContainerView.superview!.bottomAnchor)
+        self.bottomContainerBottomConstraint = bottomContainerBottomConstraint
 
         constraints += [
             bottomContainerBottomConstraint,
@@ -79,7 +81,8 @@ extension ContactsViewController {
             bottomContainerSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)
         ]
 
-        bottomEdgeConstraint = inviteOthersButton.bottomAnchor.constraint(equalTo: inviteOthersButton.superview!.bottomAnchor, constant: -(standardOffset / 2.0 + UIScreen.safeArea.bottom))
+        let bottomEdgeConstraint = inviteOthersButton.bottomAnchor.constraint(equalTo: inviteOthersButton.superview!.bottomAnchor, constant: -(standardOffset / 2.0 + UIScreen.safeArea.bottom))
+        self.bottomEdgeConstraint = bottomEdgeConstraint
 
         constraints += [
             bottomEdgeConstraint,

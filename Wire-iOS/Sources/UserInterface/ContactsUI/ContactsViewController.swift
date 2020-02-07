@@ -27,15 +27,15 @@ class ContactsViewController: UIViewController {
     var bottomContainerView = UIView()
     var bottomContainerSeparatorView = UIView()
     var noContactsLabel = UILabel()
-    var searchHeaderViewController: SearchHeaderViewController!
+    var searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
     var separatorView = UIView()
     var tableView = UITableView()
-    var inviteOthersButton: Button!
+    var inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
     var emptyResultsView = ContactsEmptyResultView()
 
-    var bottomEdgeConstraint: NSLayoutConstraint!
-    var bottomContainerBottomConstraint: NSLayoutConstraint!
-    var emptyResultsBottomConstraint: NSLayoutConstraint!
+    var bottomEdgeConstraint: NSLayoutConstraint?
+    var bottomContainerBottomConstraint: NSLayoutConstraint?
+    var emptyResultsBottomConstraint: NSLayoutConstraint?
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -90,7 +90,6 @@ class ContactsViewController: UIViewController {
     }
 
     private func setupSearchHeader() {
-        searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
         searchHeaderViewController.delegate = self
         searchHeaderViewController.allowsMultipleSelection = false
         searchHeaderViewController.view.backgroundColor = UIColor.from(scheme: .searchBarBackground, variant: .dark)
@@ -128,7 +127,6 @@ class ContactsViewController: UIViewController {
         view.addSubview(bottomContainerView)
         bottomContainerView.addSubview(bottomContainerSeparatorView)
 
-        inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
         inviteOthersButton.addTarget(self, action: #selector(sendIndirectInvite), for: .touchUpInside)
         inviteOthersButton.setTitle("contacts_ui.invite_others".localized, for: .normal)
         bottomContainerView.addSubview(inviteOthersButton)
@@ -219,8 +217,8 @@ class ContactsViewController: UIViewController {
 
         UIView.animate(withKeyboardNotification: notification, in: view, animations: { [weak self] keyboardFrame in
             guard let weakSelf = self else { return }
-            weakSelf.bottomContainerBottomConstraint.constant = -(willAppear ? keyboardFrame.height : 0)
-            weakSelf.bottomEdgeConstraint.constant = -padding - (willAppear ? 0 : UIScreen.safeArea.bottom)
+            weakSelf.bottomContainerBottomConstraint?.constant = -(willAppear ? keyboardFrame.height : 0)
+            weakSelf.bottomEdgeConstraint?.constant = -padding - (willAppear ? 0 : UIScreen.safeArea.bottom)
             weakSelf.view.layoutIfNeeded()
         })
     }
