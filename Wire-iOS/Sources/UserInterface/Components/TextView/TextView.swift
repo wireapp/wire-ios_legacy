@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -43,8 +43,13 @@ class TextView: UITextView {
     
     var attributedPlaceholder: NSAttributedString? {
         didSet {
-            let mutableCopy = attributedPlaceholder as? NSMutableAttributedString
-            mutableCopy?.addAttribute(.foregroundColor, value: placeholderTextColor, range: NSRange(location: 0, length: mutableCopy?.length ?? 0))
+            let mutableCopy: NSMutableAttributedString
+            if let attributedPlaceholder = attributedPlaceholder {
+                mutableCopy = NSMutableAttributedString(attributedString: attributedPlaceholder)
+            } else {
+                mutableCopy = NSMutableAttributedString()
+            }
+            mutableCopy.addAttribute(.foregroundColor, value: placeholderTextColor, range: NSRange(location: 0, length: mutableCopy.length))
             placeholderLabel.attributedText = mutableCopy
             placeholderLabel.sizeToFit()
             showOrHidePlaceholder()
