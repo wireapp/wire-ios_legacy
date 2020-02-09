@@ -24,8 +24,6 @@
 
 // UI
 #import "UIViewController+Errors.h"
-#import "ConversationListItemView.h"
-#import "ConversationListItemView+Internal.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"

@@ -21,7 +21,7 @@ import Foundation
 extension ConversationListItemView {
     static let minHeight: CGFloat = 64
 
-    @objc func createConstraints() {
+    func createConstraints() {
         contentStack.translatesAutoresizingMaskIntoConstraints = false
         lineView.translatesAutoresizingMaskIntoConstraints = false
 
