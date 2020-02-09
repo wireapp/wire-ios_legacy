@@ -110,13 +110,7 @@ class TextView: UITextView {
         super.init(coder: aDecoder)
         setup()
     }
-    
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//
-//        setup()
-//    }
-    
+        
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
