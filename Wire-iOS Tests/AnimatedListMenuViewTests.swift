@@ -18,7 +18,8 @@
 import XCTest
 @testable import Wire
 
-final class AnimatedListMenuViewTests {
+final class AnimatedListMenuViewTests: XCTestCase {
+    
     func testThatProgressIsClamped() {
         //GIVEN
         let sut = AnimatedListMenuView()
@@ -34,6 +35,11 @@ final class AnimatedListMenuViewTests {
 
         //THEN
         XCTAssertEqual(sut.progress, 0)
-    }
 
+        //WHEN
+        sut.progress = 0.5
+        
+        //THEN
+        XCTAssertEqual(sut.progress, 0.5)
+    }
 }

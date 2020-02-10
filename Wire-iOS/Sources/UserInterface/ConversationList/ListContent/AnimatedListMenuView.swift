@@ -41,7 +41,7 @@ final class AnimatedListMenuView: UIView {
     /// Animation progress. Value from 0 to 1.0
     var progress: CGFloat = 0 {
         didSet {
-            guard 0...1 ~= progress else { return }
+            guard !(0...1 ~= progress) else { return }
             progress = min(1, max(0, progress))
         }
     }
