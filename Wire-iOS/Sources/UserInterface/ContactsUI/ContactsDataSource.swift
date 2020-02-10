@@ -18,18 +18,18 @@
 
 import Foundation
 
-@objc protocol ContactsDataSourceDelegate: class {
+protocol ContactsDataSourceDelegate: class {
 
     func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell
     func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType])
 
 }
 
-@objc class ContactsDataSource: NSObject {
+class ContactsDataSource: NSObject {
 
     static let MinimumNumberOfContactsToDisplaySections: UInt = 15
 
-    @objc weak var delegate: ContactsDataSourceDelegate?
+    weak var delegate: ContactsDataSourceDelegate?
 
     private(set) var searchDirectory: SearchDirectory?
     private var sections = [[UserType]]()
