@@ -22,8 +22,6 @@ class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
 
-    weak var delegate: ContactsViewControllerDelegate?
-
     var bottomContainerView = UIView()
     var bottomContainerSeparatorView = UIView()
     var noContactsLabel = UILabel()
@@ -59,11 +57,6 @@ class ContactsViewController: UIViewController {
         setupLayout()
         setupStyle()
         observeKeyboardFrame()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        presentShareContactsViewControllerIfNeeded()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -171,21 +164,6 @@ class ContactsViewController: UIViewController {
                        options: .beginFromCurrentState,
                        animations: { self.emptyResultsLabel.alpha = hidden ? 0 : 1 },
                        completion: completion)
-    }
-
-    private func presentShareContactsViewControllerIfNeeded() {
-        let shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
-
-        if !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip {
-            presentShareContactsViewController()
-        }
-    }
-
-    private func presentShareContactsViewController() {
-        let shareContactsViewController = ShareContactsViewController()
-        shareContactsViewController.delegate = self
-
-        addToSelf(shareContactsViewController)
     }
 
     // MARK: - Keyboard Observation

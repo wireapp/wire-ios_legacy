@@ -768,8 +768,6 @@
 		A9C9D35E23E84EA20098CACC /* MediaPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */; };
 		A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */; };
 		A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */; };
-		A9D51B8C23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */; };
-		A9EB722123C1522000DA8240 /* ContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722023C1522000DA8240 /* ContactsViewControllerDelegate.swift */; };
 		A9EB722323C1581A00DA8240 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722223C1581A00DA8240 /* ContactsViewController.swift */; };
 		A9EB722523C3A47B00DA8240 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722423C3A47B00DA8240 /* AppDelegate.swift */; };
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
@@ -1164,7 +1162,6 @@
 		EF3243532317F0070043F147 /* ZClientViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3243522317F0060043F147 /* ZClientViewControllerTests.swift */; };
 		EF32AB0321C15B0E002E4777 /* String+MessageToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */; };
 		EF33204C21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */; };
-		EF334B98229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */; };
 		EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */; };
 		EF3371C52216F067005ED048 /* MockUser+SelfUserFromSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */; };
 		EF36168A21E753310041F0CC /* SettingsTableViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */; };
@@ -2406,8 +2403,6 @@
 		A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerDelegate.swift; sourceTree = "<group>"; };
 		A9D19B15238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A9D19B172385245E00F6E14A /* ProfileViewControllerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerViewModel.swift; sourceTree = "<group>"; };
-		A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ShareContactsViewControllerDelegate.swift"; sourceTree = "<group>"; };
-		A9EB722023C1522000DA8240 /* ContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A9EB722223C1581A00DA8240 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		A9EB722423C3A47B00DA8240 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationViewController.swift; sourceTree = "<group>"; };
@@ -2888,7 +2883,6 @@
 		EF3243522317F0060043F147 /* ZClientViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZClientViewControllerTests.swift; sourceTree = "<group>"; };
 		EF32AB0221C15B0E002E4777 /* String+MessageToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MessageToolBox.swift"; sourceTree = "<group>"; };
 		EF33204B21496A0D0079E832 /* AVPlayerViewController+StatusBarAndNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVPlayerViewController+StatusBarAndNotification.swift"; sourceTree = "<group>"; };
-		EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StartUIViewController+ContactsViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF3371C12216D9D9005ED048 /* ZMUser+Self.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUser+Self.swift"; sourceTree = "<group>"; };
 		EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+SelfUserFromSession.swift"; sourceTree = "<group>"; };
 		EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4826,8 +4820,6 @@
 				EFDE37FB213994750095DCA4 /* ContactsSectionHeaderView.swift */,
 				A9EB722223C1581A00DA8240 /* ContactsViewController.swift */,
 				EEDEA26723ED609C000EF7E3 /* ContactsViewController+Invite.swift */,
-				A9EB722023C1522000DA8240 /* ContactsViewControllerDelegate.swift */,
-				A9D51B8B23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift */,
 				EF6DAD692150F2C400D9BA70 /* ContactsViewController+SearchHeaderViewControllerDelegate.swift */,
 				EF0154B6225B922200A77FB6 /* ContactsViewController+Constraints.swift */,
 				EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */,
@@ -4955,7 +4947,6 @@
 				16325E641EE03CC4000E72EB /* SearchResultsView.swift */,
 				164C29AA1ED33A5F0026562A /* SearchResultsViewController.swift */,
 				8775BF1B2007C6B900A8AD93 /* SearchGroupSelector.swift */,
-				EF334B97229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift */,
 			);
 			path = StartUI;
 			sourceTree = "<group>";
@@ -7208,7 +7199,6 @@
 				F15650D621DD0FC600210504 /* VerticalColumnCollectionViewLayout.swift in Sources */,
 				5E4BC1CA218C9F6600A8682E /* ConversationQuoteCell.swift in Sources */,
 				54FF9E281E813BA500323D2E /* DebugAlert.swift in Sources */,
-				A9EB722123C1522000DA8240 /* ContactsViewControllerDelegate.swift in Sources */,
 				F93D58451D7DA865003AE972 /* ZMConversation+Analytics.swift in Sources */,
 				87AB6DB61D9AB47400ADAD38 /* SettingsStyleNavigationController.swift in Sources */,
 				160D6926212EFE3800096EAD /* Button.m in Sources */,
@@ -7544,7 +7534,6 @@
 				87BEB03C1D3E44BA00DE9575 /* CameraKeyboardViewController.swift in Sources */,
 				16DD6EB8228431030090A74C /* LegalHoldHeaderView.swift in Sources */,
 				5EDD25442141555600C0E254 /* LicensesLoader.swift in Sources */,
-				A9D51B8C23BA57A100BD42AB /* ContactsViewController+ShareContactsViewControllerDelegate.swift in Sources */,
 				F15650ED21DD1B4100210504 /* Reusable.swift in Sources */,
 				876113EB1DD1FEC4007F5969 /* ConversationContentViewController+Forward.swift in Sources */,
 				EFDE37FA2139889C0095DCA4 /* MuteIndicatorView.swift in Sources */,
@@ -7748,7 +7737,6 @@
 				EE0DE1CD21B172BF00CF3C4E /* ConversationCreateGuestsSectionController.swift in Sources */,
 				5E7315352191EADF00255A78 /* Message+Formatters.swift in Sources */,
 				5E8FFC1821EF61A90052DF03 /* ClientUnregisterInvitationStepDescription.swift in Sources */,
-				EF334B98229D789500099D80 /* StartUIViewController+ContactsViewControllerDelegate.swift in Sources */,
 				5E21344621CCEF1700273D0D /* EmptyViewDescription.swift in Sources */,
 				F16427061FCC5BE400D2ABFC /* SetFullNameStepDescription.swift in Sources */,
 				A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */,

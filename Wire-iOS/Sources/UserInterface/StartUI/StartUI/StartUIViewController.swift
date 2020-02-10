@@ -226,13 +226,16 @@ final class StartUIViewController: UIViewController {
     }
     
     // MARK: - Action bar
+
     @objc
     func inviteMoreButtonTapped(_ sender: UIButton?) {
-        let contactsViewController = ContactsViewController()
-        contactsViewController.delegate = self
-        navigationController?.pushViewController(contactsViewController, animated: true)
+        if needsAddressBookPermission {
+            presentShareContactsViewController()
+        } else {
+            navigationController?.pushViewController(ContactsViewController(), animated: true)
+        }
     }
-    
+
 }
 
 extension StartUIViewController: SearchHeaderViewControllerDelegate {
