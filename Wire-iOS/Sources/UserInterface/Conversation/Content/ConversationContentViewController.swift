@@ -143,6 +143,8 @@ final class ConversationContentViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         onScreen = true
+        
+        ///TODO: use delegate
         activeMediaPlayerObserver = mediaPlaybackManager?.observe(\.activeMediaPlayer, options: [.initial, .new]) { [weak self] _, _ in
             self?.updateMediaBar()
         }
