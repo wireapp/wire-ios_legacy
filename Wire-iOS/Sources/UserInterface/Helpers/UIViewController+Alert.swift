@@ -28,7 +28,6 @@ extension UIAlertController {
     ///   - message: message of the alert
     ///   - okActionHandler: a nullable closure for the OK button
     /// - Returns: the alert presented
-    @objc
     static func alertWithOKButton(title: String? = nil,
                                   message: String,
                                   okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
@@ -40,6 +39,15 @@ extension UIAlertController {
         alert.addAction(okAction)
 
         return alert
+    }
+    
+    convenience init(title: String? = nil,
+                     message: String,
+                     alertAction: UIAlertAction) {
+        self.init(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        addAction(alertAction)
     }
 
 }

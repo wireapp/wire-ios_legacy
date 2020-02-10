@@ -39,6 +39,14 @@ extension UIAlertAction {
         )
     }
 
+    static func confirm(style: Style = .cancel, handler:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction(
+            title: "general.confirm".localized,
+            style: style,
+            handler: handler
+        )
+    }
+
     convenience init(icon: StyleKitIcon?, title: String, tintColor: UIColor, handler: ((UIAlertAction) -> Void)? = nil) {
         self.init(title: title, style: .default, handler: handler);
 
