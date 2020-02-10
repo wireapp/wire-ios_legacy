@@ -20,7 +20,7 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "TextView")
 
-protocol TextViewProtocol: class {
+protocol InformalTextViewDelegate: class {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }
@@ -30,7 +30,7 @@ protocol TextViewProtocol: class {
 @objc
 class TextView: UITextView {
 
-    weak var textViewDelegate: TextViewProtocol?
+    weak var informalTextViewDelegate: InformalTextViewDelegate?
 
     var placeholder: String? {
         didSet {
@@ -144,7 +144,7 @@ class TextView: UITextView {
 
         if pasteboard.hasImages,
             let image = UIPasteboard.general.mediaAsset() {
-            textViewDelegate?.textView(self, hasImageToPaste: image)
+            informalTextViewDelegate?.textView(self, hasImageToPaste: image)
         } else if pasteboard.hasStrings {
             super.paste(sender)
         } else if pasteboard.hasURLs {
@@ -168,7 +168,7 @@ class TextView: UITextView {
     override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
 
-        textViewDelegate?.textView(self, firstResponderChanged: resigned)
+        informalTextViewDelegate?.textView(self, firstResponderChanged: resigned)
 
         return resigned
     }

@@ -148,7 +148,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
 // MARK: - Informal TextView delegate methods
 
-extension ConversationInputBarViewController: TextViewProtocol {
+extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
         let confirmImageViewController = ConfirmAssetViewController()
         confirmImageViewController.image = image
