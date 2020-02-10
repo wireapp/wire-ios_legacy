@@ -1,6 +1,5 @@
-//
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,17 +15,31 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@interface MenuDotView : UIView
+import XCTest
+@testable import Wire
 
-@end
+final class AnimatedListMenuViewTests: XCTestCase {
+    
+    func testThatProgressIsClamped() {
+        //GIVEN
+        let sut = AnimatedListMenuView()
 
-@interface AnimatedListMenuView ()
+        //WHEN
+        sut.progress = 1.3
 
-@property (nonatomic, nonnull) MenuDotView *leftDotView;
-@property (nonatomic, nonnull) MenuDotView *centerDotView;
-@property (nonatomic, nonnull) MenuDotView *rightDotView;
-@property (nonatomic) BOOL initialConstraintsCreated;
-@property (nonatomic, nonnull) NSLayoutConstraint *centerToRightDistanceConstraint;
-@property (nonatomic, nonnull) NSLayoutConstraint *leftToCenterDistanceConstraint;
+        //THEN
+        XCTAssertEqual(sut.progress, 1)
 
-@end
+        //WHEN
+        sut.progress = -1
+
+        //THEN
+        XCTAssertEqual(sut.progress, 0)
+
+        //WHEN
+        sut.progress = 0.5
+        
+        //THEN
+        XCTAssertEqual(sut.progress, 0.5)
+    }
+}
