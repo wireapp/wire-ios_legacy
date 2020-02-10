@@ -18,11 +18,12 @@
 
 import Foundation
 
-final class MenuDotView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+fileprivate final class MenuDotView: UIView {
+    init() {
+        super.init(frame: .zero)
+        
         layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 2.0
+        layer.borderWidth = 2
     }
 
     @available(*, unavailable)
@@ -49,6 +50,7 @@ final class AnimatedListMenuView: UIView {
     private let leftDotView: MenuDotView = MenuDotView()
     private let centerDotView: MenuDotView = MenuDotView()
     private let rightDotView: MenuDotView = MenuDotView()
+    
     private var initialConstraintsCreated = false
     private var centerToRightDistanceConstraint: NSLayoutConstraint?
     private var leftToCenterDistanceConstraint: NSLayoutConstraint?
