@@ -175,15 +175,6 @@ class SettingsCellDescriptorFactory {
         
         let troubleshootingSection = SettingsSectionDescriptor(cellDescriptors: [troubleshootingButton], header: troubleshootingSectionTitle, footer: troubleshootingSectionSubtitle)
         
-        let debuggingToolsTitle = "self.settings.advanced.troubleshooting.submit_tools.title".localized
-        let debuggingToolsButton = SettingsExternalScreenCellDescriptor(title: debuggingToolsTitle) { () -> (UIViewController?) in
-            return SettingsTechnicalReportViewController()
-        }
-
-        let debuggingToolsSection = SettingsSectionDescriptor(cellDescriptors: [debuggingToolsButton], header: .none, footer: .none) { (_) -> (Bool) in
-            return true
-        }
-        
         let pushTitle = "self.settings.advanced.reset_push_token.title".localized
         let pushSectionSubtitle = "self.settings.advanced.reset_push_token.subtitle".localized
         
@@ -217,7 +208,7 @@ class SettingsCellDescriptorFactory {
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
-        items.append(contentsOf: [troubleshootingSection, debuggingToolsSection, pushSection, versionSection])
+        items.append(contentsOf: [troubleshootingSection, debuggingToolsSection(), pushSection, versionSection])
         
         return SettingsGroupCellDescriptor(
             items: items,
@@ -280,23 +271,15 @@ class SettingsCellDescriptorFactory {
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
     }
     
-    func developerGroup1() -> SettingsCellDescriptorType {
-        let title = "self.settings.developer_options.title".localized
-        var developerCellDescriptors: [SettingsCellDescriptorType] = []
+    func debuggingToolsSection() -> SettingsSectionDescriptor {
+        let title = "self.settings.advanced.troubleshooting.submit_tools.title".localized
         
-        let devController = SettingsExternalScreenCellDescriptor(title: "Logging") { () -> (UIViewController?) in
-            return DeveloperOptionsController()
-        }
-        
-        developerCellDescriptors.append(devController)
-       
         let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (badge count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
-        developerCellDescriptors.append(findUnreadBadgeConversationButton)
-        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (back arrow count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
-        developerCellDescriptors.append(findUnreadBackArrowConversationButton)
-       
         
-        return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
+        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "First unread conversation (back arrow count)", isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
+        
+        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadBadgeConversationButton, findUnreadBackArrowConversationButton])], title: title)
+        return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
     }
     
     func requestNumber(_ callback: @escaping (Int)->()) {
