@@ -37,7 +37,6 @@
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
-#import "TextView+Internal.h"
 #import "TextView.h"
 #import "TextView+Internal.h"
 #import "ColorKnobView.h"
