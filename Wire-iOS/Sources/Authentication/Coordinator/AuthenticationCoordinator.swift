@@ -728,7 +728,8 @@ extension AuthenticationCoordinator {
         }
     }
     
-    func startAutomaticSSOFlow() {
+    /// Automatically start the SSO flow if possible
+    private func startAutomaticSSOFlow() {
         companyLoginController?.startAutomaticSSOFlow()
     }
 
