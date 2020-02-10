@@ -19,81 +19,55 @@
 import XCTest
 @testable import Wire
 
-final class ContactsCellSnapshotTests: ZMSnapshotTestCase {
 
+final class ContactsCellSnapshotTests: XCTestCase {
     var sut: ContactsCell!
-
+    
     override func setUp() {
         super.setUp()
         sut = ContactsCell()
     }
-
+    
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-
+    
     func testForInviteButton() {
-
+        
         let user = MockUser.mockUsers()[0]
         sut.user = user
         sut.action = .invite
-
-        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+        
+        verifyInAllColorSchemes(matching: sut)
     }
-
+    
     func testForOpenButton() {
-
+        
         let user = MockUser.mockUsers()[0]
         sut.user = user
         sut.action = .open
-
-        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+        
+        verifyInAllColorSchemes(matching: sut)
     }
-
+    
     func testForOpenButtonWithALongUsername() {
-
+        
         let user = MockUser.mockUsers()[0]
         user.name = "A very long username which should be clipped at tail"
         sut.user = user
         sut.action = .open
-
-        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+        
+        verifyInAllColorSchemes(matching: sut)
     }
-
+    
     func testForNoSubtitle() {
-
+        
         let user = MockUser.mockUsers()[0]
         (user as Any as! MockUser).handle = nil
         sut.user = user
         sut.action = .open
         
-        verifyInAllColorSchemes(view: sut.prepareForSnapshots())
+        verifyInAllColorSchemes(matching: sut)
     }
-}
-
-extension UITableView: Themeable {
-    private func getFirstThemeableCell() -> Themeable? {
-        let indexPath = IndexPath(row: 0, section: 0)
-        if let cell = self.cellForRow(at: indexPath) as? Themeable {
-            return cell
-        }
-
-        return nil
-    }
-
-    public var colorSchemeVariant: ColorSchemeVariant {
-        get {
-            return getFirstThemeableCell()?.colorSchemeVariant ?? .light
-        }
-        set(newValue) {
-            var cell = getFirstThemeableCell()
-            cell?.colorSchemeVariant = newValue
-        }
-    }
-
-    public func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
-    }
-
-
 }
