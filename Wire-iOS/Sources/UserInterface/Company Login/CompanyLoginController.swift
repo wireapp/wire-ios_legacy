@@ -149,6 +149,14 @@ import WireCommonComponents
         }
     }
 
+    func startCompanyLoginFlow(ssoOnly: Bool) {
+        if ssoOnly {
+            fetchSSOCode()
+        } else {
+            displayLoginCodePrompt()
+        }
+    }
+    
     /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
     /// Call this method when you need to present the alert in response to user interaction.
     func displayLoginCodePrompt(ssoOnly: Bool = false) {
@@ -255,7 +263,7 @@ import WireCommonComponents
     /// - Parameter domain: domain to look up
     private func lookup(domain: String) {
         delegate?.controller(self, showLoadingView: true)
-        SessionManager.shared?.unauthenticatedSession?.lookup(domain: domain) { [weak self] result in
+        SessionManager.shared?.activeUnauthenticatedSession.lookup(domain: domain) { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
             guard result.error == nil, let domainInfo = result.value else {
@@ -271,12 +279,6 @@ import WireCommonComponents
     ///
     /// - Parameter url: backend url to switch to
     private func updateBackendEnvironment(with url: URL) {
-        func notifyDelegate() {
-            DispatchQueue.main.async {
-                self.delegate?.controllerDidUpdateBackendEnvironment(self)
-            }
-        }
-        
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.switchBackend(configuration: url) { [weak self] result in
             guard let `self` = self else { return }
@@ -292,7 +294,18 @@ import WireCommonComponents
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            notifyDelegate()
+            self.delegate?.controllerDidUpdateBackendEnvironment(self)
+        }
+    }
+    
+    
+    /// Fetches the SSO Code
+    private func fetchSSOCode() {
+        SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [displayLoginCodePrompt, attemptLoginWithCode] result in
+            guard result.error == nil, let ssoCode = result.value?.ssoCode else {
+                return displayLoginCodePrompt(true)
+            }
+            attemptLoginWithCode(ssoCode)
         }
     }
     

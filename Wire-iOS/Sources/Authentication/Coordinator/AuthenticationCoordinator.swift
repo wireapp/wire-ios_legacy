@@ -721,7 +721,7 @@ extension AuthenticationCoordinator {
         if let linkCode = linkCode {
             companyLoginController?.attemptLoginWithCode(linkCode)
         } else {
-            companyLoginController?.displayLoginCodePrompt(ssoOnly: ssoOnly)
+            companyLoginController?.startCompanyLoginFlow(ssoOnly: ssoOnly)
         }
     }
 
