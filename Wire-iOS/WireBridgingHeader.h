@@ -37,8 +37,6 @@
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
-#import "AnimatedListMenuView.h"
-#import "AnimatedListMenuView+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ColorKnobView.h"
