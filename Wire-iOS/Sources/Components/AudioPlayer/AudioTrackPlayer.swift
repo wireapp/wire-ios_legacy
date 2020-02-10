@@ -21,7 +21,6 @@ import MediaPlayer
 
 /// These enums represent the state of the current media in the player.
 
-//@objc
 enum MediaPlayerState : Int {
     case ready = 0
     case playing
@@ -30,7 +29,6 @@ enum MediaPlayerState : Int {
     case error
 }
 
-//@objc ///TODO: no objc?
 protocol MediaPlayer: NSObjectProtocol {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
@@ -41,12 +39,25 @@ protocol MediaPlayer: NSObjectProtocol {
 }
 
 typealias AudioTrackCompletionHandler = ((_ loaded: Bool, _ error: Error?) -> Void)
+
+protocol AudioTrackPlayerDelegate: class {
+    func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?)
+}
+
 final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var avPlayer: AVPlayer?
-    private var timeObserverToken: Any? ///TODO: type?
+    private var timeObserverToken: Any?
     private var messageObserverToken: NSObjectProtocol?
     private var loadAudioTrackCompletionHandler: AudioTrackCompletionHandler?
-    var state: MediaPlayerState?
+    
+    weak var audioTrackPlayerDelegate: AudioTrackPlayerDelegate?
+    
+    ///TODO: use didSet and delegate?
+    var state: MediaPlayerState? {
+        didSet {
+            audioTrackPlayerDelegate?.stateDidChange(self, state: state)
+        }
+    }
     var sourceMessage: ZMConversationMessage?
     private var nowPlayingInfo: [String : Any]?
     private var playHandler: Any?
@@ -65,7 +76,10 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             (audioTrack as? NSObject)?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         }
     }
+    
+    @objc dynamic
     private(set) var progress: CGFloat = 0.0
+    
     var duration: CGFloat {
         if let duration = avPlayer?.currentItem?.asset.duration {
             return CGFloat(CMTimeGetSeconds(duration))

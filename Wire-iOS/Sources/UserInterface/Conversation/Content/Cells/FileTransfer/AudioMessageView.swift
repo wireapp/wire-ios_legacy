@@ -21,6 +21,31 @@ import Cartography
 
 private let zmLog = ZMSLog(tag: "UI")
 
+extension AudioMessageView: AudioTrackPlayerDelegate {
+    func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?) {
+        ///  Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
+        ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
+        ///          This function may called from background thread (in case incoming call).
+        DispatchQueue.main.async { [weak self] in
+            if self?.isOwnTrackPlayingInAudioPlayer() == true {
+                self?.updateActivePlayerProgressAnimated(false)
+                self?.updateActivePlayButton()
+                self?.updateTimeLabel()
+                self?.updateProximityObserverState()
+            }
+                /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+            else if state == .completed {
+                self?.updateTimeLabel()
+            } else {
+                self?.updateInactivePlayer()
+            }
+        }
+
+    }
+    
+    
+}
+
 final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
@@ -34,8 +59,10 @@ final class AudioMessageView: UIView, TransferView {
             }
             return _audioTrackPlayer
         }
+        
         set(newValue) {
             _audioTrackPlayer = newValue
+            _audioTrackPlayer?.audioTrackPlayerDelegate = self
             setupAudioPlayerObservers()
         }
     }
@@ -407,26 +434,10 @@ final class AudioMessageView: UIView, TransferView {
             self?.audioProgressChanged()
         }
 
-        audioPlayerStateObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.state, options: [.initial, .new]) { [weak self] _, change in
-            
-            ///  Updates the visual progress of the audio, play button icon image, time label and proximity sensor's sate.
-            ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
-            ///          This function may called from background thread (in case incoming call).
-            DispatchQueue.main.async {
-                if self?.isOwnTrackPlayingInAudioPlayer() == true {
-                    self?.updateActivePlayerProgressAnimated(false)
-                    self?.updateActivePlayButton()
-                    self?.updateTimeLabel()
-                    self?.updateProximityObserverState()
-                }
-                    /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
-                else if change.newValue == .completed {
-                    self?.updateTimeLabel()
-                } else {
-                    self?.updateInactivePlayer()
-                }
-            }
-        }
+        ///TODO: imp delegate
+//        audioPlayerStateObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.state, options: [.initial, .new]) { [weak self] _, change in
+        
+//        }
     }
 
     // MARK: - Actions
@@ -499,6 +510,8 @@ final class AudioMessageView: UIView, TransferView {
         setAudioOutput(earpiece: raisedToEar)
     }
 }
+
+// MARK: - WireCallCenterCallStateObserver
 
 extension AudioMessageView : WireCallCenterCallStateObserver {
 
