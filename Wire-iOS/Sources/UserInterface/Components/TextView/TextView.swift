@@ -20,7 +20,7 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "TextView")
 
-@objc protocol TextViewProtocol: NSObjectProtocol {
+protocol TextViewProtocol {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
 
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
@@ -146,7 +146,7 @@ class TextView: UITextView {
         } else if pasteboard.hasStrings {
             super.paste(sender)
         } else if pasteboard.hasURLs {
-            if (pasteboard.string?.count ?? 0) != 0 {
+            if pasteboard.string?.isEmpty == false {
                 super.paste(sender)
             } else if pasteboard.url != nil {
                 super.paste(sender)
