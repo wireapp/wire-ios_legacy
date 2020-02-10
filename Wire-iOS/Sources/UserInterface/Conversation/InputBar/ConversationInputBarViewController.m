@@ -491,40 +491,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@implementation ConversationInputBarViewController(TextViewProtocol)///TODO: swift
-#pragma mark - Informal TextView delegate methods
-
-- (void)textView:(UITextView *)textView hasImageToPaste:(id<MediaAsset>)image
-{
-    ConfirmAssetViewController *confirmImageViewController = [[ConfirmAssetViewController alloc] init];
-    confirmImageViewController.image = image;
-    confirmImageViewController.previewTitle = [self.conversation.displayName uppercasedWithCurrentLocale];
-    
-    ZM_WEAK(self);
-    
-    confirmImageViewController.onConfirm = ^(UIImage *editedImage){
-        ZM_STRONG(self);
-        [self dismissViewControllerAnimated:NO completion:nil];
-        id<MediaAsset> finalImage = editedImage == nil ? image : editedImage;
-        [self postImage:finalImage];
-    };
-    
-    confirmImageViewController.onCancel = ^() {
-        ZM_STRONG(self);
-        [self dismissViewControllerAnimated:NO completion:nil];
-    };
-    
-    [self presentViewController:confirmImageViewController animated:NO completion:nil];
-}
-
-- (void)textView:(UITextView *)textView firstResponderChanged:(Boolean)resigned
-{
-    [self updateAccessoryViews];
-    [self updateNewButtonTitleLabel];
-}
-
-@end
-
 @interface ZMAssetMetaDataEncoder (Test)
 
 + (CGSize)imageSizeForImageData:(NSData *)imageData;

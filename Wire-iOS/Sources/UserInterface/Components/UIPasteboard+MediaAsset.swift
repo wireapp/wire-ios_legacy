@@ -31,7 +31,7 @@ extension UIPasteboard {
         }
     }
 
-    @objc public func mediaAsset() -> MediaAsset? {
+    func mediaAsset() -> MediaAsset? {
         if contains(pasteboardTypes: [kUTTypeGIF as String]) {
             let data: Data? = self.data(forPasteboardType: kUTTypeGIF as String)
             return FLAnimatedImage(animatedGIFData: data)

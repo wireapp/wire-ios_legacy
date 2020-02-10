@@ -22,7 +22,7 @@ private let zmLog = ZMSLog(tag: "TextView")
 
 @objc protocol TextViewProtocol: NSObjectProtocol {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
-    
+
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }
 
@@ -37,7 +37,7 @@ class TextView: UITextView {
             showOrHidePlaceholder()
         }
     }
-    
+
     var attributedPlaceholder: NSAttributedString? {
         didSet {
             let mutableCopy: NSMutableAttributedString
@@ -52,19 +52,19 @@ class TextView: UITextView {
             showOrHidePlaceholder()
         }
     }
-    
+
     var placeholderTextColor: UIColor = .lightGray {
         didSet {
             placeholderLabel.textColor = placeholderTextColor
         }
     }
-    
+
     var placeholderFont: UIFont? {
         didSet {
             placeholderLabel.font = placeholderFont
         }
     }
-    
+
     var placeholderTextTransform: TextTransform = .upper {
         didSet {
             placeholderLabel.textTransform = placeholderTextTransform
@@ -76,27 +76,26 @@ class TextView: UITextView {
             textContainer.lineFragmentPadding = lineFragmentPadding
         }
     }
-    
+
     var placeholderTextAlignment: NSTextAlignment = NSTextAlignment.natural {
         didSet {
             placeholderLabel.textAlignment = placeholderTextAlignment
         }
     }
     var language: String?
-    
+
     private let placeholderLabel: TransformLabel = TransformLabel()
     private var placeholderLabelLeftConstraint: NSLayoutConstraint?
     private var placeholderLabelRightConstraint: NSLayoutConstraint?
-    
-    private var shouldDrawPlaceholder = false
 
+    private var shouldDrawPlaceholder = false
 
     override open var text: String! {
         didSet {
             showOrHidePlaceholder()
         }
     }
-    
+
     override open var attributedText: NSAttributedString! {
         didSet {
             showOrHidePlaceholder()
@@ -107,41 +106,40 @@ class TextView: UITextView {
         super.init(coder: aDecoder)
         setup()
     }
-        
+
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
-    
+
     // MARK: Setup
     private func setup() {
         placeholderTextContainerInset = textContainerInset
 
         NotificationCenter.default.addObserver(self, selector: #selector(textChanged(_:)), name: UITextView.textDidChangeNotification, object: self)
-        
+
         setupPlaceholderLabel()
-        
+
         if AutomationHelper.sharedHelper.disableAutocorrection {
             autocorrectionType = .no
         }
     }
-    
+
     @objc
     func textChanged(_ note: Notification?) {
         showOrHidePlaceholder()
     }
-    
-    
+
     @objc
     func showOrHidePlaceholder() {
             placeholderLabel.alpha = text.isEmpty ? 1 : 0
     }
-    
+
     // MARK: - Copy/Pasting
     override func paste(_ sender: Any?) {
         let pasteboard = UIPasteboard.general
         zmLog.debug("types available: \(pasteboard.types)")
-        
+
         if pasteboard.hasImages,
             let image = UIPasteboard.general.mediaAsset() {
             (delegate as? TextViewProtocol)?.textView(self, hasImageToPaste: image)
@@ -155,24 +153,24 @@ class TextView: UITextView {
             }
         }
     }
-    
+
     override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         if action == #selector(paste(_:)) {
             let pasteboard = UIPasteboard.general
             return pasteboard.hasImages || pasteboard.hasStrings
         }
-        
+
         return super.canPerformAction(action, withSender: sender)
     }
-    
+
     override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
 
         (delegate as? TextViewProtocol)?.textView(self, firstResponderChanged: resigned)
-        
+
         return resigned
     }
-    
+
     // MARK: Language
     override var textInputMode: UITextInputMode? {
         return overriddenTextInputMode
@@ -185,7 +183,6 @@ class TextView: UITextView {
             placeholderLabelRightConstraint?.constant = placeholderTextContainerInset.right
         }
     }
-
 
     private func setupPlaceholderLabel() {
         let linePadding = textContainer.lineFragmentPadding

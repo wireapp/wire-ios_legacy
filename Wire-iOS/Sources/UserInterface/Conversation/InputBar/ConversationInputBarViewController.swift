@@ -145,3 +145,31 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         }
     }
 }
+
+// MARK: - Informal TextView delegate methods
+
+extension ConversationInputBarViewController: TextViewProtocol {
+    func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
+        let confirmImageViewController = ConfirmAssetViewController()
+        confirmImageViewController.image = image
+        confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
+        
+        
+        confirmImageViewController.onConfirm = {[weak self] editedImage in
+            self?.dismiss(animated: false)
+            let finalImage: MediaAsset = editedImage ?? image
+            self?.postImage(finalImage)
+        }
+        
+        confirmImageViewController.onCancel = { [weak self] in
+            self?.dismiss(animated: false)
+        }
+        
+        present(confirmImageViewController, animated: false)
+    }
+    
+    func textView(_ textView: UITextView, firstResponderChanged resigned: Bool) {
+        updateAccessoryViews()
+        updateNewButtonTitleLabel()
+    }
+}
