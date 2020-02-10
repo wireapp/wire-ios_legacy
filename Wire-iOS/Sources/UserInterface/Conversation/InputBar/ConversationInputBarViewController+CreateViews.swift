@@ -85,7 +85,7 @@ extension ConversationInputBarViewController {
         inputBar = InputBar(buttons: buttons)
 
         inputBar.textView.delegate = self
-        inputBar.textView.textViewDelegate = self
+        inputBar.textView.informalTextViewDelegate = self
         registerForTextFieldSelectionChange()
 
         view.addSubview(inputBar)
