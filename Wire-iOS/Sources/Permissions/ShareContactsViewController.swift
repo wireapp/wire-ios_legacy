@@ -53,6 +53,11 @@ extension UIVisualEffectView {
 }
 
 final class ShareContactsViewController: UIViewController {
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+
     weak var delegate: ShareContactsViewControllerDelegate?
     var uploadAddressBookImmediately = false
     var backgroundBlurDisabled = false
