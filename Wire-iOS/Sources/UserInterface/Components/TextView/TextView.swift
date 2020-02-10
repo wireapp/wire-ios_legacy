@@ -20,9 +20,8 @@ import Foundation
 
 private let zmLog = ZMSLog(tag: "TextView")
 
-protocol TextViewProtocol {
+protocol TextViewProtocol: class {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset)
-
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool)
 }
 
@@ -30,6 +29,9 @@ protocol TextViewProtocol {
 // and by http://derpturkey.com/placeholder-in-uitextview/
 @objc
 class TextView: UITextView {
+
+    weak var textViewDelegate: TextViewProtocol?
+
     var placeholder: String? {
         didSet {
             placeholderLabel.text = placeholder
@@ -142,7 +144,7 @@ class TextView: UITextView {
 
         if pasteboard.hasImages,
             let image = UIPasteboard.general.mediaAsset() {
-            (delegate as? TextViewProtocol)?.textView(self, hasImageToPaste: image)
+            textViewDelegate?.textView(self, hasImageToPaste: image)
         } else if pasteboard.hasStrings {
             super.paste(sender)
         } else if pasteboard.hasURLs {
@@ -166,7 +168,7 @@ class TextView: UITextView {
     override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
 
-        (delegate as? TextViewProtocol)?.textView(self, firstResponderChanged: resigned)
+        textViewDelegate?.textView(self, firstResponderChanged: resigned)
 
         return resigned
     }
