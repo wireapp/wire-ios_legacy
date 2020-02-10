@@ -18,7 +18,7 @@
 
 import Foundation
 
-class ContactsViewController: UIViewController {
+final class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
 
@@ -34,7 +34,7 @@ class ContactsViewController: UIViewController {
     var bottomEdgeConstraint: NSLayoutConstraint?
     var bottomContainerBottomConstraint: NSLayoutConstraint?
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override public var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
 
