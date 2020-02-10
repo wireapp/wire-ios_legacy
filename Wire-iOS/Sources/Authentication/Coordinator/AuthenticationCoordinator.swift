@@ -311,9 +311,12 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .setUserPassword(let password):
                 updateUnregisteredUser(\.password, password)
 
-            case .startCompanyLogin(let code, let ssoOnly):
-                startCompanyLoginFlowIfPossible(linkCode: code, ssoOnly: ssoOnly)
+            case .startCompanyLogin(let code):
+                startCompanyLoginFlowIfPossible(linkCode: code)
 
+            case .startSSOFlow:
+                startAutomaticSSOFlow()
+                
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
 
@@ -717,19 +720,23 @@ extension AuthenticationCoordinator {
     }
 
     /// Manually start the company login flow.
-    private func startCompanyLoginFlowIfPossible(linkCode: UUID?, ssoOnly: Bool) {
+    private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
         if let linkCode = linkCode {
-            companyLoginController?.attemptLoginWithCode(linkCode)
+            companyLoginController?.attemptLoginWithSSOCode(linkCode)
         } else {
-            companyLoginController?.startCompanyLoginFlow(ssoOnly: ssoOnly)
+            companyLoginController?.displayCompanyLoginPrompt()
         }
+    }
+    
+    func startAutomaticSSOFlow() {
+        companyLoginController?.startAutomaticSSOFlow()
     }
 
     /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
     func detectLoginCodeIfPossible() {
         if canStartCompanyLogin {
             companyLoginController?.isAutoDetectionEnabled = true
-            companyLoginController?.detectLoginCode()
+            companyLoginController?.detectSSOCode()
         } else {
             companyLoginController?.isAutoDetectionEnabled = false
         }
