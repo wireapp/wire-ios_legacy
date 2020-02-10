@@ -20,6 +20,17 @@ import Foundation
 
 extension StartUIViewController {
 
+    var needsAddressBookPermission: Bool {
+        let shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        return !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip
+    }
+
+    func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+        navigationController?.pushViewController(shareContactsViewController, animated: true)
+    }
+
     func handleUploadAddressBookLogicIfNeeded() {
         guard !addressBookUploadLogicHandled else { return }
 
@@ -39,6 +50,19 @@ extension StartUIViewController {
                     })
                 }
             })
+        }
+    }
+}
+
+extension StartUIViewController: ShareContactsViewControllerDelegate {
+
+    func shareDidFinish(_ viewController: UIViewController) {
+        viewController.dismiss(animated: true)
+    }
+
+    func shareDidSkip(_ viewController: UIViewController) {
+        dismiss(animated: true) {
+            UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
         }
     }
 }

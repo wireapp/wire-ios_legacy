@@ -16,14 +16,16 @@
 //
 import UIKit
 import XCTest
+@testable import Wire
 
 final class ContactsDataSourceTests: XCTestCase {
+
     var dataSource: ContactsDataSource!
 
     override func setUp() {
         super.setUp()
         Thread.sleep(forTimeInterval: 0.5)
-        dataSource = ContactsDataSource(searchDirectory: nil)
+        dataSource = ContactsDataSource()
     }
 
     override func tearDown() {
@@ -35,7 +37,7 @@ final class ContactsDataSourceTests: XCTestCase {
         // GIVEN
         let mockUsers = MockUser.mockUsers()
         // WHEN
-        dataSource.ungroupedSearchResults = mockUsers
+        dataSource.ungroupedSearchResults = mockUsers ?? []
         // THEN
         let sections: Int? = dataSource.numberOfSections(in: UITableView())
         XCTAssertFalse(dataSource.shouldShowSectionIndex)
@@ -44,10 +46,10 @@ final class ContactsDataSourceTests: XCTestCase {
 
     func testThatDataSourceHasCorrectNumberOfSectionsForLargeNumberOfUsers() {
         // GIVEN
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json")
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json") as? [MockUser]
 
         // WHEN
-        dataSource?.ungroupedSearchResults = mockUsers
+        dataSource?.ungroupedSearchResults = mockUsers ?? []
 
         // THEN
         let sections: Int? = dataSource.numberOfSections(in: UITableView())
@@ -57,10 +59,10 @@ final class ContactsDataSourceTests: XCTestCase {
 
     func testThatDataSourceHasCorrectNumbersOfRowsInSectionsForLargeNumberOfUsers() {
         // GIVEN
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json")
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json") as? [MockUser]
 
         // WHEN
-        dataSource?.ungroupedSearchResults = mockUsers
+        dataSource?.ungroupedSearchResults = mockUsers ?? []
 
         // THEN
         let numberOfRawsInFirstSection: Int? = dataSource?.tableView(UITableView(), numberOfRowsInSection: 0)
@@ -73,11 +75,11 @@ final class ContactsDataSourceTests: XCTestCase {
 
     func testPerformanceExample() {
         // GIVEN
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json")
+        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "a_lot_of_people.json") as? [MockUser]
 
         measure({
             // WHEN
-            self.dataSource?.ungroupedSearchResults = mockUsers
+            self.dataSource?.ungroupedSearchResults = mockUsers ?? []
         })
     }
 
