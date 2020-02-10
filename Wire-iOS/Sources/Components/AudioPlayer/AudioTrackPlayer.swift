@@ -21,6 +21,7 @@ import MediaPlayer
 
 /// These enums represent the state of the current media in the player.
 
+@objc
 enum MediaPlayerState : Int {
     case ready = 0
     case playing
@@ -29,10 +30,11 @@ enum MediaPlayerState : Int {
     case error
 }
 
+@objc ///TODO: no objc?
 protocol MediaPlayer: NSObjectProtocol {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
-    var state: MediaPlayerState { get }
+    var state: MediaPlayerState? { get }
     func play()
     func pause()
     func stop()
@@ -40,13 +42,11 @@ protocol MediaPlayer: NSObjectProtocol {
 
 final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var avPlayer: AVPlayer?
-    private weak var audioTrack: (NSObjectProtocol & AudioTrack)?
-    private var progress: CGFloat = 0.0
-    private var timeObserverToken: Any?
+    private var timeObserverToken: Any? ///TODO: type?
     private var messageObserverToken: Any?
     private var loadAudioTrackCompletionHandler: ((_ loaded: Bool, _ error: Error?) -> Void)?
     private var state: MediaPlayerState?
-    private weak var sourceMessage: ZMConversationMessage?
+    var sourceMessage: ZMConversationMessage?
     private var nowPlayingInfo: [AnyHashable : Any]?
     private var playHandler: Any?
     private var pauseHandler: Any?
@@ -54,7 +54,15 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var previousTrackHandler: Any?
 
     
-    private(set) weak var audioTrack: (NSObjectProtocol & AudioTrack)?
+    private(set) var audioTrack: (NSObjectProtocol & AudioTrack)? {
+        willSet {
+            audioTrack?.removeObserver(self, forKeyPath: "status")
+        }
+        
+        didSet {
+            audioTrack?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+        }
+    }
     private(set) var progress: CGFloat = 0.0
     private(set) var duration: CGFloat = 0.0
     private(set) var elapsedTime: TimeInterval = 0.0
@@ -66,7 +74,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     /// Start the currently loaded/paused track.
     func play() {
-        if state == MediaPlayerStateCompleted {
+        if state == .completed {
             avPlayer.seek(to: CMTimeMake(value: 0, timescale: 1))
         }
         
@@ -187,14 +195,14 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         return 0
     }
     
-    func duration() -> CGFloat {
+    var duration: CGFloat {
         if let duration = avPlayer.currentItem?.asset.duration {
             return CGFloat(CMTimeGetSeconds(duration))
         }
         return 0.0
     }
     
-    func isPlaying() -> Bool {
+    var isPlaying: Bool {
         return avPlayer.rate > 0 && avPlayer.error == nil
     }
     
@@ -206,7 +214,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         sourceMessage = nil
     }
     
-    func title() -> String? {
+    var title: String? {
         return audioTrack.title()
     }
     
@@ -216,20 +224,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     
     class func keyPathsForValuesAffectingError() -> Set<AnyHashable>? {
         return Set<AnyHashable>(["avPlayer.error"])
-    }
-    
-    func setAudioTrack(_ audioTrack: (NSObjectProtocol & AudioTrack)?) {
-        if self.audioTrack == audioTrack {
-            return
-        }
-        
-        if self.audioTrack != nil {
-            self.audioTrack.removeObserver(self, forKeyPath: "status")
-        }
-        self.audioTrack = audioTrack
-        if self.audioTrack != nil {
-            self.audioTrack.addObserver(self, forKeyPath: "status", options: .new, context: nil)
-        }
     }
     
     // MARK: - KVO observer
@@ -255,7 +249,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             if avPlayer.rate > 0 {
                 state = MediaPlayerStatePlaying
                 mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
-            } else if state != MediaPlayerStateCompleted {
+            } else if state != .completed {
                 state = MediaPlayerStatePaused
                 mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
             }
@@ -268,7 +262,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             if avPlayer.currentItem == nil {
                 self.isRemoteCommandCenterEnabled = false
                 clearNowPlayingState()
-                state = MediaPlayerStateCompleted
+                state = .completed
                 mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
             } else {
                 self.isRemoteCommandCenterEnabled = true
@@ -296,13 +290,14 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     }
     
     // MARK: AVPlayer notifications
+    @objc
     func itemDidPlay(toEndTime notification: Notification?) {
         // AUDIO-557 workaround for AVSMediaManager trying to pause already paused tracks.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(0.1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: {
+        delay(0.1) {
             self.clearNowPlayingState()
-            self.state = MediaPlayerStateCompleted
+            self.state = .completed
             self.mediaPlayerDelegate.mediaPlayer(self, didChangeToState: self.state)
-        })
+        }
     }
 
     // MARK: - MPNowPlayingInfoCenter
