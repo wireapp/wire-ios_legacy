@@ -44,8 +44,6 @@
 #import "ColorKnobView.h"
 
 // View Controllers
-#import "ContactsViewController.h"
-#import "ContactsViewController+Internal.h"
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
@@ -66,7 +64,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "ContactsDataSource.h"
 #import "Button.h"
 
 // Helper objects

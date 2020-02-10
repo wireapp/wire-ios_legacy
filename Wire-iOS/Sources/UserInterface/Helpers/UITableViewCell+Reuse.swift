@@ -39,6 +39,12 @@ extension UICollectionViewCell {
     }
 }
 
+extension UITableViewHeaderFooterView {
+    static func register(in tableView: UITableView) {
+        tableView.register(self, forHeaderFooterViewReuseIdentifier: zm_reuseIdentifier)
+    }
+}
+
 // MARK: - Cell Dequeuing
 
 extension UICollectionView {
@@ -50,5 +56,9 @@ extension UICollectionView {
 extension UITableView {
     func dequeueReusableCell<T: UITableViewCell>(ofType cellType: T.Type, for indexPath: IndexPath) -> T {
         return dequeueReusableCell(withIdentifier: T.zm_reuseIdentifier, for: indexPath) as! T
+    }
+
+    func dequeueReusableHeaderFooter<T: UITableViewHeaderFooterView>(ofType headerFooterType: T.Type) -> T {
+        return dequeueReusableHeaderFooterView(withIdentifier: T.zm_reuseIdentifier) as! T
     }
 }

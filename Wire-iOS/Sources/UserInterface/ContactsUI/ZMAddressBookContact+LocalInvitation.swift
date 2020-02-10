@@ -36,11 +36,12 @@ class EmailInvitePresenter: NSObject, MFMailComposeViewControllerDelegate, MFMes
 
 
 extension ZMAddressBookContact {
-    @objc public static func canInviteLocallyWithEmail() -> Bool {
+
+    static func canInviteLocallyWithEmail() -> Bool {
         return MFMailComposeViewController.canSendMail()
     }
     
-    @objc public func inviteLocallyWithEmail(_ email: String) {
+    func inviteLocallyWithEmail(_ email: String) {
         let composeController = MFMailComposeViewController()
         composeController.mailComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
@@ -50,11 +51,11 @@ extension ZMAddressBookContact {
         ZClientViewController.shared?.present(composeController, animated: true, completion: .none)
     }
     
-    @objc public static func canInviteLocallyWithPhoneNumber() -> Bool {
+    static func canInviteLocallyWithPhoneNumber() -> Bool {
         return MFMessageComposeViewController.canSendText()
     }
     
-    @objc public func inviteLocallyWithPhoneNumber(_ phoneNumber: String) {
+    func inviteLocallyWithPhoneNumber(_ phoneNumber: String) {
         let composeController = MFMessageComposeViewController()
         composeController.messageComposeDelegate = EmailInvitePresenter.sharedInstance
         composeController.modalPresentationStyle = .formSheet
