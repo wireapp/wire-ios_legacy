@@ -733,8 +733,8 @@ extension AuthenticationCoordinator {
         companyLoginController?.startAutomaticSSOFlow()
     }
 
-    /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
-    func detectLoginCodeIfPossible() {
+    /// Call this method when the corrdinated view controller appears, to detect the sso code and display it if needed.
+    func detectSSOCodeIfPossible() {
         if canStartCompanyLogin {
             companyLoginController?.isAutoDetectionEnabled = true
             companyLoginController?.detectSSOCode()
