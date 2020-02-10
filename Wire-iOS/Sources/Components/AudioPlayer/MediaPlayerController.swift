@@ -62,7 +62,7 @@ extension MediaPlayerController: MediaPlayer {
         return message
     }
 
-    var state: MediaPlayerState {
+    var state: MediaPlayerState? {
         if player?.rate > 0 {
             return MediaPlayerState.playing
         } else {

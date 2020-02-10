@@ -18,8 +18,8 @@
 
 import Foundation
 
-@objc
+//@objc
 protocol MediaPlayerDelegate: NSObjectProtocol {
-    @objc(mediaPlayer:didChangeToState:)
+//    @objc(mediaPlayer:didChangeToState:)
     func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState)
 }

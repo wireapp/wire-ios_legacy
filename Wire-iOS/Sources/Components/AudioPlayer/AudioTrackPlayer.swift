@@ -21,7 +21,7 @@ import MediaPlayer
 
 /// These enums represent the state of the current media in the player.
 
-@objc
+//@objc
 enum MediaPlayerState : Int {
     case ready = 0
     case playing
@@ -30,7 +30,7 @@ enum MediaPlayerState : Int {
     case error
 }
 
-@objc ///TODO: no objc?
+//@objc ///TODO: no objc?
 protocol MediaPlayer: NSObjectProtocol {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
@@ -45,27 +45,43 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var timeObserverToken: Any? ///TODO: type?
     private var messageObserverToken: Any?
     private var loadAudioTrackCompletionHandler: ((_ loaded: Bool, _ error: Error?) -> Void)?
-    private var state: MediaPlayerState?
+    var state: MediaPlayerState?
     var sourceMessage: ZMConversationMessage?
-    private var nowPlayingInfo: [AnyHashable : Any]?
+    private var nowPlayingInfo: [String : Any]?
     private var playHandler: Any?
     private var pauseHandler: Any?
     private var nextTrackHandler: Any?
     private var previousTrackHandler: Any?
 
     
-    private(set) var audioTrack: (NSObjectProtocol & AudioTrack)? {
+    private(set) var audioTrack: AudioTrack? {
         willSet {
-            audioTrack?.removeObserver(self, forKeyPath: "status")
+            (audioTrack as? NSObject)?.removeObserver(self, forKeyPath: "status")
         }
         
         didSet {
-            audioTrack?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+            ///TODO: Swift observer
+            (audioTrack as? NSObject)?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
         }
     }
     private(set) var progress: CGFloat = 0.0
-    private(set) var duration: CGFloat = 0.0
-    private(set) var elapsedTime: TimeInterval = 0.0
+    var duration: CGFloat {
+        if let duration = avPlayer?.currentItem?.asset.duration {
+            return CGFloat(CMTimeGetSeconds(duration))
+        }
+        return 0.0
+    }
+
+    var elapsedTime: TimeInterval {
+        guard let time = avPlayer?.currentTime() else { return 0}
+        
+        if CMTIME_IS_VALID(time) {
+            return TimeInterval(time.value) / TimeInterval(time.timescale)
+        }
+        
+        return 0
+    }
+    
     private(set) var playing = false
     weak var mediaPlayerDelegate: MediaPlayerDelegate?
 
@@ -75,77 +91,79 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     /// Start the currently loaded/paused track.
     func play() {
         if state == .completed {
-            avPlayer.seek(to: CMTimeMake(value: 0, timescale: 1))
+            avPlayer?.seek(to: CMTimeMake(value: 0, timescale: 1))
         }
         
-        avPlayer.play()
+        avPlayer?.play()
     }
 
     /// Pause the currently playing track.
     func pause() {
-        avPlayer.pause()
+        avPlayer?.pause()
     }
 
     deinit {
         audioTrack = nil
         
-        avPlayer.removeObserver(self, forKeyPath: "status")
-        avPlayer.removeObserver(self, forKeyPath: "rate")
-        avPlayer.removeObserver(self, forKeyPath: "currentItem")
+        avPlayer?.removeObserver(self, forKeyPath: "status")
+        avPlayer?.removeObserver(self, forKeyPath: "rate")
+        avPlayer?.removeObserver(self, forKeyPath: "currentItem")
         
-        self.isRemoteCommandCenterEnabled = false
+        self.setIsRemoteCommandCenterEnabled(false)
     }
     
-    func loadTrack(_ track: (NSObjectProtocol & AudioTrack)?, sourceMessage: ZMConversationMessage?, completionHandler: @escaping (_ loaded: Bool, _ error: Error?) -> Void) {
+    func load(_ track: AudioTrack,
+              sourceMessage: ZMConversationMessage,
+              completionHandler: @escaping (_ loaded: Bool, _ error: Error?) -> Void) {
         progress = 0
         audioTrack = track
         self.sourceMessage = sourceMessage
         loadAudioTrackCompletionHandler = completionHandler
         
-        if avPlayer == nil {
-            if let streamURL = track?.streamURL {
-                avPlayer = AVPlayer(url: streamURL)
+        if let streamURL = track.streamURL {
+        if let avPlayer = avPlayer {
+            avPlayer.replaceCurrentItem(with: AVPlayerItem(url: streamURL))
+            
+            if avPlayer.status == .readyToPlay {
+                loadAudioTrackCompletionHandler?(true, nil)
             }
+        } else {
+            let avPlayer = AVPlayer(url: streamURL)
+
+            
+            ///TODO:
             avPlayer.addObserver(self, forKeyPath: "status", options: .new, context: nil)
             avPlayer.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
             avPlayer.addObserver(self, forKeyPath: "currentItem", options: [.new, .initial, .old], context: nil)
-        } else {
             
-            if let streamURL = track?.streamURL {
-                avPlayer.replaceCurrentItem(with: AVPlayerItem(url: streamURL))
-            }
-            
-            if avPlayer.status == .readyToPlay {
-                loadAudioTrackCompletionHandler(true, nil)
-            }
+            self.avPlayer = avPlayer
+        }
         }
         
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(itemDidPlay(toEndTime:)), name: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemDidPlay(toEndTime:)), name: .AVPlayerItemDidPlayToEndTime, object: avPlayer?.currentItem)
         
-        if timeObserverToken != nil {
-            avPlayer.removeTimeObserver(timeObserverToken)
+        if let timeObserverToken = timeObserverToken {
+            avPlayer?.removeTimeObserver(timeObserverToken)
         }
         
-        weak var weakSelf = self
-        timeObserverToken = avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 60), queue: DispatchQueue.main, using: { time in
-            var itemRange: CMTimeRange? = nil
-            if let duration = weakSelf?.avPlayer.currentItem?.asset.duration {
-                itemRange = CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1), duration: duration)
-            }
+        timeObserverToken = avPlayer?.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 60), queue: DispatchQueue.main, using: { [weak self] time in
+            guard let weakSelf = self,
+                let duration = weakSelf.avPlayer?.currentItem?.asset.duration
+                else { return }
+            
+            let itemRange = CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1), duration: duration)
+
             let normalizedRange = CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1), duration: CMTimeMake(value: 1, timescale: 1))
-            var normalizedTime: CMTime? = nil
-            if let itemRange = itemRange {
-                normalizedTime = CMTimeMapTimeFromRangeToRange(time, fromRange: itemRange, toRange: normalizedRange)
-            }
-            if let normalizedTime = normalizedTime {
-                weakSelf?.progress = CMTimeGetSeconds(normalizedTime)
-            }
+            
+            let normalizedTime = CMTimeMapTimeFromRangeToRange(time, fromRange: itemRange, toRange: normalizedRange)
+
+            weakSelf.progress = CGFloat(CMTimeGetSeconds(normalizedTime))
         })
         
-        let userSession = ZMUserSession.shared()
-        if userSession != nil {
-            messageObserverToken = MessageChangeInfo.addObserver(self, for: sourceMessage, userSession: ZMUserSession.shared())
+        
+        if let userSession = ZMUserSession.shared() {
+            messageObserverToken = MessageChangeInfo.add(observer:self, for: sourceMessage, userSession: userSession)
         }
 
     }
@@ -161,25 +179,22 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             return
         }
         
-        ZM_WEAK(self)
-        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { event in
-            ZM_STRONG(self)
-            if self.avPlayer.rate > 0 {
-                self.pause()
+        pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] event in
+            if self?.avPlayer?.rate > 0 {
+                self?.pause()
                 return .success
             } else {
                 return .commandFailed
             }
         })
         
-        playHandler = commandCenter.playCommand.addTarget(handler: { event in
-            ZM_STRONG(self)
-            if self.audioTrack == nil {
+        playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] event in
+            if self?.audioTrack == nil {
                 return .noSuchContent
             }
             
-            if self.avPlayer.rate == 0 {
-                self.play()
+            if self?.avPlayer?.rate == 0 {
+                self?.play()
                 return .success
             } else {
                 return .commandFailed
@@ -187,85 +202,80 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         })
     }
     
-    var elapsedTime: TimeInterval {
-        let time = avPlayer.currentTime
-        if CMTIME_IS_VALID(time) {
-            return TimeInterval(time.value / time.timescale)
-        }
-        return 0
-    }
     
-    var duration: CGFloat {
-        if let duration = avPlayer.currentItem?.asset.duration {
-            return CGFloat(CMTimeGetSeconds(duration))
-        }
-        return 0.0
-    }
     
     var isPlaying: Bool {
-        return avPlayer.rate > 0 && avPlayer.error == nil
+        return avPlayer?.rate > 0 && avPlayer?.error == nil
     }
     
     func stop() {
-        avPlayer.pause()
-        avPlayer.replaceCurrentItem(with: nil)
+        avPlayer?.pause()
+        avPlayer?.replaceCurrentItem(with: nil)
         audioTrack = nil
         messageObserverToken = nil
         sourceMessage = nil
     }
     
     var title: String? {
-        return audioTrack.title()
+        return audioTrack?.title
     }
     
-    class func keyPathsForValuesAffectingPlaying() -> Set<AnyHashable>? {
-        return Set<AnyHashable>(["avPlayer.rate"])
-    }
+//    class func keyPathsForValuesAffectingPlaying() -> Set<AnyHashable>? {
+//        return Set<AnyHashable>(["avPlayer?.rate"])///TODO: keyPath?
+//    }
+//
+//    class func keyPathsForValuesAffectingError() -> Set<AnyHashable>? {
+//        return Set<AnyHashable>(["avPlayer?.error"])
+//    }
     
-    class func keyPathsForValuesAffectingError() -> Set<AnyHashable>? {
-        return Set<AnyHashable>(["avPlayer.error"])
-    }
     
+    ///TODO: still need override?
     // MARK: - KVO observer
-    func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? AVPlayerItem) == avPlayer.currentItem && (keyPath == "status") {
-            if avPlayer.currentItem?.status == .failed {
-                state = MediaPlayerStateError
-                audioTrack.failedToLoad = true
-                mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if (object as? AVPlayerItem) == avPlayer?.currentItem && (keyPath == "status") {
+            if avPlayer?.currentItem?.status == .failed {
+                let state: MediaPlayerState = .error
+                audioTrack?.failedToLoad = true
+                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
+                
+                self.state = state
             }
         }
         
-        if object == avPlayer && (keyPath == "status") {
-            if avPlayer.status == .readyToPlay {
-                loadAudioTrackCompletionHandler(true, nil)
-            } else if avPlayer.status == .failed {
-                loadAudioTrackCompletionHandler(false, avPlayer.error)
+        if object as? AVPlayer == avPlayer && (keyPath == "status") {
+            if avPlayer?.status == .readyToPlay {
+                loadAudioTrackCompletionHandler?(true, nil)
+            } else if avPlayer?.status == .failed {
+                loadAudioTrackCompletionHandler?(false, avPlayer?.error)
             }
         }
         
-        if object == avPlayer && (keyPath == "rate") {
+        if object as? AVPlayer == avPlayer && (keyPath == "rate") {
             
-            if avPlayer.rate > 0 {
-                state = MediaPlayerStatePlaying
-                mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
+            if avPlayer?.rate > 0 {
+                let state: MediaPlayerState = .playing
+                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
+                self.state = state
             } else if state != .completed {
-                state = MediaPlayerStatePaused
-                mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
+                let state: MediaPlayerState = .paused
+                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
+                self.state = state
             }
             
             updateNowPlayingState()
         }
         
-        if object == avPlayer && (keyPath == "currentItem") {
+        if object as? AVPlayer == avPlayer && (keyPath == "currentItem") {
             
-            if avPlayer.currentItem == nil {
-                self.isRemoteCommandCenterEnabled = false
+            if avPlayer?.currentItem == nil {
+                setIsRemoteCommandCenterEnabled(false)
                 clearNowPlayingState()
-                state = .completed
-                mediaPlayerDelegate.mediaPlayer(self, didChangeToState: state)
+                let state: MediaPlayerState = .completed
+                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
+                
+                self.state = state
             } else {
-                self.isRemoteCommandCenterEnabled = true
+                setIsRemoteCommandCenterEnabled(true)
                 populateNowPlayingState()
             }
         }
@@ -282,7 +292,9 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     func updateNowPlayingState() {
         var newInfo = nowPlayingInfo
         newInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: elapsedTime)
-        newInfo?[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: avPlayer.rate)
+        if let rate = avPlayer?.rate {
+        newInfo?[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: rate)
+        }
         
         let info = MPNowPlayingInfoCenter.default()
         info.nowPlayingInfo = newInfo
@@ -293,10 +305,14 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     @objc
     func itemDidPlay(toEndTime notification: Notification?) {
         // AUDIO-557 workaround for AVSMediaManager trying to pause already paused tracks.
-        delay(0.1) {
-            self.clearNowPlayingState()
-            self.state = .completed
-            self.mediaPlayerDelegate.mediaPlayer(self, didChangeToState: self.state)
+        delay(0.1) { [weak self] in
+            guard let weakSelf = self else { return }
+            
+            self?.clearNowPlayingState()
+            self?.state = .completed
+            if let state = weakSelf.state {
+            self?.mediaPlayerDelegate?.mediaPlayer(weakSelf, didChangeTo: state)
+            }
         }
     }
 
@@ -304,7 +320,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     func populateNowPlayingState() {
         let playbackDuration: NSNumber
-        if let duration: CMTime = avPlayer.currentItem?.asset.duration {
+        if let duration: CMTime = avPlayer?.currentItem?.asset.duration {
             playbackDuration = NSNumber(value: CMTimeGetSeconds(duration))
         } else {
             playbackDuration = 0
@@ -313,7 +329,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         let nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: audioTrack?.title ?? "",
             MPMediaItemPropertyArtist: audioTrack?.author ?? "",
-            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer.rate),
+            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer?.rate ?? 0),
             MPMediaItemPropertyPlaybackDuration: playbackDuration]
 
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo

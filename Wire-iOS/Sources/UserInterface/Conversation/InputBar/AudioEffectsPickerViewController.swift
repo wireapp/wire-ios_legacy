@@ -361,7 +361,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
         player.delegate = nil
     }
 
-    var state: MediaPlayerState {
+    var state: MediaPlayerState? { ///TODO: 
         if player.isPlaying {
             return MediaPlayerState.playing
         } else {
