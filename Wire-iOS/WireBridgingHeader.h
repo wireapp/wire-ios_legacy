@@ -91,9 +91,5 @@
 #import "CABasicAnimation+Rotation.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
-// Audio player
-#import "AudioTrackPlayer.h"
-#import "AudioTrackPlayer+Private.h"
-
 // Invite
 #import "ShareItemProvider.h"

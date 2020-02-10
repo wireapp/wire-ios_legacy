@@ -19,13 +19,23 @@
 import Foundation
 import MediaPlayer
 
-// MARK: - ZMMessageObserver
-extension AudioTrackPlayer: ZMMessageObserver {
-    func messageDidChange(_ changeInfo: MessageChangeInfo?) {
-        if changeInfo?.message.hasBeenDeleted != nil {
-            stop()
-        }
-    }
+/// These enums represent the state of the current media in the player.
+
+enum MediaPlayerState : Int {
+    case ready = 0
+    case playing
+    case paused
+    case completed
+    case error
+}
+
+protocol MediaPlayer: NSObjectProtocol {
+    var title: String? { get }
+    var sourceMessage: ZMConversationMessage? { get }
+    var state: MediaPlayerState { get }
+    func play()
+    func pause()
+    func stop()
 }
 
 final class AudioTrackPlayer: NSObject, MediaPlayer {
@@ -56,10 +66,16 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     /// Start the currently loaded/paused track.
     func play() {
+        if state == MediaPlayerStateCompleted {
+            avPlayer.seek(to: CMTimeMake(value: 0, timescale: 1))
+        }
+        
+        avPlayer.play()
     }
-    
+
     /// Pause the currently playing track.
     func pause() {
+        avPlayer.pause()
     }
 
     deinit {
@@ -180,18 +196,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     
     func isPlaying() -> Bool {
         return avPlayer.rate > 0 && avPlayer.error == nil
-    }
-    
-    func play() {
-        if state == MediaPlayerStateCompleted {
-            avPlayer.seek(to: CMTimeMake(value: 0, timescale: 1))
-        }
-        
-        avPlayer.play()
-    }
-    
-    func pause() {
-        avPlayer.pause()
     }
     
     func stop() {
@@ -321,3 +325,13 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         self.nowPlayingInfo = nowPlayingInfo
     }
 }
+
+// MARK: - ZMMessageObserver
+extension AudioTrackPlayer: ZMMessageObserver {
+    func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        if changeInfo.message.hasBeenDeleted {
+            stop()
+        }
+    }
+}
+

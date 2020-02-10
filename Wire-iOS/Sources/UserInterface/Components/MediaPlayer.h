@@ -21,29 +21,29 @@
 
 
 
-/// These enums represent the state of the current media in the player.
-typedef NS_ENUM(NSInteger, MediaPlayerState)
-{
-    MediaPlayerStateReady = 0,
-    MediaPlayerStatePlaying,
-    MediaPlayerStatePaused,
-    MediaPlayerStateCompleted,
-    MediaPlayerStateError
-};
-
-@protocol ZMConversationMessage;
-
-@protocol MediaPlayer;
-
-
-@protocol MediaPlayer <NSObject>
-
-@property (nonatomic, readonly, nullable) NSString *title;
-@property (nonatomic, readonly, nullable) id<ZMConversationMessage>sourceMessage;
-@property (nonatomic, readonly) MediaPlayerState state;
-
-- (void)play;
-- (void)pause;
-- (void)stop;
-
-@end
+///// These enums represent the state of the current media in the player.
+//typedef NS_ENUM(NSInteger, MediaPlayerState)
+//{
+//    MediaPlayerStateReady = 0,
+//    MediaPlayerStatePlaying,
+//    MediaPlayerStatePaused,
+//    MediaPlayerStateCompleted,
+//    MediaPlayerStateError
+//};
+//
+//@protocol ZMConversationMessage;
+//
+//@protocol MediaPlayer;
+//
+//
+//@protocol MediaPlayer <NSObject>
+//
+//@property (nonatomic, readonly, nullable) NSString *title;
+//@property (nonatomic, readonly, nullable) id<ZMConversationMessage>sourceMessage;
+//@property (nonatomic, readonly) MediaPlayerState state;
+//
+//- (void)play;
+//- (void)pause;
+//- (void)stop;
+//
+//@end
