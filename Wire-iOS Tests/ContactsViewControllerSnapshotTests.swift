@@ -29,6 +29,7 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
         ColorScheme.default.variant = .dark
         sut = ContactsViewController()
         sut.view.backgroundColor = .black
+        XCTestCase.accentColor = .strongBlue
     }
 
     override func tearDown() {
