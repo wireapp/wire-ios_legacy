@@ -22,14 +22,14 @@ final class ContactsViewController: UIViewController {
 
     let dataSource = ContactsDataSource()
 
-    var bottomContainerView = UIView()
-    var bottomContainerSeparatorView = UIView()
-    var noContactsLabel = UILabel()
-    var searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
-    var separatorView = UIView()
-    var tableView = UITableView()
-    var inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
-    var emptyResultsLabel = UILabel()
+    let bottomContainerView = UIView()
+    let bottomContainerSeparatorView = UIView()
+    let noContactsLabel = UILabel()
+    let searchHeaderViewController = SearchHeaderViewController(userSelection: .init(), variant: .dark)
+    let separatorView = UIView()
+    let tableView = UITableView()
+    let inviteOthersButton = Button(style: .empty, variant: ColorScheme.default.variant)
+    let emptyResultsLabel = UILabel()
 
     var bottomEdgeConstraint: NSLayoutConstraint?
     var bottomContainerBottomConstraint: NSLayoutConstraint?
