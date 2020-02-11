@@ -150,28 +150,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
                 
                 playerStatusObserver = avPlayer?.observe(\AVPlayer.status, options: [.new]) { [weak self] (avPlayer: AVPlayer, _) -> Void in
-                    
-                    guard let weakSelf = self else { return }
-                    
-                    if self?.avPlayer?.currentItem?.status == .failed {
-                        let state: MediaPlayerState = .error
-                        self?.audioTrack?.failedToLoad = true
-                        weakSelf.mediaPlayerDelegate?.mediaPlayer(weakSelf, didChangeTo: state)
-                        
-                        self?.state = state
-                    }
-
-                    
-                    guard let status = self?.avPlayer?.status else { return }
-                    
-                    switch status {
-                    case .readyToPlay:
-                        self?.loadAudioTrackCompletionHandler?(true, nil)
-                    case .failed:
-                        self?.loadAudioTrackCompletionHandler?(false, self?.avPlayer?.error)
-                    default:
-                        break
-                    }
+                    self?.playStatusChanged()
                 }
             }
         } else {
@@ -205,6 +184,30 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             messageObserverToken = MessageChangeInfo.add(observer:self, for: sourceMessage, userSession: userSession)
         }
         
+    }
+    
+    private func playStatusChanged() {
+        
+        if avPlayer?.currentItem?.status == .failed {
+            let state: MediaPlayerState = .error
+            audioTrack?.failedToLoad = true
+            weakSelf.mediaPlayerDelegate?.mediaPlayer(weakSelf, didChangeTo: state)
+            
+            self.state = state
+        }
+        
+        
+        guard let status = avPlayer?.status else { return }
+        
+        switch status {
+        case .readyToPlay:
+            loadAudioTrackCompletionHandler?(true, nil)
+        case .failed:
+            loadAudioTrackCompletionHandler?(false, avPlayer?.error)
+        default:
+            break
+        }
+
     }
     
     func setIsRemoteCommandCenterEnabled(_ enabled: Bool) {
