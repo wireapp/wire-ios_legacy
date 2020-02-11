@@ -243,11 +243,14 @@ extension CompanyLoginController {
     /// Fetches SSO code and starts flow automatically if code is returned on completion
     /// Otherwise, falls back on prompting user for SSO code
     func startAutomaticSSOFlow() {
-        SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [displayCompanyLoginPrompt, attemptLoginWithSSOCode] result in
+        delegate?.controller(self, showLoadingView: true)
+        SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
+            guard let `self` = self else { return }
+            self.delegate?.controller(self, showLoadingView: false)
             guard result.error == nil, let ssoCode = result.value?.ssoCode else {
-                return displayCompanyLoginPrompt(true)
+                return self.displayCompanyLoginPrompt(ssoOnly: true)
             }
-            attemptLoginWithSSOCode(ssoCode)
+            self.attemptLoginWithSSOCode(ssoCode)
         }
     }
 }
