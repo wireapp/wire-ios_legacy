@@ -32,11 +32,20 @@ extension Notification.Name {
     static let mediaPlaybackManagerPlayerStateChanged = Notification.Name("MediaPlaybackManagerPlayerStateChangedNotification")
 }
 
+protocol MediaPlaybackManagerDelegate: class {
+    func didSet(mediaPlayer: MediaPlayer?)
+}
+
 /// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
     
-    private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? ///TODO: didSet, delegate
+    private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? {
+        didSet {
+            mediaPlaybackManagerDelegate?.didSet(mediaPlayer: activeMediaPlayer)
+        }
+    }
+    weak var mediaPlaybackManagerDelegate: MediaPlaybackManagerDelegate?
     
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     private var titleObserver: NSKeyValueObservation?

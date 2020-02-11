@@ -51,7 +51,6 @@ final class ConversationContentViewController: UIViewController {
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
     
-    private var activeMediaPlayerObserver: NSKeyValueObservation?
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [IndexPath: CGFloat] = [:]
     private var hasDoneInitialLayout = false
@@ -70,6 +69,7 @@ final class ConversationContentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.mediaPlaybackManager = mediaPlaybackManager
+        self.mediaPlaybackManager?.mediaPlaybackManagerDelegate = self
         
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
@@ -143,11 +143,6 @@ final class ConversationContentViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         onScreen = true
-        
-        ///TODO: crash, use delegate
-        activeMediaPlayerObserver = mediaPlaybackManager?.observe(\.activeMediaPlayer, options: [.initial, .new]) { [weak self] _, _ in
-            self?.updateMediaBar()
-        }
         
         for cell in tableView.visibleCells {
             cell.willDisplayCell()
@@ -374,3 +369,10 @@ extension ConversationContentViewController: UITableViewDataSourcePrefetching {
         //no-op
     }
 }
+
+extension ConversationContentViewController: MediaPlaybackManagerDelegate {
+    func didSet(mediaPlayer: MediaPlayer?) {
+        updateMediaBar()
+    }
+}
+
