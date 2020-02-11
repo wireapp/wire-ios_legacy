@@ -247,7 +247,7 @@ extension CompanyLoginController {
         SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
-            guard result.error == nil, let ssoCode = result.value?.ssoCode else {
+            guard let ssoCode = result.value?.ssoCode else {
                 return self.displayCompanyLoginPrompt(ssoOnly: true)
             }
             self.attemptLoginWithSSOCode(ssoCode)
@@ -265,9 +265,8 @@ extension CompanyLoginController {
         SessionManager.shared?.activeUnauthenticatedSession.lookup(domain: domain) { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
-            guard result.error == nil, let domainInfo = result.value else {
-                self.presentCompanyLoginAlert(error: .domainNotRegistered)
-                return
+            guard let domainInfo = result.value else {
+                return self.presentCompanyLoginAlert(error: .domainNotRegistered)
             }
             self.updateBackendEnvironment(with: domainInfo.configurationURL)
         }
@@ -282,14 +281,12 @@ extension CompanyLoginController {
         SessionManager.shared?.switchBackend(configuration: url) { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
-            guard result.error == nil, let backendEnvironment = result.value else {
-                
+            guard let backendEnvironment = result.value else {
                 if case SessionManager.SwitchBackendError.loggedInAccounts? = result.error {
                     self.presentCompanyLoginAlert(error: .domainAssociatedWithWrongServer)
                 } else {
                     self.presentCompanyLoginAlert(error: .domainNotRegistered)
                 }
-                
                 return
             }
             BackendEnvironment.shared = backendEnvironment
