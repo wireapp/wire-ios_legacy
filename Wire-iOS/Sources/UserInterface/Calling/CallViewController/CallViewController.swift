@@ -226,7 +226,10 @@ final class CallViewController: UIViewController {
 
     fileprivate func alertVideoUnavailable() {
         if voiceChannel.videoState == .stopped, voiceChannel.conversation?.localParticipants.count > 4 {
-            showAlert(forMessage: "call.video.too_many.alert.message".localized, title: "call.video.too_many.alert.title".localized) { _ in }
+            let alert = UIAlertController.alertWithOKButton(title: "call.video.too_many.alert.title".localized,
+                                                            message: "call.video.too_many.alert.message".localized)
+            
+            present(alert, animated: true)
         }
     }
     

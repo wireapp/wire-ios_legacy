@@ -23,7 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "UIViewController+Errors.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
@@ -36,7 +35,6 @@
 #import "Button.h"
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
-#import "UITableView+RowCount.h"
 #import "ColorKnobView.h"
 
 // View Controllers

@@ -17,7 +17,8 @@
 //
 
 import Foundation
-private let zmLog = ZMSLog(tag: "Alert")
+
+typealias AlertActionHandler = (UIAlertAction) -> Void
 
 extension UIAlertController {
 
@@ -30,7 +31,7 @@ extension UIAlertController {
     /// - Returns: the alert presented
     static func alertWithOKButton(title: String? = nil,
                                   message: String,
-                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+                                  okActionHandler: AlertActionHandler? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)

@@ -113,14 +113,14 @@ import WireCommonComponents
             forName: UIApplication.willEnterForegroundNotification,
             object: nil,
             queue: .main,
-            using: { [internalDetectLoginCode] _ in internalDetectLoginCode(false) }
+            using: { [internalDetectSSOCode] _ in internalDetectSSOCode(false) }
         )
     }
     
     private func startPollingTimer() {
         guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
         pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) {
-            [internalDetectLoginCode] _ in internalDetectLoginCode(true)
+            [internalDetectSSOCode] _ in internalDetectSSOCode(true)
         }
     }
     
@@ -129,29 +129,15 @@ import WireCommonComponents
         pollingTimer = nil
     }
 
+}
+
+// MARK: - Company Login
+extension CompanyLoginController {
     // MARK: - Login Prompt Presentation
-    
-    func detectLoginCode() {
-        internalDetectLoginCode(onlyNew: false)
-    }
-
-    /// This method will be called when the app comes back to the foreground.
-    /// We then check if the clipboard contains a valid SSO login code.
-    /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
-    private func internalDetectLoginCode(onlyNew: Bool) {
-        guard isAutoDetectionEnabled else { return }
-        detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentCompanyLoginAlert] result in
-            // This might have changed in the meantime.
-            guard isAutoDetectionEnabled else { return }
-
-            guard let result = result, !onlyNew || result.isNew else { return }
-            presentCompanyLoginAlert(result.code, nil, true)
-        }
-    }
 
     /// Presents the SSO login alert. If the code is available in the clipboard, we pre-fill it.
     /// Call this method when you need to present the alert in response to user interaction.
-    func displayLoginCodePrompt(ssoOnly: Bool = false) {
+    func displayCompanyLoginPrompt(ssoOnly: Bool = false) {
         detector.detectCopiedRequestCode { [presentCompanyLoginAlert] result in
             presentCompanyLoginAlert(result?.code, nil, ssoOnly)
         }
@@ -177,29 +163,18 @@ import WireCommonComponents
         
         delegate?.controller(self, presentAlert: alertController)
     }
-    
-    // MARK: - Login Handling
-    
-    /// Attempt to login using the requester specified in `init`
-    ///
-    /// - Parameter code: the code used to attempt the SSO login.
-    private func attemptLogin(using code: String) {
-        guard let uuid = CompanyLoginRequestDetector.requestCode(in: code) else {
-            presentCompanyLoginAlert(prefilledInput: code, error: .invalidFormat, ssoOnly: true)
-            return
-        }
-        attemptLoginWithCode(uuid)
-    }
+
+    // MARK: - Input Handling
     
     /// Parses the input and starts the corresponding flow
     ///
-    /// - Parameter input: <#input description#>the input the user entered in the dialog
+    /// - Parameter input: the input the user entered in the dialog
     private func parseAndHandle(input: String) {
         let parsingResult = CompanyLoginRequestDetector.parse(input: input)
         
         switch parsingResult {
         case .ssoCode(let uuid):
-            attemptLoginWithCode(uuid)
+            attemptLoginWithSSOCode(uuid)
         case .domain(let domain):
             lookup(domain: domain)
         case .unknown:
@@ -207,10 +182,21 @@ import WireCommonComponents
         }
     }
     
+    /// Attempt to login using the requester specified in `init`
+    ///
+    /// - Parameter ssoCode: the code used to attempt the SSO login.
+    private func attemptLogin(using ssoCode: String) {
+        guard let uuid = CompanyLoginRequestDetector.requestCode(in: ssoCode) else {
+            presentCompanyLoginAlert(prefilledInput: ssoCode, error: .invalidFormat, ssoOnly: true)
+            return
+        }
+        attemptLoginWithSSOCode(uuid)
+    }
+    
     /// Attemts to login with a SSO login code.
     ///
     /// - Parameter code: The SSO team code that was extracted from the link.
-    func attemptLoginWithCode(_ code: UUID) {
+    func attemptLoginWithSSOCode(_ code: UUID) {
         guard !presentOfflineAlertIfNeeded() else { return }
 
         delegate?.controller(self, showLoadingView: true)
@@ -223,6 +209,8 @@ import WireCommonComponents
         }
     }
 
+    // MARK: - Error Handling
+    
     private func handleValidationErrorIfNeeded(_ error: ValidationError?) -> Bool {
         guard let error = error else { return false }
 
@@ -247,20 +235,38 @@ import WireCommonComponents
         delegate?.controller(self, presentAlert: .noInternetError())
         return true
     }
+}
 
-    // MARK: - Custom Backend Switch Handling
+// MARK: - Automatic SSO flow
+extension CompanyLoginController {
     
+    /// Fetches SSO code and starts flow automatically if code is returned on completion
+    /// Otherwise, falls back on prompting user for SSO code
+    func startAutomaticSSOFlow() {
+        delegate?.controller(self, showLoadingView: true)
+        SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
+            guard let `self` = self else { return }
+            self.delegate?.controller(self, showLoadingView: false)
+            guard let ssoCode = result.value?.ssoCode else {
+                return self.displayCompanyLoginPrompt(ssoOnly: true)
+            }
+            self.attemptLoginWithSSOCode(ssoCode)
+        }
+    }
+}
+
+// MARK: - Custom Backend Switch
+extension CompanyLoginController {
     /// Looks up if the specified domain is registered as custom backend
     ///
     /// - Parameter domain: domain to look up
     private func lookup(domain: String) {
         delegate?.controller(self, showLoadingView: true)
-        SessionManager.shared?.unauthenticatedSession?.lookup(domain: domain) { [weak self] result in
+        SessionManager.shared?.activeUnauthenticatedSession.lookup(domain: domain) { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
-            guard result.error == nil, let domainInfo = result.value else {
-                self.presentCompanyLoginAlert(error: .domainNotRegistered)
-                return
+            guard let domainInfo = result.value else {
+                return self.presentCompanyLoginAlert(error: .domainNotRegistered)
             }
             self.updateBackendEnvironment(with: domainInfo.configurationURL)
         }
@@ -271,33 +277,48 @@ import WireCommonComponents
     ///
     /// - Parameter url: backend url to switch to
     private func updateBackendEnvironment(with url: URL) {
-        func notifyDelegate() {
-            DispatchQueue.main.async {
-                self.delegate?.controllerDidUpdateBackendEnvironment(self)
-            }
-        }
-        
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.switchBackend(configuration: url) { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
-            guard result.error == nil, let backendEnvironment = result.value else {
-                
+            guard let backendEnvironment = result.value else {
                 if case SessionManager.SwitchBackendError.loggedInAccounts? = result.error {
                     self.presentCompanyLoginAlert(error: .domainAssociatedWithWrongServer)
                 } else {
                     self.presentCompanyLoginAlert(error: .domainNotRegistered)
                 }
-                
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            notifyDelegate()
+            self.delegate?.controllerDidUpdateBackendEnvironment(self)
         }
     }
-    
-    // MARK: - Flow
+}
 
+// MARK: - SSO code detection
+extension CompanyLoginController {
+    
+    func detectSSOCode() {
+        internalDetectSSOCode(onlyNew: false)
+    }
+    
+    /// This method will be called when the app comes back to the foreground.
+    /// We then check if the clipboard contains a valid SSO login code.
+    /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
+    private func internalDetectSSOCode(onlyNew: Bool) {
+        guard isAutoDetectionEnabled else { return }
+        detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentCompanyLoginAlert] result in
+            // This might have changed in the meantime.
+            guard isAutoDetectionEnabled else { return }
+            
+            guard let result = result, !onlyNew || result.isNew else { return }
+            presentCompanyLoginAlert(result.code, nil, true)
+        }
+    }
+}
+
+// MARK: - Flow
+extension CompanyLoginController {
     public func companyLoginRequester(_ requester: CompanyLoginRequester, didRequestIdentityValidationAtURL url: URL) {
         delegate?.controllerDidStartCompanyLoginFlow(self)
         flowHandler.open(authenticationURL: url)

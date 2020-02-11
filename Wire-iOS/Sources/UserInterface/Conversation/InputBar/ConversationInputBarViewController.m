@@ -24,7 +24,6 @@
 #import "ConversationInputBarViewController+Files.h"
 
 #import "ConfirmAssetViewController.h"
-#import "UIViewController+Errors.h"
 
 #import "Wire-Swift.h"
 
