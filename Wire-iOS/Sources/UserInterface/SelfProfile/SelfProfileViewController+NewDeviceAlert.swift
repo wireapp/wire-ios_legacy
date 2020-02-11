@@ -94,7 +94,7 @@ extension SelfProfileViewController {
 }
 
 extension UIAlertController {
-    convenience init(forNewSelfClients clients: Set<UserClient>) {
+    convenience init<U: UserClientType>(forNewSelfClients clients: Set<U>) {
         var deviceNamesAndDates: [String] = []
         
         for userClient in clients {

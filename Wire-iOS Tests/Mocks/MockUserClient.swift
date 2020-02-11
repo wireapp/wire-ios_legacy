@@ -19,7 +19,6 @@
 import Foundation
 import WireSyncEngine
 
-@objcMembers
 final class MockUserClient: NSObject, UserClientType {
 
     var type: DeviceType = .permanent
@@ -59,3 +58,20 @@ final class MockUserClient: NSObject, UserClientType {
     }
 
 }
+
+extension MockUserClient {
+    func config(fingerprintString: String = "102030405060708090102030405060708090102030405060708090") {
+        remoteIdentifier = "102030405060708090"
+        
+        deviceClass = .tablet
+        model = "Simulator"
+        label = "Bill's MacBook Pro"
+        
+        fingerprint = fingerprintString.data(using: .utf8)
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        activationDate = formatter.date(from: "2016/05/01 14:31")
+    }
+}
+
