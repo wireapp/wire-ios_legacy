@@ -2064,7 +2064,6 @@
 		871BC1461D34F8F800DF0793 /* SplitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplitViewController.m; sourceTree = "<group>"; };
 		871BC18D1D34F8F800DF0793 /* MediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaAsset.h; sourceTree = "<group>"; };
 		871BC18E1D34F8F800DF0793 /* MediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaAsset.m; sourceTree = "<group>"; };
-		871BC1901D34F8F800DF0793 /* MediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayer.h; sourceTree = "<group>"; };
 		871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewView.swift; sourceTree = "<group>"; };
 		871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossfadeTransition.h; sourceTree = "<group>"; };
 		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossfadeTransition.m; sourceTree = "<group>"; };
@@ -2361,7 +2360,6 @@
 		A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMockUser.swift; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
-		A963643123E2E52F00190992 /* AudioTrackPlayer+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackPlayer+Private.h"; sourceTree = "<group>"; };
 		A965801323EDB17200EF345D /* TokenField+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TokenField+Internal.h"; sourceTree = "<group>"; };
 		A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewController.swift; sourceTree = "<group>"; };
 		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
@@ -4260,7 +4258,6 @@
 				871BC1511D34F8F800DF0793 /* Giphy */,
 				161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */,
 				A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */,
-				871BC1901D34F8F800DF0793 /* MediaPlayer.h */,
 				871BC18D1D34F8F800DF0793 /* MediaAsset.h */,
 				871BC18E1D34F8F800DF0793 /* MediaAsset.m */,
 				EFBCC9122154FF18006AAB70 /* CGFloat+Const.swift */,

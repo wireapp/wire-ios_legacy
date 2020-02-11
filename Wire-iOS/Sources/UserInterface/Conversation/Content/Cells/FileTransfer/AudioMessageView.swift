@@ -58,7 +58,7 @@ final class AudioMessageView: UIView, TransferView {
         }
     }
     
-    var audioTrackPlayer: AudioTrackPlayer? {
+    var audioTrackPlayer: AudioTrackPlayer? { ///TODO: lazy var
         get {
             if _audioTrackPlayer == nil {
                 _audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
