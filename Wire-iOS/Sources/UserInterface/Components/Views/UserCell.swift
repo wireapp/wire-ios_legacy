@@ -196,7 +196,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     private func updateTitleLabel() {
-        guard let user = self.user else {
+        guard let user = user else {
             return
         }
         

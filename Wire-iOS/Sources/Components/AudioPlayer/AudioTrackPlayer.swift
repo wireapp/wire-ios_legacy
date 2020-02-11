@@ -29,7 +29,7 @@ enum MediaPlayerState : Int {
     case error
 }
 
-protocol MediaPlayer: NSObjectProtocol {
+protocol MediaPlayer {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
     var state: MediaPlayerState? { get }
@@ -45,6 +45,7 @@ protocol AudioTrackPlayerDelegate: class {
 }
 
 final class AudioTrackPlayer: NSObject, MediaPlayer {
+    
     private var avPlayer: AVPlayer?
     private var timeObserverToken: Any?
     private var messageObserverToken: NSObjectProtocol?
@@ -73,24 +74,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     fileprivate var audioTrackStatusObserver : NSKeyValueObservation?
     
-    private(set) var audioTrack: (AudioTrack & NSObject)? {
-        willSet {
-            (audioTrack as? NSObject)?.removeObserver(self, forKeyPath: "status")
-        }
-        
-        didSet {
-//            audioTrackStatusObserver = (audioTrack as? NSObject)?.observe(\AudioTrack.status, options: [.new]) { [weak self] audioTrack, _ in
-//                self?.audioTrackStatusChanged()
-//            }
-            setObserver(audioTrack)
-        }
-    }
-    
-    private func setObserver<T>(_ audioTrack: T?) where T: NSObject & AudioTrack { ///TODO: status???
-        audioTrackStatusObserver = audioTrack?.observe(\NSObject.status, options: [.new]) { [weak self] _, _ in
-            self?.audioTrackStatusChanged()
-        }
-    }
+    private var audioTrack: AudioTrack?
 
     @objc dynamic
     private(set) var progress: CGFloat = 0 ///TODO: didSet
@@ -213,7 +197,11 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     }
     
     private func playStatusChanged() {
-        
+        if avPlayer?.currentItem?.status == .failed {
+            audioTrack?.failedToLoad = true
+            state = .error
+        }
+
         guard let status = avPlayer?.status else { return }
         
         switch status {

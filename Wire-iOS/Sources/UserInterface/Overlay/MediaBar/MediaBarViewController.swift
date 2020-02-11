@@ -89,10 +89,6 @@ final class MediaBarViewController: UIViewController {
 
 extension MediaBarViewController: MediaPlaybackManagerChangeObserver {
     
-    func activeMediaPlayerTitleDidChange() {
-        updateTitleLabel()
-    }
-    
     func activeMediaPlayerStateDidChange() {
         updatePlayPauseButton()
     }

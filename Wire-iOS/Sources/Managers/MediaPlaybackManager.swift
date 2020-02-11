@@ -22,8 +22,6 @@ private let zmLog = ZMSLog(tag: "MediaPlaybackManager")
 
 /// An object that observes changes in the media playback manager.
 protocol MediaPlaybackManagerChangeObserver: AnyObject {
-    /// The title of the active media player changed.
-    func activeMediaPlayerTitleDidChange()
     /// The state of the active media player changes.
     func activeMediaPlayerStateDidChange()
 }
@@ -48,7 +46,6 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     weak var mediaPlaybackManagerDelegate: MediaPlaybackManagerDelegate?
     
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
-    private var titleObserver: NSKeyValueObservation?
     var name: String!
     
     weak var delegate: AVSMediaDelegate?
@@ -122,24 +119,9 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
             activeMediaPlayer?.pause()
         }
     }
-    
-    // MARK: - Active Media Player State
-    private func startObservingMediaPlayerChanges() {
-        setObserver(activeMediaPlayer)
-    }
-    
-    private func setObserver<T>(_ mediaPlayerObject: T?) where T: NSObject & MediaPlayer {
-        titleObserver = mediaPlayerObject?.observe(\.title, options: [.initial, .new]) { [weak self] _, _ in
-            self?.changeObserver?.activeMediaPlayerTitleDidChange()
-        }
-    }
-    
-    private func stopObservingMediaPlayerChanges(_ mediaPlayer: MediaPlayer?) {
-        titleObserver = nil
-    }
 }
 
-extension MediaPlaybackManager: MediaPlayerDelegate { ///TODO:
+extension MediaPlaybackManager: MediaPlayerDelegate {
     func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
         
