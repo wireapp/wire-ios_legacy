@@ -118,90 +118,123 @@ class MockUserType: NSObject, UserType, Mockable {
 
     var canManageTeam: Bool = false
 
+    var canLeaveConversation: Bool = false
+
+    func canLeave(_ conversation: ZMConversation) -> Bool {
+        return canLeaveConversation
+    }
+
+    var canCreateConversation: Bool = false
+
     func canCreateConversation(type: ZMConversationType) -> Bool {
-        fatalError()
+        return canCreateConversation
+    }
+
+    var canDeleteConversation: Bool = false
+
+    func canDeleteConversation(_ conversation: ZMConversation) -> Bool {
+        return canDeleteConversation
+    }
+
+    var canAddUserToConversation: Bool = false
+
+    func canAddUser(to conversation: ZMConversation) -> Bool {
+        return canAddUserToConversation
+    }
+
+    var canRemoveUserFromConversation: Bool = false
+
+    func canRemoveUser(from conversation: ZMConversation) -> Bool {
+        return canRemoveUserFromConversation
+    }
+
+    var canAddServiceToConversation: Bool = false
+
+    func canAddService(to conversation: ZMConversation) -> Bool {
+        return canAddServiceToConversation
+    }
+
+    func canRemoveService(from conversation: ZMConversation) -> Bool {
+        // TODO: This looks wrong, investigate.
+        return canRemoveUserFromConversation
     }
 
     func canAccessCompanyInformation(of user: UserType) -> Bool {
         fatalError()
     }
 
-    func canAddService(to conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
-
-    func canRemoveService(from conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
-
-    func canAddUser(to conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
-
-    func canRemoveUser(from conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
-
-    func canDeleteConversation(_ conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
+    var canModifyOtherMemberInConversation: Bool = false
 
     func canModifyOtherMember(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return canModifyOtherMemberInConversation
     }
+
+    var canModifyTitleInConversation: Bool = false
+
+    func canModifyTitle(in conversation: ZMConversation) -> Bool {
+        return canModifyTitleInConversation
+    }
+
+    var canModifyReadReceiptSettingsInConversation: Bool = false
 
     func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return canModifyReadReceiptSettingsInConversation
     }
+
+    var canModifyEphemeralSettingsInConversation: Bool = false
 
     func canModifyEphemeralSettings(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return canModifyEphemeralSettingsInConversation
     }
 
+    var canModifyNotificationSettingsInConversation: Bool = false
+
     func canModifyNotificationSettings(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return canModifyNotificationSettingsInConversation
     }
 
     func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        // TODO: This looks wrong, investigate.
+        return canModifyNotificationSettingsInConversation
     }
 
-    func canModifyTitle(in conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
-
-    func canLeave(_ conversation: ZMConversation) -> Bool {
-        fatalError()
-    }
+    var isGroupAdminInConversation: Bool = false
 
     func isGroupAdmin(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return isGroupAdminInConversation
     }
 
     // MARK: - Methods
 
     func connect(message: String) {
-        fatalError()
+        // No op
     }
 
+    var isGuestInConversation: Bool = false
+
     func isGuest(in conversation: ZMConversation) -> Bool {
-        fatalError()
+        return isGuestInConversation
     }
 
     func requestPreviewProfileImage() {
-        fatalError()
+        // No op
     }
 
     func requestCompleteProfileImage() {
-        fatalError()
+        // No op
     }
 
     func imageData(for size: ProfileImageSize, queue: DispatchQueue, completion: @escaping (Data?) -> Void) {
-        fatalError()
+        switch size {
+        case .preview:
+            completion(previewImageData)
+        case .complete:
+            completion(completeImageData)
+        }
     }
 
     func refreshData() {
-        fatalError()
+        // No op
     }
 
 }
