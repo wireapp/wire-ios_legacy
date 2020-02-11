@@ -52,7 +52,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     
     weak var audioTrackPlayerDelegate: AudioTrackPlayerDelegate?
     
-    ///TODO: use didSet and delegate?
     var state: MediaPlayerState? {
         didSet {
             audioTrackPlayerDelegate?.stateDidChange(self, state: state)

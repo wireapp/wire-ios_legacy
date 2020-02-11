@@ -27,29 +27,37 @@ extension AudioMessageView: AudioTrackPlayerDelegate {
         ///  Notice: when there are more then 1 instance of this class exists, this function will be called in every instance.
         ///          This function may called from background thread (in case incoming call).
         DispatchQueue.main.async { [weak self] in
-            if self?.isOwnTrackPlayingInAudioPlayer() == true {
-                self?.updateActivePlayerProgressAnimated(false)
-                self?.updateActivePlayButton()
-                self?.updateTimeLabel()
-                self?.updateProximityObserverState()
-            }
-                /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
-            else if state == .completed {
-                self?.updateTimeLabel()
-            } else {
-                self?.updateInactivePlayer()
-            }
+            self?.updateUI(state: state)
         }
-
+        
     }
     
-    
+    private func updateUI(state: MediaPlayerState?) {
+        if isOwnTrackPlayingInAudioPlayer() {
+            updateActivePlayerProgressAnimated(false)
+            updateActivePlayButton()
+            updateTimeLabel()
+            updateProximityObserverState()
+        }
+            /// when state is completed, there is no info about it is own track or not. Update the time label in this case anyway (set to the length of own audio track)
+        else if state == .completed {
+            updateTimeLabel()
+        } else {
+            updateInactivePlayer()
+        }
+    }
 }
 
 final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
-    private var _audioTrackPlayer: AudioTrackPlayer?
+    
+    private var _audioTrackPlayer: AudioTrackPlayer? {
+        didSet {
+            _audioTrackPlayer?.audioTrackPlayerDelegate = self
+        }
+    }
+    
     var audioTrackPlayer: AudioTrackPlayer? {
         get {
             if _audioTrackPlayer == nil {
@@ -62,7 +70,6 @@ final class AudioMessageView: UIView, TransferView {
         
         set(newValue) {
             _audioTrackPlayer = newValue
-            _audioTrackPlayer?.audioTrackPlayerDelegate = self
             setupAudioPlayerObservers()
         }
     }
@@ -73,7 +80,7 @@ final class AudioMessageView: UIView, TransferView {
         button.setIconColor(.white, for: .normal)
         return button
     }()
-
+    
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = (UIFont.smallSemiboldFont).monospaced()
@@ -81,22 +88,22 @@ final class AudioMessageView: UIView, TransferView {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.accessibilityIdentifier = "AudioTimeLabel"
-
+        
         return label
     }()
-
+    
     private let playerProgressView: ProgressView = {
         let progressView = ProgressView()
         progressView.backgroundColor = .from(scheme: .separator)
         progressView.tintColor = .accent()
-
+        
         return progressView
     }()
-
+    
     private let waveformProgressView: WaveformProgressView = {
         let waveformProgressView = WaveformProgressView()
         waveformProgressView.backgroundColor = .from(scheme: .placeholderBackground)
-
+        
         return waveformProgressView
     }()
     private let loadingView = ThreeDotsLoadingView()
@@ -110,18 +117,18 @@ final class AudioMessageView: UIView, TransferView {
     private var proximityMonitorManager: ProximityMonitorManager? {
         return ZClientViewController.shared?.proximityMonitorManager
     }
-
-
+    
+    
     private var callStateObserverToken : Any?
     /// flag for resume audio player after incoming call
     private var isPausedForIncomingCall : Bool
-
+    
     required override init(frame: CGRect) {
         isPausedForIncomingCall = false
-
+        
         super.init(frame: frame)
         backgroundColor = .from(scheme: .placeholderBackground)
-
+        
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
         self.playButton.accessibilityIdentifier = "AudioActionButton"
@@ -129,7 +136,7 @@ final class AudioMessageView: UIView, TransferView {
         
         self.downloadProgressView.isUserInteractionEnabled = false
         self.downloadProgressView.accessibilityIdentifier = "AudioProgressView"
-
+        
         self.playerProgressView.setDeterministic(true, animated: false)
         self.playerProgressView.accessibilityIdentifier = "PlayerProgressView"
         
@@ -137,7 +144,7 @@ final class AudioMessageView: UIView, TransferView {
         
         self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView]
         self.allViews.forEach(self.addSubview)
-
+        
         self.createConstraints()
         
         var currentElements = self.accessibilityElements ?? []
@@ -146,7 +153,7 @@ final class AudioMessageView: UIView, TransferView {
         
         setNeedsLayout()
         layoutIfNeeded()
-
+        
         if let session = ZMUserSession.shared() {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
         }
@@ -368,10 +375,10 @@ final class AudioMessageView: UIView, TransferView {
     private func playTrack() {
         let userSession = ZMUserSession.shared()
         guard let fileMessage = self.fileMessage,
-              let fileMessageData = fileMessage.fileMessageData,
-              let audioTrackPlayer = self.audioTrackPlayer,
-              userSession == nil || userSession!.isCallOngoing == false else {
-            return
+            let fileMessageData = fileMessage.fileMessageData,
+            let audioTrackPlayer = self.audioTrackPlayer,
+            userSession == nil || userSession!.isCallOngoing == false else {
+                return
         }
         
         self.proximityMonitorManager?.stateChanged = proximityStateDidChange
@@ -433,18 +440,13 @@ final class AudioMessageView: UIView, TransferView {
         audioPlayerProgressObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.progress, options: [.initial, .new]) { [weak self] _, _ in
             self?.audioProgressChanged()
         }
-
-        ///TODO: imp delegate
-//        audioPlayerStateObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.state, options: [.initial, .new]) { [weak self] _, change in
-        
-//        }
     }
-
+    
     // MARK: - Actions
     
     @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
         isPausedForIncomingCall = false
-
+        
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {
@@ -514,7 +516,7 @@ final class AudioMessageView: UIView, TransferView {
 // MARK: - WireCallCenterCallStateObserver
 
 extension AudioMessageView : WireCallCenterCallStateObserver {
-
+    
     func callCenterDidChange(callState: CallState,
                              conversation: ZMConversation,
                              caller: UserType,
@@ -522,7 +524,7 @@ extension AudioMessageView : WireCallCenterCallStateObserver {
                              previousCallState: CallState?) {
         guard let player = audioTrackPlayer else { return }
         guard isOwnTrackPlayingInAudioPlayer() else { return }
-
+        
         // Pause the audio player when call is incoming to prevent the audio player is reset.
         // Resume playing when the call is terminating (and the audio is paused by this method)
         switch (previousCallState, callState) {
