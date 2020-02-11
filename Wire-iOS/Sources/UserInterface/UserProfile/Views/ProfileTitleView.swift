@@ -19,10 +19,10 @@
 import UIKit
 import Cartography
 
-@objcMembers class ProfileTitleView : UIView {
+final class ProfileTitleView : UIView {
     
     let verifiedImageView = UIImageView(image: WireStyleKit.imageOfShieldverified)
-    let titleLabel = UILabel()
+    private let titleLabel = UILabel()
     
     var showVerifiedShield = false {
         didSet {
@@ -64,8 +64,7 @@ import Cartography
         }
     }
     
-    @objc(configureWithViewModel::)
-    public func configure(with user: UserType, variant: ColorSchemeVariant) {
+    func configure(with user: UserType, variant: ColorSchemeVariant) {
         let attributedTitle = user.nameIncludingAvailability(color: UIColor.from(scheme: .textForeground, variant: variant))
         titleLabel.attributedText = attributedTitle
         titleLabel.font = FontSpec(.normal, .medium).font!
