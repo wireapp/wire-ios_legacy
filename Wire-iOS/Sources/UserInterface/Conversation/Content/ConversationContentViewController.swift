@@ -144,7 +144,7 @@ final class ConversationContentViewController: UIViewController {
         super.viewWillAppear(animated)
         onScreen = true
         
-        ///TODO: use delegate
+        ///TODO: crash, use delegate
         activeMediaPlayerObserver = mediaPlaybackManager?.observe(\.activeMediaPlayer, options: [.initial, .new]) { [weak self] _, _ in
             self?.updateMediaBar()
         }

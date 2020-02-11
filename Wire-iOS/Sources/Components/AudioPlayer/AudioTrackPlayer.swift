@@ -38,7 +38,7 @@ protocol MediaPlayer: NSObjectProtocol {
     func stop()
 }
 
-typealias AudioTrackCompletionHandler = ((_ loaded: Bool, _ error: Error?) -> Void)
+typealias AudioTrackCompletionHandler = (_ loaded: Bool, _ error: Error?) -> Void
 
 protocol AudioTrackPlayerDelegate: class {
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?)
@@ -78,13 +78,13 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     }
     
     @objc dynamic
-    private(set) var progress: CGFloat = 0.0
+    private(set) var progress: CGFloat = 0
     
     var duration: CGFloat {
         if let duration = avPlayer?.currentItem?.asset.duration {
             return CGFloat(CMTimeGetSeconds(duration))
         }
-        return 0.0
+        return 0
     }
     
     var elapsedTime: TimeInterval {
