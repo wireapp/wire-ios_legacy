@@ -60,7 +60,9 @@ class AuthenticationInterfaceBuilder {
     func makeViewController(for step: AuthenticationFlowStep) -> AuthenticationStepViewController? {
         switch step {
         case .landingScreen:
-            return LandingViewController()
+            let landingViewController = LandingViewController()
+            landingViewController.configure(with: featureProvider)
+            return landingViewController
 
         case .reauthenticate(let credentials, _, let isSignedOut):
             let viewController: AuthenticationStepController
@@ -90,14 +92,7 @@ class AuthenticationInterfaceBuilder {
             return viewController
 
         case .provideCredentials(let credentialsFlowType, let prefill):
-            let viewController = makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
-
-            // Add the item to start company login if needed.
-            if featureProvider.allowDirectCompanyLogin {
-                viewController.setRightItem("signin.company_idp.button.title".localized, withAction: .startCompanyLogin(code: nil), accessibilityID: "companyLoginButton")
-            }
-
-            return viewController
+            return makeCredentialsViewController(for: .login(credentialsFlowType, prefill))
 
         case .createCredentials(_, let credentialsFlowType):
             return makeCredentialsViewController(for: .registration(credentialsFlowType))

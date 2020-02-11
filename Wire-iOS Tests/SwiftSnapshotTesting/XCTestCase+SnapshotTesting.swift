@@ -80,6 +80,33 @@ extension XCTestCase {
                    line: line)
         }
     }
+    
+    // MARK: - verify the snapshots in both dark and light scheme
+    
+    func verifyInAllColorSchemes(matching: UIView,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
+        if var themeable = matching as? Themeable {
+            themeable.colorSchemeVariant = .light
+            
+            verify(matching: matching,
+                   named: "LightTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
+            themeable.colorSchemeVariant = .dark
+            
+            verify(matching: matching,
+                   named: "DarkTheme",
+                   file: file,
+                   testName: testName,
+                   line: line)
+        } else {
+            XCTFail("View doesn't support Themable protocol")
+        }
+    }
+
 }
 
 extension XCTestCase {
@@ -131,14 +158,18 @@ extension XCTestCase {
     }
 
     func verify(matching value: UIView,
+                named name: String? = nil,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
 
         let failure = verifySnapshot(matching: value,
                                      as: .image,
+                                     named: name,
                                      snapshotDirectory: snapshotDirectory(file: file),
-                                     file: file, testName: testName, line: line)
+                                     file: file,
+                                     testName: testName,
+                                     line: line)
 
         XCTAssertNil(failure, file: file, line: line)
     }

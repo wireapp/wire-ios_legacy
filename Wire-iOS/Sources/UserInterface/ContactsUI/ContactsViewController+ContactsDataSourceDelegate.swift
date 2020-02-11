@@ -18,58 +18,33 @@
 
 import Foundation
 
-extension ContactsViewController {
-    func actionButtonHidden() -> Bool {
-        if let shouldDisplayActionButtonForUser = contentDelegate?.shouldDisplayActionButton {
-            return !shouldDisplayActionButtonForUser
-        } else {
-            return true
-        }
-    }
-}
-
 extension ContactsViewController: ContactsDataSourceDelegate {
-    
-    public func dataSource(_ dataSource: ContactsDataSource,
-                           cellFor user: UserType,
-                           at indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ContactsViewControllerCellID, for: indexPath) as? ContactsCell else {
-            fatal("Cannot create cell")
-        }
+
+    func dataSource(_ dataSource: ContactsDataSource, cellFor user: UserType, at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: ContactsCell.self, for: indexPath)
         cell.contentBackgroundColor = .clear
         cell.colorSchemeVariant = .dark
-
         cell.user = user
 
-        cell.actionButtonHandler = {[weak self, weak cell] user in
-            guard let `self` = self,
-                let cell = cell,
-                let user = user else { return }
-
-            self.contentDelegate?.contactsViewController(self, actionButton: cell.actionButton, pressedFor: user)
-
-            cell.actionButton.isHidden = self.actionButtonHidden()
+        cell.actionButtonHandler = { [weak self] user, action in
+            switch action {
+            case .open:
+                self?.openConversation(for: user)
+            case .invite:
+                self?.invite(user: user)
+            }
         }
 
-        cell.actionButton.isHidden = actionButtonHidden()
-
-        if !cell.actionButton.isHidden,
-            let index = contentDelegate?.contactsViewController(self, actionButtonTitleIndexFor: (user as? ZMSearchUser)?.user, isIgnored: (user as? ZMSearchUser)?.user?.isIgnored ?? false),
-            let actionButtonTitles = self.actionButtonTitles() as? [String] {
-
-                let titleString = actionButtonTitles[Int(index)]
-
-                cell.allActionButtonTitles = actionButtonTitles
-                cell.actionButton.setTitle(titleString, for: .normal)
-        }
-
-        if dataSource.selection.contains(user) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        if !cell.actionButton.isHidden {
+            cell.action = user.isConnected ? .open : .invite
         }
 
         return cell
-
     }
 
-    
+    func dataSource(_ dataSource: ContactsDataSource, didReceiveSearchResult newUser: [UserType]) {
+        tableView.reloadData()
+        updateEmptyResults(hasResults: !newUser.isEmpty)
+    }
+
 }

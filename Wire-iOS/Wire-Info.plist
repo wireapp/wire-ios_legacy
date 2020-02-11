@@ -70,8 +70,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>${WIRE_BUILD_NUMBER}</string>
-	<key>DefaultBackend</key>
-	<string>${DEFAULT_BACKEND}</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<true/>
 	<key>ITSEncryptionExportComplianceCode</key>
@@ -185,6 +183,6 @@
 	<key>WireGroupId</key>
 	<string>${WIRE_BUNDLE_ID}</string>
 	<key>EnableDeveloperMenu</key>
-	<string>${ENABLE_DEVELOPER_MENU}</string>
+	<string>${DEVELOPER_MODE_ENABLED}</string>
 </dict>
 </plist>

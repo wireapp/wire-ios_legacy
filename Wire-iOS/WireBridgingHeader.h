@@ -23,18 +23,9 @@
 #import "Settings.h"
 
 // UI
-#import "ParticipantDeviceHeaderView.h"
-#import "ParticipantDeviceHeaderView+Internal.h"
 #import "UIViewController+Errors.h"
-#import "ConversationListItemView.h"
-#import "ConversationListItemView+Internal.h"
-#import "ResizingTextView.h"
-#import "NextResponderTextView.h"
 #import "SCSiriWaveformView.h"
-#import "ConversationContentViewController+Private.h"
 #import "SwizzleTransition.h"
-#import "Country.h"
-#import "PassthroughTouchesView.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"
 #import "TokenizedTextView.h"
@@ -46,15 +37,11 @@
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
-#import "AnimatedListMenuView.h"
-#import "AnimatedListMenuView+Internal.h"
 #import "TextView+Internal.h"
 #import "TextView.h"
 #import "ColorKnobView.h"
 
 // View Controllers
-#import "ContactsViewController.h"
-#import "ContactsViewController+Internal.h"
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
@@ -75,8 +62,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "CountryCodeTableViewController.h"
-#import "ContactsDataSource.h"
 #import "Button.h"
 
 // Helper objects
@@ -84,7 +69,6 @@
 #import "PopTransition.h"
 #import "ZoomTransition.h"
 #import "CrossfadeTransition.h"
-#import "VerticalTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
 #import "AuthenticationCoordinatedViewController.h"
@@ -96,7 +80,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "AVSLogObserver.h"
-#import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"

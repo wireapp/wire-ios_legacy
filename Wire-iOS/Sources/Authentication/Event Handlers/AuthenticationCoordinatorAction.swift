@@ -50,7 +50,7 @@ enum AuthenticationCoordinatorAction {
     case startLoginFlow(AuthenticationLoginRequest)
     case setUserName(String)
     case setUserPassword(String)
-    case startCompanyLogin(code: UUID?)
+    case startCompanyLogin(code: UUID?, ssoOnly: Bool)
     case startBackupFlow
     case signOut(warn: Bool)
     case addEmailAndPassword(ZMEmailCredentials)

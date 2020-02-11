@@ -1229,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Додати акаунт.";
-"landing.create_account.title" = "Персональний акаунт";
+"landing.welcome_message" = "Welcome to %@";
+"landing.create_account.title" = "Create an Account";
 "landing.create_account.subtitle" = "Розмовляйте приватно з групою друзів\U00A0та\U00A0сім'єю";
 "landing.create_team.title" = "Pro акаунт";
 "landing.create_team.subtitle" = "Безпечна співпраця для бізнесу, органів влади та профільних\U00A0організацій";
 "landing.login.hints" = "Вже зареєстровані?";
 "landing.login.button.title" = "Увійти";
+"landing.login.email.button.title" = "Log in with email";
+"landing.login.enterprise.button.title" = "Enterprise log in";
+"landing.login.sso.button.title" = "Log in with SSO";
 
 "landing.custom_backend.title" = "З'єднано з \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Показати більше";
@@ -1370,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Цю резервну копію було створено новішою або застарілою версією Wire, тому її неможливо відновити.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Вхід для компаній";
-"login.sso.alert.message" = "Введіть код доступу для вашої компанії.";
+"login.sso.alert.title" = "Enterprise Login";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Увійти";
-"login.sso.alert.text_field.placeholder" = "Код доступу SSO";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "Не вдалося здійснити вхід з корпоративного акаунта";
 "login.sso.link_error_message" = "Корпоративний акаунт, який ви вибрали, невалідний. Будь ласка, зверніться до вашого адміністратора для вирішення проблеми.";
 
-"login.sso.error.alert.title" = "Щось пішло не так";
-"login.sso.error.alert.invalid_code.title" = "Невірний код.";
-"login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний SSO-код вашої команди, та повторіть спробу.";
 "login.sso.error.offline.alert.message" = "Перевірте з'єднання з інтернетом та спробуйте ще раз.";
 "login.sso.error.alert.message" = "Будь ласка, зверніться до адміністратора команди, щоб отримати детальну інформацію, (помилка %@).";
-"login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
+
+"login.sso.error.alert.invalid_code.message" = "Будь ласка, упевніться, що це вірний SSO-код вашої команди, та повторіть спробу.";
 "login.sso.error.alert.invalid_status.message" = "Будь ласка, спробуйте ще раз пізніше (помилка %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
+"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.unknown.message" = "Будь ласка, спробуйте ще раз пізніше.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Відновлення…";

@@ -76,8 +76,7 @@ class SettingsCellDescriptorFactory {
                     let alert = UIAlertController(
                         title: "self.settings.add_account.error.title".localized,
                         message: "self.settings.add_account.error.message".localized,
-                        cancelButtonTitle: "general.ok".localized
-                    )
+                        alertAction: .ok(style: .cancel))
                     controller.present(alert, animated: true, completion: nil)
                 }
             }
@@ -485,7 +484,7 @@ class SettingsCellDescriptorFactory {
             userSession.syncManagedObjectContext.saveOrRollback()
         }
         
-        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", cancelButtonTitle: "OK")
+        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", alertAction: .ok(style: .cancel))
         controller.show(alertController, sender: nil)
     }
     
@@ -559,7 +558,7 @@ class SettingsCellDescriptorFactory {
 
         let alert = UIAlertController(title: "Success",
                                       message: "The call quality survey will be displayed after the next call.",
-                                      cancelButtonTitle: "OK")
+                                      alertAction: .ok(style: .cancel))
 
         controller.present(alert, animated: true)
     }
