@@ -77,7 +77,7 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                     UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)
 
                 } else {
-                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(forError: error)
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(for: error)
                 }
 
             }

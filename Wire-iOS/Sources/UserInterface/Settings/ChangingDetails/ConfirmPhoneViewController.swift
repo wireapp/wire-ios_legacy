@@ -203,7 +203,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
-        showAlert(forError: error)
+        showAlert(for: error)
         clearCodeInput()
     }
 }

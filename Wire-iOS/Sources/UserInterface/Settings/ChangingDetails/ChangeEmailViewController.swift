@@ -219,7 +219,7 @@ extension ChangeEmailViewController: UserProfileUpdateObserver {
     func emailUpdateDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
         updateSaveButtonState()
-        showAlert(forError: error)
+        showAlert(for: error)
     }
     
     func didSendVerificationEmail() {

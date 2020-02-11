@@ -44,7 +44,7 @@ class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
                 ZClientViewController.shared?.showLoadingView = false
                 
                 if case .failure(let error) = result {
-                    ZClientViewController.shared?.showAlert(forError: error)
+                    ZClientViewController.shared?.showAlert(for: error)
                 }
             })
         } else {

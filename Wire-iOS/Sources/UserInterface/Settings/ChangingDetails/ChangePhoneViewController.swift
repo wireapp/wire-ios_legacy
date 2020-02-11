@@ -241,19 +241,19 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     func phoneNumberVerificationCodeRequestDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
         updateSaveButtonState()
-        showAlert(forError: error)
+        showAlert(for: error)
     }
 
     func emailUpdateDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
         updateSaveButtonState()
-        showAlert(forError: error)
+        showAlert(for: error)
     }
 
     func phoneNumberRemovalDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
         updateSaveButtonState()
-        showAlert(forError: error)
+        showAlert(for: error)
     }
 
     func didRemovePhoneNumber() {

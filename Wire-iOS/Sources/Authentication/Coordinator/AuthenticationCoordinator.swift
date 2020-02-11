@@ -438,7 +438,7 @@ extension AuthenticationCoordinator {
 
     /// Presents an error alert.
     private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
-        presenter?.showAlert(forError: alertModel.error) { _ in
+        presenter?.showAlert(for: alertModel.error) { _ in
             self.executeActions(alertModel.completionActions)
         }
     }
