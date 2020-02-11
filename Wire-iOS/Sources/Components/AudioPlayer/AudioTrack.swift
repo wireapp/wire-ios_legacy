@@ -16,15 +16,24 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@objc ///TODO:
-protocol AudioTrack: NSObjectProtocol {
+protocol AudioTrack: class {
     var title: String? { get }
     var author: String? { get }
 
     var duration: TimeInterval { get }
 
-    @objc
     var streamURL: URL? { get }
 
     var failedToLoad: Bool { get set }
 }
+
+extension AudioTrack {
+    func isEqual(_ other: AudioTrack) -> Bool {
+        return title == title &&
+               author == author &&
+               duration == duration &&
+               streamURL == streamURL
+        
+    }
+}
+

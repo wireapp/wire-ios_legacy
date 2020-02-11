@@ -386,7 +386,7 @@ final class AudioMessageView: UIView, TransferView {
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         
         // first play
-        if let track = fileMessage.audioTrack(), !audioTrackPlayingSame {
+        if let track = fileMessage.audioTrack, !audioTrackPlayingSame {
             audioTrackPlayer.load(track, sourceMessage: fileMessage) { [weak self] success, error in
                 if success {
                     self?.setAudioOutput(earpiece: false)
@@ -426,7 +426,7 @@ final class AudioMessageView: UIView, TransferView {
     /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
     private func isOwnTrackPlayingInAudioPlayer() -> Bool {
         guard let message = self.fileMessage,
-            let audioTrack = message.audioTrack(),
+            let audioTrack = message.audioTrack,
             let audioTrackPlayer = self.audioTrackPlayer
             else {
                 return false

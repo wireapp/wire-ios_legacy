@@ -30,7 +30,7 @@ extension ZMConversationMessage {
         }
     }
     
-    func audioTrack() -> AudioTrack? {
+    var audioTrack: AudioTrack? {
         if let fileMessageData = self.fileMessageData
             , fileMessageData.isAudio {
             return self as? AudioTrack

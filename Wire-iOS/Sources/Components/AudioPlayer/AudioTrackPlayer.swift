@@ -77,7 +77,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     }
     
     @objc dynamic
-    private(set) var progress: CGFloat = 0
+    private(set) var progress: CGFloat = 0 ///TODO: didSet
     
     var duration: CGFloat {
         if let duration = avPlayer?.currentItem?.asset.duration {
@@ -142,13 +142,16 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
                 let avPlayer = AVPlayer(url: streamURL)
                 
                 
-                ///TODO:
+                ///TODO: Swift KVO, not override observeValue
                 avPlayer.addObserver(self, forKeyPath: "status", options: .new, context: nil)
                 avPlayer.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
                 avPlayer.addObserver(self, forKeyPath: "currentItem", options: [.new, .initial, .old], context: nil)
                 
                 self.avPlayer = avPlayer
             }
+        } else {
+            ///For testing only! streamURL is nil in test.
+            self.avPlayer = AVPlayer()
         }
         
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
