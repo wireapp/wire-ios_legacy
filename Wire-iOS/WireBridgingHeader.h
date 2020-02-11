@@ -28,7 +28,7 @@
 #import "SwizzleTransition.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"
-#import "TokenizedTextView.h"
+#import "TokenField+Internal.h"
 #import "TokenTextAttachment.h"
 
 #import "IconButton.h"
@@ -37,8 +37,6 @@
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "UITableView+RowCount.h"
-#import "TextView+Internal.h"
-#import "TextView.h"
 #import "ColorKnobView.h"
 
 // View Controllers

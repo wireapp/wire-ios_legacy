@@ -207,7 +207,7 @@ class SettingsCellDescriptorFactory {
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
-        items.append(contentsOf: [troubleshootingSection, pushSection, versionSection])
+        items.append(contentsOf: [troubleshootingSection, debuggingToolsSection(), pushSection, versionSection])
         
         return SettingsGroupCellDescriptor(
             items: items,
@@ -268,6 +268,15 @@ class SettingsCellDescriptorFactory {
         developerCellDescriptors.append(triggerSlowSyncButton)
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
+    }
+    
+    func debuggingToolsSection() -> SettingsSectionDescriptor {
+        let title = "self.settings.advanced.debugging_tools.title".localized
+        
+        let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation_badge_count.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
+        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation_back_arrow_count.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
+        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadBadgeConversationButton, findUnreadBackArrowConversationButton])], title: title)
+        return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
     }
     
     func requestNumber(_ callback: @escaping (Int)->()) {
