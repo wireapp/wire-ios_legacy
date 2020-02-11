@@ -69,7 +69,7 @@ final class ConversationContentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.mediaPlaybackManager = mediaPlaybackManager
-        self.mediaPlaybackManager?.mediaPlaybackManagerDelegate = self
+        self.mediaPlaybackManager?.setMediaPlaybackManagerDelegate(delegate: self)
         
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent

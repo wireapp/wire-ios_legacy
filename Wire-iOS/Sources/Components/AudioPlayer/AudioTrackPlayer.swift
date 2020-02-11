@@ -71,10 +71,8 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     fileprivate var playerStatusObserver : NSKeyValueObservation?
     fileprivate var playerRateObserver : NSKeyValueObservation?
     fileprivate var playerCurrentItemObserver : NSKeyValueObservation?
-
-    fileprivate var audioTrackStatusObserver : NSKeyValueObservation?
     
-    private var audioTrack: AudioTrack?
+    private(set) var audioTrack: AudioTrack?
 
     @objc dynamic
     private(set) var progress: CGFloat = 0 ///TODO: didSet

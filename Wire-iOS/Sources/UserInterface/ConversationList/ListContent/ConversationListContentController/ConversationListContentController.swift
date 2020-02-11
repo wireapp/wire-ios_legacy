@@ -23,10 +23,16 @@ import UIKit
 private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
 private let CellReuseIdConversation = "CellId"
 
+extension ConversationListContentController: MediaPlaybackManagerDelegate {
+    func didSet(mediaPlayer: MediaPlayer?) {
+        activeMediaPlayerChanged()
+    }
+}
+
 final class ConversationListContentController: UICollectionViewController {
     weak var contentDelegate: ConversationListContentDelegate?
     let listViewModel: ConversationListViewModel = ConversationListViewModel()
-    private weak var activeMediaPlayerObserver: NSObject?
+//    private weak var activeMediaPlayerObserver: NSObject?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
     private var focusOnNextSelection = false
     private var animateNextSelection = false
@@ -77,16 +83,15 @@ final class ConversationListContentController: UICollectionViewController {
 
         scrollToCurrentSelection(animated: false)
 
-        activeMediaPlayerObserver = AppDelegate.shared.mediaPlaybackManager?.observe(\.activeMediaPlayer) { [weak self] _, _ in
-            self?.activeMediaPlayerChanged()
-        }
+    
+        AppDelegate.shared.mediaPlaybackManager?.setMediaPlaybackManagerDelegate(delegate: self)
         
         mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        activeMediaPlayerObserver = nil
+        AppDelegate.shared.mediaPlaybackManager?.removeMediaPlaybackManagerDelegate(delegate: self)
     }
     
     private func activeMediaPlayerChanged() {

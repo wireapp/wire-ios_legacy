@@ -34,17 +34,70 @@ protocol MediaPlaybackManagerDelegate: class {
     func didSet(mediaPlayer: MediaPlayer?)
 }
 
+final class WeakBox<A: AnyObject> {
+    weak var unbox: A?
+    init(_ value: A) {
+        unbox = value
+    }
+}
+
+struct WeakArray<Element: AnyObject> {
+    private var items: [WeakBox<Element>] = []
+    
+    mutating func add(element: Element) {
+        items.append(WeakBox(element))
+    }
+
+    ///TODO:
+    mutating func remove(element: Element) {
+        items.removeAll{ item -> Bool in
+            item.unbox === element
+        }
+    }
+
+    init(_ elements: [Element]) {
+        items = elements.map { WeakBox($0) }
+    }
+}
+
+extension WeakArray: Collection {
+    var startIndex: Int { return items.startIndex }
+    var endIndex: Int { return items.endIndex }
+    
+    subscript(_ index: Int) -> Element? {
+        return items[index].unbox
+    }
+    
+    func index(after idx: Int) -> Int {
+        return items.index(after: idx)
+    }
+}
+
 /// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
     
     private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? {
         didSet {
-            mediaPlaybackManagerDelegate?.didSet(mediaPlayer: activeMediaPlayer)
+            mediaPlaybackManagerDelegates?.forEach() {
+                ($0 as? MediaPlaybackManagerDelegate)?.didSet(mediaPlayer: activeMediaPlayer)
+            }
         }
     }
-    weak var mediaPlaybackManagerDelegate: MediaPlaybackManagerDelegate?
     
+    private var mediaPlaybackManagerDelegates: WeakArray<AnyObject>?
+    func setMediaPlaybackManagerDelegate(delegate: MediaPlaybackManagerDelegate) {
+        if mediaPlaybackManagerDelegates == nil {
+            mediaPlaybackManagerDelegates = WeakArray([delegate])
+        } else {
+            mediaPlaybackManagerDelegates?.add(element: delegate)
+        }
+    }
+
+    func removeMediaPlaybackManagerDelegate(delegate: MediaPlaybackManagerDelegate) {
+        mediaPlaybackManagerDelegates?.remove(element: delegate)
+    }
+
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     var name: String!
     
@@ -77,7 +130,6 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
         
         self.name = name
         audioTrackPlayer.mediaPlayerDelegate = self
-        titleObserver = nil
     }
     
     // MARK: - AVSMedia
@@ -134,14 +186,12 @@ extension MediaPlaybackManager: MediaPlayerDelegate {
             }
             delegate?.didStartPlaying(self)
             activeMediaPlayer = mediaPlayer
-            startObservingMediaPlayerChanges()
         case .paused:
             delegate?.didPausePlaying(self)
         case .completed:
             if activeMediaPlayer === mediaPlayer {
                 activeMediaPlayer = nil
             }
-            stopObservingMediaPlayerChanges(mediaPlayer)
             delegate?.didFinishPlaying(self) // this interfers with the audio session
         case .error:
             delegate?.didFinishPlaying(self) // this interfers with the audio session
