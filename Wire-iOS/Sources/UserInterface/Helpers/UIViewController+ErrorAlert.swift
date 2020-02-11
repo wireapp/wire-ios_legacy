@@ -16,14 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 extension UIViewController {
-    func showAlert(forError error: Error,
+    func showAlert(for error: Error,
                    handler: AlertActionHandler? = nil) {
-//    error._code
         let nsError: NSError = error as NSError
         var message = ""
-        
+
         if nsError.domain == ZMManagedObjectValidationErrorCodeDomain,
             let code: ZMManagedObjectValidationErrorCode = ZMManagedObjectValidationErrorCode(rawValue: nsError.code) {
             switch code {
@@ -81,7 +79,7 @@ extension UIViewController {
         } else {
             message = error.localizedDescription
         }
-        
+
         let alert = UIAlertController.alertWithOKButton(message: message)
         present(alert, animated: true)
     }
