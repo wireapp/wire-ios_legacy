@@ -18,34 +18,17 @@
 
 
 #import "TokenField.h"
-#import "TokenizedTextView.h"
+#import "TokenField+Internal.h"
+
 #import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Wire-Swift.h"
 
+@class TokenizedTextView;
+
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 CGFloat const accessoryButtonSize = 32.0f;
-
-
-@interface TokenField () <TokenizedTextViewDelegate>
-
-@property (readwrite, nonatomic) TextView *textView;
-
-@property (readwrite, nonatomic) IconButton *accessoryButton;
-@property (nonatomic) NSLayoutConstraint *accessoryButtonTopMargin;
-@property (nonatomic) NSLayoutConstraint *accessoryButtonRightMargin;
-
-@property (nonatomic) UILabel *toLabel;
-@property (nonatomic) NSLayoutConstraint *toLabelLeftMargin;
-@property (nonatomic) NSLayoutConstraint *toLabelTopMargin;
-
-@property (nonatomic) NSMutableArray *currentTokens;
-@property (copy, readwrite, nonatomic) NSString *filterText;
-@property (readonly, nonatomic) NSDictionary *textAttributes;
-
-@property (nonatomic, readwrite) BOOL userDidConfirmInput;
-@end
 
 
 
@@ -103,36 +86,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.tokenSelectedBorderColor = [UIColor colorWithRed:0.118 green:0.467 blue:0.745 alpha:1.000];
     self.tokenTextTransform = TextTransformUpper;
     self.dotColor = [ColorScheme.defaultColorScheme colorWithName:ColorSchemeColorTextDimmed];
-}
-
-- (void)setupSubviews
-{
-    // this prevents accessoryButton to be visible sometimes on scrolling
-    self.clipsToBounds = YES;
-    
-    self.textView = [TokenizedTextView new];
-    self.textView.delegate = self;
-    self.textView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.textView.backgroundColor = [UIColor clearColor];
-    if (@available(iOS 11, *)) {
-        self.textView.textDragInteraction.enabled = NO;
-    }
-    [self addSubview:self.textView];
-    
-    self.toLabel = [UILabel new];
-    self.toLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.toLabel.font = self.font;
-    self.toLabel.text = self.toLabelText;
-    self.toLabel.backgroundColor = [UIColor clearColor];
-    [self.textView addSubview:self.toLabel];
-    
-    // Accessory button could be a subview of textView,
-    // but there are bugs with setting constraints from subview to UITextView trailing.
-    // So we add button as subview of self, and update its position on scrolling.
-    self.accessoryButton = [IconButton new];
-    self.accessoryButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.accessoryButton.hidden = ! self.hasAccessoryButton;
-    [self addSubview:self.accessoryButton];
 }
 
 - (void)setupConstraints
@@ -712,39 +665,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }
     
     self.textView.textContainer.exclusionPaths = exclusionPaths;
-}
-
-#pragma mark - TokenizedTextViewDelegate
-
-- (void)tokenizedTextView:(TokenizedTextView *)textView didTapTextRange:(NSRange)range fraction:(float)fraction
-{
-    if (self.isCollapsed) {
-        [self setCollapsed:NO animated:YES];
-        return;
-    }
-    
-    
-    if (fraction >= 1.0 && range.location == self.textView.textStorage.length - 1) {
-        return;
-    }
-    
-    if (range.location < self.textView.textStorage.length) {
-        [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                                 inRange:range
-                                                 options:0
-                                              usingBlock:^(TokenTextAttachment *tokenAttachemnt, NSRange range, BOOL *stop) {
-                                                  if ([tokenAttachemnt isKindOfClass:[TokenTextAttachment class]]) {
-                                                      self.textView.selectedRange = range;
-                                                  }
-                                              }];
-    }
-}
-
-- (void)tokenizedTextView:(TokenizedTextView *)textView textContainerInsetChanged:(UIEdgeInsets)textContainerInset
-{
-    [self invalidateIntrinsicContentSize];
-    [self updateExcludePath];
-    [self updateLayout];
 }
 
 #pragma mark - UITextViewDelegate

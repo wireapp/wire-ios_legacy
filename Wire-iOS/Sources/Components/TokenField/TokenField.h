@@ -26,17 +26,18 @@ NS_ASSUME_NONNULL_BEGIN
 @class TokenField;
 @class TextView;
 @class IconButton;
+@class TokenizedTextView;
 
 @protocol TokenFieldDelegate;
 
-@interface TokenField : UIView
+@interface TokenField : UIView<UITextViewDelegate>
 
 @property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 
-@property (readonly, nonatomic) TextView *textView;
+@property (readwrite, nonatomic) TokenizedTextView *textView;
 
 @property (nonatomic) BOOL hasAccessoryButton;
-@property (readonly, nonatomic) IconButton *accessoryButton;
+@property (readwrite, nonatomic) IconButton *accessoryButton;
 
 @property (readonly, nonatomic) NSArray <Token *> *tokens;
 @property (copy, readonly, nonatomic) NSString *filterText;

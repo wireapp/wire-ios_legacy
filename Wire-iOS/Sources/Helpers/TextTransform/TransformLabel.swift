@@ -27,7 +27,7 @@ import UIKit
     /// The transform to apply to the text.
     @objc public var textTransform: TextTransform = .none {
         didSet {
-            self.attributedText = attributedText?.applying(transform: textTransform)
+            attributedText = attributedText?.applying(transform: textTransform)
         }
     }
 
