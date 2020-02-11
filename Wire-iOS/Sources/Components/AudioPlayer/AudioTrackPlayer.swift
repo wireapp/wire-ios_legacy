@@ -116,11 +116,12 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     deinit {
         audioTrack = nil
         
-        avPlayer?.removeObserver(self, forKeyPath: "status")
-        avPlayer?.removeObserver(self, forKeyPath: "rate")
-        avPlayer?.removeObserver(self, forKeyPath: "currentItem")
+        ///TODO:
+//        avPlayer?.removeObserver(self, forKeyPath: "status")
+//        avPlayer?.removeObserver(self, forKeyPath: "rate")
+//        avPlayer?.removeObserver(self, forKeyPath: "currentItem")
         
-        self.setIsRemoteCommandCenterEnabled(false)
+        setIsRemoteCommandCenterEnabled(false)
     }
     
     func load(_ track: AudioTrack,
