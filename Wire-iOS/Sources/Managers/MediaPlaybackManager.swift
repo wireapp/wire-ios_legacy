@@ -125,12 +125,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
     
     // MARK: - Active Media Player State
     private func startObservingMediaPlayerChanges() {
-//        setObserver(activeMediaPlayer as! (NSObject & MediaPlayer))
-  
-//        titleObserver = (activeMediaPlayer as? MediaPlayer & NSObject)?.observe(\MediaPlayer.title, options: [.initial, .new]) { [weak self] _, _ in
-//            self?.changeObserver?.activeMediaPlayerTitleDidChange()
-//        }
-
+        setObserver(activeMediaPlayer)
     }
     
     private func setObserver<T>(_ mediaPlayerObject: T?) where T: NSObject & MediaPlayer {

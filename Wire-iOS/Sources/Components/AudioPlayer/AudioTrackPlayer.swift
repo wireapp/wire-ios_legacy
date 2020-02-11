@@ -71,18 +71,27 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     fileprivate var playerRateObserver : NSKeyValueObservation?
     fileprivate var playerCurrentItemObserver : NSKeyValueObservation?
 
+    fileprivate var audioTrackStatusObserver : NSKeyValueObservation?
     
-    private(set) var audioTrack: AudioTrack? {
+    private(set) var audioTrack: (AudioTrack & NSObject)? {
         willSet {
             (audioTrack as? NSObject)?.removeObserver(self, forKeyPath: "status")
         }
         
         didSet {
-            ///TODO: Swift observer
-            (audioTrack as? NSObject)?.addObserver(self, forKeyPath: "status", options: .new, context: nil)
+//            audioTrackStatusObserver = (audioTrack as? NSObject)?.observe(\AudioTrack.status, options: [.new]) { [weak self] audioTrack, _ in
+//                self?.audioTrackStatusChanged()
+//            }
+            setObserver(audioTrack)
         }
     }
     
+    private func setObserver<T>(_ audioTrack: T?) where T: NSObject & AudioTrack { ///TODO: status???
+        audioTrackStatusObserver = audioTrack?.observe(\NSObject.status, options: [.new]) { [weak self] _, _ in
+            self?.audioTrackStatusChanged()
+        }
+    }
+
     @objc dynamic
     private(set) var progress: CGFloat = 0 ///TODO: didSet
     
@@ -205,12 +214,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     
     private func playStatusChanged() {
         
-        if avPlayer?.currentItem?.status == .failed {
-            audioTrack?.failedToLoad = true
-            state = .error
-        }
-        
-        
         guard let status = avPlayer?.status else { return }
         
         switch status {
@@ -222,6 +225,13 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             break
         }
 
+    }
+    
+    private func audioTrackStatusChanged() {
+        if avPlayer?.currentItem?.status == .failed {
+            audioTrack?.failedToLoad = true
+            state = .error
+        }
     }
     
     func setIsRemoteCommandCenterEnabled(_ enabled: Bool) {
@@ -302,8 +312,8 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         delay(0.1) { [weak self] in
             guard let weakSelf = self else { return }
             
-            self?.clearNowPlayingState()
-            self?.state = .completed
+            weakSelf.clearNowPlayingState()
+            weakSelf.state = .completed
         }
     }
     
