@@ -142,7 +142,7 @@ final class ContactsViewController: UIViewController {
     // MARK: - Methods
 
     private func showKeyboardIfNeeded() {
-        if tableView.numberOfTotalRows() > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
+        if tableView.numberOfTotalRows > StartUIViewController.InitiallyShowsKeyboardConversationThreshold {
             searchHeaderViewController.tokenField.becomeFirstResponder()
         }
     }

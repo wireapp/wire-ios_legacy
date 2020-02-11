@@ -517,7 +517,7 @@
 		871BC2811D34F8F800DF0793 /* NSString+Fingerprint.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */; };
 		871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */; };
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
-		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */; };
+		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */; };
 		871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */; };
 		871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */; };
 		871BC2951D34F8F800DF0793 /* UIViewController+Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC21B1D34F8F800DF0793 /* UIViewController+Errors.m */; };
@@ -2086,8 +2086,7 @@
 		871BC1F71D34F8F800DF0793 /* NSString+Fingerprint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Fingerprint.m"; sourceTree = "<group>"; };
 		871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+StatusBar.swift"; sourceTree = "<group>"; };
 		871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MonoSpaced.swift"; sourceTree = "<group>"; };
-		871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+RowCount.h"; sourceTree = "<group>"; };
-		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+RowCount.m"; sourceTree = "<group>"; };
+		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+RowCount.swift"; sourceTree = "<group>"; };
 		871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reuse.swift"; sourceTree = "<group>"; };
 		871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_ExtendedBlockAnimations.h"; sourceTree = "<group>"; };
 		871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WR_ExtendedBlockAnimations.m"; sourceTree = "<group>"; };
@@ -4435,8 +4434,7 @@
 				EF68E71A20BD5B5A003F3594 /* IPadPopoverConstants.swift */,
 				EF24036920A198CC002813BE /* UIImagePickerController+iPadPopover.swift */,
 				A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */,
-				871BC20B1D34F8F800DF0793 /* UITableView+RowCount.h */,
-				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.m */,
+				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */,
 				871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */,
 				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
 				5E52376A20E7F99500649241 /* EasingFunction.swift */,
@@ -7758,7 +7756,7 @@
 				F15650DA21DD107B00210504 /* UIView+Rounded.swift in Sources */,
 				BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */,
 				8759E2C31FC82BDF008E17C9 /* Analytics+Registration.swift in Sources */,
-				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.m in Sources */,
+				871BC28D1D34F8F800DF0793 /* UITableView+RowCount.swift in Sources */,
 				5E33F0D320AD63A100414EA6 /* CallPermissions.swift in Sources */,
 				87F18BC21E02E4B600C69D9B /* CollectionVideoCell.swift in Sources */,
 				874A02541D1D325C00D0D74A /* AudioEffect.swift in Sources */,
