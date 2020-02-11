@@ -92,7 +92,7 @@ import MessageUI
                                                   sourceView: UIView? = nil) {
         let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
                                       message: "self.settings.technical_report.no_mail_alert".localized + email,
-                                      cancelButtonTitle: "general.cancel".localized)
+                                      alertAction: .ok(style: .cancel))
         alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
             let activity = UIActivityViewController(activityItems: logPaths, applicationActivities: nil)
             activity.configPopover(pointToView: sourceView ?? controller.view)

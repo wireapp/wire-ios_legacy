@@ -25,13 +25,13 @@ extension UIAlertAction {
             handler: { _ in completion?() }
         )
     }
-    
+
     @objc(okActionWithCompletion:)
-    static func ok(_ completion:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+    static func ok(_ completion: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction.ok(style: .default, handler: completion)
     }
 
-    static func ok(style: Style = .default, handler:((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+    static func ok(style: Style = .default, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
         return UIAlertAction(
             title: "general.ok".localized,
             style: style,
@@ -39,8 +39,16 @@ extension UIAlertAction {
         )
     }
 
+    static func confirm(style: Style = .cancel, handler: ((UIAlertAction) -> Void)? = nil) -> UIAlertAction {
+        return UIAlertAction(
+            title: "general.confirm".localized,
+            style: style,
+            handler: handler
+        )
+    }
+
     convenience init(icon: StyleKitIcon?, title: String, tintColor: UIColor, handler: ((UIAlertAction) -> Void)? = nil) {
-        self.init(title: title, style: .default, handler: handler);
+        self.init(title: title, style: .default, handler: handler)
 
         setValue(CATextLayerAlignmentMode.left, forKey: "titleTextAlignment")
 

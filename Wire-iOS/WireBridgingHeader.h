@@ -78,7 +78,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "AVSLogObserver.h"
-#import "UIAlertController+Wire.h"
 #import "SoundEventRulesWatchDog.h"
 #import "MessageType.h"
 #import "UIViewController+LoadingView.h"
