@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,25 +20,25 @@ import XCTest
 import SnapshotTesting
 
 final class ProfileTitleViewSnapshotTests: XCTestCase {
-    
+
     var sut: ProfileTitleView!
     var mockUser: SwiftMockUser!
-    
+
     override func setUp() {
         super.setUp()
         sut = ProfileTitleView(frame: .init(origin: .zero, size: CGSize(width: 320, height: 44)))
-        
+
         mockUser = SwiftMockUser()
-        
+
         mockUser.name = "Bill Chan"
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil
         super.tearDown()
     }
-    
+
     func testForDarkScheme() {
         sut.configure(with: mockUser, variant: .dark)
         verify(matching: sut)
