@@ -22,6 +22,4 @@
 @interface UIViewController (Errors)
 - (void)showAlertForError:(NSError *)error;
 - (void)showAlertForError:(NSError *)error handler:(void(^)(UIAlertAction *action))handler;
-- (void)showAlertForMessage:(NSString *)message;
-- (void)showAlertForMessage:(NSString *)message title:(NSString *)title handler:(void(^)(UIAlertAction *action))handler;
 @end
