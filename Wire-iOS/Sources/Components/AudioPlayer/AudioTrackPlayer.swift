@@ -64,6 +64,8 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var nextTrackHandler: Any?
     private var previousTrackHandler: Any?
     
+    fileprivate var playerStatusObserver : NSKeyValueObservation?
+
     
     private(set) var audioTrack: AudioTrack? {
         willSet {
@@ -140,19 +142,41 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
                     loadAudioTrackCompletionHandler?(true, nil)
                 }
             } else {
-                let avPlayer = AVPlayer(url: streamURL)
-                
+                avPlayer = AVPlayer(url: streamURL)
                 
                 ///TODO: Swift KVO, not override observeValue
-                avPlayer.addObserver(self, forKeyPath: "status", options: .new, context: nil)
-                avPlayer.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
-                avPlayer.addObserver(self, forKeyPath: "currentItem", options: [.new, .initial, .old], context: nil)
+                avPlayer?.addObserver(self, forKeyPath: "rate", options: .new, context: nil)
+                avPlayer?.addObserver(self, forKeyPath: "currentItem", options: [.new, .initial, .old], context: nil)
+
                 
-                self.avPlayer = avPlayer
+                playerStatusObserver = avPlayer?.observe(\AVPlayer.status, options: [.new]) { [weak self] (avPlayer: AVPlayer, _) -> Void in
+                    
+                    guard let weakSelf = self else { return }
+                    
+                    if self?.avPlayer?.currentItem?.status == .failed {
+                        let state: MediaPlayerState = .error
+                        self?.audioTrack?.failedToLoad = true
+                        weakSelf.mediaPlayerDelegate?.mediaPlayer(weakSelf, didChangeTo: state)
+                        
+                        self?.state = state
+                    }
+
+                    
+                    guard let status = self?.avPlayer?.status else { return }
+                    
+                    switch status {
+                    case .readyToPlay:
+                        self?.loadAudioTrackCompletionHandler?(true, nil)
+                    case .failed:
+                        self?.loadAudioTrackCompletionHandler?(false, self?.avPlayer?.error)
+                    default:
+                        break
+                    }
+                }
             }
         } else {
-            ///For testing only! streamURL is nil in test.
-            self.avPlayer = AVPlayer()
+            ///For testing only! streamURL is nil in tests.
+            avPlayer = AVPlayer()
         }
         
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
@@ -235,35 +259,26 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         return audioTrack?.title
     }
     
-    //    class func keyPathsForValuesAffectingPlaying() -> Set<AnyHashable>? {
-    //        return Set<AnyHashable>(["avPlayer?.rate"])///TODO: keyPath?
-    //    }
-    //
-    //    class func keyPathsForValuesAffectingError() -> Set<AnyHashable>? {
-    //        return Set<AnyHashable>(["avPlayer?.error"])
-    //    }
-    
-    
     ///TODO: still need override?
     // MARK: - KVO observer
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if (object as? AVPlayerItem) == avPlayer?.currentItem && (keyPath == "status") {
-            if avPlayer?.currentItem?.status == .failed {
-                let state: MediaPlayerState = .error
-                audioTrack?.failedToLoad = true
-                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
-                
-                self.state = state
-            }
-        }
-        
-        if object as? AVPlayer == avPlayer && (keyPath == "status") {
-            if avPlayer?.status == .readyToPlay {
-                loadAudioTrackCompletionHandler?(true, nil)
-            } else if avPlayer?.status == .failed {
-                loadAudioTrackCompletionHandler?(false, avPlayer?.error)
-            }
-        }
+//        if (object as? AVPlayerItem) == avPlayer?.currentItem && (keyPath == "status") {
+//            if avPlayer?.currentItem?.status == .failed {
+//                let state: MediaPlayerState = .error
+//                audioTrack?.failedToLoad = true
+//                mediaPlayerDelegate?.mediaPlayer(self, didChangeTo: state)
+//
+//                self.state = state
+//            }
+//        }
+//
+//        if object as? AVPlayer == avPlayer && (keyPath == "status") {
+//            if avPlayer?.status == .readyToPlay {
+//                loadAudioTrackCompletionHandler?(true, nil)
+//            } else if avPlayer?.status == .failed {
+//                loadAudioTrackCompletionHandler?(false, avPlayer?.error)
+//            }
+//        }
         
         if object as? AVPlayer == avPlayer && (keyPath == "rate") {
             
