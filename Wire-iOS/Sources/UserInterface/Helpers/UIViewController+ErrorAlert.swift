@@ -1,6 +1,6 @@
 // 
 // Wire
-// Copyright (C) 2016 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,9 +17,72 @@
 // 
 
 
-#import <UIKit/UIKit.h>
-
-@interface UIViewController (Errors)
-- (void)showAlertForError:(NSError *)error;
-- (void)showAlertForError:(NSError *)error handler:(void(^)(UIAlertAction *action))handler;
-@end
+extension UIViewController {
+    func showAlert(forError error: Error,
+                   handler: AlertActionHandler? = nil) {
+//    error._code
+        let nsError: NSError = error as NSError
+        var message = ""
+        
+        if nsError.domain == ZMManagedObjectValidationErrorCodeDomain,
+            let code: ZMManagedObjectValidationErrorCode = ZMManagedObjectValidationErrorCode(rawValue: nsError.code) {
+            switch code {
+            case .tooLong:
+                message = "error.input.too_long".localized
+            case .tooShort:
+                message = "error.input.too_short".localized
+            case .emailAddressIsInvalid:
+                message = "error.email.invalid".localized
+            case .phoneNumberContainsInvalidCharacters:
+                message = "error.phone.invalid".localized
+            default:
+                break
+            }
+        } else if nsError.domain == NSError.ZMUserSessionErrorDomain,
+            let code: ZMUserSessionErrorCode = ZMUserSessionErrorCode(rawValue: UInt(nsError.code)) {
+            switch code {
+            case .noError:
+                message = ""
+            case .needsCredentials:
+                message = "error.user.needs_credentials".localized
+            case .invalidCredentials:
+                message = "error.user.invalid_credentials".localized
+            case .accountIsPendingActivation:
+                message = "error.user.account_pending_activation".localized
+            case .networkError:
+                message = "error.user.network_error".localized
+            case .emailIsAlreadyRegistered:
+                message = "error.user.email_is_taken".localized
+            case .phoneNumberIsAlreadyRegistered:
+                message = "error.user.phone_is_taken".localized
+            case .invalidPhoneNumberVerificationCode, .invalidActivationCode:
+                message = "error.user.phone_code_invalid".localized
+            case .registrationDidFailWithUnknownError:
+                message = "error.user.registration_unknown_error".localized
+            case .invalidPhoneNumber:
+                message = "error.phone.invalid".localized
+            case .invalidEmail:
+                message = "error.email.invalid".localized
+            case .codeRequestIsAlreadyPending:
+                message = "error.user.phone_code_too_many".localized
+            case .clientDeletedRemotely:
+                message = "error.user.device_deleted_remotely".localized
+            case .lastUserIdentityCantBeDeleted:
+                message = "error.user.last_identity_cant_be_deleted".localized
+            case .accountSuspended:
+                message = "error.user.account_suspended".localized
+            case .accountLimitReached:
+                message = "error.user.account_limit_reached".localized
+            case .unknownError:
+                fallthrough
+            default:
+                message = "error.user.unkown_error".localized
+            }
+        } else {
+            message = error.localizedDescription
+        }
+        
+        let alert = UIAlertController.alertWithOKButton(message: message)
+        present(alert, animated: true)
+    }
+}

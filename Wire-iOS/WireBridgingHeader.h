@@ -23,7 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "UIViewController+Errors.h"
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
 #import "CAMediaTimingFunction+AdditionalEquations.h"

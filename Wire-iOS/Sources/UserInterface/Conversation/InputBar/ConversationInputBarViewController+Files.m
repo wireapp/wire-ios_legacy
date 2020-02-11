@@ -23,7 +23,6 @@
 @import ZipArchive;
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
-#import "UIViewController+Errors.h"
 #import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
@@ -106,9 +105,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
             // file exceeds maximum allowed upload size
             [self.parentViewController dismissViewControllerAnimated:NO completion:nil];
             
-            NSString *maxSizeString = [NSByteCountFormatter stringFromByteCount:[[ZMUserSession sharedSession] maxUploadFileSize] countStyle:NSByteCountFormatterCountStyleBinary];
-            NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"content.file.too_big", @""), maxSizeString];
-            [self showAlertForMessage:errorMessage];
+            [self showAlertForFileTooBig];
             
             completion();
         }
