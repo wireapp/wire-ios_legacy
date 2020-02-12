@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfiguration {
 
@@ -55,7 +56,7 @@ final class MockOptionsViewModelConfiguration: ConversationOptionsViewModelConfi
     }
 }
 
-final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
+final class ConversationOptionsViewControllerTests: XCTestCase {
 
     func testThatNoAlertIsShowIfNoGuestOrService() {
         // Given
@@ -80,10 +81,10 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         _ = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
 
         ///Show the alert
-        let sut = viewModel.setAllowGuests(false)
+        let sut = viewModel.setAllowGuests(false)!
 
         // Then
-        verifyAlertController(sut!)
+        verify(matching: sut)
     }
 
     func testThatItRendersTeamOnly() {
@@ -91,10 +92,10 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        sut.view.layer.speed = 0
+        
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersTeamOnly_DarkTheme() {
@@ -102,10 +103,10 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
-        sut.view.layer.speed = 0
+        
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithLink() {
@@ -116,7 +117,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithLink_DarkTheme() {
@@ -127,7 +128,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithLink_Copying() {
@@ -139,7 +140,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         viewModel.copyInProgress = true
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithLink_DarkTheme_Copying() {
@@ -151,7 +152,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         viewModel.copyInProgress = true
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithoutLink() {
@@ -162,7 +163,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersAllowGuests_WithoutLink_DarkTheme() {
@@ -173,7 +174,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersItsTitle() {
@@ -181,10 +182,10 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: true, title: "Italy Trip")
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        sut.view.layer.speed = 0
+        
         
         // Then
-        verify(view: sut.wrapInNavigationController().view)
+        verify(matching: sut.wrapInNavigationController())
     }
     
     func testThatItRendersNotTeamOnly() {
@@ -194,7 +195,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItUpdatesWhenItReceivesAChange() {
@@ -203,14 +204,14 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         config.linkResult = .success(nil)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        sut.view.layer.speed = 0
+        
         
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
         config.allowGuestsChangedHandler?(true)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItUpdatesWhenItReceivesAChange_Loading() {
@@ -218,14 +219,14 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let config = MockOptionsViewModelConfiguration(allowGuests: false)
         let viewModel = ConversationOptionsViewModel(configuration: config)
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
-        sut.view.layer.speed = 0
+        
         
         XCTAssertNotNil(config.allowGuestsChangedHandler)
         config.allowGuests = true
         config.allowGuestsChangedHandler?(true)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersNotTeamOnly_DarkTheme() {
@@ -235,7 +236,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         
         // Then
-        verify(view: sut.view)
+        verify(matching: sut)
     }
     
     func testThatItRendersLoading() {
@@ -252,7 +253,7 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         viewModel.setAllowGuests(true)
         
         // Then
-        verify(view: navigationController.view)
+        verify(matching: navigationController)
     }
     
     func testThatItRendersLoading_DarkTheme() {
@@ -269,18 +270,18 @@ final class ConversationOptionsViewControllerTests: ZMSnapshotTestCase {
         viewModel.setAllowGuests(true)
         
         // Then
-        verify(view: navigationController.view)
+        verify(matching: navigationController)
     }
     
     func testThatItRendersRemoveGuestsConfirmationAlert() {
         // When & Then
         let sut = UIAlertController.confirmRemovingGuests { _ in }
-        verifyAlertController(sut)
+        verify(matching: sut)
     }
     
     func testThatItRendersRevokeLinkConfirmationAlert() {
         // When & Then
         let sut = UIAlertController.confirmRevokingLink { _ in }
-        verifyAlertController(sut)
-    }    
+        verify(matching: sut)
+    }
 }

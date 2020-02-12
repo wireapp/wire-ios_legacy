@@ -118,7 +118,6 @@ extension XCTestCase {
     }
 
     /// verify for a UIAlertController
-    /// NOTICE: UIAlertController actionSheet not work may crash for fatal error
     func verify(matching value: UIAlertController,
                 file: StaticString = #file,
                 testName: String = #function,
@@ -130,12 +129,22 @@ extension XCTestCase {
         // Prevent showing cursor
         value.setEditing(false, animated: false)
 
+        // workaround for UIAlertController with actionSheet style crashes for invalid size
+        if value.preferredStyle == .actionSheet {
+            presentViewController(value)
+        }
+
         let failure = verifySnapshot(matching: value,
                                      as: .image,
                                      snapshotDirectory: snapshotDirectory(file: file),
                                      file: file, testName: testName, line: line)
 
         XCTAssertNil(failure, file: file, line: line)
+
+        // workaround for UIAlertController with actionSheet style crashes for invalid size
+        if value.preferredStyle == .actionSheet {
+            dismissViewController(value)
+        }
     }
 
     func verify(matching value: UIViewController,
@@ -210,4 +219,40 @@ extension XCTestCase {
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
+}
+
+// MARK: - UIAlertController hack
+extension XCTestCase {
+    func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
+        // Given
+        let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
+        
+        let container = UIViewController()
+        container.loadViewIfNeeded()
+        
+        window.rootViewController = container
+        window.makeKeyAndVisible()
+        
+        controller.loadViewIfNeeded()
+        controller.view.layoutIfNeeded()
+        
+        // When
+        let presentationExpectation = expectation(description: "It should be presented")
+        container.present(controller, animated: false) {
+            presentationExpectation.fulfill()
+        }
+        
+        // Then
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+    
+    func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
+        let dismissalExpectation = expectation(description: "It should be dismissed")
+        controller.dismiss(animated: false) {
+            dismissalExpectation.fulfill()
+        }
+        
+        waitForExpectations(timeout: 2, handler: nil)
+    }
+    
 }
