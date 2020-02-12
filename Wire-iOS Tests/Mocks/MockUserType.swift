@@ -18,17 +18,45 @@
 
 import Foundation
 
-class MockUserType: NSObject, UserType, Mockable {
+class MockUserType: NSObject, UserType, Decodable {
 
-    required init!(jsonObject: [AnyHashable : Any]!) {
-        fatalError()
+    // MARK: - Decodable
+
+    required convenience init(from decoder: Decoder) throws {
+        self.init()
+
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try? container.decode(String.self, forKey: .name)
+        displayName = try container.decode(String.self, forKey: .displayName)
+        initials = try? container.decode(String.self, forKey: .initials)
+        handle = try? container.decode(String.self, forKey: .handle)
+        isConnected = (try? container.decode(Bool.self, forKey: .isConnected)) ?? false
+        connectionRequestMessage = try? container.decode(String.self, forKey: .connectionRequestMessage)
+
+        if let rawAccentColorValue = try? container.decode(Int16.self, forKey: .accentColorValue),
+           let accentColorValue = ZMAccentColor(rawValue: rawAccentColorValue)
+        {
+            self.accentColorValue = accentColorValue
+        }
+    }
+
+    enum CodingKeys: String, CodingKey {
+
+        case name
+        case displayName
+        case initials
+        case handle
+        case isConnected
+        case accentColorValue
+        case connectionRequestMessage
+
     }
 
     // MARK: - Basic Properties
 
-    var displayName: String = ""
-
     var name: String? = nil
+
+    var displayName: String = ""
 
     var initials: String? = nil
 
@@ -238,3 +266,4 @@ class MockUserType: NSObject, UserType, Mockable {
     }
 
 }
+
