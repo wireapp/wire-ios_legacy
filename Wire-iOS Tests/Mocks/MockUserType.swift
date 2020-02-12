@@ -330,7 +330,15 @@ extension MockUserType {
         return user
     }
 
-    private class func createUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+    /// Creates a connected user with the specified name and team membership.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the user.
+    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
+    ///
+    /// - Returns: A standard mock user object with default values.
+
+    class func createUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
         let user = MockUserType()
         user.name = name
         user.displayName = name
