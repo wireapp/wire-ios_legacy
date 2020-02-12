@@ -325,6 +325,7 @@ extension MockUserType {
         let user = createUser(name: name, inTeam: teamID)
         user.isSelfUser = false
         user.isConnected = true
+        user.emailAddress = teamID != nil ? "test@email.com" : nil
         user.accentColorValue = .brightOrange
         return user
     }
@@ -334,7 +335,6 @@ extension MockUserType {
         user.name = name
         user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
-        user.emailAddress = teamID != nil ? "test@email.com" : nil
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
         // user.remoteIdentifier = UUID() Do we need this?
