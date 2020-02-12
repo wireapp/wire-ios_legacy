@@ -16,16 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-protocol AudioTrack: class {
+protocol AudioTrack: NSObjectProtocol {
     var title: String? { get }
     var author: String? { get }
     var duration: TimeInterval { get }
     var streamURL: URL? { get }
     var failedToLoad: Bool { get set }
-}
-
-extension AudioTrack {
-    func isEqual(_ other: AudioTrack) -> Bool {
-        return (self as? NSObject)?.isEqual(other as? NSObject) ?? false
-    }
 }
