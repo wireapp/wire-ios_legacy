@@ -292,18 +292,49 @@ extension MockUserType: ProfileImageFetchable {
 
 extension MockUserType {
 
+    /// Creates a self-user with the specified name and team membership.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the user.
+    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
+    ///
+    /// - Returns: A configured mock user object to use as a self-user.
+
     class func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+        let user = createUser(name: name, inTeam: teamID)
+        user.isSelfUser = true
+        user.accentColorValue = .vividRed
+        return user
+    }
+
+    /// Creates a connected user with the specified name and team membership.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the user.
+    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
+    ///
+    /// - Returns: A configured mock user object to use as a user the self-user can interact with.
+
+    class func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+        let user = createUser(name: name, inTeam: teamID)
+        user.isSelfUser = false
+        user.isConnected = true
+        user.accentColorValue = .brightOrange
+        return user
+    }
+
+    private class func createUser(name: String, inTeam teamID: UUID?) -> MockUserType {
         let user = MockUserType()
         user.name = name
         user.displayName = name
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
-        user.isSelfUser = true
+        user.emailAddress = teamID != nil ? "test@email.com" : nil
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
-        user.accentColorValue = .vividRed
         // user.remoteIdentifier = UUID() Do we need this?
         return user
     }
+
 }
 
 extension MockUserType: SelfLegalHoldSubject {
