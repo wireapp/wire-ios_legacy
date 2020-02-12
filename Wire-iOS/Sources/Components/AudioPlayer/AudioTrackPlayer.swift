@@ -180,6 +180,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         }
 
     }
+
     private func playRateChanged() {
         state = avPlayer?.rate > 0 ? .playing : .paused
 
