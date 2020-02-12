@@ -53,6 +53,9 @@ class MockUserType: NSObject, UserType, Decodable {
 
     }
 
+    // MARK: - MockHelpers
+
+    private let legalHoldDataSource = MockLegalHoldDataSource()
     private var teamIdentifier: UUID?
 
     // MARK: - Basic Properties
@@ -301,4 +304,49 @@ extension MockUserType {
         // user.remoteIdentifier = UUID() Do we need this?
         return user
     }
+}
+
+extension MockUserType: SelfLegalHoldSubject {
+
+    var legalHoldStatus: UserLegalHoldStatus {
+        if isUnderLegalHold {
+            return .enabled
+        } else if let request = legalHoldDataSource.legalHoldRequest {
+            return .pending(request)
+        } else {
+            return .disabled
+        }
+    }
+
+    var needsToAcknowledgeLegalHoldStatus: Bool {
+        return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
+    }
+
+    func legalHoldRequestWasCancelled() {
+        legalHoldDataSource.legalHoldRequest = nil
+    }
+
+    func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
+        legalHoldDataSource.legalHoldRequest = request
+    }
+
+    func userDidAcceptLegalHoldRequest(_ request: LegalHoldRequest) {
+        legalHoldDataSource.legalHoldRequest = nil
+        isUnderLegalHold = true
+    }
+
+    func acknowledgeLegalHoldStatus() {
+        legalHoldDataSource.needsToAcknowledgeLegalHoldStatus = false
+    }
+
+    func requestLegalHold() {
+        let keyData = Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!
+        let prekey = LegalHoldRequest.Prekey(id: 65535, key: keyData)
+
+        legalHoldDataSource.legalHoldRequest = LegalHoldRequest(target: UUID(),
+                                                                requester: UUID(),
+                                                                clientIdentifier: "eca3c87cfe28be49",
+                                                                lastPrekey: prekey)
+    }
+
 }
