@@ -54,8 +54,7 @@ extension NSAttributedString {
      * Creates a new string by applying the given transform.
      */
 
-    @objc(stringByApplyingTextTransform:)
-    public func applying(transform: TextTransform) -> NSAttributedString {
+    func applying(transform: TextTransform) -> NSAttributedString {
         let newString = self.string.applying(transform: transform)
 
         let mutableCopy = self.mutableCopy() as! NSMutableAttributedString
