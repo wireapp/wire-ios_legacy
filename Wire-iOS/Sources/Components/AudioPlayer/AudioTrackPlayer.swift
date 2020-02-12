@@ -42,6 +42,7 @@ typealias AudioTrackCompletionHandler = (_ loaded: Bool, _ error: Error?) -> Voi
 
 protocol AudioTrackPlayerDelegate: class {
     func stateDidChange(_ audioTrackPlayer: AudioTrackPlayer, state: MediaPlayerState?)
+    func progressDidChange(_ audioTrackPlayer: AudioTrackPlayer, progress: Double)
 }
 
 final class AudioTrackPlayer: NSObject, MediaPlayer {
@@ -74,8 +75,11 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
     private(set) var audioTrack: AudioTrack?
 
-    @objc dynamic
-    private(set) var progress: CGFloat = 0 ///TODO: didSet
+    private(set) var progress: Double = 0 {
+        didSet {
+            audioTrackPlayerDelegate?.progressDidChange(self, progress: progress)
+        }
+    }
 
     var duration: CGFloat {
         if let duration = avPlayer?.currentItem?.asset.duration {
@@ -168,7 +172,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
             let normalizedTime = CMTimeMapTimeFromRangeToRange(time, fromRange: itemRange, toRange: normalizedRange)
 
-            weakSelf.progress = CGFloat(CMTimeGetSeconds(normalizedTime))
+            weakSelf.progress = CMTimeGetSeconds(normalizedTime)
         })
 
         if let userSession = ZMUserSession.shared() {
