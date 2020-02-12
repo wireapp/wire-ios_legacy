@@ -24,6 +24,16 @@ import UIKit
 
 final class TransformLabel: UILabel {
 
+    override var accessibilityValue: String? {
+        set {
+            super.accessibilityValue = newValue
+        }
+        
+        get {
+            return attributedText?.string ?? text
+        }
+    }
+
     /// The transform to apply to the text.
     var textTransform: TextTransform = .none {
         didSet {
