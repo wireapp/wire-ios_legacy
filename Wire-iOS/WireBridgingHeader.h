@@ -77,7 +77,6 @@
 #import "DeviceOrientationObserver.h"
 #import "AVSLogObserver.h"
 #import "SoundEventRulesWatchDog.h"
-#import "MessageType.h"
 #import "UIViewController+LoadingView.h"
 
 #import "ProgressSpinner.h"
@@ -85,6 +84,3 @@
 
 #import "CABasicAnimation+Rotation.h"
 #import "EmoticonSubstitutionConfiguration.h"
-
-// Invite
-#import "ShareItemProvider.h"
