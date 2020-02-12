@@ -30,7 +30,7 @@ final class AudioMessageView: UIView, TransferView {
         let audioTrackPlayer = mediaPlaybackManager?.audioTrackPlayer
 
         audioTrackPlayer?.audioTrackPlayerDelegate = self
-        return AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
+        return mediaPlaybackManager?.audioTrackPlayer
     }
 
     private let downloadProgressView = CircularProgressView()
@@ -82,6 +82,7 @@ final class AudioMessageView: UIView, TransferView {
     
     init(mediaPlaybackManager: MediaPlaybackManager? = AppDelegate.shared.mediaPlaybackManager) {
         isPausedForIncomingCall = false
+        self.mediaPlaybackManager = mediaPlaybackManager
 
         super.init(frame: .zero)
         backgroundColor = .from(scheme: .placeholderBackground)

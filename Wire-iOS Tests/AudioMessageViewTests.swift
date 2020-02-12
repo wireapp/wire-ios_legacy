@@ -63,6 +63,7 @@ extension MockMessage: AudioTrack {
 final class AudioMessageViewTests: XCTestCase {
 
     var sut: AudioMessageView!
+    var mediaPlaybackManager: MediaPlaybackManager!
 
     override func setUp() {
         super.setUp()
@@ -75,7 +76,7 @@ final class AudioMessageViewTests: XCTestCase {
             $0.backingFileMessageData.fileURL = url
         })
 
-        let mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
+        mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
         sut = AudioMessageView(mediaPlaybackManager: mediaPlaybackManager)
 
         sut.audioTrackPlayer?.load(audioMessage, sourceMessage: audioMessage)
@@ -84,6 +85,8 @@ final class AudioMessageViewTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        mediaPlaybackManager = nil
+        
         super.tearDown()
     }
 
