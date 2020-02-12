@@ -28,7 +28,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     func testForChangingExistingEmail() {
         // GIVEN
-        let mockUser = MockUserType.createSelfUser(name: "User", inTeam: nil)
+        let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = "user@example.com"
 
         // WHEN
@@ -41,7 +41,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     func testForAddingEmail() {
         // GIVEN
-        let mockUser = MockUserType.createSelfUser(name: "User", inTeam: nil)
+        let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = nil
 
         // WHEN

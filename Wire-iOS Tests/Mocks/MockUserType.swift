@@ -306,7 +306,7 @@ extension MockUserType {
     ///
     /// - Returns: A configured mock user object to use as a self-user.
 
-    class func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+    class func createSelfUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
         let user = createUser(name: name, inTeam: teamID)
         user.isSelfUser = true
         user.accentColorValue = .vividRed
@@ -321,7 +321,7 @@ extension MockUserType {
     ///
     /// - Returns: A configured mock user object to use as a user the self-user can interact with.
 
-    class func createConnectedUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+    class func createConnectedUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
         let user = createUser(name: name, inTeam: teamID)
         user.isSelfUser = false
         user.isConnected = true
