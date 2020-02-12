@@ -29,9 +29,9 @@ extension AudioMessageView: AudioTrackPlayerDelegate {
         DispatchQueue.main.async { [weak self] in
             self?.updateUI(state: state)
         }
-        
+
     }
-    
+
     private func updateUI(state: MediaPlayerState?) {
         if isOwnTrackPlayingInAudioPlayer() {
             updateActivePlayerProgressAnimated(false)
@@ -51,36 +51,36 @@ extension AudioMessageView: AudioTrackPlayerDelegate {
 final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
-    
+
     private var _audioTrackPlayer: AudioTrackPlayer? {
         didSet {
             _audioTrackPlayer?.audioTrackPlayerDelegate = self
         }
     }
-    
+
     var audioTrackPlayer: AudioTrackPlayer? { ///TODO: lazy var
         get {
             if _audioTrackPlayer == nil {
                 _audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
-                
+
                 setupAudioPlayerObservers()
             }
             return _audioTrackPlayer
         }
-        
+
         set(newValue) {
             _audioTrackPlayer = newValue
             setupAudioPlayerObservers()
         }
     }
-    
+
     private let downloadProgressView = CircularProgressView()
     let playButton: IconButton = {
         let button = IconButton()
         button.setIconColor(.white, for: .normal)
         return button
     }()
-    
+
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = (UIFont.smallSemiboldFont).monospaced()
@@ -88,178 +88,175 @@ final class AudioMessageView: UIView, TransferView {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.accessibilityIdentifier = "AudioTimeLabel"
-        
+
         return label
     }()
-    
+
     private let playerProgressView: ProgressView = {
         let progressView = ProgressView()
         progressView.backgroundColor = .from(scheme: .separator)
         progressView.tintColor = .accent()
-        
+
         return progressView
     }()
-    
+
     private let waveformProgressView: WaveformProgressView = {
         let waveformProgressView = WaveformProgressView()
         waveformProgressView.backgroundColor = .from(scheme: .placeholderBackground)
-        
+
         return waveformProgressView
     }()
     private let loadingView = ThreeDotsLoadingView()
-    
+
     private var audioPlayerProgressObserver: NSKeyValueObservation?
     private var audioPlayerStateObserver: NSKeyValueObservation?
-    private var allViews : [UIView] = []
-    
+    private var allViews: [UIView] = []
+
     private var expectingDownload: Bool = false
-    
+
     private var proximityMonitorManager: ProximityMonitorManager? {
         return ZClientViewController.shared?.proximityMonitorManager
     }
-    
-    
-    private var callStateObserverToken : Any?
+
+    private var callStateObserverToken: Any?
     /// flag for resume audio player after incoming call
-    private var isPausedForIncomingCall : Bool
-    
+    private var isPausedForIncomingCall: Bool
+
     required override init(frame: CGRect) {
         isPausedForIncomingCall = false
-        
+
         super.init(frame: frame)
         backgroundColor = .from(scheme: .placeholderBackground)
-        
+
         self.playButton.addTarget(self, action: #selector(AudioMessageView.onActionButtonPressed(_:)), for: .touchUpInside)
         self.playButton.accessibilityLabel = "content.message.audio_message.accessibility".localized
         self.playButton.accessibilityIdentifier = "AudioActionButton"
         self.playButton.layer.masksToBounds = true
-        
+
         self.downloadProgressView.isUserInteractionEnabled = false
         self.downloadProgressView.accessibilityIdentifier = "AudioProgressView"
-        
+
         self.playerProgressView.setDeterministic(true, animated: false)
         self.playerProgressView.accessibilityIdentifier = "PlayerProgressView"
-        
+
         self.loadingView.isHidden = true
-        
+
         self.allViews = [self.playButton, self.timeLabel, self.downloadProgressView, self.playerProgressView, self.waveformProgressView, self.loadingView]
         self.allViews.forEach(self.addSubview)
-        
+
         self.createConstraints()
-        
+
         var currentElements = self.accessibilityElements ?? []
         currentElements.append(contentsOf: [playButton, timeLabel])
         self.accessibilityElements = currentElements
-        
+
         setNeedsLayout()
         layoutIfNeeded()
-        
+
         if let session = ZMUserSession.shared() {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: session)
         }
     }
-    
+
     deinit {
         audioPlayerStateObserver = nil
         audioPlayerProgressObserver = nil
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
-    
+
     private func createConstraints() {
         constrain(self, self.playButton, self.timeLabel) { selfView, playButton, timeLabel in
             selfView.height == 56
-            
+
             playButton.left == selfView.left + 12
             playButton.centerY == selfView.centerY
             playButton.width == 32
             playButton.height == playButton.width
-            
+
             timeLabel.left == playButton.right + 12
             timeLabel.centerY == selfView.centerY
             timeLabel.width >= 32
         }
-        
+
         constrain(self.downloadProgressView, self.playButton) { downloadProgressView, playButton in
             downloadProgressView.center == playButton.center
             downloadProgressView.width == playButton.width - 2
             downloadProgressView.height == playButton.height - 2
         }
-        
+
         constrain(self, self.playerProgressView, self.timeLabel, self.waveformProgressView, self.loadingView) { selfView, playerProgressView, timeLabel, waveformProgressView, loadingView in
             playerProgressView.centerY == selfView.centerY
             playerProgressView.left == timeLabel.right + 12
             playerProgressView.right == selfView.right - 12
             playerProgressView.height == 1
-            
+
             waveformProgressView.centerY == selfView.centerY
             waveformProgressView.left == playerProgressView.left
             waveformProgressView.right == playerProgressView.right
             waveformProgressView.height == 32
-            
+
             loadingView.center == selfView.center
         }
-        
+
     }
-    
+
     override var tintColor: UIColor! {
         didSet {
             self.downloadProgressView.tintColor = self.tintColor
         }
     }
-    
+
     func stopProximitySensor() {
         self.proximityMonitorManager?.stopListening()
     }
-    
+
     func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
-        
+
         guard let fileMessageData = message.fileMessageData else {
             return
         }
-        
+
         if isInitial {
             self.expectingDownload = false
-        }
-        else {
+        } else {
             if fileMessageData.downloadState == .downloaded && self.expectingDownload {
                 self.playTrack()
                 self.expectingDownload = false
             }
         }
-        
+
         self.configureVisibleViews(forFileMessageData: fileMessageData, isInitial: isInitial)
         self.updateTimeLabel()
-        
+
         if self.isOwnTrackPlayingInAudioPlayer() {
             self.updateActivePlayerProgressAnimated(false)
             self.updateActivePlayButton()
-        }
-        else {
+        } else {
             self.playerProgressView.setProgress(0, animated: false)
             self.waveformProgressView.setProgress(0, animated: false)
         }
     }
-    
+
     func willDeleteMessage() {
         proximityMonitorManager?.stopListening()
         guard let player = audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.stop()
     }
-    
+
     private func configureVisibleViews(forFileMessageData fileMessageData: ZMFileMessageData, isInitial: Bool) {
         guard let fileMessage = self.fileMessage,
             let state = FileMessageViewState.fromConversationMessage(fileMessage) else { return }
-        
+
         var visibleViews = [self.playButton, self.timeLabel]
-        
+
         if (fileMessageData.normalizedLoudness?.count ?? 0 > 0) {
             waveformProgressView.samples = fileMessageData.normalizedLoudness ?? []
             if let accentColor = fileMessage.sender?.accentColor {
@@ -270,7 +267,7 @@ final class AudioMessageView: UIView, TransferView {
         } else {
             visibleViews.append(self.playerProgressView)
         }
-        
+
         switch state {
         case .obfuscated: visibleViews = []
         case .unavailable: visibleViews = [self.loadingView]
@@ -280,26 +277,25 @@ final class AudioMessageView: UIView, TransferView {
         default:
             break
         }
-        
+
         if let viewsState = state.viewsStateForAudio() {
             self.playButton.setIcon(viewsState.playButtonIcon, size: .tiny, for: .normal)
             self.playButton.backgroundColor = viewsState.playButtonBackgroundColor
             self.playButton.accessibilityValue = viewsState.playButtonIcon == .play ? "play" : "pause"
         }
-        
+
         updateVisibleViews(allViews, visibleViews: visibleViews, animated: !loadingView.isHidden)
     }
-    
+
     private func updateTimeLabel() {
-        
+
         var duration: Int? = .none
-        
+
         if self.isOwnTrackPlayingInAudioPlayer() {
             if let audioTrackPlayer = self.audioTrackPlayer {
                 duration = Int(audioTrackPlayer.elapsedTime)
             }
-        }
-        else {
+        } else {
             guard let message = self.fileMessage,
                 let fileMessageData = message.fileMessageData else {
                     return
@@ -308,70 +304,67 @@ final class AudioMessageView: UIView, TransferView {
                 duration = Int(roundf(Float(fileMessageData.durationMilliseconds) / 1000.0))
             }
         }
-        
+
         if let durationUnboxed = duration {
             let (seconds, minutes) = (durationUnboxed % 60, durationUnboxed / 60)
             let time = String(format: "%d:%02d", minutes, seconds)
             self.timeLabel.text = time
-        }
-        else {
+        } else {
             self.timeLabel.text = ""
         }
         self.timeLabel.accessibilityValue = self.timeLabel.text
     }
-    
+
     private func updateActivePlayButton() {
         guard let audioTrackPlayer = self.audioTrackPlayer else { return }
-        
+
         self.playButton.backgroundColor = FileMessageViewState.normalColor
-        
+
         if audioTrackPlayer.isPlaying {
             self.playButton.setIcon(.pause, size: .tiny, for: [])
             self.playButton.accessibilityValue = "pause"
-        }
-        else {
+        } else {
             self.playButton.setIcon(.play, size: .tiny, for: [])
             self.playButton.accessibilityValue = "play"
         }
     }
-    
+
     private func updateInactivePlayer() {
         self.playButton.backgroundColor = FileMessageViewState.normalColor
         self.playButton.setIcon(.play, size: .tiny, for: [])
         self.playButton.accessibilityValue = "play"
-        
+
         self.playerProgressView.setProgress(0, animated: false)
         self.waveformProgressView.setProgress(0, animated: false)
     }
-    
+
     private func updateActivePlayerProgressAnimated(_ animated: Bool) {
         guard let audioTrackPlayer = self.audioTrackPlayer else { return }
-        
+
         let progress: Float
         var animated = animated
-        
+
         if abs(1 - audioTrackPlayer.progress) < 0.01 {
             progress = 0
             animated = false
-        }
-        else {
+        } else {
             progress = Float(audioTrackPlayer.progress)
         }
-        
+
         self.playerProgressView.setProgress(progress, animated: animated)
         self.waveformProgressView.setProgress(progress, animated: animated)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         self.playButton.layer.cornerRadius = self.playButton.bounds.size.width / 2.0
     }
-    
+
     func stopPlaying() {
         guard let player = self.audioTrackPlayer, let source = player.sourceMessage, source.isEqual(self.fileMessage) else { return }
         player.pause()
     }
-    
+
     private func playTrack() {
         let userSession = ZMUserSession.shared()
         guard let fileMessage = self.fileMessage,
@@ -380,23 +373,22 @@ final class AudioMessageView: UIView, TransferView {
             userSession == nil || userSession!.isCallOngoing == false else {
                 return
         }
-        
+
         self.proximityMonitorManager?.stateChanged = proximityStateDidChange
-        
+
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
-        
+
         // first play
         if let track = fileMessage.audioTrack, !audioTrackPlayingSame {
             audioTrackPlayer.load(track, sourceMessage: fileMessage) { [weak self] success, error in
                 if success {
                     self?.setAudioOutput(earpiece: false)
                     audioTrackPlayer.play()
-                    
+
                     let duration = TimeInterval(Float(fileMessageData.durationMilliseconds) / 1000.0)
                     let earliestEndDate = Date(timeIntervalSinceNow: duration)
                     self?.extendEphemeralTimerIfNeeded(to: earliestEndDate)
-                }
-                else {
+                } else {
                     zmLog.warn("Cannot load track \(track): \(String(describing: error))")
                 }
             }
@@ -409,7 +401,7 @@ final class AudioMessageView: UIView, TransferView {
             }
         }
     }
-    
+
     /// Extend the ephemeral timer to the given date iff the audio message
     /// is ephemeral and it would exceed its destruction date.
     private func extendEphemeralTimerIfNeeded(to endDate: Date) {
@@ -417,10 +409,10 @@ final class AudioMessageView: UIView, TransferView {
             endDate > destructionDate,
             let assetMsg = fileMessage as? ZMAssetClientMessage
             else { return }
-        
+
         assetMsg.extendDestructionTimer(to: endDate)
     }
-    
+
     /// Check if the audioTrackPlayer is playing my track
     ///
     /// - Returns: true if audioTrackPlayer is playing the audio of this view (not other instance of AudioMessgeView or other audio playing object)
@@ -431,24 +423,24 @@ final class AudioMessageView: UIView, TransferView {
             else {
                 return false
         }
-        
+
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         return audioTrackPlayingSame && (audioTrackPlayer.audioTrack?.isEqual(audioTrack) ?? false)
     }
-    
+
     func setupAudioPlayerObservers() {
         audioPlayerProgressObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.progress, options: [.initial, .new]) { [weak self] _, _ in
             self?.audioProgressChanged()
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
         isPausedForIncomingCall = false
-        
+
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }
-        
+
         switch(fileMessageData.transferState) {
         case .uploading:
             if .none != fileMessageData.fileURL {
@@ -471,7 +463,7 @@ final class AudioMessageView: UIView, TransferView {
             }
         }
     }
-    
+
     // MARK: - Audio state observer
     private func audioProgressChanged() {
         DispatchQueue.main.async {
@@ -481,19 +473,19 @@ final class AudioMessageView: UIView, TransferView {
             }
         }
     }
-    
+
     // MARK: - Proximity Listener
-    
+
     private func updateProximityObserverState() {
         guard let audioTrackPlayer = self.audioTrackPlayer, isOwnTrackPlayingInAudioPlayer() else { return }
-        
+
         if audioTrackPlayer.isPlaying {
             proximityMonitorManager?.startListening()
         } else {
             proximityMonitorManager?.stopListening()
         }
     }
-    
+
     private func setAudioOutput(earpiece: Bool) {
         do {
             if earpiece {
@@ -507,7 +499,7 @@ final class AudioMessageView: UIView, TransferView {
             zmLog.error("Cannot set AVAudioSession category: \(error)")
         }
     }
-    
+
     func proximityStateDidChange(_ raisedToEar: Bool) {
         setAudioOutput(earpiece: raisedToEar)
     }
@@ -515,8 +507,8 @@ final class AudioMessageView: UIView, TransferView {
 
 // MARK: - WireCallCenterCallStateObserver
 
-extension AudioMessageView : WireCallCenterCallStateObserver {
-    
+extension AudioMessageView: WireCallCenterCallStateObserver {
+
     func callCenterDidChange(callState: CallState,
                              conversation: ZMConversation,
                              caller: UserType,
@@ -524,7 +516,7 @@ extension AudioMessageView : WireCallCenterCallStateObserver {
                              previousCallState: CallState?) {
         guard let player = audioTrackPlayer else { return }
         guard isOwnTrackPlayingInAudioPlayer() else { return }
-        
+
         // Pause the audio player when call is incoming to prevent the audio player is reset.
         // Resume playing when the call is terminating (and the audio is paused by this method)
         switch (previousCallState, callState) {

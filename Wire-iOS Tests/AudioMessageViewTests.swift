@@ -60,10 +60,10 @@ extension MockMessage: AudioTrack {
     }
 }
 
-final class AudioMessageViewTests: XCTestCase { ///TODO:
-    
+final class AudioMessageViewTests: XCTestCase {
+
     var sut: AudioMessageView!
-    
+
     override func setUp() {
         super.setUp()
         sut = AudioMessageView()
@@ -82,7 +82,7 @@ final class AudioMessageViewTests: XCTestCase { ///TODO:
         sut.audioTrackPlayer?.load(audioMessage, sourceMessage: audioMessage)
         sut.configure(for: audioMessage, isInitial: true)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()

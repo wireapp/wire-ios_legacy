@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -26,7 +25,7 @@ protocol MediaPlaybackManagerChangeObserver: AnyObject {
     func activeMediaPlayerStateDidChange()
 }
 
-extension Notification.Name {    
+extension Notification.Name {
     static let mediaPlaybackManagerPlayerStateChanged = Notification.Name("MediaPlaybackManagerPlayerStateChangedNotification")
 }
 
@@ -43,14 +42,14 @@ final class WeakBox<A: AnyObject> {
 
 struct WeakArray<Element: AnyObject> {
     private var items: [WeakBox<Element>] = []
-    
+
     mutating func add(element: Element) {
         items.append(WeakBox(element))
     }
 
     ///TODO:
     mutating func remove(element: Element) {
-        items.removeAll{ item -> Bool in
+        items.removeAll { item -> Bool in
             item.unbox === element
         }
     }
@@ -63,11 +62,11 @@ struct WeakArray<Element: AnyObject> {
 extension WeakArray: Collection {
     var startIndex: Int { return items.startIndex }
     var endIndex: Int { return items.endIndex }
-    
+
     subscript(_ index: Int) -> Element? {
         return items[index].unbox
     }
-    
+
     func index(after idx: Int) -> Int {
         return items.index(after: idx)
     }
@@ -76,7 +75,7 @@ extension WeakArray: Collection {
 /// This object is an interface for AVS to control conversation media playback
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
-    
+
     private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? {
         didSet {
             mediaPlaybackManagerDelegates?.forEach() {
@@ -84,7 +83,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
             }
         }
     }
-    
+
     private var mediaPlaybackManagerDelegates: WeakArray<AnyObject>?
     func setMediaPlaybackManagerDelegate(delegate: MediaPlaybackManagerDelegate) {
         if mediaPlaybackManagerDelegates == nil {
@@ -100,11 +99,11 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 
     weak var changeObserver: MediaPlaybackManagerChangeObserver?
     var name: String!
-    
+
     weak var delegate: AVSMediaDelegate?
-    
+
     var volume: Float = 0
-    
+
     var looping: Bool {
         set {
             /// no-op
@@ -113,7 +112,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
             return false
         }
     }
-    
+
     var playbackMuted: Bool {
         set {
             /// no-op
@@ -122,50 +121,50 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
             return false
         }
     }
-    
+
     var recordingMuted: Bool = false
-    
+
     init(name: String?) {
         super.init()
-        
+
         self.name = name
         audioTrackPlayer.mediaPlayerDelegate = self
     }
-    
+
     // MARK: - AVSMedia
-    
+
     func play() {
         // AUDIO-557 workaround for AVSMediaManager calling play after we say we started to play.
         if activeMediaPlayer?.state != .playing {
             activeMediaPlayer?.play()
         }
     }
-    
+
     func pause() {
         // AUDIO-557 workaround for AVSMediaManager calling pause after we say we are paused.
         if activeMediaPlayer?.state == .playing {
             activeMediaPlayer?.pause()
         }
     }
-    
+
     func stop() {
         // AUDIO-557 workaround for AVSMediaManager calling stop after we say we are stopped.
         if activeMediaPlayer?.state != .completed {
             activeMediaPlayer?.stop()
         }
     }
-    
+
     func resume() {
         activeMediaPlayer?.play()
     }
-    
+
     func reset() {
         audioTrackPlayer.stop()
-        
+
         audioTrackPlayer = AudioTrackPlayer()
         audioTrackPlayer.mediaPlayerDelegate = self
     }
-    
+
     func setPlaybackMuted(_ playbackMuted: Bool) {
         if playbackMuted {
             activeMediaPlayer?.pause()
@@ -176,9 +175,9 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 extension MediaPlaybackManager: MediaPlayerDelegate {
     func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
-        
+
         changeObserver?.activeMediaPlayerStateDidChange()
-        
+
         switch state {
         case .playing:
             if activeMediaPlayer !== mediaPlayer {
@@ -198,8 +197,8 @@ extension MediaPlaybackManager: MediaPlayerDelegate {
         default:
             break
         }
-        
+
         NotificationCenter.default.post(name: .mediaPlaybackManagerPlayerStateChanged, object: mediaPlayer)
-        
+
     }
 }

@@ -21,7 +21,7 @@ import MediaPlayer
 
 /// These enums represent the state of the current media in the player.
 
-enum MediaPlayerState : Int {
+enum MediaPlayerState: Int {
     case ready = 0
     case playing
     case paused
@@ -45,14 +45,14 @@ protocol AudioTrackPlayerDelegate: class {
 }
 
 final class AudioTrackPlayer: NSObject, MediaPlayer {
-    
+
     private var avPlayer: AVPlayer?
     private var timeObserverToken: Any?
     private var messageObserverToken: NSObjectProtocol?
     private var loadAudioTrackCompletionHandler: AudioTrackCompletionHandler?
-    
+
     weak var audioTrackPlayerDelegate: AudioTrackPlayerDelegate?
-    
+
     var state: MediaPlayerState? {
         didSet {
             audioTrackPlayerDelegate?.stateDidChange(self, state: state)
@@ -62,59 +62,59 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         }
     }
     var sourceMessage: ZMConversationMessage?
-    private var nowPlayingInfo: [String : Any]?
+    private var nowPlayingInfo: [String: Any]?
     private var playHandler: Any?
     private var pauseHandler: Any?
     private var nextTrackHandler: Any?
     private var previousTrackHandler: Any?
-    
-    fileprivate var playerStatusObserver : NSKeyValueObservation?
-    fileprivate var playerRateObserver : NSKeyValueObservation?
-    fileprivate var playerCurrentItemObserver : NSKeyValueObservation?
-    
+
+    fileprivate var playerStatusObserver: NSKeyValueObservation?
+    fileprivate var playerRateObserver: NSKeyValueObservation?
+    fileprivate var playerCurrentItemObserver: NSKeyValueObservation?
+
     private(set) var audioTrack: AudioTrack?
 
     @objc dynamic
     private(set) var progress: CGFloat = 0 ///TODO: didSet
-    
+
     var duration: CGFloat {
         if let duration = avPlayer?.currentItem?.asset.duration {
             return CGFloat(CMTimeGetSeconds(duration))
         }
         return 0
     }
-    
+
     var elapsedTime: TimeInterval {
         guard let time = avPlayer?.currentTime() else { return 0}
-        
+
         if CMTIME_IS_VALID(time) {
             return TimeInterval(time.value) / TimeInterval(time.timescale)
         }
-        
+
         return 0
     }
-    
+
     private(set) var playing = false
     weak var mediaPlayerDelegate: MediaPlayerDelegate?
-        
+
     /// Start the currently loaded/paused track.
     func play() {
         if state == .completed {
             avPlayer?.seek(to: CMTimeMake(value: 0, timescale: 1))
         }
-        
+
         avPlayer?.play()
     }
-    
+
     /// Pause the currently playing track.
     func pause() {
         avPlayer?.pause()
     }
-    
+
     deinit {
         setIsRemoteCommandCenterEnabled(false)
     }
-    
+
     func load(_ track: AudioTrack,
               sourceMessage: ZMConversationMessage,
               completionHandler: AudioTrackCompletionHandler? = nil) {
@@ -122,17 +122,17 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         audioTrack = track
         self.sourceMessage = sourceMessage
         loadAudioTrackCompletionHandler = completionHandler
-        
+
         if let streamURL = track.streamURL {
             if let avPlayer = avPlayer {
                 avPlayer.replaceCurrentItem(with: AVPlayerItem(url: streamURL))
-                
+
                 if avPlayer.status == .readyToPlay {
                     loadAudioTrackCompletionHandler?(true, nil)
                 }
             } else {
                 avPlayer = AVPlayer(url: streamURL)
-                
+
                 playerStatusObserver = avPlayer?.observe(\AVPlayer.status, options: [.new]) { [weak self] _, _ in
                     self?.playStatusChanged()
                 }
@@ -149,40 +149,39 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             ///For testing only! streamURL is nil in tests.
             avPlayer = AVPlayer()
         }
-        
+
         NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(itemDidPlay(toEndTime:)), name: .AVPlayerItemDidPlayToEndTime, object: avPlayer?.currentItem)
-        
+
         if let timeObserverToken = timeObserverToken {
             avPlayer?.removeTimeObserver(timeObserverToken)
         }
-        
+
         timeObserverToken = avPlayer?.addPeriodicTimeObserver(forInterval: CMTimeMake(value: 1, timescale: 60), queue: DispatchQueue.main, using: { [weak self] time in
             guard let weakSelf = self,
                 let duration = weakSelf.avPlayer?.currentItem?.asset.duration
                 else { return }
-            
+
             let itemRange = CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1), duration: duration)
-            
+
             let normalizedRange = CMTimeRangeMake(start: CMTimeMake(value: 0, timescale: 1), duration: CMTimeMake(value: 1, timescale: 1))
-            
+
             let normalizedTime = CMTimeMapTimeFromRangeToRange(time, fromRange: itemRange, toRange: normalizedRange)
-            
+
             weakSelf.progress = CGFloat(CMTimeGetSeconds(normalizedTime))
         })
-        
-        
+
         if let userSession = ZMUserSession.shared() {
             messageObserverToken = MessageChangeInfo.add(observer:self, for: sourceMessage, userSession: userSession)
         }
-        
+
     }
     private func playRateChanged() {
         state = avPlayer?.rate > 0 ? .playing : .paused
-        
+
         updateNowPlayingState()
     }
-    
+
     private func playCurrentItemChanged() {
         if avPlayer?.currentItem == nil {
             setIsRemoteCommandCenterEnabled(false)
@@ -193,7 +192,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             populateNowPlayingState()
         }
     }
-    
+
     private func playStatusChanged() {
         if avPlayer?.currentItem?.status == .failed {
             audioTrack?.failedToLoad = true
@@ -201,7 +200,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         }
 
         guard let status = avPlayer?.status else { return }
-        
+
         switch status {
         case .readyToPlay:
             loadAudioTrackCompletionHandler?(true, nil)
@@ -212,17 +211,17 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         }
 
     }
-    
+
     private func audioTrackStatusChanged() {
         if avPlayer?.currentItem?.status == .failed {
             audioTrack?.failedToLoad = true
             state = .error
         }
     }
-    
+
     func setIsRemoteCommandCenterEnabled(_ enabled: Bool) {
         let commandCenter = MPRemoteCommandCenter.shared()
-        
+
         if !enabled {
             commandCenter.playCommand.removeTarget(playHandler)
             commandCenter.pauseCommand.removeTarget(pauseHandler)
@@ -230,7 +229,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             commandCenter.previousTrackCommand.removeTarget(previousTrackHandler)
             return
         }
-        
+
         pauseHandler = commandCenter.pauseCommand.addTarget(handler: { [weak self] event in
             if self?.avPlayer?.rate > 0 {
                 self?.pause()
@@ -239,12 +238,12 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
                 return .commandFailed
             }
         })
-        
+
         playHandler = commandCenter.playCommand.addTarget(handler: { [weak self] event in
             if self?.audioTrack == nil {
                 return .noSuchContent
             }
-            
+
             if self?.avPlayer?.rate == 0 {
                 self?.play()
                 return .success
@@ -253,13 +252,11 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
             }
         })
     }
-    
-    
-    
+
     var isPlaying: Bool {
         return avPlayer?.rate > 0 && avPlayer?.error == nil
     }
-    
+
     func stop() {
         avPlayer?.pause()
         avPlayer?.replaceCurrentItem(with: nil)
@@ -267,44 +264,44 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         messageObserverToken = nil
         sourceMessage = nil
     }
-    
+
     var title: String? {
         return audioTrack?.title
     }
-    
+
     // MARK: - MPNowPlayingInfoCenter
     private func clearNowPlayingState() {
         let info = MPNowPlayingInfoCenter.default()
         info.nowPlayingInfo = nil
         nowPlayingInfo = nil
     }
-    
+
     private func updateNowPlayingState() {
         var newInfo = nowPlayingInfo
         newInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: elapsedTime)
         if let rate = avPlayer?.rate {
             newInfo?[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: rate)
         }
-        
+
         let info = MPNowPlayingInfoCenter.default()
         info.nowPlayingInfo = newInfo
         nowPlayingInfo = newInfo
     }
-    
+
     // MARK: AVPlayer notifications
     @objc
     private func itemDidPlay(toEndTime notification: Notification?) {
         // AUDIO-557 workaround for AVSMediaManager trying to pause already paused tracks.
         delay(0.1) { [weak self] in
             guard let weakSelf = self else { return }
-            
+
             weakSelf.clearNowPlayingState()
             weakSelf.state = .completed
         }
     }
-    
+
     // MARK: - MPNowPlayingInfoCenter
-    
+
     func populateNowPlayingState() {
         let playbackDuration: NSNumber
         if let duration: CMTime = avPlayer?.currentItem?.asset.duration {
@@ -312,13 +309,13 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         } else {
             playbackDuration = 0
         }
-        
+
         let nowPlayingInfo: [String: Any] = [
             MPMediaItemPropertyTitle: audioTrack?.title ?? "",
             MPMediaItemPropertyArtist: audioTrack?.author ?? "",
             MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: avPlayer?.rate ?? 0),
             MPMediaItemPropertyPlaybackDuration: playbackDuration]
-        
+
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
         self.nowPlayingInfo = nowPlayingInfo
     }
@@ -332,4 +329,3 @@ extension AudioTrackPlayer: ZMMessageObserver {
         }
     }
 }
-

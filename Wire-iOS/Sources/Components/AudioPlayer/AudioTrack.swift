@@ -33,7 +33,6 @@ extension AudioTrack {
                author == author &&
                duration == duration &&
                streamURL == streamURL
-        
+
     }
 }
-
