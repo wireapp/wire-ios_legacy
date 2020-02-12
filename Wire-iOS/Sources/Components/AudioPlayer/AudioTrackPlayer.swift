@@ -81,9 +81,9 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
         }
     }
 
-    var duration: CGFloat {
+    var duration: Double {
         if let duration = avPlayer?.currentItem?.asset.duration {
-            return CGFloat(CMTimeGetSeconds(duration))
+            return CMTimeGetSeconds(duration)
         }
         return 0
     }
