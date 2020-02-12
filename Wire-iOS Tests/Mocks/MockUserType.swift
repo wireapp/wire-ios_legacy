@@ -53,6 +53,8 @@ class MockUserType: NSObject, UserType, Decodable {
 
     }
 
+    private var teamIdentifier: UUID?
+
     // MARK: - Basic Properties
 
     var name: String? = nil
@@ -99,7 +101,9 @@ class MockUserType: NSObject, UserType, Decodable {
 
     // MARK: - Team
 
-    var isTeamMember: Bool = false
+    var isTeamMember: Bool {
+        return teamIdentifier != nil
+    }
 
     var teamName: String? = nil
 
@@ -280,5 +284,21 @@ extension MockUserType: ProfileImageFetchable {
 
         let image = completeImageData.flatMap(UIImage.init)
         completion(image, false)
+    }
+}
+
+extension MockUserType {
+
+    class func createSelfUser(name: String, inTeam teamID: UUID?) -> MockUserType {
+        let user = MockUserType()
+        user.name = name
+        user.displayName = name
+        user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
+        user.isSelfUser = true
+        user.teamIdentifier = teamID
+        user.teamRole = teamID != nil ? .member : .none
+        user.accentColorValue = .vividRed
+        // user.remoteIdentifier = UUID() Do we need this?
+        return user
     }
 }
