@@ -25,12 +25,12 @@ final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
 
-    lazy var audioTrackPlayer: AudioTrackPlayer? = {
+    var audioTrackPlayer: AudioTrackPlayer? {
         let audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
         
         audioTrackPlayer?.audioTrackPlayerDelegate = self
         return AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
-    }()
+    }
 
     private let downloadProgressView = CircularProgressView()
     let playButton: IconButton = {
