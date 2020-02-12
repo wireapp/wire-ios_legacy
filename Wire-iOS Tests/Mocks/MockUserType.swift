@@ -196,7 +196,13 @@ class MockUserType: NSObject, UserType, Decodable {
     }
 
     func canAccessCompanyInformation(of user: UserType) -> Bool {
-        fatalError()
+        guard
+            let otherUser = user as? MockUserType,
+            let teamIdentifier = teamIdentifier,
+            let otherTeamIdentifier = otherUser.teamIdentifier
+            else { return false }
+
+        return teamIdentifier == otherTeamIdentifier
     }
 
     var canModifyOtherMemberInConversation: Bool = false
