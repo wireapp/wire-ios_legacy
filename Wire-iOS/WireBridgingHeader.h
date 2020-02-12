@@ -78,9 +78,6 @@
 #import "SoundEventRulesWatchDog.h"
 #import "UIViewController+LoadingView.h"
 
-#import "ProgressSpinner.h"
-#import "ProgressSpinner+Internal.h"
-
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

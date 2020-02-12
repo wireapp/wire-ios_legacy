@@ -18,7 +18,7 @@
 
 import UIKit
 
-@objcMembers public class SpinnerSubtitleView: UIStackView {
+final class SpinnerSubtitleView: UIStackView {
 
     @objc public var subtitle: String? {
         didSet {
@@ -26,7 +26,7 @@ import UIKit
         }
     }
 
-    @objc public let spinner = ProgressSpinner()
+    let spinner = ProgressSpinner()
     private let label = UILabel()
 
     public init() {

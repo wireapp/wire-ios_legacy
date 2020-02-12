@@ -20,7 +20,6 @@
 #import "UIViewController+LoadingView.h"
 
 #import <objc/runtime.h>
-#import "ProgressSpinner.h"
 #import "Wire-Swift.h"
 
 const NSString *ActivityIndicatorKey = @"activityIndicator";

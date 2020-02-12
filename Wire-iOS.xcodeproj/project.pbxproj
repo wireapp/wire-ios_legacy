@@ -1393,7 +1393,6 @@
 		F15650DF21DD119D00210504 /* CheckAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87A67617206D2D2200596625 /* CheckAnimationView.swift */; };
 		F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870533FE1DD6162400A7F822 /* OverflowSeparatorView.swift */; };
 		F15650E121DD11CA00210504 /* SpinnerSubtitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D524BE62207BA15300542A4E /* SpinnerSubtitleView.swift */; };
-		F15650E221DD11D100210504 /* ProgressSpinner.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25371BBC279B00FC373F /* ProgressSpinner.m */; };
 		F15650E321DD11D700210504 /* CABasicAnimation+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.swift */; };
 		F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */; };
 		F15650E621DD14B300210504 /* TransformLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3221BE71930021CFFC /* TransformLabel.swift */; };
@@ -1687,8 +1686,6 @@
 		1E5E0CAE1B6B83C6003B0CAC /* IconButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconButton.h; sourceTree = "<group>"; };
 		1E5E0CAF1B6B83C6003B0CAC /* IconButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconButton.m; sourceTree = "<group>"; };
 		1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-03.json"; sourceTree = "<group>"; };
-		1E8C25361BBC279B00FC373F /* ProgressSpinner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressSpinner.h; sourceTree = "<group>"; };
-		1E8C25371BBC279B00FC373F /* ProgressSpinner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressSpinner.m; sourceTree = "<group>"; };
 		1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LoadingView.h"; sourceTree = "<group>"; };
 		1E8C25391BBC279B00FC373F /* UIViewController+LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LoadingView.m"; sourceTree = "<group>"; };
 		1E98C81A1BD1719500C7A7A2 /* ContactsDataSourceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsDataSourceTests.swift; sourceTree = "<group>"; };
@@ -3028,7 +3025,6 @@
 		EFF9404722414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		EFF9A652223903B100CCEC85 /* ConfirmAssetViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConfirmAssetViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFF9A65E22394E1900CCEC85 /* ProgressSpinner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressSpinner.swift; sourceTree = "<group>"; };
-		EFF9A65F22394E1A00CCEC85 /* ProgressSpinner+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProgressSpinner+Internal.h"; sourceTree = "<group>"; };
 		EFF9A6612239503C00CCEC85 /* UIViewController+LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+LoadingView.swift"; sourceTree = "<group>"; };
 		EFF9A663223960FF00CCEC85 /* FullscreenImageViewController+SetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FullscreenImageViewController+SetupView.swift"; sourceTree = "<group>"; };
 		EFFE1D3A230D63EA00389290 /* CountryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTests.swift; sourceTree = "<group>"; };
@@ -3451,9 +3447,6 @@
 			isa = PBXGroup;
 			children = (
 				D524BE62207BA15300542A4E /* SpinnerSubtitleView.swift */,
-				1E8C25361BBC279B00FC373F /* ProgressSpinner.h */,
-				EFF9A65F22394E1A00CCEC85 /* ProgressSpinner+Internal.h */,
-				1E8C25371BBC279B00FC373F /* ProgressSpinner.m */,
 				EFF9A65E22394E1900CCEC85 /* ProgressSpinner.swift */,
 				D5168F42200F6F2300F8222A /* CABasicAnimation+Rotation.swift */,
 				1E8C25381BBC279B00FC373F /* UIViewController+LoadingView.h */,
@@ -7114,7 +7107,6 @@
 				872C823E214AA12100236A76 /* NSAttributedString+Mentions.swift in Sources */,
 				5E028DEC21F883DF00E5512A /* EmailPasswordTextFieldCell.swift in Sources */,
 				EF6ACA7A213169540064047B /* ConfirmAssetViewController+Style.swift in Sources */,
-				F15650E221DD11D100210504 /* ProgressSpinner.m in Sources */,
 				A949418B23E09AFB001B0373 /* ConversationContentViewController.swift in Sources */,
 				7C440E83234B35CB00D91B5F /* FolderPickerViewController.swift in Sources */,
 				5E39FC61225CBBEF00C682B8 /* PasswordRules+Shared.swift in Sources */,
