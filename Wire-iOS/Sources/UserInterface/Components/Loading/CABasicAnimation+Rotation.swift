@@ -18,21 +18,23 @@
 
 
 extension CABasicAnimation {
-    class func rotateAnimation(with rotationSpeed: CGFloat, beginTime: CGFloat, delegate: CAAnimationDelegate? = nil) -> CABasicAnimation {
-        let rotate = CABasicAnimation(keyPath: "transform.rotation.z")
-        rotate.fillMode = .forwards
-        rotate.delegate = delegate
+    convenience init(rotationSpeed: CFTimeInterval,
+                     beginTime: CFTimeInterval,
+                     delegate: CAAnimationDelegate? = nil) {
+        self.init(keyPath: #keyPath(CALayer.transform))
+        valueFunction = CAValueFunction(name: CAValueFunctionName.rotateZ)
+        
+        fillMode = .forwards
+        self.delegate = delegate
         
         // Do a series of 5 quarter turns for a total of a 1.25 turns
         // (2PI is a full turn, so pi/2 is a quarter turn)
-        rotate.toValue = NSNumber(value: Float.pi / 2)
-        rotate.repeatCount = MAXFLOAT
+        toValue = Float.pi / 2
+        repeatCount = .infinity
         
-        rotate.duration = CFTimeInterval(rotationSpeed / 4)
-        rotate.beginTime = CFTimeInterval(beginTime)
-        rotate.isCumulative = true
-        rotate.timingFunction = CAMediaTimingFunction(name: .linear)
-        
-        return rotate
+        duration = rotationSpeed / 4
+        self.beginTime = beginTime
+        isCumulative = true
+        timingFunction = CAMediaTimingFunction(name: .linear)
     }
 }

@@ -30,7 +30,7 @@ extension ProgressSpinner {
         isHidden = false
         stopAnimationInternal()
         if window != nil {
-            spinner.layer.add(CABasicAnimation.rotateAnimation(with: 1.4, beginTime: 0, delegate: self), forKey: "rotateAnimation")
+            spinner.layer.add(CABasicAnimation(rotationSpeed: 1.4, beginTime: 0, delegate: self), forKey: "rotateAnimation")
         }
     }
 }

@@ -222,7 +222,7 @@ final class AccessoryTextField: UITextField, TextContainer, Themeable {
         updateButtonIcon()
         let animationKey = "rotation_animation"
         if isLoading {
-            let animation = CABasicAnimation.rotateAnimation(with: 1.4, beginTime: 0)
+            let animation = CABasicAnimation(rotationSpeed: 1.4, beginTime: 0)
             confirmButton.layer.add(animation, forKey: animationKey)
         } else {
             confirmButton.layer.removeAnimation(forKey: animationKey)
