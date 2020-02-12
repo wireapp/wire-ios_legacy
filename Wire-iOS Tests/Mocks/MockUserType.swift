@@ -72,7 +72,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var accentColorValue: ZMAccentColor = .strongBlue
 
-    var availability: Availability = .available
+    var availability: Availability = .none
 
     var allClients: [UserClientType] = []
 
