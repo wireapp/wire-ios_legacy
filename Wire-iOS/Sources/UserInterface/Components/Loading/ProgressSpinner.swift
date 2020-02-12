@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,24 +18,45 @@
 
 import Foundation
 
-
 final class ProgressSpinner: UIView {
-    var color: UIColor?
-    var iconSize: CGFloat = 0.0
+    var color: UIColor = .white {
+        didSet {
+            updateSpinnerIcon()
+        }
+    }
+
+    var iconSize: CGFloat = 32 {
+        didSet {
+            updateSpinnerIcon()
+        }
+    }
+    
     var hidesWhenStopped: Bool = false {
         didSet {
             isHidden = hidesWhenStopped && !isAnimationRunning
         }
     }
 
-    var animating = false
+    var isAnimating = false {
+        didSet {
+            guard oldValue != isAnimating else { return }
+            
+            if isAnimating {
+                startAnimationInternal()
+            } else {
+                stopAnimationInternal()
+            }
+        }
+    }
     
     private let spinner: UIImageView = UIImageView()
     
-    private var isAnimationRunning = false
+    private var isAnimationRunning: Bool {
+        return spinner.layer.animation(forKey: "rotateAnimation") != nil
+    }
 
-    override init() {
-        super.init()
+    init() {
+        super.init(frame: .zero)
         setup()
     }
     
@@ -44,9 +65,6 @@ final class ProgressSpinner: UIView {
     }
     
     private func setup() {
-        iconSize = 32
-        color = UIColor.white
-        
         createSpinner()
         setupConstraints()
         
@@ -74,7 +92,7 @@ final class ProgressSpinner: UIView {
     }
     
     override var intrinsicContentSize: CGSize {
-        return spinner.image.size
+        return spinner.image?.size ?? super.intrinsicContentSize
     }
 
     
@@ -91,88 +109,51 @@ final class ProgressSpinner: UIView {
         }
     }
     
-    func setColor(_ color: UIColor?) {
-        if self.color == color {
-            return
-        }
-        self.color = color
-        
-        updateSpinnerIcon()
-    }
-    
-    var iconSize: Int {
-        get {
-            return super.iconSize
-        }
-        set(iconSize) {
-            self.iconSize = iconSize
-            updateSpinnerIcon()
-        }
-    }
-    
-    
-    func setAnimating(_ animating: Bool) {
-        if self.animating == animating {
-            return
-        }
-        self.animating = animating
-        
-        if animating {
-            startAnimationInternal()
-        } else {
-            stopAnimationInternal()
-        }
-    }
-    
     private func stopAnimationInternal() {
         spinner.layer.removeAllAnimations()
     }
     
     func updateSpinnerIcon() {
-        spinner.image = UIImage(for: WRStyleKitIconSpinner, size: iconSize, color: color)
+        spinner.image = UIImage.imageForIcon(.spinner, size: iconSize, color: color)
     }
     
     func startAnimation(_ sender: Any?) {
-        animating = true
+        isAnimating = true
     }
     
     func stopAnimation(_ sender: Any?) {
-        animating = false
-    }
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        if hidesWhenStopped {
-            hidden = true
-        }
+        isAnimating = false
     }
     
     @objc
     func applicationDidBecomeActive(_ sender: Any?) {
-        if animating && !isAnimationRunning() {
+        if isAnimating && !isAnimationRunning {
             startAnimationInternal()
         }
     }
     
     @objc
     func applicationDidEnterBackground(_ sender: Any?) {
-        if animating {
+        if isAnimating {
             stopAnimationInternal()
         }
     }
     
-    func didMoveToWindow() {
+    override func didMoveToWindow() {
         if window == nil {
             // CABasicAnimation delegate is strong so we stop all animations when the view is removed.
             stopAnimationInternal()
-        } else if animating {
+        } else if isAnimating {
             startAnimationInternal()
         }
     }
     
-    func isAnimationRunning() -> Bool {
-        return spinner.layer.animation(forKey: "rotateAnimation") != nil
-    }
-
 }
 
 extension ProgressSpinner: CAAnimationDelegate {
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        if hidesWhenStopped {
+            isHidden = true
+        }
+    }
 }
