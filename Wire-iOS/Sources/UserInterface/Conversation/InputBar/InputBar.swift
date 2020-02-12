@@ -206,7 +206,7 @@ final class InputBar: UIView {
         textView.isScrollEnabled = false
         textView.isScrollEnabled = true
     }
-    
+
     deinit {
         notificationCenter.removeObserver(self)
     }
@@ -250,7 +250,8 @@ final class InputBar: UIView {
     }
     
     fileprivate func setupViews() {
-        textView.accessibilityIdentifier = "inputField" ///TODO: value??
+        textView.accessibilityIdentifier = "inputField"
+        
         updatePlaceholder()
         textView.lineFragmentPadding = 0
         textView.textAlignment = .natural
@@ -355,7 +356,6 @@ final class InputBar: UIView {
     func updatePlaceholder() {
         textView.attributedPlaceholder = placeholderText(for: inputBarState)
         textView.setNeedsLayout()
-        textView.layoutIfNeeded()
     }
 
     func placeholderText(for state: InputBarState) -> NSAttributedString? {
