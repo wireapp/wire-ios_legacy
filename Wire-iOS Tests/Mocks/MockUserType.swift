@@ -387,3 +387,21 @@ extension MockUserType: SelfLegalHoldSubject {
     }
 
 }
+
+extension MockUserType: ValidatorType {
+
+    static func validate(name: inout String?) throws -> Bool {
+        return false
+    }
+
+}
+
+extension MockUserType: ZMEditableUser {
+
+    // TODO: Move this to UserType
+    var phoneNumber: String! {
+        return "+123456789"
+    }
+
+}
+
