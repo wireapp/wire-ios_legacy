@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class LaunchImageViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class LaunchImageViewControllerSnapshotTests: XCTestCase {
     
     var sut: LaunchImageViewController!
     
@@ -35,12 +36,12 @@ final class LaunchImageViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForShowingSpinner(){
         sut.showLoadingScreen()
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
