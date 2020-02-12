@@ -21,7 +21,7 @@ import Foundation
 extension String {
 
     /// Creates a new string by applying the given transform.
-    public func applying(transform: TextTransform) -> String {
+    func applying(transform: TextTransform) -> String {
         switch transform {
         case .none: return self
         case .capitalize: return self.localizedCapitalized
@@ -38,7 +38,7 @@ extension NSString {
      */
 
     @objc(stringByApplyingTextTransform:)
-    public func applying(transform: TextTransform) -> NSString {
+    func applying(transform: TextTransform) -> NSString {
         switch transform {
         case .none: return self
         case .capitalize: return self.localizedCapitalized as NSString
