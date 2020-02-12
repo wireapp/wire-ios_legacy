@@ -273,9 +273,8 @@ class SettingsCellDescriptorFactory {
     func debuggingToolsSection() -> SettingsSectionDescriptor {
         let title = "self.settings.advanced.debugging_tools.title".localized
         
-        let findUnreadBadgeConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation_badge_count.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
-        let findUnreadBackArrowConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation_back_arrow_count.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBackArrowDot)
-        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadBadgeConversationButton, findUnreadBackArrowConversationButton])], title: title)
+        let findUnreadConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
+        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadConversationButton,])], title: title)
         return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
     }
     
