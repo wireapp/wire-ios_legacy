@@ -52,27 +52,18 @@ final class AudioMessageView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?
     weak var delegate: TransferViewDelegate?
 
-    private var _audioTrackPlayer: AudioTrackPlayer? {
-        didSet {
-            _audioTrackPlayer?.audioTrackPlayerDelegate = self
-        }
-    }
+    lazy var audioTrackPlayer: AudioTrackPlayer? = {
 
-    var audioTrackPlayer: AudioTrackPlayer? { ///TODO: lazy var
-        get {
-            if _audioTrackPlayer == nil {
-                _audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
-
-                setupAudioPlayerObservers()
-            }
-            return _audioTrackPlayer
+        let audioTrackPlayer = AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
+        ///TODO: merge with audioTrackPlayerDelegate
+        audioPlayerProgressObserver = audioTrackPlayer?.observe(\AudioTrackPlayer.progress, options: [.initial, .new]) { [weak self] _, _ in
+            self?.audioProgressChanged()
         }
-
-        set(newValue) {
-            _audioTrackPlayer = newValue
-            setupAudioPlayerObservers()
-        }
-    }
+        
+        audioTrackPlayer?.audioTrackPlayerDelegate = self
+        return AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer
+        
+    }()
 
     private let downloadProgressView = CircularProgressView()
     let playButton: IconButton = {
@@ -426,12 +417,6 @@ final class AudioMessageView: UIView, TransferView {
 
         let audioTrackPlayingSame = audioTrackPlayer.sourceMessage?.isEqual(self.fileMessage) ?? false
         return audioTrackPlayingSame && (audioTrackPlayer.audioTrack?.isEqual(audioTrack) ?? false)
-    }
-
-    func setupAudioPlayerObservers() {
-        audioPlayerProgressObserver = _audioTrackPlayer?.observe(\AudioTrackPlayer.progress, options: [.initial, .new]) { [weak self] _, _ in
-            self?.audioProgressChanged()
-        }
     }
 
     // MARK: - Actions
