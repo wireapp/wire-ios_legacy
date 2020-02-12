@@ -29,7 +29,7 @@ enum MediaPlayerState: Int {
     case error
 }
 
-protocol MediaPlayer {
+protocol MediaPlayer: class {
     var title: String? { get }
     var sourceMessage: ZMConversationMessage? { get }
     var state: MediaPlayerState? { get }

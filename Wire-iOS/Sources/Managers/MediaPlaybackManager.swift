@@ -34,7 +34,7 @@ extension Notification.Name {
 final class MediaPlaybackManager: NSObject, AVSMedia {
     var audioTrackPlayer: AudioTrackPlayer = AudioTrackPlayer()
 
-    private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? {
+    private(set) weak var activeMediaPlayer: MediaPlayer? {
         didSet {
             NotificationCenter.default.post(name: .activeMediaPlayerChanged, object: activeMediaPlayer)
         }
@@ -116,7 +116,7 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 }
 
 extension MediaPlaybackManager: MediaPlayerDelegate {
-    func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState) {
+    func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState) {
         zmLog.debug("mediaPlayer changed state: \(state)")
 
         changeObserver?.activeMediaPlayerStateDidChange()
