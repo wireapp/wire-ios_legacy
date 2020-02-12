@@ -66,7 +66,6 @@ final class AudioMessageViewTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        sut = AudioMessageView()
 
         let url = Bundle(for: type(of: self)).url(forResource: "audio_sample", withExtension: "m4a")!
 
@@ -76,8 +75,8 @@ final class AudioMessageViewTests: XCTestCase {
             $0.backingFileMessageData.fileURL = url
         })
 
-        let mediaPlayBackManager = MediaPlaybackManager(name: "conversationMedia")
-        sut.audioTrackPlayer = mediaPlayBackManager.audioTrackPlayer
+        let mediaPlaybackManager = MediaPlaybackManager(name: "conversationMedia")
+        sut = AudioMessageView(mediaPlaybackManager: mediaPlaybackManager)
 
         sut.audioTrackPlayer?.load(audioMessage, sourceMessage: audioMessage)
         sut.configure(for: audioMessage, isInitial: true)

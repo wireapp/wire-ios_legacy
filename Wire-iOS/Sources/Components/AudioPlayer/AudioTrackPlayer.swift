@@ -52,7 +52,10 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
     private var messageObserverToken: NSObjectProtocol?
     private var loadAudioTrackCompletionHandler: AudioTrackCompletionHandler?
 
+    private(set) var playing = false
+
     weak var audioTrackPlayerDelegate: AudioTrackPlayerDelegate?
+    weak var mediaPlayerDelegate: MediaPlayerDelegate?
 
     var state: MediaPlayerState? {
         didSet {
@@ -97,9 +100,6 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
 
         return 0
     }
-
-    private(set) var playing = false
-    weak var mediaPlayerDelegate: MediaPlayerDelegate?
 
     /// Start the currently loaded/paused track.
     func play() {

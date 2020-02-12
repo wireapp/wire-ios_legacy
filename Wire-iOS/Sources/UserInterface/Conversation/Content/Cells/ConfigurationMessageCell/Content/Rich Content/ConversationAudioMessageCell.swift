@@ -27,7 +27,7 @@ class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
         }
     }
     
-    private let transferView = AudioMessageView(frame: .zero)
+    private let transferView = AudioMessageView()
     private let obfuscationView = ObfuscationView(icon: .microphone)
     
     weak var delegate: ConversationMessageCellDelegate? = nil
