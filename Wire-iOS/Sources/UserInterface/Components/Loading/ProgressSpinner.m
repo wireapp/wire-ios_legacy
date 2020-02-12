@@ -21,15 +21,7 @@
 
 #import "ProgressSpinner.h"
 #import "ProgressSpinner+Internal.h"
-#import "CABasicAnimation+Rotation.h"
 #import "Wire-Swift.h"
-
-@interface ProgressSpinner () <CAAnimationDelegate>
-
-@property (nonatomic, readonly) BOOL isAnimationRunning;
-
-@end
-
 
 
 @implementation ProgressSpinner
@@ -123,15 +115,6 @@
         [self startAnimationInternal];
     } else {
         [self stopAnimationInternal];
-    }
-}
-
-- (void)startAnimationInternal
-{
-    self.hidden = NO;
-    [self stopAnimationInternal];
-    if (self.window != nil) {
-        [self.spinner.layer addAnimation:[CABasicAnimation rotateAnimationWithRotationSpeed:1.4 beginTime:0 delegate:self] forKey:@"rotateAnimation"];
     }
 }
 

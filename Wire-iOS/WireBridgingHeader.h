@@ -82,7 +82,6 @@
 #import "ProgressSpinner.h"
 #import "ProgressSpinner+Internal.h"
 
-#import "CABasicAnimation+Rotation.h"
 #import "EmoticonSubstitutionConfiguration.h"
 
 // Audio player

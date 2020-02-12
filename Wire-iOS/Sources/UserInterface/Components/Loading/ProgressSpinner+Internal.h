@@ -20,4 +20,12 @@
 
 @property (nonatomic) UIImageView *spinner;
 
+- (void)stopAnimationInternal;
+
+@end
+
+@interface ProgressSpinner () <CAAnimationDelegate>
+
+@property (nonatomic, readonly) BOOL isAnimationRunning;
+
 @end

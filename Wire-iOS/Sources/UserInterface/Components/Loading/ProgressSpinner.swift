@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,9 +16,21 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import <QuartzCore/QuartzCore.h>
+import Foundation
 
-@interface CABasicAnimation (Rotation)
+extension ProgressSpinner {
+    @objc
+    func setupConstraints() {
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.centerInSuperview()
+    }
     
-+ (CABasicAnimation * _Nonnull)rotateAnimationWithRotationSpeed:(CGFloat)rotationSpeed beginTime:(CGFloat)beginTime delegate:(id<CAAnimationDelegate> _Nullable)delegate;
-@end
+    @objc
+    func startAnimationInternal() {
+        isHidden = false
+        stopAnimationInternal()
+        if window != nil {
+            spinner.layer.add(CABasicAnimation.rotateAnimation(with: 1.4, beginTime: 0, delegate: self), forKey: "rotateAnimation")
+        }
+    }
+}
