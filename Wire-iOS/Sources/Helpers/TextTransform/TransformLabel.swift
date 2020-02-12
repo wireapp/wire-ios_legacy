@@ -22,16 +22,16 @@ import UIKit
  * A label that can automatically transform the text it presents.
  */
 
-@objc public class TransformLabel: UILabel {
+final class TransformLabel: UILabel {
 
     /// The transform to apply to the text.
-    @objc public var textTransform: TextTransform = .none {
+    var textTransform: TextTransform = .none {
         didSet {
             attributedText = attributedText?.applying(transform: textTransform)
         }
     }
 
-    @objc public override var text: String? {
+    override var text: String? {
         get {
             return super.text
         }
@@ -40,7 +40,7 @@ import UIKit
         }
     }
 
-    @objc public override var attributedText: NSAttributedString? {
+    override var attributedText: NSAttributedString? {
         get {
             return super.attributedText
         }
