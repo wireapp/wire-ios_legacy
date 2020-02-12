@@ -56,7 +56,8 @@ final class ConversationContentViewController: UIViewController {
     private var hasDoneInitialLayout = false
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
-    
+    private var token: NSObjectProtocol!
+
     init(conversation: ZMConversation,
          message: ZMConversationMessage? = nil,
          mediaPlaybackManager: MediaPlaybackManager?,
@@ -69,10 +70,14 @@ final class ConversationContentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.mediaPlaybackManager = mediaPlaybackManager
-        self.mediaPlaybackManager?.setMediaPlaybackManagerDelegate(delegate: self)
+       
         
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
+        
+        token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
+            self?.updateMediaBar()
+        }
     }
     
     @available(*, unavailable)
@@ -369,10 +374,3 @@ extension ConversationContentViewController: UITableViewDataSourcePrefetching {
         //no-op
     }
 }
-
-extension ConversationContentViewController: MediaPlaybackManagerDelegate {
-    func didSet(mediaPlayer: MediaPlayer?) {
-        updateMediaBar()
-    }
-}
-

@@ -27,49 +27,7 @@ protocol MediaPlaybackManagerChangeObserver: AnyObject {
 
 extension Notification.Name {
     static let mediaPlaybackManagerPlayerStateChanged = Notification.Name("MediaPlaybackManagerPlayerStateChangedNotification")
-}
-
-protocol MediaPlaybackManagerDelegate: class {
-    func didSet(mediaPlayer: MediaPlayer?)
-}
-
-final class WeakBox<A: AnyObject> {
-    weak var unbox: A?
-    init(_ value: A) {
-        unbox = value
-    }
-}
-
-struct WeakArray<Element: AnyObject> {
-    private var items: [WeakBox<Element>] = []
-
-    mutating func add(element: Element) {
-        items.append(WeakBox(element))
-    }
-
-    ///TODO:
-    mutating func remove(element: Element) {
-        items.removeAll { item -> Bool in
-            item.unbox === element
-        }
-    }
-
-    init(_ elements: [Element]) {
-        items = elements.map { WeakBox($0) }
-    }
-}
-
-extension WeakArray: Collection {
-    var startIndex: Int { return items.startIndex }
-    var endIndex: Int { return items.endIndex }
-
-    subscript(_ index: Int) -> Element? {
-        return items[index].unbox
-    }
-
-    func index(after idx: Int) -> Int {
-        return items.index(after: idx)
-    }
+    static let activeMediaPlayerChanged = Notification.Name("activeMediaPlayerChanged")
 }
 
 /// This object is an interface for AVS to control conversation media playback
@@ -78,23 +36,8 @@ final class MediaPlaybackManager: NSObject, AVSMedia {
 
     private(set) weak var activeMediaPlayer: (MediaPlayer & NSObject)? {
         didSet {
-            mediaPlaybackManagerDelegates?.forEach() {
-                ($0 as? MediaPlaybackManagerDelegate)?.didSet(mediaPlayer: activeMediaPlayer)
-            }
+            NotificationCenter.default.post(name: .activeMediaPlayerChanged, object: activeMediaPlayer)
         }
-    }
-
-    private var mediaPlaybackManagerDelegates: WeakArray<AnyObject>?
-    func setMediaPlaybackManagerDelegate(delegate: MediaPlaybackManagerDelegate) {
-        if mediaPlaybackManagerDelegates == nil {
-            mediaPlaybackManagerDelegates = WeakArray([delegate])
-        } else {
-            mediaPlaybackManagerDelegates?.add(element: delegate)
-        }
-    }
-
-    func removeMediaPlaybackManagerDelegate(delegate: MediaPlaybackManagerDelegate) {
-        mediaPlaybackManagerDelegates?.remove(element: delegate)
     }
 
     weak var changeObserver: MediaPlaybackManagerChangeObserver?

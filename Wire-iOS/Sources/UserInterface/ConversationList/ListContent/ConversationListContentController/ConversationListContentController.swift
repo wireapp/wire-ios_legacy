@@ -23,16 +23,9 @@ import UIKit
 private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
 private let CellReuseIdConversation = "CellId"
 
-extension ConversationListContentController: MediaPlaybackManagerDelegate {
-    func didSet(mediaPlayer: MediaPlayer?) {
-        activeMediaPlayerChanged()
-    }
-}
-
 final class ConversationListContentController: UICollectionViewController {
     weak var contentDelegate: ConversationListContentDelegate?
     let listViewModel: ConversationListViewModel = ConversationListViewModel()
-//    private weak var activeMediaPlayerObserver: NSObject?
     private weak var mediaPlaybackManager: MediaPlaybackManager?
     private var focusOnNextSelection = false
     private var animateNextSelection = false
@@ -41,7 +34,8 @@ final class ConversationListContentController: UICollectionViewController {
     private let layoutCell = ConversationListCell()
     var startCallController: ConversationCallController?
     private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
-
+    private var token: NSObjectProtocol?
+    
     init() {
         let flowLayout = BoundsAwareFlowLayout()
         flowLayout.minimumLineSpacing = 0
@@ -84,14 +78,20 @@ final class ConversationListContentController: UICollectionViewController {
         scrollToCurrentSelection(animated: false)
 
     
-        AppDelegate.shared.mediaPlaybackManager?.setMediaPlaybackManagerDelegate(delegate: self)
-        
+        token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
+            self?.activeMediaPlayerChanged()
+        }
+
         mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        AppDelegate.shared.mediaPlaybackManager?.removeMediaPlaybackManagerDelegate(delegate: self)
+       
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+            self.token = nil
+        }
     }
     
     private func activeMediaPlayerChanged() {
