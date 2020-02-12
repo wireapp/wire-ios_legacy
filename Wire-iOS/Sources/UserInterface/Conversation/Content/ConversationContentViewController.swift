@@ -56,7 +56,7 @@ final class ConversationContentViewController: UIViewController {
     private var hasDoneInitialLayout = false
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
-    private var token: NSObjectProtocol!
+    private var token: NSObjectProtocol?
 
     init(conversation: ZMConversation,
          message: ZMConversationMessage? = nil,
