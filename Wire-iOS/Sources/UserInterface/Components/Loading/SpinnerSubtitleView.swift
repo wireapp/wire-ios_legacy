@@ -26,7 +26,9 @@ final class SpinnerSubtitleView: UIStackView {
         }
     }
 
+    @objc
     let spinner = ProgressSpinner()
+    
     private let label = UILabel()
 
     public init() {

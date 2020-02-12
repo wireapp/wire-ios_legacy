@@ -19,6 +19,9 @@
 import Foundation
 
 final class ProgressSpinner: UIView {
+    
+    var didBecomeActiveNotificationToken: NSObjectProtocol?
+    
     var color: UIColor = .white {
         didSet {
             updateSpinnerIcon()
@@ -31,6 +34,7 @@ final class ProgressSpinner: UIView {
         }
     }
     
+    @objc
     var hidesWhenStopped: Bool = false {
         didSet {
             isHidden = hidesWhenStopped && !isAnimationRunning
@@ -70,9 +74,13 @@ final class ProgressSpinner: UIView {
         
         hidesWhenStopped = true
         
-        ///TODO: closure
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        didBecomeActiveNotificationToken = NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.applicationDidBecomeActive()
+        }
+
+        applicationDidEnterBackgroundToken = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.applicationDidEnterBackground()
+        }
     }
     
     override func layoutSubviews() {
@@ -83,6 +91,15 @@ final class ProgressSpinner: UIView {
         spinner.layer.frame = frame
     }
     
+    override func didMoveToWindow() {
+        if window == nil {
+            // CABasicAnimation delegate is strong so we stop all animations when the view is removed.
+            stopAnimationInternal()
+        } else if isAnimating {
+            startAnimationInternal()
+        }
+    }
+
     private func createSpinner() {
         spinner.contentMode = .center
         spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -117,37 +134,27 @@ final class ProgressSpinner: UIView {
         spinner.image = UIImage.imageForIcon(.spinner, size: iconSize, color: color)
     }
     
-    func startAnimation(_ sender: Any?) {
+    @objc
+    func startAnimation() {
         isAnimating = true
     }
     
-    func stopAnimation(_ sender: Any?) {
+    @objc
+    func stopAnimation() {
         isAnimating = false
     }
     
-    @objc
-    func applicationDidBecomeActive(_ sender: Any?) {
+    private func applicationDidBecomeActive() {
         if isAnimating && !isAnimationRunning {
             startAnimationInternal()
         }
     }
     
-    @objc
-    func applicationDidEnterBackground(_ sender: Any?) {
+    private func applicationDidEnterBackground() {
         if isAnimating {
             stopAnimationInternal()
         }
     }
-    
-    override func didMoveToWindow() {
-        if window == nil {
-            // CABasicAnimation delegate is strong so we stop all animations when the view is removed.
-            stopAnimationInternal()
-        } else if isAnimating {
-            startAnimationInternal()
-        }
-    }
-    
 }
 
 extension ProgressSpinner: CAAnimationDelegate {
