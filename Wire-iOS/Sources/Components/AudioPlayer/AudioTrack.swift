@@ -26,10 +26,6 @@ protocol AudioTrack: class {
 
 extension AudioTrack {
     func isEqual(_ other: AudioTrack) -> Bool {
-        return title == title &&
-               author == author &&
-               duration == duration &&
-               streamURL == streamURL
-
+        return (self as? NSObject)?.isEqual(other as? NSObject) ?? false
     }
 }
