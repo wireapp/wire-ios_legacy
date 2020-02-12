@@ -21,6 +21,7 @@ import Foundation
 final class ProgressSpinner: UIView {
     
     var didBecomeActiveNotificationToken: NSObjectProtocol?
+    var didEnterBackgroundNotificationToken: NSObjectProtocol?    
     
     var color: UIColor = .white {
         didSet {
@@ -78,7 +79,7 @@ final class ProgressSpinner: UIView {
             self?.applicationDidBecomeActive()
         }
 
-        applicationDidEnterBackgroundToken = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+        didEnterBackgroundNotificationToken = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
             self?.applicationDidEnterBackground()
         }
     }
