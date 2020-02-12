@@ -25,7 +25,6 @@
 // UI
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
-#import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 #import "TokenTextAttachment.h"

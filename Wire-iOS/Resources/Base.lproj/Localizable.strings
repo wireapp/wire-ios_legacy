@@ -1160,8 +1160,7 @@
 "self.settings.advanced.troubleshooting.title" = "Troubleshooting";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
 "self.settings.advanced.debugging_tools.title" = "Debugging Tools";
-"self.settings.advanced.debugging_tools.first_unread_conversation_badge_count.title" = "First unread conversation (badge count)";
-"self.settings.advanced.debugging_tools.first_unread_conversation_back_arrow_count.title" = "First unread conversation (back arrow count)";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Reset Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "If you experience problems with push notifications, Wire Support may ask you to reset this token.";
