@@ -150,7 +150,7 @@ final class AudioTrackPlayer: NSObject, MediaPlayer {
                 }
             }
         } else {
-            ///For testing only! streamURL is nil in tests.
+            // For testing only! streamURL is nil in tests.
             avPlayer = AVPlayer()
         }
 
