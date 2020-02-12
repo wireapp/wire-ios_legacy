@@ -160,7 +160,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return canLeaveConversation
     }
 
-    var canCreateConversation: Bool = false
+    var canCreateConversation: Bool = true
 
     func canCreateConversation(type: ZMConversationType) -> Bool {
         return canCreateConversation
@@ -172,13 +172,13 @@ class MockUserType: NSObject, UserType, Decodable {
         return canDeleteConversation
     }
 
-    var canAddUserToConversation: Bool = false
+    var canAddUserToConversation: Bool = true
 
     func canAddUser(to conversation: ZMConversation) -> Bool {
         return canAddUserToConversation
     }
 
-    var canRemoveUserFromConversation: Bool = false
+    var canRemoveUserFromConversation: Bool = true
 
     func canRemoveUser(from conversation: ZMConversation) -> Bool {
         return canRemoveUserFromConversation
