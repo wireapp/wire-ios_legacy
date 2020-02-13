@@ -36,14 +36,14 @@ extension String {
     func fingerprintString(attributes: [NSAttributedString.Key : Any],
                            boldAttributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
         var bold = true
-        let attributedStrings: [NSAttributedString] = split(every:2).map {
-            let attributedElement = $0 && (bold ? boldAttributes : attributes)
+        let attributedStrings: [NSAttributedString] = split{ !$0.isHexDigit }.map {
+            let attributedElement = String($0) && (bold ? boldAttributes : attributes)
             
             bold = !bold
             
             return attributedElement
         }
         
-        return attributedStrings.joined()
+        return attributedStrings.joined(separator: NSAttributedString(string: " "))
     }
 }
