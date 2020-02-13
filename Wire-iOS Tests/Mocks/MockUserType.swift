@@ -331,7 +331,7 @@ extension MockUserType {
         return user
     }
 
-    /// Creates a connected user with the specified name and team membership.
+    /// Creates a user with the specified name and team membership.
     ///
     /// - Parameters:
     ///   - name: The name of the user.
