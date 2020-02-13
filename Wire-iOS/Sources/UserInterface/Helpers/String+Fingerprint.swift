@@ -17,12 +17,12 @@
 // 
 
 extension String {
-    private func split(every: Int) -> [String] {
+    func split(every: Int) -> [String] {
         var result = [String]()
         
         for i in stride(from: 0, to: count, by: every) {
             let start = index(startIndex, offsetBy: i)
-            let end = index(startIndex, offsetBy: every, limitedBy: endIndex) ?? endIndex
+            let end = index(start, offsetBy: every, limitedBy: endIndex) ?? endIndex
             result.append(String(self[start..<end]))
         }
         
