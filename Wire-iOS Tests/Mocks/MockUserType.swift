@@ -190,9 +190,10 @@ class MockUserType: NSObject, UserType, Decodable {
         return canAddServiceToConversation
     }
 
+    var canRemoveService: Bool = false
+
     func canRemoveService(from conversation: ZMConversation) -> Bool {
-        // TODO: This looks wrong, investigate.
-        return canRemoveUserFromConversation
+        return canRemoveService
     }
 
     func canAccessCompanyInformation(of user: UserType) -> Bool {
