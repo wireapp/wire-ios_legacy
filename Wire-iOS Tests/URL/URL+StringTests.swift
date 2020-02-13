@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -23,7 +22,7 @@ final class URL_StringTests: XCTestCase {
     func testThatURLSchemeIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
-        
+
         //WHEN & THEN
         XCTAssertEqual(sut?.urlWithoutScheme, "www.example.org/abc?1234/")
     }
@@ -31,7 +30,7 @@ final class URL_StringTests: XCTestCase {
     func testThatWWWIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
-        
+
         //WHEN & THEN
         XCTAssertEqual(sut?.host?.removingPrefixWWW, "example.org")
     }
@@ -39,7 +38,7 @@ final class URL_StringTests: XCTestCase {
     func testThatTrailingSlashIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
-        
+
         //WHEN & THEN
         XCTAssertEqual(sut?.absoluteString.removingTrailingForwardSlash, "https://www.example.org/abc?1234")
     }

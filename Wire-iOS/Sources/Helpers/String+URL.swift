@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 
 public extension String {
@@ -24,11 +23,11 @@ public extension String {
     var containsURL: Bool {
         return URLMatchesInString.count > 0
     }
-    
+
     var URLsInString: [URL?] {
         return URLMatchesInString.map(\.url)
     }
-    
+
     private var URLMatchesInString: [NSTextCheckingResult] {
         do {
             let urlDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
