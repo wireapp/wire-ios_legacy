@@ -24,9 +24,11 @@ extension ZMUserSession: ZiphyURLRequester {
         // e.g. url = https://api.giphy.com/v1/gifs/trending?limit=50&offset=0
         //      requestPath = /v1/gifs/trending?limit=50&offset=0
 
-        let requestPath = request.url?.urlWithoutSchemeAndHost
+        guard let requestPath = request.url?.urlWithoutSchemeAndHost else {
+            preconditionFailure("request does not contain a valid URL")
+        }
 
-        return doRequest(withPath: requestPath!,
+        return doRequest(withPath: requestPath,
                          method: .methodGET,
                          type: .giphy,
                          completionHandler: completionHandler)
