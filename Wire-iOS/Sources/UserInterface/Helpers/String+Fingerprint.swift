@@ -19,31 +19,31 @@
 extension String {
     func split(every: Int) -> [String] {
         var result = [String]()
-        
+
         for i in stride(from: 0, to: count, by: every) {
             let start = index(startIndex, offsetBy: i)
             let end = index(start, offsetBy: every, limitedBy: endIndex) ?? endIndex
             result.append(String(self[start..<end]))
         }
-        
+
         return result
     }
 
     var fingerprintStringWithSpaces: String {
         return split(every:2).joined(separator: " ")
     }
-    
-    func fingerprintString(attributes: [NSAttributedString.Key : Any],
-                           boldAttributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
+
+    func fingerprintString(attributes: [NSAttributedString.Key: Any],
+                           boldAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         var bold = true
-        let attributedStrings: [NSAttributedString] = split{ !$0.isHexDigit }.map {
+        let attributedStrings: [NSAttributedString] = split { !$0.isHexDigit }.map {
             let attributedElement = String($0) && (bold ? boldAttributes : attributes)
-            
+
             bold = !bold
-            
+
             return attributedElement
         }
-        
+
         return attributedStrings.joined(separator: NSAttributedString(string: " "))
     }
 }

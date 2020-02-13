@@ -28,21 +28,21 @@ final class String_FingerprintTests: XCTestCase {
                               NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
                               ]
         let attributedString = fingerprintString.fingerprintString(attributes: regularAttributes, boldAttributes: boldAttributes)
-        
+
         var bold = true
         attributedString.enumerateAttributes(in: NSRange(location: 0, length: attributedString.length), options: [], using: { attrs, range, stop in
             let stringInRange = ((attributedString.string as NSString?)?.substring(with: range))?.trimmingCharacters(in: CharacterSet.whitespaces)
             if (stringInRange?.count ?? 0) == 0 {
                 return
             }
-            XCTAssertEqual(attrs as? [NSAttributedString.Key : UIFont], bold ? boldAttributes : regularAttributes)
+            XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], bold ? boldAttributes : regularAttributes)
             bold = !bold
         })
     }
-    
+
     // MARK: - Helper
     var fingerprintString: String {
         return "05 1c f4 ca 74 4b 80"
     }
-    
+
 }
