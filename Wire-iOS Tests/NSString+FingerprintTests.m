@@ -18,8 +18,6 @@
 
 
 #import <XCTest/XCTest.h>
-#import "NSString+Fingerprint.h"
-
 
 
 @interface NSString_FingerprintTests : XCTestCase

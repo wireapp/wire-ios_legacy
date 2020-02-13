@@ -21,8 +21,6 @@
 @import XCTest;
 
 
-#import "NSString+Fingerprint.h"
-
 @interface NSStringFingerprintTests : XCTestCase
 
 @end
