@@ -41,23 +41,11 @@ class MockUserType: NSObject, UserType, Decodable {
         }
     }
 
-    enum CodingKeys: String, CodingKey {
-
-        case name
-        case displayName
-        case initials
-        case handle
-        case isConnected
-        case accentColorValue
-        case connectionRequestMessage
-
-    }
-
     // MARK: - MockHelpers
 
-    private let legalHoldDataSource = MockLegalHoldDataSource()
-    private var teamIdentifier: UUID?
+    let legalHoldDataSource = MockLegalHoldDataSource()
 
+    var teamIdentifier: UUID?
     var canLeaveConversation = false
     var canCreateConversation = true
     var canDeleteConversation = false
@@ -106,13 +94,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var readReceiptsEnabled: Bool = false
 
-    // MARK: Conversations
+    // MARK: - Conversations
 
     var oneToOneConversation: ZMConversation? = nil
 
     var activeConversations: Set<ZMConversation> = Set()
 
-    // MARK: Querying
+    // MARK: - Querying
 
     var isSelfUser: Bool = false
 
@@ -122,7 +110,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isVerified: Bool = false
 
-    // MARK: Team
+    // MARK: - Team
 
     var isTeamMember: Bool {
         return teamIdentifier != nil
@@ -132,7 +120,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var teamRole: TeamRole = .none
 
-    // MARK: Connections
+    // MARK: - Connections
 
     var connectionRequestMessage: String? = nil
 
@@ -146,7 +134,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isPendingApprovalByOtherUser: Bool = false
 
-    // MARK: Wireless
+    // MARK: - Wireless
 
     var isWirelessUser: Bool = false
 
@@ -154,7 +142,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var expiresAfter: TimeInterval = 0
 
-    // MARK: Other
+    // MARK: Misc
 
     var usesCompanyLogin: Bool = false
 
@@ -168,7 +156,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var needsRichProfileUpdate: Bool = false
 
-    // MARK: Capabilities
+    // MARK: - Capabilities
 
     var canCreateService: Bool = false
 
@@ -240,7 +228,7 @@ class MockUserType: NSObject, UserType, Decodable {
         return isGroupAdminInConversation
     }
 
-    // MARK: Methods
+    // MARK: - Methods
 
     func connect(message: String) {
         // No op
@@ -271,169 +259,4 @@ class MockUserType: NSObject, UserType, Decodable {
         // No op
     }
 
-}
-
-// MARK: - Profile Image
-
-extension MockUserType: ProfileImageFetchable {
-
-    func fetchProfileImage(session: ZMUserSessionInterface,
-                           cache: ImageCache<UIImage> = defaultUserImageCache,
-                           sizeLimit: Int? = nil,
-                           desaturate: Bool = false,
-                           completion: @escaping (UIImage?, Bool) -> Void) {
-
-        let image = completeImageData.flatMap(UIImage.init)
-        completion(image, false)
-    }
-}
-
-extension MockUserType {
-
-    /// Creates a self-user with the specified name and team membership.
-    ///
-    /// - Parameters:
-    ///   - name: The name of the user.
-    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
-    ///
-    /// - Returns: A configured mock user object to use as a self-user.
-
-    class func createSelfUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
-        let user = createUser(name: name, inTeam: teamID)
-        user.isSelfUser = true
-        user.accentColorValue = .vividRed
-        return user
-    }
-
-    /// Creates a connected user with the specified name and team membership.
-    ///
-    /// - Parameters:
-    ///   - name: The name of the user.
-    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
-    ///
-    /// - Returns: A configured mock user object to use as a user the self-user can interact with.
-
-    class func createConnectedUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
-        let user = createUser(name: name, inTeam: teamID)
-        user.isSelfUser = false
-        user.isConnected = true
-        user.emailAddress = teamID != nil ? "test@email.com" : nil
-        user.accentColorValue = .brightOrange
-        return user
-    }
-
-    /// Creates a user with the specified name and team membership.
-    ///
-    /// - Parameters:
-    ///   - name: The name of the user.
-    ///   - teamID: The ID of the team of the user, or `nil` if they're not on a team.
-    ///
-    /// - Returns: A standard mock user object with default values.
-
-    class func createUser(name: String, inTeam teamID: UUID? = nil) -> MockUserType {
-        let user = MockUserType()
-        user.name = name
-        user.displayName = name
-        user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
-        user.teamIdentifier = teamID
-        user.teamRole = teamID != nil ? .member : .none
-        return user
-    }
-
-}
-
-extension MockUserType: SelfLegalHoldSubject {
-
-    var legalHoldStatus: UserLegalHoldStatus {
-        if isUnderLegalHold {
-            return .enabled
-        } else if let request = legalHoldDataSource.legalHoldRequest {
-            return .pending(request)
-        } else {
-            return .disabled
-        }
-    }
-
-    var needsToAcknowledgeLegalHoldStatus: Bool {
-        return legalHoldDataSource.needsToAcknowledgeLegalHoldStatus
-    }
-
-    func legalHoldRequestWasCancelled() {
-        legalHoldDataSource.legalHoldRequest = nil
-    }
-
-    func userDidReceiveLegalHoldRequest(_ request: LegalHoldRequest) {
-        legalHoldDataSource.legalHoldRequest = request
-    }
-
-    func userDidAcceptLegalHoldRequest(_ request: LegalHoldRequest) {
-        legalHoldDataSource.legalHoldRequest = nil
-        isUnderLegalHold = true
-    }
-
-    func acknowledgeLegalHoldStatus() {
-        legalHoldDataSource.needsToAcknowledgeLegalHoldStatus = false
-    }
-
-    func requestLegalHold() {
-        let keyData = Data(base64Encoded: "pQABARn//wKhAFggHsa0CszLXYLFcOzg8AA//E1+Dl1rDHQ5iuk44X0/PNYDoQChAFgg309rkhG6SglemG6kWae81P1HtQPx9lyb6wExTovhU4cE9g==")!
-        let prekey = LegalHoldRequest.Prekey(id: 65535, key: keyData)
-
-        legalHoldDataSource.legalHoldRequest = LegalHoldRequest(target: UUID(),
-                                                                requester: UUID(),
-                                                                clientIdentifier: "eca3c87cfe28be49",
-                                                                lastPrekey: prekey)
-    }
-
-}
-
-extension MockUserType: ValidatorType {
-
-    static func validate(name: inout String?) throws -> Bool {
-        return false
-    }
-
-}
-
-extension MockUserType: ZMEditableUser {
-
-    // TODO: Move this to UserType
-    var phoneNumber: String! {
-        return "+123456789"
-    }
-
-}
-
-class MockServiceUserType: MockUserType, ServiceUser {
-
-    var providerIdentifier: String?
-
-    var serviceIdentifier: String?
-
-    override var isServiceUser: Bool {
-        return true
-    }
-
-}
-
-extension MockServiceUserType {
-
-    /// Creates a service user with the specified name.
-    ///
-    /// - Parameters:
-    ///   - name: The name of the user.
-    ///
-    /// - Returns: A standard mock service user object with default values.
-
-    class func createServiceUser(name: String) -> MockServiceUserType {
-        let serviceUser = MockServiceUserType()
-        serviceUser.name = name
-        serviceUser.displayName = name
-        serviceUser.initials = PersonName.person(withName: name, schemeTagger: nil).initials
-        serviceUser.handle = serviceUser.name?.lowercased()
-        serviceUser.accentColorValue = .brightOrange
-        serviceUser.providerIdentifier = UUID.create().transportString()
-        serviceUser.serviceIdentifier = UUID.create().transportString()
-        return serviceUser
-    }
 }
