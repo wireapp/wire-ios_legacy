@@ -21,16 +21,16 @@ import avs
 private let zmLog = ZMSLog(tag: "AVS")
 
 final class AVSLogObserver: NSObject, AVSLogger {
-    private let token: Any
+    private var token: Any!
     
     override init() {
-        token = SessionManager.addLogger(self)
         super.init()
+        token = SessionManager.addLogger(self)
     }
     
     // MARK: - AVSLoggger
     
     func log(message: String) {
-        zmLog.safePublic("\(message)")
+//        zmLog.safePublic(message) ///TODO: public?
     }
 }
