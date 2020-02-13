@@ -238,9 +238,10 @@ class MockUserType: NSObject, UserType, Decodable {
         return canModifyNotificationSettingsInConversation
     }
 
+    var canModifyAccessControlSettings: Bool = false
+
     func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
-        // TODO: This looks wrong, investigate.
-        return canModifyNotificationSettingsInConversation
+        return canModifyAccessControlSettings
     }
 
     var isGroupAdminInConversation: Bool = false
@@ -348,7 +349,6 @@ extension MockUserType {
         user.initials = PersonName.person(withName: name, schemeTagger: nil).initials
         user.teamIdentifier = teamID
         user.teamRole = teamID != nil ? .member : .none
-        // user.remoteIdentifier = UUID() Do we need this?
         return user
     }
 
