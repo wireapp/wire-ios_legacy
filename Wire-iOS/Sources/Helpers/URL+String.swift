@@ -19,15 +19,14 @@ import Foundation
 
 extension URL {
     var urlWithoutScheme: String {
-        let prefix = "\(scheme ?? "")://"
-
-        guard absoluteString.hasPrefix(prefix) else { return absoluteString }
-        return String(absoluteString.dropFirst(prefix.count))
+        return stringWithoutPrefix("\(scheme ?? "")://")
     }
 
     var urlWithoutSchemeAndHost: String {
-        let prefix = "\(scheme ?? "")://\(host ?? "")"
-        
+        return stringWithoutPrefix("\(scheme ?? "")://\(host ?? "")")
+    }
+    
+    private func stringWithoutPrefix(_ prefix: String) -> String {
         guard absoluteString.hasPrefix(prefix) else { return absoluteString }
         return String(absoluteString.dropFirst(prefix.count))
     }
