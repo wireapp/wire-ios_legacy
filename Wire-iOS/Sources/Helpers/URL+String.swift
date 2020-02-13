@@ -24,6 +24,13 @@ extension URL {
         guard absoluteString.hasPrefix(prefix) else { return absoluteString }
         return String(absoluteString.dropFirst(prefix.count))
     }
+
+    var urlWithoutSchemeAndHost: String {
+        let prefix = "\(scheme ?? "")://\(host ?? "")"
+        
+        guard absoluteString.hasPrefix(prefix) else { return absoluteString }
+        return String(absoluteString.dropFirst(prefix.count))
+    }
 }
 
 extension String {

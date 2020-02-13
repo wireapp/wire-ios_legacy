@@ -23,13 +23,8 @@ extension ZMUserSession: ZiphyURLRequester {
         // Removing the https://host part from the given URL, so WireSyncEngine can prepend it with the Wire giphy proxy host
         // e.g. url = https://api.giphy.com/v1/gifs/trending?limit=50&offset=0
         //      requestPath = /v1/gifs/trending?limit=50&offset=0
-        let requestURL = request.url
-        var components: NSURLComponents? = nil
-        if let requestURL = requestURL {
-            components = NSURLComponents(url: requestURL, resolvingAgainstBaseURL: false)
-        }
         
-        let requestPath = (requestURL?.absoluteString as NSString?)?.substring(from: components?.rangeOfPath.location ?? 0)
+        let requestPath = request.url?.urlWithoutSchemeAndHost
         
         return doRequest(withPath: requestPath!,
                          method: .methodGET,
