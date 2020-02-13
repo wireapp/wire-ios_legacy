@@ -33,15 +33,17 @@ extension String {
         return split(every:2).joined(separator: " ")
     }
     
-    func fingerprintString(attributes: [NSAttributedString.Key : Any], boldAttributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
-        let mutableFingerprintString = NSMutableAttributedString(string: self as String)
+    func fingerprintString(attributes: [NSAttributedString.Key : Any],
+                           boldAttributes: [NSAttributedString.Key : Any]) -> NSAttributedString {
         var bold = true
-        
-        (self as NSString).enumerateSubstrings(in: NSRange(location: 0, length: count), options: .byWords, using: { substring, substringRange, enclosingRange, stop in
-            mutableFingerprintString.addAttributes(bold ? boldAttributes : attributes, range: substringRange)
+        let attributedStrings: [NSAttributedString] = split(every:2).map {
+            let attributedElement = $0 && (bold ? boldAttributes : attributes)
+            
             bold = !bold
-        })
+            
+            return attributedElement
+        }
         
-        return NSAttributedString(attributedString: mutableFingerprintString)
+        return attributedStrings.joined()
     }
 }
