@@ -44,14 +44,13 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_TeamToTeam() {
         // GIVEN
-        let swiftSelfUser = SwiftMockUser()
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyActions(user: otherUser, viewer: swiftSelfUser, conversation: conversation, expectedActions: [
+        verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .createGroup,
             .manageNotifications,
             .archive,
@@ -61,15 +60,14 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_TeamToPartner() {
         // GIVEN
-        let swiftSelfUser = SwiftMockUser()
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.teamRole = .partner
 
         let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [swiftSelfUser, otherUser]
+        conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyActions(user: otherUser, viewer: swiftSelfUser, conversation: conversation, expectedActions: [
+        verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .createGroup,
             .manageNotifications,
             .archive,
@@ -79,16 +77,14 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_TeamToGuest() {
         // GIVEN
-        let swiftSelfUser = SwiftMockUser()
-        swiftSelfUser.canAccessCompanyInformation = false
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
 
         let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [swiftSelfUser, otherUser]
+        conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyActions(user: otherUser, viewer: swiftSelfUser, conversation: conversation, expectedActions: [
+        verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .createGroup,
             .manageNotifications,
             .archive,
@@ -99,16 +95,14 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_TeamToGuestFromOtherTeam() {
         // GIVEN
-        let swiftSelfUser = SwiftMockUser()
-        swiftSelfUser.canAccessCompanyInformation = false
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
 
         let conversation = MockConversation.oneOnOneConversation()
-        conversation.activeParticipants = [swiftSelfUser, otherUser]
+        conversation.activeParticipants = [selfUser, otherUser]
 
         // THEN
-        verifyActions(user: otherUser, viewer: swiftSelfUser, conversation: conversation, expectedActions: [
+        verifyActions(user: otherUser, viewer: selfUser, conversation: conversation, expectedActions: [
             .createGroup,
             .manageNotifications,
             .archive,
@@ -200,12 +194,10 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_GuestToTeam() {
         // GIVEN
-        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
-
-        let guest = SwiftMockUser()
+        let guest = MockUserType.createUser(name: "Bob", inTeam: nil)
         guest.isGuestInConversation = true
-        guest.canAccessCompanyInformation = false
-        guest.isTeamMember = false
+
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -222,13 +214,11 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_GuestToPartner() {
         // GIVEN
+        let guest = MockUserType.createUser(name: "Bob", inTeam: nil)
+        guest.isGuestInConversation = true
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.teamRole = .partner
-
-        let guest = SwiftMockUser()
-        guest.isGuestInConversation = true
-        guest.canAccessCompanyInformation = false
-        guest.isTeamMember = false
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -245,12 +235,11 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_GuestToGuest() {
         // GIVEN
+        let guest = MockUserType.createUser(name: "Bob", inTeam: nil)
+        guest.isGuestInConversation = true
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
-
-        let guest = SwiftMockUser()
-        guest.isGuestInConversation = true
-        guest.canAccessCompanyInformation = false
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [guest, otherUser]
@@ -285,12 +274,11 @@ final class ProfileActionsFactoryTests: XCTestCase {
 
     func test_OneToOne_GuestToGuestFromOtherTeam() {
         // GIVEN
+        let guest = MockUserType.createUser(name: "Bob", inTeam: nil)
+        guest.isGuestInConversation = true
+
         let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: UUID())
         otherUser.isGuestInConversation = true
-
-        let guest = SwiftMockUser()
-        guest.isGuestInConversation = true
-        guest.canAccessCompanyInformation = false
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [guest, otherUser]
