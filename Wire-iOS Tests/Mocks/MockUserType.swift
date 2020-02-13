@@ -58,7 +58,25 @@ class MockUserType: NSObject, UserType, Decodable {
     private let legalHoldDataSource = MockLegalHoldDataSource()
     private var teamIdentifier: UUID?
 
-    // MARK: - Basic Properties
+    var canLeaveConversation = false
+    var canCreateConversation = true
+    var canDeleteConversation = false
+    var canAddUserToConversation = true
+    var canRemoveUserFromConversation = true
+    var canAddServiceToConversation = false
+    var canRemoveService = false
+    var canModifyOtherMemberInConversation = false
+    var canModifyTitleInConversation = false
+    var canModifyReadReceiptSettingsInConversation = false
+    var canModifyEphemeralSettingsInConversation = false
+    var canModifyNotificationSettingsInConversation = false
+    var canModifyAccessControlSettings = false
+    var isGroupAdminInConversation = false
+    var isGuestInConversation = false
+
+    // MARK: - UserType Conformance
+
+    // MARK: Basic Properties
 
     var name: String? = nil
 
@@ -88,13 +106,13 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var readReceiptsEnabled: Bool = false
 
-    // MARK: - Conversations
+    // MARK: Conversations
 
     var oneToOneConversation: ZMConversation? = nil
 
     var activeConversations: Set<ZMConversation> = Set()
 
-    // MARK: - Querying
+    // MARK: Querying
 
     var isSelfUser: Bool = false
 
@@ -104,7 +122,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isVerified: Bool = false
 
-    // MARK: - Team
+    // MARK: Team
 
     var isTeamMember: Bool {
         return teamIdentifier != nil
@@ -114,7 +132,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var teamRole: TeamRole = .none
 
-    // MARK: - Connections
+    // MARK: Connections
 
     var connectionRequestMessage: String? = nil
 
@@ -128,7 +146,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isPendingApprovalByOtherUser: Bool = false
 
-    // MARK: - Wireless
+    // MARK: Wireless
 
     var isWirelessUser: Bool = false
 
@@ -136,7 +154,7 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var expiresAfter: TimeInterval = 0
 
-    // MARK: - Other
+    // MARK: Other
 
     var usesCompanyLogin: Bool = false
 
@@ -150,49 +168,35 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var needsRichProfileUpdate: Bool = false
 
-    // MARK: - Capabilities
+    // MARK: Capabilities
 
     var canCreateService: Bool = false
 
     var canManageTeam: Bool = false
 
-    var canLeaveConversation: Bool = false
-
     func canLeave(_ conversation: ZMConversation) -> Bool {
         return canLeaveConversation
     }
-
-    var canCreateConversation: Bool = true
 
     func canCreateConversation(type: ZMConversationType) -> Bool {
         return canCreateConversation
     }
 
-    var canDeleteConversation: Bool = false
-
     func canDeleteConversation(_ conversation: ZMConversation) -> Bool {
         return canDeleteConversation
     }
-
-    var canAddUserToConversation: Bool = true
 
     func canAddUser(to conversation: ZMConversation) -> Bool {
         return canAddUserToConversation
     }
 
-    var canRemoveUserFromConversation: Bool = true
-
     func canRemoveUser(from conversation: ZMConversation) -> Bool {
         return canRemoveUserFromConversation
     }
 
-    var canAddServiceToConversation: Bool = false
-
     func canAddService(to conversation: ZMConversation) -> Bool {
         return canAddServiceToConversation
     }
-
-    var canRemoveService: Bool = false
 
     func canRemoveService(from conversation: ZMConversation) -> Bool {
         return canRemoveService
@@ -208,55 +212,39 @@ class MockUserType: NSObject, UserType, Decodable {
         return teamIdentifier == otherTeamIdentifier
     }
 
-    var canModifyOtherMemberInConversation: Bool = false
-
     func canModifyOtherMember(in conversation: ZMConversation) -> Bool {
         return canModifyOtherMemberInConversation
     }
-
-    var canModifyTitleInConversation: Bool = false
 
     func canModifyTitle(in conversation: ZMConversation) -> Bool {
         return canModifyTitleInConversation
     }
 
-    var canModifyReadReceiptSettingsInConversation: Bool = false
-
     func canModifyReadReceiptSettings(in conversation: ZMConversation) -> Bool {
         return canModifyReadReceiptSettingsInConversation
     }
-
-    var canModifyEphemeralSettingsInConversation: Bool = false
 
     func canModifyEphemeralSettings(in conversation: ZMConversation) -> Bool {
         return canModifyEphemeralSettingsInConversation
     }
 
-    var canModifyNotificationSettingsInConversation: Bool = false
-
     func canModifyNotificationSettings(in conversation: ZMConversation) -> Bool {
         return canModifyNotificationSettingsInConversation
     }
-
-    var canModifyAccessControlSettings: Bool = false
 
     func canModifyAccessControlSettings(in conversation: ZMConversation) -> Bool {
         return canModifyAccessControlSettings
     }
 
-    var isGroupAdminInConversation: Bool = false
-
     func isGroupAdmin(in conversation: ZMConversation) -> Bool {
         return isGroupAdminInConversation
     }
 
-    // MARK: - Methods
+    // MARK: Methods
 
     func connect(message: String) {
         // No op
     }
-
-    var isGuestInConversation: Bool = false
 
     func isGuest(in conversation: ZMConversation) -> Bool {
         return isGuestInConversation
