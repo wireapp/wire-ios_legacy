@@ -730,7 +730,6 @@
 		A949418923E09489001B0373 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418823E09489001B0373 /* SplitViewController.swift */; };
 		A949418B23E09AFB001B0373 /* ConversationContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */; };
 		A949418D23E180FF001B0373 /* Bundle+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418C23E180FF001B0373 /* Bundle+config.swift */; };
-		A9536FD523ACE12900CFD528 /* SwiftMockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */; };
 		A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
@@ -2362,7 +2361,6 @@
 		A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewController.swift; sourceTree = "<group>"; };
 		A949418C23E180FF001B0373 /* Bundle+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+config.swift"; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
-		A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMockUser.swift; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4716,7 +4714,6 @@
 		87BEB0D71C734D550094BFE9 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */,
 				5EF7BA70221C74D200815625 /* MockUser+Convenience.swift */,
 				BF16FC4D1DAFCE9300FF4325 /* MockConversationFactory.swift */,
 				87BEB0D81C734D710094BFE9 /* MockConversation.h */,
@@ -8195,7 +8192,6 @@
 				5EA73D9220D903BC0001D106 /* CheckmarkCellTests.swift in Sources */,
 				EF13204221A6C58000E7EF21 /* ChangePhoneViewControllerSnapshotTests.swift in Sources */,
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
-				A9536FD523ACE12900CFD528 /* SwiftMockUser.swift in Sources */,
 				EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */,
 				EF2FEDCA228EB085000883C8 /* MockUser+Image.swift in Sources */,
 				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
