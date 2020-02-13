@@ -891,7 +891,7 @@
 		BFE4186D209B6FFA00503C7C /* CallAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186C209B6FFA00503C7C /* CallAction.swift */; };
 		BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */; };
 		BFE41871209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */; };
-		BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */; };
+		BFE49C321C0F39590061C16F /* String+FingerprintTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE49C311C0F39580061C16F /* String+FingerprintTests.swift */; };
 		BFE57B4B1D52335A00CB0806 /* ConversationPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */; };
 		BFE65AB320A047EB00689063 /* CallAccessoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */; };
 		BFE731E020A58EFD0088BA22 /* VideoState+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */; };
@@ -2584,7 +2584,7 @@
 		BFE4186C209B6FFA00503C7C /* CallAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAction.swift; sourceTree = "<group>"; };
 		BFE4186E209B706600503C7C /* CallInfoViewControllerAccessoryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoViewControllerAccessoryType.swift; sourceTree = "<group>"; };
 		BFE41870209C8AFD00503C7C /* CallInfoConfiguration+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallInfoConfiguration+Debug.swift"; sourceTree = "<group>"; };
-		BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FingerprintTests.m"; sourceTree = "<group>"; };
+		BFE49C311C0F39580061C16F /* String+FingerprintTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+FingerprintTests.swift"; sourceTree = "<group>"; };
 		BFE57B4A1D52335A00CB0806 /* ConversationPreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationPreviewViewController.swift; sourceTree = "<group>"; };
 		BFE65AB220A047EB00689063 /* CallAccessoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallAccessoryViewController.swift; sourceTree = "<group>"; };
 		BFE731DF20A58EFD0088BA22 /* VideoState+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoState+Helper.swift"; sourceTree = "<group>"; };
@@ -5570,7 +5570,7 @@
 				1E18C2B71AFBB7E00043F3CF /* EmoticonSubstitution */,
 				BACB88531AF7C48900DDCDB0 /* Supporting Files */,
 				5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */,
-				BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */,
+				BFE49C311C0F39580061C16F /* String+FingerprintTests.swift */,
 				EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */,
 				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */,
 				876AE75F1C159A9C00E3E743 /* StringFingerprintTests.swift */,
@@ -8116,7 +8116,7 @@
 				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
-				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,
+				BFE49C321C0F39590061C16F /* String+FingerprintTests.swift in Sources */,
 				87B0ACAA1FA20D7C001B2B9D /* AnalyticsTests.swift in Sources */,
 				5EF7BA6C221B273900815625 /* ProfileDetailsViewControllerTests.swift in Sources */,
 				EFB23D0B1FC853CF0055B866 /* AccessoryTextFieldValidationTests.swift in Sources */,
