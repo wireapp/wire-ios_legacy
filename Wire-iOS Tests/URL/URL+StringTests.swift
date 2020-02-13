@@ -22,19 +22,19 @@ final class URL_StringTests: XCTestCase {
     func testThatURLSchemeIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
-        
+
         //WHEN & THEN
         XCTAssertEqual(sut?.urlWithoutScheme, "www.example.org/abc?1234/")
     }
-    
+
     func testThatURLSchemeAndHostIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
-        
+
         //WHEN & THEN
         XCTAssertEqual(sut?.urlWithoutSchemeAndHost, "/abc?1234/")
     }
-    
+
     func testThatWWWIsRemoved() {
         //GIVEN
         let sut = URL(string: "https://www.example.org/abc?1234/")
