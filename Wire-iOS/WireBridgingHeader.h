@@ -74,7 +74,6 @@
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
-#import "AVSLogObserver.h"
 #import "SoundEventRulesWatchDog.h"
 #import "UIViewController+LoadingView.h"
 

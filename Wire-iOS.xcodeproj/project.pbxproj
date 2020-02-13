@@ -483,7 +483,7 @@
 		870C92671E8CE55800A10995 /* RandomGeneratorFromDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */; };
 		870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */; };
 		870C97C31D670C9A00F6FD7D /* NextResponderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870C97C21D670C9A00F6FD7D /* NextResponderTextView.swift */; };
-		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */; };
+		870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.swift */; };
 		8710673C1C0DC5570035603B /* SettingsButtonCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */; };
 		8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067371C0DC5570035603B /* SettingsCellDescriptor.swift */; };
 		8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871067381C0DC5570035603B /* SettingsCellDescriptorFactory.swift */; };
@@ -2030,8 +2030,7 @@
 		870C92661E8CE55800A10995 /* RandomGeneratorFromDataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomGeneratorFromDataTests.swift; sourceTree = "<group>"; };
 		870C92681E8CE5E500A10995 /* ConversationAvatarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationAvatarView.swift; sourceTree = "<group>"; };
 		870C97C21D670C9A00F6FD7D /* NextResponderTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NextResponderTextView.swift; sourceTree = "<group>"; };
-		870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVSLogObserver.h; sourceTree = "<group>"; };
-		870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVSLogObserver.m; sourceTree = "<group>"; };
+		870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVSLogObserver.swift; sourceTree = "<group>"; };
 		871067361C0DC5570035603B /* SettingsButtonCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButtonCellDescriptor.swift; sourceTree = "<group>"; };
 		871067371C0DC5570035603B /* SettingsCellDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellDescriptor.swift; sourceTree = "<group>"; };
 		871067381C0DC5570035603B /* SettingsCellDescriptorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCellDescriptorFactory.swift; sourceTree = "<group>"; };
@@ -2352,7 +2351,6 @@
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleViewSnapshotTests.swift; sourceTree = "<group>"; };
-		A963643123E2E52F00190992 /* AudioTrackPlayer+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTrackPlayer+Private.h"; sourceTree = "<group>"; };
 		A965801323EDB17200EF345D /* TokenField+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TokenField+Internal.h"; sourceTree = "<group>"; };
 		A965F89D23DB3359005209E1 /* ConversationInputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewController.swift; sourceTree = "<group>"; };
 		A9681D8023883877004FE917 /* IconToggleSubtitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconToggleSubtitleCell.swift; sourceTree = "<group>"; };
@@ -5037,8 +5035,7 @@
 				EF2CF3252243EBAA003E16BC /* AppDelegate+URL.swift */,
 				7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */,
 				F1141C961F5EB2DC005340B3 /* WireApplication.swift */,
-				870DC1E91C92F5CC005C1DB9 /* AVSLogObserver.h */,
-				870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.m */,
+				870DC1EA1C92F5CC005C1DB9 /* AVSLogObserver.swift */,
 				8741CFAE1A937EDF00A56A63 /* LaunchScreen.xib */,
 				874B2C3C1BBA939000396047 /* WireBridgingHeader.h */,
 				162936BA1F470A9300D4F386 /* AppState.swift */,
@@ -7848,7 +7845,7 @@
 				EF17B0D3223A6A36006252A8 /* LaunchImageViewController.swift in Sources */,
 				BF2A74731CEB4882002608BF /* AudioButtonOverlay.swift in Sources */,
 				87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */,
-				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.m in Sources */,
+				870DC1EB1C92F5CC005C1DB9 /* AVSLogObserver.swift in Sources */,
 				5EA952C722647B3100C83FDB /* IconButton+Helpers.swift in Sources */,
 				A97FA6FC23B57067005257A8 /* StartUIViewController.swift in Sources */,
 				EF00FD741FDA97BA0059FEDC /* UIViewController+Orientation.swift in Sources */,
