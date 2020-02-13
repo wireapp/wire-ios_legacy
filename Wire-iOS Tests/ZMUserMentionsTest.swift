@@ -30,8 +30,7 @@ class ZMUserMentionsTest: XCTestCase {
 
         selfUser = MockUserType.createSelfUser(name: "selfUser")
         otherUser = MockUserType.createUser(name: "Bruno")
-        serviceUser = MockUserType.createUser(name: "Mr. Bot")
-        serviceUser.isServiceUser = true
+        serviceUser = MockServiceUserType.createServiceUser(name: "Mr. Bot")
     }
     
     override func tearDown() {

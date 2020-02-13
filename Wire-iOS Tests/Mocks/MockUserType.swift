@@ -98,7 +98,9 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isSelfUser: Bool = false
 
-    var isServiceUser: Bool = false
+    var isServiceUser: Bool {
+        return false
+    }
 
     var isVerified: Bool = false
 
@@ -414,3 +416,36 @@ extension MockUserType: ZMEditableUser {
 
 }
 
+class MockServiceUserType: MockUserType, ServiceUser {
+
+    var providerIdentifier: String?
+
+    var serviceIdentifier: String?
+
+    override var isServiceUser: Bool {
+        return true
+    }
+
+}
+
+extension MockServiceUserType {
+
+    /// Creates a service user with the specified name.
+    ///
+    /// - Parameters:
+    ///   - name: The name of the user.
+    ///
+    /// - Returns: A standard mock service user object with default values.
+
+    class func createServiceUser(name: String) -> MockServiceUserType {
+        let serviceUser = MockServiceUserType()
+        serviceUser.name = name
+        serviceUser.displayName = name
+        serviceUser.initials = PersonName.person(withName: name, schemeTagger: nil).initials
+        serviceUser.handle = serviceUser.name?.lowercased()
+        serviceUser.accentColorValue = .brightOrange
+        serviceUser.providerIdentifier = UUID.create().transportString()
+        serviceUser.serviceIdentifier = UUID.create().transportString()
+        return serviceUser
+    }
+}
