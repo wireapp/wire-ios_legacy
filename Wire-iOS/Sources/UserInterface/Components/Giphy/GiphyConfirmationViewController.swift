@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import Ziphy
 
 protocol GiphyConfirmationViewControllerDelegate {
     
@@ -25,7 +26,7 @@ protocol GiphyConfirmationViewControllerDelegate {
     
 }
 
-class GiphyConfirmationViewController: UIViewController {
+final class GiphyConfirmationViewController: UIViewController {
     
     var imagePreview = FLAnimatedImageView()
     var acceptButton = Button(style: .full)
