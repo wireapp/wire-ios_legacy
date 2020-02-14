@@ -17,16 +17,11 @@
 // 
 
 extension String {
-    func split(every: Int) -> [String] {
-        var result = [String]()
-
-        for i in stride(from: 0, to: count, by: every) {
-            let start = index(startIndex, offsetBy: i)
-            let end = index(start, offsetBy: every, limitedBy: endIndex) ?? endIndex
-            result.append(String(self[start..<end]))
-        }
-
-        return result
+    
+    func split(every: Int) -> Array<String> {
+        return stride(from: 0, to: count, by: every).map {
+            String(Array(Array(self)[$0..<min($0 + every, count)]))
+            }
     }
 
     var fingerprintStringWithSpaces: String {
