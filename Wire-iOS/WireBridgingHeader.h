@@ -70,7 +70,6 @@
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
 #import "AVSLogObserver.h"
-#import "SoundEventRulesWatchDog.h"
 #import "UIViewController+LoadingView.h"
 
 #import "EmoticonSubstitutionConfiguration.h"

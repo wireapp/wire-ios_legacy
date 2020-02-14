@@ -727,12 +727,11 @@
 		A949418923E09489001B0373 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418823E09489001B0373 /* SplitViewController.swift */; };
 		A949418B23E09AFB001B0373 /* ConversationContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */; };
 		A949418D23E180FF001B0373 /* Bundle+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A949418C23E180FF001B0373 /* Bundle+config.swift */; };
-		A9536FD523ACE12900CFD528 /* SwiftMockUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9536FD423ACE12900CFD528 /* SwiftMockUser.swift */; };
-		A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.swift */; };
+		A955D3D323F54AC400304851 /* AuthenticationCoordinatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */; };
 		A955D3D523F576F400304851 /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955D3D423F576F400304851 /* URL+String.swift */; };
 		A955D3D823F5775700304851 /* URL+StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955D3D723F5775700304851 /* URL+StringTests.swift */; };
 		A955D3D923F5791100304851 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* String+URL.swift */; };
-		A955D3D323F54AC400304851 /* AuthenticationCoordinatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */; };
+		A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.swift */; };
 		A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
@@ -775,8 +774,8 @@
 		A9EB722823C3A9F600DA8240 /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EB722723C3A9F600DA8240 /* ConversationViewController.swift */; };
 		AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */; };
 		AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */; };
-		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */; };
-		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */; };
+		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */; };
+		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */; };
 		BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */; };
 		BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4D0651B613D4E008585A5 /* ColorKnobView.m */; };
 		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
@@ -1249,7 +1248,6 @@
 		EF71BFD820EBD0DC00894A7C /* UIPopoverPresentationController+config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */; };
 		EF77DD4A22E5EB5200DF811F /* SettingsTechnicalReportViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77DD4922E5EB5200DF811F /* SettingsTechnicalReportViewControllerSnapshotTests.swift */; };
 		EF7CCAFD204E96390050325B /* MockUser+PointOfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */; };
-		EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */; };
 		EF7E96EE214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */; };
 		EF7E96F0214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7E96EF214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift */; };
 		EF7ECE1B211111B4003786C6 /* XCTestCase+FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */; };
@@ -2359,9 +2357,9 @@
 		A949418A23E09AFB001B0373 /* ConversationContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewController.swift; sourceTree = "<group>"; };
 		A949418C23E180FF001B0373 /* Bundle+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+config.swift"; sourceTree = "<group>"; };
 		A94B778B232A4AA20005FE63 /* SkeletonViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonViewControllerTests.swift; sourceTree = "<group>"; };
+		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
-		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -2447,9 +2445,8 @@
 		B4D37F9E1D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B4D37F9F1D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		B4D37FA01D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BA79B0A31B6284D900F23AFB /* SoundEventRulesWatchDog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundEventRulesWatchDog.h; sourceTree = "<group>"; };
-		BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventRulesWatchDog.m; sourceTree = "<group>"; };
-		BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventRulesWatchDogTests.m; sourceTree = "<group>"; };
+		BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventRulesWatchDog.swift; sourceTree = "<group>"; };
+		BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventRulesWatchDogTests.swift; sourceTree = "<group>"; };
 		BA8DC27A1B5FF5CF00103262 /* SketchColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchColorPickerController.h; path = Sketchpad/SketchColorPickerController.h; sourceTree = "<group>"; };
 		BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchColorPickerController.m; path = Sketchpad/SketchColorPickerController.m; sourceTree = "<group>"; };
 		BA9EAFAA1AD8121800279A40 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -2954,7 +2951,6 @@
 		EF71BFD720EBD0DC00894A7C /* UIPopoverPresentationController+config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPopoverPresentationController+config.swift"; sourceTree = "<group>"; };
 		EF77DD4922E5EB5200DF811F /* SettingsTechnicalReportViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTechnicalReportViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF7CCAFC204E96390050325B /* MockUser+PointOfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+PointOfView.swift"; sourceTree = "<group>"; };
-		EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNativeBoundsSize.swift; sourceTree = "<group>"; };
 		EF7E96ED214BB41800475C63 /* ContactsViewController+ContactsDataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+ContactsDataSourceDelegate.swift"; sourceTree = "<group>"; };
 		EF7E96EF214BFBE100475C63 /* ContactsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		EF7ECE1A211111B2003786C6 /* XCTestCase+FullscreenImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FullscreenImageViewController.swift"; sourceTree = "<group>"; };
@@ -4481,7 +4477,6 @@
 				871BC31D1D34F94200DF0793 /* AudioPlayer */,
 				EF106E82204D869B00B9F0F6 /* DeviceProtocol.swift */,
 				EF4018BD205975C100CFBCB0 /* ApplicationProtocol.swift */,
-				EF7D75A5201B6149003A8AF8 /* DeviceNativeBoundsSize.swift */,
 				EF23740D230D37EE006F53F3 /* NetworkConditionHelper.swift */,
 				871BC3371D34F94200DF0793 /* Settings */,
 				871BC33C1D34F94200DF0793 /* Settings.h */,
@@ -5192,8 +5187,7 @@
 				54F7C27E1D74367E004D8087 /* AddressBookHelper.swift */,
 				54F7C2841D746F3F004D8087 /* AddressBookHelper+Automation.swift */,
 				A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */,
-				BA79B0A31B6284D900F23AFB /* SoundEventRulesWatchDog.h */,
-				BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.m */,
+				BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */,
 				EF9FC3F02142AEDE00033ED0 /* ColorSchemeController.swift */,
 				875060721E5B3D9E005B21C7 /* FileBackupExcluder.swift */,
 				551CD27722BA288B00EE9AE5 /* LegalHoldDisclosureController.swift */,
@@ -7362,7 +7356,6 @@
 				EF066E1821EF997D00D56CAD /* ConversationContentViewController+ConversationMessageCellDelegate.swift in Sources */,
 				87F18BD21E03F13900C69D9B /* ZMLocationMessageData+Coordinates.swift in Sources */,
 				A949418D23E180FF001B0373 /* Bundle+config.swift in Sources */,
-				EF7D75A6201B6149003A8AF8 /* DeviceNativeBoundsSize.swift in Sources */,
 				EF18140C21B18846008F7DA8 /* IconToggleCell.swift in Sources */,
 				F15650F321DD1B6D00210504 /* ProfileImageFetchable.swift in Sources */,
 				5E8DA74D211AEB9E00360979 /* AuthenticationEventHandler.swift in Sources */,
@@ -7467,7 +7460,7 @@
 				87DCF4E61D34EA4500BB420F /* ShareItemProvider.swift in Sources */,
 				BFE4186A209B6E3700503C7C /* UserImageViewContainer.swift in Sources */,
 				F15650E421DD11DD00210504 /* UIViewController+LoadingView.m in Sources */,
-				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.m in Sources */,
+				BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.swift in Sources */,
 				EF834B862203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift in Sources */,
 				EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */,
 				EFEE97C623229768007A4702 /* ConversationListContentDelegate.swift in Sources */,
@@ -8162,7 +8155,7 @@
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
 				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
 				5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */,
-				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
+				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
 				BFE49C321C0F39590061C16F /* String+FingerprintTests.swift in Sources */,
