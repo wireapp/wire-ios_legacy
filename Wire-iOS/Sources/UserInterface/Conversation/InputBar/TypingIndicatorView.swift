@@ -214,7 +214,6 @@ class AnimatedPenView : UIView {
                 delay(0.15) {
                 UIView.wr_animate(easing: .easeInQuad,
                                   duration: 0.15,
-//                                  delay: 0.15, ///TODO:
                                   animations: showContainer, completion: { _ in
                     self.animatedPen.isAnimating = true
                 })
