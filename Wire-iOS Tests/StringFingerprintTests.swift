@@ -23,7 +23,6 @@ final class StringFingerprintTests: XCTestCase {
     func testThatFingerprintSplitsProperlyFor2() {
         // given
         let testStrings = ["abc", "mfngsdnfgljsfgjdns", "!!@#!@#!@#AASDF", ""]
-
         let resultStrings = ["ab c", "mf ng sd nf gl js fg jd ns", "!! @# !@ #! @# AA SD F", ""]
 
         for i in 0..<testStrings.count {
@@ -39,7 +38,6 @@ final class StringFingerprintTests: XCTestCase {
     func testThatFingerprintSplitsProperlyFor4() {
         // given
         let testStrings = ["abc", "mfngsdnfgljsfgjdns", "!!@#!@#!@#AASDF", ""]
-
         let resultStrings = ["abc", "mfng sdnf gljs fgjd ns", "!!@# !@#! @#AA SDF", ""]
 
         for i in 0..<testStrings.count {

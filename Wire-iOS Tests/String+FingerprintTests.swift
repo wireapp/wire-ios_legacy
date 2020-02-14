@@ -21,23 +21,26 @@ import XCTest
 
 final class String_FingerprintTests: XCTestCase {
     func testFingerprintAttributes() {
-        let regularAttributes = [
-                                 NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)
-                                 ]
-        let boldAttributes = [
-                              NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)
-                              ]
+        // GIVEN
+        let regularAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)]
+        let boldAttributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize)]
+
+        // WHEN
         let attributedString = fingerprintString.fingerprintString(attributes: regularAttributes, boldAttributes: boldAttributes)
 
-        var bold = true
-        attributedString.enumerateAttributes(in: NSRange(location: 0, length: attributedString.length), options: [], using: { attrs, range, stop in
-            let stringInRange = ((attributedString.string as NSString?)?.substring(with: range))?.trimmingCharacters(in: CharacterSet.whitespaces)
-            if (stringInRange?.count ?? 0) == 0 {
-                return
-            }
-            XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], bold ? boldAttributes : regularAttributes)
-            bold = !bold
-        })
+        // THEN
+        stride(from: 0, to: 20, by: 6).forEach {
+            var boldRange = NSRange(location: $0, length: 2)
+
+            let attrs = attributedString.attributes(at: $0, effectiveRange: &boldRange)
+            XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], boldAttributes)
+        }
+
+        stride(from: 3, to: 20, by: 6).forEach {
+            var regularRange = NSRange(location: $0, length: 2)
+            let attrs = attributedString.attributes(at: $0, effectiveRange: &regularRange)
+            XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], regularAttributes)
+        }
     }
 
     // MARK: - Helper
