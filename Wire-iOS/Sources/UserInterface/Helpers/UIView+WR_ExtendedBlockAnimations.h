@@ -20,12 +20,6 @@
 #import <UIKit/UIKit.h>
 
 
-typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
-    WRExtendedBlockAnimationsOptionsNone = 0,
-//    WRExtendedBlockAnimationsOptionsBeginFromCurrentState = 1 << 0
-};
-
-
 typedef NS_CLOSED_ENUM(NSInteger, WREasingFunction) {
     WREasingFunctionLinear,
     WREasingFunctionEaseInSine,
@@ -53,37 +47,3 @@ typedef NS_CLOSED_ENUM(NSInteger, WREasingFunction) {
     WREasingFunctionEaseOutBack,
     WREasingFunctionEaseInOutBack
 } NS_SWIFT_NAME(EasingFunction);
-
-
-@interface UIView (WR_ExtendedBlockAnimations)
-
-+ (void)wr_animateWithEasing:(WREasingFunction)easing
-                    duration:(NSTimeInterval)duration
-                  animations:(void (^)(void))animations NS_SWIFT_NAME(wr_animate(easing:duration:animations:));
-
-+ (void)wr_animateWithEasing:(WREasingFunction)easing
-                    duration:(NSTimeInterval)duration
-                  animations:(void (^)(void))animations
-                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:animations:completion:));
-
-+ (void)wr_animateWithEasing:(WREasingFunction)easing
-                    duration:(NSTimeInterval)duration
-                       delay:(NSTimeInterval)delay
-                  animations:(void (^)(void))animations
-                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:delay:animations:completion:));
-
-+ (void)wr_animateWithEasing:(WREasingFunction)easing
-                    duration:(NSTimeInterval)duration
-                       delay:(NSTimeInterval)delay
-                  animations:(void (^)(void))animations
-                     options:(WRExtendedBlockAnimationsOptions)options
-                  completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:delay:animations:options:completion:));
-
-
-//+ (void)wr_animateWithBasicAnimation:(CABasicAnimation *)animation
-//                            duration:(NSTimeInterval)duration
-//                          animations:(void (^)(void))animations
-//                             options:(WRExtendedBlockAnimationsOptions)options
-//                          completion:(void (^)(BOOL finished))completion;
-
-@end

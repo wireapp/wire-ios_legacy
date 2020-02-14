@@ -210,10 +210,15 @@ class AnimatedPenView : UIView {
             } else {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
-                UIView.wr_animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
-                UIView.wr_animate(easing: .easeInQuad, duration: 0.15, delay: 0.15, animations: showContainer, options: [], completion: { _ in
+                UIView.animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
+                delay(0.15) {
+                UIView.wr_animate(easing: .easeInQuad,
+                                  duration: 0.15,
+//                                  delay: 0.15, ///TODO:
+                                  animations: showContainer, completion: { _ in
                     self.animatedPen.isAnimating = true
                 })
+                }
             }
             
         } else {

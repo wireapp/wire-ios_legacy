@@ -118,7 +118,7 @@ public final class InputBarButtonsView: UIView {
         guard rowIndex != currentRow else { return }
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
-        UIView.wr_animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        UIView.animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
     }
     
     // MARK: - Button Layout
