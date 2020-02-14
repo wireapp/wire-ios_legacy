@@ -55,3 +55,21 @@ extension EasingFunction {
     }
 
 }
+
+extension UIView {
+    
+    @objc(wr_animateWithBasicAnimation:duration:animations:options:completion:)
+    class func wr_animate(with animation: CABasicAnimation?, duration: TimeInterval, animations: @escaping () -> Void, options: WRExtendedBlockAnimationsOptions, completion: @escaping (_ finished: Bool) -> Void) {
+        /* Do Animations */
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(duration)
+        CATransaction.setAnimationTimingFunction(animation?.timingFunction)
+        
+        // View animations
+        UIView.animate(withDuration: duration, animations: animations, completion: completion)
+        
+        
+        CATransaction.commit()
+    }
+
+}

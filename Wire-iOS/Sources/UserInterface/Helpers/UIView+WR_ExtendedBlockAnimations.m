@@ -97,142 +97,69 @@
 
 @implementation UIView (WR_ExtendedBlockAnimations)
 
-+ (void)load
-{
-    SEL originalSelector = @selector(actionForLayer:forKey:);
-    SEL extendedSelector = @selector(WR_actionForLayer:forKey:);
-    
-    Method originalMethod = class_getInstanceMethod(self, originalSelector);
-    Method extendedMethod = class_getInstanceMethod(self, extendedSelector);
-    
-    NSAssert(originalMethod, @"original method should exist");
-    NSAssert(extendedMethod, @"exchanged method should exist");
-    
-    if(class_addMethod(self, originalSelector, method_getImplementation(extendedMethod), method_getTypeEncoding(extendedMethod))) {
-        class_replaceMethod(self, extendedSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, extendedMethod);
-    }
-}
+//+ (void)load
+//{
+//    SEL originalSelector = @selector(actionForLayer:forKey:);
+//    SEL extendedSelector = @selector(WR_actionForLayer:forKey:);
+//
+//    Method originalMethod = class_getInstanceMethod(self, originalSelector);
+//    Method extendedMethod = class_getInstanceMethod(self, extendedSelector);
+//
+//    NSAssert(originalMethod, @"original method should exist");
+//    NSAssert(extendedMethod, @"exchanged method should exist");
+//
+//    if(class_addMethod(self, originalSelector, method_getImplementation(extendedMethod), method_getTypeEncoding(extendedMethod))) {
+//        class_replaceMethod(self, extendedSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+//    } else {
+//        method_exchangeImplementations(originalMethod, extendedMethod);
+//    }
+//}
 
-+ (NSMutableArray *)WR_savedAnimationStates
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        WR_savedAnimationStates = [NSMutableArray array];
-    });
-    
-    return WR_savedAnimationStates;
-}
-
-static void *WR_currentAnimationContext = NULL;
-static void *WR_extendedBlockAnimationsContext = &WR_extendedBlockAnimationsContext;
-static NSArray *supportedAnimatableProperties = nil;
-static NSArray *supportedAdditiveAnimatableProperties = nil;
-static NSMutableArray *WR_savedAnimationStates = nil;
-
-- (id<CAAction>)WR_actionForLayer:(CALayer *)layer forKey:(NSString *)event
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        supportedAnimatableProperties = @[@"position", @"bounds", @"opacity", @"transform"];
-        supportedAdditiveAnimatableProperties = @[@"position", @"bounds"];
-    });
-    
-    
-    if (WR_currentAnimationContext == WR_extendedBlockAnimationsContext && [supportedAnimatableProperties containsObject:event]) {
-        
-        if ([event isEqualToString:@"bounds"]) {
-            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
-                                                                                           keyPath:@"bounds.origin"]];
-            
-            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
-                                                                                           keyPath:@"bounds.size"]];
-        } else {
-            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
-                                                                                           keyPath:event]];
-        }
-        
-        // no implicit animation (it will be added later)
-        return (id<CAAction>)[NSNull null];
-    }
-    
-    // call the original implementation
-    return [self WR_actionForLayer:layer forKey:event]; // yes, they are swizzled
-}
-
-+ (void)wr_animateWithBasicAnimation:(CABasicAnimation *)animation
-                            duration:(NSTimeInterval)duration
-                          animations:(void (^)(void))animations
-                            options:(WRExtendedBlockAnimationsOptions)options
-                          completion:(void (^)(BOOL finished))completion
-{
-    WR_currentAnimationContext = WR_extendedBlockAnimationsContext;
-    
-    animations();
-    
-    NSUInteger savedAnimationStateCount = [[self WR_savedAnimationStates] count];
-    
-    BOOL beginFromCurrentState = false;//// (options & WRExtendedBlockAnimationsOptionsBeginFromCurrentState) == WRExtendedBlockAnimationsOptionsBeginFromCurrentState;
-    
-    if (beginFromCurrentState) {
-        animation.additive = NO;
-    }
-    
-    __block NSUInteger animationCount = 0;
-    
-    [[UIView WR_savedAnimationStates] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        WRSavedAnimationState *savedState   = (WRSavedAnimationState *)obj;
-        CALayer *layer    = savedState.layer;
-        NSString *keyPath = savedState.keyPath;
-        id oldValue       = savedState.oldValue;
-        id newValue       = [layer valueForKeyPath:keyPath];
-        
-        CABasicAnimation *anim = [animation copy];
-        anim.keyPath = keyPath;
-        anim.duration = duration;
-        anim.beginTime += [layer convertTime:0 fromLayer:nil]; // Compensate for layer.timeOffset
-        
-        if (anim.isAdditive && ! [supportedAdditiveAnimatableProperties containsObject:keyPath]) {
-            anim.additive = NO;
-        }
-        
-        if (anim.isAdditive) {
-            anim.fromValue = [self differenceFromValue:oldValue toValue:newValue];
-            anim.toValue = [self zeroValueForValue:newValue];
-        } else if (beginFromCurrentState) {
-            anim.fromValue = layer.presentationLayer ? [layer.presentationLayer valueForKeyPath:keyPath] : oldValue;
-            anim.toValue = newValue;
-        } else {
-            anim.fromValue = oldValue;
-            anim.toValue = newValue;
-        }
-        
-        anim.delegate = [WRAnimationBlockDelegate animationDelegateWithBeginning:^{
-            animationCount++;
-        } completion:^(BOOL finished) {
-            animationCount--;
-            
-            if (animationCount == 0) {
-                if (completion != nil) completion(finished);
-            }
-        }];
-        
-        // Additive animations need a unique or nil animation key
-        NSString *animationKey = anim.isAdditive ? nil : keyPath;
-        [layer addAnimation:anim forKey:animationKey];
-    }];
-    
-    // clean up (remove all the stored state)
-    [[self WR_savedAnimationStates] removeAllObjects];
-    
-    WR_currentAnimationContext = NULL;
-    
-    if (savedAnimationStateCount == 0) {
-        // No animations were created
-        if (completion != nil) completion(YES);
-    }
-}
+//+ (NSMutableArray *)WR_savedAnimationStates
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        WR_savedAnimationStates = [NSMutableArray array];
+//    });
+//
+//    return WR_savedAnimationStates;
+//}
+//
+//static void *WR_currentAnimationContext = NULL;
+//static void *WR_extendedBlockAnimationsContext = &WR_extendedBlockAnimationsContext;
+//static NSArray *supportedAnimatableProperties = nil;
+//static NSArray *supportedAdditiveAnimatableProperties = nil;
+//static NSMutableArray *WR_savedAnimationStates = nil;
+//
+//- (id<CAAction>)WR_actionForLayer:(CALayer *)layer forKey:(NSString *)event
+//{
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        supportedAnimatableProperties = @[@"position", @"bounds", @"opacity", @"transform"];
+//        supportedAdditiveAnimatableProperties = @[@"position", @"bounds"];
+//    });
+//
+//
+//    if (WR_currentAnimationContext == WR_extendedBlockAnimationsContext && [supportedAnimatableProperties containsObject:event]) {
+//
+//        if ([event isEqualToString:@"bounds"]) {
+//            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
+//                                                                                           keyPath:@"bounds.origin"]];
+//
+//            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
+//                                                                                           keyPath:@"bounds.size"]];
+//        } else {
+//            [[UIView WR_savedAnimationStates] addObject:[WRSavedAnimationState savedStateWithLayer:layer
+//                                                                                           keyPath:event]];
+//        }
+//
+//        // no implicit animation (it will be added later)
+//        return (id<CAAction>)[NSNull null];
+//    }
+//
+//    // call the original implementation
+//    return [self WR_actionForLayer:layer forKey:event]; // yes, they are swizzled
+//}
 
 + (void)wr_animateWithEasing:(WREasingFunction)easing duration:(NSTimeInterval)duration animations:(void (^)(void))animations
 {

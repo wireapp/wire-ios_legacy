@@ -80,10 +80,10 @@ typedef NS_CLOSED_ENUM(NSInteger, WREasingFunction) {
                   completion:(void (^)(BOOL finished))completion NS_SWIFT_NAME(wr_animate(easing:duration:delay:animations:options:completion:));
 
 
-+ (void)wr_animateWithBasicAnimation:(CABasicAnimation *)animation
-                            duration:(NSTimeInterval)duration
-                          animations:(void (^)(void))animations
-                             options:(WRExtendedBlockAnimationsOptions)options
-                          completion:(void (^)(BOOL finished))completion;
+//+ (void)wr_animateWithBasicAnimation:(CABasicAnimation *)animation
+//                            duration:(NSTimeInterval)duration
+//                          animations:(void (^)(void))animations
+//                             options:(WRExtendedBlockAnimationsOptions)options
+//                          completion:(void (^)(BOOL finished))completion;
 
 @end
