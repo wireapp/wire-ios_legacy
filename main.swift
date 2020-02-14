@@ -18,9 +18,12 @@
 
 import UIKit
 
+// Conditionally inject App Delegate depending on whether we're running tests or not.
+let appDelegateClass: AnyClass = NSClassFromString("TestingAppDelegate") ?? AppDelegate.self
+
 UIApplicationMain(
     CommandLine.argc,
     CommandLine.unsafeArgv,
     NSStringFromClass(WireApplication.self),
-    NSStringFromClass(AppDelegate.self)
+    NSStringFromClass(appDelegateClass)
 )
