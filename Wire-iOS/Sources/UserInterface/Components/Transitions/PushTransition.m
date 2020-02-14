@@ -19,6 +19,7 @@
 
 #import "PushTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
+#import "Wire-Swift.h"
 
 @implementation PushTransition
 

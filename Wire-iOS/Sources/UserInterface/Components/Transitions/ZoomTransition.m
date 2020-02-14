@@ -19,6 +19,7 @@
 
 #import "ZoomTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
+#import "Wire-Swift.h"
 
 @interface ZoomTransition ()
 
@@ -77,7 +78,9 @@
         toView.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
         
         
-        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35
+         //TODO:                               delay:0.3
+                          animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {
@@ -106,7 +109,9 @@
         toView.transform = CGAffineTransformMakeScale(0.5, 0.5);
         
         
-        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35 delay:0.3 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35
+         //TODO:                               delay:0.3
+                          animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
         } completion:^(BOOL finished) {

@@ -19,6 +19,7 @@
 
 #import "SwizzleTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
+#import "Wire-Swift.h"
 
 @implementation SwizzleTransition
 
@@ -57,7 +58,7 @@
     }
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:WREasingFunctionEaseInQuad duration:durationPhase1 delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInQuad duration:durationPhase1  animations:^{
         fromView.alpha = 0;
         if (self.direction == SwizzleTransitionDirectionHorizontal) {
             fromView.layer.transform = CATransform3DMakeTranslation(48.0f, 0.0f, 0.0f);
@@ -66,7 +67,7 @@
             fromView.layer.transform = CATransform3DMakeTranslation(0.0f, 48.0f, 0.0f);
         }
     } completion:^(BOOL finished) {
-        [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuad duration:durationPhase2 delay:0 animations:^{
+        [UIView wr_animateWithEasing:WREasingFunctionEaseOutQuad duration:durationPhase2  animations:^{
             toView.layer.transform = CATransform3DIdentity;
             toView.alpha = 1;
         } completion:^(BOOL finished) {

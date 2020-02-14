@@ -19,6 +19,7 @@
 
 #import "CrossfadeTransition.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
+#import "Wire-Swift.h"
 
 @interface CrossfadeTransition ()
 
@@ -65,7 +66,8 @@
     
     toView.alpha = 0;
     
-    [UIView wr_animateWithEasing:WREasingFunctionEaseInOutQuad duration:self.duration delay:0 animations:^{
+    [UIView wr_animateWithEasing:WREasingFunctionEaseInOutQuad duration:self.duration
+                      animations:^{
         fromView.alpha = 0;
         toView.alpha = 1;
     } completion:^(BOOL finished) {
