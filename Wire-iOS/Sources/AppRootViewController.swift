@@ -245,6 +245,10 @@ final class AppRootViewController: UIViewController {
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
