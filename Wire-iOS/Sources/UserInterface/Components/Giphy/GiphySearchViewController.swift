@@ -67,6 +67,10 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         cleanUpPendingTask()
         cleanUpPendingTimer()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
 
     fileprivate func cleanUpPendingTask() {
         pendingSearchtask?.cancel()
