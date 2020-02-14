@@ -22,7 +22,7 @@
 
 typedef NS_OPTIONS(NSUInteger, WRExtendedBlockAnimationsOptions) {
     WRExtendedBlockAnimationsOptionsNone = 0,
-    WRExtendedBlockAnimationsOptionsBeginFromCurrentState = 1 << 0
+//    WRExtendedBlockAnimationsOptionsBeginFromCurrentState = 1 << 0
 };
 
 

@@ -173,7 +173,7 @@ static NSMutableArray *WR_savedAnimationStates = nil;
     
     NSUInteger savedAnimationStateCount = [[self WR_savedAnimationStates] count];
     
-    BOOL beginFromCurrentState = (options & WRExtendedBlockAnimationsOptionsBeginFromCurrentState) == WRExtendedBlockAnimationsOptionsBeginFromCurrentState;
+    BOOL beginFromCurrentState = false;//// (options & WRExtendedBlockAnimationsOptionsBeginFromCurrentState) == WRExtendedBlockAnimationsOptionsBeginFromCurrentState;
     
     if (beginFromCurrentState) {
         animation.additive = NO;
@@ -258,7 +258,7 @@ static NSMutableArray *WR_savedAnimationStates = nil;
 {
     WREasingAnimation *animation = [WREasingAnimation new];
 
-    animation.easing = easing;
+    animation.easing = easing; ///TODO: timingFunction.timingFunction?
     animation.beginTime = CACurrentMediaTime() + delay;
     animation.fillMode = kCAFillModeBoth;
     animation.additive = YES;
