@@ -18,27 +18,25 @@
 
 extension String {
     
-    func split(every: Int) -> Array<String> {
+    func split(every: Int) -> [String] {
         return stride(from: 0, to: count, by: every).map {
             String(Array(Array(self)[$0..<min($0 + every, count)]))
-            }
+        }
     }
-
+    
     var fingerprintStringWithSpaces: String {
         return split(every:2).joined(separator: " ")
     }
-
+    
     func fingerprintString(attributes: [NSAttributedString.Key: Any],
                            boldAttributes: [NSAttributedString.Key: Any]) -> NSAttributedString {
         var bold = true
-        let attributedStrings: [NSAttributedString] = split { !$0.isHexDigit }.map {
+        return split{ !$0.isHexDigit }.map {
             let attributedElement = String($0) && (bold ? boldAttributes : attributes)
-
+            
             bold = !bold
-
+            
             return attributedElement
-        }
-
-        return attributedStrings.joined(separator: NSAttributedString(string: " "))
+        }.joined(separator: NSAttributedString(string: " "))
     }
 }

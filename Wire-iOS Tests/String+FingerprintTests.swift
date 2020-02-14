@@ -20,6 +20,8 @@ import XCTest
 @testable import Wire
 
 final class String_FingerprintTests: XCTestCase {
+    let fingerprintString: String = "05 1c f4 ca 74 4b 80"
+
     func testFingerprintAttributes() {
         // GIVEN
         let regularAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: UIFont.systemFontSize)]
@@ -30,22 +32,22 @@ final class String_FingerprintTests: XCTestCase {
 
         // THEN
         stride(from: 0, to: 20, by: 6).forEach {
-            var boldRange = NSRange(location: $0, length: 2)
+            let boldRange = NSRange(location: $0, length: 2)
+            
+            let substring = attributedString.attributedSubstring(from: boldRange)
+            let attrs = substring.attributes(at: 0, effectiveRange: nil)
 
-            let attrs = attributedString.attributes(at: $0, effectiveRange: &boldRange)
             XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], boldAttributes)
         }
 
         stride(from: 3, to: 20, by: 6).forEach {
-            var regularRange = NSRange(location: $0, length: 2)
-            let attrs = attributedString.attributes(at: $0, effectiveRange: &regularRange)
+            let regularRange = NSRange(location: $0, length: 2)
+
+            let substring = attributedString.attributedSubstring(from: regularRange)
+            let attrs = substring.attributes(at: 0, effectiveRange: nil)
+
             XCTAssertEqual(attrs as? [NSAttributedString.Key: UIFont], regularAttributes)
         }
-    }
-
-    // MARK: - Helper
-    var fingerprintString: String {
-        return "05 1c f4 ca 74 4b 80"
     }
 
 }
