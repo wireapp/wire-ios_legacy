@@ -18,6 +18,7 @@
 
 import Foundation
 @testable import Wire
+import Ziphy
 
 final class GiphySearchViewControllerSnapshotTests: ZMSnapshotTestCase {
     var sut: GiphySearchViewController!

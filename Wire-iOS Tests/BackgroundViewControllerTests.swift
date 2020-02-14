@@ -22,12 +22,12 @@ import XCTest
 
 class BackgroundViewControllerTests: ZMSnapshotTestCase {
     
-    var selfUser: MockUser!
+    var selfUser: MockUserType!
     
     override func setUp() {
         super.setUp()
         accentColor = .violet
-        selfUser = MockUser.mockSelf()
+        selfUser = MockUserType.createSelfUser(name: "")
         selfUser.accentColorValue = .violet
     }
     

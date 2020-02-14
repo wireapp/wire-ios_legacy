@@ -63,7 +63,6 @@
 #import "ZoomTransition.h"
 #import "CrossfadeTransition.h"
 #import "MediaAsset.h"
-#import "ZMUserSession+RequestProxy.h"
 
 // Utils
 
