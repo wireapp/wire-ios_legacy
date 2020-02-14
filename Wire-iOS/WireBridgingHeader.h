@@ -57,8 +57,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "Button.h"
-
 // Helper objects
 #import "PushTransition.h"
 #import "PopTransition.h"
@@ -66,7 +64,6 @@
 #import "CrossfadeTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
-#import "AuthenticationCoordinatedViewController.h"
 
 // Utils
 
