@@ -18,7 +18,18 @@
 
 import Foundation
 
-extension UIView {///TODO: delay?
+extension UIView {
+    @objc(wr_animateWithEasing:delay:duration:animations:completion:)
+    class func wr_animate(easing: EasingFunction,
+                          delayTime: TimeInterval,
+                          duration: TimeInterval,
+                          animations: @escaping () -> Void,
+                          completion: @escaping ResultHandler) {
+        delay(delayTime) {
+            animate(easing: easing, duration: duration, animations: animations, completion: completion)
+        }
+    }
+
     @objc(wr_animateWithEasing:duration:animations:completion:)
     class func wr_animate(easing: EasingFunction,
                           duration: TimeInterval,

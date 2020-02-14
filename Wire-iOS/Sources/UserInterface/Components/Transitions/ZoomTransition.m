@@ -79,7 +79,7 @@
         
         
         [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35
-         //TODO:                               delay:0.3
+                                        delay:0.3
                           animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
@@ -110,7 +110,7 @@
         
         
         [UIView wr_animateWithEasing:WREasingFunctionEaseOutExpo duration:0.35
-         //TODO:                               delay:0.3
+                                        delay:0.3
                           animations:^{
             toView.alpha = 1;
             toView.transform = CGAffineTransformIdentity;
