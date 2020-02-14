@@ -25,13 +25,10 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
         watchDog = SoundEventRulesWatchDog(ignoreTime: IgnoreTime)
     }
 
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
 
         watchDog = nil
@@ -40,7 +37,7 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
     func testThatWatchDogStaysMuted() {
         // given
         // when
-        watchDog?.isMuted = true
+        watchDog.isMuted = true
 
         // then
         XCTAssertFalse(watchDog.outputAllowed)
@@ -49,8 +46,8 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
     func testThatWatchDogAllowesOutputForAfterPassedIgnoreTime() {
         // given
         // when
-        watchDog?.isMuted = false
-        watchDog?.startIgnoreDate = Date(timeIntervalSinceNow: TimeInterval(-2 * IgnoreTime))
+        watchDog.isMuted = false
+        watchDog.startIgnoreDate = Date(timeIntervalSinceNow: TimeInterval(-2 * IgnoreTime))
 
         // then
         XCTAssertTrue(watchDog.outputAllowed)
@@ -59,8 +56,8 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
     func testThatWatchDogDisallowesOutputForNotYetPassedIgnoreTime() {
         // given
         // when
-        watchDog?.isMuted = false
-        watchDog?.startIgnoreDate = Date()
+        watchDog.isMuted = false
+        watchDog.startIgnoreDate = Date()
 
         // then
         XCTAssertFalse(watchDog.outputAllowed)
