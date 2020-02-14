@@ -19,19 +19,18 @@
 import XCTest
 @testable import Wire
 
-private let IgnoreTime: TimeInterval = 1 * 60
-
 final class SoundEventRulesWatchDogTests: XCTestCase {
-    var watchDog: SoundEventRulesWatchDog?
+    private let IgnoreTime: TimeInterval = 1 * 60
+    var watchDog: SoundEventRulesWatchDog!
 
-    func setUp() {
+    override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         watchDog = SoundEventRulesWatchDog(ignoreTime: IgnoreTime)
     }
 
-    func tearDown() {
+    override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
 
@@ -41,29 +40,29 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
     func testThatWatchDogStaysMuted() {
         // given
         // when
-        watchDog?.muted = true
+        watchDog?.isMuted = true
 
         // then
-        XCTAssertFalse(watchDog?.outputAllowed)
+        XCTAssertFalse(watchDog.outputAllowed)
     }
 
     func testThatWatchDogAllowesOutputForAfterPassedIgnoreTime() {
         // given
         // when
-        watchDog?.muted = false
+        watchDog?.isMuted = false
         watchDog?.startIgnoreDate = Date(timeIntervalSinceNow: TimeInterval(-2 * IgnoreTime))
 
         // then
-        XCTAssertTrue(watchDog?.outputAllowed)
+        XCTAssertTrue(watchDog.outputAllowed)
     }
 
     func testThatWatchDogDisallowesOutputForNotYetPassedIgnoreTime() {
         // given
         // when
-        watchDog?.muted = false
+        watchDog?.isMuted = false
         watchDog?.startIgnoreDate = Date()
 
         // then
-        XCTAssertFalse(watchDog?.outputAllowed)
+        XCTAssertFalse(watchDog.outputAllowed)
     }
 }
