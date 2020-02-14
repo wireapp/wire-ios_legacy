@@ -772,7 +772,7 @@
 		AF36C5A71E9F6F2000FADECC /* WireCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF36C5A61E9F6F2000FADECC /* WireCanvas.framework */; };
 		AFD4E72A1E449925002A4732 /* Analytics+StorableTrackingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFD4E7291E449925002A4732 /* Analytics+StorableTrackingEvent.swift */; };
 		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */; };
-		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */; };
+		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */; };
 		BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */; };
 		BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4D0651B613D4E008585A5 /* ColorKnobView.m */; };
 		BAED82B91B307AEE004D027F /* ZMUserSession+RequestProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.m */; };
@@ -2433,7 +2433,7 @@
 		B4D37F9F1D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		B4D37FA01D7EEDEB00D0C1BC /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventRulesWatchDog.swift; sourceTree = "<group>"; };
-		BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundEventRulesWatchDogTests.m; sourceTree = "<group>"; };
+		BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundEventRulesWatchDogTests.swift; sourceTree = "<group>"; };
 		BA8DC27A1B5FF5CF00103262 /* SketchColorPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SketchColorPickerController.h; path = Sketchpad/SketchColorPickerController.h; sourceTree = "<group>"; };
 		BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SketchColorPickerController.m; path = Sketchpad/SketchColorPickerController.m; sourceTree = "<group>"; };
 		BA9EAFAA1AD8121800279A40 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -5568,7 +5568,7 @@
 				5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */,
 				BFE49C311C0F39580061C16F /* NSString+FingerprintTests.m */,
 				EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */,
-				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */,
+				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */,
 				876AE75F1C159A9C00E3E743 /* NSStringFingerprintTests.m */,
 				874E85951BEA0D3C006A7EBF /* Wire-iOS-Tests-Bridging-Header.h */,
 				EF21A06F21305F6A00B9120C /* DeleteMessageTests.swift */,
@@ -8109,7 +8109,7 @@
 				EF29E89C212302CD0023B80C /* AudioMessageViewTests.swift in Sources */,
 				EF10CB20215105A400AEA8EA /* UITableViewCell+Snapshot.swift in Sources */,
 				5EF7BA72221C74ED00815625 /* MockUser+Convenience.swift in Sources */,
-				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.m in Sources */,
+				BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */,
 				5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */,
 				BF8EE5581D6351B100B0D6D7 /* InputBarEditViewTests.swift in Sources */,
 				BFE49C321C0F39590061C16F /* NSString+FingerprintTests.m in Sources */,
