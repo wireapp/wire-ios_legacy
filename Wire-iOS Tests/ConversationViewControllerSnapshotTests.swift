@@ -21,23 +21,22 @@ import XCTest
 @testable import Wire
 
 final class ConversationViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper  {
-    var coreDataFixture: CoreDataFixture!
-    
-    var sut: ConversationViewController!
 
+    var sut: ConversationViewController!
     var mockConversation: ZMConversation!
     var mockZMUserSession: MockZMUserSession!
+    var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
         super.setUp()
+
         coreDataFixture = CoreDataFixture()
-
         mockConversation = createTeamGroupConversation()
-
         mockZMUserSession = MockZMUserSession()
     
         let mockAccount = Account(userName: "mock user", userIdentifier: UUID())
-        let zClientViewController = ZClientViewController(account: mockAccount, selfUser: MockSelfUser())
+        let selfUser = MockUserType.createSelfUser(name: "Bob")
+        let zClientViewController = ZClientViewController(account: mockAccount, selfUser: selfUser)
 
         sut = ConversationViewController(session: mockZMUserSession,
                                          conversation: mockConversation,

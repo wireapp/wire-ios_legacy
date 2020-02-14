@@ -18,8 +18,9 @@
 
 import UIKit
 import Cartography
+import Ziphy
 
-class GiphyCollectionViewCell: UICollectionViewCell {
+final class GiphyCollectionViewCell: UICollectionViewCell {
 
     static let CellIdentifier = "GiphyCollectionViewCell"
 

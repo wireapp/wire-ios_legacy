@@ -146,7 +146,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             return
         }
 
-        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
@@ -242,7 +242,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 unauthenticatedSession.continueAfterBackupImportStep()
 
             case .executeFeedbackAction(let action):
-                currentViewController?.executeErrorFeedbackAction?(action)
+                currentViewController?.executeErrorFeedbackAction(action)
 
             case .presentAlert(let alertModel):
                 presentAlert(for: alertModel)
@@ -291,7 +291,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 advanceTeamCreation(value: newValue)
 
             case .displayInlineError(let error):
-                currentViewController?.displayError?(error)
+                currentViewController?.displayError(error)
 
             case .assignRandomProfileImage:
                 assignRandomProfileImage()

@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import Ziphy
 
 protocol GiphyConfirmationViewControllerDelegate {
     
