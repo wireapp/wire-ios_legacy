@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class SoundEventRulesWatchDogTests: XCTestCase {
-    private let IgnoreTime: TimeInterval = 1 * 60
+    private let IgnoreTime: TimeInterval = 60
     var watchDog: SoundEventRulesWatchDog!
 
     override func setUp() {
@@ -50,7 +50,7 @@ final class SoundEventRulesWatchDogTests: XCTestCase {
         watchDog.startIgnoreDate = Date(timeIntervalSinceNow: TimeInterval(-2 * IgnoreTime))
 
         // then
-        XCTAssertTrue(watchDog.outputAllowed)
+        XCTAssert(watchDog.outputAllowed)
     }
 
     func testThatWatchDogDisallowesOutputForNotYetPassedIgnoreTime() {
