@@ -127,10 +127,10 @@ final class ArticleView: UIView {
     }
     
     private func formatURL(_ URL: Foundation.URL) -> NSAttributedString {
-        let urlWithoutScheme = URL.absoluteString.removingURLScheme(URL.scheme!)
-        let displayString = urlWithoutScheme.removingPrefixWWW().removingTrailingForwardSlash()
+        let urlWithoutScheme = URL.urlWithoutScheme
+        let displayString = urlWithoutScheme.removingPrefixWWW.removingTrailingForwardSlash
 
-        if let host = URL.host?.removingPrefixWWW() {
+        if let host = URL.host?.removingPrefixWWW {
             return displayString.attributedString.addAttributes(authorHighlightAttributes, toSubstring: host)
         } else {
             return displayString.attributedString
