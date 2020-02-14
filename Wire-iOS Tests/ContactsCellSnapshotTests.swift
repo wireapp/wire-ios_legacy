@@ -21,12 +21,12 @@ import XCTest
 
 
 final class ContactsCellSnapshotTests: XCTestCase {
+
     var sut: ContactsCell!
     
     override func setUp() {
         super.setUp()
         XCTestCase.accentColor = .strongBlue
-
         sut = ContactsCell()
     }
     
@@ -36,26 +36,21 @@ final class ContactsCellSnapshotTests: XCTestCase {
     }
     
     func testForInviteButton() {
-        
-        let user = MockUser.mockUsers()[0]
-        sut.user = user
+        sut.user = SwiftMockLoader.mockUsers()[0]
         sut.action = .invite
         
         verifyInAllColorSchemes(matching: sut)
     }
     
     func testForOpenButton() {
-        
-        let user = MockUser.mockUsers()[0]
-        sut.user = user
+        sut.user = SwiftMockLoader.mockUsers()[0]
         sut.action = .open
         
         verifyInAllColorSchemes(matching: sut)
     }
     
     func testForOpenButtonWithALongUsername() {
-        
-        let user = MockUser.mockUsers()[0]
+        let user = SwiftMockLoader.mockUsers()[0]
         user.name = "A very long username which should be clipped at tail"
         sut.user = user
         sut.action = .open
@@ -64,9 +59,8 @@ final class ContactsCellSnapshotTests: XCTestCase {
     }
     
     func testForNoSubtitle() {
-        
-        let user = MockUser.mockUsers()[0]
-        (user as Any as! MockUser).handle = nil
+        let user = SwiftMockLoader.mockUsers()[0]
+        user.handle = nil
         sut.user = user
         sut.action = .open
         

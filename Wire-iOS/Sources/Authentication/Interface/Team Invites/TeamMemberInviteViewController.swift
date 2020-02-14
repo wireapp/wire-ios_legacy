@@ -193,4 +193,14 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
         compactWidthConstraint?.isActive = traitCollection.horizontalSizeClass == .compact
         regularWidthConstraint?.isActive = traitCollection.horizontalSizeClass != .compact
     }
+
+    // MARK: - AuthenticationCoordinatedViewController
+    
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
 }
