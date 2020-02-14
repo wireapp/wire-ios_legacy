@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -18,8 +17,6 @@
 
 import Foundation
 
-@objc
-protocol MediaPlayerDelegate: NSObjectProtocol {
-    @objc(mediaPlayer:didChangeToState:)
-    func mediaPlayer(_ mediaPlayer: (MediaPlayer & NSObject), didChangeTo state: MediaPlayerState)
+protocol MediaPlayerDelegate: class {
+    func mediaPlayer(_ mediaPlayer: MediaPlayer, didChangeTo state: MediaPlayerState)
 }

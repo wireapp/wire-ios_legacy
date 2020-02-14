@@ -51,13 +51,13 @@ final class ConversationContentViewController: UIViewController {
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
     
-    private var activeMediaPlayerObserver: NSKeyValueObservation?
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [IndexPath: CGFloat] = [:]
     private var hasDoneInitialLayout = false
     private var onScreen = false
     private weak var messageVisibleOnLoad: ZMConversationMessage?
-    
+    private var token: NSObjectProtocol?
+
     init(conversation: ZMConversation,
          message: ZMConversationMessage? = nil,
          mediaPlaybackManager: MediaPlaybackManager?,
@@ -70,9 +70,14 @@ final class ConversationContentViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         
         self.mediaPlaybackManager = mediaPlaybackManager
+       
         
         messagePresenter.targetViewController = self
         messagePresenter.modalTargetController = parent
+        
+        token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
+            self?.updateMediaBar()
+        }
     }
     
     @available(*, unavailable)
@@ -143,9 +148,6 @@ final class ConversationContentViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         onScreen = true
-        activeMediaPlayerObserver = mediaPlaybackManager?.observe(\.activeMediaPlayer, options: [.initial, .new]) { [weak self] _, _ in
-            self?.updateMediaBar()
-        }
         
         for cell in tableView.visibleCells {
             cell.willDisplayCell()

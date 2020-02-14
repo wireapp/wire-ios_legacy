@@ -25,12 +25,12 @@ protocol BreathLoadingBarDelegate: class {
     func animationDidStopped()
 }
 
-class BreathLoadingBar: UIView {
+final class BreathLoadingBar: UIView {
     weak var delegate: BreathLoadingBarDelegate?
 
     var heightConstraint: NSLayoutConstraint?
 
-    public var animating: Bool = false {
+    var animating: Bool = false {
         didSet {
             guard animating != oldValue else { return}
 
@@ -142,7 +142,7 @@ class BreathLoadingBar: UIView {
         anim.fillMode = .forwards
         anim.repeatCount = .infinity
         anim.duration = animationDuration
-        anim.timingFunction = CAMediaTimingFunction.easeInOutSine()
+        anim.timingFunction = EasingFunction.easeInOutSine.timingFunction
         self.layer.add(anim, forKey: BreathLoadingAnimationKey)
     }
 
@@ -152,7 +152,7 @@ class BreathLoadingBar: UIView {
         self.layer.removeAnimation(forKey: BreathLoadingAnimationKey)
     }
 
-    static public func withDefaultAnimationDuration() -> BreathLoadingBar {
+    static func withDefaultAnimationDuration() -> BreathLoadingBar {
         return BreathLoadingBar(animationDuration: TimeInterval.SyncBar.defaultAnimationDuration)
     }
 

@@ -16,11 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class LoadingViewControllerTests: ZMSnapshotTestCase {
+final class LoadingViewControllerTests: XCTestCase {
     
     func testThatItShowsLoadingIndicator() {
         // Given
@@ -34,7 +34,7 @@ final class LoadingViewControllerTests: ZMSnapshotTestCase {
         sut.showLoadingView = true
         
         // then
-        verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
     
     func testThatItShowsLoadingIndicatorWithSubtitle() {
@@ -50,7 +50,7 @@ final class LoadingViewControllerTests: ZMSnapshotTestCase {
         sut.showLoadingView = true
         
         // then
-        verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
     
 }

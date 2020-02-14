@@ -25,7 +25,6 @@
 // UI
 #import "SCSiriWaveformView.h"
 #import "SwizzleTransition.h"
-#import "CAMediaTimingFunction+AdditionalEquations.h"
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 #import "TokenTextAttachment.h"
@@ -58,8 +57,6 @@
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
 
-#import "Button.h"
-
 // Helper objects
 #import "PushTransition.h"
 #import "PopTransition.h"
@@ -67,7 +64,6 @@
 #import "CrossfadeTransition.h"
 #import "MediaAsset.h"
 #import "ZMUserSession+RequestProxy.h"
-#import "AuthenticationCoordinatedViewController.h"
 
 // Utils
 
@@ -77,18 +73,6 @@
 #import "DeviceOrientationObserver.h"
 #import "AVSLogObserver.h"
 #import "SoundEventRulesWatchDog.h"
-#import "MessageType.h"
 #import "UIViewController+LoadingView.h"
 
-#import "ProgressSpinner.h"
-#import "ProgressSpinner+Internal.h"
-
-#import "CABasicAnimation+Rotation.h"
 #import "EmoticonSubstitutionConfiguration.h"
-
-// Audio player
-#import "AudioTrackPlayer.h"
-#import "AudioTrackPlayer+Private.h"
-
-// Invite
-#import "ShareItemProvider.h"

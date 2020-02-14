@@ -25,7 +25,7 @@ final class MediaPlayerController: NSObject {
     let message: ZMConversationMessage
     var player: AVPlayer?
     weak var delegate: MediaPlayerDelegate?
-    fileprivate var playerRateObserver : NSKeyValueObservation!
+    fileprivate var playerRateObserver: NSKeyValueObservation!
 
     init(player: AVPlayer, message: ZMConversationMessage, delegate: MediaPlayerDelegate) {
         self.player = player
@@ -62,7 +62,7 @@ extension MediaPlayerController: MediaPlayer {
         return message
     }
 
-    var state: MediaPlayerState {
+    var state: MediaPlayerState? {
         if player?.rate > 0 {
             return MediaPlayerState.playing
         } else {
