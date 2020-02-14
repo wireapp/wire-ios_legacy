@@ -33,8 +33,8 @@ extension Notification.Name {
 
 private let zmLog = ZMSLog(tag: "AppDelegate")
 
-final class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+class AppDelegate: UIResponder, UIApplicationDelegate {
+
     @objc
     var window: UIWindow? {
         get {
@@ -75,6 +75,14 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc
     var mediaPlaybackManager: MediaPlaybackManager? {
         return (rootViewController.visibleViewController as? ZClientViewController)?.mediaPlaybackManager
+    }
+
+    // When running production code, this should always be true to ensure that we set the self user provider
+    // on the `SelfUser` helper. The `TestingAppDelegate` subclass should override this with `false` in order
+    // to require explict configuration of the self user.
+    
+    var shouldConfigureSelfUserProvider: Bool {
+        return true
     }
     
     override init() {
