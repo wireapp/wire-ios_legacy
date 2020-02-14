@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -15,34 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import Foundation
 @testable import Wire
-import SnapshotTesting
 
-final class ProfileTitleViewSnapshotTests: XCTestCase {
+extension MockUserType: ProfileImageFetchable {
 
-    var sut: ProfileTitleView!
-    var mockUser: MockUserType!
+    func fetchProfileImage(session: ZMUserSessionInterface,
+                           cache: ImageCache<UIImage> = defaultUserImageCache,
+                           sizeLimit: Int? = nil,
+                           desaturate: Bool = false,
+                           completion: @escaping (UIImage?, Bool) -> Void) {
 
-    override func setUp() {
-        super.setUp()
-        sut = ProfileTitleView(frame: .init(origin: .zero, size: CGSize(width: 320, height: 44)))
-        mockUser = .createUser(name: "Bill Chan")
-    }
-
-    override func tearDown() {
-        sut = nil
-        mockUser = nil
-        super.tearDown()
-    }
-
-    func testForDarkScheme() {
-        sut.configure(with: mockUser, variant: .dark)
-        verify(matching: sut)
-    }
-
-    func testForLightScheme() {
-        sut.configure(with: mockUser, variant: .light)
-        verify(matching: sut)
+        let image = completeImageData.flatMap(UIImage.init)
+        completion(image, false)
     }
 }

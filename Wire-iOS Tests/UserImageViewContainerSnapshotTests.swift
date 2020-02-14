@@ -23,13 +23,13 @@ import SnapshotTesting
 final class UserImageViewContainerSnapshotTests: XCTestCase {
     
     var sut: UserImageViewContainer!
-    var mockUser: MockUser!
+    var mockUser: MockUserType!
 
     override func setUp() {
         super.setUp()
 
-        mockUser = MockUser.mockUsers()!.first! as Any as? MockUser
-        mockUser.profileImage = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
+        mockUser = SwiftMockLoader.mockUsers().first
+        mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").data()
     }
     
     override func tearDown() {

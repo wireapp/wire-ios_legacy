@@ -63,7 +63,7 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
 
     func testForContactsWithoutSections() {
         // Given
-        sut.dataSource.ungroupedSearchResults = MockUser.mockUsers()
+        sut.dataSource.ungroupedSearchResults = SwiftMockLoader.mockUsers()
 
         // When
         simulateSearch(withResults: true)
@@ -88,8 +88,8 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
 
     func testForContactsAndIndexSectionBarAreShown() {
         // Given
-        let mockUsers = MockLoader.mockObjects(of: MockUser.self, fromFile: "people-15Sections.json") as? [MockUser]
-        sut.dataSource.ungroupedSearchResults = mockUsers ?? []
+        let mockUsers = SwiftMockLoader.mockUsers(fromResource: "people-15Sections.json")
+        sut.dataSource.ungroupedSearchResults = mockUsers
 
         // When
         simulateSearch(withResults: true)

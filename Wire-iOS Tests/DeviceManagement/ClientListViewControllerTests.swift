@@ -22,7 +22,7 @@ import XCTest
 final class ClientListViewControllerTests: ZMSnapshotTestCase {
 
     var sut: ClientListViewController!
-    var mockUser: MockUser!
+    var mockUser: MockUserType!
     var client: UserClient!
     var selfClient: UserClient!
 
@@ -31,8 +31,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
     override func setUp() {
         super.setUp()
 
-        mockUser = MockUser.firstMockUser()
-
+        mockUser = SwiftMockLoader.mockUsers().first
         selfClient = mockUserClient()
         client = mockUserClient()
     }

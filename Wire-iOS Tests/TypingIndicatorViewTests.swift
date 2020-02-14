@@ -36,13 +36,13 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
     }
     
     func testOneTypingUser() {
-        sut.typingUsers = Array(MockUser.mockUsers().prefix(1))
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(1))
         sut.layoutIfNeeded()
         verify(view: sut)
     }
     
     func testTwoTypingUsers() {
-        sut.typingUsers = Array(MockUser.mockUsers().prefix(2))
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(2))
         sut.layoutIfNeeded()
         verify(view: sut)
     }
@@ -52,7 +52,7 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
-        sut.typingUsers = Array(MockUser.mockUsers().prefix(5))
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
         sut.layoutIfNeeded()
         verify(view: sut)
     }
