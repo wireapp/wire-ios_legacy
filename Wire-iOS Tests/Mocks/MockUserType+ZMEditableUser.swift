@@ -18,10 +18,4 @@
 
 import Foundation
 
-extension MockUserType: ZMEditableUser {
-
-    var phoneNumber: String! {
-        return "+123456789"
-    }
-
-}
+extension MockUserType: ZMEditableUser { }

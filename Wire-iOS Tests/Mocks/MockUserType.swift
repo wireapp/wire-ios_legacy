@@ -76,6 +76,8 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var emailAddress: String? = nil
 
+    var phoneNumber: String? = "+123456789"
+
     var accentColorValue: ZMAccentColor = .strongBlue
 
     var availability: Availability = .none
