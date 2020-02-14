@@ -27,7 +27,7 @@ import UIKit
 }
 
 /// Landing screen for choosing how to authenticate.
-class LandingViewController: AuthenticationStepViewController {
+final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - State
 
@@ -488,4 +488,14 @@ class LandingViewController: AuthenticationStepViewController {
         SessionManager.shared!.select(account)
     }
 
+
+    // MARK: - AuthenticationCoordinatedViewController
+    
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
 }
