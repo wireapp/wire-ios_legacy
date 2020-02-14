@@ -52,6 +52,8 @@ class SwiftMockUser: NSObject, UserType {
     var initials: String? = nil
     
     var emailAddress: String? = nil
+
+    var phoneNumber: String? = nil
     
     var isSelfUser: Bool = true
     
