@@ -17,7 +17,7 @@
 // 
 
 final class SoundEventRulesWatchDog {
-    var startIgnoreDate: Date? 
+    var startIgnoreDate: Date?
     var ignoreTime: TimeInterval
     /// Enables/disables any sound playback.
     var isMuted = false
