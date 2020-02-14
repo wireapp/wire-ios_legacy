@@ -19,8 +19,11 @@
 extension String {
     
     func split(every: Int) -> [String] {
-        return stride(from: 0, to: count, by: every).map {
-            String(Array(Array(self)[$0..<min($0 + every, count)]))
+        return stride(from: 0, to: count, by: every).map { i in
+            let start = index(startIndex, offsetBy: i)
+            let end = index(start, offsetBy: every, limitedBy: endIndex) ?? endIndex
+            
+            return String(self[start..<end])
         }
     }
     
