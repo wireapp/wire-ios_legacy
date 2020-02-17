@@ -63,20 +63,19 @@ extension AppRootViewController: URLActionDelegate {
             let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
                                           message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                           preferredStyle: .alert)
-            let agreeAction = UIAlertAction(title: "general.ok".localized,
-                                            style: .default) { _ in
-                                                self.showLoadingView = true
-                                                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                                                    self.showLoadingView = false
-                                                    switch result {
-                                                    case let .success(environment):
-                                                        BackendEnvironment.shared = environment
-                                                    case let .failure(error):
-                                                        if let error = error as? LocalizedError {
-                                                            self.showAlert(for: error)
-                                                        }
-                                                    }
-                                                }
+            let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
+                self.showLoadingView = true
+                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
+                    self.showLoadingView = false
+                    switch result {
+                    case let .success(environment):
+                        BackendEnvironment.shared = environment
+                    case let .failure(error):
+                        if let error = error as? LocalizedError {
+                            self.showAlert(for: error)
+                        }
+                    }
+                }
             }
             alert.addAction(agreeAction)
             
