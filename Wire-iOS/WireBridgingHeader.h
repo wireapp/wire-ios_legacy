@@ -66,7 +66,6 @@
 
 // Utils
 
-#import "NSString+Fingerprint.h"
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "AVAsset+VideoConvert.h"
 #import "DeviceOrientationObserver.h"
