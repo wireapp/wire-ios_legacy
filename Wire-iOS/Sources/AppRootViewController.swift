@@ -218,6 +218,12 @@ final class AppRootViewController: UIViewController {
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
+        // When transitioning states, invalidate the SelfUser. If we transition to the authenticated
+        // state, it will be revalidated.
+        if AppDelegate.shared.shouldConfigureSelfUserProvider {
+            SelfUser.provider = nil
+        }
+
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
@@ -248,6 +254,10 @@ final class AppRootViewController: UIViewController {
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()

@@ -20,16 +20,18 @@ import XCTest
 @testable import Wire
 
 final class ConversationListViewControllerViewModelTests: XCTestCase {
-    var sut: ConversationListViewController.ViewModel!
-    fileprivate var mockViewController: MockConversationListContainer!
 
-    var mockConversation: ZMConversation!
+    private var sut: ConversationListViewController.ViewModel!
+    private var mockViewController: MockConversationListContainer!
+    private var selfUser: MockUserType!
+    private var mockConversation: ZMConversation!
 
     override func setUp() {
         super.setUp()
 
         let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        selfUser = .createSelfUser(name: "Bob")
+        sut = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
         mockViewController = MockConversationListContainer(viewModel: sut)
         sut.viewController = mockViewController
     }
@@ -37,6 +39,8 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
     override func tearDown() {
         sut = nil
         mockViewController = nil
+        selfUser = nil
+        mockConversation = nil
 
         super.tearDown()
     }
@@ -60,7 +64,7 @@ final class ConversationListViewControllerViewModelTests: XCTestCase {
         XCTAssertFalse(result)
 
         /// WHEN
-        MockUser.mockSelf().handle = "blah"
+        selfUser.handle = "blah"
         result = sut.showPushPermissionDeniedDialogIfNeeded()
 
         /// THEN

@@ -1,3 +1,4 @@
+//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -15,34 +16,20 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import XCTest
+import Foundation
 @testable import Wire
-import SnapshotTesting
 
-final class ProfileTitleViewSnapshotTests: XCTestCase {
+/// The App Delegate to use for the test target.
 
-    var sut: ProfileTitleView!
-    var mockUser: MockUserType!
+@objc(TestingAppDelegate)
+final class TestingAppDelegate: AppDelegate {
 
-    override func setUp() {
-        super.setUp()
-        sut = ProfileTitleView(frame: .init(origin: .zero, size: CGSize(width: 320, height: 44)))
-        mockUser = .createUser(name: "Bill Chan")
+    // We don't want the self user to be automatically configured as it is in production code.
+    // Explicit configuration (via `SelfUser.provider = someSelfUserProvider` ) helps clarify
+    // mocking scenarios by asserting that the test writer provides the self user themselves.
+    
+    override var shouldConfigureSelfUserProvider: Bool {
+        return false
     }
 
-    override func tearDown() {
-        sut = nil
-        mockUser = nil
-        super.tearDown()
-    }
-
-    func testForDarkScheme() {
-        sut.configure(with: mockUser, variant: .dark)
-        verify(matching: sut)
-    }
-
-    func testForLightScheme() {
-        sut.configure(with: mockUser, variant: .light)
-        verify(matching: sut)
-    }
 }

@@ -162,9 +162,8 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "{preview-url}@mention")
         
         // when
-        let mockUser = MockUser.mockUsers()[0]
-        mockUser.remoteIdentifier = UUID()
-        
+        let mockUser = SwiftMockLoader.mockUsers()[0]
+
         let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: false)
@@ -179,9 +178,8 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "@mention{preview-url} lala")
         
         // when
-        let mockUser = MockUser.mockUsers()[0]
-        mockUser.remoteIdentifier = UUID()
-        
+        let mockUser = SwiftMockLoader.mockUsers()[0]
+
         let mention = Mention(range: (textMessageData.messageText! as NSString).range(of: "@mention"), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: false)
@@ -198,9 +196,8 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "Z͉̬͎̞̙ͅA̻̹͉̪̰͐̂ͯ̈̔L̵̝͍̒̇̄͋̂ͬG̴͈̬̝̝̙̺̀̌̎ͭ̇̚O̿̔ͪ̓̋ͭ҉̘̻̗̜̗͎̗@͍ͣͯ́ͨ̄̆̐Z̾ͪ̾ͥ̎Ả͖̫͔̮ͪͧ̔ͨ̀L̰͖̹͚̲̈́ͩ͋͒̅G̴͆Ö̬̬̰̱̦̱͛̅̔ͩ̇̔")
         
         // when
-        let mockUser = MockUser.mockUsers()[0]
-        mockUser.remoteIdentifier = UUID()
-        
+        let mockUser = SwiftMockLoader.mockUsers()[0]
+
         let mention = Mention(range: NSRange(location: 57, length: 54), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: false)
@@ -214,9 +211,8 @@ class Message_FormattingTests: XCTestCase {
         let textMessageData = createTextMessageData(withMessageTemplate: "Hello 👩‍❤️‍💋‍👩! @👨‍👨‍👧‍👦")
         
         // when
-        let mockUser = MockUser.mockUsers()[0]
-        mockUser.remoteIdentifier = UUID()
-        
+        let mockUser = SwiftMockLoader.mockUsers()[0]
+
         let mention = Mention(range: NSRange(location: 19, length: 12), user: mockUser)
         textMessageData.mentions = [mention]
         let formattedText = NSAttributedString.format(message: textMessageData, isObfuscated: false)
