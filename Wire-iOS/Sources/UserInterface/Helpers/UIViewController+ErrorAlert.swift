@@ -17,8 +17,7 @@
 // 
 
 extension UIViewController {
-    func showAlert(for error: Error,
-                   handler: AlertActionHandler? = nil) {
+    func showAlert(for error: Error, handler: AlertActionHandler? = nil) {
         let nsError: NSError = error as NSError
         var message = ""
 
@@ -80,7 +79,7 @@ extension UIViewController {
             message = error.localizedDescription
         }
 
-        let alert = UIAlertController.alertWithOKButton(message: message)
+        let alert = UIAlertController.alertWithOKButton(message: message, okActionHandler: handler)
         present(alert, animated: true)
     }
 }
