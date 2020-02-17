@@ -117,6 +117,15 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         toggleConstraints()
     }
 
+    // MARK: - AuthenticationCoordinatedViewController
+
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
 }
 
 

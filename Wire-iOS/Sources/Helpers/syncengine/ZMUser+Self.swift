@@ -20,7 +20,7 @@ import Foundation
 
 typealias EditableUser = ZMUser & ZMEditableUser
 
-protocol SelfUserProvider {
+protocol SelfUserProviderUI {
     static var selfUser: EditableUser { get }
 }
 
@@ -32,7 +32,7 @@ extension ZMUser {
     @objc
     static func selfUser() -> EditableUser! {
 
-        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProvider.Type {
+        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProviderUI.Type {
             return mockUserClass.selfUser
         } else {
             guard let session = ZMUserSession.shared() else { return nil }

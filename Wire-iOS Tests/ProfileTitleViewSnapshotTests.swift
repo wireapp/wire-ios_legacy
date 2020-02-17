@@ -22,15 +22,12 @@ import SnapshotTesting
 final class ProfileTitleViewSnapshotTests: XCTestCase {
 
     var sut: ProfileTitleView!
-    var mockUser: SwiftMockUser!
+    var mockUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         sut = ProfileTitleView(frame: .init(origin: .zero, size: CGSize(width: 320, height: 44)))
-
-        mockUser = SwiftMockUser()
-
-        mockUser.name = "Bill Chan"
+        mockUser = .createUser(name: "Bill Chan")
     }
 
     override func tearDown() {

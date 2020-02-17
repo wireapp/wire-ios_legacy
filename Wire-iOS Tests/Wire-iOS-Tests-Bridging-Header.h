@@ -22,7 +22,6 @@
 
 @import WireSyncEngine;
 
-#import "NSString+Fingerprint.h"
 #import "ZMSnapshotTestCase+Internal.h"
 #import "MockUser.h"
 #import "SplitViewController.h"

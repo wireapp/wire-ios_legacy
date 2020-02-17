@@ -30,21 +30,17 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
   
     func testTestForAUserWithNoTeam() {
         createSut(userName: "Tarja Turunen", teamMember: false)
-
         verify(view: sut.view)
     }
 
     func testTestForAUserWithALongName() {
         createSut(userName: "Johannes Chrysostomus Wolfgangus Theophilus Mozart")
-
         verify(view: sut.view)
     }
 
     private func createSut(userName: String, teamMember: Bool = true) {
-        MockUser.mockSelf()?.name = userName
-        MockUser.mockSelf()?.isTeamMember = teamMember
-        
-        sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
+        let selfUser = MockUserType.createSelfUser(name: userName, inTeam: teamMember ? UUID() : nil)
+        sut = SelfProfileViewController(selfUser: selfUser, userRightInterfaceType: MockUserRight.self)
         sut.view.backgroundColor = .black
     }
 }

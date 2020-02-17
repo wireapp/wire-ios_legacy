@@ -16,36 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import Foundation
 
-public extension NSString {
-
-    // MARK: - URL Formatting
-
-    func removingPrefixWWW() -> String {
-        return replacingOccurrences(of: "www.", with: "", options: .anchored, range: NSMakeRange(0, self.length))
-    }
-
-    func removingTrailingForwardSlash() -> String {
-        return replacingOccurrences(of: "/", with: "", options: [.anchored, .backwards], range: NSMakeRange(0, self.length))
-    }
-
-    func removingURLScheme(_ scheme: String) -> String {
-        return replacingOccurrences(of: scheme + "://", with: "", options: .anchored, range: NSMakeRange(0, self.length))
-    }
-}
-
 public extension String {
-    
+
     var containsURL: Bool {
         return URLMatchesInString.count > 0
     }
-    
+
     var URLsInString: [URL?] {
         return URLMatchesInString.map(\.url)
     }
-    
+
     private var URLMatchesInString: [NSTextCheckingResult] {
         do {
             let urlDetector = try NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)

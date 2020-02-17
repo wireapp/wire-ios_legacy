@@ -118,20 +118,12 @@ extension ConversationViewController {
     }
 
     func updateRightNavigationItemsButtons() {
-        if UIApplication.isLeftToRightLayout {
-            navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
-        } else {
-            navigationItem.rightBarButtonItems = leftNavigationItems(forConversation: conversation)
-        }
+        navigationItem.rightBarButtonItems = rightNavigationItems(forConversation: conversation)
     }
 
     /// Update left navigation bar items
     func updateLeftNavigationBarItems() {
-        if UIApplication.isLeftToRightLayout {
-            navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
-        } else {
-            navigationItem.leftBarButtonItems = rightNavigationItems(forConversation: conversation)
-        }
+        navigationItem.leftBarButtonItems = leftNavigationItems(forConversation: conversation)
     }
 
     private func shouldShowCollectionsButton() -> Bool {

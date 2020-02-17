@@ -248,13 +248,13 @@ public extension NSAttributedString {
 }
 
 extension Sequence where Iterator.Element == NSAttributedString {
-    public func joined(separator: NSAttributedString) -> NSAttributedString {
+    public func joined(separator: NSAttributedString? = nil) -> NSAttributedString {
         let result = NSMutableAttributedString()
         
         var first = true
         
         for string in self {
-            if !first {
+            if !first, let separator = separator {
                 result.append(separator)
             }
             result.append(string)

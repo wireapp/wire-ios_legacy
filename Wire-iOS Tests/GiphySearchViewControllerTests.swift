@@ -18,6 +18,7 @@
 
 import XCTest
 @testable import Wire
+import Ziphy
 
 final class GiphySearchViewControllerTests: XCTestCase {
     

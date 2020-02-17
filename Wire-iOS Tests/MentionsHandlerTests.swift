@@ -95,7 +95,7 @@ class MentionsHandlerTests: XCTestCase {
     }
 
     func testThatItReplacesMention() {
-        let mockUser = MockUser.mockUsers()[0]
+        let mockUser = SwiftMockLoader.mockUsers()[0]
         let query = "Hi @bill how are you?"
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }
@@ -113,7 +113,7 @@ class MentionsHandlerTests: XCTestCase {
     }
 
     func testThatItAppendsSpaceAfterMention() {
-        let mockUser = MockUser.mockUsers()[0]
+        let mockUser = SwiftMockLoader.mockUsers()[0]
         let query = "Hi @bill"
         let handler = MentionsHandler(text: query, cursorPosition: 4)
         guard let sut = handler else { XCTFail(); return }

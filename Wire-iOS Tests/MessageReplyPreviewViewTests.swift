@@ -87,7 +87,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Hello @user"
-        let mockUser = MockUser.mockUsers()[0]
+        let mockUser = SwiftMockLoader.mockUsers().first!
         let mention = Mention(range: NSRange(location: 6, length: 5), user: mockUser)
         textMessageData.mentions = [mention]
         message.backingTextMessageData = textMessageData

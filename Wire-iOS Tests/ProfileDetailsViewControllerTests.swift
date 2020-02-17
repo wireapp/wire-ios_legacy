@@ -24,13 +24,13 @@ import XCTest
 final class ProfileDetailsViewControllerTests: XCTestCase {
 
     var selfUserTeam: UUID!
-    var selfUser: MockUser!
+    var selfUser: MockUserType!
     var defaultRichProfile: [UserRichProfileField]!
     
     override func setUp() {
         super.setUp()
         selfUserTeam = UUID()
-        selfUser = MockUser.createSelfUser(name: "George Johnson", inTeam: selfUserTeam)
+        selfUser = MockUserType.createSelfUser(name: "George Johnson", inTeam: selfUserTeam)
         
         defaultRichProfile = [
             UserRichProfileField(type: "Title", value: "Chief Design Officer"),
@@ -51,7 +51,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUser_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
@@ -70,7 +70,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUser_NoSCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
 
@@ -89,7 +89,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUser_NoSCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.emailAddress = nil
@@ -108,7 +108,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_OneToOne_OtherUserIsPartner_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -128,7 +128,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserIsPartner_NoSCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.teamRole = .partner
@@ -148,7 +148,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_OneToOne_OtherUserIsPartner_NoSCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.teamRole = .partner
@@ -187,7 +187,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = false
-        selfUser.richProfile = nil
+        selfUser.richProfile = []
 
         let conversation = MockConversation.oneOnOneConversation()
         conversation.activeParticipants = [selfUser]
@@ -203,7 +203,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.readReceiptsEnabled = true
 
-        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
         guest.readReceiptsEnabled = true
@@ -225,7 +225,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
@@ -245,7 +245,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
@@ -266,7 +266,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -287,7 +287,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -309,7 +309,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.teamRole = .partner
         selfUser.readReceiptsEnabled = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -328,12 +328,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserInTeam_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -350,13 +350,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserInTeam_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
         
@@ -372,13 +372,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -395,14 +395,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserIsPartner_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
         
@@ -418,13 +418,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
 
@@ -441,14 +441,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_OneToOne_OtherUserIsGuest_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
         otherUser.emailAddress = nil
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.readReceiptsEnabled = true
         
@@ -468,7 +468,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_Group_OtherUser_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         
@@ -487,7 +487,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUser_NoSCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         
@@ -505,7 +505,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUser_NoSCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.emailAddress = nil
@@ -522,7 +522,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsPartner_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -541,7 +541,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsPartner_NoSCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.teamRole = .partner
@@ -560,7 +560,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsPartner_NoSCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = []
         otherUser.teamRole = .partner
@@ -597,7 +597,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.availability = .busy
         selfUser.readReceiptsEnabled = false
-        selfUser.richProfile = nil
+        selfUser.richProfile = []
 
         let group = MockConversation.groupConversation()
         group.activeParticipants = [selfUser]
@@ -609,7 +609,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsGuest_SCIM() {
         // GIVEN
-        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
 
@@ -623,7 +623,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsExpiringGuest_SCIM() {
         // GIVEN
-        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         guest.isGuestInConversation = true
         guest.expiresAfter = 3600
         guest.richProfile = defaultRichProfile
@@ -642,7 +642,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
 
@@ -660,7 +660,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
@@ -679,7 +679,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -698,7 +698,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
@@ -718,7 +718,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         selfUser.teamRole = .partner
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -735,12 +735,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserInTeam_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
         
@@ -756,13 +756,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserInTeam_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.emailAddress = nil
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -776,13 +776,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -798,13 +798,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_Group_OtherUserIsAdmin_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .admin
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -820,14 +820,14 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_OtherUserIsPartner_ViewerIsGuest_SCIM_NoEmail() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.teamRole = .partner
         otherUser.emailAddress = nil
         
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -841,13 +841,13 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_Group_OtherUserIsGuest_ViewerIsGuest_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
         otherUser.isGuestInConversation = true
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: nil)
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -861,12 +861,12 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
     
     func test_Group_OtherUserInTeam_ViewerIsGuestFromOtherTeam_SCIM() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.availability = .busy
         otherUser.readReceiptsEnabled = true
         otherUser.richProfile = defaultRichProfile
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: UUID())
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: UUID())
         guest.isGuestInConversation = true
         guest.teamRole = .admin
 
@@ -882,11 +882,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         let otherTeamID = UUID()
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .admin
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
 
@@ -904,11 +904,11 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         // GIVEN
         let otherTeamID = UUID()
         
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: otherTeamID)
         otherUser.isGuestInConversation = true
         otherUser.teamRole = .admin
 
-        let guest = MockUser.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
+        let guest = MockUserType.createConnectedUser(name: "Bob the Guest", inTeam: otherTeamID)
         guest.isGuestInConversation = true
         guest.richProfile = defaultRichProfile
         guest.emailAddress = nil
@@ -930,7 +930,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.isGroupAdminInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -951,7 +951,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.isGroupAdminInConversation = false
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -972,7 +972,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.isGroupAdminInConversation = true
         otherUser.isGuestInConversation = true
         otherUser.availability = .busy
@@ -994,7 +994,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.isGroupAdminInConversation = true
         selfUser.canModifyOtherMemberInConversation = true
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.isGroupAdminInConversation = true
         otherUser.isWirelessUser = true
         otherUser.availability = .busy
@@ -1016,7 +1016,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
         selfUser.isGroupAdminInConversation = false
         selfUser.canModifyOtherMemberInConversation = false
 
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: selfUserTeam)
         otherUser.isGroupAdminInConversation = true
         otherUser.availability = .busy
         otherUser.richProfile = defaultRichProfile
@@ -1036,7 +1036,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_Group_ConnectionRequest() {
         // GIVEN
-        let otherUser = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let otherUser = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         otherUser.isConnected = false
         otherUser.readReceiptsEnabled = true
         otherUser.isGuestInConversation = true
@@ -1054,7 +1054,7 @@ final class ProfileDetailsViewControllerTests: XCTestCase {
 
     func test_ProfileViewer_OtherUserIsGuest() {
         // GIVEN
-        let guest = MockUser.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
+        let guest = MockUserType.createConnectedUser(name: "Catherine Jackson", inTeam: nil)
         /// Notice: rich profile is not visible in this case
         guest.richProfile = defaultRichProfile
 
