@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-class TypingIndicatorViewTests: ZMSnapshotTestCase {
+final class TypingIndicatorViewSnapshotTests: XCTestCase {
 
     var sut: TypingIndicatorView!
     
@@ -27,7 +28,6 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
         super.setUp()
         sut = TypingIndicatorView()
         sut.translatesAutoresizingMaskIntoConstraints = false
-        sut.layer.speed = 0
     }
 
     override func tearDown() {
@@ -37,23 +37,44 @@ class TypingIndicatorViewTests: ZMSnapshotTestCase {
     
     func testOneTypingUser() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(1))
-        sut.layoutIfNeeded()
-        verify(view: sut)
+        verify(matching: sut)
     }
     
     func testTwoTypingUsers() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(2))
-        sut.layoutIfNeeded()
-        verify(view: sut)
+        verify(matching: sut)
     }
     
     func testManyTypingUsers() {
         // limit width to test overflow behaviour
-        sut.translatesAutoresizingMaskIntoConstraints = false
         sut.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
-        sut.layoutIfNeeded()
-        verify(view: sut)
+        verify(matching: sut)
+    }
+
+    func testThatContainerIsHidden() {
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
+        sut.setHidden(true, animated: false)
+        
+        XCTAssertEqual(sut.container.alpha, 0)
+    }
+    
+    func testThatContainerIsHiddenWhenAnimated() {
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
+        sut.setHidden(true, animated: true)
+        
+        XCTAssertEqual(sut.container.alpha, 0)
+    }
+
+    func testThatLabelAndLineAreShownWhenAnimated() {
+        sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
+
+        let expectation = XCTestExpectation(description: "animation done")
+
+        sut.setHidden(false, animated: true)
+        
+        XCTAssertEqual(sut.container.alpha, 1)
+        XCTAssertFalse(self.sut.animatedPen.isAnimating)        
     }
 }
