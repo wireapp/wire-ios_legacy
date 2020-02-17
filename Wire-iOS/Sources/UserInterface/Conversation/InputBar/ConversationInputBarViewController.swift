@@ -20,9 +20,9 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
-    @objc
     func postImage(_ image: MediaAsset) {
-        sendController.sendMessage(withImageData: image.data())
+        guard let data = image.data() else { return }
+        sendController.sendMessage(withImageData: data)
     }
     
     ///TODO: chnage to didSet after ConversationInputBarViewController is converted to Swift

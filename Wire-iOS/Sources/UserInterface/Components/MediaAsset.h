@@ -26,7 +26,7 @@
 
 @property (nonatomic, readonly) CGSize size;
 
-- (NSData *)data;
+- (NSData * _Nullable)data;
 - (BOOL)isGIF;
 - (BOOL)isTransparent;
 
