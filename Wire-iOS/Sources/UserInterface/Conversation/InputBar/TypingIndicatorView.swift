@@ -26,7 +26,7 @@ final class AnimatedPenView : UIView {
     private let dots = UIImageView()
     private let pen = UIImageView()
     
-    public var isAnimating : Bool = false {
+    var isAnimating : Bool = false {
         didSet {
             pen.layer.speed = isAnimating ? 1 : 0
             pen.layer.beginTime = pen.layer.convertTime(CACurrentMediaTime(), from: nil)
@@ -110,21 +110,21 @@ final class AnimatedPenView : UIView {
 
 final class TypingIndicatorView: UIView {
     
-    public let nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
         label.textColor = .from(scheme: .textPlaceholder)
 
         return label
     }()
-    public let animatedPen = AnimatedPenView()
-    public let container: UIView = {
+    let animatedPen = AnimatedPenView()
+    let container: UIView = {
         let view = UIView()
         view.backgroundColor = .from(scheme: .background)
 
         return view
     }()
-    public let expandingLine: UIView = {
+    let expandingLine: UIView = {
         let view = UIView()
         view.backgroundColor = .from(scheme: .background)
 
@@ -133,13 +133,13 @@ final class TypingIndicatorView: UIView {
 
     private var expandingLineWidth : NSLayoutConstraint?
     
-    public var typingUsers: [UserType] = [] {
+    var typingUsers: [UserType] = [] {
         didSet {
             updateNameLabel()
         }
     }
     
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         
         addSubview(expandingLine)
@@ -183,7 +183,7 @@ final class TypingIndicatorView: UIView {
         nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
     }
     
-    public func setHidden(_ hidden : Bool, animated : Bool) {///TODO: test
+    func setHidden(_ hidden : Bool, animated : Bool) {
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0
