@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,17 +18,14 @@
 
 import Foundation
 
-extension AppDelegate {
-
-    func open(url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        do {
-            return try sessionManager?.openURL(url, options: options) ?? false
-        } catch let error as LocalizedError {
-            rootViewController.showAlert(for: error)
-            return false
-        } catch {
-            return false
-        }
+extension UIAlertController {
+    
+    convenience init(_ error: LocalizedError, preferredStyle: UIAlertController.Style) {
+        
+        let title = error.localizedDescription
+        let message = error.failureReason
+        
+        self.init(title: title, message: message, preferredStyle: preferredStyle)
     }
+    
 }
-
