@@ -131,10 +131,6 @@ final class AppRootViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        SessionManager.stopAVSLogging()
-    }
-
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
