@@ -20,7 +20,7 @@ import UIKit
 import Cartography
 
 
-class AnimatedPenView : UIView {
+final class AnimatedPenView : UIView {
     
     private let WritingAnimationKey = "writing"
     private let dots = UIImageView()
@@ -108,7 +108,7 @@ class AnimatedPenView : UIView {
 
 }
 
-@objcMembers class TypingIndicatorView: UIView {
+final class TypingIndicatorView: UIView {
     
     public let nameLabel: UILabel = {
         let label = UILabel()
@@ -183,7 +183,7 @@ class AnimatedPenView : UIView {
         nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
     }
     
-    public func setHidden(_ hidden : Bool, animated : Bool) {
+    public func setHidden(_ hidden : Bool, animated : Bool) {///TODO: test
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0
@@ -211,13 +211,12 @@ class AnimatedPenView : UIView {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
                 UIView.animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
-                delay(0.15) {
                 UIView.wr_animate(easing: .easeInQuad,
                                   duration: 0.15,
+                                  delayTime: 0.15,
                                   animations: showContainer, completion: { _ in
                     self.animatedPen.isAnimating = true
                 })
-                }
             }
             
         } else {
