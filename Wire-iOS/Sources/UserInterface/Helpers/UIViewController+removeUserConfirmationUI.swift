@@ -28,7 +28,7 @@ extension UIViewController {
     ///   - conversation: the current converation contains that user
     ///   - viewControllerDismiser: a ViewControllerDismisser to call when this UIViewController is dismissed
     func presentRemoveDialogue(
-        for participant: ZMUser,
+        for participant: UserType,
         from conversation: ZMConversation,
         dismisser: ViewControllerDismisser? = nil
         ) {
