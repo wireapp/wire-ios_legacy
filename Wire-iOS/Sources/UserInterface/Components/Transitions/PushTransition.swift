@@ -47,13 +47,13 @@ final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(toView)
         containerView.addSubview(fromView)
 
-        let duration = transitionDuration(using: transitionContext)
-
-        UIView.wr_animate(easing: .easeOutExpo, duration: duration, animations: {
+        UIView.wr_animate(easing: .easeOutExpo,
+                          duration: transitionDuration(using: transitionContext),
+                          animations: {
             fromView.transform = fromViewEndTransform
             toView.transform = .identity
         }) { finished in
-            fromView.transform = CGAffineTransform.identity
+            fromView.transform = .identity
             transitionContext.completeTransition(true)
         }
     }
