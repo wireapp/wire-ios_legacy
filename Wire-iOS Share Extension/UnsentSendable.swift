@@ -286,7 +286,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             try data.write(to: tempFileURL)
 
             if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
-                AVAsset.convertVideo(at: tempFileURL) { (url, _, error) in
+                AVAsset.convertVideoToUploadFormat(at: tempFileURL) { (url, _, error) in
                     completion(url, error)
                 }
             } else {

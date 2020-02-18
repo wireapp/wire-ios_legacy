@@ -25,7 +25,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 extension AVAsset {
     
-    public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
+    public static func convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
         
         let fileURL = URL(fileURLWithPath: inPath)
         let alteredAsset = AVAsset(url: fileURL)
@@ -59,7 +59,8 @@ extension AVAsset {
         }
     }
     
-    public static func convertVideo(at url: URL, toUploadFormatWithCompletion completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
+    public static func convertVideoToUploadFormat(at url: URL,
+                                                  completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
         let filename = URL(fileURLWithPath: URL(fileURLWithPath: url.lastPathComponent ).deletingPathExtension().absoluteString).appendingPathExtension("mp4").absoluteString
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
         

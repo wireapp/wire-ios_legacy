@@ -432,7 +432,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
-        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
+        AVAsset.convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
             if success {
                 audioPath.deleteFileAtPath()
                 self.delegate?.audioRecordViewControllerWantsToSendAudio(
