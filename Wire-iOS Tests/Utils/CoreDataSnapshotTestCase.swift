@@ -24,13 +24,27 @@ import XCTest
 /// of mock objects.
 class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
+    private struct SelfProvider: SelfUserProvider {
+
+        let selfUser: UserType & ZMEditableUser
+    }
+
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!
     var otherUser: ZMUser!
     var otherUserConversation: ZMConversation!
     var team: Team?
     var teamMember: Member?
-    let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian", "Brett", "Hannah", "Ana", "Paula"]
+
+    let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James",
+                     "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian",
+                     "Brett", "Hannah", "Ana", "Paula"]
+
+    // The provider to use when configuring `SelfUser.provider`, needed only when tested code
+    // invokes `SelfUser.current`. As we slowly migrate to `UserType`, we will use this more
+    // and the `var selfUser: ZMUser!` less.
+    //
+    var selfUserProvider: SelfUserProvider!
 
     override open func setUp() {
         super.setUp()
@@ -38,7 +52,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         setupTestObjects()
 
         MockUser.setMockSelf(selfUser)
-
+        selfUserProvider = SelfProvider(selfUser: selfUser)
     }
 
     override open func tearDown() {
@@ -49,6 +63,7 @@ class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
         team = nil
 
         MockUser.setMockSelf(nil)
+        selfUserProvider = nil
 
         super.tearDown()
     }
