@@ -99,7 +99,8 @@ final class KeyboardAvoidingViewController: UIViewController {
         bottomEdgeConstraint?.isActive = true
     }
     
-    @objc func keyboardFrameWillChange(_ notification: Notification?) {
+    @objc
+    private func keyboardFrameWillChange(_ notification: Notification?) {
         guard let bottomEdgeConstraint = bottomEdgeConstraint else { return }
         
         guard !disabledWhenInsidePopover || !isInsidePopover else {
@@ -122,9 +123,12 @@ final class KeyboardAvoidingViewController: UIViewController {
             bottomOffset = -abs(keyboardFrameInView.size.height)
         }
         
-        // When this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.
-        if modalPresentationStyle == .formSheet, let frame = presentationController?.frameOfPresentedViewInContainerView {
-            bottomOffset += frame.minY
+        // When the keyboard is visible &
+        // this controller's view is presented at a form sheet style on iPad, the view is has a top offset and the bottomOffset should be reduced.
+        if !keyboardFrameInView.origin.y.isInfinite,
+            modalPresentationStyle == .formSheet,
+            let frame = presentationController?.frameOfPresentedViewInContainerView {
+            bottomOffset += frame.minY ///TODO: no need to add when no keyboard
         }
         
         guard bottomEdgeConstraint.constant != bottomOffset else { return }
