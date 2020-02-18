@@ -70,11 +70,9 @@ final class TypingIndicatorViewSnapshotTests: XCTestCase {
     func testThatLabelAndLineAreShownWhenAnimated() {
         sut.typingUsers = Array(SwiftMockLoader.mockUsers().prefix(5))
 
-        let expectation = XCTestExpectation(description: "animation done")
-
         sut.setHidden(false, animated: true)
         
         XCTAssertEqual(sut.container.alpha, 1)
-        XCTAssertFalse(self.sut.animatedPen.isAnimating)        
+        XCTAssert(self.sut.animatedPen.isAnimating)        
     }
 }
