@@ -68,7 +68,7 @@ extension ConversationActionController {
         transitionToListAndEnqueue {
             conversation.clearMessageHistory()
             if leave {
-                conversation.removeOrShowError(participnant: ZMUser.selfUser())
+                conversation.removeOrShowError(participant: ZMUser.selfUser())
             }
         }
     }
