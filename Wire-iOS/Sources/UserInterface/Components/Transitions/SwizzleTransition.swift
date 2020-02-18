@@ -23,31 +23,31 @@ enum SwizzleTransitionDirection {
 
 final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let direction: SwizzleTransitionDirection
-    
+
     init(direction: SwizzleTransitionDirection = .vertical) {
         self.direction = direction
         super.init()
     }
-    
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let toView = transitionContext.toView,
               let fromView = transitionContext.fromView else {
             return
         }
         let containerView = transitionContext.containerView
-        
+
         containerView.addSubview(toView)
-        
+
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
         containerView.setNeedsLayout()
-        
+
         let durationPhase1: TimeInterval
         let durationPhase2: TimeInterval
         if direction == .horizontal {
@@ -60,7 +60,7 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
             durationPhase2 = 0.30
         }
         toView.alpha = 0
-        
+
         UIView.wr_animate(easing: .easeInQuad, duration: durationPhase1, animations: {
             fromView.alpha = 0
             fromView.layer.transform = self.direction == .horizontal ? CATransform3DMakeTranslation(48, 0, 0) : CATransform3DMakeTranslation(0, 48, 0)
