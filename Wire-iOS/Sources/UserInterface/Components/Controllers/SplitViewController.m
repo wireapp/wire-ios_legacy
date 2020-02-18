@@ -367,20 +367,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (id<UIViewControllerAnimatedTransitioning>)animatorForRightView
-{
-    if (self.layoutSize == SplitViewControllerLayoutSizeCompact && self.leftViewControllerRevealed) {
-        // Right view is not visible so we should not animate.
-        return [[CrossfadeTransition alloc] initWithDuration:0];
-    }
-    else if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
-        return [[SwizzleTransition alloc] init];
-    }
-    else {
-        return [[CrossfadeTransition alloc] init];
-    }
-}
-
 - (BOOL)transitionFromViewController:(UIViewController *)fromViewController
                     toViewController:(UIViewController *)toViewController
                        containerView:(UIView *)containerView

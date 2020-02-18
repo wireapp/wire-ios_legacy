@@ -30,4 +30,19 @@ extension SplitViewController {
     override open var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
+    
+    // MARK: - animator
+    @objc
+    var animatorForRightView: UIViewControllerAnimatedTransitioning? {
+        if layoutSize == .compact && isLeftViewControllerRevealed {
+            // Right view is not visible so we should not animate.
+            return CrossfadeTransition(duration: 0)
+        } else if layoutSize == .regularLandscape {
+            return SwizzleTransition() ///TODO: vertical
+        } else {
+            return CrossfadeTransition()
+        }
+    }
+    
+
 }

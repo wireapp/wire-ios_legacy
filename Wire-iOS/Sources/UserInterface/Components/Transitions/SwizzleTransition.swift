@@ -17,14 +17,14 @@
 // 
 
 enum SwizzleTransitionDirection {
-case horizontal
-case vertical
+    case horizontal
+    case vertical
 }
 
 final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let direction: SwizzleTransitionDirection
     
-    init(direction: SwizzleTransitionDirection) {
+    init(direction: SwizzleTransitionDirection = .vertical) {
         self.direction = direction
         super.init()
     }
