@@ -43,7 +43,6 @@ final class AppRootViewController: UIViewController {
     
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
-    fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate let mediaManagerLoader = MediaManagerLoader()
@@ -85,7 +84,7 @@ final class AppRootViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
-        avsLogObserver = AVSLogObserver()
+        SessionManager.startAVSLogging()
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
@@ -131,7 +130,7 @@ final class AppRootViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
