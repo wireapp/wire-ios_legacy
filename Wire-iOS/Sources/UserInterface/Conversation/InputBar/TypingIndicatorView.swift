@@ -183,7 +183,7 @@ final class TypingIndicatorView: UIView {
         nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
     }
     
-    func setHidden(_ hidden : Bool, animated : Bool) {
+    func setHidden(_ hidden : Bool, animated : Bool, completion: Completion? = nil) {
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0
@@ -206,7 +206,9 @@ final class TypingIndicatorView: UIView {
         if (animated) {
             if (hidden) {
                 collapseLine()
-                UIView.animate(withDuration: 0.15, animations: hideContainer)
+                UIView.animate(withDuration: 0.15, animations: hideContainer) { _ in
+                    completion?()
+                }
             } else {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
@@ -216,6 +218,7 @@ final class TypingIndicatorView: UIView {
                                   delayTime: 0.15,
                                   animations: showContainer, completion: { _ in
                     self.animatedPen.isAnimating = true
+                    completion?()
                 })
             }
             
@@ -227,6 +230,7 @@ final class TypingIndicatorView: UIView {
                 expandLine()
                 showContainer()
             }
+            completion?()
         }
     }
     
