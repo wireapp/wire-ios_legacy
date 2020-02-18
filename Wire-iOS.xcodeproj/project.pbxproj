@@ -508,7 +508,7 @@
 		871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */; };
 		871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19D1D34F8F800DF0793 /* PopTransition.m */; };
 		871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.m */; };
-		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
+		871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */; };
 		871BC2811D34F8F800DF0793 /* String+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* String+Fingerprint.swift */; };
@@ -2077,8 +2077,7 @@
 		871BC19D1D34F8F800DF0793 /* PopTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopTransition.m; sourceTree = "<group>"; };
 		871BC19E1D34F8F800DF0793 /* PushTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushTransition.h; sourceTree = "<group>"; };
 		871BC19F1D34F8F800DF0793 /* PushTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushTransition.m; sourceTree = "<group>"; };
-		871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleTransition.h; sourceTree = "<group>"; };
-		871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleTransition.m; sourceTree = "<group>"; };
+		871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzleTransition.swift; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransition.swift; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughTouchesView.swift; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
@@ -4339,8 +4338,7 @@
 				871BC19D1D34F8F800DF0793 /* PopTransition.m */,
 				871BC19E1D34F8F800DF0793 /* PushTransition.h */,
 				871BC19F1D34F8F800DF0793 /* PushTransition.m */,
-				871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */,
-				871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */,
+				871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */,
 				871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */,
 				0617001423E48B66005C262D /* VerticalTransition.swift */,
 				A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */,
@@ -7468,7 +7466,7 @@
 				EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */,
 				EFEE97C623229768007A4702 /* ConversationListContentDelegate.swift in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
-				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
+				871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				5E21344F21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift in Sources */,
 				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
