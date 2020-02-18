@@ -20,8 +20,8 @@
 import Foundation
 
 final class ClearBackgroundNavigationController: UINavigationController {
-    fileprivate lazy var pushTransition = PushTransition()
-    fileprivate lazy var popTransition = PopTransition()
+    fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
+    fileprivate lazy var popTransition = NavigationTransition(operation: .pop)
     
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     

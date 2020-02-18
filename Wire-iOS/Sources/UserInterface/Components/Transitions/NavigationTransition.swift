@@ -16,7 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
+final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
+    private let operation: UINavigationController.Operation
+    
+    init?(operation: UINavigationController.Operation) {
+        guard operation == .push || operation == .pop else { return nil }
+        self.operation = operation
+        
+        super.init()
+    }
+    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.55
     }
@@ -37,8 +46,19 @@ final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
         let offscreenRight = CGAffineTransform(translationX: initialFrameFromViewController.size.width, y: 0)
         let offscreenLeft = CGAffineTransform(translationX: -(initialFrameFromViewController.size.width), y: 0)
 
-        let toViewStartTransform = rightToLeft ? offscreenLeft : offscreenRight
-        let fromViewEndTransform = rightToLeft ? offscreenRight : offscreenLeft
+        let toViewStartTransform: CGAffineTransform
+        let fromViewEndTransform: CGAffineTransform
+
+        switch operation {
+        case .push:
+            toViewStartTransform = rightToLeft ? offscreenLeft : offscreenRight
+            fromViewEndTransform = rightToLeft ? offscreenRight : offscreenLeft
+        case .pop:
+            toViewStartTransform = rightToLeft ? offscreenRight : offscreenLeft
+            fromViewEndTransform = rightToLeft ? offscreenLeft : offscreenRight
+        default:
+            return
+        }
 
         fromView.frame = initialFrameFromViewController
         toView.frame = finalFrameToViewController
