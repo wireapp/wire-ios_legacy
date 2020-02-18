@@ -47,30 +47,28 @@ extension SplitViewController {
     func setLeftViewController(_ leftViewController: UIViewController?,
                                animated: Bool,
                                transition: SplitViewControllerTransition,
-                               completion: @escaping Completion) {
+                               completion: Completion?) {
         if self.leftViewController == leftViewController {
-            completion()
+            completion?()
             return
         }
         
-        if animated {
-            let removedViewController = self.leftViewController
-            
-            let animator: UIViewControllerAnimatedTransitioning
-            
-            if removedViewController == nil || leftViewController == nil {
-                animator = CrossfadeTransition()
-            } else if transition == .present {
-                animator = VerticalTransition(offset: 88)
-            } else if transition == .dismiss {
-                animator = VerticalTransition(offset: -88)
-            } else {
-                animator = CrossfadeTransition()
-            }
-            
-            if self.transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
-                self.setInternalLeft(leftViewController)
-            }
+        let removedViewController = self.leftViewController
+        
+        let animator: UIViewControllerAnimatedTransitioning
+        
+        if removedViewController == nil || leftViewController == nil {
+            animator = CrossfadeTransition()
+        } else if transition == .present {
+            animator = VerticalTransition(offset: 88)
+        } else if transition == .dismiss {
+            animator = VerticalTransition(offset: -88)
+        } else {
+            animator = CrossfadeTransition()
+        }
+        
+        if self.transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
+            self.setInternalLeft(leftViewController)
         }
     }
 }

@@ -25,14 +25,15 @@ final class CrossfadeTransition: NSObject, UIViewControllerAnimatedTransitioning
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return TimeInterval(duration)
+        return duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toView = transitionContext.toView,
-              let fromView = transitionContext.fromView else {
+        guard let toView = transitionContext.toView else {
             return
         }
+        
+        let fromView = transitionContext.fromView
 
         let containerView = transitionContext.containerView
         
@@ -46,7 +47,7 @@ final class CrossfadeTransition: NSObject, UIViewControllerAnimatedTransitioning
         toView.alpha = 0
         
         UIView.wr_animate(easing: .easeInOutQuad, duration: duration, animations: {
-            fromView.alpha = 0
+            fromView?.alpha = 0
             toView.alpha = 1
         }) { finished in
             transitionContext.completeTransition(true)
