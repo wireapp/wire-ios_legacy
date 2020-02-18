@@ -183,7 +183,7 @@ class AnimatedPenView : UIView {
         nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
     }
     
-    public func setHidden(_ hidden : Bool, animated : Bool) {
+    public func setHidden(_ hidden : Bool, animated : Bool, completion: (() -> Void)? = nil) {
         
         let collapseLine = { () -> Void in
             self.expandingLineWidth?.constant = 0
@@ -206,13 +206,16 @@ class AnimatedPenView : UIView {
         if (animated) {
             if (hidden) {
                 collapseLine()
-                UIView.animate(withDuration: 0.15, animations: hideContainer)
+                UIView.animate(withDuration: 0.15, animations: hideContainer) { _ in
+                    completion?()
+                }
             } else {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
                 UIView.wr_animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
                 UIView.wr_animate(easing: .easeInQuad, duration: 0.15, delay: 0.15, animations: showContainer, options: .beginFromCurrentState, completion: { _ in
                     self.animatedPen.isAnimating = true
+                    completion?()
                 })
             }
             
@@ -224,6 +227,7 @@ class AnimatedPenView : UIView {
                 expandLine()
                 showContainer()
             }
+            completion?()
         }
     }
     
