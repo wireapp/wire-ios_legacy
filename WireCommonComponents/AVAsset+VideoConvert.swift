@@ -25,7 +25,7 @@ private let zmLog = ZMSLog(tag: "UI")
 
 extension AVAsset {
 
-    @objc public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
+    public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
 
         let fileURL = URL(fileURLWithPath: inPath)
         let alteredAsset = AVAsset(url: fileURL)
@@ -57,6 +57,56 @@ extension AVAsset {
             }
             
         }
+    }
+
+    public static func wr_convertVideo(at url: URL, toUploadFormatWithCompletion completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
+        let filename = URL(fileURLWithPath: URL(fileURLWithPath: url.lastPathComponent ).deletingPathExtension().absoluteString).appendingPathExtension("mp4").absoluteString
+        let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
+        
+        asset.wr_convert(completion: { URL, asset, error in
+            
+                completion(URL, asset, error!)
+            
+            do {
+                    try FileManager.default.removeItem(at: url)
+            } catch let deleteError {
+                zmLog.error("Cannot delete file: \(url) (\(deleteError))")
+            }
+            
+        }, filename: filename)
+    }
+    
+    public func wr_convert(completion: @escaping (URL?, AVAsset?, Error?) -> Void,
+                           filename: String) {
+        let tmpfile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename).absoluteString
+        
+        let outputURL = URL(fileURLWithPath: tmpfile)
+        
+        if FileManager.default.fileExists(atPath: outputURL.path) {
+            do {
+                try FileManager.default.removeItem(at: outputURL)
+            } catch let deleteError {
+                zmLog.error("Cannot delete old leftover at \(outputURL): \(deleteError)")
+            }
+        }
+        
+        guard let exportSession = AVAssetExportSession(asset: self, presetName: AVAssetExportPresetHighestQuality) else { return }
+        exportSession.outputURL = outputURL
+        exportSession.shouldOptimizeForNetworkUse = true
+        exportSession.outputFileType = .mp4
+        exportSession.metadata = []
+        exportSession.metadataItemFilter = AVMetadataItemFilter.forSharing()
+        
+        weak var session: AVAssetExportSession? = exportSession
+        exportSession.exportAsynchronously(completionHandler: {
+            if session?.error != nil {
+                zmLog.error("Export session error: status=\(session?.status.rawValue) error=\(session?.error) output=\(outputURL)")
+            }
+            
+                DispatchQueue.main.async(execute: {
+                    completion(outputURL, self, (session?.error)!)
+                })
+        })
     }
 
 }
