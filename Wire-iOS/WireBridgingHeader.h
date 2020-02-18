@@ -58,7 +58,6 @@
 #import "FullscreenImageViewController+internal.h"
 
 // Helper objects
-#import "PopTransition.h"
 #import "CrossfadeTransition.h"
 #import "MediaAsset.h"
 
