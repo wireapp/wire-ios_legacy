@@ -20,7 +20,7 @@ final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.55
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.fromView,
             let toView = transitionContext.toView,
@@ -28,28 +28,27 @@ final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
             let toViewController = transitionContext.toViewController else {
                 return
         }
-        
+
         let containerView = transitionContext.containerView
-        
-        
+
         let initialFrameFromViewController = transitionContext.initialFrame(for: fromViewController)
         let finalFrameToViewController = transitionContext.finalFrame(for: toViewController)
-        
+
         let offscreenRight = CGAffineTransform(translationX: initialFrameFromViewController.size.width, y: 0)
         let offscreenLeft = CGAffineTransform(translationX: -(initialFrameFromViewController.size.width), y: 0)
-        
+
         let toViewStartTransform = rightToLeft ? offscreenLeft : offscreenRight
         let fromViewEndTransform = rightToLeft ? offscreenRight : offscreenLeft
-        
+
         fromView.frame = initialFrameFromViewController
         toView.frame = finalFrameToViewController
         toView.transform = toViewStartTransform
-        
+
         containerView.addSubview(toView)
         containerView.addSubview(fromView)
-        
+
         let duration = transitionDuration(using: transitionContext)
-        
+
         UIView.wr_animate(easing: .easeOutExpo, duration: duration, animations: {
             fromView.transform = fromViewEndTransform
             toView.transform = .identity
@@ -58,7 +57,7 @@ final class PushTransition: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.completeTransition(true)
         }
     }
-    
+
     private var rightToLeft: Bool {
         return UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
     }
