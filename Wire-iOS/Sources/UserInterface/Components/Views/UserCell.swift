@@ -273,8 +273,8 @@ extension UserCell {
 extension UserType {
     
     func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
-        if ZMUser.selfUser().isTeamMember, let user = self as? ZMUser {
-            return AvailabilityStringBuilder.string(for: user, with: .list, color: color)
+        if ZMUser.selfUser().isTeamMember {
+            return AvailabilityStringBuilder.string(for: self, with: .list, color: color)
         } else if let name = name{
             return name && color
         }
