@@ -14,7 +14,7 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
 
 final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private var interactionPoint = CGPoint.zero
@@ -32,13 +32,9 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let fromView = transitionContext.view(forKey: .from),
-            let toView = transitionContext.view(forKey: .to) else { return }
+        guard let fromView = transitionContext.fromView,
+              let toView = transitionContext.toView else { return }
         let containerView = transitionContext.containerView
-        
-        if let view = transitionContext.viewController(forKey: .to) {
-            toView.frame = transitionContext.finalFrame(for: view)
-        }
         
         containerView.addSubview(toView)
         
@@ -80,7 +76,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 2, y: 2)
             }) { finished in
-                fromView.transform = CGAffineTransform.identity
+                fromView.transform = .identity
             }
             
             frame = toView.frame
@@ -93,7 +89,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             
             UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, delay: 0.3, animations: {
                 toView.alpha = 1
-                toView.transform = CGAffineTransform.identity
+                toView.transform = .identity
             }) { finished in
                 transitionContext.completeTransition(true)
             }
