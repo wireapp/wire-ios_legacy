@@ -21,15 +21,15 @@ extension SplitViewController {
     private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
-
+    
     override open var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
-
+    
     override open var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
-
+    
     // MARK: - animator
     @objc
     var animatorForRightView: UIViewControllerAnimatedTransitioning? {
@@ -42,31 +42,35 @@ extension SplitViewController {
         
         return CrossfadeTransition()
     }
-
+    
     @objc
-    func setLeftViewController(_ leftViewController: UIViewController?, animated: Bool, transition: SplitViewControllerTransition, completion: Completion) {
+    func setLeftViewController(_ leftViewController: UIViewController?,
+                               animated: Bool,
+                               transition: SplitViewControllerTransition,
+                               completion: @escaping Completion) {
         if self.leftViewController == leftViewController {
             completion()
             return
         }
         
-        let removedViewController = self.leftViewController
-        
-        let animator: UIViewControllerAnimatedTransitioning
-        
-        if removedViewController == nil || leftViewController == nil {
-            animator = CrossfadeTransition()
-        } else if transition == .present {
-            animator = VerticalTransition(offset: 88)
-        } else if transition == .dismiss {
-            animator = VerticalTransition(offset: -88)
-        } else {
-            animator = CrossfadeTransition()
-        }
-        
-        if transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
-            self.leftViewController = leftViewController
+        if animated {
+            let removedViewController = self.leftViewController
+            
+            let animator: UIViewControllerAnimatedTransitioning
+            
+            if removedViewController == nil || leftViewController == nil {
+                animator = CrossfadeTransition()
+            } else if transition == .present {
+                animator = VerticalTransition(offset: 88)
+            } else if transition == .dismiss {
+                animator = VerticalTransition(offset: -88)
+            } else {
+                animator = CrossfadeTransition()
+            }
+            
+            if self.transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
+                self.setInternalLeft(leftViewController)
+            }
         }
     }
-
 }

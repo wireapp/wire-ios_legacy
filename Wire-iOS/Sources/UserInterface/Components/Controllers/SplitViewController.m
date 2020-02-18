@@ -281,6 +281,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     return [constraints allObjects];
 }
 
+- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController {
+    _leftViewController = leftViewController;
+}
+
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController
 {
     [self setLeftViewController:leftViewController animated:NO completion:nil];

@@ -40,6 +40,8 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 
 @property (nonatomic) SplitViewControllerLayoutSize layoutSize;
 
+- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
+
 - (void)resetOpenPercentage;
 
 - (NSArray *)constraintsInactiveForCurrentLayout;
