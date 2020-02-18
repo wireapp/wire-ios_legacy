@@ -96,7 +96,7 @@ class CompanyLoginFlowHandler {
         if #available(iOS 12, *) {
             let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
                 if let url = url {
-                    SessionManager.shared?.urlHandler.openURL(url, options: [:])
+                    self.processURL(url)
                 }
                 
                 self.currentAuthenticationSession = nil
@@ -107,7 +107,7 @@ class CompanyLoginFlowHandler {
         } else {
             let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) { url, error in
                 if let url = url {
-                    SessionManager.shared?.urlHandler.openURL(url, options: [:])
+                    self.processURL(url)
                 }
                 
                 self.currentAuthenticationSession = nil
@@ -115,6 +115,16 @@ class CompanyLoginFlowHandler {
 
             currentAuthenticationSession = session
             session.start()
+        }
+    }
+    
+    private func processURL(_ url: URL) {
+        do {
+            _ = try SessionManager.shared?.openURL(url, options: [:])
+        } catch let error as LocalizedError {
+            AppDelegate.shared.rootViewController.showAlert(for: error)
+        } catch {
+            // nop
         }
     }
 
