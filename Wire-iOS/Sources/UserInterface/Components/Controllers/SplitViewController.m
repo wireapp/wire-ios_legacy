@@ -22,13 +22,6 @@
 #import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 
-
-typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
-    SplitViewControllerTransitionDefault,
-    SplitViewControllerTransitionPresent,
-    SplitViewControllerTransitionDismiss
-};
-
 NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayoutObservableDidChangeToLayoutSizeNotificationName";
 
 
@@ -296,42 +289,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 - (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
 {
     [self setLeftViewController:leftViewController animated:animated transition:SplitViewControllerTransitionDefault completion:completion];
-}
-
-- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated transition:(SplitViewControllerTransition)transition completion:(nullable dispatch_block_t)completion
-{
-    if (self.leftViewController == leftViewController) {
-        if(completion != nil) {
-            completion();
-        }
-        return;
-    }
-    
-    UIViewController *removedViewController = self.leftViewController;
-    
-    id<UIViewControllerAnimatedTransitioning> animator = nil;
-    
-    if (removedViewController == nil || leftViewController == nil) {
-        animator = [[CrossfadeTransition alloc] init];
-    } else if (transition == SplitViewControllerTransitionPresent) {
-        animator = [[VerticalTransition alloc] initWithOffset:88];
-    } else if (transition == SplitViewControllerTransitionDismiss) {
-        animator = [[VerticalTransition alloc] initWithOffset:-88];
-    } else {
-        animator = [[CrossfadeTransition alloc] init];
-    }
-    
-    BOOL transitionDidStart =
-    [self transitionFromViewController:removedViewController
-                      toViewController:leftViewController
-                         containerView:self.leftView
-                              animator:animator
-                              animated:animated
-                            completion:completion];
-    
-    if (transitionDidStart) {
-        _leftViewController = leftViewController;
-    }
 }
 
 - (void)setRightViewController:(nullable UIViewController *)rightViewController
