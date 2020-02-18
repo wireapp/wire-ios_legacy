@@ -120,7 +120,7 @@ extension ConversationInputBarViewController {
             self.parent?.dismiss(animated: true) {
                 picker.showLoadingView = false
             }
-        })
+        }
     }
 
 }

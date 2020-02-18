@@ -761,6 +761,7 @@
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
+		A9AC63E123FC4A2D00016ABC /* AVAsset+conversionTestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC63E023FC4A2D00016ABC /* AVAsset+conversionTestsTests.swift */; };
 		A9C3223F23EB200F00E17311 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCell.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
@@ -2382,6 +2383,7 @@
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedListMenuViewTests.swift; sourceTree = "<group>"; };
+		A9AC63E023FC4A2D00016ABC /* AVAsset+conversionTestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+conversionTestsTests.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
@@ -5540,6 +5542,14 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
+		A9AC63DF23FC4A0E00016ABC /* AVAsset */ = {
+			isa = PBXGroup;
+			children = (
+				A9AC63E023FC4A2D00016ABC /* AVAsset+conversionTestsTests.swift */,
+			);
+			path = AVAsset;
+			sourceTree = "<group>";
+		};
 		A9E844F723730CC7001D1C47 /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -5551,6 +5561,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A9AC63DF23FC4A0E00016ABC /* AVAsset */,
 				EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */,
 				A955D3D623F5774100304851 /* URL */,
 				6306902E23AA5D4A0081802B /* AppLock */,
@@ -8049,6 +8060,7 @@
 				EE52378B23F5574D00D4FE79 /* MockUserType+ValidatorType.swift in Sources */,
 				F1CB5D29215A3108001CCF5D /* MentionsHandlerTests.swift in Sources */,
 				A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */,
+				A9AC63E123FC4A2D00016ABC /* AVAsset+conversionTestsTests.swift in Sources */,
 				EF17B0DB223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift in Sources */,
 				7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */,
 				16814842228C74C10069F16F /* UserClientCellTests.swift in Sources */,
