@@ -155,6 +155,7 @@ final class AppRootViewController: UIViewController {
             mediaManager: mediaManager!,
             analytics: analytics,
             delegate: appStateController,
+            showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
             configuration: configuration,
@@ -165,14 +166,13 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.foregroundNotificationResponder = self
             self.sessionManager?.showContentDelegate = self
             self.sessionManager?.switchingDelegate = self
+            self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
             sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
-                
-            sessionManager.urlHandler.delegate = self
         }
     }
 
@@ -618,192 +618,4 @@ public extension SessionManager {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 
-}
-
-extension AppRootViewController: SessionManagerURLHandlerDelegate {
-
-    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
-        switch action {
-        case .openUserProfile(let id):
-            /// For self user, open the profile viewer without searching
-            if let selfUser = ZMUser.selfUser(),
-                id == selfUser.remoteIdentifier {
-                sessionManager?.showUserProfile(user: selfUser)
-            } else {
-                sessionManager?.showConnectionRequest(userId: id)
-            }
-        case .openConversation(_, let conversation):
-            if let conversation = conversation,
-               let userSession = ZMUserSession.shared() {
-                sessionManager?.showConversation(conversation, at: nil, in: userSession)
-            }
-        case .warnInvalidDeepLink(let error):
-            switch error {
-            case .invalidUserLink:
-                presentInvalidUserProfileLinkAlert()
-            case .invalidConversationLink:
-                presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
-                                         message: "url_action.invalid_conversation.message".localized)
-            case .notLoggedIn:
-                presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
-                                         message: "url_action.authorization_required.message".localized)
-            case .malformedLink:
-                presentAlertWithOKButton(title: "url_action.invalid_link.title".localized,
-                                         message: "url_action.invalid_link.message".localized)
-            }
-        case .connectBot:
-            guard let _ = ZMUser.selfUser().team else {
-                callback(false)
-                return
-            }
-            
-            let alert = UIAlertController(title: "url_action.title".localized,
-                                          message: "url_action.connect_to_bot.message".localized,
-                                          preferredStyle: .alert)
-            
-            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
-                                            style: .default) { _ in
-                                                callback(true)
-            }
-            
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized,
-                                             style: .cancel) { _ in
-                                                callback(false)
-            }
-            
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
-
-        case .companyLoginFailure(let error):
-            defer {
-                authenticationCoordinator?.cancelCompanyLogin()
-                notifyCompanyLoginCompletion()
-            }
-            
-            guard case .unauthenticated = appStateController.appState else {
-                callback(false)
-                return
-            }
-
-            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
-
-            let alert = UIAlertController(title: "general.failure".localized,
-                                          message: message,
-                                          preferredStyle: .alert)
-
-            alert.addAction(.ok(handler: { _ in
-                callback(false)
-            }))
-
-            let presentAlert = {
-                self.present(alert, animated: true)
-            }
-
-            if let topmostViewController = UIApplication.shared.topmostViewController() as? SFSafariViewController {
-                topmostViewController.dismiss(animated: true, completion: presentAlert)
-            } else {
-                presentAlert()
-            }
-
-        case .companyLoginSuccess:
-            defer {
-                notifyCompanyLoginCompletion()
-            }
-
-            guard case .unauthenticated = appStateController.appState else {
-                callback(false)
-                return
-            }
-
-            callback(true)
-
-        case .startCompanyLogin:
-            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
-            executeCompanyLoginLinkAction(context.actionForValidLink(), callback: callback)
-
-        case .warnInvalidCompanyLogin(let error):
-            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
-            executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
-            
-        case .accessBackend(configurationURL: let configurationURL):
-            
-            if let error = sessionManager?.canSwitchBackend() {
-                self.showBackendSwitchError(error)
-                return
-            }
-            
-            let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                          message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
-                                          preferredStyle: .alert)
-            let agreeAction = UIAlertAction(title: "general.ok".localized,
-                                            style: .default) { _ in
-                                                self.showLoadingView = true
-                                                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                                                    self.showLoadingView = false
-                                                    switch result {
-                                                    case let .success(environment):
-                                                        BackendEnvironment.shared = environment
-                                                    case let .failure(error):
-                                                        if let error = error as? SessionManager.SwitchBackendError {
-                                                            self.showBackendSwitchError(error)
-                                                        }
-                                                    }
-                                                }
-            }
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    private func showBackendSwitchError(_ error: SessionManager.SwitchBackendError) {
-        let alert: UIAlertController
-        switch error {
-        case .loggedInAccounts:
-            alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
-                                          message: "url_action.switch_backend.error.logged_in".localized,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-        case .invalidBackend:
-            alert = UIAlertController(title: "url_action.switch_backend.error.invalid_backend.title".localized,
-                                          message: "url_action.switch_backend.error.invalid_backend".localized,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-        }
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
-        switch action {
-        case .allowStartingFlow:
-            callback(true)
-
-        case .preventStartingFlow:
-            callback(false)
-
-        case .showDismissableAlert(let title, let message, let allowStartingFlow):
-            if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
-                let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
-                alert.addAction(okAction)
-                controller.present(alert, animated: true)
-            } else {
-                callback(allowStartingFlow)
-            }
-        }
-    }
-
-    private func notifyCompanyLoginCompletion() {
-        NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
-    }
-}
-
-extension Notification.Name {
-    static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
 }

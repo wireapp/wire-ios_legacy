@@ -32,6 +32,9 @@
 		161041B722D764C1001109D7 /* session_manager.json in Resources */ = {isa = PBXBuildFile; fileRef = 161041B622D764C1001109D7 /* session_manager.json */; };
 		161285DF1DD1E81E004728E9 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* String+URL.swift */; };
 		161A813823D07F000081B4C3 /* KeyboardAvoidingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */; };
+		161ACB2823F5805000ABFF33 /* UIAlertController+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */; };
+		161ACB2A23F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */; };
+		161ACB3823F6AFB100ABFF33 /* Error+Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161ACB3723F6AFB100ABFF33 /* Error+Localization.swift */; };
 		161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */; };
 		16271BC61D9EB12E00689486 /* TypingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */; };
 		16271BC81DA5213400689486 /* TypingIndicatorViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */; };
@@ -200,8 +203,6 @@
 		5E0F75C02268A0D7006C991E /* UIBarButtonItem+StyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */; };
 		5E0FB21B2057F50C00FD9867 /* CallQualitySurveyReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */; };
 		5E1314B82204A041000FAFC5 /* URLWireLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */; };
-		5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */; };
-		5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */; };
 		5E1314C122097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */; };
 		5E1314D12209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */; };
 		5E144FFF213EA0EC00B65E14 /* PreviewImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E144FFD213E973B00B65E14 /* PreviewImageView.swift */; };
@@ -509,7 +510,7 @@
 		871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19D1D34F8F800DF0793 /* PopTransition.m */; };
 		871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.m */; };
 		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
-		871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.m */; };
+		871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */; };
 		871BC2811D34F8F800DF0793 /* String+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* String+Fingerprint.swift */; };
 		871BC2841D34F8F800DF0793 /* UIApplication+StatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1FC1D34F8F800DF0793 /* UIApplication+StatusBar.swift */; };
@@ -732,6 +733,7 @@
 		A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.swift */; };
 		A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
+		A95E561123FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
 		A96131A023E81CC300194608 /* ParticipantDeviceHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */; };
 		A9614EF823C38C810012A718 /* ConnectRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */; };
@@ -1548,6 +1550,9 @@
 		161285E01DD201A1004728E9 /* Wire-iOS Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Wire-iOS Share Extension.entitlements"; sourceTree = "<group>"; };
 		161541BB1E28FFAE00AC2FFB /* CircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
 		161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAvoidingViewController.swift; sourceTree = "<group>"; };
+		161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+LocalizedError.swift"; sourceTree = "<group>"; };
+		161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppRootViewController+URLActionDelegate.swift"; sourceTree = "<group>"; };
+		161ACB3723F6AFB100ABFF33 /* Error+Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Error+Localization.swift"; sourceTree = "<group>"; };
 		161B75C720B6BCB50002B0F7 /* ZMUserSession+Calling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Calling.swift"; sourceTree = "<group>"; };
 		1621AFDA1C0DEE1500FAE41A /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		16271BC51D9EB12E00689486 /* TypingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingIndicatorView.swift; sourceTree = "<group>"; };
@@ -1738,8 +1743,6 @@
 		5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+StyleKit.swift"; sourceTree = "<group>"; };
 		5E0FB21A2057F50C00FD9867 /* CallQualitySurveyReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallQualitySurveyReview.swift; sourceTree = "<group>"; };
 		5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLWireLocaleTests.swift; sourceTree = "<group>"; };
-		5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyControllerLinkContext.swift; sourceTree = "<group>"; };
-		5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyLoginLinkResponseActionTests.swift; sourceTree = "<group>"; };
 		5E1314C022097BEF000FAFC5 /* AuthenticationStartCompanyLoginLinkEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStartCompanyLoginLinkEventHandler.swift; sourceTree = "<group>"; };
 		5E1314D02209A2CD000FAFC5 /* ClientRegistrationErrorEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientRegistrationErrorEventHandler.swift; sourceTree = "<group>"; };
 		5E144FFD213E973B00B65E14 /* PreviewImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewImageView.swift; sourceTree = "<group>"; };
@@ -2076,8 +2079,7 @@
 		871BC19F1D34F8F800DF0793 /* PushTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushTransition.m; sourceTree = "<group>"; };
 		871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleTransition.h; sourceTree = "<group>"; };
 		871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleTransition.m; sourceTree = "<group>"; };
-		871BC1A41D34F8F800DF0793 /* ZoomTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomTransition.h; sourceTree = "<group>"; };
-		871BC1A51D34F8F800DF0793 /* ZoomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomTransition.m; sourceTree = "<group>"; };
+		871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransition.swift; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughTouchesView.swift; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
 		871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResizingTextView.swift; sourceTree = "<group>"; };
@@ -2356,6 +2358,7 @@
 		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
+		A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllerContextTransitioning+Helper.swift"; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
 		A96316A423F2B10500AFDB71 /* ProfileTitleViewSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTitleViewSnapshotTests.swift; sourceTree = "<group>"; };
@@ -4338,9 +4341,9 @@
 				871BC19F1D34F8F800DF0793 /* PushTransition.m */,
 				871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */,
 				871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */,
-				871BC1A41D34F8F800DF0793 /* ZoomTransition.h */,
-				871BC1A51D34F8F800DF0793 /* ZoomTransition.m */,
+				871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */,
 				0617001423E48B66005C262D /* VerticalTransition.swift */,
+				A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */,
 			);
 			path = Transitions;
 			sourceTree = "<group>";
@@ -5065,6 +5068,7 @@
 				162936BC1F470B4800D4F386 /* AppStateController.swift */,
 				162936BE1F4714D200D4F386 /* AppRootViewController.swift */,
 				1610367020617BEC008AFDD0 /* AppRootViewController+Appearance.swift */,
+				161ACB2923F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift */,
 				8751A6CA1FF6573D00804A58 /* QuickActionsManager.swift */,
 			);
 			name = Sources;
@@ -5142,6 +5146,8 @@
 				5E0F75BD2268A0B6006C991E /* ColorScheme+Helper.swift */,
 				5E0F75BF2268A0D7006C991E /* UIBarButtonItem+StyleKit.swift */,
 				550C63B322C36985005CE9FC /* FormattedText.swift */,
+				161ACB2723F5804F00ABFF33 /* UIAlertController+LocalizedError.swift */,
+				161ACB3723F6AFB100ABFF33 /* Error+Localization.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -5605,7 +5611,7 @@
 				5E1314B72204A041000FAFC5 /* URLWireLocaleTests.swift */,
 				BFE49C311C0F39580061C16F /* String+FingerprintTests.swift */,
 				EF01D27F22B136A9009754B2 /* Data+FingerprintStringTests.swift */,
-				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.m */,
+				BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */,
 				876AE75F1C159A9C00E3E743 /* StringFingerprintTests.swift */,
 				874E85951BEA0D3C006A7EBF /* Wire-iOS-Tests-Bridging-Header.h */,
 				EF21A06F21305F6A00B9120C /* DeleteMessageTests.swift */,
@@ -5713,7 +5719,6 @@
 				EF2172E821DF97CC00DA1671 /* URL+EncodeTests.swift */,
 				EF36168921E753300041F0CC /* SettingsTableViewControllerSnapshotTests.swift */,
 				EF1D8BA721EE49550001A4CC /* TeamMemberInviteViewControllerSnapshotTests.swift */,
-				5E1314BB220882E4000FAFC5 /* CompanyLoginLinkResponseActionTests.swift */,
 				EF207B36220839E000738E84 /* ConversationContentViewControllerTests.swift */,
 				EF2B255C22098C3D006712CA /* RemoveClientStepViewControllerSnapshotTests.swift */,
 				5EF7BA6A221B272200815625 /* ProfileDetailsViewControllerTests.swift */,
@@ -5914,7 +5919,6 @@
 			isa = PBXGroup;
 			children = (
 				BFFA182A20FDE93400F64377 /* CompanyLoginController.swift */,
-				5E1314B922087C61000FAFC5 /* CompanyControllerLinkContext.swift */,
 				BFFA182720FDE22B00F64377 /* UIAlertController+CompanyLogin.swift */,
 				6363EC9A23D7622F00E74F67 /* NSMutableAttributedString+CompanyLogin.swift */,
 			);
@@ -7299,6 +7303,7 @@
 				BFD37A0F2125A27E0027ECF2 /* Cartography+SafeAreaHelper.swift in Sources */,
 				871067401C0DC5570035603B /* SettingsPropertyTextValueCellDescriptor.swift in Sources */,
 				8784AE3E1FC2DE5300AAEAB8 /* MediaManagerLoader.swift in Sources */,
+				A95E561123FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift in Sources */,
 				876EECB31F5078D200E269F3 /* AccountSelectorController.swift in Sources */,
 				16626502217DACBE00300F45 /* ConversationMessageCellTableViewAdapter.swift in Sources */,
 				161B75C820B6BCB50002B0F7 /* ZMUserSession+Calling.swift in Sources */,
@@ -7426,6 +7431,7 @@
 				A955D3D523F576F400304851 /* URL+String.swift in Sources */,
 				5EF5CDA520EF739200CC98B0 /* DataTaskSession.swift in Sources */,
 				EF19EF3A230701CF00696D95 /* ImagePickerConfirmationController.swift in Sources */,
+				161ACB2823F5805000ABFF33 /* UIAlertController+LocalizedError.swift in Sources */,
 				EF21CAA8220C832800D3FEE4 /* ProfileSelfPictureViewController+SetupViews.swift in Sources */,
 				5E678061204E8BEB002F63FB /* CallQualityPresentationTransition.swift in Sources */,
 				EF471BE62326637E008E11A5 /* ConversationListViewControllerViewModel+ArchivedListViewControllerDelegate.swift in Sources */,
@@ -7539,6 +7545,7 @@
 				F15650DB21DD10A100210504 /* UserImageView.swift in Sources */,
 				1639A84922648BE400868AB9 /* ZClientViewController+AvailabilityBehaviourChange.swift in Sources */,
 				16A94AEB20932841008A5718 /* ShowAllParticipantsCell.swift in Sources */,
+				161ACB2A23F5982800ABFF33 /* AppRootViewController+URLActionDelegate.swift in Sources */,
 				5EF5C54C209B33E600676405 /* CGSize+AspectRatio.swift in Sources */,
 				EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */,
 				F15650E021DD119D00210504 /* OverflowSeparatorView.swift in Sources */,
@@ -7866,7 +7873,7 @@
 				EFDC36DC2257ACE800F916F3 /* StartUIInviteActionBar.swift in Sources */,
 				EFA145F6231EAEE50073BA5E /* ZClientViewController+SplitViewControllerDelegate.swift in Sources */,
 				87A540AA1E094BA3009028C5 /* CollectionCell.swift in Sources */,
-				871BC25A1D34F8F800DF0793 /* ZoomTransition.m in Sources */,
+				871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */,
 				A9D19B182385245E00F6E14A /* ProfileViewControllerViewModel.swift in Sources */,
 				16C02A0D204D407100811912 /* TopPeopleSectionController.swift in Sources */,
 				EE8E9267202496C2000F4752 /* NSAttributedString+Down.swift in Sources */,
@@ -7895,6 +7902,7 @@
 				A96A21F123D5B865005B5579 /* ConversationInputBarViewController+Files.swift in Sources */,
 				87D5E43E1C3E78A000EB8289 /* ProfileClientViewController.swift in Sources */,
 				5E15D31B219DB9060038439D /* ConversationFileMessageCell.swift in Sources */,
+				161ACB3823F6AFB100ABFF33 /* Error+Localization.swift in Sources */,
 				A937863423EB3BF00039987B /* CountryCodeTableViewController.swift in Sources */,
 				5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */,
 				5E8FFC2421F086240052DF03 /* AuthenticationReauthenticateInputHandler.swift in Sources */,
@@ -7926,7 +7934,6 @@
 				EF66110F2121D00B00BDF57A /* UIImage+DownSize.swift in Sources */,
 				7CC085461F7AA30F0010F96B /* DotView.swift in Sources */,
 				16A94AFB209C553A008A5718 /* CallViewController.swift in Sources */,
-				5E1314BA22087C61000FAFC5 /* CompanyControllerLinkContext.swift in Sources */,
 				5E65A7A721304B6B008BFCC0 /* UserEmailUpdateCodeSentEventHandler.swift in Sources */,
 				EF3371C22216D9D9005ED048 /* ZMUser+Self.swift in Sources */,
 				EFEE97C823229CF5007A4702 /* ConversationListCellDelegate.swift in Sources */,
@@ -8094,7 +8101,6 @@
 				EFE0439B2149D9CA00BC3079 /* ShareContactsViewControllerSnapshotTests.swift in Sources */,
 				BFC9149B1D181BE7001F068B /* LocationMessageCellTests.swift in Sources */,
 				5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */,
-				5E1314BF22088405000FAFC5 /* CompanyLoginLinkResponseActionTests.swift in Sources */,
 				EF6E3C7C208A02FE003F6752 /* GiphySearchViewControllerSnapshotTests.swift in Sources */,
 				EFC0C7F121778FB000380C4B /* SettingsTextCellSnapshotTests.swift in Sources */,
 				EFE806301FE006A7006A0EE7 /* DateFormatterTests.swift in Sources */,

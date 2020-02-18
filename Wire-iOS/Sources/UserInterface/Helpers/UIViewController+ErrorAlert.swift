@@ -17,6 +17,14 @@
 // 
 
 extension UIViewController {
+
+    func showAlert(for error: LocalizedError, handler: AlertActionHandler? = nil) {
+        present(UIAlertController.alertWithOKButton(title: error.errorDescription,
+                                                    message: error.failureReason ?? "error.user.unkown_error".localized,
+                                                    okActionHandler: handler), animated: true)
+
+    }
+    
     func showAlert(for error: Error, handler: AlertActionHandler? = nil) {
         let nsError: NSError = error as NSError
         var message = ""
