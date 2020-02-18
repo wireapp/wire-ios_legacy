@@ -21,15 +21,15 @@ extension SplitViewController {
     private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
-    
+
     override open var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
-    
+
     override open var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
-    
+
     // MARK: - animator
     @objc
     var animatorForRightView: UIViewControllerAnimatedTransitioning? {
@@ -39,10 +39,10 @@ extension SplitViewController {
         } else if layoutSize == .regularLandscape {
             return SwizzleTransition(direction: .horizontal)
         }
-        
+
         return CrossfadeTransition()
     }
-    
+
     @objc
     func setLeftViewController(_ leftViewController: UIViewController?,
                                animated: Bool,
@@ -52,11 +52,11 @@ extension SplitViewController {
             completion?()
             return
         }
-        
+
         let removedViewController = self.leftViewController
-        
+
         let animator: UIViewControllerAnimatedTransitioning
-        
+
         if removedViewController == nil || leftViewController == nil {
             animator = CrossfadeTransition()
         } else if transition == .present {
@@ -66,7 +66,7 @@ extension SplitViewController {
         } else {
             animator = CrossfadeTransition()
         }
-        
+
         if self.transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
             self.setInternalLeft(leftViewController)
         }
