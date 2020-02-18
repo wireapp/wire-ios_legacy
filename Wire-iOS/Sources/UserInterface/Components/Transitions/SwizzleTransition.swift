@@ -22,10 +22,15 @@ case vertical
 }
 
 final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
-    var direction: SwizzleTransitionDirection!
+    private let direction: SwizzleTransitionDirection
+    
+    init(direction: SwizzleTransitionDirection) {
+        self.direction = direction
+        super.init()
+    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.50
+        return 0.5
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {

@@ -232,15 +232,11 @@ final class ConversationListTopBarViewController: UIViewController {
 extension ConversationListTopBarViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
 }
 
