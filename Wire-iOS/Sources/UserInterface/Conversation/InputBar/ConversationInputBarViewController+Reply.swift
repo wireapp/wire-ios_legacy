@@ -39,6 +39,11 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
         self.quotedMessage = nil
         self.replyComposingView?.removeFromSuperview()
         self.replyComposingView = nil
+
+        if let draft = self.conversation.draftMessage {
+            let modifiedDraft = DraftMessage(text: draft.text, mentions: draft.mentions, quote: nil)
+            self.delegate?.conversationInputBarViewControllerDidComposeDraft(message: modifiedDraft)
+        }
     }
     
     func composingViewDidCancel(composingView: ReplyComposingView) {

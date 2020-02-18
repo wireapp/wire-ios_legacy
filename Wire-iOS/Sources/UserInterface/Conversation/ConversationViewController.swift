@@ -495,5 +495,10 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     func conversationInputBarViewControllerEditLastMessage() {
         contentViewController.editLastMessage()
     }
-    
+
+    func conversationInputBarViewControllerDidComposeDraft(message: DraftMessage) {
+        ZMUserSession.shared()?.enqueueChanges {
+            self.conversation.draftMessage = message
+        }
+    }
 }
