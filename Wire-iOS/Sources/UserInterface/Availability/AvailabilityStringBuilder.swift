@@ -18,7 +18,7 @@
 
 @objcMembers public class AvailabilityStringBuilder: NSObject {
 
-    static func string(for user: ZMUser, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
+    static func string(for user: UserType, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
         
         var title: String = ""
         var color = color
