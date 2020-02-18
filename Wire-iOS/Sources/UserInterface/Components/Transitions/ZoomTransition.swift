@@ -19,47 +19,47 @@
 final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private var interactionPoint = CGPoint.zero
     private var reversed = false
-    
+
     init(interactionPoint: CGPoint, reversed: Bool) {
         super.init()
-        
+
         self.interactionPoint = interactionPoint
         self.reversed = reversed
     }
-    
+
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.65
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromView = transitionContext.fromView,
               let toView = transitionContext.toView else { return }
         let containerView = transitionContext.containerView
-        
+
         containerView.addSubview(toView)
-        
+
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
-        
+
         toView.layoutIfNeeded()
-        
+
         fromView.alpha = 1
         fromView.layer.needsDisplayOnBoundsChange = false
 
         if reversed {
-            
-            UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {               fromView.alpha = 0
+
+            UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+                fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             }) { finished in
                 fromView.transform = .identity
             }
-            
+
             toView.alpha = 0
             toView.transform = CGAffineTransform(scaleX: 2, y: 2)
-            
-            
+
             UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 toView.alpha = 1
                 toView.transform = .identity
@@ -67,26 +67,25 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 transitionContext.completeTransition(true)
             }
         } else {
-            
+
             var frame = fromView.frame
             fromView.layer.anchorPoint = interactionPoint
             fromView.frame = frame
-            
+
             UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 2, y: 2)
             }) { finished in
                 fromView.transform = .identity
             }
-            
+
             frame = toView.frame
             toView.layer.anchorPoint = interactionPoint
             toView.frame = frame
-            
+
             toView.alpha = 0
             toView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            
-            
+
             UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, delay: 0.3, animations: {
                 toView.alpha = 1
                 toView.transform = .identity
