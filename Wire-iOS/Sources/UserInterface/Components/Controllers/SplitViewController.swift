@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,18 +18,18 @@
 import Foundation
 
 extension SplitViewController {
-    private var childViewController : UIViewController? {
+    private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
-    
+
     override open var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
-    
+
     override open var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
-    
+
     // MARK: - animator
     @objc
     var animatorForRightView: UIViewControllerAnimatedTransitioning? {
@@ -38,11 +37,10 @@ extension SplitViewController {
             // Right view is not visible so we should not animate.
             return CrossfadeTransition(duration: 0)
         } else if layoutSize == .regularLandscape {
-            return SwizzleTransition() ///TODO: vertical
-        } else {
-            return CrossfadeTransition()
+            return SwizzleTransition(direction: .horizontal)
         }
+        
+        return CrossfadeTransition()
     }
-    
 
 }

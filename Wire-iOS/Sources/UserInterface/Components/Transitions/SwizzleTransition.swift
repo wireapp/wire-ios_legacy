@@ -24,7 +24,7 @@ enum SwizzleTransitionDirection {
 final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private let direction: SwizzleTransitionDirection
 
-    init(direction: SwizzleTransitionDirection = .vertical) {
+    init(direction: SwizzleTransitionDirection) {
         self.direction = direction
         super.init()
     }
