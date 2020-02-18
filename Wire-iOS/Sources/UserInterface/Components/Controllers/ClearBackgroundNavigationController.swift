@@ -20,8 +20,8 @@
 import Foundation
 
 final class ClearBackgroundNavigationController: UINavigationController {
-    fileprivate let pushTransition = PushTransition()
-    fileprivate let popTransition = PopTransition()
+    fileprivate lazy var pushTransition = PushTransition()
+    fileprivate lazy var popTransition = PopTransition()
     
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
@@ -113,9 +113,9 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
         
         switch operation {
         case .push:
-            return self.pushTransition
+            return pushTransition
         case .pop:
-            return self.popTransition
+            return popTransition
         default:
             fatalError()
         }

@@ -508,7 +508,7 @@
 		871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */; };
 		871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */; };
 		871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19D1D34F8F800DF0793 /* PopTransition.m */; };
-		871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.m */; };
+		871BC2571D34F8F800DF0793 /* PushTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.swift */; };
 		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */; };
@@ -2078,8 +2078,7 @@
 		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossfadeTransition.m; sourceTree = "<group>"; };
 		871BC19C1D34F8F800DF0793 /* PopTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopTransition.h; sourceTree = "<group>"; };
 		871BC19D1D34F8F800DF0793 /* PopTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopTransition.m; sourceTree = "<group>"; };
-		871BC19E1D34F8F800DF0793 /* PushTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushTransition.h; sourceTree = "<group>"; };
-		871BC19F1D34F8F800DF0793 /* PushTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushTransition.m; sourceTree = "<group>"; };
+		871BC19F1D34F8F800DF0793 /* PushTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushTransition.swift; sourceTree = "<group>"; };
 		871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleTransition.h; sourceTree = "<group>"; };
 		871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleTransition.m; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransition.swift; sourceTree = "<group>"; };
@@ -4341,8 +4340,7 @@
 				871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */,
 				871BC19C1D34F8F800DF0793 /* PopTransition.h */,
 				871BC19D1D34F8F800DF0793 /* PopTransition.m */,
-				871BC19E1D34F8F800DF0793 /* PushTransition.h */,
-				871BC19F1D34F8F800DF0793 /* PushTransition.m */,
+				871BC19F1D34F8F800DF0793 /* PushTransition.swift */,
 				871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */,
 				871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */,
 				871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */,
@@ -7824,7 +7822,7 @@
 				EF98987620C6AAD2005680C5 /* ClientColorVariantProtocol.swift in Sources */,
 				5E4B1389204FEFCD00ED5DF1 /* UIColor+CallQuality.swift in Sources */,
 				16519D8B232108EF00C9D76D /* ConversationActionController+DeleteGroup.swift in Sources */,
-				871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */,
+				871BC2571D34F8F800DF0793 /* PushTransition.swift in Sources */,
 				8775BF212008CF3500A8AD93 /* ServiceView.swift in Sources */,
 				06C412B0239103910018866F /* ConversationInputBarViewController+DragAndDrop.swift in Sources */,
 				166390D61DC8AC0C00D7BF1C /* String+Image.swift in Sources */,
