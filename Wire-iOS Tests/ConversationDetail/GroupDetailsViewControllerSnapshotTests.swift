@@ -29,11 +29,13 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         groupConversation = createGroupConversation()
         groupConversation.userDefinedName = "iOS Team"
+        SelfUser.provider = selfUserProvider
     }
     
     override func tearDown() {
         sut = nil
         groupConversation = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
     
