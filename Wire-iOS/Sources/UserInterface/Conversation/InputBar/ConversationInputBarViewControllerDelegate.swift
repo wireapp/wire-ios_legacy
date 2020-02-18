@@ -27,4 +27,5 @@ protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {
     func conversationInputBarViewControllerDidCancelEditing(_ message: ZMConversationMessage)
     func conversationInputBarViewControllerWants(toShow message: ZMConversationMessage)
     func conversationInputBarViewControllerEditLastMessage()
+    func conversationInputBarViewControllerDidComposeDraft(message: DraftMessage)
 }
