@@ -22,13 +22,13 @@ extension CABasicAnimation {
                      beginTime: CFTimeInterval,
                      delegate: CAAnimationDelegate? = nil) {
         self.init(keyPath: "transform.rotation")
-        
+
         fillMode = .forwards
         self.delegate = delegate
         
         // (2PI is a full turn, so pi is a half turn)
-        toValue = NSNumber(value: Double.pi)
-        repeatCount = Float.greatestFiniteMagnitude
+        toValue = Double.pi
+        repeatCount = .greatestFiniteMagnitude
         
         duration = rotationSpeed / 2
         self.beginTime = beginTime
