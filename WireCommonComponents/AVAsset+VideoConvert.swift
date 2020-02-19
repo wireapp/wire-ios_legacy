@@ -60,6 +60,7 @@ extension AVAsset {
     }
     
     public static func convertVideoToUploadFormat(at url: URL,
+                                                  deleteSourceFile: Bool = true
                                                   completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
         let filename = URL(fileURLWithPath: URL(fileURLWithPath: url.lastPathComponent ).deletingPathExtension().absoluteString).appendingPathExtension("mp4").absoluteString
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil) ///TODO: "file:/video.mp4"
@@ -68,10 +69,12 @@ extension AVAsset {
             
             completion(URL, asset, error)
             
-            do {
-                try FileManager.default.removeItem(at: url)
-            } catch let deleteError {
-                zmLog.error("Cannot delete file: \(url) (\(deleteError))")
+            if deleteSourceFile {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch let deleteError {
+                    zmLog.error("Cannot delete file: \(url) (\(deleteError))")
+                }
             }
             
         }, filename: filename)

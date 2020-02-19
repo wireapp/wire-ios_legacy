@@ -23,12 +23,13 @@ final class AVAsset_conversionTests: XCTestCase {
     
     func testThatVideoIsConvertedToUploadFormat() {
         // GIVEN
-        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")
+        let videoURL = urlForResource(inTestBundleNamed: "video.mp4")///TODO: deleted?
 
         // WHEN
         let expectation = self.expectation(description: "Video converted")
 
-        AVAsset.convertVideoToUploadFormat(at: videoURL) {url, asset, error in
+        AVAsset.convertVideoToUploadFormat(at: videoURL,
+                                           deleteSourceFile: false) {url, asset, error in
             // THEN
             ///TODO: more tests
 //            XCTAssertEqual(url, videoURL)
