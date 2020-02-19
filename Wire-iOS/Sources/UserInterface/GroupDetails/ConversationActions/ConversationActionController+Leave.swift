@@ -60,7 +60,7 @@ extension ConversationActionController {
                 conversation.clearMessageHistory()
             }
             
-            conversation.removeOrShowError(participnant: ZMUser.selfUser())
+            conversation.removeOrShowError(participant: ZMUser.selfUser())
         }
     }
     

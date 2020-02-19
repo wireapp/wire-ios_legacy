@@ -43,7 +43,8 @@ extension UserType {
     }
 }
 
-extension ZMUser {
+extension UserType {
+
     static func searchForMentions(in users: [UserType], with query: String) -> [UserType] {
         
         let usersToSearch = users.filter { user in

@@ -151,16 +151,16 @@ protocol SearchHeaderViewControllerDelegate : class {
 
 extension SearchHeaderViewController : UserSelectionObserver {
     
-    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
+    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         // this is triggered by the TokenField itself so we should ignore it here
     }
     
-    public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+    public func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         guard allowsMultipleSelection else { return }
         tokenField.addToken(forTitle: user.displayName, representedObject: user)
     }
     
-    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
+    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         guard let token = tokenField.token(forRepresentedObject: user) else { return }
         tokenField.removeToken(token)
         updateClearIndicator(for: tokenField)
