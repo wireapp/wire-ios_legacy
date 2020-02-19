@@ -67,7 +67,7 @@ final class CameraKeyboardViewController: UIViewController {
     let goBackButton = IconButton()
     let cameraRollButton = IconButton()
     
-    public let splitLayoutObservable: SplitLayoutObservable
+    let splitLayoutObservable: SplitLayoutObservable
     weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
@@ -92,11 +92,11 @@ final class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    open override func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
             self.lastLayoutSize = self.view.bounds.size
@@ -105,11 +105,11 @@ final class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    @objc open func applicationDidBecomeActive(_ notification: Notification!) {
+    @objc func applicationDidBecomeActive(_ notification: Notification!) {
         self.assetLibrary.refetchAssets()
     }
     
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
@@ -155,7 +155,7 @@ final class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
@@ -165,7 +165,7 @@ final class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    open override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         // For right-to-left layout first cell is at the far right corner.
@@ -175,7 +175,7 @@ final class CameraKeyboardViewController: UIViewController {
         }
     }
     
-    open override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewWasHidden = true
         DeviceOrientationObserver.sharedInstance().stopMonitoringDeviceOrientation()
@@ -356,7 +356,7 @@ final class CameraKeyboardViewController: UIViewController {
 
 
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         defer { setupPhotoKeyboardAppearance() }
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return 1
@@ -364,7 +364,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         return 2
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return 1 }
         
         switch CameraKeyboardSection(rawValue: UInt(section))! {
@@ -375,7 +375,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return deniedAuthorizationCell(for: .cameraAndPhotos, collectionView: collectionView, indexPath: indexPath)
@@ -426,7 +426,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         return cell
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return collectionView.frame.size }
         
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
@@ -450,7 +450,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return }
         
@@ -476,13 +476,13 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell || cell is CameraKeyboardPermissionsCell {
             self.goBackButtonRevealed = true
         }
     }
     
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell || cell is CameraKeyboardPermissionsCell  {
             self.goBackButtonRevealed = false
 
@@ -493,23 +493,23 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
 
 
 extension CameraKeyboardViewController: CameraCellDelegate {
-    public func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell) {
+    func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenFullScreenCamera(self)
     }
     
-    public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
+    func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true, uti: nil)
     }
 }
 
 extension CameraKeyboardViewController: AssetLibraryDelegate {
-    public func assetLibraryDidChange(_ library: AssetLibrary) {
+    func assetLibraryDidChange(_ library: AssetLibrary) {
         self.collectionView.reloadData()
     }
 }
 
 extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?)  {
         /// TODO fix undesired camera keyboard openings here
         self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
     }
