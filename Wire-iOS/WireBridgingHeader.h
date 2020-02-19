@@ -57,8 +57,6 @@
 #import "FullscreenImageViewController+internal.h"
 
 // Helper objects
-#import "PushTransition.h"
-#import "PopTransition.h"
 #import "MediaAsset.h"
 
 // Utils
