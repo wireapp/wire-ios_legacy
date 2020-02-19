@@ -16,6 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
+    SplitViewControllerTransitionDefault,
+    SplitViewControllerTransitionPresent,
+    SplitViewControllerTransitionDismiss
+};
+
 @interface SplitViewController ()
 
 @property (nonatomic) UIView *leftView;
@@ -34,9 +40,18 @@
 
 @property (nonatomic) SplitViewControllerLayoutSize layoutSize;
 
+- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
+
 - (void)resetOpenPercentage;
 
 - (NSArray *)constraintsInactiveForCurrentLayout;
 - (NSArray *)constraintsActiveForCurrentLayout;
+
+- (BOOL)transitionFromViewController:(UIViewController *)fromViewController
+                    toViewController:(UIViewController *)toViewController
+                       containerView:(UIView *)containerView
+                            animator:(id<UIViewControllerAnimatedTransitioning>)animator
+                            animated:(BOOL)animated
+                          completion:(nullable dispatch_block_t)completion;
 
 @end

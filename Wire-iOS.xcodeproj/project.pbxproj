@@ -506,7 +506,7 @@
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
 		871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC18E1D34F8F800DF0793 /* MediaAsset.m */; };
 		871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */; };
-		871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */; };
+		871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */; };
 		871BC2561D34F8F800DF0793 /* PopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19D1D34F8F800DF0793 /* PopTransition.m */; };
 		871BC2571D34F8F800DF0793 /* PushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* PushTransition.m */; };
 		871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */; };
@@ -2073,8 +2073,7 @@
 		871BC18D1D34F8F800DF0793 /* MediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaAsset.h; sourceTree = "<group>"; };
 		871BC18E1D34F8F800DF0793 /* MediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaAsset.m; sourceTree = "<group>"; };
 		871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewView.swift; sourceTree = "<group>"; };
-		871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossfadeTransition.h; sourceTree = "<group>"; };
-		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossfadeTransition.m; sourceTree = "<group>"; };
+		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossfadeTransition.swift; sourceTree = "<group>"; };
 		871BC19C1D34F8F800DF0793 /* PopTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopTransition.h; sourceTree = "<group>"; };
 		871BC19D1D34F8F800DF0793 /* PopTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopTransition.m; sourceTree = "<group>"; };
 		871BC19E1D34F8F800DF0793 /* PushTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushTransition.h; sourceTree = "<group>"; };
@@ -4334,8 +4333,7 @@
 		871BC1971D34F8F800DF0793 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
-				871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */,
-				871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */,
+				871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */,
 				871BC19C1D34F8F800DF0793 /* PopTransition.h */,
 				871BC19D1D34F8F800DF0793 /* PopTransition.m */,
 				871BC19E1D34F8F800DF0793 /* PushTransition.h */,
@@ -7555,7 +7553,7 @@
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
 				5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */,
 				EF2388862211A67900331C07 /* UserRight.swift in Sources */,
-				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
+				871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */,
 				16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */,
 				5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */,
 				636AD79A23A916CB004A3050 /* AppLockPresenter.swift in Sources */,
