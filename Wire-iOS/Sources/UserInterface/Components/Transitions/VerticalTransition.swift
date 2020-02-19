@@ -26,7 +26,7 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
     private let offset: CGFloat
     weak var dataSource: VerticalTransitionDataSource?
     
-    @objc init(offset: CGFloat) {
+    init(offset: CGFloat) {
         self.offset = offset
         
         super.init()

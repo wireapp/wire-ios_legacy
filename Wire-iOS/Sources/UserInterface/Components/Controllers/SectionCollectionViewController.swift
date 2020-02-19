@@ -95,18 +95,30 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+        
         visibleSections[indexPath.section].collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard visibleSections.indices.contains(section) else { return 0 }
+
         return visibleSections[section].collectionView(collectionView, numberOfItemsInSection: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard visibleSections.indices.contains(indexPath.section) else {
+            fatal("Unknown section, indexPath: \(indexPath)")
+        }
+
         return visibleSections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard visibleSections.indices.contains(indexPath.section) else {
+            fatal("Unknown section, indexPath: \(indexPath)")
+        }
+
         return visibleSections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
     }
     

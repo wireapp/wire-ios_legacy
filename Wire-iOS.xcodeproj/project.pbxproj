@@ -506,9 +506,9 @@
 		871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1461D34F8F800DF0793 /* SplitViewController.m */; };
 		871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC18E1D34F8F800DF0793 /* MediaAsset.m */; };
 		871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */; };
-		871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */; };
+		871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */; };
+		871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */; };
 		871BC2571D34F8F800DF0793 /* NavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* NavigationTransition.swift */; };
-		871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */; };
 		871BC2811D34F8F800DF0793 /* String+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* String+Fingerprint.swift */; };
@@ -2072,11 +2072,9 @@
 		871BC18D1D34F8F800DF0793 /* MediaAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaAsset.h; sourceTree = "<group>"; };
 		871BC18E1D34F8F800DF0793 /* MediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaAsset.m; sourceTree = "<group>"; };
 		871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewView.swift; sourceTree = "<group>"; };
-		871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossfadeTransition.h; sourceTree = "<group>"; };
-		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossfadeTransition.m; sourceTree = "<group>"; };
+		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossfadeTransition.swift; sourceTree = "<group>"; };
+		871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzleTransition.swift; sourceTree = "<group>"; };
 		871BC19F1D34F8F800DF0793 /* NavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTransition.swift; sourceTree = "<group>"; };
-		871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwizzleTransition.h; sourceTree = "<group>"; };
-		871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwizzleTransition.m; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransition.swift; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughTouchesView.swift; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
@@ -4331,11 +4329,9 @@
 		871BC1971D34F8F800DF0793 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
-				871BC19A1D34F8F800DF0793 /* CrossfadeTransition.h */,
-				871BC19B1D34F8F800DF0793 /* CrossfadeTransition.m */,
+				871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */,
+				871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */,
 				871BC19F1D34F8F800DF0793 /* NavigationTransition.swift */,
-				871BC1A01D34F8F800DF0793 /* SwizzleTransition.h */,
-				871BC1A11D34F8F800DF0793 /* SwizzleTransition.m */,
 				871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */,
 				0617001423E48B66005C262D /* VerticalTransition.swift */,
 				A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */,
@@ -7472,7 +7468,7 @@
 				EF05948622DF18290079B8E1 /* TeamAccountView.swift in Sources */,
 				EFEE97C623229768007A4702 /* ConversationListContentDelegate.swift in Sources */,
 				871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */,
-				871BC2581D34F8F800DF0793 /* SwizzleTransition.m in Sources */,
+				871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */,
 				EF266C612003B75C00A8C136 /* BreathLoadingBar.swift in Sources */,
 				5E21344F21E3628F00273D0D /* AuthenticationLoginCredentialsInputHandler.swift in Sources */,
 				BFE4186F209B706600503C7C /* CallInfoViewControllerAccessoryType.swift in Sources */,
@@ -7557,7 +7553,7 @@
 				1682AEB620480C80003A052A /* UIViewController+Navigation.swift in Sources */,
 				5E33F0D020AD629D00414EA6 /* CallPermissionsConfiguration.swift in Sources */,
 				EF2388862211A67900331C07 /* UserRight.swift in Sources */,
-				871BC2551D34F8F800DF0793 /* CrossfadeTransition.m in Sources */,
+				871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */,
 				16D4932A203DCCCA008DDFFA /* UserCell.swift in Sources */,
 				5E35F77C2182124E00D3F4FE /* PerformanceDebugger.swift in Sources */,
 				636AD79A23A916CB004A3050 /* AppLockPresenter.swift in Sources */,
