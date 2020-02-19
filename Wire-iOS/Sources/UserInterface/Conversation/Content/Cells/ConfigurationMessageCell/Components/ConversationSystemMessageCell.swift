@@ -165,7 +165,7 @@ class NewDeviceSystemMessageCell: ConversationIconBasedCell, ConversationMessage
     var linkTarget: LinkTarget? = nil
     
     enum LinkTarget {
-        case user(ZMUser)
+        case user(UserType)
         case conversation(ZMConversation)
     }
     
@@ -669,7 +669,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
     
-    init(message: ZMConversationMessage, data: ZMSystemMessageData, user: ZMUser) {
+    init(message: ZMConversationMessage, data: ZMSystemMessageData, user: UserType) {
         let title = ConversationIgnoredDeviceSystemMessageCellDescription.makeAttributedString(systemMessage: data, user: user)
         
         configuration =  View.Configuration(attributedText: title, icon: WireStyleKit.imageOfShieldnotverified, linkTarget: .user(user))
@@ -858,7 +858,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         return StyleKitIcon.exclamationMark.makeImage(size: 16, color: .vividRed)
     }
     
-    private static func configureForReactivatedSelfClient(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
+    private static func configureForReactivatedSelfClient(_ selfUser: UserType, attributes: TextAttributes) -> View.Configuration {
         let deviceString = NSLocalizedString("content.system.this_device", comment: "")
         let fullString  = String(format: NSLocalizedString("content.system.reactivated_device", comment: ""), deviceString) && attributes.startedUsingAttributes
         let attributedText = fullString.setAttributes(attributes.linkAttributes, toSubstring: deviceString)
@@ -866,7 +866,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         return View.Configuration(attributedText: attributedText, icon: exclamationMarkIcon, linkTarget: .user(selfUser))
     }
     
-    private static func configureForNewClientOfSelfUser(_ selfUser: ZMUser, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
+    private static func configureForNewClientOfSelfUser(_ selfUser: UserType, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
         let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
         let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
@@ -876,7 +876,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         return View.Configuration(attributedText: attributedText, icon: isSelfClient ? nil : verifiedIcon, linkTarget: .user(selfUser))
     }
     
-    private static func configureForNewCurrentDeviceOfSelfUser(_ selfUser: ZMUser, attributes: TextAttributes) -> View.Configuration {
+    private static func configureForNewCurrentDeviceOfSelfUser(_ selfUser: UserType, attributes: TextAttributes) -> View.Configuration {
         let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.this_device", comment: "") && attributes.linkAttributes
@@ -885,7 +885,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         return View.Configuration(attributedText: attributedText, icon: nil, linkTarget: .user(selfUser))
     }
     
-    private static func configureForOtherUsers(_ users: [ZMUser], conversation: ZMConversation, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
+    private static func configureForOtherUsers(_ users: [UserType], conversation: ZMConversation, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
         let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
         let firstTwoNames = displayNamesOfOthers.prefix(2)
         let senderNames = firstTwoNames.joined(separator: ", ")
