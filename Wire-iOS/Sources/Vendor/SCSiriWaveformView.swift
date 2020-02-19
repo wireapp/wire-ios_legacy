@@ -49,7 +49,7 @@ import UIKit
 
 private let kDefaultFrequency: Float = 1.5
 private let kDefaultAmplitude: Float = 1
-private let kDefaultIdleAmplitude: Float = 01
+private let kDefaultIdleAmplitude: Float = 0.01
 private let kDefaultNumberOfWaves: UInt = 5
 private let kDefaultPhaseShift: Float = -0.15
 private let kDefaultDensity: Float = 5
