@@ -26,7 +26,7 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
     private let offset: CGFloat
     weak var dataSource: VerticalTransitionDataSource?
     
-    @objc init(offset: CGFloat) {
+    init(offset: CGFloat) {
         self.offset = offset
         
         super.init()
@@ -41,12 +41,12 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
         let containerView = transitionContext.containerView
         
         guard let toView = transitionContext.toView,
-            let toViewController = transitionContext.viewController(forKey: .to) else { return }
+              let toViewController = transitionContext.toViewController else { return }
         
         containerView.addSubview(toView)
         
         guard let fromView = transitionContext.fromView,
-            let fromViewController = transitionContext.viewController(forKey: .from) else { return }
+              let fromViewController = transitionContext.fromViewController else { return }
         
         fromView.frame = transitionContext.initialFrame(for: fromViewController)
         

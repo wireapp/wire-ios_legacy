@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,15 +18,57 @@
 import Foundation
 
 extension SplitViewController {
-    private var childViewController : UIViewController? {
+    private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
-    
+
     override open var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
-    
+
     override open var childForStatusBarHidden: UIViewController? {
         return childViewController
+    }
+
+    // MARK: - animator
+    @objc
+    var animatorForRightView: UIViewControllerAnimatedTransitioning? {
+        if layoutSize == .compact && isLeftViewControllerRevealed {
+            // Right view is not visible so we should not animate.
+            return CrossfadeTransition(duration: 0)
+        } else if layoutSize == .regularLandscape {
+            return SwizzleTransition(direction: .horizontal)
+        }
+
+        return CrossfadeTransition()
+    }
+
+    @objc
+    func setLeftViewController(_ leftViewController: UIViewController?,
+                               animated: Bool,
+                               transition: SplitViewControllerTransition,
+                               completion: Completion?) {
+        if self.leftViewController == leftViewController {
+            completion?()
+            return
+        }
+
+        let removedViewController = self.leftViewController
+
+        let animator: UIViewControllerAnimatedTransitioning
+
+        if removedViewController == nil || leftViewController == nil {
+            animator = CrossfadeTransition()
+        } else if transition == .present {
+            animator = VerticalTransition(offset: 88)
+        } else if transition == .dismiss {
+            animator = VerticalTransition(offset: -88)
+        } else {
+            animator = CrossfadeTransition()
+        }
+
+        if self.transition(from: removedViewController, to: leftViewController, containerView: leftView, animator: animator, animated: animated, completion: completion) {
+            self.setInternalLeft(leftViewController)
+        }
     }
 }

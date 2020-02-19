@@ -20,8 +20,8 @@
 import Foundation
 
 final class ClearBackgroundNavigationController: UINavigationController {
-    fileprivate let pushTransition = PushTransition()
-    fileprivate let popTransition = PopTransition()
+    fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
+    fileprivate lazy var popTransition = NavigationTransition(operation: .pop)
     
     fileprivate var dismissGestureRecognizer: UIScreenEdgePanGestureRecognizer!
     
@@ -113,9 +113,9 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
         
         switch operation {
         case .push:
-            return self.pushTransition
+            return pushTransition
         case .pop:
-            return self.popTransition
+            return popTransition
         default:
             fatalError()
         }
@@ -125,15 +125,11 @@ extension ClearBackgroundNavigationController: UINavigationControllerDelegate {
 extension ClearBackgroundNavigationController: UIViewControllerTransitioningDelegate {
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
 }
 

@@ -33,4 +33,11 @@ extension UIViewControllerContextTransitioning {
         return returnView
     }
     
+    var fromViewController: UIViewController? {
+        return viewController(forKey: .from)
+    }
+    
+    var toViewController: UIViewController? {
+        return viewController(forKey: .to)
+    }
 }
