@@ -309,7 +309,7 @@ class CameraKeyboardViewController: UIViewController {
 
         self.showLoadingView = true
 
-        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
+        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVURLAsset.defaultVideoQuality) { exportSession, info in
             
             guard let exportSession = exportSession else {
                 DispatchQueue.main.async(execute: {

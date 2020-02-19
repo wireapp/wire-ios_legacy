@@ -68,6 +68,8 @@ public typealias ConvertVideoCompletion = (URL?, AVURLAsset?, Error?) -> Void
 
 extension AVURLAsset {
     
+    public static let defaultVideoQuality: String = AVAssetExportPresetHighestQuality
+    
     /// Convert a Video file URL to a upload format
     ///
     /// - Parameters:
@@ -76,7 +78,7 @@ extension AVURLAsset {
     ///   - deleteSourceFile: set to false for testing only
     ///   - completion: ConvertVideoCompletion closure. URL: exported file's URL. AVURLAsset: assert of converted video. Error: error of conversion
     public static func convertVideoToUploadFormat(at url: URL,
-                                                  quality: String = AVAssetExportPresetHighestQuality,
+                                                  quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
