@@ -525,7 +525,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let users = change.users
         let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
     
-        let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
+        let allUsers = (users.compactMap(\.name) as NSArray).componentsJoined(by: ", ") as NSString
         return String.localizedStringWithFormat(template.localized, allUsers)
     }
 

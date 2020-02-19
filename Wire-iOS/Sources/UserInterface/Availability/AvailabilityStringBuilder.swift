@@ -37,14 +37,14 @@
                 }
             }
             case .participants: do {
-                title = user.displayName.localizedUppercase
+                title = (user.name ?? "").localizedUppercase
                 color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
                 guard availability != .none && !user.shouldHideAvailability else { //Should use the default placeholder string
                     return nil
                 }
-                title = "availability.\(availability.canonicalName).placeholder".localized(args: user.displayName).localizedUppercase
+                title = "availability.\(availability.canonicalName).placeholder".localized(args: user.name ?? "").localizedUppercase
             }
         }
         

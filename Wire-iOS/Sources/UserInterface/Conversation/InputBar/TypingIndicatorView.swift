@@ -180,7 +180,7 @@ class AnimatedPenView : UIView {
     }
     
     func updateNameLabel() {
-        nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
+        nameLabel.text = typingUsers.compactMap { $0.name?.uppercased(with: Locale.current) }.joined(separator: ", ")
     }
     
     public func setHidden(_ hidden : Bool, animated : Bool) {

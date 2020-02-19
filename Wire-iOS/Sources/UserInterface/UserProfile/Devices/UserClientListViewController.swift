@@ -38,7 +38,7 @@ final class UserClientListViewController: UIViewController, UICollectionViewDele
     init(user: ZMUser) {
         self.user = user
         self.clients = UserClientListViewController.clientsSortedByRelevance(for: user)
-        self.headerView = ParticipantDeviceHeaderView(userName: user.displayName)
+        self.headerView = ParticipantDeviceHeaderView(userName: user.name ?? "")
         
         super.init(nibName: nil, bundle: nil)
         

@@ -24,10 +24,8 @@ extension ZMConversationMessage {
         guard let sender = self.sender else { return "conversation.status.someone".localized }
         if sender.isSelfUser {
             return "conversation.status.you".localized
-        } else if let conversation = self.conversation {
-            return sender.displayName(in: conversation)
         } else {
-            return sender.displayName
+            return sender.name ?? ""
         }
     }
 

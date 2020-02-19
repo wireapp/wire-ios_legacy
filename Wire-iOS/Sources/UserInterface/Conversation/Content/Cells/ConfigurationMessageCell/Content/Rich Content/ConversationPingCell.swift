@@ -146,7 +146,7 @@ class ConversationPingCellDescription: ConversationMessageCellDescription {
     let accessibilityLabel: String? = nil
 
     init(message: ZMConversationMessage, sender: UserType) {
-        let senderText = sender.isSelfUser ? "content.ping.text.you".localized : sender.displayName
+        let senderText = sender.isSelfUser ? "content.ping.text.you".localized : (sender.name ?? "")
         let pingText = "content.ping.text".localized(pov: sender.pov, args: senderText)
 
         let text = NSAttributedString(string: pingText, attributes: [
