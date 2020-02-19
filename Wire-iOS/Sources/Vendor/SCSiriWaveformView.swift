@@ -57,7 +57,7 @@ private let kDefaultPrimaryLineWidth: CGFloat = 3
 private let kDefaultSecondaryLineWidth: CGFloat = 1
 
 final class SCSiriWaveformView: UIView {
-    
+
     /*
      * The total number of waves
      * Default: 5
@@ -104,53 +104,53 @@ final class SCSiriWaveformView: UIView {
      * Default: -0.15
      */
     var phaseShift: Float = 0
-    
+
     private var phase: Float = 0
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     private func setup() {
-        
+
         frequency = kDefaultFrequency
-        
+
         amplitude = kDefaultAmplitude
         idleAmplitude = kDefaultIdleAmplitude
-        
+
         numberOfWaves = kDefaultNumberOfWaves
         phaseShift = kDefaultPhaseShift
         density = kDefaultDensity
-        
+
         primaryWaveLineWidth = kDefaultPrimaryLineWidth
         secondaryWaveLineWidth = kDefaultSecondaryLineWidth
     }
-    
+
     /*
      * Tells the waveform to redraw itself using the given level (normalized value)
      */
     func update(withLevel level: Float) {
         phase += phaseShift
         amplitude = fmax(level, idleAmplitude)
-        
+
         setNeedsDisplay()
     }
-    
+
     // Thanks to Raffael Hannemann https://github.com/raffael/SISinusWaveView
-    
+
     override func draw(_ rect: CGRect) {
         let context = UIGraphicsGetCurrentContext()
         context?.clear(bounds)
-        
+
         backgroundColor?.set()
         context?.fill(rect)
-        
+
         // We draw multiple sinus waves, with equal phases but altered amplitudes, multiplied by a parable function.
         let sinConst: Float = 2 * Float.pi * frequency
 
@@ -161,35 +161,33 @@ final class SCSiriWaveformView: UIView {
 
         for i in 0..<numberOfWaves {
             let context = UIGraphicsGetCurrentContext()
-            
+
             context?.setLineWidth((i == 0 ? primaryWaveLineWidth : secondaryWaveLineWidth))
-            
-            
-            
+
             // Progress is a value between 1 and -0.5, determined by the current wave idx, which is used to alter the wave's amplitude.
             let progress: Float = 1 - Float(i) / Float(numberOfWaves)
             let normedAmplitude: Float = (1.5 * progress - 0.5) * amplitude
-            
+
             let multiplier: Float = min(1, (progress / 3 * 2) + 1 / 3)
             waveColor.withAlphaComponent(CGFloat(multiplier) * waveColor.cgColor.alpha).set()
-            
+
             var x: Float = 0
             while x < width + density {
                 // We use a parable to scale the sinus wave, that has its peak in the middle of the view.
-                let scaling: Float = -pow(1 / mid * (x - mid), 2) + 1.0
+                let scaling: Float = -pow(1 / mid * (x - mid), 2) + 1
                 let sin: Float = sinf(sinConst * (x / width) + phase)
                 let y: Float = scaling * maxAmplitude * normedAmplitude * sin + halfHeight
-                
+
                 let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
                 if x == 0 {
                     context?.move(to: point)
                 } else {
                     context?.addLine(to: point)
                 }
-                
+
                 x += density
             }
-            
+
             context?.strokePath()
         }
     }
