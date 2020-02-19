@@ -310,37 +310,22 @@ class CameraKeyboardViewController: UIViewController {
         self.showLoadingView = true
 
         imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
-            
-            DispatchQueue.main.async(execute: {
-            
-                guard let exportSession = exportSession else {
+                        
+            guard let exportSession = exportSession else {
+                DispatchQueue.main.async(execute: {
                     self.showLoadingView = false
-                    return
-                }
+                })
+                return
+            }
                 
-                let exportURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("video-export.mp4"))
-                
-                if FileManager.default.fileExists(atPath: exportURL.path) {
-                    do {
-                        try FileManager.default.removeItem(at: exportURL)
-                    }
-                    catch let error {
-                        zmLog.error("Cannot remove \(exportURL): \(error)")
-                    }
-                }
-                
-                exportSession.outputURL = exportURL
-                exportSession.outputFileType = AVFileType.mov
-                exportSession.shouldOptimizeForNetworkUse = true
-                exportSession.outputFileType = AVFileType.mp4
-
-                exportSession.exportAsynchronously {
-                    DispatchQueue.main.async(execute: {
-                        self.showLoadingView = false
-                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
-                    })
-                }
-            })
+            let exportURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("video-export.mp4"))
+            
+            exportSession.exportVideo(exportURL: exportURL) { url, error in
+                DispatchQueue.main.async(execute: {
+                    self.showLoadingView = false
+                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
+                })
+            }
         }
     }
     

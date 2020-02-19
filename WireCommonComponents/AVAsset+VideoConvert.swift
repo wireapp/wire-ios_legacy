@@ -112,13 +112,15 @@ extension AVURLAsset {
         
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
         exportSession.exportVideo(exportURL: outputURL) { url, error in
-            completion(outputURL, self, error)
-        }        
+            DispatchQueue.main.async(execute: {
+                completion(outputURL, self, error)
+            })
+        }
     }
 }
 
 extension AVAssetExportSession {
-    func exportVideo(exportURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+    public func exportVideo(exportURL: URL, completion: @escaping (URL?, Error?) -> Void) {
         if FileManager.default.fileExists(atPath: exportURL.path) {
             do {
                 try FileManager.default.removeItem(at: exportURL)
@@ -141,9 +143,7 @@ extension AVAssetExportSession {
                 zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(exportURL)")
             }
             
-            DispatchQueue.main.async(execute: {
-                completion(exportURL, session?.error)
-            })
+            completion(exportURL, session?.error)
         }
     }
 }
