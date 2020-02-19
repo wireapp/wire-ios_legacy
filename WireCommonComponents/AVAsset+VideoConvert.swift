@@ -23,6 +23,8 @@ import WireUtilities
 
 private let zmLog = ZMSLog(tag: "UI")
 
+// MARK: - audio convert
+
 extension AVAsset {
     
     public static func convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
@@ -58,14 +60,30 @@ extension AVAsset {
             
         }
     }
+}
+
+// MARK: - video convert
+
+public typealias ConvertVideoCompletion = (URL?, AVURLAsset?, Error?) -> Void
+
+extension AVURLAsset {
     
+    /// Convert a Video file URL to a upload format
+    ///
+    /// - Parameters:
+    ///   - url: video file URL
+    ///   - quality: video quality, default is AVAssetExportPresetHighestQuality
+    ///   - deleteSourceFile: set to false for testing only
+    ///   - completion: ConvertVideoCompletion closure. URL: exported file's URL. AVURLAsset: assert of converted video. Error: error of conversion
     public static func convertVideoToUploadFormat(at url: URL,
+                                                  quality: String = AVAssetExportPresetHighestQuality,
                                                   deleteSourceFile: Bool = true,
-                                                  completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
+                                                  completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
         
-        asset.convert(filename: filename) { URL, asset, error in
+        asset.convert(filename: filename,
+                      quality: quality) { URL, asset, error in
             
             completion(URL, asset, error)
             
@@ -75,14 +93,13 @@ extension AVAsset {
                 } catch let deleteError {
                     zmLog.error("Cannot delete file: \(url) (\(deleteError))")
                 }
-            }            
+            }
         }
-    }        
-}
+    }
 
-extension AVURLAsset {
     public func convert(filename: String,
-                        completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
+                        quality: String = AVAssetExportPresetHighestQuality,
+                        completion: @escaping ConvertVideoCompletion) {
         let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
         if FileManager.default.fileExists(atPath: outputURL.path) {
@@ -93,7 +110,7 @@ extension AVURLAsset {
             }
         }
         
-        guard let exportSession = AVAssetExportSession(asset: self, presetName: AVAssetExportPresetHighestQuality) else { return }
+        guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
         exportSession.outputURL = outputURL
         exportSession.shouldOptimizeForNetworkUse = true
         exportSession.outputFileType = .mp4
