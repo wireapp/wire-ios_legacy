@@ -310,7 +310,7 @@ class CameraKeyboardViewController: UIViewController {
         self.showLoadingView = true
 
         imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
-                        
+            
             guard let exportSession = exportSession else {
                 DispatchQueue.main.async(execute: {
                     self.showLoadingView = false
@@ -318,7 +318,7 @@ class CameraKeyboardViewController: UIViewController {
                 return
             }
                 
-            let exportURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("video-export.mp4"))
+            let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video-export.mp4")
             
             exportSession.exportVideo(exportURL: exportURL) { url, error in
                 DispatchQueue.main.async(execute: {
