@@ -111,22 +111,39 @@ extension AVURLAsset {
         }
         
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
-        exportSession.outputURL = outputURL
-        exportSession.shouldOptimizeForNetworkUse = true
-        exportSession.outputFileType = .mp4
-        exportSession.metadata = []
-        exportSession.metadataItemFilter = AVMetadataItemFilter.forSharing()
+        exportSession.exportVideo(exportURL: outputURL) { url, error in
+            completion(outputURL, self, error)
+        }        
+    }
+}
+
+extension AVAssetExportSession {
+    func exportVideo(exportURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+        if FileManager.default.fileExists(atPath: exportURL.path) {
+            do {
+                try FileManager.default.removeItem(at: exportURL)
+            }
+            catch let error {
+                zmLog.error("Cannot delete old leftover at \(exportURL): \(error)")
+            }
+        }
         
-        weak var session: AVAssetExportSession? = exportSession
-        exportSession.exportAsynchronously(completionHandler: {
+        outputURL = exportURL
+        shouldOptimizeForNetworkUse = true
+        outputFileType = .mp4
+        metadata = []
+        metadataItemFilter = AVMetadataItemFilter.forSharing()
+        
+        weak var session: AVAssetExportSession? = self
+        exportAsynchronously() {
             if let session = session,
                 let error = session.error {
-                zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(outputURL)")
+                zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(exportURL)")
             }
             
             DispatchQueue.main.async(execute: {
-                completion(outputURL, self, session?.error)
+                completion(exportURL, session?.error)
             })
-        })
+        }
     }
 }
