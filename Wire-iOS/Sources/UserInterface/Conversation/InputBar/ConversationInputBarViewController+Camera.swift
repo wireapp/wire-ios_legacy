@@ -216,14 +216,14 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         
         let videoURLAsset = AVURLAsset(url: NSURL(fileURLWithPath: inputPath) as URL)
         
-        videoURLAsset.convert(completion: { URL, videoAsset, error in
+        videoURLAsset.convert(filename: filename) { URL, videoAsset, error in
             guard let resultURL = URL, error == nil else {
                 completion(false, .none, 0)
                 return
             }
             completion(true, resultURL.path, CMTimeGetSeconds((videoAsset?.duration)!))
             
-            }, filename: filename)
+            }
     }
 }
 

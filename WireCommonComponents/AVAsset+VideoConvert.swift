@@ -62,10 +62,10 @@ extension AVAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   deleteSourceFile: Bool = true,
                                                   completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
-        let filename = URL(fileURLWithPath: URL(fileURLWithPath: url.lastPathComponent ).deletingPathExtension().absoluteString).appendingPathExtension("mp4").absoluteString
-        let asset: AVURLAsset = AVURLAsset(url: url, options: nil) ///TODO: "file:/video.mp4"
+        let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
+        let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
         
-        asset.convert(completion: { URL, asset, error in
+        asset.convert(filename: filename) { URL, asset, error in
             
             completion(URL, asset, error)
             
@@ -75,16 +75,15 @@ extension AVAsset {
                 } catch let deleteError {
                     zmLog.error("Cannot delete file: \(url) (\(deleteError))")
                 }
-            }
-            
-        }, filename: filename)
-    }
-    
-    public func convert(completion: @escaping (URL?, AVAsset?, Error?) -> Void,
-                        filename: String) {
-        let tmpfile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename).absoluteString
-        
-        let outputURL = URL(fileURLWithPath: tmpfile)
+            }            
+        }
+    }        
+}
+
+extension AVURLAsset {
+    public func convert(filename: String,
+                        completion: @escaping (URL?, AVAsset?, Error?) -> Void) {
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
         if FileManager.default.fileExists(atPath: outputURL.path) {
             do {
@@ -113,5 +112,4 @@ extension AVAsset {
             })
         })
     }
-    
 }
