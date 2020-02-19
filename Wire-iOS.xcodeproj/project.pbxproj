@@ -257,7 +257,7 @@
 		5E4BC1CA218C9F6600A8682E /* ConversationQuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */; };
 		5E4BC1CC218CA94D00A8682E /* ZMConversationMessage+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */; };
 		5E52376220E7E50F00649241 /* ColorTilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376020E7E46600649241 /* ColorTilesViewController.swift */; };
-		5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */; };
+		5E52378A20EB5B4C00649241 /* SCSiriWaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52378820EB5B4C00649241 /* SCSiriWaveformView.swift */; };
 		5E53534221B05C330060DB38 /* MessageDetailsViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53534021B05C2F0060DB38 /* MessageDetailsViewControllerTests.swift */; };
 		5E53534421B14A8A0060DB38 /* MessageDetailsCellDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53534321B14A8A0060DB38 /* MessageDetailsCellDescription.swift */; };
 		5E53B0DC211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */; };
@@ -1800,8 +1800,7 @@
 		5E52376020E7E46600649241 /* ColorTilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTilesViewController.swift; sourceTree = "<group>"; };
 		5E52376820E7F12B00649241 /* EasingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingAnimation.swift; sourceTree = "<group>"; };
 		5E52376A20E7F99500649241 /* EasingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingFunction.swift; sourceTree = "<group>"; };
-		5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCSiriWaveformView.m; sourceTree = "<group>"; };
-		5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCSiriWaveformView.h; sourceTree = "<group>"; };
+		5E52378820EB5B4C00649241 /* SCSiriWaveformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSiriWaveformView.swift; sourceTree = "<group>"; };
 		5E53534021B05C2F0060DB38 /* MessageDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewControllerTests.swift; sourceTree = "<group>"; };
 		5E53534321B14A8A0060DB38 /* MessageDetailsCellDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsCellDescription.swift; sourceTree = "<group>"; };
 		5E53B0DB211AB7AC009C7124 /* AuthenticationInterfaceBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationInterfaceBuilder.swift; sourceTree = "<group>"; };
@@ -3988,8 +3987,7 @@
 		5EC16B6520EB782900955156 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				5E52378920EB5B4C00649241 /* SCSiriWaveformView.h */,
-				5E52378820EB5B4C00649241 /* SCSiriWaveformView.m */,
+				5E52378820EB5B4C00649241 /* SCSiriWaveformView.swift */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -7595,7 +7593,7 @@
 				870C92691E8CE5E500A10995 /* ConversationAvatarView.swift in Sources */,
 				BFF8076620BC275D0063E5D4 /* CallHapticsController.swift in Sources */,
 				5EFD915021CA688700080599 /* AuthenticationIncrementalUserCreationInputHandler.swift in Sources */,
-				5E52378A20EB5B4C00649241 /* SCSiriWaveformView.m in Sources */,
+				5E52378A20EB5B4C00649241 /* SCSiriWaveformView.swift in Sources */,
 				5E3A6C22206A3AD500907484 /* ConversationActionController.swift in Sources */,
 				8710673E1C0DC5570035603B /* SettingsCellDescriptorFactory.swift in Sources */,
 				D5189477205045A100C095C1 /* LinkHeaderCell.swift in Sources */,
