@@ -507,8 +507,8 @@
 		871BC2501D34F8F800DF0793 /* MediaAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC18E1D34F8F800DF0793 /* MediaAsset.m */; };
 		871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */; };
 		871BC2551D34F8F800DF0793 /* CrossfadeTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */; };
-		871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */; };
 		871BC2571D34F8F800DF0793 /* NavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC19F1D34F8F800DF0793 /* NavigationTransition.swift */; };
+		871BC2581D34F8F800DF0793 /* SwizzleTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */; };
 		871BC25A1D34F8F800DF0793 /* ZoomTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */; };
 		871BC26F1D34F8F800DF0793 /* ResizingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1D31D34F8F800DF0793 /* ResizingTextView.swift */; };
 		871BC2811D34F8F800DF0793 /* String+Fingerprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1F71D34F8F800DF0793 /* String+Fingerprint.swift */; };
@@ -520,7 +520,6 @@
 		871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3381D34F94200DF0793 /* SettingsProperty.swift */; };
 		871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */; };
 		871BC3621D34F94200DF0793 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC33D1D34F94200DF0793 /* Settings.m */; };
-		871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */; };
 		871BE95A1CD0C2E7002267E8 /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */; };
 		871BE95B1CD0C3A5002267E8 /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871BE9561CD0C2DD002267E8 /* OCMock.framework */; };
 		871BE95E1CD0C459002267E8 /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 871BE9561CD0C2DD002267E8 /* OCMock.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -2074,8 +2073,8 @@
 		871BC18E1D34F8F800DF0793 /* MediaAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaAsset.m; sourceTree = "<group>"; };
 		871BC1941D34F8F800DF0793 /* MediaPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaPreviewView.swift; sourceTree = "<group>"; };
 		871BC19B1D34F8F800DF0793 /* CrossfadeTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossfadeTransition.swift; sourceTree = "<group>"; };
-		871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzleTransition.swift; sourceTree = "<group>"; };
 		871BC19F1D34F8F800DF0793 /* NavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationTransition.swift; sourceTree = "<group>"; };
+		871BC1A11D34F8F800DF0793 /* SwizzleTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwizzleTransition.swift; sourceTree = "<group>"; };
 		871BC1A51D34F8F800DF0793 /* ZoomTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTransition.swift; sourceTree = "<group>"; };
 		871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughTouchesView.swift; sourceTree = "<group>"; };
 		871BC1D01D34F8F800DF0793 /* PassthroughWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughWindow.swift; sourceTree = "<group>"; };
@@ -2095,8 +2094,6 @@
 		871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsPropertyFactory.swift; sourceTree = "<group>"; };
 		871BC33C1D34F94200DF0793 /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		871BC33D1D34F94200DF0793 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
-		871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceOrientationObserver.h; sourceTree = "<group>"; };
-		871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceOrientationObserver.m; sourceTree = "<group>"; };
 		871BE9551CD0C2DD002267E8 /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		871BE9561CD0C2DD002267E8 /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = Carthage/Build/iOS/OCMock.framework; sourceTree = "<group>"; };
 		871DD79C2080C4F6006B1C56 /* Conversation+Participants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Conversation+Participants.swift"; sourceTree = "<group>"; };
@@ -4256,8 +4253,6 @@
 				5E2B13E520E67206002F27E2 /* CollectionLayouts */,
 				8FC8524E199245760008B66B /* NetworkStatus */,
 				871BC1281D34F8F800DF0793 /* Controllers */,
-				871BC36B1D34F96000DF0793 /* DeviceOrientationObserver.h */,
-				871BC36C1D34F96000DF0793 /* DeviceOrientationObserver.m */,
 				871BC1511D34F8F800DF0793 /* Giphy */,
 				161A813723D07F000081B4C3 /* KeyboardAvoidingViewController.swift */,
 				A9C9D35D23E84EA20098CACC /* MediaPlayerDelegate.swift */,
@@ -6661,7 +6656,7 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
@@ -6672,7 +6667,7 @@
 						CreatedOnToolsVersion = 6.0;
 						DevelopmentTeam = W5KEQBF9B5;
 						LastSwiftMigration = 1000;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.SafariKeychain = {
 								enabled = 1;
@@ -7557,7 +7552,6 @@
 				87DCF49C1D34E9E600BB420F /* LocationSendViewController.swift in Sources */,
 				F1199D421FC849450070FAC3 /* VerificationCodeFieldDescription.swift in Sources */,
 				BF808B4D1DE5AD1600718076 /* SettingsCellDescriptorFactory+Account.swift in Sources */,
-				871BC36D1D34F96000DF0793 /* DeviceOrientationObserver.m in Sources */,
 				8710673D1C0DC5570035603B /* SettingsCellDescriptor.swift in Sources */,
 				EEA9A75F21B01F28001F7B5C /* ConversationCreateErrorCell.swift in Sources */,
 				EEF28EEF1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift in Sources */,
@@ -8540,6 +8534,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -8547,6 +8545,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
@@ -8568,6 +8570,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24232219B2C9B00F7035C /* Wire-iOS-Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -8575,6 +8581,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24234219B2C9B00F7035C /* Wire-iOS-Release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
