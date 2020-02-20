@@ -25,7 +25,7 @@ extension FullscreenImageViewController {
         
         let ghostImageView = UIImageView(image: imageView.image)
         ghostImageView.contentMode = .scaleAspectFit
-        ghostImageView.translatesAutoresizingMaskIntoConstraints = true
+        ghostImageView.translatesAutoresizingMaskIntoConstraints = false
         let initialFrame = view.convert(imageView.frame, from: imageView.superview)
         view.addSubview(ghostImageView)
         ghostImageView.frame = initialFrame
