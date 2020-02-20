@@ -105,7 +105,6 @@ final class InputBarTests: ZMSnapshotTestCase {
         userWithLongName.name = "Matt loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name"
         let text = "Hello @\(userWithLongName.name!)"
         sut.textView.setText(text, withMentions: [Mention(range: (text as NSString).range(of: "@\(userWithLongName.name!)"), user: userWithLongName)])
-        let test = sut.textView.textContainer.lineBreakMode
         verifyInAllPhoneWidths(view: sut)
         verifyInAllTabletWidths(view: sut)
     }
