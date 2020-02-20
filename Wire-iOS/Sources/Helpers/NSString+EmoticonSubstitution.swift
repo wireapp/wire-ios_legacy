@@ -40,7 +40,7 @@ extension NSMutableString {
                                                           range: mutableRange)
 
             if howManyTimesReplaced > 0 {
-                let length = max(mutableRange.length - (shortcut.count - emoticon.count) * howManyTimesReplaced, 0)
+                let length = max(mutableRange.length - ((shortcut as NSString).length - (emoticon as NSString).length) * howManyTimesReplaced, 0)
                 mutableRange = NSRange(location: mutableRange.location,
                                        length: length)
             }
