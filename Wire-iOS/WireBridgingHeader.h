@@ -23,7 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "SCSiriWaveformView.h"
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 #import "TokenTextAttachment.h"
