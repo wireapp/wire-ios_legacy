@@ -86,7 +86,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     
     func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
-        navigationController?.showLoadingView = state.isLoading
+        (navigationController as? RotationAwareNavigationController)?.showSpinner = state.isLoading
         title = state.title
     }
 

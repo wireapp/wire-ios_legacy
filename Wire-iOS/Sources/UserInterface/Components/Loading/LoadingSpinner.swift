@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol LoadingSpinner {
+protocol LoadingSpinner: class {
     var loadingSpinnerView: UIView { get }
     var spinnerSubtitleView: SpinnerSubtitleView { get }
     var showSpinner: Bool { get set }

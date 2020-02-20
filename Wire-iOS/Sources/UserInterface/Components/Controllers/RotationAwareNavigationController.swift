@@ -19,7 +19,16 @@
 
 import Foundation
 
-final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter, LoadingSpinner {
+
+    // MARK: - LoadingSpinner
+
+    lazy var loadingSpinnerView: UIView = {
+        return createLoadingSpinnerView()
+    }()
+    
+    lazy var spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
+
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
