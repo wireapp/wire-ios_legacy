@@ -24,7 +24,7 @@ import UIKit
 
 extension EasingFunction {
 
-    public var timingFunction: CAMediaTimingFunction {
+    var timingFunction: CAMediaTimingFunction {
         switch self {
         case .linear: return CAMediaTimingFunction(controlPoints: 0.250, 0.250, 0.750, 0.750)
         case .easeInSine: return CAMediaTimingFunction(controlPoints: 0.47, 0, 0.745, 0.715)

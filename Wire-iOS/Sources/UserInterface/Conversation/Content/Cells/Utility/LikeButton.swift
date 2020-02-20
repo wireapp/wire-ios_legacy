@@ -65,7 +65,7 @@ final class LikeButton: IconButton {
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform.identity
                 })
                 
@@ -80,7 +80,7 @@ final class LikeButton: IconButton {
             }
             else {
                 
-                UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 })
                 
