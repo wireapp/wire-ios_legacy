@@ -21,11 +21,7 @@ import XCTest
 import SnapshotTesting
 
 final class MockLoadingSpinnerViewController: UIViewController, LoadingSpinner {
-    lazy var loadingSpinnerView: UIView = {
-        return createLoadingSpinnerView()
-    }()
-    
-    lazy var spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
+    lazy var loadingSpinnerView: LoadingSpinnerView = createLoadingSpinnerView()
 }
 
 
@@ -36,9 +32,6 @@ final class LoadingViewControllerTests: XCTestCase {
         super.setUp()
         sut = MockLoadingSpinnerViewController()
         sut.view.backgroundColor = .white
-        sut.view.layer.speed = 0
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
-        sut.beginAppearanceTransition(true, animated: false)
     }
     
     override func tearDown() {
@@ -72,7 +65,7 @@ final class LoadingViewControllerTests: XCTestCase {
         // Given
         
         // when
-        sut.spinnerSubtitleView.subtitle = "RESTORING…"
+        sut.spinnerSubtitle = "RESTORING…"
         sut.showSpinner = true
         
         // then

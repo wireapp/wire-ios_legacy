@@ -45,6 +45,7 @@ final class LoadingSpinnerView: UIView {
 protocol LoadingSpinner: class {
     var loadingSpinnerView: LoadingSpinnerView { get }
     var showSpinner: Bool { get set }
+    var spinnerSubtitle: String? { get set }
 }
 
 extension LoadingSpinner where Self: UIViewController {
@@ -60,6 +61,16 @@ extension LoadingSpinner where Self: UIViewController {
         return loadingSpinnerView
     }
     
+    var spinnerSubtitle: String? {
+        get {
+            return loadingSpinnerView.spinnerSubtitleView.subtitle
+        }
+        
+        set {
+            loadingSpinnerView.spinnerSubtitleView.subtitle = newValue
+        }
+    }
+
     var showSpinner: Bool {
         get {
             return !loadingSpinnerView.isHidden
