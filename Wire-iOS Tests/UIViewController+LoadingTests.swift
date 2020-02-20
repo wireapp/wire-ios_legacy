@@ -22,55 +22,10 @@ import SnapshotTesting
 
 final class MockLoadingSpinnerViewController: UIViewController, LoadingSpinner {
     lazy var loadingSpinnerView: UIView = {
-       let view = UIView()
-        view.isHidden = true
-        view.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
-        view.addSubview(spinnerSubtitleView)
-        
-        self.view.addSubview(view)
-
-        createConstraints(container: view)
-
-        return view
+        return createLoadingSpinnerView()
     }()
     
     lazy var spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
-    
-    var showSpinner: Bool {
-        get {
-            return !loadingSpinnerView.isHidden
-        }
-        
-        set(shouldShow) {
-            loadingSpinnerView.isHidden = !shouldShow
-            spinnerSubtitleView.isHidden = !shouldShow
-            view.isUserInteractionEnabled = !shouldShow
-
-            if shouldShow {
-                UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
-                spinnerSubtitleView.spinner.startAnimation()
-            } else {
-                spinnerSubtitleView.spinner.stopAnimation()
-            }
-        }
-    }
-    
-    func createConstraints(container: UIView) {
-        container.translatesAutoresizingMaskIntoConstraints = false
-        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            // loadingView
-            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            container.topAnchor.constraint(equalTo: view.topAnchor),
-            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            // spinnerView
-            spinnerSubtitleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinnerSubtitleView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            ])
-    }
 }
 
 
@@ -100,7 +55,19 @@ final class LoadingViewControllerTests: XCTestCase {
         // then
         verifyInAllDeviceSizes(matching: sut)
     }
-    
+
+    func testThatItDismissesLoadingIndicator() {
+        // Given
+        
+        // when
+        sut.showSpinner = true
+
+        sut.showSpinner = false
+
+        // then
+        verify(matching: sut)
+    }
+
     func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
         
