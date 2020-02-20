@@ -19,8 +19,7 @@
 import Foundation
 
 extension NSMutableString {
-    
-    
+
     /// resolve emoticon shortcuts with given EmoticonSubstitutionConfiguration
     ///
     /// - Parameters:
@@ -28,20 +27,18 @@ extension NSMutableString {
     ///   - configuration: a EmoticonSubstitutionConfiguration object for injection
     func resolveEmoticonShortcuts(in range: NSRange,
                                   configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) {
-        guard let shortcuts = configuration.shortcuts else { return }
-        
+        let shortcuts = configuration.shortcuts
+
         var mutableRange = range
-        
+
         for shortcut in shortcuts {
-            guard let emoticon = configuration.emoticon(forShortcut: shortcut) else { continue }
-            
+            guard let emoticon = configuration.substitutionRules[shortcut] else { continue }
+
             let howManyTimesReplaced = replaceOccurrences(of: shortcut,
                                                           with: emoticon,
                                                           options: .literal,
                                                           range: mutableRange)
-            
-            
-            
+
             if howManyTimesReplaced > 0 {
                 let length = max(mutableRange.length - (shortcut.count - emoticon.count) * howManyTimesReplaced, 0)
                 mutableRange = NSRange(location: mutableRange.location,
