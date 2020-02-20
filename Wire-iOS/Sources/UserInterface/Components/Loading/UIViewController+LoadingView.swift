@@ -38,3 +38,9 @@ extension UIViewController {
     }
 
 }
+
+protocol LoadingSpinner {
+    var loadingView: UIView { get }
+    var spinnerView: SpinnerSubtitleView { get }
+    var showLoadingView: Bool { get set }
+}
