@@ -241,10 +241,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
 
 extension ProfileViewControllerViewModel: BackButtonTitleDelegate {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        guard let fullName = bareUser.name else {
-            return nil
-        }
-        return fullName.uppercasedWithCurrentLocale
+        return bareUser.name?.uppercasedWithCurrentLocale
     }
 }
 
