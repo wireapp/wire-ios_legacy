@@ -64,23 +64,10 @@ final class EmoticonSubstitutionConfiguration {
         
         var rules: [String: String] = [:]
         for (key, value) in jsonResult {
-            
+            let hexInt = Int(value, radix: 16)!
+            let scalar = UnicodeScalar(hexInt)!
+            rules[key] = String(Character(scalar))
         }
-
-        ///TODO:
-//        let data = self.data(using: .utf8)!
-//        return String(data: data, encoding: .nonLossyASCII) ?? self
-        
-//            jsonResult?.enumerateKeysAndObjects({ key, value, stop in
-//                let prefixedValue = "0x\(value)"
-//                let hexNumberScanner = Scanner(string: prefixedValue)
-//                var number: UInt32 = 0
-//                if hexNumberScanner.scanHexInt32(UnsafeMutablePointer<UInt32>(mutating: &number)) {
-//                    number = CFSwapInt32HostToBig(number)
-//                    let emo = String(bytes: &number, encoding: .utf32)
-//                    rules[key ?? ""] = emo ?? ""
-//                }
-//            })
 
         substitutionRules = rules
     }
