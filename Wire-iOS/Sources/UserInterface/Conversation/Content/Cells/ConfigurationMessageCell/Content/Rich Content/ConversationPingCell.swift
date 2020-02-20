@@ -75,13 +75,13 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
                 
                 self.isAnimationRunning = true
                 
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.7, animations: {
+                UIView.animate(easing: .easeOutExpo, duration: 0.7, animations: {
                     self.imageView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
                 }, completion: { (completed) in
                     self.imageView.transform = .identity
                 })
                 
-                UIView.wr_animate(easing: .easeOutQuart, duration: 0.7, animations: {
+                UIView.animate(easing: .easeOutQuart, duration: 0.7, animations: {
                     self.imageView.alpha = 0.0
                 }, completion: { (completed) in
                     if reps > 0 {
@@ -92,7 +92,7 @@ class ConversationPingCell: ConversationIconBasedCell, ConversationMessageCell {
                                 return
                              }
                             
-                            UIView.wr_animate(easing: .easeOutQuart, duration: 0.55, animations: {
+                            UIView.animate(easing: .easeOutQuart, duration: 0.55, animations: {
                                 self.imageView.alpha = 1.0
                             }, completion: { (completed) in
                                 self.stopAnimation()

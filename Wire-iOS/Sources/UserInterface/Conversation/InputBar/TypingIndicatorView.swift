@@ -213,7 +213,7 @@ final class TypingIndicatorView: UIView {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
                 UIView.animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
-                UIView.wr_animate(easing: .easeInQuad,
+                UIView.animate(easing: .easeInQuad,
                                   duration: 0.15,
                                   delayTime: 0.15,
                                   animations: showContainer, completion: { _ in

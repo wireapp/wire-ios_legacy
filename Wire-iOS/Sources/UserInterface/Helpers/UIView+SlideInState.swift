@@ -18,12 +18,12 @@
 
 import Foundation
 
-public enum SlideDirection: UInt {
+enum SlideDirection: UInt {
     case up
     case down
 }
 
-public extension UIView {
+extension UIView {
     func wr_animateSlideTo(_ direction: SlideDirection = .down, newState: ()->()) {
         guard let superview = self.superview, let screenshot = snapshotView(afterScreenUpdates: false) else {
             return newState()
@@ -37,7 +37,7 @@ public extension UIView {
         
         newState()
         
-        UIView.wr_animate(easing: .easeInOutExpo, duration: 0.20, animations: {
+        UIView.animate(easing: .easeInOutExpo, duration: 0.20, animations: {
             self.frame = screenshot.frame
             screenshot.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y - offset, width: self.frame.size.width, height: self.frame.size.height)
             }) { _ in

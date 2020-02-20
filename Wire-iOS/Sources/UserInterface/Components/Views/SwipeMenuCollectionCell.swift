@@ -84,7 +84,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     revealAnimationPerforming = true
                     let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
 
-                    UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                    UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
                         self.layoutIfNeeded()
                     }) { finished in

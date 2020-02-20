@@ -46,7 +46,7 @@ final class CrossfadeTransition: NSObject, UIViewControllerAnimatedTransitioning
 
         toView.alpha = 0
 
-        UIView.wr_animate(easing: .easeInOutQuad, duration: duration, animations: {
+        UIView.animate(easing: .easeInOutQuad, duration: duration, animations: {
             fromView?.alpha = 0
             toView.alpha = 1
         }) { finished in
