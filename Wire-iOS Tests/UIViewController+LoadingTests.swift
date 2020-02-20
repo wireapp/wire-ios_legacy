@@ -20,18 +20,82 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class LoadingViewControllerTests: XCTestCase {
+final class MockLoadingSpinnerViewController: UIViewController, LoadingSpinner {
+    lazy var loadingSpinnerView: UIView = {
+       let view = UIView()
+        view.isHidden = true
+        view.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        view.addSubview(spinnerSubtitleView)
+        
+        self.view.addSubview(view)
+
+        createConstraints(container: view)
+
+        return view
+    }()
     
-    func testThatItShowsLoadingIndicator() {
-        // Given
-        let sut = UIViewController()
+    lazy var spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
+    
+    var showSpinner: Bool {
+        get {
+            return !loadingSpinnerView.isHidden
+        }
+        
+        set(shouldShow) {
+            loadingSpinnerView.isHidden = !shouldShow
+            spinnerSubtitleView.isHidden = !shouldShow
+            view.isUserInteractionEnabled = !shouldShow
+
+            if shouldShow {
+                UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
+                spinnerSubtitleView.spinner.startAnimation()
+            } else {
+                spinnerSubtitleView.spinner.stopAnimation()
+            }
+        }
+    }
+    
+    func createConstraints(container: UIView) {
+        container.translatesAutoresizingMaskIntoConstraints = false
+        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            // loadingView
+            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.topAnchor.constraint(equalTo: view.topAnchor),
+            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            // spinnerView
+            spinnerSubtitleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            spinnerSubtitleView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            ])
+    }
+}
+
+
+final class LoadingViewControllerTests: XCTestCase {
+    var sut: (UIViewController & LoadingSpinner)!
+    
+    override func setUp() {
+        super.setUp()
+        sut = MockLoadingSpinnerViewController()
         sut.view.backgroundColor = .white
         sut.view.layer.speed = 0
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
         sut.beginAppearanceTransition(true, animated: false)
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
+    func testThatItShowsLoadingIndicator() {
+        // Given
         
         // when
-        sut.showLoadingView = true
+        sut.showSpinner = true
         
         // then
         verifyInAllDeviceSizes(matching: sut)
@@ -39,15 +103,10 @@ final class LoadingViewControllerTests: XCTestCase {
     
     func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
-        let sut = UIViewController()
-        sut.view.backgroundColor = .white
-        sut.view.layer.speed = 0
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
-        sut.beginAppearanceTransition(true, animated: false)
         
         // when
-        sut.spinnerView.subtitle = "RESTORING…"
-        sut.showLoadingView = true
+        sut.spinnerSubtitleView.subtitle = "RESTORING…"
+        sut.showSpinner = true
         
         // then
         verifyInAllDeviceSizes(matching: sut)

@@ -20,7 +20,7 @@ import UIKit
 
 final class SpinnerSubtitleView: UIStackView {
 
-    @objc public var subtitle: String? {
+    @objc var subtitle: String? {
         didSet {
             updateSubtitle(subtitle)
         }
@@ -31,7 +31,7 @@ final class SpinnerSubtitleView: UIStackView {
     
     private let label = UILabel()
 
-    public init() {
+    init() {
         super.init(frame: .zero)
         setupViews()
         updateSubtitle(nil)

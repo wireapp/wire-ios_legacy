@@ -40,7 +40,7 @@ extension UIViewController {
 }
 
 protocol LoadingSpinner {
-    var loadingView: UIView { get }
-    var spinnerView: SpinnerSubtitleView { get }
-    var showLoadingView: Bool { get set }
+    var loadingSpinnerView: UIView { get }
+    var spinnerSubtitleView: SpinnerSubtitleView { get }
+    var showSpinner: Bool { get set }
 }
