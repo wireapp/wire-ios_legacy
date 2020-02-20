@@ -23,10 +23,12 @@ import WireUtilities
 
 private let zmLog = ZMSLog(tag: "UI")
 
+// MARK: - audio convert
+
 extension AVAsset {
-
-    @objc public static func wr_convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
-
+    
+    public static func convertAudioToUploadFormat(_ inPath: String, outPath: String, completion: ((_ success: Bool) -> ())? = .none) {
+        
         let fileURL = URL(fileURLWithPath: inPath)
         let alteredAsset = AVAsset(url: fileURL)
         let session = AVAssetExportSession(asset: alteredAsset, presetName: AVAssetExportPresetAppleM4A)
@@ -36,7 +38,7 @@ extension AVAsset {
             completion?(false)
             return
         }
-    
+        
         let encodedEffectAudioURL = URL(fileURLWithPath: outPath)
         
         exportSession.outputURL = encodedEffectAudioURL as URL
@@ -58,5 +60,73 @@ extension AVAsset {
             
         }
     }
+}
 
+// MARK: - video convert
+
+public typealias ConvertVideoCompletion = (URL?, AVURLAsset?, Error?) -> Void
+
+extension AVURLAsset {
+    
+    /// Convert a Video file URL to a upload format
+    ///
+    /// - Parameters:
+    ///   - url: video file URL
+    ///   - quality: video quality, default is AVAssetExportPresetHighestQuality
+    ///   - deleteSourceFile: set to false for testing only
+    ///   - completion: ConvertVideoCompletion closure. URL: exported file's URL. AVURLAsset: assert of converted video. Error: error of conversion
+    public static func convertVideoToUploadFormat(at url: URL,
+                                                  quality: String = AVAssetExportPresetHighestQuality,
+                                                  deleteSourceFile: Bool = true,
+                                                  completion: @escaping ConvertVideoCompletion ) {
+        let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
+        let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
+        
+        asset.convert(filename: filename,
+                      quality: quality) { URL, asset, error in
+            
+            completion(URL, asset, error)
+            
+            if deleteSourceFile {
+                do {
+                    try FileManager.default.removeItem(at: url)
+                } catch let deleteError {
+                    zmLog.error("Cannot delete file: \(url) (\(deleteError))")
+                }
+            }
+        }
+    }
+
+    public func convert(filename: String,
+                        quality: String = AVAssetExportPresetHighestQuality,
+                        completion: @escaping ConvertVideoCompletion) {
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
+        
+        if FileManager.default.fileExists(atPath: outputURL.path) {
+            do {
+                try FileManager.default.removeItem(at: outputURL)
+            } catch let deleteError {
+                zmLog.error("Cannot delete old leftover at \(outputURL): \(deleteError)")
+            }
+        }
+        
+        guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
+        exportSession.outputURL = outputURL
+        exportSession.shouldOptimizeForNetworkUse = true
+        exportSession.outputFileType = .mp4
+        exportSession.metadata = []
+        exportSession.metadataItemFilter = AVMetadataItemFilter.forSharing()
+        
+        weak var session: AVAssetExportSession? = exportSession
+        exportSession.exportAsynchronously(completionHandler: {
+            if let session = session,
+                let error = session.error {
+                zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(outputURL)")
+            }
+            
+            DispatchQueue.main.async(execute: {
+                completion(outputURL, self, session?.error)
+            })
+        })
+    }
 }

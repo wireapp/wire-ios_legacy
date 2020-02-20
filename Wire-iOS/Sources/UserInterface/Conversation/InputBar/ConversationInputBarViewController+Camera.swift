@@ -207,26 +207,23 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
     
-    public func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval)->()) {
-        var filename: String?
+    func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval)->()) {
+        
         
         let lastPathComponent = (inputPath as NSString).lastPathComponent
-        filename = ((lastPathComponent as NSString).deletingPathExtension as NSString).appendingPathExtension("mp4")
         
-        if filename == .none {
-            filename = "video.mp4"
-        }
+        let filename: String = ((lastPathComponent as NSString).deletingPathExtension as NSString).appendingPathExtension("mp4") ?? "video.mp4"
         
         let videoURLAsset = AVURLAsset(url: NSURL(fileURLWithPath: inputPath) as URL)
         
-        videoURLAsset.wr_convert(completion: { URL, videoAsset, error in
+        videoURLAsset.convert(filename: filename) { URL, videoAsset, error in
             guard let resultURL = URL, error == nil else {
                 completion(false, .none, 0)
                 return
             }
             completion(true, resultURL.path, CMTimeGetSeconds((videoAsset?.duration)!))
             
-            }, filename: filename)
+            }
     }
 }
 

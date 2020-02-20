@@ -23,7 +23,6 @@
 @import ZipArchive;
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Files.h"
-#import "AVAsset+VideoConvert.h"
 #import "Wire-Swift.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";

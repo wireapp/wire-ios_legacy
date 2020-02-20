@@ -28,4 +28,3 @@
 #import <avs/AVSAudioEffect.h>
 
 #import "MockConversation.h"
-#import "EmoticonSubstitutionConfiguration+Tests.h"
