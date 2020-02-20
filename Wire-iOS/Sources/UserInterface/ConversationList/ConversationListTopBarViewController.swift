@@ -361,7 +361,6 @@ final class TopBar: UIView {
     private var leftSeparatorInsetConstraint: NSLayoutConstraint!
     private var rightSeparatorInsetConstraint: NSLayoutConstraint!
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layoutMargins = UIEdgeInsets(top: 0, left: CGFloat.ConversationList.horizontalMargin, bottom: 0, right: CGFloat.ConversationList.horizontalMargin)
