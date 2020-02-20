@@ -68,6 +68,8 @@ public typealias ConvertVideoCompletion = (URL?, AVURLAsset?, Error?) -> Void
 
 extension AVURLAsset {
     
+    public static let defaultVideoQuality: String = AVAssetExportPresetHighestQuality
+    
     /// Convert a Video file URL to a upload format
     ///
     /// - Parameters:
@@ -76,7 +78,7 @@ extension AVURLAsset {
     ///   - deleteSourceFile: set to false for testing only
     ///   - completion: ConvertVideoCompletion closure. URL: exported file's URL. AVURLAsset: assert of converted video. Error: error of conversion
     public static func convertVideoToUploadFormat(at url: URL,
-                                                  quality: String = AVAssetExportPresetHighestQuality,
+                                                  quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
@@ -111,22 +113,40 @@ extension AVURLAsset {
         }
         
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
-        exportSession.outputURL = outputURL
-        exportSession.shouldOptimizeForNetworkUse = true
-        exportSession.outputFileType = .mp4
-        exportSession.metadata = []
-        exportSession.metadataItemFilter = AVMetadataItemFilter.forSharing()
         
-        weak var session: AVAssetExportSession? = exportSession
-        exportSession.exportAsynchronously(completionHandler: {
+        exportSession.exportVideo(exportURL: outputURL) { url, error in
+            DispatchQueue.main.async(execute: {
+                completion(outputURL, self, error)
+            })
+        }
+    }
+}
+
+extension AVAssetExportSession {
+    public func exportVideo(exportURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+        if FileManager.default.fileExists(atPath: exportURL.path) {
+            do {
+                try FileManager.default.removeItem(at: exportURL)
+            }
+            catch let error {
+                zmLog.error("Cannot delete old leftover at \(exportURL): \(error)")
+            }
+        }
+        
+        outputURL = exportURL
+        shouldOptimizeForNetworkUse = true
+        outputFileType = .mp4
+        metadata = []
+        metadataItemFilter = AVMetadataItemFilter.forSharing()
+        
+        weak var session: AVAssetExportSession? = self
+        exportAsynchronously() {
             if let session = session,
                 let error = session.error {
-                zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(outputURL)")
+                zmLog.error("Export session error: status=\(session.status.rawValue) error=\(error) output=\(exportURL)")
             }
             
-            DispatchQueue.main.async(execute: {
-                completion(outputURL, self, session?.error)
-            })
-        })
+            completion(exportURL, session?.error)
+        }
     }
 }
