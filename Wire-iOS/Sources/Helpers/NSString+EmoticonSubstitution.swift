@@ -19,31 +19,31 @@
 import Foundation
 
 extension NSMutableString {
-
-
+    
+    
     /// resolve emoticon shortcuts with given EmoticonSubstitutionConfiguration
     ///
     /// - Parameters:
     ///   - range: the range to resolve
     ///   - configuration: a EmoticonSubstitutionConfiguration object for injection
     func resolveEmoticonShortcuts(in range: NSRange,
-                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
-        guard let shortcuts = configuration.shortcuts as? [NSString] else { return }
-
+                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) {
+        guard let shortcuts = configuration.shortcuts else { return }
+        
         var mutableRange = range
-
+        
         for shortcut in shortcuts {
-            let emoticon = NSString(string: configuration.emoticon(forShortcut: shortcut as String))
-
-            let howManyTimesReplaced = (self as NSMutableString).replaceOccurrences(of: shortcut as String,
-                                                                                    with: emoticon as String,
-                                                                                    options: .literal,
-                                                                                    range: mutableRange)
-
-
-
+            guard let emoticon = configuration.emoticon(forShortcut: shortcut) else { continue }
+            
+            let howManyTimesReplaced = replaceOccurrences(of: shortcut,
+                                                          with: emoticon,
+                                                          options: .literal,
+                                                          range: mutableRange)
+            
+            
+            
             if howManyTimesReplaced > 0 {
-                let length = max(mutableRange.length - (shortcut.length - emoticon.length) * howManyTimesReplaced, 0)
+                let length = max(mutableRange.length - (shortcut.count - emoticon.count) * howManyTimesReplaced, 0)
                 mutableRange = NSRange(location: mutableRange.location,
                                        length: length)
             }
