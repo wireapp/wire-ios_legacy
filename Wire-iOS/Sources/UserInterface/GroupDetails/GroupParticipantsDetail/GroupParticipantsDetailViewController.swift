@@ -179,7 +179,7 @@ private final class SelectedUserCell: UserCell {
 
 extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
     
-    func presentDetails(for user: ZMUser) {
+    func presentDetails(for user: UserType) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
             conversation: viewModel.conversation,

@@ -95,19 +95,19 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>In order to take and send pictures Wire needs access to your camera.</string>
+	<string>Allow Wire to access your camera so you can place video calls and send photos.</string>
 	<key>NSContactsUsageDescription</key>
 	<string>Allow Wire to access your contacts to connect you with others. We anonymize all information before uploading it to our server and do not share it with anyone else.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>In order to authenticate in the app allow Wire to access the Face ID feature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>In order to send your location you have to authorize Wire to use it</string>
+	<string>Allow Wire to access your location so you can send your location to others.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>You will be able to talk to people</string>
+	<string>Allow Wire to access your microphone so you can talk to people and send audio messages.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>In order to store pictures you take Wire needs access to your photo library.</string>
+	<string>Allow Wire to store pictures you take in the photo library.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>In order to send stored pictures Wire needs access to your photo library.</string>
+	<string>Allow Wire to access pictures stored in photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>RedactedScript-Regular.ttf</string>

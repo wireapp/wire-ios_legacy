@@ -113,6 +113,7 @@ extension AVURLAsset {
         }
         
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
+        
         exportSession.exportVideo(exportURL: outputURL) { url, error in
             DispatchQueue.main.async(execute: {
                 completion(outputURL, self, error)

@@ -134,7 +134,9 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
     
     private func configureViews() {
         accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
-            self.audioPreviewView.color = color
+            if let color = color {
+                self.audioPreviewView.color = color
+            }
         }
         
         topContainerView.backgroundColor = UIColor.from(scheme: .background)
@@ -273,7 +275,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
-            self.audioPreviewView.updateWithLevel(CGFloat(level))
+            self.audioPreviewView.updateWithLevel(level)
         }
     }
     

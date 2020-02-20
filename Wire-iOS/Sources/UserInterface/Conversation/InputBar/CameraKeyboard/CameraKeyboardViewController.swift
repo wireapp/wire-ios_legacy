@@ -159,7 +159,6 @@ final class CameraKeyboardViewController: UIViewController {
         super.viewWillAppear(animated)
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
-        DeviceOrientationObserver.sharedInstance().startMonitoringDeviceOrientation()
         if self.viewWasHidden {
             self.assetLibrary.refetchAssets()
         }
@@ -178,7 +177,6 @@ final class CameraKeyboardViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewWasHidden = true
-        DeviceOrientationObserver.sharedInstance().stopMonitoringDeviceOrientation()
     }
     
     fileprivate func createCollectionView() {

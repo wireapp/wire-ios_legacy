@@ -114,7 +114,9 @@ private let zmLog = ZMSLog(tag: "UI")
         self.audioPreviewView.gradientColor = backgroundColor
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
-            self.audioPreviewView.color = color
+            if let color = color {
+                self.audioPreviewView.color = color
+            }
         }
         
         self.timeLabel.font = FontSpec(.small, .light).font!
@@ -319,7 +321,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
-            self.audioPreviewView.updateWithLevel(CGFloat(level))
+            self.audioPreviewView.updateWithLevel(level)
         }
     }
     

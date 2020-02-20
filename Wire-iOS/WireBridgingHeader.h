@@ -23,7 +23,6 @@
 #import "Settings.h"
 
 // UI
-#import "SCSiriWaveformView.h"
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 #import "TokenTextAttachment.h"
@@ -62,7 +61,6 @@
 // Utils
 
 #import "UIView+WR_ExtendedBlockAnimations.h"
-#import "DeviceOrientationObserver.h"
 #import "UIViewController+LoadingView.h"
 
 #import "EmoticonSubstitutionConfiguration.h"

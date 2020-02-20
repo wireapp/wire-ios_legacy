@@ -271,7 +271,7 @@ extension GroupDetailsViewController: ProfileViewControllerDelegate {
 
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
 
-    func presentDetails(for user: ZMUser) {
+    func presentDetails(for user: UserType) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
             conversation: conversation,

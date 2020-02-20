@@ -375,15 +375,15 @@ final public class AddParticipantsViewController: UIViewController {
 
 extension AddParticipantsViewController : UserSelectionObserver {
     
-    public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+    public func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
+    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
+    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         updateSelectionValues()
     }
     

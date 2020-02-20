@@ -209,7 +209,7 @@ final class ConversationListItemView: UIView {
     ///   - title: title of the cell
     ///   - subtitle: subtitle of the cell
     ///   - users: the pending user(s) waiting for self user to accept connection request
-    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [ZMUser]) {
+    func configure(with title: NSAttributedString?, subtitle: NSAttributedString?, users: [UserType]) {
         self.titleText = title
         self.subtitleAttributedText = subtitle
         self.rightAccessory.icon = .pendingConnection

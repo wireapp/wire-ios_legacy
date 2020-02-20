@@ -86,7 +86,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             toView.alpha = 0
             toView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
 
-            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, delay: 0.3, animations: {
+            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, delayTime: 0.3, animations: {
                 toView.alpha = 1
                 toView.transform = .identity
             }) { finished in

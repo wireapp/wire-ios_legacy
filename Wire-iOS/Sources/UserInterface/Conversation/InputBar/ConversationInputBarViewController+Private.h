@@ -26,7 +26,6 @@
 @class ZMClientMessage;
 @class ReplyComposingView;
 @class TypingIndicatorView;
-@class ZMUser;
 @class UserImageView;
 
 @interface ConversationInputBarViewController ()

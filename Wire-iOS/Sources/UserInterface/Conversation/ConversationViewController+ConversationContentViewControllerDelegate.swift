@@ -107,7 +107,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
         presentParticipantsViewController(navigationController, from: sourceView)
     }
     
-    func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [ZMUser], from sourceView: UIView) {
+    func conversationContentViewController(_ controller: ConversationContentViewController, presentParticipantsDetailsWithSelectedUsers selectedUsers: [UserType], from sourceView: UIView) {
         if let groupDetailsViewController = (participantsController as? UINavigationController)?.topViewController as? GroupDetailsViewController {
                 groupDetailsViewController.presentParticipantsDetails(with: conversation.sortedOtherParticipants, selectedUsers: selectedUsers, animated: false)            
         }
