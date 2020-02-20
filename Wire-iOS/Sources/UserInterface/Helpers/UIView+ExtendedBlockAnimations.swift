@@ -19,35 +19,27 @@
 import Foundation
 
 extension UIView {
-    @objc(wr_animateWithEasing:duration:delay:animations:completion:)
-    class func wr_animate(easing: EasingFunction,
-                          duration: TimeInterval,
-                          delayTime: TimeInterval,
-                          animations: @escaping () -> Void,
-                          completion: @escaping ResultHandler) {
-        delay(delayTime) {
-            animate(easing: easing, duration: duration, animations: animations, completion: completion)
-        }
-    }
-
-    @objc(wr_animateWithEasing:duration:animations:completion:)
-    class func wr_animate(easing: EasingFunction,
-                          duration: TimeInterval,
-                          animations: @escaping () -> Void,
-                          completion: @escaping ResultHandler) {
-        animate(easing: easing, duration: duration, animations: animations, completion: completion)
-    }
-
     class func animate(easing: EasingFunction,
                        duration: TimeInterval,
-                       animations: @escaping () -> Void, completion: ResultHandler? = nil) {
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(duration)
-        CATransaction.setAnimationTimingFunction(easing.timingFunction)
+                       delayTime: TimeInterval = 0,
+                       animations: @escaping () -> Void,
+                       completion: ResultHandler? = nil) {
+        let closure: ()->() = {
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(duration)
+            CATransaction.setAnimationTimingFunction(easing.timingFunction)
+            
+            UIView.animate(withDuration: duration, animations: animations, completion: completion)
+            
+            CATransaction.commit()
+        }
         
-        UIView.animate(withDuration: duration, animations: animations, completion: completion)
         
-        CATransaction.commit()
+        if delayTime > 0 {
+            delay(delayTime, closure: closure)
+        } else {
+            closure()
+        }
     }
 }
 
