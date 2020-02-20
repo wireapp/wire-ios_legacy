@@ -33,7 +33,7 @@ final class EmoticonSubstitutionConfiguration {
 
     class var sharedInstance: EmoticonSubstitutionConfiguration {
         guard let filePath = Bundle.main.path(forResource: "emoticons.min", ofType: "json") else {
-            fatal("emoticons.min not exist!")
+            fatal("emoticons.min does not exist!")
         }
 
         return EmoticonSubstitutionConfiguration(configurationFile: filePath)
