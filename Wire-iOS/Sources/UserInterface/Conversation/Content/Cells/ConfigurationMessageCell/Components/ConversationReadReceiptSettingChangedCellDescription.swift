@@ -23,7 +23,7 @@ struct ReadReceiptViewModel {
     let icon: StyleKitIcon
     let iconColor: UIColor?
     let systemMessageType: ZMSystemMessageType
-    let sender: ZMUser
+    let sender: UserType
 
 
     func image() -> UIImage? {
@@ -92,7 +92,7 @@ final class ConversationReadReceiptSettingChangedCellDescription: ConversationMe
     let accessibilityIdentifier: String? = nil
     let accessibilityLabel: String? = nil
 
-    init(sender: ZMUser,
+    init(sender: UserType,
          systemMessageType: ZMSystemMessageType) {
         let viewModel = ReadReceiptViewModel(icon: .eye,
                                              iconColor: UIColor.from(scheme: .textDimmed),

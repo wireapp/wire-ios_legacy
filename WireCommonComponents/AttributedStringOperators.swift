@@ -190,6 +190,16 @@ public extension String {
     var localized: String {
         return NSLocalizedString(self, comment: "")
     }
+    
+    /// Retuns the NSLocalizedString version of self from the InfoPlist table
+    var infoPlistLocalized: String {
+        return localized(table: "InfoPlist")
+    }
+    
+    /// Returns the NSLocalizedString version of self as found in specified table
+    func localized(table tableName: String, bundle: Bundle = Bundle.main) -> String {
+        return NSLocalizedString(self, tableName: tableName, bundle: bundle, value: "", comment: "")
+    }
 
     /// Returns the text and uppercases it if needed.
     func localized(uppercased: Bool) -> String {

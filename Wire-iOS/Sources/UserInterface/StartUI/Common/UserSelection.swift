@@ -22,9 +22,9 @@ import WireUtilities
 @objc
 protocol UserSelectionObserver {
     
-    func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser)
-    func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser)
-    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser])
+    func userSelection(_ userSelection: UserSelection, didAddUser user: UserType)
+    func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType)
+    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType])
     
 }
 

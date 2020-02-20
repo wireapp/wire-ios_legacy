@@ -60,7 +60,7 @@ protocol AuthenticationStatusProvider: class {
      * - returns: The shared user, if any.
      */
 
-    var selfUser: ZMUser? { get }
+    var selfUser: UserType? { get }
 
     /**
      * The authentication coordinator requested the number of accounts.

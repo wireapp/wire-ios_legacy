@@ -85,7 +85,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         delegate?.conversationContentViewController(self, presentGuestOptionsFrom: sourceView)
     }
 
-    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView) {
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView) {
         delegate?.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
     }
 

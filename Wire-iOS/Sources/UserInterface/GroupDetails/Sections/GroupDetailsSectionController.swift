@@ -19,7 +19,7 @@
 import Foundation
 
 protocol GroupDetailsUserDetailPresenter: class {
-    func presentDetails(for user: ZMUser)
+    func presentDetails(for user: UserType)
 }
 
 protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter {

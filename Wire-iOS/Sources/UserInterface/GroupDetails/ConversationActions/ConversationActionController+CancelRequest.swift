@@ -41,7 +41,7 @@ enum CancelConnectionRequestResult {
         return .init(title: title, style: style) { _ in handler(self) }
     }
     
-    static func title(for user: ZMUser) -> String {
+    static func title(for user: UserType) -> String {
         return "profile.cancel_connection_request_dialog.message".localized(args: user.displayName)
     }
     
@@ -49,7 +49,7 @@ enum CancelConnectionRequestResult {
         return [.cancelRequest, .cancel]
     }
     
-    static func controller(for user: ZMUser, handler: @escaping (CancelConnectionRequestResult) -> Void) -> UIAlertController {
+    static func controller(for user: UserType, handler: @escaping (CancelConnectionRequestResult) -> Void) -> UIAlertController {
         let controller = UIAlertController(title: title(for: user), message: nil, preferredStyle: .actionSheet)
         all.map { $0.action(handler) }.forEach(controller.addAction)
         return controller
@@ -57,7 +57,7 @@ enum CancelConnectionRequestResult {
 }
 
 extension UIAlertController {
-    static func cancelConnectionRequest(for user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
+    static func cancelConnectionRequest(for user: UserType, completion: @escaping (Bool) -> Void) -> UIAlertController {
         return CancelConnectionRequestResult.controller(for: user) { result in
             completion(result == .cancel)
         }
@@ -66,7 +66,7 @@ extension UIAlertController {
 
 extension ConversationActionController {
     
-    func requestCancelConnectionRequestResult(for user: ZMUser, handler: @escaping (CancelConnectionRequestResult) -> Void) {
+    func requestCancelConnectionRequestResult(for user: UserType, handler: @escaping (CancelConnectionRequestResult) -> Void) {
         let controller = CancelConnectionRequestResult.controller(for: user, handler: handler)
         present(controller)
     }
