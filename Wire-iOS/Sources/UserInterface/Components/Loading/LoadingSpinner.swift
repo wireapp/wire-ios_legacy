@@ -18,24 +18,46 @@
 
 import Foundation
 
+final class LoadingSpinnerView: UIView {
+    let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
+    
+    init() {
+        super.init(frame: .zero)
+        addSubview(spinnerSubtitleView)
+        createConstraints()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func createConstraints() {
+        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            ])
+    }
+}
+
 protocol LoadingSpinner: class {
-    var loadingSpinnerView: UIView { get }
-    var spinnerSubtitleView: SpinnerSubtitleView { get }
+    var loadingSpinnerView: LoadingSpinnerView { get }
     var showSpinner: Bool { get set }
 }
 
 extension LoadingSpinner where Self: UIViewController {
-    func createLoadingSpinnerView() -> UIView {
-        let view = UIView()
-        view.isHidden = true
-        view.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
-        view.addSubview(spinnerSubtitleView)
+    func createLoadingSpinnerView() -> LoadingSpinnerView {
+        let loadingSpinnerView = LoadingSpinnerView()
+        loadingSpinnerView.isHidden = true
+        loadingSpinnerView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
         
-        self.view.addSubview(view)
+        view.addSubview(loadingSpinnerView)
         
-        createConstraints(container: view)
+        createConstraints(container: loadingSpinnerView)
         
-        return view
+        return loadingSpinnerView
     }
     
     var showSpinner: Bool {
@@ -45,32 +67,25 @@ extension LoadingSpinner where Self: UIViewController {
         
         set(shouldShow) {
             loadingSpinnerView.isHidden = !shouldShow
-            spinnerSubtitleView.isHidden = !shouldShow
             view.isUserInteractionEnabled = !shouldShow
             
             if shouldShow {
                 UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
-                spinnerSubtitleView.spinner.startAnimation()
+                loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
             } else {
-                spinnerSubtitleView.spinner.stopAnimation()
+                loadingSpinnerView.spinnerSubtitleView.spinner.stopAnimation()
             }
         }
     }
 
-    func createConstraints(container: UIView) {
+    private func createConstraints(container: UIView) {
         container.translatesAutoresizingMaskIntoConstraints = false
-        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            // loadingView
             container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             container.topAnchor.constraint(equalTo: view.topAnchor),
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            // spinnerView
-            spinnerSubtitleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinnerSubtitleView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             ])
     }
 }
