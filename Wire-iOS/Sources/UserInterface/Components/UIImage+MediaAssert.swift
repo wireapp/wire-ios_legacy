@@ -19,19 +19,19 @@
 import Foundation
 
 extension UIImage: MediaAsset {
-    public func data() -> Data? {
-        if isTransparent() {
+    var data: Data? {
+        if isTransparent {
             return self.pngData()
         } else {
             return self.jpegData(compressionQuality: 1.0)
         }
     }
 
-    public func isGIF() -> Bool {
+    var isGIF: Bool {
         return false
     }
 
-    public func isTransparent() -> Bool {
+    var isTransparent: Bool {
         guard let alpha: CGImageAlphaInfo = self.cgImage?.alphaInfo else { return false }
 
         switch alpha {

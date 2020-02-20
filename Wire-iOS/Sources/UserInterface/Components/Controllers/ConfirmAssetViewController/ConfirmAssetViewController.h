@@ -18,7 +18,6 @@
 
 @import UIKit;
 
-#import "MediaAsset.h"
 
 @protocol MediaAsset;
 
