@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import FLAnimatedImage
 
 var defaultImageCache = ImageCache<MediaAsset>()
 

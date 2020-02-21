@@ -21,7 +21,7 @@ import WireSyncEngine
 
 fileprivate var ciContext = CIContext(options: nil)
 
-public var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
+var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
 
 
 typealias ProfileImageFetchableUser = UserType & ProfileImageFetchable
