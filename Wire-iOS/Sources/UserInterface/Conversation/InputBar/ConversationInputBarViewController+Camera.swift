@@ -88,9 +88,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
         else {
 
-            let confirmVideoViewController = ConfirmAssetViewController()
+            let confirmVideoViewController = ConfirmAssetViewController(context: .video(url: videoURL))
             confirmVideoViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-            confirmVideoViewController.videoURL = videoURL as URL
             confirmVideoViewController.previewTitle = self.conversation.displayName.localizedUppercase
             confirmVideoViewController.onConfirm = { [unowned self] (editedImage: UIImage?)in
                 self.dismiss(animated: true, completion: .none)
@@ -154,19 +153,18 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
     public func showConfirmationForImage(_ imageData: Data,
                                                isFromCamera: Bool,
                                                uti: String?) {
-        let mediaAsset: MediaAsset?
+        let mediaAsset: MediaAsset
 
         if uti == kUTTypeGIF as String,
            let gifImage = FLAnimatedImage(animatedGIFData: imageData),
            gifImage.frameCount > 1 {
             mediaAsset = gifImage
         } else {
-            mediaAsset = UIImage(data: imageData as Data)
+            mediaAsset = UIImage(data: imageData) ?? UIImage()
         }
 
-        let confirmImageViewController = ConfirmAssetViewController()
+        let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: mediaAsset))
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-        confirmImageViewController.image = mediaAsset
         confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
         confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
             self.dismiss(animated: true) {

@@ -21,9 +21,14 @@ import AVKit
 import FLAnimatedImage
 
 final class ConfirmAssetViewController: UIViewController {
-    /// Can either be UIImage or FLAnimatedImage
-    var image: MediaAsset?
+    enum Context {
+        /// Can either be UIImage or FLAnimatedImage
+        case image(mediaAsset: MediaAsset)
+        case video(url: URL)
+    }
     
+    let context: Context
+
     ///TODO: init
     var onConfirm: ((_ editedImage: UIImage?) -> Void)!
     var onCancel: (() -> Void)!
@@ -34,11 +39,13 @@ final class ConfirmAssetViewController: UIViewController {
             view.setNeedsUpdateConstraints()
         }
     }
-
-    var videoURL: URL?
+        
+    private var playerViewController: AVPlayerViewController?
+    private var imagePreviewView: FLAnimatedImageView?
     
-    ///TODO: lazy var
-    private let playerViewController: AVPlayerViewController = AVPlayerViewController()
+    private var imageToolbarViewInsideImage: ImageToolbarView?
+    private var imageToolbarView: ImageToolbarView?
+
     private let topPanel: UIView = UIView()
     private let titleLabel: UILabel = UILabel()
     private let bottomPanel: UIView = UIView()
@@ -46,28 +53,35 @@ final class ConfirmAssetViewController: UIViewController {
     private let acceptImageButton: Button = Button()
     private let rejectImageButton: Button = Button()
     private let contentLayoutGuide: UILayoutGuide = UILayoutGuide()
-    // The preview view and image toolbar are optional
-    private let imagePreviewView: FLAnimatedImageView = FLAnimatedImageView()
     private let imageToolbarSeparatorView: UIView = UIView()
-    
-    private var imageToolbarViewInsideImage: ImageToolbarView?
-    private var imageToolbarView: ImageToolbarView?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
-
+    
+    init(context: Context) {
+        self.context = context
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if image != nil {
-            createPreviewPanel()
-        } else if videoURL != nil {
-            createVideoPanel()
+        switch context {
+            case .image(let mediaAsset):
+                createPreviewPanel(image: mediaAsset)
+        case .video(let url):
+                createVideoPanel(videoURL: url)
         }
         
         createTopPanel()
@@ -91,48 +105,62 @@ final class ConfirmAssetViewController: UIViewController {
         view.addSubview(topPanel)
         
         titleLabel.text = previewTitle
-            topPanel.addSubview(titleLabel)
+        topPanel.addSubview(titleLabel)
     }
-
+    
     private func setupStyle() {
         applyColorScheme(ColorScheme.default.variant)
-
+        
         titleLabel.font = UIFont.mediumSemiboldFont
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
-
+        
         acceptImageButton.layer.cornerRadius = 8
         acceptImageButton.titleLabel?.font = .smallSemiboldFont
-
+        
         rejectImageButton.layer.cornerRadius = 8
         rejectImageButton.titleLabel?.font = .smallSemiboldFont
     }
-
+    
     func applyColorScheme(_ colorSchemeVariant: ColorSchemeVariant) {
         view.backgroundColor = UIColor.from(scheme: .background)
         imageToolbarSeparatorView.backgroundColor = UIColor.from(scheme: .separator)
         topPanel.backgroundColor = UIColor.from(scheme: .background)
-
+        
         titleLabel.textColor = UIColor.from(scheme: .textForeground)
-
+        
         acceptImageButton.setTitleColor(.white, for: .normal)
         acceptImageButton.setTitleColor(.whiteAlpha40, for: .highlighted)
         acceptImageButton.setBackgroundImageColor(UIColor.accent(), for: .normal)
         acceptImageButton.setBackgroundImageColor(UIColor.accentDarken, for: .highlighted)
-
+        
         rejectImageButton.setTitleColor(UIColor.from(scheme: .textForeground, variant: colorSchemeVariant), for: .normal)
         rejectImageButton.setTitleColor(UIColor.from(scheme: .textDimmed, variant: colorSchemeVariant), for: .highlighted)
         rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryAction, variant: colorSchemeVariant), for: .normal)
         rejectImageButton.setBackgroundImageColor(UIColor.from(scheme: .secondaryActionDimmed, variant: colorSchemeVariant), for: .highlighted)
     }
-
+    
     /// Show editing options only if the image is not animated
     var showEditingOptions: Bool {
-        return videoURL == nil && image is UIImage
+        switch context {
+        case .image(let mediaAsset):
+            return mediaAsset is UIImage
+        case .video(url: _):
+            return false
+        }
     }
-
-    private func createVideoPanel() {
-        guard let videoURL = videoURL else { return }
+    
+    private var imageToolbarFitsInsideImage: Bool {
+        switch context {
+        case .image(let image):
+            return image.size.width > 192 && image.size.height > 96
+        case .video(url: _):
+            return false
+        }
+    }
+    
+    private func createVideoPanel(videoURL: URL) {
+        let playerViewController = AVPlayerViewController()
         
         playerViewController.player = AVPlayer(url: videoURL)
         playerViewController.player?.play()
@@ -140,32 +168,33 @@ final class ConfirmAssetViewController: UIViewController {
         playerViewController.view.backgroundColor = UIColor.from(scheme: .textBackground)
         
         view.addSubview(playerViewController.view)
+        
+        self.playerViewController = playerViewController
     }
-
+    
     /// open canvas screen if the image is sketchable(e.g. not an animated GIF)
     private func openSketch(in editMode: CanvasViewControllerEditMode) {
-        guard let image = image as? UIImage else {
+        guard case .image(let mediaAsset) = context,
+            let image = mediaAsset as? UIImage else {
             return
         }
-
+        
         let canvasViewController = CanvasViewController()
         canvasViewController.sketchImage = image
         canvasViewController.delegate = self
         canvasViewController.title = previewTitle
         canvasViewController.select(editMode: editMode, animated: false)
-
+        
         let navigationController = canvasViewController.wrapInNavigationController()
         navigationController.modalTransitionStyle = .crossDissolve
-
+        
         present(navigationController, animated: true)
     }
     
-    var imageToolbarFitsInsideImage: Bool {
-        return image?.size.width > 192 && image?.size.height > 96
-    }
-    
     // MARK: - View Creation
-    private func createPreviewPanel() {
+    private func createPreviewPanel(image: MediaAsset) {
+        let imagePreviewView = FLAnimatedImageView()
+        
         imagePreviewView.contentMode = .scaleAspectFit
         imagePreviewView.isUserInteractionEnabled = true
         view.addSubview(imagePreviewView)
@@ -181,6 +210,8 @@ final class ConfirmAssetViewController: UIViewController {
             
             self.imageToolbarViewInsideImage = imageToolbarViewInsideImage
         }
+        
+        self.imagePreviewView = imagePreviewView
     }
     
     private func createBottomPanel() {
@@ -217,12 +248,12 @@ final class ConfirmAssetViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func acceptImage(_ sender: Any?) {
-            onConfirm(nil)
+        onConfirm(nil)
     }
     
     @objc
     private func rejectImage(_ sender: Any?) {
-            onCancel()
+        onCancel()
     }
     
     @objc
@@ -244,8 +275,8 @@ final class ConfirmAssetViewController: UIViewController {
         confirmButtonsStack.translatesAutoresizingMaskIntoConstraints = false
         acceptImageButton.translatesAutoresizingMaskIntoConstraints = false
         rejectImageButton.translatesAutoresizingMaskIntoConstraints = false
-        imagePreviewView.translatesAutoresizingMaskIntoConstraints = false
-        playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        imagePreviewView?.translatesAutoresizingMaskIntoConstraints = false
+        playerViewController?.view.translatesAutoresizingMaskIntoConstraints = false
         imageToolbarViewInsideImage?.translatesAutoresizingMaskIntoConstraints = false
         
         acceptImageButton.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -302,21 +333,28 @@ final class ConfirmAssetViewController: UIViewController {
             ]
             
             // Separator
-                constraints += [
-                    imageToolbarSeparatorView.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor),
-                    imageToolbarSeparatorView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor),
-                    imageToolbarSeparatorView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor),
-                    imageToolbarSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)
-                ]
+            constraints += [
+                imageToolbarSeparatorView.leadingAnchor.constraint(equalTo: toolbar.leadingAnchor),
+                imageToolbarSeparatorView.trailingAnchor.constraint(equalTo: toolbar.trailingAnchor),
+                imageToolbarSeparatorView.bottomAnchor.constraint(equalTo: toolbar.bottomAnchor),
+                imageToolbarSeparatorView.heightAnchor.constraint(equalToConstant: 0.5)
+            ]
         } else {
             constraints += [
                 confirmButtonsStack.topAnchor.constraint(equalTo: bottomPanel.topAnchor)
             ]
         }
         
+        
+
+        
+        switch context {
         // Preview Image
-            let imageSize: CGSize = image?.size ?? CGSize(width: 1, height: 1)
+        case .image(let mediaAsset):
+            let imageSize: CGSize = mediaAsset.size
             
+            if let imagePreviewView = imagePreviewView {
+
             constraints += [
                 // dimension
                 imagePreviewView.heightAnchor.constraint(equalTo: imagePreviewView.widthAnchor, multiplier: imageSize.height / imageSize.width),
@@ -341,17 +379,20 @@ final class ConfirmAssetViewController: UIViewController {
                     imageToolbarViewInsideImage.heightAnchor.constraint(equalToConstant: 48)
                 ]
             }
-        
-        
+            }
         // Player View
-        if let playerView = playerViewController.view {
-            constraints += [
-                playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                playerView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: -margin),
-                playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                playerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: -margin)
-            ]
+        case .video(_):
+            if let playerView = playerViewController?.view {
+                constraints += [
+                    playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    playerView.topAnchor.constraint(equalTo: contentLayoutGuide.topAnchor, constant: -margin),
+                    playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    playerView.bottomAnchor.constraint(equalTo: contentLayoutGuide.bottomAnchor, constant: -margin)
+                ]
+            }
         }
+
+        
         
         NSLayoutConstraint.activate(constraints)
     }

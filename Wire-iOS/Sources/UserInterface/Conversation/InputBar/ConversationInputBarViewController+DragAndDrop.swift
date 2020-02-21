@@ -32,9 +32,8 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                 guard let draggedImage = object as? UIImage else { return }
                 
                 DispatchQueue.main.async {
-                    let confirmImageViewController = ConfirmAssetViewController()
+                    let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: draggedImage))
                     confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
-                    confirmImageViewController.image = draggedImage
                     confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
                     confirmImageViewController.onConfirm = { [unowned self] (editedImage: UIImage?) in
                         self.dismiss(animated: true) {

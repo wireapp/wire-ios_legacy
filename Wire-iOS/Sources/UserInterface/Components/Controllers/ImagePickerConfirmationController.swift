@@ -56,9 +56,8 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
         case .photoLibrary,
              .savedPhotosAlbum:
 
-            let confirmImageViewController = ConfirmAssetViewController()
+            let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: image))
             confirmImageViewController.modalPresentationStyle = .fullScreen
-            confirmImageViewController.image = image
             confirmImageViewController.previewTitle = previewTitle
 
 

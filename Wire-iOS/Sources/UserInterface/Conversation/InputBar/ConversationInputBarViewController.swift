@@ -164,8 +164,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
 extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
-        let confirmImageViewController = ConfirmAssetViewController()
-        confirmImageViewController.image = image
+        let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: image))
         confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
         
         
