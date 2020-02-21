@@ -58,7 +58,7 @@ final class ImageResourceView: FLAnimatedImageView {
             
             let update = {
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
-                self.setMediaAsset(mediaAsset)
+                self.mediaAsset = mediaAsset
                 completion?()
             }
             

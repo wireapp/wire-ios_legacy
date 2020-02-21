@@ -18,7 +18,7 @@
 
 import FLAnimatedImage
 
-protocol MediaAsset: NSObjectProtocol {
+protocol MediaAsset: NSObject {
     var imageData: Data? { get }
     var size: CGSize { get }
     var isGIF: Bool { get }
