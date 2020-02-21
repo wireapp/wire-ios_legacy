@@ -143,6 +143,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
+///TODO: Swift
 - (void)loadImageAndSetupImageView
 {
     ZM_WEAK(self);

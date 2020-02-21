@@ -18,7 +18,7 @@
 
 import Foundation
 
-public class ImageCache<T : NSObjectProtocol> {
+public class ImageCache<T : AnyObject> {
     
     public init() {
         
