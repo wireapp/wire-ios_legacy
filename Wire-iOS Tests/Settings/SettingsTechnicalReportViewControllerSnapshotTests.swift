@@ -33,7 +33,7 @@ final class SettingsTechnicalReportViewControllerSnapshotTests: XCTestCase {
     }
 
     func testForInitState() {
-        let naviViewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        let naviViewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
         naviViewController.view.backgroundColor = .black
         verify(matching: naviViewController)
     }

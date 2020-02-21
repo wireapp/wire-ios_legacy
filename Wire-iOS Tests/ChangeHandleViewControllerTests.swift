@@ -56,7 +56,7 @@ class ChangeHandleViewControllerTests: ZMSnapshotTestCase {
 fileprivate extension UIViewController {
 
     func prepareForSnapshots() -> UIView {
-        let navigationController = self.wrapInNavigationController(ClearBackgroundNavigationController.self)
+        let navigationController = wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
         navigationController.navigationBar.tintColor = .brightOrange
 
         beginAppearanceTransition(true, animated: false)
