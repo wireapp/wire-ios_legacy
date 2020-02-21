@@ -62,13 +62,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface ConversationInputBarViewController (Sketch)
-
-- (void)sketchButtonPressed:(nullable id)sender;
-
-@end
-
-
 @interface  ConversationInputBarViewController (UIGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 
 @end
@@ -492,21 +485,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ZMAssetMetaDataEncoder (Test)
 
 + (CGSize)imageSizeForImageData:(NSData *)imageData;
-
-@end
-
-@implementation ConversationInputBarViewController (Sketch)
-
-- (void)sketchButtonPressed:(id)sender
-{
-    [self.inputBar.textView resignFirstResponder];
-    
-    CanvasViewController *viewController = [[CanvasViewController alloc] init];
-    viewController.delegate = self;
-    viewController.title = self.conversation.displayName.uppercaseString;
-    
-    [self.parentViewController presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
-}
 
 @end
 
