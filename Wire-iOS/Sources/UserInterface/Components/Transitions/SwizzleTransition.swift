@@ -50,12 +50,15 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         let durationPhase1: TimeInterval
         let durationPhase2: TimeInterval
+        
+        let verticalTransform = CGAffineTransform(translationX: 0, y: 48)
+        
         if direction == .horizontal {
-            toView.layer.transform = CATransform3DMakeTranslation(24, 0, 0)
+            toView.transform = CGAffineTransform(translationX: 24, y:  0)
             durationPhase1 = 0.15
             durationPhase2 = 0.55
         } else {
-            toView.layer.transform = CATransform3DMakeTranslation(0, 48, 0)
+            toView.transform = verticalTransform
             durationPhase1 = 0.10
             durationPhase2 = 0.30
         }
@@ -63,13 +66,13 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         UIView.animate(easing: .easeInQuad, duration: durationPhase1, animations: {
             fromView.alpha = 0
-            fromView.layer.transform = self.direction == .horizontal ? CATransform3DMakeTranslation(48, 0, 0) : CATransform3DMakeTranslation(0, 48, 0)
+            fromView.transform = self.direction == .horizontal ? CGAffineTransform(translationX:48, y:0) : verticalTransform
         }) { finished in
             UIView.animate(easing: .easeOutQuad, duration: durationPhase2, animations: {
-                toView.layer.transform = CATransform3DIdentity
+                toView.transform = .identity
                 toView.alpha = 1
             }) { finished in
-                fromView.layer.transform = CATransform3DIdentity
+                fromView.transform = .identity
                 transitionContext.completeTransition(true)
             }
         }
