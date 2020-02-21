@@ -32,7 +32,7 @@ protocol MediaAssetView: class, NSObjectProtocol {
 
 extension FLAnimatedImage: MediaAsset {
     var data: Data? {
-        return self.data
+        return self.data ///TODO:
     }
     
     var isGIF: Bool {
@@ -46,22 +46,27 @@ extension FLAnimatedImage: MediaAsset {
 
 
 extension UIImageView: MediaAssetView {
-    func imageData() -> Data? {
-        return image?.data
-    }
-    
-    func setImageData(_ imageData: Data?) {
-        if let imageData = imageData {
-            image = UIImage(data: imageData)
+    var imageData: Data? {
+        get {
+            return image?.data
+        }
+        
+        set {
+            if let imageData = newValue {
+                image = UIImage(data: imageData)
+            }
         }
     }
     
-    convenience init(mediaAsset image: MediaAsset) {
+    ///TODO: method of MediaAsset
+    static func imageViewWithMediaAsset(mediaAsset image: MediaAsset) -> MediaAssetView {
         if image.isGIF {
             let animatedImageView = FLAnimatedImageView()
-            animatedImageView.animatedImage = image as? FLAnimatedImage ///TODO:
+            animatedImageView.animatedImage = image as? FLAnimatedImage
+    
+            return animatedImageView
         } else {
-            self.init(image: (image as? UIImage)?.downsized())
+            return UIImageView(image: (image as? UIImage)?.downsized())
         }
     }
     
@@ -85,14 +90,14 @@ extension FLAnimatedImageView: MediaAssetView {
         }
 
         set {
-            if let image = image {
-                if image.isGIF == true {
-                    animatedImage = image
+            if let newValue = newValue {
+                if newValue.isGIF == true {
+                    animatedImage = newValue as? FLAnimatedImage
                 } else {
-                    self.image = (image as? UIImage)?.downsized()
+                    image = (newValue as? UIImage)?.downsized()
                 }
             } else {
-                self.image = nil
+                image = nil
                 animatedImage = nil
             }
         }
