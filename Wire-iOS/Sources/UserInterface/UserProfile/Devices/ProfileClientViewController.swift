@@ -147,7 +147,7 @@ import Cartography
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
                 descriptionTextFont &&
                 UIColor.from(scheme: .textForeground)) +
                 "\n" +

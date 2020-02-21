@@ -310,7 +310,7 @@ final class CallingMatcher: ConversationStatusMatcher {
     
     func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
         if conversation.voiceChannel?.state.canJoinCall == true {
-            if let callerDisplayName = conversation.voiceChannel?.initiator?.displayName {
+            if let callerDisplayName = conversation.voiceChannel?.initiator?.name {
                 return "conversation.status.incoming_call".localized(args: callerDisplayName) && type(of: self).regularStyle
             } else {
                 return "conversation.status.incoming_call.someone".localized && type(of: self).regularStyle
@@ -351,7 +351,7 @@ final class TypingMatcher: ConversationStatusMatcher {
         let statusString: NSAttributedString
         if status.isGroup {
             let typingUsers = conversation.typingUsers.compactMap { $0 as? ZMUser }
-            let typingUsersString = typingUsers.map { $0.displayName(in: conversation) }.joined(separator: ", ")
+            let typingUsersString = typingUsers.compactMap(\.name).joined(separator: ", ")
             let resultString = String(format: "conversation.status.typing.group".localized, typingUsersString)
             let intermediateString = NSAttributedString(string: resultString, attributes: type(of: self).regularStyle)
             statusString = self.addEmphasis(to: intermediateString, for: typingUsersString)
@@ -528,14 +528,14 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
                 
                 if status.isGroup && type == .missedCall {
                     format += ".groups"
-                    return format.localized(args: sender.displayName(in: conversation)) && Swift.type(of: self).regularStyle
+                    return format.localized(args: sender.name ?? "") && Swift.type(of: self).regularStyle
                 }
                 
                 messageDescription = String(format: format.localized, message.textMessageData?.messageText ?? "")
             }
             
             if status.isGroup && !message.isEphemeral {
-                return ((sender.displayName(in: conversation) + ": ") && Swift.type(of: self).emphasisStyle) +
+                return ((sender.name ?? "" + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
             }
             else {
@@ -598,7 +598,7 @@ extension ZMUser {
             return "conversation.status.you".localized
         }
         else {
-            return self.displayName(in: conversation)
+            return self.name ?? ""
         }
     }
 }
@@ -614,8 +614,9 @@ final class GroupActivityMatcher: TypedConversationStatusMatcher {
            !sender.isSelfUser {
             
             if systemMessage.users.contains(where: { $0.isSelfUser }) {
-                let result = String(format: "conversation.status.you_was_added".localized, sender.displayName(in: conversation)) && type(of: self).regularStyle
-                return self.addEmphasis(to: result, for: sender.displayName(in: conversation))
+                let fullName = sender.name ?? ""
+                let result = String(format: "conversation.status.you_was_added".localized, fullName) && type(of: self).regularStyle
+                return self.addEmphasis(to: result, for: fullName)
             }
         }
         return .none
@@ -671,7 +672,7 @@ final class StartConversationMatcher: TypedConversationStatusMatcher {
             return .none
         }
 
-        let senderString = sender.displayName(in: conversation)
+        let senderString = sender.name ?? ""
         let resultString = String(format: "conversation.status.started_conversation".localized, senderString)
         return (resultString && type(of: self).regularStyle).addAttributes(type(of: self).emphasisStyle, toSubstring: senderString)
     }

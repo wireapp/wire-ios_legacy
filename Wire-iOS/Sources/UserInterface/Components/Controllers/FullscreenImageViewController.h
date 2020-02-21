@@ -49,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showChrome:(BOOL)shouldShow;
 
 - (void)dismissWithCompletion:(nullable dispatch_block_t)completion;
-- (void)performSaveImageAnimationFromView:(UIView *)saveView;
 @end
 
 NS_ASSUME_NONNULL_END

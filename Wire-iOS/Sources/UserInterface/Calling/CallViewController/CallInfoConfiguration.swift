@@ -197,7 +197,7 @@ fileprivate struct VoiceChannelSnapshot {
     init(_ voiceChannel: VoiceChannel) {
         callerName = {
             guard voiceChannel.conversation?.conversationType != .oneOnOne else { return nil }
-            return voiceChannel.initiator?.displayName ?? ""
+            return voiceChannel.initiator?.name ?? ""
         }()
         state = voiceChannel.state
         callStartDate = voiceChannel.callStartDate ?? .init()

@@ -67,7 +67,7 @@ final class NavigationTransition: NSObject, UIViewControllerAnimatedTransitionin
         containerView.addSubview(toView)
         containerView.addSubview(fromView)
 
-        UIView.wr_animate(easing: .easeOutExpo,
+        UIView.animate(easing: .easeOutExpo,
                           duration: transitionDuration(using: transitionContext),
                           animations: {
             fromView.transform = fromViewEndTransform

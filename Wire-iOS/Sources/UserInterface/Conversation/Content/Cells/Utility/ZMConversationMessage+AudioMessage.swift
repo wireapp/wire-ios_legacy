@@ -45,7 +45,7 @@ extension ZMAssetClientMessage: AudioTrack {
     }
     var author: String? {
         get {
-            return self.sender?.displayName
+            return self.sender?.name
         }
     }
     

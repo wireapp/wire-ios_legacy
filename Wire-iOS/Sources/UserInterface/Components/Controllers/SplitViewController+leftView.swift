@@ -56,7 +56,7 @@ extension SplitViewController {
         }
 
         if animated {    
-            UIView.wr_animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
+            UIView.animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
                 self.view.layoutIfNeeded()
             }, completion: {(_ finished: Bool) -> Void in
                 if self.layoutSize != .regularLandscape {

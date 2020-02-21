@@ -61,11 +61,11 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
         }
         toView.alpha = 0
 
-        UIView.wr_animate(easing: .easeInQuad, duration: durationPhase1, animations: {
+        UIView.animate(easing: .easeInQuad, duration: durationPhase1, animations: {
             fromView.alpha = 0
             fromView.layer.transform = self.direction == .horizontal ? CATransform3DMakeTranslation(48, 0, 0) : CATransform3DMakeTranslation(0, 48, 0)
         }) { finished in
-            UIView.wr_animate(easing: .easeOutQuad, duration: durationPhase2, animations: {
+            UIView.animate(easing: .easeOutQuad, duration: durationPhase2, animations: {
                 toView.layer.transform = CATransform3DIdentity
                 toView.alpha = 1
             }) { finished in

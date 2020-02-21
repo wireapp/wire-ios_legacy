@@ -438,7 +438,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
         
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: otherUser.displayName),
+            title: "profile.remove_dialog_message".localized(args: otherUser.name ?? ""),
             message: nil,
             preferredStyle: .actionSheet
         )

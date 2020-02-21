@@ -312,6 +312,6 @@ extension Array where Element: UserType {
         if let selfUser = ZMUser.selfUser() {
             arr.append(selfUser)
         }
-        return arr.sorted { $0.displayName < $1.displayName } as! Array<Element>
+        return arr.sorted { $0.name < $1.name } as! Array<Element>
     }
 }

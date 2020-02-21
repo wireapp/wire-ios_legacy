@@ -108,7 +108,7 @@ class GuestsBarController: UIViewController {
         }
         
         if animated {
-            UIView.wr_animate(easing: collapsed ? .easeOutQuad : .easeInQuad, duration: 0.4, animations: change, completion: completion)
+            UIView.animate(easing: collapsed ? .easeOutQuad : .easeInQuad, duration: 0.4, animations: change, completion: completion)
         } else {
             change()
             completion(true)

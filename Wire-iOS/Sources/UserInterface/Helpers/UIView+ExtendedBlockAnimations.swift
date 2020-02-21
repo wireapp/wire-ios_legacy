@@ -18,36 +18,56 @@
 
 import Foundation
 
+enum EasingFunction {
+    case linear
+    case easeInSine
+    case easeOutSine
+    case easeInOutSine
+    case easeInQuad
+    case easeOutQuad
+    case easeInOutQuad
+    case easeInCubic
+    case easeOutCubic
+    case easeInOutCubic
+    case easeInQuart
+    case easeOutQuart
+    case easeInOutQuart
+    case easeInQuint
+    case easeOutQuint
+    case easeInOutQuint
+    case easeInExpo
+    case easeOutExpo
+    case easeInOutExpo
+    case easeInCirc
+    case easeOutCirc
+    case easeInOutCirc
+    case easeInBack
+    case easeOutBack
+    case easeInOutBack
+}
+
 extension UIView {
-    @objc(wr_animateWithEasing:duration:delay:animations:completion:)
-    class func wr_animate(easing: EasingFunction,
-                          duration: TimeInterval,
-                          delayTime: TimeInterval,
-                          animations: @escaping () -> Void,
-                          completion: @escaping ResultHandler) {
-        delay(delayTime) {
-            animate(easing: easing, duration: duration, animations: animations, completion: completion)
-        }
-    }
-
-    @objc(wr_animateWithEasing:duration:animations:completion:)
-    class func wr_animate(easing: EasingFunction,
-                          duration: TimeInterval,
-                          animations: @escaping () -> Void,
-                          completion: @escaping ResultHandler) {
-        animate(easing: easing, duration: duration, animations: animations, completion: completion)
-    }
-
     class func animate(easing: EasingFunction,
                        duration: TimeInterval,
-                       animations: @escaping () -> Void, completion: ResultHandler? = nil) {
-        CATransaction.begin()
-        CATransaction.setAnimationDuration(duration)
-        CATransaction.setAnimationTimingFunction(easing.timingFunction)
+                       delayTime: TimeInterval = 0,
+                       animations: @escaping () -> Void,
+                       completion: ResultHandler? = nil) {
+        let closure: ()->() = {
+            CATransaction.begin()
+            CATransaction.setAnimationDuration(duration)
+            CATransaction.setAnimationTimingFunction(easing.timingFunction)
+            
+            UIView.animate(withDuration: duration, animations: animations, completion: completion)
+            
+            CATransaction.commit()
+        }
         
-        UIView.animate(withDuration: duration, animations: animations, completion: completion)
         
-        CATransaction.commit()
+        if delayTime > 0 {
+            delay(delayTime, closure: closure)
+        } else {
+            closure()
+        }
     }
 }
 

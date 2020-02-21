@@ -629,7 +629,7 @@ class ConversationMissingMessagesSystemMessageCellDescription: ConversationMessa
         
         func attributedLocalizedUppercaseString(_ localizationKey: String, _ users: [UserType]) -> NSAttributedString? {
             guard users.count > 0 else { return nil }
-            let userNames = users.map { $0.displayName }.joined(separator: ", ")
+            let userNames = users.compactMap { $0.name }.joined(separator: ", ")
             let string = localizationKey.localized(args: userNames + " ", users.count) + ". "
                 && font && color
             return string.addAttributes([.font: boldFont], toSubstring: userNames)
@@ -684,7 +684,7 @@ class ConversationIgnoredDeviceSystemMessageCellDescription: ConversationMessage
         if user.isSelfUser == true {
             deviceString = "content.system.your_devices".localized
         } else {
-            deviceString = String(format: "content.system.other_devices".localized, user.displayName)
+            deviceString = String(format: "content.system.other_devices".localized, user.name ?? "")
         }
         
         let baseString = "content.system.unverified".localized
@@ -773,9 +773,9 @@ class ConversationCannotDecryptSystemMessageCellDescription: ConversationMessage
         case (true, _):
             return (BaseLocalizationString + (remoteIDChanged ? IdentityString : "") + ".you_part").localized
         case (false, true):
-            return (BaseLocalizationString + IdentityString + ".otherUser_part").localized(args: sender.displayName)
+            return (BaseLocalizationString + IdentityString + ".otherUser_part").localized(args: sender.name ?? "")
         case (false, false):
-            return sender.displayName
+            return sender.name ?? ""
         }
     }
 
@@ -834,7 +834,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
         let textAttributes = TextAttributes(boldFont: .mediumSemiboldFont, normalFont: .mediumFont, textColor: UIColor.from(scheme: .textForeground), link: View.userClientURL)
         let clients = systemMessage.clients.compactMap ({ $0 as? UserClientType })
         let users = systemMessage.users.sorted(by: { (a: UserType, b: UserType) -> Bool in
-            a.displayName.compare(b.displayName) == ComparisonResult.orderedAscending
+            (a.name ?? "").compare(b.name ?? "") == ComparisonResult.orderedAscending
         })
         
         if !systemMessage.addedUsers.isEmpty {
@@ -886,7 +886,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     }
     
     private static func configureForOtherUsers(_ users: [UserType], conversation: ZMConversation, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
-        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap {$0.displayName as String}
+        let displayNamesOfOthers = users.filter {!$0.isSelfUser }.compactMap { $0.name }
         let firstTwoNames = displayNamesOfOthers.prefix(2)
         let senderNames = firstTwoNames.joined(separator: ", ")
         let additionalSenderCount = max(displayNamesOfOthers.count - 1, 1)

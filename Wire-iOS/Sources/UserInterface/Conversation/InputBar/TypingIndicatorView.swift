@@ -180,7 +180,7 @@ final class TypingIndicatorView: UIView {
     }
     
     func updateNameLabel() {
-        nameLabel.text = typingUsers.map({ $0.displayName.uppercased(with: Locale.current) }).joined(separator: ", ")
+        nameLabel.text = typingUsers.compactMap { $0.name?.uppercased(with: Locale.current) }.joined(separator: ", ")
     }
     
     func setHidden(_ hidden : Bool, animated : Bool, completion: Completion? = nil) {
@@ -213,7 +213,7 @@ final class TypingIndicatorView: UIView {
                 animatedPen.isAnimating = false
                 self.layoutSubviews()
                 UIView.animate(easing: .easeInOutQuad, duration: 0.35, animations: expandLine)
-                UIView.wr_animate(easing: .easeInQuad,
+                UIView.animate(easing: .easeInQuad,
                                   duration: 0.15,
                                   delayTime: 0.15,
                                   animations: showContainer, completion: { _ in

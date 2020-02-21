@@ -30,7 +30,6 @@
 
 #import "Settings.h"
 @import FLAnimatedImage;
-#import "UIView+WR_ExtendedBlockAnimations.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

@@ -100,7 +100,7 @@ fileprivate extension UIAlertController {
             if degradedUser.isSelfUser {
                 message = "call.degraded.alert.message.self".localized
             } else {
-                message = "call.degraded.alert.message.user".localized(args: degradedUser.displayName)
+                message = "call.degraded.alert.message.user".localized(args: degradedUser.name ?? "")
             }
         } else {
             message = "call.degraded.alert.message.unknown".localized

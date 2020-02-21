@@ -67,7 +67,7 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
             viewsToHide.forEach { $0.isHidden = true }
         }
       
-        UIView.wr_animate(easing: EasingFunction.easeOutExpo, duration: transitionDuration(using: transitionContext), animations: {
+        UIView.animate(easing: EasingFunction.easeOutExpo, duration: transitionDuration(using: transitionContext), animations: {
             fromView.transform = CGAffineTransform(translationX: 0.0, y: sign * finalRect.size.height)
             toView.transform = CGAffineTransform.identity
         }) { (finished) in
