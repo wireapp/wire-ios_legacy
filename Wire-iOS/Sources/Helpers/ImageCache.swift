@@ -18,14 +18,8 @@
 
 import Foundation
 
-public class ImageCache<T : AnyObject> {
-    
-    public init() {
-        
-    }
-    
-    public var cache: NSCache<NSString, T> = NSCache()
-    public var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
-    public var dispatchGroup: DispatchGroup = DispatchGroup()
-    
+final class ImageCache<T : AnyObject> {
+    var cache: NSCache<NSString, T> = NSCache()
+    var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
+    var dispatchGroup: DispatchGroup = DispatchGroup()    
 }
