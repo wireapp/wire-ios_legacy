@@ -91,7 +91,7 @@ class ContactsDataSource: NSObject {
     }
 
     private func recalculateSections() {
-        let nameSelector = #selector(getter: UserType.displayName)
+        let nameSelector = #selector(getter: UserType.name)
 
         guard shouldShowSectionIndex else {
             let sortedResults = collation.sortedArray(from: ungroupedSearchResults, collationStringSelector: nameSelector)

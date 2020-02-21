@@ -91,6 +91,7 @@ final class ConversationListTopBarViewController: UIViewController {
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
+            titleLabel.accessibilityValue = selfUser.name
             titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -243,11 +244,8 @@ extension ConversationListTopBarViewController: UIViewControllerTransitioningDel
 extension ConversationListTopBarViewController: ZMUserObserver {
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.nameChanged {
+        if changeInfo.nameChanged || changeInfo.teamsChanged {
             updateTitleView()
-        }
-
-        if changeInfo.teamsChanged {
             updateAccountView()
         }
         
@@ -360,7 +358,6 @@ final class TopBar: UIView {
     
     private var leftSeparatorInsetConstraint: NSLayoutConstraint!
     private var rightSeparatorInsetConstraint: NSLayoutConstraint!
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

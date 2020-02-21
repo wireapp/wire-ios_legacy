@@ -129,7 +129,7 @@ final class StartUIViewController: UIViewController {
         if let team = (selfUser as? ZMUser)?.team {
             title = team.name?.uppercased()
         } else {
-            title = selfUser.displayName.uppercased()
+            title = selfUser.name?.uppercased()
         }
         
         searchHeader.delegate = self

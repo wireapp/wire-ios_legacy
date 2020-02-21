@@ -182,7 +182,7 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Factories
     
     func makeUserNameDetailViewModel() -> UserNameDetailViewModel {
-        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.displayName, addressBookName: fullUser?.addressBookEntry?.cachedName)
+        return UserNameDetailViewModel(user: bareUser, fallbackName: bareUser.name ?? "", addressBookName: fullUser?.addressBookEntry?.cachedName)
     }
     
     var profileActionsFactory: ProfileActionsFactory {
@@ -201,7 +201,7 @@ final class ProfileViewControllerViewModel: NSObject {
         }
         
         ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.displayName, self.viewer.name ?? "")
+            let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.name ?? "", self.viewer.name ?? "")
             connect(messageText)
             // update the footer view to display the cancel request button
             self.viewModelDelegate?.updateFooterViews()
@@ -241,7 +241,7 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
 
 extension ProfileViewControllerViewModel: BackButtonTitleDelegate {
     func suggestedBackButtonTitle(for controller: ProfileViewController?) -> String? {
-        return bareUser.displayName.uppercasedWithCurrentLocale
+        return bareUser.name?.uppercasedWithCurrentLocale
     }
 }
 

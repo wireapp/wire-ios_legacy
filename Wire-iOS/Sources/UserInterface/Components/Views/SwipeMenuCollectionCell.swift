@@ -84,7 +84,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                     revealAnimationPerforming = true
                     let animStartInteractionPosition = revealDrawerGestureRecognizer.location(in: self)
 
-                    UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                    UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = self.userInteractionHorizontalOffset / self.bounds.size.width
                         self.layoutIfNeeded()
                     }) { finished in
@@ -109,7 +109,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
                 if userInteractionHorizontalOffset + initialDrawerOffset > bounds.size.width * overscrollFraction {
                     // overscrolled
 
-                    UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                    UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                         self.scrollingFraction = 1.0
                         self.visualDrawerOffset = self.bounds.size.width + self.separatorLine.bounds.size.width
                         self.layoutIfNeeded()
@@ -266,7 +266,7 @@ class SwipeMenuCollectionCell: UICollectionViewCell {
         }
 
         if animated {
-            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+            UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 action()
             })
         } else {

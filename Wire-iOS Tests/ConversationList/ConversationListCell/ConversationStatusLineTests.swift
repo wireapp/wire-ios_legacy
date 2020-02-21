@@ -250,7 +250,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         let status = sut.status.description(for: sut)
         
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName) added you")
+        XCTAssertEqual(status.string, "\(self.otherUser.name ?? "") added you")
     }
     
     func testNoStatusForSystemMessageIAddedSomeone() {
@@ -345,7 +345,7 @@ class ConversationStatusLineTests: CoreDataSnapshotTestCase {
         // WHEN
         let status = sut.status.description(for: sut)
         // THEN
-        XCTAssertEqual(status.string, "\(self.otherUser.displayName) started a conversation")
+        XCTAssertEqual(status.string, "\(self.otherUser.name ?? "") started a conversation")
     }
     
     func testNoStatusForSelfConversationStarted() {

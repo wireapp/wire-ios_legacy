@@ -21,18 +21,16 @@ extension CABasicAnimation {
     convenience init(rotationSpeed: CFTimeInterval,
                      beginTime: CFTimeInterval,
                      delegate: CAAnimationDelegate? = nil) {
-        self.init(keyPath: #keyPath(CALayer.transform))
-        valueFunction = CAValueFunction(name: CAValueFunctionName.rotateZ)
-        
+        self.init(keyPath: "transform.rotation")
+
         fillMode = .forwards
         self.delegate = delegate
         
-        // Do a series of 5 quarter turns for a total of a 1.25 turns
-        // (2PI is a full turn, so pi/2 is a quarter turn)
-        toValue = Float.pi / 2
-        repeatCount = .infinity
+        // (2PI is a full turn, so pi is a half turn)
+        toValue = Double.pi
+        repeatCount = .greatestFiniteMagnitude
         
-        duration = rotationSpeed / 4
+        duration = rotationSpeed / 2
         self.beginTime = beginTime
         isCumulative = true
         timingFunction = CAMediaTimingFunction(name: .linear)

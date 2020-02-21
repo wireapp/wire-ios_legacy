@@ -498,7 +498,7 @@
 		87168510203332F800AC9F81 /* UIViewController+SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8716850F203332F800AC9F81 /* UIViewController+SafeArea.swift */; };
 		8719FD671C88802C005FBEC0 /* Delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8719FD661C88802C005FBEC0 /* Delay.swift */; };
 		871BC00D1D34F56300DF0793 /* Analytics+MediaActionEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */; };
-		871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */; };
+		871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift */; };
 		871BC2291D34F8F800DF0793 /* ConfirmAssetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */; };
 		871BC22A1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */; };
 		871BC22B1D34F8F800DF0793 /* FullscreenImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */; };
@@ -516,7 +516,6 @@
 		871BC2871D34F8F800DF0793 /* UIFont+MonoSpaced.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */; };
 		871BC28D1D34F8F800DF0793 /* UITableView+RowCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */; };
 		871BC28E1D34F8F800DF0793 /* UITableViewCell+Reuse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */; };
-		871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */; };
 		871BC35F1D34F94200DF0793 /* SettingsProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3381D34F94200DF0793 /* SettingsProperty.swift */; };
 		871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC3391D34F94200DF0793 /* SettingsPropertyFactory.swift */; };
 		871BC3621D34F94200DF0793 /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 871BC33D1D34F94200DF0793 /* Settings.m */; };
@@ -757,9 +756,12 @@
 		A9806A3E23E41EF400691DFE /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3D23E41EF400691DFE /* Token.swift */; };
 		A9806A4023E4293400691DFE /* TokenFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9806A3F23E4293400691DFE /* TokenFieldDelegate.swift */; };
 		A9859D6823FE955000DC3F36 /* LoadingSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9859D6723FE955000DC3F36 /* LoadingSpinner.swift */; };
+		A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */; };
 		A98ECDF1232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */; };
 		A98ECDF3232A9564006A57FD /* MockConversationListContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */; };
 		A990059C23F196170089CDEB /* AnimatedListMenuViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */; };
+		A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */; };
+		A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */; };
 		A9C3223F23EB200F00E17311 /* CountryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C3223E23EB200E00E17311 /* CountryCell.swift */; };
 		A9C3224023EB217A00E17311 /* CountryCodeResultsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2126CE1FB9DFE300625A9B /* CountryCodeResultsTableViewController.swift */; };
 		A9C33DFE23D0704F0069C8BB /* MediaPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */; };
@@ -1384,9 +1386,7 @@
 		F15650B021DCFF5300210504 /* AutomationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF4A15D11D4900930051E8BA /* AutomationHelper.swift */; };
 		F15650B221DD018700210504 /* Bundle+Identifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15650B121DD018700210504 /* Bundle+Identifiers.swift */; };
 		F15650B321DD025A00210504 /* URL+Backup.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6EC9051EB1FC3D009D9A69 /* URL+Backup.swift */; };
-		F15650BE21DD08F100210504 /* AVAsset+VideoConvert.m in Sources */ = {isa = PBXBuildFile; fileRef = CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */; };
 		F15650BF21DD08F100210504 /* AVAsset+VideoConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */; };
-		F15650C021DD08F400210504 /* AVAsset+VideoConvert.h in Headers */ = {isa = PBXBuildFile; fileRef = CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F15650C121DD09DB00210504 /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
 		F15650C221DD0A8A00210504 /* BackendEnvironment+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */; };
 		F15650C321DD0A9B00210504 /* Bundle+Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */; };
@@ -1433,7 +1433,6 @@
 		F195EB9D1E2F75BC00712118 /* FeedbackOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F195EB9C1E2F75BC00712118 /* FeedbackOverlayView.swift */; };
 		F19C3A8F20513532004387E4 /* DatabaseStatisticsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19C3A8E20513532004387E4 /* DatabaseStatisticsController.swift */; };
 		F19F066E21ECC24F00426BD1 /* EasingFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376A20E7F99500649241 /* EasingFunction.swift */; };
-		F19F066F21ECC25200426BD1 /* EasingAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E52376820E7F12B00649241 /* EasingAnimation.swift */; };
 		F19F067021ECC62A00426BD1 /* UIImage+Decoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164A55C920EFB90D00AE62A6 /* UIImage+Decoding.swift */; };
 		F1A989D01FD1630300B8A82E /* SecondaryViewDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A989CF1FD1630300B8A82E /* SecondaryViewDescription.swift */; };
 		F1B5D54D2182096B00986911 /* NetworkConditionIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B5D54C2182096B00986911 /* NetworkConditionIndicatorView.swift */; };
@@ -1690,7 +1689,6 @@
 		16FB2F6B20C0389800582137 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
 		1E05C2411B6F7E0600616A66 /* Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Button.h; sourceTree = "<group>"; };
 		1E05C2421B6F7E0600616A66 /* Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Button.m; sourceTree = "<group>"; };
-		1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EmoticonSubstitutionConfiguration+Tests.h"; sourceTree = "<group>"; };
 		1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-01.json"; sourceTree = "<group>"; };
 		1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "emo-test-02.json"; sourceTree = "<group>"; };
 		1E2267F61B384619003980E3 /* people-02.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "people-02.json"; path = "PeoplePickerControllerTests/people-02.json"; sourceTree = "<group>"; };
@@ -1799,7 +1797,6 @@
 		5E4BC1C9218C9F6600A8682E /* ConversationQuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationQuoteCell.swift; sourceTree = "<group>"; };
 		5E4BC1CB218CA94D00A8682E /* ZMConversationMessage+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMConversationMessage+Date.swift"; sourceTree = "<group>"; };
 		5E52376020E7E46600649241 /* ColorTilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTilesViewController.swift; sourceTree = "<group>"; };
-		5E52376820E7F12B00649241 /* EasingAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingAnimation.swift; sourceTree = "<group>"; };
 		5E52376A20E7F99500649241 /* EasingFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingFunction.swift; sourceTree = "<group>"; };
 		5E52378820EB5B4C00649241 /* SCSiriWaveformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCSiriWaveformView.swift; sourceTree = "<group>"; };
 		5E53534021B05C2F0060DB38 /* MessageDetailsViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsViewControllerTests.swift; sourceTree = "<group>"; };
@@ -2058,8 +2055,7 @@
 		8716850F203332F800AC9F81 /* UIViewController+SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SafeArea.swift"; sourceTree = "<group>"; };
 		8719FD661C88802C005FBEC0 /* Delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Delay.swift; sourceTree = "<group>"; };
 		871BBFC81D34F56300DF0793 /* Analytics+MediaActionEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+MediaActionEvents.swift"; sourceTree = "<group>"; };
-		871BC0241D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoticonSubstitutionConfiguration.h; sourceTree = "<group>"; };
-		871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoticonSubstitutionConfiguration.m; sourceTree = "<group>"; };
+		871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmoticonSubstitutionConfiguration.swift; sourceTree = "<group>"; };
 		871BC13C1D34F8F800DF0793 /* ConfirmAssetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmAssetViewController.h; sourceTree = "<group>"; };
 		871BC13D1D34F8F800DF0793 /* ConfirmAssetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmAssetViewController.m; sourceTree = "<group>"; };
 		871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FullscreenImageViewController+PullToDismiss.h"; sourceTree = "<group>"; };
@@ -2084,8 +2080,6 @@
 		871BC2011D34F8F800DF0793 /* UIFont+MonoSpaced.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+MonoSpaced.swift"; sourceTree = "<group>"; };
 		871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+RowCount.swift"; sourceTree = "<group>"; };
 		871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reuse.swift"; sourceTree = "<group>"; };
-		871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WR_ExtendedBlockAnimations.h"; sourceTree = "<group>"; };
-		871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WR_ExtendedBlockAnimations.m"; sourceTree = "<group>"; };
 		871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Zeta.swift"; sourceTree = "<group>"; };
 		871BC21A1D34F8F800DF0793 /* UIViewController+ErrorAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+ErrorAlert.swift"; sourceTree = "<group>"; };
 		871BC21E1D34F8F800DF0793 /* UIViewController+isInsidePopover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+isInsidePopover.swift"; sourceTree = "<group>"; };
@@ -2373,9 +2367,12 @@
 		A9806A3D23E41EF400691DFE /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		A9806A3F23E4293400691DFE /* TokenFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFieldDelegate.swift; sourceTree = "<group>"; };
 		A9859D6723FE955000DC3F36 /* LoadingSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingSpinner.swift; sourceTree = "<group>"; };
+		A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullscreenImageViewController.swift; sourceTree = "<group>"; };
 		A98ECDF0232A94DD006A57FD /* ConversationListViewControllerViewModelSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListViewControllerViewModelSnapshotTests.swift; sourceTree = "<group>"; };
 		A98ECDF2232A9564006A57FD /* MockConversationListContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockConversationListContainer.swift; sourceTree = "<group>"; };
 		A990059A23F195A70089CDEB /* AnimatedListMenuViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedListMenuViewTests.swift; sourceTree = "<group>"; };
+		A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+ExtendedBlockAnimations.swift"; sourceTree = "<group>"; };
+		A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVURLAsset+conversionTests.swift"; sourceTree = "<group>"; };
 		A9B02231209B6E4E00DF25D8 /* AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCenter.swift; sourceTree = "<group>"; };
 		A9C3223E23EB200E00E17311 /* CountryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCell.swift; sourceTree = "<group>"; };
 		A9C33DFD23D0704F0069C8BB /* MediaPlaybackManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlaybackManager.swift; sourceTree = "<group>"; };
@@ -2607,8 +2604,6 @@
 		BFFD439D1DE47FFA00505C8C /* UIView+RightToLeft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+RightToLeft.swift"; sourceTree = "<group>"; };
 		BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationRenamedCellTests.swift; sourceTree = "<group>"; };
 		BFFE943D1E7839EB0025AD75 /* CoreDataSnapshotTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataSnapshotTestCase.swift; sourceTree = "<group>"; };
-		CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AVAsset+VideoConvert.h"; sourceTree = "<group>"; };
-		CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+VideoConvert.m"; sourceTree = "<group>"; };
 		CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVAsset+VideoConvert.swift"; sourceTree = "<group>"; };
 		CE2402801E0A992200665A91 /* AnalyticsConsoleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsConsoleProvider.swift; sourceTree = "<group>"; };
 		CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileMetaDataGenerator.swift; sourceTree = "<group>"; };
@@ -3389,7 +3384,6 @@
 				EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */,
 				EF1FDC8321DE68EF00C9CEB1 /* EmoticonSubstitutionConfigurationTests.swift */,
 				EF1FDC7D21DE255C00C9CEB1 /* NSString+EmoticonSubstitutionTests.swift */,
-				1E8772261B0C8B87005BDDC6 /* Utils */,
 				1E18C2BD1AFBB8590043F3CF /* emo-test-01.json */,
 				1E18C2C01AFBC0AB0043F3CF /* emo-test-02.json */,
 				1E8772271B0C8CAB005BDDC6 /* emo-test-03.json */,
@@ -3444,14 +3438,6 @@
 				5E3E1B722260DA200053AC59 /* StyleKitIcons.generated.swift */,
 			);
 			path = Autogenerated;
-			sourceTree = "<group>";
-		};
-		1E8772261B0C8B87005BDDC6 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				1E18C2B81AFBB7E00043F3CF /* EmoticonSubstitutionConfiguration+Tests.h */,
-			);
-			name = Utils;
 			sourceTree = "<group>";
 		};
 		1E8C25351BBC279B00FC373F /* Loading */ = {
@@ -4291,6 +4277,7 @@
 				871BC13E1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.h */,
 				871BC13F1D34F8F800DF0793 /* FullscreenImageViewController+PullToDismiss.m */,
 				871BC1411D34F8F800DF0793 /* FullscreenImageViewController.m */,
+				A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */,
 				EF1EE76A225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift */,
 				EFF9A663223960FF00CCEC85 /* FullscreenImageViewController+SetupView.swift */,
 				EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */,
@@ -4422,10 +4409,8 @@
 				A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */,
 				871BC20C1D34F8F800DF0793 /* UITableView+RowCount.swift */,
 				871BC20D1D34F8F800DF0793 /* UITableViewCell+Reuse.swift */,
-				5E52376820E7F12B00649241 /* EasingAnimation.swift */,
 				5E52376A20E7F99500649241 /* EasingFunction.swift */,
-				871BC2141D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.h */,
-				871BC2151D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m */,
+				A993719023F7461600881564 /* UIView+ExtendedBlockAnimations.swift */,
 				871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */,
 				BFCF31DC1DA52ECE0039B3DC /* KeyboardHeight.swift */,
 				871BC21A1D34F8F800DF0793 /* UIViewController+ErrorAlert.swift */,
@@ -5103,8 +5088,7 @@
 				7C4918A01F8BB1A20038AF4B /* UIScreen+SafeArea.swift */,
 				BF8ECC2C1E570A920015177D /* UIActivityViewController+FileSaving.swift */,
 				1693D9661CEDB26200D1F13C /* UIApplication+Permissions.swift */,
-				871BC0241D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.h */,
-				871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m */,
+				871BC0251D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift */,
 				EF1FDC7F21DE47AB00C9CEB1 /* NSString+EmoticonSubstitution.swift */,
 				EFB97F6F22EF45D50092A620 /* UIImage+ImageUtilities.swift */,
 				BF7EF5441D953B3F003E3999 /* Date+Format.swift */,
@@ -5529,6 +5513,14 @@
 			path = Backup;
 			sourceTree = "<group>";
 		};
+		A9AC63DF23FC4A0E00016ABC /* AVAsset */ = {
+			isa = PBXGroup;
+			children = (
+				A9AC63E023FC4A2D00016ABC /* AVURLAsset+conversionTests.swift */,
+			);
+			path = AVAsset;
+			sourceTree = "<group>";
+		};
 		A9E844F723730CC7001D1C47 /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -5540,6 +5532,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A9AC63DF23FC4A0E00016ABC /* AVAsset */,
 				EEEED9A423F6AF7A008C94CA /* TestingAppDelegate.swift */,
 				A955D3D623F5774100304851 /* URL */,
 				6306902E23AA5D4A0081802B /* AppLock */,
@@ -6495,8 +6488,6 @@
 				CE8E4FAA1DF066750009F437 /* FilePreviewGenerator.swift */,
 				F174AAB0218B62D200AFCC4D /* UIColor+AccentColor.swift */,
 				CE8E4FA91DF066750009F437 /* FileMetaDataGenerator.swift */,
-				CE06C93C1DF5C3D900497685 /* AVAsset+VideoConvert.h */,
-				CE06C93D1DF5C3D900497685 /* AVAsset+VideoConvert.m */,
 				CE06C93E1DF5C3D900497685 /* AVAsset+VideoConvert.swift */,
 				8778AAEC1F6BC6AD0022F53F /* AppLock.swift */,
 				7C98DCFF1FC32F41005C0042 /* SettingsPropertyName.swift */,
@@ -6547,7 +6538,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F15650C021DD08F400210504 /* AVAsset+VideoConvert.h in Headers */,
 				F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */,
 				F15650A021DCF2BB00210504 /* NetworkStatus.h in Headers */,
 				7C88BB8F235DE3F50075BCC5 /* (null) in Headers */,
@@ -7523,7 +7513,7 @@
 				D586C51F20405CC200BBA492 /* GroupDetailsFooterView.swift in Sources */,
 				160D6923212C814200096EAD /* CallController.swift in Sources */,
 				5EFD915921CBCB5300080599 /* UIResponder+VoiceOver.swift in Sources */,
-				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.m in Sources */,
+				871BC0281D34F5D200DF0793 /* EmoticonSubstitutionConfiguration.swift in Sources */,
 				EF18C7E41F9E4DA00085A832 /* NSString+FileNameForZMUser.swift in Sources */,
 				D5C34E8E203D75C5004A0986 /* ConversationOptionsViewController.swift in Sources */,
 				871BC22E1D34F8F800DF0793 /* SplitViewController.m in Sources */,
@@ -7613,13 +7603,13 @@
 				871DD79D2080C4F6006B1C56 /* Conversation+Participants.swift in Sources */,
 				87F18BD71E04035500C69D9B /* CollectionHeaderView.swift in Sources */,
 				F16E8EA8214A910F005ED9E2 /* ConversationInputBarViewController+Mentions.swift in Sources */,
-				871BC2921D34F8F800DF0793 /* UIView+WR_ExtendedBlockAnimations.m in Sources */,
 				87D56DF61E003A5300DFF722 /* CollectionsViewController.swift in Sources */,
 				F15650DE21DD10DD00210504 /* ImageMessageView.swift in Sources */,
 				5E766D9B211472C0005242B4 /* AuthenticationFlowStep.swift in Sources */,
 				EF1EE76B225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift in Sources */,
 				EF2388882211B8C500331C07 /* UserType+DisplayString.swift in Sources */,
 				F12CDAE11E43868200CEFCEB /* ConfirmPhoneViewController.swift in Sources */,
+				A993719123F7461600881564 /* UIView+ExtendedBlockAnimations.swift in Sources */,
 				D550F57920445AD7009E09DD /* UIAlertController+ConfirmRemovingGuests.swift in Sources */,
 				871BC3601D34F94200DF0793 /* SettingsPropertyFactory.swift in Sources */,
 				EF2C246F22AFA76C009389C6 /* ZClientViewController+ZMUserObserver.swift in Sources */,
@@ -7887,6 +7877,7 @@
 				5E2945992190A1680045ACFA /* SenderNameCellComponent.swift in Sources */,
 				8751BA442069455E00DF8667 /* BackupViewController.swift in Sources */,
 				1610366F20616EBC008AFDD0 /* SelfProfileViewController+NewDeviceAlert.swift in Sources */,
+				A9859D6A23FEDD7400DC3F36 /* FullscreenImageViewController.swift in Sources */,
 				D5674610208F39D200DC7F26 /* TintColorCorrectedViewController.swift in Sources */,
 				A9076C8223B1047E004FD3C9 /* ConversationContentViewController+Header.swift in Sources */,
 				A96A21F123D5B865005B5579 /* ConversationInputBarViewController+Files.swift in Sources */,
@@ -7897,7 +7888,6 @@
 				5E766D9F21147697005242B4 /* AuthenticationCoordinatorDelegate.swift in Sources */,
 				5E8FFC2421F086240052DF03 /* AuthenticationReauthenticateInputHandler.swift in Sources */,
 				BFE277631D5B4FC50074DC6D /* ConversationContentViewController+MessageDeletion.swift in Sources */,
-				F19F066F21ECC25200426BD1 /* EasingAnimation.swift in Sources */,
 				7C5836661FD5ABFE001CC843 /* TitleView.swift in Sources */,
 				7C5DF2CC1FD7DEAD00B793B6 /* AvailabilityExtensions.swift in Sources */,
 				16595CFF20BEE5E000E1340E /* Analytics+CallEvents.swift in Sources */,
@@ -8040,6 +8030,7 @@
 				EE52378B23F5574D00D4FE79 /* MockUserType+ValidatorType.swift in Sources */,
 				F1CB5D29215A3108001CCF5D /* MentionsHandlerTests.swift in Sources */,
 				A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */,
+				A9AC63E123FC4A2D00016ABC /* AVURLAsset+conversionTests.swift in Sources */,
 				EF17B0DB223A9B87006252A8 /* ConnectRequestsViewControllerSnapshotTests.swift in Sources */,
 				7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */,
 				16814842228C74C10069F16F /* UserClientCellTests.swift in Sources */,
@@ -8377,7 +8368,6 @@
 				F15650C621DD0C5500210504 /* CGFloat+Hairline.swift in Sources */,
 				F15650A321DCF63300210504 /* FilePreviewGenerator.swift in Sources */,
 				5E39FC6F2260BAEC00C682B8 /* UIImage+StyleKit.swift in Sources */,
-				F15650BE21DD08F100210504 /* AVAsset+VideoConvert.m in Sources */,
 				F15650A221DCF60E00210504 /* FileMetaDataGenerator.swift in Sources */,
 				F15650B321DD025A00210504 /* URL+Backup.swift in Sources */,
 				7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */,

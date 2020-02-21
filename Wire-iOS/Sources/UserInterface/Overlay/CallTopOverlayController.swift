@@ -211,7 +211,7 @@ final class CallTopOverlayController: UIViewController {
             let duration = callDurationFormatter.string(from: callDuration) ?? ""
             return "voice.top_overlay.tap_to_return".localized + "・" + duration
         default:
-            let initiator = self.conversation.voiceChannel?.initiator?.displayName ?? ""
+            let initiator = self.conversation.voiceChannel?.initiator?.name ?? ""
             let conversation = self.conversation.displayName
             return state.description(callee: initiator, conversation: conversation, isGroup: self.conversation.conversationType == .group)
         }

@@ -430,7 +430,7 @@ final class InputBar: UIView {
         }
 
         if animated && self.superview != nil {
-            UIView.wr_animate(easing: .easeInOutExpo, duration: 0.3, animations: layoutIfNeeded)
+            UIView.animate(easing: .easeInOutExpo, duration: 0.3, animations: layoutIfNeeded)
             UIView.transition(with: self.textView, duration: 0.1, options: [], animations: textViewChanges) { _ in
                 self.updateColors()
                 completion()

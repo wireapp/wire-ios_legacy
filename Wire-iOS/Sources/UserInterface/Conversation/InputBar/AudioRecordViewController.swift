@@ -387,7 +387,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
             convertedPath.deleteFileAtPath()
             
-            AVAsset.wr_convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
+            AVAsset.convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
                 effectPath.deleteFileAtPath()
                 
                 if success {

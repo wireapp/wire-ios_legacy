@@ -45,7 +45,7 @@ final public class ImageMessageView: UIView {
             if let user = self.user {
                 
                 self.userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.displayName
+                self.userNameLabel.text = user.name
                 self.userImageView.user = user
             }
         }

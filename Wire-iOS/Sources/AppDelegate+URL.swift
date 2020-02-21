@@ -24,7 +24,7 @@ extension AppDelegate {
         do {
             return try sessionManager?.openURL(url, options: options) ?? false
         } catch let error as LocalizedError {
-            rootViewController.showAlert(for: error)
+            UIApplication.shared.topmostViewController()?.showAlert(for: error)
             return false
         } catch {
             return false

@@ -366,27 +366,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self setSelectedByMenu:NO animated:YES];
 }
 
-#pragma mark - Utilities, custom UI
-
-- (void)performSaveImageAnimationFromView:(UIView *)saveView
-{
-    UIImageView *ghostImageView = [[UIImageView alloc] initWithImage:self.imageView.image];
-    ghostImageView.contentMode = UIViewContentModeScaleAspectFit;
-    ghostImageView.translatesAutoresizingMaskIntoConstraints = YES;
-    CGRect initialFrame = [self.view convertRect:self.imageView.frame fromView:self.imageView.superview];
-    [self.view addSubview:ghostImageView];
-    ghostImageView.frame = initialFrame;
-    CGPoint targetCenter = [self.view convertPoint:saveView.center fromView:saveView.superview];
-    
-    [UIView wr_animateWithEasing:WREasingFunctionEaseInExpo duration:0.55f animations:^{
-        ghostImageView.center = targetCenter;
-        ghostImageView.alpha = 0;
-        ghostImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    } completion:^(BOOL finished) {
-        [ghostImageView removeFromSuperview];
-    }];
-}
-
 @end
 
 @implementation FullscreenImageViewController (MessageObserver)

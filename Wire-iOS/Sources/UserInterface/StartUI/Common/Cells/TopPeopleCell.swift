@@ -25,7 +25,7 @@ class TopPeopleCell: UICollectionViewCell {
     var user: UserType? {
         didSet {
             badgeUserImageView.user = user
-            displayName = user?.displayName ?? ""
+            displayName = user?.name ?? ""
         }
     }
 

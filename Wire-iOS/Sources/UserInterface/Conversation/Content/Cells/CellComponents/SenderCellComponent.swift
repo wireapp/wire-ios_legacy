@@ -121,7 +121,7 @@ class SenderCellComponent: UIView {
     }
     
     func configureNameLabel(for user: UserType, conversation: ZMConversation?) {
-        let displayName =  user.displayName // TODO should be user.displayName(in: conversation) but it's broken
+        let fullName =  user.name ?? ""
         
         var attributedString: NSAttributedString
         if user.isServiceUser {
@@ -131,11 +131,11 @@ class SenderCellComponent: UIView {
             attachment.bounds = CGRect(x: 0.0, y: -1.5, width: botIcon.size.width, height: botIcon.size.height)
             attachment.accessibilityLabel = "general.service".localized
             let bot = NSAttributedString(attachment: attachment)
-            let name = attributedName(for: .botName, string: displayName)
+            let name = attributedName(for: .botName, string: fullName)
             attributedString = name + "  ".attributedString + bot
         } else {
             let accentColor = ColorScheme.default.nameAccent(for: user.accentColorValue, variant: ColorScheme.default.variant)
-            attributedString = attributedName(for: .userName(accent: accentColor), string: displayName)
+            attributedString = attributedName(for: .userName(accent: accentColor), string: fullName)
         }
         
         authorLabel.attributedText = attributedString

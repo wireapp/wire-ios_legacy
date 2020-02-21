@@ -19,7 +19,6 @@
 
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
-#import "UIView+WR_ExtendedBlockAnimations.h"
 #import "Wire-Swift.h"
 
 NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayoutObservableDidChangeToLayoutSizeNotificationName";

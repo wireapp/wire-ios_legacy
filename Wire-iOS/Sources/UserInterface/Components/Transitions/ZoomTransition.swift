@@ -50,7 +50,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
 
         if reversed {
 
-            UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+            UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
             }) { finished in
@@ -60,7 +60,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             toView.alpha = 0
             toView.transform = CGAffineTransform(scaleX: 2, y: 2)
 
-            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+            UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                 toView.alpha = 1
                 toView.transform = .identity
             }) { finished in
@@ -72,7 +72,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             fromView.layer.anchorPoint = interactionPoint
             fromView.frame = frame
 
-            UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+            UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                 fromView.alpha = 0
                 fromView.transform = CGAffineTransform(scaleX: 2, y: 2)
             }) { finished in
@@ -86,7 +86,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             toView.alpha = 0
             toView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
 
-            UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, delay: 0.3, animations: {
+            UIView.animate(easing: .easeOutExpo, duration: 0.35, delayTime: 0.3, animations: {
                 toView.alpha = 1
                 toView.transform = .identity
             }) { finished in
