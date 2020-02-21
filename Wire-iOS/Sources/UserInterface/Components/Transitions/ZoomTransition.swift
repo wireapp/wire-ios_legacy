@@ -36,13 +36,13 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
               let toView = transitionContext.toView else { return }
         let containerView = transitionContext.containerView
 
+        containerView.addSubview(toView)
 
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
 
-        containerView.addSubview(toView)
         containerView.layoutIfNeeded()
 
         fromView.alpha = 1
