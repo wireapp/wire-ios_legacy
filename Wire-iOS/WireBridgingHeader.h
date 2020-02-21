@@ -42,8 +42,6 @@
 
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
-#import "ConfirmAssetViewController.h"
-#import "ConfirmAssetViewController+Internal.h"
 
 #import "ProfileSelfPictureViewController.h"
 #import "ProfileSelfPictureViewController+Internal.h"
