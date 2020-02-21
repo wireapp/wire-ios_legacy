@@ -18,77 +18,54 @@
 
 import FLAnimatedImage
 
-protocol MediaAsset: class, NSObjectProtocol {
+protocol MediaAsset: class {
+    var imageData: Data? { get }
     var size: CGSize { get }
-    var data: Data? { get }
     var isGIF: Bool { get }
     var isTransparent: Bool { get }
 }
 
-protocol MediaAssetView: class, NSObjectProtocol {
-    func mediaAsset() -> MediaAsset?
-    func setMediaAsset(_ asset: MediaAsset?)
-}
 
-extension FLAnimatedImage: MediaAsset {
-    var data: Data? {
-        return self.data ///TODO:
-    }
-    
-    var isGIF: Bool {
-        return true
-    }
-    
-    var isTransparent: Bool {
-        return false
-    }
-}
-
-
-extension UIImageView: MediaAssetView {
-    var imageData: Data? {
-        get {
-            return image?.data
+extension MediaAsset {
+    func imageView() -> MediaAssetView {
+        if isGIF {
+            let animatedImageView = FLAnimatedImageView()
+            animatedImageView.animatedImage = self as? FLAnimatedImage
+            
+            return animatedImageView
+        } else {
+            return UIImageView(image: (self as? UIImage)?.downsized())
         }
-        
+    }
+
+}
+
+
+protocol MediaAssetView: class {
+    var mediaAsset: MediaAsset? { get set }
+}
+
+extension MediaAssetView where Self: UIImageView {
+    var mediaAsset: MediaAsset? {
+        get {
+            return image
+        }
         set {
-            if let imageData = newValue {
-                image = UIImage(data: imageData)
+            if newValue == nil {
+                image = nil
+            } else if newValue?.isGIF == true {
+                image = (newValue as? UIImage)?.downsized()
             }
         }
     }
-    
-    ///TODO: method of MediaAsset
-    static func imageViewWithMediaAsset(mediaAsset image: MediaAsset) -> MediaAssetView {
-        if image.isGIF {
-            let animatedImageView = FLAnimatedImageView()
-            animatedImageView.animatedImage = image as? FLAnimatedImage
-    
-            return animatedImageView
-        } else {
-            return UIImageView(image: (image as? UIImage)?.downsized())
-        }
-    }
-    
-    func mediaAsset() -> MediaAsset? {
-        return image
-    }
-    
-    func setMediaAsset(_ image: MediaAsset?) {
-        if image == nil {
-            self.image = nil
-        } else if image?.isGIF == true {
-            self.image = (image as? UIImage)?.downsized()
-        }
-    }
 }
 
-extension FLAnimatedImageView: MediaAssetView {
+extension MediaAssetView where Self: FLAnimatedImageView {
     var mediaAsset: MediaAsset? {
         get {
-        return animatedImage ?? image
+            return animatedImage ?? image
         }
-
+        
         set {
             if let newValue = newValue {
                 if newValue.isGIF == true {
@@ -103,5 +80,36 @@ extension FLAnimatedImageView: MediaAssetView {
         }
     }
 }
+
+extension FLAnimatedImage: MediaAsset {
+    var imageData: Data? {
+        return data
+    }
+    
+    var isGIF: Bool {
+        return true
+    }
+    
+    var isTransparent: Bool {
+        return false
+    }
+}
+
+
+extension UIImageView: MediaAssetView {
+    
+    var imageData: Data? {
+        get {
+            return (image as? MediaAsset)?.imageData
+        }
+        
+        set {
+            if let imageData = newValue {
+                image = UIImage(data: imageData)
+            }
+        }
+    }
+}
+
 
 

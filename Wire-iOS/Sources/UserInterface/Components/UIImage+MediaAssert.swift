@@ -19,11 +19,11 @@
 import Foundation
 
 extension UIImage: MediaAsset {
-    var data: Data? {
+    var imageData: Data? {
         if isTransparent {
-            return self.pngData()
+            return pngData()
         } else {
-            return self.jpegData(compressionQuality: 1.0)
+            return jpegData(compressionQuality: 1.0)
         }
     }
 

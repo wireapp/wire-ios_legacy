@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import FLAnimatedImage
 
 extension CGSize {
     func minZoom(imageSize: CGSize?) -> CGFloat {
@@ -139,7 +140,7 @@ extension FullscreenImageViewController {
 
     // MARK: - Image view
 
-    @objc func setupImageView(image: MediaAsset, parentSize: CGSize) {
+    func setupImageView(image: MediaAsset, parentSize: CGSize) {
         guard let imageView = UIImageView(mediaAsset: image) else { return }
 
         imageView.clipsToBounds = true

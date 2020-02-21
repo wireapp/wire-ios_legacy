@@ -125,7 +125,7 @@ final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     }
     
     func updateImageContainerAppearance() {
-        if imageResourceView.image?.isTransparent() == true {
+        if imageResourceView.image?.isTransparent == true {
             containerView.backgroundColor = UIColor.clear
             imageResourceView.layer.borderWidth = 0
         } else {
