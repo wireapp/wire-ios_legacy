@@ -191,7 +191,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         }
 
         user.fetchProfileImage(session: userSession,
-                               cache: defaultUserImageCache,
+                               cache: UIImage.defaultUserImageCache,
                                sizeLimit: size.rawValue,
                                desaturate: desaturate,
                                completion: { [weak self] (image, cacheHit) in

@@ -79,7 +79,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        self.groupConversation.append(imageFromData: img.data()!)
+        self.groupConversation.append(imageFromData: img.imageData!)
 
         createSut()
 

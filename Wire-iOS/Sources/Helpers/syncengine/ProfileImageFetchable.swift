@@ -21,9 +21,6 @@ import WireSyncEngine
 
 fileprivate var ciContext = CIContext(options: nil)
 
-var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
-
-
 typealias ProfileImageFetchableUser = UserType & ProfileImageFetchable
 
 protocol ProfileImageFetchable {
@@ -50,7 +47,7 @@ extension ProfileImageFetchable where Self: UserType {
         return derivedKey
     }
 
-    func fetchProfileImage(session: ZMUserSessionInterface, cache: ImageCache<UIImage> = defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
+    func fetchProfileImage(session: ZMUserSessionInterface, cache: ImageCache<UIImage> = UIImage.defaultUserImageCache, sizeLimit: Int? = nil, desaturate: Bool = false, completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
 
         let screenScale = UIScreen.main.scale
         let previewSizeLimit: CGFloat = 280

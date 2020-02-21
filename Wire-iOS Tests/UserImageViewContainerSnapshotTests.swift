@@ -29,7 +29,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
         super.setUp()
 
         mockUser = SwiftMockLoader.mockUsers().first
-        mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").data()
+        mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").imageData
     }
     
     override func tearDown() {
