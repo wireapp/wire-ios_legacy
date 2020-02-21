@@ -33,7 +33,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
         // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
         verify(view: viewController.view)
@@ -46,7 +46,7 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
         // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
         verify(view: viewController.view)

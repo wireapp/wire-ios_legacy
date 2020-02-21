@@ -43,7 +43,7 @@ final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
             return
         }
 
-        toView.layoutIfNeeded()
+        containerView.layoutIfNeeded()
 
         fromView.alpha = 1
         fromView.layer.needsDisplayOnBoundsChange = false

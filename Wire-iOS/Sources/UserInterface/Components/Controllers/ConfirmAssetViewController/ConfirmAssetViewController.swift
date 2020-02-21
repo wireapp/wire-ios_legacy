@@ -18,6 +18,7 @@
 
 import Foundation
 import AVKit
+import FLAnimatedImage
 
 extension ConfirmAssetViewController {
     override open var preferredStatusBarStyle: UIStatusBarStyle {
@@ -92,6 +93,34 @@ extension ConfirmAssetViewController {
         navigationController.modalTransitionStyle = .crossDissolve
 
         present(navigationController, animated: true)
+    }
+    
+    @objc
+    var imageToolbarFitsInsideImage: Bool {
+        return image?.size.width > 192 && image?.size.height > 96
+    }
+    
+    // MARK: - View Creation
+    @objc
+    func createPreviewPanel() {
+        let imagePreviewView = FLAnimatedImageView()
+        imagePreviewView.contentMode = .scaleAspectFit
+        imagePreviewView.isUserInteractionEnabled = true
+        view.addSubview(imagePreviewView)
+        
+        imagePreviewView.mediaAsset = image
+        
+        if showEditingOptions && imageToolbarFitsInsideImage {
+            let imageToolbarViewInsideImage = ImageToolbarView(withConfiguraton: .preview)
+            imageToolbarViewInsideImage.isPlacedOnImage = true
+            imageToolbarViewInsideImage.sketchButton.addTarget(self, action: #selector(sketchEdit(_:)), for: .touchUpInside)
+            imageToolbarViewInsideImage.emojiButton.addTarget(self, action: #selector(emojiEdit(_:)), for: .touchUpInside)
+            imagePreviewView.addSubview(imageToolbarViewInsideImage)
+            
+            self.imageToolbarViewInsideImage = imageToolbarViewInsideImage
+        }
+        
+        self.imagePreviewView = imagePreviewView
     }
 }
 

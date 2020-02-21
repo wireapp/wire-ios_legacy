@@ -175,6 +175,7 @@ class TextView: UITextView {
         return super.canPerformAction(action, withSender: sender)
     }
 
+    @discardableResult
     override func resignFirstResponder() -> Bool {
         let resigned = super.resignFirstResponder()
 

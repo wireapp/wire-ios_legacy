@@ -58,30 +58,7 @@
     return NO;
 }
 
-- (BOOL)imageToolbarFitsInsideImage
-{
-    return self.image.size.width > 192 && self.image.size.height > 96;
-}
-
 #pragma mark - View Creation
-
-- (void)createPreviewPanel
-{
-    self.imagePreviewView = [[FLAnimatedImageView alloc] init];
-    self.imagePreviewView.contentMode = UIViewContentModeScaleAspectFit;
-    self.imagePreviewView.userInteractionEnabled = YES;
-    [self.view addSubview:self.imagePreviewView];
-    
-    [self.imagePreviewView setMediaAsset:self.image];
-
-    if ([self showEditingOptions] && [self imageToolbarFitsInsideImage]) {
-        self.imageToolbarViewInsideImage = [[ImageToolbarView alloc] initWithConfiguraton:ImageToolbarConfigurationPreview];
-        self.imageToolbarViewInsideImage.isPlacedOnImage = YES;
-        [self.imageToolbarViewInsideImage.sketchButton addTarget:self action:@selector(sketchEdit:) forControlEvents:UIControlEventTouchUpInside];
-        [self.imageToolbarViewInsideImage.emojiButton addTarget:self action:@selector(emojiEdit:) forControlEvents:UIControlEventTouchUpInside];
-        [self.imagePreviewView addSubview:self.imageToolbarViewInsideImage];
-    }
-}
 
 - (void)createContentLayoutGuide
 {

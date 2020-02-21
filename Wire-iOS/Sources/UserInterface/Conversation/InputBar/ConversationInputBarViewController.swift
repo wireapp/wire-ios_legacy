@@ -144,7 +144,21 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             }
         }
     }
+    
+    //MARK: - Sketch
+    
+    @objc
+    func sketchButtonPressed(_ sender: Any?) {
+        inputBar.textView.resignFirstResponder()
+        
+        let viewController = CanvasViewController()
+        viewController.delegate = self
+        viewController.title = conversation.displayName.uppercased()
+        
+        parent?.present(viewController.wrapInNavigationController(), animated: true)
+    }
 }
+
 
 // MARK: - Informal TextView delegate methods
 

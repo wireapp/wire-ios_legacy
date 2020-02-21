@@ -42,4 +42,7 @@
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarViewInsideImage;
 @property (nonatomic, nullable) ImageToolbarView *imageToolbarView;
 
+- (void)sketchEdit:(id)sender;
+- (void)emojiEdit:(id)sender;
+
 @end
