@@ -21,17 +21,30 @@ import AVKit
 import FLAnimatedImage
 
 final class ConfirmAssetViewController: UIViewController {
-    enum Context {
+    enum Asset {
         /// Can either be UIImage or FLAnimatedImage
         case image(mediaAsset: MediaAsset)
         case video(url: URL)
     }
     
+    typealias Confirm = ((_ editedImage: UIImage?) -> Void)
+    struct Context {
+        let asset: Asset
+        let onConfirm: Confirm?
+        let onCancel: Completion?
+        
+        init(asset: Asset, onConfirm: Confirm? = nil, onCancel: Completion? = nil) {
+            self.asset = asset
+            self.onConfirm = onConfirm
+            self.onCancel = onCancel
+        }
+    }
+    
+    var asset: Asset {
+        return context.asset
+    }
+    
     let context: Context
-
-    ///TODO: init
-    var onConfirm: ((_ editedImage: UIImage?) -> Void)!
-    var onCancel: (() -> Void)!
     
     var previewTitle: String? {
         didSet {
@@ -77,7 +90,7 @@ final class ConfirmAssetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        switch context {
+        switch asset {
             case .image(let mediaAsset):
                 createPreviewPanel(image: mediaAsset)
         case .video(let url):
@@ -142,7 +155,7 @@ final class ConfirmAssetViewController: UIViewController {
     
     /// Show editing options only if the image is not animated
     var showEditingOptions: Bool {
-        switch context {
+        switch asset {
         case .image(let mediaAsset):
             return mediaAsset is UIImage
         case .video(url: _):
@@ -151,7 +164,7 @@ final class ConfirmAssetViewController: UIViewController {
     }
     
     private var imageToolbarFitsInsideImage: Bool {
-        switch context {
+        switch asset {
         case .image(let image):
             return image.size.width > 192 && image.size.height > 96
         case .video(url: _):
@@ -174,7 +187,7 @@ final class ConfirmAssetViewController: UIViewController {
     
     /// open canvas screen if the image is sketchable(e.g. not an animated GIF)
     private func openSketch(in editMode: CanvasViewControllerEditMode) {
-        guard case .image(let mediaAsset) = context,
+        guard case .image(let mediaAsset) = asset,
             let image = mediaAsset as? UIImage else {
             return
         }
@@ -248,12 +261,12 @@ final class ConfirmAssetViewController: UIViewController {
     // MARK: - Actions
     @objc
     private func acceptImage(_ sender: Any?) {
-        onConfirm(nil)
+        context.onConfirm?(nil)
     }
     
     @objc
     private func rejectImage(_ sender: Any?) {
-        onCancel()
+        context.onCancel?()
     }
     
     @objc
@@ -348,7 +361,7 @@ final class ConfirmAssetViewController: UIViewController {
         
 
         
-        switch context {
+        switch asset {
         // Preview Image
         case .image(let mediaAsset):
             let imageSize: CGSize = mediaAsset.size
@@ -400,6 +413,6 @@ final class ConfirmAssetViewController: UIViewController {
 
 extension ConfirmAssetViewController: CanvasViewControllerDelegate {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
-        onConfirm?(image)
+        context.onConfirm?(image)
     }
 }

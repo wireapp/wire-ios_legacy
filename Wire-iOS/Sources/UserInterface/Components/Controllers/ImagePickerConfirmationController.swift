@@ -56,22 +56,21 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
         case .photoLibrary,
              .savedPhotosAlbum:
 
-            let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: image))
-            confirmImageViewController.modalPresentationStyle = .fullScreen
-            confirmImageViewController.previewTitle = previewTitle
-
-
-            confirmImageViewController.onCancel = {
-                picker.dismiss(animated: true)
-            }
-
-            confirmImageViewController.onConfirm = { [weak self] editedImage in
+            let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: image), onConfirm: { [weak self] editedImage in
                 if let editedImage = editedImage {
                     self?.imagePickedBlock?(editedImage.pngData())
                 } else {
                     self?.imagePickedBlock?(image.pngData())
                 }
-            }
+                },
+                                                             onCancel: {
+                    picker.dismiss(animated: true)
+            })
+
+            let confirmImageViewController = ConfirmAssetViewController(context: context)
+            confirmImageViewController.modalPresentationStyle = .fullScreen
+            confirmImageViewController.previewTitle = previewTitle
+
 
             picker.present(confirmImageViewController, animated: true)
             picker.setNeedsStatusBarAppearanceUpdate()

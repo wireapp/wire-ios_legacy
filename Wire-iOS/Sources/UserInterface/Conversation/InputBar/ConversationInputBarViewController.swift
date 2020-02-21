@@ -164,19 +164,18 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
 
 extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
-        let confirmImageViewController = ConfirmAssetViewController(context: .image(mediaAsset: image))
-        confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
-        
-        
-        confirmImageViewController.onConfirm = {[weak self] editedImage in
+        let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: image), onConfirm: {[weak self] editedImage in
             self?.dismiss(animated: false)
             let finalImage: MediaAsset = editedImage ?? image
             self?.postImage(finalImage)
-        }
+            }, onCancel: { [weak self] in
+                self?.dismiss(animated: false)
+        })
+
+        let confirmImageViewController = ConfirmAssetViewController(context: context)
         
-        confirmImageViewController.onCancel = { [weak self] in
-            self?.dismiss(animated: false)
-        }
+        confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
+        
         
         present(confirmImageViewController, animated: false)
     }

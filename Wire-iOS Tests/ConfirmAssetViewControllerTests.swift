@@ -34,10 +34,9 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersTheAssetViewControllerWithLandscapeImage() {
-        sut = ConfirmAssetViewController()
+        sut = ConfirmAssetViewController(context: Context(asset: .image(mediaAsset: image(inTestBundleNamed: "unsplash_matterhorn.jpg"))))
 
         accentColor = .strongLimeGreen
-        sut.image = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
         sut.previewTitle = "Matterhorn"
         verifyInAllIPhoneSizes(view: sut.view)
     }
