@@ -144,37 +144,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)loadImageAndSetupImageView
-{
-    ZM_WEAK(self);
-    
-    const BOOL imageIsAnimatedGIF = self.message.imageMessageData.isAnimatedGIF;
-    NSData *imageData = self.message.imageMessageData.imageData;
-    
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void) {
-        
-        ZM_STRONG(self);
-        
-        id<MediaAsset> image;
-        
-        if (imageIsAnimatedGIF) {
-            image = [[FLAnimatedImage alloc] initWithAnimatedGIFData:imageData];
-        }
-        else {
-            image = [[UIImage alloc] initWithData:imageData];
-        }
-        
-        ZM_WEAK(self);
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            ZM_STRONG(self);
-
-            CGSize parentSize = self.parentViewController.view.bounds.size;
-            [self setupImageViewWithImage:image parentSize:parentSize];
-        });
-    });
-}
-
 - (void)removeImage
 {
     [self.imageView removeFromSuperview];
