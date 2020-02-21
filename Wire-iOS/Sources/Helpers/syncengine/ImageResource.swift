@@ -19,7 +19,7 @@
 import Foundation
 import FLAnimatedImage
 
-var defaultImageCache = ImageCache<NSObject>()
+var defaultImageCache = ImageCache<AnyObject>()
 
 extension ZMConversationMessage {
 
@@ -228,7 +228,7 @@ extension ImageSizeLimit {
 extension ImageResource {
     
     /// Fetch image data and calls the completion handler when it is available on the main queue.
-    func fetchImage(cache: ImageCache<NSObject> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
+    func fetchImage(cache: ImageCache<AnyObject> = defaultImageCache, sizeLimit: ImageSizeLimit = .deviceOptimized, completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
         
         guard let cacheIdentifier = self.cacheIdentifier else {
             return completion(nil, false)
