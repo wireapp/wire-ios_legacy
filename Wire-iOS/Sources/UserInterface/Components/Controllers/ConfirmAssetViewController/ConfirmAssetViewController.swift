@@ -108,7 +108,7 @@ extension ConfirmAssetViewController {
         imagePreviewView.isUserInteractionEnabled = true
         view.addSubview(imagePreviewView)
         
-        imagePreviewView.setMediaAsset(image)
+        imagePreviewView.mediaAsset = image
         
         if showEditingOptions && imageToolbarFitsInsideImage {
             let imageToolbarViewInsideImage = ImageToolbarView(withConfiguraton: .preview)
