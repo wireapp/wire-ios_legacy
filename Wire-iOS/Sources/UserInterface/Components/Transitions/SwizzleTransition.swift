@@ -40,13 +40,12 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
         }
         let containerView = transitionContext.containerView
 
-        containerView.addSubview(toView)
-
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
         
+        containerView.addSubview(toView)
         containerView.layoutIfNeeded()
 
         let durationPhase1: TimeInterval

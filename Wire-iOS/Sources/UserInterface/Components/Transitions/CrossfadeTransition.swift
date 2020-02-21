@@ -37,13 +37,12 @@ final class CrossfadeTransition: NSObject, UIViewControllerAnimatedTransitioning
 
         let containerView = transitionContext.containerView
 
-        containerView.addSubview(toView)
-
         if !transitionContext.isAnimated || duration == 0 {
             transitionContext.completeTransition(true)
             return
         }
         
+        containerView.addSubview(toView)
         containerView.layoutIfNeeded()
 
         toView.alpha = 0
