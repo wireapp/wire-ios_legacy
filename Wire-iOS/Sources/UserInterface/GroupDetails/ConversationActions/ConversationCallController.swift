@@ -73,9 +73,7 @@ final class ConversationCallController: NSObject {
             completion: completion
         )
 
-        target.present(controller, animated: true) {
-            self.target.setNeedsStatusBarAppearanceUpdate()
-        }
+        target.present(controller, animated: true)
     }
 
 }
