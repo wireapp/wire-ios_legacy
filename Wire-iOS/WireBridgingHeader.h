@@ -45,9 +45,6 @@
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
 
-#import "ProfileSelfPictureViewController.h"
-#import "ProfileSelfPictureViewController+Internal.h"
-
 #import "SketchColorPickerController.h"
 #import "SketchColorPickerController+Internal.h"
 
