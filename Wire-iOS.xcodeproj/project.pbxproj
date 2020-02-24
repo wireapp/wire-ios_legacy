@@ -778,7 +778,7 @@
 		BA79B0A51B6284D900F23AFB /* SoundEventRulesWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A41B6284D900F23AFB /* SoundEventRulesWatchDog.swift */; };
 		BA79B0A91B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA79B0A81B62851F00F23AFB /* SoundEventRulesWatchDogTests.swift */; };
 		BA8DC27C1B5FF5CF00103262 /* SketchColorPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */; };
-		BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */ = {isa = PBXBuildFile; fileRef = BAD4D0651B613D4E008585A5 /* ColorKnobView.m */; };
+		BAD4D0661B613D4E008585A5 /* ColorKnobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAD4D0651B613D4E008585A5 /* ColorKnobView.swift */; };
 		BD979D2C1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2B1D8F3AF700E8E3CB /* SettingsTechnicalReportViewController.swift */; };
 		BD979D2E1D8F41E700E8E3CB /* String+WireLocales.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD979D2D1D8F41E700E8E3CB /* String+WireLocales.swift */; };
 		BF02CDC31D79A98000C87D38 /* SavableImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF02CDC21D79A98000C87D38 /* SavableImage.swift */; };
@@ -2444,8 +2444,7 @@
 		BACB88511AF7C48900DDCDB0 /* Wire-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wire-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACB88541AF7C48900DDCDB0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BACB88551AF7C48900DDCDB0 /* AggregateArrayTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AggregateArrayTests.m; sourceTree = "<group>"; };
-		BAD4D0641B613D4E008585A5 /* ColorKnobView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorKnobView.h; path = Sketchpad/ColorKnobView.h; sourceTree = "<group>"; };
-		BAD4D0651B613D4E008585A5 /* ColorKnobView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorKnobView.m; path = Sketchpad/ColorKnobView.m; sourceTree = "<group>"; };
+		BAD4D0651B613D4E008585A5 /* ColorKnobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorKnobView.swift; path = Sketchpad/ColorKnobView.swift; sourceTree = "<group>"; };
 		BAECFF581B3D7BB70027C5ED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BAECFF591B3D7BB70027C5ED /* de */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+RequestProxy.swift"; sourceTree = "<group>"; };
@@ -6522,8 +6521,7 @@
 				BA8DC27B1B5FF5CF00103262 /* SketchColorPickerController.m */,
 				EF17B0D4223A70D1006252A8 /* SketchColorPickerController+SetupView.swift */,
 				BAA1F7E21B610D89002402B6 /* SketchColorCollectionViewCell.swift */,
-				BAD4D0641B613D4E008585A5 /* ColorKnobView.h */,
-				BAD4D0651B613D4E008585A5 /* ColorKnobView.m */,
+				BAD4D0651B613D4E008585A5 /* ColorKnobView.swift */,
 			);
 			name = Sketchpad;
 			sourceTree = "<group>";
@@ -7668,7 +7666,7 @@
 				A965F89C23DB29D8005209E1 /* ConversationInputBarSendController.swift in Sources */,
 				5E8DA74F211AEE3D00360979 /* AuthenticationCoordinatorAction.swift in Sources */,
 				EFA06E4721FB639700BF2E17 /* ConversationContentViewController+CanvasViewControllerDelegate.swift in Sources */,
-				BAD4D0661B613D4E008585A5 /* ColorKnobView.m in Sources */,
+				BAD4D0661B613D4E008585A5 /* ColorKnobView.swift in Sources */,
 				871BC2521D34F8F800DF0793 /* MediaPreviewView.swift in Sources */,
 				D58192022091E2C0003BA7EC /* IconLabelButton+CallActions.swift in Sources */,
 				1648EEEF20498F8900CC6B37 /* ContactsSectionController.swift in Sources */,

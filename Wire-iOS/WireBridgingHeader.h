@@ -32,7 +32,6 @@
 #import "Button.h"
 #import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
-#import "ColorKnobView.h"
 
 // View Controllers
 
