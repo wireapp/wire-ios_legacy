@@ -85,7 +85,7 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
             stackView.translatesAutoresizingMaskIntoConstraints = false
 
             if waitForImagesToLoad {
-                XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+                XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
             }
 
             if waitForTextViewToLoad {

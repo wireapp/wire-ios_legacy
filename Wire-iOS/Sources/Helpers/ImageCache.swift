@@ -29,6 +29,6 @@ extension UIImage {
     public static var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
 }
 
-extension NSObject {
+final class MediaAssetCache {
     static var defaultImageCache = ImageCache<AnyObject>()
 }

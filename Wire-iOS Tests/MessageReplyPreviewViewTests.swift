@@ -149,7 +149,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingTextMessageData.linkPreviewHasImage = true
         
         let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verify(view: previewView.prepareForSnapshot())
     }
@@ -159,7 +159,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         let message = MockMessageFactory.imageMessage(with: image)!
 
         let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verify(view: previewView.prepareForSnapshot())
     }
@@ -171,7 +171,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.previewData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").jpegData(compressionQuality: 0.9)
         
         let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verify(view: previewView.prepareForSnapshot())
     }
@@ -182,7 +182,7 @@ class MessageReplyPreviewViewTests: ZMSnapshotTestCase {
         message.backingFileMessageData.filename = "vacation.m4a"
         
         let previewView = message.replyPreview()!
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verify(view: previewView.prepareForSnapshot())
     }

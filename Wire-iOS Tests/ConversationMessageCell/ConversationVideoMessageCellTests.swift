@@ -27,7 +27,7 @@ final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase 
     }
     
     override func tearDown() {
-        defaultImageCache.cache.removeAllObjects()
+        MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         super.tearDown()
     }
 
