@@ -28,4 +28,5 @@ public final class ImageCache<T : AnyObject> {
 
 extension UIImage {
     public static var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
+    public static var defaultImageCache = ImageCache<AnyObject>()
 }
