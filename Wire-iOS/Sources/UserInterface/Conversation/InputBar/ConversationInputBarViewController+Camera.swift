@@ -85,9 +85,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
             }
         } else {
             let context = ConfirmAssetViewController.Context(asset: .video(url: videoURL),
-                                                             onConfirm: { [unowned self] (editedImage: UIImage?)in
-                                                                            self.dismiss(animated: true, completion: .none)
-                                                                            self.uploadFile(at: videoURL as URL)
+                                                             onConfirm: { [unowned self] (editedImage: UIImage?) in
+                                                                            self.dismiss(animated: true)
+                                                                            self.uploadFile(at: videoURL)
                                                                             },
                                                              onCancel: { [unowned self] in
                                                                             self.dismiss(animated: true) {
@@ -146,8 +146,8 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
 
     @objc
     public func showConfirmationForImage(_ imageData: Data,
-                                               isFromCamera: Bool,
-                                               uti: String?) {
+                                           isFromCamera: Bool,
+                                           uti: String?) {
         let mediaAsset: MediaAsset
 
         if uti == kUTTypeGIF as String,
@@ -166,13 +166,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                         UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
                                                                     }
 
-                                                                    if let editedImage = editedImage, let editedImageData = editedImage.pngData() {
-                                                                        self.sendController.sendMessage(withImageData: editedImageData, completion: .none)
-                                                                    } else {
-                                                                        self.sendController.sendMessage(withImageData: imageData as Data, completion: .none)
-                                                                    }
-                                                                    }
-                                                                },
+                                                                    self.sendController.sendMessage(withImageData: editedImage?.pngData() ?? imageData)
+                                                                }
+                                                            },
                                                          onCancel: { [unowned self] in
                                                                         self.dismiss(animated: true) {
                                                                             self.mode = .camera

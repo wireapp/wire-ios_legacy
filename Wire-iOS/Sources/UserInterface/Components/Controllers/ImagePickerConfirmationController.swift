@@ -55,12 +55,8 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
         case .photoLibrary,
              .savedPhotosAlbum:
             
-            let onConfirm: Confirm = { [weak self] editedImage in
-                if let editedImage = editedImage {
-                    self?.imagePickedBlock?(editedImage.pngData())
-                } else {
-                    self?.imagePickedBlock?(image.pngData())
-                }
+            let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
+                self?.imagePickedBlock?((editedImage ?? image).pngData())
             }
             
             let onCancel: Completion = {
