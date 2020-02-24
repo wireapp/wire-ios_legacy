@@ -32,15 +32,17 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                 guard let draggedImage = object as? UIImage else { return }
 
                 DispatchQueue.main.async {
-                    let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: draggedImage), onConfirm: { [unowned self] (editedImage: UIImage?) in
-                        self.dismiss(animated: true) {
-                            if let draggedImageData = draggedImage.pngData() {
-                                self.sendController.sendMessage(withImageData: draggedImageData, completion: .none)
-                            }
-                        }
-                        }, onCancel: { [unowned self] in
-                            self.dismiss(animated: true)
-                    }
+                    let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: draggedImage),
+                                                                     onConfirm: { [unowned self] (editedImage: UIImage?) in
+                                                                                    self.dismiss(animated: true) {
+                                                                                        if let draggedImageData = draggedImage.pngData() {
+                                                                                            self.sendController.sendMessage(withImageData: draggedImageData, completion: .none)
+                                                                                        }
+                                                                                    }
+                                                                                    },
+                                                                     onCancel: { [unowned self] in
+                                                                                    self.dismiss(animated: true)
+                                                                                }
                     )
 
                     let confirmImageViewController = ConfirmAssetViewController(context: context)
