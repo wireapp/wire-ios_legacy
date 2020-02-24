@@ -120,7 +120,7 @@ final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         super.configure(icon: icon, title: title, interactive: isInteractive, showInteractiveIcon: showInteractiveIcon)
         
         accessibilityLabel = options.contains(.allowSettingStatus) ? "availability.accessibility_label.change_status".localized : "availability.accessibility_label.status".localized
-        accessibilityValue = availability.localizedName
+        accessibilityValue = availability.localizedName + " " + (user.name ?? "")
     }
     
     /// Refreshes the appearance of the view, based on the options.
