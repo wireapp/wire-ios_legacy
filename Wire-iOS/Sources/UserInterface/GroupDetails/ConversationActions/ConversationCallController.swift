@@ -19,17 +19,16 @@
 import Foundation
 
 final class ConversationCallController: NSObject {
-    
+
     private unowned let target: UIViewController
     private let conversation: ZMConversation
-    
-    
+
     init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
         super.init()
     }
-    
+
     func startAudioCall(started: (() -> Void)?) {
         let startCall = { [weak self] in
             guard let `self` = self else { return }
@@ -38,36 +37,36 @@ final class ConversationCallController: NSObject {
                 self.conversation.startAudioCall()
             }
         }
-        
+
         if conversation.localParticipants.count <= 4 {
             startCall()
         } else {
             confirmGroupCall {[weak self] accepted in
                 self?.target.setNeedsStatusBarAppearanceUpdate()
-                
+
                 guard accepted else { return }
                 startCall()
             }
         }
     }
-    
+
     func startVideoCall(started: (() -> Void)?) {
         conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             started?()
             conversation.startVideoCall()
         }
     }
-    
+
     func joinCall() {
         guard conversation.canJoinCall else { return }
         conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             conversation.joinCall() // This will result in joining an ongoing call.
         }
     }
-    
+
     // MARK: - Helper
 
-    private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> ()) {
+    private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> Void) {
         let controller = UIAlertController.confirmGroupCall(
             participants: conversation.localParticipants.count - 1,
             completion: completion
