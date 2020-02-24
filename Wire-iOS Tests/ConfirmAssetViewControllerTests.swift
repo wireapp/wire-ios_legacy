@@ -40,7 +40,7 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         sut.previewTitle = "Matterhorn"
         verifyInAllIPhoneSizes(view: sut.view)
     }
-        
+
     func testThatItRendersTheAssetViewControllerWithPortraitImage() {
         sut = ConfirmAssetViewController(context: ConfirmAssetViewController.Context(asset: .image(mediaAsset: image(inTestBundleNamed: "unsplash_burger.jpg"))))
 
@@ -48,7 +48,7 @@ final class ConfirmAssetViewControllerTests: ZMSnapshotTestCase {
         sut.previewTitle = "Burger & Beer"
         verifyInAllIPhoneSizes(view: sut.view)
     }
-    
+
     func testThatItRendersTheAssetViewControllerWithSmallImage() {
         sut = ConfirmAssetViewController(context: ConfirmAssetViewController.Context(asset: .image(mediaAsset: image(inTestBundleNamed: "unsplash_small.jpg").imageScaled(with: 0.5)!)))
 

@@ -183,7 +183,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         present(confirmImageViewController, animated: true)
     }
 
-    private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool)->Void) {
+    private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool) -> Void) {
         PHPhotoLibrary.requestAuthorization { status in
             DispatchQueue.main.async {
             switch status {
@@ -197,7 +197,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
 
-    func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval)->Void) {
+    func convertVideoAtPath(_ inputPath: String, completion: @escaping (_ success: Bool, _ resultPath: String?, _ duration: TimeInterval) -> Void) {
 
         let lastPathComponent = (inputPath as NSString).lastPathComponent
 
