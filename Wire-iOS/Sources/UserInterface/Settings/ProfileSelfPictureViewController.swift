@@ -21,10 +21,9 @@ import Photos
 import MobileCoreServices
 
 final class ProfileSelfPictureViewController: UIViewController {
-//    var user: ZMUser?
-    private let selfUserImageView: UIImageView = UIImageView()
-    let bottomOverlayView: UIView  = UIView()
-    let topView: UIView = UIView()
+    var selfUserImageView: UIImageView = UIImageView()
+    private let bottomOverlayView: UIView  = UIView()
+    private let topView: UIView = UIView()
 
     private let cameraButton: IconButton = IconButton()
     private let libraryButton: IconButton = IconButton()
