@@ -100,7 +100,7 @@ extension UIImageView: MediaAssetView {
     
     var imageData: Data? {
         get {
-            return (image as? MediaAsset)?.imageData
+            return image?.imageData
         }
         
         set {
