@@ -34,8 +34,8 @@ protocol Shareable {
 
 final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate,
     TokenFieldDelegate {
-    public let destinations: [D]
-    public let shareable: S
+    let destinations: [D]
+    let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
         didSet {
             sendButton.isEnabled = self.selectedDestinations.count > 0
@@ -46,7 +46,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     var tokenFieldShareablePreviewSpacingConstraint: NSLayoutConstraint?
     var shareablePreviewTopConstraint: NSLayoutConstraint?
 
-    public var showPreview: Bool {
+    var showPreview: Bool {
         didSet {
             shareablePreviewWrapper?.isHidden = !showPreview
 
@@ -66,8 +66,8 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         }
     }
 
-    public let allowsMultipleSelection: Bool
-    public var onDismiss: ((ShareViewController, Bool)->())?
+    let allowsMultipleSelection: Bool
+    var onDismiss: ((ShareViewController, Bool)->())?
     var bottomConstraint: NSLayoutConstraint?
     
     init(shareable: S, destinations: [D], showPreview: Bool = true, allowsMultipleSelection: Bool = true) {
@@ -98,7 +98,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         self.createConstraints()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -118,7 +118,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         return view
     }()
     
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
@@ -144,11 +144,11 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     
     // MARK: - Actions
     
-    @objc public func onCloseButtonPressed(sender: AnyObject?) {
+    @objc func onCloseButtonPressed(sender: AnyObject?) {
         self.onDismiss?(self, false)
     }
     
-    @objc public func onSendButtonPressed(sender: AnyObject?) {
+    @objc func onSendButtonPressed(sender: AnyObject?) {
         if self.selectedDestinations.count > 0 {
             self.shareable.share(to: Array(self.selectedDestinations))
             self.onDismiss?(self, true)
@@ -157,15 +157,15 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     
     // MARK: - UITableViewDataSource & UITableViewDelegate
 
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.filteredDestinations.count
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ShareDestinationCell<D>.reuseIdentifier) as! ShareDestinationCell<D>
         
         let destination = self.filteredDestinations[indexPath.row]
@@ -178,7 +178,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
         self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
@@ -190,7 +190,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         }
     }
     
-    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
         guard let token = self.tokenField.token(forRepresentedObject: destination) else {
@@ -201,17 +201,17 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         self.selectedDestinations.remove(destination)
     }
      
-    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.topSeparatorView.scrollViewDidScroll(scrollView: scrollView)
     }
 
     // MARK: - UIViewControllerTransitioningDelegate
     
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: false)
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return BlurEffectTransition(visualEffectView: blurView, crossfadingViews: [containerView], reverse: true)
     }
     
