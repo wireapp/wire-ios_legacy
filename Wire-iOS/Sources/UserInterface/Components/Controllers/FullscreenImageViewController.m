@@ -27,7 +27,6 @@
 
 // ui
 #import "IconButton.h"
-@import FLAnimatedImage;
 
 
 // helpers

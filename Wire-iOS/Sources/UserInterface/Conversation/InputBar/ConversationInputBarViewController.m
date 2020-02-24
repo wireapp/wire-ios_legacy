@@ -23,13 +23,10 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 
-#import "ConfirmAssetViewController.h"
-
 #import "Wire-Swift.h"
 
 
 #import "Settings.h"
-@import FLAnimatedImage;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

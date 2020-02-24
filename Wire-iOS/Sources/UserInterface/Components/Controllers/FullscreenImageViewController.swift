@@ -53,8 +53,7 @@ extension FullscreenImageViewController {
             
             if imageIsAnimatedGIF == true {
                 mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
-            } else if let imageData = imageData,
-                   let image = UIImage(data: imageData) {
+            } else if let image = imageData.map(UIImage.init) as? UIImage {
                 mediaAsset = image
             } else {
                 return
