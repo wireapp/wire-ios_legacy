@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -31,7 +30,7 @@ private extension UIImage {
 /// Shows a confirmation dialog after picking an image in UIImagePickerController. If the user accepts
 /// the image the imagePickedBlock is called.
 final class ImagePickerConfirmationController: NSObject {
-    var previewTitle: String? = nil
+    var previewTitle: String?
     @objc
     var imagePickedBlock: ((_ imageData: Data?) -> Void)?
 
@@ -42,7 +41,7 @@ final class ImagePickerConfirmationController: NSObject {
 
 extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         presentingPickerController = picker
 
         guard let imageFromInfo = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
@@ -71,7 +70,6 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
             confirmImageViewController.modalPresentationStyle = .fullScreen
             confirmImageViewController.previewTitle = previewTitle
 
-
             picker.present(confirmImageViewController, animated: true)
             picker.setNeedsStatusBarAppearanceUpdate()
 
@@ -86,5 +84,5 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
 }
 
 extension ImagePickerConfirmationController: UINavigationControllerDelegate {
-    
+
 }

@@ -21,16 +21,16 @@ import Foundation
 private let zmLog = ZMSLog(tag: "Drag and drop images")
 
 extension ConversationInputBarViewController: UIDropInteractionDelegate {
-    
+
     @available(iOS 11.0, *)
     public func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        
+
         for dragItem in session.items {
             dragItem.itemProvider.loadObject(ofClass: UIImage.self, completionHandler: { object, error in
-                
+
                 guard error == nil else { return zmLog.error("Failed to load dragged item: \(error!.localizedDescription)") }
                 guard let draggedImage = object as? UIImage else { return }
-                
+
                 DispatchQueue.main.async {
                     let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: draggedImage), onConfirm: { [unowned self] (editedImage: UIImage?) in
                         self.dismiss(animated: true) {
@@ -43,7 +43,6 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
                     }
                     )
 
-                    
                     let confirmImageViewController = ConfirmAssetViewController(context: context)
                     confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
                     confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
@@ -55,15 +54,15 @@ extension ConversationInputBarViewController: UIDropInteractionDelegate {
             break
         }
     }
-    
+
     @available(iOS 11.0, *)
     public func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
         return UIDropProposal(operation: .copy)
     }
-    
+
     @available(iOS 11.0, *)
     public func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return session.canLoadObjects(ofClass: UIImage.self)
     }
-    
+
 }
