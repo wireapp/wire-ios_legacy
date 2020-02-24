@@ -21,7 +21,7 @@ import Foundation
 import Cartography
 
 
-@objcMembers class ProfileClientViewController: UIViewController {
+final class ProfileClientViewController: UIViewController {
 
     let userClient: UserClient
     let contentView = UIView()
@@ -86,6 +86,10 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
