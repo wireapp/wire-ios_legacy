@@ -1641,6 +1641,7 @@
 "availability.available.placeholder" = "%@ is available";
 "availability.away.placeholder" = "%@ is away";
 "availability.busy.placeholder" = "%@ is busy";
+"availability.default.user_name.title" = "This person";
 
 "availability.reminder.away.title" = "You are set to Away";
 "availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
