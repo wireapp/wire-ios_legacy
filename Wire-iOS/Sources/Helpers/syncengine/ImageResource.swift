@@ -226,7 +226,7 @@ extension ImageSizeLimit {
 extension ImageResource {
     
     /// Fetch image data and calls the completion handler when it is available on the main queue.
-    func fetchImage(cache: ImageCache<UIImage> = NSObject.defaultImageCache,
+    func fetchImage(cache: ImageCache<AnyObject> = NSObject.defaultImageCache,
                     sizeLimit: ImageSizeLimit = .deviceOptimized,
                     completion: @escaping (_ image: MediaAsset?, _ cacheHit: Bool) -> Void) {
         
