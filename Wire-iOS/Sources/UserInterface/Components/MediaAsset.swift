@@ -53,7 +53,7 @@ extension MediaAssetView where Self: UIImageView {
         set {
             if newValue == nil {
                 image = nil
-            } else if newValue?.isGIF == true {
+            } else if newValue?.isGIF == false {
                 image = (newValue as? UIImage)?.downsized()
             }
         }
