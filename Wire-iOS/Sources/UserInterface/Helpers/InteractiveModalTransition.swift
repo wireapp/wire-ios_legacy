@@ -166,8 +166,12 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
+    override var childForStatusBarStyle: UIViewController? {
+        return viewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return viewController
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
