@@ -166,6 +166,14 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     private func setupViews(with viewController: UIViewController) {
         transitioningDelegate = self
         interactionController.setupWith(viewController: self)

@@ -85,9 +85,6 @@ final class CallWindowRootViewController: UIViewController {
 
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         view.window?.isHidden = false
-        super.present(viewControllerToPresent, animated: flag) {
-            completion?()
-            viewControllerToPresent.setNeedsStatusBarAppearanceUpdate()
-        }
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
 }

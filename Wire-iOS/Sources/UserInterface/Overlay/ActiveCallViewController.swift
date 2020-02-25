@@ -84,7 +84,7 @@ final class ActiveCallViewController : UIViewController {
     override var childForStatusBarHidden: UIViewController? {
         return visibleVoiceChannelViewController
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
