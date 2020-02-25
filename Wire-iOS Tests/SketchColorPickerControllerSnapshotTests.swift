@@ -53,7 +53,7 @@ final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState(){ ///TODO: test in all device width
         verify(view: sut.view)
     }
 }
