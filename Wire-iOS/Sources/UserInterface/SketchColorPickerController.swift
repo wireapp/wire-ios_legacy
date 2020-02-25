@@ -22,62 +22,60 @@ protocol SketchColorPickerControllerDelegate: class {
     func sketchColorPickerController(_ controller: SketchColorPickerController, changedSelectedColor color: UIColor)
 }
 
-
 private let zmLog = ZMSLog(tag: "FileManager")
-
 
 /// The color picker for the sketching
 
 final class SketchColorPickerController: UIViewController {
-    
+
     /// Used only as fallback in case no brush width is set
     private let SketchColorPickerDefaultBrushWidth: CGFloat = 6
-    
+
     weak var delegate: SketchColorPickerControllerDelegate?
     var sketchColors: [UIColor] = [] {
         didSet {
             if sketchColors == oldValue {
                 return
             }
-            
+
             resetColorToBrushWidthMapper()
-            
+
             colorsCollectionView.reloadData()
             colorsCollectionView.selectItem(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: [])
         }
     }
-    
+
     /// Constains CGFloats. Default is 6, 12, 18
     private var brushWidths: [CGFloat] = [6, 12, 18] {
         didSet {
             if brushWidths == oldValue {
                 return
             }
-            
+
             resetColorToBrushWidthMapper()
         }
     }
-    
+
     var selectedColorIndex: Int = 0 {
         didSet {
             colorsCollectionView.selectItem(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: [])
-            
+
             delegate?.sketchColorPickerController(self, changedSelectedColor: selectedColor)
         }
     }
-    
+
     /// Read only: Use the selectedColorIndex to change the selected color
     private var selectedColor: UIColor {
         assert(sketchColors.indices.contains(selectedColorIndex), "Colors out of bounds")
-        
+
         return sketchColors[selectedColorIndex]
     }
-    
-    private var colorToBrushWidthMapper: [UIColor : CGFloat]?
+
+    private var colorToBrushWidthMapper: [UIColor: CGFloat]?
     private lazy var colorsCollectionView: UICollectionView = {
         return UICollectionView(frame: .zero, collectionViewLayout: colorsCollectionViewLayout)
     }()
-    
+
     private var colorsCollectionViewLayout: UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = CGSize(width: 44, height: 40)
@@ -86,111 +84,110 @@ final class SketchColorPickerController: UIViewController {
         flowLayout.minimumLineSpacing = 0
         return flowLayout
     }
-    
+
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setUpColorsCollectionView()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         colorsCollectionViewLayout.invalidateLayout()
     }
-    
+
     private func resetColorToBrushWidthMapper() {
         let brushWidth = brushWidths.first ?? SketchColorPickerDefaultBrushWidth
-        
-        var colorToBrushWidthMapper: [UIColor : CGFloat] = [:]
+
+        var colorToBrushWidthMapper: [UIColor: CGFloat] = [:]
         for color in sketchColors {
             colorToBrushWidthMapper[color] = brushWidth
         }
-        
+
         self.colorToBrushWidthMapper = colorToBrushWidthMapper
         selectedColorIndex = 0
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         coordinator.animate(alongsideTransition: { context in
             self.colorsCollectionViewLayout.invalidateLayout()
         })
     }
-    
+
     /// Returns the current brush width for the given color
     func brushWidth(for color: UIColor?) -> CGFloat {
         guard let color = color else {
             zmLog.error("Returning fallback brush for unset color key")
             return SketchColorPickerDefaultBrushWidth
         }
-        
+
         return colorToBrushWidthMapper?[color] ?? 0
     }
-    
-    func bumpBrushWidth(for color: UIColor?) -> CGFloat { ///TODO: test
+
+    private func bumpBrushWidth(for color: UIColor?) -> CGFloat {
         let count = brushWidths.count
         guard let color = color,
             let currentValue: CGFloat = colorToBrushWidthMapper?[color] else {
                 return SketchColorPickerDefaultBrushWidth
         }
-        
+
         var index: Int? = nil
         index = brushWidths.firstIndex(of: currentValue) ?? NSNotFound
-        
+
         let nextIndex = ((index ?? 0) + 1) % count
         let nextValue = brushWidths[nextIndex]
         colorToBrushWidthMapper?[color] = nextValue
-        
+
         return nextValue
     }
-    
-    func setUpColorsCollectionView() {
+
+    private func setUpColorsCollectionView() {
         colorsCollectionView.showsHorizontalScrollIndicator = false
         colorsCollectionView.backgroundColor = .from(scheme: .background)
         view.addSubview(colorsCollectionView)
-        
+
         colorsCollectionView.register(SketchColorCollectionViewCell.self, forCellWithReuseIdentifier: "SketchColorCollectionViewCell")
         colorsCollectionView.dataSource = self
         colorsCollectionView.delegate = self
-        
+
         colorsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         colorsCollectionView.fitInSuperview()
     }
 }
-
 
 extension SketchColorPickerController: UICollectionViewDataSource, UICollectionViewDelegate {
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return colorToBrushWidthMapper?.count ?? 0
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
+
     // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let color = sketchColors[indexPath.row]
         let brushWidth: CGFloat = colorToBrushWidthMapper?[color] ?? SketchColorPickerDefaultBrushWidth
-        
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SketchColorCollectionViewCell", for: indexPath) as? SketchColorCollectionViewCell
         cell?.sketchColor = color
         cell?.brushWidth = brushWidth
-        
+
         return cell!
     }
-    
+
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let color = sketchColors[indexPath.row]
@@ -200,28 +197,28 @@ extension SketchColorPickerController: UICollectionViewDataSource, UICollectionV
             let cell = collectionView.cellForItem(at: indexPath) as? SketchColorCollectionViewCell
             cell?.brushWidth = brushWidth
         }
-        
+
         selectedColorIndex = sketchColors.firstIndex(of: color) ?? NSNotFound
     }
-    
+
     private var contentWidth: CGFloat {
         return numberOfItems * colorsCollectionViewLayout.itemSize.width + (max(numberOfItems - 1, 0)) * colorsCollectionViewLayout.minimumInteritemSpacing
     }
-    
+
     private var frameWidth: CGFloat {
         return colorsCollectionView.frame.size.width
     }
-    
+
     private var numberOfItems: CGFloat {
         return CGFloat(sketchColors.count)
     }
-    
+
     private var allItemsAreIncluded: Bool {
         return contentWidth < frameWidth
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         if allItemsAreIncluded {
             // All items are included, just use the default item box
             return colorsCollectionViewLayout.itemSize
@@ -234,15 +231,15 @@ extension SketchColorPickerController: UICollectionViewDataSource, UICollectionV
         let leftOver = frameWidth - numberOfItemsVisible * itemWidth + itemWidth / 2.0
         return CGSize(width: colorsCollectionViewLayout.itemSize.width + (leftOver / numberOfItemsVisible), height: colorsCollectionViewLayout.itemSize.height)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        
+
         if allItemsAreIncluded {
             // Align content in center of frame
             let horizontalInset = frameWidth - contentWidth
             return UIEdgeInsets(top: 0, left: horizontalInset / 2, bottom: 0, right: horizontalInset / 2)
         }
-        
+
         return .zero
     }
 }
