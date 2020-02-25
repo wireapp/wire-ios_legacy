@@ -1382,7 +1382,7 @@
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
 "login.sso.start_error_title" = "Cannot Start Enterprise Login";
-"login.sso.link_error_message" = "The enterprise login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "Please check your Internet connection and try again.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
