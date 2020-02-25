@@ -1638,9 +1638,6 @@
 "availability.available" = "Alınabilir";
 "availability.away" = "Uzakta";
 "availability.busy" = "Meşgul";
-"availability.available.placeholder" = "%@ müsait";
-"availability.away.placeholder" = "%@ uzakta";
-"availability.busy.placeholder" = "%@ meşgul";
 
 "availability.reminder.away.title" = "Uzakta olarak ayarlandınız";
 "availability.reminder.away.message" = "Diğer insanlara Uzakta olarak görüneceksiniz. Gelen aramalar veya mesajlar hakkında bildirim almayacaksınız.";

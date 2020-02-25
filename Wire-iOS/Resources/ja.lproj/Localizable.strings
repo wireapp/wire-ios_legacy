@@ -1638,9 +1638,6 @@
 "availability.available" = "利用できます";
 "availability.away" = "不在";
 "availability.busy" = "取り込み中";
-"availability.available.placeholder" = "%@ が利用可能です。";
-"availability.away.placeholder" = "%@ は退席しています";
-"availability.busy.placeholder" = "%@ は取り込み中です";
 
 "availability.reminder.away.title" = "不在に設定しました";
 "availability.reminder.away.message" = "他の人によってあなたが不在に設定されました。通話着信やメッセージに関する通知は受信されません。";

@@ -1638,9 +1638,6 @@
 "availability.available" = "Disponível";
 "availability.away" = "Ausente";
 "availability.busy" = "Ocupado";
-"availability.available.placeholder" = "%@ está disponível";
-"availability.away.placeholder" = "%@ está ausente";
-"availability.busy.placeholder" = "%@ está ocupado";
 
 "availability.reminder.away.title" = "Você está definido como Ausente";
 "availability.reminder.away.message" = "Você aparecerá como Ausente para outras pessoas. Você não receberá notificações sobre quaisquer chamadas ou mensagens recebidas.";

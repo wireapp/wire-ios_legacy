@@ -1638,9 +1638,6 @@
 "availability.available" = "在线";
 "availability.away" = "离开";
 "availability.busy" = "忙碌";
-"availability.available.placeholder" = "%@ 在线";
-"availability.away.placeholder" = "%@ 离开";
-"availability.busy.placeholder" = "%@ 正忙";
 
 "availability.reminder.away.title" = "您设置为离开";
 "availability.reminder.away.message" = "您将对其他人显示为离开。您将不会收到任何电话或消息的通知。";

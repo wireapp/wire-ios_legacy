@@ -1638,9 +1638,6 @@
 "availability.available" = "Prisijungęs";
 "availability.away" = "Pasišalinęs";
 "availability.busy" = "Užsiėmęs";
-"availability.available.placeholder" = "%@ yra prisijungęs";
-"availability.away.placeholder" = "%@ yra pasišalinęs";
-"availability.busy.placeholder" = "%@ yra užsiėmęs";
 
 "availability.reminder.away.title" = "Pasišalinote";
 "availability.reminder.away.message" = "Kiti žmonės matys jus kaip pasišalinusį. Negausite perspėjimų apie skambučius ir žinutes.";

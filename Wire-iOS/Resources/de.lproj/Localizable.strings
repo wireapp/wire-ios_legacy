@@ -1638,9 +1638,6 @@
 "availability.available" = "Verfügbar";
 "availability.away" = "Abwesend";
 "availability.busy" = "Beschäftigt";
-"availability.available.placeholder" = "%@ ist verfügbar";
-"availability.away.placeholder" = "%@ ist abwesend";
-"availability.busy.placeholder" = "%@ ist beschäftigt";
 
 "availability.reminder.away.title" = "Status: Abwesend";
 "availability.reminder.away.message" = "Andere sehen den Status als Abwesend. Benachrichtigungen über eingehende Anrufe oder Nachrichten werden nicht angezeigt.";

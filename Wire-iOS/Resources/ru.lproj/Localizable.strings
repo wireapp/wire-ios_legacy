@@ -1638,9 +1638,6 @@
 "availability.available" = "Доступен";
 "availability.away" = "Отошел";
 "availability.busy" = "Занят";
-"availability.available.placeholder" = "%@ доступен";
-"availability.away.placeholder" = "%@ отошел";
-"availability.busy.placeholder" = "%@ занят";
 
 "availability.reminder.away.title" = "Вы установили 'Отошел'";
 "availability.reminder.away.message" = "Для других пользователей будет отображаться статус 'Отошел'. Вы не будете получать уведомления о любых входящих звонках или сообщениях.";
