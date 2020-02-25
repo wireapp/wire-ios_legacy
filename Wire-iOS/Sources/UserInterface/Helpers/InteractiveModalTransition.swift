@@ -158,6 +158,7 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         super.init(nibName: nil, bundle: nil)
         setupViews(with: viewController)
         createConstraints()
+        modalPresentationCapturesStatusBarAppearance = true
     }
     
     @available(*, unavailable)
