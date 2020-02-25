@@ -58,11 +58,13 @@ final class SketchColorPickerControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-//    func testForColorBumped() {
-//        //GIVEN & WHEN
-//        sut.collectionView(sut, didSelectItemAt: IndexPath(item: 1, section: 0))
-//        
-//        //THEN
-//        verify(matching: sut)
-//    }
+    func testForColorButtonBumpedThreeTimes() {
+        //GIVEN & WHEN
+        for _ in 1...3 {
+            sut.collectionView(sut.colorsCollectionView, didSelectItemAt: IndexPath(item: 1, section: 0))
+        }
+
+        //THEN
+        verify(matching: sut)
+    }
 }
