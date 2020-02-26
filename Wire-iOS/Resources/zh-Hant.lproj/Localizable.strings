@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "確認";
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麥克風權限。";
-"voice.alert.microphone_warning.explanation" = "請前往手機「設定」並允許Wire使用麥克風權限。";
 
 "voice.alert.camera_warning.title" = "Wire需要相機權限。";
-"voice.alert.camera_warning.explanation" = "請前往手機「設定」並允許Wire使用相機權限。";
 
 "voice.top_overlay.tap_to_return" = "點擊返回通話";
 "voice.top_overlay.accessibility_title" = "通話中";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "進階";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "無法開始公司登錄";
-"login.sso.link_error_message" = "您按下的公司登錄連結無效。請與管理員聯繫以解決此問題。";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "請檢查您的網路連線，然後重試。";
 "login.sso.error.alert.message" = "請與工作組管理員聯繫(錯誤 %@)。";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "您太久沒使用Wire。請重新登入。";
 "signin_logout.email.subheadline" = "您太久沒使用Wire。輸入您的電子郵件地址和密碼以繼續。";
 "signin_logout.phone.subheadline" = "您太久沒使用Wire。輸入您的電話號碼以繼續。";
-"signin_logout.sso.subheadline" = "您太久沒使用Wire。使用您的公司帳戶登錄以繼續。";
-"signin_logout.sso.buton" = "公司登錄";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
 
 "signin.email.missing_password.subtitle" = "請輸入您的電郵地址及密碼以繼續。";
 "signin.phone.missing_password.subtitle" = "輸入您的電話號碼以繼續。";

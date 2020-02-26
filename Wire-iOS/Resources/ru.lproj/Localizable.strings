@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необходим доступ к микрофону.";
-"voice.alert.microphone_warning.explanation" = "Включите его в настройках Wire.";
 
 "voice.alert.camera_warning.title" = "Wire необходим доступ к камере.";
-"voice.alert.camera_warning.explanation" = "Перейдите в Настройки и разрешите Wire доступ к камере.";
 
 "voice.top_overlay.tap_to_return" = "Нажмите, чтобы вернуться к вызову";
 "voice.top_overlay.accessibility_title" = "Текущий вызов";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
+"self.settings.advanced.debugging_tools.title" = "Средства отладки";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Найти первую непрочитанную беседу";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает поддержке Wire диагностировать проблемы с вызовами и улучшать опыт использования приложения.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email или код доступа SSO";
 "login.sso.alert.text_field.placeholder.sso_only" = "Код доступа SSO";
 
-"login.sso.start_error_title" = "Не удается авторизоваться при входе для компании";
-"login.sso.link_error_message" = "Ссылка входа для компаний, на которую вы нажали, недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
+"login.sso.start_error_title" = "Не удается запустить корпоративную авторизацию";
+"login.sso.link_error_message" = "Эта ссылка недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
 
 "login.sso.error.offline.alert.message" = "Пожалуйста, проверьте подключение к интернету и повторите попытку.";
 "login.sso.error.alert.message" = "Пожалуйста, свяжитесь с администратором вашей команды (ошибка %@).";
@@ -1392,7 +1392,7 @@
 "login.sso.error.alert.invalid_format.message.sso_only" = "Пожалуйста, введите действительный код доступа SSO";
 "login.sso.error.alert.invalid_format.message.sso_and_email" = "Пожалуйста, введите действительный email или код доступа SSO";
 "login.sso.error.alert.domain_not_registered.message" = "Этот email не может быть использован при авторизации организации. Пожалуйста, введите код SSO для продолжения.";
-"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Этот email связан с другим сервером, при этом приложение одновременно может быть подключено только к одному серверу. Пожалуйста, выйдите из всех учетных записей Wire на этом устройстве и попробуйте войти снова.";
 "login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
 
 
@@ -1476,7 +1476,7 @@
 "signin_logout.email.subheadline" = "Ваш сеанс истек. Введите адрес электронной почты и пароль, чтобы продолжить.";
 "signin_logout.phone.subheadline" = "Ваш сеанс истек. Введите номер телефона, чтобы продолжить.";
 "signin_logout.sso.subheadline" = "Ваш сеанс истек. Войдите, используя свой корпоративный аккаунт.";
-"signin_logout.sso.buton" = "Вход для компаний";
+"signin_logout.sso.buton" = "Вход для организаций";
 
 "signin.email.missing_password.subtitle" = "Для продолжения введите адрес электронной почты и пароль.";
 "signin.phone.missing_password.subtitle" = "Для продолжения введите номер телефона.";
@@ -1701,11 +1701,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "Это сообщение никому еще не понравилось.";
+"message_details.empty_likes" = "Это сообщение никому пока не понравилось.";
 "message_details.empty_read_receipts" = "Сообщение еще никем не прочитано.";
 "message_details.read_receipts_disabled" = "Отчетов о прочтении не существовало, когда это сообщение было отправлено.";
 "message_details.combined_title" = "Сведения о сообщении";
-"message_details.likes_title" = "Нравится";
+"message_details.likes_title" = "Понравилось";
 "message_details.receipts_title" = "Прочитано";
 "message_details.tabs.seen" = "Прочитано (%d)";
 "message_details.tabs.likes" = "Понравилось (%d)";
@@ -1733,7 +1733,7 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "В ожидании принятия.";
 "legalhold_request.alert.title" = "Запрошена правовая защита";
-"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nЭто включает удаленные, отредактированные и синхронизированные сообщения во всех беседах.";
+"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nСюда входят удаленные, отредактированные и синхронизированные сообщения во всех беседах.";
 "legalhold_request.alert.detail.enter_password" = "Введите пароль для подтверждения.";
 "legalhold_request.alert.error_wrong_password" = "Неверный пароль";
 

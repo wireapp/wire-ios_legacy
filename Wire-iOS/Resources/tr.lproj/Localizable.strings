@@ -81,7 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Sonuç yok.";
 "peoplepicker.no_matching_results_message" = "Tam bir e-posta adresi giriniz.";
-"peoplepicker.no_search_results" = "No matching results. Try entering a different name.";
+"peoplepicker.no_search_results" = "Eşleşen sonuç yok. Başka bir isim girmeyi deneyin.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Davet gönder";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kişileri paylaş";
@@ -192,14 +192,14 @@
 
 // Folders
 
-"folder.creation.name.title" = "Create new folder";
+"folder.creation.name.title" = "Yeni klasör oluştur";
 "folder.creation.name.button.create" = "Oluştur";
-"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
-"folder.creation.name.footer" = "Maximum 64 characters";
-"folder.creation.name.placeholder" = "Folder name";
+"folder.creation.name.header" = "\"%@\" görüşmesini yeni bir klasöre taşıyın.";
+"folder.creation.name.footer" = "En fazla 64 karakter";
+"folder.creation.name.placeholder" = "Klasör adı";
 
-"folder.picker.title" = "Move to";
-"folder.picker.empty.hint" = "Create a new folder by pressing the + button";
+"folder.picker.title" = "Şuraya taşı";
+"folder.picker.empty.hint" = "+ düğmesine basarak yeni bir klasör oluşturun";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++x
 // In-app notifications (chat heads)
@@ -221,8 +221,8 @@
 
 "list.section.groups" = "Gruplar";
 "list.section.contacts" = "İnsanlar";
-"list.section.requests" = "Requests";
-"list.section.favorites" = "Favorites";
+"list.section.requests" = "İstekler";
+"list.section.favorites" = "Favoriler";
 
 "conversation.voiceover.verified" = "onaylanmış";
 "conversation.voiceover.legalhold" = "kanuni durdurma";
@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "TAMAM";
 
 "voice.alert.microphone_warning.title" = "Wire'ın mikrofona erişmesi gerek.";
-"voice.alert.microphone_warning.explanation" = "Wire Ayarları'ndan etkinleştirin.";
 
 "voice.alert.camera_warning.title" = "Wire'ın kameraya erişmesi gerek.";
-"voice.alert.camera_warning.explanation" = "Kameraya ulaşmak için Ayarlara gidip Wire'ı etkinleştirin.";
 
 "voice.top_overlay.tap_to_return" = "Aramaya dönmek için dokunun";
 "voice.top_overlay.accessibility_title" = "Devam eden arama";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Gelişmiş";
 "self.settings.advanced.troubleshooting.title" = "Sorun giderme";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Hata Ayıklama Raporu";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Bu bilgi, Wire Desteği arama sorunlarını tanılamanıza ve genel uygulama deneyimini geliştirmenize yardımcı olur.";
 "self.settings.advanced.reset_push_token.title" = "Bildirim Sıfırlama Belirteci";
 "self.settings.advanced.reset_push_token.subtitle" = "Eğer anlık bildirimler ile sorun yaşıyorsanız, Wire Destek sizden jetonu sıfırlamanızı isteyebilir.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "Şirket Girişi Başlatılamıyor";
-"login.sso.link_error_message" = "Tıkladığınız şirket giriş bağlantısı geçerli değil. Lütfen sorunu çözmek için yöneticinize başvurun.";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "Lütfen internet bağlantınızı kontrol edin ve yeniden deneyin.";
 "login.sso.error.alert.message" = "Lütfen ayrıntılar için takım yöneticinize başvurun (hata %@).";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "Oturumunuzun süresi doldu. Devam etmek için tekrar giriş yapmanız gerekiyor.";
 "signin_logout.email.subheadline" = "Oturumunuzun süresi doldu. Devam etmek için e-posta adresinizi ve şifrenizi girin.";
 "signin_logout.phone.subheadline" = "Oturumunuzun süresi doldu. Devam etmek için telefon numaranızı girin.";
-"signin_logout.sso.subheadline" = "Oturumunuzun süresi doldu. Devam etmek için şirket hesabınızla giriş yapın.";
-"signin_logout.sso.buton" = "Şirket olarak giriş yapın";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
 
 "signin.email.missing_password.subtitle" = "Devam etmek için e-posta adresinizi ve şifrenizi girin.";
 "signin.phone.missing_password.subtitle" = "Devam etmek için telefon numaranızı girin.";
