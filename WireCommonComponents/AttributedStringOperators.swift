@@ -187,7 +187,7 @@ extension PointOfView: CustomStringConvertible {
 public extension String {
     
     /// Returns the NSLocalizedString version of self
-    var localized: String {
+    var localized: String { ///TODO: new file
         return NSLocalizedString(self, comment: "")
     }
     
