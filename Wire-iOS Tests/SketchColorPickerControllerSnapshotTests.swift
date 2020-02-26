@@ -58,8 +58,8 @@ final class SketchColorPickerControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testForAllItemsVisible() {
-        sut.view.frame = CGRect(x: 0, y: 0, width: 500, height: 48)
+    func testForAllItemsAreVisible() {
+        sut.view.frame = CGRect(x: 0, y: 0, width: 768, height: 48)
         verify(matching: sut)
     }
 
