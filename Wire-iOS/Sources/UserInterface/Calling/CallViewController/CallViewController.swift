@@ -130,7 +130,7 @@ final class CallViewController: UIViewController {
         setupApplicationStateObservers()
         updateIdleTimer()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         proximityMonitorManager?.stopListening()
@@ -160,6 +160,10 @@ final class CallViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return !isOverlayVisible
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     @objc private func resumeVideoIfNeeded() {
