@@ -132,21 +132,18 @@ public class IconButton: ButtonWithLargerHitArea {
     // MARK: - Observing state
     override public var isHighlighted: Bool {
         didSet {
-            priorState = state
             updateForNewStateIfNeeded()
         }
     }
     
     override public var isSelected: Bool {
         didSet {
-            priorState = state
             updateForNewStateIfNeeded()
         }
     }
     
     override public var isEnabled: Bool {
         didSet {
-            priorState = state
             updateForNewStateIfNeeded()
         }
     }
