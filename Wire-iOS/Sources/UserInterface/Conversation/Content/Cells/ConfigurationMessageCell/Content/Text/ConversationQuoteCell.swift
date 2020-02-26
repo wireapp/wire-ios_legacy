@@ -18,8 +18,9 @@
 
 import UIKit
 import Down
+import WireCommonComponents
 
-class ConversationReplyContentView: UIView {
+final class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
 
     struct Configuration {

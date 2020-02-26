@@ -20,6 +20,8 @@
  * A user image view that can display a badge on top for different connection states.
  */
 
+import WireCommonComponents
+
 @objc
 final class BadgeUserImageView: UserImageView {
 

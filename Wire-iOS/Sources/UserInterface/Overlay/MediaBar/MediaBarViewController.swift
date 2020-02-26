@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 final class MediaBarViewController: UIViewController {
     private var mediaPlaybackManager: MediaPlaybackManager?

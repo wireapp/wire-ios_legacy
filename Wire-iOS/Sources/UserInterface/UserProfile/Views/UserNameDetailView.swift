@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+ import WireCommonComponents
 
 
 fileprivate let smallLightFont = FontSpec(.small, .light).font!

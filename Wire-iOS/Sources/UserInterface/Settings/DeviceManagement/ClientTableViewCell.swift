@@ -21,6 +21,7 @@ import UIKit
 import Cartography
 import CoreLocation
 import Contacts
+import WireCommonComponents
 
 class ClientTableViewCell: UITableViewCell {
     

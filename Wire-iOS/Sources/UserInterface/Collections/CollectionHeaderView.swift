@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import WireCommonComponents
 
 final class CollectionHeaderView: UICollectionReusableView {
     

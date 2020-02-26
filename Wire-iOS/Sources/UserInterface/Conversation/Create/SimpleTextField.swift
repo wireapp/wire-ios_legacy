@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 protocol SimpleTextFieldDelegate: class {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)

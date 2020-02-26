@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 extension String {
     func nsRange(from range: Range<String.Index>) -> NSRange {

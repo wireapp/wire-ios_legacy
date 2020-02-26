@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireCommonComponents
 
 final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController

@@ -17,6 +17,7 @@
 //
 
 import Cartography
+import WireCommonComponents
 
 @objc public enum EditButtonType: UInt {
     case undo, confirm, cancel

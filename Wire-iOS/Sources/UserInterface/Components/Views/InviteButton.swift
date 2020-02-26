@@ -18,10 +18,11 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 final class InviteButton: IconButton {
     init(variant: ColorSchemeVariant = ColorScheme.default.variant) {
-        super.init(frame: .zero)
+        super.init() ///TODO: no param
         
         setTitleColor(UIColor.from(scheme: .textForeground, variant: variant), for: .normal)
         adjustsTitleWhenHighlighted = true
@@ -31,9 +32,5 @@ final class InviteButton: IconButton {
         
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         layer.cornerRadius = 4
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

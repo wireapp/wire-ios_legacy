@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon? = nil {

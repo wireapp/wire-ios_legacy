@@ -20,6 +20,7 @@
 import Foundation
 import SafariServices
 import AppCenterCrashes
+import WireCommonComponents
 
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"

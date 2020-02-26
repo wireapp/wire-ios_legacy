@@ -19,8 +19,8 @@
 
 import UIKit
 import Cartography
-
 import Down
+import WireCommonComponents
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {

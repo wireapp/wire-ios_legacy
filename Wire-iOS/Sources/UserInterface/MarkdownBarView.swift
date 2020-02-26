@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import Down
+import WireCommonComponents
 
 protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)

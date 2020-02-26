@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireCommonComponents
 
-class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
+final class ConversationAudioMessageCell: RoundedView, ConversationMessageCell {
     
     struct Configuration {
         let message: ZMConversationMessage

@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 protocol ParticipantDeviceHeaderViewDelegate: class {
     func participantsDeviceHeaderViewDidTapLearnMore(_ headerView: ParticipantDeviceHeaderView)

@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import WireCommonComponents
 
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)

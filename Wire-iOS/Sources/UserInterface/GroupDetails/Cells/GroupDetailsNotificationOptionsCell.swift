@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireCommonComponents
 
-class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
+final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
     
     override func setUp() {
         super.setUp()

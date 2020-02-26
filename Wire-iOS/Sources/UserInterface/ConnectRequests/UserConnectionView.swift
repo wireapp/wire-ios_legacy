@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import WireCommonComponents
 
 public final class UserConnectionView: UIView, Copyable {
     

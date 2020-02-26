@@ -19,6 +19,7 @@
 import UIKit
 import Foundation
 import WireSyncEngine
+import WireCommonComponents
 
 final class BackupStatusCell: UITableViewCell {
     let descriptionLabel = UILabel()

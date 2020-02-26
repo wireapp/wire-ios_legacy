@@ -17,7 +17,7 @@
 //
 
 import UIKit
-
+import WireCommonComponents
 
 class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
 

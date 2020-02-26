@@ -20,6 +20,7 @@
 
 import Foundation
 import MobileCoreServices
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 

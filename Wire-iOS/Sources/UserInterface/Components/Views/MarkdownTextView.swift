@@ -19,6 +19,7 @@
 import Foundation
 import MobileCoreServices
 import Down
+import WireCommonComponents
 
 extension Notification.Name {
     static let MarkdownTextViewDidChangeActiveMarkdown = Notification.Name("MarkdownTextViewDidChangeActiveMarkdown")

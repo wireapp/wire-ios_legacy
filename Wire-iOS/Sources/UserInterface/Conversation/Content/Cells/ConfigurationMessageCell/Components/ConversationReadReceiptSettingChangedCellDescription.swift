@@ -17,7 +17,7 @@
 //
 
 import Foundation
-
+import WireCommonComponents
 
 struct ReadReceiptViewModel {
     let icon: StyleKitIcon

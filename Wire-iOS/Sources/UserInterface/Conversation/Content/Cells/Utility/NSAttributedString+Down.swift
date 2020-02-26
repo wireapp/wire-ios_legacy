@@ -18,6 +18,7 @@
 
 import Foundation
 import Down
+import WireCommonComponents
 
 extension NSMutableAttributedString {
     

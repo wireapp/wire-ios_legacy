@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireCommonComponents
 
 final class ZClientViewController: UIViewController {
     private(set) var conversationRootViewController: UIViewController?
