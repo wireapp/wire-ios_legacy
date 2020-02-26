@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "Verstanden";
 
 "voice.alert.microphone_warning.title" = "Wire benötigt Zugriff auf dein Mikrofon.";
-"voice.alert.microphone_warning.explanation" = "Aktiviere es in den Wire-Einstellungen.";
 
 "voice.alert.camera_warning.title" = "Wire benötigt Zugriff auf die Kamera.";
-"voice.alert.camera_warning.explanation" = "Gehe zu den Einstellungen und erlaube Wire Zugriff auf die Kamera.";
 
 "voice.top_overlay.tap_to_return" = "Zum Anruf zurückkehren";
 "voice.top_overlay.accessibility_title" = "Aktiver Anruf";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht";
+"self.settings.advanced.debugging_tools.title" = "Tools zur Fehlerbehebung";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Erste ungelesene Unterhaltung finden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Die Informationen helfen dem Support bei der Diagnose von Anrufproblemen und die App zu verbessern.";
 "self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "E-Mail-Adresse oder SSO-Code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO Zugangscode";
 
-"login.sso.start_error_title" = "Login kann nicht gestartet werden";
-"login.sso.link_error_message" = "Der angeklickte Link zum Login ist nicht gültig. Um das Problem zu lösen, bitte an den Administrator wenden.";
+"login.sso.start_error_title" = "Problem bei der Anmeldung für Unternehmen";
+"login.sso.link_error_message" = "Dieser Link ist nicht gültig. Bitte kontaktieren Sie Ihren Administrator, um das Problem zu beheben.";
 
 "login.sso.error.offline.alert.message" = "Bitte Internetverbindung überprüfen und nochmal versuchen.";
 "login.sso.error.alert.message" = "Bitte für Details an den Team-Administrator wenden (Fehler %@).";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte erneut einloggen.";
 "signin_logout.email.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte E-Mail-Adresse und Passwort eingeben.";
 "signin_logout.phone.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte Telefonnummer eingeben.";
-"signin_logout.sso.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte mit dem Konto des Unternehmens einloggen.";
-"signin_logout.sso.buton" = "Login für Unternehmen";
+"signin_logout.sso.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte mit dem Konto des Unternehmens anmelden.";
+"signin_logout.sso.buton" = "Anmeldung für Unternehmen";
 
 "signin.email.missing_password.subtitle" = "Um fortzufahren, bitte E-Mail-Adresse und Passwort eingeben.";
 "signin.phone.missing_password.subtitle" = "Um fortzufahren, bitte Telefonnummer eingeben.";

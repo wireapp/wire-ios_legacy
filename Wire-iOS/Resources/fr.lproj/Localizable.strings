@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire a besoin d’accéder au micro.";
-"voice.alert.microphone_warning.explanation" = "Autorisez l'accès dans les paramètres de Wire.";
 
 "voice.alert.camera_warning.title" = "Wire a besoin d’accéder à l'appareil photo.";
-"voice.alert.camera_warning.explanation" = "Allez dans les paramètres et autorisez Wire à accéder à l'appareil photo.";
 
 "voice.top_overlay.tap_to_return" = "Cliquez pour revenir à l'appel";
 "voice.top_overlay.accessibility_title" = "Appel en cours";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Avancé";
 "self.settings.advanced.troubleshooting.title" = "Dépannage";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Rapport d'erreur";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Cette information aide Wire à identifier les problèmes d'appel et à améliorer l'experience globale de l'application.";
 "self.settings.advanced.reset_push_token.title" = "Réinitialiser le jeton des notifications Push";
 "self.settings.advanced.reset_push_token.subtitle" = "Si vous rencontrez des problèmes avec les notifications push, l'assistance de Wire peut vous demander de réinitialiser ce jeton.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "e-mail ou code d'accès SSO";
 "login.sso.alert.text_field.placeholder.sso_only" = "Code d’accès SSO";
 
-"login.sso.start_error_title" = "Connexion Entreprise Impossible";
-"login.sso.link_error_message" = "Le lien de connexion de votre entreprise n'est pas valide. Veuillez contacter votre administrateur pour résoudre le problème.";
+"login.sso.start_error_title" = "Impossible de démarrer la connexion entreprise";
+"login.sso.link_error_message" = "Ce lien n'est pas valide. Veuillez contacter votre administrateur pour résoudre ce problème.";
 
 "login.sso.error.offline.alert.message" = "Vérifiez votre connexion Internet et réessayez.";
 "login.sso.error.alert.message" = "Contactez votre administrateur informatique pour plus de détails (erreur %@).";
@@ -1476,7 +1476,7 @@
 "signin_logout.email.subheadline" = "Votre session a expiré. Entrez votre adresse email et votre mot de passe pour continuer.";
 "signin_logout.phone.subheadline" = "Votre session a expiré. Entrez votre numéro de téléphone de continuer.";
 "signin_logout.sso.subheadline" = "Votre session a expiré. Connectez-vous avec votre compte entreprise pour continuer.";
-"signin_logout.sso.buton" = "Connexion d'entreprise";
+"signin_logout.sso.buton" = "Connection Entreprise";
 
 "signin.email.missing_password.subtitle" = "Entrez votre adresse email et votre mot de passe pour continuer.";
 "signin.phone.missing_password.subtitle" = "Entrez votre numéro de téléphone pour continuer.";

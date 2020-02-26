@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "GERAI";
 
 "voice.alert.microphone_warning.title" = "„Wire“ būtina prieiga prie mikrofono.";
-"voice.alert.microphone_warning.explanation" = "Aktyvuokite „Wire“ nustatymuose.";
 
 "voice.alert.camera_warning.title" = "Wire reikalingas priėjimas prie kameros.";
-"voice.alert.camera_warning.explanation" = "Eikite į nustatymus ir leiskite „Wire“ naudoti kamerą.";
 
 "voice.top_overlay.tap_to_return" = "Bakstelėję grįšite į skambutį";
 "voice.top_overlay.accessibility_title" = "Vykstantis skambutis";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Papildomi";
 "self.settings.advanced.troubleshooting.title" = "Nesklandumų sprendimas";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Derinimo ataskaita";
+"self.settings.advanced.debugging_tools.title" = "Derinimo įrankiai";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Ši informacija padeda „Wire“ pagalbos centrui aptikti skambinimo nesklandumus ir pagerinti bendrą programėlės veikimą.";
 "self.settings.advanced.reset_push_token.title" = "Sukurti naują pranešimų atpažinimo ženklą";
 "self.settings.advanced.reset_push_token.subtitle" = "Jei susiduriate su naujienų pranešimo tarnybos nesklandumais, „Wire“ pagalbos centras gali paprašyti nustatyti atpažinimo ženklą iš naujo.";
@@ -1229,16 +1229,16 @@
 // Landing screen
 
 "landing.header" = "„Wire“. Pridėkite paskyrą.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Jus sveikina „%@“";
+"landing.create_account.title" = "Kurti paskyrą";
 "landing.create_account.subtitle" = "Saugiai bendraukite su draugų grupėmis\U00A0ir\U00A0šeima";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Saugus bendradarbiavimas verslui, institucijoms ir profesionalioms\U00A0organizacijoms";
 "landing.login.hints" = "Jau turite paskyrą?";
 "landing.login.button.title" = "Prisijungti";
-"landing.login.email.button.title" = "Log in with email";
-"landing.login.enterprise.button.title" = "Enterprise log in";
-"landing.login.sso.button.title" = "Log in with SSO";
+"landing.login.email.button.title" = "Prisijungti el. paštu";
+"landing.login.enterprise.button.title" = "Įmonės prisijungimas";
+"landing.login.sso.button.title" = "Prisijungti naudojant SSO";
 
 "landing.custom_backend.title" = "Prisijungta prie „%@“";
 "landing.custom_backend.more_info.button.title" = "Rodyti daugiau";
@@ -1374,25 +1374,25 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Ši atsarginė kopija buvo sukurta naudojant arba naujesnę arba senesnę „Wire“ versiją, ir negali būti naudojama atkūrimui.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
-"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.title" = "Įmonės prisijungimas";
+"login.sso.alert.message.sso_and_email" = "Įrašykite savo el. pašto adresą ir SSO kodą:";
+"login.sso.alert.message.sso_only" = "Įrašykite SSO kodą:";
 "login.sso.alert.action" = "Prisijungti";
-"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "el. paštas arba SSO prieigos kodas";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO prieigos kodas";
 
-"login.sso.start_error_title" = "Nepavyko pradėti kompanijos prisijungimo";
-"login.sso.link_error_message" = "Kompanijos prisijungimo nuoroda negalioja. Prašome susisiekti su savo komandos administratoriumi.";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "Patikrinkite savo interneto ryšį ir bandykite dar kartą.";
 "login.sso.error.alert.message" = "Papildomai informacijai susisiekite su savo komandos administratoriumi (klaida %@).";
 
 "login.sso.error.alert.invalid_code.message" = "Įsitikinkite, kad jūsų įmonės SSO prieigos kodas be klaidos, ir bandykite dar kartą.";
 "login.sso.error.alert.invalid_status.message" = "Bandykite dar kartą vėliau (klaida %@).";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
-"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
-"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Įrašykite galiojantį SSO prieigos kodą";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Įrašykite galiojantį el. pašto adresą arba SSO prieigos kodą";
+"login.sso.error.alert.domain_not_registered.message" = "Šis el. pašto adresas negali būti naudojamas kaip įmonės prisijungimas. Norėdami tęsti įrašykite SSO kodą.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Šis el. pašto adresas yra susietas su kitu serveriu, bet programėlė gali būti prijungta tik prie vieno serverio tuo pačiu metu. Atsijunkite nuo visų „Wire“ paskyrų šiame įrenginyje ir bandykite prisijungti dar kartą.";
 "login.sso.error.alert.unknown.message" = "Bandykite dar kartą vėliau.";
 
 
@@ -1475,7 +1475,7 @@
 "signin_logout.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti prisijunkite iš naujo.";
 "signin_logout.email.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti įveskite savo el. paštą ir slaptažodį.";
 "signin_logout.phone.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti įveskite savo telefono numerį.";
-"signin_logout.sso.subheadline" = "Jūsų seansui skirtasis laikas baigėsi. Norėdami tęsti prisijunkite su savo kompanijos paskyra.";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
 "signin_logout.sso.buton" = "Įmonės prisijungimas";
 
 "signin.email.missing_password.subtitle" = "Norėdami tęsti įveskite savo el. paštą ir slaptažodį.";

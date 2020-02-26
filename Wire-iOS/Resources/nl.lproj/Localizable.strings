@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire heeft toegang nodig tot de microfoon.";
-"voice.alert.microphone_warning.explanation" = "Open instellingen voor Wire om toegang tot de microfoon te geven.";
 
 "voice.alert.camera_warning.title" = "Wire heeft toegang nodig tot de camera.";
-"voice.alert.camera_warning.explanation" = "Open instellingen voor Wire om toegang tot de camera te geven.";
 
 "voice.top_overlay.tap_to_return" = "Tik om terug te keren";
 "voice.top_overlay.accessibility_title" = "Uitgaand gesprek";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Geavanceerd";
 "self.settings.advanced.troubleshooting.title" = "Probleemoplossing";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Foutrapportage";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Herstel de Push Notifications Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Als je problemen ondervindt met push-notificaties, kan Wire je vragen om deze token te herstellen.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "Cannot Start Company Login";
-"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "Controleer uw internetverbinding alstublieft en probeer het opnieuw.";
 "login.sso.error.alert.message" = "Please contact your team administrator for details (error %@).";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
 "signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
-"signin_logout.sso.buton" = "Bedrijfs login";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
 
 "signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
 "signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";

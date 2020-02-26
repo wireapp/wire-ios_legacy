@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
-"voice.alert.microphone_warning.explanation" = "Abilitalo nelle impostazioni di Wire.";
 
 "voice.alert.camera_warning.title" = "Wire ha bisogno di accedere alla fotocamera.";
-"voice.alert.camera_warning.explanation" = "Vai nelle impostazioni e consenti a Wire di accedere alla fotocamera.";
 
 "voice.top_overlay.tap_to_return" = "Tocca per tornare alla chiamata";
 "voice.top_overlay.accessibility_title" = "Chiamata in corso";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Avanzate";
 "self.settings.advanced.troubleshooting.title" = "Risoluzione dei problemi";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Report di debug";
+"self.settings.advanced.debugging_tools.title" = "Strumenti di debug";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Trova la prima conversazione non letta";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Questa informazione aiuta il team di supporto di Wire a identificare problemi delle chiamate e migliorare l'esperienza di utilizzo dell'applicazione.";
 "self.settings.advanced.reset_push_token.title" = "Reimpostazione delle notifiche Push Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Se si verificano problemi con le notifiche push, il supporto di Wire può chiedere di reimpostare questo token.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "Impossibile avviare il login aziendale";
-"login.sso.link_error_message" = "Il link di login aziendale che hai cliccato non è valido. Contatta l'amministratore per risolvere il problema.";
+"login.sso.start_error_title" = "Impossibile avviare il Login Aziendale";
+"login.sso.link_error_message" = "Questo link non è valido. Contatta l'amministratore per risolvere il problema.";
 
 "login.sso.error.offline.alert.message" = "Verifica la tua connessione internet e riprova.";
 "login.sso.error.alert.message" = "Contattare l'amministratore del sistema per maggiori dettagli (errore %@).";
@@ -1476,7 +1476,7 @@
 "signin_logout.email.subheadline" = "La sessione è scaduta. Inserisci indirizzo email e password per continuare.";
 "signin_logout.phone.subheadline" = "La sessione è scaduta. Inserisci il numero di telefono per continuare.";
 "signin_logout.sso.subheadline" = "La sessione è scaduta. Accedi con il tuo account aziendale per continuare.";
-"signin_logout.sso.buton" = "Login aziendale";
+"signin_logout.sso.buton" = "Accesso aziendale";
 
 "signin.email.missing_password.subtitle" = "Inserisci il tuo indirizzo email e la password per continuare.";
 "signin.phone.missing_password.subtitle" = "Inserisci il tuo numero di telefono per continuare.";

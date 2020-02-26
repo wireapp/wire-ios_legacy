@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "好";
 
 "voice.alert.microphone_warning.title" = "Wire需要使用麦克风的权限。";
-"voice.alert.microphone_warning.explanation" = "在Wire设置中激活。";
 
 "voice.alert.camera_warning.title" = "Wire需要使用相机的权限。";
-"voice.alert.camera_warning.explanation" = "请前往手机「设定」并允许Wire使用摄像头权限。";
 
 "voice.top_overlay.tap_to_return" = "点击返回通话";
 "voice.top_overlay.accessibility_title" = "正在呼叫";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "高级";
 "self.settings.advanced.troubleshooting.title" = "疑难排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "调试报告";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "重置信息推送通知的Token";
 "self.settings.advanced.reset_push_token.subtitle" = "当您遇到信息推送相关问题，Wire 建议您重置该Token。";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "无法启动公司登录";
-"login.sso.link_error_message" = "您点击的公司登录链接无效。请联系您的管理员解决问题。";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "请检查您的网络连接，然后重试";
 "login.sso.error.alert.message" = "请联系您的团队管理员详细信息 (错误 %@)。";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
 "signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
-"signin_logout.sso.buton" = "公司登录";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "企业登录";
 
 "signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
 "signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";

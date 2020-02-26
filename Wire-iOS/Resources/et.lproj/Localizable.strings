@@ -642,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire vajab lisipääsu mikrofonile.";
-"voice.alert.microphone_warning.explanation" = "Lülita see sisse Wire seadetest.";
 
 "voice.alert.camera_warning.title" = "Wire vajab ligipääsu kaamerale.";
-"voice.alert.camera_warning.explanation" = "Ava Seaded ja luba Wire’le ligipääs kaamerale.";
 
 "voice.top_overlay.tap_to_return" = "Toksa, et kõnesse naasta";
 "voice.top_overlay.accessibility_title" = "Aktiivne kõne";
@@ -1159,6 +1157,8 @@
 "self.settings.advanced.title" = "Edasijõudnutele";
 "self.settings.advanced.troubleshooting.title" = "Veaotsing";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
+"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
 "self.settings.advanced.reset_push_token.title" = "Lähtesta ”Push Notifications” võti";
 "self.settings.advanced.reset_push_token.subtitle" = "Kui sul on probleeme teavitustega, Wire kasutajatugi võib paluda sul see võti lähtestada.";
@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
 "login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
 
-"login.sso.start_error_title" = "Cannot Start Company Login";
-"login.sso.link_error_message" = "The company login link you clicked is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "Cannot Start Enterprise Login";
+"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
 
 "login.sso.error.offline.alert.message" = "Kontrolli oma netiühendust ja proovi uuesti.";
 "login.sso.error.alert.message" = "Palun pöördu oma meeskonna administraatori poole lisateabe saamiseks (viga %@).";
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "Your session expired. You need to log in again to continue.";
 "signin_logout.email.subheadline" = "Your session expired. Enter your email address and password to continue.";
 "signin_logout.phone.subheadline" = "Your session expired. Enter your phone number to continue.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your company account to continue.";
-"signin_logout.sso.buton" = "Ettevõtte sisselogimine";
+"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.buton" = "Enterprise log in";
 
 "signin.email.missing_password.subtitle" = "Enter your email address and password to continue.";
 "signin.phone.missing_password.subtitle" = "Enter your phone number to continue.";
