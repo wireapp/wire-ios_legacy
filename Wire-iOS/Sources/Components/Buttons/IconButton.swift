@@ -154,7 +154,7 @@ public class IconButton: ButtonWithLargerHitArea {
     override public func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         super.setTitleColor(color, for: state)
         
-        if adjustsTitleWhenHighlighted && (state.rawValue & UIControl.State.normal.rawValue) == UIControl.State.normal.rawValue {
+        if adjustsTitleWhenHighlighted && state.contains(.normal) {
             super.setTitleColor(titleColor(for: .highlighted)?.mix(UIColor.black, amount: 0.4), for: .highlighted)
         }
     }
@@ -190,18 +190,11 @@ public class IconButton: ButtonWithLargerHitArea {
     func setBackgroundImageColor(_ color: UIColor,
                                  for state: UIControl.State) {
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
-        if adjustBackgroundImageWhenHighlighted && (state.rawValue & UIControl.State.normal.rawValue) == UIControl.State.normal.rawValue {
+        
+        if adjustBackgroundImageWhenHighlighted && state.contains(.normal) {
             setBackgroundImage(UIImage.singlePixelImage(with: color.mix(UIColor.black, amount: 0.4)), for: .highlighted)
         }
     }
-    
-    //    func setIcon(_ icon: StyleKitIcon?, size: StyleKitIcon.Size, for state: UIControl.State, renderingMode: UIImage.RenderingMode = .alwaysTemplate) {
-    //        if let icon = icon {
-    //            self.__setIcon(icon, withSize: size.rawValue, for: state, renderingMode: renderingMode)
-    //        } else {
-    //            self.removeIcon(for: state)
-    //        }
-    //    }
     
     /// <#Description#>
     ///
@@ -233,7 +226,13 @@ public class IconButton: ButtonWithLargerHitArea {
         
         iconDefinitionsByState[state] = newIcon
         
-        guard let color = (renderingMode == .alwaysOriginal) ? iconColor(for: .normal) : UIColor.black else { return }
+        let color: UIColor
+        if renderingMode == .alwaysOriginal,
+            let iconColor = iconColor(for: .normal) {
+            color = iconColor
+        } else {
+            color = .black
+        }
         
         let image = UIImage.imageForIcon(iconType, size: iconSize, color: color)
         
