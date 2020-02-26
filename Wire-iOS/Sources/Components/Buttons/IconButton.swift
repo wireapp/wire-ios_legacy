@@ -77,7 +77,7 @@ public class IconButton: ButtonWithLargerHitArea {
     var adjustsTitleWhenHighlighted = false
     var adjustsBorderColorWhenHighlighted = false
     var adjustBackgroundImageWhenHighlighted = false
-    var titleImageSpacing: CGFloat = 0.0
+//    private var titleImageSpacing: CGFloat = 0.0
     
     private var iconColorsByState: [UIControl.State : UIColor] = [:]
     private var borderColorByState: [UIControl.State : UIColor] = [:]
@@ -167,8 +167,8 @@ public class IconButton: ButtonWithLargerHitArea {
         }
     }
     
-    func setTitleImageSpacing(_ titleImageSpacing: CGFloat, horizontalMargin: CGFloat) {
-        self.titleImageSpacing = titleImageSpacing
+    func setTitleImageSpacing(_ titleImageSpacing: CGFloat, horizontalMargin: CGFloat = 0) {
+//        self.titleImageSpacing = titleImageSpacing
         
         let isLeftToRight = UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight
         

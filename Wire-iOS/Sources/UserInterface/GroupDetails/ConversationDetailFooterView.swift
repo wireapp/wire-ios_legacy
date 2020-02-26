@@ -80,7 +80,7 @@ class ConversationDetailFooterView: UIView {
         configureButton(leftButton)
         configureButton(rightButton)
 
-        leftButton.titleImageSpacing = 16
+        leftButton.setTitleImageSpacing(16)
         leftButton.titleLabel?.font = FontSpec(.small, .regular).font
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
 
