@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)buttonWithStyle:(ButtonStyle)style;
 
+- (instancetype)init;
 - (instancetype)initWithStyle:(ButtonStyle)style;
 
 - (UIColor *)borderColorForState:(UIControlState)state;
