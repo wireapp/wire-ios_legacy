@@ -21,10 +21,6 @@ import Foundation
 
 extension MockUser {
     var pov: PointOfView {
-        if MockUser.mockSelf() == self {
-            return .secondPerson
-        }
-
-        return .none
+        return MockUser.mockSelf() == self ?.secondPerson : .none
     }
 }
