@@ -23,16 +23,16 @@ import Cartography
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 
-final class LocationSendViewController: UIViewController {
+public final class LocationSendViewController: UIViewController {
     
     let sendButton = Button(style: .full)
-    let addressLabel: UILabel = {
+    public let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
         label.textColor = .from(scheme: .textForeground)
         return label
     }()
-    let separatorView: UIView = {
+    public let separatorView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.from(scheme: .separator)
         return view
@@ -47,7 +47,7 @@ final class LocationSendViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         configureViews()
         createConstraints()
