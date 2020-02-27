@@ -40,8 +40,8 @@ public class Button: ButtonWithLargerHitArea {
             }
         }
     }
-
-    var textTransform: TextTransform = .upper {
+    
+    var textTransform: TextTransform = .none {
         didSet {
             for(state, title) in originalTitles {
                 setTitle(title, for: state)
@@ -65,7 +65,7 @@ public class Button: ButtonWithLargerHitArea {
     
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
         self.init()
-        
+        textTransform = .upper
         titleLabel?.font = .smallLightFont
         layer.cornerRadius = 4
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
@@ -125,7 +125,7 @@ public class Button: ButtonWithLargerHitArea {
         layer.borderColor = borderColor(for: state)?.cgColor
     }
     
-    func updateCornerRadius() {
+    private func updateCornerRadius() {
         if circular {
             layer.cornerRadius = bounds.size.height / 2
         }
