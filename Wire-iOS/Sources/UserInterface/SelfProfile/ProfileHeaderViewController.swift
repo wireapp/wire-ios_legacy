@@ -94,6 +94,8 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         label.font = FontSpec(.large, .light).font!
         label.accessibilityTraits.insert(.header)
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
+        label.textAlignment = .center
         
         return label
     }()
