@@ -146,7 +146,7 @@ final class AppRootViewController: UIViewController {
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
-        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
+        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -168,7 +168,7 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.useConstantBitRateAudio = Settings.shared.callingConstantBitRate
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,

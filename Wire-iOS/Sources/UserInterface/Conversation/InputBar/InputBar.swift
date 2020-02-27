@@ -349,7 +349,7 @@ final class InputBar: UIView {
     
     @objc
     func updateReturnKey() {
-        textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
+        textView.returnKeyType = isMarkingDown ? .default : Settings.shared.returnKeyType
         textView.reloadInputViews()
     }
 

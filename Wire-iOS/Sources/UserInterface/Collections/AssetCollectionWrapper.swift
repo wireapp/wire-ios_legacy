@@ -71,7 +71,7 @@ final class AssetCollectionWrapper: NSObject {
     convenience init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
         let assetCollection: ZMCollection
         let delegate = AssetCollectionMulticastDelegate()
-        if Settings.shared().enableBatchCollections {
+        if Settings.shared.enableBatchCollections {
             assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
         }
         else {

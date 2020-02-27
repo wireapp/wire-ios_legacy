@@ -55,7 +55,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     let conversations = to as! [ZMConversation]
 
     if message.isText {
-        let fetchLinkPreview = !Settings.shared().disableLinkPreviews
+        let fetchLinkPreview = !Settings.shared.disableLinkPreviews
         ZMUserSession.shared()?.performChanges {
             conversations.forEachNonEphemeral {
                 // We should not forward any mentions to other conversations

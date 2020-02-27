@@ -62,7 +62,7 @@ extension ConversationInputBarViewController {
             }
 
             if sourceType == .camera {
-                switch Settings.shared().preferredCamera {
+                switch Settings.shared.preferredCamera {
                 case .back:
                     pickerController.cameraDevice = .rear
                 case .front:

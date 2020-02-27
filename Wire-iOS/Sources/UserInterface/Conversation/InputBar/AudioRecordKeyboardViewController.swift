@@ -83,8 +83,8 @@ private let zmLog = ZMSLog(tag: "UI")
         configureAudioRecorder()
         createConstraints()
         
-        if Bundle.developerModeEnabled && Settings.shared().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
+        if Bundle.developerModeEnabled && Settings.shared.maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
     

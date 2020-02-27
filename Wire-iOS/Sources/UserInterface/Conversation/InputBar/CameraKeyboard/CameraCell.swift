@@ -148,7 +148,7 @@ final class CameraCell: UICollectionViewCell {
     
     @objc func changeCameraPressed(_ sender: AnyObject) {
         cameraController?.switchCamera { currentCamera in
-            Settings.shared().preferredCamera = currentCamera
+            Settings.shared.preferredCamera = currentCamera
         }
     }
 }

@@ -167,13 +167,13 @@ extension ConversationListViewController.ViewModel {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return false }
         guard false == viewController?.hasUsernameTakeoverViewController else { return false }
 
-        guard Settings.shared().pushAlertHappenedMoreThan1DayBefore else { return false }
+        guard Settings.shared.pushAlertHappenedMoreThan1DayBefore else { return false }
 
         UNUserNotificationCenter.current().checkPushesDisabled({ [weak self] pushesDisabled in
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    Settings.shared().lastPushAlertDate = Date()
+                    Settings.shared.lastPushAlertDate = Date()
 
                     weakSelf.viewController?.showPermissionDeniedViewController()
                 }

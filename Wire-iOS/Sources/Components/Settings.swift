@@ -70,11 +70,13 @@ enum SettingKey: String, CaseIterable {
 final class Settings: NSObject {
     subscript<T>(index: SettingKey) -> T? {
         get {
-            return defaults.bool(forKey: index.rawValue)
+            return defaults.value(forKey: index.rawValue) as? T
         }
         set {
             defaults.set(newValue, forKey: index.rawValue)
             defaults.synchronize()
+            
+            ///TODO: side effect
         }
     }
 

@@ -94,7 +94,7 @@ extension MKMapView {
     
     func storeLocation() {
         let location = locationData(name: nil)
-        Settings.shared().lastUserLocation = location
+        Settings.shared.lastUserLocation = location
     }
     
     func restoreLocation(animated: Bool) {

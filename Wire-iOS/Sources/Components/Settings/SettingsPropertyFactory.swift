@@ -285,11 +285,11 @@ class SettingsPropertyFactory {
         case .disableSendButton:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableSendButton) },
+                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableSendButton) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared().disableSendButton = number.boolValue
+                        Settings.shared.disableSendButton = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -311,21 +311,21 @@ class SettingsPropertyFactory {
         case .callingConstantBitRate:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().callingConstantBitRate) },
+                getAction: { _ in return SettingsPropertyValue(Settings.shared.callingConstantBitRate) },
                 setAction: { _, value in
                     if case .number(let enabled) = value {
-                        Settings.shared().callingConstantBitRate = enabled.boolValue
+                        Settings.shared.callingConstantBitRate = enabled.boolValue
                     }
             })
             
         case .disableLinkPreviews:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableLinkPreviews) },
+                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableLinkPreviews) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared().disableLinkPreviews = number.boolValue
+                        Settings.shared.disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -333,10 +333,10 @@ class SettingsPropertyFactory {
         case .disableCallKit:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableCallKit) },
+                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableCallKit) },
                 setAction: { _, value in
                     if case .number(let disabled) = value {
-                        Settings.shared().disableCallKit = disabled.boolValue
+                        Settings.shared.disableCallKit = disabled.boolValue
                     }
             })
         case .readReceiptsEnabled:

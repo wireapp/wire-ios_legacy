@@ -49,7 +49,7 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
     }
 
     static func storedPreference() -> BrowserOpeningOption {
-        return BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
+        return BrowserOpeningOption(rawValue: Settings.shared.browserLinkOpeningOptionRawValue) ?? .safari
     }
 
 }
