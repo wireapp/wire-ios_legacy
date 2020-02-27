@@ -29,8 +29,6 @@
 
 #import "IconButton.h"
 #import "IconButton+Internal.h"
-#import "Button.h"
-#import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "ColorKnobView.h"
 

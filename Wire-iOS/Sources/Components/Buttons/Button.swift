@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,12 +18,54 @@
 
 import Foundation
 
-extension Button {
-    @objc
+enum ButtonStyle : Int {
+    case full
+    case empty
+    case fullMonochrome
+    case emptyMonochrome
+}
+
+///TODO: no public
+public class Button: ButtonWithLargerHitArea {
+    private var previousState: UIControl.State?
+    
+    var circular = false {
+        didSet {
+            if circular {
+                layer.masksToBounds = true
+                updateCornerRadius()
+            } else {
+                layer.masksToBounds = false
+                layer.cornerRadius = 0
+            }
+        }
+    }
+
+    var textTransform: TextTransform = .upper {
+        didSet {
+            for(state, title) in originalTitles {
+                setTitle(title, for: state)
+            }
+        }
+    }
+    
+    private var originalTitles: [UIControl.State : String] = [:]
+    
+    private var borderColorByState: [UIControl.State : UIColor] = [:]
+    
+    init() {
+        super.init(frame: .zero)
+        
+        clipsToBounds = true
+    }
+    
+    convenience init(style: ButtonStyle) {
+        self.init(style: style, variant: ColorScheme.default.variant)
+    }
+    
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
         self.init()
         
-        textTransform = .upper
         titleLabel?.font = .smallLightFont
         layer.cornerRadius = 4
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
@@ -51,18 +93,81 @@ extension Button {
             setTitleColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
             setBorderColor(UIColor(white: 1.0, alpha: 0.32), for: .normal)
             setBorderColor(UIColor(white: 1.0, alpha: 0.16), for: .highlighted)
-        default:
-            break
         }
     }
-
-    open override func setTitle(_ title: String?, for state: UIControl.State) {
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override public var intrinsicContentSize: CGSize {
+        let s = super.intrinsicContentSize
+        
+        return CGSize(width: s.width + titleEdgeInsets.left + titleEdgeInsets.right, height: s.height + titleEdgeInsets.top + titleEdgeInsets.bottom)
+    }
+    
+    override public var bounds: CGRect {
+        didSet {
+            updateCornerRadius()
+        }
+    }
+    
+    func setBackgroundImageColor(_ color: UIColor, for state: UIControl.State) {
+        setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
+    }
+    
+    func borderColor(for state: UIControl.State) -> UIColor? {
+        return borderColorByState[state] ?? borderColorByState[.normal]
+    }
+    
+    private func updateBorderColor() {
+        layer.borderColor = borderColor(for: state)?.cgColor
+    }
+    
+    func updateCornerRadius() {
+        if circular {
+            layer.cornerRadius = bounds.size.height / 2
+        }
+    }
+    
+    // MARK: - Observing state
+    override public var isHighlighted: Bool {
+        didSet {
+            updateAppearance(with: previousState)
+        }
+    }
+    
+    override public var isSelected: Bool {
+        didSet {
+            updateAppearance(with: previousState)
+        }
+    }
+    
+    override public var isEnabled: Bool {
+        didSet {
+            updateAppearance(with: previousState)
+        }
+    }
+    
+    private func updateAppearance(with previousState: UIControl.State?) {
+        if state == previousState {
+            return
+        }
+        
+        // Update for new state (selected, highlighted, disabled) here if needed
+        updateBorderColor()
+        
+        self.previousState = state
+    }
+    
+    override public func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
         state.expanded.forEach(){ expandedState in
             if title != nil {
-                originalTitles?[NSNumber(value: expandedState.rawValue)] = title
+                originalTitles[expandedState] = title
             } else {
-                originalTitles?.removeObject(forKey: NSNumber(value: expandedState.rawValue))
+                originalTitles[expandedState] = nil
             }
         }
         
@@ -73,11 +178,10 @@ extension Button {
         super.setTitle(title, for: state)
     }
     
-    @objc(setBorderColor:forState:)
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
         state.expanded.forEach(){ expandedState in
             if color != nil {
-                borderColorByState[NSNumber(value: expandedState.rawValue)] = color
+                borderColorByState[expandedState] = color
             }
         }
         
