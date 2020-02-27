@@ -42,19 +42,22 @@ extension Settings {
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
-        get {
-        let settingsColorScheme: SettingsColorScheme? = self[.colorScheme]
-        return settingsColorScheme?.colorSchemeVariant ?? .light
+//        get {
+        if let string: String = self[.colorScheme] {
+            return settingsColorScheme(from: string).colorSchemeVariant
         }
+        return .light
+//        }
 
-        set {
-            self[.colorScheme] = newValue
-//            defaults.set(string(for: colorScheme), forKey: .colorScheme)
-            defaults.synchronize()
-                notifyColorSchemeChanged() ///TODO:
-        }
+//        set {
+//            self[.colorScheme] = newValue
+////            defaults.set(string(for: colorScheme), forKey: .colorScheme)
+//            defaults.synchronize()
+//                notifyColorSchemeChanged() ///TODO:
+//        }
     }
     
+    ///TODO: move to SettingsColorScheme
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
         case "dark":

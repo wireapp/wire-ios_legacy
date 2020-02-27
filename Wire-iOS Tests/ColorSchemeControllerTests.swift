@@ -62,7 +62,7 @@ final class ColorSchemeControllerTests: XCTestCase {
 
         // WHEN
         UserDefaults.standard.set("dark", forKey: SettingKey.colorScheme.rawValue)
-        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self) ///TODO: check ob
+        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
 
         // THEN
         XCTAssertEqual(colorScheme.variant, .dark)
