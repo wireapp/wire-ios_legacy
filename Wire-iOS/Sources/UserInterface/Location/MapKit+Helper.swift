@@ -98,7 +98,7 @@ extension MKMapView {
     }
     
     func restoreLocation(animated: Bool) {
-        guard let location = Settings.shared().lastUserLocation else { return }
+        guard let location = Settings.shared.lastUserLocation else { return }
         setCenterCoordinate(location.coordinate, zoomLevel: Int(location.zoomLevel), animated: animated)
     }
     

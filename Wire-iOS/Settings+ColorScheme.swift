@@ -33,10 +33,6 @@ enum SettingsColorScheme {
 }
 
 extension Settings {
-    static var shared: Settings {
-        return Settings.shared()
-    }
-    
     func notifyColorSchemeChanged() {
         NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self, userInfo: nil)
     }

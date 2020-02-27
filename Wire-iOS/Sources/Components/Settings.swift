@@ -29,7 +29,12 @@ enum SettingsCamera : Int {
     case back
 }
 
-//let SettingsColorSchemeChangedNotification: String? = nil
+let SettingsColorSchemeChangedNotification = "SettingsColorSchemeChangedNotification"
+
+extension Notification.Name {
+    static let SettingsColorSchemeChanged = Notification.Name("SettingsColorSchemeChanged")
+}
+
 //let UserDefaultDisableMarkdown: String? = nil
 //let UserDefaultChatHeadsDisabled: String? = nil
 //let UserDefaultLastPushAlertDate: String? = nil
@@ -55,50 +60,117 @@ enum SettingsCamera : Int {
 //let UserDefaultCallingConstantBitRate: String? = nil
 //let UserDefaultDisableLinkPreviews: String? = nil
 
-let SettingsColorSchemeChangedNotification = "SettingsColorSchemeChangedNotification"
-// NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
-let UserDefaultDisableMarkdown = "UserDefaultDisableMarkdown"
-let UserDefaultChatHeadsDisabled = "ZDevOptionChatHeadsDisabled"
-let UserDefaultLastPushAlertDate = "LastPushAlertDate"
-let UserDefaultVoIPNotificationsOnly = "VoIPNotificationsOnly"
-let UserDefaultLastViewedConversation = "LastViewedConversation"
-let UserDefaultColorScheme = "ColorScheme"
-let UserDefaultLastViewedScreen = "LastViewedScreen"
-let UserDefaultPreferredCameraFlashMode = "PreferredCameraFlashMode"
-let UserDefaultPreferredCamera = "PreferredCamera"
-let AVSMediaManagerPersistentIntensity = "AVSMediaManagerPersistentIntensity"
-let UserDefaultLastUserLocation = "LastUserLocation"
-let BlackListDownloadIntervalKey = "ZMBlacklistDownloadInterval"
-let UserDefaultMessageSoundName = "ZMMessageSoundName"
-let UserDefaultCallSoundName = "ZMCallSoundName"
-let UserDefaultPingSoundName = "ZMPingSoundName"
-let UserDefaultSendButtonDisabled = "SendButtonDisabled"
-let UserDefaultDisableCallKit = "UserDefaultDisableCallKit"
-let UserDefaultEnableBatchCollections = "UserDefaultEnableBatchCollections"
-let UserDefaultCallingProtocolStrategy = "CallingProtocolStrategy"
-let UserDefaultTwitterOpeningRawValue = "TwitterOpeningRawValue"
-let UserDefaultMapsOpeningRawValue = "MapsOpeningRawValue"
-let UserDefaultBrowserOpeningRawValue = "BrowserOpeningRawValue"
-let UserDefaultDidMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
-let UserDefaultCallingConstantBitRate = "CallingConstantBitRate"
-let UserDefaultDisableLinkPreviews = "DisableLinkPreviews"
+enum SettingKey: String {
+    // NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
+    case disableMarkdown = "UserDefaultDisableMarkdown"
+    case chatHeadsDisabled = "ZDevOptionChatHeadsDisabled"
+    case lastPushAlertDate = "LastPushAlertDate"
+    case voIPNotificationsOnly = "VoIPNotificationsOnly"
+    case lastViewedConversation = "LastViewedConversation"
+    case colorScheme = "ColorScheme"
+    case lastViewedScreen = "LastViewedScreen"
+    case preferredCameraFlashMode = "PreferredCameraFlashMode"
+    case preferredCamera = "PreferredCamera"
+    case avsMediaManagerPersistentIntensity = "AVSMediaManagerPersistentIntensity"
+    case lastUserLocation = "LastUserLocation"
+    case blackListDownloadIntervalKey = "ZMBlacklistDownloadInterval"
+    case messageSoundName = "ZMMessageSoundName"
+    case callSoundName = "ZMCallSoundName"
+    case pingSoundName = "ZMPingSoundName"
+    case sendButtonDisabled = "SendButtonDisabled"
+    case disableCallKit = "UserDefaultDisableCallKit"
+    case enableBatchCollections = "UserDefaultEnableBatchCollections"
+    case callingProtocolStrategy = "CallingProtocolStrategy"
+    case twitterOpeningRawValue = "TwitterOpeningRawValue"
+    case mapsOpeningRawValue = "MapsOpeningRawValue"
+    case browserOpeningRawValue = "BrowserOpeningRawValue"
+    case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
+    case callingConstantBitRate = "CallingConstantBitRate"
+    case disableLinkPreviews = "DisableLinkPreviews"
+}
+
 
 /// Model object for locally stored (not in SE or AVS) user app settings
 ///TODO: no nsobject?
 final class Settings: NSObject {
-    var chatHeadsDisabled = false
-    var disableMarkdown = false
+    subscript(index: SettingKey) -> Any {
+        get {
+            return defaults.bool(forKey: index)
+        }
+        set(newValue) {
+            defaults.set(newValue, forKey: UserDefaultChatHeadsDisabled)
+            defaults.synchronize()
+        }
+    }
+
+    var chatHeadsDisabled: Bool {
+        get {
+            return defaults.bool(forKey: UserDefaultChatHeadsDisabled)
+        }
+        
+        set {
+            defaults.set(newValue, forKey: UserDefaultChatHeadsDisabled)
+            defaults.synchronize()
+        }
+    }
+    
+    var disableMarkdown: Bool {
+        get {
+            return defaults.bool(forKey: UserDefaultDisableMarkdown)
+        }
+        
+        set {
+            defaults.set(newValue, forKey: UserDefaultDisableMarkdown)
+            defaults.synchronize()
+        }
+    }
+    
     var shouldRegisterForVoIPNotificationsOnly = false
     var disableSendButton = false
     var disableLinkPreviews = false
     var disableCallKit = false
     var callingConstantBitRate = false
     var enableBatchCollections = false
-    /* develop option */    var lastPushAlertDate: Date?
-    var lastViewedScreen: SettingsLastScreen?
-    var preferredCamera: SettingsCamera?
-    private(set) var blacklistDownloadInterval: TimeInterval = 0.0
-    var lastUserLocation: ZMLocationData?
+    /* develop option */
+    var lastViewedScreen: SettingsLastScreen {
+        get {
+            return SettingsLastScreen(rawValue: defaults.integer(forKey: UserDefaultLastViewedScreen)) ?? .none
+        }
+        
+        set {
+            defaults.set(newValue.rawValue, forKey: UserDefaultLastViewedScreen)
+            defaults.synchronize()
+        }
+    }
+
+    var preferredCamera: SettingsCamera {
+        get {
+            return SettingsCamera(rawValue: defaults.integer(forKey: UserDefaultPreferredCamera)) ?? .front
+        }
+        
+        set {
+            defaults.set(newValue.rawValue, forKey: UserDefaultPreferredCamera)
+        }
+    }
+
+    var blacklistDownloadInterval: TimeInterval {
+        let HOURS_6 = 6 * 60 * 60
+        let settingValue = defaults.integer(forKey: BlackListDownloadIntervalKey)
+        return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
+    }
+    
+    var lastUserLocation: LocationData? {
+        get {
+            guard let locationDict = defaults.dictionary(forKey: UserDefaultLastUserLocation) else { return nil }
+            return LocationData.locationData(fromDictionary: locationDict)
+        }
+        
+        set {
+            let locationDict = newValue.toDictionary
+            defaults.setValue(locationDict, forKey: UserDefaultLastUserLocation)
+        }
+    }
+
     var messageSoundName: String?
     var callSoundName: String?
     var pingSoundName: String?
@@ -106,10 +178,25 @@ final class Settings: NSObject {
     var browserLinkOpeningOptionRawValue = 0
     var mapsLinkOpeningOptionRawValue = 0
     
+    
+    var lastPushAlertDate: Date? {
+        get {
+            return defaults.value(forKey: UserDefaultLastPushAlertDate) as? Date
+        }
+        
+        set {
+            defaults.setValue(newValue, forKey: UserDefaultLastPushAlertDate)
+            defaults.synchronize()
+        }
+    }
+    
+    
+    
+
+    
     private var maxRecordingDurationDebug: TimeInterval = 0.0
 
-    class func allDefaultsKeys() -> [AnyHashable]? {
-        return [
+    static var allDefaultsKeys: [String] = [
             UserDefaultDisableMarkdown,
             UserDefaultChatHeadsDisabled,
             UserDefaultLastViewedConversation,
@@ -134,18 +221,8 @@ final class Settings: NSObject {
             UserDefaultCallingConstantBitRate,
             UserDefaultDisableLinkPreviews
         ]
-    }
     
-    static let sharedSettingsVar: Settings? = {
-        var sharedSettings = self.init()
-        return sharedSettings
-    }()
-    
-    class func sharedSettings() -> Self {
-        // `dispatch_once()` call was converted to a static variable initializer
-        
-        return sharedSettingsVar
-    }
+    static var shared: Settings = Settings()
     
     override init() {
         super.init()
@@ -164,71 +241,10 @@ final class Settings: NSObject {
         }
     }
     
-    func disableMarkdown() -> Bool {
-        return defaults.bool(forKey: UserDefaultDisableMarkdown)
-    }
-    
-    func setDisableMarkdown(_ disableMarkdown: Bool) {
-        defaults.set(disableMarkdown, forKey: UserDefaultDisableMarkdown)
-        defaults.synchronize()
-    }
-    
-    func chatHeadsDisabled() -> Bool {
-        return defaults.bool(forKey: UserDefaultChatHeadsDisabled)
-    }
-    
-    func setChatHeadsDisabled(_ chatHeadsDisabled: Bool) {
-        defaults.set(chatHeadsDisabled, forKey: UserDefaultChatHeadsDisabled)
-        defaults.synchronize()
-    }
-    
-    func lastPushAlertDate() -> Date? {
-        return defaults[UserDefaultLastPushAlertDate] as? Date
-    }
-    
-    func setLastPushAlert(_ lastPushAlertDate: Date?) {
-        defaults[UserDefaultLastPushAlertDate] = lastPushAlertDate
-        defaults.synchronize()
-    }
-    
-    func lastViewedScreen() -> SettingsLastScreen {
-        let lastScreen = defaults.integer(forKey: UserDefaultLastViewedScreen)
-        return lastScreen
-    }
-    
-    func setLastViewedScreen(_ lastViewedScreen: SettingsLastScreen) {
-        defaults.set(Int(lastViewedScreen), forKey: UserDefaultLastViewedScreen)
-        defaults.synchronize()
-    }
-
-    func lastUserLocation() -> ZMLocationData? {
-        let locationDict = defaults[UserDefaultLastUserLocation] as? [AnyHashable : Any]
-        return ZMLocationData(fromDictionary: locationDict)
-    }
-    
-    func setLastUserLocation(_ lastUserLocation: ZMLocationData?) {
-        let locationDict = lastUserLocation?.toDictionary
-        defaults[UserDefaultLastUserLocation] = locationDict
-    }
-    
-    func preferredCamera() -> SettingsCamera {
-        return defaults.integer(forKey: UserDefaultPreferredCamera)
-    }
-    
-    func setPreferredCamera(_ preferredCamera: SettingsCamera) {
-        defaults.set(Int(preferredCamera), forKey: UserDefaultPreferredCamera)
-    }
-    
     func synchronize() {
         storeCurrentIntensityLevelAsLastUsed()
         
         defaults.synchronize()
-    }
-    
-    func blacklistDownloadInterval() -> TimeInterval {
-        let HOURS_6 = 6 * 60 * 60
-        let settingValue = defaults.integer(forKey: BlackListDownloadIntervalKey)
-        return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
     }
     
     func reset() {
