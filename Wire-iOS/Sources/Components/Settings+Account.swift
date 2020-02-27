@@ -36,7 +36,7 @@ extension Settings {
     
     /// Returns the value associated with the given account for the given key,
     /// or nil if it doesn't exist.
-    ///
+    /// TODO: retire
     func value<T>(for key: String, in account: Account) -> T? {
         // Attempt to migrate the shared value
         if let rootValue = defaults.value(forKey: key) {
@@ -49,16 +49,20 @@ extension Settings {
         return accountPayload[key] as? T
     }
     
+    func setValue<T>(_ value: T?, settingKey: SettingKey, in account: Account) {
+        setValue(value, for: settingKey.rawValue, in: account)
+    }
+    
     /// Sets the value associated with the given account for the given key.
-    ///
+    /// TODO: retire
     func setValue<T>(_ value: T?, for key: String, in account: Account) {
         var accountPayload = self.payload(for: account)
         accountPayload[key] = value
         defaults.setValue(accountPayload, forKey: account.userDefaultsKey())
     }
     
-    @objc func lastViewedConversation(for account: Account) -> ZMConversation? {
-        guard let conversationID: String = self.value(for: lastViewedConversation, in: account) else {
+    func lastViewedConversation(for account: Account) -> ZMConversation? {
+        guard let conversationID: String = self.value(for: .lastViewedConversation, in: account) else {
             return nil
         }
         
@@ -68,13 +72,12 @@ extension Settings {
         return ZMConversation.existingObject(with: objectID, inUserSession: session)
     }
 
-    @objc func setLastViewed(conversation: ZMConversation, for account: Account) {
+    func setLastViewed(conversation: ZMConversation, for account: Account) {
         let conversationURI = conversation.objectID.uriRepresentation()
-        self.setValue(conversationURI.absoluteString, for: viewedConversation, in: account)
+        setValue(conversationURI.absoluteString, settingKey: .lastViewedConversation, in: account)
         defaults.synchronize()
     }
 
-    @objc
     func notifyDisableSendButtonChanged() {
         NotificationCenter.default.post(name: .disableSendButtonChanged, object: self, userInfo: nil)
     }

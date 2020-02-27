@@ -29,8 +29,6 @@ enum SettingsCamera : Int {
     case back
 }
 
-let SettingsColorSchemeChangedNotification = "SettingsColorSchemeChangedNotification"
-
 extension Notification.Name {
     static let SettingsColorSchemeChanged = Notification.Name("SettingsColorSchemeChanged")
 }
@@ -173,7 +171,7 @@ final class Settings: NSObject {
     
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
-    private var maxRecordingDurationDebug: TimeInterval = 0.0
+    var maxRecordingDurationDebug: TimeInterval = 0.0
 
 //    static var allDefaultsKeys: [String] = [
 //            UserDefaultDisableMarkdown,

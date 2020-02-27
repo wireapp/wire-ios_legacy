@@ -353,7 +353,7 @@ final class AppRootViewController: UIViewController {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
 
-        colorScheme.variant = Settings.shared.colorScheme.colorSchemeVariant
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
     func applicationDidTransition(to appState: AppState) {
@@ -469,7 +469,7 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard !Settings.shared.chatHeadsDisabled else {
+        guard false == Settings.shared[.chatHeadsDisabled] else {
             return false
         }
         

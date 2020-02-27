@@ -115,9 +115,9 @@ final class ZClientViewController: UIViewController {
     private func attemptToPresentInitialConversation() -> Bool {
         var stateRestored = false
         
-        let lastViewedScreen = Settings.shared.lastViewedScreen
+        let lastViewedScreen: SettingsLastScreen? = Settings.shared[.lastViewedScreen]
         switch lastViewedScreen {
-        case .list:
+        case .list?:
             
             transitionToList(animated: false, completion: nil)
             
@@ -125,7 +125,7 @@ final class ZClientViewController: UIViewController {
             if isConversationViewVisible {
                 stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
-        case .conversation:
+        case .conversation?:
             
             stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
         default:

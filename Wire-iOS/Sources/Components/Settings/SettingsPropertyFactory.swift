@@ -63,20 +63,21 @@ class SettingsPropertyFactory {
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
     
-    static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
-        SettingsPropertyName.disableMarkdown                : UserDefaultDisableMarkdown,
-        SettingsPropertyName.chatHeadsDisabled              : UserDefaultChatHeadsDisabled,
-        SettingsPropertyName.messageSoundName               : UserDefaultMessageSoundName,
-        SettingsPropertyName.callSoundName                  : UserDefaultCallSoundName,
-        SettingsPropertyName.pingSoundName                  : UserDefaultPingSoundName,
-        SettingsPropertyName.disableSendButton              : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.mapsOpeningOption              : UserDefaultMapsOpeningRawValue,
-        SettingsPropertyName.browserOpeningOption           : UserDefaultBrowserOpeningRawValue,
-        SettingsPropertyName.tweetOpeningOption             : UserDefaultTwitterOpeningRawValue,
-        SettingsPropertyName.callingProtocolStrategy        : UserDefaultCallingProtocolStrategy,
-        SettingsPropertyName.enableBatchCollections         : UserDefaultEnableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate         : UserDefaultCallingConstantBitRate,
-        SettingsPropertyName.disableLinkPreviews            : UserDefaultDisableLinkPreviews
+    ///TODO: merge 2 enums
+    static let userDefaultsPropertiesToKeys: [SettingsPropertyName: SettingKey] = [
+        SettingsPropertyName.disableMarkdown                : .disableMarkdown,
+        SettingsPropertyName.chatHeadsDisabled              : .chatHeadsDisabled,
+        SettingsPropertyName.messageSoundName               : .messageSoundName,
+        SettingsPropertyName.callSoundName                  : .callSoundName,
+        SettingsPropertyName.pingSoundName                  : .pingSoundName,
+        SettingsPropertyName.disableSendButton              : .sendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption              : .mapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption           : .browserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption             : .twitterOpeningRawValue,
+        SettingsPropertyName.callingProtocolStrategy        : .callingProtocolStrategy,
+        SettingsPropertyName.enableBatchCollections         : .enableBatchCollections,
+        SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
+        SettingsPropertyName.disableLinkPreviews            : .disableLinkPreviews
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
@@ -171,12 +172,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
+                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark") ///TODO:
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
+                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue)
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -357,7 +358,7 @@ class SettingsPropertyFactory {
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
-                return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)
+                return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)
             }
         }
         

@@ -89,7 +89,7 @@ class SettingsPropertyTests: XCTestCase {
     
     func testThatIntegerUserDefaultsSettingSave() {
         // given
-        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: UserDefaultColorScheme, userDefaults: self.userDefaults)
+        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: .colorScheme, userDefaults: self.userDefaults)
         // when & then
         try! self.saveAndCheck(property, value: "light")
     }

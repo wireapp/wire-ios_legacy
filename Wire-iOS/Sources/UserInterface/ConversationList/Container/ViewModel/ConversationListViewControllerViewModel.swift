@@ -173,7 +173,7 @@ extension ConversationListViewController.ViewModel {
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    Settings.shared.lastPushAlertDate = Date()
+                    Settings.shared[.lastPushAlertDate] = Date()
 
                     weakSelf.viewController?.showPermissionDeniedViewController()
                 }
@@ -193,7 +193,7 @@ extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObser
 
 extension Settings {
     var pushAlertHappenedMoreThan1DayBefore: Bool {
-        guard let date = lastPushAlertDate else {
+        guard let date: Date = self[.lastPushAlertDate] else {
             return true
         }
 

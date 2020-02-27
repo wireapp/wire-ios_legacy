@@ -37,24 +37,22 @@ extension Settings {
         NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self, userInfo: nil)
     }
 
-    @objc
     var defaults: UserDefaults {
         return UserDefaults.standard
     }
 
-//    var colorScheme: SettingsColorScheme {
+    var colorSchemeVariant: ColorSchemeVariant {
 //        get {
-//            guard let string = defaults.string(forKey: UserDefaultColorScheme) else { return .light }
-//
-//            return settingsColorScheme(from: string)
+        let settingsColorScheme: SettingsColorScheme? = self[.colorScheme]
+        return settingsColorScheme?.colorSchemeVariant ?? .light
 //        }
-//
+
 //        set {
-//            defaults.set(string(for: colorScheme), forKey: UserDefaultColorScheme)
+//            defaults.set(string(for: colorScheme), forKey: .colorScheme)
 //            defaults.synchronize()
-    //            notifyColorSchemeChanged() ///TODO:
+//                notifyColorSchemeChanged() ///TODO:
 //        }
-//    }
+    }
     
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
