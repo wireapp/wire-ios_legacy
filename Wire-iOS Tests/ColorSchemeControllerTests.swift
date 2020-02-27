@@ -31,7 +31,7 @@ final class ColorSchemeControllerTests: XCTestCase {
 
         sut = ColorSchemeController()
         if originalColorScheme == nil {
-            originalColorScheme = UserDefaults.standard.value(forKey: .colorScheme)
+            originalColorScheme = UserDefaults.standard.value(forKey: SettingKey.colorScheme.rawValue)
         }
 
         if originalVariant == nil {
@@ -41,7 +41,7 @@ final class ColorSchemeControllerTests: XCTestCase {
     
     override func tearDown() {
         sut = nil
-        UserDefaults.standard.set(originalColorScheme, forKey: .colorScheme)
+        UserDefaults.standard.set(originalColorScheme, forKey: SettingKey.colorScheme.rawValue)
         ColorScheme.default.variant = originalVariant
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
@@ -54,15 +54,15 @@ final class ColorSchemeControllerTests: XCTestCase {
         let colorScheme = ColorScheme.default
 
         // WHEN
-        UserDefaults.standard.set("light", forKey: .colorScheme)
+        UserDefaults.standard.set("light", forKey: SettingKey.colorScheme.rawValue)
         NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
 
         // THEN
         XCTAssertEqual(colorScheme.variant, .light)
 
         // WHEN
-        UserDefaults.standard.set("dark", forKey: .colorScheme)
-        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self)
+        UserDefaults.standard.set("dark", forKey: SettingKey.colorScheme.rawValue)
+        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self) ///TODO: check ob
 
         // THEN
         XCTAssertEqual(colorScheme.variant, .dark)

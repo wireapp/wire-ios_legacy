@@ -89,14 +89,14 @@ class SettingsPropertyTests: XCTestCase {
     
     func testThatIntegerUserDefaultsSettingSave() {
         // given
-        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: .colorScheme, userDefaults: self.userDefaults)
+        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.darkMode, userDefaultsKey: SettingKey.colorScheme.rawValue, userDefaults: self.userDefaults)
         // when & then
         try! self.saveAndCheck(property, value: "light")
     }
     
     func testThatBoolUserDefaultsSettingSave() {
         // given
-        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.chatHeadsDisabled, userDefaultsKey: UserDefaultChatHeadsDisabled, userDefaults: self.userDefaults)
+        let property = SettingsUserDefaultsProperty(propertyName: SettingsPropertyName.chatHeadsDisabled, userDefaultsKey: SettingKey.chatHeadsDisabled.rawValue, userDefaults: self.userDefaults)
         // when & then
         try! self.saveAndCheck(property, value: NSNumber(value: true))
     }

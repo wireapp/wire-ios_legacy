@@ -34,7 +34,7 @@ enum SettingsColorScheme {
 
 extension Settings {
     func notifyColorSchemeChanged() {
-        NotificationCenter.default.post(name: NSNotification.Name.SettingsColorSchemeChanged, object: self, userInfo: nil)
+        NotificationCenter.default.post(name: .SettingsColorSchemeChanged, object: self, userInfo: nil)
     }
 
     var defaults: UserDefaults {
@@ -42,16 +42,17 @@ extension Settings {
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
-//        get {
+        get {
         let settingsColorScheme: SettingsColorScheme? = self[.colorScheme]
         return settingsColorScheme?.colorSchemeVariant ?? .light
-//        }
+        }
 
-//        set {
+        set {
+            self[.colorScheme] = newValue
 //            defaults.set(string(for: colorScheme), forKey: .colorScheme)
-//            defaults.synchronize()
-//                notifyColorSchemeChanged() ///TODO:
-//        }
+            defaults.synchronize()
+                notifyColorSchemeChanged() ///TODO:
+        }
     }
     
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
