@@ -17,9 +17,10 @@
 //
 
 import Foundation
+@testable import Wire
 
 extension MockUser {
-    @objc var pov: PointOfView {
+    var pov: PointOfView {
         if MockUser.mockSelf() == self {
             return .secondPerson
         }
