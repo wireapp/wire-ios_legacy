@@ -154,7 +154,7 @@ func &&(left: String, right: ParagraphStyleDescriptor) -> NSAttributedString {
 // --- In localized .strings file:
 // "some.string" = "%@ hat etwas gemacht"; // basic version
 // "some.string-you" = "%@ hast etwas gemacht"; // second person version
-@objc enum PointOfView: UInt {
+enum PointOfView: UInt {
     // The localized string does not adjust.
     case none
     // First person: I/We case
@@ -231,13 +231,13 @@ extension String {
 extension NSAttributedString {
     
     // Adds the attribtues to the given substring in self and returns the resulting String
-    @objc func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let mutableSelf = NSMutableAttributedString(attributedString: self)
         mutableSelf.addAttributes(attributes, to: substring)
         return NSAttributedString(attributedString: mutableSelf)
     }
     
-    @objc func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
+    func setAttributes(_ attributes: [NSAttributedString.Key: AnyObject], toSubstring substring: String) -> NSAttributedString {
         let substringRange = (string as NSString).range(of: substring)
         guard substringRange.location != NSNotFound else { return self }
         
@@ -246,12 +246,10 @@ extension NSAttributedString {
         return NSAttributedString(attributedString: mutableSelf)
     }
 
-    @objc(addingColor:toSubstring:)
     func adding(color: UIColor, to substring: String) -> NSAttributedString {
         return addAttributes([.foregroundColor: color], toSubstring: substring)
     }
     
-    @objc(addingFont:toSubstring:)
     func adding(font: UIFont, to substring: String) -> NSAttributedString {
         return addAttributes([.font: font], toSubstring: substring)
     }
@@ -278,7 +276,7 @@ extension Sequence where Iterator.Element == NSAttributedString {
 
 extension NSMutableAttributedString {
 
-    @objc func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
+    func addAttributes(_ attributes: [NSAttributedString.Key: AnyObject], to substring: String) {
         let substringRange = (string as NSString).range(of: substring)
         
         guard substringRange.location != NSNotFound else { return }
