@@ -28,7 +28,6 @@
 #import "Wire-Swift.h"
 
 
-#import "Settings.h"
 @import FLAnimatedImage;
 #import "MediaAsset.h"
 

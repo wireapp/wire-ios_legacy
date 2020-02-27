@@ -20,7 +20,6 @@
 @import WireSyncEngine;
 @import avs;
 #import <CommonCrypto/CommonCrypto.h>
-#import "Settings.h"
 
 // UI
 #import "TokenField.h"
