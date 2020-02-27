@@ -30,6 +30,10 @@ extension Settings {
         return defaults.value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
     
+    func value<T>(for key: SettingKey, in account: Account) -> T? {
+        return value(for: key.rawValue, in: account)
+    }
+    
     /// Returns the value associated with the given account for the given key,
     /// or nil if it doesn't exist.
     ///
@@ -54,7 +58,7 @@ extension Settings {
     }
     
     @objc func lastViewedConversation(for account: Account) -> ZMConversation? {
-        guard let conversationID: String = self.value(for: UserDefaultLastViewedConversation, in: account) else {
+        guard let conversationID: String = self.value(for: lastViewedConversation, in: account) else {
             return nil
         }
         
@@ -66,7 +70,7 @@ extension Settings {
 
     @objc func setLastViewed(conversation: ZMConversation, for account: Account) {
         let conversationURI = conversation.objectID.uriRepresentation()
-        self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
+        self.setValue(conversationURI.absoluteString, for: viewedConversation, in: account)
         defaults.synchronize()
     }
 

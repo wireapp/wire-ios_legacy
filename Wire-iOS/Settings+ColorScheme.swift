@@ -42,19 +42,19 @@ extension Settings {
         return UserDefaults.standard
     }
 
-    var colorScheme: SettingsColorScheme {
-        get {
-            guard let string = defaults.string(forKey: UserDefaultColorScheme) else { return .light }
-            
-            return settingsColorScheme(from: string)
-        }
-
-        set {            
-            defaults.set(string(for: colorScheme), forKey: UserDefaultColorScheme)
-            defaults.synchronize()
-            notifyColorSchemeChanged()
-        }
-    }
+//    var colorScheme: SettingsColorScheme {
+//        get {
+//            guard let string = defaults.string(forKey: UserDefaultColorScheme) else { return .light }
+//
+//            return settingsColorScheme(from: string)
+//        }
+//
+//        set {
+//            defaults.set(string(for: colorScheme), forKey: UserDefaultColorScheme)
+//            defaults.synchronize()
+    //            notifyColorSchemeChanged() ///TODO:
+//        }
+//    }
     
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
