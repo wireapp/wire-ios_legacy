@@ -184,13 +184,7 @@ extension PointOfView: CustomStringConvertible {
     }
 }
 
-extension String {
-    
-    /// Returns the NSLocalizedString version of self
-    var localized: String {
-        return NSLocalizedString(self, comment: "")
-    }
-    
+extension String {    
     /// Retuns the NSLocalizedString version of self from the InfoPlist table
     var infoPlistLocalized: String {
         return localized(table: "InfoPlist")
