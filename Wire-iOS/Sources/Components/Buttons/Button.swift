@@ -25,8 +25,7 @@ enum ButtonStyle : Int {
     case emptyMonochrome
 }
 
-///TODO: no public
-public class Button: ButtonWithLargerHitArea {
+class Button: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
     
     var circular = false {
@@ -59,11 +58,7 @@ public class Button: ButtonWithLargerHitArea {
         clipsToBounds = true
     }
     
-    convenience init(style: ButtonStyle) {
-        self.init(style: style, variant: ColorScheme.default.variant)
-    }
-    
-    convenience init(style: ButtonStyle, variant: ColorSchemeVariant) {
+    convenience init(style: ButtonStyle, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init()
         textTransform = .upper
         titleLabel?.font = .smallLightFont
@@ -101,13 +96,13 @@ public class Button: ButtonWithLargerHitArea {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         let s = super.intrinsicContentSize
         
         return CGSize(width: s.width + titleEdgeInsets.left + titleEdgeInsets.right, height: s.height + titleEdgeInsets.top + titleEdgeInsets.bottom)
     }
     
-    override public var bounds: CGRect {
+    override var bounds: CGRect {
         didSet {
             updateCornerRadius()
         }
@@ -132,19 +127,19 @@ public class Button: ButtonWithLargerHitArea {
     }
     
     // MARK: - Observing state
-    override public var isHighlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
     }
     
-    override public var isSelected: Bool {
+    override var isSelected: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
     }
     
-    override public var isEnabled: Bool {
+    override var isEnabled: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
@@ -161,7 +156,7 @@ public class Button: ButtonWithLargerHitArea {
         self.previousState = state
     }
     
-    override public func setTitle(_ title: String?, for state: UIControl.State) {
+    override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
         state.expanded.forEach(){ expandedState in
             if title != nil {
