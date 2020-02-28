@@ -130,7 +130,7 @@ final class Settings {
     
     func migrateAppCenterAndOptOutSettingsToSharedDefaults() {
         if !defaults.bool(forKey: SettingKey.didMigrateHockeySettingInitially.rawValue) {
-            ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews
+            ExtensionSettings.shared.disableLinkPreviews = Settings.disableLinkPreviews
             defaults.set(true, forKey: SettingKey.didMigrateHockeySettingInitially.rawValue)
         }
     }
@@ -155,7 +155,7 @@ final class Settings {
     
     
     
-    var disableLinkPreviews: Bool {
+    static var disableLinkPreviews: Bool {
         get {
             return ExtensionSettings.shared.disableLinkPreviews
         }

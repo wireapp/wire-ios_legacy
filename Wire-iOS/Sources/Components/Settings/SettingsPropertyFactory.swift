@@ -326,11 +326,11 @@ class SettingsPropertyFactory {
         case .disableLinkPreviews:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableLinkPreviews) },
+                getAction: { _ in return SettingsPropertyValue(Settings.disableLinkPreviews) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared.disableLinkPreviews = number.boolValue
+                        Settings.disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
