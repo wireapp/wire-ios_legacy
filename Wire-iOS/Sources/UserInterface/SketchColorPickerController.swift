@@ -22,7 +22,7 @@ protocol SketchColorPickerControllerDelegate: class {
     func sketchColorPickerController(_ controller: SketchColorPickerController, changedSelectedColor color: UIColor)
 }
 
-private let zmLog = ZMSLog(tag: "FileManager")
+private let zmLog = ZMSLog(tag: "SketchColorPickerController")
 
 /// The color picker for the sketching
 
@@ -45,7 +45,6 @@ final class SketchColorPickerController: UIViewController {
         }
     }
 
-    /// Constains CGFloats. Default is 6, 12, 18
     private var brushWidths: [CGFloat] = [6, 12, 18] {
         didSet {
             if brushWidths == oldValue {
@@ -126,20 +125,14 @@ final class SketchColorPickerController: UIViewController {
     }
 
     /// Returns the current brush width for the given color
-    func brushWidth(for color: UIColor?) -> CGFloat {
-        guard let color = color else {
-            zmLog.error("Returning fallback brush for unset color key")
-            return SketchColorPickerDefaultBrushWidth
-        }
-
-        return colorToBrushWidthMapper?[color] ?? 0
+    func brushWidth(for color: UIColor) -> CGFloat {
+        return colorToBrushWidthMapper?[color] ?? SketchColorPickerDefaultBrushWidth
     }
 
-    private func bumpBrushWidth(for color: UIColor?) -> CGFloat {
+    private func bumpBrushWidth(for color: UIColor) -> CGFloat {
         let count = brushWidths.count
-        guard let color = color,
-            let currentValue: CGFloat = colorToBrushWidthMapper?[color] else {
-                return SketchColorPickerDefaultBrushWidth
+        guard let currentValue: CGFloat = colorToBrushWidthMapper?[color] else {
+            return SketchColorPickerDefaultBrushWidth
         }
 
         var index: Int? = nil
@@ -157,7 +150,8 @@ final class SketchColorPickerController: UIViewController {
         colorsCollectionView.backgroundColor = .from(scheme: .background)
         view.addSubview(colorsCollectionView)
 
-        colorsCollectionView.register(SketchColorCollectionViewCell.self, forCellWithReuseIdentifier: "SketchColorCollectionViewCell")
+        SketchColorCollectionViewCell.register(in: colorsCollectionView)
+        
         colorsCollectionView.dataSource = self
         colorsCollectionView.delegate = self
 
@@ -176,16 +170,15 @@ extension SketchColorPickerController: UICollectionViewDataSource, UICollectionV
         return 1
     }
 
-    // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let color = sketchColors[indexPath.row]
         let brushWidth: CGFloat = colorToBrushWidthMapper?[color] ?? SketchColorPickerDefaultBrushWidth
 
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SketchColorCollectionViewCell", for: indexPath) as? SketchColorCollectionViewCell
-        cell?.sketchColor = color
-        cell?.brushWidth = brushWidth
+        let cell = collectionView.dequeueReusableCell(ofType: SketchColorCollectionViewCell.self, for: indexPath)
+        cell.sketchColor = color
+        cell.brushWidth = brushWidth
 
-        return cell!
+        return cell
     }
 
     // MARK: - UICollectionViewDelegate
