@@ -55,6 +55,7 @@ enum SettingKey: String, CaseIterable {
     case disableCallKit = "UserDefaultDisableCallKit"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
+    // MARK: Link opening options
     case twitterOpeningRawValue = "TwitterOpeningRawValue"
     case mapsOpeningRawValue = "MapsOpeningRawValue"
     case browserOpeningRawValue = "BrowserOpeningRawValue"
@@ -85,7 +86,7 @@ final class Settings {
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate:
-                SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate
+                SessionManager.shared?.useConstantBitRateAudio = newValue as? Bool ?? false
             default:
                 break
             }
@@ -113,18 +114,6 @@ final class Settings {
         return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
     }
     
-    //    var lastUserLocation: LocationData? {
-    //        get {
-    //            guard let locationDict = defaults.dictionary(forKey: UserDefaultLastUserLocation) else { return nil }
-    //            return LocationData.locationData(fromDictionary: locationDict)
-    //        }
-    //
-    //        set {
-    //            let locationDict = newValue.toDictionary
-    //            defaults.setValue(locationDict, forKey: UserDefaultLastUserLocation)
-    //        }
-    //    }
-    
     var twitterLinkOpeningOptionRawValue = 0
     var browserLinkOpeningOptionRawValue = 0
     var mapsLinkOpeningOptionRawValue = 0
@@ -137,7 +126,6 @@ final class Settings {
     static var shared: Settings = Settings()
     
     init() {
-//        super.init()
         migrateAppCenterAndOptOutSettingsToSharedDefaults()
         restoreLastUsedAVSSettings()
         
@@ -179,46 +167,9 @@ final class Settings {
         }
         set {
             ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews
-//            defaults.synchronize()
         }
     }
     
-    //    // MARK: - Features disable keys
-    
-    // MARK: - Link opening options
-    //    func twitterLinkOpeningOptionRawValue() -> Int {
-    //        return defaults.integer(forKey: UserDefaultTwitterOpeningRawValue)
-    //    }
-    //
-    //    func setTwitterLinkOpeningOptionRawValue(_ twitterLinkOpeningOptionRawValue: Int) {
-    //        defaults.set(twitterLinkOpeningOptionRawValue, forKey: UserDefaultTwitterOpeningRawValue)
-    //    }
-    //
-    //    func mapsLinkOpeningOptionRawValue() -> Int {
-    //        return defaults.integer(forKey: UserDefaultMapsOpeningRawValue)
-    //    }
-    //
-    //    func setMapsLinkOpeningOptionRawValue(_ mapsLinkOpeningOptionRawValue: Int) {
-    //        defaults.set(mapsLinkOpeningOptionRawValue, forKey: UserDefaultMapsOpeningRawValue)
-    //    }
-    //
-    //    func browserLinkOpeningOptionRawValue() -> Int {
-    //        return defaults.integer(forKey: UserDefaultBrowserOpeningRawValue)
-    //    }
-    //
-    //    func setBrowserLinkOpeningOptionRawValue(_ browserLinkOpeningOptionRawValue: Int) {
-    //        defaults.set(browserLinkOpeningOptionRawValue, forKey: UserDefaultBrowserOpeningRawValue)
-    //    }
-    
-    //    func callingConstantBitRate() -> Bool {
-    //        return defaults.bool(forKey: UserDefaultCallingConstantBitRate)
-    //    }
-    //
-    //    func setCallingConstantBitRate(_ callingConstantBitRate: Bool) {
-    //        defaults.set(callingConstantBitRate, forKey: UserDefaultCallingConstantBitRate)
-    // TODO:
-    //        SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate
-    //    }
     // MARK: - MediaManager
     func restoreLastUsedAVSSettings() {
         if let savedIntensity = defaults.object(forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue) as? NSNumber,

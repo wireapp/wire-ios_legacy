@@ -314,10 +314,12 @@ class SettingsPropertyFactory {
         case .callingConstantBitRate:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared.callingConstantBitRate) },
+                getAction: { _ in
+                    let callingConstantBitRate: Bool = Settings.shared[.callingConstantBitRate] ?? false
+                    return SettingsPropertyValue(callingConstantBitRate) },
                 setAction: { _, value in
                     if case .number(let enabled) = value {
-                        Settings.shared.callingConstantBitRate = enabled.boolValue
+                        Settings.shared[.callingConstantBitRate] = enabled.boolValue
                     }
             })
             

@@ -168,7 +168,7 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared.callingConstantBitRate
+                sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
