@@ -17,7 +17,6 @@
 // 
 import UIKit
 
-@objcMembers
 final class SketchColorCollectionViewCell: UICollectionViewCell {
     var sketchColor: UIColor? {
         didSet {
@@ -31,13 +30,13 @@ final class SketchColorCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var brushWidth: Int = 0 {
+    var brushWidth: CGFloat = 6 {
         didSet {
             guard brushWidth != oldValue else {
                 return
             }
 
-            knobView.knobDiameter = CGFloat(brushWidth)
+            knobView.knobDiameter = brushWidth
             knobView.setNeedsLayout()
         }
     }
@@ -56,8 +55,6 @@ final class SketchColorCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         knobView = ColorKnobView()
         addSubview(knobView)
-
-        brushWidth = 6
 
         setNeedsUpdateConstraints()
     }

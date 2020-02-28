@@ -535,7 +535,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
             }
             
             if status.isGroup && !message.isEphemeral {
-                return ((sender.name ?? "" + ": ") && Swift.type(of: self).emphasisStyle) +
+                return (((sender.name ?? "") + ": ") && Swift.type(of: self).emphasisStyle) +
                         (messageDescription && Swift.type(of: self).regularStyle)
             }
             else {

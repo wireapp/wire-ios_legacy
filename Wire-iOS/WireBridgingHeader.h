@@ -29,8 +29,6 @@
 
 #import "IconButton.h"
 #import "IconButton+Internal.h"
-#import "Button.h"
-#import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 #import "ColorKnobView.h"
 
@@ -44,9 +42,6 @@
 #import "SplitViewController+internal.h"
 #import "ConfirmAssetViewController.h"
 #import "ConfirmAssetViewController+Internal.h"
-
-#import "SketchColorPickerController.h"
-#import "SketchColorPickerController+Internal.h"
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"

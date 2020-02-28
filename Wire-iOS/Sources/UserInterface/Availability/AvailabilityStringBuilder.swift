@@ -44,7 +44,7 @@
                 guard availability != .none && !user.shouldHideAvailability else { //Should use the default placeholder string
                     return nil
                 }
-                title = "availability.\(availability.canonicalName).placeholder".localized.localizedUppercase
+                title = "availability.\(availability.canonicalName)".localized.localizedUppercase
             }
         }
         
