@@ -189,13 +189,12 @@ final class Settings {
     
     
     // MARK: - Debug
-    
-    
+        
     private func startLogging() {
-        #if targetEnvironment(simulator)
+        #if !targetEnvironment(simulator)
         loadEnabledLogs()
-        #else
-        ZMSLog.startRecording(isInternal: Bundle.developerModeEnabled)
         #endif
+        
+        ZMSLog.startRecording(isInternal: Bundle.developerModeEnabled)
     }
 }
