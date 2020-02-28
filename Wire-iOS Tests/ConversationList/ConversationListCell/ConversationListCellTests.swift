@@ -258,6 +258,18 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(conversation: conversation, icon: icon)
     }
 
+    func testThatItRendersGroupConversationWithTextMessages() {
+        // when
+        let conversation = createGroupConversation()
+        let message = conversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+        
+        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
+        // then
+        verify(conversation)
+    }
+    
     func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)

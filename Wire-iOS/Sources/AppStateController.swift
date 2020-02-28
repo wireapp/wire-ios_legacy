@@ -241,7 +241,7 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     }
 
     var selfUser: UserType? {
-        return SelfUser.provider?.selfUser
+        return ZMUserSession.shared()?.selfUser
     }
 
     var numberOfAccounts: Int {

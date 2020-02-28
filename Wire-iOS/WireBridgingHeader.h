@@ -29,8 +29,6 @@
 
 #import "IconButton.h"
 #import "IconButton+Internal.h"
-#import "Button.h"
-#import "Button+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
@@ -46,9 +44,6 @@
 
 #import "ProfileSelfPictureViewController.h"
 #import "ProfileSelfPictureViewController+Internal.h"
-
-#import "SketchColorPickerController.h"
-#import "SketchColorPickerController+Internal.h"
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"

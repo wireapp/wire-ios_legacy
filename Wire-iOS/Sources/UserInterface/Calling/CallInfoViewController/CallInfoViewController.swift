@@ -98,7 +98,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         super.viewWillAppear(animated)
         updateState()
     }
-
+    
     private func setupViews() {
         addToSelf(backgroundViewController)
 
