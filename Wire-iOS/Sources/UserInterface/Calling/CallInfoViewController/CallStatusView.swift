@@ -153,7 +153,7 @@ extension CallStatusViewInputType {
     
     var effectiveColorVariant: ColorSchemeVariant {
         guard !isVideoCall else { return .dark }
-        return variant == .dark ? .dark : .light
+        return variant
     }
     
 }

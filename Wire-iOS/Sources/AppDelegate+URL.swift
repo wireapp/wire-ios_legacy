@@ -24,11 +24,21 @@ extension AppDelegate {
         do {
             return try sessionManager?.openURL(url, options: options) ?? false
         } catch let error as LocalizedError {
-            UIApplication.shared.topmostViewController()?.showAlert(for: error)
+            if error is CompanyLoginError {
+                rootViewController.authenticationCoordinator?.cancelCompanyLogin()
+                
+                UIApplication.shared.topmostViewController()?.dismissIfNeeded(animated: true, completion: {
+                    UIApplication.shared.topmostViewController()?.showAlert(for: error)
+                })
+            } else {
+                UIApplication.shared.topmostViewController()?.showAlert(for: error)
+            }
+            
             return false
         } catch {
             return false
         }
     }
+    
 }
 

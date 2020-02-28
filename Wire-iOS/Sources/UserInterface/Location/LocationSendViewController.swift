@@ -25,7 +25,7 @@ import Cartography
 
 public final class LocationSendViewController: UIViewController {
     
-    public let sendButton = Button(style: .full)
+    let sendButton = Button(style: .full)
     public let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont
