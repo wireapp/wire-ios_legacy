@@ -50,6 +50,8 @@ enum SettingKey: String, CaseIterable {
     case callSoundName = "ZMCallSoundName"
     case pingSoundName = "ZMPingSoundName"
     case sendButtonDisabled = "SendButtonDisabled"
+    
+    // MARK: Features disable keys
     case disableCallKit = "UserDefaultDisableCallKit"
     case enableBatchCollections = "UserDefaultEnableBatchCollections"
     case callingProtocolStrategy = "CallingProtocolStrategy"
@@ -58,32 +60,38 @@ enum SettingKey: String, CaseIterable {
     case browserOpeningRawValue = "BrowserOpeningRawValue"
     case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
     case callingConstantBitRate = "CallingConstantBitRate"
-    case disableLinkPreviews = "DisableLinkPreviews"
+    case disableLinkPreviews = "DisableLinkPreviews" ///TODO: need to save to default also?
 }
 
 
 /// Model object for locally stored (not in SE or AVS) user app settings
-///TODO: no nsobject?
-final class Settings: NSObject {
+final class Settings {
+    // MARK: - subscript
     subscript<T>(index: SettingKey) -> T? {
         get {
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {
             defaults.set(newValue, forKey: index.rawValue)
-//            defaults.synchronize()
             
-            ///TODO: side effect
+            /// side effects of setter
             
             switch index {
             case .sendButtonDisabled:
-            notifyDisableSendButtonChanged()
+                notifyDisableSendButtonChanged()
+            case .messageSoundName,
+                 .callSoundName,
+                 .pingSoundName:                AVSMediaManager.sharedInstance().configureSounds()
+            case .disableCallKit:
+                SessionManager.shared?.updateCallNotificationStyleFromSettings()
+            case .callingConstantBitRate:
+                SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate
             default:
                 break
             }
         }
     }
-
+    
     subscript<E: RawRepresentable>(index: SettingKey) -> E? {
         get {
             if let value: E.RawValue = defaults.value(forKey: index.rawValue) as? E.RawValue {
@@ -94,87 +102,42 @@ final class Settings: NSObject {
         }
         set {
             defaults.set(newValue?.rawValue, forKey: index.rawValue)
-//            defaults.synchronize()
             
             ///TODO: side effect
         }
     }
-
-    var disableLinkPreviews = false
-    var disableCallKit = false
-    var callingConstantBitRate = false
-    var enableBatchCollections = false
-    /* develop option */
-//    var lastViewedScreen: SettingsLastScreen {
-//        get {
-//            return SettingsLastScreen(rawValue: defaults.integer(forKey: UserDefaultLastViewedScreen)) ?? .none
-//        }
-//
-//        set {
-//            defaults.set(newValue.rawValue, forKey: UserDefaultLastViewedScreen)
-//            defaults.synchronize()
-//        }
-//    }
-
-//    var preferredCamera: SettingsCamera {
-//        get {
-//            return SettingsCamera(rawValue: defaults.integer(forKey: UserDefaultPreferredCamera)) ?? .front
-//        }
-//
-//        set {
-//            defaults.set(newValue.rawValue, forKey: UserDefaultPreferredCamera)
-//        }
-//    }
-
+    
     var blacklistDownloadInterval: TimeInterval {
         let HOURS_6 = 6 * 60 * 60
         let settingValue = defaults.integer(forKey: SettingKey.blackListDownloadInterval.rawValue)
         return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
     }
     
-//    var lastUserLocation: LocationData? {
-//        get {
-//            guard let locationDict = defaults.dictionary(forKey: UserDefaultLastUserLocation) else { return nil }
-//            return LocationData.locationData(fromDictionary: locationDict)
-//        }
-//
-//        set {
-//            let locationDict = newValue.toDictionary
-//            defaults.setValue(locationDict, forKey: UserDefaultLastUserLocation)
-//        }
-//    }
-
-    var messageSoundName: String?
-    var callSoundName: String?
-    var pingSoundName: String?
+    //    var lastUserLocation: LocationData? {
+    //        get {
+    //            guard let locationDict = defaults.dictionary(forKey: UserDefaultLastUserLocation) else { return nil }
+    //            return LocationData.locationData(fromDictionary: locationDict)
+    //        }
+    //
+    //        set {
+    //            let locationDict = newValue.toDictionary
+    //            defaults.setValue(locationDict, forKey: UserDefaultLastUserLocation)
+    //        }
+    //    }
+    
     var twitterLinkOpeningOptionRawValue = 0
     var browserLinkOpeningOptionRawValue = 0
     var mapsLinkOpeningOptionRawValue = 0
     
-    
-//    var lastPushAlertDate: Date? {
-//        get {
-//            return defaults.value(forKey: UserDefaultLastPushAlertDate) as? Date
-//        }
-//
-//        set {
-//            defaults.setValue(newValue, forKey: UserDefaultLastPushAlertDate)
-//            defaults.synchronize()
-//        }
-//    }
-    
-    
-    
-
-    
+        
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0
-
+    
     static var shared: Settings = Settings()
     
-    override init() {
-        super.init()
+    init() {
+//        super.init()
         migrateAppCenterAndOptOutSettingsToSharedDefaults()
         restoreLastUsedAVSSettings()
         
@@ -182,7 +145,7 @@ final class Settings: NSObject {
         
         NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
-
+    
     func migrateAppCenterAndOptOutSettingsToSharedDefaults() {
         if !defaults.bool(forKey: SettingKey.didMigrateHockeySettingInitially.rawValue) {
             ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews
@@ -209,95 +172,53 @@ final class Settings: NSObject {
     }
     
     
-//    func setMessageSoundName(_ messageSoundName: String?) {
-//        defaults[UserDefaultMessageSoundName] = messageSoundName
-    //        AVSMediaManager.sharedInstance.configureSounds() ///TODO:
-//    }
-//
-//    func messageSoundName() -> String? {
-//        return defaults[UserDefaultMessageSoundName] as? String
-//    }
-//
-//    func setCallSoundName(_ callSoundName: String?) {
-//        defaults[UserDefaultCallSoundName] = callSoundName
-//        AVSMediaManager.sharedInstance.configureSounds() TODO:
-//    }
-//
-//    func callSoundName() -> String? {
-//        return defaults[UserDefaultCallSoundName] as? String
-//    }
     
-//    func setPingSoundName(_ pingSoundName: String?) {
-//        defaults[UserDefaultPingSoundName] = pingSoundName
-//        AVSMediaManager.sharedInstance.configureSounds()
-//        //TODO:
-//    }
-//
-//    func pingSoundName() -> String? {
-//        return defaults[UserDefaultPingSoundName] as? String
-//    }
-//    func disableCallKit() -> Bool {
-//        return defaults.bool(forKey: UserDefaultDisableCallKit)
-//    }
-//
-//    func setDisableCallKit(_ disableCallKit: Bool) {
-//        defaults.set(disableCallKit, forKey: UserDefaultDisableCallKit)
-//        ///TODO
-//        SessionManager.shared().updateCallNotificationStyleFromSettings()
-//    }
+    var disableLinkPreviews: Bool {
+        get {
+            return ExtensionSettings.shared.disableLinkPreviews
+        }
+        set {
+            ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews
+//            defaults.synchronize()
+        }
+    }
     
-//    func disableLinkPreviews() -> Bool {
-//        return ExtensionSettings.shared.disableLinkPreviews()
-//    }
-//
-//    func setDisableLinkPreviews(_ disableLinkPreviews: Bool) {
-//        ExtensionSettings.shared.disableLinkPreviews() = disableLinkPreviews
-//        defaults.synchronize()
-//    }
-//
-//    // MARK: - Features disable keys
-//    func enableBatchCollections() -> Bool {
-//        return defaults.bool(forKey: UserDefaultEnableBatchCollections)
-//    }
-//
-//    func setEnableBatchCollections(_ enableBatchCollections: Bool) {
-//        defaults.set(enableBatchCollections, forKey: UserDefaultEnableBatchCollections)
-//    }
+    //    // MARK: - Features disable keys
     
     // MARK: - Link opening options
-//    func twitterLinkOpeningOptionRawValue() -> Int {
-//        return defaults.integer(forKey: UserDefaultTwitterOpeningRawValue)
-//    }
-//
-//    func setTwitterLinkOpeningOptionRawValue(_ twitterLinkOpeningOptionRawValue: Int) {
-//        defaults.set(twitterLinkOpeningOptionRawValue, forKey: UserDefaultTwitterOpeningRawValue)
-//    }
-//
-//    func mapsLinkOpeningOptionRawValue() -> Int {
-//        return defaults.integer(forKey: UserDefaultMapsOpeningRawValue)
-//    }
-//
-//    func setMapsLinkOpeningOptionRawValue(_ mapsLinkOpeningOptionRawValue: Int) {
-//        defaults.set(mapsLinkOpeningOptionRawValue, forKey: UserDefaultMapsOpeningRawValue)
-//    }
-//
-//    func browserLinkOpeningOptionRawValue() -> Int {
-//        return defaults.integer(forKey: UserDefaultBrowserOpeningRawValue)
-//    }
-//
-//    func setBrowserLinkOpeningOptionRawValue(_ browserLinkOpeningOptionRawValue: Int) {
-//        defaults.set(browserLinkOpeningOptionRawValue, forKey: UserDefaultBrowserOpeningRawValue)
-//    }
+    //    func twitterLinkOpeningOptionRawValue() -> Int {
+    //        return defaults.integer(forKey: UserDefaultTwitterOpeningRawValue)
+    //    }
+    //
+    //    func setTwitterLinkOpeningOptionRawValue(_ twitterLinkOpeningOptionRawValue: Int) {
+    //        defaults.set(twitterLinkOpeningOptionRawValue, forKey: UserDefaultTwitterOpeningRawValue)
+    //    }
+    //
+    //    func mapsLinkOpeningOptionRawValue() -> Int {
+    //        return defaults.integer(forKey: UserDefaultMapsOpeningRawValue)
+    //    }
+    //
+    //    func setMapsLinkOpeningOptionRawValue(_ mapsLinkOpeningOptionRawValue: Int) {
+    //        defaults.set(mapsLinkOpeningOptionRawValue, forKey: UserDefaultMapsOpeningRawValue)
+    //    }
+    //
+    //    func browserLinkOpeningOptionRawValue() -> Int {
+    //        return defaults.integer(forKey: UserDefaultBrowserOpeningRawValue)
+    //    }
+    //
+    //    func setBrowserLinkOpeningOptionRawValue(_ browserLinkOpeningOptionRawValue: Int) {
+    //        defaults.set(browserLinkOpeningOptionRawValue, forKey: UserDefaultBrowserOpeningRawValue)
+    //    }
     
-//    func callingConstantBitRate() -> Bool {
-//        return defaults.bool(forKey: UserDefaultCallingConstantBitRate)
-//    }
-//
-//    func setCallingConstantBitRate(_ callingConstantBitRate: Bool) {
-//        defaults.set(callingConstantBitRate, forKey: UserDefaultCallingConstantBitRate)
+    //    func callingConstantBitRate() -> Bool {
+    //        return defaults.bool(forKey: UserDefaultCallingConstantBitRate)
+    //    }
+    //
+    //    func setCallingConstantBitRate(_ callingConstantBitRate: Bool) {
+    //        defaults.set(callingConstantBitRate, forKey: UserDefaultCallingConstantBitRate)
     // TODO:
-//        SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate
-//    }
+    //        SessionManager.shared.useConstantBitRateAudio = callingConstantBitRate
+    //    }
     // MARK: - MediaManager
     func restoreLastUsedAVSSettings() {
         if let savedIntensity = defaults.object(forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue) as? NSNumber,
@@ -314,11 +235,11 @@ final class Settings: NSObject {
             defaults.setValue(NSNumber(value: level), forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue)
         }
     }
-
+    
     
     // MARK: - Debug
     
-
+    
     private func startLogging() {
         #if targetEnvironment(simulator)
         loadEnabledLogs()

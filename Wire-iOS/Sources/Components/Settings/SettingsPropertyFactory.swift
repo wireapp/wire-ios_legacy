@@ -336,10 +336,12 @@ class SettingsPropertyFactory {
         case .disableCallKit:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableCallKit) },
+                getAction: { _ in
+                    let disableCallKit: Bool = Settings.shared[.disableCallKit] ?? false
+                    return SettingsPropertyValue(disableCallKit) },
                 setAction: { _, value in
                     if case .number(let disabled) = value {
-                        Settings.shared.disableCallKit = disabled.boolValue
+                        Settings.shared[.disableCallKit] = disabled.boolValue
                     }
             })
         case .readReceiptsEnabled:
