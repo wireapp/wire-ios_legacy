@@ -69,7 +69,8 @@ protocol LinkOpeningOption {
     var displayString: String { get }
     static var availableOptions: [Self] { get }
     static func storedPreference() -> Self
-
+//    static var settingKey: SettingKey { get }
+//    static var defaultPreference: Self  { get }
 }
 
 

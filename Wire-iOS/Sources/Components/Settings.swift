@@ -103,8 +103,6 @@ final class Settings {
         }
         set {
             defaults.set(newValue?.rawValue, forKey: index.rawValue)
-            
-            ///TODO: side effect
         }
     }
     
@@ -114,11 +112,6 @@ final class Settings {
         return TimeInterval(settingValue > 0 ? settingValue : HOURS_6)
     }
     
-    var twitterLinkOpeningOptionRawValue = 0
-    var browserLinkOpeningOptionRawValue = 0
-    var mapsLinkOpeningOptionRawValue = 0
-    
-        
     /// These settings are not actually persisted, just kept in memory
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0
@@ -189,7 +182,7 @@ final class Settings {
     
     
     // MARK: - Debug
-        
+    
     private func startLogging() {
         #if !targetEnvironment(simulator)
         loadEnabledLogs()

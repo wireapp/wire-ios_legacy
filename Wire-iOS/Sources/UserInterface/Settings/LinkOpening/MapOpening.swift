@@ -44,7 +44,12 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
     }
 
     static func storedPreference() -> MapsOpeningOption {
-        return MapsOpeningOption(rawValue: Settings.shared.mapsLinkOpeningOptionRawValue) ?? .apple
+        if let mapsOpeningRawValue: Int = Settings.shared[.mapsOpeningRawValue],
+            let mapsOpeningOption = MapsOpeningOption(rawValue: mapsOpeningRawValue) {
+            return mapsOpeningOption
+        }
+        
+        return .apple
     }
 
 }

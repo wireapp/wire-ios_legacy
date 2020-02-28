@@ -45,8 +45,14 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
     }
 
     static func storedPreference() -> TweetOpeningOption {
-        return TweetOpeningOption(rawValue: Settings.shared.twitterLinkOpeningOptionRawValue) ?? .none
+        if let twitterOpeningRawValue: Int = Settings.shared[.twitterOpeningRawValue],
+            let tweetOpeningOption = TweetOpeningOption(rawValue: twitterOpeningRawValue) {
+            return tweetOpeningOption
+        }
+        
+        return .none
     }
+
 }
 
 
