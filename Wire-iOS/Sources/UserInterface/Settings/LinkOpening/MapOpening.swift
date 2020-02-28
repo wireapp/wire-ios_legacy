@@ -21,6 +21,9 @@ private let log = ZMSLog(tag: "link opening")
 
 
 enum MapsOpeningOption: Int, LinkOpeningOption {
+    typealias E = MapsOpeningOption    
+    static var settingKey: SettingKey = .mapsOpeningRawValue
+    static var defaultPreference: E = .apple
 
 
     case apple, google
@@ -42,16 +45,6 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
         case .google: return UIApplication.shared.googleMapsInstalled
         }
     }
-
-    static func storedPreference() -> MapsOpeningOption {
-        if let mapsOpeningRawValue: Int = Settings.shared[.mapsOpeningRawValue],
-            let mapsOpeningOption = MapsOpeningOption(rawValue: mapsOpeningRawValue) {
-            return mapsOpeningOption
-        }
-        
-        return .apple
-    }
-
 }
 
 
@@ -59,7 +52,7 @@ extension URL {
 
     func openAsLocation() -> Bool {
         log.debug("Trying to open \"\(self)\" as location")
-        let saved = MapsOpeningOption.storedPreference()
+        let saved: MapsOpeningOption = MapsOpeningOption.storedPreference()
         log.debug("Saved option to open a location: \(saved.displayString)")
 
         switch saved {

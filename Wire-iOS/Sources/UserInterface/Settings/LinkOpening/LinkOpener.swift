@@ -63,18 +63,28 @@ extension NSURL {
 }
 
 protocol LinkOpeningOption {
-
+    associatedtype E: RawRepresentable
+    
     static var allOptions: [Self] { get }
     var isAvailable: Bool { get }
     var displayString: String { get }
     static var availableOptions: [Self] { get }
-    static func storedPreference() -> Self
-//    static var settingKey: SettingKey { get }
-//    static var defaultPreference: Self  { get }
+    static func storedPreference() -> E
+    static var settingKey: SettingKey { get }
+    static var defaultPreference: E  { get }
 }
 
 
 extension LinkOpeningOption {
+
+    static func storedPreference() -> E {
+        if let openingRawValue: E.RawValue = Settings.shared[settingKey],
+            let openingOption: E = E.init(rawValue: openingRawValue) {
+            return openingOption
+        }
+        
+        return defaultPreference
+    }
 
     static var availableOptions: [Self] {
         return allOptions.filter { $0.isAvailable }

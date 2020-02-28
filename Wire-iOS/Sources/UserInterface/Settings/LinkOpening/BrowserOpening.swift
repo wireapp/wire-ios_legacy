@@ -21,6 +21,10 @@ private let log = ZMSLog(tag: "link opening")
 
 
 enum BrowserOpeningOption: Int, LinkOpeningOption {
+    typealias E = BrowserOpeningOption
+    static var settingKey: SettingKey = .browserOpeningRawValue
+    static var defaultPreference: E = .safari
+
 
     case safari, chrome, firefox, snowhaze, brave
 
@@ -47,23 +51,13 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         case .brave: return UIApplication.shared.braveInstalled
         }
     }
-
-    static func storedPreference() -> BrowserOpeningOption {
-        if let browserOpeningRawValue: Int = Settings.shared[.browserOpeningRawValue],
-            let browserOpeningOption = BrowserOpeningOption(rawValue: browserOpeningRawValue) {
-            return browserOpeningOption
-        }
-        
-        return .safari
-    }
-
 }
 
 extension URL {
 
     func openAsLink() -> Bool {
         log.debug("Trying to open \"\(self)\" in thrid party browser")
-        let saved = BrowserOpeningOption.storedPreference()
+        let saved: BrowserOpeningOption = BrowserOpeningOption.storedPreference()
         log.debug("Saved option to open a regular link: \(saved.displayString)")
         let app = UIApplication.shared
 
