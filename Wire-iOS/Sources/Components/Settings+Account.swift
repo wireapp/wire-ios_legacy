@@ -30,32 +30,35 @@ extension Settings {
         return defaults.value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
     
-    func value<T>(for key: SettingKey, in account: Account) -> T? {
-        return value(for: key.rawValue, in: account)
-    }
     
-    /// Returns the value associated with the given account for the given key,
-    /// or nil if it doesn't exist.
-    /// TODO: retire
-    func value<T>(for key: String, in account: Account) -> T? {
+    /// Returns the value associated with the given account for the given key
+    ///
+    /// - Parameters:
+    ///   - key: the SettingKey enum
+    ///   - account: account to get value
+    /// - Returns: the setting of the account
+    func value<T>(for settingKey: SettingKey, in account: Account) -> T? {
+        let key = settingKey.rawValue
+        
         // Attempt to migrate the shared value
         if let rootValue = defaults.value(forKey: key) {
-            setValue(rootValue, for: key, in: account)
-            defaults.setValue(nil, forKey: key)
+            setValue(rootValue, settingKey: settingKey, in: account)
+            defaults.removeObject(forKey: key)
             defaults.synchronize()
         }
         
-        var accountPayload = self.payload(for: account)
+        var accountPayload = payload(for: account)
         return accountPayload[key] as? T
     }
     
-    func setValue<T>(_ value: T?, settingKey: SettingKey, in account: Account) {
-        setValue(value, for: settingKey.rawValue, in: account)
-    }
-    
     /// Sets the value associated with the given account for the given key.
-    /// TODO: retire
-    func setValue<T>(_ value: T?, for key: String, in account: Account) {
+    ///
+    /// - Parameters:
+    ///   - value: value to set
+    ///   - settingKey: the SettingKey enum
+    ///   - account: account to set value
+    func setValue<T>(_ value: T?, settingKey: SettingKey, in account: Account) {
+        let key = settingKey.rawValue
         var accountPayload = self.payload(for: account)
         accountPayload[key] = value
         defaults.setValue(accountPayload, forKey: account.userDefaultsKey())
