@@ -4626,8 +4626,8 @@
 		87B8C33A1DF9788B0015EC89 /* LinkOpening */ = {
 			isa = PBXGroup;
 			children = (
-				87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */,
 				87B8C33C1DF9788B0015EC89 /* LinkOpener.swift */,
+				87B8C33B1DF9788B0015EC89 /* BrowserOpening.swift */,
 				87B8C33D1DF9788B0015EC89 /* MapOpening.swift */,
 				87B8C33E1DF9788B0015EC89 /* TweetOpening.swift */,
 			);

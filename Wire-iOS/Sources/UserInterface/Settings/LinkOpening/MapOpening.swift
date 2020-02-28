@@ -22,8 +22,11 @@ private let log = ZMSLog(tag: "link opening")
 
 enum MapsOpeningOption: Int, LinkOpeningOption {
 
-
     case apple, google
+    
+    typealias E = MapsOpeningOption
+    static var settingKey: String = UserDefaultMapsOpeningRawValue
+    static var defaultPreference: E = .apple
 
     static var allOptions: [MapsOpeningOption] {
         return [.apple, .google]
@@ -42,11 +45,6 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
         case .google: return UIApplication.shared.googleMapsInstalled
         }
     }
-
-    static func storedPreference() -> MapsOpeningOption {
-        return MapsOpeningOption(rawValue: Settings.shared().mapsLinkOpeningOptionRawValue) ?? .apple
-    }
-
 }
 
 

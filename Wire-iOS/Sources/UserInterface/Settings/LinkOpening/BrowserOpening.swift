@@ -24,6 +24,10 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
 
     case safari, chrome, firefox, snowhaze, brave
 
+    typealias E = BrowserOpeningOption
+    static var settingKey: String = UserDefaultBrowserOpeningRawValue
+    static var defaultPreference: E = .safari
+
     static var allOptions: [BrowserOpeningOption] {
         return [.safari, .chrome, .firefox, .snowhaze, .brave]
     }
@@ -46,10 +50,6 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         case .snowhaze: return UIApplication.shared.snowhazeInstalled
         case .brave: return UIApplication.shared.braveInstalled
         }
-    }
-
-    static func storedPreference() -> BrowserOpeningOption {
-        return BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
     }
 
 }

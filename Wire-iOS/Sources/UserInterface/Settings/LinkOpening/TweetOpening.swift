@@ -24,6 +24,10 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
 
     case none, tweetbot, twitterrific
 
+    typealias E = TweetOpeningOption
+    static var settingKey: String = UserDefaultTwitterOpeningRawValue
+    static var defaultPreference: E = .none
+
     var displayString: String {
         switch self {
         case .none: return "open_link.twitter.option.default".localized
@@ -42,10 +46,6 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         case .tweetbot: return UIApplication.shared.tweetbotInstalled
         case . twitterrific: return UIApplication.shared.twitterrificInstalled
         }
-    }
-
-    static func storedPreference() -> TweetOpeningOption {
-        return TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
     }
 }
 
