@@ -71,7 +71,20 @@ final class Settings: NSObject {
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {
-            defaults.set(newValue, forKey: index.rawValue)
+            defaults.set(newValue, forKey: index.rawValue) ///TODO: raw value of SettingsLastScreen
+            defaults.synchronize()
+            
+            ///TODO: side effect
+        }
+    }
+
+    subscript<E: RawRepresentable>(index: SettingKey) -> E? {
+        get {
+            let value = defaults.value(forKey: index.rawValue)
+            return value as? E ///TODO: need rawValue: ?
+        }
+        set {
+            defaults.set(newValue?.rawValue, forKey: index.rawValue)
             defaults.synchronize()
             
             ///TODO: side effect
@@ -173,32 +186,6 @@ final class Settings: NSObject {
     // Max audio recording duration in seconds
     var maxRecordingDurationDebug: TimeInterval = 0.0
 
-//    static var allDefaultsKeys: [String] = [
-//            UserDefaultDisableMarkdown,
-//            UserDefaultChatHeadsDisabled,
-//            UserDefaultLastViewedConversation,
-//            UserDefaultLastViewedScreen,
-//            AVSMediaManagerPersistentIntensity,
-//            UserDefaultPreferredCameraFlashMode,
-//            UserDefaultLastPushAlertDate,
-//            BlackListDownloadIntervalKey,
-//            UserDefaultMessageSoundName,
-//            UserDefaultCallSoundName,
-//            UserDefaultPingSoundName,
-//            UserDefaultLastUserLocation,
-//            UserDefaultPreferredCamera,
-//            UserDefaultSendButtonDisabled,
-//            UserDefaultDisableCallKit,
-//            UserDefaultTwitterOpeningRawValue,
-//            UserDefaultMapsOpeningRawValue,
-//            UserDefaultBrowserOpeningRawValue,
-//            UserDefaultCallingProtocolStrategy,
-//            UserDefaultEnableBatchCollections,
-//            UserDefaultDidMigrateHockeySettingInitially,
-//            UserDefaultCallingConstantBitRate,
-//            UserDefaultDisableLinkPreviews
-//        ]
-    
     static var shared: Settings = Settings()
     
     override init() {
