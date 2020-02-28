@@ -189,7 +189,7 @@ class SettingsPropertyFactory {
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
-                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue) ///TODO: full?
+                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
                 }
                 else {
                     return SettingsPropertyValue(0)
@@ -286,11 +286,13 @@ class SettingsPropertyFactory {
         case .disableSendButton:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared.disableSendButton) },
+                getAction: { _ in
+                    let disableSendButton: Bool? = Settings.shared[.sendButtonDisabled]
+                    return SettingsPropertyValue(disableSendButton ?? false) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared.disableSendButton = number.boolValue
+                        Settings.shared[.sendButtonDisabled] = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }

@@ -70,17 +70,24 @@ final class Settings: NSObject {
             return defaults.value(forKey: index.rawValue) as? T
         }
         set {
-            defaults.set(newValue, forKey: index.rawValue) ///TODO: raw value of SettingsLastScreen
+            defaults.set(newValue, forKey: index.rawValue)
 //            defaults.synchronize()
             
             ///TODO: side effect
+            
+            switch index {
+            case .sendButtonDisabled:
+            notifyDisableSendButtonChanged()
+            default:
+                break
+            }
         }
     }
 
     subscript<E: RawRepresentable>(index: SettingKey) -> E? {
         get {
             let value = defaults.value(forKey: index.rawValue)
-            return value as? E ///TODO: need rawValue: ?
+            return E(rawValue:value)
         }
         set {
             defaults.set(newValue?.rawValue, forKey: index.rawValue)
@@ -90,30 +97,6 @@ final class Settings: NSObject {
         }
     }
 
-//    var chatHeadsDisabled: Bool {
-//        get {
-//            return defaults.bool(forKey: UserDefaultChatHeadsDisabled)
-//        }
-//
-//        set {
-//            defaults.set(newValue, forKey: UserDefaultChatHeadsDisabled)
-//            defaults.synchronize()
-//        }
-//    }
-//
-//    var disableMarkdown: Bool {
-//        get {
-//            return defaults.bool(forKey: UserDefaultDisableMarkdown)
-//        }
-//
-//        set {
-//            defaults.set(newValue, forKey: UserDefaultDisableMarkdown)
-//            defaults.synchronize()
-//        }
-//    }
-    
-    var shouldRegisterForVoIPNotificationsOnly = false
-    var disableSendButton = false
     var disableLinkPreviews = false
     var disableCallKit = false
     var callingConstantBitRate = false
@@ -222,14 +205,6 @@ final class Settings: NSObject {
         synchronize()
     }
     
-//    func shouldRegisterForVoIPNotificationsOnly() -> Bool {
-//        return defaults.bool(forKey: SettingKey.VoIPNotificationsOnly)
-//    }
-//
-//    func setShouldRegisterForVoIPNotificationsOnly(_ shoudlRegisterForVoIPOnly: Bool) {
-//        defaults.set(shoudlRegisterForVoIPOnly, forKey: SettingKey.VoIPNotificationsOnly)
-//        defaults.synchronize()
-//    }
     
 //    func setMessageSoundName(_ messageSoundName: String?) {
 //        defaults[UserDefaultMessageSoundName] = messageSoundName
@@ -258,16 +233,6 @@ final class Settings: NSObject {
 //    func pingSoundName() -> String? {
 //        return defaults[UserDefaultPingSoundName] as? String
 //    }
-    
-//    func disableSendButton() -> Bool {
-//        return defaults.bool(forKey: UserDefaultSendButtonDisabled)
-//    }
-//
-//    func setDisableSendButton(_ disableSendButton: Bool) {
-//        defaults.set(disableSendButton, forKey: UserDefaultSendButtonDisabled)
-//        notifyDisableSendButtonChanged() ///TODO:
-//    }
-
 //    func disableCallKit() -> Bool {
 //        return defaults.bool(forKey: UserDefaultDisableCallKit)
 //    }
