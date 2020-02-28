@@ -86,8 +86,11 @@ final class Settings: NSObject {
 
     subscript<E: RawRepresentable>(index: SettingKey) -> E? {
         get {
-            let value = defaults.value(forKey: index.rawValue)
-            return E(rawValue:value)
+            if let value: E.RawValue = defaults.value(forKey: index.rawValue) as? E.RawValue {
+                return E(rawValue:value)
+            }
+            
+            return nil
         }
         set {
             defaults.set(newValue?.rawValue, forKey: index.rawValue)
