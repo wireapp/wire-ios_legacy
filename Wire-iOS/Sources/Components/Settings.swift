@@ -332,9 +332,12 @@ final class Settings: NSObject {
 //    }
     // MARK: - MediaManager
     func restoreLastUsedAVSSettings() {
-        let savedIntensity = defaults.integer(forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue)
-        ///0 in test
-        AVSMediaManager.sharedInstance().intensityLevel = AVSIntensityLevel(rawValue: UInt(savedIntensity)) ?? .full
+        if let savedIntensity = defaults.object(forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue) as? NSNumber,
+            let intensityLevel = AVSIntensityLevel(rawValue: UInt(savedIntensity.intValue)){
+            AVSMediaManager.sharedInstance().intensityLevel = intensityLevel
+        } else {
+            AVSMediaManager.sharedInstance().intensityLevel = .full
+        }        
     }
     
     func storeCurrentIntensityLevelAsLastUsed() {
