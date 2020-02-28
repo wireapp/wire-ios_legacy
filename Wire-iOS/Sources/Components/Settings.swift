@@ -34,7 +34,6 @@ extension Notification.Name {
 }
 
 enum SettingKey: String, CaseIterable {
-    // NB!!! After adding the key here please make sure to add it to @m +allDefaultsKeys as well
     case disableMarkdown = "UserDefaultDisableMarkdown"
     case chatHeadsDisabled = "ZDevOptionChatHeadsDisabled"
     case lastPushAlertDate = "LastPushAlertDate"
@@ -72,7 +71,7 @@ final class Settings: NSObject {
         }
         set {
             defaults.set(newValue, forKey: index.rawValue) ///TODO: raw value of SettingsLastScreen
-            defaults.synchronize()
+//            defaults.synchronize()
             
             ///TODO: side effect
         }
@@ -85,7 +84,7 @@ final class Settings: NSObject {
         }
         set {
             defaults.set(newValue?.rawValue, forKey: index.rawValue)
-            defaults.synchronize()
+//            defaults.synchronize()
             
             ///TODO: side effect
         }
@@ -334,7 +333,7 @@ final class Settings: NSObject {
     // MARK: - MediaManager
     func restoreLastUsedAVSSettings() {
         let savedIntensity = defaults.integer(forKey: SettingKey.avsMediaManagerPersistentIntensity.rawValue)
-        
+        ///0 in test
         AVSMediaManager.sharedInstance().intensityLevel = AVSIntensityLevel(rawValue: UInt(savedIntensity)) ?? .full
     }
     

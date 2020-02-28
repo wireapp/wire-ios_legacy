@@ -189,7 +189,7 @@ class SettingsPropertyFactory {
         case .soundAlerts:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
                 if let mediaManager = self.mediaManager {
-                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue)
+                    return SettingsPropertyValue(mediaManager.intensityLevel.rawValue) ///TODO: full?
                 }
                 else {
                     return SettingsPropertyValue(0)
