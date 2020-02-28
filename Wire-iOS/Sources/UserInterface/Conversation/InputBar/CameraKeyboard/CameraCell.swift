@@ -39,7 +39,7 @@ final class CameraCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
-        self.cameraController = CameraController(camera: Settings.shared[.preferredCamera] ?? .front)
+        cameraController = CameraController(camera: Settings.shared[.preferredCamera] ?? .front)
 
         super.init(frame: frame)
         

@@ -82,7 +82,8 @@ final class Settings {
                 notifyDisableSendButtonChanged()
             case .messageSoundName,
                  .callSoundName,
-                 .pingSoundName:                AVSMediaManager.sharedInstance().configureSounds()
+                 .pingSoundName:
+                AVSMediaManager.sharedInstance().configureSounds()
             case .disableCallKit:
                 SessionManager.shared?.updateCallNotificationStyleFromSettings()
             case .callingConstantBitRate:
