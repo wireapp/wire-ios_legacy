@@ -36,7 +36,7 @@ class Tab: Button {
 
     init(variant: ColorSchemeVariant) {
         colorSchemeVariant = variant
-        super.init(frame: .zero)
+        super.init()
 
         titleLabel?.font = FontSpec(.small, .semibold).font
         titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 4, right: 0)
@@ -44,11 +44,6 @@ class Tab: Button {
         
         updateColors()
     }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 
     override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 48)
