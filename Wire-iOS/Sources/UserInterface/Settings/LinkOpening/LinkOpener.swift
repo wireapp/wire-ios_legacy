@@ -70,14 +70,14 @@ protocol LinkOpeningOption {
     var displayString: String { get }
     static var availableOptions: [Self] { get }
     
-    static func storedPreference() -> E
+    static var storedPreference: E { get }
     static var settingKey: String { get }
     static var defaultPreference: E  { get }
 }
 
 
 extension LinkOpeningOption {
-    static func storedPreference() -> E {
+    static var storedPreference: E {
         let openingRawValue: E.RawValue = Settings.shared().defaults.integer(forKey: settingKey)
         
         if let openingOption: E = E.init(rawValue: openingRawValue) {
