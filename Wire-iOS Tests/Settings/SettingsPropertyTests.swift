@@ -20,7 +20,7 @@
 import XCTest
 @testable import Wire
 
-@objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
+final class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {
     var needsRichProfileUpdate: Bool = false
     
     var enableReadReceipts: Bool = false
@@ -36,7 +36,7 @@ import XCTest
     
 }
 
-class ZMMockAVSMediaManager: AVSMediaManagerInterface {
+final class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     var isMicrophoneMuted: Bool = false
 
     var intensityLevel : AVSIntensityLevel = .none
@@ -44,11 +44,11 @@ class ZMMockAVSMediaManager: AVSMediaManagerInterface {
     func playMediaByName(_ name: String!) { }
 }
 
-class ZMMockTracking: TrackingInterface {
+final class ZMMockTracking: TrackingInterface {
     var disableCrashAndAnalyticsSharing: Bool = false
 }
 
-class SettingsPropertyTests: XCTestCase {
+final class SettingsPropertyTests: XCTestCase {
     var userDefaults: UserDefaults!
 
     override func setUp() {
@@ -209,11 +209,13 @@ class SettingsPropertyTests: XCTestCase {
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
         let key = SettingKey.blackListDownloadInterval
-        settings[key] = 42
+        let value: Int = 42
+        settings[key] = value
         
         // when & then
         let result: Int? = settings.value(for: key, in: account)
-        XCTAssertNil(settings[key])
-        XCTAssertEqual(result, 42)
+        let settingVal: Int? = settings[key]
+        XCTAssertNil(settingVal)
+        XCTAssertEqual(result, value)
     }
 }

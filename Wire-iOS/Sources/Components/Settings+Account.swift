@@ -51,6 +51,7 @@ extension Settings {
         return accountPayload[key] as? T
     }
     
+    
     /// Sets the value associated with the given account for the given key.
     ///
     /// - Parameters:
