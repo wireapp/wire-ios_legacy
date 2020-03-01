@@ -178,11 +178,11 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
-        let key = "IntegerKey"
+        let key = SettingKey.blackListDownloadInterval
         XCTAssertNil(settings.value(for: key, in: account) as Int?)
         
         // when
-        settings.setValue(42, for: key, in: account)
+        settings.setValue(42, settingKey: key, in: account)
         
         // then
         let result: Int? = settings.value(for: key, in: account)
@@ -193,11 +193,11 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
-        let key = "BooleanKey"
+        let key = SettingKey.disableMarkdown
         XCTAssertNil(settings.value(for: key, in: account) as Bool?)
         
         // when
-        settings.setValue(true, for: key, in: account)
+        settings.setValue(true, settingKey: key, in: account)
         
         // then
         let result: Bool? = settings.value(for: key, in: account)
@@ -208,12 +208,12 @@ class SettingsPropertyTests: XCTestCase {
         // given
         let settings = Settings()
         let account = Account(userName: "bob", userIdentifier: UUID())
-        let key = "IntegerKey"
-        settings.defaults.setValue(42, forKey: key)
+        let key = SettingKey.blackListDownloadInterval
+        settings[key] = 42
         
         // when & then
         let result: Int? = settings.value(for: key, in: account)
-        XCTAssertNil(settings.defaults.object(forKey: key))
+        XCTAssertNil(settings[key])
         XCTAssertEqual(result, 42)
     }
 }
