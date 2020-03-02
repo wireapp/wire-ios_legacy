@@ -181,6 +181,17 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
         return wr_supportedInterfaceOrientations
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+        
+        guard let coordinator = coordinator else { return }
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.updatePopoverSourceRect()
+        }
+    }
+    
     func setupMentionsResultsView() {
         mentionsSearchResultsViewController.view.translatesAutoresizingMaskIntoConstraints = false
         
