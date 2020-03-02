@@ -24,12 +24,12 @@ import XCTest
 final class BrowserOpeningOptionTests: XCTestCase {
 
     class override func tearDown() {
-        Settings.shared().reset()
+        Settings.shared.reset()
     }
     
     func testThatDefaultBrowserIsSafari() {
         //GIVEN & WHEN
-        Settings.shared().reset()
+        Settings.shared.reset()
         let preference: BrowserOpeningOption = BrowserOpeningOption.storedPreference
         
         //THEN
@@ -38,7 +38,7 @@ final class BrowserOpeningOptionTests: XCTestCase {
 
     func testThatBrowserCanBeChangedToSnowhaze() {
         //GIVEN & WHEN
-        Settings.shared().browserLinkOpeningOptionRawValue = BrowserOpeningOption.snowhaze.rawValue
+        Settings.shared.browserLinkOpeningOptionRawValue = BrowserOpeningOption.snowhaze.rawValue
         
         //THEN
         XCTAssertEqual(BrowserOpeningOption.storedPreference, BrowserOpeningOption.snowhaze)
