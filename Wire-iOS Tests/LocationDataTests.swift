@@ -41,7 +41,6 @@ final class LocationDataTests: XCTestCase {
         XCTAssertEqual(sut?.latitude, 1)
         XCTAssertEqual(sut?.longitude, 2)
         XCTAssertEqual(sut?.zoomLevel, 3)
-        XCTAssertEqual(sut?.name, "test")
     }
     
     func testThatLocationDataCanBeConvertedToADictionary() {
