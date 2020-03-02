@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-
 import XCTest
 @testable import Wire
 
@@ -38,7 +36,8 @@ final class BrowserOpeningOptionTests: XCTestCase {
 
     func testThatBrowserCanBeChangedToSnowhaze() {
         //GIVEN & WHEN
-        Settings.shared.browserLinkOpeningOptionRawValue = BrowserOpeningOption.snowhaze.rawValue
+        let browserOpeningOption: BrowserOpeningOption = .snowhaze
+        Settings.shared[.browserOpeningRawValue] = browserOpeningOption
         
         //THEN
         XCTAssertEqual(BrowserOpeningOption.storedPreference, BrowserOpeningOption.snowhaze)
