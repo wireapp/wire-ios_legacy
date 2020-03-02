@@ -31,9 +31,9 @@ extension UIImage {
         return scaledImage
     }
 
-    func desaturatedImage(with context: CIContext, saturation: NSNumber) -> UIImage? {
+    func desaturatedImage(with context: CIContext, saturation: Double = 0) -> UIImage? {
         guard let filter = CIFilter(name: "CIColorControls"),
-            let cg = self.cgImage
+            let cg = cgImage
             else { return nil }
 
         let i: CIImage = CIImage(cgImage: cg)
@@ -41,7 +41,7 @@ extension UIImage {
         filter.setValue(i, forKey: kCIInputImageKey)
         filter.setValue(saturation, forKey: "InputSaturation")
 
-        guard let result = filter.value(forKey: kCIOutputImageKey) as? CIImage,
+        guard let result = filter.outputImage,
             let cgImage: CGImage = context.createCGImage(result, from: result.extent) else { return nil }
 
         return UIImage(cgImage: cgImage, scale: scale, orientation: imageOrientation)
