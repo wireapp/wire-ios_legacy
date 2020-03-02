@@ -19,13 +19,12 @@
 
 import UIKit
 import Cartography
-
 import Down
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
         let disableSendButton: Bool? = self[.sendButtonDisabled]
-        return disableSendButton ?? false ? .send : .default
+        return disableSendButton == true ? .send : .default
     }
 }
 

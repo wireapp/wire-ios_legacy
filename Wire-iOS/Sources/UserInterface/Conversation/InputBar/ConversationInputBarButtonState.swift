@@ -33,11 +33,11 @@ extension ZMConversation {
     }
 }
 
-@objcMembers final public class ConversationInputBarButtonState: NSObject {
+@objcMembers final class ConversationInputBarButtonState: NSObject {
 
-    public var sendButtonHidden: Bool {
-        let disableSendButton: Bool = Settings.shared[.sendButtonDisabled] ?? false
-        return !hasText || editing || (disableSendButton && !markingDown)
+    var sendButtonHidden: Bool {
+        let disableSendButton: Bool? = Settings.shared[.sendButtonDisabled]
+        return !hasText || editing || (disableSendButton == true && !markingDown)
     }
 
     public var hourglassButtonHidden: Bool {

@@ -170,7 +170,7 @@ final class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark") ///TODO:
+                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark")
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
