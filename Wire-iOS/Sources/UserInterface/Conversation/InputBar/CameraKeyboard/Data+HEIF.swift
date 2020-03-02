@@ -23,7 +23,7 @@ extension Data {
         guard let inputImage = CIImage(data: self),
               let colorSpace = inputImage.colorSpace else { return nil }
 
-        let context = CIContext(options: nil)
+        let context = CIContext.shared
         return context.jpegRepresentation(of: inputImage, colorSpace: colorSpace, options: [:])
     }
 }
