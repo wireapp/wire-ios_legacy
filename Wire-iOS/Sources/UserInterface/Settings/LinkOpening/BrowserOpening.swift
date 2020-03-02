@@ -21,15 +21,11 @@ private let log = ZMSLog(tag: "link opening")
 
 
 enum BrowserOpeningOption: Int, LinkOpeningOption {
-    typealias E = BrowserOpeningOption
-    static var settingKey: SettingKey = .browserOpeningRawValue
-    static var defaultPreference: E = .safari
-
 
     case safari, chrome, firefox, snowhaze, brave
 
     typealias ApplicationOptionEnum = BrowserOpeningOption
-    static var settingKey: String = UserDefaultBrowserOpeningRawValue
+    static var settingKey: SettingKey = .browserOpeningRawValue
     static var defaultPreference: ApplicationOptionEnum = .safari
 
     static var allOptions: [BrowserOpeningOption] {

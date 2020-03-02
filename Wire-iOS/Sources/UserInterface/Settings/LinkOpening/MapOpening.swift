@@ -21,14 +21,10 @@ private let log = ZMSLog(tag: "link opening")
 
 
 enum MapsOpeningOption: Int, LinkOpeningOption {
-    typealias E = MapsOpeningOption    
-    static var settingKey: SettingKey = .mapsOpeningRawValue
-    static var defaultPreference: E = .apple
-
     case apple, google
     
     typealias ApplicationOptionEnum = MapsOpeningOption
-    static var settingKey: String = UserDefaultMapsOpeningRawValue
+    static var settingKey: SettingKey = .mapsOpeningRawValue
     static var defaultPreference: ApplicationOptionEnum = .apple
 
     static var allOptions: [MapsOpeningOption] {

@@ -21,15 +21,10 @@ private let log = ZMSLog(tag: "link opening")
 
 
 enum TweetOpeningOption: Int, LinkOpeningOption {
-    typealias E = TweetOpeningOption
-    static var settingKey: SettingKey = .twitterOpeningRawValue
-    static var defaultPreference: E = .none
-
-
     case none, tweetbot, twitterrific
 
     typealias ApplicationOptionEnum = TweetOpeningOption
-    static var settingKey: String = UserDefaultTwitterOpeningRawValue
+    static var settingKey: SettingKey = .twitterOpeningRawValue
     static var defaultPreference: ApplicationOptionEnum = .none
 
     var displayString: String {
