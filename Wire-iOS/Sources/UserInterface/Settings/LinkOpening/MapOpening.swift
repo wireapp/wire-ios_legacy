@@ -25,8 +25,11 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
     static var settingKey: SettingKey = .mapsOpeningRawValue
     static var defaultPreference: E = .apple
 
-
     case apple, google
+    
+    typealias ApplicationOptionEnum = MapsOpeningOption
+    static var settingKey: String = UserDefaultMapsOpeningRawValue
+    static var defaultPreference: ApplicationOptionEnum = .apple
 
     static var allOptions: [MapsOpeningOption] {
         return [.apple, .google]
@@ -52,7 +55,7 @@ extension URL {
 
     func openAsLocation() -> Bool {
         log.debug("Trying to open \"\(self)\" as location")
-        let saved: MapsOpeningOption = MapsOpeningOption.storedPreference()
+        let saved = MapsOpeningOption.storedPreference
         log.debug("Saved option to open a location: \(saved.displayString)")
 
         switch saved {
