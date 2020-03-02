@@ -76,7 +76,7 @@ final class SettingsTableViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         sut.view.backgroundColor = .black
 
-        verify(view: sut.view)///TODO:
+        verify(view: sut.view)
     }
 
     func testForOptionsGroupScrollToBottom() {

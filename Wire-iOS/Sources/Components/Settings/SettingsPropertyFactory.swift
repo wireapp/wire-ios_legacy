@@ -63,7 +63,6 @@ class SettingsPropertyFactory {
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
     
-    ///TODO: merge 2 enums
     static let userDefaultsPropertiesToKeys: [SettingsPropertyName: SettingKey] = [
         SettingsPropertyName.disableMarkdown                : .disableMarkdown,
         SettingsPropertyName.chatHeadsDisabled              : .chatHeadsDisabled,
@@ -77,7 +76,7 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy        : .callingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections         : .enableBatchCollections,
         SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
-        SettingsPropertyName.disableLinkPreviews            : .disableLinkPreviews
+//        SettingsPropertyName.disableLinkPreviews            : .disableLinkPreviews
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {

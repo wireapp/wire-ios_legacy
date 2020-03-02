@@ -60,7 +60,7 @@ enum SettingKey: String, CaseIterable {
     case browserOpeningRawValue = "BrowserOpeningRawValue"
     case didMigrateHockeySettingInitially = "DidMigrateHockeySettingInitially"
     case callingConstantBitRate = "CallingConstantBitRate"
-    case disableLinkPreviews = "DisableLinkPreviews" ///TODO: need to save to default also?
+    case disableLinkPreviews = "DisableLinkPreviews"
 }
 
 /// Model object for locally stored (not in SE or AVS) user app settings
@@ -156,7 +156,7 @@ final class Settings {
             return ExtensionSettings.shared.disableLinkPreviews
         }
         set {
-            ExtensionSettings.shared.disableLinkPreviews = disableLinkPreviews
+            ExtensionSettings.shared.disableLinkPreviews = newValue
         }
     }
 

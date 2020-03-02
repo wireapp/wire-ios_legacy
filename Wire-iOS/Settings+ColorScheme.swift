@@ -49,7 +49,7 @@ extension Settings {
         return .light
     }
 
-    ///TODO: move to SettingsColorScheme
+    ///TODO: move to SettingsColorScheme, as a init method
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
         case "dark":
@@ -61,6 +61,7 @@ extension Settings {
         }
     }
 
+    ///TODO: move to SettingsColorScheme
     func string(for colorScheme: SettingsColorScheme) -> String {
         switch colorScheme {
         case .dark:
