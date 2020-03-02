@@ -24,9 +24,9 @@ enum MapsOpeningOption: Int, LinkOpeningOption {
 
     case apple, google
     
-    typealias E = MapsOpeningOption
+    typealias ApplicationOptionEnum = MapsOpeningOption
     static var settingKey: String = UserDefaultMapsOpeningRawValue
-    static var defaultPreference: E = .apple
+    static var defaultPreference: ApplicationOptionEnum = .apple
 
     static var allOptions: [MapsOpeningOption] {
         return [.apple, .google]

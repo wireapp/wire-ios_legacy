@@ -24,9 +24,9 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
 
     case none, tweetbot, twitterrific
 
-    typealias E = TweetOpeningOption
+    typealias ApplicationOptionEnum = TweetOpeningOption
     static var settingKey: String = UserDefaultTwitterOpeningRawValue
-    static var defaultPreference: E = .none
+    static var defaultPreference: ApplicationOptionEnum = .none
 
     var displayString: String {
         switch self {

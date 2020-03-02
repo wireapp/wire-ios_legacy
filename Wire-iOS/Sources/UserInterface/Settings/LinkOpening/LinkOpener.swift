@@ -63,24 +63,24 @@ extension NSURL {
 }
 
 protocol LinkOpeningOption {
-    associatedtype E: RawRepresentable where E.RawValue == Int
+    associatedtype ApplicationOptionEnum: RawRepresentable where ApplicationOptionEnum.RawValue == Int
     
     static var allOptions: [Self] { get }
     var isAvailable: Bool { get }
     var displayString: String { get }
     static var availableOptions: [Self] { get }
     
-    static var storedPreference: E { get }
+    static var storedPreference: ApplicationOptionEnum { get }
     static var settingKey: String { get }
-    static var defaultPreference: E  { get }
+    static var defaultPreference: ApplicationOptionEnum  { get }
 }
 
 
 extension LinkOpeningOption {
-    static var storedPreference: E {
-        let openingRawValue: E.RawValue = Settings.shared().defaults.integer(forKey: settingKey)
+    static var storedPreference: ApplicationOptionEnum {
+        let openingRawValue: ApplicationOptionEnum.RawValue = Settings.shared().defaults.integer(forKey: settingKey)
         
-        if let openingOption: E = E.init(rawValue: openingRawValue) {
+        if let openingOption: ApplicationOptionEnum = ApplicationOptionEnum.init(rawValue: openingRawValue) {
             return openingOption
         }
         
