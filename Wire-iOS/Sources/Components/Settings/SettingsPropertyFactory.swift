@@ -54,7 +54,7 @@ protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
 }
 
-class SettingsPropertyFactory {
+final class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
@@ -76,7 +76,6 @@ class SettingsPropertyFactory {
         SettingsPropertyName.callingProtocolStrategy        : .callingProtocolStrategy,
         SettingsPropertyName.enableBatchCollections         : .enableBatchCollections,
         SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
-//        SettingsPropertyName.disableLinkPreviews            : .disableLinkPreviews
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {

@@ -134,7 +134,7 @@ final class Settings {
     }
 
     // Persist all the settings
-    func synchronize() {
+    private func synchronize() {
         storeCurrentIntensityLevelAsLastUsed()
 
         defaults.synchronize()
