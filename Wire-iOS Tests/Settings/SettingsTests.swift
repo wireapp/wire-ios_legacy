@@ -23,14 +23,14 @@ final class SettingsTests: XCTestCase {
     class override func tearDown() {
         Settings.shared.reset()
     }
-    
+
     func testThatDateIsNilWhenInit() {
         // GIVEN
         Settings.shared.reset()
-        
+
         // WHEN
         let lastPushAlertDate: Date? = Settings.shared[.lastPushAlertDate]
-        
+
         // THEN
         XCTAssertNil(lastPushAlertDate)
     }
@@ -41,7 +41,7 @@ final class SettingsTests: XCTestCase {
 
         // WHEN
         Settings.shared[.lastPushAlertDate] = date
-        
+
         // THEN
         XCTAssertEqual(date, Settings.shared[.lastPushAlertDate])
     }
@@ -49,10 +49,10 @@ final class SettingsTests: XCTestCase {
     func testThatEnumCanBeWrittenAndReturnAnEnum() {
         // GIVEN
         let settingsCamera: SettingsCamera = .back
-        
+
         // WHEN
         Settings.shared[.preferredCamera] = settingsCamera
-        
+
         // THEN
         XCTAssertEqual(settingsCamera, Settings.shared[.preferredCamera])
     }

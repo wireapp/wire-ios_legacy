@@ -21,7 +21,7 @@ import Foundation
 enum SettingsColorScheme {
     case light
     case dark
-    
+
     var colorSchemeVariant: ColorSchemeVariant {
         switch self {
         case .light:
@@ -45,10 +45,10 @@ extension Settings {
         if let string: String = self[.colorScheme] {
             return settingsColorScheme(from: string).colorSchemeVariant
         }
-        
+
         return .light
     }
-    
+
     ///TODO: move to SettingsColorScheme
     func settingsColorScheme(from string: String) -> SettingsColorScheme {
         switch string {
@@ -60,7 +60,7 @@ extension Settings {
             fatal("unsupported colorScheme string")
         }
     }
-    
+
     func string(for colorScheme: SettingsColorScheme) -> String {
         switch colorScheme {
         case .dark:

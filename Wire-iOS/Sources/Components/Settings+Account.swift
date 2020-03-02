@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
 extension Account {
@@ -29,8 +28,7 @@ extension Settings {
     private func payload(for account: Account) -> [String: Any] {
         return defaults.value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
-    
-    
+
     /// Returns the value associated with the given account for the given key
     ///
     /// - Parameters:
@@ -39,19 +37,18 @@ extension Settings {
     /// - Returns: the setting of the account
     func value<T>(for settingKey: SettingKey, in account: Account) -> T? {
         let key = settingKey.rawValue
-        
+
         // Attempt to migrate the shared value
         if let rootValue = defaults.value(forKey: key) {
             setValue(rootValue, settingKey: settingKey, in: account)
             defaults.removeObject(forKey: key)
             defaults.synchronize()
         }
-        
+
         var accountPayload = payload(for: account)
         return accountPayload[key] as? T
     }
-    
-    
+
     /// Sets the value associated with the given account for the given key.
     ///
     /// - Parameters:
@@ -64,12 +61,12 @@ extension Settings {
         accountPayload[key] = value
         defaults.setValue(accountPayload, forKey: account.userDefaultsKey())
     }
-    
+
     func lastViewedConversation(for account: Account) -> ZMConversation? {
         guard let conversationID: String = self.value(for: .lastViewedConversation, in: account) else {
             return nil
         }
-        
+
         let conversationURI = URL(string: conversationID)
         let session = ZMUserSession.shared()
         let objectID = ZMManagedObject.objectID(forURIRepresentation: conversationURI, inUserSession: session)
