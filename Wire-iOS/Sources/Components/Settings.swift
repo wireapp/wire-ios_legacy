@@ -105,6 +105,19 @@ final class Settings {
         }
     }
 
+    subscript(index: SettingKey) -> LocationData? {
+        get {
+            if let value = defaults.value(forKey: index.rawValue) as? [String : Any] {
+                return LocationData.locationData(fromDictionary: value)
+            }
+            
+            return nil
+        }
+        set {
+            defaults.set(newValue?.toDictionary(), forKey: index.rawValue)
+        }
+    }
+    
     var blacklistDownloadInterval: TimeInterval {
         let HOURS_6 = 6 * 60 * 60
         let settingValue = defaults.integer(forKey: SettingKey.blackListDownloadInterval.rawValue)

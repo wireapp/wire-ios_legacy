@@ -93,7 +93,7 @@ extension MKMapView {
     }
     
     func storeLocation() {
-        let location = locationData(name: nil)
+        let location: LocationData = locationData(name: nil)
         Settings.shared[.lastUserLocation] = location
     }
     
