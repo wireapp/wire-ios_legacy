@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,8 +20,57 @@ import Foundation
 import Photos
 import MobileCoreServices
 
-extension ProfileSelfPictureViewController {
-    override open func viewDidLoad() {
+final class ProfileSelfPictureViewController: UIViewController {
+    var selfUserImageView: UIImageView = UIImageView()
+    private let bottomOverlayView: UIView  = UIView()
+    private let topView: UIView = UIView()
+
+    private let cameraButton: IconButton = IconButton()
+    private let libraryButton: IconButton = IconButton()
+    private let closeButton: IconButton = IconButton()
+    private let imagePickerConfirmationController: ImagePickerConfirmationController = ImagePickerConfirmationController()
+    
+    private var userObserverToken: NSObjectProtocol?
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        imagePickerConfirmationController.imagePickedBlock = { [weak self] imageData in
+            self?.dismiss(animated: true)
+            self?.setSelfImageTo(imageData)
+        }
+        
+        if let session = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(observer:self,
+                                                   for: ZMUser.selfUser(),
+                                                   in: session)
+        }
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    /// This should be called when the user has confirmed their intent to set their image to this data. No custom presentations should be in flight, all previous presentations should be completed by this point.
+    private func setSelfImageTo(_ selfImageData: Data?) {
+        // iOS11 uses HEIF image format, but BE expects JPEG
+        guard let selfImageData = selfImageData,
+              let jpegData: Data = selfImageData.isJPEG ? selfImageData : UIImage(data: selfImageData)?.jpegData(compressionQuality: 1.0) else { return }
+        
+        
+        ZMUserSession.shared()?.enqueueChanges({
+            ZMUserSession.shared()?.profileUpdate.updateImage(imageData: jpegData)
+        })
+    }
+    
+    // MARK: - Button Handling
+    @objc
+    private func closeButtonTapped(_ sender: Any?) {
+        presentingViewController?.dismiss(animated: true)
+    }
+
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .clear
@@ -30,16 +79,16 @@ extension ProfileSelfPictureViewController {
         setupTopView()
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
 
-    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 
-    func addCameraButton() {
-        cameraButton = IconButton()
+    private func addCameraButton() {
+        
         cameraButton.translatesAutoresizingMaskIntoConstraints = false
 
         bottomOverlayView.addSubview(cameraButton)
@@ -57,8 +106,8 @@ extension ProfileSelfPictureViewController {
         cameraButton.accessibilityLabel = "cameraButton"
     }
 
-    func addCloseButton() {
-        closeButton = IconButton()
+    private func addCloseButton() {
+        
         closeButton.accessibilityIdentifier = "CloseButton"
 
         bottomOverlayView.addSubview(closeButton)
@@ -77,11 +126,10 @@ extension ProfileSelfPictureViewController {
         closeButton.addTarget(self, action: #selector(self.closeButtonTapped(_:)), for: .touchUpInside)
     }
 
-    func addLibraryButton() {
+    private func addLibraryButton() {
         let length: CGFloat = 32
         let libraryButtonSize = CGSize(width: length, height: length)
-
-        libraryButton = IconButton()
+        
         libraryButton.translatesAutoresizingMaskIntoConstraints = false
 
         libraryButton.accessibilityIdentifier = "CameraLibraryButton"
@@ -125,8 +173,8 @@ extension ProfileSelfPictureViewController {
 
     }
 
-    open func setupTopView() {
-        topView = UIView()
+    private func setupTopView() {
+        
         topView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topView)
 
@@ -135,7 +183,7 @@ extension ProfileSelfPictureViewController {
 
         topView.backgroundColor = .clear
 
-        selfUserImageView = UIImageView()
+        
         selfUserImageView.clipsToBounds = true
         selfUserImageView.contentMode = .scaleAspectFill
         
@@ -149,8 +197,7 @@ extension ProfileSelfPictureViewController {
         selfUserImageView.fitInSuperview()
     }
 
-    func setupBottomOverlay() {
-        bottomOverlayView = UIView()
+    private func setupBottomOverlay() {
         bottomOverlayView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bottomOverlayView)
 
@@ -172,7 +219,7 @@ extension ProfileSelfPictureViewController {
     }
 
     @objc
-    func libraryButtonTapped(_ sender: Any?) {
+    private func libraryButtonTapped(_ sender: Any?) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.sourceType = .photoLibrary
         imagePickerController.mediaTypes = [kUTTypeImage as String]
@@ -193,7 +240,7 @@ extension ProfileSelfPictureViewController {
     }
 
     @objc
-    func cameraButtonTapped(_ sender: Any?) {
+    private func cameraButtonTapped(_ sender: Any?) {
         if !UIImagePickerController.isSourceTypeAvailable(.camera) || !UIImagePickerController.isCameraDeviceAvailable(.front) {
             return
         }
@@ -209,5 +256,21 @@ extension ProfileSelfPictureViewController {
         picker.mediaTypes = [kUTTypeImage as String]
         picker.modalTransitionStyle = .coverVertical
         present(picker, animated: true)
+    }
+}
+
+extension ProfileSelfPictureViewController: ZMUserObserver {
+    
+    func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.imageMediumDataChanged,
+            let userSession = ZMUserSession.shared(),
+            let profileImageUser = changeInfo.user as? ProfileImageFetchable else { return }
+        
+        profileImageUser.fetchProfileImage(session: userSession,
+                                           cache: defaultUserImageCache,
+                                           sizeLimit: nil,
+                                           desaturate: false) { (image, _) in
+                                            self.selfUserImageView.image = image
+        }
     }
 }

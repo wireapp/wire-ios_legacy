@@ -40,8 +40,6 @@ final class CallWindowRootViewController: UIViewController {
         return callController?.activeCallViewController ?? topmostViewController()
     }
 
-
-
     override var childForStatusBarStyle: UIViewController? {
         return child
     }
@@ -51,7 +49,11 @@ final class CallWindowRootViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        return topmostViewController()?.shouldAutorotate ?? true
+        if isHorizontalSizeClassRegular {
+            return topmostViewController()?.shouldAutorotate ?? true
+        }
+        
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

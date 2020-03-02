@@ -31,7 +31,6 @@ private extension UIImage {
 /// the image the imagePickedBlock is called.
 final class ImagePickerConfirmationController: NSObject {
     var previewTitle: String?
-    @objc
     var imagePickedBlock: ((_ imageData: Data?) -> Void)?
 
     /// We need to store this reference to close the @c SketchViewController

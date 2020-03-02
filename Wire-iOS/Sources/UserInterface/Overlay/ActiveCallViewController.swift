@@ -77,12 +77,16 @@ final class ActiveCallViewController : UIViewController {
         updateVisibleVoiceChannelViewController()
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return visibleVoiceChannelViewController.prefersStatusBarHidden
+    override var childForStatusBarStyle: UIViewController? {
+        return visibleVoiceChannelViewController
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleVoiceChannelViewController.preferredStatusBarStyle
+    override var childForStatusBarHidden: UIViewController? {
+        return visibleVoiceChannelViewController
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
