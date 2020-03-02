@@ -20,7 +20,11 @@ import Foundation
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 
 /// The main conversation view controller
-final class ConversationContentViewController: UIViewController {
+final class ConversationContentViewController: UIViewController, PopoverPresenter {
+    //MARK: PopoverPresenter
+    var presentedPopover: UIPopoverPresentationController?
+    var popoverPointToView: UIView?
+
     weak var delegate: ConversationContentViewControllerDelegate?
     let conversation: ZMConversation
     var bottomMargin: CGFloat = 0 {
