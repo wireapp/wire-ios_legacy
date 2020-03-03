@@ -122,6 +122,14 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
+    class var buttonMessage: MockMessage {
+        let message = MockMessageFactory.messageTemplate()
+        
+        ///TODO:
+//        message.backingLocationMessageData = MockLocationMessageData()
+        return message
+    }
+
     class func videoMessage(previewImage: UIImage? = nil) -> MockMessage? {
         let message: MockMessage? = self.fileTransferMessage()
         message?.backingFileMessageData.mimeType = "video/mp4"
