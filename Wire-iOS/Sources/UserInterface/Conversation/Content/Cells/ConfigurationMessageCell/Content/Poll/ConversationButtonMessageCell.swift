@@ -19,7 +19,7 @@
 import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
-    private let button = Button(style: .full)
+    private let button = Button(style: .empty)
     var isSelected: Bool = false
     
     weak var message: ZMConversationMessage?
@@ -69,7 +69,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 final class ConversationButtonMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationButtonMessageCell
 
-    var topMargin: Float = 0
+    var topMargin: Float = 10 ///TODO: read from design spec
     
     var isFullWidth: Bool = false ///TODO:
     

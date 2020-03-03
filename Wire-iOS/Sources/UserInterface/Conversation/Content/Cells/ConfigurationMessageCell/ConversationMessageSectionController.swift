@@ -174,8 +174,10 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     private func addPollMessageCells() -> [AnyConversationMessageCellDescription] {
         ///TODO: text cells
-        let cell = ConversationButtonMessageCellDescription(text: "Foo") ///TODO: get form message
-        return [AnyConversationMessageCellDescription(cell)]
+        //TODO: get form message
+        return [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo")),
+                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Bar")),
+                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "2020"))]
     }
 
     // MARK: - Composition
