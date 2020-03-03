@@ -86,9 +86,11 @@ extension XCTestCase {
                                 file: StaticString = #file,
                                 testName: String = #function,
                                 line: UInt = #line) {
+        let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
+        let widthConstraint = container.addWidthConstraint(width: 300)
+
         for width in phoneWidths() {
-            let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
-            container.addWidthConstraint(width: width)
+            widthConstraint.constant = width
 
             let nameWithProperty: String
             if let name = name {
@@ -236,13 +238,16 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
 }
 
 extension UIView {
-    func addWidthConstraint(width: CGFloat) {
+    func addWidthConstraint(width: CGFloat) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: width)
-            ])
+        
+        let widthConstraint = widthAnchor.constraint(equalToConstant: width)
+        
+        NSLayoutConstraint.activate([widthConstraint])
 
         layoutIfNeeded()
+        
+        return widthConstraint
     }
 }
 
