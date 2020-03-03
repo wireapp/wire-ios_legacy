@@ -44,9 +44,9 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                                                     searchQueries: [],
                                                     previousMessageIsKnock: false,
                                                     spacing: 0)
-        
+
         resetDayFormatter()
-        
+
         [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
@@ -59,7 +59,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         coreDataFixture = nil
         super.tearDown()
     }
-    
+
     /**
      * Performs a snapshot test for a message
      */
@@ -71,7 +71,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-        
+
         let context = (context ?? defaultContext)!
 
         let closuse: () -> UIView = {
@@ -81,23 +81,23 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
-        
+
         if waitForImagesToLoad {
             XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         }
-        
+
         if waitForTextViewToLoad {
             // We need to run the run loop for UITextView to highlight detected links
             let delay = Date().addingTimeInterval(1)
             RunLoop.main.run(until: delay)
         }
-        
+
             return stackView
         }
-        
+
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            
+
             verifyInAllPhoneWidths(matching:closuse(),
                                    named: "dark",
                                    file: file,
@@ -112,7 +112,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                                    line: line)
 
         } else {
-            
+
             verifyInAllPhoneWidths(matching:closuse(),
                 file: file,
                 testName: testName,

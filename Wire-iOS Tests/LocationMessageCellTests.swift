@@ -21,11 +21,7 @@ import XCTest
 @testable import Wire
 import MapKit
 
-class LocationMessageCellTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 

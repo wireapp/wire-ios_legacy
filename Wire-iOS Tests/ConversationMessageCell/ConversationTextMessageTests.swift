@@ -20,11 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
 
     func testPlainText() {
         // GIVEN
