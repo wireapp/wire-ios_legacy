@@ -19,12 +19,12 @@
 import XCTest
 @testable import Wire
 
-final class ButtonMessageCellTests: ConversationCellSnapshotTestCase {
+final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     
-    override func setUp() {
-        super.setUp()
-        recordMode = true
-    }
+//    override func setUp() {
+//        super.setUp()
+//        recordMode = true
+//    }
     
     typealias CellConfiguration = (MockMessage) -> Void
     
@@ -35,7 +35,12 @@ final class ButtonMessageCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helpers
     
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let buttonMessage = MockMessageFactory.buttonMessage
+        let buttonMessage = MockMessageFactory.buttonMessage ///TODO: text shoudl belong to sub-messages
+        
+        let textMessageData = MockTextMessageData()
+        textMessageData.messageText = "Dummy Poll question:"
+
+        buttonMessage.backingTextMessageData = textMessageData
         
         config?(buttonMessage)
         return buttonMessage

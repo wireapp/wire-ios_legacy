@@ -122,6 +122,8 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
+        } else if message.isPoll {///TODO: for testing only, poll message is also a text message for now
+            contentCellDescriptions = addPollMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isImage {
@@ -136,8 +138,6 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
             contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
-        } else if message.isPoll {///TODO: for testing only
-            contentCellDescriptions = addPollMessageCells()
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -172,10 +172,12 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         return [AnyConversationMessageCellDescription(locationCell)]
     }
 
-    private func addPollMessageCells() -> [AnyConversationMessageCellDescription] {
-        ///TODO: text cells
+    private var addPollMessageCells: [AnyConversationMessageCellDescription] {
+        ///TODO: text cells, may be we need a simpler text cell?
+        let text = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         //TODO: get form message
-        return [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo")),
+        return text +
+               [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo")),
                 AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Bar")),
                 AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "2020"))]
     }
