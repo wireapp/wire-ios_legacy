@@ -20,7 +20,7 @@
 
 import XCTest
 
-class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
+final class ConversationFileMessageTests: ConversationCellSnapshotTestCase {
     
     override func setUp() {
         super.setUp()
