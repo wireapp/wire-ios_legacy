@@ -26,40 +26,42 @@ import SnapshotTesting
  */
 class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
-
-    fileprivate var defaultContext: ConversationMessageContext!
-
-    override func setUp() {
-        super.setUp()
-        coreDataFixture = CoreDataFixture()
-
-        ColorScheme.default.variant = .light
-        NSAttributedString.invalidateParagraphStyle()
-        NSAttributedString.invalidateMarkdownStyle()
-        defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
-                                                    isTimeIntervalSinceLastMessageSignificant: false,
-                                                    isFirstMessageOfTheDay: false,
-                                                    isFirstUnreadMessage: false,
-                                                    isLastMessage: false,
-                                                    searchQueries: [],
-                                                    previousMessageIsKnock: false,
-                                                    spacing: 0)
-
+    
+    fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
+                                                                       isTimeIntervalSinceLastMessageSignificant: false,
+                                                                       isFirstMessageOfTheDay: false,
+                                                                       isFirstUnreadMessage: false,
+                                                                       isLastMessage: false,
+                                                                       searchQueries: [],
+                                                                       previousMessageIsKnock: false,
+                                                                       spacing: 0)
+    
+    override class func setUp() {
         resetDayFormatter()
-
+        
         [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
             $0.locale = Locale(identifier: "en_US")
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
     }
-
-    override func tearDown() {
+    
+    override class func tearDown() {
         ColorScheme.default.variant = .light
-        defaultContext = nil
+    }
+    
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+        
+        ColorScheme.default.variant = .light
+        
+    }
+    
+    override func tearDown() {
         coreDataFixture = nil
         super.tearDown()
     }
-
+    
     /**
      * Performs a snapshot test for a message
      */
@@ -71,9 +73,9 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-
-        let context = (context ?? defaultContext)!
-
+        
+        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
+        
         let closuse: () -> UIView = {
             let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
@@ -81,45 +83,45 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             stackView.axis = .vertical
             stackView.translatesAutoresizingMaskIntoConstraints = false
             stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
-
+            
             if waitForImagesToLoad {
                 XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
             }
-
+            
             if waitForTextViewToLoad {
                 // We need to run the run loop for UITextView to highlight detected links
                 let delay = Date().addingTimeInterval(1)
                 RunLoop.main.run(until: delay)
             }
-
+            
             return stackView
         }
-
+        
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-
+            
             verifyInAllPhoneWidths(matching:closuse(),
                                    named: "dark",
                                    file: file,
                                    testName: testName,
                                    line: line)
-
+            
             ColorScheme.default.variant = .light
             verifyInAllPhoneWidths(matching:closuse(),
                                    named: "light",
                                    file: file,
                                    testName: testName,
                                    line: line)
-
+            
         } else {
-
+            
             verifyInAllPhoneWidths(matching:closuse(),
-                file: file,
-                testName: testName,
-                line: line)
+                                   file: file,
+                                   testName: testName,
+                                   line: line)
         }
     }
-
+    
 }
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {
