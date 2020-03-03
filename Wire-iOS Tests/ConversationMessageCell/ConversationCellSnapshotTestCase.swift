@@ -60,12 +60,6 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         super.tearDown()
     }
     
-    func enableDarkMode() {
-        ColorScheme.default.variant = .dark
-        NSAttributedString.invalidateParagraphStyle()
-        NSAttributedString.invalidateMarkdownStyle()
-    }
-
     /**
      * Performs a snapshot test for a message
      */

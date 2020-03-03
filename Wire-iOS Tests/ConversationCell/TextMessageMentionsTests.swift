@@ -27,16 +27,14 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
     /// "Saturday, February 14, 2009 at 12:20:30 AM Central European Standard Time"
     static let dummyServerTimestamp = Date(timeIntervalSince1970: 1234567230)
 
-    override func setUp() {
-        super.setUp()
-    }
-
     func testThatItRendersMentions_OnlyMention() {
         let messageText = "@Bruno"
         let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message,
+               waitForTextViewToLoad: true,
+               allColorSchemes: true)
     }
 
     func testThatItRendersMentions() {
@@ -134,18 +132,9 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         verify(message: message, waitForTextViewToLoad: true)
     }
 
-    func testDarkMode() {
-        enableDarkMode()
-        let messageText = "@Bruno"
-        let mention = Mention(range: NSRange(location: 0, length: 6), user: otherUser)
-        let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
-        
-
-        verify(message: message, waitForTextViewToLoad: true)
-    }
-
     func testDarkModeSelf() {
-        enableDarkMode()
+        ColorScheme.default.variant = .dark
+
         let messageText = "@current"
         let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
