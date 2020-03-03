@@ -19,7 +19,6 @@
 @testable import Wire
 import WireDataModel
 
-
 // MARK: - Mentions
 
 final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
@@ -143,4 +142,3 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
 
 }
-
