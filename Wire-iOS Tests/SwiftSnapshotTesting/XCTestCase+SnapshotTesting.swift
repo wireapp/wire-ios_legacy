@@ -82,14 +82,23 @@ extension XCTestCase {
     }
     
     func verifyInAllPhoneWidths(matching value: UIView,
+                                named name: String? = nil,
                                 file: StaticString = #file,
                                 testName: String = #function,
                                 line: UInt = #line) {
         for width in phoneWidths() {
-            let container = containerView(with: value, snapshotBackgroundColor: .white)
+            let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
             container.addWidthConstraint(width: width)
+            
+            let nameWithProperty: String
+            if let name = name {
+                nameWithProperty = "\(name)-\(width)"
+            } else {
+                nameWithProperty = "\(width)"
+            }
+            
             verify(matching: container,
-                   named: "\(width)",
+                   named: nameWithProperty,
                    file: file,
                    testName: testName,
                    line: line)

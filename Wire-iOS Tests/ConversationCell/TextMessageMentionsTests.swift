@@ -73,8 +73,7 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
         let message = otherUserConversation.append(text: messageText, mentions: [mention1, mention2], fetchLinkPreview: false)!
 
         /// The emoji 🀄︎ may be rendered on its corner on differnt versions of iOS, set tolerance to 0.01
-        verify(message: message, waitForTextViewToLoad: true,
-               tolerance: 0.01)
+        verify(message: message, waitForTextViewToLoad: true)
     }
 
     func testThatItRendersMentions_SelfMention_LongText() {

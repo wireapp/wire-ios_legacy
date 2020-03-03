@@ -36,7 +36,6 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
-//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
                                                     isTimeIntervalSinceLastMessageSignificant: false,
                                                     isFirstMessageOfTheDay: false,
@@ -63,7 +62,6 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     
     func enableDarkMode() {
         ColorScheme.default.variant = .dark
-//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
     }
@@ -75,22 +73,23 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 context: ConversationMessageContext? = nil,
                 waitForImagesToLoad: Bool = false,
                 waitForTextViewToLoad: Bool = false,
-                tolerance: CGFloat = 0,
-                colorSchemes: Set<ColorSchemeVariant> = [],
-        file: StaticString = #file,
-        testName: String = #function,
-        line: UInt = #line) {
-
-
+                allColorSchemes: Bool = false,
+                file: StaticString = #file,
+                testName: String = #function,
+                line: UInt = #line) {
+        
         let context = (context ?? defaultContext)!
+
+        let closuse: () -> UIView = {
         let section = ConversationMessageSectionController(message: message, context: context)
         let views = section.cellDescriptions.map({ $0.makeView() })
         let stackView = UIStackView(arrangedSubviews: views)
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
         
         if waitForImagesToLoad {
-            XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+            XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         }
         
         if waitForTextViewToLoad {
@@ -99,14 +98,32 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             RunLoop.main.run(until: delay)
         }
         
-//        return stackView
+            return stackView
+        }
+        
+        if allColorSchemes {
+            ColorScheme.default.variant = .dark
+            
+            verifyInAllPhoneWidths(matching:closuse(),
+                                   named: "dark",
+                                   file: file,
+                                   testName: testName,
+                                   line: line)
 
-        verifyInAllPhoneWidths(matching:stackView,
-//           tolerance: tolerance,
-//           colorSchemes: colorSchemes,
-           file: file,
-           testName: testName,
-           line: line)
+            ColorScheme.default.variant = .light
+            verifyInAllPhoneWidths(matching:closuse(),
+                                   named: "light",
+                                   file: file,
+                                   testName: testName,
+                                   line: line)
+
+        } else {
+            
+            verifyInAllPhoneWidths(matching:closuse(),
+                file: file,
+                testName: testName,
+                line: line)
+        }
     }
 
 }
