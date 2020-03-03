@@ -95,3 +95,10 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
         configuration = View.Configuration(text: text)
     }
 }
+
+///TODO: for testing only! remove after DM is ready
+extension ZMConversationMessage {
+    public var isPoll: Bool {
+        return true
+    }
+}

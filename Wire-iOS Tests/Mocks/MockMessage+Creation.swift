@@ -126,7 +126,7 @@ final class MockMessageFactory: NSObject {
         let message = MockMessageFactory.messageTemplate()
         
         ///TODO:
-//        message.backingLocationMessageData = MockLocationMessageData()
+        message.isPoll = true
         return message
     }
 

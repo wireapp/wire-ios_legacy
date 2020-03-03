@@ -118,7 +118,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         
         messageCellIndex = cellDescriptions.count
         
-        var contentCellDescriptions: [AnyConversationMessageCellDescription]
+        let contentCellDescriptions: [AnyConversationMessageCellDescription]
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
@@ -136,6 +136,8 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
             contentCellDescriptions = [AnyConversationMessageCellDescription(ConversationFileMessageCellDescription(message: message))]
         } else if message.isSystem {
             contentCellDescriptions = ConversationSystemMessageCellDescription.cells(for: message)
+        } else if message.isPoll {///TODO: for testing only
+            contentCellDescriptions = addPollMessageCells()
         } else {
             contentCellDescriptions = [AnyConversationMessageCellDescription(UnknownMessageCellDescription())]
         }
@@ -168,6 +170,12 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         
         let locationCell = ConversationLocationMessageCellDescription(message: message, location: locationMessageData)
         return [AnyConversationMessageCellDescription(locationCell)]
+    }
+
+    private func addPollMessageCells() -> [AnyConversationMessageCellDescription] {
+        ///TODO: text cells
+        let cell = ConversationButtonMessageCellDescription(text: "Foo") ///TODO: get form message
+        return [AnyConversationMessageCellDescription(cell)]
     }
 
     // MARK: - Composition

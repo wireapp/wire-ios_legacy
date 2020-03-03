@@ -288,6 +288,9 @@ extension MockFileMessageData: MockFileMessageDataType { }
     var backingFileMessageData: MockFileMessageDataType! = .none
     var backingLocationMessageData: MockLocationMessageData! = .none
     var backingSystemMessageData: MockSystemMessageData! = .none
+    
+    ///TODO: for testing only
+    var isPoll: Bool = false
 
     var isEphemeral: Bool = false
     var isObfuscated: Bool = false
