@@ -52,7 +52,7 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
 
         let message = otherUserConversation.append(text: messageText, mentions: [mention1, mention2, mention3], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentions_SelfMention() {
@@ -60,7 +60,7 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
         let mention = Mention(range: NSRange(location: 6, length: 3), user: selfUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentionWithEmoji_MultipleMention() {
@@ -70,7 +70,7 @@ final class TextMessageMentionsTests: ConversationCellSnapshotTestCase {
         let message = otherUserConversation.append(text: messageText, mentions: [mention1, mention2], fetchLinkPreview: false)!
 
         /// The emoji 🀄︎ may be rendered on its corner on differnt versions of iOS, set tolerance to 0.01
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentions_SelfMention_LongText() {
@@ -103,7 +103,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentions_MarkdownInMention_Code() {
@@ -111,7 +111,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         let mention = Mention(range: NSRange(location: 8, length: 8), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentions_MarkdownInMention_Link() {
@@ -119,7 +119,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         let mention = Mention(range: NSRange(location: 8, length: 27), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testThatItRendersMentions_MarkdownInUserName() {
@@ -128,7 +128,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         let mention = Mention(range: NSRange(location: 8, length: 6), user: otherUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     func testDarkModeSelf() {
@@ -138,7 +138,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
         let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
 }

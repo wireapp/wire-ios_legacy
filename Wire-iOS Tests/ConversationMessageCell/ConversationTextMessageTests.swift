@@ -28,7 +28,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.sender = otherUser
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testLinkPreview() {
@@ -53,7 +53,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testTextWithQuote() {
@@ -67,7 +67,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testTextWithLinkPreviewAndQuote() {
@@ -84,7 +84,7 @@ final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testMediaPreviewAttachment() {

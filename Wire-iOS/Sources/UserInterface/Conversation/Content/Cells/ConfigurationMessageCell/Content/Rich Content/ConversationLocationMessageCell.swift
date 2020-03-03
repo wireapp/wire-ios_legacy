@@ -152,7 +152,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
     }
 
     func updateMapLocation(withLocationData locationData: LocationMessageData) {
-        // invalid check for hidding map for snapshot testing 
+        // invalid check for hidding map for snapshot testing
         guard locationData.zoomLevel != Int32.min else {
             mapView.isHidden = true
             return
@@ -163,7 +163,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         } else {
             // As the zoom level is optional we use a viewport of 250m x 250m if none is specified
             let region = MKCoordinateRegion(center: locationData.coordinate, latitudinalMeters: 250, longitudinalMeters: 250)
-            mapView.setRegion(region, animated: false)///TODO: do not set?
+            mapView.setRegion(region, animated: false)
         }
     }
 
