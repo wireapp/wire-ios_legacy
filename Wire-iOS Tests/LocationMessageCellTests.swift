@@ -19,7 +19,6 @@
 
 import XCTest
 @testable import Wire
-import MapKit
 
 final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
@@ -47,8 +46,7 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let locationMessage = MockMessageFactory.locationMessage()!
-        locationMessage.backingLocationMessageData?.latitude = 9.041169
-        locationMessage.backingLocationMessageData?.longitude = 48.53775
+        locationMessage.backingLocationMessageData?.zoomLevel = Int32.min
         locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
         
         config?(locationMessage)

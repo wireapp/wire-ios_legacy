@@ -223,7 +223,8 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 }
 
-@objcMembers class MockLocationMessageData: NSObject, LocationMessageData {
+@objcMembers
+final class MockLocationMessageData: NSObject, LocationMessageData {
     var longitude: Float = 0
     var latitude: Float = 0
     var name: String? = nil

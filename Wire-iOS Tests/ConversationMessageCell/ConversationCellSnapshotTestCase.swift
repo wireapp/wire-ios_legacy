@@ -75,22 +75,22 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         let context = (context ?? defaultContext)!
 
         let closuse: () -> UIView = {
-        let section = ConversationMessageSectionController(message: message, context: context)
-        let views = section.cellDescriptions.map({ $0.makeView() })
-        let stackView = UIStackView(arrangedSubviews: views)
-        stackView.axis = .vertical
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
+            let section = ConversationMessageSectionController(message: message, context: context)
+            let views = section.cellDescriptions.map({ $0.makeView() })
+            let stackView = UIStackView(arrangedSubviews: views)
+            stackView.axis = .vertical
+            stackView.translatesAutoresizingMaskIntoConstraints = false
+            stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
 
-        if waitForImagesToLoad {
-            XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
-        }
+            if waitForImagesToLoad {
+                XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+            }
 
-        if waitForTextViewToLoad {
-            // We need to run the run loop for UITextView to highlight detected links
-            let delay = Date().addingTimeInterval(1)
-            RunLoop.main.run(until: delay)
-        }
+            if waitForTextViewToLoad {
+                // We need to run the run loop for UITextView to highlight detected links
+                let delay = Date().addingTimeInterval(1)
+                RunLoop.main.run(until: delay)
+            }
 
             return stackView
         }
