@@ -170,15 +170,6 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
 // MARK: - Helpers
 extension ZMSnapshotTestCase {
-    func containerView(with view: UIView) -> UIView {
-        let container = UIView(frame: view.bounds)
-        container.backgroundColor = snapshotBackgroundColor
-        container.addSubview(view)
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.fitInSuperview()
-        return container
-    }
 
     private func snapshotVerify(view: UIView,
                                 identifier: String? = nil,
@@ -255,7 +246,7 @@ extension ZMSnapshotTestCase {
                 file: StaticString = #file,
                 line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
         if assertEmptyFrame(container, file: file, line: line) {
             return
         }
@@ -287,15 +278,10 @@ extension ZMSnapshotTestCase {
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
 
-        container.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: width)
-            ])
-
-        container.layoutIfNeeded()
-
+        container.addWidthConstraint(width: width)
+        
         if assertEmptyFrame(container, file: file, line: line) {
             return
         }

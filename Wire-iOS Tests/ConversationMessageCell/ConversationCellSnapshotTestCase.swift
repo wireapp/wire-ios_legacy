@@ -18,22 +18,25 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 /**
  * A base test class for section-based messages. Use the section property to build
  * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
  */
-class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
+class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     fileprivate var defaultContext: ConversationMessageContext!
 
     override func setUp() {
         super.setUp()
-        
+        coreDataFixture = CoreDataFixture()
+
         ColorScheme.default.variant = .light
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
                                                     isTimeIntervalSinceLastMessageSignificant: false,
                                                     isFirstMessageOfTheDay: false,
@@ -54,12 +57,13 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
     override func tearDown() {
         ColorScheme.default.variant = .light
         defaultContext = nil
+        coreDataFixture = nil
         super.tearDown()
     }
     
     func enableDarkMode() {
         ColorScheme.default.variant = .dark
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
         NSAttributedString.invalidateParagraphStyle()
         NSAttributedString.invalidateMarkdownStyle()
     }
@@ -73,32 +77,35 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 waitForTextViewToLoad: Bool = false,
                 tolerance: CGFloat = 0,
                 colorSchemes: Set<ColorSchemeVariant> = [],
-                file: StaticString = #file,
-                line: UInt = #line) {
+        file: StaticString = #file,
+        testName: String = #function,
+        line: UInt = #line) {
 
-        verifyInAllPhoneWidths(initialization:{
-            let context = (context ?? defaultContext)!
-            let section = ConversationMessageSectionController(message: message, context: context)
-            let views = section.cellDescriptions.map({ $0.makeView() })
-            let stackView = UIStackView(arrangedSubviews: views)
-            stackView.axis = .vertical
-            stackView.translatesAutoresizingMaskIntoConstraints = false
 
-            if waitForImagesToLoad {
-                XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
-            }
+        let context = (context ?? defaultContext)!
+        let section = ConversationMessageSectionController(message: message, context: context)
+        let views = section.cellDescriptions.map({ $0.makeView() })
+        let stackView = UIStackView(arrangedSubviews: views)
+        stackView.axis = .vertical
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        if waitForImagesToLoad {
+            XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        }
+        
+        if waitForTextViewToLoad {
+            // We need to run the run loop for UITextView to highlight detected links
+            let delay = Date().addingTimeInterval(1)
+            RunLoop.main.run(until: delay)
+        }
+        
+//        return stackView
 
-            if waitForTextViewToLoad {
-                // We need to run the run loop for UITextView to highlight detected links
-                let delay = Date().addingTimeInterval(1)
-                RunLoop.main.run(until: delay)
-            }
-
-            return stackView
-        },
-           tolerance: tolerance,
-           colorSchemes: colorSchemes,
+        verifyInAllPhoneWidths(matching:stackView,
+//           tolerance: tolerance,
+//           colorSchemes: colorSchemes,
            file: file,
+           testName: testName,
            line: line)
     }
 

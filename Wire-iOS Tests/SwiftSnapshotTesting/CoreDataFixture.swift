@@ -325,4 +325,20 @@ extension CoreDataFixtureTestHelper {
     func teamTest(_ block: () -> Void) {
         coreDataFixture.teamTest(block)
     }
+
+    func nonTeamTest(_ block: () -> Void) {
+        coreDataFixture.nonTeamTest(block)
+    }
+    
+    var uiMOC: NSManagedObjectContext! {
+        return coreDataFixture.uiMOC
+    }
+    
+    var usernames: [String] {
+        return coreDataFixture.usernames
+    }
+
+    var team: Team? {
+        return coreDataFixture.team
+    }
 }

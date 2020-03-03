@@ -81,6 +81,21 @@ extension XCTestCase {
         }
     }
     
+    func verifyInAllPhoneWidths(matching value: UIView,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        for width in phoneWidths() {
+            let container = containerView(with: value, snapshotBackgroundColor: .white)
+            container.addWidthConstraint(width: width)
+            verify(matching: container,
+                   named: "\(width)",
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+
     // MARK: - verify the snapshots in both dark and light scheme
     
     func verifyInAllColorSchemes(matching: UIView,
@@ -211,18 +226,39 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
     }
 }
 
-// MARK: - color scheme
+extension UIView {
+    func addWidthConstraint(width: CGFloat) {
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalToConstant: width)
+            ])
+        
+        layoutIfNeeded()
+    }
+}
+
 extension XCTestCase {
+
+    // MARK: - verify in different width helper
+    func containerView(with view: UIView, snapshotBackgroundColor: UIColor?) -> UIView {
+        let container = UIView(frame: view.bounds)
+        container.backgroundColor = snapshotBackgroundColor
+        container.addSubview(view)
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.fitInSuperview()
+        return container
+    }
+
+    // MARK: - color scheme
     func resetColorScheme() {
         ColorScheme.default.variant = .light
 
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-}
 
-// MARK: - UIAlertController hack
-extension XCTestCase {
+    // MARK: - UIAlertController hack
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
