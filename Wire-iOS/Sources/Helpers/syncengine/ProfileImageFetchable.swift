@@ -19,7 +19,9 @@
 import Foundation
 import WireSyncEngine
 
-fileprivate var ciContext = CIContext(options: nil)
+extension CIContext {
+    static var shared: CIContext = CIContext(options: nil)
+}
 
 typealias ProfileImageFetchableUser = UserType & ProfileImageFetchable
 
@@ -88,7 +90,7 @@ extension ProfileImageFetchable where Self: UserType {
             }
 
             if desaturate {
-                image = image?.desaturatedImage(with: ciContext, saturation: 0)
+                image = image?.desaturatedImage(with: CIContext.shared)
             }
 
             if let image = image {

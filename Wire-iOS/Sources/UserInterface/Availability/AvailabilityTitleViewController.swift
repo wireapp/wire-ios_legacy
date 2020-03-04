@@ -18,7 +18,7 @@
 
 import Foundation
 
-class AvailabilityTitleViewController: UIViewController {
+final class AvailabilityTitleViewController: UIViewController {
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let options: AvailabilityTitleView.Options
@@ -53,10 +53,10 @@ class AvailabilityTitleViewController: UIViewController {
         let alertViewController = UIAlertController.availabilityPicker { [weak self] (availability) in
             self?.didSelectAvailability(availability)
         }
-        alertViewController.popoverPresentationController?.sourceView = view
-        alertViewController.popoverPresentationController?.sourceRect = view.frame
         
-        self.present(alertViewController, animated: true)
+        alertViewController.configPopover(pointToView: view)
+        
+        present(alertViewController, animated: true)
     }
     
     private func didSelectAvailability(_ availability: Availability) {

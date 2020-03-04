@@ -53,6 +53,10 @@ final class AppLockViewController: UIViewController {
         self.init(nibName:nil, bundle:nil)
     }
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

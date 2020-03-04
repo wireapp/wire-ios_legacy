@@ -28,7 +28,7 @@ extension UIApplication {
     /// 2. CallWindowRootViewController is in use and voice channel controller is active
     /// 3. the window's rootViewController is AppRootViewController
     var topMostVisibleWindow: UIWindow? {
-        let orderedWindows = self.windows.sorted { win1, win2 in
+        let orderedWindows = windows.sorted { win1, win2 in
             win1.windowLevel < win2.windowLevel
         }
 
@@ -41,9 +41,9 @@ extension UIApplication {
                 return callWindowRootController.isDisplayingCallOverlay
             } else if controller is AppRootViewController  {
                 return true
-            } else {
-                return false
             }
+            
+            return false
         }
 
         return visibleWindow.last

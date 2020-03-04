@@ -93,7 +93,7 @@ final class SettingsClientViewController: UIViewController,
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return ColorScheme.default.statusBarStyle
     }
 
     override func viewDidLoad() {

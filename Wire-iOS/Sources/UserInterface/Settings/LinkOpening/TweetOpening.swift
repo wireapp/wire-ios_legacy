@@ -24,6 +24,10 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
 
     case none, tweetbot, twitterrific
 
+    typealias ApplicationOptionEnum = TweetOpeningOption
+    static var settingKey: String = UserDefaultTwitterOpeningRawValue
+    static var defaultPreference: ApplicationOptionEnum = .none
+
     var displayString: String {
         switch self {
         case .none: return "open_link.twitter.option.default".localized
@@ -43,10 +47,6 @@ enum TweetOpeningOption: Int, LinkOpeningOption {
         case . twitterrific: return UIApplication.shared.twitterrificInstalled
         }
     }
-
-    static func storedPreference() -> TweetOpeningOption {
-        return TweetOpeningOption(rawValue: Settings.shared().twitterLinkOpeningOptionRawValue) ?? .none
-    }
 }
 
 
@@ -55,7 +55,7 @@ extension URL {
     func openAsTweet() -> Bool {
         log.debug("Trying to open \"\(self)\" as tweet, isTweet: \(isTweet)")
         guard isTweet else { return false }
-        let saved = TweetOpeningOption.storedPreference()
+        let saved = TweetOpeningOption.storedPreference
         log.debug("Saved option to open a tweet: \(saved.displayString)")
         let app = UIApplication.shared
         
