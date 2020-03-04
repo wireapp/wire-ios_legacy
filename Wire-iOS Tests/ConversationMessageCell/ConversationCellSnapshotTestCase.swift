@@ -76,7 +76,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         
         let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
         
-        let closuse: () -> UIView = {
+        let createViewClosure: () -> UIView = {
             let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
             let stackView = UIStackView(arrangedSubviews: views)
@@ -100,14 +100,14 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         if allColorSchemes {
             ColorScheme.default.variant = .dark
             
-            verifyInAllPhoneWidths(matching:closuse(),
+            verifyInAllPhoneWidths(matching:createViewClosure(),
                                    named: "dark",
                                    file: file,
                                    testName: testName,
                                    line: line)
             
             ColorScheme.default.variant = .light
-            verifyInAllPhoneWidths(matching:closuse(),
+            verifyInAllPhoneWidths(matching:createViewClosure(),
                                    named: "light",
                                    file: file,
                                    testName: testName,
@@ -115,7 +115,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             
         } else {
             
-            verifyInAllPhoneWidths(matching:closuse(),
+            verifyInAllPhoneWidths(matching:createViewClosure(),
                                    file: file,
                                    testName: testName,
                                    line: line)
