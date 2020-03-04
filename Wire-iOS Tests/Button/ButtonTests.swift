@@ -24,15 +24,27 @@ final class ButtonTests: XCTestCase {
 
     override func setUp() {
         sut = Button(style: .empty)
-        sut.setTitle("Dummy button", for: .normal)
     }
 
     override func tearDown() {
         sut = nil
     }
 
+    func testForLongTitleCanBeWrapped() {
+        //GIVEN
+        sut.titleLabel?.lineBreakMode = .byWordWrapping
+        sut.titleLabel?.textAlignment = .center
+        sut.titleLabel?.numberOfLines = 0
+        sut.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
+        sut.setTitle("Dummy button with long long long long long long long long title", for: .normal)
+
+        //WHEN & THEN
+        verifyInAllPhoneWidths(matching: sut)
+    }
+
     func testForStyleChangedToFull() {
         //GIVEN
+        sut.setTitle("Dummy button", for: .normal)
 
         //WHEN
         sut.style = .full
@@ -43,6 +55,7 @@ final class ButtonTests: XCTestCase {
 
     func testForStyleChangedToEmpty() {
         //GIVEN
+        sut.setTitle("Dummy button", for: .normal)
 
         //WHEN
         sut.style = .full
