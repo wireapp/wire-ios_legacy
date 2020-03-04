@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -24,35 +23,34 @@ extension ConversationInputBarViewController {
         guard let data = image.data() else { return }
         sendController.sendMessage(withImageData: data)
     }
-    
+
     ///TODO: chnage to didSet after ConversationInputBarViewController is converted to Swift
     @objc
     func asssignInputController(_ inputController: UIViewController?) {
         self.inputController?.view.removeFromSuperview()
-        
+
         self.inputController = inputController
         deallocateUnusedInputControllers()
-        
-        
+
         if let inputController = inputController {
             let inputViewSize = UIView.lastKeyboardSize
-            
+
             let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
             let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
             inputView.allowsSelfSizing = true
-            
+
             inputView.autoresizingMask = .flexibleWidth
             inputController.view.frame = inputView.frame
             inputController.view.autoresizingMask = .flexibleWidth
             if let view = inputController.view {
                 inputView.addSubview(view)
             }
-            
+
             inputBar.textView.inputView = inputView
         } else {
             inputBar.textView.inputView = nil
         }
-        
+
         inputBar.textView.reloadInputViews()
     }
 
@@ -70,29 +68,29 @@ extension ConversationInputBarViewController {
 
 }
 
-//MARK: - GiphySearchViewControllerDelegate
+// MARK: - GiphySearchViewControllerDelegate
 
 extension ConversationInputBarViewController: GiphySearchViewControllerDelegate {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String) {
         clearInputBar()
         dismiss(animated: true) {
             let messageText: String
-            
+
             if (searchTerm == "") {
                 messageText = String(format: "giphy.conversation.random_message".localized, searchTerm)
             } else {
                 messageText = String(format: "giphy.conversation.message".localized, searchTerm)
             }
-            
+
             self.sendController.sendTextMessage(messageText, mentions: [], withImageData: imageData)
         }
     }
 }
 
-//MARK: - UIImagePickerControllerDelegate
+// MARK: - UIImagePickerControllerDelegate
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
-    
+
     ///TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
@@ -101,18 +99,18 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         } catch {
         }
     }
-    
+
     public func imagePickerController(_ picker: UIImagePickerController,
-                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
-        
+
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String
-        
+
         if mediaType == kUTTypeMovie as String {
             processVideo(info: info, picker: picker)
         } else if mediaType == kUTTypeImage as String {
             let image: UIImage? = (info[UIImagePickerController.InfoKey.editedImage] as? UIImage) ?? info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-            
+
             if let image = image, let jpegData = image.jpegData(compressionQuality: 0.9) {
                 if picker.sourceType == UIImagePickerController.SourceType.camera {
                     UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
@@ -131,12 +129,12 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             parent?.dismiss(animated: true)
         }
     }
-    
+
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         statusBarBlinksRedFix()
-        
+
         parent?.dismiss(animated: true) {
-            
+
             if self.shouldRefocusKeyboardAfterImagePickerDismiss {
                 self.shouldRefocusKeyboardAfterImagePickerDismiss = false
                 self.mode = .camera
@@ -144,44 +142,42 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             }
         }
     }
-    
-    //MARK: - Sketch
-    
+
+    // MARK: - Sketch
+
     @objc
     func sketchButtonPressed(_ sender: Any?) {
         inputBar.textView.resignFirstResponder()
-        
+
         let viewController = CanvasViewController()
         viewController.delegate = self
         viewController.title = conversation.displayName.uppercased()
-        
+
         parent?.present(viewController.wrapInNavigationController(), animated: true)
     }
 }
-
 
 // MARK: - Informal TextView delegate methods
 
 extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
-        let confirmImageViewController = ConfirmAssetViewController()
-        confirmImageViewController.image = image
+        let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: image),
+                                                         onConfirm: {[weak self] editedImage in
+                                                                        self?.dismiss(animated: false)
+                                                                        self?.postImage(editedImage ?? image)
+                                                                        },
+                                                         onCancel: { [weak self] in
+                                                                        self?.dismiss(animated: false)
+                                                                    }
+        )
+
+        let confirmImageViewController = ConfirmAssetViewController(context: context)
+
         confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
-        
-        
-        confirmImageViewController.onConfirm = {[weak self] editedImage in
-            self?.dismiss(animated: false)
-            let finalImage: MediaAsset = editedImage ?? image
-            self?.postImage(finalImage)
-        }
-        
-        confirmImageViewController.onCancel = { [weak self] in
-            self?.dismiss(animated: false)
-        }
-        
+
         present(confirmImageViewController, animated: false)
     }
-    
+
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool) {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
