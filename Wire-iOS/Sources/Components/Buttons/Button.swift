@@ -92,7 +92,7 @@ class Button: ButtonWithLargerHitArea {
             setTitleColor(UIColor.from(scheme: .textForeground, variant: .light), for: .normal)
             setTitleColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
         case .empty:
-            setBackgroundImageColor(.clear, for: .normal)
+            setBackgroundImageColor(nil, for: .normal)
             layer.borderWidth = 1
             setTitleColor(UIColor.buttonEmptyText(variant: variant), for: .normal)
             setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
@@ -126,8 +126,12 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    func setBackgroundImageColor(_ color: UIColor, for state: UIControl.State) {
-        setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
+    func setBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
+        if let color = color {
+            setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
+        } else {
+            setBackgroundImage(nil, for: state)
+        }
     }
 
     func borderColor(for state: UIControl.State) -> UIColor? {
