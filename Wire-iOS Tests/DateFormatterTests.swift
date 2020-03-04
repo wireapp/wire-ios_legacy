@@ -22,7 +22,7 @@ import XCTest
 final class DateFormatterTests: XCTestCase {
 
     override func tearDown() {
-        resetDayFormatter()
+        XCTestCase.resetDayFormatter()
 
         super.tearDown()
     }

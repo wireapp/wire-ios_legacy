@@ -39,12 +39,13 @@ class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
         guard let selfUser = ZMUser.selfUser() else { return }
     
         if selfUser.usesCompanyLogin || password != nil {
-            ZClientViewController.shared?.showLoadingView = true
+            weak var topMostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
+            topMostViewController?.showLoadingView = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
-                ZClientViewController.shared?.showLoadingView = false
+                topMostViewController?.showLoadingView = false
                 
                 if case .failure(let error) = result {
-                    ZClientViewController.shared?.showAlert(for: error)
+                    topMostViewController?.showAlert(for: error)
                 }
             })
         } else {

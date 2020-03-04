@@ -18,11 +18,12 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
-    
+final class SketchColorPickerControllerSnapshotTests: XCTestCase {
+
     var sut: SketchColorPickerController!
-    
+
     override func setUp() {
         super.setUp()
         sut = SketchColorPickerController()
@@ -40,20 +41,35 @@ final class SketchColorPickerControllerSnapshotTests: ZMSnapshotTestCase {
                             UIColor(red: 0.381, green: 0.192, blue: 0.006, alpha: 1),
                             UIColor(red: 0.894, green: 0.735, blue: 0.274, alpha: 1),
                             UIColor(red: 0.905, green: 0.317, blue: 0.466, alpha: 1),
-                            UIColor(red: 0.58,  green: 0.088, blue: 0.318, alpha: 1),
-                            UIColor(red: 0.431, green: 0.65,  blue: 0.749, alpha: 1),
-                            UIColor(red: 0.6,   green: 0.588, blue: 0.278, alpha: 1),
-                            UIColor(red: 0.44,  green: 0.44,  blue: 0.44,  alpha: 1)]
+                            UIColor(red: 0.58, green: 0.088, blue: 0.318, alpha: 1),
+                            UIColor(red: 0.431, green: 0.65, blue: 0.749, alpha: 1),
+                            UIColor(red: 0.6, green: 0.588, blue: 0.278, alpha: 1),
+                            UIColor(red: 0.44, green: 0.44, blue: 0.44, alpha: 1)]
 
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
 
-    func testForInitState(){
-        verify(view: sut.view)
+    func testForInitState() {
+        verify(matching: sut)
+    }
+
+    func testForAllItemsAreVisible() {
+        sut.view.frame = CGRect(x: 0, y: 0, width: 768, height: 48)
+        verify(matching: sut)
+    }
+
+    func testForColorButtonBumpedThreeTimes() {
+        //GIVEN & WHEN
+        for _ in 1...3 {
+            sut.collectionView(sut.colorsCollectionView, didSelectItemAt: IndexPath(item: 1, section: 0))
+        }
+
+        //THEN
+        verify(matching: sut)
     }
 }
