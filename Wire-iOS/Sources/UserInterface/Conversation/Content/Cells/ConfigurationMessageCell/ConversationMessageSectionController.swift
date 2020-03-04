@@ -44,7 +44,6 @@ protocol ConversationMessageSectionControllerDelegate: class {
  * the cells from the table or collection view and configuring them with a message.
  */
 
-@objc
 final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.

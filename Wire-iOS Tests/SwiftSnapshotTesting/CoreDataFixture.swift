@@ -20,12 +20,11 @@ import WireTesting
 import XCTest
 @testable import Wire
 
-
 // MARK: - factory methods
 
 extension ZMConversation {
     static func createOtherUserConversation(moc: NSManagedObjectContext, otherUser: ZMUser) -> ZMConversation {
-        
+
         let otherUserConversation = ZMConversation.insertNewObject(in: moc)
         otherUserConversation.add(participants: ZMUser.selfUser(in: moc))
 
@@ -35,24 +34,24 @@ extension ZMConversation {
         connection.to = otherUser
         connection.status = .accepted
         connection.conversation = otherUserConversation
-        
+
         connection.add(user: otherUser)
 
         return otherUserConversation
     }
-    
+
     static func createGroupConversationOnlyAdmin(moc: NSManagedObjectContext, selfUser: ZMUser) -> ZMConversation {
         let conversation = ZMConversation.insertNewObject(in: moc)
         conversation.remoteIdentifier = UUID.create()
         conversation.conversationType = .group
-        
+
         let role = Role(context: moc)
         role.name = ZMConversation.defaultAdminRoleName
         conversation.addParticipantsAndUpdateConversationState(users:[selfUser], role: role)
-        
+
         return conversation
     }
-    
+
     static func createGroupConversation(moc: NSManagedObjectContext,
                                         otherUser: ZMUser,
                                         selfUser: ZMUser) -> ZMConversation {
@@ -60,7 +59,7 @@ extension ZMConversation {
         conversation.add(participants:otherUser)
         return conversation
     }
-    
+
     static func createTeamGroupConversation(moc: NSManagedObjectContext,
                                             otherUser: ZMUser,
                                             selfUser: ZMUser) -> ZMConversation {
@@ -83,7 +82,6 @@ final class CoreDataFixture {
     var team: Team?
     var teamMember: Member?
     let usernames = ["Anna", "Claire", "Dean", "Erik", "Frank", "Gregor", "Hanna", "Inge", "James", "Laura", "Klaus", "Lena", "Linea", "Lara", "Elliot", "Francois", "Felix", "Brian", "Brett", "Hannah", "Ana", "Paula"]
-
 
     ///From ZMSnapshot
 
@@ -180,7 +178,6 @@ final class CoreDataFixture {
 
         team = Team.insertNewObject(in: uiMOC)
         team!.remoteIdentifier = UUID()
-        
 
         teamMember = Member.insertNewObject(in: uiMOC)
         teamMember!.user = selfUser
@@ -224,14 +221,14 @@ final class CoreDataFixture {
             team = nil
         }
     }
-    
+
     func createUser(name: String) -> ZMUser {
         let user = ZMUser.insertNewObject(in: uiMOC)
         user.name = name
         user.remoteIdentifier = UUID()
         return user
     }
-    
+
     func createService(name: String) -> ZMUser {
         let user = createUser(name: name)
         user.serviceIdentifier = UUID.create().transportString()
@@ -252,7 +249,7 @@ final class CoreDataFixture {
         updateTeamStatus(wasInTeam: wasInTeam)
         block()
     }
-    
+
     func markAllMessagesAsUnread(in conversation: ZMConversation) {
         conversation.lastReadServerTimeStamp = Date.distantPast
         conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
@@ -260,7 +257,7 @@ final class CoreDataFixture {
 
 }
 
-//MARK: - mock service user
+// MARK: - mock service user
 
 extension CoreDataFixture {
     func createServiceUser() -> ZMUser {
@@ -277,7 +274,6 @@ extension CoreDataFixture {
     }
 }
 
-
 protocol CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture! { get }
 
@@ -289,12 +285,11 @@ protocol CoreDataFixtureTestHelper {
 
     func createGroupConversation() -> ZMConversation
     func createTeamGroupConversation() -> ZMConversation
-    
+
     func createUser(name: String) -> ZMUser
-    
+
     func teamTest(_ block: () -> Void)
 }
-
 
 // MARK: - default implementation for migrating CoreDataSnapshotTestCase to XCTestCase
 extension CoreDataFixtureTestHelper {
@@ -313,16 +308,32 @@ extension CoreDataFixtureTestHelper {
     func createGroupConversation() -> ZMConversation {
         return ZMConversation.createGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createTeamGroupConversation() -> ZMConversation {
         return ZMConversation.createTeamGroupConversation(moc: coreDataFixture.uiMOC, otherUser: otherUser, selfUser: selfUser)
     }
-    
+
     func createUser(name: String) -> ZMUser {
         return coreDataFixture.createUser(name: name)
     }
 
     func teamTest(_ block: () -> Void) {
         coreDataFixture.teamTest(block)
+    }
+
+    func nonTeamTest(_ block: () -> Void) {
+        coreDataFixture.nonTeamTest(block)
+    }
+
+    var uiMOC: NSManagedObjectContext! {
+        return coreDataFixture.uiMOC
+    }
+
+    var usernames: [String] {
+        return coreDataFixture.usernames
+    }
+
+    var team: Team? {
+        return coreDataFixture.team
     }
 }

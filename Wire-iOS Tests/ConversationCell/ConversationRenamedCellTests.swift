@@ -18,11 +18,7 @@
 
 @testable import Wire
 
-class ConversationRenamedCellTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class ConversationRenamedCellTests: ConversationCellSnapshotTestCase {
 
     func testThatItRendersRenamedCellCorrectlySelf() {
         let name = "Amazing Conversation"

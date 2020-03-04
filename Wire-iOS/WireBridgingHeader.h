@@ -39,8 +39,6 @@
 
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
-#import "ConfirmAssetViewController.h"
-#import "ConfirmAssetViewController+Internal.h"
 
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
