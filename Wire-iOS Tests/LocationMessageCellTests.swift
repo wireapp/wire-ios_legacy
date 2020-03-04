@@ -26,7 +26,7 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     func testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
-        // If it does we can try to use the 'withAccurancy' methods in FBSnapshotTestCase
+        // Add waitForTextViewToLoad to wait for MapView rendering would fix the issue. (Tested with iOS 12 simulator)
         verify(message: makeMessage(), waitForTextViewToLoad: true)
     }
     
@@ -46,7 +46,6 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let locationMessage = MockMessageFactory.locationMessage()!
-//        locationMessage.backingLocationMessageData?.zoomLevel = Int32.min
         locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
         
         config?(locationMessage)
