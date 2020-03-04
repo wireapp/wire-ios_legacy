@@ -153,10 +153,10 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 
     func updateMapLocation(withLocationData locationData: LocationMessageData) {
         // snpashot test gives a invalid zoomLevel. Hide mapview to prevent inconsistant snapshot result.
-        guard locationData.zoomLevel != Int32.min else {
-            mapView.isHidden = true
-            return
-        }
+//        guard locationData.zoomLevel != Int32.min else {
+//            mapView.isHidden = true
+//            return
+//        }
         
         if locationData.zoomLevel != 0 {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
