@@ -176,9 +176,9 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         let text = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         //TODO: get form message
         return text +
-               [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo")),
-                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Bar")),
-                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "2020"))]
+            [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo", state: .selected)),
+                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Bar", state: .unselected)),
+                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "2020", state: .unselected))]
     }
 
     // MARK: - Composition

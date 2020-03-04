@@ -19,7 +19,7 @@
 import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
-    private let button = Button(style: .empty)
+    private let button = Button(style: .empty) ///TODO: support button style change
     var isSelected: Bool = false
     
     weak var message: ZMConversationMessage?
@@ -38,7 +38,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     
     struct Configuration {
         let text: String
-        let state: State = .unselected
+        let state: State
         ///TODO: state/spinner ?
     }
     
@@ -98,14 +98,14 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
     
     var accessibilityLabel: String? = nil
     
-    init(text: String) { /// TODO: state
-        configuration = View.Configuration(text: text)
+    init(text: String, state: ConversationButtonMessageCell.State) { /// TODO: state
+        configuration = View.Configuration(text: text, state: state)
     }
 }
 
 ///TODO: for testing only! remove after DM is ready
 extension ZMConversationMessage {
-    public var isPoll: Bool {
-        return self is ZMClientMessage == false
+    public var isPoll: Bool { ///TODO: make a tmp PollMessage protocol
+        return (self is ZMClientMessage == false) && (self is ZMSystemMessage == false)
     }
 }
