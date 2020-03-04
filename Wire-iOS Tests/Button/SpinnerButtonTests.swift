@@ -25,7 +25,7 @@ final class SpinnerButtonTests: XCTestCase {
     
     override func setUp() {
         sut = SpinnerButton(style: .full)
-        sut.setTitle("Dummy spinner button", for: .normal)
+        sut.setTitle("Dummy spinner button with long text", for: .normal)
     }
     
     override func tearDown() {

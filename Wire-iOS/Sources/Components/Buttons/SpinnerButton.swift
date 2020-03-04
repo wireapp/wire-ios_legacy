@@ -18,26 +18,26 @@
 
 import Foundation
 
+
+/// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
+    private static let iconSize = StyleKitIcon.Size.tiny.rawValue
+    private static let iconInset: CGFloat = 10 ///TODO: get it from design
+    private static let textInset: CGFloat = 5
+
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
         
-        progressSpinner.color = UIColor.from(scheme: .textDimmed, variant: .light)
-        progressSpinner.iconSize = StyleKitIcon.Size.tiny.rawValue
-        
+        progressSpinner.color = UIColor.from(scheme: .textDimmed, variant: .light) ///TODO: from design
+        progressSpinner.iconSize = SpinnerButton.iconSize
 
         addSubview(progressSpinner)
         
         progressSpinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //            progressSpinner.widthAnchor.constraint(equalToConstant: StyleKitIcon.Size.tiny.rawValue), ///TODO: needed?
-//            progressSpinner.heightAnchor.constraint(equalTo: progressSpinner.widthAnchor),
-            
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10), ///TODO: get it from design
-            ])
+            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -SpinnerButton.iconInset)])
 
-        layoutIfNeeded()
         return progressSpinner
     }()
     
@@ -49,4 +49,70 @@ final class SpinnerButton: Button {
             showSpinner ? spinner.startAnimation() : spinner.stopAnimation()
         }
     }
+    
+    override init() {
+        super.init()
+        titleLabel?.lineBreakMode = .byWordWrapping
+        titleLabel?.textAlignment = .center
+        titleLabel?.numberOfLines = 0
+        
+//        titleLabel?.setContentHuggingPriority(.required, for: .vertical)
+//        titleLabel?.setContentHuggingPriority(.required, for: .horizontal)
+
+//        setContentHuggingPriority(.required, for: .vertical)
+//        setContentHuggingPriority(.required, for: .horizontal)
+
+        let iconInset = SpinnerButton.iconSize + SpinnerButton.iconInset
+        contentEdgeInsets = UIEdgeInsets(top: contentEdgeInsets.top, left: contentEdgeInsets.left+iconInset, bottom: contentEdgeInsets.bottom, right: contentEdgeInsets.right+iconInset)
+        titleEdgeInsets = UIEdgeInsets(top: titleEdgeInsets.top, left: titleEdgeInsets.left+iconInset, bottom: titleEdgeInsets.bottom, right: titleEdgeInsets.right+iconInset)
+        
+        if let titleLabel = titleLabel {
+
+//            addConstraints([
+//                .init(item: titleLabel,
+//                      attribute: .top,
+//                      relatedBy: .greaterThanOrEqual,
+//                      toItem: self,
+//                      attribute: .top,
+//                      multiplier: 1.0,
+//                      constant: contentEdgeInsets.top),
+//                .init(item: titleLabel,
+//                      attribute: .bottom,
+//                      relatedBy: .greaterThanOrEqual,
+//                      toItem: self,
+//                      attribute: .bottom,
+//                      multiplier: 1.0,
+//                      constant: contentEdgeInsets.bottom),
+//                .init(item: titleLabel,
+//                      attribute: .left,
+//                      relatedBy: .greaterThanOrEqual,
+//                      toItem: self,
+//                      attribute: .left,
+//                      multiplier: 1.0,
+//                      constant: contentEdgeInsets.left + 30),
+//                .init(item: titleLabel,
+//                      attribute: .right,
+//                      relatedBy: .greaterThanOrEqual,
+//                      toItem: self,
+//                      attribute: .right,
+//                      multiplier: 1.0,
+//                      constant: contentEdgeInsets.right)
+//                ])
+//        addConstraints([
+//            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.textInset),
+//            titleLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: SpinnerButton.textInset),
+//            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: iconInset),
+//            titleLabel.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: iconInset),
+//            ])
+        }
+
+//        let insets = titleEdgeInsets
+//
+//
+    }
+    
+//    override func setTitle(_ title: String?, for state: UIControl.State) {
+//        super.setTitle(title, for: state)
+//        setNeedsLayout()
+//    }
 }
