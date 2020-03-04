@@ -98,23 +98,23 @@ class ParticipantsCellViewModel {
     
     /// Users displayed in the system message, up to 17 when not collapsed
     /// but only 15 when there are more than 15 users and we collapse them.
-    lazy var shownUsers: [ZMUser] = {
+    lazy var shownUsers: [UserType] = {
         let users = sortedUsersWithoutSelf
         let boundary = users.count > maxShownUsers && action.allowsCollapsing ? maxShownUsersWhenCollapsed : users.count
         let result = users[..<boundary]
-        return result + (isSelfIncludedInUsers ? [.selfUser()] : [])
+        return result + (isSelfIncludedInUsers ? [SelfUser.current] : [])
     }()
     
     /// Users not displayed in the system message but collapsed into a link.
     /// E.g. `and 5 others`.
-    private lazy var collapsedUsers: [ZMUser] = {
+    private lazy var collapsedUsers: [UserType] = {
         let users = sortedUsersWithoutSelf
         guard users.count > maxShownUsers, action.allowsCollapsing else { return [] }
         return Array(users.dropFirst(maxShownUsersWhenCollapsed))
     }()
     
     /// The users to display when opening the participants details screen.
-    var selectedUsers: [ZMUser] {
+    var selectedUsers: [UserType] {
         switch action {
         case .added: return sortedUsers
         default: return []
@@ -127,7 +127,7 @@ class ParticipantsCellViewModel {
     
     /// The users involved in the conversation action sorted alphabetically by
     /// name.
-    lazy var sortedUsers: [ZMUser] = {
+    lazy var sortedUsers: [UserType] = {
         guard let sender = message.sender else { return [] }
         guard action.involvesUsersOtherThanSender else { return [sender] }
         guard let systemMessage = message.systemMessageData else { return [] }
@@ -150,7 +150,7 @@ class ParticipantsCellViewModel {
         self.message = message
     }
     
-    lazy var sortedUsersWithoutSelf: [ZMUser] = {
+    lazy var sortedUsersWithoutSelf: [UserType] = {
         return sortedUsers.filter { !$0.isSelfUser }
     }()
 
