@@ -30,8 +30,15 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         button.setTitle(object.text, for: .normal)
     }
     
+    enum State {
+        case unselected
+        case selected
+        case loading
+    }
+    
     struct Configuration {
         let text: String
+        let state: State = .unselected
         ///TODO: state/spinner ?
     }
     
@@ -91,7 +98,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
     
     var accessibilityLabel: String? = nil
     
-    init(text: String) {
+    init(text: String) { /// TODO: state
         configuration = View.Configuration(text: text)
     }
 }
@@ -99,6 +106,6 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 ///TODO: for testing only! remove after DM is ready
 extension ZMConversationMessage {
     public var isPoll: Bool {
-        return true
+        return self is ZMClientMessage == false
     }
 }

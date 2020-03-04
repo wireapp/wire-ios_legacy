@@ -30,7 +30,7 @@ final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helpers
     
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let buttonMessage = MockMessageFactory.buttonMessage ///TODO: text shoudl belong to sub-messages
+        let buttonMessage = MockMessageFactory.buttonMessage ///TODO: text should belong to sub-messages
         
         let textMessageData = MockTextMessageData()
         textMessageData.messageText = "Dummy Poll question:"
