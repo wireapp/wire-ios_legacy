@@ -21,11 +21,6 @@ import XCTest
 
 final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     
-//    override func setUp() {
-//        super.setUp()
-//        recordMode = true
-//    }
-    
     typealias CellConfiguration = (MockMessage) -> Void
     
     func testThatItRendersButton() {
