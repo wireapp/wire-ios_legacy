@@ -92,6 +92,7 @@ class Button: ButtonWithLargerHitArea {
             setTitleColor(UIColor.from(scheme: .textForeground, variant: .light), for: .normal)
             setTitleColor(UIColor.from(scheme: .textDimmed, variant: .light), for: .highlighted)
         case .empty:
+            setBackgroundImageColor(.clear, for: .normal)
             layer.borderWidth = 1
             setTitleColor(UIColor.buttonEmptyText(variant: variant), for: .normal)
             setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
