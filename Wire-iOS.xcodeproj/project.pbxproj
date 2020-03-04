@@ -4912,7 +4912,9 @@
 				5E181908216B734C003659CB /* Cartfile.resolved */,
 				5EDD254221412ED200C0E254 /* EmbeddedDependencies.plist */,
 			);
+			indentWidth = 4;
 			sourceTree = "<group>";
+			tabWidth = 4;
 		};
 		8F42C539199244A700288E4D /* Products */ = {
 			isa = PBXGroup;
