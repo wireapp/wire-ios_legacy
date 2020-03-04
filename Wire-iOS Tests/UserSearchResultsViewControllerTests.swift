@@ -58,14 +58,14 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     
     func testThatShowsResultsInConversationWithEmptyQuery() {
         createSUT()
-        sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "")
+        sut.users = [selfUser, otherUser].searchForMentions(withQuery: "")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
 
     func testThatShowsResultsInConversationWithQuery() {
         createSUT()
-        sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "u")
+        sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
@@ -73,7 +73,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
     func testThatShowsResultsInConversationWithQuery_DarkMode() {
         ColorScheme.default.variant = .dark
         createSUT()
-        sut.users = ZMUser.searchForMentions(in: [selfUser, otherUser], with: "u")
+        sut.users = [selfUser, otherUser].searchForMentions(withQuery: "u")
         guard let view = sut.view else { XCTFail(); return }
         verify(view: view)
     }
@@ -95,7 +95,7 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
 
         allUsers.append(selfUser)
 
-        return ZMUser.searchForMentions(in: allUsers, with: "")
+        return allUsers.searchForMentions(withQuery: "")
     }
 
 
@@ -168,10 +168,10 @@ class UserSearchResultsViewControllerTests: CoreDataSnapshotTestCase {
         createSUT()
         // given
         let users: [UserType] = [selfUser, otherUser, serviceUser]
-        sut.users = ZMUser.searchForMentions(in: users, with: "u")
+        sut.users = users.searchForMentions(withQuery: "u")
         
         // when
-        sut.users = ZMUser.searchForMentions(in: users, with: "362D00AE-B606-4680-BD47-F17749229E64")
+        sut.users = users.searchForMentions(withQuery: "362D00AE-B606-4680-BD47-F17749229E64")
     }
     
 }
