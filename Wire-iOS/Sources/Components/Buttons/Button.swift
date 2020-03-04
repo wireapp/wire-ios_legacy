@@ -48,6 +48,13 @@ class Button: ButtonWithLargerHitArea {
         }
     }
     
+    var style: ButtonStyle? {
+        didSet {
+            updateStyle(variant: variant)
+        }
+    }
+    private var variant: ColorSchemeVariant = ColorScheme.default.variant
+    
     private var originalTitles: [UIControl.State : String] = [:]
     
     private var borderColorByState: [UIControl.State : UIColor] = [:]
@@ -60,10 +67,20 @@ class Button: ButtonWithLargerHitArea {
     
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init()
+
+        self.style = style
+        self.variant = variant
+
         textTransform = .upper
         titleLabel?.font = .smallLightFont
         layer.cornerRadius = 4
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
+        
+        updateStyle(variant: variant)
+    }
+    
+    private func updateStyle(variant: ColorSchemeVariant) {
+        guard let style = style else { return }
         
         switch style {
         case .full:
