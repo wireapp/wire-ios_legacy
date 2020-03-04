@@ -592,17 +592,6 @@ final class FailedSendMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-extension ZMUser {
-    func nameAsSender(in conversation: ZMConversation) -> String {
-        if self.isSelfUser {
-            return "conversation.status.you".localized
-        }
-        else {
-            return self.name ?? ""
-        }
-    }
-}
-
 // "[You|User] [added|removed|left] [_|users|you]"
 final class GroupActivityMatcher: TypedConversationStatusMatcher {
     let matchedTypes: [StatusMessageType] = [.addParticipants, .removeParticipants]

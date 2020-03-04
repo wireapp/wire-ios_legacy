@@ -154,13 +154,12 @@ class ParticipantsCellViewModel {
         return sortedUsers.filter { !$0.isSelfUser }
     }()
 
-    private func name(for user: ZMUser) -> String {
+    private func name(for user: UserType) -> String {
         if user.isSelfUser {
             return "content.system.you_\(grammaticalCase(for: user))".localized
+        } else {
+            return user.name ?? "conversation.status.someone".localized
         }
-
-        let username = user.nameAsSender(in: message.conversation!)
-        return username.isEmpty ? "conversation.status.someone".localized : username
     }
     
     private var nameList: NameList {
@@ -170,9 +169,9 @@ class ParticipantsCellViewModel {
     
     /// The user will, depending on the context, be in a specific case within the
     /// sentence. This is important for localization of "you".
-    private func grammaticalCase(for user: ZMUser) -> String {
+    private func grammaticalCase(for user: UserType) -> String {
         // user is always the subject
-        if user == message.sender { return "nominative" }
+        if message.isUserSender(user) { return "nominative" }
         // "started with ... user"
         if case .started = action { return "dative" }
         return "accusative"
