@@ -25,7 +25,7 @@ final class SpinnerButtonTests: XCTestCase {
     
     override func setUp() {
         sut = SpinnerButton(style: .full)
-        sut.setTitle("Dummy spinner button with long text", for: .normal)
+        sut.setTitle("Dummy spinner button with long long long long long extralong text", for: .normal)
     }
     
     override func tearDown() {
@@ -40,6 +40,6 @@ final class SpinnerButtonTests: XCTestCase {
         
         //THEN
         XCTAssertFalse(sut.isEnabled)
-        verify(matching: sut)
+        verifyInAllPhoneWidths(matching: sut)
     }
 }
