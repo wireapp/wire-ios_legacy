@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -31,20 +30,20 @@ final class ButtonTests: XCTestCase {
     override func tearDown() {
         sut = nil
     }
-    
+
     func testForStyleChangedToFull() {
         //GIVEN
-        
+
         //WHEN
         sut.style = .full
-        
+
         //THEN
         verify(matching: sut)
     }
 
     func testForStyleChangedToEmpty() {
         //GIVEN
-        
+
         //WHEN
         sut.style = .full
         sut.style = .empty

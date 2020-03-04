@@ -18,7 +18,7 @@
 
 import Foundation
 
-enum ButtonStyle : Int {
+enum ButtonStyle: Int {
     case full
     case empty
     case fullMonochrome
@@ -27,7 +27,7 @@ enum ButtonStyle : Int {
 
 class Button: ButtonWithLargerHitArea {
     private var previousState: UIControl.State?
-    
+
     var circular = false {
         didSet {
             if circular {
@@ -39,7 +39,7 @@ class Button: ButtonWithLargerHitArea {
             }
         }
     }
-    
+
     var textTransform: TextTransform = .none {
         didSet {
             for(state, title) in originalTitles {
@@ -47,24 +47,24 @@ class Button: ButtonWithLargerHitArea {
             }
         }
     }
-    
+
     var style: ButtonStyle? {
         didSet {
             updateStyle(variant: variant)
         }
     }
     private var variant: ColorSchemeVariant = ColorScheme.default.variant
-    
-    private var originalTitles: [UIControl.State : String] = [:]
-    
-    private var borderColorByState: [UIControl.State : UIColor] = [:]
-    
+
+    private var originalTitles: [UIControl.State: String] = [:]
+
+    private var borderColorByState: [UIControl.State: UIColor] = [:]
+
     init() {
         super.init(frame: .zero)
-        
+
         clipsToBounds = true
     }
-    
+
     convenience init(style: ButtonStyle, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init()
 
@@ -75,13 +75,13 @@ class Button: ButtonWithLargerHitArea {
         titleLabel?.font = .smallLightFont
         layer.cornerRadius = 4
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
-        
+
         updateStyle(variant: variant)
     }
-    
+
     private func updateStyle(variant: ColorSchemeVariant) {
         guard let style = style else { return }
-        
+
         switch style {
         case .full:
             setBackgroundImageColor(.accent(), for: .normal)
@@ -108,96 +108,96 @@ class Button: ButtonWithLargerHitArea {
             setBorderColor(UIColor(white: 1.0, alpha: 0.16), for: .highlighted)
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override var intrinsicContentSize: CGSize {
         let s = super.intrinsicContentSize
-        
+
         return CGSize(width: s.width + titleEdgeInsets.left + titleEdgeInsets.right, height: s.height + titleEdgeInsets.top + titleEdgeInsets.bottom)
     }
-    
+
     override var bounds: CGRect {
         didSet {
             updateCornerRadius()
         }
     }
-    
+
     func setBackgroundImageColor(_ color: UIColor, for state: UIControl.State) {
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
     }
-    
+
     func borderColor(for state: UIControl.State) -> UIColor? {
         return borderColorByState[state] ?? borderColorByState[.normal]
     }
-    
+
     private func updateBorderColor() {
         layer.borderColor = borderColor(for: state)?.cgColor
     }
-    
+
     private func updateCornerRadius() {
         if circular {
             layer.cornerRadius = bounds.size.height / 2
         }
     }
-    
+
     // MARK: - Observing state
     override var isHighlighted: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
     }
-    
+
     override var isSelected: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
     }
-    
+
     override var isEnabled: Bool {
         didSet {
             updateAppearance(with: previousState)
         }
     }
-    
+
     private func updateAppearance(with previousState: UIControl.State?) {
         if state == previousState {
             return
         }
-        
+
         // Update for new state (selected, highlighted, disabled) here if needed
         updateBorderColor()
-        
+
         self.previousState = state
     }
-    
+
     override func setTitle(_ title: String?, for state: UIControl.State) {
         var title = title
-        state.expanded.forEach(){ expandedState in
+        state.expanded.forEach() { expandedState in
             if title != nil {
                 originalTitles[expandedState] = title
             } else {
                 originalTitles[expandedState] = nil
             }
         }
-        
+
         if textTransform != .none {
             title = title?.applying(transform: textTransform)
         }
-        
+
         super.setTitle(title, for: state)
     }
-    
+
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expanded.forEach(){ expandedState in
+        state.expanded.forEach() { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
             }
         }
-        
+
         updateBorderColor()
     }
 }
