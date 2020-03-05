@@ -111,4 +111,20 @@ struct UserSet: Collection, SetAlgebra {
         storage.formSymmetricDifference(other.storage)
     }
 
+    /// Temporary helper to assist migration.
+    
+    var asZMUserSet: Set<ZMUser> {
+        let users = compactMap { $0 as? ZMUser }
+        return Set(users)
+    }
+
+}
+
+/// Temporary helper to assist migration.
+
+extension Set where Element == ZMUser {
+
+    var asUserSet: UserSet {
+        return UserSet(Array(self))
+    }
 }
