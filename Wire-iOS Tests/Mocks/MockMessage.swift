@@ -20,6 +20,11 @@
 import Foundation
 import WireLinkPreview
 
+
+final class MockCompositeMessageData : NSObject, CompositeMessageData {
+    var items: [CompositeMessageItem] = []
+}
+
 final class MockTextMessageData : NSObject, ZMTextMessageData {
     
     var messageText: String? = ""
@@ -231,7 +236,9 @@ final class MockLocationMessageData: NSObject, LocationMessageData {
 }
 
 
-final class MockMessage: NSObject, ZMConversationMessage {
+final class MockMessage: NSObject, ZMConversationMessage, ConversationCompositeMessage {
+    // MARK: - ConversationCompositeMessage
+    var compositeMessageData: CompositeMessageData?
     
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     
@@ -244,8 +251,10 @@ final class MockMessage: NSObject, ZMConversationMessage {
     var updatedAt: Date? = .none
     var conversation: ZMConversation? = .none
     var deliveryState: ZMDeliveryState = .delivered
+    
     var imageMessageData: ZMImageMessageData? = .none
     var knockMessageData: ZMKnockMessageData? = .none
+    
     var causedSecurityLevelDegradation: Bool = false
     var needsReadConfirmation: Bool = false
     let objectIdentifier: String = UUID().uuidString
@@ -290,7 +299,7 @@ final class MockMessage: NSObject, ZMConversationMessage {
     var backingSystemMessageData: MockSystemMessageData! = .none
     
     ///TODO: for testing only
-    var isPoll: Bool = false
+//    var isPoll: Bool = false
 
     var isEphemeral: Bool = false
     var isObfuscated: Bool = false

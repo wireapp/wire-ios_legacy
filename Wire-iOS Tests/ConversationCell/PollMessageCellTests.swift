@@ -30,14 +30,14 @@ final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helpers
     
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let buttonMessage = MockMessageFactory.buttonMessage ///TODO: text should belong to sub-messages
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage ///TODO: text should belong to sub-messages
         
-        let textMessageData = MockTextMessageData()
-        textMessageData.messageText = "Dummy Poll question:"
+        let mockCompositeMessageData = MockCompositeMessageData()
+//        textMessageData.messageText = "Dummy Poll question:"
 
-        buttonMessage.backingTextMessageData = textMessageData
+        mockCompositeMessage.compositeMessageData = mockCompositeMessageData
         
-        config?(buttonMessage)
-        return buttonMessage
+        config?(mockCompositeMessage)
+        return mockCompositeMessage
     }
 }

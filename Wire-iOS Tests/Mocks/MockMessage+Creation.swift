@@ -122,11 +122,8 @@ final class MockMessageFactory: NSObject {
         return message
     }
 
-    class var buttonMessage: MockMessage {
+    class var compositeMessage: MockMessage {
         let message = MockMessageFactory.messageTemplate()
-        
-        ///TODO:
-        message.isPoll = true
         return message
     }
 
