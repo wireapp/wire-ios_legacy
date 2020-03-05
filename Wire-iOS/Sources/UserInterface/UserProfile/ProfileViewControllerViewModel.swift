@@ -101,7 +101,7 @@ final class ProfileViewControllerViewModel: NSObject {
         return BlockResult.title(for: bareUser)
     }
     
-    var allBockResult: [BlockResult] {
+    var allBlockResult: [BlockResult] {
         return BlockResult.all(isBlocked: bareUser.isBlocked)
     }
     
@@ -136,6 +136,16 @@ final class ProfileViewControllerViewModel: NSObject {
     func archiveConversation() {
         transitionToListAndEnqueue {
             self.conversation?.isArchived.toggle()
+        }
+    }
+    
+    func handleBlockAndUnblock() {
+        switch context {
+        case .search:
+            /// stay on this VC and let user to decise what to do next
+            enqueueChanges(toggleBlocked)
+        default:
+            transitionToListAndEnqueue { self.toggleBlocked() }
         }
     }
 
@@ -174,9 +184,13 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true,
-                                                         leftViewControllerRevealed: leftViewControllerRevealed) {
-                                                            ZMUserSession.shared()?.enqueueChanges(block)
+                                                       leftViewControllerRevealed: leftViewControllerRevealed) {
+                                                        self.enqueueChanges(block)
         }
+    }
+    
+    func enqueueChanges(_ block: @escaping () -> Void) {
+        ZMUserSession.shared()?.enqueueChanges(block)
     }
 
     // MARK: - Factories
