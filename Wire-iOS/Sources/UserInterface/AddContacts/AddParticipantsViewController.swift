@@ -293,7 +293,7 @@ final class AddParticipantsViewController: UIViewController {
     fileprivate func updateSelectionValues() {
         // Update view model after selection changed
         if case .create(let values) = viewModel.context {
-            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users, allowGuests: true)
+            let updated = ConversationCreationValues(name: values.name, participants: userSelection.users.asZMUserSet, allowGuests: true)
             viewModel = AddParticipantsViewModel(with: .create(updated), variant: variant)
         }
 
@@ -305,14 +305,14 @@ final class AddParticipantsViewController: UIViewController {
         updateTitle()
         
         // Notify delegate
-        conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users))
+        conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users.asZMUserSet))
     }
     
     private func updateTitle() {
         title = {
             switch viewModel.context {
             case .create(let values): return viewModel.title(with: values.participants)
-            case .add: return viewModel.title(with: userSelection.users)
+            case .add: return viewModel.title(with: userSelection.users.asZMUserSet)
             }
         }()
     }
