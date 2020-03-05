@@ -38,7 +38,7 @@ extension ConversationViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?,
                                wantsToCreateConversationWithName name: String?,
-                               users: Set<ZMUser>) {
+                               users: UserSet) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationCreation = { [weak self] in
@@ -46,7 +46,7 @@ extension ConversationViewController: ProfileViewControllerDelegate {
             
             userSession.enqueueChanges({
                 newConversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                         participants: Array(users),
+                                                                         participants: Array(users.asZMUserSet),
                                                                          name: name,
                                                                          team: ZMUser.selfUser().team)
 
