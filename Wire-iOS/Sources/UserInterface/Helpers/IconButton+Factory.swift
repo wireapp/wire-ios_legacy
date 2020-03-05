@@ -61,7 +61,7 @@ extension IconButton {
         )
 
         sendButton.adjustsImageWhenHighlighted = false
-        sendButton.adjustBackgroundImageWhenHighlighted = true ///TODO: ealier?
+        sendButton.adjustBackgroundImageWhenHighlighted = true
 
         return sendButton
     }
