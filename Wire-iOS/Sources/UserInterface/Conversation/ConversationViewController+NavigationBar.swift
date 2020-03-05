@@ -60,7 +60,10 @@ extension ConversationViewController {
 
     var backButton: UIBarButtonItem {
         let hasUnreadInOtherConversations = self.conversation.hasUnreadMessagesInOtherConversations
-        let arrowIcon: StyleKitIcon = hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow
+        let arrowIcon: StyleKitIcon = view.isRightToLeft
+            ? (hasUnreadInOtherConversations ? .forwardArrowWithDot : .forwardArrow)
+            : (hasUnreadInOtherConversations ? .backArrowWithDot : .backArrow)
+        
         let icon: StyleKitIcon = (self.parent?.wr_splitViewController?.layoutSize == .compact) ? arrowIcon : .hamburger
         let action = #selector(ConversationViewController.onBackButtonPressed(_:))
         let button = UIBarButtonItem(icon: icon, target: self, action: action)
