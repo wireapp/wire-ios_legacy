@@ -85,14 +85,14 @@ extension AddParticipantsViewController.Context {
     }
 }
 
-final public class AddParticipantsViewController: UIViewController {
+final class AddParticipantsViewController: UIViewController {
     
-    public enum CreateAction {
+    enum CreateAction {
         case updatedUsers(Set<ZMUser>)
         case create
     }
     
-    public enum Context {
+    enum Context {
         case add(ZMConversation)
         case create(ConversationCreationValues)
     }
@@ -124,20 +124,20 @@ final public class AddParticipantsViewController: UIViewController {
         userSelection.remove(observer: self)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience public init(conversation: ZMConversation) {
+    convenience init(conversation: ZMConversation) {
         self.init(context: .add(conversation))
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 
@@ -375,15 +375,15 @@ final public class AddParticipantsViewController: UIViewController {
 
 extension AddParticipantsViewController : UserSelectionObserver {
     
-    public func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
+    func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
+    func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
+    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         updateSelectionValues()
     }
     
@@ -391,7 +391,7 @@ extension AddParticipantsViewController : UserSelectionObserver {
 
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
-    public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
             self.dismiss(animated: true) {
                 self.addSelectedParticipants(to: conversation)
@@ -400,7 +400,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
         }
     }
     
-    public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
+    func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         self.performSearch()
     }
     
@@ -408,34 +408,34 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
 
 extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
 
-    public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
     
-    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
     
 }
 
 extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         // no-op
     }
 
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,
