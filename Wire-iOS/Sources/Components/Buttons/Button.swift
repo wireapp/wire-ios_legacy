@@ -131,8 +131,12 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
-    func setBackgroundImageColor(_ color: UIColor, for state: UIControl.State) {
-        setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
+    func setBackgroundImageColor(_ color: UIColor?, for state: UIControl.State) {
+        if let color = color {
+            setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
+        } else {
+            setBackgroundImage(nil, for: state)
+        }
     }
 
     func borderColor(for state: UIControl.State) -> UIColor? {
