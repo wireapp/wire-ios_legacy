@@ -29,8 +29,8 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 
 @property (nonatomic) CGFloat openPercentage;
 
-@property (nonatomic) NSLayoutConstraint *leftViewOffsetConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewOffsetConstraint;
+@property (nonatomic) NSLayoutConstraint *leftViewLeadingConstraint;
+@property (nonatomic) NSLayoutConstraint *rightViewLeadingConstraint;
 
 @property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
 @property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
