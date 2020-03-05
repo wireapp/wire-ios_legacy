@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -20,23 +19,23 @@ import XCTest
 @testable import Wire
 
 final class PollMessageCellTests: ConversationCellSnapshotTestCase {
-    
+
     typealias CellConfiguration = (MockMessage) -> Void
-    
+
     func testThatItRendersButton() {
         verify(message: makeMessage())
     }
-    
+
     // MARK: - Helpers
-    
+
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage ///TODO: text should belong to sub-messages
-        
+
         let mockCompositeMessageData = MockCompositeMessageData()
 //        textMessageData.messageText = "Dummy Poll question:"
 
         mockCompositeMessage.compositeMessageData = mockCompositeMessageData
-        
+
         config?(mockCompositeMessage)
         return mockCompositeMessage
     }

@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,45 +18,45 @@
 import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
-    private let button = Button(style: .empty) ///TODO: support button style change
+    private let button = Button(style: .empty) ///TODO: SpinnerButton
     var isSelected: Bool = false
-    
+
     weak var message: ZMConversationMessage?
-    
+
     weak var delegate: ConversationMessageCellDelegate?
-    
+
     func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
         button.setTitle(object.text, for: .normal)
     }
-    
+
     enum State {
         case unselected
         case selected
         case loading
     }
-    
+
     struct Configuration {
         let text: String
         let state: State
         ///TODO: state/spinner ?
     }
-    
+
     override init(frame: CGRect) { ///TODO: init?
         super.init(frame: frame)
 
         configureViews()
         createConstraints()
     }
-    
+
     private func configureViews() {
         addSubview(button)
     }
-    
+
     private func createConstraints() {
         button.translatesAutoresizingMaskIntoConstraints = false
 
         let inset = UIEdgeInsets.zero ///TODO: read from UI spec
-        
+
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
             button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: inset.bottom),
@@ -65,7 +64,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.right)
             ])
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -77,35 +76,28 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
     typealias View = ConversationButtonMessageCell
 
     var topMargin: Float = 10 ///TODO: read from design spec
-    
+
     var isFullWidth: Bool = false ///TODO:
-    
+
     var supportsActions: Bool = false ///TODO:
-    
+
     var showEphemeralTimer: Bool = false
-    
+
     var containsHighlightableContent: Bool = false
-    
+
     var message: ZMConversationMessage?
-    
+
     var delegate: ConversationMessageCellDelegate?
-    
+
     var actionController: ConversationMessageActionController?
-    
+
     var configuration: View.Configuration
-    
-    var accessibilityIdentifier: String? = "ButtonCell"
-    
-    var accessibilityLabel: String? = nil
-    
+
+    var accessibilityIdentifier: String? = "PollCell"
+
+    var accessibilityLabel: String?
+
     init(text: String, state: ConversationButtonMessageCell.State) { /// TODO: state
         configuration = View.Configuration(text: text, state: state)
-    }
-}
-
-///TODO: for testing only! remove after DM is ready
-extension ZMConversationMessage {
-    public var isPoll: Bool { ///TODO: make a tmp PollMessage protocol
-        return (self is ZMClientMessage == false) && (self is ZMSystemMessage == false)
     }
 }
