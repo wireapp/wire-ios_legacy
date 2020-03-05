@@ -28,6 +28,10 @@ final class SpinnerButton: Button {
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
         
+
+        // the spinner covers the text with alpha BG
+        // TODO: dark mode?
+        progressSpinner.backgroundColor = UIColor(white: 1, alpha: 0.8)
         progressSpinner.color = .accent()
         progressSpinner.iconSize = SpinnerButton.iconSize
 
@@ -52,13 +56,26 @@ final class SpinnerButton: Button {
     
     override init() {
         super.init()
-        titleLabel?.lineBreakMode = .byWordWrapping
-        titleLabel?.numberOfLines = 0
-        ///TODO: just let spinner covers the text with alpha BG
+        let inset: CGFloat = 10
+        if let titleLabel = titleLabel {
+            titleLabel.lineBreakMode = .byWordWrapping
+            titleLabel.numberOfLines = 0
+
+            NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: inset),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: inset)])
+        }
     }
     
-    override func setTitle(_ title: String?, for state: UIControl.State) {
-        titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        super.setTitle(title, for: state)
+    ///custom empty style with accent color for disabled state.
+    override func updateEmptyStyle() {
+        setBackgroundImageColor(.clear, for: .normal)
+        layer.borderWidth = 1
+        setTitleColor(.buttonEmptyText(variant: variant), for: .normal)
+        setTitleColor(.buttonEmptyText(variant: variant), for: .highlighted)
+        setTitleColor(.buttonEmptyText(variant: variant), for: .disabled)
+        setBorderColor(.accent(), for: .normal)
+        setBorderColor(.accentDarken, for: .highlighted)
+        setBorderColor(.accent(), for: .disabled)
     }
 }

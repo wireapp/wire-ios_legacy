@@ -25,13 +25,23 @@ final class SpinnerButtonTests: XCTestCase {
     
     override func setUp() {
         sut = SpinnerButton(style: .empty)
-        sut.setTitle("Dummy spinner button with long long long long long extralong text", for: .normal)
+        sut.setTitle("Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne", for: .normal)
     }
     
     override func tearDown() {
         sut = nil
     }
-    
+
+    func testForSpinnerIsHidden() {
+        //GIVEN
+        
+        //WHEN
+        
+        //THEN
+        XCTAssert(sut.isEnabled)
+        verifyInAllPhoneWidths(matching: sut)
+    }
+
     func testForSpinnerIsShown() {
         //GIVEN
         
