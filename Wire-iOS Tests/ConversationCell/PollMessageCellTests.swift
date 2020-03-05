@@ -35,11 +35,18 @@ final class PollMessageCellTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.textMessage(withText: "Who is your most favourite musician?")!
         let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
         
-        let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
-        mockButtonMessageData.title = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
-        let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
+        let items: [CompositeMessageItem] = ["Johann Sebastian Bach",
+                                             "Johannes Chrysostomus Wolfgangus Theophilus Mozart",
+                                             "Ludwig van Beethoven"].map {
+            let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
+            mockButtonMessageData.title = $0
+            let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
+            
+            return buttonItem
+        }
         
-        mockCompositeMessageData.items = [buttonItem]
+        
+        mockCompositeMessageData.items = [textItem] + items
 
         mockCompositeMessage.compositeMessageData = mockCompositeMessageData
 
