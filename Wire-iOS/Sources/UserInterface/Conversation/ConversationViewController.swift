@@ -267,12 +267,11 @@ final class ConversationViewController: UIViewController {
         openConversationList()
     }
     
-    @objc
-    func addParticipants(_ participants: Set<ZMUser>) {
+    func addParticipants(_ participants: UserSet) {
         var newConversation: ZMConversation? = nil
         
         session.enqueueChanges({
-            newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
+            newConversation = self.conversation.addParticipantsOrCreateConversation(participants.asZMUserSet)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
                 self?.zClientViewController.select(conversation: newConversation, focusOnView: true, animated: true)
