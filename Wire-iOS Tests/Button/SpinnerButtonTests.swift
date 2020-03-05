@@ -23,33 +23,45 @@ import SnapshotTesting
 final class SpinnerButtonTests: XCTestCase {
     var sut: SpinnerButton!
     
-    override func setUp() {
+    override func tearDown() {
+        sut = nil
+    }
+    
+    func createSut() {
         sut = SpinnerButton(style: .empty)
         sut.setTitle("Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne", for: .normal)
     }
     
-    override func tearDown() {
-        sut = nil
-    }
-
     func testForSpinnerIsHidden() {
         //GIVEN
+        createSut()
         
         //WHEN
         
         //THEN
         XCTAssert(sut.isEnabled)
-        verify(matching: sut)
+        verifyInAllPhoneWidths(matching: sut)
     }
 
     func testForSpinnerIsShown() {
         //GIVEN
         
         //WHEN
-        sut.showSpinner = true
         
         //THEN
+        ColorScheme.default.variant = .dark
+        createSut()
+        sut.showSpinner = true
+
         XCTAssertFalse(sut.isEnabled)
-        verifyInAllPhoneWidths(matching: sut)
+
+        verifyInAllPhoneWidths(matching:sut,
+                               named: "dark")
+        
+        ColorScheme.default.variant = .light
+        createSut()
+        sut.showSpinner = true
+        verifyInAllPhoneWidths(matching:sut,
+                               named: "light")
     }
 }
