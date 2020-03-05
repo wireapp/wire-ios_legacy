@@ -55,6 +55,8 @@ final class SpinnerButton: Button {
     
     override init() {
         super.init()
+        
+        /// multi line support
         let inset: CGFloat = 10
         if let titleLabel = titleLabel {
             titleLabel.lineBreakMode = .byWordWrapping
