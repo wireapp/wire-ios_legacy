@@ -18,7 +18,7 @@
 import XCTest
 @testable import Wire
 
-final class PollMessageCellTests: ConversationCellSnapshotTestCase {
+final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
@@ -27,23 +27,27 @@ final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     }
 
     // MARK: - Helpers
+    
+    private func createItem(title: String, state: ButtonMessageState) -> CompositeMessageItem {
+        let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
+        mockButtonMessageData.state = state
+        mockButtonMessageData.title = title
+        let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
+        
+        return buttonItem
+    }
 
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
 
         let mockCompositeMessageData = MockCompositeMessageData()
-        let message = MockMessageFactory.textMessage(withText: "Who is your most favourite musician?")!
+        let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
         let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
         
-        let items: [CompositeMessageItem] = ["Johann Sebastian Bach",
-                                             "Johannes Chrysostomus Wolfgangus Theophilus Mozart",
-                                             "Ludwig van Beethoven"].map {
-            let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
-            mockButtonMessageData.title = $0
-            let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
-            
-            return buttonItem
-        }
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
+                                             createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state:.unselected),
+                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
         
         
         mockCompositeMessageData.items = [textItem] + items

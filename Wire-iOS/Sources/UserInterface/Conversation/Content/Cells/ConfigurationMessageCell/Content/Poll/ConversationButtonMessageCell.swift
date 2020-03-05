@@ -18,7 +18,7 @@
 import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
-    private let button = Button(style: .empty) ///TODO: SpinnerButton
+    private let button = SpinnerButton(style: .empty)
     var isSelected: Bool = false
 
     weak var message: ZMConversationMessage?
@@ -27,6 +27,15 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
         button.setTitle(object.text, for: .normal)
+        switch object.state {
+        case .unselected:
+            button.style = .empty
+        case .selected:
+            button.style = .full
+        case .confirmed:
+            button.isEnabled = false
+            ///TODO: style?
+        }
     }
 
     enum State {
