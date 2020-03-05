@@ -49,7 +49,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [otherUser, userWithDifferentNameAndHandle]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "user").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "user").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -65,7 +65,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [otherUser, userWithDifferentNameAndHandle]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "test").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "test").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -78,7 +78,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, otherUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -91,7 +91,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, otherUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "u").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "u").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -104,7 +104,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, serviceUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 0)
@@ -117,7 +117,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, serviceUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "u").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "u").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 0)
@@ -130,7 +130,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, otherUser, serviceUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -143,7 +143,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [selfUser, otherUser, serviceUser]
         
         // when
-        let results = ZMUser.searchForMentions(in: users, with: "u").map(HashBox.init)
+        let results = users.searchForMentions(withQuery: "u").map(HashBox.init)
         
         // then
         XCTAssertEqual(results.count, 1)
@@ -157,7 +157,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [mockUserWithEmoji]
         
         // WHEN
-        let results = ZMUser.searchForMentions(in: users, with: "😀 hello")
+        let results = users.searchForMentions(withQuery: "😀 hello")
         
         // THEN
         XCTAssertEqual(results.map(HashBox.init), users.map(HashBox.init))
@@ -169,7 +169,7 @@ class ZMUserMentionsTest: XCTestCase {
         let users: [UserType] = [mockUser]
         
         // WHEN
-        let results = ZMUser.searchForMentions(in: users, with: "@o")
+        let results = users.searchForMentions(withQuery: "@o")
         
         // THEN
         XCTAssertEqual(results.map(HashBox.init), users.map(HashBox.init))

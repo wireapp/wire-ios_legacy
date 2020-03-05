@@ -20,13 +20,12 @@ import Foundation
 
 extension SplitViewController {
     @objc func setupInitialConstraints() {
-        guard let leftView = leftView,
-            let rightView = rightView else { return }
+        guard let leftView = leftView, let rightView = rightView else { return }
 
-        leftViewOffsetConstraint = leftView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        leftViewOffsetConstraint.priority = UILayoutPriority.defaultHigh
-        rightViewOffsetConstraint = rightView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        rightViewOffsetConstraint.priority = UILayoutPriority.defaultHigh
+        leftViewLeadingConstraint = leftView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        leftViewLeadingConstraint.priority = UILayoutPriority.defaultHigh
+        rightViewLeadingConstraint = rightView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        rightViewLeadingConstraint.priority = UILayoutPriority.defaultHigh
 
         leftViewWidthConstraint = leftView.widthAnchor.constraint(equalToConstant: 0)
         rightViewWidthConstraint = rightView.widthAnchor.constraint(equalToConstant: 0)
@@ -38,8 +37,8 @@ extension SplitViewController {
         let constraints: [NSLayoutConstraint] =
             [leftView.topAnchor.constraint(equalTo: view.topAnchor), leftView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
              rightView.topAnchor.constraint(equalTo: view.topAnchor), rightView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-             leftViewOffsetConstraint,
-             rightViewOffsetConstraint,
+             leftViewLeadingConstraint,
+             rightViewLeadingConstraint,
              leftViewWidthConstraint,
              rightViewWidthConstraint,
              pinLeftViewOffsetConstraint]

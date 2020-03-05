@@ -18,18 +18,18 @@
 
 import Foundation
 
-@objcMembers final public class ConversationCallController: NSObject {
-    
+final class ConversationCallController: NSObject {
+
     private unowned let target: UIViewController
     private let conversation: ZMConversation
-    
-    @objc public init(conversation: ZMConversation, target: UIViewController) {
+
+    init(conversation: ZMConversation, target: UIViewController) {
         self.conversation = conversation
         self.target = target
         super.init()
     }
-    
-    @objc public func startAudioCall(started: (() -> Void)?) {
+
+    func startAudioCall(started: (() -> Void)?) {
         let startCall = { [weak self] in
             guard let `self` = self else { return }
             self.conversation.confirmJoiningCallIfNeeded(alertPresenter: self.target) {
@@ -37,38 +37,41 @@ import Foundation
                 self.conversation.startAudioCall()
             }
         }
-        
+
         if conversation.localParticipants.count <= 4 {
             startCall()
         } else {
-            confirmGroupCall { accepted in
+            confirmGroupCall {[weak self] accepted in
+                self?.target.setNeedsStatusBarAppearanceUpdate()
+
                 guard accepted else { return }
                 startCall()
             }
         }
     }
-    
-    @objc public func startVideoCall(started: (() -> Void)?) {
+
+    func startVideoCall(started: (() -> Void)?) {
         conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             started?()
             conversation.startVideoCall()
         }
     }
-    
-    @objc public func joinCall() {
+
+    func joinCall() {
         guard conversation.canJoinCall else { return }
         conversation.confirmJoiningCallIfNeeded(alertPresenter: target) { [conversation] in
             conversation.joinCall() // This will result in joining an ongoing call.
         }
     }
-    
+
     // MARK: - Helper
 
-    private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> ()) {
+    private func confirmGroupCall(completion: @escaping (_ completion: Bool) -> Void) {
         let controller = UIAlertController.confirmGroupCall(
             participants: conversation.localParticipants.count - 1,
             completion: completion
         )
+
         target.present(controller, animated: true)
     }
 
