@@ -25,36 +25,13 @@ enum IconButtonStyle {
     case navigation
 }
 
-final class IconDefinition {///TODO struct
+struct IconDefinition: Equatable {
     let iconType: StyleKitIcon
     let iconSize: CGFloat
     let renderingMode: UIImage.RenderingMode
-
-    init(for type: StyleKitIcon,
-                     size: CGFloat,
-                     renderingMode: UIImage.RenderingMode) {
-        
-        iconType = type
-        iconSize = size
-        self.renderingMode = renderingMode
-    }
-    
-    ///TODO: ==
-    func isEqual(_ objectIconDefinition: IconDefinition?) -> Bool {
-        
-        if objectIconDefinition?.iconType == iconType && objectIconDefinition?.iconSize == iconSize && objectIconDefinition?.renderingMode == renderingMode {
-            return true
-        }
-        
-        return false
-    }
-    
-    func hash() -> Int {///TODO: override?
-        return Int(iconType.rawValue) * Int(iconSize) * renderingMode.rawValue
-    }
 }
 
-///TODO: remove public
+///TODO: remove public after ButtonWithLargerHitArea is converted to Swift
 public class IconButton: ButtonWithLargerHitArea {
     var circular = false {
         didSet {
@@ -77,7 +54,6 @@ public class IconButton: ButtonWithLargerHitArea {
     var adjustsTitleWhenHighlighted = false
     var adjustsBorderColorWhenHighlighted = false
     var adjustBackgroundImageWhenHighlighted = false
-//    private var titleImageSpacing: CGFloat = 0.0
     
     private var iconColorsByState: [UIControl.State : UIColor] = [:]
     private var borderColorByState: [UIControl.State : UIColor] = [:]
@@ -167,7 +143,6 @@ public class IconButton: ButtonWithLargerHitArea {
     }
     
     func setTitleImageSpacing(_ titleImageSpacing: CGFloat, horizontalMargin: CGFloat = 0) {
-//        self.titleImageSpacing = titleImageSpacing
         
         let isLeftToRight = UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight
         
@@ -219,11 +194,11 @@ public class IconButton: ButtonWithLargerHitArea {
             return
         }
         
-        let newIcon = IconDefinition(for: iconType, size: iconSize, renderingMode: renderingMode)
+        let newIcon = IconDefinition(iconType: iconType, iconSize: iconSize, renderingMode: renderingMode)
         
         let currentIcon = iconDefinitionsByState[state]
         
-        if !force && currentIcon?.isEqual(newIcon) == true { ///TODO: struct
+        if !force, let currentIcon = currentIcon, currentIcon == newIcon {
             return
         }
         
