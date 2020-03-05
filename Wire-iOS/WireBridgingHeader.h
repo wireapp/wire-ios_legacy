@@ -19,6 +19,8 @@
 // Data model
 @import WireSyncEngine;
 @import avs;
+@import WireCommonComponents;
+
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 

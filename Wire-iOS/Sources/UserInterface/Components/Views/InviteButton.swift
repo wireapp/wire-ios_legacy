@@ -31,9 +31,5 @@ final class InviteButton: IconButton {
         
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         layer.cornerRadius = 4
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    }    
 }

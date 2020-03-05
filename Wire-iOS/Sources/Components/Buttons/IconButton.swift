@@ -84,8 +84,8 @@ public class IconButton: ButtonWithLargerHitArea {
     private var iconDefinitionsByState: [UIControl.State : IconDefinition] = [:]
     private var priorState: UIControl.State?
     
-    override init() {
-        super.init()
+    init() {
+        super.init(frame: .zero)
         
         hitAreaPadding = CGSize(width: 20, height: 20)
     }
@@ -121,32 +121,32 @@ public class IconButton: ButtonWithLargerHitArea {
     }
     
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         
         updateCircularCornerRadius()
     }
     
     // MARK: - Observing state
-    override var isHighlighted: Bool {
+    override public var isHighlighted: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
     
-    override var isSelected: Bool {
+    override public var isSelected: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
 
-    override var isEnabled: Bool {
+    override public var isEnabled: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
     
-    override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
+    override public func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         super.setTitleColor(color, for: state)
         
         if adjustsTitleWhenHighlighted && state.contains(.normal) {
@@ -191,16 +191,26 @@ public class IconButton: ButtonWithLargerHitArea {
             setBackgroundImage(UIImage.singlePixelImage(with: color.mix(UIColor.black, amount: 0.4)), for: .highlighted)
         }
     }
-    /// <#Description#>
+    
+    func setIcon(_ iconType: StyleKitIcon?,
+                 size: StyleKitIcon.Size,
+                 for state: UIControl.State,
+                 renderingMode: UIImage.RenderingMode = UIImage.RenderingMode.alwaysTemplate,
+                 force: Bool = false) {
+        
+        setIcon(iconType, iconSize: size.rawValue, for: state, renderingMode: renderingMode, force: force)
+    }
+
+    /// set icon to a new icon or no icon
     ///
     /// - Parameters:
-    ///   - iconType: <#iconType description#>
-    ///   - iconSize: <#iconSize description#>
-    ///   - state: <#state description#>
+    ///   - iconType: the StyleKitIcontype
+    ///   - iconSize: StyleKitIcon.Size
+    ///   - state: UIControl state
     ///   - renderingMode: Default rendering mode is AlwaysTemplate
-    ///   - force: <#force description#>
+    ///   - force: force update
     func setIcon(_ iconType: StyleKitIcon?,
-                 size: CGFloat,
+                 iconSize: CGFloat,
                  for state: UIControl.State,
                  renderingMode: UIImage.RenderingMode = UIImage.RenderingMode.alwaysTemplate,
                  force: Bool = false) {
@@ -208,7 +218,7 @@ public class IconButton: ButtonWithLargerHitArea {
             removeIcon(for: state)
             return
         }
-
+        
         let newIcon = IconDefinition(for: iconType, size: iconSize, renderingMode: renderingMode)
         
         let currentIcon = iconDefinitionsByState[state]
@@ -248,7 +258,7 @@ public class IconButton: ButtonWithLargerHitArea {
         
         if currentIcon != nil && currentIcon?.renderingMode == .alwaysOriginal {
             if let iconType = currentIcon?.iconType, let renderingMode = currentIcon?.renderingMode {
-                setIcon(iconType, with: currentIcon?.iconSize ?? 0, for: state, renderingMode: renderingMode, force: true)
+                setIcon(iconType, iconSize: currentIcon?.iconSize ?? 0, for: state, renderingMode: renderingMode, force: true)
             }
         }
         

@@ -182,7 +182,7 @@ extension LocationSelectionViewController: LocationSendViewControllerDelegate {
 
 extension LocationSelectionViewController: ModalTopBarDelegate {
     
-    public func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
+    func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar) {
         delegate?.locationSelectionViewControllerDidCancel(self)
     }
     
