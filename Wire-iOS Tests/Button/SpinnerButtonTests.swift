@@ -39,7 +39,7 @@ final class SpinnerButtonTests: XCTestCase {
         
         //THEN
         XCTAssert(sut.isEnabled)
-        verifyInAllPhoneWidths(matching: sut)
+        verify(matching: sut)
     }
 
     func testForSpinnerIsShown() {
