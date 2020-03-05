@@ -21,42 +21,39 @@ import WireUtilities
 
 @objc
 protocol UserSelectionObserver {
-    
+
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType)
     func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType)
     func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType])
     
 }
 
-@objcMembers
-public class UserSelection : NSObject {
+class UserSelection: NSObject {
     
-    public fileprivate(set) var users : Set<ZMUser> = Set()
-    fileprivate var observers : [UnownedObject<UserSelectionObserver>] = []
+    private(set) var users : Set<ZMUser> = Set()
+    private var observers : [UnownedObject<UserSelectionObserver>] = []
     
-    public func replace(_ users: [ZMUser]) {
+    func replace(_ users: [ZMUser]) {
         self.users = Set(users)
         observers.forEach({ $0.unbox?.userSelection(self, wasReplacedBy: users) })
     }
     
-    public func add(_ user: ZMUser) {
+    func add(_ user: ZMUser) {
         users.insert(user)
         observers.forEach({ $0.unbox?.userSelection(self, didAddUser: user) })
     }
     
-    public func remove(_ user: ZMUser) {
+    func remove(_ user: ZMUser) {
         users.remove(user)
         observers.forEach({ $0.unbox?.userSelection(self, didRemoveUser: user) })
     }
-    
-    @objc(addObserver:)
+
     func add(observer: UserSelectionObserver) {
         guard !observers.contains(where: { $0.unbox === observer}) else { return }
         
         observers.append(UnownedObject(observer))
     }
     
-    @objc(removeObserver:)
     func remove(observer: UserSelectionObserver) {
         guard let index = observers.firstIndex(where: { $0.unbox === observer}) else { return }
         
@@ -65,16 +62,16 @@ public class UserSelection : NSObject {
     
     // MARK: - Limit
     
-    public private(set) var limit: Int?
+    private(set) var limit: Int?
     private var limitReachedHandler: (() -> Void)?
     
-    public var hasReachedLimit: Bool {
+    var hasReachedLimit: Bool {
         guard let limit = limit, users.count >= limit else { return false }
         limitReachedHandler?()
         return true
     }
     
-    public func setLimit(_ limit: Int, handler: @escaping () -> Void) {
+    func setLimit(_ limit: Int, handler: @escaping () -> Void) {
         self.limit = limit
         self.limitReachedHandler = handler
     }
