@@ -28,7 +28,7 @@ final class SpinnerButton: Button {
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
         
-        progressSpinner.color = UIColor.from(scheme: .textDimmed, variant: .light) ///TODO: from design
+        progressSpinner.color = .accent()
         progressSpinner.iconSize = SpinnerButton.iconSize
 
         addSubview(progressSpinner)
@@ -53,66 +53,12 @@ final class SpinnerButton: Button {
     override init() {
         super.init()
         titleLabel?.lineBreakMode = .byWordWrapping
-        titleLabel?.textAlignment = .center
         titleLabel?.numberOfLines = 0
-        
-//        titleLabel?.setContentHuggingPriority(.required, for: .vertical)
-//        titleLabel?.setContentHuggingPriority(.required, for: .horizontal)
-
-//        setContentHuggingPriority(.required, for: .vertical)
-//        setContentHuggingPriority(.required, for: .horizontal)
-
-        let iconInset = SpinnerButton.iconSize + SpinnerButton.iconInset
-        contentEdgeInsets = UIEdgeInsets(top: contentEdgeInsets.top, left: contentEdgeInsets.left+iconInset, bottom: contentEdgeInsets.bottom, right: contentEdgeInsets.right+iconInset)
-        titleEdgeInsets = UIEdgeInsets(top: titleEdgeInsets.top, left: titleEdgeInsets.left+iconInset, bottom: titleEdgeInsets.bottom, right: titleEdgeInsets.right+iconInset)
-        
-        if let titleLabel = titleLabel {
-
-//            addConstraints([
-//                .init(item: titleLabel,
-//                      attribute: .top,
-//                      relatedBy: .greaterThanOrEqual,
-//                      toItem: self,
-//                      attribute: .top,
-//                      multiplier: 1.0,
-//                      constant: contentEdgeInsets.top),
-//                .init(item: titleLabel,
-//                      attribute: .bottom,
-//                      relatedBy: .greaterThanOrEqual,
-//                      toItem: self,
-//                      attribute: .bottom,
-//                      multiplier: 1.0,
-//                      constant: contentEdgeInsets.bottom),
-//                .init(item: titleLabel,
-//                      attribute: .left,
-//                      relatedBy: .greaterThanOrEqual,
-//                      toItem: self,
-//                      attribute: .left,
-//                      multiplier: 1.0,
-//                      constant: contentEdgeInsets.left + 30),
-//                .init(item: titleLabel,
-//                      attribute: .right,
-//                      relatedBy: .greaterThanOrEqual,
-//                      toItem: self,
-//                      attribute: .right,
-//                      multiplier: 1.0,
-//                      constant: contentEdgeInsets.right)
-//                ])
-//        addConstraints([
-//            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.textInset),
-//            titleLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: SpinnerButton.textInset),
-//            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: iconInset),
-//            titleLabel.trailingAnchor.constraint(greaterThanOrEqualTo: trailingAnchor, constant: iconInset),
-//            ])
-        }
-
-//        let insets = titleEdgeInsets
-//
-//
+        ///TODO: just let spinner covers the text with alpha BG
     }
     
-//    override func setTitle(_ title: String?, for state: UIControl.State) {
-//        super.setTitle(title, for: state)
-//        setNeedsLayout()
-//    }
+    override func setTitle(_ title: String?, for state: UIControl.State) {
+        titleEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        super.setTitle(title, for: state)
+    }
 }

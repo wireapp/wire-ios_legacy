@@ -24,7 +24,7 @@ final class SpinnerButtonTests: XCTestCase {
     var sut: SpinnerButton!
     
     override func setUp() {
-        sut = SpinnerButton(style: .full)
+        sut = SpinnerButton(style: .empty)
         sut.setTitle("Dummy spinner button with long long long long long extralong text", for: .normal)
     }
     
