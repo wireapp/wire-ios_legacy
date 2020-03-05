@@ -21,19 +21,21 @@ import Foundation
 extension ZMConversation {
 
     func addParticipantsOrCreateConversation(_ participants: UserSet) -> ZMConversation? {
+        guard !participants.isEmpty, let userSession = ZMUserSession.shared() else { return self }
 
-        let participantSet = participants.asZMUserSet
+        let connectedUserIsOnlyParticipant: Bool = {
+            guard let user = self.connectedUser else { return false }
+            return participants.count == 1 && participants.contains(user)
+        }()
 
-        guard !participantSet.isEmpty, let userSession = ZMUserSession.shared() else { return self }
+        var listOfPeople = Array(participants)
 
         switch conversationType {
         case .group:
-            addOrShowError(participants: Array(participantSet))
+            addOrShowError(participants: listOfPeople)
             return self
-        case .oneOnOne where participantSet.count > 1 || (participantSet.count == 1 && !(connectedUser == participantSet.first)):
-            
-            var listOfPeople = Array(participantSet)
-            
+
+        case .oneOnOne where !connectedUserIsOnlyParticipant:
             if let connectedUser = connectedUser {
                 listOfPeople.append(connectedUser)
             }
