@@ -73,19 +73,6 @@ final class ContactsViewControllerSnapshotTests: XCTestCase {
         verify(matching: sut)
     }
 
-    ///TODO: restore this after fixed Alert tests in SwiftSnapshot
-    /// CI server produce empty snapshot but it works on local machine. It seems the alert with type UIAlertControllerStyleAlert is not shown on CI server.
-    /*
-    func DISABLE_testForNoEmailClientAlert() {
-        let contact = ZMAddressBookContact()
-
-        guard let alert = sut.invite(contact, from: UIView()) else {
-            return XCTFail("No alert generated for the contact.")
-        }
-
-        verifyAlertController(alert)
-    }*/
-
     func testForContactsAndIndexSectionBarAreShown() {
         // Given
         let mockUsers = SwiftMockLoader.mockUsers(fromResource: "people-15Sections.json")
