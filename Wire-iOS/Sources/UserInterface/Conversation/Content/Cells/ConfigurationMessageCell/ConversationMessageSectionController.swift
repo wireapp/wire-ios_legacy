@@ -121,7 +121,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
-        } else if message is ConversationCompositeMessage {
+        } else if (message as? ConversationCompositeMessage)?.compositeMessageData != nil { ///TODO: use isComposite
             contentCellDescriptions = addCompositeMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
