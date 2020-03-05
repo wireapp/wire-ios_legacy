@@ -88,7 +88,7 @@ extension AddParticipantsViewController.Context {
 final class AddParticipantsViewController: UIViewController {
     
     enum CreateAction {
-        case updatedUsers(Set<ZMUser>)
+        case updatedUsers(UserSet)
         case create
     }
     
@@ -305,7 +305,7 @@ final class AddParticipantsViewController: UIViewController {
         updateTitle()
         
         // Notify delegate
-        conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users.asZMUserSet))
+        conversationCreationDelegate?.addParticipantsViewController(self, didPerform: .updatedUsers(userSelection.users))
     }
     
     private func updateTitle() {

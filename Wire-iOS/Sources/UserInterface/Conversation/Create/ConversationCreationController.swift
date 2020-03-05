@@ -260,7 +260,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
     public func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
-            values.participants = users
+            values.participants = users.asZMUserSet
 
         case .create:
             var allParticipants = values.participants
