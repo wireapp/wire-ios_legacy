@@ -326,7 +326,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         case let .block(isBlocked):
             isBlocked
                 ? handleBlockAndUnblock()
-                : presentBlockRequest(from: targetView)
+                : presentBlockActionSheet(from: targetView)
         case .openOneToOne:
             viewModel.openOneToOneConversation()
         case .removeFromGroup:
@@ -383,7 +383,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     
     // MARK: Block
     
-    private func presentBlockRequest(from targetView: UIView) {
+    private func presentBlockActionSheet(from targetView: UIView) {
         let controller = UIAlertController(title: viewModel.blockTitle, message: nil, preferredStyle: .actionSheet)
         viewModel.allBlockResult.map { $0.action(handleBlockActions) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
