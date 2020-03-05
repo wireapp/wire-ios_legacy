@@ -143,7 +143,7 @@ final class ProfileViewControllerViewModel: NSObject {
         switch context {
         case .search:
             /// stay on this VC and let user to decise what to do next
-            saveEnqueueChanges(toggleBlocked)
+            enqueueChanges(toggleBlocked)
         default:
             transitionToListAndEnqueue { self.toggleBlocked() }
         }
@@ -185,11 +185,11 @@ final class ProfileViewControllerViewModel: NSObject {
     func transitionToListAndEnqueue(leftViewControllerRevealed: Bool = true, _ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true,
                                                        leftViewControllerRevealed: leftViewControllerRevealed) {
-                                                        self.saveEnqueueChanges(block)
+                                                        self.enqueueChanges(block)
         }
     }
     
-    func saveEnqueueChanges(_ block: @escaping () -> Void) {
+    func enqueueChanges(_ block: @escaping () -> Void) {
         ZMUserSession.shared()?.enqueueChanges(block)
     }
 
