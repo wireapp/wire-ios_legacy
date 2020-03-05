@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 protocol UserCellSubtitleProtocol: class {
     func subtitle(forRegularUser user: UserType?) -> NSAttributedString?

@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireCommonComponents
 
 public enum PopUpIconButtonExpandDirection {
     case left, right

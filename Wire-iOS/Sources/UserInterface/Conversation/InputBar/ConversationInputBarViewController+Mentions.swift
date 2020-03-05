@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 extension ConversationInputBarViewController {
     var isInMentionsFlow: Bool {

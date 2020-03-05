@@ -17,7 +17,6 @@
 //
 
 import WireSyncEngine
-import WireCommonComponents
 
 extension NetworkQuality {
     func attributedString(color: UIColor) -> NSAttributedString? {

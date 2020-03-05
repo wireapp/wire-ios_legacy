@@ -17,7 +17,6 @@
 // 
 
 import Foundation
-import WireCommonComponents
 
 @objc class PlaceholderConversationView: UIView {
     

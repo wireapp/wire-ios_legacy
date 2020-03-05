@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireCommonComponents
 
 class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
 

@@ -18,9 +18,8 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
-final class FileTransferView: UIView, TransferView {
+final public class FileTransferView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
 
     weak var delegate: TransferViewDelegate?

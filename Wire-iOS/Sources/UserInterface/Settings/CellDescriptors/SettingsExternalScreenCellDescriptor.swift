@@ -18,7 +18,6 @@
 
 
 import Foundation
-import WireCommonComponents
 
 enum PresentationStyle: Int {
     case modal

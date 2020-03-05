@@ -17,14 +17,13 @@
 //
 
 import UIKit
-import WireCommonComponents
 
 /**
  * The description of a cell for message details.
  * - note: This class needs to be NSCopying to be used in an ordered set for diffing.
  */
 
-final class MessageDetailsCellDescription: NSObject {
+class MessageDetailsCellDescription: NSObject {
 
     /// The user to display.
     let user: UserType

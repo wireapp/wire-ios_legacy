@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 /**
  * The actions that can be performed from the profile details or devices.

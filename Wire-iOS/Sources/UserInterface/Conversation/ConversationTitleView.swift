@@ -18,7 +18,6 @@
 
 
 import UIKit
-import WireCommonComponents
 
 final class ConversationTitleView: TitleView {
     var conversation: ZMConversation

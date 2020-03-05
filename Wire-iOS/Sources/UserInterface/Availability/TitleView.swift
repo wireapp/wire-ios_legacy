@@ -19,7 +19,6 @@
 
 import UIKit
 import Cartography
-import WireCommonComponents
 
 
 class TitleView: UIView {

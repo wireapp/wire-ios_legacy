@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 
 private let verifiedShieldImage = WireStyleKit.imageOfShieldverified

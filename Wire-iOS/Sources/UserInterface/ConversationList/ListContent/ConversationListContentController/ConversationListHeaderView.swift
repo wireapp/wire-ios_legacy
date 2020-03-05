@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 extension UIView {
     func rotate(to angleInDegrees: CGFloat) {

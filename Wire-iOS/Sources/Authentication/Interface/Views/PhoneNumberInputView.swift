@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {

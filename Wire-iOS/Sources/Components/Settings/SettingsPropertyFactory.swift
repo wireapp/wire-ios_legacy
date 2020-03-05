@@ -22,7 +22,6 @@ import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
 
-import WireCommonComponents
 
 protocol TrackingInterface {
     var disableCrashAndAnalyticsSharing : Bool { get set }

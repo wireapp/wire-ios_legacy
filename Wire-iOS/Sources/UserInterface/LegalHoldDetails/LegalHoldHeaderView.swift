@@ -17,9 +17,8 @@
 //
 
 import Foundation
-import WireCommonComponents
 
-final class LegalHoldHeaderView: UIView {
+class LegalHoldHeaderView: UIView {
     
     let iconView: UIImageView = {
         let imageView = UIImageView()

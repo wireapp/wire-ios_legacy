@@ -18,7 +18,6 @@
 
 import Foundation
 import UserNotifications
-import WireCommonComponents
 
 typealias Completion = () -> ()
 typealias ResultHandler = (_ succeeded: Bool) -> Void

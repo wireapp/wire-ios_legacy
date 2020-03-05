@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     

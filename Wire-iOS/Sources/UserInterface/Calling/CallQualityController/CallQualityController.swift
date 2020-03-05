@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import WireCommonComponents
 
 protocol CallQualityControllerDelegate: class {
     func dismissCurrentSurveyIfNeeded()

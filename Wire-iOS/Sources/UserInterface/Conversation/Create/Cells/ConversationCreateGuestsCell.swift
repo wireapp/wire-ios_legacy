@@ -17,9 +17,8 @@
 //
 
 import Foundation
-import WireCommonComponents
 
-final class ConversationCreateGuestsCell: IconToggleCell {
+class ConversationCreateGuestsCell: IconToggleCell {
     
     override func setUp() {
         super.setUp()

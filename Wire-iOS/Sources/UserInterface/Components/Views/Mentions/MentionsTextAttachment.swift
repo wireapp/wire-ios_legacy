@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 /// The purpose of this subclass of NSTextAttachment is to render a mention in the input bar.
 /// It also keeps a reference to the `UserType` describing the User being mentioned.

@@ -19,7 +19,6 @@
 import UIKit
 import Cartography
 import WireUtilities
-import WireCommonComponents
 
 final class ListSkeletonCellNameItemView: UIView {
     

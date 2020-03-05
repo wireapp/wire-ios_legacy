@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 final class NoResultsView: UIView {
     public let label = UILabel()

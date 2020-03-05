@@ -19,7 +19,7 @@
 
 import UIKit
 import WireLinkPreview
-import WireCommonComponents
+
 
 @objc protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)

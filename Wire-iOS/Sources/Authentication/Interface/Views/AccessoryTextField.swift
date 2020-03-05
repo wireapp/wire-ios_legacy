@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 protocol TextFieldValidationDelegate: class {
 

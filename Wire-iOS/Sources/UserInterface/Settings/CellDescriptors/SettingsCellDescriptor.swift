@@ -18,7 +18,7 @@
 
 
 import Foundation
-import WireCommonComponents
+
 
 /**
  * Top-level structure overview:

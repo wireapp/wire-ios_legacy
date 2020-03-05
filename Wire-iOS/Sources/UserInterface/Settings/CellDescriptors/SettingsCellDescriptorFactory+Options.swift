@@ -19,7 +19,7 @@
 
 import Foundation
 import LocalAuthentication
-import WireCommonComponents
+
 
 extension SettingsCellDescriptorFactory {
 

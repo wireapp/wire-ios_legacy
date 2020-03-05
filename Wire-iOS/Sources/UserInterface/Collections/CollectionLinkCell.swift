@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none

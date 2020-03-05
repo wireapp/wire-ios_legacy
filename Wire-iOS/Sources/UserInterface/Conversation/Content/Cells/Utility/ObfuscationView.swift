@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 final class ObfuscationView: UIImageView {
     init(icon: StyleKitIcon) {

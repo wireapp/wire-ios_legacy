@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 final class BackButtonDescription {
     var buttonTapped: (() -> ())? = nil

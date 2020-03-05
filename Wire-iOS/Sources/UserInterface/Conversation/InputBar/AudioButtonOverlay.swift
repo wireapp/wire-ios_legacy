@@ -20,7 +20,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 @objcMembers public final class AudioButtonOverlay: UIView {
     

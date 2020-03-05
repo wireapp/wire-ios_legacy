@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import WireCommonComponents
-
 public class IconStringsBuilder {
     
     // Logic for composing attributed strings with:

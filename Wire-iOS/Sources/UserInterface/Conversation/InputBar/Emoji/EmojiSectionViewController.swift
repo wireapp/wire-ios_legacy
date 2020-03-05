@@ -18,7 +18,6 @@
 
 
 import Foundation
-import WireCommonComponents
 
 
 protocol EmojiSectionViewControllerDelegate: class {

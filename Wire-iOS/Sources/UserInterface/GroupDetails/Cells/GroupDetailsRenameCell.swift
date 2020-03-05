@@ -18,9 +18,8 @@
 
 
 import Foundation
-import WireCommonComponents
 
-final class GroupDetailsRenameCell : UICollectionViewCell {
+class GroupDetailsRenameCell : UICollectionViewCell {
     
     let verifiedIconView = UIImageView()
     let accessoryIconView = UIImageView()

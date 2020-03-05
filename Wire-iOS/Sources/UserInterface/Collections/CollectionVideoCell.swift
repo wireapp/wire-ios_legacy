@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()

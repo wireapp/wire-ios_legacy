@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
+
 
 final class ProfileClientViewController: UIViewController {
 

@@ -18,7 +18,6 @@
 
 import Foundation
 import Cartography
-import WireCommonComponents
 
 final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()

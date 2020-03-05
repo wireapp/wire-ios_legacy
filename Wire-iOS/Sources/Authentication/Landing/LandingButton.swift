@@ -17,7 +17,6 @@
 //
 
 import UIKit
-import WireCommonComponents
 
 class LandingButton: UIView {
     var priorState: UIControl.State?

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 private typealias Attributes = [NSAttributedString.Key : AnyObject]
 

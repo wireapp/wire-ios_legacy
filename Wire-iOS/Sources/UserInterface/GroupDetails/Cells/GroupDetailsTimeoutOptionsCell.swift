@@ -17,9 +17,8 @@
 //
 
 import UIKit
-import WireCommonComponents
 
-final class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
+class GroupDetailsTimeoutOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     override func setUp() {
         super.setUp()

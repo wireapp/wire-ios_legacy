@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 protocol AppLockInteractorInput: class {
     var isAuthenticationNeeded: Bool { get }

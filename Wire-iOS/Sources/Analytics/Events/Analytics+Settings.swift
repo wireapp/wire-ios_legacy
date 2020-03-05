@@ -18,7 +18,6 @@
 
 
 import Foundation
-import WireCommonComponents
 
 private let settingsChangeEvent = "settings.changed_value"
 private let settingsChangeEventPropertyName = "property"

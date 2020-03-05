@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 extension ZMConversationMessage {
     func replyPreview() -> UIView? {

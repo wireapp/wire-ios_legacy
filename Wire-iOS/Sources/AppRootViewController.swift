@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import SafariServices
-import WireCommonComponents
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 

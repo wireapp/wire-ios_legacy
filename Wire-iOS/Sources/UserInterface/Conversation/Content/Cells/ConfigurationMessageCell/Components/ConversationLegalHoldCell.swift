@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     

@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 /// The different contents that can be displayed inside the message toolbox.
 enum MessageToolboxContent: Equatable {

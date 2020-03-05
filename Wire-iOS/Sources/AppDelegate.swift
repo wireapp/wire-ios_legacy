@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 enum ApplicationLaunchType {
     case unknown

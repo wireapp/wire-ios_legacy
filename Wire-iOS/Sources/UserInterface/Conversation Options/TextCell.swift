@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import WireCommonComponents
 
 final class TextCell: UITableViewCell, CellConfigurationConfigurable {
     

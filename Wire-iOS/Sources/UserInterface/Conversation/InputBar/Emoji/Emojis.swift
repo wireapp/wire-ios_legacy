@@ -18,11 +18,11 @@
 
 
 import Foundation
-import WireCommonComponents
+
 
 typealias Emoji = String
 
-final class EmojiDataSource: NSObject, UICollectionViewDataSource {
+class EmojiDataSource: NSObject, UICollectionViewDataSource {
 
     enum Update {
         case insert(Int)

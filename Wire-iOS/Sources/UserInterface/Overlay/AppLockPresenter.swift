@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireCommonComponents
 
 extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")
