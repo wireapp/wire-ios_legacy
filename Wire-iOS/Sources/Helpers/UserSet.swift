@@ -86,15 +86,18 @@ struct UserSet: Collection, SetAlgebra {
         return UserSet(storage: storage.symmetricDifference(other.storage))
     }
 
+    @discardableResult
     mutating func insert(_ newMember: __owned UserType) -> (inserted: Bool, memberAfterInsert: UserType) {
         let (inserted, memberAfterInsert) = storage.insert(HashBox(value: newMember))
         return (inserted, memberAfterInsert.value)
     }
 
+    @discardableResult
     mutating func remove(_ member: UserType) -> UserType? {
         return storage.remove(HashBox(value: member))?.value
     }
 
+    @discardableResult
     mutating func update(with newMember: __owned UserType) -> UserType? {
         return storage.update(with: HashBox(value: newMember))?.value
     }
