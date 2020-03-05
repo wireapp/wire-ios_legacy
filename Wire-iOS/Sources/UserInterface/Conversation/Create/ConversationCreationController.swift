@@ -26,22 +26,32 @@ protocol ConversationCreationValuesConfigurable: class {
 }
 
 final public class ConversationCreationValues {
-    private var unfilteredParticipants: Set<ZMUser>
+
+    private var unfilteredParticipants: UserSet
     
     var allowGuests: Bool
     var enableReceipts: Bool
     var name: String
-    var participants: Set<ZMUser> {
+    var participants: UserSet {
         get {
-            let selfUser = ZMUser.selfUser()
-            return allowGuests ? unfilteredParticipants : unfilteredParticipants.filter({ $0.team == selfUser?.team})
+            if allowGuests {
+                return unfilteredParticipants
+            } else {
+                let selfUser = ZMUser.selfUser()
+                let filteredParticipants = unfilteredParticipants.filter {
+                    guard let selfUser = selfUser else { return false }
+                    return $0.isOnSameTeam(otherUser: selfUser)
+                }
+
+                return UserSet(filteredParticipants)
+            }
         }
         set {
             unfilteredParticipants = newValue
         }
     }
     
-    init (name: String = "", participants: Set<ZMUser> = [], allowGuests: Bool = true, enableReceipts: Bool = true) {
+    init (name: String = "", participants: UserSet = UserSet(), allowGuests: Bool = true, enableReceipts: Bool = true) {
         self.name = name
         self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
@@ -117,9 +127,9 @@ final class ConversationCreationController: UIViewController {
     fileprivate let source: LinearGroupCreationFlowEvent.Source
 
     weak var delegate: ConversationCreationControllerDelegate?
-    private var preSelectedParticipants: Set<ZMUser>?
+    private var preSelectedParticipants: UserSet?
     
-    @objc public convenience init(preSelectedParticipants: Set<ZMUser>) {
+    public convenience init(preSelectedParticipants: UserSet) {
         self.init(source: .conversationDetails)
         self.preSelectedParticipants = preSelectedParticipants
     }
@@ -260,18 +270,18 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
     public func addParticipantsViewController(_ addParticipantsViewController: AddParticipantsViewController, didPerform action: AddParticipantsViewController.CreateAction) {
         switch action {
         case .updatedUsers(let users):
-            values.participants = users.asZMUserSet
+            values.participants = users
 
         case .create:
             var allParticipants = values.participants
             allParticipants.insert(ZMUser.selfUser())
             Analytics.shared().tagLinearGroupCreated(with: self.source, isEmpty: values.participants.isEmpty, allowGuests: values.allowGuests)
-            Analytics.shared().tagAddParticipants(source: self.source, allParticipants.asUserSet, allowGuests: values.allowGuests, in: nil)
+            Analytics.shared().tagAddParticipants(source: self.source, allParticipants, allowGuests: values.allowGuests, in: nil)
             
             delegate?.conversationCreationController(
                 self,
                 didSelectName: values.name,
-                participants: values.participants.asUserSet,
+                participants: values.participants,
                 allowGuests: values.allowGuests,
                 enableReceipts: values.enableReceipts
             )

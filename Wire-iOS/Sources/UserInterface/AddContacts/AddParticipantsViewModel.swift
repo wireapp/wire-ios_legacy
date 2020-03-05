@@ -34,11 +34,11 @@ struct AddParticipantsViewModel {
         }
     }
     
-    var selectedUsers: [ZMUser] {
+    var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
             return conversation.connectedUser.map { [$0] } ?? []
-        case .create(let values): return Array(values.participants)
+        case .create(let values): return values.participants
         default: return []
         }
     }
