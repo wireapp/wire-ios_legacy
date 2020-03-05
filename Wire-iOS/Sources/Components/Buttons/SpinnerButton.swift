@@ -21,16 +21,18 @@ import Foundation
 
 /// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
+    ///TODO: get these from design
     private static let iconSize = StyleKitIcon.Size.tiny.rawValue
-    private static let iconInset: CGFloat = 10 ///TODO: get it from design
+    private static let iconInset: CGFloat = 10
     private static let textInset: CGFloat = 5
+    private static let inset: CGFloat = 10
 
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
         
 
         // the spinner covers the text with alpha BG
-        progressSpinner.backgroundColor = variant == .light ? UIColor(white: 1, alpha: 0.8) : UIColor(white: 0, alpha: 0.8)
+        progressSpinner.backgroundColor = variant == .light ? UIColor(white: 1, alpha: 0.8) : UIColor(white: 0, alpha: 0.8) ///TODO: update from design
         progressSpinner.color = .accent()
         progressSpinner.iconSize = SpinnerButton.iconSize
 
@@ -57,14 +59,13 @@ final class SpinnerButton: Button {
         super.init()
         
         /// multi line support
-        let inset: CGFloat = 10
         if let titleLabel = titleLabel {
             titleLabel.lineBreakMode = .byWordWrapping
             titleLabel.numberOfLines = 0
 
             NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: inset),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: inset)])
+            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.inset),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: SpinnerButton.inset)])
         }
     }
     
