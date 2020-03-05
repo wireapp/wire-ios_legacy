@@ -43,7 +43,7 @@ struct AddParticipantsViewModel {
         }
     }
     
-    func title(with users: Set<ZMUser>) -> String {
+    func title(with users: UserSet) -> String {
         return users.isEmpty
             ? "peoplepicker.group.title.singular".localized(uppercased: true)
             : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)

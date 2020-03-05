@@ -311,8 +311,8 @@ final class AddParticipantsViewController: UIViewController {
     private func updateTitle() {
         title = {
             switch viewModel.context {
-            case .create(let values): return viewModel.title(with: values.participants)
-            case .add: return viewModel.title(with: userSelection.users.asZMUserSet)
+            case .create(let values): return viewModel.title(with: values.participants.asUserSet)
+            case .add: return viewModel.title(with: userSelection.users)
             }
         }()
     }
