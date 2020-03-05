@@ -29,14 +29,31 @@ final class PollMessageCellTests: ConversationCellSnapshotTestCase {
     // MARK: - Helpers
 
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
-        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage ///TODO: text should belong to sub-messages
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
 
         let mockCompositeMessageData = MockCompositeMessageData()
-//        textMessageData.messageText = "Dummy Poll question:"
+        let message = MockMessageFactory.textMessage(withText: "Who is your most favourite musician?")!
+        let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
+        
+        let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
+        mockButtonMessageData.title = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+        let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
+        
+        mockCompositeMessageData.items = [buttonItem]
 
         mockCompositeMessage.compositeMessageData = mockCompositeMessageData
 
         config?(mockCompositeMessage)
         return mockCompositeMessage
+    }
+}
+
+final class MockButtonMessageData: ButtonMessageData {
+    var title: String?
+    
+    var state: ButtonMessageState = .unselected
+    
+    func touchAction() {
+        //no-op
     }
 }

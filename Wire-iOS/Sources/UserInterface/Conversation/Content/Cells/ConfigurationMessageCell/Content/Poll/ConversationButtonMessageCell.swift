@@ -36,8 +36,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     struct Configuration {
-        let text: String
-        let state: State
+        let text: String?
+        let state: ButtonMessageState
         ///TODO: state/spinner ?
     }
 
@@ -97,7 +97,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var accessibilityLabel: String?
 
-    init(text: String, state: ConversationButtonMessageCell.State) { /// TODO: state
+    init(text: String?, state: ButtonMessageState) { /// TODO: state conversion?
         configuration = View.Configuration(text: text, state: state)
     }
 }

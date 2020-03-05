@@ -121,8 +121,8 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
-        } else if message.isPoll {///TODO: for testing only, poll message is also a text message for now
-            contentCellDescriptions = addPollMessageCells
+        } else if message is ConversationCompositeMessage {
+            contentCellDescriptions = addCompositeMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
         } else if message.isImage {
@@ -171,14 +171,26 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         return [AnyConversationMessageCellDescription(locationCell)]
     }
 
-    private var addPollMessageCells: [AnyConversationMessageCellDescription] {
-        ///TODO: text cells, may be we need a simpler text cell?
-        let text = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)
-        //TODO: get form message
-        return text +
-            [AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Foo", state: .selected)),
-                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "Bar", state: .unselected)),
-                AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: "2020", state: .unselected))]
+    private var addCompositeMessageCells: [AnyConversationMessageCellDescription] {
+        guard let compositeMessage = message as? ConversationCompositeMessage else { return [] }
+        
+        var cells: [AnyConversationMessageCellDescription] = []
+        
+        compositeMessage.compositeMessageData?.items.forEach() { item in
+            switch item {
+            case .text(let data):
+                break
+//                let text = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries) ///TODO: message item
+//
+//                cells.append(text)
+            case .button(let data):
+                
+                let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title, state: data.state))
+                cells.append(button)
+            }
+        }
+        
+        return cells
     }
 
     // MARK: - Composition
