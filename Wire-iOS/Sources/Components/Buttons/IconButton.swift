@@ -38,7 +38,7 @@ public class IconButton: ButtonWithLargerHitArea {
             updateCircular()
         }
     }
-    
+
     var borderWidth: CGFloat = 0.5 {
         didSet {
             updateCircular()
@@ -50,30 +50,30 @@ public class IconButton: ButtonWithLargerHitArea {
             updateCustomCornerRadius()
         }
     }
-    
+
     var adjustsTitleWhenHighlighted = false
     var adjustsBorderColorWhenHighlighted = false
     var adjustBackgroundImageWhenHighlighted = false
-    
-    private var iconColorsByState: [UIControl.State : UIColor] = [:]
-    private var borderColorByState: [UIControl.State : UIColor] = [:]
-    private var iconDefinitionsByState: [UIControl.State : IconDefinition] = [:]
+
+    private var iconColorsByState: [UIControl.State: UIColor] = [:]
+    private var borderColorByState: [UIControl.State: UIColor] = [:]
+    private var iconDefinitionsByState: [UIControl.State: IconDefinition] = [:]
     private var priorState: UIControl.State?
-    
+
     init() {
         super.init(frame: .zero)
-        
+
         hitAreaPadding = CGSize(width: 20, height: 20)
     }
-    
+
     convenience init(style: IconButtonStyle, variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init()
-        
+
         setIconColor(UIColor.from(scheme: .iconNormal, variant: variant), for: .normal)
         setIconColor(UIColor.from(scheme: .iconSelected, variant: variant), for: .selected)
         setIconColor(UIColor.from(scheme: .iconHighlighted, variant: variant), for: .highlighted)
         setBackgroundImageColor(UIColor.from(scheme: .iconBackgroundSelected, variant: variant), for: .selected)
-        
+
         switch style {
         case .default:
             break
@@ -90,26 +90,25 @@ public class IconButton: ButtonWithLargerHitArea {
             contentHorizontalAlignment = .left
         }
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 
     override public func layoutSubviews() {
         super.layoutSubviews()
-        
+
         updateCircularCornerRadius()
     }
-    
+
     // MARK: - Observing state
     override public var isHighlighted: Bool {
         didSet {
             updateForNewStateIfNeeded()
         }
     }
-    
+
     override public var isSelected: Bool {
         didSet {
             updateForNewStateIfNeeded()
@@ -121,15 +120,15 @@ public class IconButton: ButtonWithLargerHitArea {
             updateForNewStateIfNeeded()
         }
     }
-    
+
     override public func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         super.setTitleColor(color, for: state)
-        
+
         if adjustsTitleWhenHighlighted && state.contains(.normal) {
             super.setTitleColor(titleColor(for: .highlighted)?.mix(UIColor.black, amount: 0.4), for: .highlighted)
         }
     }
-    
+
     private func updateCircular() {
         if circular {
             layer.masksToBounds = true
@@ -141,38 +140,37 @@ public class IconButton: ButtonWithLargerHitArea {
             layer.cornerRadius = 0
         }
     }
-    
+
     func setTitleImageSpacing(_ titleImageSpacing: CGFloat, horizontalMargin: CGFloat = 0) {
-        
+
         let isLeftToRight = UIView.userInterfaceLayoutDirection(for: .unspecified) == .leftToRight
-        
+
         let inset = titleImageSpacing / 2.0
         let leftInset = isLeftToRight ? -inset : inset
         let rightInset = isLeftToRight ? inset : -inset
-        
+
         imageEdgeInsets = UIEdgeInsets(top: imageEdgeInsets.top, left: leftInset, bottom: imageEdgeInsets.bottom, right: rightInset)
         titleEdgeInsets = UIEdgeInsets(top: titleEdgeInsets.top, left: rightInset, bottom: titleEdgeInsets.bottom, right: leftInset)
-        
+
         let horizontal = inset + horizontalMargin
         contentEdgeInsets = UIEdgeInsets(top: contentEdgeInsets.top, left: horizontal, bottom: contentEdgeInsets.bottom, right: horizontal)
     }
 
-    
     func setBackgroundImageColor(_ color: UIColor,
                                  for state: UIControl.State) {
         setBackgroundImage(UIImage.singlePixelImage(with: color), for: state)
-        
+
         if adjustBackgroundImageWhenHighlighted && state.contains(.normal) {
             setBackgroundImage(UIImage.singlePixelImage(with: color.mix(UIColor.black, amount: 0.4)), for: .highlighted)
         }
     }
-    
+
     func setIcon(_ iconType: StyleKitIcon?,
                  size: StyleKitIcon.Size,
                  for state: UIControl.State,
                  renderingMode: UIImage.RenderingMode = UIImage.RenderingMode.alwaysTemplate,
                  force: Bool = false) {
-        
+
         setIcon(iconType, iconSize: size.rawValue, for: state, renderingMode: renderingMode, force: force)
     }
 
@@ -193,17 +191,17 @@ public class IconButton: ButtonWithLargerHitArea {
             removeIcon(for: state)
             return
         }
-        
+
         let newIcon = IconDefinition(iconType: iconType, iconSize: iconSize, renderingMode: renderingMode)
-        
+
         let currentIcon = iconDefinitionsByState[state]
-        
+
         if !force, let currentIcon = currentIcon, currentIcon == newIcon {
             return
         }
-        
+
         iconDefinitionsByState[state] = newIcon
-        
+
         let color: UIColor
         if renderingMode == .alwaysOriginal,
             let iconColor = iconColor(for: .normal) {
@@ -211,84 +209,84 @@ public class IconButton: ButtonWithLargerHitArea {
         } else {
             color = .black
         }
-        
+
         let image = UIImage.imageForIcon(iconType, size: iconSize, color: color)
-        
+
         setImage(image.withRenderingMode(renderingMode), for: state)
     }
-    
+
     func removeIcon(for state: UIControl.State) {
         iconDefinitionsByState[state] = nil
         setImage(nil, for: state)
     }
-    
+
     func setIconColor(_ color: UIColor?, for state: UIControl.State) {
         if nil != color {
             iconColorsByState[state] = color
         } else {
             iconColorsByState.removeValue(forKey: state)
         }
-        
+
         let currentIcon = iconDefinitionsByState[state]
-        
+
         if currentIcon != nil && currentIcon?.renderingMode == .alwaysOriginal {
             if let iconType = currentIcon?.iconType, let renderingMode = currentIcon?.renderingMode {
                 setIcon(iconType, iconSize: currentIcon?.iconSize ?? 0, for: state, renderingMode: renderingMode, force: true)
             }
         }
-        
+
         updateTintColor()
     }
 
     func iconDefinition(for state: UIControl.State) -> IconDefinition? {
         return iconDefinitionsByState[state]
     }
-    
+
     func iconColor(for state: UIControl.State) -> UIColor? {
         return iconColorsByState[state] ?? iconColorsByState[.normal]
     }
-    
+
     func borderColor(for state: UIControl.State) -> UIColor? {
         return borderColorByState[state] ?? borderColorByState[.normal]
     }
-    
+
     private func updateBorderColor() {
         layer.borderColor = borderColor(for: state)?.cgColor
     }
-    
+
     func updateTintColor() {
         tintColor = iconColor(for: state)
     }
-    
+
     func updateCircularCornerRadius() {
         guard circular else { return }
-            
-            /// Create a circular mask. It would also mask subviews.
-            
-            let radius: CGFloat = bounds.size.height / 2
-            let maskPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
-            
-            let maskLayer = CAShapeLayer()
-            maskLayer.frame = bounds
-            maskLayer.path = maskPath.cgPath
-            
-            layer.mask = maskLayer
-            
-            /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
-                layer.cornerRadius = borderWidth > 0 ? radius : 0
+
+        /// Create a circular mask. It would also mask subviews.
+
+        let radius: CGFloat = bounds.size.height / 2
+        let maskPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
+
+        let maskLayer = CAShapeLayer()
+        maskLayer.frame = bounds
+        maskLayer.path = maskPath.cgPath
+
+        layer.mask = maskLayer
+
+        /// When the button has border, set self.layer.cornerRadius to prevent border is covered by icon
+        layer.cornerRadius = borderWidth > 0 ? radius : 0
     }
 
     func updateCustomCornerRadius() {
-            layer.cornerRadius = roundCorners ? 6 : 0
+        layer.cornerRadius = roundCorners ? 6 : 0
     }
-    
+
     private func updateForNewStateIfNeeded() {
         guard state != priorState else { return }
-        
-            priorState = state
-            // Update for new state (selected, highlighted, disabled) here if needed
-            updateTintColor()
-            updateBorderColor()
+
+        priorState = state
+        // Update for new state (selected, highlighted, disabled) here if needed
+        updateTintColor()
+        updateBorderColor()
     }
 
     func icon(for state: UIControl.State) -> StyleKitIcon? {
@@ -296,17 +294,17 @@ public class IconButton: ButtonWithLargerHitArea {
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {
-        state.expanded.forEach(){ expandedState in
+        state.expanded.forEach() { expandedState in
             if color != nil {
                 borderColorByState[expandedState] = color
-                
+
                 if adjustsBorderColorWhenHighlighted &&
-                   expandedState == .normal {
+                    expandedState == .normal {
                     borderColorByState[.highlighted] = color?.mix(.black, amount: 0.4)
                 }
             }
         }
-        
+
         updateBorderColor()
     }
 }

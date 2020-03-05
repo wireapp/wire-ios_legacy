@@ -18,7 +18,6 @@
 
 import Foundation
 import WireTesting
-import WireCommonComponents
 @testable import Wire
 
 class MentionsHandlerTests: XCTestCase {
