@@ -51,13 +51,11 @@ final public class ConversationCreationValues {
 
 protocol ConversationCreationControllerDelegate: class {
 
-    func conversationCreationController(
-        _ controller: ConversationCreationController,
-        didSelectName name: String,
-        participants: Set<ZMUser>,
-        allowGuests: Bool,
-        enableReceipts: Bool
-    )
+    func conversationCreationController(_ controller: ConversationCreationController,
+                                        didSelectName name: String,
+                                        participants: UserSet,
+                                        allowGuests: Bool,
+                                        enableReceipts: Bool)
     
 }
 
@@ -273,7 +271,7 @@ extension ConversationCreationController: AddParticipantsConversationCreationDel
             delegate?.conversationCreationController(
                 self,
                 didSelectName: values.name,
-                participants: values.participants,
+                participants: values.participants.asUserSet,
                 allowGuests: values.allowGuests,
                 enableReceipts: values.enableReceipts
             )

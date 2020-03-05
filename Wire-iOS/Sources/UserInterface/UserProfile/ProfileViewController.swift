@@ -474,17 +474,15 @@ extension ProfileViewController: ProfileViewControllerDelegate {
 }
 
 extension ProfileViewController: ConversationCreationControllerDelegate {
-    func conversationCreationController(
-        _ controller: ConversationCreationController,
-        didSelectName name: String,
-        participants: Set<ZMUser>,
-        allowGuests: Bool,
-        enableReceipts: Bool
-        ) {
+    func conversationCreationController(_ controller: ConversationCreationController,
+                                        didSelectName name: String,
+                                        participants: UserSet,
+                                        allowGuests: Bool,
+                                        enableReceipts: Bool) {
         controller.dismiss(animated: true) { [weak self] in
             self?.delegate?.profileViewController(self,
                                                   wantsToCreateConversationWithName: name,
-                                                  users: participants.asUserSet)
+                                                  users: participants)
         }
     }
 }
