@@ -20,31 +20,24 @@ import Foundation
 
 /// A set of instances conforming to `UserType`.
 
-struct UserSet: Collection, SetAlgebra {
+struct UserSet {
 
     typealias Storage = Set<HashBox<UserType>>
-    typealias Element = UserType
-    typealias Index = Storage.Index
-
-    // MARK: - Properties
 
     private var storage: Storage
-
-    // MARK: - Life Cycle
-
-    init() {
-        storage = Storage()
-    }
-
-    init(arrayLiteral elements: UserType...) {
-        storage = Storage(elements.map(HashBox.init))
-    }
 
     private init(storage: Storage) {
         self.storage = storage
     }
 
-    // MARK: - Methods
+}
+
+// MARK: - Collection
+
+extension UserSet: Collection {
+
+    typealias Element = UserType
+    typealias Index = Storage.Index
 
     var isEmpty: Bool {
         return storage.isEmpty
@@ -68,6 +61,20 @@ struct UserSet: Collection, SetAlgebra {
 
     __consuming func makeIterator() -> IndexingIterator<[UserType]> {
         return storage.map(\.value).makeIterator()
+    }
+
+}
+
+// MARK: - Set Algebra
+
+extension UserSet: SetAlgebra {
+
+    init() {
+        storage = Storage()
+    }
+
+    init(arrayLiteral elements: UserType...) {
+        storage = Storage(elements.map(HashBox.init))
     }
 
     func contains(_ member: UserType) -> Bool {
