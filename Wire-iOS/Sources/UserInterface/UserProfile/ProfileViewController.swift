@@ -323,8 +323,10 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             viewModel.archiveConversation()
         case .deleteContents:
             presentDeleteConfirmationPrompt(from: targetView)
-        case .block:
-            presentBlockRequest(from: targetView)
+        case let .block(isBlocked):
+            isBlocked
+                ? handleBlockAndUnblock()
+                : presentBlockActionSheet(from: targetView)
         case .openOneToOne:
             viewModel.openOneToOneConversation()
         case .removeFromGroup:
@@ -375,37 +377,26 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     @objc
     private func presentLegalHoldDetails() {
         guard let user = viewModel.fullUser else { return }
-        
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
     
     // MARK: Block
     
-    private func presentBlockRequest(from targetView: UIView) {
-        
+    private func presentBlockActionSheet(from targetView: UIView) {
         let controller = UIAlertController(title: viewModel.blockTitle, message: nil, preferredStyle: .actionSheet)
-        viewModel.allBockResult.map { $0.action(handleBlockResult) }.forEach(controller.addAction)
+        viewModel.allBlockResult.map { $0.action(handleBlockActions) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
     
-    private func handleBlockResult(_ result: BlockResult) {
+    private func handleBlockActions(_ result: BlockResult) {
         guard case .block = result else { return }
-        
-        let updateClosure = {
-            self.viewModel.toggleBlocked()
-            self.updateFooterViews()
-        }
-        
-        switch viewModel.context {
-        case .search:
-            /// stay on this VC and let user to decise what to do next
-            updateClosure()
-        default:
-            viewModel.transitionToListAndEnqueue {
-                updateClosure()
-            }
-        }
+        handleBlockAndUnblock()
+    }
+    
+    private func handleBlockAndUnblock() {
+        viewModel.handleBlockAndUnblock()
+        updateFooterViews()
     }
     
     // MARK: Notifications
