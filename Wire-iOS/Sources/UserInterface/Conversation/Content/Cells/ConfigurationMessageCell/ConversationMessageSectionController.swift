@@ -179,9 +179,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
         compositeMessage.compositeMessageData?.items.forEach() { item in
             switch item {
             case .text(let data):
-                ConversationTextMessageCellDescription.cells(textMessageData: data,
-                                             message: message,
-                                             searchQueries: context.searchQueries)```
+                ConversationTextMessageCellDescription.cells(textMessageData: data, message: message, searchQueries: context.searchQueries)
 
                 cells = cells + textCells
             case .button(let data):
