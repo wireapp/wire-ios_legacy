@@ -34,9 +34,6 @@ GITHUB_USERNAME="`git config user.email`"
 
 if [[ -n "${GITHUB_ACCESS_TOKEN}" ]] && [[ -n "${GITHUB_USERNAME}" ]]; then
   CREDENTIALS="${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}"
-else
-  echo "❌  Access token and / or github username not set ⚠️"
-  exit 1
 fi
 
 ##################################
