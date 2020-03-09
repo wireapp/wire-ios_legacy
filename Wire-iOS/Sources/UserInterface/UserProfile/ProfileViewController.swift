@@ -295,20 +295,26 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         performAction(action, targetView: footerView.leftButton)
     }
     
-    func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction]) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    func footerView(_ footerView: ProfileFooterView,
+                    shouldPresentMenuWithActions actions: [ProfileAction]) {
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
         
-        for action in actions {
-            let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
-                self.performAction(action, targetView: footerView)
-            }
-            
-            actionSheet.addAction(sheetAction)
-        }
-        
+        actions.map { buildProfileAction($0, footerView: footerView) }
+            .forEach(actionSheet.addAction)
         actionSheet.addAction(.cancel())
         presentAlert(actionSheet, targetView: footerView)
     }
+    
+    private func buildProfileAction(_ action: ProfileAction,
+                                    footerView: ProfileFooterView) -> UIAlertAction {
+        return UIAlertAction(title: action.buttonText,
+                             style: .default) { _ in
+                                self.performAction(action, targetView: footerView)
+        }
+    }
+
     
     private func performAction(_ action: ProfileAction,
                        targetView: UIView) {
