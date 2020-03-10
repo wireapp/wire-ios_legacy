@@ -42,7 +42,7 @@ extension UserType {
         guard let cachedImage = cachedImage(imageCache: imageCache,
                                             cacheKey: cacheKey) else {
             downloadProfileImage(for: imageSize)
-            processDownloadedProdileImage(for: imageSize,
+            processDownloadedProfileImage(for: imageSize,
                                           sizeLimit: sizeLimit,
                                           isDesaturated: isDesaturated,
                                           imageCache: imageCache,
@@ -107,12 +107,12 @@ extension UserType {
     
     // MARK: Dowload Image Helper
     
-    private func processDownloadedProdileImage(for imageSize: ProfileImageSize,
-                                      sizeLimit: Int?,
-                                      isDesaturated: Bool,
-                                      imageCache: ImageCache<UIImage>,
-                                      cacheKey: String,
-                                      completion: @escaping ProfileImageCompletion) {
+    private func processDownloadedProfileImage(for imageSize: ProfileImageSize,
+                                               sizeLimit: Int?,
+                                               isDesaturated: Bool,
+                                               imageCache: ImageCache<UIImage>,
+                                               cacheKey: String,
+                                               completion: @escaping ProfileImageCompletion) {
         imageData(for: imageSize, queue: imageCache.processingQueue) { (imageData) in
             guard let imageData = imageData else {
                 return DispatchQueue.main.async {
