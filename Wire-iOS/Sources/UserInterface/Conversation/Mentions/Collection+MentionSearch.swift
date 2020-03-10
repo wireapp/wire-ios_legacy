@@ -60,21 +60,3 @@ private extension UserType {
     }
 
 }
-
-final class HashBox<Type: NSObjectProtocol>: Hashable, Equatable {
-
-    static func == (lhs: HashBox<Type>, rhs: HashBox<Type>) -> Bool {
-        return lhs.value.isEqual(rhs.value)
-    }
-
-    let value: Type
-
-    init(value: Type) {
-        self.value = value
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(value.hash)
-    }
-
-}

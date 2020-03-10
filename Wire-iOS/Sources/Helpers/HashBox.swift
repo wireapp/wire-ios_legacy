@@ -18,17 +18,22 @@
 
 import Foundation
 
-extension ProfilePresenter: ProfileViewControllerDelegate {
+/// A wrapper type to provide hashable capabilities for abstract types.
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
-        guard let controller = controller else { return }
+final class HashBox<Type: NSObjectProtocol>: Hashable {
 
-        dismiss(viewController: controller) {
-            ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
-        }
+    let value: Type
+
+    init(value: Type) {
+        self.value = value
     }
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
-        //no-op.
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(value.hash)
     }
+
+    static func == (lhs: HashBox<Type>, rhs: HashBox<Type>) -> Bool {
+        return lhs.value.isEqual(rhs.value)
+    }
+
 }
