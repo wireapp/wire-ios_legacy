@@ -727,6 +727,8 @@
 		A955D3D923F5791100304851 /* String+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168A16A31D95964B005CFA6C /* String+URL.swift */; };
 		A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAED82B81B307AEE004D027F /* ZMUserSession+RequestProxy.swift */; };
 		A956554E23ED9D460004720E /* TokenizedTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE9DCB11B5F9A6D00E347DF /* TokenizedTextView.swift */; };
+		A95C76C0240E87440047CD29 /* ConversationButtonMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */; };
+		A95C76C2240E915D0047CD29 /* CompositeMessageCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */; };
 		A95E31C723DEF01000258C43 /* UIView+Zeta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC2181D34F8F800DF0793 /* UIView+Zeta.swift */; };
 		A95E561123FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */; };
 		A95FB36B23ED7F030095247C /* PassthroughTouchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 871BC1CE1D34F8F800DF0793 /* PassthroughTouchesView.swift */; };
@@ -2335,6 +2337,8 @@
 		A955D3D223F54AC400304851 /* AuthenticationCoordinatedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationCoordinatedViewController.swift; sourceTree = "<group>"; };
 		A955D3D423F576F400304851 /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
 		A955D3D723F5775700304851 /* URL+StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+StringTests.swift"; sourceTree = "<group>"; };
+		A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationButtonMessageCell.swift; sourceTree = "<group>"; };
+		A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeMessageCellTests.swift; sourceTree = "<group>"; };
 		A95E561023FBF0C0005F8E8D /* UIViewControllerContextTransitioning+Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewControllerContextTransitioning+Helper.swift"; sourceTree = "<group>"; };
 		A961319F23E81CC300194608 /* ParticipantDeviceHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDeviceHeaderView.swift; sourceTree = "<group>"; };
 		A9614EF723C38C810012A718 /* ConnectRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectRequestsViewController.swift; sourceTree = "<group>"; };
@@ -3597,6 +3601,7 @@
 		5E35F7462180A25100D3F4FE /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				A95C76BE240E871F0047CD29 /* Poll */,
 				5E4BC1C1218A0B1400A8682E /* Text */,
 				5E4BC1C2218A0B1F00A8682E /* Rich Content */,
 			);
@@ -5475,6 +5480,14 @@
 			path = URL;
 			sourceTree = "<group>";
 		};
+		A95C76BE240E871F0047CD29 /* Poll */ = {
+			isa = PBXGroup;
+			children = (
+				A95C76BF240E87440047CD29 /* ConversationButtonMessageCell.swift */,
+			);
+			path = Poll;
+			sourceTree = "<group>";
+		};
 		A9681D8223883890004FE917 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -5600,10 +5613,6 @@
 				16271BC71DA5213400689486 /* TypingIndicatorViewTests.swift */,
 				BFAF4CAE1CEB791B00780537 /* AudioRecordViewControllerTests.swift */,
 				BF735D001E716816003BC61F /* CallSystemMessageTests.swift */,
-				BF4D99CF1E79AF8100A7B08F /* StartedConversationCellTests.swift */,
-				BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */,
-				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
-				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
 				162E8C621CF5D68A004B4F45 /* AudioProcessingTests.swift */,
 				16BEBC3E1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift */,
 				BFF655731E81235900D48337 /* ConversationAvatarViewTests.swift */,
@@ -6175,6 +6184,11 @@
 		EF2BEF2D20E3B5A200D056B0 /* ConversationCell */ = {
 			isa = PBXGroup;
 			children = (
+				BF4D99CF1E79AF8100A7B08F /* StartedConversationCellTests.swift */,
+				BFFE943B1E7839D10025AD75 /* ConversationRenamedCellTests.swift */,
+				160C31201E4C7E770012E4BC /* UnknownMessageCellTests.swift */,
+				BFC914991D181B7C001F068B /* LocationMessageCellTests.swift */,
+				A95C76C1240E915D0047CD29 /* CompositeMessageCellTests.swift */,
 				872C823B214A9B8500236A76 /* TextMessageMentionsTests.swift */,
 				EFE6151B2260E4AA006D48ED /* MultiParagraphSnapshotTests.swift */,
 				EF40353022609D6C001A3568 /* MarkDownSnapshotTests.swift */,
@@ -7917,6 +7931,7 @@
 				F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */,
 				7C440E7523472C5200D91B5F /* FolderCreationController.swift in Sources */,
 				D5168F552010F24C00F8222A /* TokenTextAttachment.m in Sources */,
+				A95C76C0240E87440047CD29 /* ConversationButtonMessageCell.swift in Sources */,
 				A955D3DA23F57F4600304851 /* ZMUserSession+RequestProxy.swift in Sources */,
 				EF4018BE205975C100CFBCB0 /* ApplicationProtocol.swift in Sources */,
 				875753D1211DC61C00A80F5E /* EmptySearchResultsView.swift in Sources */,
@@ -8212,6 +8227,7 @@
 				EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */,
 				16BEBC3F1D006FB6006FFD3E /* ThreeDotsLoadingViewTests.swift in Sources */,
 				A93E6104233B870300CEA65F /* ConversationListHeaderViewSnapshotTests.swift in Sources */,
+				A95C76C2240E915D0047CD29 /* CompositeMessageCellTests.swift in Sources */,
 				EF223F5D2327A1CF004480FA /* ConversationListViewControllerViewModelTests.swift in Sources */,
 				EFEB2EE0220C7E5500519EDC /* ProfileSelfPictureViewControllerSnapshotTests.swift in Sources */,
 				EF2FEDC8228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift in Sources */,

@@ -173,6 +173,13 @@ extension ConversationTextMessageCellDescription {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
+        
+        return cells(textMessageData: textMessageData, message: message, searchQueries: searchQueries)
+    }
+    
+    static func cells(textMessageData: ZMTextMessageData,
+                      message: ZMConversationMessage,
+                      searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
@@ -195,7 +202,7 @@ extension ConversationTextMessageCellDescription {
 
         // Quote
         if textMessageData.hasQuote {
-            let quotedMessage = message.textMessageData?.quote
+            let quotedMessage = textMessageData.quote
             let quoteCell = ConversationReplyCellDescription(quotedMessage: quotedMessage)
             cells.append(AnyConversationMessageCellDescription(quoteCell))
         }
