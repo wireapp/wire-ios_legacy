@@ -19,8 +19,24 @@ import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let button = SpinnerButton(style: .empty)
+    private let errorLabel = UILabel()
+    
+    var errorLabelTopConstraint: NSLayoutConstraint!
+    var errorLabelHeightConstraint: NSLayoutConstraint!
+
     var isSelected: Bool = false
 
+    var errorMessage: String? {
+        didSet {
+            if errorMessage?.isEmpty == false {
+                errorLabelTopConstraint.constant = 4
+            } else {
+                errorLabelTopConstraint.constant = 0
+            }
+            
+            errorLabel.invalidateIntrinsicContentSize()
+        }
+    }
     weak var message: ZMConversationMessage?
 
     weak var delegate: ConversationMessageCellDelegate?
@@ -64,16 +80,27 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     private func configureViews() {
         addSubview(button)
+        addSubview(errorLabel)
     }
 
     private func createConstraints() {
-        button.translatesAutoresizingMaskIntoConstraints = false
-
+        [button, errorLabel].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
+//        errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 0)
+        
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor),
             button.leadingAnchor.constraint(equalTo: leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor)])
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            errorLabelTopConstraint,
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ])
     }
 }
 

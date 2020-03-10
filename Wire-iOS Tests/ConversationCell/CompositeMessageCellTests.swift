@@ -26,6 +26,14 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         verify(message: makeMessage())
     }
 
+    func testThatItRendersErrorMessage() {
+        verify(message: makeMessage())
+    }
+
+    func testThatItRendersButton() {
+        verify(message: makeMessage())
+    }
+
     // MARK: - Helpers
     
     private func createItem(title: String, state: ButtonMessageState) -> CompositeMessageItem {
