@@ -50,7 +50,6 @@ final class SpinnerButtonTests: XCTestCase {
         sut.isLoading = true
 
         //THEN
-        XCTAssert(sut.isEnabled)
         verifyInWidths(matching: sut, widths: Set([300]))
     }
 
