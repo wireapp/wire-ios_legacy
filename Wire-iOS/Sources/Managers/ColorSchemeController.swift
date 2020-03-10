@@ -34,7 +34,7 @@ class ColorSchemeController: NSObject {
         super.init()
 
         if let session = ZMUserSession.shared() {
-            userObserverToken = UserChangeInfo.add(observer:self, for: ZMUser.selfUser(), in: session)
+            userObserverToken = UserChangeInfo.add(observer:self, for: SelfUser.current, in: session)
         }
 
         NotificationCenter.default.addObserver(self, selector: #selector(settingsColorSchemeDidChange(notification:)), name: .SettingsColorSchemeChanged, object: nil)
