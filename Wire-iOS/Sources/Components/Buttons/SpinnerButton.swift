@@ -36,7 +36,9 @@ final class SpinnerButton: Button {
         NSLayoutConstraint.activate([
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
             progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor),
-            progressSpinner.widthAnchor.constraint(equalToConstant: 48)])
+            progressSpinner.widthAnchor.constraint(equalToConstant: 48),
+            progressSpinner.topAnchor.constraint(equalTo: topAnchor),
+            progressSpinner.bottomAnchor.constraint(equalTo: bottomAnchor)])
 
         return progressSpinner
     }()
