@@ -106,4 +106,3 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
         configuration = View.Configuration(text: text, state: state)
     }
 }
-1
