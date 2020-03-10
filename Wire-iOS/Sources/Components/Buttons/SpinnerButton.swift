@@ -19,29 +19,23 @@ import Foundation
 
 /// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
-    ///TODO: get these from design and then move the constant to enum
-    private static let iconSize = StyleKitIcon.Size.tiny.rawValue
-    private static let iconInset: CGFloat = 10
-    private static let textInset: CGFloat = 5
-    private static let inset: CGFloat = 10
-
+    
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
 
         // the spinner covers the text with alpha BG
-        ///TODO: update from design
         progressSpinner.backgroundColor = variant == .light
-            ? UIColor(white: 1, alpha: 0.8)
-            : UIColor(white: 0, alpha: 0.8)
+            ? UIColor(white: 1, alpha: CGFloat.SpinnerButton.spinnerBackgroundAlpha)
+            : UIColor(white: 0, alpha: CGFloat.SpinnerButton.spinnerBackgroundAlpha)
         progressSpinner.color = .accent()
-        progressSpinner.iconSize = SpinnerButton.iconSize
+        progressSpinner.iconSize = CGFloat.SpinnerButton.iconSize
 
         addSubview(progressSpinner)
 
         progressSpinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -SpinnerButton.iconInset)])
+            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.SpinnerButton.contentInset)])
 
         return progressSpinner
     }()
@@ -64,12 +58,15 @@ final class SpinnerButton: Button {
     /// multi line support of titleLabel
     private func configureTitleLabel() {
         if let titleLabel = titleLabel {
+            // title is always align to left
+            contentHorizontalAlignment = .left
+            
             titleLabel.lineBreakMode = .byWordWrapping
             titleLabel.numberOfLines = 0
 
             NSLayoutConstraint.activate([
-                titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.inset),
-                titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: SpinnerButton.inset)])
+                titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: CGFloat.SpinnerButton.contentInset),
+                titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
         }
     }
 
@@ -83,5 +80,10 @@ final class SpinnerButton: Button {
         setBorderColor(.accent(), for: .normal)
         setBorderColor(.accentDarken, for: .highlighted)
         setBorderColor(.accent(), for: .disabled)
+    }
+    
+    //MARK: - factory method
+    static func alarmButton() -> SpinnerButton {
+        return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
     }
 }

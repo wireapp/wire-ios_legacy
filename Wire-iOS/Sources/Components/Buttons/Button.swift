@@ -67,15 +67,17 @@ class Button: ButtonWithLargerHitArea {
     }
 
     convenience init(style: ButtonStyle,
-                     variant: ColorSchemeVariant = ColorScheme.default.variant) {
+                     variant: ColorSchemeVariant = ColorScheme.default.variant,
+                     cornerRadius: CGFloat = 4,
+                     titleLabelFont: UIFont = .smallLightFont) {
         self.init()
 
         self.style = style
         self.variant = variant
 
         textTransform = .upper
-        titleLabel?.font = .smallLightFont
-        layer.cornerRadius = 4
+        titleLabel?.font = titleLabelFont
+        layer.cornerRadius = cornerRadius
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 
         updateStyle(variant: variant)

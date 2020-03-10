@@ -20,7 +20,7 @@ import XCTest
 import SnapshotTesting
 
 final class ButtonTests: XCTestCase {
-    var sut: Button!
+    var sut: Wire.Button!
 
     override func setUp() {
         sut = Button(style: .empty)

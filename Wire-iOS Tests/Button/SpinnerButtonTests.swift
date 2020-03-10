@@ -26,9 +26,20 @@ final class SpinnerButtonTests: XCTestCase {
         sut = nil
     }
 
-    func createSut() {
-        sut = SpinnerButton(style: .empty)
-        sut.setTitle("Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne", for: .normal)
+    func createSut(title: String = "Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne") {
+        sut = SpinnerButton.alarmButton()
+        sut.setTitle(title, for: .normal)
+    }
+
+    func testForShortTitle() {
+        //GIVEN
+        createSut(title: "Yes, I am safe.")
+        
+        //WHEN
+        
+        //THEN
+        XCTAssert(sut.isEnabled)
+        verifyInAllPhoneWidths(matching: sut)
     }
 
     func testForSpinnerIsHidden() {
