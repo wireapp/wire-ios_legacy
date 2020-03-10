@@ -41,7 +41,7 @@ extension ZMConversation {
             }
             
             return ZMConversation.insertGroupConversation(session: userSession,
-                                                          participants: listOfPeople,
+                                                          participants: listOfPeople as! [ZMUser],
                                                           team: ZMUser.selfUser().team)
         default:
             return self

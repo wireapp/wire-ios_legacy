@@ -82,7 +82,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
                     let team = ZMUser.selfUser().team
                     
                     conversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                          participants: Array(users),
+                                                                          participants: Array(users) as! [ZMUser],
                                                                           team: team)
                 }, completionHandler: {
                     delay(0.3) {
@@ -100,7 +100,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         
         userSession.enqueueChanges({
             conversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                  participants: Array(users),
+                                                                  participants: Array(users) as! [ZMUser],
                                                                   name: name,
                                                                   team: ZMUser.selfUser().team,
                                                                   allowGuests: allowGuests,

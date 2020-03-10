@@ -35,7 +35,8 @@ final class SpinnerButton: Button {
         progressSpinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -CGFloat.SpinnerButton.contentInset)])
+            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor),
+            progressSpinner.widthAnchor.constraint(equalToConstant: 48)])
 
         return progressSpinner
     }()

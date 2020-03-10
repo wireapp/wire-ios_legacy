@@ -41,6 +41,18 @@ final class SpinnerButtonTests: XCTestCase {
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
     }
+    
+    func testForSpinnerOverlapsTitle() {
+        //GIVEN
+        createSut(title: "No, I need rescue. I am on the west side.")
+        
+        //WHEN
+        sut.isLoading = true
+
+        //THEN
+        XCTAssert(sut.isEnabled)
+        verifyInWidths(matching: sut, widths: Set([300]))
+    }
 
     func testForSpinnerIsHidden() {
         //GIVEN

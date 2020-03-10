@@ -81,30 +81,44 @@ extension XCTestCase {
         }
     }
 
-    func verifyInAllPhoneWidths(matching value: UIView,
+    func verifyInWidths(matching value: UIView,
+                        widths: Set<CGFloat>,
                                 named name: String? = nil,
                                 file: StaticString = #file,
                                 testName: String = #function,
                                 line: UInt = #line) {
         let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
         let widthConstraint = container.addWidthConstraint(width: 300)
-
-        for width in phoneWidths() {
+        
+        for width in widths {
             widthConstraint.constant = width
-
+            
             let nameWithProperty: String
             if let name = name {
                 nameWithProperty = "\(name)-\(width)"
             } else {
                 nameWithProperty = "\(width)"
             }
-
+            
             verify(matching: container,
                    named: nameWithProperty,
                    file: file,
                    testName: testName,
                    line: line)
         }
+    }
+    
+    func verifyInAllPhoneWidths(matching value: UIView,
+                                named name: String? = nil,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        verifyInWidths(matching: value,
+                       widths: phoneWidths(),
+                       named: name,
+                       file: file,
+                       testName: testName,
+                       line: line)
     }
 
     // MARK: - verify the snapshots in both dark and light scheme

@@ -46,7 +46,7 @@ extension ConversationViewController: ProfileViewControllerDelegate {
             
             userSession.enqueueChanges({
                 newConversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                         participants: Array(users),
+                                                                         participants: Array(users) as! [ZMUser],
                                                                          name: name,
                                                                          team: ZMUser.selfUser().team)
 
