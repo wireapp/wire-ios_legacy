@@ -26,18 +26,6 @@ cd $DIR/..
 source avs-versions
 AVS_FRAMEWORK_NAME="avs.framework"
 
-##################################
-# CREDENTIALS
-##################################
-# prepare credentials if needed
-
-# if git is installed
-if command -v git >dev/null; then
-  GITHUB_USERNAME="`git config user.email`"
-  if [[ -n "${GITHUB_ACCESS_TOKEN}" ]] && [[ -n "${GITHUB_USERNAME}" ]]; then
-    CREDENTIALS="${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}"
-  fi
-fi
 
 ##################################
 # SET UP PATHS
@@ -94,6 +82,29 @@ if [ -e "${AVS_FILENAME}" ]; then
 else
 	# DOWNLOAD
 	echo "ℹ️  Downloading ${AVS_RELEASE_TAG_PATH}..."
+
+  # prepare credentials
+  if hash git 2>/dev/null; then
+    GITHUB_USERNAME="`git config user.email`"
+
+    # guard username exists
+    if [[ -z "${GITHUB_USERNAME}" ]]; then
+      echo "❌  Git email not found. Configure it with: git config user.name ⚠️"
+      exit 1
+    fi
+
+    # guard access token exists
+    if [[ -z "${GITHUB_ACCESS_TOKEN}" ]]; then
+      echo "❌  GITHUB_ACCESS_TOKEN not set ⚠️"
+      exit 1
+    fi
+
+    CREDENTIALS="${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}"
+
+  else
+    echo "❌  Can't find git. Please make sure it is installed ⚠️"
+    exit 1
+  fi
 	
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
