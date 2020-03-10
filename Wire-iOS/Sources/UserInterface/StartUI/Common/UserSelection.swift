@@ -30,20 +30,20 @@ protocol UserSelectionObserver {
 
 class UserSelection: NSObject {
     
-    private(set) var users : Set<ZMUser> = Set()
-    private var observers : [UnownedObject<UserSelectionObserver>] = []
+    private(set) var users = UserSet()
+    private var observers: [UnownedObject<UserSelectionObserver>] = []
     
-    func replace(_ users: [ZMUser]) {
-        self.users = Set(users)
+    func replace(_ users: [UserType]) {
+        self.users = UserSet(users)
         observers.forEach({ $0.unbox?.userSelection(self, wasReplacedBy: users) })
     }
     
-    func add(_ user: ZMUser) {
+    func add(_ user: UserType) {
         users.insert(user)
         observers.forEach({ $0.unbox?.userSelection(self, didAddUser: user) })
     }
     
-    func remove(_ user: ZMUser) {
+    func remove(_ user: UserType) {
         users.remove(user)
         observers.forEach({ $0.unbox?.userSelection(self, didRemoveUser: user) })
     }
