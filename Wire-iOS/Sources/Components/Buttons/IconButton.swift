@@ -26,8 +26,8 @@ enum IconButtonStyle {
 }
 
 struct IconDefinition: Equatable {
-    let iconType: StyleKitIcon
-    let iconSize: CGFloat
+    let type: StyleKitIcon
+    let size: CGFloat
     let renderingMode: UIImage.RenderingMode
 }
 
@@ -45,7 +45,7 @@ public class IconButton: ButtonWithLargerHitArea {
         }
     }
 
-    var roundCorners = false {
+    var hasRoundCorners = false {
         didSet {
             updateCustomCornerRadius()
         }
@@ -66,7 +66,8 @@ public class IconButton: ButtonWithLargerHitArea {
         hitAreaPadding = CGSize(width: 20, height: 20)
     }
 
-    convenience init(style: IconButtonStyle, variant: ColorSchemeVariant = ColorScheme.default.variant) {
+    convenience init(style: IconButtonStyle,
+                     variant: ColorSchemeVariant = ColorScheme.default.variant) {
         self.init()
 
         setIconColor(UIColor.from(scheme: .iconNormal, variant: variant), for: .normal)
@@ -192,11 +193,9 @@ public class IconButton: ButtonWithLargerHitArea {
             return
         }
 
-        let newIcon = IconDefinition(iconType: iconType, iconSize: iconSize, renderingMode: renderingMode)
+        let newIcon = IconDefinition(type: iconType, size: iconSize, renderingMode: renderingMode)
 
-        let currentIcon = iconDefinitionsByState[state]
-
-        if !force, let currentIcon = currentIcon, currentIcon == newIcon {
+        guard force || newIcon != iconDefinitionsByState[state] else {
             return
         }
 
@@ -220,19 +219,23 @@ public class IconButton: ButtonWithLargerHitArea {
         setImage(nil, for: state)
     }
 
-    func setIconColor(_ color: UIColor?, for state: UIControl.State) {
+    func setIconColor(_ color: UIColor?,
+                      for state: UIControl.State) {
         if nil != color {
             iconColorsByState[state] = color
         } else {
             iconColorsByState.removeValue(forKey: state)
         }
 
-        let currentIcon = iconDefinitionsByState[state]
+        
 
-        if currentIcon != nil && currentIcon?.renderingMode == .alwaysOriginal {
-            if let iconType = currentIcon?.iconType, let renderingMode = currentIcon?.renderingMode {
-                setIcon(iconType, iconSize: currentIcon?.iconSize ?? 0, for: state, renderingMode: renderingMode, force: true)
-            }
+        if let currentIcon = iconDefinitionsByState[state],
+            currentIcon.renderingMode == .alwaysOriginal {
+            setIcon(currentIcon.type,
+                    iconSize: currentIcon.size,
+                    for: state,
+                    renderingMode: currentIcon.renderingMode,
+                    force: true)
         }
 
         updateTintColor()
@@ -258,13 +261,15 @@ public class IconButton: ButtonWithLargerHitArea {
         tintColor = iconColor(for: state)
     }
 
-    func updateCircularCornerRadius() {
+    private func updateCircularCornerRadius() {
         guard circular else { return }
 
         /// Create a circular mask. It would also mask subviews.
 
         let radius: CGFloat = bounds.size.height / 2
-        let maskPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
+        let maskPath = UIBezierPath(roundedRect: bounds,
+                                    byRoundingCorners: .allCorners,
+                                    cornerRadii: CGSize(width: radius, height: radius))
 
         let maskLayer = CAShapeLayer()
         maskLayer.frame = bounds
@@ -277,7 +282,7 @@ public class IconButton: ButtonWithLargerHitArea {
     }
 
     func updateCustomCornerRadius() {
-        layer.cornerRadius = roundCorners ? 6 : 0
+        layer.cornerRadius = hasRoundCorners ? 6 : 0
     }
 
     private func updateForNewStateIfNeeded() {
@@ -290,7 +295,7 @@ public class IconButton: ButtonWithLargerHitArea {
     }
 
     func icon(for state: UIControl.State) -> StyleKitIcon? {
-        return iconDefinition(for: state)?.iconType
+        return iconDefinition(for: state)?.type
     }
 
     func setBorderColor(_ color: UIColor?, for state: UIControl.State) {

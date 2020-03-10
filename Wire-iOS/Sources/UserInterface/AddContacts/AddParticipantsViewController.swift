@@ -167,7 +167,7 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
-        confirmButton.roundCorners = true
+        confirmButton.hasRoundCorners = true
         
         
 

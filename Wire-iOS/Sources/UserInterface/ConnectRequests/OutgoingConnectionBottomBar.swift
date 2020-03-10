@@ -21,12 +21,12 @@ import UIKit
 import Cartography
 
 
-@objc enum OutgoingConnectionBottomBarAction: UInt {
+enum OutgoingConnectionBottomBarAction: UInt {
     case cancel, archive
 }
 
 
-@objcMembers final class OutgoingConnectionViewController: UIViewController {
+final class OutgoingConnectionViewController: UIViewController {
 
     private let cancelButton = IconButton(style: .default)
     private let archiveButton = IconButton(style: .default)
