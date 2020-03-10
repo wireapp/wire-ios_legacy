@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCase {
+final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCase {
 
     var mockThumbnail: MockImageResource!
 
@@ -51,7 +51,7 @@ class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCa
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
         // THEN
-        verify(view: cell)
+        verify(matching: cell)
     }
 
     func testThatItRendersSoundCloudSongAttachment() {
@@ -69,7 +69,7 @@ class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCa
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
         // THEN
-        verify(view: cell)
+        verify(matching: cell)
     }
 
     func testThatItRendersSoundCloudPlaylistAttachment() {
@@ -87,7 +87,7 @@ class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshotTestCa
         cell.frame.size = cell.systemLayoutSizeFitting(CGSize(width: 414, height: 0))
 
         // THEN
-        verify(view: cell)
+        verify(matching: cell)
     }
 
 }

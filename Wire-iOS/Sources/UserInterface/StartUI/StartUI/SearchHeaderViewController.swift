@@ -26,7 +26,7 @@ protocol SearchHeaderViewControllerDelegate : class {
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
 }
 
-@objcMembers public class SearchHeaderViewController : UIViewController {
+class SearchHeaderViewController : UIViewController {
     
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
@@ -35,15 +35,14 @@ protocol SearchHeaderViewControllerDelegate : class {
     let userSelection : UserSelection
     let colorSchemeVariant : ColorSchemeVariant
     var allowsMultipleSelection: Bool = true
-    
-    @objc
+
     weak var delegate : SearchHeaderViewControllerDelegate? = nil
     
-    public var query : String {
+    var query : String {
         return tokenField.filterText
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -57,7 +56,7 @@ protocol SearchHeaderViewControllerDelegate : class {
         userSelection.add(observer: self)
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
@@ -91,7 +90,7 @@ protocol SearchHeaderViewControllerDelegate : class {
         createConstraints()
     }
     
-    fileprivate func createConstraints() {
+    private func createConstraints() {
         constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
             searchIcon.centerY == tokenField.centerY
             searchIcon.leading == tokenField.leading + 8
@@ -125,25 +124,25 @@ protocol SearchHeaderViewControllerDelegate : class {
         }
     }
     
-    @objc fileprivate dynamic func onClearButtonPressed() {
+    @objc private dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()
         updateClearIndicator(for: tokenField)
     }
     
-    public func clearInput() {
+    func clearInput() {
         tokenField.removeAllTokens()
         tokenField.clearFilterText()
         userSelection.replace([])
     }
     
-    public func resetQuery() {
+    func resetQuery() {
         tokenField.filterUnwantedAttachments()
         delegate?.searchHeaderViewController(self, updatedSearchQuery: tokenField.filterText)
     }
     
-    fileprivate func updateClearIndicator(for tokenField: TokenField) {
+    private func updateClearIndicator(for tokenField: TokenField) {
         clearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
     }
     
@@ -151,16 +150,16 @@ protocol SearchHeaderViewControllerDelegate : class {
 
 extension SearchHeaderViewController : UserSelectionObserver {
     
-    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
+    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         // this is triggered by the TokenField itself so we should ignore it here
     }
     
-    public func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
+    func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         guard allowsMultipleSelection else { return }
         tokenField.addToken(forTitle: user.name ?? "", representedObject: user)
     }
     
-    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
+    func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         guard let token = tokenField.token(forRepresentedObject: user) else { return }
         tokenField.removeToken(token)
         updateClearIndicator(for: tokenField)

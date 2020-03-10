@@ -20,11 +20,7 @@
 
 import XCTest
 
-class ConversationAudioMessageCellTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class ConversationAudioMessageCellTests: ConversationCellSnapshotTestCase {
     
     override func tearDown() {
         MediaAssetCache.defaultImageCache.cache.removeAllObjects()

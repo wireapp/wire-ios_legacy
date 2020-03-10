@@ -58,23 +58,14 @@ extension SplitViewController {
             leftView?.isHidden = false
         case .changed:
             if let width = leftViewController?.view.bounds.size.width {
-                if isLeftViewControllerRevealed {
-                    if offset.x > 0 {
-                        offset.x = 0
-                    }
-                    if abs(offset.x) > width {
-                        offset.x = -width
-                    }
-                    openPercentage = 1.0 - abs(offset.x) / width
-                } else {
-                    if offset.x < 0 {
-                        offset.x = 0
-                    }
-                    if abs(offset.x) > width {
-                        offset.x = width
-                    }
-                    openPercentage = abs(offset.x) / width
-                    }
+                if offset.x > 0, view.isRightToLeft {
+                    offset.x = 0
+                } else if offset.x < 0, !view.isRightToLeft {
+                    offset.x = 0
+                } else if abs(offset.x) > width {
+                    offset.x = width
+                }
+                openPercentage = abs(offset.x) / width
                 view.layoutIfNeeded()
             }
         case .cancelled,
@@ -83,7 +74,6 @@ extension SplitViewController {
             let didCompleteTransition = isRevealed != isLeftViewControllerRevealed
             
             setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
-                
                 if didCompleteTransition {
                     self?.leftViewController?.endAppearanceTransition()
                     self?.rightViewController?.endAppearanceTransition()

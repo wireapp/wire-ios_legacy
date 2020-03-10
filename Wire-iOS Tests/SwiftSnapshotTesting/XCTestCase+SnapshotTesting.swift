@@ -80,23 +80,49 @@ extension XCTestCase {
                    line: line)
         }
     }
-    
+
+    func verifyInAllPhoneWidths(matching value: UIView,
+                                named name: String? = nil,
+                                file: StaticString = #file,
+                                testName: String = #function,
+                                line: UInt = #line) {
+        let container = containerView(with: value, snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black)
+        let widthConstraint = container.addWidthConstraint(width: 300)
+
+        for width in phoneWidths() {
+            widthConstraint.constant = width
+
+            let nameWithProperty: String
+            if let name = name {
+                nameWithProperty = "\(name)-\(width)"
+            } else {
+                nameWithProperty = "\(width)"
+            }
+
+            verify(matching: container,
+                   named: nameWithProperty,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+
     // MARK: - verify the snapshots in both dark and light scheme
-    
+
     func verifyInAllColorSchemes(matching: UIView,
                                  file: StaticString = #file,
                                  testName: String = #function,
                                  line: UInt = #line) {
         if var themeable = matching as? Themeable {
             themeable.colorSchemeVariant = .light
-            
+
             verify(matching: matching,
                    named: "LightTheme",
                    file: file,
                    testName: testName,
                    line: line)
             themeable.colorSchemeVariant = .dark
-            
+
             verify(matching: matching,
                    named: "DarkTheme",
                    file: file,
@@ -211,48 +237,72 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
     }
 }
 
-// MARK: - color scheme
+extension UIView {
+    func addWidthConstraint(width: CGFloat) -> NSLayoutConstraint {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        let widthConstraint = widthAnchor.constraint(equalToConstant: width)
+        
+        NSLayoutConstraint.activate([widthConstraint])
+
+        layoutIfNeeded()
+        
+        return widthConstraint
+    }
+}
+
 extension XCTestCase {
+
+    // MARK: - verify in different width helper
+    func containerView(with view: UIView, snapshotBackgroundColor: UIColor?) -> UIView {
+        let container = UIView(frame: view.bounds)
+        container.backgroundColor = snapshotBackgroundColor
+        container.addSubview(view)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.fitInSuperview()
+        return container
+    }
+
+    // MARK: - color scheme
     func resetColorScheme() {
         ColorScheme.default.variant = .light
 
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
-}
 
-// MARK: - UIAlertController hack
-extension XCTestCase {
+    // MARK: - UIAlertController hack
     func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         // Given
         let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
-        
+
         let container = UIViewController()
         container.loadViewIfNeeded()
-        
+
         window.rootViewController = container
         window.makeKeyAndVisible()
-        
+
         controller.loadViewIfNeeded()
         controller.view.layoutIfNeeded()
-        
+
         // When
         let presentationExpectation = expectation(description: "It should be presented")
         container.present(controller, animated: false) {
             presentationExpectation.fulfill()
         }
-        
+
         // Then
         waitForExpectations(timeout: 2, handler: nil)
     }
-    
+
     func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
         let dismissalExpectation = expectation(description: "It should be dismissed")
         controller.dismiss(animated: false) {
             dismissalExpectation.fulfill()
         }
-        
+
         waitForExpectations(timeout: 2, handler: nil)
     }
-    
+
 }

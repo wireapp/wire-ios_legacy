@@ -131,8 +131,6 @@ final class ConversationListContentController: UICollectionViewController {
         clearsSelectionOnViewWillAppear = false
     }
 
-
-
     // MARK: - section header
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

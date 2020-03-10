@@ -30,8 +30,13 @@ AVS_FRAMEWORK_NAME="avs.framework"
 # CREDENTIALS
 ##################################
 # prepare credentials if needed
-if [[ -n "${GITHUB_ACCESS_TOKEN}" ]]; then
-	ACCESS_TOKEN_QUERY="?access_token=${GITHUB_ACCESS_TOKEN}"
+
+# if git is installed
+if command -v git >dev/null; then
+  GITHUB_USERNAME="`git config user.email`"
+  if [[ -n "${GITHUB_ACCESS_TOKEN}" ]] && [[ -n "${GITHUB_USERNAME}" ]]; then
+    CREDENTIALS="${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}"
+  fi
 fi
 
 ##################################
@@ -57,7 +62,7 @@ fi
 if [ -z "${AVS_VERSION}" ]; then
 	LATEST_VERSION_PATH="https://api.github.com/repos/${AVS_REPO}/releases/latest"
 	# need to get tag of last version
-	AVS_VERSION=`curl -sLJ "${LATEST_VERSION_PATH}${ACCESS_TOKEN_QUERY}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
+	AVS_VERSION=`curl -sLJ -u "${CREDENTIALS}" "${LATEST_VERSION_PATH}" | python -c 'import json; import sys; print json.load(sys.stdin)["tag_name"]'`
 	if [ -z "${AVS_VERSION}" ]; then
 		echo "❌  Can't find latest version for ${LATEST_VERSION_PATH} ⚠️"
 		exit 1
@@ -92,7 +97,7 @@ else
 	
 	# Get tag json: need to parse json to get assed URL
 	TEMP_FILE=`mktemp`
-	curl -sLJ "${AVS_RELEASE_TAG_PATH}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}"
+	curl -sLJ -u "${CREDENTIALS}" "${AVS_RELEASE_TAG_PATH}" -o "${TEMP_FILE}"
 	ASSET_URL=`cat ${TEMP_FILE} | python -c 'import json; import sys; print json.load(sys.stdin)["assets"][0]["url"]'`
 	rm "${TEMP_FILE}"
 	if [ -z "${ASSET_URL}" ]; then
@@ -101,7 +106,7 @@ else
 	# get file
 	TEMP_FILE=`mktemp`
 	echo "Redirected to ${ASSET_URL}..."
-	curl -LJ "${ASSET_URL}${ACCESS_TOKEN_QUERY}" -o "${TEMP_FILE}" -H "Accept: application/octet-stream"
+	curl -LJ -u "${CREDENTIALS}" "${ASSET_URL}" -o "${TEMP_FILE}" -H "Accept: application/octet-stream"
 	if [ ! -f "${TEMP_FILE}" ]; then
 		echo "❌  Failed to download ${ASSET_URL} ⚠️"
 		exit 1
