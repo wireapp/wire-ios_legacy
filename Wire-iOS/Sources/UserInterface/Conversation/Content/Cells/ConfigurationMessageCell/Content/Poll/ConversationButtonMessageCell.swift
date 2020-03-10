@@ -50,11 +50,16 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         ///TODO: state/spinner ?
     }
 
-    override init(frame: CGRect) { ///TODO: init?
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .zero)
 
         configureViews()
         createConstraints()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureViews() {
@@ -64,27 +69,18 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private func createConstraints() {
         button.translatesAutoresizingMaskIntoConstraints = false
 
-        let inset = UIEdgeInsets.zero ///TODO: read from UI spec
-
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: topAnchor, constant: inset.top),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor, constant: inset.bottom),
-            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: inset.left),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -inset.right)
-            ])
+            button.topAnchor.constraint(equalTo: topAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor)])
     }
-
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
 }
 
 final class ConversationButtonMessageCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationButtonMessageCell
 
-    var topMargin: Float = 10 ///TODO: read from design spec
+    var topMargin: Float = Float.ConversationButtonMessageCell.verticalInset
 
     var isFullWidth: Bool = false ///TODO:
 
@@ -106,7 +102,8 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var accessibilityLabel: String?
 
-    init(text: String?, state: ButtonMessageState) { /// TODO: state conversion?
+    init(text: String?, state: ButtonMessageState) {
         configuration = View.Configuration(text: text, state: state)
     }
 }
+1
