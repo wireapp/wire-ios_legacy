@@ -30,24 +30,24 @@ extension UserType {
                            isDesaturated: Bool,
                            completion: @escaping ProfileImageCompletion) {
         
-        let imageSize = findProfileImageSize(for: sizeLimit)
+        let imageSize = profileImageSize(with: sizeLimit)
         
-        guard let cacheKey = findCachedImageKey(for: imageSize,
-                                                sizeLimit: sizeLimit,
-                                                isDesaturated: isDesaturated) else {
+        guard let cacheKey = buildCachedImageKey(for: imageSize,
+                                                 sizeLimit: sizeLimit,
+                                                 isDesaturated: isDesaturated) else {
             completion(nil, false)
             return
         }
         
-        guard let cachedImage = findCachedImage(imageCache: imageCache,
-                                                cacheKey: cacheKey) else {
-            findPreviewImage(for: imageSize)
-            downloadImageProfile(for: imageSize,
-                                 sizeLimit: sizeLimit,
-                                 isDesaturated: isDesaturated,
-                                 imageCache: imageCache,
-                                 cacheKey: cacheKey,
-                                 completion: completion)
+        guard let cachedImage = cachedImage(imageCache: imageCache,
+                                            cacheKey: cacheKey) else {
+            downloadProfileImage(for: imageSize)
+            processDownloadedProdileImage(for: imageSize,
+                                          sizeLimit: sizeLimit,
+                                          isDesaturated: isDesaturated,
+                                          imageCache: imageCache,
+                                          cacheKey: cacheKey,
+                                          completion: completion)
             return
         }
         
@@ -56,7 +56,7 @@ extension UserType {
     
     // MARK: ImageSize Helper
     
-    private func findProfileImageSize(for sizeLimit: Int?) -> ProfileImageSize {
+    private func profileImageSize(with sizeLimit: Int?) -> ProfileImageSize {
         guard let sizeLimit = sizeLimit else { return .complete }
         
         let screenScale = UIScreen.main.scale
@@ -66,7 +66,7 @@ extension UserType {
     
     // MARK: Cache Image Helper
     
-    private func findCachedImage(imageCache: ImageCache<UIImage>,
+    private func cachedImage(imageCache: ImageCache<UIImage>,
                                  cacheKey: String) -> UIImage? {
         guard let cachedImage = imageCache.cache.object(forKey: cacheKey as NSString) else {
             return nil
@@ -74,9 +74,9 @@ extension UserType {
         return cachedImage
     }
     
-    private func findCachedImageKey(for imageSize: ProfileImageSize,
-                                    sizeLimit: Int?,
-                                    isDesaturated: Bool) -> String? {
+    private func buildCachedImageKey(for imageSize: ProfileImageSize,
+                                     sizeLimit: Int?,
+                                     isDesaturated: Bool) -> String? {
         guard let baseKey = imageSize == .preview ? smallProfileImageCacheKey : mediumProfileImageCacheKey else {
             return nil
         }
@@ -96,7 +96,7 @@ extension UserType {
     
     // MARK: Preview Image Helper
     
-    private func findPreviewImage(for imageSize: ProfileImageSize) {
+    private func downloadProfileImage(for imageSize: ProfileImageSize) {
         switch imageSize {
         case .preview:
             requestPreviewProfileImage()
@@ -107,7 +107,7 @@ extension UserType {
     
     // MARK: Dowload Image Helper
     
-    private func downloadImageProfile(for imageSize: ProfileImageSize,
+    private func processDownloadedProdileImage(for imageSize: ProfileImageSize,
                                       sizeLimit: Int?,
                                       isDesaturated: Bool,
                                       imageCache: ImageCache<UIImage>,
