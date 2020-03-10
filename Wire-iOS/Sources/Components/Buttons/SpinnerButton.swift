@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -18,7 +17,6 @@
 
 import Foundation
 
-
 /// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
     ///TODO: get these from design and then move the constant to enum
@@ -29,7 +27,7 @@ final class SpinnerButton: Button {
 
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
-        
+
         // the spinner covers the text with alpha BG
         ///TODO: update from design
         progressSpinner.backgroundColor = variant == .light
@@ -39,7 +37,7 @@ final class SpinnerButton: Button {
         progressSpinner.iconSize = SpinnerButton.iconSize
 
         addSubview(progressSpinner)
-        
+
         progressSpinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -47,35 +45,34 @@ final class SpinnerButton: Button {
 
         return progressSpinner
     }()
-    
+
     var showSpinner: Bool = false {
         didSet {
             spinner.isHidden = !showSpinner
             isEnabled = !showSpinner
-            
+
             showSpinner ? spinner.startAnimation() : spinner.stopAnimation()
         }
     }
-    
+
     override init() {
         super.init()
-        
+
         configureTitleLabel()
     }
 
-    
     /// multi line support of titleLabel
     private func configureTitleLabel() {
         if let titleLabel = titleLabel {
             titleLabel.lineBreakMode = .byWordWrapping
             titleLabel.numberOfLines = 0
-            
+
             NSLayoutConstraint.activate([
                 titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.inset),
                 titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: SpinnerButton.inset)])
         }
     }
-    
+
     ///custom empty style with accent color for disabled state.
     override func updateEmptyStyle() {
         setBackgroundImageColor(.clear, for: .normal)

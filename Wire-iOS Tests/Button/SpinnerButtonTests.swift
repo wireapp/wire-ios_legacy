@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,22 +21,22 @@ import SnapshotTesting
 
 final class SpinnerButtonTests: XCTestCase {
     var sut: SpinnerButton!
-    
+
     override func tearDown() {
         sut = nil
     }
-    
+
     func createSut() {
         sut = SpinnerButton(style: .empty)
         sut.setTitle("Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne", for: .normal)
     }
-    
+
     func testForSpinnerIsHidden() {
         //GIVEN
         createSut()
-        
+
         //WHEN
-        
+
         //THEN
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
@@ -45,9 +44,9 @@ final class SpinnerButtonTests: XCTestCase {
 
     func testForSpinnerIsShown() {
         //GIVEN
-        
+
         //WHEN
-        
+
         //THEN
         ColorScheme.default.variant = .dark
         createSut()
@@ -57,7 +56,7 @@ final class SpinnerButtonTests: XCTestCase {
 
         verifyInAllPhoneWidths(matching:sut,
                                named: "dark")
-        
+
         ColorScheme.default.variant = .light
         createSut()
         sut.showSpinner = true

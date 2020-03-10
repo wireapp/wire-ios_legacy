@@ -53,7 +53,7 @@ class Button: ButtonWithLargerHitArea {
             updateStyle(variant: variant)
         }
     }
-    
+
     private(set) var variant: ColorSchemeVariant = ColorScheme.default.variant
 
     private var originalTitles: [UIControl.State: String] = [:]
@@ -103,7 +103,7 @@ class Button: ButtonWithLargerHitArea {
             setBorderColor(UIColor(white: 1.0, alpha: 0.16), for: .highlighted)
         }
     }
-    
+
     func updateEmptyStyle() {
         setBackgroundImageColor(nil, for: .normal)
         layer.borderWidth = 1
