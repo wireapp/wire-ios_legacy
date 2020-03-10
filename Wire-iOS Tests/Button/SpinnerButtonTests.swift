@@ -34,18 +34,18 @@ final class SpinnerButtonTests: XCTestCase {
     func testForShortTitle() {
         //GIVEN
         createSut(title: "Yes, I am safe.")
-        
+
         //WHEN
-        
+
         //THEN
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
     }
-    
+
     func testForSpinnerOverlapsTitle() {
         //GIVEN
         createSut(title: "No, I need rescue. I am on the west side.")
-        
+
         //WHEN
         sut.isLoading = true
 

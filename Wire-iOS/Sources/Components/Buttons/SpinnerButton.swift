@@ -19,7 +19,7 @@ import Foundation
 
 /// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
-    
+
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
 
@@ -63,7 +63,7 @@ final class SpinnerButton: Button {
         if let titleLabel = titleLabel {
             // title is always align to left
             contentHorizontalAlignment = .left
-            
+
             titleLabel.lineBreakMode = .byWordWrapping
             titleLabel.numberOfLines = 0
 
@@ -84,8 +84,8 @@ final class SpinnerButton: Button {
         setBorderColor(.accentDarken, for: .highlighted)
         setBorderColor(.accent(), for: .disabled)
     }
-    
-    //MARK: - factory method
+
+    // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
         return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
     }
