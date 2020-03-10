@@ -53,7 +53,8 @@ class Button: ButtonWithLargerHitArea {
             updateStyle(variant: variant)
         }
     }
-    var variant: ColorSchemeVariant = ColorScheme.default.variant
+    
+    private(set) var variant: ColorSchemeVariant = ColorScheme.default.variant
 
     private var originalTitles: [UIControl.State: String] = [:]
 
