@@ -28,7 +28,7 @@ extension ProfilePresenter: ProfileViewControllerDelegate {
         }
     }
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         //no-op.
     }
 }

@@ -21,7 +21,7 @@ import Foundation
 fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
-    func startUI(_ startUI: StartUIViewController, didSelect users: Set<ZMUser>) {
+    func startUI(_ startUI: StartUIViewController, didSelect users: UserSet) {
         guard users.count > 0 else {
             return
         }
@@ -32,18 +32,24 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
             ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
         })
     }
-    
-    func startUI(_ startUI: StartUIViewController, createConversationWith users: Set<ZMUser>, name: String, allowGuests: Bool, enableReceipts: Bool) {
-        let createConversationClosure = {
-            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
-        }
-        (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
-    }
 
     func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation) {
         startUI.dismissIfNeeded(animated: true) {
             ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
         }
+    }
+
+    func startUI(_ startUI: StartUIViewController,
+                 createConversationWith users: UserSet,
+                 name: String,
+                 allowGuests: Bool,
+                 enableReceipts: Bool) {
+
+        let createConversationClosure = {
+            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        }
+
+        (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
     
     
@@ -53,7 +59,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     /// - Parameters:
     ///   - users: the user set to create a new conversation
     ///   - onConversationCreated: a ConversationCreatedBlock which has the conversation created
-    private func withConversationForUsers(_ users: Set<ZMUser>?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
+    private func withConversationForUsers(_ users: UserSet?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
         
         guard let users = users,
             let userSession = ZMUserSession.shared() else { return }
@@ -87,20 +93,18 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         }
     }
     
-    private func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
-        guard let users = users,
-            let userSession = ZMUserSession.shared() else { return }
+    private func createConversation(withUsers users: UserSet?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
+        guard let users = users, let userSession = ZMUserSession.shared() else { return }
         
         var conversation: ZMConversation! = nil
         
         userSession.enqueueChanges({
-            
             conversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                         participants: Array(users),
-                                                                         name: name,
-                                                                         team: ZMUser.selfUser().team,
-                                                                         allowGuests: allowGuests,
-                                                                         readReceipts: enableReceipts)
+                                                                  participants: Array(users),
+                                                                  name: name,
+                                                                  team: ZMUser.selfUser().team,
+                                                                  allowGuests: allowGuests,
+                                                                  readReceipts: enableReceipts)
         }, completionHandler:{
             delay(0.3) {
                 ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)

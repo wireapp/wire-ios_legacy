@@ -25,11 +25,7 @@ import XCTest
 import XCTest
 
 final class ConversationImageMessageTests: ConversationCellSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+
     override func tearDown() {
         defaultImageCache.cache.removeAllObjects()
         super.tearDown()

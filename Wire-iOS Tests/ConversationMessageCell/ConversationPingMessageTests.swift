@@ -19,11 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationPingMessageTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class ConversationPingMessageTests: ConversationCellSnapshotTestCase {
 
     func testPing() {
         // GIVEN

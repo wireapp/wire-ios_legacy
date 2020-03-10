@@ -23,8 +23,6 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 
-#import "ConfirmAssetViewController.h"
-
 #import "Wire-Swift.h"
 
 

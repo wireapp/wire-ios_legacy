@@ -159,13 +159,17 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
     
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,
-                                        participants: Set<ZMUser>,
+                                        participants: UserSet,
                                         allowGuests: Bool,
                                         enableReceipts: Bool) {
         dismiss(controller: controller) { [weak self] in
             guard let weakSelf = self else { return }
 
-            weakSelf.delegate?.startUI(weakSelf, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+            weakSelf.delegate?.startUI(weakSelf,
+                                       createConversationWith: participants,
+                                       name: name,
+                                       allowGuests: allowGuests,
+                                       enableReceipts: enableReceipts)
         }
     }
     

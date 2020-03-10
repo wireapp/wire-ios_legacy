@@ -125,6 +125,8 @@ extension ConversationContentViewController {
            let shareViewController = keyboardAvoidingViewController.viewController as? ShareViewController<ZMConversation, ZMMessage> {
             shareViewController.showPreview = traitCollection.horizontalSizeClass != .regular
         }
+
+        updatePopoverSourceRect()
     }
 
     func updatePopover() {
