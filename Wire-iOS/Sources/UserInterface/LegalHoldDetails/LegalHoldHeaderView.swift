@@ -39,9 +39,11 @@ class LegalHoldHeaderView: UIView {
     }()
     
     let descriptionLabel: UILabel = {
+        let text = SelfUser.current.isUnderLegalHold
+            ? "legalhold.header.self_description"
+            : "legalhold.header.other_description"
+
         let label = UILabel(frame: .zero)
-        let text = ZMUser.selfUser()?.isUnderLegalHold == true ? "legalhold.header.self_description" : "legalhold.header.other_description"
-        
         label.attributedText = text.localized && .paragraphSpacing(8)
         label.font = UIFont.normalFont
         label.numberOfLines = 0
