@@ -122,7 +122,7 @@ final class DeletionDialogPresenter: NSObject {
         let alert = deleteAlert(message: message,
                                 sourceView: source,
                                 completion: completion)
-        sourceViewController?.present(alert, animated: true)
+        sourceViewController.present(alert, animated: true)
     }
 }
 

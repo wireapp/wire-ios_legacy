@@ -25,7 +25,11 @@ protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
-@objcMembers final class CollectionsViewController: UIViewController {
+final class CollectionsViewController: UIViewController, PopoverPresenter {
+    //MARK: PopoverPresenter
+    var presentedPopover: UIPopoverPresentationController?
+    var popoverPointToView: UIView?
+
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
