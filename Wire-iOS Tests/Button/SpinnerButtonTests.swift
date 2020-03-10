@@ -50,7 +50,7 @@ final class SpinnerButtonTests: XCTestCase {
         //THEN
         ColorScheme.default.variant = .dark
         createSut()
-        sut.showSpinner = true
+        sut.isLoading = true
 
         XCTAssertFalse(sut.isEnabled)
 
@@ -59,7 +59,7 @@ final class SpinnerButtonTests: XCTestCase {
 
         ColorScheme.default.variant = .light
         createSut()
-        sut.showSpinner = true
+        sut.isLoading = true
         verifyInAllPhoneWidths(matching:sut,
                                named: "light")
     }

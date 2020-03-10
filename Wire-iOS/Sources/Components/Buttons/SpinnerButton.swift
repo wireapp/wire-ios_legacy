@@ -46,12 +46,12 @@ final class SpinnerButton: Button {
         return progressSpinner
     }()
 
-    var showSpinner: Bool = false {
+    var isLoading: Bool = false {
         didSet {
-            spinner.isHidden = !showSpinner
-            isEnabled = !showSpinner
+            spinner.isHidden = !isLoading
+            isEnabled = !isLoading
 
-            showSpinner ? spinner.startAnimation() : spinner.stopAnimation()
+            isLoading ? spinner.startAnimation() : spinner.stopAnimation()
         }
     }
 
