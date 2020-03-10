@@ -260,5 +260,15 @@ class MockUserType: NSObject, UserType, Decodable {
     func refreshData() {
         // No op
     }
+    
+    func fetchProfileImage(session: ZMUserSessionInterface,
+                           cache: ImageCache<UIImage> = defaultUserImageCache,
+                           sizeLimit: Int? = nil,
+                           desaturate: Bool = false,
+                           completion: @escaping (UIImage?, Bool) -> Void) {
+        
+        let image = completeImageData.flatMap(UIImage.init)
+        completion(image, false)
+    }
 
 }

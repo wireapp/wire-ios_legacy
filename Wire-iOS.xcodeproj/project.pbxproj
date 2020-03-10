@@ -993,7 +993,6 @@
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
 		EE52378423F5567300D4FE79 /* MockUserType+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378223F5566F00D4FE79 /* MockUserType+Creation.swift */; };
 		EE52378723F556DE00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378523F556DC00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift */; };
-		EE52378923F5572900D4FE79 /* MockUserType+ProfileImageFetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378823F5572900D4FE79 /* MockUserType+ProfileImageFetchable.swift */; };
 		EE52378B23F5574D00D4FE79 /* MockUserType+ValidatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378A23F5574D00D4FE79 /* MockUserType+ValidatorType.swift */; };
 		EE52378F23F557A600D4FE79 /* MockServiceUserType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52378E23F557A600D4FE79 /* MockServiceUserType.swift */; };
 		EE52379123F557B900D4FE79 /* MockServiceUserType+Creation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE52379023F557B900D4FE79 /* MockServiceUserType+Creation.swift */; };
@@ -1166,7 +1165,6 @@
 		EF2F161E225748F100C44B88 /* ConnectRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8913EA1A9F287E0056AB0C /* ConnectRequestsCell.swift */; };
 		EF2F6DA320ED11D2007B6D70 /* UIColor+Accent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2F6DA220ED11D2007B6D70 /* UIColor+Accent.swift */; };
 		EF2FEDC8228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2FEDC7228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift */; };
-		EF2FEDCA228EB085000883C8 /* MockUser+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2FEDC9228EB085000883C8 /* MockUser+Image.swift */; };
 		EF3052452087388000613C45 /* ConfirmEmailViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */; };
 		EF305247208742F300613C45 /* ConfirmPhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */; };
 		EF30524B2088927D00613C45 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = EF30524A2088927D00613C45 /* transparent.png */; };
@@ -2676,7 +2674,6 @@
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
 		EE52378223F5566F00D4FE79 /* MockUserType+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+Creation.swift"; sourceTree = "<group>"; };
 		EE52378523F556DC00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+SelfLegalHoldSubject.swift"; sourceTree = "<group>"; };
-		EE52378823F5572900D4FE79 /* MockUserType+ProfileImageFetchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+ProfileImageFetchable.swift"; sourceTree = "<group>"; };
 		EE52378A23F5574D00D4FE79 /* MockUserType+ValidatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUserType+ValidatorType.swift"; sourceTree = "<group>"; };
 		EE52378E23F557A600D4FE79 /* MockServiceUserType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServiceUserType.swift; sourceTree = "<group>"; };
 		EE52379023F557B900D4FE79 /* MockServiceUserType+Creation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockServiceUserType+Creation.swift"; sourceTree = "<group>"; };
@@ -2845,7 +2842,6 @@
 		EF2EA63221F8AFB2000E12CA /* ServiceDetailViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceDetailViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
 		EF2F6DA220ED11D2007B6D70 /* UIColor+Accent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Accent.swift"; sourceTree = "<group>"; };
 		EF2FEDC7228E9E42000883C8 /* UserImageViewContainerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageViewContainerSnapshotTests.swift; sourceTree = "<group>"; };
-		EF2FEDC9228EB085000883C8 /* MockUser+Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockUser+Image.swift"; sourceTree = "<group>"; };
 		EF3052442087388000613C45 /* ConfirmEmailViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailViewControllerTests.swift; sourceTree = "<group>"; };
 		EF305246208742F300613C45 /* ConfirmPhoneViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmPhoneViewControllerTests.swift; sourceTree = "<group>"; };
 		EF30524A2088927D00613C45 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
@@ -4658,7 +4654,6 @@
 				EE52379223F5588000D4FE79 /* MockUserType+CodingKeys.swift */,
 				EE52378223F5566F00D4FE79 /* MockUserType+Creation.swift */,
 				EE52378523F556DC00D4FE79 /* MockUserType+SelfLegalHoldSubject.swift */,
-				EE52378823F5572900D4FE79 /* MockUserType+ProfileImageFetchable.swift */,
 				EE52378A23F5574D00D4FE79 /* MockUserType+ValidatorType.swift */,
 				EEEED9B023F6EA4F008C94CA /* MockUserType+ZMEditableUser.swift */,
 				EE52378E23F557A600D4FE79 /* MockServiceUserType.swift */,
@@ -4677,7 +4672,6 @@
 				EF1EA4611FB0934D00B53063 /* MockUser+filename.swift */,
 				EF3371C32216EEE2005ED048 /* MockUser+SelfUserFromSession.swift */,
 				EF2A8DE8214A8B38002C9058 /* MockUser+Service.swift */,
-				EF2FEDC9228EB085000883C8 /* MockUser+Image.swift */,
 				87BEB0DE1C734DA60094BFE9 /* MockLoader.h */,
 				87BEB0DF1C734DA60094BFE9 /* MockLoader.m */,
 				87BEB0E11C734DB60094BFE9 /* MockMessage.swift */,
@@ -8114,7 +8108,6 @@
 				EE75B774203C6F5300855099 /* MarkdownTextStorageTests.swift in Sources */,
 				EF19209D20C6E4F800E4B92D /* XCTestCase+DayFormatter.swift in Sources */,
 				EF2971582099AD8700EFE6A4 /* SelfProfileViewControllerTests.swift in Sources */,
-				EE52378923F5572900D4FE79 /* MockUserType+ProfileImageFetchable.swift in Sources */,
 				5E294595219081A80045ACFA /* Date+Generator.swift in Sources */,
 				EF207B37220839E000738E84 /* ConversationContentViewControllerTests.swift in Sources */,
 				EEEED9A623F6AF80008C94CA /* TestingAppDelegate.swift in Sources */,
@@ -8169,7 +8162,6 @@
 				EF13204221A6C58000E7EF21 /* ChangePhoneViewControllerSnapshotTests.swift in Sources */,
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
 				EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */,
-				EF2FEDCA228EB085000883C8 /* MockUser+Image.swift in Sources */,
 				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
 				5EBF47C421B2F8710021CFFC /* MessageDetailsActionTests.swift in Sources */,
 				5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */,
