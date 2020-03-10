@@ -53,7 +53,8 @@ class Button: ButtonWithLargerHitArea {
             updateStyle(variant: variant)
         }
     }
-    var variant: ColorSchemeVariant = ColorScheme.default.variant
+
+    private(set) var variant: ColorSchemeVariant = ColorScheme.default.variant
 
     private var originalTitles: [UIControl.State: String] = [:]
 
@@ -66,15 +67,17 @@ class Button: ButtonWithLargerHitArea {
     }
 
     convenience init(style: ButtonStyle,
-                     variant: ColorSchemeVariant = ColorScheme.default.variant) {
+                     variant: ColorSchemeVariant = ColorScheme.default.variant,
+                     cornerRadius: CGFloat = 4,
+                     titleLabelFont: UIFont = .smallLightFont) {
         self.init()
 
         self.style = style
         self.variant = variant
 
         textTransform = .upper
-        titleLabel?.font = .smallLightFont
-        layer.cornerRadius = 4
+        titleLabel?.font = titleLabelFont
+        layer.cornerRadius = cornerRadius
         contentEdgeInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
 
         updateStyle(variant: variant)
@@ -102,7 +105,7 @@ class Button: ButtonWithLargerHitArea {
             setBorderColor(UIColor(white: 1.0, alpha: 0.16), for: .highlighted)
         }
     }
-    
+
     func updateEmptyStyle() {
         setBackgroundImageColor(nil, for: .normal)
         layer.borderWidth = 1

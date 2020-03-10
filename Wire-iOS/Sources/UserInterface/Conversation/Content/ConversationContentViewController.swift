@@ -20,7 +20,11 @@ import Foundation
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 
 /// The main conversation view controller
-final class ConversationContentViewController: UIViewController {
+final class ConversationContentViewController: UIViewController, PopoverPresenter {
+    //MARK: PopoverPresenter
+    var presentedPopover: UIPopoverPresentationController?
+    var popoverPointToView: UIView?
+
     weak var delegate: ConversationContentViewControllerDelegate?
     let conversation: ZMConversation
     var bottomMargin: CGFloat = 0 {
@@ -175,6 +179,17 @@ final class ConversationContentViewController: UIViewController {
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+        
+        guard let coordinator = coordinator else { return }
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.updatePopoverSourceRect()
+        }
     }
     
     func setupMentionsResultsView() {

@@ -42,7 +42,7 @@ final class ProfileClientViewController: UIViewController {
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
-    var deleteDeviceButton: ButtonWithLargerHitArea?
+    var debugMenuButton: ButtonWithLargerHitArea?
 
     var showBackButton: Bool = true {
         didSet {
@@ -109,7 +109,7 @@ final class ProfileClientViewController: UIViewController {
         self.setupVerifiedToggle()
         self.setupVerifiedToggleLabel()
         self.setupResetButton()
-        self.setupDeleteButton()
+        self.setupDebugMenuButton()
         self.createConstraints()
         self.updateFingerprintLabel()
     }
@@ -246,15 +246,15 @@ final class ProfileClientViewController: UIViewController {
         self.contentView.addSubview(resetButton)
     }
     
-    private func setupDeleteButton() {
+    private func setupDebugMenuButton() {
         guard Bundle.developerModeEnabled else { return }
-        let deleteButton = ButtonWithLargerHitArea()
-        deleteButton.setTitleColor(UIColor.accent(), for: .normal)
-        deleteButton.titleLabel?.font = FontSpec(.small, .light).font!
-        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: [])
-        deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
-        self.contentView.addSubview(deleteButton)
-        self.deleteDeviceButton = deleteButton
+        let debugButton = ButtonWithLargerHitArea()
+        debugButton.setTitleColor(UIColor.accent(), for: .normal)
+        debugButton.titleLabel?.font = FontSpec(.small, .light).font!
+        debugButton.setTitle("DEBUG MENU", for: [])
+        debugButton.addTarget(self, action: #selector(ProfileClientViewController.onShowDebugActions(_:)), for: .touchUpInside)
+        self.contentView.addSubview(debugButton)
+        self.debugMenuButton = debugButton
     }
     
     private func createConstraints() {
@@ -309,11 +309,11 @@ final class ProfileClientViewController: UIViewController {
             spinner.bottom <= verifiedToggle.bottom - 32
         }
 
-        if let deleteDeviceButton = self.deleteDeviceButton {
-            constrain(contentView, descriptionTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
-                deleteDeviceButton.right == contentView.right
-                deleteDeviceButton.left == contentView.left
-                deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+        if let debugMenuButton = self.debugMenuButton {
+            constrain(contentView, descriptionTextView, debugMenuButton) { contentView, reviewInvitationTextView, debugMenuButton in
+                debugMenuButton.right == contentView.right
+                debugMenuButton.left == contentView.left
+                debugMenuButton.top == reviewInvitationTextView.bottom + 10
             }
         }
     }
@@ -356,11 +356,42 @@ final class ProfileClientViewController: UIViewController {
         self.resetSessionPending = true
     }
     
-    @objc private func onDeleteDeviceTapped(_ sender: AnyObject) {
+    @objc private func onShowDebugActions(_ sender: AnyObject) {
+        let actionSheet = UIAlertController(title: "Debug actions",
+                                            message: "⚠️ will cause decryption errors ⚠️",
+                                            preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Delete Session", style: .default, handler: { [weak self] (_) in
+            self?.onDeleteDeviceTapped()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Corrupt Session", style: .default, handler: { [weak self] (_) in
+            self?.onCorruptSessionTapped()
+        }))
+        
+        actionSheet.addAction(.cancel())
+        
+        present(actionSheet, animated: true)
+    }
+    
+    @objc private func onDeleteDeviceTapped() {
         let sync = self.userClient.managedObjectContext!.zm_sync!
         sync.performGroupedBlockAndWait {
             let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
             client.deleteClientAndEndSession()
+            sync.saveOrRollback()
+        }
+        self.presentingViewController?.dismiss(animated: true, completion: .none)
+    }
+    
+    @objc private func onCorruptSessionTapped() {
+        let sync = self.userClient.managedObjectContext!.zm_sync!
+        let selfClientID = ZMUser.selfUser()?.selfClient()?.objectID
+        sync.performGroupedBlockAndWait {
+            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+            let selfClient = try! sync.existingObject(with: selfClientID!) as! UserClient
+            
+            _ = selfClient.establishSessionWithClient(client, usingPreKey: "pQABAQACoQBYIBi1nXQxPf9hpIp1K1tBOj/tlBuERZHfTMOYEW38Ny7PA6EAoQBYIAZbZQ9KtsLVc9VpHkPjYy2+Bmz95fyR0MGKNUqtUUi1BPY=")
             sync.saveOrRollback()
         }
         self.presentingViewController?.dismiss(animated: true, completion: .none)

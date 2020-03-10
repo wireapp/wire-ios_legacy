@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,22 +21,44 @@ import SnapshotTesting
 
 final class SpinnerButtonTests: XCTestCase {
     var sut: SpinnerButton!
-    
+
     override func tearDown() {
         sut = nil
     }
-    
-    func createSut() {
-        sut = SpinnerButton(style: .empty)
-        sut.setTitle("Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne", for: .normal)
+
+    func createSut(title: String = "Deutsches Ipsum Dolor deserunt Schnaps has schnell Tollit Zauberer ius Polizei Saepe Schnaps elaboraret Ich habe fertig ne") {
+        sut = SpinnerButton.alarmButton()
+        sut.setTitle(title, for: .normal)
     }
-    
+
+    func testForShortTitle() {
+        //GIVEN
+        createSut(title: "Yes, I am safe.")
+
+        //WHEN
+
+        //THEN
+        XCTAssert(sut.isEnabled)
+        verifyInAllPhoneWidths(matching: sut)
+    }
+
+    func testForSpinnerOverlapsTitle() {
+        //GIVEN
+        createSut(title: "No, I need rescue. I am on the west side.")
+
+        //WHEN
+        sut.isLoading = true
+
+        //THEN
+        verifyInWidths(matching: sut, widths: Set([300]))
+    }
+
     func testForSpinnerIsHidden() {
         //GIVEN
         createSut()
-        
+
         //WHEN
-        
+
         //THEN
         XCTAssert(sut.isEnabled)
         verifyInAllPhoneWidths(matching: sut)
@@ -45,22 +66,22 @@ final class SpinnerButtonTests: XCTestCase {
 
     func testForSpinnerIsShown() {
         //GIVEN
-        
+
         //WHEN
-        
+
         //THEN
         ColorScheme.default.variant = .dark
         createSut()
-        sut.showSpinner = true
+        sut.isLoading = true
 
         XCTAssertFalse(sut.isEnabled)
 
         verifyInAllPhoneWidths(matching:sut,
                                named: "dark")
-        
+
         ColorScheme.default.variant = .light
         createSut()
-        sut.showSpinner = true
+        sut.isLoading = true
         verifyInAllPhoneWidths(matching:sut,
                                named: "light")
     }

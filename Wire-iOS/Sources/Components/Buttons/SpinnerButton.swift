@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -18,57 +17,62 @@
 
 import Foundation
 
-
 /// A button with spinner at the trailing side. Title text is non trancated.
 final class SpinnerButton: Button {
-    ///TODO: get these from design
-    private static let iconSize = StyleKitIcon.Size.tiny.rawValue
-    private static let iconInset: CGFloat = 10
-    private static let textInset: CGFloat = 5
-    private static let inset: CGFloat = 10
 
     private lazy var spinner: ProgressSpinner = {
         let progressSpinner = ProgressSpinner()
-        
 
         // the spinner covers the text with alpha BG
-        progressSpinner.backgroundColor = variant == .light ? UIColor(white: 1, alpha: 0.8) : UIColor(white: 0, alpha: 0.8) ///TODO: update from design
+        progressSpinner.backgroundColor = variant == .light
+            ? UIColor(white: 1, alpha: CGFloat.SpinnerButton.spinnerBackgroundAlpha)
+            : UIColor(white: 0, alpha: CGFloat.SpinnerButton.spinnerBackgroundAlpha)
         progressSpinner.color = .accent()
-        progressSpinner.iconSize = SpinnerButton.iconSize
+        progressSpinner.iconSize = CGFloat.SpinnerButton.iconSize
 
         addSubview(progressSpinner)
-        
+
         progressSpinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -SpinnerButton.iconInset)])
+            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor),
+            progressSpinner.widthAnchor.constraint(equalToConstant: 48),
+            progressSpinner.topAnchor.constraint(equalTo: topAnchor),
+            progressSpinner.bottomAnchor.constraint(equalTo: bottomAnchor)])
 
         return progressSpinner
     }()
-    
-    var showSpinner: Bool = false {
+
+    var isLoading: Bool = false {
         didSet {
-            spinner.isHidden = !showSpinner
-            isEnabled = !showSpinner
-            
-            showSpinner ? spinner.startAnimation() : spinner.stopAnimation()
+            spinner.isHidden = !isLoading
+            isEnabled = !isLoading
+
+            isLoading ? spinner.startAnimation() : spinner.stopAnimation()
         }
     }
-    
+
     override init() {
         super.init()
-        
-        /// multi line support
+
+        configureTitleLabel()
+    }
+
+    /// multi line support of titleLabel
+    private func configureTitleLabel() {
         if let titleLabel = titleLabel {
+            // title is always align to left
+            contentHorizontalAlignment = .left
+
             titleLabel.lineBreakMode = .byWordWrapping
             titleLabel.numberOfLines = 0
 
             NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: SpinnerButton.inset),
-            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: SpinnerButton.inset)])
+                titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: CGFloat.SpinnerButton.contentInset),
+                titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
         }
     }
-    
+
     ///custom empty style with accent color for disabled state.
     override func updateEmptyStyle() {
         setBackgroundImageColor(.clear, for: .normal)
@@ -79,5 +83,10 @@ final class SpinnerButton: Button {
         setBorderColor(.accent(), for: .normal)
         setBorderColor(.accentDarken, for: .highlighted)
         setBorderColor(.accent(), for: .disabled)
+    }
+
+    // MARK: - factory method
+    static func alarmButton() -> SpinnerButton {
+        return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
     }
 }

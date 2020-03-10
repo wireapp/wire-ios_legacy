@@ -71,16 +71,16 @@ final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, Mes
         delegate?.conversationMessageWantsToOpenMessageDetails(self, messageDetailsViewController: detailsViewController)
     }
 
-    private func perform(action: MessageAction) {
-        delegate?.perform(action: action, for: message, view: selectionView ?? self)
+    private func perform(action: MessageAction, sender: UIView? = nil) {
+        delegate?.perform(action: action, for: message, view: selectionView ?? sender ?? self)
     }
 
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView) {
         perform(action: .like)
     }
 
-    func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView) {
-        perform(action: .delete)
+    func messageToolboxViewDidSelectDelete(_ sender: UIView?) {
+        perform(action: .delete, sender: sender)
     }
 
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView) {

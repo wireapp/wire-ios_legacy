@@ -266,9 +266,8 @@ final class ConversationViewController: UIViewController {
     func onBackButtonPressed(_ backButton: UIButton?) {
         openConversationList()
     }
-    
-    @objc
-    func addParticipants(_ participants: Set<ZMUser>) {
+
+    func addParticipants(_ participants: UserSet) {
         var newConversation: ZMConversation? = nil
         
         session.enqueueChanges({

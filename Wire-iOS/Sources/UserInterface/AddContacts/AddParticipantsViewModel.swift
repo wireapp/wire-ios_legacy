@@ -34,16 +34,16 @@ struct AddParticipantsViewModel {
         }
     }
     
-    var selectedUsers: [ZMUser] {
+    var selectedUsers: UserSet {
         switch context {
         case .add(let conversation) where conversation.conversationType == .oneOnOne:
             return conversation.connectedUser.map { [$0] } ?? []
-        case .create(let values): return Array(values.participants)
+        case .create(let values): return values.participants
         default: return []
         }
     }
     
-    func title(with users: Set<ZMUser>) -> String {
+    func title(with users: UserSet) -> String {
         return users.isEmpty
             ? "peoplepicker.group.title.singular".localized(uppercased: true)
             : "peoplepicker.group.title.plural".localized(uppercased: true, args: users.count)

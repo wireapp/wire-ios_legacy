@@ -82,15 +82,13 @@ final class ProfileViewControllerViewModel: NSObject {
             context != .profileViewer
     }
     
-    var fullUserSet: Set<ZMUser> {
-        let users: Set<ZMUser>
+    var fullUserSet: UserSet {
         if let fullUser = fullUser {
-            users = Set<ZMUser>([fullUser])
+            return UserSet(arrayLiteral: fullUser)
         } else {
-            users = Set<ZMUser>()
+            return UserSet()
+
         }
-        
-        return users
     }
     
     var incomingRequestFooterHidden: Bool {
