@@ -18,7 +18,14 @@
 
 import Foundation
 
+extension Float {
+    enum ConversationButtonMessageCell {
+        static let verticalInset: Float = 8
+    }
+}
+
 extension CGFloat {
+    
     enum SpinnerButton {
         static let contentInset: CGFloat = 16
         static let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
