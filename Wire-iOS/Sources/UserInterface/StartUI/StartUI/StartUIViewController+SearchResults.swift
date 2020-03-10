@@ -133,7 +133,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         GuestRoomEvent.created.track()
         showLoadingView = true
-        userSession.performChanges { [weak self] in
+        userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 
             if let conversation = ZMConversation.insertGroupConversation(session: userSession,

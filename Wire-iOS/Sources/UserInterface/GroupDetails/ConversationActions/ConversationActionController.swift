@@ -63,12 +63,12 @@ final class ConversationActionController {
     }
     
     func enqueue(_ block: @escaping () -> Void) {
-        ZMUserSession.shared()?.enqueueChanges(block)
+        ZMUserSession.shared()?.enqueue(block)
     }
     
     func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
         ZClientViewController.shared?.transitionToList(animated: true) {
-            ZMUserSession.shared()?.enqueueChanges(block)
+            ZMUserSession.shared()?.enqueue(block)
         }
     }
 

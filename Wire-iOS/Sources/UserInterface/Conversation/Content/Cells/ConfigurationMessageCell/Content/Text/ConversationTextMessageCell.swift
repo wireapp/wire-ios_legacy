@@ -178,7 +178,7 @@ extension ConversationTextMessageCellDescription {
 
         // Refetch the link attachments if needed
         if !Settings.shared.disableLinkPreviews {
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 message.refetchLinkAttachmentsIfNeeded()
             }
         }

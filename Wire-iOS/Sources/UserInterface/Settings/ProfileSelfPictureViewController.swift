@@ -59,8 +59,8 @@ final class ProfileSelfPictureViewController: UIViewController {
               let jpegData: Data = selfImageData.isJPEG ? selfImageData : UIImage(data: selfImageData)?.jpegData(compressionQuality: 1.0) else { return }
         
         
-        ZMUserSession.shared()?.enqueueChanges({
-            ZMUserSession.shared()?.profileUpdate.updateImage(imageData: jpegData)
+        ZMUserSession.shared()?.enqueue({
+            ZMUserSession.shared()?.userProfileImage?.updateImage(imageData: jpegData)
         })
     }
     

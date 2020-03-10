@@ -80,7 +80,7 @@ final class SettingsClientViewController: UIViewController,
 
         self.userClientToken = UserClientChangeInfo.add(observer: self, for: userClient)
         if userClient.fingerprint == .none {
-            ZMUserSession.shared()?.enqueueChanges({ () -> Void in
+            ZMUserSession.shared()?.enqueue({ () -> Void in
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
@@ -169,9 +169,9 @@ final class SettingsClientViewController: UIViewController,
     }
     
     @objc func onVerifiedChanged(_ sender: UISwitch!) {
-        let selfClient = ZMUserSession.shared()!.selfUserClient()
+        let selfClient = ZMUserSession.shared()!.selfUserClient
         
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             if (sender.isOn) {
                 selfClient?.trustClient(self.userClient)
             } else {
@@ -190,7 +190,7 @@ final class SettingsClientViewController: UIViewController,
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if let userClient = ZMUserSession.shared()?.selfUserClient(), self.userClient == userClient {
+        if let userClient = ZMUserSession.shared()?.selfUserClient, self.userClient == userClient {
             return 2
         } else {
             return userClient.type == .legalHold ? 3 : 4
@@ -204,7 +204,7 @@ final class SettingsClientViewController: UIViewController,
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.shared()?.selfUserClient()  {
+            if self.userClient == ZMUserSession.shared()?.selfUserClient  {
                 return 1
             }
             else {

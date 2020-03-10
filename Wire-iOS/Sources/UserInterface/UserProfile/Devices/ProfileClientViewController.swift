@@ -67,7 +67,7 @@ final class ProfileClientViewController: UIViewController {
         
         self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
         if userClient.fingerprint == .none {
-            ZMUserSession.shared()?.enqueueChanges({ () -> Void in
+            ZMUserSession.shared()?.enqueue({ () -> Void in
                 self.userClient.fetchFingerprintOrPrekeys()
             })
         }
@@ -325,7 +325,7 @@ final class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient!,
                                                                 fromConversation:self.fromConversation,
                                                                 variant: ColorScheme.default.variant)
 
@@ -336,9 +336,9 @@ final class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onTrustChanged(_ sender: AnyObject) {
-        ZMUserSession.shared()?.enqueueChanges({ [weak self] in
+        ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let `self` = self else { return }
-            let selfClient = ZMUserSession.shared()!.selfUserClient()
+            let selfClient = ZMUserSession.shared()!.selfUserClient
             if(self.verifiedToggle.isOn) {
                 selfClient?.trustClient(self.userClient)
             } else {
@@ -350,7 +350,7 @@ final class ProfileClientViewController: UIViewController {
     }
 
     @objc private func onResetTapped(_ sender: AnyObject) {
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             self.userClient.resetSession()
         }
         self.resetSessionPending = true

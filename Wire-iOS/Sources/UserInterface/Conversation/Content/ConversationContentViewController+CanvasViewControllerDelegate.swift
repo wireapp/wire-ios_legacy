@@ -23,7 +23,7 @@ extension ConversationContentViewController: CanvasViewControllerDelegate {
         parent?.dismiss(animated: true) {
             if let imageData = image.pngData() {
 
-                ZMUserSession.shared()?.enqueueChanges({
+                ZMUserSession.shared()?.enqueue({
                     self.conversation.append(imageFromData: imageData)
                 }, completionHandler: {
                     Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)
