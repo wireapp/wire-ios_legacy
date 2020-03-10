@@ -20,7 +20,7 @@ import XCTest
 import SnapshotTesting
 
 final class ButtonTests: XCTestCase {
-    var sut: Button!
+    var sut: Wire.Button!
 
     override func setUp() {
         sut = Button(style: .empty)
@@ -33,7 +33,6 @@ final class ButtonTests: XCTestCase {
     func testForLongTitleCanBeWrapped() {
         //GIVEN
         sut.titleLabel?.lineBreakMode = .byWordWrapping
-        sut.titleLabel?.textAlignment = .natural
         sut.titleLabel?.numberOfLines = 0
         sut.titleEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 20, right: 20)
         sut.setTitle("Dummy button with long long long long long long long long title", for: .normal)

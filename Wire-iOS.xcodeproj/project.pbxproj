@@ -743,6 +743,8 @@
 		A96A21F123D5B865005B5579 /* ConversationInputBarViewController+Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */; };
 		A96A21F323D5BC25005B5579 /* UIResponder+FirstResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */; };
 		A96E230A23EAD43A00C2195E /* PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */; };
+		A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D22410016B00BE6EF7 /* SpinnerButton.swift */; };
+		A97017D6241004A600BE6EF7 /* SpinnerButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */; };
 		A97192B3221302DD00E72AD1 /* MockUserRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97192B2221302DD00E72AD1 /* MockUserRight.swift */; };
 		A972840A2384247D00AFEFC6 /* BackupExcluderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */; };
 		A978D993236C587B00B568AE /* ZMUserSession+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */; };
@@ -2344,6 +2346,8 @@
 		A96A21F023D5B865005B5579 /* ConversationInputBarViewController+Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+Files.swift"; sourceTree = "<group>"; };
 		A96A21F223D5BC25005B5579 /* UIResponder+FirstResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+FirstResponder.swift"; sourceTree = "<group>"; };
 		A96E230923EAD43A00C2195E /* PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberTests.swift; sourceTree = "<group>"; };
+		A97017D22410016B00BE6EF7 /* SpinnerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButton.swift; sourceTree = "<group>"; };
+		A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerButtonTests.swift; sourceTree = "<group>"; };
 		A97192B2221302DD00E72AD1 /* MockUserRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserRight.swift; sourceTree = "<group>"; };
 		A97284072384244E00AFEFC6 /* BackupExcluderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupExcluderTests.swift; sourceTree = "<group>"; };
 		A978D992236C587B00B568AE /* ZMUserSession+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMUserSession+Shared.swift"; sourceTree = "<group>"; };
@@ -3394,6 +3398,7 @@
 				1E5E0CAF1B6B83C6003B0CAC /* IconButton.m */,
 				5EA952C622647B3100C83FDB /* IconButton+Helpers.swift */,
 				A90E4AC32381EFCD00468F31 /* Button.swift */,
+				A97017D22410016B00BE6EF7 /* SpinnerButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -5507,6 +5512,7 @@
 			isa = PBXGroup;
 			children = (
 				A9DA5083240FFD0900C2F886 /* ButtonTests.swift */,
+				A97017D4241004A000BE6EF7 /* SpinnerButtonTests.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -7063,6 +7069,7 @@
 				5E8FFC0E21EE0B180052DF03 /* LayoutDirection.swift in Sources */,
 				1682AEC3204840E7003A052A /* SectionCollectionViewController.swift in Sources */,
 				BF86E11B1C245BF9001D9430 /* UserClient+Fingerprint.swift in Sources */,
+				A97017D32410016B00BE6EF7 /* SpinnerButton.swift in Sources */,
 				871067411C0DC5570035603B /* SettingsPropertyToggleCellDescriptor.swift in Sources */,
 				5E8DA788211C499900360979 /* AuthenticationCoordinator+PreLogin.swift in Sources */,
 				A947673F23DF2414009C6AE9 /* UIViewController+isInsidePopover.swift in Sources */,
@@ -8269,6 +8276,7 @@
 				EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */,
 				EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */,
 				874941CD1DE458DF006CF32B /* CombinationTest.swift in Sources */,
+				A97017D6241004A600BE6EF7 /* SpinnerButtonTests.swift in Sources */,
 				A9DA5084240FFD0900C2F886 /* ButtonTests.swift in Sources */,
 				5E97C33120F5F17800C806B4 /* ExtensionSettingsTests.swift in Sources */,
 				8742FB821E8BD23D00D046BC /* ConversationStatusLineTests.swift in Sources */,
