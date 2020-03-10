@@ -227,8 +227,6 @@ public class IconButton: ButtonWithLargerHitArea {
             iconColorsByState.removeValue(forKey: state)
         }
 
-        
-
         if let currentIcon = iconDefinitionsByState[state],
             currentIcon.renderingMode == .alwaysOriginal {
             setIcon(currentIcon.type,
