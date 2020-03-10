@@ -32,7 +32,7 @@ AVS_FRAMEWORK_NAME="avs.framework"
 # prepare credentials if needed
 
 # if git is installed
-if command -v git >dev/null; then
+if hash git 2>/dev/null; then
   GITHUB_USERNAME="`git config user.email`"
   if [[ -n "${GITHUB_ACCESS_TOKEN}" ]] && [[ -n "${GITHUB_USERNAME}" ]]; then
     CREDENTIALS="${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}"
