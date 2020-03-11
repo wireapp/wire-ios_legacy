@@ -162,8 +162,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                          onConfirm: { [unowned self] (editedImage: UIImage?) in
                                                                 self.dismiss(animated: true) {
                                                                     if isFromCamera {
+                                                                        guard let image = UIImage(data: imageData as Data) else { return }
                                                                         let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                                                                        UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
+                                                                        UIImageWriteToSavedPhotosAlbum(image, self, selector, nil)
                                                                     }
 
                                                                     self.sendController.sendMessage(withImageData: editedImage?.pngData() ?? imageData)
