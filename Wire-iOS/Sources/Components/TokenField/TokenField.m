@@ -542,17 +542,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }
 }
 
-- (void)updateTokenAttachments
-{
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.attributedText.length) options:0
-                                          usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                              if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                  [tokenAttachment refreshImage];
-                                              }
-                                          }];
-}
-
 - (void)updateTextAttributes
 {
     self.textView.typingAttributes = self.textAttributes;
