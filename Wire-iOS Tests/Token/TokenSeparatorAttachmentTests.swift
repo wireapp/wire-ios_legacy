@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,19 +21,19 @@ import SnapshotTesting
 
 final class TokenSeparatorAttachmentTests: XCTestCase {
     var sut: TokenSeparatorAttachment!
-    
+
     override func setUp() {
         let token = Token(title: "", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.dotColor = .black
-        
+
         sut = TokenSeparatorAttachment(token: token, tokenField: tokenField)
     }
-    
+
     override func tearDown() {
         sut = nil
     }
-    
+
     func testTokenAttachmentImage() {
         verify(matching: sut.image!)
     }

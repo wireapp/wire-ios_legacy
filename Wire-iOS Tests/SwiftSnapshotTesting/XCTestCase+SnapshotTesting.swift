@@ -214,7 +214,7 @@ extension XCTestCase {
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
-        
+
         let failure = verifySnapshot(matching: value,
                                      as: .image,
                                      named: name,
@@ -222,7 +222,7 @@ extension XCTestCase {
                                      file: file,
                                      testName: testName,
                                      line: line)
-        
+
         XCTAssertNil(failure, file: file, line: line)
     }
 
@@ -257,13 +257,13 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
 extension UIView {
     func addWidthConstraint(width: CGFloat) -> NSLayoutConstraint {
         translatesAutoresizingMaskIntoConstraints = false
-        
+
         let widthConstraint = widthAnchor.constraint(equalToConstant: width)
-        
+
         NSLayoutConstraint.activate([widthConstraint])
 
         layoutIfNeeded()
-        
+
         return widthConstraint
     }
 }

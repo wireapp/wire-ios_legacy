@@ -16,41 +16,40 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 final class TokenTextAttachment: NSTextAttachment {
     @objc
     let token: Token
-    
+
     private unowned let tokenField: TokenField
-    
+
     @objc(isSelected)
     var isSelected = false {
         didSet {
             refreshImage()
         }
     }
-    
+
     ///TODO: caller
     @objc
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
-        
+
         super.init(data: nil, ofType: nil)
-        
+
         refreshImage()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     @objc
     func refreshImage() {
         image = imageForCurrentToken
     }
-    
+
     private var imageForCurrentToken: UIImage? {
         let imageHeight: CGFloat = ceil(tokenField.font?.lineHeight ?? 0)
         let title = token.title.applying(transform: tokenField.tokenTextTransform)
@@ -60,34 +59,34 @@ final class TokenTextAttachment: NSTextAttachment {
         let attributedName = NSAttributedString(string: shortTitle, attributes: titleAttributes)
         let imageSize = CGSize(width: attributedName.size().width, height: imageHeight)
         let delta: CGFloat = ceil(((tokenField.font?.capHeight ?? 0) - imageHeight) * 0.5)
-        
+
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
-        
+
         UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
-        
+
         if let backgroundColor = backgroundColor {
             context.setFillColor(backgroundColor.cgColor)
         }
-        
+
         if let borderColor = borderColor {
             context.setStrokeColor(borderColor.cgColor)
         }
-        
+
         context.setLineJoin(.round)
         context.setLineWidth(1)
-        
+
         attributedName.draw(at: CGPoint(x: 0, y: -delta + tokenField.tokenTitleVerticalAdjustment))
-        
+
         let i = UIGraphicsGetImageFromCurrentImageContext()
-        
+
         context.restoreGState()
         UIGraphicsEndImageContext()
-        
+
         return i
     }
-    
+
     // MARK: - String formatting
     private var titleColor: UIColor? {
         if isSelected {
@@ -96,7 +95,7 @@ final class TokenTextAttachment: NSTextAttachment {
             return tokenField.tokenTitleColor
         }
     }
-    
+
     private var backgroundColor: UIColor? {
         if isSelected {
             return tokenField.tokenSelectedBackgroundColor
@@ -104,7 +103,7 @@ final class TokenTextAttachment: NSTextAttachment {
             return tokenField.tokenBackgroundColor
         }
     }
-    
+
     private var borderColor: UIColor? {
         if isSelected {
             return tokenField.tokenSelectedBorderColor
@@ -112,50 +111,50 @@ final class TokenTextAttachment: NSTextAttachment {
             return tokenField.tokenBorderColor
         }
     }
-    
+
     private var dotColor: UIColor? {
         return tokenField.dotColor
     }
-    
-    private var titleAttributes: [NSAttributedString.Key : Any] {
+
+    private var titleAttributes: [NSAttributedString.Key: Any] {
         guard let titleColor = titleColor,
             let tokenTitleFont = tokenField.tokenTitleFont else {
                 return [:]
         }
-        
+
         return [
             NSAttributedString.Key.font: tokenTitleFont,
             NSAttributedString.Key.foregroundColor: titleColor
         ]
     }
-    
+
     // MARK: - String shortening
     static let appendixString: String = "…"
-    
-    func shortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key : Any]?, toFitMaxWidth maxWidth: CGFloat) -> String {
+
+    func shortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key: Any]?, toFitMaxWidth maxWidth: CGFloat) -> String {
         if size(for: text, attributes: attributes).width < maxWidth {
             return text
         }
-        
+
         return searchForShortenedText(forText: text, withAttributes: attributes, toFitMaxWidth: maxWidth, in: NSRange(location: 0, length: text.count))
     }
-    
+
     // Search for longest substring, which render width is less than maxWidth
-    
-    func searchForShortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key : Any]?, toFitMaxWidth maxWidth: CGFloat, in range: NSRange) -> String {
+
+    func searchForShortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key: Any]?, toFitMaxWidth maxWidth: CGFloat, in range: NSRange) -> String {
         // In other words, search for such number l, that
         // [title substringToIndex:l].width <= maxWidth,
         // and [title substringToIndex:l+1].width > maxWidth;
-        
+
         // the longer substring is, the longer its width, so
         // we can use binary search here.
-        
+
         let nsString: NSString = text as NSString
-        
+
         let shortedTextLength = range.location + range.length / 2
         let shortedText = (nsString.substring(to: shortedTextLength)) + TokenTextAttachment.appendixString
         let shortedText1 = (nsString.substring(to: shortedTextLength + 1)) + TokenTextAttachment.appendixString
-        
+
         let shortedTextSize = size(for: shortedText, attributes: attributes)
         let shortedText1Size = size(for: shortedText1, attributes: attributes)
         if shortedTextSize.width <= maxWidth && shortedText1Size.width > maxWidth {
@@ -167,19 +166,19 @@ final class TokenTextAttachment: NSTextAttachment {
             // Search in left range
             return searchForShortenedText(forText: text, withAttributes: attributes, toFitMaxWidth: maxWidth, in: NSRange(location: range.location, length: shortedTextLength - range.location))
         }
-        
+
         return text
     }
-    
-    func size(for string: String, attributes: [NSAttributedString.Key : Any]?) -> CGSize {
+
+    func size(for string: String, attributes: [NSAttributedString.Key: Any]?) -> CGSize {
         return NSAttributedString(string: string, attributes: attributes).size()
     }
-    
+
     // MARK: - Description
     override var description: String {
         return String(format: "<\(type(of: self)): \(self), name \(token.title)>")
     }
-    
+
     var debugQuickLookObject: UIImage? {
         return image
     }
