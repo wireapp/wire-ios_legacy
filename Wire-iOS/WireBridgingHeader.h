@@ -25,7 +25,6 @@
 // UI
 #import "TokenField.h"
 #import "TokenField+Internal.h"
-#import "TokenTextAttachment.h"
 
 #import "IconButton.h"
 #import "IconButton+Internal.h"
