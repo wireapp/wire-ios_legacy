@@ -17,7 +17,6 @@
 // 
 
 final class TokenTextAttachment: NSTextAttachment {
-    @objc
     let token: Token
 
     private unowned let tokenField: TokenField
@@ -29,8 +28,6 @@ final class TokenTextAttachment: NSTextAttachment {
         }
     }
 
-    ///TODO: caller
-    @objc
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField

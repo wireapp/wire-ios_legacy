@@ -691,40 +691,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }
 }
 
-NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
-{
-    return NSEqualRanges(range, NSUnionRange(range, includedRange));
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView
-{
-    ZMLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
-    
-    __block NSRange modifiedSelectionRange = NSMakeRange(0, 0);
-    __block BOOL hasModifiedSelection = NO;
-    
-    [textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                        inRange:NSMakeRange(0, textView.attributedText.length)
-                                        options:0
-                                     usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                         if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                             tokenAttachment.isSelected = RangeIncludesRange(textView.selectedRange, range);
-                                             [textView.layoutManager invalidateDisplayForCharacterRange:range];
-                                             
-                                             if (RangeIncludesRange(textView.selectedRange, range)) {
-                                                 modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
-                                                 hasModifiedSelection = YES;
-                                             }
-                                             ZMLogInfo(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.isSelected);
-                                         }
-                                     }];
-    
-    
-    if (hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange)) {
-        textView.selectedRange = modifiedSelectionRange;
-    }
-}
-
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView

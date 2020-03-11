@@ -18,6 +18,8 @@
 
 import UIKit
 
+private let zmLog = ZMSLog(tag: "TokenField")
+
 extension TokenField {
     
     @objc
@@ -169,6 +171,37 @@ extension TokenField {
         
         textView.showOrHidePlaceholder()
     }
+    
+    private func rangeIncludesRange(_ range: NSRange, _ includedRange: NSRange) -> Bool {
+        return NSEqualRanges(range, NSUnionRange(range, includedRange))
+    }
+    
+    ///TODO: test textview delegate method called?
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        zmLog.debug("Selection changed: NSStringFromRange(textView.selectedRange)")
+        
+        var modifiedSelectionRange = NSRange(location: 0, length: 0)
+        var hasModifiedSelection = false
+        
+        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, range, stop in
+            if let tokenAttachment = tokenAttachmentas? TokenTextAttachment {
+                tokenAttachment.isSelected = RangeIncludesRange(textView.selectedRange, range)
+                textView.layoutManager.invalidateDisplay(forCharacterRange: range)
+                
+                if rangeIncludesRange(textView.selectedRange, range) {
+                    modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range)
+                    hasModifiedSelection = true
+                }
+                zmLog.info("    person attachement: \(tokenAttachment.token.title) at range: \(range) selected: \(tokenAttachment.isSelected)")
+            }
+        })
+        
+        
+        if hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange) {
+            textView.selectedRange = modifiedSelectionRange
+        }
+    }
+
 }
 
 // MARK: - TokenizedTextViewDelegate
