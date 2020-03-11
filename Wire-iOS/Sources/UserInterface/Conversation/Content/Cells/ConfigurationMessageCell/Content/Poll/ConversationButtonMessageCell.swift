@@ -62,11 +62,11 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         }
     }
 
-    enum State {
-        case unselected
-        case selected
-        case loading
-    }
+//    enum State {
+//        case unselected
+//        case selected
+//        case loading
+//    }
 
     struct Configuration {
         let text: String?
@@ -142,7 +142,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var accessibilityLabel: String?
 
-    init(text: String?, state: ButtonMessageState) {
+    init(text: String?, state: ButtonMessageState) { //TODO: map ButtonMessageState to Stata, missing loading 
         configuration = View.Configuration(text: text, state: state)
     }
 }
