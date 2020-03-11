@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+///TODO: token protocol
 final class TokenTextAttachment: NSTextAttachment {
     let token: Token
 
     private unowned let tokenField: TokenField
 
-    @objc(isSelected)
     var isSelected = false {
         didSet {
             refreshImage()
@@ -42,7 +42,6 @@ final class TokenTextAttachment: NSTextAttachment {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @objc
     func refreshImage() {
         image = imageForCurrentToken
     }

@@ -202,6 +202,57 @@ extension TokenField {
         }
     }
 
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text == "\n") {
+            textView.resignFirstResponder()
+            userDidConfirmInput = true
+                delegate?.tokenFieldDidConfirmSelection(self)
+            
+            return false
+        }
+        
+        if range.length == 1 && text.count == 0 {
+            // backspace
+            var cancelBackspace = false
+            textView.attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { tokenAttachment, range, stop in
+                if let tokenAttachment = tokenAttachment as? TokenTextAttachment {
+                    if !tokenAttachment.isSelected {
+                        textView.selectedRange = range
+                        cancelBackspace = true
+                    }
+                    stop.pointee = true
+                }
+            }
+            )
+            if cancelBackspace {
+                return false
+            }
+        }
+        
+        
+        // Inserting text between tokens does not make sense for this control.
+        // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
+        // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
+        // so don’t do any magic in that case
+        if !text.isEmpty {
+            (textView.text as NSString).enumerateSubstrings(in: NSRange(location: range.location, length: textView.text.count - range.location), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
+                
+                
+                
+                if substring?.isEmpty == false,
+                    let nsString: NSString = substring as NSString?,
+                    nsString.character(at: 0) == NSTextAttachment.character {
+                    textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+                    stop.pointee = true
+                }
+            })
+        }
+        
+        updateTextAttributes()
+        
+        return true
+
+    }
 }
 
 // MARK: - TokenizedTextViewDelegate
