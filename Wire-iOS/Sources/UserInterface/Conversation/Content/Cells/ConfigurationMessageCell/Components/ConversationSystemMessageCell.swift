@@ -305,8 +305,10 @@ final class ConversationSystemMessageCellDescription {
             return [AnyConversationMessageCellDescription(timerCell)]
 
         case .conversationIsSecure:
-            let shieldCell = ConversationVerifiedSystemMessageSectionDescription()
-            return [AnyConversationMessageCellDescription(shieldCell)]
+            if conversation.conversationType != .connection {
+                let shieldCell = ConversationVerifiedSystemMessageSectionDescription()
+                return [AnyConversationMessageCellDescription(shieldCell)]
+            }
 
         case .decryptionFailed:
             let decryptionCell = ConversationCannotDecryptSystemMessageCellDescription(message: message, data: systemMessageData, sender: sender, remoteIdentityChanged: false)

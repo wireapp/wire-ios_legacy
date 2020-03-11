@@ -46,7 +46,7 @@ final class ConversationTitleView: TitleView {
             attachments.append(.legalHold())
         }
         
-        if conversation.securityLevel == .secure {
+        if conversation.securityLevel == .secure && conversation.conversationType != .connection {
             attachments.append(.verifiedShield())
         }
         
