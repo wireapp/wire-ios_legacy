@@ -681,41 +681,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self invalidateIntrinsicContentSize];
 }
 
-///TODO:
-- (void)filterUnwantedAttachments
-{
-    NSMutableOrderedSet *updatedCurrentTokens = [NSMutableOrderedSet orderedSet];
-    NSMutableSet *updatedCurrentSeparatorTokens = [NSMutableSet set];
-    
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:0
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop) {
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && ![updatedCurrentTokens containsObject:((TokenTextAttachment *)textAttachment).token]) {
-                                                  [updatedCurrentTokens addObject:((TokenTextAttachment *)textAttachment).token];
-                                              }
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && ![updatedCurrentSeparatorTokens containsObject:((TokenSeparatorAttachment *) textAttachment).token]) {
-                                                  [updatedCurrentSeparatorTokens addObject:((TokenSeparatorAttachment *) textAttachment).token];
-                                              }
-                                          }];
-    
-    [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
-    
-    NSMutableSet *deletedTokens = [NSMutableSet setWithArray:self.currentTokens];
-    [deletedTokens minusSet:updatedCurrentTokens.set];
-    
-    if (deletedTokens.count > 0) {
-        [self removeTokens:deletedTokens.allObjects];
-    }
-    
-    [self.currentTokens removeObjectsInArray:deletedTokens.allObjects];
-    if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
-        [self.delegate tokenField:self changedTokensTo:self.currentTokens];
-    }
-}
-
 - (void)notifyIfFilterTextChanged
 {
     __block NSUInteger indexOfFilterText = 0;

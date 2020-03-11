@@ -81,7 +81,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGRect excludedRect;  // rect for excluded path in textView text container
 
 @property (nonatomic, readonly) BOOL userDidConfirmInput;
-- (void)filterUnwantedAttachments;
 
 - (void)scrollToBottomOfInputField;
 

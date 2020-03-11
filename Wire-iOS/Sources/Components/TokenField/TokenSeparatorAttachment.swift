@@ -17,7 +17,6 @@
 
 final class TokenSeparatorAttachment: NSTextAttachment {
 
-    @objc
     let token: Token
 
     private unowned let tokenField: TokenField
