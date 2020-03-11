@@ -31,9 +31,9 @@ final class TokenSeparatorAttachment: NSTextAttachment {
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
-
+        
         super.init(data: nil, ofType: nil) ///TODO: () ?
-
+        
         refreshImage()
     }
     
@@ -41,26 +41,22 @@ final class TokenSeparatorAttachment: NSTextAttachment {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     
     private func refreshImage() {
         image = imageForCurrentToken
     }
     
     private var imageForCurrentToken: UIImage? {
-        guard let context = UIGraphicsGetCurrentContext(),
-            let tokenFieldFont = tokenField.font else { return nil }
-        
-        let imageHeight = ceil(tokenFieldFont.pointSize)
-        
+        let imageHeight = ceil(tokenField.font?.pointSize ?? 0)
         let imageSize = CGSize(width: dotSize + dotSpacing * 2, height: imageHeight)
+        let lineHeight = tokenField.font?.lineHeight ?? 0
+        let delta = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
         
-        let delta = ceil((tokenFieldFont.lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageSize.height)
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0.0)
-        
-        
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
         
         if let backgroundColor = backgroundColor {
@@ -114,9 +110,9 @@ final class TokenTextAttachment: NSTextAttachment {
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
-
+        
         super.init(data: nil, ofType: nil)
-
+        
         refreshImage()
     }
     
@@ -124,48 +120,38 @@ final class TokenTextAttachment: NSTextAttachment {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     @objc
     func refreshImage() {
         image = imageForCurrentToken
     }
     
     private var imageForCurrentToken: UIImage? {
-        guard let context = UIGraphicsGetCurrentContext(),
-            let tokenFieldFont = tokenField.font else { return nil }
-
-        let imageHeight = ceil(tokenFieldFont.lineHeight)
+        let imageHeight = ceil(tokenField.font?.lineHeight ?? 0)
         let title = token.title.applying(transform: tokenField.tokenTextTransform)
-        var tokenMaxWidth = ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight)
         // Width cannot be smaller than height
-        if tokenMaxWidth < imageHeight {
-            tokenMaxWidth = imageHeight
-        }
+        let tokenMaxWidth = max(ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight), imageHeight)
         let shortTitle = shortenedText(forText: title, withAttributes: titleAttributes, toFitMaxWidth: tokenMaxWidth)
         let attributedName = NSAttributedString(string: shortTitle, attributes: titleAttributes)
+        let imageSize = CGSize(width: attributedName.size().width, height: imageHeight)
+        let delta = ceil((tokenField.font?.capHeight ?? 0 - imageHeight) * 0.5)
         
-        let size = attributedName.size()
-        
-        var imageSize = size
-        imageSize.height = imageHeight
-        
-        let delta = ceil((tokenFieldFont.capHeight - imageHeight) * 0.5)
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
         
         UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0.0)
-        
+        guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
         
         if let backgroundColor = backgroundColor {
-        context.setFillColor(backgroundColor.cgColor)
+            context.setFillColor(backgroundColor.cgColor)
         }
         
-        if let CGColor = borderColor?.cgColor {
-            context.setStrokeColor(CGColor)
+        if let borderColor = borderColor?.cgColor {
+            context.setStrokeColor(borderColor)
         }
-
+        
         context.setLineJoin(.round)
-
+        
         context.setLineWidth(1)
         
         attributedName.draw(at: CGPoint(x: 0, y: -delta + tokenField.tokenTitleVerticalAdjustment))
@@ -212,7 +198,7 @@ final class TokenTextAttachment: NSTextAttachment {
             let tokenTitleFont = tokenField.tokenTitleFont else {
                 return [:]
         }
-
+        
         return [
             NSAttributedString.Key.font: tokenTitleFont,
             NSAttributedString.Key.foregroundColor: titleColor
@@ -259,7 +245,8 @@ final class TokenTextAttachment: NSTextAttachment {
     }
     
     func size(for string: String, attributes: [NSAttributedString.Key : Any]?) -> CGSize {
-        let attributedString = NSAttributedString(string: string, attributes: attributes)
+        let attributedString = NSAttributedString(string: string,
+                                                  attributes: attributes)
         return attributedString.size()
     }
     

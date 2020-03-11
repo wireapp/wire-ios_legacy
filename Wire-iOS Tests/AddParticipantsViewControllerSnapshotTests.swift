@@ -35,7 +35,7 @@ final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase
         verify(view: sut.view)
     }
 
-    func testForAddParticipantsButtonIsShown(){
+    func testForAddParticipantsButtonIsShown(){ //TODO
         let conversation = createGroupConversation()
 
         sut = AddParticipantsViewController(context: .add(conversation), variant: .light)
