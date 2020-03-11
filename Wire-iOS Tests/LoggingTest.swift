@@ -29,7 +29,7 @@ class LoggingTest: XCTestCase {
         // which gets attached to debug reports.
         XCTAssertNotNil(ZMSLog.currentLog)
         XCTAssertNotNil(ZMSLog.currentLogPath)
-        XCTAssertFalse(FileManager.default.contents(atPath: ZMSLog.currentLogPath!.path)!.isEmpty)
+        XCTAssertFalse(ZMSLog.currentLog!.isEmpty)
     }
         
 }
