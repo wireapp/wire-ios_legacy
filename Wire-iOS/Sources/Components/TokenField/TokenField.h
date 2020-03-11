@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 
-@property (readwrite, nonatomic) TokenizedTextView *textView;
+@property (readwrite, nonatomic, null_resettable) TokenizedTextView *textView;
 
 @property (nonatomic) BOOL hasAccessoryButton;
 @property (readwrite, nonatomic) IconButton *accessoryButton;

@@ -27,7 +27,7 @@ extension TokenField {
         // this prevents accessoryButton to be visible sometimes on scrolling
         clipsToBounds = true
         
-        textView = TokenizedTextView()
+        let textView = TokenizedTextView()
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -44,6 +44,8 @@ extension TokenField {
         toLabel.backgroundColor = UIColor.clear
         textView.addSubview(toLabel)
         
+        self.textView = textView
+
         // Accessory button could be a subview of textView,
         // but there are bugs with setting constraints from subview to UITextView trailing.
         // So we add button as subview of self, and update its position on scrolling.
@@ -77,7 +79,7 @@ extension TokenField {
     
     @objc
     func updateTokenAttachments() { ///TODO: test
-        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, _, _ in
+        textView?.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, _, _ in
             (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         })
     }
