@@ -210,9 +210,9 @@ final class TokenTextAttachment: NSTextAttachment {
     func shortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key : Any]?, toFitMaxWidth maxWidth: CGFloat) -> String {
         if size(for: text, attributes: attributes).width < maxWidth {
             return text
-        } else {
-            return searchForShortenedText(forText: text, withAttributes: attributes, toFitMaxWidth: maxWidth, in: NSRange(location: 0, length: text.count))
         }
+        
+        return searchForShortenedText(forText: text, withAttributes: attributes, toFitMaxWidth: maxWidth, in: NSRange(location: 0, length: text.count))
     }
     
     // Search for longest substring, which render width is less than maxWidth
@@ -224,9 +224,12 @@ final class TokenTextAttachment: NSTextAttachment {
         
         // the longer substring is, the longer its width, so
         // we can use binary search here.
+        
+        let nsString: NSString = text as NSString
+        
         let shortedTextLength = range.location + range.length / 2
-        let shortedText = ((text as NSString?)?.substring(to: shortedTextLength) ?? "") + TokenTextAttachment.appendixString
-        let shortedText1 = ((text as NSString?)?.substring(to: shortedTextLength + 1) ?? "") + TokenTextAttachment.appendixString
+        let shortedText = (nsString.substring(to: shortedTextLength)) + TokenTextAttachment.appendixString
+        let shortedText1 = (nsString.substring(to: shortedTextLength + 1)) + TokenTextAttachment.appendixString
         
         let shortedTextSize = size(for: shortedText, attributes: attributes)
         let shortedText1Size = size(for: shortedText1, attributes: attributes)
@@ -238,15 +241,13 @@ final class TokenTextAttachment: NSTextAttachment {
         } else if shortedTextSize.width > maxWidth {
             // Search in left range
             return searchForShortenedText(forText: text, withAttributes: attributes, toFitMaxWidth: maxWidth, in: NSRange(location: range.location, length: shortedTextLength - range.location))
-        } else {
-            return text
         }
+        
+        return text
     }
     
     func size(for string: String, attributes: [NSAttributedString.Key : Any]?) -> CGSize {
-        let attributedString = NSAttributedString(string: string,
-                                                  attributes: attributes)
-        return attributedString.size()
+        return NSAttributedString(string: string, attributes: attributes).size()
     }
     
     // MARK: - Description
