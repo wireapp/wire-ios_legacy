@@ -24,9 +24,7 @@ extension ConversationViewController {
 
         updateLeftNavigationBarItems()
 
-        if isIPadRegular() {
-            becomeFirstResponder()
-        } else if isFocused {
+        if isFocused {
             // We are presenting the conversation screen so mark it as the last viewed screen,
             // but only if we are acutally focused (otherwise we would be shown on the next launch)
             Settings.shared().lastViewedScreen = .conversation
