@@ -708,6 +708,7 @@
 		A90E4AC12381E6D700468F31 /* UIControlState+ExpandState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC02381E6D600468F31 /* UIControlState+ExpandState.swift */; };
 		A90E4AC42381EFCD00468F31 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90E4AC32381EFCD00468F31 /* Button.swift */; };
 		A9150DB523D1B6B900844185 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9150DB423D1B6B800844185 /* Analytics.swift */; };
+		A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
 		A92E731C2407F54A007C1FFE /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
@@ -2317,6 +2318,7 @@
 		A90E4AC22381EE0C00468F31 /* IconButton+Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IconButton+Internal.h"; path = "Wire-iOS/Sources/Components/IconButton+Internal.h"; sourceTree = SOURCE_ROOT; };
 		A90E4AC32381EFCD00468F31 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A9150DB423D1B6B800844185 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
+		A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenTextAttachmentTests.swift; sourceTree = "<group>"; };
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A92E731D2407F587007C1FFE /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
@@ -5450,6 +5452,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A918330B241922D700CBD0B7 /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				A918330C241922EB00CBD0B7 /* TokenTextAttachmentTests.swift */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
 		A93E6102233B870200CEA65F /* SectionHeader */ = {
 			isa = PBXGroup;
 			children = (
@@ -5520,6 +5530,7 @@
 		BACB88521AF7C48900DDCDB0 /* Wire-iOS Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A918330B241922D700CBD0B7 /* Token */,
 				A9DA5082240FFCEB00C2F886 /* Button */,
 				A984AAE424099239002CFF2E /* LinkOpeningOption */,
 				A9AC63DF23FC4A0E00016ABC /* AVAsset */,
@@ -8164,6 +8175,7 @@
 				874941CB1DE34DEC006CF32B /* UserConnectionViewTests.swift in Sources */,
 				EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */,
 				EF2FEDCA228EB085000883C8 /* MockUser+Image.swift in Sources */,
+				A918330D241922EB00CBD0B7 /* TokenTextAttachmentTests.swift in Sources */,
 				8790907A2121A120006219B4 /* VariantsBuilder.swift in Sources */,
 				5EBF47C421B2F8710021CFFC /* MessageDetailsActionTests.swift in Sources */,
 				5E35F78B2187069400D3F4FE /* ConversationCellSnapshotTestCase.swift in Sources */,

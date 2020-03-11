@@ -146,8 +146,8 @@ final class TokenTextAttachment: NSTextAttachment {
             context.setFillColor(backgroundColor.cgColor)
         }
         
-        if let borderColor = borderColor?.cgColor {
-            context.setStrokeColor(borderColor)
+        if let borderColor = borderColor {
+            context.setStrokeColor(borderColor.cgColor)
         }
         
         context.setLineJoin(.round)
