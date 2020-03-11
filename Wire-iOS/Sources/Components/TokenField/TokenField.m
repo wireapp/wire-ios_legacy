@@ -354,42 +354,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self.textView showOrHidePlaceholder];
 }
 
-- (void)removeTokens:(NSArray *)tokensToRemove
-{
-    NSMutableArray *rangesToRemove = [NSMutableArray new];
-    
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.attributedText.length)
-                                             options:0
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop)
-     {
-         if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && [tokensToRemove containsObject:((TokenSeparatorAttachment *)textAttachment).token]) {
-             [rangesToRemove addObject:[NSValue valueWithRange:range]];
-         }
-         
-         if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && [tokensToRemove containsObject:((TokenTextAttachment *)textAttachment).token]) {
-             [rangesToRemove addObject:[NSValue valueWithRange:range]];
-         }
-     }];
-    
-    // Delete ranges from the end of string till the beginning: this keeps range locations valid.
-    [rangesToRemove sortUsingComparator:^NSComparisonResult(NSValue *rangeValue1, NSValue *rangeValue2) {
-        return rangeValue1.rangeValue.location <= rangeValue2.rangeValue.location;
-    }];
-    [self.textView.textStorage beginEditing];
-    for (NSValue *rangeValue in rangesToRemove) {
-        NSRange toRemove = [rangeValue rangeValue];
-        [self.textView.textStorage deleteCharactersInRange:toRemove];
-    }
-    [self.textView.textStorage endEditing];
-    
-    [self.currentTokens removeObjectsInArray:tokensToRemove];
-    [self invalidateIntrinsicContentSize];
-    [self updateTextAttributes];
-    
-    [self.textView showOrHidePlaceholder];
-}
-
 - (Token *)tokenForRepresentedObject:(id)object
 {
     for (Token *token in self.currentTokens) {
@@ -717,6 +681,7 @@ CGFloat const accessoryButtonSize = 32.0f;
     [self invalidateIntrinsicContentSize];
 }
 
+///TODO:
 - (void)filterUnwantedAttachments
 {
     NSMutableOrderedSet *updatedCurrentTokens = [NSMutableOrderedSet orderedSet];

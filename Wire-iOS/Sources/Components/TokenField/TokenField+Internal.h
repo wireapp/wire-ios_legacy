@@ -35,5 +35,6 @@
 
 - (void)updateExcludePath;
 - (void)updateLayout;
+- (void)updateTextAttributes;
 
 @end

@@ -88,12 +88,45 @@ extension TokenField {
             string.append(separatorString)
         }
         
-//        string += textAttributes
-        
-//        string.addAttributes((textAttributes as? [NSAttributedString.Key : Any]) ?? [:], range: NSRange(location: 0, length: string.length))
         return string && (textAttributes as? [NSAttributedString.Key : Any]) ?? [:]
     }
 
+    // MARK: remove token
+    
+    @objc
+    func removeTokens(_ tokensToRemove: [Token]) {
+        var rangesToRemove: [NSRange] = []
+        
+        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { textAttachment, range, stop in
+            if let token = (textAttachment as? TokenSeparatorAttachment)?.token,
+                tokensToRemove.contains(token) == true {
+                    rangesToRemove.append(range)
+            }
+            
+            if let token = (textAttachment as? TokenTextAttachment)?.token,
+                tokensToRemove.contains(token) == true {
+                    rangesToRemove.append(range)
+            }
+        })
+        
+        // Delete ranges from the end of string till the beginning: this keeps range locations valid.
+        rangesToRemove.sort(by: { rangeValue1, rangeValue2 in
+            rangeValue1.location > rangeValue2.location
+        })
+        
+        textView.textStorage.beginEditing()
+        for rangeValue in rangesToRemove {
+            textView.textStorage.deleteCharacters(in: rangeValue)
+        }
+        textView.textStorage.endEditing()
+        
+        currentTokens?.removeObjects(in: tokensToRemove)
+        
+        invalidateIntrinsicContentSize()
+        updateTextAttributes()
+        
+        textView.showOrHidePlaceholder()
+    }
 }
 
 // MARK: - TokenizedTextViewDelegate

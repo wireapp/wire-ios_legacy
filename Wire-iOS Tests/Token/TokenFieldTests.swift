@@ -1,3 +1,4 @@
+
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -19,22 +20,35 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class TokenTextAttachmentTests: XCTestCase {
-    var sut: TokenTextAttachment!
+final class TokenFieldTests: XCTestCase {
+    var sut: TokenField!
     
     override func setUp() {
-        let token = Token(title: "Max Mustermann", representedObject: MockUser())
-        let tokenField = TokenField()
-        tokenField.tokenTitleColor = .black
-        
-        sut = TokenTextAttachment(token: token, tokenField: tokenField)
+        sut = TokenField()
+        sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
+        sut.backgroundColor = .black
     }
     
     override func tearDown() {
         sut = nil
     }
     
-    func testTokenAttachmentImage() {
-        verify(matching: sut.image!)
+    func testThatTokensCanBeRemoved() {
+        // given
+        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        
+        sut.addToken(token1)
+        sut.addToken(forTitle: "Token 2", representedObject: MockUser())
+
+        verify(matching: sut)
+
+        // when
+        sut.removeToken(token1)
+        
+        // then
+        XCTAssertEqual(sut.tokens.count, 1)
+        XCTAssertEqual(sut.tokens.first?.title, "Token 2")
+
+        verify(matching: sut)
     }
 }
