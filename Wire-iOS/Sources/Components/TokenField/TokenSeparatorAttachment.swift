@@ -15,7 +15,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-final class TokenSeparatorAttachment: NSTextAttachment {
+final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
 
     let token: Token
 

@@ -16,8 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-///TODO: token protocol
-final class TokenTextAttachment: NSTextAttachment {
+protocol TokenContainer {
+    var token: Token { get }
+}
+    
+final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     let token: Token
 
     private unowned let tokenField: TokenField

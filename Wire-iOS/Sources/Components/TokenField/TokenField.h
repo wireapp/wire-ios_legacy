@@ -40,7 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, nonatomic) IconButton *accessoryButton;
 
 @property (readonly, nonatomic) NSArray <Token *> *tokens;
-@property (copy, readonly, nonatomic) NSString *filterText;
+///TODO: private(set)
+@property (copy, readwrite, nonatomic) NSString *filterText;
 
 - (void)addToken:(Token *)token;
 - (void)addTokenForTitle:(NSString *)title representedObject:(id)object;

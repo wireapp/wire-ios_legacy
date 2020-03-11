@@ -28,7 +28,6 @@
 @property (nonatomic) NSLayoutConstraint *toLabelTopMargin;
 
 @property (nonatomic) NSMutableArray *currentTokens;
-@property (copy, readwrite, nonatomic) NSString *filterText;
 @property (readonly, nonatomic) NSDictionary *textAttributes;
 
 @property (nonatomic, readwrite) BOOL userDidConfirmInput;
@@ -36,6 +35,5 @@
 - (void)updateExcludePath;
 - (void)updateLayout;
 - (void)updateTextAttributes;
-- (void)notifyIfFilterTextChanged;
 
 @end

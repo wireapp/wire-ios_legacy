@@ -601,26 +601,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.textView.textContainer.exclusionPaths = exclusionPaths;
 }
 
-- (void)notifyIfFilterTextChanged
-{
-    __block NSUInteger indexOfFilterText = 0;
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:0
-                                          usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                              if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                  indexOfFilterText = NSMaxRange(range);
-                                              }
-                                          }];
-    
-    NSString *oldFilterText = self.filterText;
-    self.filterText = [[self.textView.text substringFromIndex:indexOfFilterText] stringByReplacingOccurrencesOfString:@"\uFFFC" withString:@""];
-    if ([oldFilterText isEqualToString:self.filterText] == NO) {
-        if ([self.delegate respondsToSelector:@selector(tokenField:changedFilterTextTo:)]) {
-            [self.delegate tokenField:self changedFilterTextTo:self.filterText];
-        }
-    }
-}
 
 #pragma mark - UIScrollViewDelegate
 

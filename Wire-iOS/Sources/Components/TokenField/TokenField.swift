@@ -78,10 +78,10 @@ extension TokenField {
     @objc
     func updateTokenAttachments() { ///TODO: test
         textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, _, _ in
-                (tokenAttachment as? TokenTextAttachment)?.refreshImage()
+            (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         })
     }
-
+    
     
     @objc
     func string(forTokens tokens: [Token]) -> NSAttributedString {
@@ -104,22 +104,14 @@ extension TokenField {
     @objc
     func filterUnwantedAttachments() {///TODO: test
         var updatedCurrentTokens: Set<Token> = []
-        var updatedCurrentSeparatorTokens: Set<Token> = []
         
         textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.text.count), options: [], using: { textAttachment, range, stop in
             
-            if let token = (textAttachment as? TokenTextAttachment)?.token,
+            if let token = (textAttachment as? TokenContainer)?.token,
                 !updatedCurrentTokens.contains(token) {
                 updatedCurrentTokens.insert(token)
             }
-            
-            if let token = (textAttachment as? TokenSeparatorAttachment)?.token,
-                !updatedCurrentSeparatorTokens.contains(token) {
-                updatedCurrentSeparatorTokens.insert(token)
-            }
         })
-        
-        updatedCurrentTokens = updatedCurrentTokens.intersection(updatedCurrentSeparatorTokens)
         
         ///TODO: Change currentTokens type to [Token]
         if let currentTokens = self.currentTokens as? [Token] {
@@ -142,13 +134,8 @@ extension TokenField {
         var rangesToRemove: [NSRange] = []
         
         textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { textAttachment, range, stop in
-            if let token = (textAttachment as? TokenSeparatorAttachment)?.token,
-                tokensToRemove.contains(token) == true {
-                rangesToRemove.append(range)
-            }
-            
-            if let token = (textAttachment as? TokenTextAttachment)?.token,
-                tokensToRemove.contains(token) == true {
+            if let token = (textAttachment as? TokenContainer)?.token,
+                tokensToRemove.contains(token) {
                 rangesToRemove.append(range)
             }
         })
@@ -175,6 +162,22 @@ extension TokenField {
     private func rangeIncludesRange(_ range: NSRange, _ includedRange: NSRange) -> Bool {
         return NSEqualRanges(range, NSUnionRange(range, includedRange))
     }
+    
+    private func notifyIfFilterTextChanged() {
+        var indexOfFilterText = 0
+        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.text.count), options: [], using: { tokenAttachment, range, stop in
+            if tokenAttachment is TokenTextAttachment {
+                indexOfFilterText = NSMaxRange(range)
+            }
+        })
+        
+        let oldFilterText = filterText
+        self.filterText = ((textView.text as NSString).substring(from: indexOfFilterText)).replacingOccurrences(of: "\u{FFFC}", with: "")
+        if oldFilterText != filterText {
+            delegate?.tokenField(self, changedFilterTextTo: filterText)
+        }
+    }
+    
     
 }
 
@@ -300,5 +303,5 @@ extension TokenField : UITextViewDelegate {
         return true
         
     }
-
+    
 }
