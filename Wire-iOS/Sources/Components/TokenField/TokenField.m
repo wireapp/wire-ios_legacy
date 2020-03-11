@@ -601,21 +601,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.textView.textContainer.exclusionPaths = exclusionPaths;
 }
 
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
-{
-    return ![textAttachment isKindOfClass:[TokenSeparatorAttachment class]];
-}
-- (void)textViewDidChange:(UITextView *)textView
-{
-    self.userDidConfirmInput = NO;
-    
-    [self filterUnwantedAttachments];
-    [self notifyIfFilterTextChanged];
-    [self invalidateIntrinsicContentSize];
-}
-
 - (void)notifyIfFilterTextChanged
 {
     __block NSUInteger indexOfFilterText = 0;

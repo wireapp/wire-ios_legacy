@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TokenFieldDelegate;
 
-@interface TokenField : UIView<UITextViewDelegate>
+@interface TokenField : UIView
 
 @property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 

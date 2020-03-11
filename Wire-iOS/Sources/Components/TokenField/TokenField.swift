@@ -176,8 +176,55 @@ extension TokenField {
         return NSEqualRanges(range, NSUnionRange(range, includedRange))
     }
     
+}
+
+// MARK: - TokenizedTextViewDelegate
+
+extension TokenField: TokenizedTextViewDelegate {
+    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat) {
+        if isCollapsed {
+            setCollapsed(false, animated: true)
+            return
+        }
+        
+        if fraction >= 1 && range.location == self.textView.textStorage.length - 1 {
+            return
+        }
+        
+        if range.location < self.textView.textStorage.length {
+            self.textView.attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { tokenAttachemnt, range, stop in
+                if (tokenAttachemnt is TokenTextAttachment) {
+                    self.textView.selectedRange = range
+                }
+            })
+        }
+    }
+    
+    func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
+        invalidateIntrinsicContentSize()
+        updateExcludePath()
+        updateLayout()
+    }
+    
+}
+
+// MARK: - UITextViewDelegate
+
+extension TokenField : UITextViewDelegate {
+    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        return !(textAttachment is TokenSeparatorAttachment)
+    }
+    
+    public func textViewDidChange(_ textView: UITextView) {
+        userDidConfirmInput = false
+        
+        filterUnwantedAttachments()
+        notifyIfFilterTextChanged()
+        invalidateIntrinsicContentSize()
+    }
+    
     ///TODO: test textview delegate method called?
-    func textViewDidChangeSelection(_ textView: UITextView) {
+    public func textViewDidChangeSelection(_ textView: UITextView) {
         zmLog.debug("Selection changed: NSStringFromRange(textView.selectedRange)")
         
         var modifiedSelectionRange = NSRange(location: 0, length: 0)
@@ -201,12 +248,12 @@ extension TokenField {
             textView.selectedRange = modifiedSelectionRange
         }
     }
-
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             userDidConfirmInput = true
-                delegate?.tokenFieldDidConfirmSelection(self)
+            delegate?.tokenFieldDidConfirmSelection(self)
             
             return false
         }
@@ -251,36 +298,7 @@ extension TokenField {
         updateTextAttributes()
         
         return true
-
-    }
-}
-
-// MARK: - TokenizedTextViewDelegate
-
-extension TokenField: TokenizedTextViewDelegate {
-    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat) {
-        if isCollapsed {
-            setCollapsed(false, animated: true)
-            return
-        }
         
-        if fraction >= 1 && range.location == self.textView.textStorage.length - 1 {
-            return
-        }
-        
-        if range.location < self.textView.textStorage.length {
-            self.textView.attributedText.enumerateAttribute(.attachment, in: range, options: [], using: { tokenAttachemnt, range, stop in
-                if (tokenAttachemnt is TokenTextAttachment) {
-                    self.textView.selectedRange = range
-                }
-            })
-        }
     }
-    
-    func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
-        invalidateIntrinsicContentSize()
-        updateExcludePath()
-        updateLayout()
-    }
-    
+
 }

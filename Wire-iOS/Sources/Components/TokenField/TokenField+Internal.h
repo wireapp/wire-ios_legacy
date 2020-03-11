@@ -36,5 +36,6 @@
 - (void)updateExcludePath;
 - (void)updateLayout;
 - (void)updateTextAttributes;
+- (void)notifyIfFilterTextChanged;
 
 @end
