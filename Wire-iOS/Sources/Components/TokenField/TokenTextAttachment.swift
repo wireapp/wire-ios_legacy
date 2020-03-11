@@ -48,10 +48,10 @@ final class TokenSeparatorAttachment: NSTextAttachment {
     }
     
     private var imageForCurrentToken: UIImage? {
-        let imageHeight = ceil(tokenField.font?.pointSize ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.font?.pointSize ?? 0)
         let imageSize = CGSize(width: dotSize + dotSpacing * 2, height: imageHeight)
         let lineHeight = tokenField.font?.lineHeight ?? 0
-        let delta = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
+        let delta: CGFloat = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
         
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageSize.height)
         
@@ -127,14 +127,14 @@ final class TokenTextAttachment: NSTextAttachment {
     }
     
     private var imageForCurrentToken: UIImage? {
-        let imageHeight = ceil(tokenField.font?.lineHeight ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.font?.lineHeight ?? 0)
         let title = token.title.applying(transform: tokenField.tokenTextTransform)
         // Width cannot be smaller than height
-        let tokenMaxWidth = max(ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight), imageHeight)
+        let tokenMaxWidth: CGFloat = max(ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight), imageHeight)
         let shortTitle = shortenedText(forText: title, withAttributes: titleAttributes, toFitMaxWidth: tokenMaxWidth)
         let attributedName = NSAttributedString(string: shortTitle, attributes: titleAttributes)
         let imageSize = CGSize(width: attributedName.size().width, height: imageHeight)
-        let delta = ceil((tokenField.font?.capHeight ?? 0 - imageHeight) * 0.5)
+        let delta: CGFloat = ceil(((tokenField.font?.capHeight ?? 0) - imageHeight) * 0.5)
         
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
         
@@ -151,7 +151,6 @@ final class TokenTextAttachment: NSTextAttachment {
         }
         
         context.setLineJoin(.round)
-        
         context.setLineWidth(1)
         
         attributedName.draw(at: CGPoint(x: 0, y: -delta + tokenField.tokenTitleVerticalAdjustment))
