@@ -22,6 +22,9 @@ import WireSystem
 class LoggingTest: XCTestCase {
 
     func testThatCurrentLogIsNotEmpty() {
+        // Wait for all log operations to finish
+        ZMSLog.sync()
+        
         // Assert that some logs have been written to the current log file, which is the file
         // which gets attached to debug reports.
         XCTAssertNotNil(ZMSLog.currentLog)
