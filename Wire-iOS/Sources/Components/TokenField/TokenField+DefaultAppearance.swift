@@ -70,12 +70,36 @@ extension TokenField {
         font = schema.font(for: .init(.normal, .regular))
         tokenTitleFont = schema.font(for: .init(.small, .regular))
     }
+    
+    // MARK: - Utility
+    
+    @objc
+    func string(forTokens tokens: [Token]) -> NSAttributedString {
+        let string = NSMutableAttributedString()
+        for token in tokens {
+            let tokenAttachment = TokenTextAttachment(token: token, tokenField: self)
+            let tokenString = NSAttributedString(attachment: tokenAttachment)
+            
+            string.append(tokenString)
+            
+            let separatorAttachment = TokenSeparatorAttachment(token: token, tokenField: self)
+            let separatorString = NSAttributedString(attachment: separatorAttachment)
+            
+            string.append(separatorString)
+        }
+        
+//        string += textAttributes
+        
+//        string.addAttributes((textAttributes as? [NSAttributedString.Key : Any]) ?? [:], range: NSRange(location: 0, length: string.length))
+        return string && (textAttributes as? [NSAttributedString.Key : Any]) ?? [:]
+    }
+
 }
 
 // MARK: - TokenizedTextViewDelegate
 
 extension TokenField: TokenizedTextViewDelegate {
-    func tokenizedTextView(_ textView: TokenizedTextView?, didTapTextRange range: NSRange, fraction: CGFloat) {
+    func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat) {
         if isCollapsed {
             setCollapsed(false, animated: true)
             return
@@ -94,7 +118,7 @@ extension TokenField: TokenizedTextViewDelegate {
         }
     }
 
-    func tokenizedTextView(_ textView: TokenizedTextView?, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
+    func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
         invalidateIntrinsicContentSize()
         updateExcludePath()
         updateLayout()

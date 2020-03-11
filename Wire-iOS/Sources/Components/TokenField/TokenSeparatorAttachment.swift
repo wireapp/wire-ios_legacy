@@ -24,7 +24,6 @@ final class TokenSeparatorAttachment: NSTextAttachment {
     private let dotSize: CGFloat = 4
     private let dotSpacing: CGFloat = 8
 
-    @objc
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField

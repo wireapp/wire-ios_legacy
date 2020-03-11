@@ -541,24 +541,6 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 #pragma mark - Utility
 
-- (NSAttributedString *)stringForTokens:(NSArray *)tokens
-{
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
-    for (Token *token in tokens) {
-        TokenTextAttachment *tokenAttachment = [[TokenTextAttachment alloc] initWithToken:token tokenField:self];
-        NSMutableAttributedString* tokenString = [[NSAttributedString attributedStringWithAttachment:tokenAttachment] mutableCopy];
-        
-        [string appendAttributedString:tokenString];
-        
-        TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
-        NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
-        
-        [string appendAttributedString:separatorString];
-    }
-    [string addAttributes:self.textAttributes range:NSMakeRange(0, string.length)];
-    return string;
-}
-
 - (NSAttributedString *)collapsedString
 {
     NSString *collapsedText = NSLocalizedString(@" ...", nil);
