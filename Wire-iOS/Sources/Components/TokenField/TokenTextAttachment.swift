@@ -19,11 +19,15 @@
 
 
 final class TokenSeparatorAttachment: NSTextAttachment {
-    let token: Token
-    unowned let tokenField: TokenField
-    let dotSize: CGFloat = 4.0
-    let dotSpacing: CGFloat = 8.0
     
+    @objc
+    let token: Token
+    
+    private unowned let tokenField: TokenField
+    private let dotSize: CGFloat = 4.0
+    private let dotSpacing: CGFloat = 8.0
+    
+    @objc
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
@@ -93,14 +97,20 @@ final class TokenSeparatorAttachment: NSTextAttachment {
 }
 
 final class TokenTextAttachment: NSTextAttachment {
+    @objc
     let token: Token
-    unowned let tokenField: TokenField
+    
+    private unowned let tokenField: TokenField
+    
+    @objc(isSelected)
     var isSelected = false {
         didSet {
             refreshImage()
         }
     }
     
+    ///TODO: caller
+    @objc
     init(token: Token, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
@@ -115,7 +125,8 @@ final class TokenTextAttachment: NSTextAttachment {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func refreshImage() {
+    @objc
+    func refreshImage() {
         image = imageForCurrentToken
     }
     

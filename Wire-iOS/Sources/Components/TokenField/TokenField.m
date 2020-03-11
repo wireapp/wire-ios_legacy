@@ -20,7 +20,6 @@
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 
-#import "TokenTextAttachment.h"
 #import "IconButton.h"
 #import "Wire-Swift.h"
 
@@ -808,14 +807,14 @@ NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
                                         options:0
                                      usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
                                          if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                             tokenAttachment.selected = RangeIncludesRange(textView.selectedRange, range);
+                                             tokenAttachment.isSelected = RangeIncludesRange(textView.selectedRange, range);
                                              [textView.layoutManager invalidateDisplayForCharacterRange:range];
                                              
                                              if (RangeIncludesRange(textView.selectedRange, range)) {
                                                  modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
                                                  hasModifiedSelection = YES;
                                              }
-                                             ZMLogInfo(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
+                                             ZMLogInfo(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.isSelected);
                                          }
                                      }];
     
