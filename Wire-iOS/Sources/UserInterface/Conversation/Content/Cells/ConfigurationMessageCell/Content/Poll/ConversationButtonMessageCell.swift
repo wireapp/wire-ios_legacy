@@ -19,22 +19,30 @@ import UIKit
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let button = SpinnerButton(style: .empty)
-    private let errorLabel = UILabel()
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .accent()
+        
+        return label
+    }()
     
-    var errorLabelTopConstraint: NSLayoutConstraint!
-    var errorLabelHeightConstraint: NSLayoutConstraint!
+    var errorLabelTopConstraint: NSLayoutConstraint?
+    var errorLabelHeightConstraint: NSLayoutConstraint?
 
     var isSelected: Bool = false
 
     var errorMessage: String? {
         didSet {
             if errorMessage?.isEmpty == false {
-                errorLabelTopConstraint.constant = 4
+                errorLabelTopConstraint?.constant = 4
             } else {
-                errorLabelTopConstraint.constant = 0
+                errorLabelTopConstraint?.constant = 0
             }
-            
+            errorLabel.text = errorMessage
             errorLabel.invalidateIntrinsicContentSize()
+            
+            layoutIfNeeded()
         }
     }
     weak var message: ZMConversationMessage?
@@ -88,8 +96,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
-//        errorLabelHeightConstraint = errorLabel.heightAnchor.constraint(equalToConstant: 0)
+        let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
         
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
@@ -101,6 +108,12 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
             errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             ])
+        
+        self.errorLabelTopConstraint = errorLabelTopConstraint
+        
+        ///TODO: for test only!
+//        errorMessage = "Test error"
+
     }
 }
 
@@ -125,7 +138,7 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var configuration: View.Configuration
 
-    var accessibilityIdentifier: String? = "PollCell"
+    var accessibilityIdentifier: String? = "ButtonCell"
 
     var accessibilityLabel: String?
 
