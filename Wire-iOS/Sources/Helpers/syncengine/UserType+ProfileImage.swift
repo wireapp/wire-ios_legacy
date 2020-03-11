@@ -135,8 +135,11 @@ extension UserType {
                 imageCache.cache.setObject(image, forKey: cacheKey as NSString)
             }
             
+            imageCache.dispatchGroup.enter()
+            
             DispatchQueue.main.async {
                 completion(image, false)
+                imageCache.dispatchGroup.leave()
             }
         }
     }

@@ -173,7 +173,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
             self.container.backgroundColor = self.containerBackgroundColor(for: user)
         }
 
-        if animated {
+        if animated && !ProcessInfo.processInfo.isRunningTests {
             UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: updateBlock, completion: nil)
         } else {
             updateBlock()

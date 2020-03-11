@@ -30,6 +30,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
 
         mockUser = SwiftMockLoader.mockUsers().first
         mockUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").data()
+        mockUser.mediumProfileImageCacheKey = "test"
     }
     
     override func tearDown() {
@@ -55,6 +56,7 @@ final class UserImageViewContainerSnapshotTests: XCTestCase {
     func testForWithUserImage(){
         setupSut(userSession: MockZMUserSession())
 
+        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
         verify(matching: sut)
     }
 }
