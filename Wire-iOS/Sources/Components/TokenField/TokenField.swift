@@ -184,8 +184,8 @@ extension TokenField {
         var hasModifiedSelection = false
         
         textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, range, stop in
-            if let tokenAttachment = tokenAttachmentas? TokenTextAttachment {
-                tokenAttachment.isSelected = RangeIncludesRange(textView.selectedRange, range)
+            if let tokenAttachment = tokenAttachmentas as? TokenTextAttachment {
+                tokenAttachment.isSelected = rangeIncludesRange(textView.selectedRange, range)
                 textView.layoutManager.invalidateDisplay(forCharacterRange: range)
                 
                 if rangeIncludesRange(textView.selectedRange, range) {
