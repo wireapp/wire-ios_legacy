@@ -29,9 +29,9 @@ extension UIColor {
     ///
     /// - Parameter accentColor: the accent color
     class func setAccent(_ accentColor: ZMAccentColor) {
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue {
             SelfUser.provider?.selfUser.accentColorValue = accentColor
-        })
+        }
     }
     
     class func indexedAccentColor() -> ZMAccentColor {
