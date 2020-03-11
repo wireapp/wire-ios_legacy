@@ -262,15 +262,18 @@ final class ProfileSelfPictureViewController: UIViewController {
 extension ProfileSelfPictureViewController: ZMUserObserver {
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
-        guard changeInfo.imageMediumDataChanged,
-            let userSession = ZMUserSession.shared(),
-            let profileImageUser = changeInfo.user as? ProfileImageFetchable else { return }
+        guard
+            changeInfo.imageMediumDataChanged,
+            let userSession = ZMUserSession.shared()
+        else {
+            return
+        }
         
-        profileImageUser.fetchProfileImage(session: userSession,
-                                           cache: defaultUserImageCache,
-                                           sizeLimit: nil,
-                                           desaturate: false) { (image, _) in
-                                            self.selfUserImageView.image = image
+        changeInfo.user.fetchProfileImage(session: userSession,
+                                          imageCache: defaultUserImageCache,
+                                          sizeLimit: nil,
+                                          isDesaturated: false) { (image, _) in
+            self.selfUserImageView.image = image
         }
     }
 }
