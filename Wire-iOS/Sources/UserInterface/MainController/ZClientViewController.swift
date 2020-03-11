@@ -126,13 +126,9 @@ final class ZClientViewController: UIViewController {
                 stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
         case .conversation:
-            
             stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
         default:
-            // If there's no previously selected screen
-            if isConversationViewVisible {
-                selectListItemWhenNoPreviousItemSelected()
-            }
+            break
         }
         return stateRestored
     }
