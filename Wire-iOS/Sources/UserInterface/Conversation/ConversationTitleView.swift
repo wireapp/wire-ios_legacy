@@ -20,13 +20,7 @@
 import UIKit
 
 final class ConversationTitleView: TitleView {
-    private var shouldShowVerifiedShield: Bool = false
-    public var conversation: ZMConversation {
-        didSet {
-            shouldShowVerifiedShield = conversation.securityLevel == .secure && conversation.conversationType != .connection
-        }
-    }
-
+    var conversation: ZMConversation
     var interactive: Bool = true
     
     @objc init(conversation: ZMConversation, interactive: Bool = true) {
@@ -52,7 +46,7 @@ final class ConversationTitleView: TitleView {
             attachments.append(.legalHold())
         }
         
-        if shouldShowVerifiedShield {
+        if conversation.shouldShowVerifiedShield {
             attachments.append(.verifiedShield())
         }
         
@@ -63,7 +57,7 @@ final class ConversationTitleView: TitleView {
         var components: [String] = []
         components.append(conversation.displayName.localizedUppercase)
         
-        if shouldShowVerifiedShield {
+        if conversation.shouldShowVerifiedShield {
             components.append("conversation.voiceover.verified".localized)
         }
         
@@ -102,3 +96,9 @@ extension NSTextAttachment {
     }
 }
 
+private extension ZMConversation {
+    var shouldShowVerifiedShield: Bool {
+        return self.securityLevel == .secure &&
+            self.conversationType != .connection
+    }
+}
