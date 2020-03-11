@@ -17,81 +17,6 @@
 // 
 
 
-
-final class TokenSeparatorAttachment: NSTextAttachment {
-    
-    @objc
-    let token: Token
-    
-    private unowned let tokenField: TokenField
-    private let dotSize: CGFloat = 4.0
-    private let dotSpacing: CGFloat = 8.0
-    
-    @objc
-    init(token: Token, tokenField: TokenField) {
-        self.token = token
-        self.tokenField = tokenField
-        
-        super.init(data: nil, ofType: nil) ///TODO: () ?
-        
-        refreshImage()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    private func refreshImage() {
-        image = imageForCurrentToken
-    }
-    
-    private var imageForCurrentToken: UIImage? {
-        let imageHeight: CGFloat = ceil(tokenField.font?.pointSize ?? 0)
-        let imageSize = CGSize(width: dotSize + dotSpacing * 2, height: imageHeight)
-        let lineHeight = tokenField.font?.lineHeight ?? 0
-        let delta: CGFloat = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
-        
-        bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageSize.height)
-        
-        UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0.0)
-        guard let context = UIGraphicsGetCurrentContext() else { return nil }
-        context.saveGState()
-        
-        if let backgroundColor = backgroundColor {
-            context.setFillColor(backgroundColor.cgColor)
-        }
-        context.setLineJoin(.round)
-        context.setLineWidth(1)
-        
-        // draw dot
-        let dotPath = UIBezierPath(ovalIn: CGRect(x: dotSpacing, y: ceil((imageSize.height + dotSize) / 2.0), width: dotSize, height: dotSize))
-        
-        if let dotColor = dotColor {
-            context.setFillColor(dotColor.cgColor)
-        }
-        context.addPath(dotPath.cgPath)
-        context.fillPath()
-        
-        let i = UIGraphicsGetImageFromCurrentImageContext()
-        
-        context.restoreGState()
-        UIGraphicsEndImageContext()
-        
-        return i
-    }
-    
-    
-    private var dotColor: UIColor? {
-        return tokenField.dotColor
-    }
-    
-    private var backgroundColor: UIColor? {
-        return tokenField.tokenBackgroundColor
-    }
-}
-
 final class TokenTextAttachment: NSTextAttachment {
     @objc
     let token: Token
@@ -138,7 +63,7 @@ final class TokenTextAttachment: NSTextAttachment {
         
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
         
-        UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0.0)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, _: false, _: 0)
         guard let context = UIGraphicsGetCurrentContext() else { return nil }
         context.saveGState()
         
