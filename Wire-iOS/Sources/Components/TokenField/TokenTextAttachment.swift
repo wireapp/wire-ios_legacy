@@ -15,10 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
-
-protocol TokenContainer {
-    var token: Token { get }
-}
     
 final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     let token: Token
