@@ -78,7 +78,7 @@ extension TokenField {
     // MARK: - Utility
     
     @objc
-    func updateTokenAttachments() { ///TODO: test
+    func updateTokenAttachments() {
         textView?.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.attributedText.length), options: [], using: { tokenAttachment, _, _ in
             (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         })

@@ -108,4 +108,18 @@ final class TokenFieldTests: XCTestCase {
         // then
         XCTAssertEqual(sut.tokens.count, 3)
     }
+
+    func testThatColorIsChnagedAfterUpdateTokenAttachments() {
+        // given
+        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        
+        sut.addToken(token1)
+        
+        // when
+        sut.tokenTitleColor = .brightOrange
+        sut.updateTokenAttachments()
+        // then
+        
+        verify(matching: sut)
+    }
 }
