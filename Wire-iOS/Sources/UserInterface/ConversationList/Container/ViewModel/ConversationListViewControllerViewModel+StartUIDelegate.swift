@@ -68,7 +68,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
             if users.count == 1,
                 let user = users.first {
                 var oneToOneConversation: ZMConversation? = nil
-                userSession.enqueueChanges({
+                userSession.enqueue({
                     oneToOneConversation = user.oneToOneConversation
                 }, completionHandler: {
                     delay(0.3) {
@@ -78,7 +78,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
             } else if users.count > 1 {
                 var conversation: ZMConversation? = nil
                 
-                userSession.enqueueChanges({
+                userSession.enqueue({
                     let team = ZMUser.selfUser().team
                     
                     conversation = ZMConversation.insertGroupConversation(session: userSession,
@@ -98,7 +98,7 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
         
         var conversation: ZMConversation! = nil
         
-        userSession.enqueueChanges({
+        userSession.enqueue({
             conversation = ZMConversation.insertGroupConversation(session: userSession,
                                                                   participants: Array(users),
                                                                   name: name,

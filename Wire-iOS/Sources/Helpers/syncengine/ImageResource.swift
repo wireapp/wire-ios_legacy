@@ -248,7 +248,7 @@ extension ImageResource {
             return completion(image, true)
         }
         
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             self.requestImageDownload()
         }
         

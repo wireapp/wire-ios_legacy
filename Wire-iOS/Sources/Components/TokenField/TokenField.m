@@ -21,7 +21,6 @@
 #import "TokenField+Internal.h"
 
 #import "TokenTextAttachment.h"
-#import "IconButton.h"
 #import "Wire-Swift.h"
 
 @class TokenizedTextView;

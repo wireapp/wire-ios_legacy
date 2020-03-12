@@ -55,11 +55,11 @@ extension ConversationContentViewController {
                                view: UIView) {
         switch actionId {
         case .cancel:
-            session.enqueueChanges({
+            session.enqueue({
                 message.fileMessageData?.cancelTransfer()
             })
         case .resend:
-            session.enqueueChanges({
+            session.enqueue({
                 message.resend()
             })
         case .delete:
@@ -109,7 +109,7 @@ extension ConversationContentViewController {
 
             let selectedMessage = dataSource.selectedMessage
 
-            session.performChanges({
+            session.perform({
                 Message.setLikedMessage(message, liked: updatedLikedState)
             })
 
@@ -135,7 +135,7 @@ extension ConversationContentViewController {
         case .copy:
             message.copy(in: .general)
         case .download:
-            session.enqueueChanges({
+            session.enqueue({
                 message.fileMessageData?.requestFileDownload()
             })
         case .reply:

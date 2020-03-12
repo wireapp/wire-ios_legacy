@@ -339,7 +339,7 @@ final class ConversationImagesViewController: TintColorCorrectedViewController {
     }
 
     @objc func likeCurrent() {
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             self.currentMessage.liked = !self.currentMessage.liked
         }, completionHandler: {
             self.updateLikeButton()
