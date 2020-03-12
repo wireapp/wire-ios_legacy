@@ -61,7 +61,7 @@ extension CollectionCell: SelectableView {
 
 final class DeletionDialogPresenter: NSObject {
 
-    private unowned let sourceViewController: PopoverPresenterViewController
+    private weak var sourceViewController: UIViewController?
     
     func deleteAlert(message: ZMConversationMessage,
                      sourceView: UIView?,
@@ -95,14 +95,14 @@ final class DeletionDialogPresenter: NSObject {
                 presentationController.sourceView = selectableView.selectionView
                 presentationController.sourceRect = selectableView.selectionRect
             } else {
-                alert.configPopover(pointToView: source, popoverPresenter: sourceViewController)
+                alert.configPopover(pointToView: source, popoverPresenter: sourceViewController as? PopoverPresenterViewController)
             }
         }
         
         return alert
     }
 
-    init(sourceViewController: PopoverPresenterViewController) {
+    init(sourceViewController: UIViewController) {
         self.sourceViewController = sourceViewController
         super.init()
     }
@@ -122,7 +122,7 @@ final class DeletionDialogPresenter: NSObject {
         let alert = deleteAlert(message: message,
                                 sourceView: source,
                                 completion: completion)
-        sourceViewController.present(alert, animated: true)
+        sourceViewController?.present(alert, animated: true)
     }
 }
 

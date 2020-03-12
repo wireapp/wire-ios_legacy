@@ -156,9 +156,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        let presenter: PopoverPresenterViewController = (presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as! PopoverPresenterViewController
+        let presenter: PopoverPresenterViewController? = (presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
 
-        if let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
+        if let presenter = presenter,
+           let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
             keyboardAvoiding.configPopover(pointToView: pointToView, popoverPresenter: presenter)
         }
 

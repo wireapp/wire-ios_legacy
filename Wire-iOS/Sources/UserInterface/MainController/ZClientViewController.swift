@@ -125,7 +125,7 @@ final class ZClientViewController: UIViewController {
             if isConversationViewVisible {
                 stateRestored = attemptToLoadLastViewedConversation(withFocus: false, animated: false)
             }
-        case .conversation:
+        case .conversation?:
             stateRestored = attemptToLoadLastViewedConversation(withFocus: true, animated: false)
         default:
             break
