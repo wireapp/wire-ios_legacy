@@ -159,20 +159,21 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
 
         let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: mediaAsset),
-                                                         onConfirm: { [unowned self] (editedImage: UIImage?) in
-                                                                self.dismiss(animated: true) {
+                                                         onConfirm: { [weak self] (editedImage: UIImage?) in
+                                                                self?.dismiss(animated: true) {
                                                                     if isFromCamera {
+                                                                        guard let image = UIImage(data: imageData as Data) else { return }
                                                                         let selector = #selector(ConversationInputBarViewController.image(_:didFinishSavingWithError:contextInfo:))
-                                                                        UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData as Data)!, self, selector, nil)
+                                                                        UIImageWriteToSavedPhotosAlbum(image, self, selector, nil)
                                                                     }
 
-                                                                    self.sendController.sendMessage(withImageData: editedImage?.pngData() ?? imageData)
+                                                                    self?.sendController.sendMessage(withImageData: editedImage?.pngData() ?? imageData)
                                                                 }
                                                             },
-                                                         onCancel: { [unowned self] in
-                                                                        self.dismiss(animated: true) {
-                                                                            self.mode = .camera
-                                                                            self.inputBar.textView.becomeFirstResponder()
+                                                         onCancel: { [weak self] in
+                                                                        self?.dismiss(animated: true) {
+                                                                            self?.mode = .camera
+                                                                            self?.inputBar.textView.becomeFirstResponder()
                                                                         }
                                                                     })
 
