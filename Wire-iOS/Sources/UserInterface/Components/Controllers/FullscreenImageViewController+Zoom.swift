@@ -147,15 +147,15 @@ extension FullscreenImageViewController {
     ///   - image: a MediaAsset object contains GIF or other images
     ///   - parentSize: parent view's size
     func setupImageView(image: MediaAsset, parentSize: CGSize) {
-        guard let imageView = image.imageView as? UIImageView else { return }
+        let imageView = image.imageView
 
         imageView.clipsToBounds = true
         imageView.layer.allowsEdgeAntialiasing = true
-        self.imageView = imageView
+        self.imageView = imageView as? UIImageView
         imageView.translatesAutoresizingMaskIntoConstraints = false
 
         scrollView.addSubview(imageView)
-        scrollView.contentSize = imageView.image?.size ?? CGSize.zero
+        scrollView.contentSize = self.imageView?.image?.size ?? .zero
 
         updateScrollViewZoomScale(viewSize: parentSize, imageSize: image.size)
         updateZoom(withSize: parentSize)

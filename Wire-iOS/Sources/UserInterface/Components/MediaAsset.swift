@@ -41,7 +41,7 @@ extension MediaAsset {
 }
 
 
-protocol MediaAssetView: class {
+protocol MediaAssetView: UIView {
     var mediaAsset: MediaAsset? { get set }
 }
 
