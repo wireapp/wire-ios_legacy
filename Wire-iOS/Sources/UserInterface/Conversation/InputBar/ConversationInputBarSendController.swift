@@ -29,7 +29,7 @@ final class ConversationInputBarSendController: NSObject {
 
     func sendMessage(withImageData imageData: Data, completion completionHandler: Completion? = nil) {
         feedbackGenerator.prepare()
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             self.conversation.append(imageFromData:imageData)
             self.feedbackGenerator.impactOccurred()
         }, completionHandler: {
@@ -41,7 +41,7 @@ final class ConversationInputBarSendController: NSObject {
     func sendTextMessage(_ text: String,
                          mentions: [Mention],
                          replyingTo message: ZMConversationMessage?) {
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             let shouldFetchLinkPreview = !Settings.shared().disableLinkPreviews
             self.conversation.append(text:text, mentions: mentions, replyingTo: message, fetchLinkPreview: shouldFetchLinkPreview)
             self.conversation.draftMessage = nil
@@ -54,7 +54,7 @@ final class ConversationInputBarSendController: NSObject {
     func sendTextMessage(_ text: String, mentions: [Mention], withImageData data: Data) {
         let shouldFetchLinkPreview = !Settings.shared().disableLinkPreviews
         
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             self.conversation.append(text: text, mentions: mentions, replyingTo: nil, fetchLinkPreview: shouldFetchLinkPreview)
             
             self.conversation.append(imageFromData: data)

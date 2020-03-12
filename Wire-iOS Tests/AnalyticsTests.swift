@@ -23,6 +23,7 @@ import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
+import WireCommonComponents
 
 class AnalyticsTests : XCTestCase {
 

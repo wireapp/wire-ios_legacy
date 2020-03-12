@@ -57,7 +57,7 @@ extension ConversationInputBarViewController {
         /// alert actions  for debugging
         #if targetEnvironment(simulator)
         let plistHandler: ((UIAlertAction) -> Void) = { _ in
-            ZMUserSession.shared()?.enqueueChanges({
+            ZMUserSession.shared()?.enqueue({
                 let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                 guard let basePath = paths.first,
                     let sourceLocation = Bundle.main.url(forResource: "CountryCodes", withExtension: "plist") else { return }
@@ -156,7 +156,7 @@ extension ConversationInputBarViewController {
     #if targetEnvironment(simulator)
     private func uploadTestAlertAction(size: UInt, title: String, fileName: String) -> UIAlertAction {
         return UIAlertAction(title: title, style: .default, handler: {_ in
-            ZMUserSession.shared()?.enqueueChanges({
+            ZMUserSession.shared()?.enqueue({
                 let randomData = Data.secureRandomData(length: UInt(size))
 
                 if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {

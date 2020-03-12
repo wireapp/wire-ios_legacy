@@ -333,7 +333,7 @@ class SettingsCellDescriptorFactory {
         let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
         let conversationId = conversation.objectID
         
-        let syncContext = userSession.syncManagedObjectContext!
+        let syncContext = userSession.syncManagedObjectContext
         syncContext.performGroupedBlock {
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
             let messages: [ZMClientMessage] = (0...count).map { i in
@@ -458,9 +458,9 @@ class SettingsCellDescriptorFactory {
 
         let uiMOC = userSession.managedObjectContext
         let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
-        let allConversations = uiMOC?.fetchOrAssert(request: fetchRequest)
+        let allConversations = uiMOC.fetchOrAssert(request: fetchRequest)
         
-        if let convo = allConversations?.first(where: { predicate.evaluate(with: $0) }) {
+        if let convo = allConversations.first(where: { predicate.evaluate(with: $0) }) {
             alert.message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
@@ -536,14 +536,14 @@ class SettingsCellDescriptorFactory {
         _ = builder.setOtrKey("broken_key".data(using: .utf8))
         let genericMessage = ZMGenericMessage.message(content: builder.build())
         
-        userSession.enqueueChanges {
+        userSession.enqueue {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
     }
     
     private static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
         ZMUserSession.shared()?.syncManagedObjectContext.performGroupedBlock {
-            ZMUserSession.shared()?.applicationStatusDirectory.requestSlowSync()
+            ZMUserSession.shared()?.requestSlowSync()
         }
     }
     

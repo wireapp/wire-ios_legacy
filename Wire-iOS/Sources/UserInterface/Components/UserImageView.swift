@@ -173,7 +173,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
             self.container.backgroundColor = self.containerBackgroundColor(for: user)
         }
 
-        if animated {
+        if animated && !ProcessInfo.processInfo.isRunningTests {
             UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: updateBlock, completion: nil)
         } else {
             updateBlock()
@@ -182,8 +182,12 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Updates the image for the user.
     fileprivate func updateUserImage() {
-        guard let user = user as? ProfileImageFetchableUser,
-              let userSession = userSession else { return }
+        guard
+            let user = user,
+            let userSession = userSession
+        else {
+            return
+        }
 
         var desaturate = false
         if shouldDesaturate {
@@ -191,9 +195,9 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         }
 
         user.fetchProfileImage(session: userSession,
-                               cache: defaultUserImageCache,
+                               imageCache: defaultUserImageCache,
                                sizeLimit: size.rawValue,
-                               desaturate: desaturate,
+                               isDesaturated: desaturate,
                                completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }

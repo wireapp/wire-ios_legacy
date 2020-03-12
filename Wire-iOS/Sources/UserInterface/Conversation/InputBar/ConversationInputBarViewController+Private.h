@@ -92,7 +92,6 @@
 @property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 
 - (void)updateRightAccessoryView;
-- (void)updateButtonIcons;
 - (void)updateAccessoryViews;
 - (void)updateNewButtonTitleLabel;
 - (void)clearInputBar;
