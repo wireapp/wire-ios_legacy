@@ -26,6 +26,7 @@ enum ConversationStatusIcon: Equatable {
     
     case unreadMessages(count: Int)
     case unreadPing
+    case alarm
     case missedCall
     case mention
     case reply
@@ -71,6 +72,7 @@ enum StatusMessageType: Int, CaseIterable {
     case addParticipants
     case removeParticipants
     case newConversation
+    case composite
 
     private var localizationSilencedRootPath: String {
         return "conversation.silenced.status.message"
@@ -160,17 +162,16 @@ extension StatusMessageType {
         else if message.isKnock {
             self = .knock
         }
-        else if message.isSystem, let system = message.systemMessageData {
-            if let statusMessageType = StatusMessageType.conversationSystemMessageTypeToStatusMessageType[system.systemMessageType] {
-                self = statusMessageType
-            }
-            else {
-                return nil
-            }
+        else if message.isComposite {
+            self = .composite
         }
-        else {
-            return nil
+        else if message.isSystem,
+             let system = message.systemMessageData,
+             let statusMessageType = StatusMessageType.conversationSystemMessageTypeToStatusMessageType[system.systemMessageType] {
+            self = statusMessageType
         }
+
+        return nil
     }
 }
 
@@ -452,6 +453,7 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         .reply:      "reply",
         .missedCall: "missedcall",
         .knock:      "knock",
+        .composite:  "composite",
         .text:       "text",
         .link:       "link",
         .image:      "image",
@@ -568,6 +570,8 @@ final class NewMessagesMatcher: TypedConversationStatusMatcher {
         switch type {
         case .knock:
             return .unreadPing
+        case .composite:
+            return .alarm
         case .missedCall:
             return .missedCall
         default:
@@ -795,3 +799,8 @@ extension ZMConversation {
     }
 }
 
+extension ZMConversationMessage {
+    var isComposite: Bool {
+        return (self as? ConversationCompositeMessage)?.isComposite == true
+    }
+}

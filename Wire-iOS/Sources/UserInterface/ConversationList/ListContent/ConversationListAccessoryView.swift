@@ -161,6 +161,10 @@ final class ConversationListAccessoryView: UIView {
             iconView.setIcon(.ping, size: iconSize, color: .black)
             accessibilityValue = "conversation_list.voiceover.status.ping".localized
             return iconView
+        case .alarm:
+            iconView.setIcon(.alerts, size: iconSize, color: .black) ///TODO: wait for design update
+            accessibilityValue = "conversation_list.voiceover.status.alarm".localized
+            return iconView
         }
     }
 

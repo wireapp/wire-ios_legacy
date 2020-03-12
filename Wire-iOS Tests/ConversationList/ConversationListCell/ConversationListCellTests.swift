@@ -198,6 +198,19 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(otherUserConversation)
     }
     
+    func testThatItRendersConversationWithCompositeMessage() {
+        // when
+        otherUserConversation.appendb
+        
+//        let knock = otherUserConversation.appendKnock()
+//        (knock as! ZMClientMessage).sender = otherUser
+//        otherUserConversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+//        (otherUserConversation.append(text: "@self test", mentions: [selfMention]) as! ZMMessage).sender = self.otherUser
+
+        // then
+        verify(otherUserConversation)
+    }
+    
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
         otherUserConversation.setTypingUsers([otherUser])

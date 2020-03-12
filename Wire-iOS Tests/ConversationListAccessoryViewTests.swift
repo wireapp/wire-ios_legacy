@@ -85,6 +85,13 @@ class ConversationListAccessoryViewTests: ZMSnapshotTestCase {
         self.verify(view: sut.snapshotView())
     }
     
+    func testThatItShowsAlarm() { ///TODO: wait for design update
+        // WHEN
+        sut.icon = .alarm
+        // THEN
+        self.verify(view: sut.snapshotView())
+    }
+    
     func testThatItShowsTyping() {
         // WHEN
         sut.icon = ConversationStatusIcon.typing
