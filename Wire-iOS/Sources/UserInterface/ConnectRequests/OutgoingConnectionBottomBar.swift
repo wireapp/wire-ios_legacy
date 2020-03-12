@@ -21,12 +21,12 @@ import UIKit
 import Cartography
 
 
-@objc enum OutgoingConnectionBottomBarAction: UInt {
+enum OutgoingConnectionBottomBarAction: UInt {
     case cancel, archive
 }
 
 
-@objcMembers final class OutgoingConnectionViewController: UIViewController {
+final class OutgoingConnectionViewController: UIViewController {
 
     private let cancelButton = IconButton(style: .default)
     private let archiveButton = IconButton(style: .default)
@@ -55,7 +55,7 @@ import Cartography
         cancelButton.setTitle("profile.cancel_connection_button_title".localized(uppercased: true), for: .normal)
         cancelButton.titleLabel?.font = FontSpec(.small, .light).font!
         cancelButton.setTitleColor(UIColor.from(scheme: .textForeground), for: .normal)
-        cancelButton.titleImageSpacing = 24
+        cancelButton.setTitleImageSpacing(24)
         cancelButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
 

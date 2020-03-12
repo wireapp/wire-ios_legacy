@@ -17,17 +17,7 @@
 //
 
 import Foundation
-@testable import Wire
 
-extension MockUserType: ProfileImageFetchable {
-
-    func fetchProfileImage(session: ZMUserSessionInterface,
-                           cache: ImageCache<UIImage> = defaultUserImageCache,
-                           sizeLimit: Int? = nil,
-                           desaturate: Bool = false,
-                           completion: @escaping (UIImage?, Bool) -> Void) {
-
-        let image = completeImageData.flatMap(UIImage.init)
-        completion(image, false)
-    }
+extension CIContext {
+    static var shared: CIContext = CIContext(options: nil)
 }

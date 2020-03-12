@@ -116,7 +116,7 @@ extension RenameGroupSectionController: SimpleTextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
         if let newName = validName {
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 self.conversation.userDefinedName = newName
             }
         } else {

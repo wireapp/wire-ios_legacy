@@ -142,7 +142,7 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
     
     private func updateMutedMessageTypes(_ types: MutedMessageTypes) {
         
-        userSession.performChanges {
+        userSession.perform {
             self.conversation.mutedMessageTypes = types
         }
     }

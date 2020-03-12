@@ -867,7 +867,7 @@ class ConversationNewDeviceSystemMessageCellDescription: ConversationMessageCell
     }
     
     private static func configureForNewClientOfSelfUser(_ selfUser: UserType, clients: [UserClientType], attributes: TextAttributes) -> View.Configuration {
-        let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient()) ?? false
+        let isSelfClient = clients.first?.isEqual(ZMUserSession.shared()?.selfUserClient) ?? false
         let senderName = NSLocalizedString("content.system.you_started", comment: "") && attributes.senderAttributes
         let startedUsingString = NSLocalizedString("content.system.started_using", comment: "") && attributes.startedUsingAttributes
         let userClientString = NSLocalizedString("content.system.new_device", comment: "") && attributes.linkAttributes
