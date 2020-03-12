@@ -27,10 +27,27 @@ final class TokenFieldTests: XCTestCase {
         sut = TokenField()
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         sut.backgroundColor = .black
+        sut.textView.placeholder = "Dummy placeholder"
     }
     
     override func tearDown() {
         sut = nil
+    }
+
+    func testThatPlaceHolderIsShownAfterAllTokensAreRemoved() {
+        // given
+        sut.addToken(forTitle: "Token 1", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 2", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 3", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 4", representedObject: MockUser())
+
+        // when
+        sut.removeAllTokens()
+        
+        // then
+        XCTAssert(sut.tokens.isEmpty)
+        
+        verify(matching: sut)
     }
     
     func testThatTokensCanBeRemoved() {

@@ -332,11 +332,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }    
 }
 
-- (void)removeToken:(Token *)token
-{
-    [self removeTokens:@[token]];
-}
-
 - (void)updateMaxTitleWidthForToken:(Token *)token
 {
     CGFloat tokenMaxSizeWidth = self.textView.textContainer.size.width;
@@ -346,12 +341,6 @@ CGFloat const accessoryButtonSize = 32.0f;
         tokenMaxSizeWidth -= (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f);
     }
     token.maxTitleWidth = tokenMaxSizeWidth;
-}
-
-- (void)removeAllTokens
-{
-    [self removeTokens:[self.currentTokens copy]];
-    [self.textView showOrHidePlaceholder];
 }
 
 - (Token *)tokenForRepresentedObject:(id)object

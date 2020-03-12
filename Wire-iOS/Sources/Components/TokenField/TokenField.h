@@ -46,8 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addToken:(Token *)token;
 - (void)addTokenForTitle:(NSString *)title representedObject:(id)object;
 - (nullable Token *)tokenForRepresentedObject:(id)object;    // searches by isEqual:
-- (void)removeToken:(Token *)token;
-- (void)removeAllTokens;
 - (void)clearFilterText;
 
 // Collapse
