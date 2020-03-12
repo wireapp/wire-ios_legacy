@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -22,14 +21,14 @@ import SnapshotTesting
 
 final class TokenFieldTests: XCTestCase {
     var sut: TokenField!
-    
+
     override func setUp() {
         sut = TokenField()
         sut.frame = CGRect(origin: .zero, size: CGSize(width: 320, height: 44))
         sut.backgroundColor = .black
         sut.textView.placeholder = "Dummy placeholder"
     }
-    
+
     override func tearDown() {
         sut = nil
     }
@@ -43,17 +42,17 @@ final class TokenFieldTests: XCTestCase {
 
         // when
         sut.removeAllTokens()
-        
+
         // then
         XCTAssert(sut.tokens.isEmpty)
-        
+
         verify(matching: sut)
     }
-    
+
     func testThatTokensCanBeRemoved() {
         // given
         let token1 = Token(title: "Token 1", representedObject: MockUser())
-        
+
         sut.addToken(token1)
         sut.addToken(forTitle: "Token 2", representedObject: MockUser())
 
@@ -61,7 +60,7 @@ final class TokenFieldTests: XCTestCase {
 
         // when
         sut.removeToken(token1)
-        
+
         // then
         XCTAssertEqual(sut.tokens.count, 1)
         XCTAssertEqual(sut.tokens.first?.title, "Token 2")
@@ -75,21 +74,18 @@ final class TokenFieldTests: XCTestCase {
         sut.addToken(forTitle: "Token 2", representedObject: MockUser())
         sut.addToken(forTitle: "Token 3", representedObject: MockUser())
         sut.addToken(forTitle: "Token 4", representedObject: MockUser())
-        
-        
+
         // remove last 2 token(text and seperator) in text view
         var rangesToRemove: [NSRange] = []
-        sut.textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: sut.textView.text.count), options: [], using: { textAttachment, range, _ in
-            
+        sut.textView.attributedText.enumerateAttachment() { textAttachment, range, _ in
             if textAttachment is TokenContainer {
                 rangesToRemove.append(range)
             }
-        })
-        
+        }
+
         rangesToRemove.sort(by: { rangeValue1, rangeValue2 in
             rangeValue1.location > rangeValue2.location
         })
-
 
         var numToRemove = 2
         sut.textView.textStorage.beginEditing()
@@ -104,7 +100,7 @@ final class TokenFieldTests: XCTestCase {
 
         // when
         sut.filterUnwantedAttachments()
-        
+
         // then
         XCTAssertEqual(sut.tokens.count, 3)
     }
@@ -112,14 +108,14 @@ final class TokenFieldTests: XCTestCase {
     func testThatColorIsChnagedAfterUpdateTokenAttachments() {
         // given
         let token1 = Token(title: "Token 1", representedObject: MockUser())
-        
+
         sut.addToken(token1)
-        
+
         // when
         sut.tokenTitleColor = .brightOrange
         sut.updateTokenAttachments()
         // then
-        
+
         verify(matching: sut)
     }
 }

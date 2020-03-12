@@ -21,19 +21,19 @@ import SnapshotTesting
 
 final class TokenTextAttachmentTests: XCTestCase {
     var sut: TokenTextAttachment!
-    
+
     override func setUp() {
         let token = Token(title: "Max Mustermann", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.tokenTitleColor = .black
-        
+
         sut = TokenTextAttachment(token: token, tokenField: tokenField)
     }
-    
+
     override func tearDown() {
         sut = nil
     }
-    
+
     func testTokenAttachmentImage() {
         verify(matching: sut.image!)
     }
