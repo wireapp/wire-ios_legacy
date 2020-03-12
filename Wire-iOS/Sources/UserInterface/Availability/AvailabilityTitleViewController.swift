@@ -66,7 +66,7 @@ final class AvailabilityTitleViewController: UIViewController {
         }
         
         if let session = ZMUserSession.shared() {
-            session.performChanges(changes)
+            session.perform(changes)
         } else {
             changes()
         }

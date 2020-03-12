@@ -71,7 +71,7 @@ final class DeletionDialogPresenter: NSObject {
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
                 
-                ZMUserSession.shared()?.enqueueChanges({
+                ZMUserSession.shared()?.enqueue({
                     switch type {
                     case .local:
                         ZMMessage.hideMessage(message)

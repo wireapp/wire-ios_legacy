@@ -260,5 +260,4 @@ class MockUserType: NSObject, UserType, Decodable {
     func refreshData() {
         // No op
     }
-
 }

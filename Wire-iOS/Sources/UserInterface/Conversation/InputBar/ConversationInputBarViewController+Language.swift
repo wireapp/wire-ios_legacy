@@ -29,7 +29,7 @@ extension ConversationInputBarViewController {
 
         guard let keyboardLanguage =  self.inputBar.textView.originalTextInputMode?.primaryLanguage else { return }
 
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             self.conversation.language = keyboardLanguage
             self.setInputLanguage()
         }

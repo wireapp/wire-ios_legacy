@@ -122,7 +122,7 @@ final class SettingsPropertyFactory {
 
                     var inOutString: String? = stringValue as String
                     _ = try type(of: selfUser).validate(name: &inOutString)
-                    self.userSession?.enqueueChanges {
+                    self.userSession?.enqueue {
                         selfUser.name = stringValue
                     }
                 default:
@@ -159,7 +159,7 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userSession?.enqueueChanges({
+                    self.userSession?.enqueue({
                         self.selfUser?.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
                     })
                 default:
@@ -239,7 +239,7 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                 case .number(let number):
-                    self.userSession?.performChanges {
+                    self.userSession?.perform {
                         if let userSession = self.userSession as? ZMUserSession {
                             self.delegate?.asyncMethodDidStart(self)
                             (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
@@ -270,7 +270,7 @@ final class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .number(let number):
-                        self.userSession?.performChanges {
+                        self.userSession?.perform {
                             self.userSession?.isNotificationContentHidden = number.boolValue
                         }
                     
@@ -354,7 +354,7 @@ final class SettingsPropertyFactory {
                 setAction: { _, value in
                     if case .number(let enabled) = value,
                         let userSession = self.userSession as? ZMUserSession {
-                            userSession.performChanges {
+                            userSession.perform {
                                 self.selfUser?.readReceiptsEnabled = enabled.boolValue
                             }
                         }

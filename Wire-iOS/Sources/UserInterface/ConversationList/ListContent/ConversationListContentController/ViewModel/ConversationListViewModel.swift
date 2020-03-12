@@ -277,7 +277,7 @@ final class ConversationListViewModel: NSObject {
     }
 
     private func setupObservers() {
-        conversationDirectoryToken = userSession?.conversationDirectory?.addObserver(self)
+        conversationDirectoryToken = userSession?.conversationDirectory.addObserver(self)
     }
 
     func sectionHeaderTitle(sectionIndex: Int) -> String? {
@@ -562,7 +562,7 @@ final class ConversationListViewModel: NSObject {
         if indexPath(for: itemToSelect) == nil {
             guard let conversation = itemToSelect as? ZMConversation else { return false }
 
-            ZMUserSession.shared()?.enqueueChanges({
+            ZMUserSession.shared()?.enqueue({
                 conversation.isArchived = false
             }, completionHandler: {
                 self.internalSelect(itemToSelect: itemToSelect)
