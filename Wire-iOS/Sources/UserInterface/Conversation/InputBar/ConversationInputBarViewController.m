@@ -250,49 +250,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                              forState:UIControlStateDisabled];
 }
 
-- (void)updateButtonIcons
-{
-    [self.audioButton setIcon:WRStyleKitIconMicrophone
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.videoButton setIcon:WRStyleKitIconVideoMessage
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.photoButton setIcon:WRStyleKitIconCameraLens
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.uploadFileButton setIcon:WRStyleKitIconPaperclip
-                          withSize:16
-                          forState:UIControlStateNormal];
-    
-    [self.sketchButton setIcon:WRStyleKitIconBrush
-                      withSize:16
-                      forState:UIControlStateNormal];
-    
-    [self.pingButton setIcon:WRStyleKitIconPing
-                    withSize:16
-                    forState:UIControlStateNormal];
-    
-    [self.locationButton setIcon:WRStyleKitIconLocationPin
-                        withSize:16
-                        forState:UIControlStateNormal];
-    
-    [self.gifButton setIcon:WRStyleKitIconGif
-                   withSize:16
-                   forState:UIControlStateNormal];
-
-    [self.mentionButton setIcon:WRStyleKitIconMention
-                   withSize:16
-                   forState:UIControlStateNormal];
-
-    [self.sendButton setIcon:WRStyleKitIconSend
-                    withSize:16
-                    forState:UIControlStateNormal];
-}
-
 - (void)updateAccessoryViews
 {
     [self updateLeftAccessoryView];

@@ -20,7 +20,7 @@
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 
-#import "IconButton.h"
+#import "TokenTextAttachment.h"
 #import "Wire-Swift.h"
 
 @class TokenizedTextView;

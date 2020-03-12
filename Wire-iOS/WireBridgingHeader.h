@@ -19,6 +19,8 @@
 // Data model
 @import WireSyncEngine;
 @import avs;
+@import WireCommonComponents;
+
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 
@@ -26,8 +28,6 @@
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 
-#import "IconButton.h"
-#import "IconButton+Internal.h"
 #import "ButtonWithLargerHitArea.h"
 
 // View Controllers
