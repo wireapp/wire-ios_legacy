@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import XCTest
 @testable import Wire
 import SnapshotTesting
@@ -28,12 +27,12 @@ final class CallSystemMessageTests: XCTestCase, CoreDataFixtureTestHelper {
         super.setUp()
         coreDataFixture = CoreDataFixture()
     }
-    
+
     override func tearDown() {
         coreDataFixture = nil
         super.tearDown()
     }
-    
+
     // MARK: - Missed Call
 
     func testThatItRendersMissedCallFromSelfUser() {
@@ -88,7 +87,7 @@ final class CallSystemMessageTests: XCTestCase, CoreDataFixtureTestHelper {
     private func cell(for type: ZMSystemMessageType, fromSelf: Bool, expanded: Bool = false, inGroup: Bool = false) -> UITableViewCell {
         let message = systemMessage(missed: type == .missedCall, in: .insertNewObject(in: uiMOC), from: fromSelf ? selfUser : otherUser, inGroup: inGroup)
         let cell = createCell(for: message, missed: type == .missedCall)
-        
+
         // TODO: Check for expanded state
 //        if expanded {
 //            cell.setSelected(true, animated: false)
@@ -119,9 +118,9 @@ final class CallSystemMessageTests: XCTestCase, CoreDataFixtureTestHelper {
         cell.configure(with: description.configuration, fullWidth: description.isFullWidth, topMargin: description.topMargin)
 
         cell.frame = CGRect(origin: .zero, size: CGSize(width: CGSize.iPhoneSize.iPhone4.width, height: 32.5))
-        
+
         cell.backgroundColor = .white
-        
+
         return cell
     }
 
