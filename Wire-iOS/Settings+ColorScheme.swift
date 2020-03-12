@@ -38,15 +38,15 @@ extension Settings {
     }
 
     var defaults: UserDefaults {
-        return UserDefaults.standard
+        return .standard
     }
 
     var colorSchemeVariant: ColorSchemeVariant {
-        if let string: String = self[.colorScheme] {
-            return settingsColorScheme(from: string).colorSchemeVariant
+        guard let string: String = self[.colorScheme] else {
+            return .light
         }
 
-        return .light
+        return settingsColorScheme(from: string).colorSchemeVariant
     }
 
     ///TODO: move to SettingsColorScheme, as a init method
