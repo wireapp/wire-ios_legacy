@@ -68,4 +68,44 @@ final class TokenFieldTests: XCTestCase {
 
         verify(matching: sut)
     }
+
+    func testForFilterUnwantedAttachments() {
+        // given
+        sut.addToken(forTitle: "Token 1", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 2", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 3", representedObject: MockUser())
+        sut.addToken(forTitle: "Token 4", representedObject: MockUser())
+        
+        
+        // remove last 2 token(text and seperator) in text view
+        var rangesToRemove: [NSRange] = []
+        sut.textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: sut.textView.text.count), options: [], using: { textAttachment, range, _ in
+            
+            if textAttachment is TokenContainer {
+                rangesToRemove.append(range)
+            }
+        })
+        
+        rangesToRemove.sort(by: { rangeValue1, rangeValue2 in
+            rangeValue1.location > rangeValue2.location
+        })
+
+
+        var numToRemove = 2
+        sut.textView.textStorage.beginEditing()
+        for rangeValue in rangesToRemove {
+            sut.textView.textStorage.deleteCharacters(in: rangeValue)
+            numToRemove -= 1
+            if numToRemove <= 0 {
+                break
+            }
+        }
+        sut.textView.textStorage.endEditing()
+
+        // when
+        sut.filterUnwantedAttachments()
+        
+        // then
+        XCTAssertEqual(sut.tokens.count, 3)
+    }
 }

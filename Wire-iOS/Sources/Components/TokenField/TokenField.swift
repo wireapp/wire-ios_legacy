@@ -103,16 +103,26 @@ extension TokenField {
         return string && (textAttributes as? [NSAttributedString.Key : Any]) ?? [:]
     }
     
-    func filterUnwantedAttachments() { ///TODO: test
+    
+    /// update currentTokens with textView's current attributedText text after the textView change the text
+    func filterUnwantedAttachments() {
         var updatedCurrentTokens: Set<Token> = []
+        var updatedCurrentSeparatorTokens: Set<Token> = []
         
-        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.text.count), options: [], using: { textAttachment, range, stop in
+        textView.attributedText.enumerateAttribute(.attachment, in: NSRange(location: 0, length: textView.text.count), options: [], using: { textAttachment, _, _ in
             
-            if let token = (textAttachment as? TokenContainer)?.token,
+            if let token = (textAttachment as? TokenTextAttachment)?.token,
                 !updatedCurrentTokens.contains(token) {
                 updatedCurrentTokens.insert(token)
             }
+            
+            if let token = (textAttachment as? TokenSeparatorAttachment)?.token,
+                !updatedCurrentSeparatorTokens.contains(token) {
+                updatedCurrentSeparatorTokens.insert(token)
+            }
         })
+        
+        updatedCurrentTokens = updatedCurrentTokens.intersection(updatedCurrentSeparatorTokens)
         
         ///TODO: Change currentTokens type to [Token]
         if let currentTokens = self.currentTokens as? [Token] {
@@ -127,7 +137,7 @@ extension TokenField {
             delegate?.tokenField(self, changedTokensTo: currentTokens)
         }
     }
-    
+
     // MARK: - remove token
     
     func removeAllTokens() {
