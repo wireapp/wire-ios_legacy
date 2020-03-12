@@ -27,7 +27,7 @@ protocol MediaAsset: AnyObject {
 
 
 extension MediaAsset {
-    func imageView() -> MediaAssetView {
+    var imageView: MediaAssetView {
         if isGIF {
             let animatedImageView = FLAnimatedImageView()
             animatedImageView.animatedImage = self as? FLAnimatedImage
