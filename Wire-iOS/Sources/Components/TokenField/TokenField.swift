@@ -262,18 +262,16 @@ final class TokenField: UIView {
     
     func addToken(forTitle title: String, representedObject object: AnyObject) { ///TODO: compare any
         let token = Token(title: title, representedObject: object)
-        add(token)
+        addToken(token)
     }
     
-    func add(_ token: Token?) {
-        if let token = token {
-            if !currentTokens.contains(token) {
-                currentTokens.append(token)
-            } else {
-                return
-            }
+    func addToken(_ token: Token) {
+        guard !currentTokens.contains(token) else {
+            return
         }
-        
+
+        currentTokens.append(token)
+
         updateMaxTitleWidth(for: token)
         
         if !isCollapsed {
