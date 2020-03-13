@@ -24,25 +24,49 @@ let accessoryButtonSize: CGFloat = 32.0
 
 final class TokenField: UIView {
     weak var delegate: TokenFieldDelegate?
+
     let textView: TokenizedTextView = TokenizedTextView()
-    var hasAccessoryButton = false
-    var accessoryButton: IconButton?
+    let accessoryButton: IconButton = IconButton()
+
+    var hasAccessoryButton = false {
+        didSet {
+            guard oldValue != hasAccessoryButton else { return }
+
+            accessoryButton.isHidden = !hasAccessoryButton
+            updateExcludePath()
+
+        }
+    }
+    
+
     private(set) var filterText: String = ""
     
     // Appearance
-    var toLabelText: String?
+    var toLabelText: String? {
+        didSet {
+            guard oldValue != toLabelText else { return }
+            updateTextAttributes()
+        }
+    }
     var font: UIFont?
     var tokenTitleFont: UIFont?
-    var tokenTitleColor: UIColor?
-    var tokenSelectedTitleColor: UIColor?
-    var tokenBackgroundColor: UIColor?
-    var tokenSelectedBackgroundColor: UIColor?
-    var tokenBorderColor: UIColor?
-    var tokenSelectedBorderColor: UIColor?
-    var dotColor: UIColor?
-    var tokenTextTransform: TextTransform?
-    var lineSpacing: CGFloat = 0.0
-    var tokenOffset: CGFloat = 0.0
+    var tokenTitleColor: UIColor = UIColor.white
+    var tokenSelectedTitleColor: UIColor = UIColor(red: 0.103, green: 0.382, blue: 0.691, alpha: 1)
+    var tokenBackgroundColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1) {
+        didSet {
+            guard oldValue != tokenBackgroundColor else { return }
+
+            updateTokenAttachments()
+        }
+    }
+    
+    var tokenSelectedBackgroundColor: UIColor = UIColor.white
+    var tokenBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
+    var tokenSelectedBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
+    var dotColor: UIColor = ColorScheme.default.color(named: .textDimmed)
+    var tokenTextTransform: TextTransform = .upper
+    var lineSpacing: CGFloat = 0
+    var tokenOffset: CGFloat = 0
     /* horisontal distance between tokens, and btw "To:" and first token */    var tokenTitleVerticalAdjustment: CGFloat = 0.0
     // Utils
     var excludedRect = CGRect.zero
@@ -52,14 +76,15 @@ final class TokenField: UIView {
     
     private var accessoryButtonTopMargin: NSLayoutConstraint!
     private var accessoryButtonRightMargin: NSLayoutConstraint!
-    private var toLabel: UILabel?
-    private var toLabelLeftMargin: NSLayoutConstraint?
-    private var toLabelTopMargin: NSLayoutConstraint?
+    private var toLabel: UILabel = UILabel()
+    ///TODO:
+    private var toLabelLeftMargin: NSLayoutConstraint!
+    private var toLabelTopMargin: NSLayoutConstraint!
     private var currentTokens: [Token] = [] ///TODO: public getter
     private var textAttributes: [AnyHashable : Any]?
 
     // Collapse
-    var numberOfLines = 0
+
     /* in not collapsed state; in collapsed state - 1 line; default to NSUIntegerMax */
     var collapsed = false
     
@@ -76,9 +101,9 @@ final class TokenField: UIView {
     }
 
     // MARK: - Setup
-    func setup() {
+    private func setup() {
         currentTokens = []
-        numberOfLines = UInt.max
+        numberOfLines = Int.max
         
         setupDefaultAppearance()
         setupSubviews()
@@ -86,21 +111,13 @@ final class TokenField: UIView {
         setupStyle()
     }
     
-    func setupDefaultAppearance() {
+    private func setupDefaultAppearance() {
         setupFonts()
         textColor = UIColor.black
         lineSpacing = 8.0
         hasAccessoryButton = false
         tokenTitleVerticalAdjustment = 1
         
-        tokenTitleColor = UIColor.white
-        tokenSelectedTitleColor = UIColor(red: 0.103, green: 0.382, blue: 0.691, alpha: 1.000)
-        tokenBackgroundColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
-        tokenSelectedBackgroundColor = UIColor.white
-        tokenBorderColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
-        tokenSelectedBorderColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
-        tokenTextTransform = .upper
-        dotColor = ColorScheme.default.color(named: .textDimmed)
     }
     
     private func setupConstraints() {
@@ -194,22 +211,12 @@ final class TokenField: UIView {
         return attributes
     }
 
-    func setToLabelText(_ toLabelText: String?) {
-        if (self.toLabelText == toLabelText) {
-            return
-        }
-        self.toLabelText = toLabelText
-        updateTextAttributes()
-    }
-    
     func setHasAccessoryButton(_ hasAccessoryButton: Bool) {
         if self.hasAccessoryButton == hasAccessoryButton {
             return
         }
         
         self.hasAccessoryButton = hasAccessoryButton
-        accessoryButton.hidden = !hasAccessoryButton
-        updateExcludePath()
     }
     
     func setTokenTitleColor(_ color: UIColor?) {
@@ -228,18 +235,6 @@ final class TokenField: UIView {
         updateTokenAttachments()
     }
     
-    var tokenBackgroundColor: UIColor! {
-        get {
-            return super.tokenBackgroundColor
-        }
-        set(color) {
-            if tokenBackgroundColor == color {
-                return
-            }
-            tokenBackgroundColor = color
-            updateTokenAttachments()
-        }
-    }
     
     func setTokenSelectedBackgroundColor(_ color: UIColor?) {
         if tokenSelectedBackgroundColor == color {
@@ -379,13 +374,9 @@ final class TokenField: UIView {
         updateExcludePath()
     }
     
-    var numberOfLines: Int {
-        get {
-            return super.numberOfLines
-        }
-        set(numberOfLines) {
-            if self.numberOfLines != numberOfLines {
-                self.numberOfLines = numberOfLines
+    override var numberOfLines: Int {
+        didSet {
+            if oldValue != numberOfLines {
                 invalidateIntrinsicContentSize()
             }
         }
@@ -395,46 +386,6 @@ final class TokenField: UIView {
         setCollapsed(collapsed, animated: false)
     }
     
-    func addToken(forTitle title: String?, representedObject object: Any?) {
-        let token = Token(title: title, representedObject: object)
-        add(token)
-    }
-
-    func add(_ token: Token?) {
-        if let token = token {
-            if !currentTokens.contains(token) {
-                currentTokens.append(token)
-            } else {
-                return
-            }
-        }
-        
-        updateMaxTitleWidth(for: token)
-        
-        if !isCollapsed {
-            textView.attributedText = string(forTokens: currentTokens)
-            // Calling -insertText: forces textView to update its contentSize, while other public methods do not.
-            // Broken contentSize leads to broken scrolling to bottom of input field.
-            textView.insertText("")
-            
-            if delegate.responds(to: #selector(tokenField(_:changedFilterTextTo:))) {
-                delegate.tokenField(self, changedFilterTextTo: "")
-            }
-            
-            invalidateIntrinsicContentSize()
-            
-            // Move the cursor to the end of the input field
-            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
-            
-            // autoscroll to the end of the input field
-            setNeedsLayout()
-            updateLayout()
-            scrollToBottomOfInputField()
-        } else {
-            textView.attributedText = collapsedString()
-            invalidateIntrinsicContentSize()
-        }
-    }
 
     func setCollapsed(_ collapsed: Bool, animated: Bool) {
         if self.collapsed == collapsed {
@@ -451,22 +402,23 @@ final class TokenField: UIView {
             self.invalidateIntrinsicContentSize()
             self.layoutIfNeeded()
         }
-        ZM_WEAK(self)
-        let compeltionBlock: ((Bool) -> Void)? = { finnished in
-            ZM_STRONG(self)
-            if self.collapsed {
-                self.textView.attributedText = self.collapsedString()
-                self.invalidateIntrinsicContentSize()
+        let compeltionBlock: ((Bool) -> Void)? = {[weak self] finnished in
+            
+            guard let weakSelf = self else { return }
+            
+            if weakSelf.collapsed {
+                weakSelf.textView.attributedText = weakSelf.collapsedString()
+                weakSelf.invalidateIntrinsicContentSize()
                 UIView.animate(withDuration: 0.2, animations: {
-                    self.textView.setContentOffset(CGPoint.zero, animated: false)
+                    weakSelf.textView.setContentOffset(CGPoint.zero, animated: false)
                 })
             } else {
-                self.textView.attributedText = self.string(forTokens: self.currentTokens)
-                self.invalidateIntrinsicContentSize()
-                if self.textView.attributedText.length > 0 {
-                    self.textView.selectedRange = NSRange(location: self.textView.attributedText.length, length: 0)
+                weakSelf.textView.attributedText = weakSelf.string(forTokens: self.currentTokens)
+                weakSelf.invalidateIntrinsicContentSize()
+                if weakSelf.textView.attributedText.length > 0 {
+                    weakSelf.textView.selectedRange = NSRange(location: weakSelf.textView.attributedText.length, length: 0)
                     UIView.animate(withDuration: 0.2, animations: {
-                        self.textView.scrollRangeToVisible(self.textView.selectedRange)
+                        weakSelf.textView.scrollRangeToVisible(self.textView.selectedRange)
                     })
                 }
             }
@@ -481,10 +433,14 @@ final class TokenField: UIView {
     }
 
     // MARK: - Layout
-    var intrinsicContentSize: CGSize {
+    private var fontLineHeight: CGFloat {
+        return font?.lineHeight ?? 0
+    }
+    
+    override var intrinsicContentSize: CGSize {
         let height = textView.contentSize.height
-        let maxHeight = font.lineHeight * CGFloat(numberOfLines) + lineSpacing * CGFloat((numberOfLines - 1)) + textView.textContainerInset.top + textView.textContainerInset.bottom
-        let minHeight = font.lineHeight * 1 + textView.textContainerInset.top + textView.textContainerInset.bottom
+        let maxHeight = fontLineHeight * CGFloat(numberOfLines) + lineSpacing * CGFloat((numberOfLines - 1)) + textView.textContainerInset.top + textView.textContainerInset.bottom
+        let minHeight = fontLineHeight + textView.textContainerInset.top + textView.textContainerInset.bottom
         
         if collapsed {
             return CGSize(width: UIView.noIntrinsicMetric, height: minHeight)
@@ -493,27 +449,27 @@ final class TokenField: UIView {
         }
     }
     
-    func accessoryButtonTop() -> CGFloat {
-        return textView.textContainerInset.top + (font.lineHeight - accessoryButtonSize) / 2 - textView.contentOffset.y
+    var accessoryButtonTop: CGFloat {
+        return textView.textContainerInset.top + (fontLineHeight - accessoryButtonSize) / 2 - textView.contentOffset.y
     }
     
-    func accessoryButtonRight() -> CGFloat {
+    var accessoryButtonRight: CGFloat {
         return textView.textContainerInset.right
     }
     
     private func updateLayout() {
-        if toLabelText.length > 0 {
+        if toLabelText?.isEmpty == false {
             toLabelLeftMargin.constant = textView.textContainerInset.left
             toLabelTopMargin.constant = textView.textContainerInset.top
         }
         if hasAccessoryButton {
-            accessoryButtonRightMargin.constant = accessoryButtonRight()
-            accessoryButtonTopMargin.constant = accessoryButtonTop()
+            accessoryButtonRightMargin.constant = accessoryButtonRight
+            accessoryButtonTopMargin.constant = accessoryButtonTop
         }
         layoutIfNeeded()
     }
     
-    func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         
         var anyTokenUpdated = false
@@ -532,7 +488,7 @@ final class TokenField: UIView {
     }
 
     // MARK: - Utility
-    func collapsedString() -> NSAttributedString? {
+    var collapsedString: NSAttributedString? {
         let collapsedText = NSLocalizedString(" ...", comment: "")
         
         return NSAttributedString(string: collapsedText, attributes: textAttributes)
@@ -645,7 +601,6 @@ final class TokenField: UIView {
         }
         addSubview(textView)
 
-        toLabel = UILabel()
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.font = font
         toLabel.text = toLabelText
@@ -657,7 +612,6 @@ final class TokenField: UIView {
         // Accessory button could be a subview of textView,
         // but there are bugs with setting constraints from subview to UITextView trailing.
         // So we add button as subview of self, and update its position on scrolling.
-        accessoryButton = IconButton()
         accessoryButton.translatesAutoresizingMaskIntoConstraints = false
         accessoryButton.isHidden = !hasAccessoryButton
         addSubview(accessoryButton)
