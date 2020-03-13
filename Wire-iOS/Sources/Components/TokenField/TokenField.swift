@@ -20,9 +20,9 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "TokenField")
 
-let accessoryButtonSize: CGFloat = 32
-
 final class TokenField: UIView {
+    let accessoryButtonSize: CGFloat = 32
+
     weak var delegate: TokenFieldDelegate?
 
     let textView: TokenizedTextView = TokenizedTextView()
@@ -56,7 +56,10 @@ final class TokenField: UIView {
             updateTokenAttachments()
         }
     }
-    var tokenTitleFont: UIFont?
+    
+    // Dynamic Type is disabled for now until the separator dots
+    // vertical alignment has been fixed for larger fonts.
+    let tokenTitleFont: UIFont = FontScheme(contentSizeCategory: .medium).font(for: .init(.small, .regular))!
     var tokenTitleColor: UIColor = UIColor.white {
         didSet {
             guard oldValue != tokenTitleColor else { return }
@@ -172,9 +175,6 @@ final class TokenField: UIView {
 
     // MARK: - Setup
     private func setup() {
-        currentTokens = []
-        
-        setupFonts()
         setupSubviews()
         setupConstraints()
         setupStyle()
@@ -212,7 +212,7 @@ final class TokenField: UIView {
 
     // MARK: - Appearance
     
-    var textColor: UIColor = UIColor.black {
+    var textColor: UIColor = .black {
         didSet {
             guard oldValue != textColor else {
                 return
@@ -582,14 +582,6 @@ final class TokenField: UIView {
         textView.lineFragmentPadding = 0
     }
 
-    private func setupFonts() {
-        // Dynamic Type is disabled for now until the separator dots
-        // vertical alignment has been fixed for larger fonts.
-        let schema = FontScheme(contentSizeCategory: .medium)
-        font = schema.font(for: .init(.normal, .regular))
-        tokenTitleFont = schema.font(for: .init(.small, .regular))
-    }
-
     // MARK: - Utility
 
     func updateTokenAttachments() {
@@ -739,11 +731,11 @@ extension TokenField: TokenizedTextViewDelegate {
 // MARK: - UITextViewDelegate
 
 extension TokenField: UITextViewDelegate {
-    public func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+    func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return !(textAttachment is TokenSeparatorAttachment)
     }
 
-    public func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         userDidConfirmInput = false
 
         filterUnwantedAttachments()
@@ -751,7 +743,7 @@ extension TokenField: UITextViewDelegate {
         invalidateIntrinsicContentSize()
     }
 
-    public func textViewDidChangeSelection(_ textView: UITextView) {
+    func textViewDidChangeSelection(_ textView: UITextView) {
         zmLog.debug("Selection changed: NSStringFromRange(textView.selectedRange)")
 
         var modifiedSelectionRange = NSRange(location: 0, length: 0)
@@ -775,7 +767,7 @@ extension TokenField: UITextViewDelegate {
         }
     }
 
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             userDidConfirmInput = true

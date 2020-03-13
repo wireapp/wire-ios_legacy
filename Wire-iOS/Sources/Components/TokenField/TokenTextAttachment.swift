@@ -112,13 +112,12 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var titleAttributes: [NSAttributedString.Key: Any] {
-        guard let titleColor = titleColor,
-            let tokenTitleFont = tokenField.tokenTitleFont else {
-                return [:]
+        guard let titleColor = titleColor else {
+            return [:]
         }
 
         return [
-            NSAttributedString.Key.font: tokenTitleFont,
+            NSAttributedString.Key.font: tokenField.tokenTitleFont,
             NSAttributedString.Key.foregroundColor: titleColor
         ]
     }
