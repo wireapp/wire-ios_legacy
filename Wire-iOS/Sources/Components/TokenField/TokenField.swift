@@ -787,14 +787,14 @@ final class TokenField: UIView {
     }
 
     private func rangeIncludesRange(_ range: NSRange, _ includedRange: NSRange) -> Bool {
-        return NSEqualRanges(range, NSUnionRange(range, includedRange))
+        return range == range.union(includedRange)
     }
 
     private func notifyIfFilterTextChanged() {
         var indexOfFilterText = 0
         textView.attributedText.enumerateAttachment() { tokenAttachment, range, _ in
             if tokenAttachment is TokenTextAttachment {
-                indexOfFilterText = NSMaxRange(range)
+                indexOfFilterText = range.upperBound
             }
         }
 
@@ -864,14 +864,14 @@ extension TokenField: UITextViewDelegate {
                 textView.layoutManager.invalidateDisplay(forCharacterRange: range)
 
                 if rangeIncludesRange(textView.selectedRange, range) {
-                    modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range)
+                    modifiedSelectionRange = (hasModifiedSelection ? modifiedSelectionRange : range).union(range)
                     hasModifiedSelection = true
                 }
                 zmLog.info("    person attachement: \(tokenAttachment.token.title) at range: \(range) selected: \(tokenAttachment.isSelected)")
             }
         }
 
-        if hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange) {
+        if hasModifiedSelection, textView.selectedRange != modifiedSelectionRange {
             textView.selectedRange = modifiedSelectionRange
         }
     }
@@ -909,7 +909,10 @@ extension TokenField: UITextViewDelegate {
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
         if !text.isEmpty {
-            (textView.text as NSString).enumerateSubstrings(in: NSRange(location: range.location, length: textView.text.count - range.location), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
+            let range = NSRange(location: range.location, length: textView.text.count - range.location)
+            (textView.text as NSString).enumerateSubstrings(in: range,
+                                                            options: .byComposedCharacterSequences,
+                                                            using: { substring, _, _, stop in
 
                 if substring?.isEmpty == false,
                     let nsString: NSString = substring as NSString?,

@@ -179,7 +179,7 @@ final class AddParticipantsViewController: UIViewController {
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: SelfUser.current.canManageTeam)
         super.init(nibName: nil, bundle: nil)
         
         emptyResultView.delegate = self

@@ -61,13 +61,14 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         mockAddressBookHelper = MockAddressBookHelper()
+        SelfUser.provider = selfUserProvider
     }
 
     override func tearDown() {
         sut = nil
         mockAddressBookHelper = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
 

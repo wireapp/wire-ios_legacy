@@ -65,10 +65,12 @@ extension ZMAddressBookContact {
     }
 
     private func invitationBody() -> String {
-        if let handle = ZMUser.selfUser(inUserSession: ZMUserSession.shared()!).handle {
-            return "send_invitation.text".localized(args: "@" + handle)
-        } else {
+        guard
+            let handle = SelfUser.provider?.selfUser.handle
+        else {
             return "send_invitation_no_email.text".localized
         }
+
+        return "send_invitation.text".localized(args: "@" + handle)
     }
 }
