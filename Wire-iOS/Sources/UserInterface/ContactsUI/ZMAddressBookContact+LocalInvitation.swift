@@ -66,8 +66,7 @@ extension ZMAddressBookContact {
 
     private func invitationBody() -> String {
         guard
-            let selfUser = SelfUser.provider?.selfUser,
-            let handle = selfUser.handle
+            let handle = SelfUser.provider?.selfUser.handle
         else {
             return "send_invitation_no_email.text".localized
         }
