@@ -46,7 +46,7 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var imageForCurrentToken: UIImage? {
-        let imageHeight: CGFloat = ceil(tokenField.font?.lineHeight ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.fontLineHeight)
         let title = token.title.applying(transform: tokenField.tokenTextTransform)
         // Width cannot be smaller than height
         let tokenMaxWidth: CGFloat = max(ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight), imageHeight)

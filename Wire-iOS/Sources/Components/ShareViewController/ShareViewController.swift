@@ -181,7 +181,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
-        self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
+        self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination as AnyObject)
         
         self.selectedDestinations.insert(destination)
         
@@ -193,7 +193,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
-        guard let token = self.tokenField.token(forRepresentedObject: destination) else {
+        guard let token = self.tokenField.token(forRepresentedObject: destination as AnyObject) else {
             return
         }
         self.tokenField.removeToken(token)

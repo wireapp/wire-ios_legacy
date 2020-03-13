@@ -20,7 +20,7 @@ import UIKit
 
 private let zmLog = ZMSLog(tag: "TokenField")
 
-let accessoryButtonSize: CGFloat = 32.0
+let accessoryButtonSize: CGFloat = 32
 
 final class TokenField: UIView {
     weak var delegate: TokenFieldDelegate?
@@ -28,6 +28,7 @@ final class TokenField: UIView {
     let textView: TokenizedTextView = TokenizedTextView()
     let accessoryButton: IconButton = IconButton()
 
+    ///TODO: check double coded?
     var hasAccessoryButton = false {
         didSet {
             guard oldValue != hasAccessoryButton else { return }
@@ -41,17 +42,35 @@ final class TokenField: UIView {
 
     private(set) var filterText: String = ""
     
-    // Appearance
+    // MARK: - Appearance
     var toLabelText: String? {
         didSet {
             guard oldValue != toLabelText else { return }
             updateTextAttributes()
         }
     }
-    var font: UIFont?
+    var font: UIFont? {
+        didSet {
+            guard oldValue != font else { return }
+            
+            updateTokenAttachments()
+        }
+    }
     var tokenTitleFont: UIFont?
-    var tokenTitleColor: UIColor = UIColor.white
-    var tokenSelectedTitleColor: UIColor = UIColor(red: 0.103, green: 0.382, blue: 0.691, alpha: 1)
+    var tokenTitleColor: UIColor = UIColor.white {
+        didSet {
+            guard oldValue != tokenTitleColor else { return }
+            
+            updateTokenAttachments()
+        }
+    }
+    var tokenSelectedTitleColor: UIColor = UIColor(red: 0.103, green: 0.382, blue: 0.691, alpha: 1) {
+        didSet {
+            guard oldValue != tokenSelectedTitleColor else { return }
+            
+            updateTokenAttachments()
+        }
+    }
     var tokenBackgroundColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1) {
         didSet {
             guard oldValue != tokenBackgroundColor else { return }
@@ -60,14 +79,52 @@ final class TokenField: UIView {
         }
     }
     
-    var tokenSelectedBackgroundColor: UIColor = UIColor.white
-    var tokenBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
+    var tokenSelectedBackgroundColor: UIColor = UIColor.white {
+        didSet {
+            guard oldValue != tokenSelectedBackgroundColor else { return }
+            
+            updateTokenAttachments()
+        }
+    }
+    
+    var tokenBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000) {
+        didSet {
+            guard oldValue != tokenBorderColor else { return }
+            
+            updateTokenAttachments()
+        }
+    }
+    
     var tokenSelectedBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
+    {
+        didSet {
+            guard oldValue != tokenSelectedBorderColor else { return }
+            
+            updateTokenAttachments()
+        }
+    }
+    
     var dotColor: UIColor = ColorScheme.default.color(named: .textDimmed)
     var tokenTextTransform: TextTransform = .upper
-    var lineSpacing: CGFloat = 0
-    var tokenOffset: CGFloat = 0
-    /* horisontal distance between tokens, and btw "To:" and first token */    var tokenTitleVerticalAdjustment: CGFloat = 0.0
+    var tokenOffset: CGFloat = 0 {
+        didSet {
+            guard tokenOffset != oldValue else {
+                return
+            }
+
+            updateExcludePath()
+            updateTokenAttachments()
+        }
+    }
+    /* horisontal distance between tokens, and btw "To:" and first token */
+    var tokenTitleVerticalAdjustment: CGFloat = 1 {
+        didSet {
+            guard oldValue != tokenTitleVerticalAdjustment else { return }
+            
+            updateTokenAttachments()
+        }
+    }
+    
     // Utils
     var excludedRect = CGRect.zero
     /* rect for excluded path in textView text container */
@@ -81,12 +138,25 @@ final class TokenField: UIView {
     private var toLabelLeftMargin: NSLayoutConstraint!
     private var toLabelTopMargin: NSLayoutConstraint!
     private var currentTokens: [Token] = [] ///TODO: public getter
-    private var textAttributes: [AnyHashable : Any]?
+    private var textAttributes: [NSAttributedString.Key : Any] {
+        var attributes: [NSAttributedString.Key : Any] = [:]
+        
+        let inputParagraphStyle = NSMutableParagraphStyle()
+        inputParagraphStyle.lineSpacing = lineSpacing
+        attributes[NSAttributedString.Key.paragraphStyle] = inputParagraphStyle
+        
+        if font != nil {
+            attributes[NSAttributedString.Key.font] = font
+        }
+            attributes[NSAttributedString.Key.foregroundColor] = textColor
+        
+        return attributes
+    }
 
     // Collapse
 
     /* in not collapsed state; in collapsed state - 1 line; default to NSUIntegerMax */
-    var collapsed = false
+    var isCollapsed = false
     
     
     // MARK: - Init
@@ -103,21 +173,11 @@ final class TokenField: UIView {
     // MARK: - Setup
     private func setup() {
         currentTokens = []
-        numberOfLines = Int.max
         
-        setupDefaultAppearance()
+        setupFonts()
         setupSubviews()
         setupConstraints()
         setupStyle()
-    }
-    
-    private func setupDefaultAppearance() {
-        setupFonts()
-        textColor = UIColor.black
-        lineSpacing = 8.0
-        hasAccessoryButton = false
-        tokenTitleVerticalAdjustment = 1
-        
     }
     
     private func setupConstraints() {
@@ -127,12 +187,12 @@ final class TokenField: UIView {
             "button": accessoryButton
         ]
         let metrics = [
-            "left": NSNumber(value: Float(textView.textContainerInset.left)),
-            "top": NSNumber(value: Float(textView.textContainerInset.top)),
-            "right": NSNumber(value: Float(textView.textContainerInset.right)),
-            "bSize": NSNumber(value: accessoryButtonSize),
-            "bTop": NSNumber(value: accessoryButtonTop),
-            "bRight": NSNumber(value: accessoryButtonRight)
+            "left": textView.textContainerInset.left,
+            "top": textView.textContainerInset.top,
+            "right": textView.textContainerInset.right,
+            "bSize": accessoryButtonSize,
+            "bTop": accessoryButtonTop,
+            "bRight": accessoryButtonRight
         ]
         
         addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[textView]|", options: [], metrics: nil, views: views))
@@ -151,121 +211,25 @@ final class TokenField: UIView {
     }
 
     // MARK: - Appearance
-    func setFont(_ font: UIFont?) {
-        if self.font == font {
-            return
-        }
-        self.font = font
-        updateTextAttributes()
-    }
     
-    var textColor: UIColor! {
-        get {
-            return super.textColor
-        }
-        set(textColor) {
-            if self.textColor == textColor {
+    var textColor: UIColor = UIColor.black {
+        didSet {
+            guard oldValue != textColor else {
                 return
             }
-            self.textColor = textColor
+            
             updateTextAttributes()
         }
     }
     
-    var lineSpacing: CGFloat {
-        get {
-            return super.lineSpacing
-        }
-        set(lineSpacing) {
-            if self.lineSpacing == lineSpacing {
+    var lineSpacing: CGFloat = 8 {
+        didSet {
+            guard oldValue != lineSpacing else {
                 return
             }
-            self.lineSpacing = lineSpacing
+
             updateTextAttributes()
         }
-    }
-    
-    func setTokenOffset(_ tokenOffset: CGFloat) {
-        if self.tokenOffset == tokenOffset {
-            return
-        }
-        self.tokenOffset = tokenOffset
-        updateExcludePath()
-        updateTokenAttachments()
-    }
-    
-    func textAttributes() -> [AnyHashable : Any]? {
-        var attributes: [AnyHashable : Any] = [:]
-        
-        var inputParagraphStyle = NSMutableParagraphStyle()
-        inputParagraphStyle.lineSpacing = lineSpacing
-        attributes[NSAttributedString.Key.paragraphStyle] = inputParagraphStyle
-        
-        if font {
-            attributes[NSAttributedString.Key.font] = font
-        }
-        if textColor != nil {
-            attributes[NSAttributedString.Key.foregroundColor] = textColor
-        }
-        
-        return attributes
-    }
-
-    func setHasAccessoryButton(_ hasAccessoryButton: Bool) {
-        if self.hasAccessoryButton == hasAccessoryButton {
-            return
-        }
-        
-        self.hasAccessoryButton = hasAccessoryButton
-    }
-    
-    func setTokenTitleColor(_ color: UIColor?) {
-        if tokenTitleColor == color {
-            return
-        }
-        tokenTitleColor = color
-        updateTokenAttachments()
-    }
-    
-    func setTokenSelectedTitleColor(_ color: UIColor?) {
-        if tokenSelectedTitleColor == color {
-            return
-        }
-        tokenSelectedTitleColor = color
-        updateTokenAttachments()
-    }
-    
-    
-    func setTokenSelectedBackgroundColor(_ color: UIColor?) {
-        if tokenSelectedBackgroundColor == color {
-            return
-        }
-        tokenSelectedBackgroundColor = color
-        updateTokenAttachments()
-    }
-
-    func setTokenBorderColor(_ color: UIColor?) {
-        if tokenBorderColor == color {
-            return
-        }
-        tokenBorderColor = color
-        updateTokenAttachments()
-    }
-    
-    func setTokenSelectedBorderColor(_ color: UIColor?) {
-        if tokenSelectedBorderColor == color {
-            return
-        }
-        tokenSelectedBorderColor = color
-        updateTokenAttachments()
-    }
-    
-    func setTokenTitleVerticalAdjustment(_ tokenTitleVerticalAdjustment: CGFloat) {
-        if self.tokenTitleVerticalAdjustment == tokenTitleVerticalAdjustment {
-            return
-        }
-        self.tokenTitleVerticalAdjustment = tokenTitleVerticalAdjustment
-        updateTokenAttachments()
     }
     
     // MARK: - UIView overrides
@@ -273,11 +237,11 @@ final class TokenField: UIView {
         return textView.isFirstResponder
     }
     
-    var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return textView.canBecomeFirstResponder
     }
     
-    var canResignFirstResponder: Bool {
+    override    var canResignFirstResponder: Bool {
         return textView.canResignFirstResponder
     }
     
@@ -296,7 +260,7 @@ final class TokenField: UIView {
         return currentTokens
     }
     
-    func addToken(forTitle title: String?, representedObject object: Any?) {
+    func addToken(forTitle title: String, representedObject object: AnyObject) { ///TODO: compare any
         let token = Token(title: title, representedObject: object)
         add(token)
     }
@@ -318,9 +282,7 @@ final class TokenField: UIView {
             // Broken contentSize leads to broken scrolling to bottom of input field.
             textView.insertText("")
             
-            if delegate.responds(to: #selector(tokenField(_:changedFilterTextTo:))) {
-                delegate.tokenField(self, changedFilterTextTo: "")
-            }
+            delegate?.tokenField(self, changedFilterTextTo: "")
             
             invalidateIntrinsicContentSize()
             
@@ -332,7 +294,7 @@ final class TokenField: UIView {
             updateLayout()
             scrollToBottomOfInputField()
         } else {
-            textView.attributedText = collapsedString()
+            textView.attributedText = collapsedString
             invalidateIntrinsicContentSize()
         }
     }
@@ -348,13 +310,15 @@ final class TokenField: UIView {
     }
     
     // searches by isEqual:
-    func token(forRepresentedObject object: Any?) -> Token? {
-        for token in currentTokens {
-            if token.representedObject == object {
-                return token
-            }
-        }
-        return nil
+    func token(forRepresentedObject object: AnyObject?) -> Token? {
+        
+        
+//        for token in currentTokens {
+//            if token.representedObject == object {
+//                return token
+//            }
+//        }
+        return currentTokens.first(where:{ $0.representedObject as? NSObject == object as? NSObject})
     }
     
     func scrollToBottomOfInputField() {
@@ -374,7 +338,7 @@ final class TokenField: UIView {
         updateExcludePath()
     }
     
-    override var numberOfLines: Int {
+    var numberOfLines: Int = Int.max {
         didSet {
             if oldValue != numberOfLines {
                 invalidateIntrinsicContentSize()
@@ -388,15 +352,15 @@ final class TokenField: UIView {
     
 
     func setCollapsed(_ collapsed: Bool, animated: Bool) {
-        if self.collapsed == collapsed {
+        if isCollapsed == collapsed {
             return
         }
         
-        if currentTokens.count == 0 {
+        if currentTokens.isEmpty {
             return
         }
         
-        self.collapsed = collapsed
+        isCollapsed = collapsed
         
         let animationBlock = {
             self.invalidateIntrinsicContentSize()
@@ -406,19 +370,19 @@ final class TokenField: UIView {
             
             guard let weakSelf = self else { return }
             
-            if weakSelf.collapsed {
-                weakSelf.textView.attributedText = weakSelf.collapsedString()
+            if weakSelf.isCollapsed {
+                weakSelf.textView.attributedText = weakSelf.collapsedString
                 weakSelf.invalidateIntrinsicContentSize()
                 UIView.animate(withDuration: 0.2, animations: {
                     weakSelf.textView.setContentOffset(CGPoint.zero, animated: false)
                 })
             } else {
-                weakSelf.textView.attributedText = weakSelf.string(forTokens: self.currentTokens)
+                weakSelf.textView.attributedText = weakSelf.string(forTokens: weakSelf.currentTokens)
                 weakSelf.invalidateIntrinsicContentSize()
                 if weakSelf.textView.attributedText.length > 0 {
                     weakSelf.textView.selectedRange = NSRange(location: weakSelf.textView.attributedText.length, length: 0)
                     UIView.animate(withDuration: 0.2, animations: {
-                        weakSelf.textView.scrollRangeToVisible(self.textView.selectedRange)
+                        weakSelf.textView.scrollRangeToVisible(weakSelf.textView.selectedRange)
                     })
                 }
             }
@@ -433,7 +397,7 @@ final class TokenField: UIView {
     }
 
     // MARK: - Layout
-    private var fontLineHeight: CGFloat {
+    var fontLineHeight: CGFloat {
         return font?.lineHeight ?? 0
     }
     
@@ -442,11 +406,7 @@ final class TokenField: UIView {
         let maxHeight = fontLineHeight * CGFloat(numberOfLines) + lineSpacing * CGFloat((numberOfLines - 1)) + textView.textContainerInset.top + textView.textContainerInset.bottom
         let minHeight = fontLineHeight + textView.textContainerInset.top + textView.textContainerInset.bottom
         
-        if collapsed {
-            return CGSize(width: UIView.noIntrinsicMetric, height: minHeight)
-        } else {
-            return CGSize(width: UIView.noIntrinsicMetric, height: max(min(height, maxHeight), minHeight))
-        }
+        return CGSize(width: UIView.noIntrinsicMetric, height: isCollapsed ? minHeight: max(min(height, maxHeight), minHeight))
     }
     
     var accessoryButtonTop: CGFloat {
@@ -489,7 +449,7 @@ final class TokenField: UIView {
 
     // MARK: - Utility
     var collapsedString: NSAttributedString? {
-        let collapsedText = NSLocalizedString(" ...", comment: "")
+        let collapsedText = " ...".localized
         
         return NSAttributedString(string: collapsedText, attributes: textAttributes)
     }
@@ -500,9 +460,12 @@ final class TokenField: UIView {
         let notWhitespace = CharacterSet.whitespacesAndNewlines.inverted
         
         (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.count), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
-            if (substring?.count ?? 0) != 0 && (substring?[substring?.index(substring?.startIndex, offsetBy: 0)] != .character) && (substring as NSString?)?.rangeOfCharacter(from: notWhitespace).location != NSNotFound {
+            if substring?.isEmpty == false,
+                let nsString: NSString = substring as NSString?,
+                nsString.character(at: 0) == NSTextAttachment.character,
+                (substring as NSString?)?.rangeOfCharacter(from: notWhitespace).location != NSNotFound {
                 firstCharacterIndex = substringRange.location
-                stop = UnsafeMutablePointer<ObjCBool>(mutating: &true)
+                stop.pointee = true
             }
         })
         
@@ -526,7 +489,7 @@ final class TokenField: UIView {
         textView.textStorage.addAttributes(textAttributes, range: NSRange(location: 0, length: textView.textStorage.length))
         textView.textStorage.endEditing()
         
-        if toLabelText {
+        if let toLabelText = toLabelText {
             toLabel.attributedText = NSMutableAttributedString(string: toLabelText, attributes: textAttributes)
         } else {
             toLabel.text = ""
@@ -539,20 +502,20 @@ final class TokenField: UIView {
     private func updateExcludePath() {
         updateLayout()
         
-        var exclusionPaths: [AnyHashable]? = []
+        var exclusionPaths: [UIBezierPath] = []
         
         if excludedRect.equalTo(CGRect.zero) == false {
             let transform = CGAffineTransform(translationX: textView.contentOffset.x, y: textView.contentOffset.y)
             var transformedRect = excludedRect.applying(transform)
             let path = UIBezierPath(rect: transformedRect)
-            exclusionPaths?.append(path)
+            exclusionPaths.append(path)
         }
         
-        if toLabelText.length > 0 {
+        if toLabelText?.isEmpty == false {
             var transformedRect = toLabel.frame.offsetBy(dx: -textView.textContainerInset.left, dy: -textView.textContainerInset.top)
             transformedRect.size.width += tokenOffset
             let path = UIBezierPath(rect: transformedRect)
-            exclusionPaths?.append(path)
+            exclusionPaths.append(path)
         }
         
         if hasAccessoryButton {
@@ -569,15 +532,9 @@ final class TokenField: UIView {
             transformedRect = transformedRect.applying(transform)
             
             let path = UIBezierPath(rect: transformedRect)
-            exclusionPaths?.append(path)
-        }
-        
-        if let exclusionPaths = exclusionPaths as? [UIBezierPath] {
-            textView.textContainer.exclusionPaths = exclusionPaths
-            let path = UIBezierPath(rect: transformedRect)
             exclusionPaths.append(path)
         }
-
+        
         textView.textContainer.exclusionPaths = exclusionPaths
     }
 
@@ -607,8 +564,6 @@ final class TokenField: UIView {
         toLabel.backgroundColor = UIColor.clear
         textView.addSubview(toLabel)
 
-        self.textView = textView
-
         // Accessory button could be a subview of textView,
         // but there are bugs with setting constraints from subview to UITextView trailing.
         // So we add button as subview of self, and update its position on scrolling.
@@ -617,7 +572,7 @@ final class TokenField: UIView {
         addSubview(accessoryButton)
     }
 
-    @objc func setupStyle() {
+    private func setupStyle() {
         tokenOffset = 4
 
         textView.tintColor = .accent()
@@ -629,7 +584,7 @@ final class TokenField: UIView {
         textView.lineFragmentPadding = 0
     }
 
-    @objc func setupFonts() {
+    private func setupFonts() {
         // Dynamic Type is disabled for now until the separator dots
         // vertical alignment has been fixed for larger fonts.
         let schema = FontScheme(contentSizeCategory: .medium)
@@ -639,15 +594,13 @@ final class TokenField: UIView {
 
     // MARK: - Utility
 
-    @objc
-    func updateTokenAttachments() {
-        textView?.attributedText.enumerateAttachment() { tokenAttachment, _, _ in
+    private func updateTokenAttachments() {
+        textView.attributedText.enumerateAttachment() { tokenAttachment, _, _ in
             (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         }
     }
 
-    @objc
-    func string(forTokens tokens: [Token]) -> NSAttributedString {
+    private func string(forTokens tokens: [Token]) -> NSAttributedString {
         let string = NSMutableAttributedString()
         for token in tokens {
             let tokenAttachment = TokenTextAttachment(token: token, tokenField: self)
@@ -684,24 +637,20 @@ final class TokenField: UIView {
 
         updatedCurrentTokens = updatedCurrentTokens.intersection(updatedCurrentSeparatorTokens)
 
-        ///TODO: Change currentTokens type to [Token]
-        if let currentTokens = self.currentTokens as? [Token] {
             var deletedTokens = Set<Token>(currentTokens)
             deletedTokens.subtract(updatedCurrentTokens)
 
             if !deletedTokens.isEmpty {
                 removeTokens(Array(deletedTokens))
             }
-
-            self.currentTokens.removeObjects(in: Array(deletedTokens))
+            currentTokens.removeAll(where: { deletedTokens.contains($0) })
             delegate?.tokenField(self, changedTokensTo: currentTokens)
-        }
     }
 
     // MARK: - remove token
 
     func removeAllTokens() {
-        removeTokens(currentTokens as! [Token])
+        removeTokens(currentTokens)
         textView.showOrHidePlaceholder()
     }
 
@@ -730,7 +679,7 @@ final class TokenField: UIView {
         }
         textView.textStorage.endEditing()
 
-        currentTokens?.removeObjects(in: tokensToRemove)
+        currentTokens.removeAll(where: { tokensToRemove.contains($0) })
 
         invalidateIntrinsicContentSize()
         updateTextAttributes()

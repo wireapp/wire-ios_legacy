@@ -16,20 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-public final class Token: NSObject {
+final class Token: NSObject {
     
-    @objc
-    let representedObject: Any
+    let representedObject: AnyObject
     
-    @objc
     let title: String
 
     // if title render is longer than this length, it is trimmed with "..."
-    @objc
     var maxTitleWidth: CGFloat = 0
     
-    @objc
-    init(title: String, representedObject: Any) {
+    init(title: String,
+         representedObject: AnyObject) {
         self.title = title
         self.representedObject = representedObject
         
