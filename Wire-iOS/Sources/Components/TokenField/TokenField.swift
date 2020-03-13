@@ -24,31 +24,11 @@ let accessoryButtonSize: CGFloat = 32.0
 
 final class TokenField: UIView {
     weak var delegate: TokenFieldDelegate?
-    var textView: TokenizedTextView?
+    let textView: TokenizedTextView = TokenizedTextView()
     var hasAccessoryButton = false
     var accessoryButton: IconButton?
     private(set) var tokens: [Token]?
-    ///TODO: private(set)
-    var filterText: String?
-    
-    func add(_ token: Token?) {
-    }
-    
-    func addToken(forTitle title: String?, representedObject object: Any?) {
-    }
-    
-    func token(forRepresentedObject object: Any?) -> Token? {
-    } // searches by isEqual:
-    
-    func clearFilterText() {
-    }
-    
-    // Collapse
-    var numberOfLines = 0
-    /* in not collapsed state; in collapsed state - 1 line; default to NSUIntegerMax */    var collapsed = false
-    
-    func setCollapsed(_ collapsed: Bool, animated: Bool) {
-    }
+    private(set) var filterText: String = ""
     
     // Appearance
     var toLabelText: String?
@@ -72,51 +52,31 @@ final class TokenField: UIView {
     
     private(set) var userDidConfirmInput = false
     
-    private var accessoryButtonTopMargin: NSLayoutConstraint?
-    private var accessoryButtonRightMargin: NSLayoutConstraint?
+    private var accessoryButtonTopMargin: NSLayoutConstraint!
+    private var accessoryButtonRightMargin: NSLayoutConstraint!
     private var toLabel: UILabel?
     private var toLabelLeftMargin: NSLayoutConstraint?
     private var toLabelTopMargin: NSLayoutConstraint?
     private var currentTokens: [AnyHashable]?
     private var textAttributes: [AnyHashable : Any]?
-    private var userDidConfirmInput = false
-    
-    private func updateExcludePath() {
-    }
-    
-    private func updateLayout() {
-    }
-    
-    private func updateTextAttributes() {
-    }
 
+    // Collapse
+    var numberOfLines = 0
+    /* in not collapsed state; in collapsed state - 1 line; default to NSUIntegerMax */
+    var collapsed = false
     
-    func scrollToBottomOfInputField() {
-    }
     
-    override var isFirstResponder: Bool {
-    }
-    
-    override func becomeFirstResponder() -> Bool {
-    }
-    
-    override func resignFirstResponder() -> Bool {
-    }
-
     // MARK: - Init
     init() {
-        super.init()
+        super.init(frame: .zero)
         setup()
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
+
     // MARK: - Setup
     func setup() {
         currentTokens = []
@@ -141,11 +101,11 @@ final class TokenField: UIView {
         tokenSelectedBackgroundColor = UIColor.white
         tokenBorderColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
         tokenSelectedBorderColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
-        tokenTextTransform = TextTransformUpper
-        dotColor = ColorScheme.defaultColorScheme.color(withName: ColorSchemeColorTextDimmed)
+        tokenTextTransform = .upper
+        dotColor = ColorScheme.default.color(named: .textDimmed)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         let views = [
             "textView": textView,
             "toLabel": toLabel,
@@ -316,7 +276,7 @@ final class TokenField: UIView {
     }
     
     // MARK: - UIView overrides
-    var isFirstResponder: Bool {
+    override var isFirstResponder: Bool {
         return textView.isFirstResponder
     }
     
@@ -328,17 +288,17 @@ final class TokenField: UIView {
         return textView.canResignFirstResponder
     }
     
-    func becomeFirstResponder() -> Bool {
+    override func becomeFirstResponder() -> Bool {
         setCollapsed(false, animated: true)
         return textView.becomeFirstResponder()
     }
     
-    func resignFirstResponder() -> Bool {
+    override func resignFirstResponder() -> Bool {
         super.resignFirstResponder()
         return textView.resignFirstResponder()
     }
 
-    // MARK: - Public Interface
+    // MARK: - Interface
     func tokens() -> [AnyHashable]? {
         return currentTokens
     }
@@ -394,6 +354,7 @@ final class TokenField: UIView {
         token?.maxTitleWidth = tokenMaxSizeWidth
     }
     
+    // searches by isEqual:
     func token(forRepresentedObject object: Any?) -> Token? {
         for token in currentTokens {
             if token.representedObject == object {
@@ -542,7 +503,7 @@ final class TokenField: UIView {
         return textView.textContainerInset.right
     }
     
-    func updateLayout() {
+    private func updateLayout() {
         if toLabelText.length > 0 {
             toLabelLeftMargin.constant = textView.textContainerInset.left
             toLabelTopMargin.constant = textView.textContainerInset.top
@@ -605,7 +566,7 @@ final class TokenField: UIView {
         }
     }
     
-    func updateTextAttributes() {
+    private func updateTextAttributes() {
         textView.typingAttributes = textAttributes
         textView.textStorage.beginEditing()
         textView.textStorage.addAttributes(textAttributes, range: NSRange(location: 0, length: textView.textStorage.length))
@@ -621,7 +582,7 @@ final class TokenField: UIView {
     }
 
 
-    func updateExcludePath() {
+    private func updateExcludePath() {
         updateLayout()
         
         var exclusionPaths: [AnyHashable]? = []
@@ -673,12 +634,10 @@ final class TokenField: UIView {
         }
     }
 
-    @objc
     func setupSubviews() {
         // this prevents accessoryButton to be visible sometimes on scrolling
         clipsToBounds = true
 
-        let textView = TokenizedTextView()
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false

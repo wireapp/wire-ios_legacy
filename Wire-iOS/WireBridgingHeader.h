@@ -25,10 +25,7 @@
 #import "Settings.h"
 
 // UI
-#import "TokenField.h"
-#import "TokenField+Internal.h"
-
-#import "ButtonWithLargerHitArea.h"
+#import "TextTransform.h"
 
 // View Controllers
 
