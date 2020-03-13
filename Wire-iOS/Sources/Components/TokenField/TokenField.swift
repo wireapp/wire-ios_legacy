@@ -592,7 +592,7 @@ final class TokenField: UIView {
 
     // MARK: - Utility
 
-    private func updateTokenAttachments() {
+    func updateTokenAttachments() {
         textView.attributedText.enumerateAttachment() { tokenAttachment, _, _ in
             (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         }
@@ -612,7 +612,7 @@ final class TokenField: UIView {
             string.append(separatorString)
         }
 
-        return string && (textAttributes as? [NSAttributedString.Key: Any]) ?? [:]
+        return string && textAttributes
     }
 
     /// update currentTokens with textView's current attributedText text after the textView change the text
