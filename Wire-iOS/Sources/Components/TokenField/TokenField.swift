@@ -27,13 +27,11 @@ final class TokenField: UIView {
     let textView: TokenizedTextView = TokenizedTextView()
     var hasAccessoryButton = false
     var accessoryButton: IconButton?
-    private(set) var tokens: [Token]?
     private(set) var filterText: String = ""
     
     // Appearance
     var toLabelText: String?
     var font: UIFont?
-    var textColor: UIColor?
     var tokenTitleFont: UIFont?
     var tokenTitleColor: UIColor?
     var tokenSelectedTitleColor: UIColor?
@@ -57,7 +55,7 @@ final class TokenField: UIView {
     private var toLabel: UILabel?
     private var toLabelLeftMargin: NSLayoutConstraint?
     private var toLabelTopMargin: NSLayoutConstraint?
-    private var currentTokens: [AnyHashable]?
+    private var currentTokens: [Token] = [] ///TODO: public getter
     private var textAttributes: [AnyHashable : Any]?
 
     // Collapse
@@ -299,7 +297,7 @@ final class TokenField: UIView {
     }
 
     // MARK: - Interface
-    func tokens() -> [AnyHashable]? {
+    var tokens: [Token] {
         return currentTokens
     }
     
