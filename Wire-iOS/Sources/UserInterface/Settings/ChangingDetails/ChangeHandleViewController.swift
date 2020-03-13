@@ -195,7 +195,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     var popOnSuccess = true
 
     convenience init() {
-        self.init(state: HandleChangeState(currentHandle: ZMUser.selfUser().handle ?? nil, newHandle: nil, availability: .unknown))
+        self.init(state: HandleChangeState(currentHandle: SelfUser.current.handle ?? nil, newHandle: nil, availability: .unknown))
     }
 
     convenience init(suggestedHandle handle: String) {

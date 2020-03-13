@@ -229,7 +229,8 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     }
 
     var authenticatedUserNeedsEmailCredentials: Bool {
-        return ZMUser.selfUser()?.emailAddress?.isEmpty == true
+        guard let emailAddress = selfUser?.emailAddress else { return false }
+        return emailAddress.isEmpty
     }
 
     var sharedUserSession: ZMUserSession? {
@@ -241,7 +242,7 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     }
 
     var selfUser: UserType? {
-        return SelfUser.provider?.selfUser
+        return ZMUserSession.shared()?.selfUser
     }
 
     var numberOfAccounts: Int {

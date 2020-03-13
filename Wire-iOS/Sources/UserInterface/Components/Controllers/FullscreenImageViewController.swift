@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import FLAnimatedImage
 
 extension FullscreenImageViewController {
     // MARK: - Utilities, custom UI
@@ -40,4 +41,30 @@ extension FullscreenImageViewController {
             ghostImageView.removeFromSuperview()
         }
     }
+    
+    @objc
+    func loadImageAndSetupImageView() {
+        let imageIsAnimatedGIF = message.imageMessageData?.isAnimatedGIF
+        let imageData = message.imageMessageData?.imageData
+        
+        DispatchQueue.global(qos: .default).async(execute: { [weak self] in
+            
+            let mediaAsset: MediaAsset
+            
+            if imageIsAnimatedGIF == true {
+                mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
+            } else if let image = imageData.map(UIImage.init) as? UIImage {
+                mediaAsset = image
+            } else {
+                return
+            }
+            
+            DispatchQueue.main.async(execute: {
+                if let parentSize = self?.parent?.view.bounds.size {
+                    self?.setupImageView(image: mediaAsset, parentSize: parentSize)
+                }
+            })
+        })
+    }
+
 }

@@ -61,13 +61,14 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         mockAddressBookHelper = MockAddressBookHelper()
+        SelfUser.provider = selfUserProvider
     }
 
     override func tearDown() {
         sut = nil
         mockAddressBookHelper = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
 
@@ -80,7 +81,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         nonTeamTest {
             setupSut()
 
-            let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
+            let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
 
             navigationController.pushViewController(sut, animated: false)
 

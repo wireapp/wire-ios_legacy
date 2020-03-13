@@ -23,14 +23,10 @@
 #import "ConversationInputBarViewController+Private.h"
 #import "ConversationInputBarViewController+Files.h"
 
-#import "ConfirmAssetViewController.h"
-
 #import "Wire-Swift.h"
 
 
 #import "Settings.h"
-@import FLAnimatedImage;
-#import "MediaAsset.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -61,13 +57,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)sendButtonPressed:(id)sender;
 
 @end
-
-@interface ConversationInputBarViewController (Sketch)
-
-- (void)sketchButtonPressed:(nullable id)sender;
-
-@end
-
 
 @interface  ConversationInputBarViewController (UIGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 
@@ -261,49 +250,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                              forState:UIControlStateDisabled];
 }
 
-- (void)updateButtonIcons
-{
-    [self.audioButton setIcon:WRStyleKitIconMicrophone
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.videoButton setIcon:WRStyleKitIconVideoMessage
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.photoButton setIcon:WRStyleKitIconCameraLens
-                     withSize:16
-                     forState:UIControlStateNormal];
-    
-    [self.uploadFileButton setIcon:WRStyleKitIconPaperclip
-                          withSize:16
-                          forState:UIControlStateNormal];
-    
-    [self.sketchButton setIcon:WRStyleKitIconBrush
-                      withSize:16
-                      forState:UIControlStateNormal];
-    
-    [self.pingButton setIcon:WRStyleKitIconPing
-                    withSize:16
-                    forState:UIControlStateNormal];
-    
-    [self.locationButton setIcon:WRStyleKitIconLocationPin
-                        withSize:16
-                        forState:UIControlStateNormal];
-    
-    [self.gifButton setIcon:WRStyleKitIconGif
-                   withSize:16
-                   forState:UIControlStateNormal];
-
-    [self.mentionButton setIcon:WRStyleKitIconMention
-                   withSize:16
-                   forState:UIControlStateNormal];
-
-    [self.sendButton setIcon:WRStyleKitIconSend
-                    withSize:16
-                    forState:UIControlStateNormal];
-}
-
 - (void)updateAccessoryViews
 {
     [self updateLeftAccessoryView];
@@ -492,21 +438,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ZMAssetMetaDataEncoder (Test)
 
 + (CGSize)imageSizeForImageData:(NSData *)imageData;
-
-@end
-
-@implementation ConversationInputBarViewController (Sketch)
-
-- (void)sketchButtonPressed:(id)sender
-{
-    [self.inputBar.textView resignFirstResponder];
-    
-    CanvasViewController *viewController = [[CanvasViewController alloc] init];
-    viewController.delegate = self;
-    viewController.title = self.conversation.displayName.uppercaseString;
-    
-    [self.parentViewController presentViewController:[viewController wrapInNavigationController] animated:YES completion:nil];
-}
 
 @end
 

@@ -103,7 +103,7 @@ final class ProfileDetailsContentController: NSObject,
         super.init()
         configureObservers()
         updateContent()
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             user.needsRichProfileUpdate = true
         }
     }

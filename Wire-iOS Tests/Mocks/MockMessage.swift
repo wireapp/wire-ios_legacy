@@ -20,7 +20,7 @@
 import Foundation
 import WireLinkPreview
 
-@objcMembers class MockTextMessageData : NSObject, ZMTextMessageData {
+final class MockTextMessageData : NSObject, ZMTextMessageData {
     
     var messageText: String? = ""
     var backingLinkPreview: LinkMetadata? = nil
@@ -50,7 +50,7 @@ import WireLinkPreview
     }
 }
 
-@objcMembers class MockSystemMessageData: NSObject, ZMSystemMessageData {
+final class MockSystemMessageData: NSObject, ZMSystemMessageData {
 
     var messageTimer: NSNumber?
     var systemMessageType: ZMSystemMessageType = .invalid
@@ -71,7 +71,7 @@ import WireLinkPreview
     }
 }
 
-@objc protocol MockFileMessageDataType: ZMFileMessageData {
+protocol MockFileMessageDataType: ZMFileMessageData {
     var size: UInt64 { get set }
     var mimeType: String? { get set }
     var filename: String? { get set }
@@ -86,7 +86,7 @@ import WireLinkPreview
 extension MockPassFileMessageData: MockFileMessageDataType { }
 extension MockFileMessageData: MockFileMessageDataType { }
 
-@objcMembers class MockPassFileMessageData: NSObject, ZMFileMessageData {
+final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     
     var mimeType: String? = "application/vnd.apple.pkpass"
     var size: UInt64 = 1024 * 1024 * 2
@@ -144,7 +144,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 }
 
-@objcMembers class MockFileMessageData: NSObject, ZMFileMessageData {
+final class MockFileMessageData: NSObject, ZMFileMessageData {
     var mimeType: String? = "application/pdf"
     var size: UInt64 = 1024 * 1024 * 2
     var transferState: AssetTransferState = .uploaded
@@ -192,11 +192,11 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 }
 
-@objcMembers class MockKnockMessageData: NSObject, ZMKnockMessageData {
+final class MockKnockMessageData: NSObject, ZMKnockMessageData {
     
 }
 
-@objcMembers class MockImageMessageData : NSObject, ZMImageMessageData {
+final class MockImageMessageData : NSObject, ZMImageMessageData {
     
     var mockOriginalSize: CGSize = .zero
     var mockImageData = Data()
@@ -223,7 +223,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
     }
 }
 
-@objcMembers class MockLocationMessageData: NSObject, LocationMessageData {
+final class MockLocationMessageData: NSObject, LocationMessageData {
     var longitude: Float = 0
     var latitude: Float = 0
     var name: String? = nil
@@ -231,7 +231,7 @@ extension MockFileMessageData: MockFileMessageDataType { }
 }
 
 
-@objcMembers class MockMessage: NSObject, ZMConversationMessage {
+final class MockMessage: NSObject, ZMConversationMessage {
     
     typealias UsersByReaction = Dictionary<String, [ZMUser]>
     

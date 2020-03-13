@@ -43,17 +43,19 @@ final class VerticalTransition: NSObject, UIViewControllerAnimatedTransitioning 
         guard let toView = transitionContext.toView,
               let toViewController = transitionContext.toViewController else { return }
         
-        containerView.addSubview(toView)
-        
         guard let fromView = transitionContext.fromView,
               let fromViewController = transitionContext.fromViewController else { return }
         
         fromView.frame = transitionContext.initialFrame(for: fromViewController)
         
+        containerView.addSubview(toView)
+
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
+        
+        containerView.layoutIfNeeded()
         
         let sign = copysign(1.0, self.offset)
         let finalRect = transitionContext.finalFrame(for: toViewController)

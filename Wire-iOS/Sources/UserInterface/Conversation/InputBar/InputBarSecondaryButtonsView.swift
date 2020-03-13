@@ -22,18 +22,18 @@ import Cartography
 // Acts as a container for InputBarEditView & MarkdownBarView, however
 // only one of the views will be in the view hierarchy at a time.
 //
-public class InputBarSecondaryButtonsView: UIView {
+class InputBarSecondaryButtonsView: UIView {
     
-    public let editBarView: InputBarEditView
-    public let markdownBarView: MarkdownBarView
+    let editBarView: InputBarEditView
+    let markdownBarView: MarkdownBarView
     
-    public init(editBarView: InputBarEditView, markdownBarView: MarkdownBarView) {
+    init(editBarView: InputBarEditView, markdownBarView: MarkdownBarView) {
         self.editBarView = editBarView
         self.markdownBarView = markdownBarView
         super.init(frame: .zero)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -50,11 +50,11 @@ public class InputBarSecondaryButtonsView: UIView {
         }
     }
     
-    public func setEditBarView() {
+    func setEditBarView() {
         setView(editBarView)
     }
     
-    public func setMarkdownBarView() {
+    func setMarkdownBarView() {
         setView(markdownBarView)
     }
 }

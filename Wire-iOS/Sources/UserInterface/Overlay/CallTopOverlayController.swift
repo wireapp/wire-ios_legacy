@@ -222,7 +222,8 @@ final class CallTopOverlayController: UIViewController {
         callDurationTimer = nil
     }
     
-    @objc dynamic func openCall(_ sender: UITapGestureRecognizer?) {
+    @objc
+    private func openCall(_ sender: UITapGestureRecognizer?) {
         delegate?.voiceChannelTopOverlayWantsToRestoreCall(self)
     }
 }

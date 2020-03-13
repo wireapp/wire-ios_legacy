@@ -130,7 +130,7 @@ final class CallViewController: UIViewController {
         setupApplicationStateObservers()
         updateIdleTimer()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         proximityMonitorManager?.stopListening()
@@ -160,6 +160,10 @@ final class CallViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return !isOverlayVisible
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 
     @objc private func resumeVideoIfNeeded() {
@@ -193,7 +197,7 @@ final class CallViewController: UIViewController {
     fileprivate func acceptDegradedCall() {
         guard let userSession = ZMUserSession.shared() else { return }
         
-        userSession.enqueueChanges({
+        userSession.enqueue({
             self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession)
         }, completionHandler: {
             self.conversation?.joinCall()
@@ -373,11 +377,11 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         guard let userSession = ZMUserSession.shared() else { return }
         
         switch action {
-        case .continueDegradedCall: userSession.enqueueChanges { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
+        case .continueDegradedCall: userSession.enqueue { self.voiceChannel.continueByDecreasingConversationSecurity(userSession: userSession) }
         case .acceptCall: acceptCallIfPossible()
         case .acceptDegradedCall: acceptDegradedCall()
         case .terminateCall: voiceChannel.leave(userSession: userSession, completion: nil)
-        case .terminateDegradedCall: userSession.enqueueChanges { self.voiceChannel.leaveAndDecreaseConversationSecurity(userSession: userSession) }
+        case .terminateDegradedCall: userSession.enqueue { self.voiceChannel.leaveAndDecreaseConversationSecurity(userSession: userSession) }
         case .toggleMuteState: voiceChannel.toggleMuteState(userSession: userSession)
         case .toggleSpeakerState: AVSMediaManager.sharedInstance().toggleSpeaker()
         case .minimizeOverlay: minimizeOverlay()

@@ -75,9 +75,9 @@ final class CallDegradationController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewIsReady = true
-        presentAlertIfNeeded()  
+        presentAlertIfNeeded()
     }
-    
+
     private func presentAlertIfNeeded() {
         guard
             viewIsReady,

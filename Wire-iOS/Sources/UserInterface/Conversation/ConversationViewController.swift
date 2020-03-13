@@ -166,7 +166,7 @@ final class ConversationViewController: UIViewController {
         outgoingConnectionViewController = OutgoingConnectionViewController()
         outgoingConnectionViewController.view.translatesAutoresizingMaskIntoConstraints = false
         outgoingConnectionViewController.buttonCallback = { [weak self] action in
-            self?.session.enqueueChanges({
+            self?.session.enqueue({
                 switch action {
                 case .cancel:
                     self?.conversation.connectedUser?.cancelConnectionRequest()
@@ -266,12 +266,11 @@ final class ConversationViewController: UIViewController {
     func onBackButtonPressed(_ backButton: UIButton?) {
         openConversationList()
     }
-    
-    @objc
-    func addParticipants(_ participants: Set<ZMUser>) {
+
+    func addParticipants(_ participants: UserSet) {
         var newConversation: ZMConversation? = nil
         
-        session.enqueueChanges({
+        session.enqueue({
             newConversation = self.conversation.addParticipantsOrCreateConversation(participants)
         }, completionHandler: { [weak self] in
             if let newConversation = newConversation {
@@ -471,7 +470,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
                                                             withText newText: String?,
                                                             mentions: [Mention]) {
         contentViewController.didFinishEditing(message)
-        session.enqueueChanges({
+        session.enqueue({
             if let newText = newText,
                 !newText.isEmpty {
                 let fetchLinkPreview = !Settings.shared().disableLinkPreviews
@@ -497,7 +496,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
     }
 
     func conversationInputBarViewControllerDidComposeDraft(message: DraftMessage) {
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             self.conversation.draftMessage = message
         }
     }

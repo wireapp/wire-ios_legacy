@@ -151,7 +151,7 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         locationAnnotation = annotation
     }
 
-    func updateMapLocation(withLocationData locationData: LocationMessageData) {
+    func updateMapLocation(withLocationData locationData: LocationMessageData) {        
         if locationData.zoomLevel != 0 {
             mapView.setCenterCoordinate(locationData.coordinate, zoomLevel: Int(locationData.zoomLevel))
         } else {
@@ -161,14 +161,15 @@ final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
         }
     }
 
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         // The zoomLevel calculation depends on the frame of the mapView, so we need to call this here again
         guard let locationData = lastConfiguration?.location else { return }
         updateMapLocation(withLocationData: locationData)
     }
 
-    @objc func openInMaps() {
+    @objc
+    private func openInMaps() {
         lastConfiguration?.location.openInMaps(with: mapView.region.span)
     }
 

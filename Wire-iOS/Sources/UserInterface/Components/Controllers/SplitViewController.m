@@ -389,8 +389,8 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 - (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage
 {
-    self.rightViewOffsetConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
-    self.leftViewOffsetConstraint.constant = 64.0f * (1.0f - percentage);
+    self.rightViewLeadingConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
+    self.leftViewLeadingConstraint.constant = 64.0f * (1.0f - percentage);
 }
 
 @end

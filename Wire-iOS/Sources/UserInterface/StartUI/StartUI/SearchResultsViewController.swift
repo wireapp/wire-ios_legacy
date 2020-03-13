@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-@objc enum SearchGroup: Int {
+enum SearchGroup: Int {
     case people
     case services
 }
@@ -54,8 +54,7 @@ extension SearchGroup {
     }
 }
 
-@objc
-protocol SearchResultsViewControllerDelegate {
+protocol SearchResultsViewControllerDelegate: class {
     
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)
@@ -64,20 +63,17 @@ protocol SearchResultsViewControllerDelegate {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
 }
 
-@objc
 public enum SearchResultsViewControllerAction : Int {
     case createGroup
     case createGuestRoom
 }
 
-@objc
 public enum SearchResultsViewControllerMode : Int {
     case search
     case selection
     case list
 }
 
-@objc
 public enum SearchResultsViewControllerSection : Int {
     case unknown
     case topPeople
@@ -129,7 +125,7 @@ extension UIViewController {
     }
 }
 
-@objcMembers public class SearchResultsViewController : UIViewController {
+class SearchResultsViewController : UIViewController {
 
     var searchResultsView: SearchResultsView?
     var searchDirectory: SearchDirectory!
@@ -153,12 +149,12 @@ extension UIViewController {
         }
     }
 
-    public var filterConversation: ZMConversation? = nil
-    public let shouldIncludeGuests: Bool
+    var filterConversation: ZMConversation? = nil
+    let shouldIncludeGuests: Bool
 
     weak var delegate: SearchResultsViewControllerDelegate? = nil
 
-    public var mode: SearchResultsViewControllerMode = .search {
+    var mode: SearchResultsViewControllerMode = .search {
         didSet {
             updateVisibleSections()
         }
@@ -168,8 +164,7 @@ extension UIViewController {
         searchDirectory?.tearDown()
     }
 
-    @objc
-    public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
@@ -210,23 +205,23 @@ extension UIViewController {
         inviteTeamMemberSection.delegate = self
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func loadView() {
+    override func loadView() {
         searchResultsView  = SearchResultsView()
         searchResultsView?.parentViewController = self
         view = searchResultsView
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         sectionController.collectionView?.reloadData()
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
     }
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         sectionController.collectionView = searchResultsView?.collectionView
@@ -237,7 +232,7 @@ extension UIViewController {
     }
 
     @objc
-    public func cancelPreviousSearch() {
+    func cancelPreviousSearch() {
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
     }
@@ -259,22 +254,18 @@ extension UIViewController {
         }
     }
 
-    @objc
-    public func searchForUsers(withQuery query: String) {
+    func searchForUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
     }
 
-    @objc
-    public func searchForLocalUsers(withQuery query: String) {
+    func searchForLocalUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.contacts, .teamMembers])
     }
 
-    @objc
-    public func searchForServices(withQuery query: String) {
+    func searchForServices(withQuery query: String) {
         self.performSearch(query: query, options: [.services])
     }
 
-    @objc
     func searchContactList() {
         searchForLocalUsers(withQuery: "")
     }

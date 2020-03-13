@@ -166,7 +166,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         }
 
         if let userSession = ZMUserSession.shared() {
-            self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
+            self.selfUserObserver = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)

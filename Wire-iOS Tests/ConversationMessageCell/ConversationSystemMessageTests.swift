@@ -19,15 +19,11 @@
 import XCTest
 @testable import Wire
 
-class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
+final class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
+
     func testConversationIsSecure() {
         let message = MockMessageFactory.systemMessage(with: .conversationIsSecure)!
-        
+
         verify(message: message)
     }
 
@@ -35,81 +31,81 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         let message = MockMessageFactory.systemMessage(with: .conversationNameChanged, users: 0, clients: 0)!
         message.backingSystemMessageData.text = "Blue room"
         message.sender = MockUser.mockUsers()?.first
-        
+
         verify(message: message)
     }
-    
+
     func testAddParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        
+
         verify(message: message)
     }
-    
+
     func testAddParticipant_Service() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockService()]) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testAddManyParticipants() {
         let message = MockMessageFactory.systemMessage(with: .participantsAdded, users: 10, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        
+
         verify(message: message)
     }
-    
+
     func testRemoveParticipant() {
         let message = MockMessageFactory.systemMessage(with: .participantsRemoved, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
 
-        verify(message: message, colorSchemes: [.light, .dark])
+        verify(message: message, allColorSchemes: true)
     }
 
     func testTeamMemberLeave() {
         let message = MockMessageFactory.systemMessage(with: .teamMemberLeave, users: 1, clients: 0)!
         message.sender = MockUser.mockUsers()?.last
-        
+
         verify(message: message)
     }
-    
+
     func testDecryptionFailed() {
         let message = MockMessageFactory.systemMessage(with: .decryptionFailed, users: 0, clients: 0)!
-        
+
         verify(message: message)
     }
-    
+
     func testNewClient_oneUser_oneClient() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
-        
+
         verify(message: message)
     }
-    
+
     func testNewClient_selfUser_oneClient() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 1)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testNewClient_selfUser_manyClients() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 2)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testNewClient_oneUser_manyClients() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 1, clients: 3)!
-        
+
         verify(message: message)
     }
-    
+
     func testNewClient_manyUsers_manyClients() {
         let message = MockMessageFactory.systemMessage(with: .newClient, users: 3, clients: 4)!
-        
+
         verify(message: message)
     }
 
@@ -119,10 +115,10 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
-    
+
     func testReactivatedDevice() {
         let message = MockMessageFactory.systemMessage(with: .reactivatedDevice)!
-        
+
         verify(message: message)
     }
 
@@ -146,25 +142,25 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
 
         verify(message: message)
     }
-    
+
     // MARK: - ignored client
-    
+
     func testIgnoredClient_self() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockSelf()]) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testIgnoredClient_other() {
         let message = MockMessageFactory.systemMessage(with: .ignoredClient)!
         message.backingSystemMessageData?.users = Set<AnyHashable>([MockUser.mockUsers()!.last]) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     // MARK: - Legal Hold
-    
+
     func testThatItRendersLegalHoldEnabledInConversation() {
         let mockUser = MockUser.createSelfUser(name: "John Doe", inTeam: nil)
         mockUser.isUnderLegalHold = true
@@ -172,44 +168,43 @@ class ConversationSystemMessageTests: ConversationCellSnapshotTestCase {
         XCTAssertTrue(message.sender?.isUnderLegalHold ?? false)
         verify(message: message)
     }
-    
+
     func testThatItRendersLegalHoldDisabledInConversation() {
         let message = MockMessageFactory.systemMessage(with: .legalHoldDisabled)!
         XCTAssertFalse(message.sender?.isUnderLegalHold ?? false)
         verify(message: message)
     }
-    
-    
+
     // MARK: - potential gap
-    
+
     func testPotentialGap() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
 
         verify(message: message)
     }
-    
+
     func testPotentialGap_addedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
-        
+
         message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testPotentialGap_removedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
-        
+
         message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
-    
+
     func testPotentialGap_addedAndRemovedUsers() {
         let message = MockMessageFactory.systemMessage(with: .potentialGap)!
-        
+
         message.backingSystemMessageData?.addedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.prefix(1))) as! Set<ZMUser>
         message.backingSystemMessageData?.removedUsers = Set<AnyHashable>(Array(MockUser.mockUsers()!.suffix(1))) as! Set<ZMUser>
-        
+
         verify(message: message)
     }
 

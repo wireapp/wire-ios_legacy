@@ -34,42 +34,47 @@ final class SwizzleTransition: NSObject, UIViewControllerAnimatedTransitioning {
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard let toView = transitionContext.toView,
-              let fromView = transitionContext.fromView else {
-            return
-        }
+        let toView = transitionContext.toView
+        let fromView = transitionContext.fromView
+
         let containerView = transitionContext.containerView
 
-        containerView.addSubview(toView)
+        if let toView = toView {
+            containerView.addSubview(toView)
+        }
 
         if !transitionContext.isAnimated {
             transitionContext.completeTransition(true)
             return
         }
-        containerView.setNeedsLayout()
+        
+        containerView.layoutIfNeeded()
 
         let durationPhase1: TimeInterval
         let durationPhase2: TimeInterval
+        
+        let verticalTransform = CGAffineTransform(translationX: 0, y: 48)
+        
         if direction == .horizontal {
-            toView.layer.transform = CATransform3DMakeTranslation(24, 0, 0)
+            toView?.transform = CGAffineTransform(translationX: 24, y:  0)
             durationPhase1 = 0.15
             durationPhase2 = 0.55
         } else {
-            toView.layer.transform = CATransform3DMakeTranslation(0, 48, 0)
+            toView?.transform = verticalTransform
             durationPhase1 = 0.10
             durationPhase2 = 0.30
         }
-        toView.alpha = 0
+        toView?.alpha = 0
 
         UIView.animate(easing: .easeInQuad, duration: durationPhase1, animations: {
-            fromView.alpha = 0
-            fromView.layer.transform = self.direction == .horizontal ? CATransform3DMakeTranslation(48, 0, 0) : CATransform3DMakeTranslation(0, 48, 0)
+            fromView?.alpha = 0
+            fromView?.transform = self.direction == .horizontal ? CGAffineTransform(translationX:48, y:0) : verticalTransform
         }) { finished in
             UIView.animate(easing: .easeOutQuad, duration: durationPhase2, animations: {
-                toView.layer.transform = CATransform3DIdentity
-                toView.alpha = 1
+                toView?.transform = .identity
+                toView?.alpha = 1
             }) { finished in
-                fromView.layer.transform = CATransform3DIdentity
+                fromView?.transform = .identity
                 transitionContext.completeTransition(true)
             }
         }
