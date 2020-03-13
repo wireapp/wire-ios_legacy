@@ -28,8 +28,6 @@
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 
-#import "ButtonWithLargerHitArea.h"
-
 // View Controllers
 
 #import "ConversationInputBarViewController.h"
