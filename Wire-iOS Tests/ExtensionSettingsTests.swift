@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireCommonComponents
 
 class ExtensionSettingsTests: XCTestCase {
 

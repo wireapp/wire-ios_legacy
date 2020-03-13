@@ -402,7 +402,7 @@ final class AudioMessageView: UIView, TransferView {
             switch fileMessageData.downloadState {
             case .remote:
                 self.expectingDownload = true
-                ZMUserSession.shared()?.enqueueChanges(fileMessageData.requestFileDownload)
+                ZMUserSession.shared()?.enqueue(fileMessageData.requestFileDownload)
             case .downloaded:
                 playTrack()
             case .downloading:

@@ -48,14 +48,14 @@ final class IncomingConnectionViewController: UIViewController {
         connectionView = IncomingConnectionView(user: user)
         connectionView.onAccept = { [weak self] user in
             guard let `self` = self else { return }
-            self.userSession?.performChanges {
+            self.userSession?.perform {
                 self.user.accept()
             }
             self.onAction?(.accept)
         }
         connectionView.onIgnore = { [weak self] user in
             guard let `self` = self else { return }
-            self.userSession?.performChanges {
+            self.userSession?.perform {
                 self.user.ignore()
                 self.onAction?(.ignore)
             }

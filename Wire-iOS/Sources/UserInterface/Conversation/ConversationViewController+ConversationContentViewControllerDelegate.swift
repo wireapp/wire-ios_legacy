@@ -44,7 +44,7 @@ extension ConversationViewController: ConversationContentViewControllerDelegate 
     }
     
     func conversationContentViewController(_ contentViewController: ConversationContentViewController, didTriggerResending message: ZMConversationMessage) {
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             message.resend()
         })
     }

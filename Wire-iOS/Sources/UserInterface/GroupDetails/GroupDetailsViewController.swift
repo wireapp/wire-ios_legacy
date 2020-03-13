@@ -168,17 +168,12 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(optionsSectionController)
         }
         
-        if let selfUser = ZMUser.selfUser(),
-            conversation.teamRemoteIdentifier != nil,
-            selfUser.canModifyReadReceiptSettings(in: conversation)
-        {
+        if conversation.teamRemoteIdentifier != nil && SelfUser.current.canModifyReadReceiptSettings(in: conversation) {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
-           
-            
         }
         
         // MARK: services sections
@@ -304,14 +299,4 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(menu, animated: animated)
     }
     
-}
-
-extension Array where Element: UserType {
-    func addSelfUserAndSorted() -> [UserType] {
-        var arr: [UserType] = self
-        if let selfUser = ZMUser.selfUser() {
-            arr.append(selfUser)
-        }
-        return arr.sorted { $0.name < $1.name } as! Array<Element>
-    }
 }

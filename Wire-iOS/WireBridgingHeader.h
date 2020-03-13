@@ -19,17 +19,14 @@
 // Data model
 @import WireSyncEngine;
 @import avs;
+@import WireCommonComponents;
+
 #import <CommonCrypto/CommonCrypto.h>
 #import "Settings.h"
 
 // UI
 #import "TokenField.h"
 #import "TokenField+Internal.h"
-#import "TokenTextAttachment.h"
-
-#import "IconButton.h"
-#import "IconButton+Internal.h"
-#import "ButtonWithLargerHitArea.h"
 
 // View Controllers
 

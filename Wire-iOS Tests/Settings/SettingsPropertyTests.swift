@@ -18,6 +18,7 @@
 
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
 @objcMembers class MockZMEditableUser: MockUser, ZMEditableUser, ValidatorType {

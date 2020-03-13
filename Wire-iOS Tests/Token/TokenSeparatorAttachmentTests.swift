@@ -1,4 +1,3 @@
-//
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -16,18 +15,26 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
 @testable import Wire
+import SnapshotTesting
 
-extension MockUserType: ProfileImageFetchable {
+final class TokenSeparatorAttachmentTests: XCTestCase {
+    var sut: TokenSeparatorAttachment!
 
-    func fetchProfileImage(session: ZMUserSessionInterface,
-                           cache: ImageCache<UIImage> = defaultUserImageCache,
-                           sizeLimit: Int? = nil,
-                           desaturate: Bool = false,
-                           completion: @escaping (UIImage?, Bool) -> Void) {
+    override func setUp() {
+        let token = Token(title: "", representedObject: MockUser())
+        let tokenField = TokenField()
+        tokenField.dotColor = .black
 
-        let image = completeImageData.flatMap(UIImage.init)
-        completion(image, false)
+        sut = TokenSeparatorAttachment(token: token, tokenField: tokenField)
+    }
+
+    override func tearDown() {
+        sut = nil
+    }
+
+    func testTokenAttachmentImage() {
+        verify(matching: sut.image!)
     }
 }

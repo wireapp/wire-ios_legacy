@@ -157,7 +157,7 @@ final class ConversationListViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if !isIPadRegular() {
-            Settings.shared().lastViewedScreen = SettingsLastScreen.list
+            Settings.shared().lastViewedScreen = .list
         }
 
         state = .conversationList

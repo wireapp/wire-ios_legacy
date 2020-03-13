@@ -124,7 +124,7 @@ import MessageUI
         }
         
         // Prepare subject & body
-        let user = ZMUser.selfUser()
+        let user = SelfUser.current as? ZMUser
         let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
