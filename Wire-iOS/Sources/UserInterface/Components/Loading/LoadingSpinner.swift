@@ -48,18 +48,61 @@ protocol LoadingSpinner: class {
     var spinnerSubtitle: String? { get set }
 }
 
-extension LoadingSpinner where Self: UIViewController {
+extension UIViewController {
     func createLoadingSpinnerView() -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
         loadingSpinnerView.isHidden = true
-        loadingSpinnerView.backgroundColor = UIColor(white: 0.0, alpha: 0.5)
+        loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
-        view.addSubview(loadingSpinnerView)
-        
-        createConstraints(container: loadingSpinnerView)
         
         return loadingSpinnerView
     }
+
+//    lazy var loadingSpinnerView: LoadingSpinnerView = createLoadingSpinnerView()
+    
+    var showSpinner: Bool {
+        get {
+            return false
+        }
+        
+        set {
+            if newValue {
+                let loadingSpinnerView = createLoadingSpinnerView()
+                
+                let viewController = UIViewController()
+                viewController.view.backgroundColor = .clear
+                viewController.view.addSubview(loadingSpinnerView)
+
+//                viewController.view = loadingSpinnerView
+                loadingSpinnerView.isHidden = false
+                
+                viewController.createConstraints(container: loadingSpinnerView)
+
+                addToSelf(viewController)
+//                loadingSpinnerView.layoutIfNeeded()
+//                viewController.view.layoutIfNeeded()
+                UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
+                loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
+            } else {
+                ///TODO: dismiss/hide
+            }
+        }
+    }
+    
+    private func createConstraints(container: UIView) {
+        container.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            container.topAnchor.constraint(equalTo: view.topAnchor),
+            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+    }
+
+}
+
+extension LoadingSpinner where Self: UIViewController {
     
     var spinnerSubtitle: String? {
         get {
@@ -89,14 +132,4 @@ extension LoadingSpinner where Self: UIViewController {
         }
     }
 
-    private func createConstraints(container: UIView) {
-        container.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            container.topAnchor.constraint(equalTo: view.topAnchor),
-            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
-    }
 }
