@@ -23,8 +23,7 @@ final class ShareItemProvider: UIActivityItemProvider {
 
     override func activityViewController(_ activityViewController: UIActivityViewController, itemForActivityType activityType: UIActivity.ActivityType?) -> Any? {
         guard
-            let selfUser = SelfUser.provider?.selfUser,
-            let handle = selfUser.handle
+            let handle = SelfUser.provider?.selfUser.handle
         else {
             return "send_invitation_no_email.text".localized
         }
