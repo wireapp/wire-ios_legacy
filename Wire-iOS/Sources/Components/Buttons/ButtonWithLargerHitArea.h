@@ -21,8 +21,4 @@
 
 
 
-@interface ButtonWithLargerHitArea : UIButton
 
-@property (nonatomic) CGSize hitAreaPadding;
-
-@end
