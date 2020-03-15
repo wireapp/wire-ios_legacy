@@ -41,9 +41,6 @@ final class TokenField: UIView {
     private(set) var filterText: String = ""
     
     // MARK: - Appearance
-    func updateTokenAttachmentsIfNeeded() {
-        
-    }
     
     var toLabelText: String? {
         didSet {
@@ -150,7 +147,7 @@ final class TokenField: UIView {
     ///TODO:
     private var toLabelLeftMargin: NSLayoutConstraint!
     private var toLabelTopMargin: NSLayoutConstraint!
-    private var currentTokens: [Token] = [] ///TODO: public getter
+    private(set) var tokens: [Token] = []
     private var textAttributes: [NSAttributedString.Key : Any] {
         var attributes: [NSAttributedString.Key : Any] = [:]
         
@@ -241,6 +238,34 @@ final class TokenField: UIView {
     }
     
     // MARK: - UIView overrides
+    
+    override var intrinsicContentSize: CGSize {
+        let height = textView.contentSize.height
+        let maxHeight = fontLineHeight * CGFloat(numberOfLines) + lineSpacing * CGFloat(numberOfLines - 1) + textView.textContainerInset.top + textView.textContainerInset.bottom
+        let minHeight = fontLineHeight + textView.textContainerInset.top + textView.textContainerInset.bottom
+        
+        return CGSize(width: UIView.noIntrinsicMetric, height: isCollapsed ? minHeight: max(min(height, maxHeight), minHeight))
+    }
+    
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        var anyTokenUpdated = false
+        for token in tokens {
+            if token.maxTitleWidth == 0 {
+                updateMaxTitleWidth(for: token)
+                anyTokenUpdated = true
+            }
+        }
+        
+        if anyTokenUpdated {
+            updateTokenAttachments()
+            let wholeRange = NSRange(location: 0, length: textView.attributedText.length)
+            textView.layoutManager.invalidateLayout(forCharacterRange: wholeRange, actualCharacterRange: nil)
+        }
+    }
+    
     override var isFirstResponder: Bool {
         return textView.isFirstResponder
     }
@@ -249,7 +274,7 @@ final class TokenField: UIView {
         return textView.canBecomeFirstResponder
     }
     
-    override    var canResignFirstResponder: Bool {
+    override var canResignFirstResponder: Bool {
         return textView.canResignFirstResponder
     }
     
@@ -264,9 +289,6 @@ final class TokenField: UIView {
     }
 
     // MARK: - Interface
-    var tokens: [Token] {
-        return currentTokens
-    }
     
     func addToken(forTitle title: String, representedObject object: AnyObject) { ///TODO: compare any
         let token = Token(title: title, representedObject: object)
@@ -274,16 +296,16 @@ final class TokenField: UIView {
     }
     
     func addToken(_ token: Token) {
-        guard !currentTokens.contains(token) else {
+        guard !tokens.contains(token) else {
             return
         }
 
-        currentTokens.append(token)
+        tokens.append(token)
 
         updateMaxTitleWidth(for: token)
         
         if !isCollapsed {
-            textView.attributedText = string(forTokens: currentTokens)
+            textView.attributedText = string(forTokens: tokens)
             // Calling -insertText: forces textView to update its contentSize, while other public methods do not.
             // Broken contentSize leads to broken scrolling to bottom of input field.
             textView.insertText("")
@@ -307,9 +329,9 @@ final class TokenField: UIView {
 
     func updateMaxTitleWidth(for token: Token?) {
         var tokenMaxSizeWidth = textView.textContainer.size.width
-        if currentTokens.count == 0 {
+        if tokens.count == 0 {
             tokenMaxSizeWidth -= toLabel.frame.size.width + (hasAccessoryButton ? accessoryButton.frame.size.width : 0.0) + tokenOffset
-        } else if currentTokens.count == 1 {
+        } else if tokens.count == 1 {
             tokenMaxSizeWidth -= hasAccessoryButton ? accessoryButton.frame.size.width : 0.0
         }
         token?.maxTitleWidth = tokenMaxSizeWidth
@@ -317,7 +339,7 @@ final class TokenField: UIView {
     
     // searches by isEqual:
     func token(forRepresentedObject object: AnyObject?) -> Token? {
-        return currentTokens.first(where:{ $0.representedObject as? NSObject == object as? NSObject})
+        return tokens.first(where:{ $0.representedObject as? NSObject == object as? NSObject})
     }
     
     func scrollToBottomOfInputField() {
@@ -341,7 +363,7 @@ final class TokenField: UIView {
             return
         }
         
-        if currentTokens.isEmpty {
+        if tokens.isEmpty {
             return
         }
         
@@ -362,7 +384,7 @@ final class TokenField: UIView {
                     weakSelf.textView.setContentOffset(CGPoint.zero, animated: false)
                 })
             } else {
-                weakSelf.textView.attributedText = weakSelf.string(forTokens: weakSelf.currentTokens)
+                weakSelf.textView.attributedText = weakSelf.string(forTokens: weakSelf.tokens)
                 weakSelf.invalidateIntrinsicContentSize()
                 if weakSelf.textView.attributedText.length > 0 {
                     weakSelf.textView.selectedRange = NSRange(location: weakSelf.textView.attributedText.length, length: 0)
@@ -386,14 +408,6 @@ final class TokenField: UIView {
         return font.lineHeight
     }
     
-    override var intrinsicContentSize: CGSize {
-        let height = textView.contentSize.height
-        let maxHeight = fontLineHeight * CGFloat(numberOfLines) + lineSpacing * CGFloat((numberOfLines - 1)) + textView.textContainerInset.top + textView.textContainerInset.bottom
-        let minHeight = fontLineHeight + textView.textContainerInset.top + textView.textContainerInset.bottom
-        
-        return CGSize(width: UIView.noIntrinsicMetric, height: isCollapsed ? minHeight: max(min(height, maxHeight), minHeight))
-    }
-    
     private var accessoryButtonTop: CGFloat {
         return textView.textContainerInset.top + (fontLineHeight - accessoryButtonSize) / 2 - textView.contentOffset.y
     }
@@ -414,24 +428,6 @@ final class TokenField: UIView {
         layoutIfNeeded()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        var anyTokenUpdated = false
-        for token in currentTokens {
-            if token.maxTitleWidth == 0 {
-                updateMaxTitleWidth(for: token)
-                anyTokenUpdated = true
-            }
-        }
-        
-        if anyTokenUpdated {
-            updateTokenAttachments()
-            let wholeRange = NSRange(location: 0, length: textView.attributedText.length)
-            textView.layoutManager.invalidateLayout(forCharacterRange: wholeRange, actualCharacterRange: nil)
-        }
-    }
-
     // MARK: - Utility
     var collapsedString: NSAttributedString? {
         let collapsedText = " ...".localized
@@ -614,20 +610,20 @@ final class TokenField: UIView {
 
         updatedCurrentTokens = updatedCurrentTokens.intersection(updatedCurrentSeparatorTokens)
 
-            var deletedTokens = Set<Token>(currentTokens)
+            var deletedTokens = Set<Token>(tokens)
             deletedTokens.subtract(updatedCurrentTokens)
 
             if !deletedTokens.isEmpty {
                 removeTokens(Array(deletedTokens))
             }
-            currentTokens.removeAll(where: { deletedTokens.contains($0) })
-            delegate?.tokenField(self, changedTokensTo: currentTokens)
+            tokens.removeAll(where: { deletedTokens.contains($0) })
+            delegate?.tokenField(self, changedTokensTo: tokens)
     }
 
     // MARK: - remove token
 
     func removeAllTokens() {
-        removeTokens(currentTokens)
+        removeTokens(tokens)
         textView.showOrHidePlaceholder()
     }
 
@@ -656,7 +652,7 @@ final class TokenField: UIView {
         }
         textView.textStorage.endEditing()
 
-        currentTokens.removeAll(where: { tokensToRemove.contains($0) })
+        tokens.removeAll(where: { tokensToRemove.contains($0) })
 
         invalidateIntrinsicContentSize()
         updateTextAttributes()
