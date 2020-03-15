@@ -35,7 +35,6 @@ final class TokenField: UIView {
 
             accessoryButton.isHidden = !hasAccessoryButton
             updateExcludePath()
-
         }
     }
     
@@ -59,7 +58,7 @@ final class TokenField: UIView {
     
     // Dynamic Type is disabled for now until the separator dots
     // vertical alignment has been fixed for larger fonts.
-    let tokenTitleFont: UIFont = FontScheme(contentSizeCategory: .medium).font(for: .init(.small, .regular))!
+    let tokenTitleFont: UIFont = FontSpec(.small, .regular).fontWithoutDynamicType!
     var tokenTitleColor: UIColor = UIColor.white {
         didSet {
             guard oldValue != tokenTitleColor else { return }
@@ -504,7 +503,7 @@ final class TokenField: UIView {
         
         if excludedRect.equalTo(CGRect.zero) == false {
             let transform = CGAffineTransform(translationX: textView.contentOffset.x, y: textView.contentOffset.y)
-            var transformedRect = excludedRect.applying(transform)
+            let transformedRect = excludedRect.applying(transform)
             let path = UIBezierPath(rect: transformedRect)
             exclusionPaths.append(path)
         }
@@ -820,10 +819,4 @@ extension TokenField: UITextViewDelegate {
 
     }
 
-}
-
-extension NSAttributedString {
-    func enumerateAttachment(block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        enumerateAttribute(.attachment, in: NSRange(location: 0, length: length), options: [], using: block)
-    }
 }

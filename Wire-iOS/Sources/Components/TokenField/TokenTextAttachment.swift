@@ -135,7 +135,10 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
 
     // Search for longest substring, which render width is less than maxWidth
 
-    func searchForShortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key: Any]?, toFitMaxWidth maxWidth: CGFloat, in range: NSRange) -> String {
+    func searchForShortenedText(forText text: String,
+                                withAttributes attributes: [NSAttributedString.Key: Any]?,
+                                toFitMaxWidth maxWidth: CGFloat,
+                                in range: NSRange) -> String {
         // In other words, search for such number l, that
         // [title substringToIndex:l].width <= maxWidth,
         // and [title substringToIndex:l+1].width > maxWidth;
