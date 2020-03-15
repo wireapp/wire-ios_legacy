@@ -47,7 +47,7 @@ final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase
         sut = AddParticipantsViewController(context: .add(conversation), variant: .light)
 
         let user = createUser(name: "Bill")
-        sut.userSelection.add(user) ///TODO:
+        sut.userSelection.add(user)
         sut.userSelection(UserSelection(), didAddUser: user)
 
         verify(view: sut.view)

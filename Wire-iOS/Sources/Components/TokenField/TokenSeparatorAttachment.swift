@@ -42,7 +42,7 @@ final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var imageForCurrentToken: UIImage? {
-        let imageHeight: CGFloat = ceil(tokenField.font?.pointSize ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.font.pointSize)
         let imageSize = CGSize(width: dotSize + dotSpacing * 2, height: imageHeight)
         let lineHeight = tokenField.fontLineHeight
         let delta: CGFloat = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)

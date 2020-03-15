@@ -28,7 +28,6 @@ final class TokenField: UIView {
     let textView: TokenizedTextView = TokenizedTextView()
     let accessoryButton: IconButton = IconButton()
 
-    ///TODO: check double coded?
     var hasAccessoryButton = false {
         didSet {
             guard oldValue != hasAccessoryButton else { return }
@@ -42,16 +41,20 @@ final class TokenField: UIView {
     private(set) var filterText: String = ""
     
     // MARK: - Appearance
+    func updateTokenAttachmentsIfNeeded() {
+        
+    }
+    
     var toLabelText: String? {
         didSet {
             guard oldValue != toLabelText else { return }
             updateTextAttributes()
         }
     }
-    var font: UIFont? {
+    
+    var font: UIFont = FontSpec(.normal, .regular).fontWithoutDynamicType! {
         didSet {
             guard oldValue != font else { return }
-            
             updateTokenAttachments()
         }
     }
@@ -59,10 +62,10 @@ final class TokenField: UIView {
     // Dynamic Type is disabled for now until the separator dots
     // vertical alignment has been fixed for larger fonts.
     let tokenTitleFont: UIFont = FontSpec(.small, .regular).fontWithoutDynamicType!
+    
     var tokenTitleColor: UIColor = UIColor.white {
         didSet {
             guard oldValue != tokenTitleColor else { return }
-            
             updateTokenAttachments()
         }
     }
@@ -128,13 +131,21 @@ final class TokenField: UIView {
     }
     
     // Utils
-    var excludedRect = CGRect.zero
-    /* rect for excluded path in textView text container */
+    
+    /// rect for excluded path in textView text container
+    var excludedRect = CGRect.zero {
+        didSet {
+            guard oldValue != excludedRect else { return }
+            
+            updateExcludePath()
+        }
+    }
     
     private(set) var userDidConfirmInput = false
     
     private var accessoryButtonTopMargin: NSLayoutConstraint!
     private var accessoryButtonRightMargin: NSLayoutConstraint!
+    
     private var toLabel: UILabel = UILabel()
     ///TODO:
     private var toLabelLeftMargin: NSLayoutConstraint!
@@ -145,12 +156,10 @@ final class TokenField: UIView {
         
         let inputParagraphStyle = NSMutableParagraphStyle()
         inputParagraphStyle.lineSpacing = lineSpacing
-        attributes[NSAttributedString.Key.paragraphStyle] = inputParagraphStyle
+        attributes[.paragraphStyle] = inputParagraphStyle
         
-        if font != nil {
-            attributes[NSAttributedString.Key.font] = font
-        }
-            attributes[NSAttributedString.Key.foregroundColor] = textColor
+            attributes[.font] = font
+            attributes[.foregroundColor] = textColor
         
         return attributes
     }
@@ -308,13 +317,6 @@ final class TokenField: UIView {
     
     // searches by isEqual:
     func token(forRepresentedObject object: AnyObject?) -> Token? {
-        
-        
-//        for token in currentTokens {
-//            if token.representedObject == object {
-//                return token
-//            }
-//        }
         return currentTokens.first(where:{ $0.representedObject as? NSObject == object as? NSObject})
     }
     
@@ -326,15 +328,6 @@ final class TokenField: UIView {
         }
     }
     
-    func setExcludedRect(_ excludedRect: CGRect) {
-        if self.excludedRect.equalTo(excludedRect) {
-            return
-        }
-        
-        self.excludedRect = excludedRect
-        updateExcludePath()
-    }
-    
     var numberOfLines: Int = Int.max {
         didSet {
             if oldValue != numberOfLines {
@@ -343,12 +336,7 @@ final class TokenField: UIView {
         }
     }
     
-    func setCollapsed(_ collapsed: Bool) {
-        setCollapsed(collapsed, animated: false)
-    }
-    
-
-    func setCollapsed(_ collapsed: Bool, animated: Bool) {
+    func setCollapsed(_ collapsed: Bool, animated: Bool = false) {
         if isCollapsed == collapsed {
             return
         }
@@ -395,7 +383,7 @@ final class TokenField: UIView {
 
     // MARK: - Layout
     var fontLineHeight: CGFloat {
-        return font?.lineHeight ?? 0
+        return font.lineHeight
     }
     
     override var intrinsicContentSize: CGSize {
@@ -406,11 +394,11 @@ final class TokenField: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: isCollapsed ? minHeight: max(min(height, maxHeight), minHeight))
     }
     
-    var accessoryButtonTop: CGFloat {
+    private var accessoryButtonTop: CGFloat {
         return textView.textContainerInset.top + (fontLineHeight - accessoryButtonSize) / 2 - textView.contentOffset.y
     }
     
-    var accessoryButtonRight: CGFloat {
+    private var accessoryButtonRight: CGFloat {
         return textView.textContainerInset.right
     }
     
@@ -542,7 +530,7 @@ final class TokenField: UIView {
         }
     }
 
-    func setupSubviews() {
+    private func setupSubviews() {
         // this prevents accessoryButton to be visible sometimes on scrolling
         clipsToBounds = true
 
