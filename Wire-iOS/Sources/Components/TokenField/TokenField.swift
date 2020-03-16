@@ -779,16 +779,16 @@ extension TokenField: UITextViewDelegate {
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
         if !text.isEmpty,
-            let textRange = Range(range, in: textView.text) {
+           let textRange = Range(range, in: textView.text) {
             let range = textRange.upperBound..<textView.text.endIndex
             textView.text.enumerateCharacters(range: range) { substring, _, _, stop in
 
-                if substring?.isEmpty == false,
-                    let nsString: NSString = substring as NSString?,
-                    nsString.character(at: 0) == NSTextAttachment.character {
-                    textView.selectedRange = NSRange(location: textView.text.length, length: 0)
-                    stop = true
-                }
+                guard let substring = substring,
+                      !substring.isEmpty,
+                      (substring as NSString).character(at: 0) == NSTextAttachment.character else { return }
+                
+                textView.selectedRange = NSRange(location: textView.text.length, length: 0)
+                stop = true
             }
         }
 
