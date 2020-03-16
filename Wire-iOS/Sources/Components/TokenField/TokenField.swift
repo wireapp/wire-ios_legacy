@@ -431,8 +431,7 @@ final class TokenField: UIView {
         guard let text = textView.text else { return }
 
         var firstCharacterRange: Range<String.Index>?
-        let range = text.startIndex ..< text.endIndex
-        text.enumerateSubstrings(in: range, options: .byComposedCharacterSequences) {substring, substringRange, _, stop in
+        text.enumerateCharacters() { substring, substringRange, _, stop in
             guard let substring = substring,
                 substring.isEmpty == false,
                 !substring.trimmingCharacters(in: .whitespaces).isEmpty,
