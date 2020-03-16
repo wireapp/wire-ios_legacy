@@ -89,7 +89,7 @@ final class TokenField: UIView {
         }
     }
     
-    var tokenBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000) {
+    var tokenBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1) {
         didSet {
             guard oldValue != tokenBorderColor else { return }
             
@@ -97,7 +97,7 @@ final class TokenField: UIView {
         }
     }
     
-    var tokenSelectedBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1.000)
+    var tokenSelectedBorderColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1)
     {
         didSet {
             guard oldValue != tokenSelectedBorderColor else { return }
@@ -312,7 +312,7 @@ final class TokenField: UIView {
             invalidateIntrinsicContentSize()
             
             // Move the cursor to the end of the input field
-            textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+            textView.selectedRange = NSRange(location: textView.text.length, length: 0)
             
             // autoscroll to the end of the input field
             setNeedsLayout()
@@ -324,14 +324,15 @@ final class TokenField: UIView {
         }
     }
     
-    func updateMaxTitleWidth(for token: Token?) {
+    func updateMaxTitleWidth(for token: Token) {
         var tokenMaxSizeWidth = textView.textContainer.size.width
-        if tokens.count == 0 {
-            tokenMaxSizeWidth -= toLabel.frame.size.width + (hasAccessoryButton ? accessoryButton.frame.size.width : 0.0) + tokenOffset
+        if tokens.isEmpty {
+            tokenMaxSizeWidth -= toLabel.frame.size.width + (hasAccessoryButton ? accessoryButton.frame.size.width : 0) + tokenOffset
         } else if tokens.count == 1 {
-            tokenMaxSizeWidth -= hasAccessoryButton ? accessoryButton.frame.size.width : 0.0
+            tokenMaxSizeWidth -= hasAccessoryButton ? accessoryButton.frame.size.width : 0
         }
-        token?.maxTitleWidth = tokenMaxSizeWidth
+        
+        token.maxTitleWidth = tokenMaxSizeWidth
     }
     
     // searches by isEqual:
@@ -341,9 +342,9 @@ final class TokenField: UIView {
     
     func scrollToBottomOfInputField() {
         if textView.contentSize.height > textView.bounds.size.height {
-            textView.setContentOffset(CGPoint(x: 0.0, y: textView.contentSize.height - textView.bounds.size.height), animated: true)
+            textView.setContentOffset(CGPoint(x: 0textView.text.length, y: textView.contentSize.height - textView.bounds.size.height), animated: true)
         } else {
-            textView.contentOffset = CGPoint.zero
+            textView.contentOffset = .zero
         }
     }
     
@@ -437,7 +438,7 @@ final class TokenField: UIView {
         
         let notWhitespace = CharacterSet.whitespacesAndNewlines.inverted
         
-        (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.count), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
+        (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.length), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
             if substring?.isEmpty == false,
                 let nsString: NSString = substring as NSString?,
                 nsString.character(at: 0) == NSTextAttachment.character,
@@ -449,7 +450,7 @@ final class TokenField: UIView {
         
         filterText = ""
         if firstCharacterIndex != NSNotFound {
-            let rangeToClear = NSRange(location: firstCharacterIndex, length: textView.text.count - firstCharacterIndex)
+            let rangeToClear = NSRange(location: firstCharacterIndex, length: textView.text.length - firstCharacterIndex)
             
             textView.textStorage.beginEditing()
             textView.textStorage.deleteCharacters(in: rangeToClear)
@@ -780,7 +781,7 @@ extension TokenField: UITextViewDelegate {
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
         if !text.isEmpty {
-            let range = NSRange(location: range.location, length: textView.text.count - range.location)
+            let range = NSRange(location: range.location, length: textView.text.length - range.location)
             (textView.text as NSString).enumerateSubstrings(in: range,
                                                             options: .byComposedCharacterSequences,
                                                             using: { substring, _, _, stop in
@@ -788,7 +789,7 @@ extension TokenField: UITextViewDelegate {
                                                                 if substring?.isEmpty == false,
                                                                     let nsString: NSString = substring as NSString?,
                                                                     nsString.character(at: 0) == NSTextAttachment.character {
-                                                                    textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+                                                                    textView.selectedRange = NSRange(location: textView.text.length, length: 0)
                                                                     stop.pointee = true
                                                                 }
             })

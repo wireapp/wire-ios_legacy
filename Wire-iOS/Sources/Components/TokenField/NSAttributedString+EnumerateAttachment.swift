@@ -23,3 +23,9 @@ extension NSAttributedString {
         enumerateAttribute(.attachment, in: NSRange(location: 0, length: length), options: [], using: block)
     }
 }
+
+extension String {
+    var length: Int {
+        return (self as NSString).length
+    }
+}
