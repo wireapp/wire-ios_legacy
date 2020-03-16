@@ -428,33 +428,35 @@ final class TokenField: UIView {
 
     ///clean filter text other then NSTextAttachment
     func clearFilterText() {
-        var firstCharacterIndex = NSNotFound
+        guard let text = textView.text else { return }
 
-        let notWhitespace = CharacterSet.whitespacesAndNewlines.inverted
+        var firstCharacterRange: Range<String.Index>?
+        let range = text.startIndex ..< text.endIndex
+        text.enumerateSubstrings(in: range, options: .byComposedCharacterSequences) {substring, substringRange, _, stop in
+            guard let substring = substring,
+                substring.isEmpty == false,
+                !substring.trimmingCharacters(in: .whitespaces).isEmpty,
+                (substring as NSString).character(at: 0) != NSTextAttachment.character else { return }
 
-        // search for first non NSTextAttachment character, and the charcter is notWhitespace
-        (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.length), options: .byComposedCharacterSequences, using: { substring, substringRange, _, stop in
-            if substring?.isEmpty == false,
-                let nsString: NSString = substring as NSString?,
-                nsString.character(at: 0) != NSTextAttachment.character,
-                (substring as NSString?)?.rangeOfCharacter(from: notWhitespace).location != NSNotFound {
-                firstCharacterIndex = substringRange.location
-                stop.pointee = true
-            }
-        })
+            firstCharacterRange = substringRange
+            stop = true
+        }
 
         filterText = ""
-        if firstCharacterIndex != NSNotFound {
-            let rangeToClear = NSRange(location: firstCharacterIndex, length: textView.text.length - firstCharacterIndex)
 
-            textView.textStorage.beginEditing()
-            textView.textStorage.deleteCharacters(in: rangeToClear)
-            textView.textStorage.endEditing()
-            textView.insertText("")
+        // clear the text form firstCharacterIndex to the end
+        guard let lowerBound = firstCharacterRange?.lowerBound else { return }
 
-            invalidateIntrinsicContentSize()
-            layoutIfNeeded()
-        }
+        let rangeToDelete = lowerBound..<text.endIndex
+        let nsRange = textView.text.nsRange(from: rangeToDelete)
+
+        textView.textStorage.beginEditing()
+        textView.textStorage.deleteCharacters(in: nsRange)
+        textView.textStorage.endEditing()
+        textView.insertText("")
+
+        invalidateIntrinsicContentSize()
+        layoutIfNeeded()
     }
 
     private func updateTextAttributes() {
