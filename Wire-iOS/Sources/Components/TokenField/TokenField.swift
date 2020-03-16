@@ -426,15 +426,17 @@ final class TokenField: UIView {
         return NSAttributedString(string: collapsedText, attributes: textAttributes)
     }
 
+    ///clean filter text other then NSTextAttachment
     func clearFilterText() {
         var firstCharacterIndex = NSNotFound
 
         let notWhitespace = CharacterSet.whitespacesAndNewlines.inverted
 
+        // search for first non NSTextAttachment character, and the charcter is notWhitespace
         (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.length), options: .byComposedCharacterSequences, using: { substring, substringRange, _, stop in
             if substring?.isEmpty == false,
                 let nsString: NSString = substring as NSString?,
-                nsString.character(at: 0) == NSTextAttachment.character,
+                nsString.character(at: 0) != NSTextAttachment.character,
                 (substring as NSString?)?.rangeOfCharacter(from: notWhitespace).location != NSNotFound {
                 firstCharacterIndex = substringRange.location
                 stop.pointee = true
