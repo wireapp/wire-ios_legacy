@@ -755,10 +755,10 @@ extension TokenField: UITextViewDelegate {
             return false
         }
 
-        if range.length == 1 && text.isEmpty {
+        if range.length == 1, text.isEmpty {
             // backspace
             var cancelBackspace = false
-            textView.attributedText.enumerateAttachment { tokenAttachment, range, stop in
+            textView.attributedText.enumerateAttachment(range: range) { tokenAttachment, range, stop in
                 if let tokenAttachment = tokenAttachment as? TokenTextAttachment {
                     if !tokenAttachment.isSelected {
                         textView.selectedRange = range
@@ -795,7 +795,5 @@ extension TokenField: UITextViewDelegate {
         updateTextAttributes()
 
         return true
-
     }
-
 }
