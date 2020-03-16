@@ -86,34 +86,33 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        extendedLayoutIncludesOpaqueBars = true
-
-        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
-        noResultsLabel.isHidden = true
-        view.addSubview(noResultsLabel)
-
-        collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.accessibilityIdentifier = "giphyCollectionView"
-        collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
-
+        setupNoResultLabel()
+        setupCollectionView()
         setupNavigationItem()
         createConstraints()
         applyStyle()
     }
 
-    private func createConstraints() {
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+    private func setupNoResultLabel() {
+        extendedLayoutIncludesOpaqueBars = true
+        
+        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
+        noResultsLabel.isHidden = true
+        view.addSubview(noResultsLabel)
     }
-
-    private func applyStyle() {
-        collectionView?.backgroundColor = UIColor.from(scheme: .background)
-        noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
-        noResultsLabel.font = UIFont.smallLightFont
+    
+    private func setupCollectionView() {
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.accessibilityIdentifier = "giphyCollectionView"
+        collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
+        let offset = navigationController?.navigationBar.frame.maxY ?? 0
+        edgesForExtendedLayout = []
+        collectionView.contentInset = UIEdgeInsets(top: offset,
+                                                   left: 0,
+                                                   bottom: 0,
+                                                   right: 0)
     }
-
+    
     private func setupNavigationItem() {
         searchBar.text = searchTerm
         searchBar.delegate = self
@@ -131,6 +130,18 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         self.navigationItem.titleView = searchBar
     }
 
+    private func createConstraints() {
+        constrain(view, noResultsLabel) { container, noResultsLabel in
+            noResultsLabel.center == container.center
+        }
+    }
+    
+    private func applyStyle() {
+        collectionView?.backgroundColor = UIColor.from(scheme: .background)
+        noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
+        noResultsLabel.font = UIFont.smallLightFont
+    }
+    
     // MARK: - Presentation
 
     @objc func wrapInsideNavigationController() -> UINavigationController {
