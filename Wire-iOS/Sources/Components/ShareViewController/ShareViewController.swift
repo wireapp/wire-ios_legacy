@@ -192,7 +192,7 @@ final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Share
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
-        guard let token = self.tokenField.token(forRepresentedObject: destination as AnyObject) else {
+        guard let token = self.tokenField.token(forRepresentedObject: destination) else {
             return
         }
         self.tokenField.removeToken(token)

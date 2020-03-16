@@ -435,7 +435,7 @@ final class TokenField: UIView {
         
         let notWhitespace = CharacterSet.whitespacesAndNewlines.inverted
         
-        (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.length), options: .byComposedCharacterSequences, using: { substring, substringRange, enclosingRange, stop in
+        (textView.text as NSString).enumerateSubstrings(in: NSRange(location: 0, length: textView.text.length), options: .byComposedCharacterSequences, using: { substring, substringRange, _, stop in
             if substring?.isEmpty == false,
                 let nsString: NSString = substring as NSString?,
                 nsString.character(at: 0) == NSTextAttachment.character,
