@@ -77,7 +77,7 @@ final class TokenFieldTests: XCTestCase {
 
         // remove last 2 token(text and seperator) in text view
         var rangesToRemove: [NSRange] = []
-        sut.textView.attributedText.enumerateAttachment() { textAttachment, range, _ in
+        sut.textView.attributedText.enumerateAttachment { textAttachment, range, _ in
             if textAttachment is TokenContainer {
                 rangesToRemove.append(range)
             }
