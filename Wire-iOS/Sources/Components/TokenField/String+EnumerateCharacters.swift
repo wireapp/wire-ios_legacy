@@ -20,8 +20,9 @@ extension String {
     var length: Int {
         return (self as NSString).length
     }
-    
-    func enumerateCharacters(body: @escaping (String?, Range<String.Index>, Range<String.Index>, inout Bool) -> Void) {
-        enumerateSubstrings(in: startIndex..<endIndex, options: .byComposedCharacterSequences, body)
+
+    func enumerateCharacters(range: Range<String.Index>,
+        body: @escaping (String?, Range<String.Index>, Range<String.Index>, inout Bool) -> Void) {
+        enumerateSubstrings(in: range, options: .byComposedCharacterSequences, body)
     }
 }

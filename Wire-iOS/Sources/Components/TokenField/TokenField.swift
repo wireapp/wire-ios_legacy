@@ -431,7 +431,8 @@ final class TokenField: UIView {
         guard let text = textView.text else { return }
 
         var firstCharacterRange: Range<String.Index>?
-        text.enumerateCharacters() { substring, substringRange, _, stop in
+        let range = text.startIndex..<text.endIndex
+        text.enumerateCharacters(range: range) { substring, substringRange, _, stop in
             guard let substring = substring,
                 substring.isEmpty == false,
                 !substring.trimmingCharacters(in: .whitespaces).isEmpty,
@@ -743,7 +744,9 @@ extension TokenField: UITextViewDelegate {
         }
     }
 
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
         if text == "\n" {
             textView.resignFirstResponder()
             userDidConfirmInput = true
@@ -775,19 +778,18 @@ extension TokenField: UITextViewDelegate {
         // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
-        if !text.isEmpty {
-            let range = NSRange(location: range.location, length: textView.text.length - range.location)
-            (textView.text as NSString).enumerateSubstrings(in: range,
-                                                            options: .byComposedCharacterSequences,
-                                                            using: { substring, _, _, stop in
+        if !text.isEmpty,
+            let textRange = Range(range, in: textView.text) {
+            let range = textRange.upperBound..<textView.text.endIndex
+            textView.text.enumerateCharacters(range: range) { substring, _, _, stop in
 
-                                                                if substring?.isEmpty == false,
-                                                                    let nsString: NSString = substring as NSString?,
-                                                                    nsString.character(at: 0) == NSTextAttachment.character {
-                                                                    textView.selectedRange = NSRange(location: textView.text.length, length: 0)
-                                                                    stop.pointee = true
-                                                                }
-            })
+                if substring?.isEmpty == false,
+                    let nsString: NSString = substring as NSString?,
+                    nsString.character(at: 0) == NSTextAttachment.character {
+                    textView.selectedRange = NSRange(location: textView.text.length, length: 0)
+                    stop = true
+                }
+            }
         }
 
         updateTextAttributes()
