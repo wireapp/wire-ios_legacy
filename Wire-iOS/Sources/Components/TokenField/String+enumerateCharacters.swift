@@ -16,10 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-
-extension NSAttributedString {
-    func enumerateAttachment(block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
-        enumerateAttribute(.attachment, in: NSRange(location: 0, length: length), options: [], using: block)
+extension String {
+    var length: Int {
+        return (self as NSString).length
+    }
+    
+    func enumerateCharacters(body: @escaping (String?, Range<String.Index>, Range<String.Index>, inout Bool) -> Void) {
+        enumerateSubstrings(in: startIndex..<endIndex, options: .byComposedCharacterSequences, body)
     }
 }
