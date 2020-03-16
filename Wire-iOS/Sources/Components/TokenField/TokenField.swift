@@ -22,22 +22,22 @@ private let zmLog = ZMSLog(tag: "TokenField")
 
 final class TokenField: UIView {
     let accessoryButtonSize: CGFloat = 32
-
+    
     weak var delegate: TokenFieldDelegate?
-
+    
     let textView: TokenizedTextView = TokenizedTextView()
     let accessoryButton: IconButton = IconButton()
-
+    
     var hasAccessoryButton = false {
         didSet {
             guard oldValue != hasAccessoryButton else { return }
-
+            
             accessoryButton.isHidden = !hasAccessoryButton
             updateExcludePath()
         }
     }
     
-
+    
     private(set) var filterText: String = ""
     
     // MARK: - Appearance
@@ -76,7 +76,7 @@ final class TokenField: UIView {
     var tokenBackgroundColor: UIColor = UIColor(red: 0.118, green: 0.467, blue: 0.745, alpha: 1) {
         didSet {
             guard oldValue != tokenBackgroundColor else { return }
-
+            
             updateTokenAttachments()
         }
     }
@@ -113,7 +113,7 @@ final class TokenField: UIView {
             guard tokenOffset != oldValue else {
                 return
             }
-
+            
             updateExcludePath()
             updateTokenAttachments()
         }
@@ -144,25 +144,21 @@ final class TokenField: UIView {
     private var accessoryButtonRightMargin: NSLayoutConstraint!
     
     private var toLabel: UILabel = UILabel()
-    ///TODO:
     private var toLabelLeftMargin: NSLayoutConstraint!
     private var toLabelTopMargin: NSLayoutConstraint!
+    
     private(set) var tokens: [Token] = []
     private var textAttributes: [NSAttributedString.Key : Any] {
-        var attributes: [NSAttributedString.Key : Any] = [:]
-        
         let inputParagraphStyle = NSMutableParagraphStyle()
         inputParagraphStyle.lineSpacing = lineSpacing
-        attributes[.paragraphStyle] = inputParagraphStyle
-        
-            attributes[.font] = font
-            attributes[.foregroundColor] = textColor
-        
-        return attributes
+
+        return [.font: font,
+                                                          .foregroundColor: textColor,
+                                                          .paragraphStyle: inputParagraphStyle]
     }
-
+    
     // Collapse
-
+    
     /* in not collapsed state; in collapsed state - 1 line; default to NSUIntegerMax */
     var isCollapsed = false
     
@@ -177,7 +173,7 @@ final class TokenField: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Setup
     private func setup() {
         setupSubviews()
@@ -214,7 +210,7 @@ final class TokenField: UIView {
         
         updateTextAttributes()
     }
-
+    
     // MARK: - Appearance
     
     var textColor: UIColor = .black {
@@ -232,7 +228,7 @@ final class TokenField: UIView {
             guard oldValue != lineSpacing else {
                 return
             }
-
+            
             updateTextAttributes()
         }
     }
@@ -247,7 +243,7 @@ final class TokenField: UIView {
         return CGSize(width: UIView.noIntrinsicMetric, height: isCollapsed ? minHeight: max(min(height, maxHeight), minHeight))
     }
     
-
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -287,10 +283,11 @@ final class TokenField: UIView {
         super.resignFirstResponder()
         return textView.resignFirstResponder()
     }
-
+    
     // MARK: - Interface
     
-    func addToken(forTitle title: String, representedObject object: AnyObject) { ///TODO: compare any
+    func addToken(forTitle title: String,
+                  representedObject object: AnyObject) {
         let token = Token(title: title, representedObject: object)
         addToken(token)
     }
@@ -299,9 +296,9 @@ final class TokenField: UIView {
         guard !tokens.contains(token) else {
             return
         }
-
+        
         tokens.append(token)
-
+        
         updateMaxTitleWidth(for: token)
         
         if !isCollapsed {
@@ -326,7 +323,7 @@ final class TokenField: UIView {
             invalidateIntrinsicContentSize()
         }
     }
-
+    
     func updateMaxTitleWidth(for token: Token?) {
         var tokenMaxSizeWidth = textView.textContainer.size.width
         if tokens.count == 0 {
@@ -402,7 +399,7 @@ final class TokenField: UIView {
             compeltionBlock?(true)
         }
     }
-
+    
     // MARK: - Layout
     var fontLineHeight: CGFloat {
         return font.lineHeight
@@ -478,8 +475,8 @@ final class TokenField: UIView {
         
         updateExcludePath()
     }
-
-
+    
+    
     private func updateExcludePath() {
         updateLayout()
         
@@ -518,18 +515,18 @@ final class TokenField: UIView {
         
         textView.textContainer.exclusionPaths = exclusionPaths
     }
-
+    
     // MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == textView {
             updateExcludePath()
         }
     }
-
+    
     private func setupSubviews() {
         // this prevents accessoryButton to be visible sometimes on scrolling
         clipsToBounds = true
-
+        
         textView.tokenizedTextViewDelegate = self
         textView.delegate = self
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -538,13 +535,13 @@ final class TokenField: UIView {
             textView.textDragInteraction?.isEnabled = false
         }
         addSubview(textView)
-
+        
         toLabel.translatesAutoresizingMaskIntoConstraints = false
         toLabel.font = font
         toLabel.text = toLabelText
         toLabel.backgroundColor = UIColor.clear
         textView.addSubview(toLabel)
-
+        
         // Accessory button could be a subview of textView,
         // but there are bugs with setting constraints from subview to UITextView trailing.
         // So we add button as subview of self, and update its position on scrolling.
@@ -552,10 +549,10 @@ final class TokenField: UIView {
         accessoryButton.isHidden = !hasAccessoryButton
         addSubview(accessoryButton)
     }
-
+    
     private func setupStyle() {
         tokenOffset = 4
-
+        
         textView.tintColor = .accent()
         textView.autocorrectionType = .no
         textView.returnKeyType = .go
@@ -564,106 +561,106 @@ final class TokenField: UIView {
         textView.placeholderTextTransform = .upper
         textView.lineFragmentPadding = 0
     }
-
+    
     // MARK: - Utility
-
+    
     func updateTokenAttachments() {
         textView.attributedText.enumerateAttachment() { tokenAttachment, _, _ in
             (tokenAttachment as? TokenTextAttachment)?.refreshImage()
         }
     }
-
+    
     private func string(forTokens tokens: [Token]) -> NSAttributedString {
         let string = NSMutableAttributedString()
         for token in tokens {
             let tokenAttachment = TokenTextAttachment(token: token, tokenField: self)
             let tokenString = NSAttributedString(attachment: tokenAttachment)
-
+            
             string.append(tokenString)
-
+            
             let separatorAttachment = TokenSeparatorAttachment(token: token, tokenField: self)
             let separatorString = NSAttributedString(attachment: separatorAttachment)
-
+            
             string.append(separatorString)
         }
-
+        
         return string && textAttributes
     }
-
+    
     /// update currentTokens with textView's current attributedText text after the textView change the text
     func filterUnwantedAttachments() {
         var updatedCurrentTokens: Set<Token> = []
         var updatedCurrentSeparatorTokens: Set<Token> = []
-
+        
         textView.attributedText.enumerateAttachment() { textAttachment, _, _ in
-
+            
             if let token = (textAttachment as? TokenTextAttachment)?.token,
                 !updatedCurrentTokens.contains(token) {
                 updatedCurrentTokens.insert(token)
             }
-
+            
             if let token = (textAttachment as? TokenSeparatorAttachment)?.token,
                 !updatedCurrentSeparatorTokens.contains(token) {
                 updatedCurrentSeparatorTokens.insert(token)
             }
         }
-
+        
         updatedCurrentTokens = updatedCurrentTokens.intersection(updatedCurrentSeparatorTokens)
-
-            var deletedTokens = Set<Token>(tokens)
-            deletedTokens.subtract(updatedCurrentTokens)
-
-            if !deletedTokens.isEmpty {
-                removeTokens(Array(deletedTokens))
-            }
-            tokens.removeAll(where: { deletedTokens.contains($0) })
-            delegate?.tokenField(self, changedTokensTo: tokens)
+        
+        var deletedTokens = Set<Token>(tokens)
+        deletedTokens.subtract(updatedCurrentTokens)
+        
+        if !deletedTokens.isEmpty {
+            removeTokens(Array(deletedTokens))
+        }
+        tokens.removeAll(where: { deletedTokens.contains($0) })
+        delegate?.tokenField(self, changedTokensTo: tokens)
     }
-
+    
     // MARK: - remove token
-
+    
     func removeAllTokens() {
         removeTokens(tokens)
         textView.showOrHidePlaceholder()
     }
-
+    
     func removeToken(_ token: Token) {
         removeTokens([token])
     }
-
+    
     private func removeTokens(_ tokensToRemove: [Token]) {
         var rangesToRemove: [NSRange] = []
-
+        
         textView.attributedText.enumerateAttachment() { textAttachment, range, _ in
             if let token = (textAttachment as? TokenContainer)?.token,
                 tokensToRemove.contains(token) {
                 rangesToRemove.append(range)
             }
         }
-
+        
         // Delete ranges from the end of string till the beginning: this keeps range locations valid.
         rangesToRemove.sort(by: { rangeValue1, rangeValue2 in
             rangeValue1.location > rangeValue2.location
         })
-
+        
         textView.textStorage.beginEditing()
         for rangeValue in rangesToRemove {
             textView.textStorage.deleteCharacters(in: rangeValue)
         }
         textView.textStorage.endEditing()
-
+        
         tokens.removeAll(where: { tokensToRemove.contains($0) })
-
+        
         invalidateIntrinsicContentSize()
         updateTextAttributes()
-
+        
         textView.showOrHidePlaceholder()
     }
-
+    
     private func rangeIncludesRange(_ range: NSRange, _ includedRange: NSRange) -> Bool {
         return range == range.union(includedRange)
     }
-
+    
     private func notifyIfFilterTextChanged() {
         var indexOfFilterText = 0
         textView.attributedText.enumerateAttachment() { tokenAttachment, range, _ in
@@ -671,14 +668,14 @@ final class TokenField: UIView {
                 indexOfFilterText = range.upperBound
             }
         }
-
+        
         let oldFilterText = filterText
         self.filterText = ((textView.text as NSString).substring(from: indexOfFilterText)).replacingOccurrences(of: "\u{FFFC}", with: "")
         if oldFilterText != filterText {
             delegate?.tokenField(self, changedFilterTextTo: filterText)
         }
     }
-
+    
 }
 
 // MARK: - TokenizedTextViewDelegate
@@ -689,11 +686,11 @@ extension TokenField: TokenizedTextViewDelegate {
             setCollapsed(false, animated: true)
             return
         }
-
+        
         if fraction >= 1 && range.location == self.textView.textStorage.length - 1 {
             return
         }
-
+        
         if range.location < textView.textStorage.length {
             textView.attributedText.enumerateAttachment() { tokenAttachemnt, range, _ in
                 if tokenAttachemnt is TokenTextAttachment {
@@ -702,13 +699,13 @@ extension TokenField: TokenizedTextViewDelegate {
             }
         }
     }
-
+    
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets) {
         invalidateIntrinsicContentSize()
         updateExcludePath()
         updateLayout()
     }
-
+    
 }
 
 // MARK: - UITextViewDelegate
@@ -717,26 +714,26 @@ extension TokenField: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith textAttachment: NSTextAttachment, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
         return !(textAttachment is TokenSeparatorAttachment)
     }
-
+    
     func textViewDidChange(_ textView: UITextView) {
         userDidConfirmInput = false
-
+        
         filterUnwantedAttachments()
         notifyIfFilterTextChanged()
         invalidateIntrinsicContentSize()
     }
-
+    
     func textViewDidChangeSelection(_ textView: UITextView) {
         zmLog.debug("Selection changed: NSStringFromRange(textView.selectedRange)")
-
+        
         var modifiedSelectionRange = NSRange(location: 0, length: 0)
         var hasModifiedSelection = false
-
+        
         textView.attributedText.enumerateAttachment() { tokenAttachment, range, _ in
             if let tokenAttachment = tokenAttachment as? TokenTextAttachment {
                 tokenAttachment.isSelected = rangeIncludesRange(textView.selectedRange, range)
                 textView.layoutManager.invalidateDisplay(forCharacterRange: range)
-
+                
                 if rangeIncludesRange(textView.selectedRange, range) {
                     modifiedSelectionRange = (hasModifiedSelection ? modifiedSelectionRange : range).union(range)
                     hasModifiedSelection = true
@@ -744,21 +741,21 @@ extension TokenField: UITextViewDelegate {
                 zmLog.info("    person attachement: \(tokenAttachment.token.title) at range: \(range) selected: \(tokenAttachment.isSelected)")
             }
         }
-
+        
         if hasModifiedSelection, textView.selectedRange != modifiedSelectionRange {
             textView.selectedRange = modifiedSelectionRange
         }
     }
-
+    
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
             textView.resignFirstResponder()
             userDidConfirmInput = true
             delegate?.tokenFieldDidConfirmSelection(self)
-
+            
             return false
         }
-
+        
         if range.length == 1 && text.isEmpty {
             // backspace
             var cancelBackspace = false
@@ -777,7 +774,7 @@ extension TokenField: UITextViewDelegate {
                 return false
             }
         }
-
+        
         // Inserting text between tokens does not make sense for this control.
         // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
@@ -787,20 +784,20 @@ extension TokenField: UITextViewDelegate {
             (textView.text as NSString).enumerateSubstrings(in: range,
                                                             options: .byComposedCharacterSequences,
                                                             using: { substring, _, _, stop in
-
-                if substring?.isEmpty == false,
-                    let nsString: NSString = substring as NSString?,
-                    nsString.character(at: 0) == NSTextAttachment.character {
-                    textView.selectedRange = NSRange(location: textView.text.count, length: 0)
-                    stop.pointee = true
-                }
+                                                                
+                                                                if substring?.isEmpty == false,
+                                                                    let nsString: NSString = substring as NSString?,
+                                                                    nsString.character(at: 0) == NSTextAttachment.character {
+                                                                    textView.selectedRange = NSRange(location: textView.text.count, length: 0)
+                                                                    stop.pointee = true
+                                                                }
             })
         }
-
+        
         updateTextAttributes()
-
+        
         return true
-
+        
     }
-
+    
 }
