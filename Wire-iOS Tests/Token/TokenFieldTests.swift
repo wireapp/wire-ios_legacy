@@ -51,7 +51,7 @@ final class TokenFieldTests: XCTestCase {
 
     func testThatTokensCanBeRemoved() {
         // given
-        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        let token1: Token<NSObjectProtocol> = Token(title: "Token 1", representedObject: MockUser())
 
         sut.addToken(token1)
         sut.addToken(forTitle: "Token 2", representedObject: MockUser())
@@ -107,7 +107,7 @@ final class TokenFieldTests: XCTestCase {
 
     func testThatColorIsChnagedAfterUpdateTokenAttachments() {
         // given
-        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        let token1: Token<NSObjectProtocol> = Token(title: "Token 1", representedObject: MockUser())
 
         sut.addToken(token1)
 

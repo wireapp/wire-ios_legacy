@@ -17,13 +17,13 @@
 
 final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
 
-    let token: Token
+    let token: Token<NSObjectProtocol>
 
     private unowned let tokenField: TokenField
     private let dotSize: CGFloat = 4
     private let dotSpacing: CGFloat = 8
 
-    init(token: Token, tokenField: TokenField) {
+    init(token: Token<NSObjectProtocol>, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
 

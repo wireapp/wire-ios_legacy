@@ -16,9 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-final class Token: NSObject {
+final class Token<T: NSObjectProtocol>: Hashable {
     
-    let representedObject: AnyObject
+    let representedObject: HashBox<T>
     
     let title: String
 
@@ -26,12 +26,18 @@ final class Token: NSObject {
     var maxTitleWidth: CGFloat = 0
     
     init(title: String,
-         representedObject: AnyObject) {
+         representedObject: T) {
         self.title = title
-        self.representedObject = representedObject
+        self.representedObject = HashBox(value: representedObject)
         
-        super.init()
-        
-        maxTitleWidth = CGFloat.greatestFiniteMagnitude
+        maxTitleWidth = .greatestFiniteMagnitude
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(representedObject)
+    }
+
+    static func == (lhs: Token<T>, rhs: Token<T>) -> Bool {
+        return lhs.representedObject == rhs.representedObject
     }
 }

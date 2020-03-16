@@ -147,14 +147,14 @@ final class TokenField: UIView {
     private var toLabelLeftMargin: NSLayoutConstraint!
     private var toLabelTopMargin: NSLayoutConstraint!
     
-    private(set) var tokens: [Token] = []
+    private(set) var tokens = [Token<NSObjectProtocol>]()
     private var textAttributes: [NSAttributedString.Key : Any] {
         let inputParagraphStyle = NSMutableParagraphStyle()
         inputParagraphStyle.lineSpacing = lineSpacing
-
+        
         return [.font: font,
-                                                          .foregroundColor: textColor,
-                                                          .paragraphStyle: inputParagraphStyle]
+                .foregroundColor: textColor,
+                .paragraphStyle: inputParagraphStyle]
     }
     
     // Collapse
@@ -287,12 +287,12 @@ final class TokenField: UIView {
     // MARK: - Interface
     
     func addToken(forTitle title: String,
-                  representedObject object: AnyObject) {
+                  representedObject object: NSObjectProtocol) {
         let token = Token(title: title, representedObject: object)
         addToken(token)
     }
     
-    func addToken(_ token: Token) {
+    func addToken(_ token: Token<NSObjectProtocol>) {
         guard !tokens.contains(token) else {
             return
         }
@@ -324,7 +324,7 @@ final class TokenField: UIView {
         }
     }
     
-    func updateMaxTitleWidth(for token: Token) {
+    func updateMaxTitleWidth(for token: Token<NSObjectProtocol>) {
         var tokenMaxSizeWidth = textView.textContainer.size.width
         if tokens.isEmpty {
             tokenMaxSizeWidth -= toLabel.frame.size.width + (hasAccessoryButton ? accessoryButton.frame.size.width : 0) + tokenOffset
@@ -336,13 +336,13 @@ final class TokenField: UIView {
     }
     
     // searches by isEqual:
-    func token(forRepresentedObject object: AnyObject?) -> Token? {
-        return tokens.first(where:{ $0.representedObject as? NSObject == object as? NSObject})
+    func token(forRepresentedObject object: NSObjectProtocol) -> Token<NSObjectProtocol>? {
+        return tokens.first(where:{ $0.representedObject == HashBox(value:object)})
     }
     
-    func scrollToBottomOfInputField() {
+    private func scrollToBottomOfInputField() {
         if textView.contentSize.height > textView.bounds.size.height {
-            textView.setContentOffset(CGPoint(x: 0textView.text.length, y: textView.contentSize.height - textView.bounds.size.height), animated: true)
+            textView.setContentOffset(CGPoint(x: 0, y: textView.contentSize.height - textView.bounds.size.height), animated: true)
         } else {
             textView.contentOffset = .zero
         }
@@ -357,11 +357,7 @@ final class TokenField: UIView {
     }
     
     func setCollapsed(_ collapsed: Bool, animated: Bool = false) {
-        if isCollapsed == collapsed {
-            return
-        }
-        
-        if tokens.isEmpty {
+        guard isCollapsed != collapsed, !tokens.isEmpty else {
             return
         }
         
@@ -371,6 +367,7 @@ final class TokenField: UIView {
             self.invalidateIntrinsicContentSize()
             self.layoutIfNeeded()
         }
+        
         let compeltionBlock: ((Bool) -> Void)? = {[weak self] finnished in
             
             guard let weakSelf = self else { return }
@@ -571,7 +568,7 @@ final class TokenField: UIView {
         }
     }
     
-    private func string(forTokens tokens: [Token]) -> NSAttributedString {
+    private func string(forTokens tokens: [Token<NSObjectProtocol>]) -> NSAttributedString {
         let string = NSMutableAttributedString()
         for token in tokens {
             let tokenAttachment = TokenTextAttachment(token: token, tokenField: self)
@@ -590,8 +587,8 @@ final class TokenField: UIView {
     
     /// update currentTokens with textView's current attributedText text after the textView change the text
     func filterUnwantedAttachments() {
-        var updatedCurrentTokens: Set<Token> = []
-        var updatedCurrentSeparatorTokens: Set<Token> = []
+        var updatedCurrentTokens = Set<Token<NSObjectProtocol>>()
+        var updatedCurrentSeparatorTokens: Set<Token<NSObjectProtocol>> = []
         
         textView.attributedText.enumerateAttachment() { textAttachment, _, _ in
             
@@ -625,11 +622,11 @@ final class TokenField: UIView {
         textView.showOrHidePlaceholder()
     }
     
-    func removeToken(_ token: Token) {
+    func removeToken(_ token: Token<NSObjectProtocol>) {
         removeTokens([token])
     }
     
-    private func removeTokens(_ tokensToRemove: [Token]) {
+    private func removeTokens(_ tokensToRemove: [Token<NSObjectProtocol>]) {
         var rangesToRemove: [NSRange] = []
         
         textView.attributedText.enumerateAttachment() { textAttachment, range, _ in

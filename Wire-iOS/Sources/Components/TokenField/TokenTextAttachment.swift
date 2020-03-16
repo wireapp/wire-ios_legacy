@@ -17,7 +17,7 @@
 // 
 
 final class TokenTextAttachment: NSTextAttachment, TokenContainer {
-    let token: Token
+    let token: Token<NSObjectProtocol>
 
     private unowned let tokenField: TokenField
 
@@ -27,7 +27,7 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
         }
     }
 
-    init(token: Token, tokenField: TokenField) {
+    init(token: Token<NSObjectProtocol>, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
 
@@ -53,7 +53,7 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
         let shortTitle = shortenedText(forText: title, withAttributes: titleAttributes, toFitMaxWidth: tokenMaxWidth)
         let attributedName = NSAttributedString(string: shortTitle, attributes: titleAttributes)
         let imageSize = CGSize(width: attributedName.size().width, height: imageHeight)
-        let delta: CGFloat = ceil(((tokenField.font.capHeight ?? 0) - imageHeight) * 0.5)
+        let delta: CGFloat = ceil((tokenField.font.capHeight - imageHeight) * 0.5)
 
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
 
