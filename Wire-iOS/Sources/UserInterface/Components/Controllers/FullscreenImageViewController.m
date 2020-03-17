@@ -36,128 +36,128 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface FullscreenImageViewController (MessageObserver) <ZMMessageObserver>
-
-@end
-
-@interface FullscreenImageViewController () <UIScrollViewDelegate>
-
-@property (nonatomic) CALayer *highlightLayer;
-
-@property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
-@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
-@property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
-
-@property (nonatomic) BOOL isShowingChrome;
-@property (nonatomic) BOOL assetWriteInProgress;
-
-@property (nonatomic) BOOL forcePortraitMode;
-
-@property (nonatomic) id messageObserverToken;
-
-@end
+//@interface FullscreenImageViewController (MessageObserver) <ZMMessageObserver>
+//
+//@end
+//
+//@interface FullscreenImageViewController () <UIScrollViewDelegate>
+//
+//@property (nonatomic) CALayer *highlightLayer;
+//
+//@property (nonatomic) UITapGestureRecognizer *tapGestureRecognzier;
+//@property (nonatomic) UITapGestureRecognizer *doubleTapGestureRecognizer;
+//@property (nonatomic) UILongPressGestureRecognizer *longPressGestureRecognizer;
+//
+//@property (nonatomic) BOOL isShowingChrome;
+//@property (nonatomic) BOOL assetWriteInProgress;
+//
+//@property (nonatomic) BOOL forcePortraitMode;
+//
+//@property (nonatomic) id messageObserverToken;
+//
+//@end
 
 @implementation FullscreenImageViewController
 
-- (instancetype)initWithMessage:(id<ZMConversationMessage>)message
-{
-    self = [self init];
+//- (instancetype)initWithMessage:(id<ZMConversationMessage>)message
+//{
+//    self = [self init];
+//
+//    if (self) {
+//        _message = message;
+//        _forcePortraitMode = NO;
+//        _swipeToDismiss = YES;
+//        _showCloseButton = YES;
+//
+//        [self setupScrollView];
+//        [self updateForMessage];
+//
+//        self.view.userInteractionEnabled = YES;
+//        [self setupGestureRecognizers];
+//        [self showChrome:YES];
+//
+//        [self setupStyle];
+//
+//        [self setActionController];
+//
+//        if (nil != [ZMUserSession sharedSession]) {
+//            self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
+//        }
+//    }
+//
+//    return self;
+//}
+//
+//- (void)dismissWithCompletion:(dispatch_block_t)completion
+//{
+//    if (nil != self.dismissAction) {
+//        self.dismissAction(completion);
+//    }
+//    else if (nil != self.navigationController) {
+//        [self.navigationController popViewControllerAnimated:YES];
+//        if (completion) {
+//            completion();
+//        }
+//    }
+//    else {
+//        [self dismissViewControllerAnimated:YES completion:completion];
+//    }
+//}
 
-    if (self) {
-        _message = message;
-        _forcePortraitMode = NO;
-        _swipeToDismiss = YES;
-        _showCloseButton = YES;
-
-        [self setupScrollView];
-        [self updateForMessage];
-
-        self.view.userInteractionEnabled = YES;
-        [self setupGestureRecognizers];
-        [self showChrome:YES];
-
-        [self setupStyle];
-
-        [self setActionController];
-
-        if (nil != [ZMUserSession sharedSession]) {
-            self.messageObserverToken = [MessageChangeInfo addObserver:self forMessage:message userSession:[ZMUserSession sharedSession]];
-        }
-    }
-
-    return self;
-}
-
-- (void)dismissWithCompletion:(dispatch_block_t)completion
-{
-    if (nil != self.dismissAction) {
-        self.dismissAction(completion);
-    }
-    else if (nil != self.navigationController) {
-        [self.navigationController popViewControllerAnimated:YES];
-        if (completion) {
-            completion();
-        }
-    }
-    else {
-        [self dismissViewControllerAnimated:YES completion:completion];
-    }
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    [self centerScrollViewContent];
-}
-
-- (BOOL)prefersStatusBarHidden
-{
-    return NO;
-}
-
-- (void)setForcePortraitMode:(BOOL)forcePortraitMode
-{
-    _forcePortraitMode = forcePortraitMode;
-    [UIViewController attemptRotationToDeviceOrientation];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
-
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-- (void)updateForMessage
-{
-    if (self.message.isObfuscated || self.message.hasBeenDeleted) {
-        [self removeImage];
-        self.obfuscationView.hidden = NO;
-    } else {
-        self.obfuscationView.hidden = YES;
-        [self loadImageAndSetupImageView];
-    }
-}
-
-- (void)removeImage
-{
-    [self.imageView removeFromSuperview];
-    self.imageView = nil;
-}
-
-- (void)showChrome:(BOOL)shouldShow
-{
-    self.isShowingChrome = shouldShow;
-}
-
-- (void)setSwipeToDismiss:(BOOL)swipeToDismiss
-{
-    _swipeToDismiss = swipeToDismiss;
-    self.panRecognizer.enabled = self.swipeToDismiss;
-}
+//- (void)viewDidLayoutSubviews
+//{
+//    [super viewDidLayoutSubviews];
+//    [self centerScrollViewContent];
+//}
+//
+//- (BOOL)prefersStatusBarHidden
+//{
+//    return NO;
+//}
+//
+//- (void)setForcePortraitMode:(BOOL)forcePortraitMode
+//{
+//    _forcePortraitMode = forcePortraitMode;
+//    [UIViewController attemptRotationToDeviceOrientation];
+//}
+//
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskAll;
+//}
+//
+//- (BOOL)shouldAutorotate
+//{
+//    return YES;
+//}
+//
+//- (void)updateForMessage
+//{
+//    if (self.message.isObfuscated || self.message.hasBeenDeleted) {
+//        [self removeImage];
+//        self.obfuscationView.hidden = NO;
+//    } else {
+//        self.obfuscationView.hidden = YES;
+//        [self loadImageAndSetupImageView];
+//    }
+//}
+//
+//- (void)removeImage
+//{
+//    [self.imageView removeFromSuperview];
+//    self.imageView = nil;
+//}
+//
+//- (void)showChrome:(BOOL)shouldShow
+//{
+//    self.isShowingChrome = shouldShow;
+//}
+//
+//- (void)setSwipeToDismiss:(BOOL)swipeToDismiss
+//{
+//    _swipeToDismiss = swipeToDismiss;
+//    self.panRecognizer.enabled = self.swipeToDismiss;
+//}
 
 - (void)setupGestureRecognizers
 {
