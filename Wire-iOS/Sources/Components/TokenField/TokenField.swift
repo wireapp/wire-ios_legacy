@@ -430,8 +430,8 @@ final class TokenField: UIView {
     func clearFilterText() {
         guard let text = textView.text else { return }
 
-        guard let attachmentCharacter = UnicodeScalar(NSTextAttachment.character),
-            let firstCharacterIndex = text.unicodeScalars.firstIndex(where: { $0 != attachmentCharacter && !NSCharacterSet.whitespaces.contains($0) }) else {
+        guard let attachmentCharacter = UnicodeScalar.textAttachmentCharacter,
+            let firstCharacterIndex = text.unicodeScalars.firstIndex(where: { $0 != attachmentCharacter && !CharacterSet.whitespaces.contains($0) }) else {
                 return
         }
 
@@ -745,8 +745,8 @@ extension TokenField: UITextViewDelegate {
             return false
         }
 
+        // backspace - search for first TokenTextAttachment, select it.(and remove last token)
         if range.length == 1, text.isEmpty {
-            // backspace
             var cancelBackspace = false
             textView.attributedText.enumerateAttachment(range: range) { tokenAttachment, range, stop in
                 if let tokenAttachment = tokenAttachment as? TokenTextAttachment {
@@ -770,16 +770,19 @@ extension TokenField: UITextViewDelegate {
         // so don’t do any magic in that case
         
         if !text.isEmpty,
-            let attachmentCharacter = UnicodeScalar(NSTextAttachment.character),
-            let textRange = Range(range, in: textView.text) {            
-                let range = textRange.upperBound..<textView.text.endIndex
-                let subString = textView.text?[range]
-                if subString?.unicodeScalars.contains(attachmentCharacter) == true {
-                    textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
-                }
+           let attachmentCharacter = UnicodeScalar.textAttachmentCharacter,
+           let textRange = Range(range, in: textView.text),
+           textView.text.suffix(from: textRange.upperBound).unicodeScalars.contains(attachmentCharacter) {
+            textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
         }
         updateTextAttributes()
 
         return true
+    }
+}
+
+extension UnicodeScalar {
+    fileprivate static var textAttachmentCharacter: UnicodeScalar? {
+        return UnicodeScalar(NSTextAttachment.character)
     }
 }
