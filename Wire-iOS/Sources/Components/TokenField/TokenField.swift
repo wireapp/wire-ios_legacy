@@ -768,7 +768,7 @@ extension TokenField: UITextViewDelegate {
         // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
-        
+
         if !text.isEmpty,
            let attachmentCharacter = UnicodeScalar.textAttachmentCharacter,
            let textRange = Range(range, in: textView.text),

@@ -28,4 +28,3 @@ extension NSAttributedString {
         enumerateAttribute(.attachment, in: range, options: [], using: block)
     }
 }
-
