@@ -67,4 +67,6 @@ final class MockButtonMessageData: ButtonMessageData {
     func touchAction() {
         //no-op
     }
+
+    var isExpired: Bool { return false }
 }
