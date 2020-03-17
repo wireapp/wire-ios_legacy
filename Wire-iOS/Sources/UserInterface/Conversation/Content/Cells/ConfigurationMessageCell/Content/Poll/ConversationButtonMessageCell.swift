@@ -26,6 +26,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     weak var delegate: ConversationMessageCellDelegate?
     private var config: Configuration? {
         didSet {
+            guard config != oldValue else { return }
+            
             updateUI()
         }
     }
@@ -42,6 +44,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         case .selected:
             button.style = .full
         case .confirmed:
+            button.style = .full
             button.isEnabled = false
             ///TODO: style for expired state
         }
@@ -131,5 +134,16 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
          state: ButtonMessageState,
          buttonAction: @escaping Completion) {
         configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction)
+    }
+}
+
+extension ConversationButtonMessageCell.Configuration: Hashable {
+    static func == (lhs: ConversationButtonMessageCell.Configuration, rhs: ConversationButtonMessageCell.Configuration) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+        hasher.combine(state)
     }
 }

@@ -70,6 +70,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 waitForImagesToLoad: Bool = false,
                 waitForTextViewToLoad: Bool = false,
                 allColorSchemes: Bool = false,
+                allWidths: Bool = true,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
@@ -99,26 +100,49 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            
-            verifyInAllPhoneWidths(matching:createViewClosure(),
-                                   named: "dark",
-                                   file: file,
-                                   testName: testName,
-                                   line: line)
-            
+            verify(matching: createViewClosure(),
+                   named: "dark",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+
             ColorScheme.default.variant = .light
-            verifyInAllPhoneWidths(matching:createViewClosure(),
-                                   named: "light",
-                                   file: file,
-                                   testName: testName,
-                                   line: line)
-            
+            verify(matching: createViewClosure(),
+                   named: "light",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)            
         } else {
-            
-            verifyInAllPhoneWidths(matching:createViewClosure(),
+            verify(matching: createViewClosure(),
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+    
+    private func verify(matching value: UIView,
+                        named name: String? = nil,
+                        allColorSchemes: Bool = false,
+                        allWidths: Bool = true,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        if allWidths {
+            verifyInAllPhoneWidths(matching:value,
+                                   named: name,
                                    file: file,
                                    testName: testName,
                                    line: line)
+        } else {
+            verifyInWidths(matching:value,
+                           widths: [smallestWidth],
+                           named: name,
+                           file: file,
+                           testName: testName,
+                           line: line)
         }
     }
     

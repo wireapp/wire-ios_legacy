@@ -25,6 +25,19 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
     func testThatItRendersButton() {
         verify(message: makeMessage())
     }
+    
+    func testThatButtonStyleIsUpdatedAfterStateChange() {
+        // given
+        let message = makeMessage() { config in
+
+            // when
+            let item = self.createItem(title: "J.S. Bach", state:.unselected)
+            (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
+        }
+                
+        // then
+        verify(message: message, allWidths: false)
+    }
 
     // MARK: - Helpers
     
