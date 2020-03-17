@@ -30,7 +30,42 @@ protocol MenuVisibilityController: NSObjectProtocol {
 
 private let kZoomScaleDelta: CGFloat = 0.0003
 
+// MARK: - UIScrollViewDelegate
+
 extension FullscreenImageViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        updateScrollViewZoomScale(withViewSize: self.view.frame.size, imageSize: imageView?.image?.size)
+        
+        delegate.fadeAndHideMenu(true)
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        setSelectedByMenu(false, animated: false)
+        UIMenuController.shared.isMenuVisible = false
+        
+        centerScrollViewContent()
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    func centerScrollViewContent() {
+        let imageWidth = Float(imageView?.image?.size.width ?? 0.0)
+        let imageHeight = Float(imageView?.image?.size.height ?? 0.0)
+        
+        let viewWidth = view.bounds.size.width
+        let viewHeight = view.bounds.size.height
+        
+        var horizontalInset = (CGFloat(viewWidth) - scrollView.zoomScale * CGFloat(imageWidth)) / 2
+        horizontalInset = max(0, horizontalInset)
+        
+        var verticalInset = (CGFloat(viewHeight) - scrollView.zoomScale * CGFloat(imageHeight)) / 2
+        verticalInset = max(0, verticalInset)
+        
+        scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+    }
+
 }
 
 extension FullscreenImageViewController: UIGestureRecognizerDelegate {
@@ -459,13 +494,97 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
         }
     }
 
+    // MARK: - Gesture Handling
+    func didTapBackground(_ tapper: UITapGestureRecognizer?) {
+        showChrome(!isShowingChrome)
+        setSelectedByMenu(false, animated: false)
+        UIMenuController.shared.isMenuVisible = false
+        delegate.fadeAndHideMenu(!delegate.menuVisible)
+    }
+    
+    func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer?) {
+        if longPressRecognizer?.state == .began {
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide(_:)), name: UIMenuController.didHideMenuNotification, object: nil)
+            
+            ///  The reason why we are touching the window here is to workaround a bug where,
+            ///  After dismissing the webplayer, the window would fail to become the first responder,
+            ///  preventing us to show the menu at all.
+            ///  We now force the window to be the key window and to be the first responder to ensure that we can
+            ///  show the menu controller.
+            view.window.makeKey()
+            view.window.becomeFirstResponder()
+            becomeFirstResponder()
+            
+            let menuController = UIMenuController.shared
+            menuController.menuItems = ConversationMessageActionController.allMessageActions
+            
+            if let imageView = imageView {
+                menuController.setTargetRect(imageView?.bounds ?? CGRect.zero, in: imageView)
+            }
+            menuController.setMenuVisible(true, animated: true)
+            setSelectedByMenu(true, animated: true)
+        }
+    }
+
+    // MARK: - Actions
+    func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return actionController.canPerformAction(action)
+    }
+    
+    func forwardingTarget(for aSelector: Selector!) -> Any? {
+        return actionController
+    }
+    
+    func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+        ZMLogDebug("Setting selected: %@ animated: %@", NSNumber(value: selected), NSNumber(value: animated))
+        if selected {
+            
+            highlightLayer = CALayer()
+            highlightLayer.backgroundColor = UIColor.clear.cgColor
+            highlightLayer.frame = CGRect(x: 0, y: 0, width: (imageView?.frame.size.width ?? 0.0) / scrollView.zoomScale, height: (imageView?.frame.size.height ?? 0.0) / scrollView.zoomScale)
+            imageView?.layer.insertSublayer(highlightLayer, at: 0)
+            
+            if animated {
+                UIView.animate(withDuration: 0.33, animations: {
+                    self.highlightLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
+                })
+            } else {
+                highlightLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
+            }
+        } else {
+            if animated {
+                UIView.animate(withDuration: 0.33, animations: {
+                    self.highlightLayer.backgroundColor = UIColor.clear.cgColor
+                }) { finished in
+                    if finished {
+                        self.highlightLayer.removeFromSuperlayer()
+                    }
+                }
+            } else {
+                highlightLayer.backgroundColor = UIColor.clear.cgColor
+                highlightLayer.removeFromSuperlayer()
+            }
+        }
+    }
+
+    func menuDidHide(_ notification: Notification?) {
+        NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
+        setSelectedByMenu(false, animated: true)
+    }
+
 }
 
 extension FullscreenImageViewController: ZMMessageObserver {
+    func messageDidChange(_ changeInfo: MessageChangeInfo?) {
+        if ((changeInfo?.transferStateChanged != nil || changeInfo?.imageChanged != nil) && (message.imageMessageData().imageData != nil)) || changeInfo?.isObfuscatedChanged != nil {
+            
+            updateForMessage()
+        }
+    }
+
 }
 
-extension FullscreenImageViewController: UIScrollViewDelegate {
-}
 //TODO: new file
 final class DynamicsProxy: NSObject, UIDynamicItem {
     var bounds = CGRect.zero
