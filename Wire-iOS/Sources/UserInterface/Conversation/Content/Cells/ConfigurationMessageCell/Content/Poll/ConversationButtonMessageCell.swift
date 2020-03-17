@@ -26,7 +26,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     weak var delegate: ConversationMessageCellDelegate?
     private var config: Configuration? {
         didSet {
-            ///TODO: update UI
             updateUI()
         }
     }
