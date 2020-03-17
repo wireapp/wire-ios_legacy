@@ -50,7 +50,11 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         ///TODO: state/spinner ?
     }
 
-    init() {
+    convenience init() {
+        self.init(frame: .zero)
+    }
+    
+    override init(frame: CGRect) {
         super.init(frame: .zero)
 
         configureViews()
