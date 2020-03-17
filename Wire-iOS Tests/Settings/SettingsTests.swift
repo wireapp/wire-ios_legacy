@@ -19,27 +19,41 @@
 import XCTest
 @testable import Wire
 
-final class BrowserOpeningOptionTests: XCTestCase {
-
+final class SettingsTests: XCTestCase {
     class override func tearDown() {
         Settings.shared.reset()
     }
-    
-    func testThatDefaultBrowserIsSafari() {
-        //GIVEN & WHEN
+
+    func testThatDateIsNilWhenInit() {
+        // GIVEN
         Settings.shared.reset()
-        let preference: BrowserOpeningOption = BrowserOpeningOption.storedPreference
-        
-        //THEN
-        XCTAssertEqual(preference, BrowserOpeningOption.safari)
+
+        // WHEN
+        let lastPushAlertDate: Date? = Settings.shared[.lastPushAlertDate]
+
+        // THEN
+        XCTAssertNil(lastPushAlertDate)
     }
 
-    func testThatBrowserCanBeChangedToSnowhaze() {
-        //GIVEN & WHEN
-        let browserOpeningOption: BrowserOpeningOption = .snowhaze
-        Settings.shared[.browserOpeningRawValue] = browserOpeningOption
-        
-        //THEN
-        XCTAssertEqual(BrowserOpeningOption.storedPreference, BrowserOpeningOption.snowhaze)
+    func testThatDateCanBeWritten() {
+        // GIVEN
+        let date = Date()
+
+        // WHEN
+        Settings.shared[.lastPushAlertDate] = date
+
+        // THEN
+        XCTAssertEqual(date, Settings.shared[.lastPushAlertDate])
+    }
+
+    func testThatEnumCanBeWrittenAndReturnAnEnum() {
+        // GIVEN
+        let settingsCamera: SettingsCamera = .back
+
+        // WHEN
+        Settings.shared[.preferredCamera] = settingsCamera
+
+        // THEN
+        XCTAssertEqual(settingsCamera, Settings.shared[.preferredCamera])
     }
 }

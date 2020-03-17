@@ -19,12 +19,12 @@
 
 import UIKit
 import Cartography
-
 import Down
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {
-        return disableSendButton ? .send : .default
+        let disableSendButton: Bool? = self[.sendButtonDisabled]
+        return disableSendButton == true ? .send : .default
     }
 }
 
@@ -349,7 +349,7 @@ final class InputBar: UIView {
     
     @objc
     func updateReturnKey() {
-        textView.returnKeyType = isMarkingDown ? .default : Settings.shared().returnKeyType
+        textView.returnKeyType = isMarkingDown ? .default : Settings.shared.returnKeyType
         textView.reloadInputViews()
     }
 

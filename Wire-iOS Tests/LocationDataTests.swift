@@ -23,7 +23,25 @@ import XCTest
 import MapKit
 
 
-class LocationDataTests: XCTestCase {
+final class LocationDataTests: XCTestCase {
+    
+    class override func tearDown() {
+        Settings.shared.reset()
+    }
+
+    func testThatLocationDataCanBeStored() {
+        // given
+        let location: LocationData = LocationData.locationData(withLatitude: 1, longitude: 2, name: "test", zoomLevel: 3)
+        Settings.shared[.lastUserLocation] = location
+
+        // when
+        let sut: LocationData? = Settings.shared[.lastUserLocation]
+        
+        // then
+        XCTAssertEqual(sut?.latitude, 1)
+        XCTAssertEqual(sut?.longitude, 2)
+        XCTAssertEqual(sut?.zoomLevel, 3)
+    }
     
     func testThatLocationDataCanBeConvertedToADictionary() {
         // given

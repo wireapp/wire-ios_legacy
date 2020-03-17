@@ -22,7 +22,6 @@
 @import WireCommonComponents;
 
 #import <CommonCrypto/CommonCrypto.h>
-#import "Settings.h"
 
 // UI
 #import "TextTransform.h"
