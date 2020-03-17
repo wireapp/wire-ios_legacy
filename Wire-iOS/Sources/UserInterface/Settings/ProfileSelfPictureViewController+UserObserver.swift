@@ -18,17 +18,19 @@
 
 import Foundation
 
-///TODO: remove public after MockUser is convert to Swift
-public final class ImageCache<T : AnyObject> {
-    var cache: NSCache<NSString, T> = NSCache()
-    var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
-    var dispatchGroup: DispatchGroup = DispatchGroup()
-}
+extension ProfileSelfPictureViewController: ZMUserObserver {
+    
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        guard changeInfo.imageMediumDataChanged,
+            let userSession = ZMUserSession.shared(),
+            let profileImageUser = changeInfo.user as? ProfileImageFetchable else { return }
 
-extension UIImage {
-    public static var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
-}
-
-final class MediaAssetCache {
-    static var defaultImageCache = ImageCache<AnyObject>()
+        profileImageUser.fetchProfileImage(session: userSession,
+                                           cache: UIImage.defaultUserImageCache,
+                                           sizeLimit: nil,
+                                           desaturate: false) { (image, _) in
+            self.selfUserImageView.image = image
+        }
+    }
+    
 }
