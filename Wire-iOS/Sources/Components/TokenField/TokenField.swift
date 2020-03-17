@@ -774,7 +774,7 @@ extension TokenField: UITextViewDelegate {
             let textRange = Range(range, in: textView.text) {            
                 let range = textRange.upperBound..<textView.text.endIndex
                 let subString = textView.text?[range]
-                if let _ = subString?.unicodeScalars.firstIndex(where: { $0 == attachmentCharacter }) {
+                if subString?.unicodeScalars.contains(attachmentCharacter) == true {
                     textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
                 }
         }
