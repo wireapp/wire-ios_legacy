@@ -27,7 +27,6 @@
 
 
 @import FLAnimatedImage;
-#import "MediaAsset.h"
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
