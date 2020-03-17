@@ -19,7 +19,7 @@
 import Foundation
 
 extension FullscreenImageViewController {
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         if parent != nil {
@@ -27,15 +27,14 @@ extension FullscreenImageViewController {
         }
     }
 
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
 
-    override open var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return true
     }
 
-    @objc
     func setActionController() {
         actionController = ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
     }

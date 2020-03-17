@@ -19,7 +19,7 @@
 import Foundation
 
 extension FullscreenImageViewController {
-    @objc func setupStyle() {
+    func setupStyle() {
         switch UIDevice.current.userInterfaceIdiom {
         case .pad:
             minimumDismissMagnitude = 2500

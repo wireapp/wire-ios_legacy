@@ -19,7 +19,6 @@
 import Foundation
 
 extension FullscreenImageViewController {
-    @objc
     func setupSnapshotBackgroundView() {
         guard let snapshotBackgroundView = delegate?.backgroundScreenshot(for: self) else { return }
 
@@ -38,9 +37,7 @@ extension FullscreenImageViewController {
         self.snapshotBackgroundView = snapshotBackgroundView
     }
 
-    @objc
     func setupScrollView() {
-        scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
 

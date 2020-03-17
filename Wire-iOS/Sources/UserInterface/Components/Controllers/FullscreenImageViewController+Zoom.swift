@@ -46,7 +46,7 @@ extension CGSize {
 
 extension FullscreenImageViewController {
 
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
         guard let imageSize = imageView?.image?.size else { return }
 
         let isImageZoomedToMax = scrollView.zoomScale == scrollView.maximumZoomScale
@@ -73,7 +73,8 @@ extension FullscreenImageViewController {
 
     // MARK: - Gesture Handling
 
-    @objc func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
+    @objc
+    private func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }

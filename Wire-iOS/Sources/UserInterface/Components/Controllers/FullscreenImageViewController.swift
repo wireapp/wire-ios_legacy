@@ -28,67 +28,30 @@ protocol MenuVisibilityController: NSObjectProtocol {
     func fadeAndHideMenu(_ hidden: Bool)
 }
 
-private let kZoomScaleDelta: CGFloat = 0.0003
-
-// MARK: - UIScrollViewDelegate
-
-extension FullscreenImageViewController: UIScrollViewDelegate {
-    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        updateScrollViewZoomScale(withViewSize: self.view.frame.size, imageSize: imageView?.image?.size)
-        
-        delegate.fadeAndHideMenu(true)
-    }
-    
-    func scrollViewDidZoom(_ scrollView: UIScrollView) {
-        setSelectedByMenu(false, animated: false)
-        UIMenuController.shared.isMenuVisible = false
-        
-        centerScrollViewContent()
-    }
-    
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return imageView
-    }
-    
-    func centerScrollViewContent() {
-        let imageWidth = Float(imageView?.image?.size.width ?? 0.0)
-        let imageHeight = Float(imageView?.image?.size.height ?? 0.0)
-        
-        let viewWidth = view.bounds.size.width
-        let viewHeight = view.bounds.size.height
-        
-        var horizontalInset = (CGFloat(viewWidth) - scrollView.zoomScale * CGFloat(imageWidth)) / 2
-        horizontalInset = max(0, horizontalInset)
-        
-        var verticalInset = (CGFloat(viewHeight) - scrollView.zoomScale * CGFloat(imageHeight)) / 2
-        verticalInset = max(0, verticalInset)
-        
-        scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
-    }
-
-}
-
-extension FullscreenImageViewController: UIGestureRecognizerDelegate {
-    func dismissingPanGestureRecognizerPanned(_ panner: UIPanGestureRecognizer?) {
-    }
-}
-
 final class FullscreenImageViewController: UIViewController {
-    private(set) var scrollView: UIScrollView?
-    private(set) weak var message: ZMConversationMessage?
+    //    TODO: private
+    let kZoomScaleDelta: CGFloat = 0.0003
+
+    //    TODO: private
+    let scrollView: UIScrollView = UIScrollView()
+    ///TODO: optional?
+    let message: ZMConversationMessage
     var snapshotBackgroundView: UIView?
     weak var delegate: (ScreenshotProvider & MenuVisibilityController)?
     var swipeToDismiss = false
     var showCloseButton = false
-    var dismissAction: ((_ dispatch_block_t: ) -> Void)?
+    var dismissAction: DismissAction?
     
-    private var lastZoomScale: CGFloat = 0.0
-    private var imageView: UIImageView?
-    private var minimumDismissMagnitude: CGFloat = 0.0
-    private var scrollView: UIScrollView!
+    //TODO: private
+    var lastZoomScale: CGFloat = 0.0
+    //    private, optional?
+    var imageView: UIImageView!
+    //TODO: private
+    var minimumDismissMagnitude: CGFloat = 0.0
     private var loadingSpinner: UIActivityIndicatorView?
     private var obfuscationView: ObfuscationView!
-    private var actionController: ConversationMessageActionController!
+    //TODO: private lazy {}
+    var actionController: ConversationMessageActionController!
     
     // MARK: pull to dismiss
     private var isDraggingImage = false
@@ -96,44 +59,36 @@ final class FullscreenImageViewController: UIViewController {
     private var imageDragStartingPoint = CGPoint.zero
     private var imageDragOffsetFromActualTranslation: UIOffset!
     private var imageDragOffsetFromImageCenter: UIOffset!
-    private var animator: UIDynamicAnimator?
+    ///TODO: private
+    var animator: UIDynamicAnimator?
     private var attachmentBehavior: UIAttachmentBehavior?
     private var initialImageViewBounds = CGRect.zero
     private var initialImageViewCenter = CGPoint.zero
-    private var panRecognizer: UIPanGestureRecognizer?
+    private let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
 
     private var highlightLayer: CALayer?
-    private var tapGestureRecognzier: UITapGestureRecognizer?
-    private var doubleTapGestureRecognizer: UITapGestureRecognizer?
+    ///TODO: lazy
+    private var tapGestureRecognzier: UITapGestureRecognizer!
+    private var doubleTapGestureRecognizer: UITapGestureRecognizer!
     private var longPressGestureRecognizer: UILongPressGestureRecognizer?
     private var isShowingChrome = false
     private var assetWriteInProgress = false
     private var forcePortraitMode = false
     private var messageObserverToken: Any?
 
-    private func centerScrollViewContent() {
-    }
-    
-    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-    }
-
-    init(message: ZMConversationMessage?) {
-    }
-    
-    func showChrome(_ shouldShow: Bool) {
-    }
-    
-    func dismiss(withCompletion completion: () -> ()? = nil) {
-    }
+    // TODO:
+//    func dismiss(withCompletion completion: () -> ()? = nil) {
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    convenience init(message: ZMConversationMessage?) {
-        self.init()
-        
+    convenience init(message: ZMConversationMessage) {
         self.message = message
+
+        self.init(nibName: nil, bundle: nil)
+
         forcePortraitMode = false
         swipeToDismiss = true
         showCloseButton = true
@@ -149,14 +104,14 @@ final class FullscreenImageViewController: UIViewController {
         
         setActionController()
         
-        if nil != ZMUserSession.shared() {
-            messageObserverToken = MessageChangeInfo.addObserver(self, for: message, userSession: ZMUserSession.shared())
+        if let userSession = ZMUserSession.shared() {
+            messageObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
         }
     }
     
-    func dismiss(withCompletion completion: () -> ()) {
+    func dismiss(withCompletion completion: Completion?) {
         if nil != dismissAction {
-            dismissAction(completion)
+            dismissAction?(completion)
         } else if nil != navigationController {
             navigationController?.popViewController(animated: true)
             if completion != nil {
@@ -167,12 +122,12 @@ final class FullscreenImageViewController: UIViewController {
         }
     }
     
-    func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         centerScrollViewContent()
     }
     
-    var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
     
@@ -181,11 +136,11 @@ final class FullscreenImageViewController: UIViewController {
         UIViewController.attemptRotationToDeviceOrientation()
     }
     
-    var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
     
-    var shouldAutorotate: Bool {
+    override var shouldAutorotate: Bool {
         return true
     }
     
@@ -210,7 +165,7 @@ final class FullscreenImageViewController: UIViewController {
     
     func setSwipeToDismiss(_ swipeToDismiss: Bool) {
         self.swipeToDismiss = swipeToDismiss
-        panRecognizer.enabled = self.swipeToDismiss
+        panRecognizer.isEnabled = self.swipeToDismiss
     }
 
 
@@ -229,8 +184,7 @@ final class FullscreenImageViewController: UIViewController {
         
         longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
         view.addGestureRecognizer(longPressGestureRecognizer)
-        
-        panRecognizer = UIPanGestureRecognizer()
+    
         panRecognizer.maximumNumberOfTouches = 1
         panRecognizer.delegate = self
         panRecognizer.enabled = swipeToDismiss
@@ -406,10 +360,9 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     func dismissImageFlicking(withVelocity velocity: CGPoint) {
-        ZM_WEAK(self)
         // Proxy object is used because the UIDynamics messing up the zoom level transform on imageView
         let proxy = DynamicsProxy()
-        proxy.center = imageView?.center
+        proxy.center = imageView.center
         proxy.bounds = initialImageViewBounds
         isDraggingImage = false
         
@@ -419,10 +372,9 @@ final class FullscreenImageViewController: UIViewController {
             push.setTargetOffsetFromCenter(UIOffsetMake(attachmentBehavior.anchorPoint.x - initialImageViewCenter.x, attachmentBehavior.anchorPoint.y - initialImageViewCenter.y), for: imageView)
         }
         
-        push.magnitude = max(minimumDismissMagnitude, fabs(Float(velocity.y)) / 6.0)
+        push.magnitude = max(minimumDismissMagnitude, fabs(Float(velocity.y)) / 6)
         
-        push.action = {
-            ZM_STRONG(self)
+        push.action = { [weak self] in
             self.imageView?.center = CGPoint(x: self.imageView?.center.x ?? 0.0, y: proxy.center.y)
             
             self.updateBackgroundColor(withImageViewCenter: self.imageView?.center)
@@ -495,14 +447,16 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
     }
 
     // MARK: - Gesture Handling
+    @objc
     func didTapBackground(_ tapper: UITapGestureRecognizer?) {
         showChrome(!isShowingChrome)
         setSelectedByMenu(false, animated: false)
         UIMenuController.shared.isMenuVisible = false
-        delegate.fadeAndHideMenu(!delegate.menuVisible)
+        delegate?.fadeAndHideMenu(!delegate.menuVisible)
     }
     
-    func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer?) {
+    @objc
+    private func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer?) {
         if longPressRecognizer?.state == .began {
             
             NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide(_:)), name: UIMenuController.didHideMenuNotification, object: nil)
@@ -536,8 +490,9 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
         return actionController
     }
     
+    //TODO: private
     func setSelectedByMenu(_ selected: Bool, animated: Bool) {
-        ZMLogDebug("Setting selected: %@ animated: %@", NSNumber(value: selected), NSNumber(value: animated))
+        zmLog.debug("Setting selected: \(selected) animated: \(animated)")
         if selected {
             
             highlightLayer = CALayer()
@@ -585,9 +540,49 @@ extension FullscreenImageViewController: ZMMessageObserver {
 
 }
 
+// MARK: - UIScrollViewDelegate
+
+extension FullscreenImageViewController: UIScrollViewDelegate {
+    func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
+        updateScrollViewZoomScale(viewSize: self.view.frame.size, imageSize: imageView?.image?.size)
+        
+        delegate?.fadeAndHideMenu(true)
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        setSelectedByMenu(false, animated: false)
+        UIMenuController.shared.isMenuVisible = false
+        
+        centerScrollViewContent()
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
+    // TODO: private
+    func centerScrollViewContent() {
+        let imageWidth = Float(imageView?.image?.size.width ?? 0.0)
+        let imageHeight = Float(imageView?.image?.size.height ?? 0.0)
+        
+        let viewWidth = view.bounds.size.width
+        let viewHeight = view.bounds.size.height
+        
+        var horizontalInset = (CGFloat(viewWidth) - scrollView.zoomScale * CGFloat(imageWidth)) / 2
+        horizontalInset = max(0, horizontalInset)
+        
+        var verticalInset = (CGFloat(viewHeight) - scrollView.zoomScale * CGFloat(imageHeight)) / 2
+        verticalInset = max(0, verticalInset)
+        
+        scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)
+    }
+    
+}
+
 //TODO: new file
 final class DynamicsProxy: NSObject, UIDynamicItem {
     var bounds = CGRect.zero
     var center = CGPoint.zero
     var transform: CGAffineTransform!
 }
+
