@@ -83,7 +83,7 @@ final class StartUIViewController: UIViewController {
     }
 
     var selfUser: UserType {
-        return ZMUser.selfUser()
+        return SelfUser.current
     }
     
     // MARK: - Overloaded methods

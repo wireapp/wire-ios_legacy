@@ -30,23 +30,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol TokenFieldDelegate;
 
-@interface TokenField : UIView<UITextViewDelegate>
+@interface TokenField : UIView
 
 @property (weak, nonatomic, nullable) id<TokenFieldDelegate> delegate;
 
-@property (readwrite, nonatomic) TokenizedTextView *textView;
+@property (readwrite, nonatomic, null_resettable) TokenizedTextView *textView;
 
 @property (nonatomic) BOOL hasAccessoryButton;
 @property (readwrite, nonatomic) IconButton *accessoryButton;
 
 @property (readonly, nonatomic) NSArray <Token *> *tokens;
-@property (copy, readonly, nonatomic) NSString *filterText;
+///TODO: private(set)
+@property (copy, readwrite, nonatomic) NSString *filterText;
 
 - (void)addToken:(Token *)token;
 - (void)addTokenForTitle:(NSString *)title representedObject:(id)object;
 - (nullable Token *)tokenForRepresentedObject:(id)object;    // searches by isEqual:
-- (void)removeToken:(Token *)token;
-- (void)removeAllTokens;
 - (void)clearFilterText;
 
 // Collapse
@@ -81,7 +80,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGRect excludedRect;  // rect for excluded path in textView text container
 
 @property (nonatomic, readonly) BOOL userDidConfirmInput;
-- (void)filterUnwantedAttachments;
 
 - (void)scrollToBottomOfInputField;
 

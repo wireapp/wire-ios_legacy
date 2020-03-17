@@ -31,8 +31,7 @@ struct IconDefinition: Equatable {
     let renderingMode: UIImage.RenderingMode
 }
 
-///TODO: remove public after ButtonWithLargerHitArea is converted to Swift
-public class IconButton: ButtonWithLargerHitArea {
+class IconButton: ButtonWithLargerHitArea {
     var circular = false {
         didSet {
             updateCircular()

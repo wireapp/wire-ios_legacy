@@ -22,9 +22,15 @@ import XCTest
 final class GroupDetailsFooterViewTests: CoreDataSnapshotTestCase {
     
     var sut: GroupDetailsFooterView!
+
+    override func setUp() {
+        super.setUp()
+        SelfUser.provider = selfUserProvider
+    }
     
     override func tearDown() {
         sut = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
 

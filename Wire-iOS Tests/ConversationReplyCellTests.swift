@@ -24,7 +24,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
 
     override func tearDown() {
         super.tearDown()
-        defaultImageCache.cache.removeAllObjects()
+        MediaAssetCache.defaultImageCache.cache.removeAllObjects()
     }
 
     // MARK: - Basic Layout
@@ -490,7 +490,7 @@ final class ConversationReplyCellTests: CoreDataSnapshotTestCase {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
         let cell = ConversationReplyCell()
         cell.configure(with: cellDescription.configuration, animated: false)
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         return cell
     }
 

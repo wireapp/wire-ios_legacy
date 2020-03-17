@@ -44,7 +44,7 @@ extension ConversationInputBarViewController {
     }
 
     func postImage(_ image: MediaAsset) {
-        guard let data = image.data() else { return }
+        guard let data = image.imageData else { return }
         sendController.sendMessage(withImageData: data)
     }
 

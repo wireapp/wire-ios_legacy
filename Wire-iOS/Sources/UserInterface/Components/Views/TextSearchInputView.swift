@@ -26,23 +26,23 @@ protocol TextSearchInputViewDelegate: class {
     func searchViewShouldReturn(_ searchView: TextSearchInputView) -> Bool
 }
 
-public final class TextSearchInputView: UIView {
-    public let iconView = UIImageView()
-    public let searchInput = UITextView()
-    public let placeholderLabel = UILabel()
-    public let cancelButton = IconButton(style: .default)
+final class TextSearchInputView: UIView {
+    let iconView = UIImageView()
+    let searchInput = UITextView()
+    let placeholderLabel = UILabel()
+    let cancelButton = IconButton(style: .default)
 
     private let spinner = ProgressSpinner()
     
     weak var delegate: TextSearchInputViewDelegate?
-    public var query: String = "" {
+    var query: String = "" {
         didSet {
             self.updateForSearchQuery()
             self.delegate?.searchView(self, didChangeQueryTo: self.query)
         }
     }
     
-    public var placeholderString: String = "" {
+    var placeholderString: String = "" {
         didSet {
             self.placeholderLabel.text = placeholderString
         }
@@ -120,11 +120,11 @@ public final class TextSearchInputView: UIView {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatal("init?(coder aDecoder: NSCoder) is not implemented")
     }
     
-    @objc public func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
+    @objc func onCancelButtonTouchUpInside(_ sender: AnyObject!) {
         self.query = ""
         self.searchInput.text = ""
         self.searchInput.resignFirstResponder()
@@ -142,7 +142,7 @@ public final class TextSearchInputView: UIView {
 
 extension TextSearchInputView: UITextViewDelegate {
     
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let currentText = textView.text else {
             return true
         }
@@ -161,11 +161,11 @@ extension TextSearchInputView: UITextViewDelegate {
         return !containsReturn
     }
         
-    public func textViewDidBeginEditing(_ textView: UITextView) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
     }
 
-    public func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(_ textView: UITextView) {
         self.updatePlaceholderLabel()
     }
 

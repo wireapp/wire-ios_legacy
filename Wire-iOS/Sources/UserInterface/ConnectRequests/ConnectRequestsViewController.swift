@@ -43,7 +43,7 @@ final class ConnectRequestsViewController: UIViewController, UITableViewDataSour
                                                                                  for: pendingConnectionsList,
                                                                                  userSession: userSession)
             
-            userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
             
             connectionRequests = pendingConnectionsList as? [ZMConversation] ?? []
         }

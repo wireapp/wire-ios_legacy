@@ -21,43 +21,43 @@ import UIKit
 import WireSyncEngine
 import Cartography
 
-public protocol ColorPickerControllerDelegate {
+protocol ColorPickerControllerDelegate {
     func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-public class ColorPickerController: UIViewController {
-    public let overlayView = UIView()
-    public let contentView = UIView()
-    public let tableView = UITableView()
-    public let headerView = UIView()
-    public let titleLabel = UILabel()
-    public let closeButton = IconButton()
+class ColorPickerController: UIViewController {
+    let overlayView = UIView()
+    let contentView = UIView()
+    let tableView = UITableView()
+    let headerView = UIView()
+    let titleLabel = UILabel()
+    let closeButton = IconButton()
 
     static fileprivate let rowHeight: CGFloat = 44
     
-    public let colors: [UIColor]
-    public var currentColor: UIColor?
-    public var delegate: ColorPickerControllerDelegate?
+    let colors: [UIColor]
+    var currentColor: UIColor?
+    var delegate: ColorPickerControllerDelegate?
     
-    public init(colors: [UIColor]) {
+    init(colors: [UIColor]) {
         self.colors = colors
         super.init(nibName: nil, bundle: nil)
         
         self.modalPresentationStyle = .custom
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var title: String? {
+    override var title: String? {
         didSet {
             self.titleLabel.text = self.title
         }
     }
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.addSubview(self.contentView)
@@ -114,13 +114,13 @@ public class ColorPickerController: UIViewController {
         self.tableView.separatorStyle = .none
     }
     
-    override public var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         get {
             return false
         }
     }
 
-    override public var preferredStatusBarStyle: UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         get {
             return .lightContent
         }
@@ -169,21 +169,21 @@ public class ColorPickerController: UIViewController {
         
     }
     
-    @objc public func didPressDismiss(_ sender: AnyObject?) {
+    @objc func didPressDismiss(_ sender: AnyObject?) {
         self.delegate?.colorPickerWantsToDismiss(self)
     }
 }
 
 extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.colors.count
     }
     
-    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return type(of: self).rowHeight
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = self.tableView.dequeueReusableCell(withIdentifier: PickerCell.reuseIdentifier) as? PickerCell else {
             fatal("Cannot create cell")
@@ -197,7 +197,7 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.delegate?.colorPicker(self, didSelectColor: self.colors[(indexPath as NSIndexPath).row])
         self.currentColor = self.colors[(indexPath as NSIndexPath).row]
     }
@@ -206,7 +206,7 @@ extension ColorPickerController: UITableViewDelegate, UITableViewDataSource {
 final class AccentColorPickerController: ColorPickerController {
     fileprivate let allAccentColors: [AccentColor]
     
-    public init() {
+    init() {
         self.allAccentColors = AccentColor.allSelectable()
         
         super.init(colors: self.allAccentColors.map { UIColor(for: $0) })
@@ -218,18 +218,18 @@ final class AccentColorPickerController: ColorPickerController {
         self.delegate = self
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.isScrollEnabled = false
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
 extension AccentColorPickerController: ColorPickerControllerDelegate {
-    public func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor) {
+    func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor) {
         guard let colorIndex = self.colors.firstIndex(of: color) else {
             return
         }
@@ -239,7 +239,7 @@ extension AccentColorPickerController: ColorPickerControllerDelegate {
         }
     }
 
-    public func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController) {
+    func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController) {
         self.dismiss(animated: true, completion: .none)
     }
 }

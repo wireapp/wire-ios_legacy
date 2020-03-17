@@ -16,25 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-public final class Token: NSObject {
-    
-    @objc
-    let representedObject: Any
-    
-    @objc
+final class Token<T: NSObjectProtocol>: Hashable {
+
+    let representedObject: HashBox<T>
+
     let title: String
 
     // if title render is longer than this length, it is trimmed with "..."
-    @objc
     var maxTitleWidth: CGFloat = 0
-    
-    @objc
-    init(title: String, representedObject: Any) {
+
+    init(title: String,
+         representedObject: T) {
         self.title = title
-        self.representedObject = representedObject
-        
-        super.init()
-        
-        maxTitleWidth = CGFloat.greatestFiniteMagnitude
+        self.representedObject = HashBox(value: representedObject)
+
+        maxTitleWidth = .greatestFiniteMagnitude
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(representedObject)
+    }
+
+    static func == (lhs: Token<T>, rhs: Token<T>) -> Bool {
+        return lhs.hashValue == rhs.hashValue
     }
 }
