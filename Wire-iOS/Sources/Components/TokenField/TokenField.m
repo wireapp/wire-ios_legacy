@@ -20,7 +20,6 @@
 #import "TokenField.h"
 #import "TokenField+Internal.h"
 
-#import "TokenTextAttachment.h"
 #import "Wire-Swift.h"
 
 @class TokenizedTextView;
@@ -332,11 +331,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     }    
 }
 
-- (void)removeToken:(Token *)token
-{
-    [self removeTokens:@[token]];
-}
-
 - (void)updateMaxTitleWidthForToken:(Token *)token
 {
     CGFloat tokenMaxSizeWidth = self.textView.textContainer.size.width;
@@ -346,48 +340,6 @@ CGFloat const accessoryButtonSize = 32.0f;
         tokenMaxSizeWidth -= (self.hasAccessoryButton ? self.accessoryButton.frame.size.width : 0.0f);
     }
     token.maxTitleWidth = tokenMaxSizeWidth;
-}
-
-- (void)removeAllTokens
-{
-    [self removeTokens:[self.currentTokens copy]];
-    [self.textView showOrHidePlaceholder];
-}
-
-- (void)removeTokens:(NSArray *)tokensToRemove
-{
-    NSMutableArray *rangesToRemove = [NSMutableArray new];
-    
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.attributedText.length)
-                                             options:0
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop)
-     {
-         if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && [tokensToRemove containsObject:((TokenSeparatorAttachment *)textAttachment).token]) {
-             [rangesToRemove addObject:[NSValue valueWithRange:range]];
-         }
-         
-         if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && [tokensToRemove containsObject:((TokenTextAttachment *)textAttachment).token]) {
-             [rangesToRemove addObject:[NSValue valueWithRange:range]];
-         }
-     }];
-    
-    // Delete ranges from the end of string till the beginning: this keeps range locations valid.
-    [rangesToRemove sortUsingComparator:^NSComparisonResult(NSValue *rangeValue1, NSValue *rangeValue2) {
-        return rangeValue1.rangeValue.location <= rangeValue2.rangeValue.location;
-    }];
-    [self.textView.textStorage beginEditing];
-    for (NSValue *rangeValue in rangesToRemove) {
-        NSRange toRemove = [rangeValue rangeValue];
-        [self.textView.textStorage deleteCharactersInRange:toRemove];
-    }
-    [self.textView.textStorage endEditing];
-    
-    [self.currentTokens removeObjectsInArray:tokensToRemove];
-    [self invalidateIntrinsicContentSize];
-    [self updateTextAttributes];
-    
-    [self.textView showOrHidePlaceholder];
 }
 
 - (Token *)tokenForRepresentedObject:(id)object
@@ -541,24 +493,6 @@ CGFloat const accessoryButtonSize = 32.0f;
 
 #pragma mark - Utility
 
-- (NSAttributedString *)stringForTokens:(NSArray *)tokens
-{
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] init];
-    for (Token *token in tokens) {
-        TokenTextAttachment *tokenAttachment = [[TokenTextAttachment alloc] initWithToken:token tokenField:self];
-        NSMutableAttributedString* tokenString = [[NSAttributedString attributedStringWithAttachment:tokenAttachment] mutableCopy];
-        
-        [string appendAttributedString:tokenString];
-        
-        TokenSeparatorAttachment *separatorAttachment = [[TokenSeparatorAttachment alloc] initWithToken:token tokenField:self];
-        NSMutableAttributedString* separatorString = [[NSAttributedString attributedStringWithAttachment:separatorAttachment] mutableCopy];
-        
-        [string appendAttributedString:separatorString];
-    }
-    [string addAttributes:self.textAttributes range:NSMakeRange(0, string.length)];
-    return string;
-}
-
 - (NSAttributedString *)collapsedString
 {
     NSString *collapsedText = NSLocalizedString(@" ...", nil);
@@ -594,17 +528,6 @@ CGFloat const accessoryButtonSize = 32.0f;
         [self invalidateIntrinsicContentSize];
         [self layoutIfNeeded];
     }
-}
-
-- (void)updateTokenAttachments
-{
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.attributedText.length) options:0
-                                          usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                              if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                  [tokenAttachment refreshImage];
-                                              }
-                                          }];
 }
 
 - (void)updateTextAttributes
@@ -666,163 +589,6 @@ CGFloat const accessoryButtonSize = 32.0f;
     self.textView.textContainer.exclusionPaths = exclusionPaths;
 }
 
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithTextAttachment:(NSTextAttachment *)textAttachment inRange:(NSRange)characterRange interaction:(UITextItemInteraction)interaction
-{
-    return ![textAttachment isKindOfClass:[TokenSeparatorAttachment class]];
-}
-
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        self.userDidConfirmInput = YES;
-        if ([self.delegate respondsToSelector:@selector(tokenFieldDidConfirmSelection:)]) {
-            [self.delegate tokenFieldDidConfirmSelection:self];
-        }
-        
-        return NO;
-    }
-    
-    if (range.length == 1 && text.length == 0) {  // backspace
-        __block BOOL cancelBackspace = NO;
-        [textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                            inRange:range
-                                            options:0
-                                         usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                             if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                 if (! tokenAttachment.isSelected) {
-                                                     textView.selectedRange = range;
-                                                     cancelBackspace = YES;
-                                                 }
-                                                 *stop = YES;
-                                             }
-                                         }];
-        if (cancelBackspace) {
-            return NO;
-        }
-    }
-    
-    
-    // Inserting text between tokens does not make sense for this control.
-    // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
-    // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
-    // so don’t do any magic in that case
-    if (text.length != 0) {
-        [textView.text enumerateSubstringsInRange:NSMakeRange(range.location, textView.text.length - range.location)
-                                          options:NSStringEnumerationByComposedCharacterSequences
-                                       usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
-                                           
-                                           if (substring.length && ([substring characterAtIndex:0] == NSAttachmentCharacter)) {
-                                               textView.selectedRange = NSMakeRange(textView.text.length, 0);
-                                               *stop = YES;
-                                           }
-                                       }];
-    }
-    
-    [self updateTextAttributes];
-    
-    return YES;
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    self.userDidConfirmInput = NO;
-    
-    [self filterUnwantedAttachments];
-    [self notifyIfFilterTextChanged];
-    [self invalidateIntrinsicContentSize];
-}
-
-- (void)filterUnwantedAttachments
-{
-    NSMutableOrderedSet *updatedCurrentTokens = [NSMutableOrderedSet orderedSet];
-    NSMutableSet *updatedCurrentSeparatorTokens = [NSMutableSet set];
-    
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:0
-                                          usingBlock:^(NSTextAttachment *textAttachment, NSRange range, BOOL *stop) {
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenTextAttachment class]] && ![updatedCurrentTokens containsObject:((TokenTextAttachment *)textAttachment).token]) {
-                                                  [updatedCurrentTokens addObject:((TokenTextAttachment *)textAttachment).token];
-                                              }
-                                              
-                                              if ([textAttachment isKindOfClass:[TokenSeparatorAttachment class]] && ![updatedCurrentSeparatorTokens containsObject:((TokenSeparatorAttachment *) textAttachment).token]) {
-                                                  [updatedCurrentSeparatorTokens addObject:((TokenSeparatorAttachment *) textAttachment).token];
-                                              }
-                                          }];
-    
-    [updatedCurrentTokens intersectSet:updatedCurrentSeparatorTokens];
-    
-    NSMutableSet *deletedTokens = [NSMutableSet setWithArray:self.currentTokens];
-    [deletedTokens minusSet:updatedCurrentTokens.set];
-    
-    if (deletedTokens.count > 0) {
-        [self removeTokens:deletedTokens.allObjects];
-    }
-    
-    [self.currentTokens removeObjectsInArray:deletedTokens.allObjects];
-    if ([self.delegate respondsToSelector:@selector(tokenField:changedTokensTo:)]) {
-        [self.delegate tokenField:self changedTokensTo:self.currentTokens];
-    }
-}
-
-- (void)notifyIfFilterTextChanged
-{
-    __block NSUInteger indexOfFilterText = 0;
-    [self.textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, self.textView.text.length)
-                                             options:0
-                                          usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                              if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                                  indexOfFilterText = NSMaxRange(range);
-                                              }
-                                          }];
-    
-    NSString *oldFilterText = self.filterText;
-    self.filterText = [[self.textView.text substringFromIndex:indexOfFilterText] stringByReplacingOccurrencesOfString:@"\uFFFC" withString:@""];
-    if ([oldFilterText isEqualToString:self.filterText] == NO) {
-        if ([self.delegate respondsToSelector:@selector(tokenField:changedFilterTextTo:)]) {
-            [self.delegate tokenField:self changedFilterTextTo:self.filterText];
-        }
-    }
-}
-
-NS_INLINE BOOL RangeIncludesRange(NSRange range, NSRange includedRange)
-{
-    return NSEqualRanges(range, NSUnionRange(range, includedRange));
-}
-
-- (void)textViewDidChangeSelection:(UITextView *)textView
-{
-    ZMLogDebug(@"Selection changed: %@", NSStringFromRange(textView.selectedRange));
-    
-    __block NSRange modifiedSelectionRange = NSMakeRange(0, 0);
-    __block BOOL hasModifiedSelection = NO;
-    
-    [textView.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                        inRange:NSMakeRange(0, textView.attributedText.length)
-                                        options:0
-                                     usingBlock:^(TokenTextAttachment *tokenAttachment, NSRange range, BOOL *stop) {
-                                         if ([tokenAttachment isKindOfClass:[TokenTextAttachment class]]) {
-                                             tokenAttachment.selected = RangeIncludesRange(textView.selectedRange, range);
-                                             [textView.layoutManager invalidateDisplayForCharacterRange:range];
-                                             
-                                             if (RangeIncludesRange(textView.selectedRange, range)) {
-                                                 modifiedSelectionRange = NSUnionRange(hasModifiedSelection ? modifiedSelectionRange : range, range);
-                                                 hasModifiedSelection = YES;
-                                             }
-                                             ZMLogInfo(@"    person attachement: %@ at range: %@ selected: %d", tokenAttachment.token.title,  NSStringFromRange(range), tokenAttachment.selected);
-                                         }
-                                     }];
-    
-    
-    if (hasModifiedSelection && !NSEqualRanges(textView.selectedRange, modifiedSelectionRange)) {
-        textView.selectedRange = modifiedSelectionRange;
-    }
-}
 
 #pragma mark - UIScrollViewDelegate
 

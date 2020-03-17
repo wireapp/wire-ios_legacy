@@ -19,36 +19,36 @@
 import Foundation
 import Cartography
 
-final public class FileTransferView: UIView, TransferView {
-    public var fileMessage: ZMConversationMessage?
+final class FileTransferView: UIView, TransferView {
+    var fileMessage: ZMConversationMessage?
 
     weak var delegate: TransferViewDelegate?
 
-    public let progressView = CircularProgressView()
-    public let topLabel = UILabel()
-    public let bottomLabel = UILabel()
-    public let fileTypeIconView: UIImageView = {
+    let progressView = CircularProgressView()
+    let topLabel = UILabel()
+    let bottomLabel = UILabel()
+    let fileTypeIconView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .textForeground)
         return imageView
     }()
-    public let fileEyeView: UIImageView = {
+    let fileEyeView: UIImageView = {
         let imageView = UIImageView()
         imageView.tintColor = .from(scheme: .background)
         return imageView
     }()
 
     private let loadingView = ThreeDotsLoadingView()
-    public let actionButton = IconButton()
+    let actionButton = IconButton()
     
-    public let labelTextColor: UIColor = .from(scheme: .textForeground)
-    public let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
-    public let labelFont: UIFont = .smallLightFont
-    public let labelBoldFont: UIFont = .smallSemiboldFont
+    let labelTextColor: UIColor = .from(scheme: .textForeground)
+    let labelTextBlendedColor: UIColor = .from(scheme: .textDimmed)
+    let labelFont: UIFont = .smallLightFont
+    let labelBoldFont: UIFont = .smallSemiboldFont
 
     private var allViews : [UIView] = []
     
-    public required override init(frame: CGRect) {
+    required override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .from(scheme: .placeholderBackground)
         
@@ -86,11 +86,11 @@ final public class FileTransferView: UIView, TransferView {
         self.accessibilityElements = currentElements
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
@@ -131,7 +131,7 @@ final public class FileTransferView: UIView, TransferView {
         }
     }
     
-    public func configure(for message: ZMConversationMessage, isInitial: Bool) {
+    func configure(for message: ZMConversationMessage, isInitial: Bool) {
         self.fileMessage = message
         guard let fileMessageData = message.fileMessageData
             else { return }
@@ -229,20 +229,20 @@ final public class FileTransferView: UIView, TransferView {
         self.updateVisibleViews(self.allViews, visibleViews: visibleViews, animated: !self.loadingView.isHidden)
     }
     
-    public override var tintColor: UIColor! {
+    override var tintColor: UIColor! {
         didSet {
             self.progressView.tintColor = self.tintColor
         }
     }
     
-    public override func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         self.actionButton.layer.cornerRadius = self.actionButton.bounds.size.width / 2.0
     }
     
     // MARK: - Actions
     
-    @objc public func onActionButtonPressed(_ sender: UIButton) {
+    @objc func onActionButtonPressed(_ sender: UIButton) {
         guard let message = self.fileMessage, let fileMessageData = message.fileMessageData else {
             return
         }

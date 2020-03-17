@@ -27,10 +27,10 @@ import CoreLocation
     func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController)
 }
 
-@objcMembers final public class LocationSelectionViewController: UIViewController {
+@objcMembers final class LocationSelectionViewController: UIViewController {
     
     weak var delegate: LocationSelectionViewControllerDelegate?
-    public let locationButton: IconButton = {
+    let locationButton: IconButton = {
         let button = IconButton()
         button.setIcon(.location, size: .tiny, for: [])
         button.borderWidth = 0.5
@@ -43,7 +43,7 @@ import CoreLocation
         return button
     }()
 
-    public let locationButtonContainer = UIView()
+    let locationButtonContainer = UIView()
     fileprivate var mapView = MKMapView()
     fileprivate let toolBar = ModalTopBar()
     fileprivate let locationManager = CLLocationManager()
@@ -59,7 +59,7 @@ import CoreLocation
         return status == .authorizedAlways || status == .authorizedWhenInUse
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         locationManager.delegate = self
@@ -71,14 +71,14 @@ import CoreLocation
         createConstraints()
     }
     
-    public override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !userLocationAuthorized { mapView.restoreLocation(animated: true) }
         locationManager.requestWhenInUseAuthorization()
         updateUserLocation()
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         locationManager.stopUpdatingHeading()
         mapView.storeLocation()
@@ -142,7 +142,7 @@ import CoreLocation
         mapView.setRegion(region, animated: animated)
     }
     
-    public override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
     
@@ -173,7 +173,7 @@ import CoreLocation
 }
 
 extension LocationSelectionViewController: LocationSendViewControllerDelegate {
-    public func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController) {
+    func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController) {
         let locationData = mapView.locationData(name: viewController.address)
         delegate?.locationSelectionViewController(self, didSelectLocationWithData: locationData)
         dismiss(animated: true, completion: nil)
@@ -190,7 +190,7 @@ extension LocationSelectionViewController: ModalTopBarDelegate {
 
 extension LocationSelectionViewController: CLLocationManagerDelegate {
     
-    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         updateUserLocation()
     }
     
@@ -198,16 +198,16 @@ extension LocationSelectionViewController: CLLocationManagerDelegate {
 
 extension LocationSelectionViewController: MKMapViewDelegate {
     
-    public func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
+    func mapViewDidFinishRenderingMap(_ mapView: MKMapView, fullyRendered: Bool) {
         mapDidRender = true
         formatAndUpdateAddress()
     }
     
-    public func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         formatAndUpdateAddress()
     }
     
-    public func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+    func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         if !userShowedInitially {
             userShowedInitially = true
             zoomToUserLocation(true)

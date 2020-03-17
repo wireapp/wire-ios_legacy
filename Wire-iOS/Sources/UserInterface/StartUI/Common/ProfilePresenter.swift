@@ -68,7 +68,7 @@ class ProfilePresenter: NSObject, ViewControllerDismisser {
 
         self.onDismiss = onDismiss
 
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .search)
+        let profileViewController = ProfileViewController(user: user, viewer: SelfUser.current, context: .search)
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 

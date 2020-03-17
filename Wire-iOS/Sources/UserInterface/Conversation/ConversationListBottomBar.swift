@@ -136,7 +136,7 @@ final class ConversationListBottomBarController: UIViewController {
     private func addObservers() {
         guard let userSession = ZMUserSession.shared() else { return }
         
-        userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
+        userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
     }
     
     fileprivate func updateColorScheme() {
