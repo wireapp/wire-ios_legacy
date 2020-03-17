@@ -100,22 +100,20 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         
         if allColorSchemes {
             ColorScheme.default.variant = .dark
-            
-            if allWidths {
-            verifyInAllPhoneWidths(matching:createViewClosure(),
-                                   named: "dark",
-                                   file: file,
-                                   testName: testName,
-                                   line: line)
-            }
-            
+            verify(matching: createViewClosure(),
+                   named: "dark",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+
             ColorScheme.default.variant = .light
-            verifyInAllPhoneWidths(matching:createViewClosure(),
-                                   named: "light",
-                                   file: file,
-                                   testName: testName,
-                                   line: line)
-            
+            verify(matching: createViewClosure(),
+                   named: "light",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)            
         } else {
             verify(matching: createViewClosure(),
                    allWidths: allWidths,
