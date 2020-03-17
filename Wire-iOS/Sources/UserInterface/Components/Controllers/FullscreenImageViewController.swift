@@ -19,7 +19,73 @@
 import Foundation
 import FLAnimatedImage
 
-extension FullscreenImageViewController {
+protocol ScreenshotProvider: NSObjectProtocol {
+    func backgroundScreenshot(for fullscreenController: FullscreenImageViewController) -> UIView?
+}
+
+protocol MenuVisibilityController: NSObjectProtocol {
+    var menuVisible: Bool { get }
+    func fadeAndHideMenu(_ hidden: Bool)
+}
+
+private let kZoomScaleDelta: CGFloat = 0.0003
+
+extension FullscreenImageViewController: UIScrollViewDelegate {
+}
+
+extension FullscreenImageViewController: UIGestureRecognizerDelegate {
+    func dismissingPanGestureRecognizerPanned(_ panner: UIPanGestureRecognizer?) {
+    }
+}
+
+final class FullscreenImageViewController: UIViewController {
+    private(set) var scrollView: UIScrollView?
+    private(set) weak var message: ZMConversationMessage?
+    var snapshotBackgroundView: UIView?
+    weak var delegate: (ScreenshotProvider & MenuVisibilityController)?
+    var swipeToDismiss = false
+    var showCloseButton = false
+    var dismissAction: ((_ dispatch_block_t: ) -> Void)?
+    
+    private var lastZoomScale: CGFloat = 0.0
+    private var imageView: UIImageView?
+    private var minimumDismissMagnitude: CGFloat = 0.0
+    private var scrollView: UIScrollView!
+    private var loadingSpinner: UIActivityIndicatorView?
+    private var obfuscationView: ObfuscationView!
+    private var actionController: ConversationMessageActionController!
+    
+    // MARK: pull to dismiss
+    private var isDraggingImage = false
+    private var imageViewStartingTransform: CGAffineTransform!
+    private var imageDragStartingPoint = CGPoint.zero
+    private var imageDragOffsetFromActualTranslation: UIOffset!
+    private var imageDragOffsetFromImageCenter: UIOffset!
+    private var animator: UIDynamicAnimator?
+    private var attachmentBehavior: UIAttachmentBehavior?
+    private var initialImageViewBounds = CGRect.zero
+    private var initialImageViewCenter = CGPoint.zero
+    private var panRecognizer: UIPanGestureRecognizer?
+
+    private func centerScrollViewContent() {
+    }
+    
+    private func setSelectedByMenu(_ selected: Bool, animated: Bool) {
+    }
+
+    init(message: ZMConversationMessage?) {
+    }
+    
+    func showChrome(_ shouldShow: Bool) {
+    }
+    
+    func dismiss(withCompletion completion: () -> ()? = nil) {
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
     // MARK: - Utilities, custom UI
     func performSaveImageAnimation(from saveView: UIView) {
         guard let imageView = imageView else { return }
