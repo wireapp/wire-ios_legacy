@@ -308,7 +308,7 @@ final class TokenField: UIView {
             invalidateIntrinsicContentSize()
 
             // Move the cursor to the end of the input field
-            textView.selectedRange = NSRange(location: textView.text.length, length: 0)
+            textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
 
             // autoscroll to the end of the input field
             setNeedsLayout()
@@ -787,7 +787,7 @@ extension TokenField: UITextViewDelegate {
                       !substring.isEmpty,
                       (substring as NSString).character(at: 0) == NSTextAttachment.character else { return }
                 
-                textView.selectedRange = NSRange(location: textView.text.length, length: 0)
+                textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
                 stop = true
             }
         }
