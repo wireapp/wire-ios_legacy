@@ -430,35 +430,14 @@ final class TokenField: UIView {
     func clearFilterText() {
         guard let text = textView.text else { return }
 
-//        var firstCharacterRange: Range<String.Index>?
-//        let range = text.startIndex..<text.endIndex
-        
-        guard let attachmentCharacter = UnicodeScalar(NSTextAttachment.character) else { return }
-
-        var firstCharacterIndex = text.unicodeScalars.firstIndex(where: { $0 != attachmentCharacter && !NSCharacterSet.whitespaces.contains($0) })
-//        for (index, unicodeScalar) in text.unicodeScalars.enumerated() {
-//            firstCharacterIndex = index
-//
-//        }
-        
-//        text.unicodeScalars.first(where:{ })
-        
-//        text.enumerateCharacters(range: range) { substring, substringRange, _, stop in
-//            guard let substring = substring,
-//                substring.isEmpty == false,
-//                !substring.trimmingCharacters(in: .whitespaces).isEmpty,
-//                (substring as NSString).character(at: 0) != NSTextAttachment.character else { return }
-//
-//            firstCharacterRange = substringRange
-//            stop = true
-//        }
+        guard let attachmentCharacter = UnicodeScalar(NSTextAttachment.character),
+            let firstCharacterIndex = text.unicodeScalars.firstIndex(where: { $0 != attachmentCharacter && !NSCharacterSet.whitespaces.contains($0) }) else {
+                return
+        }
 
         filterText = ""
 
-        // clear the text form firstCharacterIndex to the end
-//        guard let lowerBound = firstCharacterRange?.lowerBound else { return }
-
-        let rangeToDelete = firstCharacterIndex!..<text.endIndex
+        let rangeToDelete = firstCharacterIndex..<text.endIndex
         let nsRange = textView.text.nsRange(from: rangeToDelete)
 
         textView.textStorage.beginEditing()
@@ -789,20 +768,16 @@ extension TokenField: UITextViewDelegate {
         // If there are any tokens after the insertion point, move the cursor to the end instead, but only for insertions
         // If the range length is >0, we are trying to replace something instead, and that’s a bit more complex,
         // so don’t do any magic in that case
+        
         if !text.isEmpty,
-           let textRange = Range(range, in: textView.text) {
-            let range = textRange.upperBound..<textView.text.endIndex
-            textView.text.enumerateCharacters(range: range) { substring, _, _, stop in
-
-                guard let substring = substring,
-                      !substring.isEmpty,
-                      (substring as NSString).character(at: 0) == NSTextAttachment.character else { return }
-                
-                textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
-                stop = true
-            }
+            let attachmentCharacter = UnicodeScalar(NSTextAttachment.character),
+            let textRange = Range(range, in: textView.text) {            
+                let range = textRange.upperBound..<textView.text.endIndex
+                let subString = textView.text?[range]
+                if let _ = subString?.unicodeScalars.firstIndex(where: { $0 == attachmentCharacter }) {
+                    textView.selectedRange = NSRange(location: textView.text.utf16.count, length: 0)
+                }
         }
-
         updateTextAttributes()
 
         return true
