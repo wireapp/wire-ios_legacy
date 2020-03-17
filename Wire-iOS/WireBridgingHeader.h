@@ -41,7 +41,6 @@
 #import "FullscreenImageViewController+internal.h"
 
 // Helper objects
-#import "MediaAsset.h"
 
 // Utils
 

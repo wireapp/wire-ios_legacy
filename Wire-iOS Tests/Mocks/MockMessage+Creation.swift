@@ -53,7 +53,7 @@ final class MockMessageFactory: NSObject {
 
     class func imageMessage(with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
-        if let image = image, let data = image.data() {
+        if let image = image, let data = image.imageData {
             imageData.mockImageData = data
             imageData.mockOriginalSize = image.size
             imageData.isDownloaded = true

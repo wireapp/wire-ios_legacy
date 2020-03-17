@@ -27,7 +27,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
 
     override func tearDown() {
         
-        defaultImageCache.cache.removeAllObjects()
+        MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         sut = nil
         super.tearDown()
     }
@@ -108,7 +108,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -118,7 +118,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         self.verifyInAllPhoneWidths(view: self.sut)
     }
@@ -133,7 +133,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         textMessageData.imageData = .none
         sut.configure(withTextMessageData: textMessageData, obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -143,7 +143,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithLongURL(), obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         self.verifyInAllPhoneWidths(view: self.sut)
     }
@@ -153,7 +153,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: twitterStatusWithoutPicture(), obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         verifyInAllPhoneWidths(view: sut)
     }
@@ -164,7 +164,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(), obfuscated: true)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
 
         verifyInAllPhoneWidths(view: sut)
     }
@@ -192,7 +192,7 @@ final class ArticleViewTests: ZMSnapshotTestCase {
         sut.translatesAutoresizingMaskIntoConstraints = false
         sut.configure(withTextMessageData: articleWithPicture(imageNamed: named), obfuscated: false)
         sut.layoutIfNeeded()
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         self.verifyInAllPhoneWidths(view: self.sut)
     }

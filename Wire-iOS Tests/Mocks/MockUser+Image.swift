@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2019 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,19 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-///TODO: remove public after MockUser is convert to Swift
-public final class ImageCache<T : AnyObject> {
-    var cache: NSCache<NSString, T> = NSCache()
-    var processingQueue = DispatchQueue(label: "ImageCacheQueue", qos: .background, attributes: [.concurrent])
-    var dispatchGroup: DispatchGroup = DispatchGroup()
-}
+extension MockUser: ProfileImageFetchable {
+    public func fetchProfileImage(session: ZMUserSessionInterface,
+                                  cache: ImageCache<UIImage> = UIImage.defaultUserImageCache,
+                                  sizeLimit: Int? = nil,
+                                  desaturate: Bool = false,
+                                  completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {
 
-extension UIImage {
-    public static var defaultUserImageCache: ImageCache<UIImage> = ImageCache()
-}
-
-final class MediaAssetCache {
-    static var defaultImageCache = ImageCache<AnyObject>()
+        completion(profileImage, false)
+    }
 }
