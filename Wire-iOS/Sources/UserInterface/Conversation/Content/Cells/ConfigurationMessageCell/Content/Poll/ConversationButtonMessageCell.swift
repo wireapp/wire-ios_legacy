@@ -20,22 +20,36 @@ import UIKit
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let button = SpinnerButton(style: .empty)
     var isSelected: Bool = false
+    private var buttonAction: Completion?
 
     weak var message: ZMConversationMessage?
-
     weak var delegate: ConversationMessageCellDelegate?
+    private var config: Configuration? {
+        didSet {
+            ///TODO: update UI
+            updateUI()
+        }
+    }
 
-    func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
-        button.setTitle(object.text, for: .normal)
-        switch object.state {
+    private func updateUI() {
+        guard let config = config else { return }
+        
+        buttonAction = config.buttonAction
+        button.setTitle(config.text, for: .normal)
+
+        switch config.state {
         case .unselected:
             button.style = .empty
         case .selected:
             button.style = .full
         case .confirmed:
             button.isEnabled = false
-            ///TODO: style?
+            ///TODO: style for expired state
         }
+    }
+    
+    func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
+        config = object
     }
 
     enum State {
@@ -47,6 +61,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     struct Configuration {
         let text: String?
         let state: ButtonMessageState
+        let buttonAction: Completion
         ///TODO: state/spinner ?
     }
 
@@ -59,6 +74,13 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
         configureViews()
         createConstraints()
+        
+        button.addTarget(self, action: #selector(buttonTouched), for: .touchUpInside)
+    }
+    
+    @objc
+    private func buttonTouched() {
+        self.buttonAction?()
     }
 
     @available(*, unavailable)
@@ -106,7 +128,9 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var accessibilityLabel: String?
 
-    init(text: String?, state: ButtonMessageState) {
-        configuration = View.Configuration(text: text, state: state)
+    init(text: String?,
+         state: ButtonMessageState,
+         buttonAction: @escaping Completion) {
+        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction)
     }
 }
