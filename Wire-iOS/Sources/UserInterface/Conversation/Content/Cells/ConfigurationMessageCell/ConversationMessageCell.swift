@@ -200,7 +200,7 @@ extension ConversationMessageCellDescription {
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
-        adapterCell.cellView.configure(with: self.configuration, animated: animated)
+        adapterCell.cellView.configure(with: configuration, animated: animated)
         
         if cell.isVisible {
             _ = message?.startSelfDestructionIfNeeded()

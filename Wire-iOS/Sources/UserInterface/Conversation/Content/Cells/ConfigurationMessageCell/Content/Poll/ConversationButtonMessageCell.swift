@@ -48,9 +48,11 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             button.isEnabled = false
             ///TODO: style for expired state
         }
+        
+        button.accessibilityValue = "\(config.state)"
     }
     
-    func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
+    func configure(with object: Configuration, animated: Bool) {
         config = object
     }
 
@@ -82,7 +84,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     
     @objc
     private func buttonTouched() {
-        self.buttonAction?()
+        buttonAction?()
     }
 
     @available(*, unavailable)
