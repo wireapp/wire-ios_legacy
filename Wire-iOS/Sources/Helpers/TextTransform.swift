@@ -18,8 +18,8 @@
 
 import Foundation
 
-enum TextTransform : Int {
-    case none = 0
+enum TextTransform {
+    case none
     case upper
     case lower
     case capitalize
