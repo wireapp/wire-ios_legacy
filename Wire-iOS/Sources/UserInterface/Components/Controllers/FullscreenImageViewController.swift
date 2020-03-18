@@ -78,10 +78,6 @@ final class FullscreenImageViewController: UIViewController {
     private var forcePortraitMode = false
     private var messageObserverToken: Any?
 
-    // TODO:
-//    func dismiss(withCompletion completion: () -> ()? = nil) {
-//    }
-    
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -160,10 +156,12 @@ final class FullscreenImageViewController: UIViewController {
         imageView = nil
     }
     
+    ///TODO: setter
     func showChrome(_ shouldShow: Bool) {
         isShowingChrome = shouldShow
     }
     
+    ///TODO: didSet
     func setSwipeToDismiss(_ swipeToDismiss: Bool) {
         self.swipeToDismiss = swipeToDismiss
         panRecognizer.isEnabled = self.swipeToDismiss
