@@ -47,18 +47,16 @@ final class FullscreenImageViewController: UIViewController {
     let scrollView: UIScrollView = UIScrollView()
     var snapshotBackgroundView: UIView?
     private var minimumDismissMagnitude: CGFloat = 0
-    ///TODO: still needed?
-    private var obfuscationView: ObfuscationView?
     private lazy var actionController: ConversationMessageActionController = {
         return ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
     }()
 
     // MARK: pull to dismiss
     private var isDraggingImage = false
-    private var imageViewStartingTransform: CGAffineTransform!
-    private var imageDragStartingPoint = CGPoint.zero
-    private var imageDragOffsetFromActualTranslation: UIOffset!
-    private var imageDragOffsetFromImageCenter: UIOffset!
+    private var imageViewStartingTransform: CGAffineTransform = .identity
+    private var imageDragStartingPoint: CGPoint = .zero
+    private var imageDragOffsetFromActualTranslation: UIOffset = .zero
+    private var imageDragOffsetFromImageCenter: UIOffset = .zero
     private lazy var animator: UIDynamicAnimator = {
         return UIDynamicAnimator(referenceView: scrollView)
     }()
@@ -80,6 +78,7 @@ final class FullscreenImageViewController: UIViewController {
             UIViewController.attemptRotationToDeviceOrientation()
         }
     }
+    
     private var messageObserverToken: NSObjectProtocol?
 
     // MARK: - init
@@ -182,9 +181,7 @@ final class FullscreenImageViewController: UIViewController {
         if message.isObfuscated ||
            message.hasBeenDeleted {
             removeImage()
-            obfuscationView?.isHidden = false
         } else {
-            obfuscationView?.isHidden = true
             loadImageAndSetupImageView()
         }
     }
