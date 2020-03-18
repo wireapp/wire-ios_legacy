@@ -42,4 +42,3 @@ extension CGSize {
                otherSize.height < height
     }
 }
-
