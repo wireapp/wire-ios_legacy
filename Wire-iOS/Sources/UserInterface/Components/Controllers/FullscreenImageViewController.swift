@@ -19,6 +19,8 @@
 import Foundation
 import FLAnimatedImage
 
+private let zmLog = ZMSLog(tag: "FullscreenImageViewController")
+
 protocol ScreenshotProvider: NSObjectProtocol {
     func backgroundScreenshot(for fullscreenController: FullscreenImageViewController) -> UIView?
 }
@@ -70,7 +72,7 @@ final class FullscreenImageViewController: UIViewController {
     ///TODO: lazy
     private var tapGestureRecognzier: UITapGestureRecognizer!
     private var doubleTapGestureRecognizer: UITapGestureRecognizer!
-    private var longPressGestureRecognizer: UILongPressGestureRecognizer?
+    private var longPressGestureRecognizer: UILongPressGestureRecognizer!
     private var isShowingChrome = false
     private var assetWriteInProgress = false
     private var forcePortraitMode = false
@@ -80,14 +82,15 @@ final class FullscreenImageViewController: UIViewController {
 //    func dismiss(withCompletion completion: () -> ()? = nil) {
 //    }
     
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
-    convenience init(message: ZMConversationMessage) {
+    init(message: ZMConversationMessage) {
         self.message = message
 
-        self.init(nibName: nil, bundle: nil)
+        super.init(nibName: nil, bundle: nil)
 
         forcePortraitMode = false
         swipeToDismiss = true
@@ -114,9 +117,7 @@ final class FullscreenImageViewController: UIViewController {
             dismissAction?(completion)
         } else if nil != navigationController {
             navigationController?.popViewController(animated: true)
-            if completion != nil {
-                completion()
-            }
+            completion?()
         } else {
             dismiss(animated: true, completion: completion)
         }
@@ -147,9 +148,9 @@ final class FullscreenImageViewController: UIViewController {
     func updateForMessage() {
         if message.isObfuscated || message.hasBeenDeleted {
             removeImage()
-            obfuscationView.hidden = false
+            obfuscationView.isHidden = false
         } else {
-            obfuscationView.hidden = true
+            obfuscationView.isHidden = true
             loadImageAndSetupImageView()
         }
     }
@@ -187,7 +188,7 @@ final class FullscreenImageViewController: UIViewController {
     
         panRecognizer.maximumNumberOfTouches = 1
         panRecognizer.delegate = self
-        panRecognizer.enabled = swipeToDismiss
+        panRecognizer.isEnabled = swipeToDismiss
         panRecognizer.addTarget(self, action: #selector(dismissingPanGestureRecognizerPanned(_:)))
         scrollView.addGestureRecognizer(panRecognizer)
         
@@ -199,11 +200,11 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     func attributedNameString(forDisplayName displayName: String?) -> NSAttributedString? {
-        let text = displayName?.uppercasedWithCurrentLocale()
+        let text = displayName?.uppercasedWithCurrentLocale
         let attributes = [
             NSAttributedString.Key.font: UIFont.smallMediumFont,
-            NSAttributedString.Key.foregroundColor: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextForeground),
-            NSAttributedString.Key.backgroundColor: UIColor.wr_color(fromColorScheme: ColorSchemeColorTextBackground)
+            NSAttributedString.Key.foregroundColor: UIColor.from(scheme: .textForeground),
+            NSAttributedString.Key.backgroundColor: UIColor.from(scheme: .textBackground)
         ]
         
         let attributedName = NSAttributedString(string: text ?? "", attributes: attributes)
@@ -259,34 +260,35 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     //MARK: - PullToDismiss
-    func dismissingPanGestureRecognizerPanned(_ panner: UIPanGestureRecognizer?) {
+    @objc
+    private func dismissingPanGestureRecognizerPanned(_ panner: UIPanGestureRecognizer) {
         
-        let translation = panner?.translation(in: panner?.view)
-        let locationInView = panner?.location(in: panner?.view)
-        let velocity = panner?.velocity(in: panner?.view)
-        let vectorDistance = sqrtf(powf(velocity?.x, 2) + powf(velocity?.y, 2))
+        let translation = panner.translation(in: panner.view)
+        let locationInView = panner.location(in: panner.view)
+        let velocity = panner.velocity(in: panner.view)
+        let vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
         
-        if panner?.state == .began {
+        if panner.state == .began {///TODO: switch
             isDraggingImage = imageView.frame.contains(locationInView)
             if isDraggingImage {
-                initiateImageDrag(fromLocation: locationInView, translationOffset: UIOffset.zero)
+                initiateImageDrag(fromLocation: locationInView, translationOffset: .zero)
             }
-        } else if panner?.state == .changed {
+        } else if panner.state == .changed {
             if isDraggingImage {
                 var newAnchor = imageDragStartingPoint
-                newAnchor.x += (translation?.x ?? 0.0) + imageDragOffsetFromActualTranslation.horizontal
-                newAnchor.y += (translation?.y ?? 0.0) + imageDragOffsetFromActualTranslation.vertical
-                attachmentBehavior.anchorPoint = newAnchor
+                newAnchor.x += (translation.x) + imageDragOffsetFromActualTranslation.horizontal
+                newAnchor.y += (translation.y) + imageDragOffsetFromActualTranslation.vertical
+                attachmentBehavior?.anchorPoint = newAnchor
                 updateBackgroundColor(withImageViewCenter: imageView.center)
             } else {
                 isDraggingImage = imageView.frame.contains(locationInView)
                 if isDraggingImage {
-                    let translationOffset = UIOffsetMake(-1 * (translation?.x ?? 0.0), -1 * (translation?.y ?? 0.0))
+                    let translationOffset = UIOffset(horizontal: -1 * (translation.x), vertical: -1 * (translation.y))
                     initiateImageDrag(fromLocation: locationInView, translationOffset: translationOffset)
                 }
             }
         } else {
-            if vectorDistance > 300 && fabs(Float(translation?.y ?? 0.0)) > 100 {
+            if vectorDistance > 300 && abs(translation.y) > 100 {
                 if isDraggingImage {
                     dismissImageFlicking(withVelocity: velocity)
                 } else {
@@ -303,43 +305,44 @@ final class FullscreenImageViewController: UIViewController {
         setupSnapshotBackgroundView()
         showChrome(false)
         
-        initialImageViewCenter = imageView?.center
+        initialImageViewCenter = imageView.center
         let nearLocationInView = CGPoint(x: (panGestureLocationInView.x - initialImageViewCenter.x) * 0.1 + initialImageViewCenter.x, y: (panGestureLocationInView.y - initialImageViewCenter.y) * 0.1 + initialImageViewCenter.y)
         
         imageDragStartingPoint = nearLocationInView
         imageDragOffsetFromActualTranslation = translationOffset
         
         let anchor = imageDragStartingPoint
-        let offset = UIOffsetMake(nearLocationInView.x - initialImageViewCenter.x, nearLocationInView.y - initialImageViewCenter.y)
+        let offset = UIOffset(horizontal: nearLocationInView.x - initialImageViewCenter.x, vertical: nearLocationInView.y - initialImageViewCenter.y)
         imageDragOffsetFromImageCenter = offset
         
         // Proxy object is used because the UIDynamics messing up the zoom level transform on imageView
         let proxy = DynamicsProxy()
         imageViewStartingTransform = imageView?.transform
-        proxy.center = imageView?.center
+        proxy.center = imageView.center
         initialImageViewBounds = view.convert(imageView?.bounds ?? CGRect.zero, from: imageView)
         proxy.bounds = initialImageViewBounds
         
         attachmentBehavior = UIAttachmentBehavior(item: proxy, offsetFromCenter: offset, attachedToAnchor: anchor)
-        attachmentBehavior.damping = 1
-        ZM_WEAK(self)
-        attachmentBehavior.action = {
-            ZM_STRONG(self)
-            self.imageView?.center = CGPoint(x: self.imageView?.center.x ?? 0.0, y: proxy.center.y)
-            self.imageView?.transform = proxy.transform.concatenating(self.imageViewStartingTransform)
+        attachmentBehavior?.damping = 1
+        attachmentBehavior?.action = { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.imageView?.center = CGPoint(x: weakSelf.imageView?.center.x ?? 0.0, y: proxy.center.y)
+            weakSelf.imageView?.transform = proxy.transform.concatenating(weakSelf.imageViewStartingTransform)
         }
-        animator.addBehavior(attachmentBehavior)
+        if let attachmentBehavior = attachmentBehavior {
+            animator?.addBehavior(attachmentBehavior)
+        }
         
         let modifier = UIDynamicItemBehavior(items: [proxy])
         modifier.density = 10000000
         modifier.resistance = 1000
         modifier.elasticity = 0
         modifier.friction = 0
-        animator.addBehavior(modifier)
+        animator?.addBehavior(modifier)
     }
 
     func cancelCurrentImageDrag(animated: Bool) {
-        animator.removeAllBehaviors()
+        animator?.removeAllBehaviors()
         attachmentBehavior = nil
         isDraggingImage = false
         
@@ -367,30 +370,34 @@ final class FullscreenImageViewController: UIViewController {
         isDraggingImage = false
         
         let push = UIPushBehavior(items: [proxy], mode: .instantaneous)
-        push.pushDirection = CGVectorMake(velocity.x * 0.1, velocity.y * 0.1)
-        if let imageView = imageView {
-            push.setTargetOffsetFromCenter(UIOffsetMake(attachmentBehavior.anchorPoint.x - initialImageViewCenter.x, attachmentBehavior.anchorPoint.y - initialImageViewCenter.y), for: imageView)
+        push.pushDirection = CGVector(dx: velocity.x * 0.1, dy: velocity.y * 0.1)
+        if let imageView = imageView,
+            let attachmentBehavior = attachmentBehavior {
+            push.setTargetOffsetFromCenter(UIOffset(horizontal: attachmentBehavior.anchorPoint.x - initialImageViewCenter.x, vertical: attachmentBehavior.anchorPoint.y - initialImageViewCenter.y), for: imageView)
         }
         
-        push.magnitude = max(minimumDismissMagnitude, fabs(Float(velocity.y)) / 6)
+        push.magnitude = max(minimumDismissMagnitude, CGFloat(abs(velocity.y) / 6))
         
         push.action = { [weak self] in
-            self.imageView?.center = CGPoint(x: self.imageView?.center.x ?? 0.0, y: proxy.center.y)
+            guard let weakSelf = self else { return }
+            weakSelf.imageView?.center = CGPoint(x: weakSelf.imageView?.center.x ?? 0.0, y: proxy.center.y)
             
-            self.updateBackgroundColor(withImageViewCenter: self.imageView?.center)
-            if self.imageViewIsOffscreen() {
+            weakSelf.updateBackgroundColor(withImageViewCenter: weakSelf.imageView.center)
+            if weakSelf.imageViewIsOffscreen() {
                 UIView.animate(withDuration: 0.1, animations: {
-                    self.updateBackgroundColor(withProgress: 1)
+                    weakSelf.updateBackgroundColor(withProgress: 1)
                 }) { finished in
-                    self.animator.removeAllBehaviors()
-                    self.attachmentBehavior = nil
-                    self.imageView?.removeFromSuperview()
-                    self.dismiss(completion: nil)
+                    weakSelf.animator?.removeAllBehaviors()
+                    weakSelf.attachmentBehavior = nil
+                    weakSelf.imageView?.removeFromSuperview()
+                    weakSelf.dismiss(withCompletion: nil)
                 }
             }
         }
-        animator.remove(attachmentBehavior)
-        animator.addBehavior(push)
+        if let attachmentBehavior = attachmentBehavior {
+            animator?.removeBehavior(attachmentBehavior)
+        }
+        animator?.addBehavior(push)
     }
     
     func imageViewIsOffscreen() -> Bool {
@@ -399,7 +406,7 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     func updateBackgroundColor(withImageViewCenter imageViewCenter: CGPoint) {
-        let progress = CGFloat(fabs(Float(imageViewCenter.y - initialImageViewCenter.y)) / 1000)
+        let progress = CGFloat(abs(Float(imageViewCenter.y - initialImageViewCenter.y)) / 1000)
         updateBackgroundColor(withProgress: progress)
     }
     
@@ -411,18 +418,17 @@ final class FullscreenImageViewController: UIViewController {
         }
         var newAlpha = 1 - progress
         if isDraggingImage {
-            newAlpha = max(newAlpha, 0.80)
+            newAlpha = max(newAlpha, 0.8)
         }
         
-        if snapshotBackgroundView {
+        if let snapshotBackgroundView = snapshotBackgroundView {
             snapshotBackgroundView.alpha = 1 - newAlpha
         } else {
-            view.backgroundColor = view.backgroundColor?.init(alphaComponent: newAlpha)
+            view.backgroundColor = view.backgroundColor?.withAlphaComponent(newAlpha)
         }
     }
-
-    
 }
+
 extension FullscreenImageViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         let imageViewRect = view.convert(imageView?.bounds ?? CGRect.zero, from: imageView)
@@ -452,7 +458,7 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
         showChrome(!isShowingChrome)
         setSelectedByMenu(false, animated: false)
         UIMenuController.shared.isMenuVisible = false
-        delegate?.fadeAndHideMenu(!delegate.menuVisible)
+        delegate?.fadeAndHideMenu(delegate?.menuVisible == false)
     }
     
     @objc
@@ -466,15 +472,15 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
             ///  preventing us to show the menu at all.
             ///  We now force the window to be the key window and to be the first responder to ensure that we can
             ///  show the menu controller.
-            view.window.makeKey()
-            view.window.becomeFirstResponder()
+            view.window?.makeKey()
+            view.window?.becomeFirstResponder()
             becomeFirstResponder()
             
             let menuController = UIMenuController.shared
             menuController.menuItems = ConversationMessageActionController.allMessageActions
             
             if let imageView = imageView {
-                menuController.setTargetRect(imageView?.bounds ?? CGRect.zero, in: imageView)
+                menuController.setTargetRect(imageView.bounds, in: imageView)
             }
             menuController.setMenuVisible(true, animated: true)
             setSelectedByMenu(true, animated: true)
@@ -482,11 +488,11 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
     }
 
     // MARK: - Actions
-    func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return actionController.canPerformAction(action)
     }
     
-    func forwardingTarget(for aSelector: Selector!) -> Any? {
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return actionController
     }
     
@@ -495,35 +501,37 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
         zmLog.debug("Setting selected: \(selected) animated: \(animated)")
         if selected {
             
-            highlightLayer = CALayer()
+            let highlightLayer = CALayer()
             highlightLayer.backgroundColor = UIColor.clear.cgColor
             highlightLayer.frame = CGRect(x: 0, y: 0, width: (imageView?.frame.size.width ?? 0.0) / scrollView.zoomScale, height: (imageView?.frame.size.height ?? 0.0) / scrollView.zoomScale)
             imageView?.layer.insertSublayer(highlightLayer, at: 0)
             
             if animated {
                 UIView.animate(withDuration: 0.33, animations: {
-                    self.highlightLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
+                    self.highlightLayer?.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
                 })
             } else {
                 highlightLayer.backgroundColor = UIColor.black.withAlphaComponent(0.4).cgColor
             }
+            self.highlightLayer = highlightLayer
         } else {
             if animated {
                 UIView.animate(withDuration: 0.33, animations: {
-                    self.highlightLayer.backgroundColor = UIColor.clear.cgColor
+                    self.highlightLayer?.backgroundColor = UIColor.clear.cgColor
                 }) { finished in
                     if finished {
-                        self.highlightLayer.removeFromSuperlayer()
+                        self.highlightLayer?.removeFromSuperlayer()
                     }
                 }
             } else {
-                highlightLayer.backgroundColor = UIColor.clear.cgColor
-                highlightLayer.removeFromSuperlayer()
+                highlightLayer?.backgroundColor = UIColor.clear.cgColor
+                highlightLayer?.removeFromSuperlayer()
             }
         }
     }
 
-    func menuDidHide(_ notification: Notification?) {
+    @objc
+    private func menuDidHide(_ notification: Notification?) {
         NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
         setSelectedByMenu(false, animated: true)
     }
@@ -531,8 +539,8 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
 }
 
 extension FullscreenImageViewController: ZMMessageObserver {
-    func messageDidChange(_ changeInfo: MessageChangeInfo?) {
-        if ((changeInfo?.transferStateChanged != nil || changeInfo?.imageChanged != nil) && (message.imageMessageData().imageData != nil)) || changeInfo?.isObfuscatedChanged != nil {
+    func messageDidChange(_ changeInfo: MessageChangeInfo) {
+        if ((changeInfo.transferStateChanged || changeInfo.imageChanged) && (message.imageMessageData?.imageData != nil)) || changeInfo.isObfuscatedChanged {
             
             updateForMessage()
         }
@@ -544,7 +552,10 @@ extension FullscreenImageViewController: ZMMessageObserver {
 
 extension FullscreenImageViewController: UIScrollViewDelegate {
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        updateScrollViewZoomScale(viewSize: self.view.frame.size, imageSize: imageView?.image?.size)
+        if let imageSize = imageView?.image?.size,
+           let viewSize = view?.frame.size {
+            updateScrollViewZoomScale(viewSize: viewSize, imageSize: imageSize)
+        }
         
         delegate?.fadeAndHideMenu(true)
     }
@@ -583,6 +594,6 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
 final class DynamicsProxy: NSObject, UIDynamicItem {
     var bounds = CGRect.zero
     var center = CGPoint.zero
-    var transform: CGAffineTransform!
+    var transform: CGAffineTransform = .identity
 }
 
