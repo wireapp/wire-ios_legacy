@@ -34,8 +34,4 @@ extension FullscreenImageViewController {
     override var canBecomeFirstResponder: Bool {
         return true
     }
-
-    func setActionController() {
-        actionController = ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
-    }
 }

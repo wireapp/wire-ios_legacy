@@ -36,7 +36,6 @@ final class FullscreenImageViewController: UIViewController {
 
     //    TODO: private
     let scrollView: UIScrollView = UIScrollView()
-    ///TODO: optional?
     let message: ZMConversationMessage
     var snapshotBackgroundView: UIView?
     weak var delegate: (ScreenshotProvider & MenuVisibilityController)?
@@ -45,15 +44,17 @@ final class FullscreenImageViewController: UIViewController {
     var dismissAction: DismissAction?
     
     //TODO: private
-    var lastZoomScale: CGFloat = 0.0
+    var lastZoomScale: CGFloat = 0
     //    private, optional?
     var imageView: UIImageView!
     //TODO: private
-    var minimumDismissMagnitude: CGFloat = 0.0
+    var minimumDismissMagnitude: CGFloat = 0
     private var loadingSpinner: UIActivityIndicatorView?
     private var obfuscationView: ObfuscationView!
     //TODO: private lazy {}
-    var actionController: ConversationMessageActionController!
+    private lazy var actionController: ConversationMessageActionController = {
+        return ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
+    }()
     
     // MARK: pull to dismiss
     private var isDraggingImage = false
@@ -100,8 +101,6 @@ final class FullscreenImageViewController: UIViewController {
         showChrome(true)
         
         setupStyle()
-        
-        setActionController()
         
         if let userSession = ZMUserSession.shared() {
             messageObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
