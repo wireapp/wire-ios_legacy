@@ -16,20 +16,18 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-
 import XCTest
 @testable import Wire
 
 final class BrowserOpeningOptionTests: XCTestCase {
 
     class override func tearDown() {
-        Settings.shared().reset()
+        Settings.shared.reset()
     }
     
     func testThatDefaultBrowserIsSafari() {
         //GIVEN & WHEN
-        Settings.shared().reset()
+        Settings.shared.reset()
         let preference: BrowserOpeningOption = BrowserOpeningOption.storedPreference
         
         //THEN
@@ -38,7 +36,8 @@ final class BrowserOpeningOptionTests: XCTestCase {
 
     func testThatBrowserCanBeChangedToSnowhaze() {
         //GIVEN & WHEN
-        Settings.shared().browserLinkOpeningOptionRawValue = BrowserOpeningOption.snowhaze.rawValue
+        let browserOpeningOption: BrowserOpeningOption = .snowhaze
+        Settings.shared[.browserOpeningRawValue] = browserOpeningOption
         
         //THEN
         XCTAssertEqual(BrowserOpeningOption.storedPreference, BrowserOpeningOption.snowhaze)

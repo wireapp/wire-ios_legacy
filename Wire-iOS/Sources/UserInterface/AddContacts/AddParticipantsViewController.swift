@@ -88,7 +88,7 @@ extension AddParticipantsViewController.Context {
 final class AddParticipantsViewController: UIViewController {
     
     enum CreateAction {
-        case updatedUsers(Set<ZMUser>)
+        case updatedUsers(UserSet)
         case create
     }
     
@@ -167,7 +167,7 @@ final class AddParticipantsViewController: UIViewController {
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
-        confirmButton.roundCorners = true
+        confirmButton.hasRoundCorners = true
         
         
 
@@ -179,7 +179,7 @@ final class AddParticipantsViewController: UIViewController {
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: SelfUser.current.canManageTeam)
         super.init(nibName: nil, bundle: nil)
         
         emptyResultView.delegate = self

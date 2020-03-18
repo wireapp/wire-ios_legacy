@@ -600,7 +600,7 @@ extension AuthenticationCoordinator {
         URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
-                    userSession.profileUpdate.updateImage(imageData: data)
+                    userSession.userProfileImage?.updateImage(imageData: data)
                 }
             }
         }.resume()

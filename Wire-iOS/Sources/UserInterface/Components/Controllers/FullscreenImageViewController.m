@@ -26,7 +26,7 @@
 #import "FullscreenImageViewController+internal.h"
 
 // ui
-#import "IconButton.h"
+@import FLAnimatedImage;
 
 
 // helpers

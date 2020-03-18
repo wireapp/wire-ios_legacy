@@ -23,7 +23,7 @@ private let latitudeKey = "LastLocationLatitudeKey"
 private let longitudeKey = "LastLocationLongitudeKey"
 private let zoomLevelKey = "LastLocationZoomLevelKey"
 
-public extension LocationData {
+extension LocationData {
 
     func toDictionary() -> [String : Any] {
         return [

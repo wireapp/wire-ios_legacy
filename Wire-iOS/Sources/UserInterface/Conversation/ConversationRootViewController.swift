@@ -148,7 +148,7 @@ extension ZMConversation {
     /// This in an opportunistic update of the data, with an on-demand strategy.
     /// Whenever the conversation is opened by the user, we check if anything is missing.
     fileprivate func refreshDataIfNeeded() {
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             self.markToDownloadRolesIfNeeded()
         }
     }

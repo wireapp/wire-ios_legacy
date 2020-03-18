@@ -85,7 +85,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
             
             if waitForImagesToLoad {
-                XCTAssert(self.waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+                XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
             }
             
             if waitForTextViewToLoad {

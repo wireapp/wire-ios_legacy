@@ -177,8 +177,8 @@ extension ConversationTextMessageCellDescription {
         var cells: [AnyConversationMessageCellDescription] = []
 
         // Refetch the link attachments if needed
-        if !Settings.shared.disableLinkPreviews {
-            ZMUserSession.shared()?.enqueueChanges {
+        if !Settings.disableLinkPreviews {
+            ZMUserSession.shared()?.enqueue {
                 message.refetchLinkAttachmentsIfNeeded()
             }
         }

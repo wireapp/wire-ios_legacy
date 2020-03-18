@@ -51,8 +51,8 @@ extension UIPopoverPresentationController {
     ///   - pointToView: the view in the presenter the popover's arrow points to
     ///   - sourceView: the view which presents this popover, usually a view of a UIViewController
     func config(from popoverPresenter: PopoverPresenter,
-                       pointToView: UIView,
-                       sourceView: UIView) {
+                pointToView: UIView,
+                sourceView: UIView) {
 
         if let viewController = popoverPresenter as? UIViewController {
             sourceRect = pointToView.popoverSourceRect(from: viewController)

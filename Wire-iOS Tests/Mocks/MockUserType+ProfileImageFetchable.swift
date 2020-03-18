@@ -22,7 +22,7 @@ import Foundation
 extension MockUserType: ProfileImageFetchable {
 
     func fetchProfileImage(session: ZMUserSessionInterface,
-                           cache: ImageCache<UIImage> = defaultUserImageCache,
+                           cache: ImageCache<UIImage> = UIImage.defaultUserImageCache,
                            sizeLimit: Int? = nil,
                            desaturate: Bool = false,
                            completion: @escaping (UIImage?, Bool) -> Void) {

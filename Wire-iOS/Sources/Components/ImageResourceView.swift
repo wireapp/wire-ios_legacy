@@ -20,7 +20,7 @@ import Foundation
 import Cartography
 import FLAnimatedImage
 
-class ImageResourceView: FLAnimatedImageView {
+final class ImageResourceView: FLAnimatedImageView {
     
     fileprivate var loadingView = ThreeDotsLoadingView()
     
@@ -41,7 +41,7 @@ class ImageResourceView: FLAnimatedImageView {
     
     public func setImageResource(_ imageResource: ImageResource?, hideLoadingView: Bool = false, completion: (() -> Void)? = nil) {
         let token = UUID()
-        setMediaAsset(nil)
+        mediaAsset = nil
 
         imageResourceInternal = imageResource
         reuseToken = token
@@ -58,7 +58,7 @@ class ImageResourceView: FLAnimatedImageView {
             
             let update = {
                 self.loadingView.isHidden = hideLoadingView || mediaAsset != nil
-                self.setMediaAsset(mediaAsset)
+                self.mediaAsset = mediaAsset
                 completion?()
             }
             

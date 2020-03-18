@@ -82,15 +82,13 @@ final class ProfileViewControllerViewModel: NSObject {
             context != .profileViewer
     }
     
-    var fullUserSet: Set<ZMUser> {
-        let users: Set<ZMUser>
+    var fullUserSet: UserSet {
         if let fullUser = fullUser {
-            users = Set<ZMUser>([fullUser])
+            return UserSet(arrayLiteral: fullUser)
         } else {
-            users = Set<ZMUser>()
+            return UserSet()
+
         }
-        
-        return users
     }
     
     var incomingRequestFooterHidden: Bool {
@@ -107,7 +105,7 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func cancelConnectionRequest(completion: @escaping Completion) {
         let user = fullUser
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             user?.cancelConnectionRequest()
             completion()
         })
@@ -124,7 +122,7 @@ final class ProfileViewControllerViewModel: NSObject {
         }
         var conversation: ZMConversation! = nil
         
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             conversation = fullUser.oneToOneConversation
         }, completionHandler: {
             self.delegate?.profileViewController(self.viewModelDelegate as? ProfileViewController, wantsToNavigateTo: conversation)
@@ -152,7 +150,7 @@ final class ProfileViewControllerViewModel: NSObject {
     // MARK: - Notifications
     
     func updateMute(enableNotifications: Bool) {
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             self.conversation?.mutedMessageTypes = enableNotifications ? .none : .all
             // update the footer view to display the correct mute/unmute button
             self.viewModelDelegate?.updateFooterViews()
@@ -161,7 +159,7 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func handleNotificationResult(_ result: NotificationResult) {
         if let mutedMessageTypes = result.mutedMessageTypes {
-            ZMUserSession.shared()?.performChanges {
+            ZMUserSession.shared()?.perform {
                 self.conversation?.mutedMessageTypes = mutedMessageTypes
             }
         }
@@ -174,7 +172,7 @@ final class ProfileViewControllerViewModel: NSObject {
         transitionToListAndEnqueue {
             self.conversation?.clearMessageHistory()
             if leave {
-                self.conversation?.removeOrShowError(participant: ZMUser.selfUser())
+                self.conversation?.removeOrShowError(participant: SelfUser.current)
             }
         }
     }
@@ -190,7 +188,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     func enqueueChanges(_ block: @escaping () -> Void) {
-        ZMUserSession.shared()?.enqueueChanges(block)
+        ZMUserSession.shared()?.enqueue(block)
     }
 
     // MARK: - Factories
@@ -214,7 +212,7 @@ final class ProfileViewControllerViewModel: NSObject {
             }
         }
         
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             let messageText = "missive.connection_request.default_message".localized(args: self.bareUser.name ?? "", self.viewer.name ?? "")
             connect(messageText)
             // update the footer view to display the cancel request button
@@ -224,7 +222,7 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func acceptConnectionRequest() {
         guard let user = self.fullUser else { return }
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             user.accept()
             user.refreshData()
             self.viewModelDelegate?.updateFooterViews()
@@ -233,7 +231,7 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func ignoreConnectionRequest() {
         guard let user = self.fullUser else { return }
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             user.ignore()
             self.viewModelDelegate?.returnToPreviousScreen()
         }

@@ -17,6 +17,7 @@
 //
 
 import XCTest
+import WireCommonComponents
 @testable import Wire
 
 private final class MockBackupExcluder: BackupExcluder {}

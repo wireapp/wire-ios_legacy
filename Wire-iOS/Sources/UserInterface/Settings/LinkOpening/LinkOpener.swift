@@ -69,18 +69,18 @@ protocol LinkOpeningOption {
     var isAvailable: Bool { get }
     var displayString: String { get }
     static var availableOptions: [Self] { get }
-    
+
     static var storedPreference: ApplicationOptionEnum { get }
-    static var settingKey: String { get }
+    static var settingKey: SettingKey { get }
     static var defaultPreference: ApplicationOptionEnum  { get }
 }
 
 
 extension LinkOpeningOption {
+
     static var storedPreference: ApplicationOptionEnum {
-        let openingRawValue: ApplicationOptionEnum.RawValue = Settings.shared().defaults.integer(forKey: settingKey)
-        
-        if let openingOption: ApplicationOptionEnum = ApplicationOptionEnum.init(rawValue: openingRawValue) {
+        if let openingRawValue: ApplicationOptionEnum.RawValue = Settings.shared[settingKey],
+            let openingOption: ApplicationOptionEnum = ApplicationOptionEnum.init(rawValue: openingRawValue) {
             return openingOption
         }
         

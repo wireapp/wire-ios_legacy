@@ -83,7 +83,7 @@ private enum ExtensionSettingsKey: String {
         }
     }
     
-    @objc public var disableLinkPreviews: Bool {
+    public var disableLinkPreviews: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }

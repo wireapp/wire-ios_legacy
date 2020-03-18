@@ -39,7 +39,7 @@ final class UserDetailViewControllerFactory: NSObject {
             return serviceDetailViewController
         } else {
             // TODO: Do not present the details if the user is not connected.
-            let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
+            let profileViewController = ProfileViewController(user: user, viewer: SelfUser.current, conversation: conversation)
             profileViewController.delegate = profileViewControllerDelegate
             profileViewController.viewControllerDismisser = viewControllerDismisser
             return profileViewController

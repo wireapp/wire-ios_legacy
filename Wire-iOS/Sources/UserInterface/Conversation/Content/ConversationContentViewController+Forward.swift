@@ -39,7 +39,7 @@ extension ZMConversation: ShareDestination {
 
 extension Array where Element == ZMConversation {
 
-    // Should be called inside ZMUserSession.shared().performChanges block
+    // Should be called inside ZMUserSession.shared().perform block
     func forEachNonEphemeral(_ block: (ZMConversation) -> Void) {
         forEach {
             let timeout = $0.messageDestructionTimeout
@@ -55,27 +55,27 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     let conversations = to as! [ZMConversation]
 
     if message.isText {
-        let fetchLinkPreview = !Settings.shared().disableLinkPreviews
-        ZMUserSession.shared()?.performChanges {
+        let fetchLinkPreview = !Settings.disableLinkPreviews
+        ZMUserSession.shared()?.perform {
             conversations.forEachNonEphemeral {
                 // We should not forward any mentions to other conversations
                 _ = $0.append(text: message.textMessageData!.messageText!, mentions: [], fetchLinkPreview: fetchLinkPreview)
             }
         }
     } else if message.isImage, let imageData = message.imageMessageData?.imageData {
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             conversations.forEachNonEphemeral { _ = $0.append(imageFromData: imageData) }
         }
     } else if message.isVideo || message.isAudio || message.isFile {
         let url  = message.fileMessageData!.fileURL!
         FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { fileMetadata in
-            ZMUserSession.shared()?.performChanges {
+            ZMUserSession.shared()?.perform {
                 conversations.forEachNonEphemeral { _ = $0.append(file: fileMetadata) }
             }
         }
     } else if message.isLocation {
         let locationData = LocationData.locationData(withLatitude: message.locationMessageData!.latitude, longitude: message.locationMessageData!.longitude, name: message.locationMessageData!.name, zoomLevel: message.locationMessageData!.zoomLevel)
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             conversations.forEachNonEphemeral { _ = $0.append(location: locationData) }
         }
     } else {
@@ -156,9 +156,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        let presenter: PopoverPresenterViewController? = (self.presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
+        let presenter: PopoverPresenterViewController? = (presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
 
-        if let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
+        if let presenter = presenter,
+           let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
             keyboardAvoiding.configPopover(pointToView: pointToView, popoverPresenter: presenter)
         }
 

@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import Ziphy
+import FLAnimatedImage
 
 final class GiphyCollectionViewCell: UICollectionViewCell {
 

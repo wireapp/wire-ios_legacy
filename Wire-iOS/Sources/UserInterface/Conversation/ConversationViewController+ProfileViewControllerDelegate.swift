@@ -38,13 +38,13 @@ extension ConversationViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?,
                                wantsToCreateConversationWithName name: String?,
-                               users: Set<ZMUser>) {
+                               users: UserSet) {
         guard let userSession = ZMUserSession.shared() else { return }
         
         let conversationCreation = { [weak self] in
             var newConversation: ZMConversation! = nil
             
-            userSession.enqueueChanges({
+            userSession.enqueue({
                 newConversation = ZMConversation.insertGroupConversation(session: userSession,
                                                                          participants: Array(users),
                                                                          name: name,

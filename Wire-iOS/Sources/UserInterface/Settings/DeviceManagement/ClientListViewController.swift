@@ -116,7 +116,7 @@ final class ClientListViewController: UIViewController,
     }
 
     required init(clientsList: [UserClient]?,
-                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
+                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,

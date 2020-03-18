@@ -728,17 +728,17 @@ extension CollectionsViewController: CollectionCellDelegate {
             }
 
         case .download:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 message.fileMessageData?.requestFileDownload()
             }
 
         case .cancel:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 message.fileMessageData?.cancelTransfer()
             }
 
         case .like:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 Message.setLikedMessage(message, liked: !message.liked)
             }
 

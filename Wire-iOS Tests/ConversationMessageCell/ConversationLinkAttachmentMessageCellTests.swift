@@ -31,7 +31,7 @@ final class ConversationLinkAttachmentMessageCellTests: ConversationCellSnapshot
     }
 
     override func tearDown() {
-        defaultImageCache.cache.removeAllObjects()
+        MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         mockThumbnail = nil
         super.tearDown()
     }

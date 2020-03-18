@@ -114,7 +114,7 @@ final class SavableImage: NSObject {
         }
     }
 
-    // Has to be called from inside a `photoLibrary.performChanges` block
+    // Has to be called from inside a `photoLibrary.perform` block
     private func saveImage(using source: Source) {
         switch source {
         case .gif(let url):
