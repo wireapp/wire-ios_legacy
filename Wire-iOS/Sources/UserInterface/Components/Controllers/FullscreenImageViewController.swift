@@ -302,8 +302,7 @@ final class FullscreenImageViewController: UIViewController {
         }
     }
 
-    @objc
-    func loadImageAndSetupImageView() {
+    private func loadImageAndSetupImageView() {
         let imageIsAnimatedGIF = message.imageMessageData?.isAnimatedGIF
         let imageData = message.imageMessageData?.imageData
 
