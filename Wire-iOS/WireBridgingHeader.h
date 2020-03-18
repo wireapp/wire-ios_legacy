@@ -23,9 +23,6 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
-// UI
-#import "TextTransform.h"
-
 // View Controllers
 
 #import "ConversationInputBarViewController.h"
