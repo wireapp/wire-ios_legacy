@@ -291,12 +291,13 @@ final class FullscreenImageViewController: UIViewController {
         let velocity = panner.velocity(in: panner.view)
         let vectorDistance = sqrt(pow(velocity.x, 2) + pow(velocity.y, 2))
         
-        if panner.state == .began {///TODO: switch
+        switch panner.state {
+        case .began:
             isDraggingImage = imageView.frame.contains(locationInView)
             if isDraggingImage {
                 initiateImageDrag(fromLocation: locationInView, translationOffset: .zero)
             }
-        } else if panner.state == .changed {
+        case .changed:
             if isDraggingImage {
                 var newAnchor = imageDragStartingPoint
                 newAnchor.x += (translation.x) + imageDragOffsetFromActualTranslation.horizontal
@@ -310,7 +311,7 @@ final class FullscreenImageViewController: UIViewController {
                     initiateImageDrag(fromLocation: locationInView, translationOffset: translationOffset)
                 }
             }
-        } else {
+        default:
             if vectorDistance > 300 && abs(translation.y) > 100 {
                 if isDraggingImage {
                     dismissImageFlicking(withVelocity: velocity)
@@ -400,14 +401,14 @@ final class FullscreenImageViewController: UIViewController {
             push.setTargetOffsetFromCenter(UIOffset(horizontal: attachmentBehavior.anchorPoint.x - initialImageViewCenter.x, vertical: attachmentBehavior.anchorPoint.y - initialImageViewCenter.y), for: imageView)
         }
         
-        push.magnitude = max(minimumDismissMagnitude, CGFloat(abs(velocity.y) / 6))
+        push.magnitude = max(minimumDismissMagnitude, abs(velocity.y) / 6)
         
         push.action = { [weak self] in
             guard let weakSelf = self else { return }
-            weakSelf.imageView?.center = CGPoint(x: weakSelf.imageView?.center.x ?? 0.0, y: proxy.center.y)
+            weakSelf.imageView?.center = CGPoint(x: weakSelf.imageView?.center.x ?? 0, y: proxy.center.y)
             
             weakSelf.updateBackgroundColor(withImageViewCenter: weakSelf.imageView.center)
-            if weakSelf.imageViewIsOffscreen() {
+            if weakSelf.imageViewIsOffscreen {
                 UIView.animate(withDuration: 0.1, animations: {
                     weakSelf.updateBackgroundColor(withProgress: 1)
                 }) { finished in
@@ -424,13 +425,13 @@ final class FullscreenImageViewController: UIViewController {
         animator.addBehavior(push)
     }
     
-    func imageViewIsOffscreen() -> Bool {
+    private var imageViewIsOffscreen: Bool {
         // tiny inset threshold for small zoom
-        return !view.bounds.insetBy(dx: -10, dy: -10).intersects(view.convert(imageView?.bounds ?? CGRect.zero, from: imageView))
+        return !view.bounds.insetBy(dx: -10, dy: -10).intersects(view.convert(imageView?.bounds ?? .zero, from: imageView))
     }
 
-    func updateBackgroundColor(withImageViewCenter imageViewCenter: CGPoint) {
-        let progress = CGFloat(abs(Float(imageViewCenter.y - initialImageViewCenter.y)) / 1000)
+    private func updateBackgroundColor(withImageViewCenter imageViewCenter: CGPoint) {
+        let progress: CGFloat = abs(imageViewCenter.y - initialImageViewCenter.y) / 1000
         updateBackgroundColor(withProgress: progress)
     }
     
@@ -470,7 +471,7 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
             
             let offset = panRecognizer.translation(in: view)
             
-            return fabs(Float(offset.y)) > fabs(Float(offset.x))
+            return abs(offset.y) > abs(offset.x)
         } else {
             return true
         }
@@ -613,11 +614,3 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
     }
     
 }
-
-//TODO: new file
-final class DynamicsProxy: NSObject, UIDynamicItem {
-    var bounds = CGRect.zero
-    var center = CGPoint.zero
-    var transform: CGAffineTransform = .identity
-}
-

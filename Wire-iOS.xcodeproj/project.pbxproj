@@ -711,6 +711,7 @@
 		A91833112419275E00CBD0B7 /* TokenSeparatorAttachmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91833102419275E00CBD0B7 /* TokenSeparatorAttachmentTests.swift */; };
 		A91833132419347F00CBD0B7 /* TokenFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91833122419347F00CBD0B7 /* TokenFieldTests.swift */; };
 		A9275F5F24221AD6007CB2BC /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F5E24221AD6007CB2BC /* TextTransform.swift */; };
+		A9275F6124223AB4007CB2BC /* DynamicsProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F6024223AB4007CB2BC /* DynamicsProxy.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
 		A92E731C2407F54A007C1FFE /* AttributedStringOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870534001DD6265100A7F822 /* AttributedStringOperators.swift */; };
@@ -2313,6 +2314,7 @@
 		A91833102419275E00CBD0B7 /* TokenSeparatorAttachmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenSeparatorAttachmentTests.swift; sourceTree = "<group>"; };
 		A91833122419347F00CBD0B7 /* TokenFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFieldTests.swift; sourceTree = "<group>"; };
 		A9275F5E24221AD6007CB2BC /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
+		A9275F6024223AB4007CB2BC /* DynamicsProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicsProxy.swift; sourceTree = "<group>"; };
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		A92E731D2407F587007C1FFE /* String+Localized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Localized.swift"; sourceTree = "<group>"; };
@@ -4234,6 +4236,7 @@
 				55DD5C321FA231000082170C /* CallQualityController */,
 				5EEFC16720BEBE56007E8A79 /* BrowserViewController.swift */,
 				16CB8DB81DC0F777000C5F47 /* DefaultNavigationBar.swift */,
+				A9275F6024223AB4007CB2BC /* DynamicsProxy.swift */,
 				A9859D6923FEDD7400DC3F36 /* FullscreenImageViewController.swift */,
 				EF1EE76A225380AD00E7B6E3 /* FullscreenImageViewController+ViewLifeCycle.swift */,
 				EF834B852203600500E92F13 /* FullscreenImageViewController+MessageActionResponder.swift */,
@@ -7746,6 +7749,7 @@
 				A96316A623F2BCAA00AFDB71 /* UIViewController+ErrorAlert.swift in Sources */,
 				D53D39102059784900B87DAD /* ConversationActionController+CancelRequest.swift in Sources */,
 				EF1F9A021FBB1FD800969DD1 /* LandingButton.swift in Sources */,
+				A9275F6124223AB4007CB2BC /* DynamicsProxy.swift in Sources */,
 				5E769C5821AE948F00785EB7 /* MessageDetailsDataSource.swift in Sources */,
 				5501FFCB22B399CE0050D8FC /* UITextContentType+Availability.swift in Sources */,
 				EF066E1621EF938C00D56CAD /* MessageActionResponder.swift in Sources */,
