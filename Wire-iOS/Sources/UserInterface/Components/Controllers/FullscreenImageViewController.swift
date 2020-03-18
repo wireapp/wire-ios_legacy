@@ -39,8 +39,12 @@ final class FullscreenImageViewController: UIViewController {
     let message: ZMConversationMessage
     var snapshotBackgroundView: UIView?
     weak var delegate: (ScreenshotProvider & MenuVisibilityController)?
-    var swipeToDismiss = false
-    var showCloseButton = false
+    var swipeToDismiss = true {
+        didSet {
+            panRecognizer.isEnabled = swipeToDismiss
+        }
+    }
+    var showCloseButton = true
     var dismissAction: DismissAction?
     
     //TODO: private
@@ -49,9 +53,8 @@ final class FullscreenImageViewController: UIViewController {
     var imageView: UIImageView!
     //TODO: private
     var minimumDismissMagnitude: CGFloat = 0
-    private var loadingSpinner: UIActivityIndicatorView?
-    private var obfuscationView: ObfuscationView!
-    //TODO: private lazy {}
+    ///TODO: still needed?
+    private var obfuscationView: ObfuscationView?
     private lazy var actionController: ConversationMessageActionController = {
         return ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
     }()
@@ -62,22 +65,28 @@ final class FullscreenImageViewController: UIViewController {
     private var imageDragStartingPoint = CGPoint.zero
     private var imageDragOffsetFromActualTranslation: UIOffset!
     private var imageDragOffsetFromImageCenter: UIOffset!
-    ///TODO: private
-    var animator: UIDynamicAnimator?
+    private lazy var animator: UIDynamicAnimator = {
+        return UIDynamicAnimator(referenceView: scrollView)
+    }()
     private var attachmentBehavior: UIAttachmentBehavior?
     private var initialImageViewBounds = CGRect.zero
     private var initialImageViewCenter = CGPoint.zero
     private let panRecognizer: UIPanGestureRecognizer = UIPanGestureRecognizer()
 
     private var highlightLayer: CALayer?
-    ///TODO: lazy
-    private var tapGestureRecognzier: UITapGestureRecognizer!
-    private var doubleTapGestureRecognizer: UITapGestureRecognizer!
-    private var longPressGestureRecognizer: UILongPressGestureRecognizer!
-    private var isShowingChrome = false
+
+    private let tapGestureRecognzier = UITapGestureRecognizer()
+    private let doubleTapGestureRecognizer = UITapGestureRecognizer()
+    private let longPressGestureRecognizer = UILongPressGestureRecognizer()
+    
+    private var isShowingChrome = true
     private var assetWriteInProgress = false
-    private var forcePortraitMode = false
-    private var messageObserverToken: Any?
+    private var forcePortraitMode = false {
+        didSet {
+            UIViewController.attemptRotationToDeviceOrientation()
+        }
+    }
+    private var messageObserverToken: NSObjectProtocol?
 
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
@@ -89,16 +98,11 @@ final class FullscreenImageViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
-        forcePortraitMode = false
-        swipeToDismiss = true
-        showCloseButton = true
-        
         setupScrollView()
         updateForMessage()
         
         view.isUserInteractionEnabled = true
         setupGestureRecognizers()
-        showChrome(true)
         
         setupStyle()
         
@@ -107,16 +111,7 @@ final class FullscreenImageViewController: UIViewController {
         }
     }
     
-    func dismiss(withCompletion completion: Completion?) {
-        if nil != dismissAction {
-            dismissAction?(completion)
-        } else if nil != navigationController {
-            navigationController?.popViewController(animated: true)
-            completion?()
-        } else {
-            dismiss(animated: true, completion: completion)
-        }
-    }
+    //MARK: - override
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -127,11 +122,6 @@ final class FullscreenImageViewController: UIViewController {
         return false
     }
     
-    func setForcePortraitMode(_ forcePortraitMode: Bool) {
-        self.forcePortraitMode = forcePortraitMode
-        UIViewController.attemptRotationToDeviceOrientation()
-    }
-    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
@@ -140,12 +130,24 @@ final class FullscreenImageViewController: UIViewController {
         return true
     }
     
-    func updateForMessage() {
-        if message.isObfuscated || message.hasBeenDeleted {
-            removeImage()
-            obfuscationView.isHidden = false
+    private func dismiss(_ completion: Completion? = nil) {
+        if nil != dismissAction {
+            dismissAction?(completion)
+        } else if nil != navigationController {
+            navigationController?.popViewController(animated: true)
+            completion?()
         } else {
-            obfuscationView.isHidden = true
+            dismiss(animated: true, completion: completion)
+        }
+    }
+
+    private func updateForMessage() {
+        if message.isObfuscated ||
+           message.hasBeenDeleted {
+            removeImage()
+            obfuscationView?.isHidden = false
+        } else {
+            obfuscationView?.isHidden = true
             loadImageAndSetupImageView()
         }
     }
@@ -155,32 +157,56 @@ final class FullscreenImageViewController: UIViewController {
         imageView = nil
     }
     
-    ///TODO: setter
-    func showChrome(_ shouldShow: Bool) {
-        isShowingChrome = shouldShow
+    private func setupSnapshotBackgroundView() {
+        guard let snapshotBackgroundView = delegate?.backgroundScreenshot(for: self) else { return }
+        
+        snapshotBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(snapshotBackgroundView)
+        
+        let topBarHeight: CGFloat = navigationController?.navigationBar.frame.maxY ?? 0
+        
+        snapshotBackgroundView.pinToSuperview(anchor: .top, inset: topBarHeight)
+        snapshotBackgroundView.pinToSuperview(anchor: .leading)
+        snapshotBackgroundView.setDimensions(size: UIScreen.main.bounds.size)
+        
+        snapshotBackgroundView.alpha = 0
+        
+        self.snapshotBackgroundView = snapshotBackgroundView
     }
     
-    ///TODO: didSet
-    func setSwipeToDismiss(_ swipeToDismiss: Bool) {
-        self.swipeToDismiss = swipeToDismiss
-        panRecognizer.isEnabled = self.swipeToDismiss
+    private func setupScrollView() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        
+        scrollView.fitInSuperview()
+        
+        if #available(iOS 11, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            automaticallyAdjustsScrollViewInsets = false
+        }
+        
+        scrollView.delegate = self
+        scrollView.accessibilityIdentifier = "fullScreenPage"
+        
+        
     }
 
 
-    func setupGestureRecognizers() {
-        tapGestureRecognzier = UITapGestureRecognizer(target: self, action: #selector(didTapBackground(_:)))
+    private func setupGestureRecognizers() {
+        tapGestureRecognzier.addTarget(self, action: #selector(didTapBackground(_:)))
         
         let delayedTouchBeganRecognizer = scrollView.gestureRecognizers?[0]
         delayedTouchBeganRecognizer?.require(toFail: tapGestureRecognzier)
         
         view.addGestureRecognizer(tapGestureRecognzier)
         
-        
-        doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGestureRecognizer.addTarget(self, action: #selector(handleDoubleTap(_:)))
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTapGestureRecognizer)
         
-        longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        longPressGestureRecognizer.addTarget(self, action: #selector(handleLongPress(_:)))
         view.addGestureRecognizer(longPressGestureRecognizer)
     
         panRecognizer.maximumNumberOfTouches = 1
@@ -289,7 +315,7 @@ final class FullscreenImageViewController: UIViewController {
                 if isDraggingImage {
                     dismissImageFlicking(withVelocity: velocity)
                 } else {
-                    dismiss(withCompletion: nil)
+                    dismiss()
                 }
             } else {
                 cancelCurrentImageDrag(animated: true)
@@ -298,9 +324,9 @@ final class FullscreenImageViewController: UIViewController {
     }
     
     // MARK: - Dynamic Image Dragging
-    func initiateImageDrag(fromLocation panGestureLocationInView: CGPoint, translationOffset: UIOffset) {
+    private func initiateImageDrag(fromLocation panGestureLocationInView: CGPoint, translationOffset: UIOffset) {
         setupSnapshotBackgroundView()
-        showChrome(false)
+        isShowingChrome = false
         
         initialImageViewCenter = imageView.center
         let nearLocationInView = CGPoint(x: (panGestureLocationInView.x - initialImageViewCenter.x) * 0.1 + initialImageViewCenter.x, y: (panGestureLocationInView.y - initialImageViewCenter.y) * 0.1 + initialImageViewCenter.y)
@@ -327,7 +353,7 @@ final class FullscreenImageViewController: UIViewController {
             weakSelf.imageView?.transform = proxy.transform.concatenating(weakSelf.imageViewStartingTransform)
         }
         if let attachmentBehavior = attachmentBehavior {
-            animator?.addBehavior(attachmentBehavior)
+            animator.addBehavior(attachmentBehavior)
         }
         
         let modifier = UIDynamicItemBehavior(items: [proxy])
@@ -335,31 +361,32 @@ final class FullscreenImageViewController: UIViewController {
         modifier.resistance = 1000
         modifier.elasticity = 0
         modifier.friction = 0
-        animator?.addBehavior(modifier)
+        animator.addBehavior(modifier)
     }
 
-    func cancelCurrentImageDrag(animated: Bool) {
-        animator?.removeAllBehaviors()
+    private func cancelCurrentImageDrag(animated: Bool) {
+        animator.removeAllBehaviors()
         attachmentBehavior = nil
         isDraggingImage = false
         
-        if animated == false {
+        if !animated {
             imageView?.transform = imageViewStartingTransform
             imageView?.center = initialImageViewCenter
         } else {
-            UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.allowUserInteraction, .beginFromCurrentState], animations: {
-                if self.isDraggingImage == false {
-                    self.imageView?.transform = self.imageViewStartingTransform
-                    self.updateBackgroundColor(withProgress: 0)
-                    if self.scrollView.isDragging == false && self.scrollView.isDecelerating == false {
-                        self.imageView?.center = self.initialImageViewCenter
+            UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [.allowUserInteraction, .beginFromCurrentState], animations: { [weak self] in
+                guard let weakSelf = self else { return }
+                if !weakSelf.isDraggingImage {
+                    weakSelf.imageView?.transform = weakSelf.imageViewStartingTransform
+                    weakSelf.updateBackgroundColor(withProgress: 0)
+                    if !weakSelf.scrollView.isDragging && !weakSelf.scrollView.isDecelerating {
+                        weakSelf.imageView?.center = weakSelf.initialImageViewCenter
                     }
                 }
             })
         }
     }
 
-    func dismissImageFlicking(withVelocity velocity: CGPoint) {
+    private func dismissImageFlicking(withVelocity velocity: CGPoint) {
         // Proxy object is used because the UIDynamics messing up the zoom level transform on imageView
         let proxy = DynamicsProxy()
         proxy.center = imageView.center
@@ -384,17 +411,17 @@ final class FullscreenImageViewController: UIViewController {
                 UIView.animate(withDuration: 0.1, animations: {
                     weakSelf.updateBackgroundColor(withProgress: 1)
                 }) { finished in
-                    weakSelf.animator?.removeAllBehaviors()
+                    weakSelf.animator.removeAllBehaviors()
                     weakSelf.attachmentBehavior = nil
                     weakSelf.imageView?.removeFromSuperview()
-                    weakSelf.dismiss(withCompletion: nil)
+                    weakSelf.dismiss()
                 }
             }
         }
         if let attachmentBehavior = attachmentBehavior {
-            animator?.removeBehavior(attachmentBehavior)
+            animator.removeBehavior(attachmentBehavior)
         }
-        animator?.addBehavior(push)
+        animator.addBehavior(push)
     }
     
     func imageViewIsOffscreen() -> Bool {
@@ -451,8 +478,8 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
 
     // MARK: - Gesture Handling
     @objc
-    func didTapBackground(_ tapper: UITapGestureRecognizer?) {
-        showChrome(!isShowingChrome)
+    private func didTapBackground(_ tapper: UITapGestureRecognizer?) {
+        isShowingChrome = !isShowingChrome
         setSelectedByMenu(false, animated: false)
         UIMenuController.shared.isMenuVisible = false
         delegate?.fadeAndHideMenu(delegate?.menuVisible == false)
@@ -550,7 +577,7 @@ extension FullscreenImageViewController: ZMMessageObserver {
 extension FullscreenImageViewController: UIScrollViewDelegate {
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
         if let imageSize = imageView?.image?.size,
-           let viewSize = view?.frame.size {
+           let viewSize = self.view?.frame.size {
             updateScrollViewZoomScale(viewSize: viewSize, imageSize: imageSize)
         }
         
@@ -570,16 +597,16 @@ extension FullscreenImageViewController: UIScrollViewDelegate {
     
     // TODO: private
     func centerScrollViewContent() {
-        let imageWidth = Float(imageView?.image?.size.width ?? 0.0)
-        let imageHeight = Float(imageView?.image?.size.height ?? 0.0)
+        let imageWidth: CGFloat = imageView?.image?.size.width ?? 0
+        let imageHeight: CGFloat = imageView?.image?.size.height ?? 0
         
         let viewWidth = view.bounds.size.width
         let viewHeight = view.bounds.size.height
         
-        var horizontalInset = (CGFloat(viewWidth) - scrollView.zoomScale * CGFloat(imageWidth)) / 2
+        var horizontalInset: CGFloat = (viewWidth - scrollView.zoomScale * imageWidth) / 2
         horizontalInset = max(0, horizontalInset)
         
-        var verticalInset = (CGFloat(viewHeight) - scrollView.zoomScale * CGFloat(imageHeight)) / 2
+        var verticalInset: CGFloat = (viewHeight - scrollView.zoomScale * imageHeight) / 2
         verticalInset = max(0, verticalInset)
         
         scrollView.contentInset = UIEdgeInsets(top: verticalInset, left: horizontalInset, bottom: verticalInset, right: horizontalInset)

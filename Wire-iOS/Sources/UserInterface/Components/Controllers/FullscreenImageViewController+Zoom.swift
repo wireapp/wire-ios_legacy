@@ -106,18 +106,18 @@ extension FullscreenImageViewController {
 
     // MARK: - Zoom scale
 
-    @objc func updateScrollViewZoomScale(viewSize: CGSize, imageSize: CGSize) {
-        self.scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
+    func updateScrollViewZoomScale(viewSize: CGSize, imageSize: CGSize) {
+        scrollView.minimumZoomScale = viewSize.minZoom(imageSize: imageSize)
 
         // if the image is small than the screen size, max zoom level is "zoom to fit screen"
         if viewSize.contains(imageSize) {
-            self.scrollView.maximumZoomScale = min(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
+            scrollView.maximumZoomScale = min(viewSize.height / imageSize.height, viewSize.width / imageSize.width)
         } else {
-            self.scrollView.maximumZoomScale = 1
+            scrollView.maximumZoomScale = 1
         }
     }
 
-    @objc func updateZoom() {
+    func updateZoom() {
         guard let size = parent?.view?.frame.size else { return }
         updateZoom(withSize: size)
     }
@@ -125,7 +125,7 @@ extension FullscreenImageViewController {
     /// Zoom to show as much image as possible unless image is smaller than screen
     ///
     /// - Parameter size: size of the view which contains imageView
-    @objc func updateZoom(withSize size: CGSize) {
+    func updateZoom(withSize size: CGSize) {
         guard let image = imageView?.image else { return }
         guard !(size.width == 0 && size.height == 0) else { return }
 
@@ -135,7 +135,7 @@ extension FullscreenImageViewController {
         if minZoom == lastZoomScale {
             minZoom += 0.000001
         }
-        scrollView.zoomScale = CGFloat(minZoom)
+        scrollView.zoomScale = minZoom
         lastZoomScale = minZoom
     }
 
