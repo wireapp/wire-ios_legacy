@@ -30,11 +30,9 @@ protocol MenuVisibilityController: NSObjectProtocol {
 }
 
 final class FullscreenImageViewController: UIViewController {
-    private let kZoomScaleDelta: CGFloat = 0.0003
+    static let kZoomScaleDelta: CGFloat = 0.0003
 
-    private let scrollView: UIScrollView = UIScrollView()
     let message: ZMConversationMessage
-    var snapshotBackgroundView: UIView?
     weak var delegate: (ScreenshotProvider & MenuVisibilityController)?
     var swipeToDismiss = true {
         didSet {
@@ -46,6 +44,8 @@ final class FullscreenImageViewController: UIViewController {
 
     private var lastZoomScale: CGFloat = 0
     var imageView: UIImageView?
+    let scrollView: UIScrollView = UIScrollView()
+    var snapshotBackgroundView: UIView?
     private var minimumDismissMagnitude: CGFloat = 0
     ///TODO: still needed?
     private var obfuscationView: ObfuscationView?
@@ -120,7 +120,7 @@ final class FullscreenImageViewController: UIViewController {
 
         let isImageZoomedToMax = scrollView.zoomScale == scrollView.maximumZoomScale
 
-        let isImageZoomed = abs(scrollView.minimumZoomScale - scrollView.zoomScale) > kZoomScaleDelta
+        let isImageZoomed = abs(scrollView.minimumZoomScale - scrollView.zoomScale) > FullscreenImageViewController.kZoomScaleDelta
         updateScrollViewZoomScale(viewSize: size, imageSize: imageSize)
 
         let animationBlock: () -> Void = {
@@ -539,7 +539,7 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     @objc
-    private func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
+    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }
@@ -554,7 +554,7 @@ final class FullscreenImageViewController: UIViewController {
         let scaleDiff: CGFloat = scrollView.zoomScale - scrollView.minimumZoomScale
 
         // image view in minimum zoom scale, zoom in to a 50 x 50 rect
-        if scaleDiff < kZoomScaleDelta {
+        if scaleDiff < FullscreenImageViewController.kZoomScaleDelta {
             // image is smaller than screen bound and zoom sclae is max(1), do not zoom in
             let point = doubleTapper.location(in: doubleTapper.view)
 
