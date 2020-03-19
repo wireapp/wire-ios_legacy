@@ -114,7 +114,8 @@ extension ConversationInputBarViewController {
 
         picker.showLoadingView = true
         AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
-            if error == nil && resultURL != nil {
+            if error == nil,
+               let resultURL = resultURL {
                 self.uploadFile(at: resultURL)
             }
 

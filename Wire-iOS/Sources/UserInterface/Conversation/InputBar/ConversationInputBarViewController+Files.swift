@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import ZipArchive
 
 extension ConversationInputBarViewController: UINavigationControllerDelegate {}
 
@@ -25,17 +26,20 @@ private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 extension ConversationInputBarViewController {
     func uploadItem(at itemURL: URL) {
         let itemPath = itemURL.path
-        var isDirectory = false
-        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: UnsafeMutablePointer<ObjCBool>(mutating: &isDirectory))
+        var isDirectory : ObjCBool = false
+        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
         if !fileExists {
             zmLog.error("File not found for uploading: \(itemURL)")
             return
         }
         
-        if isDirectory {
+        guard !isDirectory.boolValue else {
+            uploadFile(at: itemURL)
+            return
+        }
+        
             let tmpPath = URL(fileURLWithPath: URL(fileURLWithPath: itemPath).deletingLastPathComponent().absoluteString).appendingPathComponent("tmp").absoluteString
             
-            var error: Error? = nil
             do {
                 try FileManager.default.createDirectory(atPath: tmpPath, withIntermediateDirectories: true, attributes: nil)
             } catch {
@@ -44,7 +48,7 @@ extension ConversationInputBarViewController {
             }
             
             do {
-                try FileManager.default.moveItem(atPath: itemPath ?? "", toPath: URL(fileURLWithPath: tmpPath).appendingPathComponent(itemPath?.lastPathComponent ?? "").absoluteString)
+                try FileManager.default.moveItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpPath).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
             } catch {
                 zmLog.error("Cannot move \(itemPath) to \(tmpPath): \(error)")
                 do {
@@ -54,7 +58,7 @@ extension ConversationInputBarViewController {
                 return
             }
             
-            let archivePath = itemPath ?? "" + (".zip")
+            let archivePath = itemPath + (".zip")
             let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpPath)
             
             if zipSucceded {
@@ -66,17 +70,14 @@ extension ConversationInputBarViewController {
             do {
                 try FileManager.default.removeItem(atPath: tmpPath)
             } catch {
-                    zmLog.error("Cannot delete folder at path \(tmpPath): \(error)")
-                    return
+                zmLog.error("Cannot delete folder at path \(tmpPath): \(error)")
+                return
             }
-        } else {
-            uploadFile(at: itemURL)
-        }
+        
     }
-
+    
     func uploadFile(at url: URL) {
         let completion = {
-            var deleteError: Error? = nil
             do {
                 try FileManager.default.removeItem(at: url)
             } catch let deleteError {
@@ -84,7 +85,7 @@ extension ConversationInputBarViewController {
             }
             
         }
-
+        
         let attributes: [FileAttributeKey : Any]
         do {
             attributes = try FileManager.default.attributesOfItem(atPath: url.path)
@@ -92,38 +93,47 @@ extension ConversationInputBarViewController {
             zmLog.error("Cannot get attributes on selected file: \(error)")
             parent?.dismiss(animated: true)
             completion()
+            
+            return
         }
         
         
         
-            if (attributes[FileAttributeKey.size] as? NSNumber)?.uint64Value ?? 0 > ZMUserSession.shared().maxUploadFileSize() {
-                // file exceeds maximum allowed upload size
-                parent?.dismiss(animated: false)
+        if attributes[FileAttributeKey.size] as? UInt64 > ZMUserSession.shared()?.maxUploadFileSize() {
+            // file exceeds maximum allowed upload size
+            parent?.dismiss(animated: false)
+            
+            showAlertForFileTooBig()
+            
+            completion()
+        } else {
+            FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { [weak self] metadata in
+                guard let weakSelf = self else { return }
                 
-                showAlertForFileTooBig()
-                
-                completion()
-            } else {
-                FileMetaDataGenerator.metadataForFile(at: url, uti: url?.uti, name: url?.lastPathComponent) { metadata in
-                    self.impactFeedbackGenerator.prepare()
-                    ZMUserSession.sharedSession.performChanges({
-                        
-                        weak var message = self.conversation.appendMessage(with: metadata)
-                        self.impactFeedbackGenerator.impactOccurred()
-                        
-                        if message?.fileMessageData.isVideo != nil {
-                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionVideoMessage, inConversation: self.conversation)
-                        } else if message?.fileMessageData.isAudio != nil {
-                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionAudioMessage, inConversation: self.conversation)
-                        } else {
-                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionFileTransfer, inConversation: self.conversation)
+                weakSelf.impactFeedbackGenerator?.prepare()
+                ZMUserSession.shared()?.perform({
+                    
+                    
+                    weakSelf.impactFeedbackGenerator?.impactOccurred()
+                    
+                    var conversationMediaAction: ConversationMediaAction = .fileTransfer
+                    
+                    if let message: ZMConversationMessage = weakSelf.conversation.append(file: metadata),
+                       let fileMessageData = message.fileMessageData {
+                        if fileMessageData.isVideo {
+                            conversationMediaAction = .videoMessage
+                        } else if fileMessageData.isAudio {
+                            conversationMediaAction = .audioMessage
                         }
-                        
-                        completion()
-                    })
-                }
-                parent?.dismiss(animated: true)
+                    }
+                    
+                    Analytics.shared().tagMediaActionCompleted(conversationMediaAction, inConversation: weakSelf.conversation)
+                    
+                    completion()
+                })
             }
+            parent?.dismiss(animated: true)
+        }
         
     }
     
@@ -139,8 +149,7 @@ extension ConversationInputBarViewController {
         })
     }
     
-    @objc
-    func showAlertForFileTooBig() {
+    private func showAlertForFileTooBig() {
         guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
         
         let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(maxUploadFileSize), countStyle: .binary)
