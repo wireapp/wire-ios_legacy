@@ -136,7 +136,7 @@ final class Settings {
 
         startLogging()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(UIApplicationDelegate.applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
     func migrateAppCenterAndOptOutSettingsToSharedDefaults() {
@@ -160,7 +160,8 @@ final class Settings {
         UserDefaults.standard.synchronize()
     }
 
-    func applicationDidEnterBackground(_ application: UIApplication) {
+    @objc
+    private func applicationDidEnterBackground(_ application: UIApplication) {
         synchronize()
     }
 

@@ -20,7 +20,7 @@ import Foundation
 import MessageUI
 
 /// Presents debug alerts
-@objcMembers public class DebugAlert: NSObject {
+final class DebugAlert: NSObject {
     
     private struct Action {
         let text: String
@@ -105,7 +105,7 @@ import MessageUI
 }
 
 /// Sends debug logs by email
-@objcMembers public class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
+final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
 
     private var mailViewController : MFMailComposeViewController? = nil
     static private var senderInstance: DebugLogSender? = nil
@@ -124,7 +124,7 @@ import MessageUI
         }
         
         // Prepare subject & body
-        let user = SelfUser.current as? ZMUser
+        let user = SelfUser.provider?.selfUser as? ZMUser
         let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"
