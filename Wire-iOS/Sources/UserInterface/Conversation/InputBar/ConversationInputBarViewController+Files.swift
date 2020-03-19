@@ -18,7 +18,127 @@
 
 import Foundation
 
+extension ConversationInputBarViewController: UINavigationControllerDelegate {
+    
+}
+
 extension ConversationInputBarViewController {
+    func uploadItem(at itemURL: URL) {
+        let itemPath = itemURL?.path
+        var isDirectory = false
+        let fileExists = FileManager.default.fileExists(atPath: itemPath ?? "", isDirectory: UnsafeMutablePointer<ObjCBool>(mutating: &isDirectory))
+        if !fileExists {
+            zmLog.error("File not found for uploading: %@", itemURL)
+            return
+        }
+        
+        if isDirectory {
+            let tmpPath = URL(fileURLWithPath: URL(fileURLWithPath: itemPath ?? "").deletingLastPathComponent().absoluteString).appendingPathComponent("tmp").absoluteString
+            
+            var error: Error? = nil
+            do {
+                try FileManager.default.createDirectory(atPath: tmpPath, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+            }
+            if error != nil {
+                zmLog.error("Cannot create folder at path %@: %@", tmpPath, error)
+                return
+            }
+            
+            do {
+                try FileManager.default.moveItem(atPath: itemPath ?? "", toPath: URL(fileURLWithPath: tmpPath).appendingPathComponent(itemPath?.lastPathComponent ?? "").absoluteString)
+            } catch {
+            }
+            if error != nil {
+                zmLog.error("Cannot move %@ to %@: %@", itemPath, tmpPath, error)
+                do {
+                    try FileManager.default.removeItem(atPath: tmpPath)
+                } catch {
+                }
+                return
+            }
+            
+            let archivePath = itemPath ?? "" + (".zip")
+            let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpPath)
+            
+            if zipSucceded {
+                uploadFile(at: URL(fileURLWithPath: archivePath))
+            } else {
+                zmLog.error("Cannot archive folder at path: %@", itemURL)
+            }
+            
+            do {
+                try FileManager.default.removeItem(atPath: tmpPath)
+            } catch {
+            }
+            if error != nil {
+                zmLog.error("Cannot delete folder at path %@: %@", tmpPath, error)
+                return
+            }
+        } else {
+            uploadFile(at: itemURL)
+        }
+    }
+
+    func uploadFile(at url: URL) {
+        var error: Error? = nil
+        var attributes: [String : Any?]? = nil
+        do {
+            attributes = try FileManager.default.attributesOfItem(atPath: url?.path ?? "")
+        } catch {
+        }
+        
+        let completion = {
+            var deleteError: Error? = nil
+            do {
+                if let url = url {
+                    try FileManager.default.removeItem(at: url)
+                }
+            } catch let deleteError {
+            }
+            
+            if deleteError != nil {
+                zmLog.error("Error: cannot unlink document: %@", deleteError)
+            }
+        }
+        
+        if error != nil {
+            zmLog.error("Cannot get attributes on selected file: %@", error)
+            parent?.dismiss(animated: true)
+            completion()
+        } else {
+            
+            if (attributes?[FileAttributeKey.size] as? NSNumber)?.uint64Value ?? 0 > ZMUserSession.shared().maxUploadFileSize() {
+                // file exceeds maximum allowed upload size
+                parent?.dismiss(animated: false)
+                
+                showAlertForFileTooBig()
+                
+                completion()
+            } else {
+                FileMetaDataGenerator.metadataForFile(at: url, uti: url?.uti, name: url?.lastPathComponent) { metadata in
+                    self.impactFeedbackGenerator.prepare()
+                    ZMUserSession.sharedSession.performChanges({
+                        
+                        weak var message = self.conversation.appendMessage(with: metadata)
+                        self.impactFeedbackGenerator.impactOccurred()
+                        
+                        if message?.fileMessageData.isVideo != nil {
+                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionVideoMessage, inConversation: self.conversation)
+                        } else if message?.fileMessageData.isAudio != nil {
+                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionAudioMessage, inConversation: self.conversation)
+                        } else {
+                            Analytics.shared().tagMediaActionCompleted(ConversationMediaActionFileTransfer, inConversation: self.conversation)
+                        }
+                        
+                        completion()
+                    })
+                }
+                parent?.dismiss(animated: true)
+            }
+        }
+    }
+    
     func execute(videoPermissions toExecute: @escaping () -> ()) {
         UIApplication.wr_requestOrWarnAboutVideoAccess({ granted in
             if granted {
