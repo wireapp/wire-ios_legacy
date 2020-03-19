@@ -33,32 +33,25 @@ extension ConversationInputBarViewController {
             return
         }
         
-        guard !isDirectory.boolValue else {
+        guard isDirectory.boolValue else {
             uploadFile(at: itemURL)
             return
         }
         
         // zip and upload the directory
         
-        let tmpPath = URL(fileURLWithPath: URL(fileURLWithPath: itemPath).deletingLastPathComponent().absoluteString).appendingPathComponent("tmp").absoluteString
+        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
         
         do {
-            try FileManager.default.createDirectory(atPath: tmpPath, withIntermediateDirectories: true, attributes: nil)
+            try FileManager.default.copyItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpURL.path).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
         } catch {
-            zmLog.error("Cannot create folder at path \(tmpPath): \(error)")
-            return
-        }
-        
-        do {
-            try FileManager.default.moveItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpPath).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
-        } catch {
-            zmLog.error("Cannot move \(itemPath) to \(tmpPath): \(error)")
-            removeItem(atPath: tmpPath)
+            zmLog.error("Cannot move \(itemPath) to \(tmpURL): \(error)")
+            removeItem(atPath: tmpURL.path)
             return
         }
         
         let archivePath = itemPath + (".zip")
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpPath)
+        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpURL.path)
         
         if zipSucceded {
             uploadFile(at: URL(fileURLWithPath: archivePath))
@@ -66,7 +59,7 @@ extension ConversationInputBarViewController {
             zmLog.error("Cannot archive folder at path: \(itemURL)")
         }
         
-        removeItem(atPath: tmpPath)
+        removeItem(atPath: tmpURL.path)
     }
     
     @discardableResult
@@ -83,7 +76,7 @@ extension ConversationInputBarViewController {
     }
     
     func uploadFile(at url: URL) {
-        let completion = {[weak self] in
+        let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
         }
         
@@ -106,17 +99,19 @@ extension ConversationInputBarViewController {
             
             showAlertForFileTooBig()
             
-            completion()
+            _ = completion()
             
             return
         }
-        FileMetaDataGenerator.metadataForFileAtURL(url, UTI: url.UTI(), name: url.lastPathComponent) { [weak self] metadata in
+        
+        FileMetaDataGenerator.metadataForFileAtURL(url,
+                                                   UTI: url.UTI(),
+                                                   name: url.lastPathComponent) { [weak self] metadata in
             guard let weakSelf = self else { return }
             
             weakSelf.impactFeedbackGenerator?.prepare()
             ZMUserSession.shared()?.perform({
-                
-                
+
                 weakSelf.impactFeedbackGenerator?.impactOccurred()
                 
                 var conversationMediaAction: ConversationMediaAction = .fileTransfer
@@ -136,8 +131,6 @@ extension ConversationInputBarViewController {
             })
         }
         parent?.dismiss(animated: true)
-        
-        
     }
     
     func execute(videoPermissions toExecute: @escaping () -> ()) {
