@@ -25,13 +25,13 @@ extension ConversationInputBarViewController {
 
         return DraftMessage(text: text, mentions: mentions, quote: quotedMessage as? ZMMessage)
     }
-    
+
     @objc
     func didEnterBackground(_ notification: Notification?) {
         if !inputBar.textView.text.isEmpty {
             conversation.setIsTyping(false)
         }
-        
+
         let draft = draftMessage(from: inputBar.textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
