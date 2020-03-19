@@ -18,39 +18,35 @@
 
 import Foundation
 
-extension ConversationInputBarViewController: UINavigationControllerDelegate {
-    
-}
+extension ConversationInputBarViewController: UINavigationControllerDelegate {}
+
+private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 
 extension ConversationInputBarViewController {
     func uploadItem(at itemURL: URL) {
-        let itemPath = itemURL?.path
+        let itemPath = itemURL.path
         var isDirectory = false
-        let fileExists = FileManager.default.fileExists(atPath: itemPath ?? "", isDirectory: UnsafeMutablePointer<ObjCBool>(mutating: &isDirectory))
+        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: UnsafeMutablePointer<ObjCBool>(mutating: &isDirectory))
         if !fileExists {
-            zmLog.error("File not found for uploading: %@", itemURL)
+            zmLog.error("File not found for uploading: \(itemURL)")
             return
         }
         
         if isDirectory {
-            let tmpPath = URL(fileURLWithPath: URL(fileURLWithPath: itemPath ?? "").deletingLastPathComponent().absoluteString).appendingPathComponent("tmp").absoluteString
+            let tmpPath = URL(fileURLWithPath: URL(fileURLWithPath: itemPath).deletingLastPathComponent().absoluteString).appendingPathComponent("tmp").absoluteString
             
             var error: Error? = nil
             do {
                 try FileManager.default.createDirectory(atPath: tmpPath, withIntermediateDirectories: true, attributes: nil)
             } catch {
-            }
-            if error != nil {
-                zmLog.error("Cannot create folder at path %@: %@", tmpPath, error)
+                zmLog.error("Cannot create folder at path \(tmpPath): \(error)")
                 return
             }
             
             do {
                 try FileManager.default.moveItem(atPath: itemPath ?? "", toPath: URL(fileURLWithPath: tmpPath).appendingPathComponent(itemPath?.lastPathComponent ?? "").absoluteString)
             } catch {
-            }
-            if error != nil {
-                zmLog.error("Cannot move %@ to %@: %@", itemPath, tmpPath, error)
+                zmLog.error("Cannot move \(itemPath) to \(tmpPath): \(error)")
                 do {
                     try FileManager.default.removeItem(atPath: tmpPath)
                 } catch {
@@ -64,16 +60,14 @@ extension ConversationInputBarViewController {
             if zipSucceded {
                 uploadFile(at: URL(fileURLWithPath: archivePath))
             } else {
-                zmLog.error("Cannot archive folder at path: %@", itemURL)
+                zmLog.error("Cannot archive folder at path: \(itemURL)")
             }
             
             do {
                 try FileManager.default.removeItem(atPath: tmpPath)
             } catch {
-            }
-            if error != nil {
-                zmLog.error("Cannot delete folder at path %@: %@", tmpPath, error)
-                return
+                    zmLog.error("Cannot delete folder at path \(tmpPath): \(error)")
+                    return
             }
         } else {
             uploadFile(at: itemURL)
@@ -81,34 +75,28 @@ extension ConversationInputBarViewController {
     }
 
     func uploadFile(at url: URL) {
-        var error: Error? = nil
-        var attributes: [String : Any?]? = nil
-        do {
-            attributes = try FileManager.default.attributesOfItem(atPath: url?.path ?? "")
-        } catch {
-        }
-        
         let completion = {
             var deleteError: Error? = nil
             do {
-                if let url = url {
-                    try FileManager.default.removeItem(at: url)
-                }
+                try FileManager.default.removeItem(at: url)
             } catch let deleteError {
+                zmLog.error("Error: cannot unlink document: \(deleteError)")
             }
             
-            if deleteError != nil {
-                zmLog.error("Error: cannot unlink document: %@", deleteError)
-            }
         }
-        
-        if error != nil {
-            zmLog.error("Cannot get attributes on selected file: %@", error)
+
+        let attributes: [FileAttributeKey : Any]
+        do {
+            attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+        } catch {
+            zmLog.error("Cannot get attributes on selected file: \(error)")
             parent?.dismiss(animated: true)
             completion()
-        } else {
-            
-            if (attributes?[FileAttributeKey.size] as? NSNumber)?.uint64Value ?? 0 > ZMUserSession.shared().maxUploadFileSize() {
+        }
+        
+        
+        
+            if (attributes[FileAttributeKey.size] as? NSNumber)?.uint64Value ?? 0 > ZMUserSession.shared().maxUploadFileSize() {
                 // file exceeds maximum allowed upload size
                 parent?.dismiss(animated: false)
                 
@@ -136,7 +124,7 @@ extension ConversationInputBarViewController {
                 }
                 parent?.dismiss(animated: true)
             }
-        }
+        
     }
     
     func execute(videoPermissions toExecute: @escaping () -> ()) {
