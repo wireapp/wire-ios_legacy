@@ -79,8 +79,8 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         updateRecordingState(recordingState)
 
-        if Bundle.developerModeEnabled && Settings.shared().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
+        if Bundle.developerModeEnabled && Settings.shared.maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
     

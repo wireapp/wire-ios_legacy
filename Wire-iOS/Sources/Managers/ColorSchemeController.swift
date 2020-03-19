@@ -47,7 +47,7 @@ class ColorSchemeController: NSObject {
 
     @objc
     func settingsColorSchemeDidChange(notification: Notification?) {
-        ColorScheme.default.variant = Settings.shared.colorScheme.colorSchemeVariant
+        ColorScheme.default.variant = Settings.shared.colorSchemeVariant
 
         NSAttributedString.invalidateMarkdownStyle()
 

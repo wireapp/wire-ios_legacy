@@ -26,7 +26,7 @@
 #import "Wire-Swift.h"
 
 
-#import "Settings.h"
+@import FLAnimatedImage;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 

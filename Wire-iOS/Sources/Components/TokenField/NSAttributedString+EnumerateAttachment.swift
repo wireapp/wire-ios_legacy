@@ -16,24 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@class TokenizedTextView;
+import Foundation
 
-@interface TokenField ()
+extension NSAttributedString {
+    func enumerateAttachment(block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        return enumerateAttachment(range: NSRange(location: 0, length: length), block: block)
+    }
 
-@property (nonatomic) NSLayoutConstraint *accessoryButtonTopMargin;
-@property (nonatomic) NSLayoutConstraint *accessoryButtonRightMargin;
-
-@property (nonatomic) UILabel *toLabel;
-@property (nonatomic) NSLayoutConstraint *toLabelLeftMargin;
-@property (nonatomic) NSLayoutConstraint *toLabelTopMargin;
-
-@property (nonatomic) NSMutableArray *currentTokens;
-@property (readonly, nonatomic) NSDictionary *textAttributes;
-
-@property (nonatomic, readwrite) BOOL userDidConfirmInput;
-
-- (void)updateExcludePath;
-- (void)updateLayout;
-- (void)updateTextAttributes;
-
-@end
+    func enumerateAttachment(range: NSRange,
+                             block: (Any?, NSRange, UnsafeMutablePointer<ObjCBool>) -> Void) {
+        enumerateAttribute(.attachment, in: range, options: [], using: block)
+    }
+}

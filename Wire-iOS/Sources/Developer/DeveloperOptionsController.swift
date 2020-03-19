@@ -78,7 +78,7 @@ extension DeveloperOptionsController {
     /// Creates a cell to switch a specific log tag on or off
     func logSwitchCell(tag: String) -> UITableViewCell {
         return self.createCellWithSwitch(labelText: tag, isOn: ZMSLog.getLevel(tag: tag) == .debug) { (isOn) in
-            Settings.shared().set(logTag: tag, enabled: isOn)
+            Settings.shared.set(logTag: tag, enabled: isOn)
         }
     }
     

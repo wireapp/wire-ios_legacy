@@ -146,7 +146,7 @@ final class AppRootViewController: UIViewController {
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
-        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
+        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -168,7 +168,7 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
@@ -353,7 +353,7 @@ final class AppRootViewController: UIViewController {
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
 
-        colorScheme.variant = Settings.shared.colorScheme.colorSchemeVariant
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
     func applicationDidTransition(to appState: AppState) {
@@ -469,7 +469,7 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard !Settings.shared.chatHeadsDisabled else {
+        guard false == Settings.shared[.chatHeadsDisabled] else {
             return false
         }
         

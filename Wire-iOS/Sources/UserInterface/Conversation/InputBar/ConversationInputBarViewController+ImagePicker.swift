@@ -62,10 +62,11 @@ extension ConversationInputBarViewController {
             }
 
             if sourceType == .camera {
-                switch Settings.shared().preferredCamera {
-                case .back:
+                let settingsCamera: SettingsCamera? = Settings.shared[.preferredCamera]
+                switch settingsCamera {
+                case .back?:
                     pickerController.cameraDevice = .rear
-                case .front:
+                case .front?, .none:
                     pickerController.cameraDevice = .front
                 }
             }

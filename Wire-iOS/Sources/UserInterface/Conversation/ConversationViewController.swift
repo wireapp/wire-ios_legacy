@@ -473,7 +473,7 @@ extension ConversationViewController: ConversationInputBarViewControllerDelegate
         session.enqueue({
             if let newText = newText,
                 !newText.isEmpty {
-                let fetchLinkPreview = !Settings.shared().disableLinkPreviews
+                let fetchLinkPreview = !Settings.disableLinkPreviews
                 message.textMessageData?.editText(newText, mentions: mentions, fetchLinkPreview: fetchLinkPreview)
             } else {
                 ZMMessage.deleteForEveryone(message)

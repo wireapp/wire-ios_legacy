@@ -22,11 +22,6 @@
 @import WireCommonComponents;
 
 #import <CommonCrypto/CommonCrypto.h>
-#import "Settings.h"
-
-// UI
-#import "TokenField.h"
-#import "TokenField+Internal.h"
 
 // View Controllers
 

@@ -17,5 +17,5 @@
 //
 
 protocol TokenContainer {
-    var token: Token { get }
+    var token: Token<NSObjectProtocol> { get }
 }

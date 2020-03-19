@@ -55,7 +55,7 @@ func forward(_ message: ZMMessage, to: [AnyObject]) {
     let conversations = to as! [ZMConversation]
 
     if message.isText {
-        let fetchLinkPreview = !Settings.shared().disableLinkPreviews
+        let fetchLinkPreview = !Settings.disableLinkPreviews
         ZMUserSession.shared()?.perform {
             conversations.forEachNonEphemeral {
                 // We should not forward any mentions to other conversations
@@ -156,9 +156,10 @@ extension ConversationContentViewController: UIAdaptivePresentationControllerDel
         keyboardAvoiding.preferredContentSize = CGSize.IPadPopover.preferredContentSize
         keyboardAvoiding.modalPresentationStyle = .popover
 
-        let presenter: PopoverPresenterViewController? = (self.presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
+        let presenter: PopoverPresenterViewController? = (presentedViewController ?? UIApplication.shared.keyWindow?.rootViewController) as? PopoverPresenterViewController
 
-        if let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
+        if let presenter = presenter,
+           let pointToView = (view as? SelectableView)?.selectionView ?? view ?? self.view {
             keyboardAvoiding.configPopover(pointToView: pointToView, popoverPresenter: presenter)
         }
 
