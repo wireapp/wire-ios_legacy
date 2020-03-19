@@ -17,6 +17,13 @@
 
 import UIKit
 
+
+extension ButtonMessageState {
+    var localizedName: String {
+        return "button_message_cell.state.\(self)".localized
+    }
+}
+
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let button = SpinnerButton(style: .empty)
     var isSelected: Bool = false
@@ -49,7 +56,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             ///TODO: style for expired state
         }
         
-        button.accessibilityValue = "\(config.state)"
+        button.accessibilityValue = config.state.localizedName
     }
     
     func configure(with object: Configuration, animated: Bool) {
