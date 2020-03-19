@@ -21,6 +21,13 @@ import MobileCoreServices
 extension ConversationInputBarViewController {
     
     @objc
+    func didEnterBackground(_ notification: Notification?) {
+        guard !inputBar.textView.text.isEmpty else { return }
+
+        conversation.setIsTyping(false)
+    }
+
+    @objc
     func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
         

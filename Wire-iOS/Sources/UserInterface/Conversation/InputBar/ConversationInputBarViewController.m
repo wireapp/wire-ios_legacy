@@ -105,14 +105,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)didEnterBackground:(NSNotification *)notification
-{
-    NOT_USED(notification);
-    if(self.inputBar.textView.text.length > 0) {
-        [self.conversation setIsTyping:NO];
-    }
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
