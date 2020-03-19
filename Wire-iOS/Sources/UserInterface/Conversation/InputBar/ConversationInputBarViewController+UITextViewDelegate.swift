@@ -120,8 +120,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         }
         
         guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
-        let (text, mentions) = textView.preparedText
-        let draft = DraftMessage(text: text, mentions: mentions, quote: self.quotedMessage as? ZMMessage)
+        let draft = draftMessage(from: textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 }

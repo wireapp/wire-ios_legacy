@@ -19,7 +19,23 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
-    
+    // MARK: - Save draft message
+    func draftMessage(from textView: MarkdownTextView) -> DraftMessage {
+        let (text, mentions) = textView.preparedText
+
+        return DraftMessage(text: text, mentions: mentions, quote: quotedMessage as? ZMMessage)
+    }
+
+    @objc
+    func didEnterBackground(_ notification: Notification?) {
+        if !inputBar.textView.text.isEmpty {
+            conversation.setIsTyping(false)
+        }
+
+        let draft = draftMessage(from: inputBar.textView)
+        delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
+    }
+
     @objc
     func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
