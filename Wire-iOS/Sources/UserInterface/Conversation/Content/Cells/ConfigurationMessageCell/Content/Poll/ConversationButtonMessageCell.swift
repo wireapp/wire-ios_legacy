@@ -20,7 +20,7 @@ import UIKit
 
 extension ButtonMessageState {
     var localizedName: String {
-        return "buttonMessageCell.state.\(self)".localized
+        return "button_message_cell.state.\(self)".localized
     }
 }
 

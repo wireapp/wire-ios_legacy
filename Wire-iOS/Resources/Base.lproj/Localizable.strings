@@ -1747,6 +1747,6 @@
 "account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
 
 // Button cell state
-"buttonMessageCell.state.unselected" = "unselected";
-"buttonMessageCell.state.selected" = "selected";
-"buttonMessageCell.state.confirmed" = "confirmed";
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
