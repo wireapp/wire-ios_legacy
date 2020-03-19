@@ -19,7 +19,7 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
-    //MARk: - save draft message
+    // MARK: - Save draft message
     func draftMessage(from textView: MarkdownTextView) -> DraftMessage {
         let (text, mentions) = textView.preparedText
 
@@ -28,11 +28,11 @@ extension ConversationInputBarViewController {
     
     @objc
     func didEnterBackground(_ notification: Notification?) {
-        guard !inputBar.textView.text.isEmpty else { return }
-
-        conversation.setIsTyping(false)
+        if !inputBar.textView.text.isEmpty {
+            conversation.setIsTyping(false)
+        }
         
-       let draft = draftMessage(from: inputBar.textView)
+        let draft = draftMessage(from: inputBar.textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 
