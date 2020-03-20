@@ -207,6 +207,11 @@ extension ConversationMessageCellDescription {
         }
     }
     
+    
+    /// Default impletmentation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type
     func isConfigurationEqual(with other: Any) -> Bool {
         return type(of: self) == type(of: other)
     }
@@ -214,6 +219,11 @@ extension ConversationMessageCellDescription {
 }
 
 extension ConversationMessageCellDescription where View.Configuration : Equatable {
+    
+    /// Default impletmentation of isConfigurationEqual
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type, and configures are equal
     func isConfigurationEqual(with other: Any) -> Bool {
         guard let otherConfig = (other as? Self)?.configuration else { return false }
         
