@@ -213,6 +213,14 @@ extension ConversationMessageCellDescription {
     
 }
 
+extension ConversationMessageCellDescription where View.Configuration : Equatable {
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherConfig = (other as? Self)?.configuration else { return false }
+        
+        return configuration == otherConfig
+    }
+}
+
 /**
  * A type erased box containing a conversation message cell description.
  */

@@ -396,14 +396,6 @@ class ConversationParticipantsChangedSystemMessageCellDescription: ConversationM
         configuration = View.Configuration(icon: model.image(), attributedText: model.attributedTitle(), showLine: true, warning: model.warning())
         actionController = nil
     }
-
-    func isConfigurationEqual(with description: Any) -> Bool {
-        guard let otherSystemMessageDescription = description as? ConversationParticipantsChangedSystemMessageCellDescription else {
-            return false
-        }
-
-        return self.configuration == otherSystemMessageDescription.configuration
-    }
 }
 
 class ConversationRenamedSystemMessageCellDescription: ConversationMessageCellDescription {

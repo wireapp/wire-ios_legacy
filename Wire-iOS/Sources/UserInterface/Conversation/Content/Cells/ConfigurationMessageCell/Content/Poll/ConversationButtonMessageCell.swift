@@ -144,14 +144,6 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
          buttonAction: @escaping Completion) {
         configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction)
     }
-    
-    func isConfigurationEqual(with description: Any) -> Bool {
-        guard let otherButtonMessageDescription = description as? ConversationButtonMessageCellDescription else {
-            return false
-        }
-        
-        return configuration == otherButtonMessageDescription.configuration
-    }
 }
 
 extension ConversationButtonMessageCell.Configuration: Hashable {

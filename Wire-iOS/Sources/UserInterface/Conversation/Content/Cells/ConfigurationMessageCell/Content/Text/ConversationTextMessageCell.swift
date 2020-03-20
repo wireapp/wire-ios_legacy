@@ -157,12 +157,6 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         cell.cellView.menuPresenter = cell
         return cell
     }
-    
-    func isConfigurationEqual(with other: Any) -> Bool {
-        guard let otherDescription = other as? ConversationTextMessageCellDescription else { return false }
-        
-        return configuration == otherDescription.configuration
-    }
 }
 
 // MARK: - Factory
