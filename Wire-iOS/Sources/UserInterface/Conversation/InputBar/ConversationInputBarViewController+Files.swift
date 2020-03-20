@@ -24,26 +24,14 @@ extension ConversationInputBarViewController: UINavigationControllerDelegate {}
 private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 
 extension ConversationInputBarViewController {
-    func uploadItem(at itemURL: URL) {
-        let itemPath = itemURL.path
-        var isDirectory : ObjCBool = false
-        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
-        if !fileExists {
-            zmLog.error("File not found for uploading: \(itemURL)")
-            return
-        }
-        
-        guard isDirectory.boolValue else {
-            uploadFile(at: itemURL)
-            return
-        }
-        
-        // zip and upload the directory
-        
+    //TODO: check it is still possible on iOS 10
+    func updateDirectory(itemURL: URL) {
         let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
-        
+
+        let itemPath = itemURL.path
+
         do {
-            try FileManager.default.copyItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpURL.path).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
+            try FileManager.default.moveItem(atPath: itemPath, toPath: URL(fileURLWithPath: tmpURL.path).appendingPathComponent(itemURL.lastPathComponent).absoluteString)
         } catch {
             zmLog.error("Cannot move \(itemPath) to \(tmpURL): \(error)")
             removeItem(atPath: tmpURL.path)
@@ -60,6 +48,25 @@ extension ConversationInputBarViewController {
         }
         
         removeItem(atPath: tmpURL.path)
+
+    }
+    
+    func uploadItem(at itemURL: URL) {
+        let itemPath = itemURL.path
+        var isDirectory : ObjCBool = false
+        let fileExists = FileManager.default.fileExists(atPath: itemPath, isDirectory: &isDirectory)
+        if !fileExists {
+            zmLog.error("File not found for uploading: \(itemURL)")
+            return
+        }
+        
+        guard isDirectory.boolValue else {
+            uploadFile(at: itemURL)
+            return
+        }
+        
+        // zip and upload the directory
+        updateDirectory(itemURL: itemURL)
     }
     
     @discardableResult
@@ -75,6 +82,24 @@ extension ConversationInputBarViewController {
         return true
     }
     
+    func uploadFiles(at urls: [URL]) {
+        //copy files to a temp path
+        let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
+        
+        urls.forEach() { }
+        do {
+            try FileManager.default.copyItem(at: videoURL, to: videoTempURL)
+        } catch let error {
+            zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
+            return
+        }
+        }
+
+    }
+    
+    /// upload a signal file
+    ///
+    /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
         let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
@@ -90,8 +115,6 @@ extension ConversationInputBarViewController {
             
             return
         }
-        
-        
         
         guard (attributes[FileAttributeKey.size] as? UInt64 ?? UInt64.max) <= ZMUserSession.shared()?.maxUploadFileSize() ?? 0 else {
             // file exceeds maximum allowed upload size
