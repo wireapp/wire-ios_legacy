@@ -35,11 +35,11 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         didSet {
             guard config != oldValue else { return }
             
-            updateUI()
-            
             if config?.state != oldValue?.state {
                 button.isLoading = false
             }
+
+            updateUI()
         }
     }
 

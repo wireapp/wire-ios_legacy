@@ -46,7 +46,6 @@ final class SpinnerButton: Button {
     var isLoading: Bool = false {
         didSet {
             spinner.isHidden = !isLoading
-            isEnabled = !isLoading
 
             isLoading ? spinner.startAnimation() : spinner.stopAnimation()
         }
