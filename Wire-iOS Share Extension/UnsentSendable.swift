@@ -265,18 +265,16 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             }
         })
     }
-
+    
     /// Process data to the right format to be sent
     private func prepareForSending(withUTI UTI: String, name: String?, data: Data, completion: @escaping (URL?, Error?) -> Void) {
         guard let fileName = nameForFile(withUTI: UTI, name: name) else { return completion(nil, nil) }
 
         let fileManager = FileManager.default
-        let tmp = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent(UUID().uuidString) // temp subdir
 
         do {
-            if !fileManager.fileExists(atPath: tmp.absoluteString) {
-                try fileManager.createDirectory(at: tmp, withIntermediateDirectories: true)
-            }
+            let tmp = try FileManager.createTmpDirectory()
+
             let tempFileURL = tmp.appendingPathComponent(fileName)
 
             if fileManager.fileExists(atPath: tempFileURL.absoluteString) {

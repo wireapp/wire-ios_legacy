@@ -116,11 +116,11 @@ extension ConversationInputBarViewController {
 
             documentPickerViewController.delegate = self
 
-            self.parent?.present(documentPickerViewController, animated: true) {
-                if #available(iOS 11.0, *) {
-                    documentPickerViewController.allowsMultipleSelection = true
-                }
+            if #available(iOS 11.0, *) {
+                documentPickerViewController.allowsMultipleSelection = true
             }
+            
+            self.parent?.present(documentPickerViewController, animated: true)
         }
 
         controller.addAction(UIAlertAction(icon: .ellipsis,
