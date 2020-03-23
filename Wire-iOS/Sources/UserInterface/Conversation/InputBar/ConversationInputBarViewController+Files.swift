@@ -24,8 +24,14 @@ extension ConversationInputBarViewController: UINavigationControllerDelegate {}
 private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 
 extension ConversationInputBarViewController {
-    //TODO: check it is still possible on iOS 10
+    
+
+    
     @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Upload a directory is no longer allowed in Document picker")
+    /// Tested with iOS 10 simulator and confirmed that folder is not selectable for upload.
+    /// This method should be removed in the future
+    ///
+    /// - Parameter itemURL: url of the directory
     func updateDirectory(itemURL: URL) {
         let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
 
@@ -104,22 +110,24 @@ extension ConversationInputBarViewController {
     ///
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
+        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
+        
         let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
         }
         
-        let attributes: [FileAttributeKey : Any]
+        let fileSize: UInt64?
         do {
-            attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+           fileSize = try url.fileSize()
         } catch {
-            zmLog.error("Cannot get attributes on selected file: \(error)")
+            zmLog.error("Cannot get file size on selected file: \(error)")
             parent?.dismiss(animated: true)
             completion()
             
             return
         }
         
-        guard (attributes[FileAttributeKey.size] as? UInt64 ?? UInt64.max) <= ZMUserSession.shared()?.maxUploadFileSize() ?? 0 else {
+        guard (fileSize ?? UInt64.max) <= maxUploadFileSize else {
             // file exceeds maximum allowed upload size
             parent?.dismiss(animated: false)
             
@@ -178,17 +186,5 @@ extension ConversationInputBarViewController {
         let errorMessage = String(format: "content.file.too_big".localized, maxSizeString)
         let alert = UIAlertController.alertWithOKButton(message: errorMessage)
         present(alert, animated: true)
-    }
-}
-
-extension Array where Element == URL {
-    func zipFiles(filename: String = "archive.zip") -> URL? {
-        let archiveURL = URL(fileURLWithPath: NSTemporaryDirectory() + filename)
-        
-        let paths = map(){$0.path}
-        
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archiveURL.path, withFilesAtPaths: paths)
-        
-        return zipSucceded ? archiveURL : nil
     }
 }
