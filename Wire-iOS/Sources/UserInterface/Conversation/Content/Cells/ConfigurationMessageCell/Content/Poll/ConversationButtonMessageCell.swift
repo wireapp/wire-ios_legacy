@@ -64,6 +64,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
     
     func configure(with object: Configuration, animated: Bool) {
+        button.reset()
+
         config = object
     }
 
@@ -90,11 +92,13 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         configureViews()
         createConstraints()
         
-        button.addTarget(self, action: #selector(buttonTouched), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
     }
     
     @objc
-    private func buttonTouched() {
+    private func buttonTouched(sender: Any) {
+        guard config?.state != .confirmed else { return }
+        
         button.isLoading = true
         buttonAction?()
     }
