@@ -117,15 +117,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @end
 
-
-@interface SplitViewController ()
-
-@property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
-
-@property (nonatomic) UITraitCollection *futureTraitCollection;
-
-@end
-
 @implementation SplitViewController
 
 - (void)viewDidLoad 
