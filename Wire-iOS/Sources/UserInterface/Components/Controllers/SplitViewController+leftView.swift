@@ -23,39 +23,36 @@ extension SplitViewController {
     var isConversationViewVisible: Bool {
         return (layoutSize == .regularLandscape) || !isLeftViewControllerRevealed
     }
-
-
+    
+    
     /// update left view UI depends on isLeftViewControllerRevealed
     ///
     /// - Parameters:
     ///   - animated: animation enabled?
     ///   - completion: completion closure
-    @objc(updateLeftViewControllerVisibilityAnimated:completion:)
-    func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
+    func updateLeftViewController(animated: Bool, completion: Completion?) {
         if animated {
             view.layoutIfNeeded()
         }
-        leftView?.isHidden = false
-
+        leftView.isHidden = false
+        
         resetOpenPercentage()
         if layoutSize != .regularLandscape {
-            leftViewController?.beginAppearanceTransition(self.isLeftViewControllerRevealed, animated: animated)
-            rightViewController?.beginAppearanceTransition(!self.isLeftViewControllerRevealed, animated: animated)
+            leftViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: animated)
+            rightViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: animated)
         }
-
-        let completionBlock: () -> Void = {
-            if let completion = completion {
-                completion()
-            }
-
+        
+        let completionBlock: Completion = {
+            completion?()
+            
             if self.openPercentage == 0 &&
                 self.layoutSize != .regularLandscape &&
                 (self.leftView.layer.presentation()?.frame == self.leftView.frame || (self.leftView.layer.presentation()?.frame == nil && !animated)) {
-                self.leftView?.isHidden = true
+                self.leftView.isHidden = true
             }
         }
-
-        if animated {    
+        
+        if animated {
             UIView.animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
                 self.view.layoutIfNeeded()
             }, completion: {(_ finished: Bool) -> Void in
