@@ -44,7 +44,7 @@ final class ZClientViewController: UIViewController {
     // init value = false which set to true, set to false after data usage permission dialog is displayed
     var dataUsagePermissionDialogDisplayed = false
     let backgroundViewController: BackgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
-
+    
     private let colorSchemeController: ColorSchemeController = ColorSchemeController()
     private var analyticsEventPersistence: ShareExtensionAnalyticsPersistence?
     private var incomingApnsObserver: Any?
@@ -101,11 +101,11 @@ final class ZClientViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
         AVSMediaManager.sharedInstance().unregisterMedia(mediaPlaybackManager)
     }
-
+    
     private func restoreStartupState() {
         pendingInitialStateRestore = false
         attemptToPresentInitialConversation()
@@ -132,7 +132,7 @@ final class ZClientViewController: UIViewController {
         }
         return stateRestored
     }
-
+    
     // MARK: - Overloaded methods
     
     override func viewDidLoad() {
@@ -141,13 +141,12 @@ final class ZClientViewController: UIViewController {
         pendingInitialStateRestore = true
         
         view.backgroundColor = .black
-        
         wireSplitViewController.delegate = self
         addToSelf(wireSplitViewController)
         
         wireSplitViewController.view.translatesAutoresizingMaskIntoConstraints = false
         createTopViewConstraints()
-
+        
         updateSplitViewTopConstraint()
         
         wireSplitViewController.view.backgroundColor = .clear
@@ -171,18 +170,18 @@ final class ZClientViewController: UIViewController {
     
     private func createBackgroundViewController() {
         backgroundViewController.addToSelf(conversationListViewController)
-
+        
         conversationListViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         conversationListViewController.view.frame = backgroundViewController.view.bounds
-
+        
         wireSplitViewController.leftViewController = backgroundViewController
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
     
-
+    
     override var shouldAutorotate: Bool {
         return presentedViewController?.shouldAutorotate ?? true
     }
@@ -214,9 +213,9 @@ final class ZClientViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-
+    
     // MARK: trait
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -270,17 +269,14 @@ final class ZClientViewController: UIViewController {
         wireSplitViewController.setRight(conversationRootViewController, animated: animated, completion: completion)
         
         if focus {
-            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated, completion: nil)
+            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated)
         }
         
         return true
     }
-
-    func loadPlaceholderConversationController(animated: Bool) {
-        loadPlaceholderConversationController(animated: animated) { }
-    }
     
-    func loadPlaceholderConversationController(animated: Bool, completion: @escaping Completion) {
+    func loadPlaceholderConversationController(animated: Bool,
+                                               completion: Completion? = nil) {
         currentConversation = nil
         pushContentViewController(nil, focusOnView: false, animated: animated, completion: completion)
     }
@@ -303,7 +299,7 @@ final class ZClientViewController: UIViewController {
               completion: Completion? = nil) {
         var conversationRootController: ConversationRootViewController? = nil
         if conversation === currentConversation,
-           conversationRootController != nil {
+            conversationRootController != nil {
             if let message = message {
                 conversationRootController?.scroll(to: message)
             }
@@ -332,7 +328,7 @@ final class ZClientViewController: UIViewController {
         let controller = GroupDetailsViewController(conversation: conversation)
         let navController = controller.wrapInNavigationController()
         navController.modalPresentationStyle = .formSheet
-
+        
         present(navController, animated: true)
     }
     
@@ -389,7 +385,7 @@ final class ZClientViewController: UIViewController {
     // MARK: - ColorSchemeControllerDidApplyChangesNotification
     private func reloadCurrentConversation() {
         guard let currentConversation = currentConversation else { return }
-
+        
         let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
         
         // Need to reload conversation to apply color scheme changes
@@ -425,7 +421,7 @@ final class ZClientViewController: UIViewController {
     /// - Returns: In the first case, YES is returned, otherwise NO.
     @discardableResult
     private func attemptToLoadLastViewedConversation(withFocus focus: Bool, animated: Bool) -> Bool {
-
+        
         if let currentAccount = SessionManager.shared?.accountManager.selectedAccount {
             if let conversation = Settings.shared.lastViewedConversation(for: currentAccount) {
                 select(conversation: conversation, focusOnView: focus, animated: animated)
@@ -438,7 +434,7 @@ final class ZClientViewController: UIViewController {
             })
             
             return true
-
+            
         } else {
             selectListItemWhenNoPreviousItemSelected()
             return false
@@ -467,7 +463,7 @@ final class ZClientViewController: UIViewController {
     func contentSizeCategoryDidChange(_ notification: Notification?) {
         reloadCurrentConversation()
     }
-
+    
     private func setupAppearance() {
         GuestIndicator.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         UserCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
@@ -490,19 +486,19 @@ final class ZClientViewController: UIViewController {
         AddressBookHelper.sharedHelper.startRemoteSearch(!addressBookDidBecomeGranted)
         AddressBookHelper.sharedHelper.persistCurrentAccessStatus()
     }
-
+    
     // MARK: - Setup methods
     
     private func setupAddressBookHelper() {
         AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
     }
-
+    
     func transitionToList(animated: Bool, completion: Completion?) {
         transitionToList(animated: animated,
                          leftViewControllerRevealed: true,
                          completion: completion)
     }
-
+    
     func transitionToList(animated: Bool,
                           leftViewControllerRevealed: Bool = true,
                           completion: Completion?) {
@@ -517,8 +513,8 @@ final class ZClientViewController: UIViewController {
         }
         
     }
-
-
+    
+    
     func setTopOverlay(to viewController: UIViewController?, animated: Bool = true) {
         topOverlayViewController?.willMove(toParent: nil)
         
@@ -538,13 +534,13 @@ final class ZClientViewController: UIViewController {
                             previousViewController.removeFromParent()
                             self.topOverlayViewController = viewController
                             self.updateSplitViewTopConstraint()
-                            })
+                })
             } else {
                 topOverlayContainer.addSubview(viewController.view)
                 viewController.view.fitInSuperview()
                 viewController.didMove(toParent: self)
                 topOverlayViewController = viewController
-                        updateSplitViewTopConstraint()
+                updateSplitViewTopConstraint()
             }
         } else if let previousViewController = topOverlayViewController {
             if animated {
@@ -598,7 +594,7 @@ final class ZClientViewController: UIViewController {
             }
         }
     }
-
+    
     private func createLegalHoldDisclosureController() {
         legalHoldDisclosureController = LegalHoldDisclosureController(selfUser: ZMUser.selfUser(), userSession: ZMUserSession.shared(), presenter: { viewController, animated, completion in
             viewController.presentTopmost(animated: animated, completion: completion)
@@ -609,7 +605,7 @@ final class ZClientViewController: UIViewController {
         
         topOverlayContainer.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topOverlayContainer)
-
+        
         contentTopRegularConstraint = topOverlayContainer.topAnchor.constraint(equalTo: safeTopAnchor)
         contentTopCompactConstraint = topOverlayContainer.topAnchor.constraint(equalTo: view.topAnchor)
         
@@ -621,14 +617,14 @@ final class ZClientViewController: UIViewController {
             wireSplitViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             wireSplitViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             ])
-
+        
         let heightConstraint = topOverlayContainer.heightAnchor.constraint(equalToConstant: 0)
         heightConstraint.priority = UILayoutPriority.defaultLow
         heightConstraint.isActive = true
     }
-
+    
     private func updateSplitViewTopConstraint() {
-
+        
         let isRegularContainer = traitCollection.horizontalSizeClass == .regular
         
         if isRegularContainer && nil == topOverlayViewController {
@@ -638,41 +634,41 @@ final class ZClientViewController: UIViewController {
             contentTopRegularConstraint.isActive = false
             contentTopCompactConstraint.isActive = true
         }
-
+        
     }
-
-
+    
+    
     /// Open the user client list screen
     ///
     /// - Parameter user: the UserType with client list to show
     
     func openClientListScreen(for user: UserType) {
         var viewController: UIViewController?
-
+        
         if user.isSelfUser, let clients = user.allClients as? [UserClient] {
             let clientListViewController = ClientListViewController(clientsList: clients, credentials: nil, detailedView: true, showTemporary: true, variant: ColorScheme.default.variant)
             clientListViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissClientListController(_:)))
             viewController = clientListViewController
         } else {
             let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .deviceList)
-
+            
             if let conversationViewController = (conversationRootViewController as? ConversationRootViewController)?.conversationViewController {
                 profileViewController.delegate = conversationViewController
-
+                
                 profileViewController.viewControllerDismisser = conversationViewController
             }
             viewController = profileViewController
         }
-
+        
         let navWrapperController: UINavigationController? = viewController?.wrapInNavigationController()
         navWrapperController?.modalPresentationStyle = .formSheet
         if let aController = navWrapperController {
             present(aController, animated: true)
         }
     }
-
+    
     ///MARK: - select conversation
-
+    
     /// Select a conversation and move the focus to the conversation view.
     ///
     /// - Parameters:
@@ -690,25 +686,25 @@ final class ZClientViewController: UIViewController {
             self?.conversationListViewController.viewModel.select(conversation: conversation, scrollTo: message, focusOnView: focus, animated: animated, completion: completion)
         })
     }
-
+    
     func select(conversation: ZMConversation) {
         conversationListViewController.viewModel.select(conversation: conversation)
     }
-
+    
     var isConversationViewVisible: Bool {
         return wireSplitViewController.isConversationViewVisible
     }
-
+    
     var isConversationListVisible: Bool {
         return (wireSplitViewController.layoutSize == .regularLandscape) ||
             (wireSplitViewController.isLeftViewControllerRevealed && conversationListViewController.presentedViewController == nil)
     }
-
+    
     func minimizeCallOverlay(animated: Bool,
                              withCompletion completion: Completion?) {
         AppDelegate.shared.callWindowRootViewController?.minimizeOverlay(animated: animated, completion: completion)
     }
-
+    
     // MARK: - Application State
     @objc
     private func applicationWillEnterForeground(_ notification: Notification?) {
@@ -725,7 +721,7 @@ final class ZClientViewController: UIViewController {
             Analytics.shared().tag($0)
         }
     }
-
+    
 }
 
 //MARK: - ZMNetworkAvailabilityObserver
