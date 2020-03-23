@@ -86,38 +86,20 @@ extension ConversationInputBarViewController {
         guard urls.count > 1 else {
             if let url = urls.first {
                 uploadFile(at: url)
-            }
-            
+            }            
             return
         }
         
-        //copy files to a temp path
-        guard let tmpDirectory = try? FileManager.createTmpDirectory() else {
-            zmLog.error("Cannot create temp directory")
-            return
-        }
-
-        urls.forEach() {
-            do {                
-                let filename = $0.lastPathComponent
-                try FileManager.default.copyItem(at: $0, to: tmpDirectory.appendingPathComponent(filename))
-            } catch let error {
-                zmLog.error("Cannot copy video from \($0) to \(tmpDirectory): \(error)")
-                return
-            }
-        }
+        let archivePath = URL(fileURLWithPath: NSTemporaryDirectory() + "archive.zip").path
         
-        let archivePath = URL(fileURLWithPath: NSTemporaryDirectory() + "\(UUID().uuidString).zip").path
-        
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withContentsOfDirectory: tmpDirectory.path)
+        let paths = urls.map(){$0.path}
+        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withFilesAtPaths: paths)
 
         if zipSucceded {
             uploadFile(at: URL(fileURLWithPath: archivePath))
         } else {
             zmLog.error("Cannot archive folder at path: \(archivePath)")
         }
-        
-        removeItem(atPath: tmpDirectory.path)
 
     }
     
