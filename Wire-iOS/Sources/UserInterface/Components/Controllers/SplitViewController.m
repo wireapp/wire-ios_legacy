@@ -166,25 +166,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
 }
 
-- (void)updateLayoutSizeAndLeftViewVisibility
-{
-    [self updateLayoutSizeForTraitCollection:self.traitCollection];
-    [self updateLeftViewVisibility];
-}
-
-- (void)updateLeftViewVisibility
-{
-    switch(self.layoutSize) {
-        case SplitViewControllerLayoutSizeCompact: // fallthrough
-        case SplitViewControllerLayoutSizeRegularPortrait:
-            self.leftView.hidden = self.openPercentage == 0;
-            break;
-        case SplitViewControllerLayoutSizeRegularLandscape:
-            self.leftView.hidden = NO;
-            break;
-    }
-}
-
 - (CGFloat)leftViewControllerWidth
 {
     return self.leftViewWidthConstraint.constant;
@@ -265,10 +246,5 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-//- (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage
-//{
-//    self.rightViewLeadingConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
-//    self.leftViewLeadingConstraint.constant = 64.0f * (1.0f - percentage);
-//}
 
 @end

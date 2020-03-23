@@ -44,7 +44,6 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 - (void)updateConstraintsForSize:(CGSize)size;
 - (void)updateLeftViewVisibility;
 - (void)updateForSize:(CGSize)size;
-- (void)updateLayoutSizeAndLeftViewVisibility;
 
 @end
 

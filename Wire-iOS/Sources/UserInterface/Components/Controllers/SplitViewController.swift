@@ -105,6 +105,33 @@ extension SplitViewController {
     
     //TODO private
     
+//    func update(for size: CGSize) {
+//        updateLayoutSize(for: futureTraitCollection ?? traitCollection)
+//
+//        updateConstraints(for: size)
+//        updateActiveConstraints()
+//
+//        futureTraitCollection = nil
+//
+//        // update right view constraits after size changes
+//        updateRightAndLeftEdgeConstraints(openPercentage)
+//    }
+    
+    func updateLayoutSizeAndLeftViewVisibility() {
+        updateLayoutSize(for: traitCollection)
+        updateLeftViewVisibility()
+    }
+    
+
+    func updateLeftViewVisibility() {
+        switch layoutSize {
+        case .compact /* fallthrough */, .regularPortrait:
+            leftView.isHidden = (openPercentage == 0)
+        case .regularLandscape:
+            leftView.isHidden = false
+        }
+    }
+
     
     var constraintsActiveForCurrentLayout: [NSLayoutConstraint] {
         var constraints: Set<NSLayoutConstraint> = []
