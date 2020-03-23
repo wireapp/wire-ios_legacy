@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,7 +20,7 @@ import XCTest
 
 final class URLs_zipTests: XCTestCase {
 
-    func testThatFileURLsCanBeZipped(){
+    func testThatFileURLsCanBeZipped() {
         // GIVEN
         let urls = ["not_animated.gif", "0x0.pdf", "sample.pkpass"].map() {
             urlForResource(inTestBundleNamed:$0)
@@ -33,5 +32,8 @@ final class URLs_zipTests: XCTestCase {
         // THEN
         XCTAssertNotNil(zipURL)
         XCTAssertGreaterThan(try! zipURL!.fileSize()!, 0)
+
+        try! FileManager.default.removeItem(atPath: zipURL!.path)
+        XCTAssertNil(try? zipURL?.fileSize())
     }
 }

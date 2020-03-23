@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -20,10 +19,10 @@ import Foundation
 import ZipArchive
 
 extension URL {
-    func fileSize() throws -> UInt64?  {
-        let attributes: [FileAttributeKey : Any]
+    func fileSize() throws -> UInt64? {
+        let attributes: [FileAttributeKey: Any]
         attributes = try FileManager.default.attributesOfItem(atPath: path)
-    
+
         return attributes[FileAttributeKey.size] as? UInt64
     }
 }
@@ -31,11 +30,11 @@ extension URL {
 extension Array where Element == URL {
     func zipFiles(filename: String = "archive.zip") -> URL? {
         let archiveURL = URL(fileURLWithPath: NSTemporaryDirectory() + filename)
-        
-        let paths = map(){$0.path}
-        
+
+        let paths = map() {$0.path}
+
         let zipSucceded = SSZipArchive.createZipFile(atPath: archiveURL.path, withFilesAtPaths: paths)
-        
+
         return zipSucceded ? archiveURL : nil
     }
 }
