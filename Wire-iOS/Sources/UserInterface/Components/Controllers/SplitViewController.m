@@ -144,24 +144,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self.view addGestureRecognizer:self.horizontalPanner];
 }
 
-
-- (void)updateForSize:(CGSize)size
-{
-    if (nil != self.futureTraitCollection) {
-        [self updateLayoutSizeForTraitCollection:self.futureTraitCollection];
-    } else {
-        [self updateLayoutSizeForTraitCollection:self.traitCollection];
-    }
-    
-    [self updateConstraintsForSize:size];
-    [self updateActiveConstraints];
-
-    self.futureTraitCollection = nil;
-
-    // update right view constraits after size changes
-    [self updateRightAndLeftEdgeConstraints: self.openPercentage];
-}
-
 - (void)updateConstraintsForSize:(CGSize)size {
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
 }

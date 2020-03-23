@@ -105,17 +105,17 @@ extension SplitViewController {
     
     //TODO private
     
-//    func update(for size: CGSize) {
-//        updateLayoutSize(for: futureTraitCollection ?? traitCollection)
-//
-//        updateConstraints(for: size)
-//        updateActiveConstraints()
-//
-//        futureTraitCollection = nil
-//
-//        // update right view constraits after size changes
-//        updateRightAndLeftEdgeConstraints(openPercentage)
-//    }
+    func update(for size: CGSize) {
+        updateLayoutSize(for: futureTraitCollection ?? traitCollection)
+
+        updateConstraints(for: size)
+        updateActiveConstraints()
+
+        futureTraitCollection = nil
+
+        // update right view constraits after size changes
+        updateRightAndLeftEdgeConstraints(openPercentage)
+    }
     
     func updateLayoutSizeAndLeftViewVisibility() {
         updateLayoutSize(for: traitCollection)
