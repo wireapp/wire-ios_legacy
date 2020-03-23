@@ -42,16 +42,27 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 
 - (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
 
-- (void)resetOpenPercentage;
-
 - (NSArray *)constraintsInactiveForCurrentLayout;
 - (NSArray *)constraintsActiveForCurrentLayout;
 
-- (BOOL)transitionFromViewController:(UIViewController *)fromViewController
-                    toViewController:(UIViewController *)toViewController
-                       containerView:(UIView *)containerView
-                            animator:(id<UIViewControllerAnimatedTransitioning>)animator
-                            animated:(BOOL)animated
-                          completion:(nullable dispatch_block_t)completion;
+@end
+
+@interface SplitViewControllerTransitionContext : NSObject <UIViewControllerContextTransitioning>
+
+@property (nonatomic, copy) void (^completionBlock)(BOOL didComplete);
+@property (nonatomic, getter=isAnimated) BOOL animated;
+@property (nonatomic, getter=isInteractive) BOOL interactive;
+
+- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController containerView:(UIView *)containerView;
+
+@end
+
+
+
+@interface SplitViewControllerTransitionContext ()
+
+@property (nonatomic) NSDictionary *viewControllers;
+@property (nonatomic) UIView *containerView;
+@property (nonatomic) UIModalPresentationStyle presentationStyle;
 
 @end

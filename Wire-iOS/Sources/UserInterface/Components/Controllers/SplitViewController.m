@@ -24,25 +24,7 @@
 NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayoutObservableDidChangeToLayoutSizeNotificationName";
 
 
-@interface SplitViewControllerTransitionContext : NSObject <UIViewControllerContextTransitioning>
 
-@property (nonatomic, copy) void (^completionBlock)(BOOL didComplete);
-@property (nonatomic, getter=isAnimated) BOOL animated;
-@property (nonatomic, getter=isInteractive) BOOL interactive;
-
-- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController containerView:(UIView *)containerView;
-
-@end
-
-
-
-@interface SplitViewControllerTransitionContext ()
-
-@property (nonatomic) NSDictionary *viewControllers;
-@property (nonatomic) UIView *containerView;
-@property (nonatomic) UIModalPresentationStyle presentationStyle;
-
-@end
 
 
 
@@ -326,41 +308,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (BOOL)transitionFromViewController:(UIViewController *)fromViewController
-                    toViewController:(UIViewController *)toViewController
-                       containerView:(UIView *)containerView
-                            animator:(id<UIViewControllerAnimatedTransitioning>)animator
-                            animated:(BOOL)animated
-                          completion:(nullable dispatch_block_t)completion
-{
-    if ([self.childViewControllers containsObject:toViewController]) {
-        return NO; // Return if transition is done or already in progress
-    }
-    
-    [fromViewController willMoveToParentViewController:nil];
-    
-    if (toViewController != nil) {
-        toViewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        [self addChildViewController:toViewController];
-    } else {
-        [self updateConstraintsForSize:self.view.bounds.size willMoveToEmptyView:YES];
-    }
-    
-    SplitViewControllerTransitionContext *transitionContext = [[SplitViewControllerTransitionContext alloc] initWithFromViewController:fromViewController toViewController:toViewController containerView:containerView];
-    
-    transitionContext.interactive = NO;
-    transitionContext.animated = animated;
-    transitionContext.completionBlock = ^(BOOL didComplete) {
-        [fromViewController.view removeFromSuperview];
-        [fromViewController removeFromParentViewController];
-        [toViewController didMoveToParentViewController:self];
-        if (completion != nil) completion();
-    };
-    
-    [animator animateTransition:transitionContext];
-    
-    return YES;
-}
 
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
 {
@@ -374,11 +321,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self updateLeftViewControllerVisibilityAnimated:animated completion:completion];
 }
 
-- (void)resetOpenPercentage
-{
-    self.openPercentage = self.leftViewControllerRevealed ? 1 : 0;
-}
-
 - (void)setOpenPercentage:(CGFloat)percentage
 {
     _openPercentage = percentage;
@@ -387,10 +329,10 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage
-{
-    self.rightViewLeadingConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
-    self.leftViewLeadingConstraint.constant = 64.0f * (1.0f - percentage);
-}
+//- (void)updateRightAndLeftEdgeConstraints:(CGFloat)percentage
+//{
+//    self.rightViewLeadingConstraint.constant = self.leftViewWidthConstraint.constant * percentage;
+//    self.leftViewLeadingConstraint.constant = 64.0f * (1.0f - percentage);
+//}
 
 @end

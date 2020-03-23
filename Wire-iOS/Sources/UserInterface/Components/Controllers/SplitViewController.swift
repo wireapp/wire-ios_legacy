@@ -71,4 +71,58 @@ extension SplitViewController {
             self.setInternalLeft(leftViewController)
         }
     }
+    
+    //TODO private
+    
+    //private
+    @objc(transitionFromViewController:toViewController:containerView:animator:animated:completion:)
+    func transition(from fromViewController: UIViewController?,
+                            to toViewController: UIViewController?,
+                            containerView: UIView,
+                            animator: UIViewControllerAnimatedTransitioning?,
+                            animated: Bool,
+                            completion: Completion? = nil) -> Bool {
+        // Return if transition is done or already in progress
+        if let toViewController = toViewController, children.contains(toViewController) {
+                return false
+        }
+        
+        fromViewController?.willMove(toParent: nil)
+        
+        if let toViewController = toViewController {
+            toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            addChild(toViewController)
+        } else {
+            updateConstraints(for: view.bounds.size, willMoveToEmptyView: true)
+        }
+        
+        ///TODO: non optional
+        let transitionContext = SplitViewControllerTransitionContext(from: fromViewController, to: toViewController, containerView: containerView)!
+        
+        transitionContext.isInteractive = false
+        transitionContext.isAnimated = animated
+        transitionContext.completionBlock = { didComplete in
+            fromViewController?.view.removeFromSuperview()
+            fromViewController?.removeFromParent()
+            toViewController?.didMove(toParent: self)
+                completion?()
+        }
+        
+        animator?.animateTransition(using: transitionContext)
+        
+        return true
+    }
+
+    @objc
+    func resetOpenPercentage() {
+        openPercentage = isLeftViewControllerRevealed ? 1 : 0
+    }
+
+    @objc
+    func updateRightAndLeftEdgeConstraints(_ percentage: CGFloat) {
+        rightViewLeadingConstraint.constant = leftViewWidthConstraint.constant * percentage
+        leftViewLeadingConstraint.constant = 64 * (1 - percentage)
+    }
+    //TODO end of private
+
 }
