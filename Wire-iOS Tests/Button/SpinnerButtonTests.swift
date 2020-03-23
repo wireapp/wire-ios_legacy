@@ -74,8 +74,6 @@ final class SpinnerButtonTests: XCTestCase {
         createSut()
         sut.isLoading = true
 
-        XCTAssertFalse(sut.isEnabled)
-
         verifyInAllPhoneWidths(matching:sut,
                                named: "dark")
 
