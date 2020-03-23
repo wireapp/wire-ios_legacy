@@ -41,11 +41,18 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 @property (nonatomic) SplitViewControllerLayoutSize layoutSize;
 
 - (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
-
-- (NSArray *)constraintsInactiveForCurrentLayout;
-- (NSArray *)constraintsActiveForCurrentLayout;
+- (void)updateConstraintsForSize:(CGSize)size;
 
 @end
+
+@interface SplitViewController ()
+
+@property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
+
+@property (nonatomic) UITraitCollection *futureTraitCollection;
+
+@end
+
 
 @interface SplitViewControllerTransitionContext : NSObject <UIViewControllerContextTransitioning>
 

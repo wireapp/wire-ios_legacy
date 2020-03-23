@@ -20,7 +20,8 @@ import Foundation
 
 extension SplitViewController {
     @objc func setupInitialConstraints() {
-        guard let leftView = leftView, let rightView = rightView else { return }
+        guard let leftView = leftView,
+              let rightView = rightView else { return }
 
         leftViewLeadingConstraint = leftView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         leftViewLeadingConstraint.priority = UILayoutPriority.defaultHigh
@@ -46,9 +47,9 @@ extension SplitViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
-    @objc func updateActiveConstraints() {
-        guard let constraintsInactiveForCurrentLayout = constraintsInactiveForCurrentLayout() as? [NSLayoutConstraint],
-        let constraintsActiveForCurrentLayout = constraintsActiveForCurrentLayout() as? [NSLayoutConstraint] else { return }
+    ///TODO: private
+    @objc
+    func updateActiveConstraints() {
         NSLayoutConstraint.deactivate(constraintsInactiveForCurrentLayout)
         NSLayoutConstraint.activate(constraintsActiveForCurrentLayout)
     }
