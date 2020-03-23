@@ -122,7 +122,7 @@ extension SplitViewController {
         updateLeftViewVisibility()
     }
     
-
+    @objc
     func updateLeftViewVisibility() {
         switch layoutSize {
         case .compact /* fallthrough */, .regularPortrait:
@@ -206,4 +206,20 @@ extension SplitViewController {
     }
     //TODO end of private
 
+}
+
+extension UIViewController {
+    var wr_splitViewController: SplitViewController? {
+        var possibleSplit: UIViewController? = self
+        
+        repeat {
+            if let splitViewController = possibleSplit as? SplitViewController {
+                return splitViewController
+            }
+            
+            possibleSplit = possibleSplit?.parent
+        } while possibleSplit != nil
+        
+        return nil
+    }
 }

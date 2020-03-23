@@ -42,12 +42,6 @@ FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotificati
 @end
 
 
-@interface UIViewController (SplitViewController)
-@property (nonatomic, readonly, nullable) SplitViewController *wr_splitViewController;
-@end
-
-
-
 @interface SplitViewController : UIViewController <SplitLayoutObservable>
 @property (nonatomic, nullable) UIViewController *leftViewController;
 @property (nonatomic, nullable) UIViewController *rightViewController;
