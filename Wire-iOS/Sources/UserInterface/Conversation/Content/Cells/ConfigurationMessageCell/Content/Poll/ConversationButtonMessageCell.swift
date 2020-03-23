@@ -35,6 +35,10 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         didSet {
             guard config != oldValue else { return }
             
+            if config?.state != oldValue?.state {
+                button.isLoading = false
+            }
+
             updateUI()
         }
     }
@@ -91,6 +95,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     
     @objc
     private func buttonTouched() {
+        button.isLoading = true
         buttonAction?()
     }
 
