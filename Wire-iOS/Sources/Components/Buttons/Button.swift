@@ -171,12 +171,13 @@ class Button: ButtonWithLargerHitArea {
 
     override var isEnabled: Bool {
         didSet {
+            guard oldValue != isEnabled else { return }
             updateAppearance(with: previousState)
         }
     }
 
     private func updateAppearance(with previousState: UIControl.State?) {
-        if state == previousState {
+        guard state != previousState else {
             return
         }
 
