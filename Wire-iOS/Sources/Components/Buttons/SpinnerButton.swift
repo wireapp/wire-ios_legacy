@@ -88,4 +88,9 @@ final class SpinnerButton: Button {
     static func alarmButton() -> SpinnerButton {
         return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
     }
+    
+    func reset() {
+        isLoading = false
+        isEnabled = true
+    }
 }

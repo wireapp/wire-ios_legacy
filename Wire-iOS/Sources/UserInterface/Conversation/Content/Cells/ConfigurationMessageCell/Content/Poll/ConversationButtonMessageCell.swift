@@ -64,6 +64,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
     
     func configure(with object: Configuration, animated: Bool) {
+        button.reset()
+
         config = object
     }
 
