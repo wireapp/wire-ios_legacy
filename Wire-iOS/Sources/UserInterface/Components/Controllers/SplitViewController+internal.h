@@ -53,23 +53,3 @@ typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
 
 @end
 
-
-@interface SplitViewControllerTransitionContext : NSObject <UIViewControllerContextTransitioning>
-
-@property (nonatomic, copy) void (^completionBlock)(BOOL didComplete);
-@property (nonatomic, getter=isAnimated) BOOL animated;
-@property (nonatomic, getter=isInteractive) BOOL interactive;
-
-- (instancetype)initWithFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController containerView:(UIView *)containerView;
-
-@end
-
-
-
-@interface SplitViewControllerTransitionContext ()
-
-@property (nonatomic) NSDictionary *viewControllers;
-@property (nonatomic) UIView *containerView;
-@property (nonatomic) UIModalPresentationStyle presentationStyle;
-
-@end

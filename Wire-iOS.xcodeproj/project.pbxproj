@@ -713,6 +713,7 @@
 		A91833132419347F00CBD0B7 /* TokenFieldTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91833122419347F00CBD0B7 /* TokenFieldTests.swift */; };
 		A923F1C02428C12A003F361F /* URLs+zip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923F1BF2428C12A003F361F /* URLs+zip.swift */; };
 		A923F1C72428C71A003F361F /* ZipFileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923F1C42428C572003F361F /* ZipFileTests.swift */; };
+		A923F1C924290325003F361F /* SplitViewControllerTransitionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A923F1C824290325003F361F /* SplitViewControllerTransitionContext.swift */; };
 		A9275F5F24221AD6007CB2BC /* TextTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9275F5E24221AD6007CB2BC /* TextTransform.swift */; };
 		A92CB35723CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */; };
 		A92CB35923CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */; };
@@ -2321,6 +2322,7 @@
 		A91833122419347F00CBD0B7 /* TokenFieldTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenFieldTests.swift; sourceTree = "<group>"; };
 		A923F1BF2428C12A003F361F /* URLs+zip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLs+zip.swift"; sourceTree = "<group>"; };
 		A923F1C42428C572003F361F /* ZipFileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipFileTests.swift; sourceTree = "<group>"; };
+		A923F1C824290325003F361F /* SplitViewControllerTransitionContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewControllerTransitionContext.swift; sourceTree = "<group>"; };
 		A9275F5E24221AD6007CB2BC /* TextTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTransform.swift; sourceTree = "<group>"; };
 		A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContentViewControllerDelegate.swift; sourceTree = "<group>"; };
 		A92CB35823CDF97800F12797 /* ConversationViewController+ConversationContentViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationViewController+ConversationContentViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -4260,6 +4262,7 @@
 				EF19EF39230701CF00696D95 /* ImagePickerConfirmationController.swift */,
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
 				871BC1451D34F8F800DF0793 /* SplitViewController.h */,
+				A923F1C824290325003F361F /* SplitViewControllerTransitionContext.swift */,
 				EF60FC4220652F9F0017D083 /* SplitViewController+internal.h */,
 				871BC1461D34F8F800DF0793 /* SplitViewController.m */,
 				A949418823E09489001B0373 /* SplitViewController.swift */,
@@ -7653,6 +7656,7 @@
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */,
 				EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */,
+				A923F1C924290325003F361F /* SplitViewControllerTransitionContext.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
 				A949418723E08AF6001B0373 /* Settings.swift in Sources */,
 				7C25D755214911AC002E22BF /* UserSearchResultsViewController.swift in Sources */,

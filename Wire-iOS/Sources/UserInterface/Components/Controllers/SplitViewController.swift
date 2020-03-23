@@ -178,7 +178,7 @@ extension SplitViewController {
         }
         
         ///TODO: non optional
-        let transitionContext = SplitViewControllerTransitionContext(from: fromViewController, to: toViewController, containerView: containerView)!
+        let transitionContext = SplitViewControllerTransitionContext(from: fromViewController, to: toViewController, containerView: containerView)
         
         transitionContext.isInteractive = false
         transitionContext.isAnimated = animated
