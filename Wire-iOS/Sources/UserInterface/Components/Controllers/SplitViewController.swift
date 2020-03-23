@@ -18,6 +18,37 @@
 import Foundation
 
 extension SplitViewController {
+    //MARK: - override
+    override open func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        futureTraitCollection = newCollection
+        updateLayoutSize(for: newCollection)
+        
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        updateActiveConstraints()
+        
+        updateLeftViewVisibility()
+    }
+    
+    override open func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        update(for: view.bounds.size)
+    }
+    
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        update(for: size)
+        
+        coordinator.animate(alongsideTransition: { context in
+        }) { context in
+            self.updateLayoutSizeAndLeftViewVisibility()
+        }
+        
+    }
+
+    //MARK: - status bar
     private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
