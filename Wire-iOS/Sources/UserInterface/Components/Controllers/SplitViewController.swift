@@ -77,7 +77,7 @@ extension SplitViewController {
     @objc
     func setLeftViewController(_ leftViewController: UIViewController?,
                                animated: Bool,
-                               transition: SplitViewControllerTransition,
+                               transition: SplitViewControllerTransition = .`default`,
                                completion: Completion?) {
         if self.leftViewController == leftViewController {
             completion?()
@@ -105,6 +105,29 @@ extension SplitViewController {
     
     //TODO private
     
+    
+    var constraintsActiveForCurrentLayout: [NSLayoutConstraint] {
+        var constraints: Set<NSLayoutConstraint> = []
+        
+        if layoutSize == .regularLandscape {
+            constraints.formUnion(Set([pinLeftViewOffsetConstraint, sideBySideConstraint]))
+        }
+        
+        constraints.formUnion(Set([leftViewWidthConstraint]))
+        
+        return Array(constraints)
+    }
+    
+    var constraintsInactiveForCurrentLayout: [NSLayoutConstraint] {
+        guard layoutSize != .regularLandscape else {
+            return []
+        }
+        
+        var constraints: Set<NSLayoutConstraint> = []
+        constraints.formUnion(Set([pinLeftViewOffsetConstraint, sideBySideConstraint]))
+        return Array(constraints)
+    }
+
     //private
     @objc(transitionFromViewController:toViewController:containerView:animator:animated:completion:)
     func transition(from fromViewController: UIViewController?,

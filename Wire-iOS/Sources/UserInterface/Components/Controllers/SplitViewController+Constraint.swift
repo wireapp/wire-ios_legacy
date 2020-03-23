@@ -50,8 +50,8 @@ extension SplitViewController {
     ///TODO: private
     @objc
     func updateActiveConstraints() {
-        NSLayoutConstraint.deactivate(constraintsInactiveForCurrentLayout() as! [NSLayoutConstraint])
-        NSLayoutConstraint.activate(constraintsActiveForCurrentLayout() as! [NSLayoutConstraint])
+        NSLayoutConstraint.deactivate(constraintsInactiveForCurrentLayout)
+        NSLayoutConstraint.activate(constraintsActiveForCurrentLayout)
     }
 
     private func leftViewMinWidth(size: CGSize)-> CGFloat {

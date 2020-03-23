@@ -198,30 +198,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
-- (NSArray *)constraintsActiveForCurrentLayout
-{
-    NSMutableSet *constraints = [NSMutableSet set];
-    
-    if (self.layoutSize == SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
-    }
-    
-    [constraints addObjectsFromArray:@[self.leftViewWidthConstraint]];
-    
-    return [constraints allObjects];
-}
-
-- (NSArray *)constraintsInactiveForCurrentLayout
-{
-    NSMutableSet *constraints = [NSMutableSet set];
-    
-    if (self.layoutSize != SplitViewControllerLayoutSizeRegularLandscape) {
-        [constraints addObjectsFromArray:@[self.pinLeftViewOffsetConstraint, self.sideBySideConstraint]];
-    }
-        
-    return [constraints allObjects];
-}
-
 - (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController {
     _leftViewController = leftViewController;
 }
