@@ -25,6 +25,7 @@ private let zmLog = ZMSLog(tag: "ConversationInputBarViewController+Files")
 
 extension ConversationInputBarViewController {
     //TODO: check it is still possible on iOS 10
+    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Upload a directory is no longer allowed in Document picker")
     func updateDirectory(itemURL: URL) {
         let tmpURL = URL(fileURLWithPath: NSTemporaryDirectory())
 
@@ -51,6 +52,7 @@ extension ConversationInputBarViewController {
 
     }
     
+    @available(iOS, introduced: 8.0, deprecated: 11.0, message: "Upload a directory is no longer allowed in Document picker")
     func uploadItem(at itemURL: URL) {
         let itemPath = itemURL.path
         var isDirectory : ObjCBool = false
@@ -86,19 +88,14 @@ extension ConversationInputBarViewController {
         guard urls.count > 1 else {
             if let url = urls.first {
                 uploadFile(at: url)
-            }            
+            }
             return
         }
         
-        let archivePath = URL(fileURLWithPath: NSTemporaryDirectory() + "archive.zip").path
-        
-        let paths = urls.map(){$0.path}
-        let zipSucceded = SSZipArchive.createZipFile(atPath: archivePath, withFilesAtPaths: paths)
-
-        if zipSucceded {
-            uploadFile(at: URL(fileURLWithPath: archivePath))
+        if let archiveURL = urls.zipFiles() {
+            uploadFile(at: archiveURL)
         } else {
-            zmLog.error("Cannot archive folder at path: \(archivePath)")
+            zmLog.error("Cannot archive files at URLs: \(urls.description)")
         }
 
     }
@@ -181,5 +178,17 @@ extension ConversationInputBarViewController {
         let errorMessage = String(format: "content.file.too_big".localized, maxSizeString)
         let alert = UIAlertController.alertWithOKButton(message: errorMessage)
         present(alert, animated: true)
+    }
+}
+
+extension Array where Element == URL {
+    func zipFiles(filename: String = "archive.zip") -> URL? {
+        let archiveURL = URL(fileURLWithPath: NSTemporaryDirectory() + filename)
+        
+        let paths = map(){$0.path}
+        
+        let zipSucceded = SSZipArchive.createZipFile(atPath: archiveURL.path, withFilesAtPaths: paths)
+        
+        return zipSucceded ? archiveURL : nil
     }
 }
