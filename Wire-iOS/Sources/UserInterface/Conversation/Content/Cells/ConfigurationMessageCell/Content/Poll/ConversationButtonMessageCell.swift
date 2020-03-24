@@ -33,7 +33,9 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     weak var delegate: ConversationMessageCellDelegate?
     private var config: Configuration? {
         didSet {
-            guard config != oldValue else { return }
+            guard config != oldValue else {
+                return
+            }
             
             if config?.state != oldValue?.state {
                 button.isLoading = false
@@ -44,8 +46,12 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     private func updateUI() {
-        guard let config = config else { return }
+        guard let config = config else {
+            return
+        }
         
+        button.reset()
+
         buttonAction = config.buttonAction
         button.setTitle(config.text, for: .normal)
 
@@ -64,8 +70,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
     
     func configure(with object: Configuration, animated: Bool) {
-        button.reset()
-
         config = object
     }
 
@@ -79,7 +83,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         let text: String?
         let state: ButtonMessageState
         let buttonAction: Completion
-        ///TODO: state/spinner ?
     }
 
     convenience init() {
