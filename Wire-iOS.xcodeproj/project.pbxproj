@@ -1247,7 +1247,6 @@
 		EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */ = {isa = PBXBuildFile; fileRef = EF6E3C7F208A262B003F6752 /* not_animated.gif */; };
 		EF6E9FE423193439000B7785 /* ConversationListViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */; };
 		EF6E9FE623193478000B7785 /* UIViewControllerTransitioningDelegate+Present.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */; };
-		EF6E9FE8231960B3000B7785 /* SplitViewController+LayoutSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */; };
 		EF6E9FEE231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FED231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift */; };
 		EF6E9FF0231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */; };
 		EF6EB1CE20A5C296002F720D /* AppStateControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */; };
@@ -1311,7 +1310,6 @@
 		EFC6F8A0213FCDE200B92D51 /* MenuConfigurationProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */; };
 		EFC7146F20DD476000FAA4B4 /* CountryCodeTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */; };
 		EFC8E21D212D777A00BE7BBE /* UIColor+TeamCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFF9E841FBF335700491F9A /* UIColor+TeamCreation.swift */; };
-		EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */; };
 		EFD1A61F224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */; };
 		EFD43FF821B82BC70050ABC5 /* XCTestCase+DeviceSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */; };
 		EFD43FFA21B82C500050ABC5 /* ChangePhoneViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */; };
@@ -1344,8 +1342,7 @@
 		EFEE97C823229CF5007A4702 /* ConversationListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEE97C723229CF5007A4702 /* ConversationListCellDelegate.swift */; };
 		EFF3DA432097548A007A3358 /* UIImage+MediaAssert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */; };
 		EFF3DA452097587F007A3358 /* UIPasteboard+MediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */; };
-		EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */; };
-		EFF74F4421A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */; };
+		EFF74F4421A45E5700CCF3DD /* UIViewController+SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF74F4321A45E5700CCF3DD /* UIViewController+SplitViewController.swift */; };
 		EFF92B6421A84E210090DA66 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6321A84E210090DA66 /* PhoneNumber.swift */; };
 		EFF92B6721A855050090DA66 /* String+PhoneNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */; };
 		EFF9404822414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFF9404722414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift */; };
@@ -2918,7 +2915,6 @@
 		EF6E3C7F208A262B003F6752 /* not_animated.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = not_animated.gif; sourceTree = "<group>"; };
 		EF6E9FE323193439000B7785 /* ConversationListViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+State.swift"; sourceTree = "<group>"; };
 		EF6E9FE523193477000B7785 /* UIViewControllerTransitioningDelegate+Present.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewControllerTransitioningDelegate+Present.swift"; sourceTree = "<group>"; };
-		EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+LayoutSize.swift"; sourceTree = "<group>"; };
 		EF6E9FED231D4426000B7785 /* ConversationListViewControllerViewModel+ZMConversationListObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConversationListViewControllerViewModel+ZMConversationListObserver.swift"; sourceTree = "<group>"; };
 		EF6E9FEF231D4CDF000B7785 /* ConversationListViewController+ConversationListBottomBarControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListViewController+ConversationListBottomBarControllerDelegate.swift"; sourceTree = "<group>"; };
 		EF6EB1CD20A5C296002F720D /* AppStateControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateControllerTests.swift; sourceTree = "<group>"; };
@@ -2976,7 +2972,6 @@
 		EFC57A0F21BABCC90008DBE6 /* ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerAudioRecorderSnapshotTests.swift; sourceTree = "<group>"; };
 		EFC6F89F213FCDE200B92D51 /* MenuConfigurationProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuConfigurationProperties.swift; sourceTree = "<group>"; };
 		EFC7146D20DD471800FAA4B4 /* CountryCodeTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewControllerTests.swift; sourceTree = "<group>"; };
-		EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+Constraint.swift"; sourceTree = "<group>"; };
 		EFD1A61E224001AB00695792 /* ConversationInputBarViewController+CreateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+CreateViews.swift"; sourceTree = "<group>"; };
 		EFD43FF621B82BB00050ABC5 /* XCTestCase+DeviceSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+DeviceSize.swift"; sourceTree = "<group>"; };
 		EFD43FF921B82C500050ABC5 /* ChangePhoneViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePhoneViewControllerTests.swift; sourceTree = "<group>"; };
@@ -3007,8 +3002,7 @@
 		EFEE97C723229CF5007A4702 /* ConversationListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCellDelegate.swift; sourceTree = "<group>"; };
 		EFF3DA422097548A007A3358 /* UIImage+MediaAssert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+MediaAssert.swift"; sourceTree = "<group>"; };
 		EFF3DA442097587F007A3358 /* UIPasteboard+MediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPasteboard+MediaAsset.swift"; sourceTree = "<group>"; };
-		EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+leftView.swift"; sourceTree = "<group>"; };
-		EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplitViewController+UIGestureRecognizerDelegate.swift"; sourceTree = "<group>"; };
+		EFF74F4321A45E5700CCF3DD /* UIViewController+SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SplitViewController.swift"; sourceTree = "<group>"; };
 		EFF92B6321A84E210090DA66 /* PhoneNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
 		EFF92B6521A854BA0090DA66 /* String+PhoneNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PhoneNumberTests.swift"; sourceTree = "<group>"; };
 		EFF9404722414E03004F3115 /* ZClientViewController+ProfileViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZClientViewController+ProfileViewControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -4259,10 +4253,7 @@
 				871BC1441D34F8F800DF0793 /* RotationAwareNavigationController.swift */,
 				A923F1C824290325003F361F /* SplitViewControllerTransitionContext.swift */,
 				A949418823E09489001B0373 /* SplitViewController.swift */,
-				EF6E9FE7231960B3000B7785 /* SplitViewController+LayoutSize.swift */,
-				EFD003532179CE3C008C20D3 /* SplitViewController+Constraint.swift */,
-				EFF74F4321A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift */,
-				EFF6DCB3206BE94600437C71 /* SplitViewController+leftView.swift */,
+				EFF74F4321A45E5700CCF3DD /* UIViewController+SplitViewController.swift */,
 				87A1F9DA200CEDCA0040E9A9 /* ClearBackgroundNavigationController.swift */,
 				1682AEC2204840E7003A052A /* SectionCollectionViewController.swift */,
 				5E028DED21F9C34D00E5512A /* AuthenticationNavigationBar.swift */,
@@ -7605,7 +7596,7 @@
 				BFA2F03B20CAACF900EBE97C /* CallParticipantTimestamps.swift in Sources */,
 				5E35F78421833AF000D3F4FE /* ZMConversationMessage+Sender.swift in Sources */,
 				1648EEED20498E1300CC6B37 /* SearchSectionController.swift in Sources */,
-				EFF74F4421A45E5700CCF3DD /* SplitViewController+UIGestureRecognizerDelegate.swift in Sources */,
+				EFF74F4421A45E5700CCF3DD /* UIViewController+SplitViewController.swift in Sources */,
 				879E5E991F0104A6007A88A3 /* UITextView+Autocorrect.swift in Sources */,
 				877798AC205A8EF500898A5E /* ZClientViewController.swift in Sources */,
 				BF5FAC0120B6B738004CEB45 /* UIAlertController+OngoingCall.swift in Sources */,
@@ -7964,7 +7955,6 @@
 				F16427021FCC5B9E00D2ABFC /* SetEmailStepDescription.swift in Sources */,
 				5E766D9921144DFC005242B4 /* AuthenticationCoordinator.swift in Sources */,
 				F15650EC21DD1B4100210504 /* ImageCache.swift in Sources */,
-				EF6E9FE8231960B3000B7785 /* SplitViewController+LayoutSize.swift in Sources */,
 				D550F57020444924009E09DD /* ConversationActionController+ClearContent.swift in Sources */,
 				8784D4551E817D13007A6867 /* ConversationListTopBarViewController.swift in Sources */,
 				5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */,
@@ -7977,7 +7967,6 @@
 				EF2B255F2209C543006712CA /* UIUserInterfaceSizeClass+Constraint.swift in Sources */,
 				EF1BEBCD21F5E8F5001128E0 /* StartUIViewController+Constraints.swift in Sources */,
 				160D691D212AC95A00096EAD /* ImageResourceView.swift in Sources */,
-				EFF6DCB4206BE94600437C71 /* SplitViewController+leftView.swift in Sources */,
 				1639A80D225F604100868AB9 /* Settings+Availability.swift in Sources */,
 				F10F46D420288CEB00261449 /* ConversationCreationController.swift in Sources */,
 				A965F89E23DB3359005209E1 /* ConversationInputBarViewController.swift in Sources */,
@@ -7993,7 +7982,6 @@
 				BF606D6F1CAA8A78002BAC94 /* ConversationListBottomBar.swift in Sources */,
 				D5DBAAB020064E3B00E9F65B /* TeamMemberInviteTableViewCell.swift in Sources */,
 				8775BF232008E0A400A8AD93 /* ServiceDetailViewController.swift in Sources */,
-				EFD003542179CE3C008C20D3 /* SplitViewController+Constraint.swift in Sources */,
 				BF79B0FC20A98B60001BF4FE /* SelfVideoPreviewView.swift in Sources */,
 				5E8C38B8212FDD68002AE12B /* ObservableSessionManager.swift in Sources */,
 				1689FD4B2195C8B800A656E2 /* EphemeralCountdownView.swift in Sources */,

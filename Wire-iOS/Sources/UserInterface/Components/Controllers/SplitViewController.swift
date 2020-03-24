@@ -43,6 +43,30 @@ protocol SplitViewControllerDelegate: class {
 }
 
 final class SplitViewController: UIViewController, SplitLayoutObservable {
+    weak var delegate: SplitViewControllerDelegate?
+    
+    //MARK: - SplitLayoutObservable
+    var layoutSize: SplitViewControllerLayoutSize = .compact {
+        didSet {
+            guard oldValue != layoutSize else { return }
+            
+            NotificationCenter.default.post(name: Notification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self)
+        }
+    }
+    
+    var leftViewControllerWidth: CGFloat {
+        return leftViewWidthConstraint?.constant ?? 0
+    }
+    
+    var openPercentage: CGFloat = 0 {
+        didSet {
+            updateRightAndLeftEdgeConstraints(openPercentage)
+            
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+
+
     private var internalLeftViewController: UIViewController?
     var leftViewController: UIViewController? {
         get{
@@ -69,43 +93,26 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
     
-    weak var delegate: SplitViewControllerDelegate?
 
-    //TODO private
-    var leftView: UIView!
-//    private
-    var rightView: UIView!
-    var openPercentage: CGFloat = 0 {
-        didSet {
-            updateRightAndLeftEdgeConstraints(openPercentage)
-            
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    private var leftView: UIView = UIView(frame: UIScreen.main.bounds)
+    private var rightView: UIView = {
+        let view = PlaceholderConversationView(frame: UIScreen.main.bounds)
+        view.backgroundColor = UIColor.from(scheme: .background)
+
+        return view
+    }()
     
-    //TODO: private
-    var leftViewLeadingConstraint: NSLayoutConstraint!
-    var rightViewLeadingConstraint: NSLayoutConstraint!
-    var leftViewWidthConstraint: NSLayoutConstraint!
-    var rightViewWidthConstraint: NSLayoutConstraint!
-    var sideBySideConstraint: NSLayoutConstraint!
-    var pinLeftViewOffsetConstraint: NSLayoutConstraint!
+    private var leftViewLeadingConstraint: NSLayoutConstraint!
+    private var rightViewLeadingConstraint: NSLayoutConstraint!
+    private var leftViewWidthConstraint: NSLayoutConstraint!
+    private var rightViewWidthConstraint: NSLayoutConstraint!
+    private var sideBySideConstraint: NSLayoutConstraint!
+    private var pinLeftViewOffsetConstraint: NSLayoutConstraint!
     
-    private var horizontalPanner: UIPanGestureRecognizer?
+    private var horizontalPanner: UIPanGestureRecognizer = UIPanGestureRecognizer()
+
     private var futureTraitCollection: UITraitCollection?
     
-    //MARK: - SplitLayoutObservable
-    var layoutSize: SplitViewControllerLayoutSize = .compact {
-        didSet {
-            guard oldValue != layoutSize else { return }
-
-            NotificationCenter.default.post(name: Notification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self)
-        }
-    }
-
-    var leftViewControllerWidth: CGFloat {
-        return leftViewWidthConstraint!.constant //TODO
-    }
 
     //MARK: - init
     init() {
@@ -117,53 +124,15 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setLeftViewControllerRevealed(_ leftViewControllerRevealed: Bool,
-                                       animated: Bool,
-                                       completion: Completion? = nil) {
-        self.internalLeftViewControllerRevealed = leftViewControllerRevealed
-        updateLeftViewController(animated: animated, completion: completion)
-    }
-
-
-    
-    func setRightViewController(_ rightViewController: UIViewController?,
-                                animated: Bool,
-                                completion: Completion? = nil) {
-        if self.rightViewController == rightViewController {
-            return
-        }
-        
-        // To determine if self.rightViewController.presentedViewController is actually presented over it, or is it
-        // presented over one of it's parents.
-        if self.rightViewController?.presentedViewController?.presentingViewController == self.rightViewController {
-            self.rightViewController?.dismiss(animated: false)
-        }
-        
-        let removedViewController = self.rightViewController
-        
-        let transitionDidStart = transition(from: removedViewController, to: rightViewController, containerView: rightView, animator: animatorForRightView, animated: animated, completion: completion)
-        
-        if transitionDidStart {
-            self.rightViewController = rightViewController
-        }
-    }
 
     // MARK: - override
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        leftView = UIView(frame: UIScreen.main.bounds)
-        leftView?.translatesAutoresizingMaskIntoConstraints = false
-        if let leftView = leftView {
-            view.addSubview(leftView)
-        }
-
-        rightView = PlaceholderConversationView(frame: UIScreen.main.bounds)
-        rightView?.translatesAutoresizingMaskIntoConstraints = false
-        rightView?.backgroundColor = UIColor.from(scheme: .background)
-        if let rightView = rightView {
-            view.addSubview(rightView)
+        [leftView, rightView].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
         }
 
         setupInitialConstraints()
@@ -171,13 +140,11 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         updateConstraints(for: view.bounds.size)
         updateActiveConstraints()
 
-        ///TODO: no side effect
-//        setInternalLeftViewControllerRevealed(true)
-//        self.internalLeftViewControllerRevealed = true
         openPercentage = 1
-        horizontalPanner = UIPanGestureRecognizer(target: self, action: #selector(onHorizontalPan(_:)))
-        horizontalPanner?.delegate = self
-        view.addGestureRecognizer(horizontalPanner!)
+
+        horizontalPanner.addTarget(self, action: #selector(onHorizontalPan(_:)))
+        horizontalPanner.delegate = self
+        view.addGestureRecognizer(horizontalPanner)
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -234,6 +201,41 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         return CrossfadeTransition()
     }
 
+    // MARK: - left and right view controllers
+    func setLeftViewControllerRevealed(_ leftViewControllerRevealed: Bool,
+                                       animated: Bool,
+                                       completion: Completion? = nil) {
+        self.internalLeftViewControllerRevealed = leftViewControllerRevealed
+        updateLeftViewController(animated: animated, completion: completion)
+    }
+    
+    
+    
+    func setRightViewController(_ newRightViewController: UIViewController?,
+                                animated: Bool,
+                                completion: Completion? = nil) {
+        guard rightViewController != newRightViewController else {
+            return
+        }
+        
+        // To determine if self.rightViewController.presentedViewController is actually presented over it, or is it
+        // presented over one of it's parents.
+        if rightViewController?.presentedViewController?.presentingViewController == rightViewController {
+            rightViewController?.dismiss(animated: false)
+        }
+        
+        let transitionDidStart = transition(from: rightViewController,
+                                            to: newRightViewController,
+                                            containerView: rightView,
+                                            animator: animatorForRightView,
+                                            animated: animated,
+                                            completion: completion)
+        
+        if transitionDidStart {
+            rightViewController = newRightViewController
+        }
+    }
+
     func setLeftViewController(_ leftViewController: UIViewController?,
                                animated: Bool = false,
                                transition: SplitViewControllerTransition = .`default`,
@@ -267,9 +269,81 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
-    //TODO private
+    var isConversationViewVisible: Bool {
+        return (layoutSize == .regularLandscape) || !isLeftViewControllerRevealed
+    }
+    
+    /// update left view UI depends on isLeftViewControllerRevealed
+    ///
+    /// - Parameters:
+    ///   - animated: animation enabled?
+    ///   - completion: completion closure
+    private func updateLeftViewController(animated: Bool,
+                                  completion: Completion? = nil) {
+        if animated {
+            view.layoutIfNeeded()
+        }
+        leftView.isHidden = false
+        
+        resetOpenPercentage()
+        if layoutSize != .regularLandscape {
+            leftViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: animated)
+            rightViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: animated)
+        }
+        
+        let completionBlock: Completion = {
+            completion?()
+            
+            if self.openPercentage == 0 &&
+                self.layoutSize != .regularLandscape &&
+                (self.leftView.layer.presentation()?.frame == self.leftView.frame || (self.leftView.layer.presentation()?.frame == nil && !animated)) {
+                self.leftView.isHidden = true
+            }
+        }
+        
+        if animated {
+            UIView.animate(easing: .easeOutExpo, duration: 0.55, animations: {() -> Void in
+                self.view.layoutIfNeeded()
+            }, completion: {(_ finished: Bool) -> Void in
+                if self.layoutSize != .regularLandscape {
+                    self.leftViewController?.endAppearanceTransition()
+                    self.rightViewController?.endAppearanceTransition()
+                }
+                completionBlock()
+            })
+        } else {
+            completionBlock()
+        }
+    }
 
-    func update(for size: CGSize) {
+    //MARK: - updte size
+    
+    /// return true if right view (mostly conversation screen) is fully visible
+    var isRightViewControllerRevealed: Bool {
+        switch self.layoutSize {
+        case .compact, .regularPortrait:
+            return !isLeftViewControllerRevealed
+        case .regularLandscape:
+            return true
+        }
+    }
+    
+    /// Update layoutSize for the change of traitCollection and the current orientation
+    ///
+    /// - Parameters:
+    ///   - traitCollection: the new traitCollection
+    private func updateLayoutSize(for traitCollection: UITraitCollection) {
+        switch (traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
+        case (.regular, true):
+            self.layoutSize = .regularPortrait
+        case (.regular, false):
+            self.layoutSize = .regularLandscape
+        default:
+            self.layoutSize = .compact
+        }
+    }
+
+    private func update(for size: CGSize) {
         updateLayoutSize(for: futureTraitCollection ?? traitCollection)
 
         updateConstraints(for: size)
@@ -281,12 +355,12 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         updateRightAndLeftEdgeConstraints(openPercentage)
     }
 
-    func updateLayoutSizeAndLeftViewVisibility() {
+    private func updateLayoutSizeAndLeftViewVisibility() {
         updateLayoutSize(for: traitCollection)
         updateLeftViewVisibility()
     }
 
-    func updateLeftViewVisibility() {
+    private func updateLeftViewVisibility() {
         switch layoutSize {
         case .compact /* fallthrough */, .regularPortrait:
             leftView.isHidden = (openPercentage == 0)
@@ -295,7 +369,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
-    var constraintsActiveForCurrentLayout: [NSLayoutConstraint] {
+    private var constraintsActiveForCurrentLayout: [NSLayoutConstraint] {
         var constraints: Set<NSLayoutConstraint> = []
 
         if layoutSize == .regularLandscape {
@@ -307,7 +381,7 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         return Array(constraints)
     }
 
-    var constraintsInactiveForCurrentLayout: [NSLayoutConstraint] {
+    private var constraintsInactiveForCurrentLayout: [NSLayoutConstraint] {
         guard layoutSize != .regularLandscape else {
             return []
         }
@@ -337,12 +411,13 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
             updateConstraints(for: view.bounds.size, willMoveToEmptyView: true)
         }
 
-        ///TODO: non optional
-        let transitionContext = SplitViewControllerTransitionContext(from: fromViewController, to: toViewController, containerView: containerView)
+        let transitionContext = SplitViewControllerTransitionContext(from: fromViewController,
+                                                                     to: toViewController,
+                                                                     containerView: containerView)
 
         transitionContext.isInteractive = false
         transitionContext.isAnimated = animated
-        transitionContext.completionBlock = { didComplete in
+        transitionContext.completionBlock = { _ in
             fromViewController?.view.removeFromSuperview()
             fromViewController?.removeFromParent()
             toViewController?.didMove(toParent: self)
@@ -354,30 +429,134 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         return true
     }
 
-    func resetOpenPercentage() {
+    private func resetOpenPercentage() {
         openPercentage = isLeftViewControllerRevealed ? 1 : 0
     }
 
-    func updateRightAndLeftEdgeConstraints(_ percentage: CGFloat) {
+    private func updateRightAndLeftEdgeConstraints(_ percentage: CGFloat) {
         rightViewLeadingConstraint.constant = leftViewWidthConstraint.constant * percentage
         leftViewLeadingConstraint.constant = 64 * (1 - percentage)
     }
-    //TODO end of private
+
+    //MARK: - constraints
+    private func setupInitialConstraints() {
+        
+        leftViewLeadingConstraint = leftView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        leftViewLeadingConstraint.priority = UILayoutPriority.defaultHigh
+        rightViewLeadingConstraint = rightView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        rightViewLeadingConstraint.priority = UILayoutPriority.defaultHigh
+        
+        leftViewWidthConstraint = leftView.widthAnchor.constraint(equalToConstant: 0)
+        rightViewWidthConstraint = rightView.widthAnchor.constraint(equalToConstant: 0)
+        
+        pinLeftViewOffsetConstraint = leftView.leftAnchor.constraint(equalTo: view.leftAnchor)
+        sideBySideConstraint = rightView.leftAnchor.constraint(equalTo: leftView.rightAnchor)
+        sideBySideConstraint.isActive = false
+        
+        let constraints: [NSLayoutConstraint] =
+            [leftView.topAnchor.constraint(equalTo: view.topAnchor), leftView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+             rightView.topAnchor.constraint(equalTo: view.topAnchor), rightView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+             leftViewLeadingConstraint,
+             rightViewLeadingConstraint,
+             leftViewWidthConstraint,
+             rightViewWidthConstraint,
+             pinLeftViewOffsetConstraint]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func updateActiveConstraints() {
+        NSLayoutConstraint.deactivate(constraintsInactiveForCurrentLayout)
+        NSLayoutConstraint.activate(constraintsActiveForCurrentLayout)
+    }
+    
+    private func leftViewMinWidth(size: CGSize) -> CGFloat {
+        return min(size.width * 0.43, CGFloat.SplitView.LeftViewWidth)
+    }
+    
+    private func updateConstraints(for size: CGSize,
+                           willMoveToEmptyView toEmptyView: Bool = false) {
+        let isRightViewEmpty: Bool = rightViewController == nil || toEmptyView
+        
+        switch (layoutSize, isRightViewEmpty) {
+        case (.compact, _):
+            leftViewWidthConstraint.constant = size.width
+            rightViewWidthConstraint.constant = size.width
+        case (.regularPortrait, true),
+             (.regularLandscape, _):
+            leftViewWidthConstraint.constant = leftViewMinWidth(size: size)
+            rightViewWidthConstraint.constant = size.width - leftViewWidthConstraint.constant
+        case (.regularPortrait, false):
+            leftViewWidthConstraint.constant = leftViewMinWidth(size: size)
+            rightViewWidthConstraint.constant = size.width
+        }
+    }
+
+    
+    //MARK: - gesture
+    
+    @objc
+    func onHorizontalPan(_ gestureRecognizer: UIPanGestureRecognizer?) {
+        
+        guard layoutSize != .regularLandscape,
+            delegate?.splitViewControllerShouldMoveLeftViewController(self) == true,
+            isConversationViewVisible,
+            let gestureRecognizer = gestureRecognizer else {
+                return
+        }
+        
+        var offset = gestureRecognizer.translation(in: view)
+        
+        switch gestureRecognizer.state {
+        case .began:
+            leftViewController?.beginAppearanceTransition(!isLeftViewControllerRevealed, animated: true)
+            rightViewController?.beginAppearanceTransition(isLeftViewControllerRevealed, animated: true)
+            leftView.isHidden = false
+        case .changed:
+            if let width = leftViewController?.view.bounds.size.width {
+                if offset.x > 0, view.isRightToLeft {
+                    offset.x = 0
+                } else if offset.x < 0, !view.isRightToLeft {
+                    offset.x = 0
+                } else if abs(offset.x) > width {
+                    offset.x = width
+                }
+                openPercentage = abs(offset.x) / width
+                view.layoutIfNeeded()
+            }
+        case .cancelled,
+             .ended:
+            let isRevealed = openPercentage > 0.5
+            let didCompleteTransition = isRevealed != isLeftViewControllerRevealed
+            
+            setLeftViewControllerRevealed(isRevealed, animated: true) { [weak self] in
+                if didCompleteTransition {
+                    self?.leftViewController?.endAppearanceTransition()
+                    self?.rightViewController?.endAppearanceTransition()
+                }
+            }
+        default:
+            break
+        }
+    }
 
 }
 
-extension UIViewController {
-    var wr_splitViewController: SplitViewController? {
-        var possibleSplit: UIViewController? = self
-
-        repeat {
-            if let splitViewController = possibleSplit as? SplitViewController {
-                return splitViewController
-            }
-
-            possibleSplit = possibleSplit?.parent
-        } while possibleSplit != nil
-
-        return nil
+extension SplitViewController: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if layoutSize == .regularLandscape {
+            return false
+        }
+        
+        if let delegate = delegate, !delegate.splitViewControllerShouldMoveLeftViewController(self) {
+            return false
+        }
+        
+        if isLeftViewControllerRevealed && !isIPadRegular() {
+            return false
+        }
+        
+        return true
     }
 }
