@@ -27,10 +27,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 @implementation SplitViewController
 
 
-- (void)updateConstraintsForSize:(CGSize)size {
-    [self updateConstraintsForSize:size willMoveToEmptyView:NO];
-}
-
 - (CGFloat)leftViewControllerWidth
 {
     return self.leftViewWidthConstraint.constant;

@@ -59,7 +59,8 @@ extension SplitViewController {
     }
 
     @objc(updateConstraintsForSize:willMoveToEmptyView:)
-    func updateConstraints(for size: CGSize, willMoveToEmptyView toEmptyView: Bool) {
+    func updateConstraints(for size: CGSize,
+                           willMoveToEmptyView toEmptyView: Bool = false) {
         let isRightViewEmpty: Bool = rightViewController == nil || toEmptyView
 
         switch (layoutSize, isRightViewEmpty) {
