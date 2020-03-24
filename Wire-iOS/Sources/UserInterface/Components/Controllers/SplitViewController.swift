@@ -92,8 +92,8 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
-    private var leftView: UIView = UIView(frame: UIScreen.main.bounds)
-    private var rightView: UIView = {
+    var leftView: UIView = UIView(frame: UIScreen.main.bounds)
+    var rightView: UIView = {
         let view = PlaceholderConversationView(frame: UIScreen.main.bounds)
         view.backgroundColor = UIColor.from(scheme: .background)
 
