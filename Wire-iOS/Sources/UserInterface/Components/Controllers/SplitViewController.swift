@@ -18,37 +18,67 @@
 import Foundation
 
 extension SplitViewController {
-    //MARK: - override
+    // MARK: - override
+
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+
+        leftView = UIView(frame: UIScreen.main.bounds)
+        leftView?.translatesAutoresizingMaskIntoConstraints = false
+        if let leftView = leftView {
+            view.addSubview(leftView)
+        }
+
+        rightView = PlaceholderConversationView(frame: UIScreen.main.bounds)
+        rightView?.translatesAutoresizingMaskIntoConstraints = false
+        rightView?.backgroundColor = UIColor.from(scheme: .background)
+        if let rightView = rightView {
+            view.addSubview(rightView)
+        }
+
+        setupInitialConstraints()
+        updateLayoutSize(for: traitCollection)
+        updateConstraints(for: view.bounds.size)
+        updateActiveConstraints()
+
+        ///TODO: no side effect
+        setInternalLeftViewControllerRevealed(true)
+        openPercentage = 1
+        horizontalPanner = UIPanGestureRecognizer(target: self, action: #selector(onHorizontalPan(_:)))
+        horizontalPanner.delegate = self
+        view.addGestureRecognizer(horizontalPanner)
+    }
+
     override open func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         futureTraitCollection = newCollection
         updateLayoutSize(for: newCollection)
-        
+
         super.willTransition(to: newCollection, with: coordinator)
-        
+
         updateActiveConstraints()
-        
+
         updateLeftViewVisibility()
     }
-    
+
     override open func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
+
         update(for: view.bounds.size)
     }
-    
+
     override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        
+
         update(for: size)
-        
+
         coordinator.animate(alongsideTransition: { context in
         }) { context in
             self.updateLayoutSizeAndLeftViewVisibility()
         }
-        
+
     }
 
-    //MARK: - status bar
+    // MARK: - status bar
     private var childViewController: UIViewController? {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
@@ -102,9 +132,9 @@ extension SplitViewController {
             self.setInternalLeft(leftViewController)
         }
     }
-    
+
     //TODO private
-    
+
     func update(for size: CGSize) {
         updateLayoutSize(for: futureTraitCollection ?? traitCollection)
 
@@ -116,12 +146,12 @@ extension SplitViewController {
         // update right view constraits after size changes
         updateRightAndLeftEdgeConstraints(openPercentage)
     }
-    
+
     func updateLayoutSizeAndLeftViewVisibility() {
         updateLayoutSize(for: traitCollection)
         updateLeftViewVisibility()
     }
-    
+
     @objc
     func updateLeftViewVisibility() {
         switch layoutSize {
@@ -132,24 +162,23 @@ extension SplitViewController {
         }
     }
 
-    
     var constraintsActiveForCurrentLayout: [NSLayoutConstraint] {
         var constraints: Set<NSLayoutConstraint> = []
-        
+
         if layoutSize == .regularLandscape {
             constraints.formUnion(Set([pinLeftViewOffsetConstraint, sideBySideConstraint]))
         }
-        
+
         constraints.formUnion(Set([leftViewWidthConstraint]))
-        
+
         return Array(constraints)
     }
-    
+
     var constraintsInactiveForCurrentLayout: [NSLayoutConstraint] {
         guard layoutSize != .regularLandscape else {
             return []
         }
-        
+
         var constraints: Set<NSLayoutConstraint> = []
         constraints.formUnion(Set([pinLeftViewOffsetConstraint, sideBySideConstraint]))
         return Array(constraints)
@@ -158,39 +187,39 @@ extension SplitViewController {
     //private
     @objc(transitionFromViewController:toViewController:containerView:animator:animated:completion:)
     func transition(from fromViewController: UIViewController?,
-                            to toViewController: UIViewController?,
-                            containerView: UIView,
-                            animator: UIViewControllerAnimatedTransitioning?,
-                            animated: Bool,
-                            completion: Completion? = nil) -> Bool {
+                    to toViewController: UIViewController?,
+                    containerView: UIView,
+                    animator: UIViewControllerAnimatedTransitioning?,
+                    animated: Bool,
+                    completion: Completion? = nil) -> Bool {
         // Return if transition is done or already in progress
         if let toViewController = toViewController, children.contains(toViewController) {
-                return false
+            return false
         }
-        
+
         fromViewController?.willMove(toParent: nil)
-        
+
         if let toViewController = toViewController {
             toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             addChild(toViewController)
         } else {
             updateConstraints(for: view.bounds.size, willMoveToEmptyView: true)
         }
-        
+
         ///TODO: non optional
         let transitionContext = SplitViewControllerTransitionContext(from: fromViewController, to: toViewController, containerView: containerView)
-        
+
         transitionContext.isInteractive = false
         transitionContext.isAnimated = animated
         transitionContext.completionBlock = { didComplete in
             fromViewController?.view.removeFromSuperview()
             fromViewController?.removeFromParent()
             toViewController?.didMove(toParent: self)
-                completion?()
+            completion?()
         }
-        
+
         animator?.animateTransition(using: transitionContext)
-        
+
         return true
     }
 
@@ -211,15 +240,15 @@ extension SplitViewController {
 extension UIViewController {
     var wr_splitViewController: SplitViewController? {
         var possibleSplit: UIViewController? = self
-        
+
         repeat {
             if let splitViewController = possibleSplit as? SplitViewController {
                 return splitViewController
             }
-            
+
             possibleSplit = possibleSplit?.parent
         } while possibleSplit != nil
-        
+
         return nil
     }
 }

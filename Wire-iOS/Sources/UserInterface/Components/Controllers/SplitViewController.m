@@ -26,30 +26,6 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
 
 @implementation SplitViewController
 
-- (void)viewDidLoad 
-{
-    [super viewDidLoad];
-
-    self.leftView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.leftView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.leftView];
-    
-    self.rightView = [[PlaceholderConversationView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    self.rightView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.rightView.backgroundColor = [UIColor wr_colorFromColorScheme:ColorSchemeColorBackground];
-    [self.view addSubview:self.rightView];
-    
-    [self setupInitialConstraints];
-    [self updateLayoutSizeForTraitCollection:self.traitCollection];
-    [self updateConstraintsForSize:self.view.bounds.size];
-    [self updateActiveConstraints];
-    
-    _leftViewControllerRevealed = YES;
-    self.openPercentage = 1;
-    self.horizontalPanner = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(onHorizontalPan:)];
-    self.horizontalPanner.delegate = self;
-    [self.view addGestureRecognizer:self.horizontalPanner];
-}
 
 - (void)updateConstraintsForSize:(CGSize)size {
     [self updateConstraintsForSize:size willMoveToEmptyView:NO];
@@ -114,6 +90,11 @@ NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayout
     }
 }
 
+
+- (void)setInternalLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
+{
+    _leftViewControllerRevealed = leftViewControllerIsRevealed;
+}
 
 - (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
 {
