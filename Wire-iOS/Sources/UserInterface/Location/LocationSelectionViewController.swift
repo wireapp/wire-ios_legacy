@@ -22,12 +22,12 @@ import Cartography
 import MapKit
 import CoreLocation
 
-@objc protocol LocationSelectionViewControllerDelegate: class {
+protocol LocationSelectionViewControllerDelegate: class {
     func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData)
     func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController)
 }
 
-@objcMembers final class LocationSelectionViewController: UIViewController {
+final class LocationSelectionViewController: UIViewController {
     
     weak var delegate: LocationSelectionViewControllerDelegate?
     let locationButton: IconButton = {

@@ -35,10 +35,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface ConversationInputBarViewController (Location) <LocationSelectionViewControllerDelegate>
-
-@end
-
 @interface ConversationInputBarViewController (ZMConversationObserver) <ZMConversationObserver>
 @end
 
@@ -431,26 +427,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 + (CGSize)imageSizeForImageData:(NSData *)imageData;
 
 @end
-
-@implementation ConversationInputBarViewController (Location)
-
-- (void)locationSelectionViewController:(LocationSelectionViewController *)viewController didSelectLocationWithData:(ZMLocationData *)locationData
-{
-    [ZMUserSession.sharedSession enqueueChanges:^{
-        [self.conversation appendMessageWithLocationData:locationData];
-        [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionLocation inConversation:self.conversation];
-    }];
-    
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)locationSelectionViewControllerDidCancel:(LocationSelectionViewController *)viewController
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
 
 @implementation ConversationInputBarViewController (Giphy)
 
