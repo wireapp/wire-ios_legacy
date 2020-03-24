@@ -42,7 +42,7 @@ protocol SplitViewControllerDelegate: class {
     func splitViewControllerShouldMoveLeftViewController(_ splitViewController: SplitViewController) -> Bool
 }
 
-class SplitViewController: UIViewController, SplitLayoutObservable {
+final class SplitViewController: UIViewController, SplitLayoutObservable {
     private var internalLeftViewController: UIViewController?
     var leftViewController: UIViewController? {
         get{
@@ -53,7 +53,9 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
             setLeftViewController(newValue)
         }
     }
+    
     var rightViewController: UIViewController?
+    
     private var internalLeftViewControllerRevealed = true
     var isLeftViewControllerRevealed: Bool {
         get{
@@ -115,14 +117,6 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setInternalLeft(_ leftViewController: UIViewController?) {
-        self.internalLeftViewController = leftViewController
-    }
-    
-//    private func setInternalLeftViewControllerRevealed(_ leftViewControllerIsRevealed: Bool) {
-//        self.internalLeftViewControllerRevealed = leftViewControllerIsRevealed
-//    }
-
     func setLeftViewControllerRevealed(_ leftViewControllerRevealed: Bool,
                                        animated: Bool,
                                        completion: Completion? = nil) {
@@ -156,7 +150,7 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
 
     // MARK: - override
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         leftView = UIView(frame: UIScreen.main.bounds)
@@ -186,7 +180,7 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
         view.addGestureRecognizer(horizontalPanner!)
     }
 
-    override open func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         futureTraitCollection = newCollection
         updateLayoutSize(for: newCollection)
 
@@ -197,13 +191,13 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
         updateLeftViewVisibility()
     }
 
-    override open func viewWillLayoutSubviews() {
+    override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
         update(for: view.bounds.size)
     }
 
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
         update(for: size)
@@ -220,11 +214,11 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
         return openPercentage > 0 ? leftViewController : rightViewController
     }
 
-    override open var childForStatusBarStyle: UIViewController? {
+    override var childForStatusBarStyle: UIViewController? {
         return childViewController
     }
 
-    override open var childForStatusBarHidden: UIViewController? {
+    override var childForStatusBarHidden: UIViewController? {
         return childViewController
     }
 
@@ -269,7 +263,7 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
                            animator: animator,
                            animated: animated,
                            completion: completion) {
-            self.setInternalLeft(leftViewController)
+            self.internalLeftViewController = leftViewController
         }
     }
 
@@ -323,8 +317,7 @@ class SplitViewController: UIViewController, SplitLayoutObservable {
         return Array(constraints)
     }
 
-    //private
-    func transition(from fromViewController: UIViewController?,
+    private func transition(from fromViewController: UIViewController?,
                     to toViewController: UIViewController?,
                     containerView: UIView,
                     animator: UIViewControllerAnimatedTransitioning?,

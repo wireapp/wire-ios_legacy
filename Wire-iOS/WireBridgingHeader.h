@@ -28,9 +28,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
 
-#import "SplitViewController.h"
-#import "SplitViewController+internal.h"
-
 #import "FullscreenImageViewController.h"
 #import "FullscreenImageViewController+PullToDismiss.h"
 #import "FullscreenImageViewController+internal.h"
