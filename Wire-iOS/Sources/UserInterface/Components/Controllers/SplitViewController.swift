@@ -21,7 +21,7 @@ extension Notification.Name {
     static let SplitLayoutObservableDidChangeToLayoutSize = Notification.Name("SplitLayoutObservableDidChangeToLayoutSizeNotification")
 }
 
-enum SplitViewControllerTransition: Int {
+enum SplitViewControllerTransition {
     case `default`
     case present
     case dismiss
@@ -230,20 +230,18 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
         }
     }
 
-    func setLeftViewController(_ leftViewController: UIViewController?,
+    func setLeftViewController(_ newLeftViewController: UIViewController?,
                                animated: Bool = false,
                                transition: SplitViewControllerTransition = .`default`,
                                completion: Completion? = nil) {
-        guard self.leftViewController != leftViewController else {
+        guard leftViewController != newLeftViewController else {
             completion?()
             return
         }
 
-        let removedViewController = self.leftViewController
-
         let animator: UIViewControllerAnimatedTransitioning
 
-        if removedViewController == nil || leftViewController == nil {
+        if leftViewController == nil || newLeftViewController == nil {
             animator = CrossfadeTransition()
         } else if transition == .present {
             animator = VerticalTransition(offset: 88)
@@ -253,18 +251,19 @@ final class SplitViewController: UIViewController, SplitLayoutObservable {
             animator = CrossfadeTransition()
         }
 
-        if self.transition(from: removedViewController,
-                           to: leftViewController,
+        if self.transition(from: leftViewController,
+                           to: newLeftViewController,
                            containerView: leftView,
                            animator: animator,
                            animated: animated,
                            completion: completion) {
-            self.internalLeftViewController = leftViewController
+            internalLeftViewController = newLeftViewController
         }
     }
 
     var isConversationViewVisible: Bool {
-        return (layoutSize == .regularLandscape) || !isLeftViewControllerRevealed
+        return layoutSize == .regularLandscape ||
+               !isLeftViewControllerRevealed
     }
 
     /// update left view UI depends on isLeftViewControllerRevealed
