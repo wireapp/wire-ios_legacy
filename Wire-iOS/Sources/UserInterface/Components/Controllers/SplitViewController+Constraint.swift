@@ -19,7 +19,8 @@
 import Foundation
 
 extension SplitViewController {
-    @objc func setupInitialConstraints() {
+    ///TODO: private
+    func setupInitialConstraints() {
         guard let leftView = leftView,
               let rightView = rightView else { return }
 

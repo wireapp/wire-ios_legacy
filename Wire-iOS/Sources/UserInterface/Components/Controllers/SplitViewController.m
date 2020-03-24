@@ -21,96 +21,93 @@
 #import "SplitViewController+internal.h"
 #import "Wire-Swift.h"
 
-NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification = @"SplitLayoutObservableDidChangeToLayoutSizeNotificationName";
+//@implementation SplitViewController
 
 
-@implementation SplitViewController
+//- (CGFloat)leftViewControllerWidth
+//{
+//    return self.leftViewWidthConstraint.constant;
+//}
+
+//- (void)setLayoutSize:(SplitViewControllerLayoutSize)layoutSize
+//{
+//    if (_layoutSize != layoutSize) {
+//        _layoutSize = layoutSize;
+//        [[NSNotificationCenter defaultCenter] postNotificationName:SplitLayoutObservableDidChangeToLayoutSizeNotification object:self];
+//    }
+//}
+
+//- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController {
+//    _leftViewController = leftViewController;
+//}
+
+//- (void)setLeftViewController:(nullable UIViewController *)leftViewController
+//{
+//    [self setLeftViewController:leftViewController animated:NO completion:nil];
+//}
+
+//- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
+//{
+//    [self setLeftViewController:leftViewController animated:animated transition:SplitViewControllerTransitionDefault completion:completion];
+//}
+
+//- (void)setRightViewController:(nullable UIViewController *)rightViewController
+//{
+//    [self setRightViewController:rightViewController animated:NO completion:nil];
+//}
+
+//- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
+//{
+//    if (self.rightViewController == rightViewController) {
+//        return;
+//    }
+//
+//    // To determine if self.rightViewController.presentedViewController is actually presented over it, or is it
+//    // presented over one of it's parents.
+//    if (self.rightViewController.presentedViewController.presentingViewController == self.rightViewController) {
+//        [self.rightViewController dismissViewControllerAnimated:NO completion:nil];
+//    }
+//
+//    UIViewController *removedViewController = self.rightViewController;
+//
+//    BOOL transitionDidStart =
+//    [self transitionFromViewController:removedViewController
+//                      toViewController:rightViewController
+//                         containerView:self.rightView
+//                              animator:[self animatorForRightView]
+//                              animated:animated
+//                            completion:completion];
+//
+//    if (transitionDidStart) {
+//        _rightViewController = rightViewController;
+//    }
+//}
 
 
-- (CGFloat)leftViewControllerWidth
-{
-    return self.leftViewWidthConstraint.constant;
-}
+//- (void)setInternalLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
+//{
+//    _leftViewControllerRevealed = leftViewControllerIsRevealed;
+//}
 
-- (void)setLayoutSize:(SplitViewControllerLayoutSize)layoutSize
-{
-    if (_layoutSize != layoutSize) {
-        _layoutSize = layoutSize;
-        [[NSNotificationCenter defaultCenter] postNotificationName:SplitLayoutObservableDidChangeToLayoutSizeNotification object:self];
-    }
-}
+//- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
+//{
+//    _leftViewControllerRevealed = leftViewControllerIsRevealed;
+//    [self updateLeftViewControllerVisibilityAnimated:YES completion:nil];
+//}
 
-- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController {
-    _leftViewController = leftViewController;
-}
+//- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
+//{
+//    _leftViewControllerRevealed = leftViewControllerRevealed;
+//    [self updateLeftViewControllerVisibilityAnimated:animated completion:completion];
+//}
 
-- (void)setLeftViewController:(nullable UIViewController *)leftViewController
-{
-    [self setLeftViewController:leftViewController animated:NO completion:nil];
-}
-
-- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
-{
-    [self setLeftViewController:leftViewController animated:animated transition:SplitViewControllerTransitionDefault completion:completion];
-}
-
-- (void)setRightViewController:(nullable UIViewController *)rightViewController
-{
-    [self setRightViewController:rightViewController animated:NO completion:nil];
-}
-
-- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
-{
-    if (self.rightViewController == rightViewController) {
-        return;
-    }
-    
-    // To determine if self.rightViewController.presentedViewController is actually presented over it, or is it
-    // presented over one of it's parents.
-    if (self.rightViewController.presentedViewController.presentingViewController == self.rightViewController) {
-        [self.rightViewController dismissViewControllerAnimated:NO completion:nil];
-    }
-    
-    UIViewController *removedViewController = self.rightViewController;
-    
-    BOOL transitionDidStart =
-    [self transitionFromViewController:removedViewController
-                      toViewController:rightViewController
-                         containerView:self.rightView
-                              animator:[self animatorForRightView]
-                              animated:animated
-                            completion:completion];
-    
-    if (transitionDidStart) {
-        _rightViewController = rightViewController;
-    }
-}
+//- (void)setOpenPercentage:(CGFloat)percentage
+//{
+//    _openPercentage = percentage;
+//    [self updateRightAndLeftEdgeConstraints: percentage];
+//
+//    [self setNeedsStatusBarAppearanceUpdate];
+//}
 
 
-- (void)setInternalLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
-{
-    _leftViewControllerRevealed = leftViewControllerIsRevealed;
-}
-
-- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed
-{
-    _leftViewControllerRevealed = leftViewControllerIsRevealed;
-    [self updateLeftViewControllerVisibilityAnimated:YES completion:nil];
-}
-
-- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion
-{
-    _leftViewControllerRevealed = leftViewControllerRevealed;
-    [self updateLeftViewControllerVisibilityAnimated:animated completion:completion];
-}
-
-- (void)setOpenPercentage:(CGFloat)percentage
-{
-    _openPercentage = percentage;
-    [self updateRightAndLeftEdgeConstraints: percentage];
-    
-    [self setNeedsStatusBarAppearanceUpdate];
-}
-
-
-@end
+//@end

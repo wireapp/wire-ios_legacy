@@ -34,15 +34,14 @@ extension SplitViewController {
     ///
     /// - Parameters:
     ///   - traitCollection: the new traitCollection
-    @objc(updateLayoutSizeForTraitCollection:)
     func updateLayoutSize(for traitCollection: UITraitCollection) {
         switch (traitCollection.horizontalSizeClass, UIApplication.shared.statusBarOrientation.isPortrait) {
         case (.regular, true):
-            layoutSize = .regularPortrait
+            self.layoutSize = .regularPortrait
         case (.regular, false):
-            layoutSize = .regularLandscape
+            self.layoutSize = .regularLandscape
         default:
-            layoutSize = .compact
+            self.layoutSize = .compact
         }
     }
 }

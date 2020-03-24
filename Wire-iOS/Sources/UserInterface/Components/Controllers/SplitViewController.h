@@ -20,39 +20,22 @@
 #import <UIKit/UIKit.h>
 
 
-@class SplitViewController;
-
-NS_ASSUME_NONNULL_BEGIN
-
-typedef NS_CLOSED_ENUM(NSInteger, SplitViewControllerLayoutSize) {
-    SplitViewControllerLayoutSizeCompact,
-    SplitViewControllerLayoutSizeRegularPortrait,
-    SplitViewControllerLayoutSizeRegularLandscape
-};
-
-@protocol SplitLayoutObservable <NSObject>
-@property (nonatomic, readonly) SplitViewControllerLayoutSize layoutSize;
-@property (nonatomic, readonly) CGFloat leftViewControllerWidth;
-@end
-
-FOUNDATION_EXPORT NSString *SplitLayoutObservableDidChangeToLayoutSizeNotification;
-
-@protocol SplitViewControllerDelegate <NSObject>
-- (BOOL)splitViewControllerShouldMoveLeftViewController:(SplitViewController *)splitViewController;
-@end
-
-
-@interface SplitViewController : UIViewController <SplitLayoutObservable>
-@property (nonatomic, nullable) UIViewController *leftViewController;
-@property (nonatomic, nullable) UIViewController *rightViewController;
-
-@property (nonatomic, getter=isLeftViewControllerRevealed) BOOL leftViewControllerRevealed;
-
-@property (nonatomic, weak, nullable) id<SplitViewControllerDelegate> delegate;
-
-- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
-@end
-
-NS_ASSUME_NONNULL_END
+//@class SplitViewController;
+//
+//NS_ASSUME_NONNULL_BEGIN
+//
+//
+//@interface SplitViewController : UIViewController <SplitLayoutObservable>
+//@property (nonatomic, nullable) UIViewController *leftViewController;
+//@property (nonatomic, nullable) UIViewController *rightViewController;
+//
+//@property (nonatomic, getter=isLeftViewControllerRevealed) BOOL leftViewControllerRevealed;
+//
+//@property (nonatomic, weak, nullable) id<SplitViewControllerDelegate> delegate;
+//
+//- (void)setLeftViewController:(nullable UIViewController *)leftViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+//- (void)setRightViewController:(nullable UIViewController *)rightViewController animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+//- (void)setLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed animated:(BOOL)animated completion:(nullable dispatch_block_t)completion;
+//@end
+//
+//NS_ASSUME_NONNULL_END

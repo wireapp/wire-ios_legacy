@@ -16,40 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-typedef NS_ENUM(NSInteger, SplitViewControllerTransition) {
-    SplitViewControllerTransitionDefault,
-    SplitViewControllerTransitionPresent,
-    SplitViewControllerTransitionDismiss
-};
-
-@interface SplitViewController ()
-
-@property (nonatomic) UIView *leftView;
-@property (nonatomic) UIView *rightView;
-
-@property (nonatomic) CGFloat openPercentage;
-
-@property (nonatomic) NSLayoutConstraint *leftViewLeadingConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewLeadingConstraint;
-
-@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
-@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
-
-@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
-@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
-
-@property (nonatomic) SplitViewControllerLayoutSize layoutSize;
-
-- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
-- (void)setInternalLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed;
-
-@end
-
-@interface SplitViewController ()
-
-@property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
-
-@property (nonatomic) UITraitCollection *futureTraitCollection;
-
-@end
+//@interface SplitViewController ()
+//
+//@property (nonatomic) UIView *leftView;
+//@property (nonatomic) UIView *rightView;
+//
+//@property (nonatomic) CGFloat openPercentage;
+//
+//@property (nonatomic) NSLayoutConstraint *leftViewLeadingConstraint;
+//@property (nonatomic) NSLayoutConstraint *rightViewLeadingConstraint;
+//
+//@property (nonatomic) NSLayoutConstraint *leftViewWidthConstraint;
+//@property (nonatomic) NSLayoutConstraint *rightViewWidthConstraint;
+//
+//@property (nonatomic) NSLayoutConstraint *sideBySideConstraint;
+//@property (nonatomic) NSLayoutConstraint *pinLeftViewOffsetConstraint;
+//
+//@property (nonatomic) SplitViewControllerLayoutSize layoutSize;
+//
+//- (void)setInternalLeftViewController:(nullable UIViewController *)leftViewController;
+//- (void)setInternalLeftViewControllerRevealed:(BOOL)leftViewControllerIsRevealed;
+//
+//@end
+//
+//@interface SplitViewController ()
+//
+//@property (nonatomic) UIPanGestureRecognizer *horizontalPanner;
+//
+//@property (nonatomic) UITraitCollection *futureTraitCollection;
+//
+//@end
 

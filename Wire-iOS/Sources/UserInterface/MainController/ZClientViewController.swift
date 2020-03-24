@@ -262,7 +262,7 @@ final class ZClientViewController: UIViewController {
                                            animated: Bool,
                                            completion: Completion?) -> Bool {
         conversationRootViewController = viewController
-        wireSplitViewController.setRight(conversationRootViewController, animated: animated, completion: completion)
+        wireSplitViewController.setRightViewController(conversationRootViewController, animated: animated, completion: completion)
 
         if focus {
             wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated)

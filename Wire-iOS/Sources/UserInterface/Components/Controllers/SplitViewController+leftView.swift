@@ -19,7 +19,6 @@
 import Foundation
 
 extension SplitViewController {
-    @objc
     var isConversationViewVisible: Bool {
         return (layoutSize == .regularLandscape) || !isLeftViewControllerRevealed
     }
@@ -29,10 +28,8 @@ extension SplitViewController {
     /// - Parameters:
     ///   - animated: animation enabled?
     ///   - completion: completion closure
-
-    ///TODO: rm
-    @objc(updateLeftViewControllerVisibilityAnimated:completion:)
-    func updateLeftViewController(animated: Bool, completion: (() -> Void)?) {
+    func updateLeftViewController(animated: Bool,
+                                  completion: Completion? = nil) {
         if animated {
             view.layoutIfNeeded()
         }
