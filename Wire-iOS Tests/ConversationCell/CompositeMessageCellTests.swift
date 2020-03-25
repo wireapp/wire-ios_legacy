@@ -22,10 +22,21 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
+    func testThatItRendersErrorMessage() {
+        // given
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
+                                             createItem(title: "Stone age", state:.unselected, isExpired: true),
+                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
+
+        // when & then
+        verify(message: makeMessage(items: items), allWidths: false)
+    }
+
     func testThatItRendersButton() {
         verify(message: makeMessage())
     }
-    
+
     func testThatButtonStyleIsUpdatedAfterStateChange() {
         // given
         let message = makeMessage() { config in
@@ -33,20 +44,34 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
             let item = self.createItem(title: "J.S. Bach", state:.unselected)
             (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
         }
-                
+
         // then
         verify(message: message, allWidths: false)
     }
 
     // MARK: - Helpers
-    
-    private func createItem(title: String, state: ButtonMessageState) -> CompositeMessageItem {
+
+    private func createItem(title: String, state: ButtonMessageState, isExpired: Bool = false) -> CompositeMessageItem {
         let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
         mockButtonMessageData.state = state
         mockButtonMessageData.title = title
+        mockButtonMessageData.isExpired = isExpired
         let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
-        
+
         return buttonItem
+    }
+
+    private func makeMessage(items: [CompositeMessageItem]) -> MockMessage {
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
+
+        let mockCompositeMessageData = MockCompositeMessageData()
+        let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
+        let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
+
+        mockCompositeMessageData.items = [textItem] + items
+
+        mockCompositeMessage.compositeMessageData = mockCompositeMessageData
+        return mockCompositeMessage
     }
 
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
@@ -55,13 +80,12 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         let mockCompositeMessageData = MockCompositeMessageData()
         let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
         let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
-        
+
         let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
                                              createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state:.unselected),
                                              createItem(title: "Ludwig van Beethoven", state:.confirmed),
                                              createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
-        
-        
+
         mockCompositeMessageData.items = [textItem] + items
 
         mockCompositeMessage.compositeMessageData = mockCompositeMessageData
@@ -73,12 +97,12 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
 final class MockButtonMessageData: ButtonMessageData {
     var title: String?
-    
+
     var state: ButtonMessageState = .unselected
-    
+
     func touchAction() {
         //no-op
     }
 
-    var isExpired: Bool { return false }
+    var isExpired: Bool = false
 }
