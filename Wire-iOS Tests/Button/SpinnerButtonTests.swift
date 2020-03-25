@@ -50,7 +50,9 @@ final class SpinnerButtonTests: XCTestCase {
         sut.isLoading = true
 
         //THEN
-        verifyInWidths(matching: sut, widths: Set([300]))
+        verifyInWidths(matching: sut,
+                       widths: Set([300]),
+                       snapshotBackgroundColor: UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha))
     }
 
     func testForSpinnerIsHidden() {
@@ -81,6 +83,7 @@ final class SpinnerButtonTests: XCTestCase {
         createSut()
         sut.isLoading = true
         verifyInAllPhoneWidths(matching:sut,
+                               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground),
                                named: "light")
     }
 }

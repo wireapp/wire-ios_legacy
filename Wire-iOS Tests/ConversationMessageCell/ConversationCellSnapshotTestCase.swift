@@ -71,6 +71,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                 waitForTextViewToLoad: Bool = false,
                 allColorSchemes: Bool = false,
                 allWidths: Bool = true,
+                snapshotBackgroundColor: UIColor? = nil,
                 file: StaticString = #file,
                 testName: String = #function,
                 line: UInt = #line) {
@@ -83,7 +84,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
             let stackView = UIStackView(arrangedSubviews: views)
             stackView.axis = .vertical
             stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.backgroundColor = ColorScheme.default.variant == .light ? .white : .black
+            stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
             
             if waitForImagesToLoad {
                 XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
@@ -101,6 +102,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         if allColorSchemes {
             ColorScheme.default.variant = .dark
             verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "dark",
                    allWidths: allWidths,
                    file: file,
@@ -109,6 +111,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
 
             ColorScheme.default.variant = .light
             verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
                    named: "light",
                    allWidths: allWidths,
                    file: file,
@@ -116,6 +119,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
                    line: line)            
         } else {
             verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
                    allWidths: allWidths,
                    file: file,
                    testName: testName,
@@ -124,14 +128,18 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
     }
     
     private func verify(matching value: UIView,
+                        snapshotBackgroundColor: UIColor?,
                         named name: String? = nil,
                         allColorSchemes: Bool = false,
                         allWidths: Bool = true,
                         file: StaticString = #file,
                         testName: String = #function,
                         line: UInt = #line) {
+        let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        
         if allWidths {
             verifyInAllPhoneWidths(matching:value,
+                                   snapshotBackgroundColor: backgroundColor,
                                    named: name,
                                    file: file,
                                    testName: testName,
@@ -139,6 +147,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         } else {
             verifyInWidths(matching:value,
                            widths: [smallestWidth],
+                           snapshotBackgroundColor: backgroundColor,
                            named: name,
                            file: file,
                            testName: testName,

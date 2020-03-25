@@ -30,11 +30,14 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
                                              createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
 
         // when & then
-        verify(message: makeMessage(items: items), allWidths: false)
+        verify(message: makeMessage(items: items),
+               allWidths: false,
+               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
     }
 
     func testThatItRendersButton() {
-        verify(message: makeMessage())
+        verify(message: makeMessage(),
+               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground))
     }
 
     func testThatButtonStyleIsUpdatedAfterStateChange() {

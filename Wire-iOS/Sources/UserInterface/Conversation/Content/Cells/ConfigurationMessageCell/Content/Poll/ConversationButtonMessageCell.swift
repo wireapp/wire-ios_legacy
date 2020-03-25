@@ -58,10 +58,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
                 return
             }
 
-            if config?.state != oldValue?.state {
-                button.isLoading = false
-            }
-
             updateUI()
         }
     }
@@ -71,18 +67,21 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             return
         }
 
-        button.reset()
-
         buttonAction = config.buttonAction
         button.setTitle(config.text, for: .normal)
 
         switch config.state {
         case .unselected:
             button.style = .empty
+            button.isLoading = false
+            button.isEnabled = true
         case .selected:
-            button.style = .full
+            button.style = .empty
+            button.isLoading = true
+            button.isEnabled = false
         case .confirmed:
             button.style = .full
+            button.isLoading = false
             button.isEnabled = false
         }
 
@@ -117,9 +116,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     @objc
     private func buttonTouched(sender: Any) {
-        guard config?.state != .confirmed else { return }
-
-        button.isLoading = true
         buttonAction?()
     }
 
