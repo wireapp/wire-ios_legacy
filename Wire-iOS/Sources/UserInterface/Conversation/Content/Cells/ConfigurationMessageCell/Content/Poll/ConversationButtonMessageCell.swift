@@ -25,12 +25,39 @@ extension ButtonMessageState {
 }
 
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
-    private let button = SpinnerButton(style: .empty)
     var isSelected: Bool = false
-    private var buttonAction: Completion?
 
     weak var message: ZMConversationMessage?
     weak var delegate: ConversationMessageCellDelegate?
+
+    var errorMessage: String? {
+        didSet {
+            if errorMessage?.isEmpty == false {
+                errorLabelTopConstraint?.constant = 4
+            } else {
+                errorLabelTopConstraint?.constant = 0
+            }
+            errorLabel.text = errorMessage
+            errorLabel.invalidateIntrinsicContentSize()
+            
+            layoutIfNeeded()
+        }
+    }
+
+    private let button = SpinnerButton(style: .empty)
+    private var buttonAction: Completion?
+
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = .smallLightFont
+        label.textColor = .accent()
+        
+        return label
+    }()
+
+    private var errorLabelTopConstraint: NSLayoutConstraint?
+    private var errorLabelHeightConstraint: NSLayoutConstraint?
+
     private var config: Configuration? {
         didSet {
             guard config != oldValue else {
@@ -73,12 +100,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         config = object
     }
 
-    enum State {
-        case unselected
-        case selected
-        case loading
-    }
-
     struct Configuration {
         let text: String?
         let state: ButtonMessageState
@@ -112,17 +133,34 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }
 
     private func configureViews() {
-        addSubview(button)
+        [button, errorLabel].forEach() {
+            addSubview($0)
+        }
     }
 
     private func createConstraints() {
-        button.translatesAutoresizingMaskIntoConstraints = false
-
+        [button, errorLabel].forEach() {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
+        
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor),
             button.leadingAnchor.constraint(equalTo: leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor)])
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            errorLabelTopConstraint,
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
+            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            ])
+        
+        self.errorLabelTopConstraint = errorLabelTopConstraint
+        
+        ///TODO: for test only!
+                errorMessage = "Test error"
+        
     }
 }
 
@@ -167,4 +205,4 @@ extension ConversationButtonMessageCell.Configuration: Hashable {
         hasher.combine(text)
         hasher.combine(state)
     }
-}
+} 

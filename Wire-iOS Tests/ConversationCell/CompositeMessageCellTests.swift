@@ -23,7 +23,7 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
     typealias CellConfiguration = (MockMessage) -> Void
 
     func testThatItRendersErrorMessage() {
-        verify(message: makeMessage())
+        verify(message: makeMessage(), allWidths: false)
     }
 
     func testThatItRendersButton() {
