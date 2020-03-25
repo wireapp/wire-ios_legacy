@@ -25,7 +25,7 @@ extension ConversationInputBarViewController {
 
         let locationSelectionViewController = LocationSelectionViewController()
         locationSelectionViewController.modalPresentationStyle = .popover
-        
+
         if let popover = locationSelectionViewController.popoverPresentationController,
            let imageView = sender?.imageView {
 
@@ -42,14 +42,14 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: LocationSelectionViewControllerDelegate {
     func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData) {
-        ZMUserSession.shared()?.enqueue{
+        ZMUserSession.shared()?.enqueue {
             self.conversation.append(location: locationData)
             Analytics.shared().tagMediaActionCompleted(.location, inConversation: self.conversation)
         }
-        
+
         parent?.dismiss(animated: true)
     }
-    
+
     func locationSelectionViewControllerDidCancel(_ viewController: LocationSelectionViewController) {
         parent?.dismiss(animated: true)
     }
