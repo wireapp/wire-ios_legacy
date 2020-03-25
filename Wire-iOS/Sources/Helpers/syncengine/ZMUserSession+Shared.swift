@@ -37,7 +37,6 @@ extension ZMUserSession {
         return ZMUser.selfUser(inUserSession: self).hasTeam
     }
     
-    @objc
     func maxUploadFileSize() -> UInt64 {
         return selfUserHasTeam ? MaxTeamFileSize : MaxFileSize
     }
