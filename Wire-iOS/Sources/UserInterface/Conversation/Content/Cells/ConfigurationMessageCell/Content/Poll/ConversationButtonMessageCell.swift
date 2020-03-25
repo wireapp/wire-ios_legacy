@@ -116,7 +116,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     @objc
     private func buttonTouched(sender: Any) {
-//        guard config?.state != .confirmed else { return }
         buttonAction?()
     }
 
