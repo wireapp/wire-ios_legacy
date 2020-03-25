@@ -92,7 +92,7 @@ extension ConversationContentViewController {
                     present(saveController, animated: true)
                 }
             }
-        case .digitalSignIn:
+        case .digitallySign:
             // TODO: Start the digital signature
             break
         case .edit:

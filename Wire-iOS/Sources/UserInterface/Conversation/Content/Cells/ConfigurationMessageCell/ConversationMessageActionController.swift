@@ -41,7 +41,7 @@ final class ConversationMessageActionController: NSObject {
     // MARK: - List of Actions
 
     @objc static let allMessageActions: [UIMenuItem] = [
-        UIMenuItem(title: "content.message.sign".localized, action: #selector(ConversationMessageActionController.digitalSignInMessage)),
+        UIMenuItem(title: "content.message.sign".localized, action: #selector(ConversationMessageActionController.digitallySignMessage)),
         UIMenuItem(title: "content.message.copy".localized, action: #selector(ConversationMessageActionController.copyMessage)),
         UIMenuItem(title: "content.message.reply".localized, action: #selector(ConversationMessageActionController.quoteMessage)),
         UIMenuItem(title: "content.message.details".localized, action: #selector(ConversationMessageActionController.openMessageDetails)),
@@ -59,7 +59,7 @@ final class ConversationMessageActionController: NSObject {
 
     @objc func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
-        case #selector(ConversationMessageActionController.digitalSignInMessage):
+        case #selector(ConversationMessageActionController.digitallySignMessage):
             return message.canBeDigitallySigned
         case #selector(ConversationMessageActionController.copyMessage):
             return message.canBeCopied
@@ -150,8 +150,8 @@ final class ConversationMessageActionController: NSObject {
         responder?.perform(action: action, for: message, view: view)
     }
 
-    @objc func digitalSignInMessage() {
-        perform(action: .digitalSignIn)
+    @objc func digitallySignMessage() {
+        perform(action: .digitallySign)
     }
     
     @objc func copyMessage() {

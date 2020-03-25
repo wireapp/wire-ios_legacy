@@ -23,7 +23,7 @@ enum MessageAction {
     `delete`,
     present,
     save,
-    digitalSignIn,
+    digitallySign,
     copy,
     edit,
     sketchDraw,
