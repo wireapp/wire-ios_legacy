@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
 extension Account {
@@ -29,48 +28,57 @@ extension Settings {
     private func payload(for account: Account) -> [String: Any] {
         return defaults.value(forKey: account.userDefaultsKey()) as? [String: Any] ?? [:]
     }
-    
-    /// Returns the value associated with the given account for the given key,
-    /// or nil if it doesn't exist.
+
+    /// Returns the value associated with the given account for the given key
     ///
-    func value<T>(for key: String, in account: Account) -> T? {
+    /// - Parameters:
+    ///   - key: the SettingKey enum
+    ///   - account: account to get value
+    /// - Returns: the setting of the account
+    func value<T>(for settingKey: SettingKey, in account: Account) -> T? {
+        let key = settingKey.rawValue
+
         // Attempt to migrate the shared value
         if let rootValue = defaults.value(forKey: key) {
-            setValue(rootValue, for: key, in: account)
-            defaults.setValue(nil, forKey: key)
+            setValue(rootValue, settingKey: settingKey, in: account)
+            defaults.removeObject(forKey: key)
             defaults.synchronize()
         }
-        
-        var accountPayload = self.payload(for: account)
+
+        var accountPayload = payload(for: account)
         return accountPayload[key] as? T
     }
-    
+
     /// Sets the value associated with the given account for the given key.
     ///
-    func setValue<T>(_ value: T?, for key: String, in account: Account) {
+    /// - Parameters:
+    ///   - value: value to set
+    ///   - settingKey: the SettingKey enum
+    ///   - account: account to set value
+    func setValue<T>(_ value: T?, settingKey: SettingKey, in account: Account) {
+        let key = settingKey.rawValue
         var accountPayload = self.payload(for: account)
         accountPayload[key] = value
         defaults.setValue(accountPayload, forKey: account.userDefaultsKey())
     }
-    
-    @objc func lastViewedConversation(for account: Account) -> ZMConversation? {
-        guard let conversationID: String = self.value(for: UserDefaultLastViewedConversation, in: account) else {
+
+    func lastViewedConversation(for account: Account) -> ZMConversation? {
+        guard let conversationID: String = self.value(for: .lastViewedConversation, in: account) else {
             return nil
         }
-        
+
         let conversationURI = URL(string: conversationID)
         let session = ZMUserSession.shared()
         let objectID = ZMManagedObject.objectID(forURIRepresentation: conversationURI, inUserSession: session)
         return ZMConversation.existingObject(with: objectID, inUserSession: session)
     }
 
-    @objc func setLastViewed(conversation: ZMConversation, for account: Account) {
+    func setLastViewed(conversation: ZMConversation, for account: Account) {
         let conversationURI = conversation.objectID.uriRepresentation()
-        self.setValue(conversationURI.absoluteString, for: UserDefaultLastViewedConversation, in: account)
+        setValue(conversationURI.absoluteString, settingKey: .lastViewedConversation, in: account)
         defaults.synchronize()
     }
 
-    @objc
     func notifyDisableSendButtonChanged() {
         NotificationCenter.default.post(name: .disableSendButtonChanged, object: self, userInfo: nil)
     }

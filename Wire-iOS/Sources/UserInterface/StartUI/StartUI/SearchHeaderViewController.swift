@@ -19,50 +19,49 @@
 import Foundation
 import Cartography
 
-
 @objc
-protocol SearchHeaderViewControllerDelegate : class {
-    func searchHeaderViewController(_ searchHeaderViewController : SearchHeaderViewController, updatedSearchQuery query: String)
-    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController : SearchHeaderViewController)
+protocol SearchHeaderViewControllerDelegate: class {
+    func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String)
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)
 }
 
-class SearchHeaderViewController : UIViewController {
-    
+class SearchHeaderViewController: UIViewController {
+
     let tokenFieldContainer = UIView()
     let tokenField = TokenField()
     let searchIcon = UIImageView()
     let clearButton: IconButton
-    let userSelection : UserSelection
-    let colorSchemeVariant : ColorSchemeVariant
+    let userSelection: UserSelection
+    let colorSchemeVariant: ColorSchemeVariant
     var allowsMultipleSelection: Bool = true
 
-    weak var delegate : SearchHeaderViewControllerDelegate? = nil
-    
-    var query : String {
+    weak var delegate: SearchHeaderViewControllerDelegate?
+
+    var query: String {
         return tokenField.filterText
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(userSelection: UserSelection, variant: ColorSchemeVariant) {
         self.userSelection = userSelection
         self.colorSchemeVariant = variant
         self.clearButton = IconButton(style: .default, variant: variant)
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         userSelection.add(observer: self)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = UIColor.from(scheme: .barBackground, variant: colorSchemeVariant)
 
         searchIcon.setIcon(.search, size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant))
-        
+
         clearButton.accessibilityLabel = "clear"
         clearButton.setIcon(.clearInput, size: .tiny, for: .normal)
         clearButton.addTarget(self, action: #selector(onClearButtonPressed), for: .touchUpInside)
@@ -83,23 +82,23 @@ class SearchHeaderViewController : UIViewController {
         tokenField.textView.autocorrectionType = .no
         tokenField.textView.textContainerInset = UIEdgeInsets(top: 9, left: 40, bottom: 11, right: 32)
         tokenField.delegate = self
-        
+
         [tokenField, searchIcon, clearButton].forEach(tokenFieldContainer.addSubview)
         [tokenFieldContainer].forEach(view.addSubview)
-        
+
         createConstraints()
     }
-    
+
     private func createConstraints() {
         constrain(tokenFieldContainer, tokenField, searchIcon, clearButton) { container, tokenField, searchIcon, clearButton in
             searchIcon.centerY == tokenField.centerY
             searchIcon.leading == tokenField.leading + 8
-            
+
             clearButton.width == 32
             clearButton.height == clearButton.width
             clearButton.centerY == tokenField.centerY
             clearButton.trailing == tokenField.trailing
-            
+
             tokenField.height >= 40
             tokenField.top >= container.top + 8
             tokenField.bottom <= container.bottom - 8
@@ -107,7 +106,7 @@ class SearchHeaderViewController : UIViewController {
             tokenField.trailing == container.trailing - 8
             tokenField.centerY == container.centerY
         }
-        
+
         // pin to the bottom of the navigation bar
 
         if #available(iOS 11.0, *) {
@@ -123,62 +122,62 @@ class SearchHeaderViewController : UIViewController {
             tokenFieldContainer.height == 56
         }
     }
-    
+
     @objc private dynamic func onClearButtonPressed() {
         tokenField.clearFilterText()
         tokenField.removeAllTokens()
         resetQuery()
         updateClearIndicator(for: tokenField)
     }
-    
+
     func clearInput() {
         tokenField.removeAllTokens()
         tokenField.clearFilterText()
         userSelection.replace([])
     }
-    
+
     func resetQuery() {
         tokenField.filterUnwantedAttachments()
         delegate?.searchHeaderViewController(self, updatedSearchQuery: tokenField.filterText)
     }
-    
+
     private func updateClearIndicator(for tokenField: TokenField) {
         clearButton.isHidden = tokenField.filterText.isEmpty && tokenField.tokens.isEmpty
     }
-    
+
 }
 
-extension SearchHeaderViewController : UserSelectionObserver {
-    
+extension SearchHeaderViewController: UserSelectionObserver {
+
     func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         // this is triggered by the TokenField itself so we should ignore it here
     }
-    
+
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         guard allowsMultipleSelection else { return }
         tokenField.addToken(forTitle: user.name ?? "", representedObject: user)
     }
-    
+
     func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         guard let token = tokenField.token(forRepresentedObject: user) else { return }
         tokenField.removeToken(token)
         updateClearIndicator(for: tokenField)
     }
-    
+
 }
 
-extension SearchHeaderViewController : TokenFieldDelegate {
+extension SearchHeaderViewController: TokenFieldDelegate {
 
-    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        userSelection.replace(tokens.compactMap { $0.representedObject as? ZMUser })
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token<NSObjectProtocol>]) {
+        userSelection.replace(tokens.compactMap { $0.representedObject.value as? ZMUser })
         updateClearIndicator(for: tokenField)
     }
-    
+
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
         delegate?.searchHeaderViewController(self, updatedSearchQuery: text)
         updateClearIndicator(for: tokenField)
     }
-    
+
     func tokenFieldDidConfirmSelection(_ controller: TokenField) {
         delegate?.searchHeaderViewControllerDidConfirmAction(self)
     }

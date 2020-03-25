@@ -25,7 +25,7 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
     case safari, chrome, firefox, snowhaze, brave
 
     typealias ApplicationOptionEnum = BrowserOpeningOption
-    static var settingKey: String = UserDefaultBrowserOpeningRawValue
+    static var settingKey: SettingKey = .browserOpeningRawValue
     static var defaultPreference: ApplicationOptionEnum = .safari
 
     static var allOptions: [BrowserOpeningOption] {
@@ -51,7 +51,6 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         case .brave: return UIApplication.shared.braveInstalled
         }
     }
-
 }
 
 extension URL {

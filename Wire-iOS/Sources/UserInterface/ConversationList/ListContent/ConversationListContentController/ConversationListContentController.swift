@@ -68,10 +68,8 @@ final class ConversationListContentController: UICollectionViewController {
         super.viewWillAppear(animated)
 
         // viewWillAppear: can get called also when dismissing the controller above this one.
-        // The user session might not be there anymore in some cases, e.g. when logging out
-        guard let _ = ZMUserSession.shared() else {
-            return
-        }
+        // The self user might not be there anymore in some cases, e.g. when logging out
+        guard SelfUser.provider != nil else { return }
 
         updateVisibleCells()
 

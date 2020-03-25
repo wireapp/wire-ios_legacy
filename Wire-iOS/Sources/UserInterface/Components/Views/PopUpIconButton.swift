@@ -18,7 +18,7 @@
 
 import UIKit
 
-public enum PopUpIconButtonExpandDirection {
+enum PopUpIconButtonExpandDirection {
     case left, right
 }
 
@@ -26,15 +26,15 @@ protocol PopUpIconButtonDelegate: class {
     func popUpIconButton(_ button: PopUpIconButton, didSelectIcon icon: StyleKitIcon)
 }
 
-public class PopUpIconButton: IconButton {
+final class PopUpIconButton: IconButton {
 
     weak var delegate: PopUpIconButtonDelegate?
-    public var itemIcons: [StyleKitIcon] = []
+    var itemIcons: [StyleKitIcon] = []
     
     private var buttonView: PopUpIconButtonView?
     fileprivate let longPressGR = UILongPressGestureRecognizer()
     
-    public func setupView() {
+    func setupView() {
         longPressGR.minimumPressDuration = 0.15
         longPressGR.addTarget(self, action: #selector(longPressHandler(gestureRecognizer:)))
         addGestureRecognizer(longPressGR)

@@ -17,68 +17,93 @@
 
 import UIKit
 
+
+extension ButtonMessageState {
+    var localizedName: String {
+        return "button_message_cell.state.\(self)".localized
+    }
+}
+
 final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let button = SpinnerButton(style: .empty)
-    private let errorLabel: UILabel = {
-        let label = UILabel()
-        label.font = .smallLightFont
-        label.textColor = .accent()
-        
-        return label
-    }()
-    
-    var errorLabelTopConstraint: NSLayoutConstraint?
-    var errorLabelHeightConstraint: NSLayoutConstraint?
-
     var isSelected: Bool = false
+    private var buttonAction: Completion?
 
-    var errorMessage: String? {
+    weak var message: ZMConversationMessage?
+    weak var delegate: ConversationMessageCellDelegate?
+    private var config: Configuration? {
         didSet {
-            if errorMessage?.isEmpty == false {
-                errorLabelTopConstraint?.constant = 4
-            } else {
-                errorLabelTopConstraint?.constant = 0
+            guard config != oldValue else {
+                return
             }
-            errorLabel.text = errorMessage
-            errorLabel.invalidateIntrinsicContentSize()
             
-            layoutIfNeeded()
+            if config?.state != oldValue?.state {
+                button.isLoading = false
+            }
+
+            updateUI()
         }
     }
-    weak var message: ZMConversationMessage?
 
-    weak var delegate: ConversationMessageCellDelegate?
+    private func updateUI() {
+        guard let config = config else {
+            return
+        }
+        
+        button.reset()
 
-    func configure(with object: ConversationButtonMessageCell.Configuration, animated: Bool) {
-        button.setTitle(object.text, for: .normal)
-        switch object.state {
+        buttonAction = config.buttonAction
+        button.setTitle(config.text, for: .normal)
+
+        switch config.state {
         case .unselected:
             button.style = .empty
         case .selected:
             button.style = .full
         case .confirmed:
+            button.style = .full
             button.isEnabled = false
-            ///TODO: style?
+            ///TODO: style for expired state
         }
+        
+        button.accessibilityValue = config.state.localizedName
+    }
+    
+    func configure(with object: Configuration, animated: Bool) {
+        config = object
     }
 
-//    enum State {
-//        case unselected
-//        case selected
-//        case loading
-//    }
+    enum State {
+        case unselected
+        case selected
+        case loading
+    }
 
     struct Configuration {
         let text: String?
         let state: ButtonMessageState
-        ///TODO: state/spinner ?
+        let buttonAction: Completion
     }
 
-    init() {
+    convenience init() {
+        self.init(frame: .zero)
+    }
+    
+    override init(frame: CGRect) {
         super.init(frame: .zero)
 
         configureViews()
         createConstraints()
+        
+        button.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
+    }
+    
+    @objc
+    private func buttonTouched(sender: Any) {
+        guard config?.state != .confirmed else { return }
+        
+        button.isLoading = true
+        buttonAction?()
     }
 
     @available(*, unavailable)
@@ -88,32 +113,16 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     private func configureViews() {
         addSubview(button)
-        addSubview(errorLabel)
     }
 
     private func createConstraints() {
-        [button, errorLabel].forEach() {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
-        
+        button.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor),
             button.leadingAnchor.constraint(equalTo: leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
-            errorLabelTopConstraint,
-            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            ])
-        
-        self.errorLabelTopConstraint = errorLabelTopConstraint
-        
-        ///TODO: for test only!
-//        errorMessage = "Test error"
-
+            button.trailingAnchor.constraint(equalTo: trailingAnchor)])
     }
 }
 
@@ -138,11 +147,24 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var configuration: View.Configuration
 
-    var accessibilityIdentifier: String? = "ButtonCell"
+    var accessibilityIdentifier: String? = "PollCell"
 
     var accessibilityLabel: String?
 
-    init(text: String?, state: ButtonMessageState) { //TODO: map ButtonMessageState to Stata, missing loading 
-        configuration = View.Configuration(text: text, state: state)
+    init(text: String?,
+         state: ButtonMessageState,
+         buttonAction: @escaping Completion) {
+        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction)
+    }
+}
+
+extension ConversationButtonMessageCell.Configuration: Hashable {
+    static func == (lhs: ConversationButtonMessageCell.Configuration, rhs: ConversationButtonMessageCell.Configuration) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(text)
+        hasher.combine(state)
     }
 }

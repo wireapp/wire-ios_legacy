@@ -20,12 +20,12 @@
 import Foundation
 import Cartography
 
-public final class CollectionsView: UIView {
+final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!
     var collectionView: UICollectionView!
     let noResultsView = NoResultsView()
     
-    static public let useAutolayout = false
+    static let useAutolayout = false
     
     var noItemsInLibrary: Bool = false {
         didSet {
@@ -76,11 +76,11 @@ public final class CollectionsView: UIView {
         self.collectionViewLayout = layout
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public static func closeButton() -> IconButton {
+    static func closeButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 48, height: 32)
@@ -89,7 +89,7 @@ public final class CollectionsView: UIView {
         return button
     }
     
-    public static func backButton() -> IconButton {
+    static func backButton() -> IconButton {
         let button = IconButton(style: .default)
         button.setIcon(.backArrow, size: .tiny, for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 32, height: 20)

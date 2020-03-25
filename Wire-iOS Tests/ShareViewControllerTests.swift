@@ -79,13 +79,13 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
     func testThatItRendersCorrectlyShareViewController_Photos() {
         let img = image(inTestBundleNamed: "unsplash_matterhorn.jpg")
-        self.groupConversation.append(imageFromData: img.data()!)
+        self.groupConversation.append(imageFromData: img.imageData!)
 
         createSut()
 
         _ = sut.view // make sure view is loaded
         
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
         self.verifyInAllDeviceSizes(view: sut.view)
     }
@@ -105,7 +105,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
         _ = sut.view // make sure view is loaded
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         self.verifyInAllDeviceSizes(view: sut.view)
     }
 
@@ -120,7 +120,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
         _ = sut.view // make sure view is loaded
 
-        XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+        XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         self.verifyInAllDeviceSizes(view: sut.view)
     }
 

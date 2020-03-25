@@ -18,7 +18,6 @@
 
 
 #import "WireBridgingHeader.h"
-#import "Settings.h"
 
 @import WireSyncEngine;
 

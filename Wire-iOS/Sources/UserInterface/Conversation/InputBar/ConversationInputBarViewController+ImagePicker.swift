@@ -62,10 +62,11 @@ extension ConversationInputBarViewController {
             }
 
             if sourceType == .camera {
-                switch Settings.shared().preferredCamera {
-                case .back:
+                let settingsCamera: SettingsCamera? = Settings.shared[.preferredCamera]
+                switch settingsCamera {
+                case .back?:
                     pickerController.cameraDevice = .rear
-                case .front:
+                case .front?, .none:
                     pickerController.cameraDevice = .front
                 }
             }
@@ -113,7 +114,8 @@ extension ConversationInputBarViewController {
 
         picker.showLoadingView = true
         AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
-            if error == nil && resultURL != nil {
+            if error == nil,
+               let resultURL = resultURL {
                 self.uploadFile(at: resultURL)
             }
 

@@ -23,9 +23,7 @@ extension ConversationInputBarViewController: UIDocumentPickerDelegate {
 
     @available(iOS 11.0, *)
     public func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
-
-        uploadItem(at: url)
+        uploadFiles(at: urls)
     }
 
 
@@ -118,8 +116,11 @@ extension ConversationInputBarViewController {
 
             documentPickerViewController.delegate = self
 
-            self.parent?.present(documentPickerViewController, animated: true) {
+            if #available(iOS 11.0, *) {
+                documentPickerViewController.allowsMultipleSelection = true
             }
+            
+            self.parent?.present(documentPickerViewController, animated: true)
         }
 
         controller.addAction(UIAlertAction(icon: .ellipsis,

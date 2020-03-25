@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-@objc
 protocol TokenizedTextViewDelegate: class {
     func tokenizedTextView(_ textView: TokenizedTextView, didTapTextRange range: NSRange, fraction: CGFloat)
     func tokenizedTextView(_ textView: TokenizedTextView, textContainerInsetChanged textContainerInset: UIEdgeInsets)
@@ -26,10 +25,8 @@ protocol TokenizedTextViewDelegate: class {
 //! Shouldn't be used anywhere else.
 // TODO: as a inner class of TokenField
 
-@objc
 final class TokenizedTextView: TextView {
 
-    @objc
     weak var tokenizedTextViewDelegate: TokenizedTextViewDelegate?
 
     private lazy var tapSelectionGestureRecognizer: UITapGestureRecognizer = {

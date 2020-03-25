@@ -6,6 +6,11 @@ trigger:
     include:
       - develop
 
+pr:
+  branches:
+    include:
+      - '*'
+
 steps:
 - script: |
     sudo xcode-select -switch /Applications/Xcode_10.3.app

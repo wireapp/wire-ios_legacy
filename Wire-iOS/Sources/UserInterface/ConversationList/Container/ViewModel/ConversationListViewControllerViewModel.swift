@@ -91,10 +91,8 @@ extension ConversationListViewController {
 
 extension ConversationListViewController.ViewModel {
     func setupObservers() {
-        if let userSession = ZMUserSession.shared(),
-            let selfUser = ZMUser.selfUser() {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, in: userSession) as Any
-
+        if let userSession = ZMUserSession.shared(){
+            userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession) as Any
             initialSyncObserverToken = ZMUserSession.addInitialSyncCompletionObserver(self, userSession: userSession)
         }
 
@@ -135,7 +133,7 @@ extension ConversationListViewController.ViewModel {
         guard let session = ZMUserSession.shared(),
             let userProfile = userProfile else { return }
 
-        if nil == ZMUser.selfUser()?.handle,
+        if nil == session.selfUser.handle,
             session.hasCompletedInitialSync == true,
             session.isPendingHotFixChanges == false {
 
@@ -167,13 +165,13 @@ extension ConversationListViewController.ViewModel {
         guard !AutomationHelper.sharedHelper.skipFirstLoginAlerts else { return false }
         guard false == viewController?.hasUsernameTakeoverViewController else { return false }
 
-        guard Settings.shared().pushAlertHappenedMoreThan1DayBefore else { return false }
+        guard Settings.shared.pushAlertHappenedMoreThan1DayBefore else { return false }
 
         UNUserNotificationCenter.current().checkPushesDisabled({ [weak self] pushesDisabled in
             DispatchQueue.main.async {
                 if pushesDisabled,
                     let weakSelf = self {
-                    Settings.shared().lastPushAlertDate = Date()
+                    Settings.shared[.lastPushAlertDate] = Date()
 
                     weakSelf.viewController?.showPermissionDeniedViewController()
                 }
@@ -193,7 +191,7 @@ extension ConversationListViewController.ViewModel: ZMInitialSyncCompletionObser
 
 extension Settings {
     var pushAlertHappenedMoreThan1DayBefore: Bool {
-        guard let date = lastPushAlertDate else {
+        guard let date: Date = self[.lastPushAlertDate] else {
             return true
         }
 

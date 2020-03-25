@@ -46,7 +46,6 @@ final class SpinnerButton: Button {
     var isLoading: Bool = false {
         didSet {
             spinner.isHidden = !isLoading
-            isEnabled = !isLoading
 
             isLoading ? spinner.startAnimation() : spinner.stopAnimation()
         }
@@ -88,5 +87,10 @@ final class SpinnerButton: Button {
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
         return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
+    }
+    
+    func reset() {
+        isLoading = false
+        isEnabled = true
     }
 }

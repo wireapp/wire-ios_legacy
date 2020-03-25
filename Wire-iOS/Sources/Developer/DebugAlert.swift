@@ -20,7 +20,7 @@ import Foundation
 import MessageUI
 
 /// Presents debug alerts
-@objcMembers public class DebugAlert: NSObject {
+final class DebugAlert {
     
     private struct Action {
         let text: String
@@ -92,7 +92,7 @@ import MessageUI
                                                   sourceView: UIView? = nil) {
         let alert = UIAlertController(title: "self.settings.technical_report_section.title".localized,
                                       message: "self.settings.technical_report.no_mail_alert".localized + email,
-                                      alertAction: .ok(style: .cancel))
+                                      alertAction: .cancel())
         alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: { (action) in
             let activity = UIActivityViewController(activityItems: logPaths, applicationActivities: nil)
             activity.configPopover(pointToView: sourceView ?? controller.view)
@@ -105,7 +105,7 @@ import MessageUI
 }
 
 /// Sends debug logs by email
-@objcMembers public class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
+final class DebugLogSender: NSObject, MFMailComposeViewControllerDelegate {
 
     private var mailViewController : MFMailComposeViewController? = nil
     static private var senderInstance: DebugLogSender? = nil
@@ -124,7 +124,7 @@ import MessageUI
         }
         
         // Prepare subject & body
-        let user = ZMUser.selfUser()
+        let user = SelfUser.provider?.selfUser as? ZMUser
         let userID = user?.remoteIdentifier?.transportString() ?? ""
         let device = UIDevice.current.name
         let userDescription = "\(user?.name ?? "") [user: \(userID)] [device: \(device)]"

@@ -21,12 +21,11 @@
 
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
-#import "ConversationInputBarViewController+Files.h"
 
 #import "Wire-Swift.h"
 
 
-#import "Settings.h"
+@import FLAnimatedImage;
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
@@ -103,14 +102,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 - (void)dealloc
 {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
-}
-
-- (void)didEnterBackground:(NSNotification *)notification
-{
-    NOT_USED(notification);
-    if(self.inputBar.textView.text.length > 0) {
-        [self.conversation setIsTyping:NO];
-    }
 }
 
 - (void)viewDidLoad
