@@ -20,11 +20,11 @@ import FLAnimatedImage
 
 private let zmLog = ZMSLog(tag: "FullscreenImageViewController")
 
-protocol ScreenshotProvider: NSObjectProtocol {
+protocol ScreenshotProvider: UIViewController {
     func backgroundScreenshot(for fullscreenController: FullscreenImageViewController) -> UIView?
 }
 
-protocol MenuVisibilityController: NSObjectProtocol {
+protocol MenuVisibilityController: UIViewController {
     var menuVisible: Bool { get }
     func fadeAndHideMenu(_ hidden: Bool)
 }
