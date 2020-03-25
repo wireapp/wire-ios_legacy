@@ -51,7 +51,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }()
 
     private var errorLabelTopConstraint: NSLayoutConstraint?
-//    private var errorLabelHeightConstraint: NSLayoutConstraint?
 
     private var config: Configuration? {
         didSet {
