@@ -83,6 +83,7 @@ final class SpinnerButtonTests: XCTestCase {
         createSut()
         sut.isLoading = true
         verifyInAllPhoneWidths(matching:sut,
+                               snapshotBackgroundColor: UIColor.from(scheme: .contentBackground),
                                named: "light")
     }
 }
