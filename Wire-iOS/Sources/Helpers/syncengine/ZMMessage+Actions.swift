@@ -20,9 +20,10 @@ import Foundation
 
 extension ZMConversationMessage {
 
-    /// Whether the message can be digital signed in.
-    var canDigitalSignedIn: Bool {
-        guard sender?.phoneNumber != nil else {
+    /// Whether the message can be digitally signed in.
+    var canBeDigitallySigned: Bool {
+        
+        guard ZMUser.selfUser()?.phoneNumber != nil else {
             return false
         }
         return isPDF

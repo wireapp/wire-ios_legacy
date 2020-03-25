@@ -60,7 +60,7 @@ final class ConversationMessageActionController: NSObject {
     @objc func canPerformAction(_ selector: Selector) -> Bool {
         switch selector {
         case #selector(ConversationMessageActionController.digitalSignInMessage):
-            return message.canDigitalSignedIn
+            return message.canBeDigitallySigned
         case #selector(ConversationMessageActionController.copyMessage):
             return message.canBeCopied
         case #selector(ConversationMessageActionController.editMessage):
