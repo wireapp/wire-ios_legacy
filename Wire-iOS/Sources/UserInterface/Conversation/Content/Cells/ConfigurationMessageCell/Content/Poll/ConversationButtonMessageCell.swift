@@ -17,7 +17,6 @@
 
 import UIKit
 
-
 extension ButtonMessageState {
     var localizedName: String {
         return "button_message_cell.state.\(self)".localized
@@ -35,7 +34,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             errorLabelTopConstraint?.constant = errorMessage?.isEmpty == false ? 4: 0
             errorLabel.text = errorMessage
             errorLabel.invalidateIntrinsicContentSize()
-            
+
             layoutIfNeeded()
         }
     }
@@ -47,7 +46,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         let label = UILabel()
         label.font = .smallLightFont
         label.textColor = .accent()
-        
+
         return label
     }()
 
@@ -59,7 +58,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             guard config != oldValue else {
                 return
             }
-            
+
             if config?.state != oldValue?.state {
                 button.isLoading = false
             }
@@ -72,7 +71,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         guard let config = config else {
             return
         }
-        
+
         button.reset()
 
         buttonAction = config.buttonAction
@@ -87,12 +86,12 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             button.style = .full
             button.isEnabled = false
         }
-        
+
         button.accessibilityValue = config.state.localizedName
-        
+
         errorMessage = config.hasError ? "button_message_cell.generic_error".localized : nil
     }
-    
+
     func configure(with object: Configuration, animated: Bool) {
         config = object
     }
@@ -107,20 +106,20 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     convenience init() {
         self.init(frame: .zero)
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: .zero)
 
         configureViews()
         createConstraints()
-        
+
         button.addTarget(self, action: #selector(buttonTouched(sender:)), for: .touchUpInside)
     }
-    
+
     @objc
     private func buttonTouched(sender: Any) {
         guard config?.state != .confirmed else { return }
-        
+
         button.isLoading = true
         buttonAction?()
     }
@@ -140,20 +139,20 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         [button, errorLabel].forEach() {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
-        
+
         let errorLabelTopConstraint = errorLabel.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 0)
-        
+
         NSLayoutConstraint.activate([
             button.topAnchor.constraint(equalTo: topAnchor),
             button.leadingAnchor.constraint(equalTo: leadingAnchor),
             button.trailingAnchor.constraint(equalTo: trailingAnchor),
-            
+
             errorLabelTopConstraint,
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor),
-            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            errorLabel.bottomAnchor.constraint(equalTo: bottomAnchor)
             ])
-        
+
         self.errorLabelTopConstraint = errorLabelTopConstraint
     }
 }
@@ -195,9 +194,9 @@ extension ConversationButtonMessageCell.Configuration: Hashable {
     static func == (lhs: ConversationButtonMessageCell.Configuration, rhs: ConversationButtonMessageCell.Configuration) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(text)
         hasher.combine(state)
     }
-} 
+}
