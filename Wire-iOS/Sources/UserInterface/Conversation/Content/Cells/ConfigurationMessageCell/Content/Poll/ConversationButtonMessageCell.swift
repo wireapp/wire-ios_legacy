@@ -32,11 +32,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     var errorMessage: String? {
         didSet {
-            if errorMessage?.isEmpty == false {
-                errorLabelTopConstraint?.constant = 4
-            } else {
-                errorLabelTopConstraint?.constant = 0
-            }
+            errorLabelTopConstraint?.constant = errorMessage?.isEmpty == false ? 4: 0
             errorLabel.text = errorMessage
             errorLabel.invalidateIntrinsicContentSize()
             
@@ -56,7 +52,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     }()
 
     private var errorLabelTopConstraint: NSLayoutConstraint?
-    private var errorLabelHeightConstraint: NSLayoutConstraint?
+//    private var errorLabelHeightConstraint: NSLayoutConstraint?
 
     private var config: Configuration? {
         didSet {

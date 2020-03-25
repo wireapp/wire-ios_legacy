@@ -23,18 +23,15 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
     typealias CellConfiguration = (MockMessage) -> Void
 
     func testThatItRendersErrorMessage() {
-        verify(message: makeMessage(), allWidths: false)
-        
         // given
-        let message = makeMessage() { config in
-            // when
-            let item = self.createItem(title: "Stone age", state:.unselected, isExpired: true)
+        let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
+                                             createItem(title: "Stone age", state:.unselected, isExpired: true),
+                                             createItem(title: "Ludwig van Beethoven", state:.confirmed),
+                                             createItem(title: "Giacomo Antonio Domenico Michele Secondo Maria Puccini & Giuseppe Fortunino Francesco Verdi", state:.unselected)]
 
-            (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
-        }
         
-        // then
-        verify(message: message, allWidths: false)
+        // when & then
+        verify(message: makeMessage(items: items), allWidths: false)
     }
 
     func testThatItRendersButton() {
@@ -65,6 +62,20 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         return buttonItem
     }
 
+    private func makeMessage(items: [CompositeMessageItem]) -> MockMessage {
+        let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
+        
+        let mockCompositeMessageData = MockCompositeMessageData()
+        let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
+        let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
+        
+        
+        mockCompositeMessageData.items = [textItem] + items
+        
+        mockCompositeMessage.compositeMessageData = mockCompositeMessageData
+        return mockCompositeMessage
+    }
+    
     private func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
 
