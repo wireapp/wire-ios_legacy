@@ -139,6 +139,7 @@ class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
         } else {
             verifyInWidths(matching:value,
                            widths: [smallestWidth],
+                           snapshotBackgroundColor: ColorScheme.default.variant == .light ? .white : .black,
                            named: name,
                            file: file,
                            testName: testName,
