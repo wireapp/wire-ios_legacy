@@ -184,7 +184,10 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
                 cells = cells + textCells
             case .button(let data):
                 
-                let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title, state: data.state, buttonAction: {
+                let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title,
+                                                                                                            state: data.state,
+                                                                                                            hasError: data.isExpired,
+                                                                                                            buttonAction: {
                         data.touchAction()
                     }))
                 cells.append(button)

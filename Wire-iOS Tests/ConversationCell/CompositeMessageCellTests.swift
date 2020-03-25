@@ -24,6 +24,17 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     func testThatItRendersErrorMessage() {
         verify(message: makeMessage(), allWidths: false)
+        
+        // given
+        let message = makeMessage() { config in
+            // when
+            let item = self.createItem(title: "Stone age", state:.unselected, isExpired: true)
+
+            (config.compositeMessageData as? MockCompositeMessageData)?.items[1] = item
+        }
+        
+        // then
+        verify(message: message, allWidths: false)
     }
 
     func testThatItRendersButton() {
@@ -44,10 +55,11 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     // MARK: - Helpers
     
-    private func createItem(title: String, state: ButtonMessageState) -> CompositeMessageItem {
+    private func createItem(title: String, state: ButtonMessageState, isExpired: Bool = false) -> CompositeMessageItem {
         let mockButtonMessageData: MockButtonMessageData = MockButtonMessageData()
         mockButtonMessageData.state = state
         mockButtonMessageData.title = title
+        mockButtonMessageData.isExpired = isExpired
         let buttonItem: CompositeMessageItem = .button(mockButtonMessageData)
         
         return buttonItem
@@ -84,5 +96,5 @@ final class MockButtonMessageData: ButtonMessageData {
         //no-op
     }
 
-    var isExpired: Bool { return false }
+    var isExpired: Bool = false
 }

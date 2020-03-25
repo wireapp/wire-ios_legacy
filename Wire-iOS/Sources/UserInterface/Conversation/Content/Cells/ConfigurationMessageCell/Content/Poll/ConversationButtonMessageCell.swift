@@ -90,10 +90,11 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         case .confirmed:
             button.style = .full
             button.isEnabled = false
-            ///TODO: style for expired state
         }
         
         button.accessibilityValue = config.state.localizedName
+        
+        errorMessage = config.hasError ? "button_message_cell.generic_error".localized : nil
     }
     
     func configure(with object: Configuration, animated: Bool) {
@@ -104,6 +105,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         let text: String?
         let state: ButtonMessageState
         let buttonAction: Completion
+        let hasError: Bool
     }
 
     convenience init() {
@@ -157,10 +159,6 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             ])
         
         self.errorLabelTopConstraint = errorLabelTopConstraint
-        
-        ///TODO: for test only!
-                errorMessage = "Test error"
-        
     }
 }
 
@@ -191,8 +189,9 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     init(text: String?,
          state: ButtonMessageState,
+         hasError: Bool,
          buttonAction: @escaping Completion) {
-        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction)
+        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction, hasError: hasError)
     }
 }
 
