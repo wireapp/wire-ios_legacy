@@ -20,6 +20,14 @@ import Foundation
 
 extension ZMConversationMessage {
 
+    /// Whether the message can be digital signed in.
+    var canDigitalSignedIn: Bool {
+        guard sender?.phoneNumber != nil else {
+            return false
+        }
+        return isPDF
+    }
+    
     /// Whether the message can be copied.
     var canBeCopied: Bool {
         return !isEphemeral && (isText || isImage || isLocation)

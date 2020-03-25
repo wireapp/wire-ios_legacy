@@ -561,6 +561,7 @@
 "content.message.go_to_conversation" = "Reveal";
 "content.message.forward.to" = "Search…";
 "content.message.open" = "Open";
+"content.message.sign" = "Sign";
 "content.message.copy" = "Copy";
 "content.message.download" = "Download";
 "content.message.details" = "Details";

@@ -92,6 +92,9 @@ extension ConversationContentViewController {
                     present(saveController, animated: true)
                 }
             }
+        case .digitalSignIn:
+            // TODO: Start the digital signature
+            break
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
