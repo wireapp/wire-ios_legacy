@@ -208,7 +208,7 @@ extension ConversationMessageCellDescription {
     }
     
     
-    /// Default impletmentation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
+    /// Default implementation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
     ///
     /// - Parameter other: other object to compare
     /// - Returns: true if both self and other having same type
