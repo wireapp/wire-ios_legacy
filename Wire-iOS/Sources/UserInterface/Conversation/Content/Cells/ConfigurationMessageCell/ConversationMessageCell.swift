@@ -220,7 +220,7 @@ extension ConversationMessageCellDescription {
 
 extension ConversationMessageCellDescription where View.Configuration : Equatable {
     
-    /// Default impletmentation of isConfigurationEqual
+    /// Default implementation of isConfigurationEqual
     ///
     /// - Parameter other: other object to compare
     /// - Returns: true if both self and other having same type, and configures are equal
