@@ -32,20 +32,12 @@ protocol NetworkStatusObserver: NSObjectProtocol {
     func wr_networkStatusDidChange(_ note: Notification?)
 }
 
-private var NetworkStatusNotificationName = "NetworkStatusNotification"
-
-func ReachabilityCallback(_ target: SCNetworkReachability?, _ flags: SCNetworkReachabilityFlags, _ info: UnsafeMutableRawPointer?) {
+extension Notification.Name {
+    static let NetworkStatus = Notification.Name("NetworkStatusNotification")
 }
 
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
 public final class NetworkStatus: NSObject {
-    /// Returns status for specific host
-    convenience init(for hostURL: URL?) {
-    }
-    
-    /// The shared network status object (status of 0.0.0.0)
-    class func shared() -> Self {
-    }
     
     //- (id)initWithClientInstance:(ZCClientInstance *)clientInstance;
     
@@ -69,39 +61,47 @@ public final class NetworkStatus: NSObject {
     class func remove(_ observer: NetworkStatusObserver?) {
     }
     
-    private var reachabilityRef: SCNetworkReachability?
+    private let reachabilityRef: SCNetworkReachability
     
+    
+    /// The shared network status object (status of 0.0.0.0)
+    class func shared() -> Self {
+    }
+
     // MARK: - NSObject
-    init(host hostURL: URL?) {
+    
+    
+    /// Returns status for specific host
+    ///
+    /// - Parameter hostURL: URL of the host
+    init?(host hostURL: URL) {
+        guard let host = hostURL.host,
+              let reachabilityRef = SCNetworkReachabilityCreateWithName(nil, host) else { return nil }
+
+        self.reachabilityRef = reachabilityRef
+
         super.init()
-        #if !__clang_analyzer__
-        if let UTF8String = hostURL?.host?.utf8CString {
-            reachabilityRef = SCNetworkReachabilityCreateWithName(nil, UTF8String)
-        }
-        #endif
+        
         startReachabilityObserving()
     }
     
-    override init() {
-        super.init()
-        var zeroAddress: sockaddr_in
-        bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_len = MemoryLayout.size(ofValue: zeroAddress)
-        zeroAddress.sin_family = AF_INET
-        #if !__clang_analyzer__
-        reachabilityRef = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, &zeroAddress as? sockaddr)
-        #endif
-        startReachabilityObserving()
-    }
+//    override init() {
+//        super.init()
+//        var zeroAddress: sockaddr_in
+//        bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
+//        zeroAddress.sin_len = MemoryLayout.size(ofValue: zeroAddress)
+//        zeroAddress.sin_family = AF_INET
+//        #if !__clang_analyzer__
+//        reachabilityRef = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, &zeroAddress as? sockaddr)
+//        #endif
+//        startReachabilityObserving()
+//    }
     
     deinit {
-        if reachabilityRef != nil {
-            SCNetworkReachabilityUnscheduleFromRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode)
-        }
+        SCNetworkReachabilityUnscheduleFromRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode!.rawValue)
     }
     
     func startReachabilityObserving() {
-        if reachabilityRef != nil {
             var context = SCNetworkReachabilityContext(0, (self), nil, nil, nil)
             
             if SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context) {
@@ -113,7 +113,6 @@ public final class NetworkStatus: NSObject {
             } else {
                 ZMLogError("Error setting network reachability callback")
             }
-        }
     }
 
 
@@ -211,10 +210,12 @@ public final class NetworkStatus: NSObject {
     }
     
     // MARK: - Utilities
-    func ReachabilityCallback(_ target: SCNetworkReachability?, _ flags: SCNetworkReachabilityFlags, _ info: UnsafeMutableRawPointer?) {
+    private func ReachabilityCallback(_ target: SCNetworkReachability?,
+                                      _ flags: SCNetworkReachabilityFlags,
+                                      _ info: UnsafeMutableRawPointer?) {
         //#pragma unused (target, flags)
         assert(info != nil, "info was NULL in ReachabilityCallback")
-        assert(((info as? NSObject) is NetworkStatus), "info was wrong class in ReachabilityCallback")
+        assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
         
         let noteObject = info as? NetworkStatus
         // Post a notification to notify the client that the network reachability changed.
