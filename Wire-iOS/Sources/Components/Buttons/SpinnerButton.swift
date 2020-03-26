@@ -59,16 +59,17 @@ final class SpinnerButton: Button {
 
     /// multi line support of titleLabel
     private func configureTitleLabel() {
-        if let titleLabel = titleLabel {
-            // title is always align to left
-            contentHorizontalAlignment = .left
+        guard let titleLabel = titleLabel else { return }
 
-            titleLabel.lineBreakMode = .byWordWrapping
-            titleLabel.numberOfLines = 0
+        // title is always align to left
+        contentHorizontalAlignment = .left
 
-            NSLayoutConstraint.activate([
-                titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: CGFloat.SpinnerButton.contentInset),
-                titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
+        titleLabel.lineBreakMode = .byWordWrapping
+        titleLabel.numberOfLines = 0
+
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: CGFloat.SpinnerButton.contentInset),
+            titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
         }
     }
 
