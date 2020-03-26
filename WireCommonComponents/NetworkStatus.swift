@@ -44,17 +44,11 @@ extension Notification.Name {
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
 public final class NetworkStatus: NSObject {
     
-    class func add(_ observer: NetworkStatusObserver?) {
-    }
-    
-    class func remove(_ observer: NetworkStatusObserver?) {
-    }
-    
     private let reachabilityRef: SCNetworkReachability
     
     
     /// The shared network status object (status of 0.0.0.0)
-    class func shared() -> Self {
+    class func shared() -> NetworkStatus {
     }
 
     // MARK: - NSObject
@@ -210,17 +204,14 @@ public final class NetworkStatus: NSObject {
         return goodEnough
     }
 
-    func description() -> String? {
-        return String(format: "<%@: %p> Server reachability: %@", type(of: self), self, stringForCurrentStatus() ?? "")
+    var description: String {
+        return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus ?? "")"
     }
     
     // MARK: - Utilities
     
     
     private var ReachabilityCallback : SCNetworkReachabilityCallBack? {
-        
-        let noteObject = info as? NetworkStatus
-        
         
         
         let callbackClosure: SCNetworkReachabilityCallBack? = {
@@ -253,8 +244,8 @@ public final class NetworkStatus: NSObject {
 }
 
 /// Convenience shortcut
-@inline(__always) private func IsNetworkReachable() -> Bool {
-    return NetworkStatus.shared().reachability() == .ok
-}
+//@inline(__always) private func IsNetworkReachable() -> Bool {
+//    return NetworkStatus.shared().reachability == .ok
+//}
 
 
