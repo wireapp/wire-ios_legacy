@@ -94,6 +94,7 @@ extension ConversationContentViewController {
             }
         case .digitallySign:
             // TODO: Start the digital signature
+            message.fileMessageData?.signPDFDocument()
             break
         case .edit:
             dataSource.editingMessage = message
