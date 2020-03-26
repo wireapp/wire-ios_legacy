@@ -157,9 +157,9 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
 
     var topMargin: Float = Float.ConversationButtonMessageCell.verticalInset
 
-    var isFullWidth: Bool = false ///TODO:
+    var isFullWidth: Bool = false
 
-    var supportsActions: Bool = false ///TODO:
+    var supportsActions: Bool = false
 
     var showEphemeralTimer: Bool = false
 
