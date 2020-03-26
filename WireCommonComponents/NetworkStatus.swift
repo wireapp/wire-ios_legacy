@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import SystemConfiguration
 
 enum ServerReachability : Int {
     /// Backend can be reached.
@@ -37,7 +38,7 @@ func ReachabilityCallback(_ target: SCNetworkReachability?, _ flags: SCNetworkRe
 }
 
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
-class NetworkStatus: NSObject {
+public final class NetworkStatus: NSObject {
     /// Returns status for specific host
     convenience init(for hostURL: URL?) {
     }
@@ -81,7 +82,7 @@ class NetworkStatus: NSObject {
         startReachabilityObserving()
     }
     
-    init() {
+    override init() {
         super.init()
         var zeroAddress: sockaddr_in
         bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
@@ -170,7 +171,8 @@ class NetworkStatus: NSObject {
         }
     }
     
-    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+//    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+    ///TODO: extension?
     func isNetworkQualitySufficientForOnlineFeatures() -> Bool {
         
         var goodEnough = true
