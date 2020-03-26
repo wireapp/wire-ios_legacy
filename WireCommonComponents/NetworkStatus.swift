@@ -44,22 +44,6 @@ extension Notification.Name {
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
 public final class NetworkStatus: NSObject {
     
-    //- (id)initWithClientInstance:(ZCClientInstance *)clientInstance;
-    
-    /// Current state of the network.
-    func reachability() -> ServerReachability {
-    }
-    
-    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-    // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
-    // When offline it will return NO;
-    func isNetworkQualitySufficientForOnlineFeatures() -> Bool {
-    }
-    
-    #endif
-    func stringForCurrentStatus() -> String? {
-    }
-    
     class func add(_ observer: NetworkStatusObserver?) {
     }
     
@@ -149,8 +133,9 @@ public final class NetworkStatus: NSObject {
         return sharedStatusSingleton
     }
     
+    /// Current state of the network.
     var reachability: ServerReachability {
-        var returnValue: ServerReachability = ServerReachabilityUnreachable
+        var returnValue: ServerReachability = .unreachable
         var flags: SCNetworkReachabilityFlags
         
         if SCNetworkReachabilityGetFlags(reachabilityRef, &flags) {
@@ -160,7 +145,7 @@ public final class NetworkStatus: NSObject {
             
             if reachable && !connectionRequired {
                 zmLog.info("Reachability status: reachable and connected.")
-                returnValue = ServerReachabilityOK
+                returnValue = .ok
             } else if reachable && connectionRequired {
                 zmLog.info("Reachability status: reachable but connection required.")
             } else {
@@ -169,7 +154,7 @@ public final class NetworkStatus: NSObject {
         } else {
             zmLog.info("Reachability status could not be determined.")
         }
-        return returnValue!
+        return returnValue
     }
     
     class func add(_ observer: NetworkStatusObserver?) {
@@ -189,18 +174,21 @@ public final class NetworkStatus: NSObject {
     
 //    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
     ///TODO: extension?
-    func isNetworkQualitySufficientForOnlineFeatures() -> Bool {
+    // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
+    // When offline it will return NO;
+    var isNetworkQualitySufficientForOnlineFeatures: Bool {
         
         var goodEnough = true
         var isWifi = true
         
-        if reachability == ServerReachabilityOK {
+        switch reachability {
+        case .ok:
             // we are online, check if we are on wifi or not
             var flags: SCNetworkReachabilityFlags
             SCNetworkReachabilityGetFlags(reachabilityRef, &flags)
             
             isWifi = !(flags.rawValue & SCNetworkReachabilityFlags.isWWAN.rawValue)
-        } else {
+        case .unreachable:
             // we are offline, so access is definitetly not good enough
             goodEnough = false
             return goodEnough
@@ -227,25 +215,39 @@ public final class NetworkStatus: NSObject {
     }
     
     // MARK: - Utilities
-    private func ReachabilityCallback(_ target: SCNetworkReachability?,
-                                      _ flags: SCNetworkReachabilityFlags,
-                                      _ info: UnsafeMutableRawPointer?) {
-        //#pragma unused (target, flags)
-        assert(info != nil, "info was NULL in ReachabilityCallback")
-        assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
+    
+    
+    private var ReachabilityCallback : SCNetworkReachabilityCallBack? {
         
         let noteObject = info as? NetworkStatus
-        // Post a notification to notify the client that the network reachability changed.
         
-        NotificationCenter.default.post(name: Notification.Name.NetworkStatus, object: noteObject)
+        
+        
+        let callbackClosure: SCNetworkReachabilityCallBack? = {
+            (reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
+            guard let info = info else {
+                assert(false, "info was NULL in ReachabilityCallback")
+//                assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
+                return
+            }
+
+            let networkStatus = Unmanaged<NetworkStatus>.fromOpaque(info).takeUnretainedValue()
+
+            // Post a notification to notify the client that the network reachability changed.
+            NotificationCenter.default.post(name: Notification.Name.NetworkStatus, object: networkStatus)
+        }
+        
+        return callbackClosure
     }
     
     
     var stringForCurrentStatus: String {
-        if reachability == .OK {
+        switch reachability {
+        case .ok:
             return "OK"
+        case .unreachable:
+            return "Unreachable"
         }
-        return "Unreachable"
     }
 
 }
