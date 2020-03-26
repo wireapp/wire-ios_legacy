@@ -70,7 +70,6 @@ final class SpinnerButton: Button {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: CGFloat.SpinnerButton.contentInset),
             titleLabel.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: CGFloat.SpinnerButton.contentInset)])
-        }
     }
 
     ///custom empty style with accent color for disabled state.
