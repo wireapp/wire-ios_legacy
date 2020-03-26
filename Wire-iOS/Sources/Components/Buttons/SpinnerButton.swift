@@ -17,7 +17,7 @@
 
 import Foundation
 
-/// A button with spinner at the trailing side. Title text is non trancated.
+/// A button with spinner at the trailing side. Title text is non truncated.
 final class SpinnerButton: Button {
 
     private lazy var spinner: ProgressSpinner = {
