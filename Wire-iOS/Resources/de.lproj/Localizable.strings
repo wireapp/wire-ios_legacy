@@ -1751,4 +1751,4 @@
 "button_message_cell.state.selected" = "ausgewählt";
 "button_message_cell.state.confirmed" = "bestätigt";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";
