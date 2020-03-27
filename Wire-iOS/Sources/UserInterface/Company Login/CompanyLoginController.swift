@@ -163,7 +163,7 @@ extension CompanyLoginController {
         error: UIAlertController.CompanyLoginError? = nil,
         ssoOnly: Bool = false) {
         
-        // Do not repeatly showing alert if exist
+        // Do not repeatly show alert if exist
         guard ssoAlert == nil else { return }
         
         let inputHandler = ssoOnly ? attemptLogin : parseAndHandle
