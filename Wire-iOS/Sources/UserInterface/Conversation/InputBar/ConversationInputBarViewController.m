@@ -35,15 +35,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@interface ConversationInputBarViewController (Location) <LocationSelectionViewControllerDelegate>
-
-@end
-
-@interface ConversationInputBarViewController (ZMConversationObserver) <ZMConversationObserver>
-@end
-
-@interface ConversationInputBarViewController (ZMUserObserver) <ZMUserObserver>
-@end
 
 @interface ConversationInputBarViewController (Giphy)
 
@@ -54,10 +45,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @interface ConversationInputBarViewController (Sending)
 
 - (void)sendButtonPressed:(id)sender;
-
-@end
-
-@interface  ConversationInputBarViewController (UIGestureRecognizerDelegate) <UIGestureRecognizerDelegate>
 
 @end
 
@@ -196,17 +183,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
 }
 
-- (void)updateAvailabilityPlaceholder
-{
-    if (!ZMUser.selfUser.hasTeam || self.conversation.conversationType != ZMConversationTypeOneOnOne) {
-        return;
-    }
-
-    self.inputBar.availabilityPlaceholder = [AvailabilityStringBuilder stringFor:self.conversation.connectedUser
-                                                                                with:AvailabilityLabelStylePlaceholder
-                                                                               color:self.inputBar.placeholderColor];
-}
-
 - (void)updateNewButtonTitleLabel
 {
     self.photoButton.titleLabel.hidden = self.inputBar.textView.isFirstResponder;
@@ -259,10 +235,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     self.quotedMessage = nil;
 }
 
-- (void)updateInputBarVisibility
-{
-    self.view.hidden = self.conversation.isReadOnly;
-}
 
 - (void)updateMentionList
 {
@@ -432,26 +404,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 @end
 
-@implementation ConversationInputBarViewController (Location)
-
-- (void)locationSelectionViewController:(LocationSelectionViewController *)viewController didSelectLocationWithData:(ZMLocationData *)locationData
-{
-    [ZMUserSession.sharedSession enqueueChanges:^{
-        [self.conversation appendMessageWithLocationData:locationData];
-        [[Analytics shared] tagMediaActionCompleted:ConversationMediaActionLocation inConversation:self.conversation];
-    }];
-    
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)locationSelectionViewControllerDidCancel:(LocationSelectionViewController *)viewController
-{
-    [self.parentViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-@end
-
-
 @implementation ConversationInputBarViewController (Giphy)
 
 - (void)giphyButtonPressed:(id)sender
@@ -513,62 +465,5 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 @end
 
 
-@implementation ConversationInputBarViewController (ZMConversationObserver)
-
-- (void)conversationDidChange:(ConversationChangeInfo *)change
-{    
-    if (change.participantsChanged || change.connectionStateChanged) {
-        [self updateInputBarVisibility];
-    }
-    
-    if (change.destructionTimeoutChanged) {
-        [self updateAccessoryViews];
-        [self updateInputBar];
-    }
-}
-
-@end
-
-@implementation ConversationInputBarViewController (ZMUserObserver)
-
-- (void)userDidChange:(UserChangeInfo *)changeInfo
-{
-    if (changeInfo.availabilityChanged) {
-        [self updateAvailabilityPlaceholder];
-    }
-}
-
-@end
 
 
-@implementation ConversationInputBarViewController (UIGestureRecognizerDelegate)
-
-#pragma mark - UIGestureRecognizerDelegate
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    if (self.singleTapGestureRecognizer == gestureRecognizer || self.singleTapGestureRecognizer == otherGestureRecognizer) {
-        return YES;
-    }
-    else {
-        return NO;
-    }
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-       shouldReceiveTouch:(UITouch *)touch
-{
-    if (self.singleTapGestureRecognizer == gestureRecognizer) {
-        return YES;
-    }
-    else {
-        return CGRectContainsPoint(gestureRecognizer.view.bounds, [touch locationInView:gestureRecognizer.view]);
-    }
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return [otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]];
-}
-
-@end
