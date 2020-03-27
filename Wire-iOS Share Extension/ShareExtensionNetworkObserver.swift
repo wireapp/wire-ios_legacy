@@ -24,6 +24,7 @@ class ShareExtensionNetworkObserver: NSObject, NetworkStatusObserver {
     
     static let statusChangeNotificationName = NSNotification.Name(rawValue: "networkStatusChange")
     
+    @objc
     func wr_networkStatusDidChange(_ note: Notification!) {
         NotificationCenter.default.post(name: ShareExtensionNetworkObserver.statusChangeNotificationName,
                                         object: note.object,

@@ -50,7 +50,7 @@ public final class NetworkStatus: NSObject {
     /// The shared network status object (status of 0.0.0.0)
     class func shared() -> NetworkStatus {
     }
-
+    
     // MARK: - NSObject
     
     
@@ -60,10 +60,10 @@ public final class NetworkStatus: NSObject {
     ///TODO: rm
     init?(host hostURL: URL) {
         guard let host = hostURL.host,
-              let reachabilityRef = SCNetworkReachabilityCreateWithName(nil, host) else { return nil }
-
+            let reachabilityRef = SCNetworkReachabilityCreateWithName(nil, host) else { return nil }
+        
         self.reachabilityRef = reachabilityRef
-
+        
         super.init()
         
         startReachabilityObserving()
@@ -82,15 +82,15 @@ public final class NetworkStatus: NSObject {
             return pointer.withMemoryRebound(to: sockaddr.self, capacity: MemoryLayout<sockaddr>.size) {
                 // $0 is the pointer to `sockaddr`
                 return SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, $0)
-                }
+            }
         }) else {
             fatalError("reachabilityRef can not be inited")
         }
         
         self.reachabilityRef = reachabilityRef
-
+        
         super.init()
-
+        
         startReachabilityObserving()
     }
     
@@ -103,18 +103,18 @@ public final class NetworkStatus: NSObject {
         // Sets `self` as listener object
         context.info = UnsafeMutableRawPointer(Unmanaged<NetworkStatus>.passUnretained(self).toOpaque())
         
-            if SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context) {
-                if SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode!.rawValue) {
-                    zmLog.info("Scheduled network reachability callback in runloop")
-                } else {
-                    zmLog.error("Error scheduling network reachability in runloop")
-                }
+        if SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context) {
+            if SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode!.rawValue) {
+                zmLog.info("Scheduled network reachability callback in runloop")
             } else {
-                zmLog.error("Error setting network reachability callback")
+                zmLog.error("Error scheduling network reachability in runloop")
             }
+        } else {
+            zmLog.error("Error setting network reachability callback")
+        }
     }
-
-
+    
+    
     // MARK: - Public API
     ///TODO: rm
     class func status(forHost hostURL: URL) -> NetworkStatus? {
@@ -134,39 +134,40 @@ public final class NetworkStatus: NSObject {
         
         if SCNetworkReachabilityGetFlags(reachabilityRef, &flags) {
             
-            let reachable = (flags.rawValue & SCNetworkReachabilityFlags.reachable.rawValue)
-            let connectionRequired = (flags.rawValue & SCNetworkReachabilityFlags.connectionRequired.rawValue)
+            let reachable: Bool = flags.contains(.reachable)
+            let connectionRequired: Bool = flags.contains(.connectionRequired)
             
-            if reachable && !connectionRequired {
+            switch (reachable, connectionRequired) {
+            case (true, false):
                 zmLog.info("Reachability status: reachable and connected.")
                 returnValue = .ok
-            } else if reachable && connectionRequired {
+            case (true, true):
                 zmLog.info("Reachability status: reachable but connection required.")
-            } else {
+            case (false, _):
                 zmLog.info("Reachability status: not reachable.")
             }
+            
         } else {
             zmLog.info("Reachability status could not be determined.")
         }
+        
         return returnValue
     }
     
-    class func add(_ observer: NetworkStatusObserver?) {
+    class func add(_ observer: NetworkStatusObserver) {
         // Make sure that we have an actual instance doing the monitoring, whenever someone asks for it
-        self.sharedStatus()
+        let _ = sharedStatus
         
-        if let observer = observer {
-            NotificationCenter.default.addObserver(observer, selector: #selector(wr_networkStatusDidChange(_:)), name: NetworkStatusNotificationName, object: nil)
-        }
+        NotificationCenter.default.addObserver(observer, selector: #selector(NetworkStatusObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)
     }
     
     class func remove(_ observer: NetworkStatusObserver?) {
         if let observer = observer {
-            NotificationCenter.default.removeObserver(observer, name: NetworkStatusNotificationName, object: nil)
+            NotificationCenter.default.removeObserver(observer, name: Notification.Name.NetworkStatus, object: nil)
         }
     }
     
-//    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+    //    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
     ///TODO: extension?
     // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
     // When offline it will return NO;
@@ -181,11 +182,10 @@ public final class NetworkStatus: NSObject {
             var flags: SCNetworkReachabilityFlags
             SCNetworkReachabilityGetFlags(reachabilityRef, &flags)
             
-            isWifi = !(flags.rawValue & SCNetworkReachabilityFlags.isWWAN.rawValue)
+            isWifi = !flags.contains(.isWWAN)
         case .unreachable:
             // we are offline, so access is definitetly not good enough
-            goodEnough = false
-            return goodEnough
+            return false
         }
         
         
@@ -203,8 +203,8 @@ public final class NetworkStatus: NSObject {
         
         return goodEnough
     }
-
-    var description: String {
+    
+    override public var description: String {
         return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus ?? "")"
     }
     
@@ -218,12 +218,12 @@ public final class NetworkStatus: NSObject {
             (reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
             guard let info = info else {
                 assert(false, "info was NULL in ReachabilityCallback")
-//                assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
+                //                assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
                 return
             }
-
+            
             let networkStatus = Unmanaged<NetworkStatus>.fromOpaque(info).takeUnretainedValue()
-
+            
             // Post a notification to notify the client that the network reachability changed.
             NotificationCenter.default.post(name: Notification.Name.NetworkStatus, object: networkStatus)
         }
@@ -240,7 +240,7 @@ public final class NetworkStatus: NSObject {
             return "Unreachable"
         }
     }
-
+    
 }
 
 /// Convenience shortcut
