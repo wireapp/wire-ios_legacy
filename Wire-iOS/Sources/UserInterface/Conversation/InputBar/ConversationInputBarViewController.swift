@@ -257,6 +257,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
 }
 
 // MARK: - ZMUserObserver
+
 extension ConversationInputBarViewController: ZMUserObserver {
     public func userDidChange(_ changeInfo: UserChangeInfo) {
         if changeInfo.availabilityChanged {
