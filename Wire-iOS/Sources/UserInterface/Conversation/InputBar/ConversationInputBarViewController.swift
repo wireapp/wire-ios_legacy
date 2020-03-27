@@ -245,7 +245,7 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 extension ConversationInputBarViewController: ZMConversationObserver {
     public func conversationDidChange(_ change: ConversationChangeInfo) {
         if change.participantsChanged ||
-            change.connectionStateChanged {
+           change.connectionStateChanged {
             updateInputBarVisibility()
         }
 
