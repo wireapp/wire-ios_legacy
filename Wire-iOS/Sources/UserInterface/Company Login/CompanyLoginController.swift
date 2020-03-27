@@ -19,7 +19,7 @@
 import Foundation
 import WireCommonComponents
 
-@objc protocol CompanyLoginControllerDelegate: class {
+protocol CompanyLoginControllerDelegate: class {
 
     /// The `CompanyLoginController` will never present any alerts on its own and will
     /// always ask its delegate to handle the actual presentation of the alerts.
@@ -51,9 +51,18 @@ import WireCommonComponents
 final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
 
     weak var delegate: CompanyLoginControllerDelegate?
-
-    @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true {
+    private var cancelSSOPressed = false {
         didSet {
+            if cancelSSOPressed {
+                stopPollingTimer()
+            }
+        }
+    }
+    
+    var isAutoDetectionEnabled = true {
+        didSet {
+            guard !cancelSSOPressed else { return }
+            
             isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
         }
     }
@@ -64,18 +73,20 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, Com
     private static let fallbackURLScheme = "wire-sso"
 
     // Whether performing a company login is supported on the current build.
-    @objc(companyLoginEnabled) static public let isCompanyLoginEnabled = true
+    static public let isCompanyLoginEnabled = true
 
     private var token: Any?
     private var pollingTimer: Timer?
     private let detector: CompanyLoginRequestDetector
     private let requester: CompanyLoginRequester
     private let flowHandler: CompanyLoginFlowHandler
+    
+    private weak var ssoAlert: UIAlertController?
 
     // MARK: - Initialization
 
     /// Create a new `CompanyLoginController` instance using the standard detector and requester.
-    @objc(initWithDefaultEnvironment) public convenience init?(withDefaultEnvironment: ()) {
+    convenience init?(withDefaultEnvironment: ()) {
         guard CompanyLoginController.isCompanyLoginEnabled,
             let callbackScheme = Bundle.ssoURLScheme else { return nil } // Disable on public builds
         
@@ -119,8 +130,8 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, Com
     
     private func startPollingTimer() {
         guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { ///TODO: stop when cancel pressed
-            [internalDetectSSOCode] _ in internalDetectSSOCode(true)
+        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { [internalDetectSSOCode] _ in
+            internalDetectSSOCode(true)
         }
     }
     
@@ -152,15 +163,27 @@ extension CompanyLoginController {
         error: UIAlertController.CompanyLoginError? = nil,
         ssoOnly: Bool = false) {
         
+        // Do not repeatly showing alert if exist
+        guard ssoAlert == nil else { return }
+        
         let inputHandler = ssoOnly ? attemptLogin : parseAndHandle
         
         let alertController = UIAlertController.companyLogin(
             prefilledInput: prefilledInput,
             ssoOnly: ssoOnly,
             error: error,
-            completion: { input in input.apply(inputHandler) }
+            completion: { [weak self] input, succeed in
+                input.apply(inputHandler)
+                self?.ssoAlert = nil
+                
+                // stop polling loop when cancel is pressed
+                if !succeed {
+                    self?.cancelSSOPressed = true
+                }
+            }
         )
         
+        ssoAlert = alertController
         delegate?.controller(self, presentAlert: alertController)
     }
 
@@ -306,7 +329,7 @@ extension CompanyLoginController {
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
     private func internalDetectSSOCode(onlyNew: Bool) {
-        guard isAutoDetectionEnabled else { return }
+        guard isAutoDetectionEnabled, !cancelSSOPressed else { return }
         detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentCompanyLoginAlert] result in
             // This might have changed in the meantime.
             guard isAutoDetectionEnabled else { return }

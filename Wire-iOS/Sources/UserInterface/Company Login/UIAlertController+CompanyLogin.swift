@@ -86,8 +86,7 @@ extension UIAlertController {
         prefilledInput: String? = nil,
         ssoOnly: Bool = false,
         error: CompanyLoginError? = nil,
-        completion: @escaping (String?) -> Void
-        ) -> UIAlertController {
+        completion: @escaping (String?, Bool) -> Void) -> UIAlertController {
         
         let copy = CompanyLoginCopy(ssoOnly: ssoOnly)
         
@@ -106,7 +105,7 @@ extension UIAlertController {
         }
         
         let loginAction = UIAlertAction(title: copy.action, style: .default) { [controller] _ in
-            completion(controller.textFields?.first?.text)
+            completion(controller.textFields?.first?.text, true)
         }
         
         controller.addTextField { textField in
@@ -115,7 +114,7 @@ extension UIAlertController {
             textField.placeholder = copy.placeholder
         }
         
-        controller.addAction(.cancel { completion(nil) })
+        controller.addAction(.cancel { completion(nil, false) })
         controller.addAction(loginAction)
         return controller
     }
