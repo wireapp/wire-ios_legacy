@@ -18,7 +18,7 @@
 import Foundation
 import FLAnimatedImage
 
-private let zmLog = ZMSLog(tag: "FullscreenImageViewController")
+private let zmLog = ZMSLog(tag: "UI")
 
 protocol ScreenshotProvider: UIViewController {
     func backgroundScreenshot(for fullscreenController: FullscreenImageViewController) -> UIView?
@@ -86,7 +86,7 @@ final class FullscreenImageViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     init(message: ZMConversationMessage) {
         self.message = message
 
@@ -95,14 +95,9 @@ final class FullscreenImageViewController: UIViewController {
         setupScrollView()
         updateForMessage()
 
-        view.isUserInteractionEnabled = true
         setupGestureRecognizers()
-
         setupStyle()
-
-        if let userSession = ZMUserSession.shared() {
-            messageObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
-        }
+        setupObservers()
     }
 
     // MARK: - View life cycle
@@ -239,6 +234,12 @@ final class FullscreenImageViewController: UIViewController {
         scrollView.delegate = self
         scrollView.accessibilityIdentifier = "fullScreenPage"
 
+    }
+
+    fileprivate func setupObservers() {
+        guard let userSession = ZMUserSession.shared() else { return }
+        
+        messageObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
     }
 
     private func setupGestureRecognizers() {
@@ -512,18 +513,9 @@ final class FullscreenImageViewController: UIViewController {
 
     @objc
     private func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer?) {
-        if longPressRecognizer?.state == .began {
+        guard longPressRecognizer?.state == .began else { return }
 
             NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide(_:)), name: UIMenuController.didHideMenuNotification, object: nil)
-
-            ///  The reason why we are touching the window here is to workaround a bug where,
-            ///  After dismissing the webplayer, the window would fail to become the first responder,
-            ///  preventing us to show the menu at all.
-            ///  We now force the window to be the key window and to be the first responder to ensure that we can
-            ///  show the menu controller.
-            view.window?.makeKey()
-            view.window?.becomeFirstResponder()
-            becomeFirstResponder()
 
             let menuController = UIMenuController.shared
             menuController.menuItems = ConversationMessageActionController.allMessageActions
@@ -533,11 +525,10 @@ final class FullscreenImageViewController: UIViewController {
             }
             menuController.setMenuVisible(true, animated: true)
             setSelectedByMenu(true, animated: true)
-        }
     }
 
     @objc
-    func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
+    private func handleDoubleTap(_ doubleTapper: UITapGestureRecognizer) {
         setSelectedByMenu(false, animated: false)
 
         guard let image = imageView?.image else { return }
@@ -697,24 +688,6 @@ extension FullscreenImageViewController: UIGestureRecognizerDelegate {
         NotificationCenter.default.removeObserver(self, name: UIMenuController.didHideMenuNotification, object: nil)
         setSelectedByMenu(false, animated: true)
     }
-
-// MARK: - MessageActionResponder
-    private func perform(action: MessageAction) {
-        let sourceView: UIView
-
-        /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
-        if action == .delete,
-            let conversationImagesViewController = delegate as? ConversationImagesViewController {
-            sourceView = conversationImagesViewController.deleteButton
-        } else if action == .forward,
-            let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
-            sourceView = shareButton
-        } else {
-            sourceView = scrollView
-        }
-
-        (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
-    }
 }
 
 // MARK: - MessageActionResponder
@@ -736,6 +709,24 @@ extension FullscreenImageViewController: MessageActionResponder {
             perform(action: action)
         }
     }
+    
+    fileprivate func perform(action: MessageAction) {
+        let sourceView: UIView
+        
+        /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
+        if action == .delete,
+            let conversationImagesViewController = delegate as? ConversationImagesViewController {
+            sourceView = conversationImagesViewController.deleteButton
+        } else if action == .forward,
+            let shareButton = (delegate as? ConversationImagesViewController)?.shareButton {
+            sourceView = shareButton
+        } else {
+            sourceView = scrollView
+        }
+        
+        (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
+    }
+
 }
 
 extension FullscreenImageViewController: ZMMessageObserver {
