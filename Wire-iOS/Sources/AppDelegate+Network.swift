@@ -23,7 +23,7 @@ extension AppDelegate {
 
     /// @return YES if network is offline
     @objc static var isOffline: Bool {
-        return .unreachable == NetworkStatus.shared().reachability()
+        return .unreachable == NetworkStatus.shared.reachability
     }
 
     var sessionManager: SessionManager? {

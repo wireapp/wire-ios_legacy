@@ -20,12 +20,12 @@
 import Foundation
 import WireCommonComponents
 
-class ShareExtensionNetworkObserver: NSObject, NetworkStatusObserver {
+final class ShareExtensionNetworkObserver: NSObject, NetworkStatusObserver {
     
     static let statusChangeNotificationName = NSNotification.Name(rawValue: "networkStatusChange")
     
     @objc
-    func wr_networkStatusDidChange(_ note: Notification!) {
+    func wr_networkStatusDidChange(_ note: Notification) {
         NotificationCenter.default.post(name: ShareExtensionNetworkObserver.statusChangeNotificationName,
                                         object: note.object,
                                         userInfo: nil)

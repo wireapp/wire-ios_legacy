@@ -20,8 +20,9 @@ import Foundation
 import WireCommonComponents
 import WireShareEngine
 import Cartography
+import SystemConfiguration
 
-class SendingProgressViewController : UIViewController {
+final class SendingProgressViewController : UIViewController {
 
     enum ProgressMode {
         case preparing, sending
@@ -111,7 +112,7 @@ class SendingProgressViewController : UIViewController {
 
         updateProgressMode()
         
-        let reachability = NetworkStatus.shared().reachability()
+        let reachability = NetworkStatus.shared.reachability
         setReachability(from: reachability)
     }
     
@@ -121,15 +122,16 @@ class SendingProgressViewController : UIViewController {
     
     @objc func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus {
-            setReachability(from: status.reachability())
+            setReachability(from: status.reachability)
         }
     }
     
-    func setReachability(from reachability: ServerReachability) {
-        
+    func setReachability(from reachability: ServerReachability) {        
         switch reachability {
-            case .OK: connectionStatusLabel.isHidden = true; break;
-            case .unreachable: connectionStatusLabel.isHidden = false; break;
+            case .ok:
+                connectionStatusLabel.isHidden = true
+            case .unreachable:
+                connectionStatusLabel.isHidden = false
         }
     }
 

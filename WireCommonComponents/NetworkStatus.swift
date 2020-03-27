@@ -24,17 +24,17 @@ import CoreTelephony
 private let zmLog = ZMSLog(tag: "NetworkStatus")
 
 
-enum ServerReachability : Int {
+public enum ServerReachability {
     /// Backend can be reached.
     case ok
     /// Backend can not be reached.
     case unreachable
 }
 
-protocol NetworkStatusObserver: NSObjectProtocol {
+public protocol NetworkStatusObserver: NSObjectProtocol {
     /// note.object is the NetworkStatus instance doing the monitoring.
     /// Method name @c `-networkStatusDidChange:` conflicts with some apple internal method name.
-    func wr_networkStatusDidChange(_ note: Notification?)
+    func wr_networkStatusDidChange(_ note: Notification)
 }
 
 extension Notification.Name {
@@ -47,9 +47,6 @@ public final class NetworkStatus: NSObject {
     private let reachabilityRef: SCNetworkReachability
     
     
-    /// The shared network status object (status of 0.0.0.0)
-    class func shared() -> NetworkStatus {
-    }
     
     // MARK: - NSObject
     
@@ -70,7 +67,7 @@ public final class NetworkStatus: NSObject {
     }
     
     override init() {
-        var zeroAddress: sockaddr_in
+        var zeroAddress: sockaddr_in = sockaddr_in()
         bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
@@ -123,14 +120,15 @@ public final class NetworkStatus: NSObject {
     
     static let sharedStatusSingleton: NetworkStatus = NetworkStatus()
     
-    static var sharedStatus: NetworkStatus {
+    /// The shared network status object (status of 0.0.0.0)
+    static public var shared: NetworkStatus {
         return sharedStatusSingleton
     }
     
     /// Current state of the network.
-    var reachability: ServerReachability {
+    public var reachability: ServerReachability {
         var returnValue: ServerReachability = .unreachable
-        var flags: SCNetworkReachabilityFlags
+        var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
         
         if SCNetworkReachabilityGetFlags(reachabilityRef, &flags) {
             
@@ -154,11 +152,11 @@ public final class NetworkStatus: NSObject {
         return returnValue
     }
     
-    class func add(_ observer: NetworkStatusObserver) {
+    public class func add(_ observer: NetworkStatusObserver) {
         // Make sure that we have an actual instance doing the monitoring, whenever someone asks for it
-        let _ = sharedStatus
-        
-        NotificationCenter.default.addObserver(observer, selector: #selector(NetworkStatusObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)
+        let _ = shared
+
+//        NotificationCenter.default.addObserver(observer, selector: #selector(ShareExtensionNetworkObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)///TODO: which wr_networkStatusDidChange??
     }
     
     class func remove(_ observer: NetworkStatusObserver?) {
@@ -167,8 +165,6 @@ public final class NetworkStatus: NSObject {
         }
     }
     
-    //    #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-    ///TODO: extension?
     // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
     // When offline it will return NO;
     var isNetworkQualitySufficientForOnlineFeatures: Bool {
@@ -179,7 +175,7 @@ public final class NetworkStatus: NSObject {
         switch reachability {
         case .ok:
             // we are online, check if we are on wifi or not
-            var flags: SCNetworkReachabilityFlags
+            var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
             SCNetworkReachabilityGetFlags(reachabilityRef, &flags)
             
             isWifi = !flags.contains(.isWWAN)
@@ -245,7 +241,7 @@ public final class NetworkStatus: NSObject {
 
 /// Convenience shortcut
 //@inline(__always) private func IsNetworkReachable() -> Bool {
-//    return NetworkStatus.shared().reachability == .ok
+//    return NetworkStatus.shared.reachability == .ok
 //}
 
 
