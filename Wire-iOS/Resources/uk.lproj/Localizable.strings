@@ -1381,8 +1381,8 @@
 "login.sso.alert.text_field.placeholder.sso_and_email" = "емейл або код доступу SSO";
 "login.sso.alert.text_field.placeholder.sso_only" = "Код доступу SSO";
 
-"login.sso.start_error_title" = "Cannot Start Enterprise Login";
-"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "Не вдалося розпочати вхід в Корпоративний акаунт";
+"login.sso.link_error_message" = "Це посилання недійсне. Будь ласка, зверніться до адміністратора, щоб вирішити проблему.";
 
 "login.sso.error.offline.alert.message" = "Перевірте з'єднання з інтернетом та спробуйте ще раз.";
 "login.sso.error.alert.message" = "Будь ласка, зверніться до адміністратора команди, щоб отримати детальну інформацію, (помилка %@).";
@@ -1475,7 +1475,7 @@
 "signin_logout.subheadline" = "Термін дійсності вашого сеансу завершився. Залогіньтеся ще раз, щоб продовжити.";
 "signin_logout.email.subheadline" = "Термін дійсності вашого сеансу завершився. Введіть ваш email та пароль, щоб продовжити.";
 "signin_logout.phone.subheadline" = "Термін дійсності вашого сеансу завершився. Введіть ваш номер телефону, щоб продовжити.";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
+"signin_logout.sso.subheadline" = "Термін дійсності вашого сеансу завершився. Увійдіть у ваш корпоративний акаунт для продовження.";
 "signin_logout.sso.buton" = "Корпоративна аутентифікація";
 
 "signin.email.missing_password.subtitle" = "Введіть ваш email та пароль для продовження.";
@@ -1745,3 +1745,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Термін дії вашої сесії завершився";
 "account_deleted_session_expired_alert.message" = "Додаток не зв'язувався із сервером впродовж тривалого періоду часу, або ваша сесія була анульована.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "не вибрано";
+"button_message_cell.state.selected" = "вибрано";
+"button_message_cell.state.confirmed" = "підтверджено";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";

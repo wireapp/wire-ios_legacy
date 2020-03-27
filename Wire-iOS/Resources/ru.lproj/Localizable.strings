@@ -1001,7 +1001,7 @@
 "self.settings.account_details.delete_account.title" = "Удалить аккаунт";
 
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
-"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам сообщение по электронной почте или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
+"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам сообщение по email или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
 
 "self.settings.account_details.log_out.alert.title" = "Выйти";
 "self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
@@ -1745,3 +1745,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Ваша сессия истекла";
 "account_deleted_session_expired_alert.message" = "Приложение не связывалось с сервером в течение длительного периода времени, или ваша сессия была аннулирована удаленно.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "не выбрано";
+"button_message_cell.state.selected" = "выбрано";
+"button_message_cell.state.confirmed" = "подтверждено";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";

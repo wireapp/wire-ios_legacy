@@ -264,7 +264,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Llamada perdida de %2$@</string>
         <key>other</key>
         <string>Missed calls from %2$@</string>
       </dict>
@@ -280,7 +280,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Missed call from %2$@</string>
+        <string>Llamada perdida de %2$@</string>
         <key>other</key>
         <string>Missed calls from %2$@</string>
       </dict>

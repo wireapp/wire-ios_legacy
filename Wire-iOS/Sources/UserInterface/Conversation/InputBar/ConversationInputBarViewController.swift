@@ -19,6 +19,22 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
+    @objc
+    func updateAvailabilityPlaceholder() {
+        guard ZMUser.selfUser().hasTeam,
+            conversation.conversationType == .oneOnOne,
+            let connectedUser = conversation.connectedUser else {
+            return
+        }
+
+        inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
+    }
+
+    @objc
+    func updateInputBarVisibility() {
+        view.isHidden = conversation.isReadOnly
+    }
+
     // MARK: - Save draft message
     func draftMessage(from textView: MarkdownTextView) -> DraftMessage {
         let (text, mentions) = textView.preparedText
@@ -39,23 +55,23 @@ extension ConversationInputBarViewController {
     @objc
     func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
-        
+
         videoButton.setIcon(.videoMessage, size: .tiny, for: .normal)
-        
+
         photoButton.setIcon(.cameraLens, size: .tiny, for: .normal)
-        
+
         uploadFileButton.setIcon(.paperclip, size: .tiny, for: .normal)
-        
+
         sketchButton.setIcon(.brush, size: .tiny, for: .normal)
-        
+
         pingButton.setIcon(.ping, size: .tiny, for: .normal)
-        
+
         locationButton.setIcon(.locationPin, size: .tiny, for: .normal)
-        
+
         gifButton.setIcon(.gif, size: .tiny, for: .normal)
-        
+
         mentionButton.setIcon(.mention, size: .tiny, for: .normal)
-        
+
         sendButton.setIcon(.send, size: .tiny, for: .normal)
     }
 
@@ -221,5 +237,51 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool) {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
+    }
+}
+
+// MARK: - ZMConversationObserver
+
+extension ConversationInputBarViewController: ZMConversationObserver {
+    public func conversationDidChange(_ change: ConversationChangeInfo) {
+        if change.participantsChanged ||
+           change.connectionStateChanged {
+            updateInputBarVisibility()
+        }
+
+        if change.destructionTimeoutChanged {
+            updateAccessoryViews()
+            updateInputBar()
+        }
+    }
+}
+
+// MARK: - ZMUserObserver
+
+extension ConversationInputBarViewController: ZMUserObserver {
+    public func userDidChange(_ changeInfo: UserChangeInfo) {
+        if changeInfo.availabilityChanged {
+            updateAvailabilityPlaceholder()
+        }
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return singleTapGestureRecognizer == gestureRecognizer || singleTapGestureRecognizer == otherGestureRecognizer
+    }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if singleTapGestureRecognizer == gestureRecognizer {
+            return true
+        }
+
+        return gestureRecognizer.view?.bounds.contains(touch.location(in: gestureRecognizer.view)) ?? false
+    }
+
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer is UIPanGestureRecognizer
     }
 }
