@@ -55,6 +55,8 @@ final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, Com
         didSet {
             if cancelSSOPressed {
                 stopPollingTimer()
+            } else {
+                startPollingTimer()
             }
         }
     }
@@ -185,6 +187,7 @@ extension CompanyLoginController {
         
         ssoAlert = alertController
         delegate?.controller(self, presentAlert: alertController)
+        cancelSSOPressed = false
     }
 
     // MARK: - Input Handling
