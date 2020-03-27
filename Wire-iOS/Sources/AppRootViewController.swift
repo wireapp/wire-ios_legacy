@@ -214,12 +214,6 @@ final class AppRootViewController: UIViewController {
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
-        // When transitioning states, invalidate the SelfUser. If we transition to the authenticated
-        // state, it will be revalidated.
-        if AppDelegate.shared.shouldConfigureSelfUserProvider {
-            SelfUser.provider = nil
-        }
-
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
@@ -250,10 +244,6 @@ final class AppRootViewController: UIViewController {
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
-            if AppDelegate.shared.shouldConfigureSelfUserProvider {
-                SelfUser.provider = ZMUserSession.shared()
-            }
-
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -347,12 +337,15 @@ final class AppRootViewController: UIViewController {
     func applicationWillTransition(to appState: AppState) {
 
         if case .authenticated = appState {
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+            
             callWindow.callController.transitionToLoggedInSession()
         }
 
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
-
         colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
@@ -360,6 +353,8 @@ final class AppRootViewController: UIViewController {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
+            SelfUser.provider = nil
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,

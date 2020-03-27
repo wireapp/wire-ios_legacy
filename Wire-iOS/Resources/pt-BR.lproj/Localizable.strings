@@ -1745,3 +1745,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Sua sessão expirou";
 "account_deleted_session_expired_alert.message" = "O aplicativo não se comunicou com o servidor por um longo período ou sua sessão foi invalidada remotamente.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "unselected";
+"button_message_cell.state.selected" = "selected";
+"button_message_cell.state.confirmed" = "confirmed";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
