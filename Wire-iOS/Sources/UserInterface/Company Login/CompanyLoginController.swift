@@ -172,12 +172,12 @@ extension CompanyLoginController {
             prefilledInput: prefilledInput,
             ssoOnly: ssoOnly,
             error: error,
-            completion: { [weak self] input, succeed in
+            completion: { [weak self] input, success in
                 input.apply(inputHandler)
                 self?.ssoAlert = nil
                 
                 // stop polling loop when cancel is pressed
-                if !succeed {
+                if !success {
                     self?.cancelSSOPressed = true
                 }
             }
