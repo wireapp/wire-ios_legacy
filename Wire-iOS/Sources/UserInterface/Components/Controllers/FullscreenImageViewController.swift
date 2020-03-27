@@ -144,6 +144,8 @@ final class FullscreenImageViewController: UIViewController {
         centerScrollViewContent()
     }
 
+    // MARK: - Overrides
+   
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
