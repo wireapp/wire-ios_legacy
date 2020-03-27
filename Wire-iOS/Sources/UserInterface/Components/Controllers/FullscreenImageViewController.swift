@@ -166,7 +166,7 @@ final class FullscreenImageViewController: UIViewController {
         return true
     }
 
-    // MARK: - dismiss
+    // MARK: - Dismiss
 
     private func dismiss(_ completion: Completion? = nil) {
         if nil != dismissAction {
