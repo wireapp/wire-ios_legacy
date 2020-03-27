@@ -266,6 +266,7 @@ extension ConversationInputBarViewController: ZMUserObserver {
 }
 
 // MARK: - UIGestureRecognizerDelegate
+
 extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return singleTapGestureRecognizer == gestureRecognizer || singleTapGestureRecognizer == otherGestureRecognizer
