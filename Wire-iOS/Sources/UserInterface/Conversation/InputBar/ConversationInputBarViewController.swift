@@ -277,7 +277,8 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
         if singleTapGestureRecognizer == gestureRecognizer {
             return true
         }
-            return gestureRecognizer.view?.bounds.contains(touch.location(in: gestureRecognizer.view)) ?? false
+        
+        return gestureRecognizer.view?.bounds.contains(touch.location(in: gestureRecognizer.view)) ?? false
     }
 
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
