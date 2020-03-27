@@ -48,9 +48,9 @@ import WireCommonComponents
 /// A concrete implementation of the internally used `SharedIdentitySessionRequester` and
 /// `SharedIdentitySessionRequestDetector` can be provided.
 ///
-@objc public final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
+final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
 
-    @objc weak var delegate: CompanyLoginControllerDelegate?
+    weak var delegate: CompanyLoginControllerDelegate?
 
     @objc(autoDetectionEnabled) var isAutoDetectionEnabled = true {
         didSet {
@@ -119,7 +119,7 @@ import WireCommonComponents
     
     private func startPollingTimer() {
         guard UIDevice.current.userInterfaceIdiom == .pad, CompanyLoginController.isPollingEnabled else { return }
-        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) {
+        pollingTimer = .scheduledTimer(withTimeInterval: 1, repeats: true) { ///TODO: stop when cancel pressed
             [internalDetectSSOCode] _ in internalDetectSSOCode(true)
         }
     }
