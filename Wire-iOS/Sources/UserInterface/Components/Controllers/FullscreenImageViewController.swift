@@ -105,7 +105,7 @@ final class FullscreenImageViewController: UIViewController {
         }
     }
 
-    // MARK: - override
+    // MARK: - View life cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
