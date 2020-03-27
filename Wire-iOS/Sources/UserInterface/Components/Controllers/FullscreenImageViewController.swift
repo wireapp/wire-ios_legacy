@@ -78,7 +78,7 @@ final class FullscreenImageViewController: UIViewController {
             UIViewController.attemptRotationToDeviceOrientation()
         }
     }
-    
+
     private var messageObserverToken: NSObjectProtocol?
 
     // MARK: - init
@@ -86,7 +86,7 @@ final class FullscreenImageViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     init(message: ZMConversationMessage) {
         self.message = message
 
@@ -140,7 +140,7 @@ final class FullscreenImageViewController: UIViewController {
     }
 
     // MARK: - Overrides
-   
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -238,7 +238,7 @@ final class FullscreenImageViewController: UIViewController {
 
     fileprivate func setupObservers() {
         guard let userSession = ZMUserSession.shared() else { return }
-        
+
         messageObserverToken = MessageChangeInfo.add(observer: self, for: message, userSession: userSession)
     }
 
@@ -515,16 +515,16 @@ final class FullscreenImageViewController: UIViewController {
     private func handleLongPress(_ longPressRecognizer: UILongPressGestureRecognizer?) {
         guard longPressRecognizer?.state == .began else { return }
 
-            NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide(_:)), name: UIMenuController.didHideMenuNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(menuDidHide(_:)), name: UIMenuController.didHideMenuNotification, object: nil)
 
-            let menuController = UIMenuController.shared
-            menuController.menuItems = ConversationMessageActionController.allMessageActions
+        let menuController = UIMenuController.shared
+        menuController.menuItems = ConversationMessageActionController.allMessageActions
 
-            if let imageView = imageView {
-                menuController.setTargetRect(imageView.bounds, in: imageView)
-            }
-            menuController.setMenuVisible(true, animated: true)
-            setSelectedByMenu(true, animated: true)
+        if let imageView = imageView {
+            menuController.setTargetRect(imageView.bounds, in: imageView)
+        }
+        menuController.setMenuVisible(true, animated: true)
+        setSelectedByMenu(true, animated: true)
     }
 
     @objc
@@ -709,10 +709,10 @@ extension FullscreenImageViewController: MessageActionResponder {
             perform(action: action)
         }
     }
-    
+
     fileprivate func perform(action: MessageAction) {
         let sourceView: UIView
-        
+
         /// iPad popover points to delete button of container is availible. The scrollView occupies most of the screen area and the popover is compressed.
         if action == .delete,
             let conversationImagesViewController = delegate as? ConversationImagesViewController {
@@ -723,7 +723,7 @@ extension FullscreenImageViewController: MessageActionResponder {
         } else {
             sourceView = scrollView
         }
-        
+
         (delegate as? MessageActionResponder)?.perform(action: action, for: message, view: sourceView)
     }
 

@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 
 final class FullscreenImageViewControllerTests: XCTestCase {
-    
+
     var sut: FullscreenImageViewController!
 
     override func setUp() {
