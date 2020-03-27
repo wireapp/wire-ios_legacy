@@ -51,8 +51,8 @@ extension ConversationContentViewController {
     }
 
     func messageAction(actionId: MessageAction,
-                               for message: ZMConversationMessage,
-                               view: UIView) {
+                       for message: ZMConversationMessage,
+                       view: UIView) {
         switch actionId {
         case .cancel:
             session.enqueue({
@@ -93,9 +93,7 @@ extension ConversationContentViewController {
                 }
             }
         case .digitallySign:
-            // TODO: Start the digital signature
             message.fileMessageData?.signPDFDocument()
-            break
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
