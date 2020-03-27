@@ -241,6 +241,7 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 }
 
 // MARK: - ZMConversationObserver
+
 extension ConversationInputBarViewController: ZMConversationObserver {
     public func conversationDidChange(_ change: ConversationChangeInfo) {
         if change.participantsChanged ||
