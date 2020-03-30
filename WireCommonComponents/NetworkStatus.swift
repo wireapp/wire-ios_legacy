@@ -42,16 +42,12 @@ extension Notification.Name {
 }
 
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
-public final class NetworkStatus: NSObject {
+public final class NetworkStatus {
     
     private let reachabilityRef: SCNetworkReachability
     
     
-    
-    // MARK: - NSObject
-    
-    
-    override init() {
+    init() {
         var zeroAddress: sockaddr_in = sockaddr_in()
         bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
@@ -70,8 +66,6 @@ public final class NetworkStatus: NSObject {
         }
         
         self.reachabilityRef = reachabilityRef
-        
-        super.init()
         
         startReachabilityObserving()
     }
@@ -164,7 +158,7 @@ public final class NetworkStatus: NSObject {
         return goodEnough
     }
     
-    override public var description: String {
+    public var description: String {
         return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus)"
     }
     
