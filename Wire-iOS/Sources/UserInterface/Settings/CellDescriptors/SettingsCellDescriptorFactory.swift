@@ -355,9 +355,17 @@ class SettingsCellDescriptorFactory {
     
     func helpSection() -> SettingsCellDescriptorType {
         
-        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
-            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
+        let supportButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.support_website".localized, isDestructive: false, presentationStyle: .modal, presentationAction: {
+            
+            let browserViewController = WebViewViewController(url: URL(string: "https://www.google.com")!)
+            browserViewController.completion = { result in
+                print(result)
+            }
+            let navController = UINavigationController(rootViewController: browserViewController)
+            return navController
         }, previewGenerator: .none)
+        //            return BrowserViewController(url: URL.wr_support.appendingLocaleParameter)
+        //        }, previewGenerator: .none)
         
         let contactButton = SettingsExternalScreenCellDescriptor(title: "self.help_center.contact_support".localized, isDestructive: false, presentationStyle: .modal, presentationAction: { 
             return BrowserViewController(url: URL.wr_askSupport.appendingLocaleParameter)
