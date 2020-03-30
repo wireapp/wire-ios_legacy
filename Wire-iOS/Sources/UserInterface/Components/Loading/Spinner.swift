@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -21,87 +20,85 @@ import Foundation
 import Foundation
 
 final class Spinner: UIView {
-    
+
     var color: UIColor = .white {
         didSet {
             updateSpinnerIcon()
         }
     }
-    
+
     var iconSize: CGFloat = 32 {
         didSet {
             updateSpinnerIcon()
         }
     }
-    
-    
+
     var isAnimating = false {
         didSet {
             guard oldValue != isAnimating else {
                 return
             }
-            
+
             isAnimating ? startAnimationInternal() : stopAnimationInternal()
         }
     }
-    
+
     private let spinner: UIImageView = UIImageView()
-    
+
     private var isAnimationRunning: Bool {
         return spinner.layer.animation(forKey: "rotateAnimation") != nil
     }
-    
+
     init() {
         super.init(frame: .zero)
         setup()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setup() {
         createSpinner()
         setupConstraints()
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         let frame = spinner.layer.frame
         spinner.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         spinner.layer.frame = frame
     }
-    
+
     private func createSpinner() {
         spinner.contentMode = .center
         spinner.translatesAutoresizingMaskIntoConstraints = false
         addSubview(spinner)
-        
+
         updateSpinnerIcon()
     }
-    
+
     override var intrinsicContentSize: CGSize {
         return spinner.image?.size ?? super.intrinsicContentSize
     }
-    
-    
+
     private func setupConstraints() {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.centerInSuperview()
     }
-    
+
     private func startAnimationInternal() {
         isHidden = false
         stopAnimationInternal()
-        
+
         spinner.layer.add(CABasicAnimation(rotationSpeed: 1.4, beginTime: 0, delegate: nil), forKey: "rotateAnimation")
     }
-    
+
     private func stopAnimationInternal() {
         spinner.layer.removeAllAnimations()
     }
-    
+
     func updateSpinnerIcon() {
         spinner.image = UIImage.imageForIcon(.spinner, size: iconSize, color: color)
     }

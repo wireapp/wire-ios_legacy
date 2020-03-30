@@ -46,7 +46,7 @@ final class SpinnerButton: Button {
             guard oldValue != isLoading else {
                 return
             }
-            
+
             spinner.isHidden = !isLoading
             spinner.isAnimating = isLoading
         }
@@ -77,7 +77,7 @@ final class SpinnerButton: Button {
     override func updateFullStyle() {
         setBackgroundImageColor(.accent(), for: .disabled)
         setBackgroundImageColor(.accent(), for: .normal)
-        
+
         setTitleColor(.white, for: .normal)
         setTitleColor(.white, for: .highlighted)
         setTitleColor(.white, for: .disabled)
@@ -103,5 +103,5 @@ final class SpinnerButton: Button {
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
         return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
-    }    
+    }
 }
