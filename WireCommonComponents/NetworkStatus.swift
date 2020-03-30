@@ -96,7 +96,7 @@ public final class NetworkStatus: NSObject {
         }
     }
     
-            
+    
     // MARK: - Public API
 
     /// The shared network status object (status of 0.0.0.0)
@@ -136,12 +136,7 @@ public final class NetworkStatus: NSObject {
         //        NotificationCenter.default.addObserver(observer, selector: #selector(ShareExtensionNetworkObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)///TODO: which wr_networkStatusDidChange??
     }
     
-    class func remove(_ observer: NetworkStatusObserver?) {
-        if let observer = observer {
-            NotificationCenter.default.removeObserver(observer, name: Notification.Name.NetworkStatus, object: nil)
-        }
-    }
-    
+		    
     // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
     // When offline it will return NO;
     var isNetworkQualitySufficientForOnlineFeatures: Bool {
