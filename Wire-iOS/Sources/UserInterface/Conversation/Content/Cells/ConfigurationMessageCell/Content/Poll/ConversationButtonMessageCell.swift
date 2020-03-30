@@ -193,5 +193,6 @@ extension ConversationButtonMessageCell.Configuration: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(text)
         hasher.combine(state)
+        hasher.combine(hasError)
     }
 }

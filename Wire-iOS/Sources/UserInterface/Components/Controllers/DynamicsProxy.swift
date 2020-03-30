@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,25 +18,8 @@
 
 import Foundation
 
-extension FullscreenImageViewController {
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if parent != nil {
-            updateZoom()
-        }
-    }
-
-    override open var preferredStatusBarStyle: UIStatusBarStyle {
-        return ColorScheme.default.statusBarStyle
-    }
-
-    override open var canBecomeFirstResponder: Bool {
-        return true
-    }
-
-    @objc
-    func setActionController() {
-        actionController = ConversationMessageActionController(responder: self, message: message, context: .collection, view: scrollView)
-    }
+final class DynamicsProxy: NSObject, UIDynamicItem {
+    var bounds = CGRect.zero
+    var center = CGPoint.zero
+    var transform: CGAffineTransform = .identity
 }

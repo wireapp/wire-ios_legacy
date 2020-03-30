@@ -81,13 +81,12 @@ extension UIAlertController {
     /// - parameter prefilledInput: Input which should be used to prefill the textfield of the controller (optional).
     /// - parameter ssoOnly: A boolean defining if the alert's copy should be for SSO only. default: false.
     /// - parameter error: An (optional) error to display above the textfield
-    /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled.
+    /// - parameter completion: The completion closure which will be called with the provided code or nil if cancelled. `succeed` flag is false when the user canceled the alert.
     static func companyLogin(
         prefilledInput: String? = nil,
         ssoOnly: Bool = false,
         error: CompanyLoginError? = nil,
-        completion: @escaping (String?) -> Void
-        ) -> UIAlertController {
+        completion: @escaping (_ ssoCode: String?, _ succeed: Bool) -> Void) -> UIAlertController {
         
         let copy = CompanyLoginCopy(ssoOnly: ssoOnly)
         
@@ -106,7 +105,7 @@ extension UIAlertController {
         }
         
         let loginAction = UIAlertAction(title: copy.action, style: .default) { [controller] _ in
-            completion(controller.textFields?.first?.text)
+            completion(controller.textFields?.first?.text, true)
         }
         
         controller.addTextField { textField in
@@ -115,7 +114,7 @@ extension UIAlertController {
             textField.placeholder = copy.placeholder
         }
         
-        controller.addAction(.cancel { completion(nil) })
+        controller.addAction(.cancel { completion(nil, false) })
         controller.addAction(loginAction)
         return controller
     }
