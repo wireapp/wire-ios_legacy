@@ -64,12 +64,13 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         return buttonItem
     }
 
+    fileprivate var mockTextMessage = MockMessageFactory.textMessage(withText: "# Question:\nWho is/are your most favourite musician(s)  ?")!
+    
     private func makeMessage(items: [CompositeMessageItem]) -> MockMessage {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
 
         let mockCompositeMessageData = MockCompositeMessageData()
-        let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
-        let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
+        let textItem: CompositeMessageItem = .text(mockTextMessage.backingTextMessageData)
 
         mockCompositeMessageData.items = [textItem] + items
 
@@ -81,8 +82,7 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
         let mockCompositeMessage: MockMessage = MockMessageFactory.compositeMessage
 
         let mockCompositeMessageData = MockCompositeMessageData()
-        let message = MockMessageFactory.textMessage(withText: "Who is/are your most favourite musician(s)  ?")!
-        let textItem: CompositeMessageItem = .text(message.backingTextMessageData)
+        let textItem: CompositeMessageItem = .text(mockTextMessage.backingTextMessageData)
 
         let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),
                                              createItem(title: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", state:.unselected),
