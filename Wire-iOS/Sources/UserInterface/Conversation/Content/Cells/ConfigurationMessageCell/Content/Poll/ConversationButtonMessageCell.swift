@@ -54,6 +54,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     private var config: Configuration? {
         didSet {
+            buttonAction = config?.buttonAction
+
             guard config != oldValue else {
                 return
             }
@@ -66,25 +68,22 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         guard let config = config else {
             return
         }
-
-        button.reset()
         
-        buttonAction = config.buttonAction
         button.setTitle(config.text, for: .normal)
 
         switch config.state {
         case .unselected:
+            button.style = .empty
             button.isLoading = false
             button.isEnabled = true
-            button.style = .empty
         case .selected:
+            button.style = .empty
             button.isLoading = true
             button.isEnabled = false
-            button.style = .empty
         case .confirmed:
+            button.style = .full
             button.isLoading = false
             button.isEnabled = false
-            button.style = .full
         }
 
         button.accessibilityValue = config.state.localizedName

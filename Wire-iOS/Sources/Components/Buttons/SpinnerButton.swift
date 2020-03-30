@@ -47,8 +47,9 @@ final class SpinnerButton: Button {
                 return
             }
             
-            spinner.isHidden = !isLoading
             spinner.isAnimating = isLoading
+            
+            print("🧼 isLoading = \(isLoading), style = \(String(describing: style))")
         }
     }
 
@@ -98,10 +99,5 @@ final class SpinnerButton: Button {
     // MARK: - factory method
     static func alarmButton() -> SpinnerButton {
         return SpinnerButton(style: .empty, cornerRadius: 6, titleLabelFont: .smallSemiboldFont)
-    }
-    
-    func reset() {
-        spinner.isAnimating = false
-    }
-    
+    }    
 }
