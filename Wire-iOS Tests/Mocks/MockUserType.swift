@@ -257,7 +257,17 @@ class MockUserType: NSObject, UserType, Decodable {
         }
     }
 
+    // MARK: - Refresh requests
+
     func refreshData() {
+        // No op
+    }
+
+    func refreshRichProfile() {
+        // No op
+    }
+
+    func refreshMembership() {
         // No op
     }
 }
