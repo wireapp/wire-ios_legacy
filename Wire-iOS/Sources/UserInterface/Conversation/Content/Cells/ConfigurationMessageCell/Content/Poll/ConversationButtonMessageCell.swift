@@ -67,22 +67,24 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
             return
         }
 
+        button.reset()
+        
         buttonAction = config.buttonAction
         button.setTitle(config.text, for: .normal)
 
         switch config.state {
         case .unselected:
-            button.style = .empty
             button.isLoading = false
             button.isEnabled = true
-        case .selected:
             button.style = .empty
+        case .selected:
             button.isLoading = true
             button.isEnabled = false
+            button.style = .empty
         case .confirmed:
-            button.style = .full
             button.isLoading = false
             button.isEnabled = false
+            button.style = .full
         }
 
         button.accessibilityValue = config.state.localizedName
