@@ -96,6 +96,14 @@ extension WebViewViewController: WKNavigationDelegate {
             completion?(.success)
             decisionHandler(.cancel)
         } else if let _ = url.absoluteString.range(of: "failed") {
+            let urlComponents = URLComponents(string: url.absoluteString)
+            if let queryItems = urlComponents?.queryItems {
+                for queryItem in queryItems {
+                    if queryItem.name == "errorCode" {
+                        print(queryItem.value ?? "")
+                    }
+                }
+            }
             completion?(.failure(WebViewError.authenticationFailed))
             decisionHandler(.cancel)
         } else {
