@@ -458,7 +458,6 @@
 		7C88BB90235F413F0075BCC5 /* Bundle+InfoDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1EB850235F008F00575DD9 /* Bundle+InfoDict.swift */; };
 		7CA971F7235605D6007C5F09 /* AppDelegate+AppCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */; };
 		7CAB951320650F0F004BAFC4 /* ShareDestinationCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */; };
-		7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */; };
 		7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C72F03E200E1000001231D3 /* MockPhotoPermissionsController.swift */; };
 		7CC085461F7AA30F0010F96B /* DotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC085451F7AA30F0010F96B /* DotView.swift */; };
 		7CCA7CC2221AEC7B00A7CA2A /* ConversationDetailFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA7CC1221AEC7B00A7CA2A /* ConversationDetailFooterView.swift */; };
@@ -2007,7 +2006,6 @@
 		7CA971F6235605D6007C5F09 /* AppDelegate+AppCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+AppCenter.swift"; sourceTree = "<group>"; };
 		7CAB7B5D235998E200A65042 /* AppCenterData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppCenterData.framework; path = Carthage/Build/iOS/AppCenterData.framework; sourceTree = "<group>"; };
 		7CAB951120650EE6004BAFC4 /* ShareDestinationCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareDestinationCellTests.swift; sourceTree = "<group>"; };
-		7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionNetworkObserver.swift; sourceTree = "<group>"; };
 		7CC085451F7AA30F0010F96B /* DotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DotView.swift; sourceTree = "<group>"; };
 		7CCA7CC1221AEC7B00A7CA2A /* ConversationDetailFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationDetailFooterView.swift; sourceTree = "<group>"; };
 		7CCA7CC3221AF55300A7CA2A /* ProfileFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFooterView.swift; sourceTree = "<group>"; };
@@ -3464,7 +3462,6 @@
 				165FDC491DD5D447009D75A2 /* NSItemProvider+Helper.h */,
 				165FDC4A1DD5D447009D75A2 /* NSItemProvider+Helper.m */,
 				BFBE45761E36205F009FBF60 /* Error+Logging.swift */,
-				7CB082D51FB20E0E00972488 /* ShareExtensionNetworkObserver.swift */,
 				D5D8977E201A121900FAF69C /* Account+ShareExtensionDisplayName.swift */,
 				BF6EC9091EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift */,
 				BF96A6CB1E2FD3BA0057974A /* NSItemProvider+Fetching.swift */,
@@ -7009,7 +7006,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF3B26E52370596300245701 /* CrashReporter.swift in Sources */,
-				7CB082DC1FB2137100972488 /* ShareExtensionNetworkObserver.swift in Sources */,
 				EF2DB834231678360055BDB4 /* UnsentGifImageSendable.swift in Sources */,
 				BF96A6CA1E2FD3340057974A /* NSExtensionContext+Attachments.swift in Sources */,
 				BF6EC90A1EB1FD0C009D9A69 /* ExtensionBackupExcluder.swift in Sources */,

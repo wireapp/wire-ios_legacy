@@ -38,7 +38,7 @@ public protocol NetworkStatusObserver: NSObjectProtocol {
 }
 
 extension Notification.Name {
-    static let NetworkStatus = Notification.Name("NetworkStatusNotification")
+    public static let NetworkStatus = Notification.Name("NetworkStatusNotification")
 }
 
 /// This class monitors the reachability of backend. It emits notifications to its observers if the status changes.
@@ -128,14 +128,6 @@ public final class NetworkStatus: NSObject {
         
         return returnValue
     }
-    
-    public class func add(_ observer: NetworkStatusObserver) {
-        // Make sure that we have an actual instance doing the monitoring, whenever someone asks for it
-        let _ = shared
-        
-        //        NotificationCenter.default.addObserver(observer, selector: #selector(ShareExtensionNetworkObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)///TODO: which wr_networkStatusDidChange??
-    }
-    
 		    
     // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
     // When offline it will return NO;
@@ -186,7 +178,7 @@ public final class NetworkStatus: NSObject {
             (reachability:SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
             guard let info = info else {
                 assert(false, "info was NULL in ReachabilityCallback")
-                //                assert(info is NetworkStatus, "info was wrong class in ReachabilityCallback")
+
                 return
             }
             

@@ -82,11 +82,12 @@ final class SendController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(SendController.networkStatusDidChange(_:)),
-                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               name:  Notification.Name.NetworkStatus,
                                                object: nil)
     }
     
-    @objc func networkStatusDidChange(_ notification: Notification) {
+    @objc ///TODO: test
+    private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability == .ok {
             self.tryToTimeout()
         }
