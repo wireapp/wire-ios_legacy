@@ -81,7 +81,7 @@ extension UIColor {
         return UIColor(fromZMAccentColor: indexedAccentColor())
     }
 
-    @objc static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
+    static func buttonEmptyText(variant: ColorSchemeVariant) -> UIColor {
         switch variant {
         case .dark:
             return .white

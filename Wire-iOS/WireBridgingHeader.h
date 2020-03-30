@@ -28,10 +28,6 @@
 #import "ConversationInputBarViewController.h"
 #import "ConversationInputBarViewController+Private.h"
 
-#import "FullscreenImageViewController.h"
-#import "FullscreenImageViewController+PullToDismiss.h"
-#import "FullscreenImageViewController+internal.h"
-
 // Helper objects
 
 // Utils

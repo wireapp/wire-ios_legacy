@@ -1745,3 +1745,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
 "account_deleted_session_expired_alert.message" = "Die App hat über einen längeren Zeitraum nicht mit dem Server kommuniziert oder die Session wurde per Fernzugriff für ungültig erklärt.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "nicht ausgewählt";
+"button_message_cell.state.selected" = "ausgewählt";
+"button_message_cell.state.confirmed" = "bestätigt";
+
+"button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";

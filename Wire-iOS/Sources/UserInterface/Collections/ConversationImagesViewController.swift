@@ -18,7 +18,7 @@
 
 import Foundation
 
-typealias DismissAction = (_ completion: (()->())?)->()
+typealias DismissAction = (_ completion: Completion?)->()
 
 final class ConversationImagesViewController: TintColorCorrectedViewController {
     
