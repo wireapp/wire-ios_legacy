@@ -77,15 +77,20 @@ final class SpinnerButton: Button {
     override func updateFullStyle() {
         setBackgroundImageColor(.accent(), for: .disabled)
         setBackgroundImageColor(.accent(), for: .normal)
-        setTitleColor(UIColor.white, for: .normal)
-        setTitleColor(UIColor.white, for: .disabled)
         
+        setTitleColor(.white, for: .normal)
+        setTitleColor(.white, for: .highlighted)
+        setTitleColor(.white, for: .disabled)
+
         setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
     }
 
     ///custom empty style with accent color for disabled state.
     override func updateEmptyStyle() {
+        // remember reset background image colors when style is switch
+        setBackgroundImageColor(.clear, for: .disabled)
         setBackgroundImageColor(.clear, for: .normal)
+
         layer.borderWidth = 1
         setTitleColor(.buttonEmptyText(variant: variant), for: .normal)
         setTitleColor(.buttonEmptyText(variant: variant), for: .highlighted)
