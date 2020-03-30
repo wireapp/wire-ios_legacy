@@ -62,6 +62,8 @@ final class ProfileViewControllerViewModel: NSObject {
            let userSession = ZMUserSession.shared() {
             observerToken = UserChangeInfo.add(observer: self, for: fullUser, in: userSession)
         }
+
+        triggerUserAndMembershipDataFetchIfNeeded()
     }
     
     var fullUser: ZMUser? {
@@ -189,6 +191,18 @@ final class ProfileViewControllerViewModel: NSObject {
     
     func enqueueChanges(_ block: @escaping () -> Void) {
         ZMUserSession.shared()?.enqueue(block)
+    }
+
+    private func triggerUserAndMembershipDataFetchIfNeeded() {
+        guard
+            let user = fullUser,
+            let membership = user.membership
+        else {
+            return
+        }
+
+        user.needsToBeUpdatedFromBackend = true
+        membership.needsToBeUpdatedFromBackend = true
     }
 
     // MARK: - Factories
