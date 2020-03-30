@@ -121,7 +121,7 @@ final class SendingProgressViewController : UIViewController {
         cancelHandler?()
     }
     
-    @objc //TODO test
+    @objc
     private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus {
             setReachability(from: status.reachability)

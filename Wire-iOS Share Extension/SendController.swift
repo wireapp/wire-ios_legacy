@@ -86,7 +86,7 @@ final class SendController {
                                                object: nil)
     }
     
-    @objc ///TODO: test
+    @objc
     private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus, status.reachability == .ok {
             self.tryToTimeout()
