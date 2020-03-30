@@ -24,9 +24,7 @@ final class SpinnerButton: Button {
         let progressSpinner = ProgressSpinner()
 
         // the spinner covers the text with alpha BG
-        progressSpinner.backgroundColor = variant == .light
-            ? UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha)
-            : UIColor(white: 0, alpha: CGFloat.SpinnerButton.spinnerBackgroundAlpha)
+        progressSpinner.backgroundColor = UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha)
         progressSpinner.color = .accent()
         progressSpinner.iconSize = CGFloat.SpinnerButton.iconSize
 
