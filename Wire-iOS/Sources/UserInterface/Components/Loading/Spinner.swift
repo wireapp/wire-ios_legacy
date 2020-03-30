@@ -17,8 +17,6 @@
 
 import Foundation
 
-import Foundation
-
 final class Spinner: UIView {
 
     var color: UIColor = .white {
