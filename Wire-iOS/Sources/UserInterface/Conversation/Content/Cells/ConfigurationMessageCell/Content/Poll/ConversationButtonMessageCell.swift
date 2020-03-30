@@ -39,7 +39,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         }
     }
 
-    private let button = SpinnerButton(style: .empty)
+    private let button = SpinnerButton.alarmButton()
     private var buttonAction: Completion?
 
     private let errorLabel: UILabel = {
