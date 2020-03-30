@@ -20,25 +20,25 @@ import Foundation
 /// A button with spinner at the trailing side. Title text is non truncated.
 final class SpinnerButton: Button {
 
-    private lazy var spinner: ProgressSpinner = {
-        let progressSpinner = ProgressSpinner()
+    private lazy var spinner: Spinner = {
+        let spinner = Spinner()
 
         // the spinner covers the text with alpha BG
-        progressSpinner.backgroundColor = UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha)
-        progressSpinner.color = .accent()
-        progressSpinner.iconSize = CGFloat.SpinnerButton.iconSize
+        spinner.backgroundColor = UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha)
+        spinner.color = .accent()
+        spinner.iconSize = CGFloat.SpinnerButton.iconSize
 
-        addSubview(progressSpinner)
+        addSubview(spinner)
 
-        progressSpinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            progressSpinner.centerYAnchor.constraint(equalTo: centerYAnchor),
-            progressSpinner.trailingAnchor.constraint(equalTo: trailingAnchor),
-            progressSpinner.widthAnchor.constraint(equalToConstant: 48),
-            progressSpinner.topAnchor.constraint(equalTo: topAnchor),
-            progressSpinner.bottomAnchor.constraint(equalTo: bottomAnchor)])
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
+            spinner.trailingAnchor.constraint(equalTo: trailingAnchor),
+            spinner.widthAnchor.constraint(equalToConstant: 48),
+            spinner.topAnchor.constraint(equalTo: topAnchor),
+            spinner.bottomAnchor.constraint(equalTo: bottomAnchor)])
 
-        return progressSpinner
+        return spinner
     }()
 
     var isLoading: Bool = false {
@@ -47,9 +47,8 @@ final class SpinnerButton: Button {
                 return
             }
             
+            spinner.isHidden = !isLoading
             spinner.isAnimating = isLoading
-            
-            print("🧼 isLoading = \(isLoading), style = \(String(describing: style))")
         }
     }
 
