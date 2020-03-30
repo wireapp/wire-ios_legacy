@@ -187,9 +187,10 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
                 let button = AnyConversationMessageCellDescription(ConversationButtonMessageCellDescription(text: data.title,
                                                                                                             state: data.state,
                                                                                                             hasError: data.isExpired,
+                                                                                                            messageIdentifier: message.objectIdentifier,
                                                                                                             buttonAction: {
                         data.touchAction()
-                    }))
+                }))
                 cells.append(button)
             }
         }

@@ -99,6 +99,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         let state: ButtonMessageState
         let buttonAction: Completion
         let hasError: Bool
+        // unique key to distinguish differnt buttons with same text/state/hasError in different polls
+        let messageIdentifier: String
     }
 
     convenience init() {
@@ -180,8 +182,9 @@ final class ConversationButtonMessageCellDescription: ConversationMessageCellDes
     init(text: String?,
          state: ButtonMessageState,
          hasError: Bool,
+         messageIdentifier: String,
          buttonAction: @escaping Completion) {
-        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction, hasError: hasError)
+        configuration = View.Configuration(text: text, state: state, buttonAction: buttonAction, hasError: hasError, messageIdentifier: messageIdentifier)
     }
 }
 
@@ -194,5 +197,6 @@ extension ConversationButtonMessageCell.Configuration: Hashable {
         hasher.combine(text)
         hasher.combine(state)
         hasher.combine(hasError)
+        hasher.combine(messageIdentifier)
     }
 }
