@@ -51,21 +51,6 @@ public final class NetworkStatus: NSObject {
     // MARK: - NSObject
     
     
-    /// Returns status for specific host
-    ///
-    /// - Parameter hostURL: URL of the host
-    ///TODO: rm
-    init?(host hostURL: URL) {
-        guard let host = hostURL.host,
-            let reachabilityRef = SCNetworkReachabilityCreateWithName(nil, host) else { return nil }
-        
-        self.reachabilityRef = reachabilityRef
-        
-        super.init()
-        
-        startReachabilityObserving()
-    }
-    
     override init() {
         var zeroAddress: sockaddr_in = sockaddr_in()
         bzero(&zeroAddress, MemoryLayout.size(ofValue: zeroAddress))
@@ -111,19 +96,11 @@ public final class NetworkStatus: NSObject {
         }
     }
     
-    
+            
     // MARK: - Public API
-    ///TODO: rm
-    class func status(forHost hostURL: URL) -> NetworkStatus? {
-        return NetworkStatus(host: hostURL)
-    }
-    
-    static let sharedStatusSingleton: NetworkStatus = NetworkStatus()
-    
+
     /// The shared network status object (status of 0.0.0.0)
-    static public var shared: NetworkStatus {
-        return sharedStatusSingleton
-    }
+    static public var shared: NetworkStatus = NetworkStatus()
     
     /// Current state of the network.
     public var reachability: ServerReachability {
@@ -155,8 +132,8 @@ public final class NetworkStatus: NSObject {
     public class func add(_ observer: NetworkStatusObserver) {
         // Make sure that we have an actual instance doing the monitoring, whenever someone asks for it
         let _ = shared
-
-//        NotificationCenter.default.addObserver(observer, selector: #selector(ShareExtensionNetworkObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)///TODO: which wr_networkStatusDidChange??
+        
+        //        NotificationCenter.default.addObserver(observer, selector: #selector(ShareExtensionNetworkObserver.wr_networkStatusDidChange(_:)), name: Notification.Name.NetworkStatus, object: nil)///TODO: which wr_networkStatusDidChange??
     }
     
     class func remove(_ observer: NetworkStatusObserver?) {
@@ -201,7 +178,7 @@ public final class NetworkStatus: NSObject {
     }
     
     override public var description: String {
-        return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus ?? "")"
+        return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus)"
     }
     
     // MARK: - Utilities
@@ -238,10 +215,3 @@ public final class NetworkStatus: NSObject {
     }
     
 }
-
-/// Convenience shortcut
-//@inline(__always) private func IsNetworkReachable() -> Bool {
-//    return NetworkStatus.shared.reachability == .ok
-//}
-
-
