@@ -29,11 +29,11 @@ public enum ServerReachability {
     case unreachable
 }
 
-public protocol NetworkStatusObserver: NSObjectProtocol {
-    /// note.object is the NetworkStatus instance doing the monitoring.
-    /// Method name @c `-networkStatusDidChange:` conflicts with some apple internal method name.
-    func wr_networkStatusDidChange(_ note: Notification)
-}
+//public protocol NetworkStatusObserver: NSObjectProtocol {
+//    /// note.object is the NetworkStatus instance doing the monitoring.
+//    /// Method name @c `-networkStatusDidChange:` conflicts with some apple internal method name.
+//    func wr_networkStatusDidChange(_ note: Notification)
+//}
 
 extension Notification.Name {
     public static let NetworkStatus = Notification.Name("NetworkStatusNotification")
@@ -70,12 +70,12 @@ public final class NetworkStatus {
         SCNetworkReachabilityUnscheduleFromRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode!.rawValue)
     }
 
-    func startReachabilityObserving() {
+    private func startReachabilityObserving() {
         var context = SCNetworkReachabilityContext(version: 0, info: nil, retain: nil, release: nil, copyDescription: nil)
         // Sets `self` as listener object
         context.info = UnsafeMutableRawPointer(Unmanaged<NetworkStatus>.passUnretained(self).toOpaque())
 
-        if SCNetworkReachabilitySetCallback(reachabilityRef, ReachabilityCallback, &context) {
+        if SCNetworkReachabilitySetCallback(reachabilityRef, reachabilityCallback, &context) {
             if SCNetworkReachabilityScheduleWithRunLoop(reachabilityRef, CFRunLoopGetCurrent(), CFRunLoopMode.defaultMode!.rawValue) {
                 zmLog.info("Scheduled network reachability callback in runloop")
             } else {
@@ -118,47 +118,9 @@ public final class NetworkStatus {
         return returnValue
     }
 
-    // This indicates if the network quality according to the system is at 3G level or above. On Wifi it will return YES.
-    // When offline it will return NO;
-    var isNetworkQualitySufficientForOnlineFeatures: Bool {
-
-        var goodEnough = true
-        var isWifi = true
-
-        switch reachability {
-        case .ok:
-            // we are online, check if we are on wifi or not
-            var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
-            SCNetworkReachabilityGetFlags(reachabilityRef, &flags)
-
-            isWifi = !flags.contains(.isWWAN)
-        case .unreachable:
-            // we are offline, so access is definitetly not good enough
-            return false
-        }
-
-        if !isWifi {
-            // we are online, but we determited from above that we're on radio
-            let networkInfo = CTTelephonyNetworkInfo()
-
-            let radioAccessTechnology = networkInfo.currentRadioAccessTechnology
-
-            if (radioAccessTechnology == CTRadioAccessTechnologyGPRS) || (radioAccessTechnology == CTRadioAccessTechnologyEdge) {
-
-                goodEnough = false
-            }
-        }
-
-        return goodEnough
-    }
-
-    public var description: String {
-        return "<\(type(of: self)): \(self)> Server reachability: \(stringForCurrentStatus)"
-    }
-
     // MARK: - Utilities
 
-    private var ReachabilityCallback: SCNetworkReachabilityCallBack? {
+    private var reachabilityCallback: SCNetworkReachabilityCallBack? {
 
         let callbackClosure: SCNetworkReachabilityCallBack? = {
             (reachability: SCNetworkReachability, flags: SCNetworkReachabilityFlags, info: UnsafeMutableRawPointer?) in
@@ -176,14 +138,4 @@ public final class NetworkStatus {
 
         return callbackClosure
     }
-
-    var stringForCurrentStatus: String {
-        switch reachability {
-        case .ok:
-            return "OK"
-        case .unreachable:
-            return "Unreachable"
-        }
-    }
-
 }
