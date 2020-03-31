@@ -20,13 +20,13 @@ import UIKit
 import Foundation
 import WebKit
 
-enum WebViewError: Error {
-    case authenticationFailed
-    case internalServerError
-}
-
 class DigitalSignatureVerificationViewController: UIViewController {
 
+    private enum VerificationError: Error {
+        case authenticationFailed
+        case internalServerError
+    }
+    
     var completion: ((_ result: VoidResult?) -> Void)?
     
     private var webView = WKWebView(frame: .zero)
@@ -108,7 +108,7 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
                 return nil
             }
             return error.contains("authenticationFailed") ?
-                .failure(WebViewError.authenticationFailed) : .failure(WebViewError.internalServerError)
+                .failure(VerificationError.authenticationFailed) : .failure(VerificationError.internalServerError)
         } else {
             return nil
         }
