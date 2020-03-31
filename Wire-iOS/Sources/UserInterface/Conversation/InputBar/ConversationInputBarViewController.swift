@@ -166,6 +166,29 @@ extension ConversationInputBarViewController {
         ZClientViewController.shared?.present(giphySearchViewController.wrapInsideNavigationController(), animated: true)
     }
 
+    // MARK: - Animations
+    func bounceCameraIcon() {
+        let scaleTransform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+    
+        let scaleUp = {
+                self.photoButton.transform = scaleTransform
+            }
+    
+        let scaleDown = {
+                self.photoButton.transform = CGAffineTransform.identity
+            }
+    
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
+        }
+    }
+    
+    // MARK: - Haptic Feedback
+    func playInputHapticFeedback() {
+        impactFeedbackGenerator?.prepare()
+        impactFeedbackGenerator?.impactOccurred()
+    }
+    
 }
 
 // MARK: - GiphySearchViewControllerDelegate

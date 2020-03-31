@@ -251,14 +251,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self endEditingMessageIfNeeded];
 }
 
-#pragma mark - Haptic Feedback
-
-- (void)playInputHapticFeedback
-{
-    [self.impactFeedbackGenerator prepare];
-    [self.impactFeedbackGenerator impactOccurred];
-}
-
 #pragma mark - Input views handling
 
 - (void)onSingleTap:(UITapGestureRecognizer *)recognier
@@ -357,23 +349,5 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-#pragma mark - Animations
-
-- (void)bounceCameraIcon;
-{
-    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.3, 1.3);
-    
-    dispatch_block_t scaleUp = ^{
-        self.photoButton.transform = scaleTransform;
-    };
-    
-    dispatch_block_t scaleDown = ^{
-        self.photoButton.transform = CGAffineTransformIdentity;
-    };
-
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:scaleUp completion:^(__unused BOOL finished) {
-        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:scaleDown completion:nil];
-    }];
-}
 
 @end
