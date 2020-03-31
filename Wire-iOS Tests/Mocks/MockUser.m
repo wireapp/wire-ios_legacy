@@ -145,6 +145,7 @@ static id<UserType> mockSelfUser = nil;
 @synthesize refreshDataCount;
 @synthesize refreshRichProfileCount;
 @synthesize refreshMembershipCount;
+@synthesize refreshTeamDataCount;
 
 #pragma mark - ZMBareUserConnection
 
@@ -213,6 +214,11 @@ static id<UserType> mockSelfUser = nil;
 - (void)refreshRichProfile
 {
     refreshRichProfileCount += 1;
+}
+
+- (void)refreshTeamData
+{
+    refreshTeamDataCount += 1;
 }
 
 - (void)connectWithMessage:(NSString * _Nonnull)message {
