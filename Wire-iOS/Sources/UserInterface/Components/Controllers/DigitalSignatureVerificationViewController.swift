@@ -48,7 +48,6 @@ class DigitalSignatureVerificationViewController: UIViewController {
         super.viewDidLoad()
 
         setupWebView()
-        createConstraints()
         loadURL()
     }
     
@@ -56,8 +55,9 @@ class DigitalSignatureVerificationViewController: UIViewController {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         updateButtonMode()
-
+        
         self.view.addSubview(webView)
+        webView.fitInSuperview()
     }
     
     private func updateButtonMode() {
@@ -66,10 +66,6 @@ class DigitalSignatureVerificationViewController: UIViewController {
         buttonItem.accessibilityLabel = "general.done".localized
         buttonItem.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = buttonItem
-    }
-    
-    private func createConstraints() {
-        webView.fitInSuperview()
     }
     
     private func loadURL() {
