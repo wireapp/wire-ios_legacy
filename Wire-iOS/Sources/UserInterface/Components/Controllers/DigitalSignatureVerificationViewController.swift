@@ -25,7 +25,7 @@ enum WebViewError: Error {
     case internalServerError
 }
 
-class WebViewViewController: UIViewController {
+class DigitalSignatureVerificationViewController: UIViewController {
 
     var completion: ((_ result: VoidResult?) -> Void)?
     
@@ -59,7 +59,7 @@ class WebViewViewController: UIViewController {
     }
     
     private func updateButtonMode() {
-        let buttonItem = UIBarButtonItem(title: "general.done".localized, style: .done, target: self, action: #selector(WebViewViewController.onClose))
+        let buttonItem = UIBarButtonItem(title: "general.done".localized, style: .done, target: self, action: #selector(DigitalSignatureVerificationViewController.onClose))
         buttonItem.accessibilityIdentifier = "DoneButton"
         buttonItem.accessibilityLabel = "general.done".localized
         buttonItem.tintColor = UIColor.black
@@ -85,7 +85,7 @@ class WebViewViewController: UIViewController {
     }
 }
 
-extension WebViewViewController: WKNavigationDelegate {
+extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
