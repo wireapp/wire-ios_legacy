@@ -100,6 +100,10 @@
 
 @property (nonatomic) UIImage * profileImage;
 
+@property (nonatomic, readwrite) int refreshDataCount;
+@property (nonatomic, readwrite) int refreshRichProfileCount;
+@property (nonatomic, readwrite) int refreshMembershipCount;
+
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
 - (void)fetchUserClients;
