@@ -22,7 +22,7 @@ import WebKit
 
 class DigitalSignatureVerificationViewController: UIViewController {
 
-    typealias DigitalSignatureCompletion = ((_ result: VoidResult?) -> Void)?
+    typealias DigitalSignatureCompletion = ((_ result: VoidResult?) -> Void)
     
     // MARK: - Error states
     private enum VerificationError: Error {
@@ -31,13 +31,13 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     // MARK: - Private Property
-    private var completion: DigitalSignatureCompletion
+    private var completion: DigitalSignatureCompletion?
     
     private var webView = WKWebView(frame: .zero)
     private var url: URL?
     
     // MARK: - Init
-    init(url: URL, completion: DigitalSignatureCompletion = nil) {
+    init(url: URL, completion: DigitalSignatureCompletion? = nil) {
         self.url = url
         self.completion = completion
         super.init(nibName: nil, bundle: nil)
