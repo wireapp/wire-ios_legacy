@@ -81,7 +81,8 @@ class DigitalSignatureVerificationViewController: UIViewController {
 
 extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url,
+        guard 
+            let url = navigationAction.request.url,
             let response = parse(url) else {
                 decisionHandler(.allow)
                 return
