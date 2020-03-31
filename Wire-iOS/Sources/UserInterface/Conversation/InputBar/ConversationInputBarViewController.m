@@ -163,16 +163,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
 }
 
-- (void)updateNewButtonTitleLabel
-{
-    self.photoButton.titleLabel.hidden = self.inputBar.textView.isFirstResponder;
-}
-
-- (void)updateLeftAccessoryView
-{
-    self.authorImageView.alpha = self.inputBar.textView.isFirstResponder ? 1 : 0;
-}
-
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
@@ -196,25 +186,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.ephemeralIndicatorButton setBackgroundImage:self.conversation.disabledTimeoutImage
                                              forState:UIControlStateDisabled];
 }
-
-- (void)updateAccessoryViews
-{
-    [self updateLeftAccessoryView];
-    [self updateRightAccessoryView];
-}
-
-- (void)clearInputBar
-{
-    self.inputBar.textView.text = @"";
-    [self.inputBar.markdownView resetIcons];
-    [self.inputBar.textView resetMarkdown];
-    [self updateRightAccessoryView];
-    [self.conversation setIsTyping:NO];
-    [self.replyComposingView removeFromSuperview];
-    self.replyComposingView = nil;
-    self.quotedMessage = nil;
-}
-
 
 - (void)updateMentionList
 {

@@ -19,6 +19,32 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
+    
+    func clearInputBar() {
+        inputBar.textView.text = ""
+        inputBar.markdownView.resetIcons()
+        inputBar.textView.resetMarkdown()
+        updateRightAccessoryView()
+        conversation.setIsTyping(false)
+        replyComposingView?.removeFromSuperview()
+        replyComposingView = nil
+        quotedMessage = nil
+    }
+    
+    func updateNewButtonTitleLabel() {
+        photoButton.titleLabel?.isHidden = inputBar.textView.isFirstResponder
+    }
+    
+    func updateLeftAccessoryView() {
+        authorImageView.alpha = inputBar.textView.isFirstResponder ? 1 : 0
+    }
+    
+    @objc
+    func updateAccessoryViews() {
+        updateLeftAccessoryView()
+        updateRightAccessoryView()
+    }
+
     @objc
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
