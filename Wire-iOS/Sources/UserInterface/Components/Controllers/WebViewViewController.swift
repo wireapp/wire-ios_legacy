@@ -20,10 +20,9 @@ import UIKit
 import Foundation
 import WebKit
 
-
 enum WebViewError: Error {
     case authenticationFailed
-    case serverError
+    case internalServerError
 }
 
 class WebViewViewController: UIViewController {
@@ -63,6 +62,7 @@ class WebViewViewController: UIViewController {
         let buttonItem = UIBarButtonItem(title: "general.done".localized, style: .done, target: self, action: #selector(WebViewViewController.onClose))
         buttonItem.accessibilityIdentifier = "DoneButton"
         buttonItem.accessibilityLabel = "general.done".localized
+        buttonItem.tintColor = UIColor.black
         navigationItem.leftBarButtonItem = buttonItem
     }
     
@@ -86,7 +86,6 @@ class WebViewViewController: UIViewController {
 }
 
 extension WebViewViewController: WKNavigationDelegate {
-    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard let url = navigationAction.request.url else {
             decisionHandler(.allow)
@@ -97,14 +96,16 @@ extension WebViewViewController: WKNavigationDelegate {
             decisionHandler(.cancel)
         } else if let _ = url.absoluteString.range(of: "failed") {
             let urlComponents = URLComponents(string: url.absoluteString)
-            if let queryItems = urlComponents?.queryItems {
-                for queryItem in queryItems {
-                    if queryItem.name == "errorCode" {
-                        print(queryItem.value ?? "")
-                    }
-                }
+            let errorCode = urlComponents?.queryItems?.first(where: { $0.name == "errorCode" })
+            guard let error = errorCode?.value else {
+                completion?(nil)
+                return
             }
-            completion?(.failure(WebViewError.authenticationFailed))
+            if error.contains("authenticationFailed") {
+                completion?(.failure(WebViewError.authenticationFailed))
+            } else {
+                completion?(.failure(WebViewError.internalServerError))
+            }
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
