@@ -145,7 +145,7 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
     
     // MARK: - Presentation
 
-    @objc func wrapInsideNavigationController() -> UINavigationController {
+    func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
         let backButtonImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black)

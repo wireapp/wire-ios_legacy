@@ -30,19 +30,6 @@
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
-@interface ConversationInputBarViewController (Giphy)
-
-- (void)giphyButtonPressed:(id)sender;
-
-@end
-
-@interface ConversationInputBarViewController (Sending)
-
-- (void)sendButtonPressed:(id)sender;
-
-@end
-
-
 @implementation ConversationInputBarViewController
 
 
@@ -390,45 +377,3 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 }
 
 @end
-
-
-@interface ZMAssetMetaDataEncoder (Test)
-
-+ (CGSize)imageSizeForImageData:(NSData *)imageData;
-
-@end
-
-@implementation ConversationInputBarViewController (Giphy)
-
-- (void)giphyButtonPressed:(id)sender
-{
-    if (![AppDelegate isOffline]) {
-        
-        GiphySearchViewController *giphySearchViewController = [[GiphySearchViewController alloc] initWithSearchTerm:@"" conversation:self.conversation];
-        giphySearchViewController.delegate = self;
-        [[ZClientViewController sharedZClientViewController] presentViewController:[giphySearchViewController wrapInsideNavigationController] animated:YES completion:nil];
-    }
-}
-
-@end
-
-
-
-#pragma mark - SendButton
-
-@implementation ConversationInputBarViewController (Sending)
-
-- (void)sendButtonPressed:(id)sender
-{
-    [self.inputBar.textView autocorrectLastWord];
-    [self sendText];
-}
-
-@end
-
-
-
-
-
-
-

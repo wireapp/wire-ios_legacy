@@ -147,6 +147,25 @@ extension ConversationInputBarViewController {
         }
     }
     
+    // MARK: - SendButton
+    
+    @objc
+    func sendButtonPressed(_ sender: Any?) {
+        inputBar.textView.autocorrectLastWord()
+        sendText()
+    }
+    
+    // MARK: - Giphy
+    
+    @objc
+    func giphyButtonPressed(_ sender: Any?) {
+        guard !AppDelegate.isOffline else { return }
+        
+        let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
+        giphySearchViewController.delegate = self
+        ZClientViewController.shared?.present(giphySearchViewController.wrapInsideNavigationController(), animated: true)
+    }
+    
 }
 
 // MARK: - GiphySearchViewControllerDelegate
