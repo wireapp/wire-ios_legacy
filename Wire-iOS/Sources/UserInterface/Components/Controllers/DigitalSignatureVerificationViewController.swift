@@ -106,11 +106,8 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
             guard let error = errorCode?.value else {
                 return nil
             }
-            if error.contains("authenticationFailed") {
-                return .failure(WebViewError.authenticationFailed)
-            } else {
-                return .failure(WebViewError.internalServerError)
-            }
+            return error.contains("authenticationFailed") ?
+                .failure(WebViewError.authenticationFailed) : .failure(WebViewError.internalServerError)
         } else {
             return nil
         }
