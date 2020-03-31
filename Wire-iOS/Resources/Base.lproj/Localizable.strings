@@ -229,7 +229,7 @@
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
 
-"conversation.status.poll.default" = "New Poll";
+"conversation.status.secutity_alert.default" = "New security alert";
 
 "conversation.status.typing" = "Typing a message…";
 "conversation.status.typing.group" = "%@: typing a message…";

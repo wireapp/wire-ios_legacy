@@ -341,7 +341,7 @@ final class CallingMatcher: ConversationStatusMatcher {
     var combinesWith: [ConversationStatusMatcher] = []
 }
 
-final class PollMatcher: ConversationStatusMatcher {
+final class SecurityAlertMatcher: ConversationStatusMatcher {
     func isMatching(with status: ConversationStatus) -> Bool {
         return status.messagesRequiringAttention.contains(where: { $0.isComposite })
     }
@@ -355,7 +355,7 @@ final class PollMatcher: ConversationStatusMatcher {
         }
 
         let textItem = (message as? ConversationCompositeMessage)?.compositeMessageData?.items.first(where: {
-            if case let .text(_) = $0 {
+            if case .text(_) = $0 {
                 return true
             }
             return false
@@ -748,11 +748,11 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let silencedMatcher = SilencedMatcher()
     let newMessageMatcher = NewMessagesMatcher()
     let groupActivityMatcher = GroupActivityMatcher()
-    
+
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
-    
-    return [PollMatcher(),
+
+    return [SecurityAlertMatcher(),
             SelfUserLeftMatcher(),
             BlockedMatcher(),
             CallingMatcher(),
