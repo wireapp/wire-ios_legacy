@@ -21,7 +21,7 @@ import Cartography
 
 struct Stream: Equatable {
     let userId: UUID
-    let clientId: String
+    let clientId: String?
 }
 
 struct VideoStream: Equatable {
