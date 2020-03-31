@@ -30,4 +30,3 @@ extension AppDelegate {
         return rootViewController.sessionManager
     }
 }
-
