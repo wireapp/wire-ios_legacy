@@ -19,7 +19,7 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
-    
+
     func clearInputBar() {
         inputBar.textView.text = ""
         inputBar.markdownView.resetIcons()
@@ -30,15 +30,15 @@ extension ConversationInputBarViewController {
         replyComposingView = nil
         quotedMessage = nil
     }
-    
+
     func updateNewButtonTitleLabel() {
         photoButton.titleLabel?.isHidden = inputBar.textView.isFirstResponder
     }
-    
+
     func updateLeftAccessoryView() {
         authorImageView?.alpha = inputBar.textView.isFirstResponder ? 1 : 0
     }
-    
+
     @objc
     func updateAccessoryViews() {
         updateLeftAccessoryView()
@@ -194,26 +194,26 @@ extension ConversationInputBarViewController {
     // MARK: - Animations
     func bounceCameraIcon() {
         let scaleTransform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-    
+
         let scaleUp = {
                 self.photoButton.transform = scaleTransform
             }
-    
+
         let scaleDown = {
                 self.photoButton.transform = CGAffineTransform.identity
             }
-    
+
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
         }
     }
-    
+
     // MARK: - Haptic Feedback
     func playInputHapticFeedback() {
         impactFeedbackGenerator?.prepare()
         impactFeedbackGenerator?.impactOccurred()
     }
-    
+
     // MARK: - Input views handling
     @objc
     func onSingleTap(_ recognier: UITapGestureRecognizer?) {
@@ -227,23 +227,22 @@ extension ConversationInputBarViewController {
     func setupNotificationCenter() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
             let isRecording = self?.audioRecordKeyboardViewController?.isRecording
-            
+
             if false == self?.inRotation &&
                (false == isRecording || nil == isRecording) {
                 self?.mode = .textInput
             }
         }
-        
+
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
             self?.didEnterBackground()
         }
     }
-    
+
     // MARK: - Keyboard Shortcuts
     override open var canBecomeFirstResponder: Bool {
         return true
     }
-    
 
 }
 
