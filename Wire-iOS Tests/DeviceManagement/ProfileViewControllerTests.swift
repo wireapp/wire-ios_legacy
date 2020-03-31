@@ -191,7 +191,7 @@ final class ProfileViewControllerTests: XCTestCase {
         XCTAssertEqual(mockUser.refreshMembershipCount, 1)
     }
 
-    func testItDoesNOtRequestsDataRefeshForNonTeamMembers() {
+    func testItDoesNotRequestsDataRefeshForNonTeamMembers() {
         // Given
         mockUser.isTeamMember = false
 
