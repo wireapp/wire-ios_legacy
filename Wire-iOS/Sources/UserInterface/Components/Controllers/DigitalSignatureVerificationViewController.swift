@@ -98,7 +98,7 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
         }
     }
     
-    private func parse(_ url: URL) -> VoidResult? {
+    func parse(_ url: URL) -> VoidResult? {
         if let _ = url.absoluteString.range(of: success) {
             return .success
         } else if let _ = url.absoluteString.range(of: failed) {
