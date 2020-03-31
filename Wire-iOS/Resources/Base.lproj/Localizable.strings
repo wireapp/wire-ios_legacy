@@ -424,6 +424,9 @@
 "content.message.link_attachment.accessibility_label.soundcloud_song" = "SoundCloud song preview";
 "content.message.link_attachment.accessibility_label.soundcloud_set" = "SoundCloud playlist preview";
 
+// Digital signature
+"digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+
 // New conversation participants added / removed / started system message
 
 "content.system.conversation.other.started" = "%@ started a conversation with %@";

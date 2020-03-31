@@ -164,6 +164,7 @@ extension ConversationContentViewController: SignatureObserver {
     
     func didReceiveSignatureURL(_ url: URL) {
         showLoadingView = false
+        presentDigitalSignatureVerification(with: url)
     }
     
     func signatureAvailable(_ signature: Data) {
@@ -172,5 +173,20 @@ extension ConversationContentViewController: SignatureObserver {
     
     func signatureInvalid(_ error: Error) {
         
+    }
+    
+    private func presentDigitalSignatureVerification(with url: URL) {
+        let digitalSignatureVerification = DigitalSignatureVerificationViewController(url: url) { result in
+            switch result { // TO DO: complete logic in other PR
+                case .success?:
+                    break
+                case let .failure(error)?:
+                    break
+                case .none:
+                    break
+            }
+        }
+        let navigationController = UINavigationController(rootViewController: digitalSignatureVerification)
+        present(navigationController, animated: true)
     }
 }
