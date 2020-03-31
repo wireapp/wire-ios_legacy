@@ -99,15 +99,15 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     }
     
     func parse(_ url: URL) -> VoidResult? {
-        if let _ = url.absoluteString.range(of: success) {
+        let urlComponents = URLComponents(string: url.absoluteString)
+        let postCode = urlComponents?.queryItems?.first(where: { $0.name == "postCode" })
+        if let _ = postCode?.value?.range(of: success) {
             return .success
-        } else if let _ = url.absoluteString.range(of: failed) {
-            let urlComponents = URLComponents(string: url.absoluteString)
-            let errorCode = urlComponents?.queryItems?.first(where: { $0.name == "errorCode" })
-            guard let error = errorCode?.value else {
+        } else if let _ = postCode?.value?.range(of: failed) {
+            guard let error = postCode?.value else {
                 return nil
             }
-            return error.contains("authenticationFailed") ?
+            return error.contains("authentication") ?
                 .failure(VerificationError.authenticationFailed) : .failure(VerificationError.internalServerError)
         } else {
             return nil
