@@ -56,22 +56,13 @@ extension ConversationInputBarViewController {
         #if targetEnvironment(simulator)
         let plistHandler: ((UIAlertAction) -> Void) = { _ in
             ZMUserSession.shared()?.enqueue({
-                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory,
-                                                                .userDomainMask,
-                                                                true)
-                guard
-                    let basePath = paths.first,
-                    let sourceLocation = Bundle.main.url(forResource: "CountryCodes",
-                                                         withExtension: "plist")
-                else {
-                    return
-                }
+                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+                guard let basePath = paths.first,
+                    let sourceLocation = Bundle.main.url(forResource: "CountryCodes", withExtension: "plist") else { return }
 
-                let destLocation = URL(fileURLWithPath: basePath)
-                    .appendingPathComponent(sourceLocation.lastPathComponent)
+                let destLocation = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
 
-                try? FileManager.default.copyItem(at: sourceLocation,
-                                                  to: destLocation)
+                try? FileManager.default.copyItem(at: sourceLocation, to: destLocation)
                 self.uploadFile(at: destLocation)
             })
         }
