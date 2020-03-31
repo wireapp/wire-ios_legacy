@@ -54,7 +54,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     var deletionDialogPresenter: DeletionDialogPresenter?
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
-    var digitallySignatureToken: Any?
+    var digitalSignatureToken: Any?
     
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [IndexPath: CGFloat] = [:]

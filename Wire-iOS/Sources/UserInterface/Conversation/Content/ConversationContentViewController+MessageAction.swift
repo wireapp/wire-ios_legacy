@@ -93,7 +93,7 @@ extension ConversationContentViewController {
                 }
             }
         case .digitallySign:
-            digitallySignatureToken = message.fileMessageData?.signPDFDocument(observer: self)
+            digitalSignatureToken = message.fileMessageData?.signPDFDocument(observer: self)
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
