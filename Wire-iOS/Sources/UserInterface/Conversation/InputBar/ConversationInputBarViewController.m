@@ -54,7 +54,8 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+        [self setupNotificationCenter];
+//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 
         [self setupInputLanguageObserver];
@@ -253,13 +254,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 #pragma mark - Input views handling
 
-- (void)onSingleTap:(UITapGestureRecognizer *)recognier
-{
-    if (recognier.state == UIGestureRecognizerStateRecognized) {
-        self.mode = ConversationInputBarViewControllerModeTextInput;
-    }
-}
-
 - (void)setMode:(ConversationInputBarViewControllerMode)mode
 {
     if (_mode == mode) {
@@ -343,11 +337,11 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     }
 }
 
-- (void)keyboardDidHide:(NSNotification *)notification {
-    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
-        self.mode = ConversationInputBarViewControllerModeTextInput;
-    }
-}
+//- (void)keyboardDidHide:(NSNotification *)notification {
+//    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
+//        self.mode = ConversationInputBarViewControllerModeTextInput;
+//    }
+//}
 
 
 @end

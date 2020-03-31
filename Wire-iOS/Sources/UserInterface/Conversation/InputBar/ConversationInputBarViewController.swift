@@ -189,6 +189,24 @@ extension ConversationInputBarViewController {
         impactFeedbackGenerator?.impactOccurred()
     }
     
+    // MARK: - Input views handling
+    @objc
+    func onSingleTap(_ recognier: UITapGestureRecognizer?) {
+        if recognier?.state == .recognized {
+            mode = .textInput
+        }
+    }
+
+    // MARK: - notification center
+    @objc //TODO
+    func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
+            if false == self?.inRotation &&
+               false == self?.audioRecordKeyboardViewController?.isRecording {
+                self?.mode = .textInput
+            }
+        }
+    }
 }
 
 // MARK: - GiphySearchViewControllerDelegate
