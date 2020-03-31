@@ -79,7 +79,6 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     @objc private func onClose() {
-        completion?(nil)
         self.dismiss(animated: true, completion: nil)
     }
 }
