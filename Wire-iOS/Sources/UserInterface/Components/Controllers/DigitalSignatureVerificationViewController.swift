@@ -112,10 +112,11 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
         if let _ = postCode?.value?.range(of: success) {
             return .success
         } else if let _ = postCode?.value?.range(of: failed) {
-            guard let error = postCode?.value else {
+            let errorCode = urlComponents?.queryItems?.first(where: { $0.name == "errorCode" })
+            guard let error = errorCode?.value else {
                 return nil
             }
-            return error.contains("authentication")
+            return error.contains("authenticationFailed")
                 ? .failure(VerificationError.authenticationFailed)
                 : .failure(VerificationError.internalServerError)
         } else {
