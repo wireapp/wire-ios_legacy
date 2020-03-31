@@ -103,6 +103,7 @@
 @property (nonatomic, readwrite) int refreshDataCount;
 @property (nonatomic, readwrite) int refreshRichProfileCount;
 @property (nonatomic, readwrite) int refreshMembershipCount;
+@property (nonatomic, readwrite) int refreshTeamDataCount;
 
 
 - (NSString *)displayNameInConversation:(MockConversation *)conversation;
