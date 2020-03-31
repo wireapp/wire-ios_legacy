@@ -175,6 +175,7 @@
 		543E0C681E23A7C3000E2161 /* NotSignedInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */; };
 		545BA2191E2D3C4900AA373E /* PostContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545BA2181E2D3C4900AA373E /* PostContent.swift */; };
 		546B17642417A3D70091F4B3 /* CIContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546B17632417A3D70091F4B3 /* CIContext+Shared.swift */; };
+		548D8E6A242E2F6C006E92F9 /* PDFTest.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 548D8E69242E2F6B006E92F9 /* PDFTest.pdf */; };
 		549D55AC1DBE03990035EB66 /* Settings+Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549D55AB1DBE03990035EB66 /* Settings+Logging.swift */; };
 		54AB765C1DB7AB77008D19C8 /* DeveloperOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */; };
 		54BB91E01E1FA6330039E91F /* WireShareEngine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */; };
@@ -1711,6 +1712,7 @@
 		543E0C671E23A7C3000E2161 /* NotSignedInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotSignedInViewController.swift; sourceTree = "<group>"; };
 		545BA2181E2D3C4900AA373E /* PostContent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContent.swift; sourceTree = "<group>"; };
 		546B17632417A3D70091F4B3 /* CIContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CIContext+Shared.swift"; sourceTree = "<group>"; };
+		548D8E69242E2F6B006E92F9 /* PDFTest.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PDFTest.pdf; sourceTree = "<group>"; };
 		549D55AB1DBE03990035EB66 /* Settings+Logging.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings+Logging.swift"; sourceTree = "<group>"; };
 		54AB765B1DB7AB77008D19C8 /* DeveloperOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeveloperOptionsController.swift; sourceTree = "<group>"; };
 		54BB91DF1E1FA6330039E91F /* WireShareEngine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WireShareEngine.framework; path = Carthage/Build/iOS/WireShareEngine.framework; sourceTree = "<group>"; };
@@ -3451,6 +3453,14 @@
 				A97BC010241EA2650069E145 /* NSAttributedString+EnumerateAttachment.swift */,
 			);
 			path = TokenField;
+			sourceTree = "<group>";
+		};
+		548D8E6F243354D3006E92F9 /* DigitallySignature */ = {
+			isa = PBXGroup;
+			children = (
+				548D8E69242E2F6B006E92F9 /* PDFTest.pdf */,
+			);
+			path = DigitallySignature;
 			sourceTree = "<group>";
 		};
 		55DD5C321FA231000082170C /* CallQualityController */ = {
@@ -5222,6 +5232,7 @@
 		8FC85180199245760008B66B /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				548D8E6F243354D3006E92F9 /* DigitallySignature */,
 				5E3A6C23206A4DDF00907484 /* Previews */,
 				8FC85181199245760008B66B /* Cells */,
 				A92CB35623CDF6D100F12797 /* ConversationContentViewControllerDelegate.swift */,
@@ -6766,6 +6777,7 @@
 				BF732A751D9C14C7003077DB /* emoji_food.plist in Resources */,
 				F1FDF2C621ADA3FA00E037A1 /* Images.xcassets in Resources */,
 				5EDD253A213FFD9700C0E254 /* Licenses.generated.plist in Resources */,
+				548D8E6A242E2F6C006E92F9 /* PDFTest.pdf in Resources */,
 				1658D2011D3E742A00249609 /* first_message.caf in Resources */,
 				161041B722D764C1001109D7 /* session_manager.json in Resources */,
 			);

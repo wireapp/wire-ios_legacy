@@ -93,7 +93,7 @@ extension ConversationContentViewController {
                 }
             }
         case .digitallySign:
-            message.fileMessageData?.signPDFDocument()
+            digitallySignatureToken = message.fileMessageData?.signPDFDocument(observer: self)
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
@@ -153,5 +153,24 @@ extension ConversationContentViewController {
             let detailsViewController = MessageDetailsViewController(message: message)
             parent?.present(detailsViewController, animated: true)
         }
+    }
+}
+
+// MARK: - SignatureObserver
+extension ConversationContentViewController: SignatureObserver {
+    func willReceiveSignatureURL() {
+        showLoadingView = true
+    }
+    
+    func didReceiveSignatureURL(_ url: URL) {
+        showLoadingView = false
+    }
+    
+    func signatureAvailable(_ signature: Data) {
+        
+    }
+    
+    func signatureInvalid(_ error: Error) {
+        
     }
 }

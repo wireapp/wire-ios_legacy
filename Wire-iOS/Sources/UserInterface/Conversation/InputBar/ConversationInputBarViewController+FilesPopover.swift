@@ -66,10 +66,26 @@ extension ConversationInputBarViewController {
                 self.uploadFile(at: destLocation)
             })
         }
+        
+        let pdfHandler: ((UIAlertAction) -> Void) = { _ in
+            ZMUserSession.shared()?.enqueue({
+                let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+                guard let basePath = paths.first,
+                    let sourceLocation = Bundle.main.url(forResource: "PDFTest", withExtension: "pdf") else { return }
+                
+                let destLocation = URL(fileURLWithPath: basePath).appendingPathComponent(sourceLocation.lastPathComponent)
+                
+                try? FileManager.default.copyItem(at: sourceLocation, to: destLocation)
+                self.uploadFile(at: destLocation)
+            })
+        }
 
         controller.addAction(UIAlertAction(title: "CountryCodes.plist",
                                            style: .default,
                                            handler: plistHandler))
+        controller.addAction(UIAlertAction(title: "PDF file",
+                                           style: .default,
+                                           handler: pdfHandler))
 
         let size = UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1
         let humanReadableSize = size / 1024 / 1024
