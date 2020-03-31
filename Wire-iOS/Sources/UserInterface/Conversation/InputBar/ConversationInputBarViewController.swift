@@ -198,11 +198,13 @@ extension ConversationInputBarViewController {
     }
 
     // MARK: - notification center
-    @objc //TODO
+    @objc //TODO: no objc
     func setupNotificationCenter() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
+            let isRecording = self?.audioRecordKeyboardViewController?.isRecording
+            
             if false == self?.inRotation &&
-               false == self?.audioRecordKeyboardViewController?.isRecording {
+               (false == isRecording || nil == isRecording) {
                 self?.mode = .textInput
             }
         }
