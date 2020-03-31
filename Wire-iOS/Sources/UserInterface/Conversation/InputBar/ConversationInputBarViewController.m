@@ -55,8 +55,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
         [self setupNotificationCenter];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
 
         [self setupInputLanguageObserver];
 
@@ -336,12 +334,5 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         item.trailingBarButtonGroups = @[];
     }
 }
-
-//- (void)keyboardDidHide:(NSNotification *)notification {
-//    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
-//        self.mode = ConversationInputBarViewControllerModeTextInput;
-//    }
-//}
-
 
 @end

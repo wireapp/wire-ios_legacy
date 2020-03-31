@@ -42,8 +42,7 @@ extension ConversationInputBarViewController {
         return DraftMessage(text: text, mentions: mentions, quote: quotedMessage as? ZMMessage)
     }
 
-    @objc
-    func didEnterBackground(_ notification: Notification?) {
+    private func didEnterBackground() {
         if !inputBar.textView.text.isEmpty {
             conversation.setIsTyping(false)
         }
@@ -207,6 +206,10 @@ extension ConversationInputBarViewController {
                (false == isRecording || nil == isRecording) {
                 self?.mode = .textInput
             }
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.didEnterBackground()
         }
     }
 }
