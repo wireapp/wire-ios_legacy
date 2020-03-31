@@ -29,8 +29,11 @@ class DigitalSignatureVerificationViewController: UIViewController {
 
     var completion: ((_ result: VoidResult?) -> Void)?
     
-    private var webView: WKWebView!
+    private var webView = WKWebView(frame: .zero)
     private var url: URL?
+    
+    private let success: String = "success"
+    private let failed: String = "failed"
     
     init(url: URL) {
         self.url = url
@@ -50,7 +53,6 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     private func setupWebView() {
-        webView = WKWebView(frame: .zero)
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         updateButtonMode()
@@ -87,28 +89,38 @@ class DigitalSignatureVerificationViewController: UIViewController {
 
 extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
-            decisionHandler(.allow)
-            return
+        guard let url = navigationAction.request.url,
+            let response = parse(url) else {
+                decisionHandler(.allow)
+                return
         }
-        if let _ = url.absoluteString.range(of: "success") {
+        
+        switch response {
+        case .success:
             completion?(.success)
             decisionHandler(.cancel)
-        } else if let _ = url.absoluteString.range(of: "failed") {
+        case .failure(let error):
+            completion?(.failure(error))
+            decisionHandler(.cancel)
+        }
+    }
+    
+    private func parse(_ url: URL) -> VoidResult? {
+        if let _ = url.absoluteString.range(of: success) {
+            return .success
+        } else if let _ = url.absoluteString.range(of: failed) {
             let urlComponents = URLComponents(string: url.absoluteString)
             let errorCode = urlComponents?.queryItems?.first(where: { $0.name == "errorCode" })
             guard let error = errorCode?.value else {
-                completion?(nil)
-                return
+                return nil
             }
             if error.contains("authenticationFailed") {
-                completion?(.failure(WebViewError.authenticationFailed))
+                return .failure(WebViewError.authenticationFailed)
             } else {
-                completion?(.failure(WebViewError.internalServerError))
+                return .failure(WebViewError.internalServerError)
             }
-            decisionHandler(.cancel)
         } else {
-            decisionHandler(.allow)
+            return nil
         }
     }
 }
