@@ -22,19 +22,25 @@ import WebKit
 
 class DigitalSignatureVerificationViewController: UIViewController {
 
+    typealias Result = ((_ result: VoidResult?) -> Void)
+    
+    // MARK: - Error states
     private enum VerificationError: Error {
         case authenticationFailed
         case internalServerError
     }
     
-    var completion: ((_ result: VoidResult?) -> Void)?
-    
+    // MARK: - Private Property
     private var webView = WKWebView(frame: .zero)
     private var url: URL?
     
     private let success: String = "success"
     private let failed: String = "failed"
     
+    // MARK: - Public Property
+    var completion: Result?
+    
+    // MARK: - Init
     init(url: URL) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
@@ -51,12 +57,13 @@ class DigitalSignatureVerificationViewController: UIViewController {
         loadURL()
     }
     
+    // MARK: - Private Method
     private func setupWebView() {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
         updateButtonMode()
         
-        self.view.addSubview(webView)
+        view.addSubview(webView)
         webView.fitInSuperview()
     }
     
@@ -75,10 +82,11 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     @objc private func onClose() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }
 
+// MARK: - WKNavigationDelegate
 extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         guard 
@@ -107,8 +115,9 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
             guard let error = postCode?.value else {
                 return nil
             }
-            return error.contains("authentication") ?
-                .failure(VerificationError.authenticationFailed) : .failure(VerificationError.internalServerError)
+            return error.contains("authentication")
+                ? .failure(VerificationError.authenticationFailed)
+                : .failure(VerificationError.internalServerError)
         } else {
             return nil
         }
