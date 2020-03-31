@@ -36,7 +36,7 @@ extension ConversationInputBarViewController {
     }
     
     func updateLeftAccessoryView() {
-        authorImageView.alpha = inputBar.textView.isFirstResponder ? 1 : 0
+        authorImageView?.alpha = inputBar.textView.isFirstResponder ? 1 : 0
     }
     
     @objc
@@ -238,6 +238,13 @@ extension ConversationInputBarViewController {
             self?.didEnterBackground()
         }
     }
+    
+    // MARK: - Keyboard Shortcuts
+    override open var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+
 }
 
 // MARK: - GiphySearchViewControllerDelegate

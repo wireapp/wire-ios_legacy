@@ -192,34 +192,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self triggerMentionsIfNeededFrom: self.inputBar.textView with:nil];
 }
 
-#pragma mark - Keyboard Shortcuts
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (void)commandReturnPressed
-{
-    [self sendText];
-}
-
-- (void)shiftReturnPressed
-{
-    [self.inputBar.textView replaceRange:self.inputBar.textView.selectedTextRange withText:@"\n"];
-}
-
-- (void)upArrowPressed
-{
-    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerEditLastMessage)]) {
-        [self.delegate conversationInputBarViewControllerEditLastMessage];
-    }
-}
-
-- (void)escapePressed
-{
-    [self endEditingMessageIfNeeded];
-}
 
 #pragma mark - Input views handling
 

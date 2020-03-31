@@ -24,7 +24,6 @@ extension ConversationInputBarViewController {
         sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
     }
         
-    @objc
     func sendText() {
         let (text, mentions) = inputBar.textView.preparedText
         let quote = quotedMessage

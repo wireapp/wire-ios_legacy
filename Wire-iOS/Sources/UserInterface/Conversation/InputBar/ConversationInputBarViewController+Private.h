@@ -78,7 +78,7 @@
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
-@property (nonatomic) UserImageView *authorImageView;
+@property (nonatomic, nullable) UserImageView *authorImageView;
 
 @property (nonatomic) ZMConversation *conversation;
 
@@ -93,9 +93,5 @@
 
 - (void)updateRightAccessoryView;
 
-- (void)shiftReturnPressed;
-- (void)commandReturnPressed;
-- (void)upArrowPressed;
-- (void)escapePressed;
 
 @end
