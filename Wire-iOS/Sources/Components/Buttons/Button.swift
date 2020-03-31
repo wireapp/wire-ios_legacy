@@ -88,9 +88,7 @@ class Button: ButtonWithLargerHitArea {
 
         switch style {
         case .full:
-            setBackgroundImageColor(.accent(), for: .normal)
-            setTitleColor(UIColor.white, for: .normal)
-            setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
+            updateFullStyle()
         case .fullMonochrome:
             setBackgroundImageColor(UIColor.white, for: .normal)
             setTitleColor(UIColor.from(scheme: .textForeground, variant: .light), for: .normal)
@@ -106,6 +104,12 @@ class Button: ButtonWithLargerHitArea {
         }
     }
 
+    func updateFullStyle() {
+        setBackgroundImageColor(.accent(), for: .normal)
+        setTitleColor(UIColor.white, for: .normal)
+        setTitleColor(UIColor.from(scheme: .textDimmed, variant: variant), for: .highlighted)
+    }
+    
     func updateEmptyStyle() {
         setBackgroundImageColor(nil, for: .normal)
         layer.borderWidth = 1
