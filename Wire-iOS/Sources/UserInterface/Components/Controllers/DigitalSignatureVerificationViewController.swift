@@ -22,7 +22,7 @@ import WebKit
 
 class DigitalSignatureVerificationViewController: UIViewController {
 
-    typealias Result = ((_ result: VoidResult?) -> Void)
+    typealias DigitalSignatureCompletion = ((_ result: VoidResult?) -> Void)?
     
     // MARK: - Error states
     private enum VerificationError: Error {
@@ -31,18 +31,15 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     // MARK: - Private Property
+    private var completion: DigitalSignatureCompletion
+    
     private var webView = WKWebView(frame: .zero)
     private var url: URL?
     
-    private let success: String = "success"
-    private let failed: String = "failed"
-    
-    // MARK: - Public Property
-    var completion: Result?
-    
     // MARK: - Init
-    init(url: URL) {
+    init(url: URL, completion: DigitalSignatureCompletion = nil) {
         self.url = url
+        self.completion = completion
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -109,18 +106,16 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func parse(_ url: URL) -> VoidResult? {
         let urlComponents = URLComponents(string: url.absoluteString)
         let postCode = urlComponents?.queryItems?.first(where: { $0.name == "postCode" })
-        if let _ = postCode?.value?.range(of: success) {
-            return .success
-        } else if let _ = postCode?.value?.range(of: failed) {
-            let errorCode = urlComponents?.queryItems?.first(where: { $0.name == "errorCode" })
-            guard let error = errorCode?.value else {
-                return nil
-            }
-            return error.contains("authenticationFailed")
-                ? .failure(VerificationError.authenticationFailed)
-                : .failure(VerificationError.internalServerError)
-        } else {
+        guard let  postCodeValue = postCode?.value else {
             return nil
+        }
+        switch postCodeValue {
+            case "sas-success":
+            return .success
+        case "sas-error-authentication-failed":
+             return .failure(VerificationError.authenticationFailed)
+        default:
+            return .failure(VerificationError.internalServerError)
         }
     }
 }
