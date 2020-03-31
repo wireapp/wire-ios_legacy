@@ -29,12 +29,6 @@
 
 static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
-@interface ConversationInputBarViewController (Ping)
-
-- (void)pingButtonPressed:(UIButton *)button;
-
-@end
-
 
 @interface ConversationInputBarViewController (Giphy)
 
@@ -434,35 +428,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
 
 
-#pragma mark - PingButton
-
-@implementation ConversationInputBarViewController (Ping)
-
-- (void)pingButtonPressed:(UIButton *)button
-{
-    [self appendKnock];
-}
-
-- (void)appendKnock
-{
-    [self.notificationFeedbackGenerator prepare];
-    [[ZMUserSession sharedSession] enqueueChanges:^{
-        id<ZMConversationMessage> knockMessage = [self.conversation appendKnock];
-        if (knockMessage) {
-            [Analytics.shared tagMediaActionCompleted:ConversationMediaActionPing inConversation:self.conversation];
-
-            [AVSMediaManager.sharedInstance playKnockSound];
-            [self.notificationFeedbackGenerator notificationOccurred:UINotificationFeedbackTypeSuccess];
-        }
-    }];
-    
-    self.pingButton.enabled = NO;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.pingButton.enabled = YES;
-    });
-}
-
-@end
 
 
 
