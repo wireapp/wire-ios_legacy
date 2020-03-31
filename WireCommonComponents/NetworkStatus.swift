@@ -29,12 +29,6 @@ public enum ServerReachability {
     case unreachable
 }
 
-//public protocol NetworkStatusObserver: NSObjectProtocol {
-//    /// note.object is the NetworkStatus instance doing the monitoring.
-//    /// Method name @c `-networkStatusDidChange:` conflicts with some apple internal method name.
-//    func wr_networkStatusDidChange(_ note: Notification)
-//}
-
 extension Notification.Name {
     public static let NetworkStatus = Notification.Name("NetworkStatusNotification")
 }
