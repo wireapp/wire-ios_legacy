@@ -69,10 +69,7 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     private func createConstraints() {
-        webView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0).isActive = true
-        webView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0).isActive = true
-        webView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: 0).isActive = true
-        webView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 0).isActive = true
+        webView.fitInSuperview()
     }
     
     private func loadURL() {
