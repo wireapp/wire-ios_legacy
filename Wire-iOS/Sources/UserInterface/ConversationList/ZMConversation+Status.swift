@@ -732,7 +732,7 @@ final class UnsernameMatcher: ConversationStatusMatcher {
 /*
  Matchers priorities (highest first):
  
- (Poll)
+ (SecurityAlert)
  (SelfUserLeftMatcher)
  (Blocked)
  (Calling)
@@ -843,4 +843,3 @@ extension ZMConversation {
         )
     }
 }
-
