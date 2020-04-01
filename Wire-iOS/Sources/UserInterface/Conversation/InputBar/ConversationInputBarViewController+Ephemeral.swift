@@ -21,6 +21,11 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
+    func createEphemeralKeyboardViewController() {
+        ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
+        ephemeralKeyboardViewController?.delegate = self
+    }
+
     @objc
     func configureEphemeralKeyboardButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)

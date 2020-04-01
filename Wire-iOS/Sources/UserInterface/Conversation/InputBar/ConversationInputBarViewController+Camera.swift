@@ -43,6 +43,14 @@ final class StatusBarVideoEditorController: UIVideoEditorController {
 
 extension ConversationInputBarViewController: CameraKeyboardViewControllerDelegate {
 
+    func createCameraKeyboardViewController() {
+        guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else { return }
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
+        cameraKeyboardViewController.delegate = self
+
+        self.cameraKeyboardViewController = cameraKeyboardViewController
+    }
+
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if duration > ZMUserSession.shared()!.maxVideoLength() {
@@ -260,7 +268,7 @@ extension ConversationInputBarViewController {
     func cameraButtonPressed(_ sender: Any?) {
         if mode == .camera {
             inputBar.textView.resignFirstResponder()
-            self.cameraKeyboardViewController = nil
+            cameraKeyboardViewController = nil
             delay(0.3) {
                 self.mode = .textInput
             }

@@ -35,7 +35,7 @@ extension ConversationInputBarViewController {
         createConstraints()
     }
 
-    private func createInputBar() {
+    private func createInputBar() { ///TODO: init
         audioButton.accessibilityIdentifier = "audioButton"
         audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
 

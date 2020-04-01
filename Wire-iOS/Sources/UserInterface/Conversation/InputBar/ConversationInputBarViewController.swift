@@ -85,23 +85,13 @@ PopoverPresenter {
     var typingIndicatorView: TypingIndicatorView?
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
-    //TODO: lazy?
+
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
-    private lazy var cameraKeyboardViewController: CameraKeyboardViewController = {
-        guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else { fatal("splitViewController must exist") }
-        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
-        cameraKeyboardViewController.delegate = self
-        
-        return cameraKeyboardViewController
-    }()
+    var cameraKeyboardViewController: CameraKeyboardViewController?
+    var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
     
-    ///TODO: test
-    lazy var ephemeralKeyboardViewController: EphemeralKeyboardViewController = {
-        let viewController = EphemeralKeyboardViewController(conversation: conversation)
-        viewController.delegate = self
-        return viewController
-    }()
     let sendController: ConversationInputBarSendController
+    
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
@@ -173,19 +163,17 @@ PopoverPresenter {
     /// - Returns: a ConversationInputBarViewController
     init(conversation: ZMConversation) {
         self.conversation = conversation
-
         sendController = ConversationInputBarSendController(conversation: conversation)
 
         super.init(nibName: nil, bundle: nil)
+        
         setupAudioSession()
         
         conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         typingObserverToken = conversation.addTypingObserver(self)
         
         setupNotificationCenter()
-        
         setupInputLanguageObserver()
-                
         setupViews()
     }
     
