@@ -35,33 +35,33 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol AVAudioSessionType;
 @protocol ConversationInputBarViewControllerDelegate;
 
-typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
-    ConversationInputBarViewControllerModeTextInput,
-    ConversationInputBarViewControllerModeAudioRecord,
-    ConversationInputBarViewControllerModeCamera,
-    ConversationInputBarViewControllerModeTimeoutConfguration
-};
-
-
-@interface ConversationInputBarViewController : UIViewController <UIPopoverPresentationControllerDelegate>
-
-@property (nonatomic, readonly, nonnull) IconButton *photoButton;
-@property (nonatomic, readonly, nonnull) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, readonly, nonnull) IconButton *markdownButton;
-@property (nonatomic, readonly, nonnull) IconButton *mentionButton;
-
-@property (nonatomic, readonly, nonnull) InputBar *inputBar;
-@property (nonatomic, readonly) ZMConversation *conversation;
-@property (nonatomic, weak, nullable) id <ConversationInputBarViewControllerDelegate> delegate;
-@property (nonatomic) ConversationInputBarViewControllerMode mode;
-@property (nonatomic, readonly, nullable) UIViewController *inputController;
-@property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
-@property (nonatomic, weak, nullable) id<Dismissable, UserList, KeyboardCollapseObserver> mentionsView;
-@property (nonatomic, strong, nullable) id textfieldObserverToken;
-@property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
-
-- (instancetype)initWithConversation:(ZMConversation *)conversation;
-
-@end
-
-NS_ASSUME_NONNULL_END
+//typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
+//    ConversationInputBarViewControllerModeTextInput,
+//    ConversationInputBarViewControllerModeAudioRecord,
+//    ConversationInputBarViewControllerModeCamera,
+//    ConversationInputBarViewControllerModeTimeoutConfguration
+//};
+//
+//
+//@interface ConversationInputBarViewController : UIViewController <UIPopoverPresentationControllerDelegate>
+//
+//@property (nonatomic, readonly, nonnull) IconButton *photoButton;
+//@property (nonatomic, readonly, nonnull) IconButton *ephemeralIndicatorButton;
+//@property (nonatomic, readonly, nonnull) IconButton *markdownButton;
+//@property (nonatomic, readonly, nonnull) IconButton *mentionButton;
+//
+//@property (nonatomic, readonly, nonnull) InputBar *inputBar;
+//@property (nonatomic, readonly) ZMConversation *conversation;
+//@property (nonatomic, weak, nullable) id <ConversationInputBarViewControllerDelegate> delegate;
+//@property (nonatomic) ConversationInputBarViewControllerMode mode;
+//@property (nonatomic, readonly, nullable) UIViewController *inputController;
+//@property (nonatomic, strong, nullable) MentionsHandler *mentionsHandler;
+//@property (nonatomic, weak, nullable) id<Dismissable, UserList, KeyboardCollapseObserver> mentionsView;
+//@property (nonatomic, strong, nullable) id textfieldObserverToken;
+//@property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
+//
+//- (instancetype)initWithConversation:(ZMConversation *)conversation;
+//
+//@end
+//
+//NS_ASSUME_NONNULL_END

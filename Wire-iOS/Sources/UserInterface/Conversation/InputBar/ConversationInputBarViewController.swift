@@ -18,8 +18,221 @@
 import Foundation
 import MobileCoreServices
 
-extension ConversationInputBarViewController {
+enum ConversationInputBarViewControllerMode {
+    case textInput
+    case audioRecord
+    case camera
+    case timeoutConfguration
+}
 
+final class ConversationInputBarViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+    private(set) var photoButton: IconButton!
+    private(set) var ephemeralIndicatorButton: IconButton!
+    private(set) var markdownButton: IconButton!
+    private(set) var mentionButton: IconButton!
+    private(set) var inputBar: InputBar!
+    private(set) var conversation: ZMConversation?
+    weak var delegate: ConversationInputBarViewControllerDelegate?
+    var mode: ConversationInputBarViewControllerMode!
+    private(set) var inputController: UIViewController?
+    var mentionsHandler: MentionsHandler?
+    weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
+    var textfieldObserverToken: Any?
+    weak var audioSession: AVAudioSessionType!
+    
+    private var audioButton: IconButton!
+    private var photoButton: IconButton!
+    private var uploadFileButton: IconButton!
+    private var sketchButton: IconButton!
+    private var pingButton: IconButton!
+    private var locationButton: IconButton!
+    private var ephemeralIndicatorButton: IconButton!
+    private var markdownButton: IconButton!
+    private var gifButton: IconButton!
+    private var mentionButton: IconButton!
+    private var sendButton: IconButton!
+    private var hourglassButton: IconButton!
+    private var videoButton: IconButton!
+    private var inputBar: InputBar!
+    private var typingIndicatorView: TypingIndicatorView?
+    private var audioRecordViewController: AudioRecordViewController?
+    private var audioRecordViewContainer: UIView?
+    private var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
+    private var cameraKeyboardViewController: CameraKeyboardViewController?
+    private var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
+    private var sendController: ConversationInputBarSendController!
+    private weak var editingMessage: ZMConversationMessage?
+    private weak var quotedMessage: ZMConversationMessage?
+    private var replyComposingView: ReplyComposingView?
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    private var shouldRefocusKeyboardAfterImagePickerDismiss = false
+    // Counter keeping track of calls being made when the audio keyboard ewas visible before.
+    private var callCountWhileCameraKeyboardWasVisible = 0
+    private var callStateObserverToken: Any?
+    private var wasRecordingBeforeCall = false
+    private var sendButtonState: ConversationInputBarButtonState!
+    private var inRotation = false
+
+    // PopoverPresenter
+
+    private weak var presentedPopover: UIPopoverPresentationController?
+    private weak var popoverPointToView: UIView?
+    private var singleTapGestureRecognizer: UIGestureRecognizer?
+    private var authorImageView: UserImageView?
+    private var conversation: ZMConversation?
+    private var conversationObserverToken: Any?
+    private var userObserverToken: Any?
+    private var inputController: UIViewController?
+    private var typingObserverToken: Any?
+    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
+    
+    /// init with a ZMConversation objcet
+    /// - Parameter conversation: provide nil only for tests
+    /// - Returns: a ConversationInputBarViewController
+    
+    init(conversation: ZMConversation?) {
+        super.init()
+        setupAudioSession()
+        
+        if conversation != nil {
+            self.conversation = conversation
+            sendController = ConversationInputBarSendController(conversation: self.conversation)
+            conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: self.conversation)
+            typingObserverToken = conversation?.addTypingObserver(self)
+        }
+        
+        sendButtonState = ConversationInputBarButtonState()
+        
+        setupNotificationCenter()
+        
+        setupInputLanguageObserver()
+        
+        notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+        impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+        
+        setupViews()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
+
+    // MARK: - view life cycle
+    
+    func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupCallStateObserver()
+        setupAppLockedObserver()
+        
+        createSingleTapGestureRecognizer()
+        
+        
+        if conversation.hasDraftMessage {
+            inputBar.textView.setDraftMessage(conversation.draftMessage)
+        }
+        
+        configureAudioButton(audioButton)
+        configureMarkdownButton()
+        configureMentionButton()
+        configureEphemeralKeyboardButton(hourglassButton)
+        configureEphemeralKeyboardButton(ephemeralIndicatorButton)
+        
+        sendButton.addTarget(self, action: #selector(sendButtonPressed(_:)), for: .touchUpInside)
+        photoButton.addTarget(self, action: #selector(cameraButtonPressed(_:)), for: .touchUpInside)
+        videoButton.addTarget(self, action: #selector(videoButtonPressed(_:)), for: .touchUpInside)
+        sketchButton.addTarget(self, action: #selector(sketchButtonPressed(_:)), for: .touchUpInside)
+        uploadFileButton.addTarget(self, action: #selector(docUploadPressed(_:)), for: .touchUpInside)
+        pingButton.addTarget(self, action: #selector(pingButtonPressed(_:)), for: .touchUpInside)
+        gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
+        locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
+        
+        if conversationObserverToken == nil && conversation != nil {
+            conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: conversation)
+        }
+        
+        if userObserverToken == nil && conversation.connectedUser != nil && ZMUserSession.sharedSession != nil {
+            userObserverToken = UserChangeInfo.addObserver(self, forUser: conversation.connectedUser, inUserSession: ZMUserSession.sharedSession)
+        }
+        
+        updateAccessoryViews()
+        updateInputBarVisibility()
+        updateTypingIndicator()
+        updateWritingState(animated: false)
+        updateButtonIcons()
+        updateAvailabilityPlaceholder()
+        
+        setInputLanguage()
+        setupStyle()
+        
+        if #available(iOS 11.0, *) {
+            let interaction = UIDropInteraction(delegate: self)
+            inputBar.textView.addInteraction(interaction)
+        }
+    }
+    
+    func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateRightAccessoryView()
+        inputBar.updateReturnKey()
+        inputBar.updateEphemeralState()
+        updateMentionList()
+    }
+    
+    func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        inputBar.textView.endEditing(true)
+    }
+    
+    func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        endEditingMessageIfNeeded()
+        NSObject.cancelPreviousPerformRequests(withTarget: self)
+    }
+    
+    func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        ephemeralIndicatorButton.layer.cornerRadius = ephemeralIndicatorButton.bounds.width / 2
+    }
+    
+    // MARK: - setup
+    func createSingleTapGestureRecognizer() {
+        singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onSingleTap(_:)))
+        singleTapGestureRecognizer.enabled = false
+        singleTapGestureRecognizer.delegate = self
+        singleTapGestureRecognizer.cancelsTouchesInView = true
+        view.addGestureRecognizer(singleTapGestureRecognizer)
+    }
+
+    func updateRightAccessoryView() {
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
+        
+        let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        
+        sendButtonState.update(withTextLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+        
+        sendButton.hidden = sendButtonState.sendButtonHidden
+        hourglassButton.hidden = sendButtonState.hourglassButtonHidden
+        ephemeralIndicatorButton.hidden = sendButtonState.ephemeralIndicatorButtonHidden
+        ephemeralIndicatorButton.enabled = sendButtonState.ephemeralIndicatorButtonEnabled
+        
+        ephemeralIndicatorButton.setBackgroundImage(conversation.timeoutImage, for: .normal)
+        ephemeralIndicatorButton.setBackgroundImage(conversation.disabledTimeoutImage, for: .disabled)
+    }
+    
+    func updateMentionList() {
+        triggerMentionsIfNeeded(from: inputBar.textView, with: nil)
+    }
+
+    
+    private func updateRightAccessoryView() {
+    }
+    
     func clearInputBar() {
         inputBar.textView.text = ""
         inputBar.markdownView.resetIcons()

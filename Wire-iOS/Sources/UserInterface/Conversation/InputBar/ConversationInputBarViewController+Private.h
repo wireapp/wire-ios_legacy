@@ -28,70 +28,70 @@
 @class TypingIndicatorView;
 @class UserImageView;
 
-@interface ConversationInputBarViewController ()
-
-@property (nonatomic, nonnull) IconButton *audioButton;
-@property (nonatomic, nonnull) IconButton *photoButton;
-@property (nonatomic, nonnull) IconButton *uploadFileButton;
-@property (nonatomic, nonnull) IconButton *sketchButton;
-@property (nonatomic, nonnull) IconButton *pingButton;
-@property (nonatomic, nonnull) IconButton *locationButton;
-@property (nonatomic, nonnull) IconButton *ephemeralIndicatorButton;
-@property (nonatomic, nonnull) IconButton *markdownButton;
-@property (nonatomic, nonnull) IconButton *gifButton;
-@property (nonatomic, nonnull) IconButton *mentionButton;
-@property (nonatomic, nonnull) IconButton *sendButton;
-@property (nonatomic, nonnull) IconButton *hourglassButton;
-@property (nonatomic, nonnull) IconButton *videoButton;
-
-@property (nonatomic, nonnull) InputBar *inputBar;
-
-@property (nonatomic, nullable) TypingIndicatorView *typingIndicatorView;
-
-@property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
-@property (nonatomic, nullable) UIView *audioRecordViewContainer;
-
-@property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
-@property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
-@property (nonatomic, nullable) EphemeralKeyboardViewController *ephemeralKeyboardViewController;
-@property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
-@property (nonatomic, nullable) id<ZMConversationMessage> editingMessage;
-@property (nonatomic, nullable) id<ZMConversationMessage> quotedMessage;
-@property (nonatomic, nullable) ReplyComposingView *replyComposingView;
-
-@property (nonatomic, nullable) UIImpactFeedbackGenerator *impactFeedbackGenerator;
-
-@property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
-
-// Counter keeping track of calls being made when the audio keyboard ewas visible before.
-@property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;
-@property (nonatomic, nullable)           id callStateObserverToken;
-@property (nonatomic)           BOOL wasRecordingBeforeCall;
-
-@property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
-
-@property (nonatomic) BOOL inRotation;
-
-// PopoverPresenter
-@property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
-@property (nonatomic, nullable, weak) UIView *popoverPointToView;
-
-@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
-
-@property (nonatomic, nullable) UserImageView *authorImageView;
-
-@property (nonatomic) ZMConversation *conversation;
-
-@property (nonatomic) id conversationObserverToken;
-@property (nonatomic) id userObserverToken;
-
-@property (nonatomic) UIViewController *inputController;
-
-@property (nonatomic) id typingObserverToken;
-
-@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
-
-- (void)updateRightAccessoryView;
-
-
-@end
+//@interface ConversationInputBarViewController ()
+//
+//@property (nonatomic, nonnull) IconButton *audioButton;
+//@property (nonatomic, nonnull) IconButton *photoButton;
+//@property (nonatomic, nonnull) IconButton *uploadFileButton;
+//@property (nonatomic, nonnull) IconButton *sketchButton;
+//@property (nonatomic, nonnull) IconButton *pingButton;
+//@property (nonatomic, nonnull) IconButton *locationButton;
+//@property (nonatomic, nonnull) IconButton *ephemeralIndicatorButton;
+//@property (nonatomic, nonnull) IconButton *markdownButton;
+//@property (nonatomic, nonnull) IconButton *gifButton;
+//@property (nonatomic, nonnull) IconButton *mentionButton;
+//@property (nonatomic, nonnull) IconButton *sendButton;
+//@property (nonatomic, nonnull) IconButton *hourglassButton;
+//@property (nonatomic, nonnull) IconButton *videoButton;
+//
+//@property (nonatomic, nonnull) InputBar *inputBar;
+//
+//@property (nonatomic, nullable) TypingIndicatorView *typingIndicatorView;
+//
+//@property (nonatomic, nullable) AudioRecordViewController *audioRecordViewController;
+//@property (nonatomic, nullable) UIView *audioRecordViewContainer;
+//
+//@property (nonatomic, nullable) AudioRecordKeyboardViewController *audioRecordKeyboardViewController;
+//@property (nonatomic, nullable) CameraKeyboardViewController *cameraKeyboardViewController;
+//@property (nonatomic, nullable) EphemeralKeyboardViewController *ephemeralKeyboardViewController;
+//@property (nonatomic, nonnull)  ConversationInputBarSendController *sendController;
+//@property (nonatomic, nullable) id<ZMConversationMessage> editingMessage;
+//@property (nonatomic, nullable) id<ZMConversationMessage> quotedMessage;
+//@property (nonatomic, nullable) ReplyComposingView *replyComposingView;
+//
+//@property (nonatomic, nullable) UIImpactFeedbackGenerator *impactFeedbackGenerator;
+//
+//@property (nonatomic)           BOOL shouldRefocusKeyboardAfterImagePickerDismiss;
+//
+//// Counter keeping track of calls being made when the audio keyboard ewas visible before.
+//@property (nonatomic)           NSInteger callCountWhileCameraKeyboardWasVisible;
+//@property (nonatomic, nullable)           id callStateObserverToken;
+//@property (nonatomic)           BOOL wasRecordingBeforeCall;
+//
+//@property (nonatomic, nonnull) ConversationInputBarButtonState *sendButtonState;
+//
+//@property (nonatomic) BOOL inRotation;
+//
+//// PopoverPresenter
+//@property (nonatomic, nullable, weak) UIPopoverPresentationController *presentedPopover;
+//@property (nonatomic, nullable, weak) UIView *popoverPointToView;
+//
+//@property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
+//
+//@property (nonatomic, nullable) UserImageView *authorImageView;
+//
+//@property (nonatomic) ZMConversation *conversation;
+//
+//@property (nonatomic) id conversationObserverToken;
+//@property (nonatomic) id userObserverToken;
+//
+//@property (nonatomic) UIViewController *inputController;
+//
+//@property (nonatomic) id typingObserverToken;
+//
+//@property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
+//
+//- (void)updateRightAccessoryView;
+//
+//
+//@end
