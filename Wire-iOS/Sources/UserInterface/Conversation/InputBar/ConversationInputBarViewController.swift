@@ -256,7 +256,6 @@ PopoverPresenter {
 
     /// init with a ZMConversation objcet
     /// - Parameter conversation: provide nil only for tests
-    /// - Returns: a ConversationInputBarViewController
     init(conversation: ZMConversation) {
         self.conversation = conversation
 
