@@ -193,89 +193,89 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 //}
 
 
-#pragma mark - Input views handling
+//#pragma mark - Input views handling
+//
+//- (void)setMode:(ConversationInputBarViewControllerMode)mode
+//{
+//    if (_mode == mode) {
+//        return;
+//    }
+//    _mode = mode;
+//    
+//    switch (mode) {
+//        case ConversationInputBarViewControllerModeTextInput:
+//            [self asssignInputController: nil];
+//            self.inputController = nil;
+//            self.singleTapGestureRecognizer.enabled = NO;
+//            [self selectInputControllerButton:nil];
+//            break;
+//    
+//        case ConversationInputBarViewControllerModeAudioRecord:
+//            [self clearTextInputAssistentItemIfNeeded];
+//            
+//            if (self.inputController == nil || self.inputController != self.audioRecordKeyboardViewController) {
+//                if (self.audioRecordKeyboardViewController == nil) {
+//                    self.audioRecordKeyboardViewController = [[AudioRecordKeyboardViewController alloc] init];
+//                    self.audioRecordKeyboardViewController.delegate = self;
+//                }
+//
+//                [self asssignInputController: self.audioRecordKeyboardViewController];
+//            }
+//
+//            self.singleTapGestureRecognizer.enabled = YES;
+//            [self selectInputControllerButton:self.audioButton];
+//            break;
+//            
+//        case ConversationInputBarViewControllerModeCamera:
+//            [self clearTextInputAssistentItemIfNeeded];
+//            
+//            if (self.inputController == nil || self.inputController != self.cameraKeyboardViewController) {
+//                if (self.cameraKeyboardViewController == nil) {
+//                    [self createCameraKeyboardViewController];
+//                }
+//
+//                [self asssignInputController: self.cameraKeyboardViewController];
+//            }
+//            
+//            self.singleTapGestureRecognizer.enabled = YES;
+//            [self selectInputControllerButton:self.photoButton];
+//            break;
+//
+//        case ConversationInputBarViewControllerModeTimeoutConfguration:
+//            [self clearTextInputAssistentItemIfNeeded];
+//
+//            if (self.inputController == nil || self.inputController != self.ephemeralKeyboardViewController) {
+//                if (self.ephemeralKeyboardViewController == nil) {
+//                    [self createEphemeralKeyboardViewController];
+//                }
+//
+//                [self asssignInputController: self.ephemeralKeyboardViewController];
+//            }
+//
+//            self.singleTapGestureRecognizer.enabled = YES;
+//            [self selectInputControllerButton:self.hourglassButton];
+//            break;
+//
+//
+//    }
+//    
+//    [self updateRightAccessoryView];
+//}
 
-- (void)setMode:(ConversationInputBarViewControllerMode)mode
-{
-    if (_mode == mode) {
-        return;
-    }
-    _mode = mode;
-    
-    switch (mode) {
-        case ConversationInputBarViewControllerModeTextInput:
-            [self asssignInputController: nil];
-            self.inputController = nil;
-            self.singleTapGestureRecognizer.enabled = NO;
-            [self selectInputControllerButton:nil];
-            break;
-    
-        case ConversationInputBarViewControllerModeAudioRecord:
-            [self clearTextInputAssistentItemIfNeeded];
-            
-            if (self.inputController == nil || self.inputController != self.audioRecordKeyboardViewController) {
-                if (self.audioRecordKeyboardViewController == nil) {
-                    self.audioRecordKeyboardViewController = [[AudioRecordKeyboardViewController alloc] init];
-                    self.audioRecordKeyboardViewController.delegate = self;
-                }
-
-                [self asssignInputController: self.audioRecordKeyboardViewController];
-            }
-
-            self.singleTapGestureRecognizer.enabled = YES;
-            [self selectInputControllerButton:self.audioButton];
-            break;
-            
-        case ConversationInputBarViewControllerModeCamera:
-            [self clearTextInputAssistentItemIfNeeded];
-            
-            if (self.inputController == nil || self.inputController != self.cameraKeyboardViewController) {
-                if (self.cameraKeyboardViewController == nil) {
-                    [self createCameraKeyboardViewController];
-                }
-
-                [self asssignInputController: self.cameraKeyboardViewController];
-            }
-            
-            self.singleTapGestureRecognizer.enabled = YES;
-            [self selectInputControllerButton:self.photoButton];
-            break;
-
-        case ConversationInputBarViewControllerModeTimeoutConfguration:
-            [self clearTextInputAssistentItemIfNeeded];
-
-            if (self.inputController == nil || self.inputController != self.ephemeralKeyboardViewController) {
-                if (self.ephemeralKeyboardViewController == nil) {
-                    [self createEphemeralKeyboardViewController];
-                }
-
-                [self asssignInputController: self.ephemeralKeyboardViewController];
-            }
-
-            self.singleTapGestureRecognizer.enabled = YES;
-            [self selectInputControllerButton:self.hourglassButton];
-            break;
-
-
-    }
-    
-    [self updateRightAccessoryView];
-}
-
-- (void)selectInputControllerButton:(IconButton *)button
-{
-    for (IconButton *otherButton in @[self.photoButton, self.audioButton, self.hourglassButton]) {
-        otherButton.selected = [button isEqual:otherButton];
-    }
-}
-
-- (void)clearTextInputAssistentItemIfNeeded
-{
-    if (nil != [UITextInputAssistantItem class]) {
-        UITextInputAssistantItem *item = self.inputBar.textView.inputAssistantItem;
-        item.leadingBarButtonGroups = @[];
-        item.trailingBarButtonGroups = @[];
-    }
-}
+//- (void)selectInputControllerButton:(IconButton *)button
+//{
+//    for (IconButton *otherButton in @[self.photoButton, self.audioButton, self.hourglassButton]) {
+//        otherButton.selected = [button isEqual:otherButton];
+//    }
+//}
+//
+//- (void)clearTextInputAssistentItemIfNeeded
+//{
+//    if (nil != [UITextInputAssistantItem class]) {
+//        UITextInputAssistantItem *item = self.inputBar.textView.inputAssistantItem;
+//        item.leadingBarButtonGroups = @[];
+//        item.trailingBarButtonGroups = @[];
+//    }
+//}
 
 @end

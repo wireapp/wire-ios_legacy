@@ -86,6 +86,57 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
     private var typingObserverToken: Any?
     private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
     
+    // MARK: - Input views handling
+    func setMode(_ mode: ConversationInputBarViewControllerMode) {
+        if self.mode == mode {
+            return
+        }
+        self.mode = mode
+        
+        switch mode {
+        case ConversationInputBarViewControllerModeTextInput:
+            asssignInputController(nil)
+            inputController = nil
+            singleTapGestureRecognizer.enabled = false
+            selectInputControllerButton(nil)
+        case ConversationInputBarViewControllerModeAudioRecord:
+            clearTextInputAssistentItemIfNeeded()
+            if inputController == nil || inputController != audioRecordKeyboardViewController {
+                if audioRecordKeyboardViewController == nil {
+                    audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
+                    audioRecordKeyboardViewController.delegate = self
+                }
+                
+                asssignInputController(audioRecordKeyboardViewController)
+            }
+            singleTapGestureRecognizer.enabled = true
+            selectInputControllerButton(audioButton)
+        case ConversationInputBarViewControllerModeCamera:
+            clearTextInputAssistentItemIfNeeded()
+            if inputController == nil || inputController != cameraKeyboardViewController {
+                if cameraKeyboardViewController == nil {
+                    createCameraKeyboardViewController()
+                }
+                
+                asssignInputController(cameraKeyboardViewController)
+            }
+            singleTapGestureRecognizer.enabled = true
+            selectInputControllerButton(photoButton)
+        case ConversationInputBarViewControllerModeTimeoutConfguration:
+            clearTextInputAssistentItemIfNeeded()
+            if inputController == nil || inputController != ephemeralKeyboardViewController {
+                if ephemeralKeyboardViewController == nil {
+                    createEphemeralKeyboardViewController()
+                }
+                
+                asssignInputController(ephemeralKeyboardViewController)
+            }
+            singleTapGestureRecognizer.enabled = true
+            selectInputControllerButton(hourglassButton)
+        }
+
+        updateRightAccessoryView()
+    }
     /// init with a ZMConversation objcet
     /// - Parameter conversation: provide nil only for tests
     /// - Returns: a ConversationInputBarViewController
@@ -312,6 +363,21 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
 
         sendButton.setIcon(.send, size: .tiny, for: .normal)
     }
+    
+    func selectInputControllerButton(_ button: IconButton?) {
+        for otherButton in [photoButton, audioButton, hourglassButton] {
+            otherButton.selected = button == otherButton
+        }
+    }
+    
+    func clearTextInputAssistentItemIfNeeded() {
+        if nil != UITextInputAssistantItem.self {
+            let item = inputBar.textView.inputAssistantItem
+            item.leadingBarButtonGroups = []
+            item.trailingBarButtonGroups = []
+        }
+    }
+    
 
     func postImage(_ image: MediaAsset) {
         guard let data = image.imageData else { return }
