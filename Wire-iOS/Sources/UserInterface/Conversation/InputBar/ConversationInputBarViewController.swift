@@ -169,35 +169,48 @@ final class ConversationInputBarViewController: UIViewController,
     private var typingObserverToken: Any?
     private var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
+    
+    
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
             guard oldValue != mode else {
                 return
             }
 
+            let singleTapGestureRecognizerEnabled: Bool
+            let selectedButton: IconButton?
+            let newInputController: UIViewController?
+            
+            
+            let closure: (UIViewController?, ) -> () = { viewController in
+                if self.inputController == nil ||
+                    self.inputController != viewController {
+                    if viewController == nil {
+                        viewController = AudioRecordKeyboardViewController()
+                        audioRecordKeyboardViewController?.delegate = self
+                    }
+                    
+                    self.inputController = viewController
+                }
+            }
+            
             switch mode {
             case .textInput:
                 inputController = nil
-                singleTapGestureRecognizer.isEnabled = false
-                selectInputControllerButton(nil)
+                singleTapGestureRecognizerEnabled = false
+                selectedButton = nil
             case .audioRecord:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil ||
-                   inputController != audioRecordKeyboardViewController {
-                    if audioRecordKeyboardViewController == nil {
-                        audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
-                        audioRecordKeyboardViewController?.delegate = self
-                    }
-
-                    inputController = audioRecordKeyboardViewController
-                }
+                
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(audioButton)
             case .camera:
                 clearTextInputAssistentItemIfNeeded()
                 if inputController == nil ||
                    inputController != cameraKeyboardViewController {
-                    createCameraKeyboardViewController()
+                    if cameraKeyboardViewController == nil {
+                        createCameraKeyboardViewController()
+                    }
                     inputController = cameraKeyboardViewController
                 }
                 singleTapGestureRecognizer.isEnabled = true
@@ -206,12 +219,18 @@ final class ConversationInputBarViewController: UIViewController,
                 clearTextInputAssistentItemIfNeeded()
                 if inputController == nil ||
                    inputController != ephemeralKeyboardViewController {
-                    createEphemeralKeyboardViewController()
+                    if ephemeralKeyboardViewController == nil {
+                        createEphemeralKeyboardViewController()
+                    }
                     inputController = ephemeralKeyboardViewController
                 }
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(hourglassButton)
             }
+            
+            singleTapGestureRecognizer.isEnabled = singleTapGestureRecognizerEnabled
+            selectInputControllerButton(selectedButton)
+
 
             updateRightAccessoryView()
         }
