@@ -260,7 +260,7 @@ extension ConversationInputBarViewController {
     func cameraButtonPressed(_ sender: Any?) {
         if mode == .camera {
             inputBar.textView.resignFirstResponder()
-            cameraKeyboardViewController = nil
+            self.cameraKeyboardViewController = nil
             delay(0.3) {
                 self.mode = .textInput
             }

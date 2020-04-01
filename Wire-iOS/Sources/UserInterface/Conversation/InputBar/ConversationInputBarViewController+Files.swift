@@ -140,10 +140,10 @@ extension ConversationInputBarViewController {
                                                    name: url.lastPathComponent) { [weak self] metadata in
             guard let weakSelf = self else { return }
 
-            weakSelf.impactFeedbackGenerator?.prepare()
+            weakSelf.impactFeedbackGenerator.prepare()
             ZMUserSession.shared()?.perform({
 
-                weakSelf.impactFeedbackGenerator?.impactOccurred()
+                weakSelf.impactFeedbackGenerator.impactOccurred()
 
                 var conversationMediaAction: ConversationMediaAction = .fileTransfer
 

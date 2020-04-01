@@ -20,9 +20,8 @@ import Foundation
 
 extension ConversationInputBarViewController: ReplyComposingViewDelegate {
     
-    @objc(replyToMessage:composingView:)
     func reply(to message: ZMConversationMessage, composingView: ReplyComposingView) {
-        if let _ = self.replyComposingView {
+        if let _ = replyComposingView {
             removeReplyComposingView()
         }
         
@@ -30,7 +29,7 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
     }
     
     @objc func addReplyComposingView(_ composingView: ReplyComposingView) {
-        self.quotedMessage = composingView.message
+        quotedMessage = composingView.message
         self.replyComposingView = composingView
         composingView.delegate = self
     }

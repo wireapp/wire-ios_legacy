@@ -19,13 +19,9 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-    @objc
     func setupViews() {
-        createSendButton()
         createEphemeralIndicatorButton()
-        createMarkdownButton()
 
-        createHourglassButton()
         createTypingIndicatorView()
 
         createInputBar()
@@ -84,8 +80,8 @@ extension ConversationInputBarViewController {
         inputBar.editingView.delegate = self
     }
 
+    ///TODO: init
     private func createEphemeralIndicatorButton() {
-        ephemeralIndicatorButton = IconButton()
         ephemeralIndicatorButton.layer.borderWidth = 0.5
 
         ephemeralIndicatorButton.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
@@ -100,19 +96,7 @@ extension ConversationInputBarViewController {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
 
-    private func createMarkdownButton() {
-        markdownButton = IconButton(style: .circular)
-        markdownButton.accessibilityIdentifier = "markdownButton"
-    }
-
-    private func createHourglassButton() {
-        hourglassButton = IconButton(style: .default)
-
-        hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
-
-        hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-    }
-
+    ///TODO: init
     private func createTypingIndicatorView() {
         let typingIndicatorView = TypingIndicatorView()
         typingIndicatorView.accessibilityIdentifier = "typingIndicator"

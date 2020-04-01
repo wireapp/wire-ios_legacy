@@ -33,11 +33,7 @@ PopoverPresenter {
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
-    private(set) var photoButton: IconButton = IconButton()
-    private(set) var ephemeralIndicatorButton: IconButton!
-    private(set) var markdownButton: IconButton!
-    private(set) var mentionButton: IconButton = IconButton()
-    private(set) var inputBar: InputBar!
+    var inputBar: InputBar! ///TODO: lazy
     let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
     
@@ -47,18 +43,44 @@ PopoverPresenter {
     var textfieldObserverToken: Any?
     weak var audioSession: AVAudioSessionType!
     
-    var audioButton: IconButton = IconButton()
-    var uploadFileButton: IconButton  = IconButton()
-    private var sketchButton: IconButton = IconButton()
-    private var pingButton: IconButton = IconButton()
-    private var locationButton: IconButton = IconButton()
+    // MARK: buttons
+    private(set) var photoButton: IconButton = IconButton()
+    private(set) var ephemeralIndicatorButton: IconButton = IconButton()
+    private(set) var markdownButton: IconButton = {
+        let button = IconButton(style: .circular)
+        button.accessibilityIdentifier = "markdownButton"
+        return button
+    }()
+    private(set) var mentionButton: IconButton = IconButton()
+
+    let audioButton: IconButton = IconButton()
+    let uploadFileButton: IconButton = IconButton()
+    let sketchButton: IconButton = IconButton()
+    let pingButton: IconButton = IconButton()
+    let locationButton: IconButton = IconButton()
     //    private var ephemeralIndicatorButton: IconButton!
     //    private var markdownButton: IconButton!
-    private var gifButton: IconButton = IconButton()
+    let gifButton: IconButton = IconButton()
     //    private var mentionButton: IconButton!
-    private var sendButton: IconButton!
-    private var hourglassButton: IconButton!
-    var videoButton: IconButton!
+    let sendButton: IconButton = {
+            let button = IconButton.sendButton()
+            button.hitAreaPadding = CGSize(width: 30, height: 30)
+        
+        return button
+    }()
+    let hourglassButton: IconButton = {
+        let hourglassButton = IconButton(style: .default)
+        
+        hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
+        
+        hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
+        
+        return hourglassButton
+    }()
+
+    let videoButton: IconButton = IconButton()
+    
+    // MARK: subviews
     //    private var inputBar: InputBar!
     var typingIndicatorView: TypingIndicatorView?
     var audioRecordViewController: AudioRecordViewController?
@@ -81,25 +103,23 @@ PopoverPresenter {
     }()
     let sendController: ConversationInputBarSendController
     var editingMessage: ZMConversationMessage?
-    private weak var quotedMessage: ZMConversationMessage?
-    private var replyComposingView: ReplyComposingView?
-    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    private var shouldRefocusKeyboardAfterImagePickerDismiss = false
+    var quotedMessage: ZMConversationMessage?
+    var replyComposingView: ReplyComposingView?
+    var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    var shouldRefocusKeyboardAfterImagePickerDismiss = false
     // Counter keeping track of calls being made when the audio keyboard ewas visible before.
-    private var callCountWhileCameraKeyboardWasVisible = 0
-    var callStateObserverToken: Any? //TODO: type
+    var callCountWhileCameraKeyboardWasVisible = 0
+    var callStateObserverToken: Any?
     var wasRecordingBeforeCall = false
-    private var sendButtonState: ConversationInputBarButtonState!
+    let sendButtonState: ConversationInputBarButtonState = ConversationInputBarButtonState()
     var inRotation = false
     
     private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     private var authorImageView: UserImageView?
-    //    private var conversation: ZMConversation?
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
-    //    private var inputController: UIViewController?
     private var typingObserverToken: Any?
-    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
+    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
@@ -151,7 +171,6 @@ PopoverPresenter {
     /// init with a ZMConversation objcet
     /// - Parameter conversation: provide nil only for tests
     /// - Returns: a ConversationInputBarViewController
-    
     init(conversation: ZMConversation) {
         self.conversation = conversation
 
@@ -160,18 +179,13 @@ PopoverPresenter {
         super.init(nibName: nil, bundle: nil)
         setupAudioSession()
         
-            conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: self.conversation)
-            typingObserverToken = conversation.addTypingObserver(self)
-        
-        sendButtonState = ConversationInputBarButtonState()
+        conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
+        typingObserverToken = conversation.addTypingObserver(self)
         
         setupNotificationCenter()
         
         setupInputLanguageObserver()
-        
-        notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-        impactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
-        
+                
         setupViews()
     }
     
@@ -195,8 +209,9 @@ PopoverPresenter {
         createSingleTapGestureRecognizer()
         
         
-        if conversation.hasDraftMessage {
-            inputBar.textView.setDraftMessage(conversation.draftMessage)
+        if conversation.hasDraftMessage,
+            let draftMessage = conversation.draftMessage {
+            inputBar.textView.setDraftMessage(draftMessage)
         }
         
         configureAudioButton(audioButton)
@@ -214,12 +229,13 @@ PopoverPresenter {
         gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
         
-        if conversationObserverToken == nil && conversation != nil {
-            conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: conversation)
+        if conversationObserverToken == nil {
+            conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         }
         
-        if userObserverToken == nil && conversation.connectedUser != nil && ZMUserSession.sharedSession != nil {
-            userObserverToken = UserChangeInfo.addObserver(self, forUser: conversation.connectedUser, inUserSession: ZMUserSession.sharedSession)
+        if let connectedUser = conversation.connectedUser,
+            let userSession = ZMUserSession.shared() {
+            userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
         }
         
         updateAccessoryViews()
@@ -238,7 +254,7 @@ PopoverPresenter {
         }
     }
     
-    func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateRightAccessoryView()
         inputBar.updateReturnKey()
@@ -246,18 +262,18 @@ PopoverPresenter {
         updateMentionList()
     }
     
-    func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         inputBar.textView.endEditing(true)
     }
     
-    func viewDidDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         endEditingMessageIfNeeded()
         NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
     
-    func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         ephemeralIndicatorButton.layer.cornerRadius = ephemeralIndicatorButton.bounds.width / 2
     }
@@ -298,7 +314,7 @@ PopoverPresenter {
 
     private func createSingleTapGestureRecognizer() {
         singleTapGestureRecognizer.addTarget(self, action: #selector(onSingleTap(_:)))
-        singleTapGestureRecognizer.enabled = false
+        singleTapGestureRecognizer.isEnabled = false
         singleTapGestureRecognizer.delegate = self
         singleTapGestureRecognizer.cancelsTouchesInView = true
         view.addGestureRecognizer(singleTapGestureRecognizer)
@@ -309,12 +325,12 @@ PopoverPresenter {
         
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        sendButtonState.update(withTextLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
+        sendButtonState.update(textLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
         
-        sendButton.hidden = sendButtonState.sendButtonHidden
-        hourglassButton.hidden = sendButtonState.hourglassButtonHidden
-        ephemeralIndicatorButton.hidden = sendButtonState.ephemeralIndicatorButtonHidden
-        ephemeralIndicatorButton.enabled = sendButtonState.ephemeralIndicatorButtonEnabled
+        sendButton.isHidden = sendButtonState.sendButtonHidden
+        hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
+        ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
+        ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
         
         ephemeralIndicatorButton.setBackgroundImage(conversation.timeoutImage, for: .normal)
         ephemeralIndicatorButton.setBackgroundImage(conversation.disabledTimeoutImage, for: .disabled)
@@ -324,9 +340,6 @@ PopoverPresenter {
         triggerMentionsIfNeeded(from: inputBar.textView, with: nil)
     }
 
-    
-    private func updateRightAccessoryView() {
-    }
     
     func clearInputBar() {
         inputBar.textView.text = ""
@@ -410,16 +423,14 @@ PopoverPresenter {
     
     func selectInputControllerButton(_ button: IconButton?) {
         for otherButton in [photoButton, audioButton, hourglassButton] {
-            otherButton.selected = button == otherButton
+            otherButton.isSelected = button == otherButton
         }
     }
     
     func clearTextInputAssistentItemIfNeeded() {
-        if nil != UITextInputAssistantItem.self {
             let item = inputBar.textView.inputAssistantItem
             item.leadingBarButtonGroups = []
             item.trailingBarButtonGroups = []
-        }
     }
     
 
@@ -429,7 +440,6 @@ PopoverPresenter {
     }
 
     ///TODO: chnage to didSet after ConversationInputBarViewController is converted to Swift
-    @objc
     func asssignInputController(_ inputController: UIViewController?) {
         self.inputController?.view.removeFromSuperview()
 
@@ -533,8 +543,8 @@ PopoverPresenter {
 
     // MARK: - Haptic Feedback
     func playInputHapticFeedback() {
-        impactFeedbackGenerator?.prepare()
-        impactFeedbackGenerator?.impactOccurred()
+        impactFeedbackGenerator.prepare()
+        impactFeedbackGenerator.impactOccurred()
     }
 
     // MARK: - Input views handling
@@ -565,7 +575,7 @@ PopoverPresenter {
     }
 
     // MARK: - Keyboard Shortcuts
-    override open var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return true
     }
 
