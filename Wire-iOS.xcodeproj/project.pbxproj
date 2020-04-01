@@ -1319,7 +1319,6 @@
 		EFD514AD21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */; };
 		EFD5CF4E2189C68D00BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */; };
 		EFDAC64722DE2AD100D63025 /* TeamImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDAC64622DE2AD100D63025 /* TeamImageView.swift */; };
-		EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */; };
 		EFDACABB20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */; };
 		EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */; };
 		EFDBA23F229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */; };
@@ -2975,7 +2974,6 @@
 		EFD514AC21886CC600D7C7E0 /* ConversationListItemView+Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationListItemView+Constraints.swift"; sourceTree = "<group>"; };
 		EFD5CF4C2189C5F700BEC99E /* NSMutableAttributedString+ReplaceEmojiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+ReplaceEmojiTests.swift"; sourceTree = "<group>"; };
 		EFDAC64622DE2AD100D63025 /* TeamImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamImageView.swift; sourceTree = "<group>"; };
-		EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+OrientationAndSize.swift"; sourceTree = "<group>"; };
 		EFDACABA20FF84B900791207 /* ConversationInputBarViewController+FilesPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationInputBarViewController+FilesPopover.swift"; sourceTree = "<group>"; };
 		EFDB3133217F5E0300D2A7CE /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		EFDBA23E229400F200874A15 /* ConversationListTopBarViewControllerSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListTopBarViewControllerSnapshotTests.swift; sourceTree = "<group>"; };
@@ -5263,7 +5261,6 @@
 				EF58B556218B463F00750A2B /* ConversationInputBarViewController+KeyCommand.swift */,
 				EF3BA5D321075FC60093048F /* ConversationInputBarViewController+Language.swift */,
 				EF2C59EC20DBF1BB00C5664F /* ConversationInputBarViewController+SendButton.swift */,
-				EFDACAB820FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift */,
 				EF4795AC2077847E00334E32 /* ConversationInputBarViewController+UITextViewDelegate.swift */,
 				87E8D0BA2182179F00BD26AC /* ConversationInputBarViewController+Reply.swift */,
 				EEF28EEE1F168039007642E2 /* ConversationInputBarViewController+Markdown.swift */,
@@ -7326,7 +7323,6 @@
 				0667FE312384237E00F75F93 /* UICollectionView+SetMessage.swift in Sources */,
 				5EA73D8720D901000001D106 /* SeparatorCollectionViewCell.swift in Sources */,
 				F12CDAE31E4386A100CEFCEB /* ChangeHandleViewController.swift in Sources */,
-				EFDACAB920FF715A00791207 /* ConversationInputBarViewController+OrientationAndSize.swift in Sources */,
 				87B8C3401DF9788B0015EC89 /* LinkOpener.swift in Sources */,
 				5EE73BED21230BF30032986D /* RegistrationActivationErrorHandler.swift in Sources */,
 				7C4918A11F8BB1A20038AF4B /* UIScreen+SafeArea.swift in Sources */,

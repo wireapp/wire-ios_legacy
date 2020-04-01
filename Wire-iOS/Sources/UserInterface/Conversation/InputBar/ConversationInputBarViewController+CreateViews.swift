@@ -40,33 +40,24 @@ extension ConversationInputBarViewController {
     }
 
     private func createInputBar() {
-        audioButton = IconButton()
         audioButton.accessibilityIdentifier = "audioButton"
         audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
 
-        videoButton = IconButton()
         videoButton.accessibilityIdentifier = "videoButton"
 
-        photoButton = IconButton()
         photoButton.accessibilityIdentifier = "photoButton"
         photoButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
 
-        uploadFileButton = IconButton()
         uploadFileButton.accessibilityIdentifier = "uploadFileButton"
 
-        sketchButton = IconButton()
         sketchButton.accessibilityIdentifier = "sketchButton"
 
-        pingButton = IconButton()
         pingButton.accessibilityIdentifier = "pingButton"
 
-        locationButton = IconButton()
         locationButton.accessibilityIdentifier = "locationButton"
 
-        gifButton = IconButton()
         gifButton.accessibilityIdentifier = "gifButton"
 
-        mentionButton = IconButton()
         mentionButton.accessibilityIdentifier = "mentionButton"
 
         let buttons: [IconButton] = [

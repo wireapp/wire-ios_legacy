@@ -25,7 +25,7 @@ import Cartography
 extension ConversationInputBarViewController {
     
     
-    @objc func setupCallStateObserver() {
+    func setupCallStateObserver() {
         if let userSession = ZMUserSession.shared() {
             callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession:userSession)
         }

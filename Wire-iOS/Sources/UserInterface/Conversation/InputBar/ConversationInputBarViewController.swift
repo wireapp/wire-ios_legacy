@@ -17,6 +17,7 @@
 
 import Foundation
 import MobileCoreServices
+import Photos
 
 enum ConversationInputBarViewControllerMode {
     case textInput
@@ -25,14 +26,81 @@ enum ConversationInputBarViewControllerMode {
     case timeoutConfguration
 }
 
-final class ConversationInputBarViewController: UIViewController, UIPopoverPresentationControllerDelegate {
-    private(set) var photoButton: IconButton!
+final class ConversationInputBarViewController: UIViewController,
+UIPopoverPresentationControllerDelegate,
+PopoverPresenter {
+    // MARK: PopoverPresenter    
+    var presentedPopover: UIPopoverPresentationController?
+    var popoverPointToView: UIView?
+
+    private(set) var photoButton: IconButton = IconButton()
     private(set) var ephemeralIndicatorButton: IconButton!
     private(set) var markdownButton: IconButton!
-    private(set) var mentionButton: IconButton!
+    private(set) var mentionButton: IconButton = IconButton()
     private(set) var inputBar: InputBar!
     let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
+    
+    private(set) var inputController: UIViewController?
+    var mentionsHandler: MentionsHandler?
+    weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
+    var textfieldObserverToken: Any?
+    weak var audioSession: AVAudioSessionType!
+    
+    var audioButton: IconButton = IconButton()
+    var uploadFileButton: IconButton  = IconButton()
+    private var sketchButton: IconButton = IconButton()
+    private var pingButton: IconButton = IconButton()
+    private var locationButton: IconButton = IconButton()
+    //    private var ephemeralIndicatorButton: IconButton!
+    //    private var markdownButton: IconButton!
+    private var gifButton: IconButton = IconButton()
+    //    private var mentionButton: IconButton!
+    private var sendButton: IconButton!
+    private var hourglassButton: IconButton!
+    var videoButton: IconButton!
+    //    private var inputBar: InputBar!
+    var typingIndicatorView: TypingIndicatorView?
+    var audioRecordViewController: AudioRecordViewController?
+    var audioRecordViewContainer: UIView?
+    //TODO: lazy?
+    var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
+    private lazy var cameraKeyboardViewController: CameraKeyboardViewController = {
+        guard let splitViewController = ZClientViewController.shared?.wireSplitViewController else { fatal("splitViewController must exist") }
+        let cameraKeyboardViewController = CameraKeyboardViewController(splitLayoutObservable: splitViewController, imageManagerType: PHImageManager.self)
+        cameraKeyboardViewController.delegate = self
+        
+        return cameraKeyboardViewController
+    }()
+    
+    ///TODO: test
+    lazy var ephemeralKeyboardViewController: EphemeralKeyboardViewController = {
+        let viewController = EphemeralKeyboardViewController(conversation: conversation)
+        viewController.delegate = self
+        return viewController
+    }()
+    let sendController: ConversationInputBarSendController
+    var editingMessage: ZMConversationMessage?
+    private weak var quotedMessage: ZMConversationMessage?
+    private var replyComposingView: ReplyComposingView?
+    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
+    private var shouldRefocusKeyboardAfterImagePickerDismiss = false
+    // Counter keeping track of calls being made when the audio keyboard ewas visible before.
+    private var callCountWhileCameraKeyboardWasVisible = 0
+    var callStateObserverToken: Any? //TODO: type
+    var wasRecordingBeforeCall = false
+    private var sendButtonState: ConversationInputBarButtonState!
+    var inRotation = false
+    
+    private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
+    private var authorImageView: UserImageView?
+    //    private var conversation: ZMConversation?
+    private var conversationObserverToken: Any?
+    private var userObserverToken: Any?
+    //    private var inputController: UIViewController?
+    private var typingObserverToken: Any?
+    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
+
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
             guard oldValue != mode else {
@@ -43,7 +111,7 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
             case .textInput:
                 asssignInputController(nil)
                 inputController = nil
-                singleTapGestureRecognizer?.isEnabled = false
+                singleTapGestureRecognizer.isEnabled = false
                 selectInputControllerButton(nil)
             case .audioRecord:
                 clearTextInputAssistentItemIfNeeded()
@@ -55,29 +123,21 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
                     
                     asssignInputController(audioRecordKeyboardViewController)
                 }
-                singleTapGestureRecognizer?.isEnabled = true
+                singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(audioButton)
             case .camera:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != cameraKeyboardViewController {
-                    if cameraKeyboardViewController == nil {
-                        createCameraKeyboardViewController()
-                    }
-                    
+                if inputController == nil || inputController != cameraKeyboardViewController {                    
                     asssignInputController(cameraKeyboardViewController)
                 }
-                singleTapGestureRecognizer?.isEnabled = true
+                singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(photoButton)
             case .timeoutConfguration:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != ephemeralKeyboardViewController {
-                    if ephemeralKeyboardViewController == nil {
-                        createEphemeralKeyboardViewController()
-                    }
-                    
+                if inputController == nil || inputController != ephemeralKeyboardViewController {                    
                     asssignInputController(ephemeralKeyboardViewController)
                 }
-                singleTapGestureRecognizer?.isEnabled = true
+                singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(hourglassButton)
             }
             
@@ -85,58 +145,6 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
 
         }
     }
-    private(set) var inputController: UIViewController?
-    var mentionsHandler: MentionsHandler?
-    weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
-    var textfieldObserverToken: Any?
-    weak var audioSession: AVAudioSessionType!
-    
-    private var audioButton: IconButton!
-//    private var photoButton: IconButton!
-//    private var uploadFileButton: IconButton!
-    private var sketchButton: IconButton!
-    private var pingButton: IconButton!
-    private var locationButton: IconButton!
-//    private var ephemeralIndicatorButton: IconButton!
-//    private var markdownButton: IconButton!
-    private var gifButton: IconButton!
-//    private var mentionButton: IconButton!
-    private var sendButton: IconButton!
-    private var hourglassButton: IconButton!
-    private var videoButton: IconButton!
-//    private var inputBar: InputBar!
-    var typingIndicatorView: TypingIndicatorView?
-    private var audioRecordViewController: AudioRecordViewController?
-    private var audioRecordViewContainer: UIView?
-    private var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
-    private var cameraKeyboardViewController: CameraKeyboardViewController?
-    private var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
-    private var sendController: ConversationInputBarSendController!
-    var editingMessage: ZMConversationMessage?
-    private weak var quotedMessage: ZMConversationMessage?
-    private var replyComposingView: ReplyComposingView?
-    private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
-    private var shouldRefocusKeyboardAfterImagePickerDismiss = false
-    // Counter keeping track of calls being made when the audio keyboard ewas visible before.
-    private var callCountWhileCameraKeyboardWasVisible = 0
-    private var callStateObserverToken: Any?
-    private var wasRecordingBeforeCall = false
-    private var sendButtonState: ConversationInputBarButtonState!
-    private var inRotation = false
-
-    // PopoverPresenter
-
-    private weak var presentedPopover: UIPopoverPresentationController?
-    private weak var popoverPointToView: UIView?
-    
-    private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-    private var authorImageView: UserImageView?
-//    private var conversation: ZMConversation?
-    private var conversationObserverToken: Any?
-    private var userObserverToken: Any?
-//    private var inputController: UIViewController?
-    private var typingObserverToken: Any?
-    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
     
     // MARK: - Input views handling
 
@@ -147,10 +155,11 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
     init(conversation: ZMConversation) {
         self.conversation = conversation
 
+        sendController = ConversationInputBarSendController(conversation: conversation)
+
         super.init(nibName: nil, bundle: nil)
         setupAudioSession()
         
-            sendController = ConversationInputBarSendController(conversation: self.conversation)
             conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: self.conversation)
             typingObserverToken = conversation.addTypingObserver(self)
         
@@ -253,6 +262,29 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
         ephemeralIndicatorButton.layer.cornerRadius = ephemeralIndicatorButton.bounds.width / 2
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
+        
+        guard let coordinator = coordinator else { return }
+        
+        super.viewWillTransition(to: size, with: coordinator)
+        self.inRotation = true
+        
+        coordinator.animate(alongsideTransition: nil) { _ in
+            self.inRotation = false
+            self.updatePopoverSourceRect()
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        
+        guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
+        
+        guard !inRotation else { return }
+        
+        updatePopoverSourceRect()
+    }
+
     // MARK: - setup
     private func setupStyle() {
         ephemeralIndicatorButton.borderWidth = 0
