@@ -25,9 +25,6 @@
 
 // View Controllers
 
-#import "ConversationInputBarViewController.h"
-#import "ConversationInputBarViewController+Private.h"
-
 #import "SplitViewController.h"
 #import "SplitViewController+internal.h"
 

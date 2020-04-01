@@ -31,9 +31,60 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
     private(set) var markdownButton: IconButton!
     private(set) var mentionButton: IconButton!
     private(set) var inputBar: InputBar!
-    private(set) var conversation: ZMConversation?
+    let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
-    var mode: ConversationInputBarViewControllerMode!
+    var mode: ConversationInputBarViewControllerMode = .textInput {
+        didSet {
+            guard oldValue != mode else {
+                return
+            }
+            
+            switch mode {
+            case .textInput:
+                asssignInputController(nil)
+                inputController = nil
+                singleTapGestureRecognizer?.isEnabled = false
+                selectInputControllerButton(nil)
+            case .audioRecord:
+                clearTextInputAssistentItemIfNeeded()
+                if inputController == nil || inputController != audioRecordKeyboardViewController {
+                    if audioRecordKeyboardViewController == nil {
+                        audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
+                        audioRecordKeyboardViewController?.delegate = self
+                    }
+                    
+                    asssignInputController(audioRecordKeyboardViewController)
+                }
+                singleTapGestureRecognizer?.isEnabled = true
+                selectInputControllerButton(audioButton)
+            case .camera:
+                clearTextInputAssistentItemIfNeeded()
+                if inputController == nil || inputController != cameraKeyboardViewController {
+                    if cameraKeyboardViewController == nil {
+                        createCameraKeyboardViewController()
+                    }
+                    
+                    asssignInputController(cameraKeyboardViewController)
+                }
+                singleTapGestureRecognizer?.isEnabled = true
+                selectInputControllerButton(photoButton)
+            case .timeoutConfguration:
+                clearTextInputAssistentItemIfNeeded()
+                if inputController == nil || inputController != ephemeralKeyboardViewController {
+                    if ephemeralKeyboardViewController == nil {
+                        createEphemeralKeyboardViewController()
+                    }
+                    
+                    asssignInputController(ephemeralKeyboardViewController)
+                }
+                singleTapGestureRecognizer?.isEnabled = true
+                selectInputControllerButton(hourglassButton)
+            }
+            
+            updateRightAccessoryView()
+
+        }
+    }
     private(set) var inputController: UIViewController?
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
@@ -41,27 +92,27 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
     weak var audioSession: AVAudioSessionType!
     
     private var audioButton: IconButton!
-    private var photoButton: IconButton!
-    private var uploadFileButton: IconButton!
+//    private var photoButton: IconButton!
+//    private var uploadFileButton: IconButton!
     private var sketchButton: IconButton!
     private var pingButton: IconButton!
     private var locationButton: IconButton!
-    private var ephemeralIndicatorButton: IconButton!
-    private var markdownButton: IconButton!
+//    private var ephemeralIndicatorButton: IconButton!
+//    private var markdownButton: IconButton!
     private var gifButton: IconButton!
-    private var mentionButton: IconButton!
+//    private var mentionButton: IconButton!
     private var sendButton: IconButton!
     private var hourglassButton: IconButton!
     private var videoButton: IconButton!
-    private var inputBar: InputBar!
-    private var typingIndicatorView: TypingIndicatorView?
+//    private var inputBar: InputBar!
+    var typingIndicatorView: TypingIndicatorView?
     private var audioRecordViewController: AudioRecordViewController?
     private var audioRecordViewContainer: UIView?
     private var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
     private var cameraKeyboardViewController: CameraKeyboardViewController?
     private var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
     private var sendController: ConversationInputBarSendController!
-    private weak var editingMessage: ZMConversationMessage?
+    var editingMessage: ZMConversationMessage?
     private weak var quotedMessage: ZMConversationMessage?
     private var replyComposingView: ReplyComposingView?
     private var impactFeedbackGenerator: UIImpactFeedbackGenerator?
@@ -77,80 +128,31 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
 
     private weak var presentedPopover: UIPopoverPresentationController?
     private weak var popoverPointToView: UIView?
-    private var singleTapGestureRecognizer: UIGestureRecognizer?
+    
+    private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     private var authorImageView: UserImageView?
-    private var conversation: ZMConversation?
+//    private var conversation: ZMConversation?
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
-    private var inputController: UIViewController?
+//    private var inputController: UIViewController?
     private var typingObserverToken: Any?
     private var notificationFeedbackGenerator: UINotificationFeedbackGenerator?
     
     // MARK: - Input views handling
-    func setMode(_ mode: ConversationInputBarViewControllerMode) {
-        if self.mode == mode {
-            return
-        }
-        self.mode = mode
-        
-        switch mode {
-        case ConversationInputBarViewControllerModeTextInput:
-            asssignInputController(nil)
-            inputController = nil
-            singleTapGestureRecognizer.enabled = false
-            selectInputControllerButton(nil)
-        case ConversationInputBarViewControllerModeAudioRecord:
-            clearTextInputAssistentItemIfNeeded()
-            if inputController == nil || inputController != audioRecordKeyboardViewController {
-                if audioRecordKeyboardViewController == nil {
-                    audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
-                    audioRecordKeyboardViewController.delegate = self
-                }
-                
-                asssignInputController(audioRecordKeyboardViewController)
-            }
-            singleTapGestureRecognizer.enabled = true
-            selectInputControllerButton(audioButton)
-        case ConversationInputBarViewControllerModeCamera:
-            clearTextInputAssistentItemIfNeeded()
-            if inputController == nil || inputController != cameraKeyboardViewController {
-                if cameraKeyboardViewController == nil {
-                    createCameraKeyboardViewController()
-                }
-                
-                asssignInputController(cameraKeyboardViewController)
-            }
-            singleTapGestureRecognizer.enabled = true
-            selectInputControllerButton(photoButton)
-        case ConversationInputBarViewControllerModeTimeoutConfguration:
-            clearTextInputAssistentItemIfNeeded()
-            if inputController == nil || inputController != ephemeralKeyboardViewController {
-                if ephemeralKeyboardViewController == nil {
-                    createEphemeralKeyboardViewController()
-                }
-                
-                asssignInputController(ephemeralKeyboardViewController)
-            }
-            singleTapGestureRecognizer.enabled = true
-            selectInputControllerButton(hourglassButton)
-        }
 
-        updateRightAccessoryView()
-    }
     /// init with a ZMConversation objcet
     /// - Parameter conversation: provide nil only for tests
     /// - Returns: a ConversationInputBarViewController
     
-    init(conversation: ZMConversation?) {
-        super.init()
+    init(conversation: ZMConversation) {
+        self.conversation = conversation
+
+        super.init(nibName: nil, bundle: nil)
         setupAudioSession()
         
-        if conversation != nil {
-            self.conversation = conversation
             sendController = ConversationInputBarSendController(conversation: self.conversation)
             conversationObserverToken = ConversationChangeInfo.addObserver(self, forConversation: self.conversation)
-            typingObserverToken = conversation?.addTypingObserver(self)
-        }
+            typingObserverToken = conversation.addTypingObserver(self)
         
         sendButtonState = ConversationInputBarButtonState()
         
@@ -175,7 +177,7 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
 
     // MARK: - view life cycle
     
-    func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         setupCallStateObserver()
@@ -252,8 +254,18 @@ final class ConversationInputBarViewController: UIViewController, UIPopoverPrese
     }
     
     // MARK: - setup
-    func createSingleTapGestureRecognizer() {
-        singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(onSingleTap(_:)))
+    private func setupStyle() {
+        ephemeralIndicatorButton.borderWidth = 0
+        ephemeralIndicatorButton.titleLabel?.font = UIFont.smallSemiboldFont
+        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
+        hourglassButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
+        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .selected)
+        
+        hourglassButton.setBackgroundImageColor(.clear, for: .selected)
+    }
+
+    private func createSingleTapGestureRecognizer() {
+        singleTapGestureRecognizer.addTarget(self, action: #selector(onSingleTap(_:)))
         singleTapGestureRecognizer.enabled = false
         singleTapGestureRecognizer.delegate = self
         singleTapGestureRecognizer.cancelsTouchesInView = true
