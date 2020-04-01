@@ -60,15 +60,8 @@ final class ConversationInputBarViewController: UIViewController,
         
         
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
-        button.setTitleColor(UIColor.accent(), for: .normal)
-        
-        updateEphemeralIndicatorButtonTitle(button)
+        button.setTitleColor(UIColor.accent(), for: .normal)        
     }()
-    
-    ///TODO: init
-//    private func createEphemeralIndicatorButton() {
-//    }
-
     
     let markdownButton: IconButton = {
         let button = IconButton(style: .circular)

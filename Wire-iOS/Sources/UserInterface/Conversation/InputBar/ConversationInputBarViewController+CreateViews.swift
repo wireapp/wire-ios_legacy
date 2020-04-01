@@ -20,6 +20,7 @@ import Foundation
 
 extension ConversationInputBarViewController {
     func setupViews() {
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
         createTypingIndicatorView()
 
