@@ -70,8 +70,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         return imageView
     }()
 
-    var netObserver = ShareExtensionNetworkObserver()
-
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
@@ -118,7 +116,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
