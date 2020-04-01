@@ -414,7 +414,7 @@ PopoverPresenter {
     }
 
     func updateMentionList() {
-        triggerMentionsIfNeeded(from: inputBar.textView, with: nil)
+        triggerMentionsIfNeeded(from: inputBar.textView)
     }
 
     func clearInputBar() {
@@ -433,7 +433,6 @@ PopoverPresenter {
     }
 
     func updateAccessoryViews() {
-        updateLeftAccessoryView()
         updateRightAccessoryView()
     }
 
@@ -467,25 +466,16 @@ PopoverPresenter {
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 
-    func updateButtonIcons() {
+    private func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
-
         videoButton.setIcon(.videoMessage, size: .tiny, for: .normal)
-
         photoButton.setIcon(.cameraLens, size: .tiny, for: .normal)
-
         uploadFileButton.setIcon(.paperclip, size: .tiny, for: .normal)
-
         sketchButton.setIcon(.brush, size: .tiny, for: .normal)
-
         pingButton.setIcon(.ping, size: .tiny, for: .normal)
-
         locationButton.setIcon(.locationPin, size: .tiny, for: .normal)
-
         gifButton.setIcon(.gif, size: .tiny, for: .normal)
-
         mentionButton.setIcon(.mention, size: .tiny, for: .normal)
-
         sendButton.setIcon(.send, size: .tiny, for: .normal)
     }
 
