@@ -176,7 +176,7 @@ class SearchResultsViewController : UIViewController {
         sectionController = SectionCollectionViewController()
         contactsSection = ContactsSectionController()
         contactsSection.selection = userSelection
-        contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
+        contactsSection.title = "peoplepicker.header.contacts_personal".localized
         contactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection = ContactsSectionController()
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
