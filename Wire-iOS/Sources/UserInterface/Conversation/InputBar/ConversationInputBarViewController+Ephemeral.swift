@@ -26,7 +26,6 @@ extension ConversationInputBarViewController {
         ephemeralKeyboardViewController?.delegate = self
     }
 
-    @objc
     func configureEphemeralKeyboardButton(_ button: IconButton) {
         button.addTarget(self, action: #selector(ephemeralKeyboardButtonTapped), for: .touchUpInside)
     }
@@ -84,7 +83,6 @@ extension ConversationInputBarViewController {
         self.parent?.present(controller, animated: true)
     }
 
-    @objc
     func updateEphemeralIndicatorButtonTitle(_ button: ButtonWithLargerHitArea) {
         guard let timerValue = conversation.destructionTimeout else {
             button.setTitle("", for: .normal)
@@ -99,7 +97,7 @@ extension ConversationInputBarViewController {
 
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
-    @objc func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
+    func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
         updateEphemeralKeyboardVisibility()
     }
 

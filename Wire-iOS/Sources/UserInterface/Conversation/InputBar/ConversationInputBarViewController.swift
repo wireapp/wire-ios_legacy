@@ -27,13 +27,12 @@ enum ConversationInputBarViewControllerMode {
 }
 
 final class ConversationInputBarViewController: UIViewController,
-UIPopoverPresentationControllerDelegate,
-PopoverPresenter {
+                                                UIPopoverPresentationControllerDelegate,
+                                                PopoverPresenter {
     // MARK: PopoverPresenter    
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
 
-    var inputBar: InputBar! ///TODO: lazy
     let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
@@ -44,15 +43,45 @@ PopoverPresenter {
     weak var audioSession: AVAudioSessionType! ///TODO: ??
 
     // MARK: buttons
-    let photoButton: IconButton = IconButton()
-    let ephemeralIndicatorButton: IconButton = IconButton()
+    let photoButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(UIColor.accent(), for: UIControl.State.selected)        
+        return button
+    }()
+    
+    let ephemeralIndicatorButton: IconButton = {
+        let button = IconButton()
+        button.layer.borderWidth = 0.5
+        
+        button.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
+        button.adjustsTitleWhenHighlighted = true
+        button.adjustsBorderColorWhenHighlighted = true
+        
+        
+        
+        button.setTitleColor(UIColor.lightGraphite, for: .disabled)
+        button.setTitleColor(UIColor.accent(), for: .normal)
+        
+        updateEphemeralIndicatorButtonTitle(button)
+    }()
+    
+    ///TODO: init
+//    private func createEphemeralIndicatorButton() {
+//    }
+
+    
     let markdownButton: IconButton = {
         let button = IconButton(style: .circular)
-        button.accessibilityIdentifier = "markdownButton"
         return button
     }()
     let mentionButton: IconButton = IconButton()
-    let audioButton: IconButton = IconButton()
+    let audioButton: IconButton = {
+        let button = IconButton()
+        button.setIconColor(UIColor.accent(), for: UIControl.State.selected)
+        
+        return button
+    }()
+
     let uploadFileButton: IconButton = IconButton()
     let sketchButton: IconButton = IconButton()
     let pingButton: IconButton = IconButton()
@@ -77,6 +106,10 @@ PopoverPresenter {
     let videoButton: IconButton = IconButton()
 
     // MARK: subviews
+    lazy var inputBar: InputBar = {
+        return InputBar(buttons: inputBarButtons)
+    }()
+
     var typingIndicatorView: TypingIndicatorView?
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?

@@ -20,7 +20,6 @@ import Foundation
 
 extension ConversationInputBarViewController {
     func setupViews() {
-        createEphemeralIndicatorButton()
 
         createTypingIndicatorView()
 
@@ -35,41 +34,33 @@ extension ConversationInputBarViewController {
         createConstraints()
     }
 
+    var inputBarButtons: [IconButton] {
+        return [photoButton,
+                mentionButton,
+                sketchButton,
+                gifButton,
+                audioButton,
+                pingButton,
+                uploadFileButton,
+                locationButton,
+                videoButton]
+    }
+    
     private func createInputBar() { ///TODO: init
         audioButton.accessibilityIdentifier = "audioButton"
-        audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
-
         videoButton.accessibilityIdentifier = "videoButton"
-
         photoButton.accessibilityIdentifier = "photoButton"
-        photoButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
-
         uploadFileButton.accessibilityIdentifier = "uploadFileButton"
-
         sketchButton.accessibilityIdentifier = "sketchButton"
-
         pingButton.accessibilityIdentifier = "pingButton"
-
         locationButton.accessibilityIdentifier = "locationButton"
-
         gifButton.accessibilityIdentifier = "gifButton"
-
         mentionButton.accessibilityIdentifier = "mentionButton"
+        markdownButton.accessibilityIdentifier = "markdownButton"
 
-        let buttons: [IconButton] = [
-            photoButton,
-            mentionButton,
-            sketchButton,
-            gifButton,
-            audioButton,
-            pingButton,
-            uploadFileButton,
-            locationButton,
-            videoButton]
-
-        buttons.forEach(){ $0.hitAreaPadding = CGSize.zero }
-
-        inputBar = InputBar(buttons: buttons)
+        inputBarButtons.forEach(){
+            $0.hitAreaPadding = .zero
+        }
 
         inputBar.textView.delegate = self
         inputBar.textView.informalTextViewDelegate = self
@@ -78,22 +69,6 @@ extension ConversationInputBarViewController {
         view.addSubview(inputBar)
 
         inputBar.editingView.delegate = self
-    }
-
-    ///TODO: init
-    private func createEphemeralIndicatorButton() {
-        ephemeralIndicatorButton.layer.borderWidth = 0.5
-
-        ephemeralIndicatorButton.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
-        ephemeralIndicatorButton.adjustsTitleWhenHighlighted = true
-        ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = true
-
-
-
-        ephemeralIndicatorButton.setTitleColor(UIColor.lightGraphite, for: .disabled)
-        ephemeralIndicatorButton.setTitleColor(UIColor.accent(), for: .normal)
-
-        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
     }
 
     ///TODO: init
