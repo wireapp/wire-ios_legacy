@@ -181,7 +181,6 @@ PopoverPresenter {
     var inRotation = false
 
     private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-    private var authorImageView: UserImageView? ///TODO: rm?
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
@@ -433,17 +432,11 @@ PopoverPresenter {
         photoButton.titleLabel?.isHidden = inputBar.textView.isFirstResponder
     }
 
-    func updateLeftAccessoryView() {
-        authorImageView?.alpha = inputBar.textView.isFirstResponder ? 1 : 0
-    }
-
-    @objc
     func updateAccessoryViews() {
         updateLeftAccessoryView()
         updateRightAccessoryView()
     }
 
-    @objc
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
             conversation.conversationType == .oneOnOne,
@@ -454,7 +447,6 @@ PopoverPresenter {
         inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
     }
 
-    @objc
     func updateInputBarVisibility() {
         view.isHidden = conversation.isReadOnly
     }
@@ -475,7 +467,6 @@ PopoverPresenter {
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 
-    @objc
     func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
 
