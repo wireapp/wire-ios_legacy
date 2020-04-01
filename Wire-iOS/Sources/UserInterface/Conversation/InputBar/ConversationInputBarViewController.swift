@@ -36,7 +36,40 @@ final class ConversationInputBarViewController: UIViewController,
     let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
 
-    private(set) var inputController: UIViewController?
+    private(set) var inputController: UIViewController? {
+        willSet {
+            inputController?.view.removeFromSuperview()
+        }
+        
+        didSet {
+            deallocateUnusedInputControllers()
+            
+            defer {
+                inputBar.textView.reloadInputViews()
+            }
+            
+            guard let inputController = inputController else {
+                inputBar.textView.inputView = nil
+                return
+            }
+            
+            let inputViewSize = UIView.lastKeyboardSize
+            
+            let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
+            let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
+            inputView.allowsSelfSizing = true
+            
+            inputView.autoresizingMask = .flexibleWidth
+            inputController.view.frame = inputView.frame
+            inputController.view.autoresizingMask = .flexibleWidth
+            if let view = inputController.view {
+                inputView.addSubview(view)
+            }
+            
+            inputBar.textView.inputView = inputView
+        }
+    }
+
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
     var textfieldObserverToken: Any?
@@ -144,7 +177,6 @@ final class ConversationInputBarViewController: UIViewController,
 
             switch mode {
             case .textInput:
-                asssignInputController(nil)
                 inputController = nil
                 singleTapGestureRecognizer.isEnabled = false
                 selectInputControllerButton(nil)
@@ -157,7 +189,7 @@ final class ConversationInputBarViewController: UIViewController,
                         audioRecordKeyboardViewController?.delegate = self
                     }
 
-                    asssignInputController(audioRecordKeyboardViewController)
+                    inputController = audioRecordKeyboardViewController
                 }
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(audioButton)
@@ -166,15 +198,16 @@ final class ConversationInputBarViewController: UIViewController,
                 if inputController == nil ||
                    inputController != cameraKeyboardViewController {
                     createCameraKeyboardViewController()
-                    asssignInputController(cameraKeyboardViewController)
+                    inputController = cameraKeyboardViewController
                 }
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(photoButton)
             case .timeoutConfguration:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != ephemeralKeyboardViewController {
+                if inputController == nil ||
+                   inputController != ephemeralKeyboardViewController {
                     createEphemeralKeyboardViewController()
-                    asssignInputController(ephemeralKeyboardViewController)
+                    inputController = ephemeralKeyboardViewController
                 }
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(hourglassButton)
@@ -449,35 +482,6 @@ final class ConversationInputBarViewController: UIViewController,
         sendController.sendMessage(withImageData: data)
     }
 
-    ///TODO: chnage to didSet after ConversationInputBarViewController is converted to Swift
-    func asssignInputController(_ inputController: UIViewController?) {
-        self.inputController?.view.removeFromSuperview()
-
-        self.inputController = inputController
-        deallocateUnusedInputControllers()
-
-        if let inputController = inputController {
-            let inputViewSize = UIView.lastKeyboardSize
-
-            let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
-            let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
-            inputView.allowsSelfSizing = true
-
-            inputView.autoresizingMask = .flexibleWidth
-            inputController.view.frame = inputView.frame
-            inputController.view.autoresizingMask = .flexibleWidth
-            if let view = inputController.view {
-                inputView.addSubview(view)
-            }
-
-            inputBar.textView.inputView = inputView
-        } else {
-            inputBar.textView.inputView = nil
-        }
-
-        inputBar.textView.reloadInputViews()
-    }
-
     func deallocateUnusedInputControllers() {
         if cameraKeyboardViewController != inputController {
             cameraKeyboardViewController = nil
@@ -566,8 +570,7 @@ final class ConversationInputBarViewController: UIViewController,
     }
 
     // MARK: - notification center
-    @objc //TODO: no objc
-    func setupNotificationCenter() {
+    private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
             guard let weakSelf = self else { return }
 
