@@ -20,9 +20,12 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    func createEphemeralKeyboardViewController() {
-        ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
-        ephemeralKeyboardViewController?.delegate = self
+    func createEphemeralKeyboardViewController() -> EphemeralKeyboardViewController {
+        let ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
+        ephemeralKeyboardViewController.delegate = self
+        
+        self.ephemeralKeyboardViewController = ephemeralKeyboardViewController
+        return ephemeralKeyboardViewController
     }
 
     func configureEphemeralKeyboardButton(_ button: IconButton) {

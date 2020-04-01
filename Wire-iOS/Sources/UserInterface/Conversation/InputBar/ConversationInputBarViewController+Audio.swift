@@ -50,17 +50,8 @@ extension ConversationInputBarViewController {
         displayRecordKeyboard()
     }
 
-    func configureAudioButton(_ button: IconButton) {
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
-        longPressRecognizer.minimumPressDuration = 0.3
-        button.addGestureRecognizer(longPressRecognizer)
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
-        tapGestureRecognizer.require(toFail: longPressRecognizer)
-        button.addGestureRecognizer(tapGestureRecognizer)
-    }
-
-    @objc func audioButtonPressed(_ sender: UITapGestureRecognizer) {
+    @objc
+    func audioButtonPressed(_ sender: UITapGestureRecognizer) {
         guard sender.state == .ended else {
             return
         }

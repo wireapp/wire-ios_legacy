@@ -72,6 +72,7 @@ PopoverPresenter {
 
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
+    
     var textfieldObserverToken: Any?
     let audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
 
@@ -82,7 +83,7 @@ PopoverPresenter {
         return button
     }()
 
-    let ephemeralIndicatorButton: IconButton = {
+    lazy var ephemeralIndicatorButton: IconButton = {
         let button = IconButton()
         button.layer.borderWidth = 0.5
 
@@ -92,7 +93,20 @@ PopoverPresenter {
 
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
         button.setTitleColor(UIColor.accent(), for: .normal)
+        
+        configureEphemeralKeyboardButton(button)
 
+        return button
+    }()
+
+    lazy var hourglassButton: IconButton = {
+        let button = IconButton(style: .default)
+        
+        button.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
+        button.accessibilityIdentifier = "ephemeralTimeSelectionButton"
+        
+        configureEphemeralKeyboardButton(button)
+        
         return button
     }()
 
@@ -101,9 +115,17 @@ PopoverPresenter {
         return button
     }()
     let mentionButton: IconButton = IconButton()
-    let audioButton: IconButton = {
+    lazy var audioButton: IconButton = {
         let button = IconButton()
-        button.setIconColor(UIColor.accent(), for: UIControl.State.selected)
+        button.setIconColor(UIColor.accent(), for: .selected)
+
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(audioButtonLongPressed(_:)))
+        longPressRecognizer.minimumPressDuration = 0.3
+        button.addGestureRecognizer(longPressRecognizer)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(audioButtonPressed(_:)))
+        tapGestureRecognizer.require(toFail: longPressRecognizer)
+        button.addGestureRecognizer(tapGestureRecognizer)
 
         return button
     }()
@@ -118,15 +140,6 @@ PopoverPresenter {
         button.hitAreaPadding = CGSize(width: 30, height: 30)
 
         return button
-    }()
-    let hourglassButton: IconButton = {
-        let hourglassButton = IconButton(style: .default)
-
-        hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
-
-        hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-
-        return hourglassButton
     }()
 
     let videoButton: IconButton = IconButton()
@@ -168,7 +181,7 @@ PopoverPresenter {
     var inRotation = false
 
     private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
-    private var authorImageView: UserImageView?
+    private var authorImageView: UserImageView? ///TODO: rm?
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
@@ -185,14 +198,19 @@ PopoverPresenter {
             let newInputController: UIViewController?
 
             func config(viewController: UIViewController?,
-                        setupClosure: Completion) {
+                        setupClosure: () -> UIViewController) {
                 if inputController == nil ||
                     inputController != viewController {
-                    if viewController == nil {
-                        setupClosure()
+                    
+                    let newViewController: UIViewController
+                    
+                    if let viewController = viewController {
+                        newViewController = viewController
+                    } else {
+                        newViewController = setupClosure()
                     }
 
-                    inputController = viewController
+                    inputController = newViewController
                 }
             }
 
@@ -204,22 +222,25 @@ PopoverPresenter {
             case .audioRecord:
                 clearTextInputAssistentItemIfNeeded()
                 config(viewController: audioRecordKeyboardViewController) {
-                    self.audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
-                    self.audioRecordKeyboardViewController?.delegate = self
+                    let audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
+                    audioRecordKeyboardViewController.delegate = self
+                    self.audioRecordKeyboardViewController = audioRecordKeyboardViewController
+
+                    return audioRecordKeyboardViewController
                 }
                 singleTapGestureRecognizerEnabled = true
                 selectedButton = audioButton
             case .camera:
                 clearTextInputAssistentItemIfNeeded()
                 config(viewController: cameraKeyboardViewController) {
-                    self.createCameraKeyboardViewController()
+                    return self.createCameraKeyboardViewController()
                 }
                 singleTapGestureRecognizerEnabled = true
                 selectedButton = photoButton
             case .timeoutConfguration:
                 clearTextInputAssistentItemIfNeeded()
                 config(viewController: ephemeralKeyboardViewController) {
-                    self.createEphemeralKeyboardViewController()
+                    return self.createEphemeralKeyboardViewController()
                 }
                 singleTapGestureRecognizerEnabled = true
                 selectedButton = hourglassButton
@@ -267,18 +288,15 @@ PopoverPresenter {
         setupCallStateObserver()
         setupAppLockedObserver()
 
-        createSingleTapGestureRecognizer()
+        setupSingleTapGestureRecognizer()
 
         if conversation.hasDraftMessage,
-            let draftMessage = conversation.draftMessage {
+           let draftMessage = conversation.draftMessage {
             inputBar.textView.setDraftMessage(draftMessage)
         }
 
-        configureAudioButton(audioButton)
         configureMarkdownButton()
         configureMentionButton()
-        configureEphemeralKeyboardButton(hourglassButton)
-        configureEphemeralKeyboardButton(ephemeralIndicatorButton)
 
         sendButton.addTarget(self, action: #selector(sendButtonPressed(_:)), for: .touchUpInside)
         photoButton.addTarget(self, action: #selector(cameraButtonPressed(_:)), for: .touchUpInside)
@@ -372,7 +390,7 @@ PopoverPresenter {
         hourglassButton.setBackgroundImageColor(.clear, for: .selected)
     }
 
-    private func createSingleTapGestureRecognizer() {
+    private func setupSingleTapGestureRecognizer() {
         singleTapGestureRecognizer.addTarget(self, action: #selector(onSingleTap(_:)))
         singleTapGestureRecognizer.isEnabled = false
         singleTapGestureRecognizer.delegate = self
