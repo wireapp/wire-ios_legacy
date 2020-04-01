@@ -110,10 +110,6 @@ extension ConversationInputBarViewController {
         }
         
     }
-
-    @objc func setupAudioSession() {
-        self.audioSession = AVAudioSession.sharedInstance()
-    }
     
     fileprivate func showAudioRecordViewControllerIfGrantedAccess() {
         if audioSession.recordPermission == .granted {            

@@ -40,8 +40,8 @@ final class ConversationInputBarViewController: UIViewController,
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
     var textfieldObserverToken: Any?
-    weak var audioSession: AVAudioSessionType! ///TODO: ??
-
+    let audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
+    
     // MARK: buttons
     let photoButton: IconButton = {
         let button = IconButton()
@@ -60,7 +60,9 @@ final class ConversationInputBarViewController: UIViewController,
         
         
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
-        button.setTitleColor(UIColor.accent(), for: .normal)        
+        button.setTitleColor(UIColor.accent(), for: .normal)
+        
+        return button
     }()
     
     let markdownButton: IconButton = {
@@ -111,8 +113,10 @@ final class ConversationInputBarViewController: UIViewController,
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
-    let sendController: ConversationInputBarSendController
-
+    lazy var sendController: ConversationInputBarSendController = {
+        return ConversationInputBarSendController(conversation: conversation)
+    }()
+    
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
@@ -187,11 +191,8 @@ final class ConversationInputBarViewController: UIViewController,
     /// - Returns: a ConversationInputBarViewController
     init(conversation: ZMConversation) {
         self.conversation = conversation
-        sendController = ConversationInputBarSendController(conversation: conversation)
 
         super.init(nibName: nil, bundle: nil)
-
-        setupAudioSession()
 
         conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         typingObserverToken = conversation.addTypingObserver(self)
