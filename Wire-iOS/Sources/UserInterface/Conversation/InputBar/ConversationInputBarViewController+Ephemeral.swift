@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 import Foundation
 
 extension ConversationInputBarViewController {
@@ -61,7 +60,7 @@ extension ConversationInputBarViewController {
             }
         }
     }
-    
+
     private func presentEphemeralControllerAsPopover() {
         createEphemeralKeyboardViewController()
         ephemeralKeyboardViewController?.modalPresentationStyle = .popover
@@ -88,7 +87,7 @@ extension ConversationInputBarViewController {
             button.setTitle("", for: .normal)
             return
         }
-        
+
         let title = timerValue.shortDisplayString
         button.setTitle(title, for: .normal)
     }
@@ -110,7 +109,7 @@ extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDel
             self.updateRightAccessoryView()
         }
     }
-    
+
 }
 
 extension ConversationInputBarViewController {
@@ -123,11 +122,11 @@ extension ConversationInputBarViewController {
         } else {
             state = .message
         }
-        
+
         return state
     }
 
-    @objc func updateInputBar() {
+    func updateInputBar() {
         inputBar.changeEphemeralState(to: ephemeralState)
     }
 }

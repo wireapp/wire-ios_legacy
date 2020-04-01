@@ -23,7 +23,7 @@ import FLAnimatedImage
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+final class FastTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     static let sharedDelegate = FastTransitioningDelegate()
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -112,14 +112,16 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         showConfirmationForImage(imageData, isFromCamera: isFromCamera, uti: uti)
     }
 
-    @objc func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc
+    func image(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             zmLog.error("didFinishSavingWithError: \(error)")
         }
     }
 
     // MARK: - Video save callback
-    @objc func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
+    @objc
+    func video(_ image: UIImage?, didFinishSavingWithError error: NSError?, contextInfo: AnyObject) {
         if let error = error {
             zmLog.error("Error saving video: \(error)")
         }
@@ -145,8 +147,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         }
     }
 
-    @objc
-    public func showConfirmationForImage(_ imageData: Data,
+    func showConfirmationForImage(_ imageData: Data,
                                            isFromCamera: Bool,
                                            uti: String?) {
         let mediaAsset: MediaAsset
@@ -239,7 +240,7 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         }
     }
 
-    @nonobjc public func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
+    func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
         editor.dismiss(animated: true, completion: .none)
         zmLog.error("Video editor failed with error: \(error)")
     }

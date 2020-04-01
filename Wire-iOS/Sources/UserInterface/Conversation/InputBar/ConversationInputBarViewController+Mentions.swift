@@ -52,11 +52,12 @@ extension ConversationInputBarViewController {
         dismissMentionsIfNeeded()
     }
     
-    @objc func configureMentionButton() {
+    func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
 
-    @objc func mentionButtonTapped(sender: Any) {
+    @objc
+    private func mentionButtonTapped(sender: Any) {
         guard !isInMentionsFlow else { return }
 
         let textView = inputBar.textView
@@ -76,12 +77,12 @@ extension ConversationInputBarViewController: UserSearchResultsViewControllerDel
 
 extension ConversationInputBarViewController {
     
-    @objc func dismissMentionsIfNeeded() {
+    func dismissMentionsIfNeeded() {
         mentionsHandler = nil
         mentionsView?.dismiss()
     }
 
-    @objc func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
+    func triggerMentionsIfNeeded(from textView: UITextView, with selection: UITextRange? = nil) {
         if let position = MentionsHandler.cursorPosition(in: textView, range: selection) {
             mentionsHandler = MentionsHandler(text: textView.text, cursorPosition: position)
         }
@@ -94,7 +95,7 @@ extension ConversationInputBarViewController {
         }
     }
 
-    @objc func registerForTextFieldSelectionChange() {
+    func registerForTextFieldSelectionChange() {
         textfieldObserverToken = inputBar.textView.observe(\MarkdownTextView.selectedTextRange, options: [.new]) { [weak self] (textView: MarkdownTextView, change: NSKeyValueObservedChange<UITextRange?>) -> Void in
             let newValue = change.newValue ?? nil
             self?.triggerMentionsIfNeeded(from: textView, with: newValue)

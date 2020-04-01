@@ -19,22 +19,22 @@
 import Foundation
 
 extension ConversationInputBarViewController: ReplyComposingViewDelegate {
-    
+
     func reply(to message: ZMConversationMessage, composingView: ReplyComposingView) {
         if let _ = replyComposingView {
             removeReplyComposingView()
         }
-        
+
         addReplyComposingView(composingView)
     }
-    
-    @objc func addReplyComposingView(_ composingView: ReplyComposingView) {
+
+    func addReplyComposingView(_ composingView: ReplyComposingView) {
         quotedMessage = composingView.message
         self.replyComposingView = composingView
         composingView.delegate = self
     }
-    
-    @objc func removeReplyComposingView() {
+
+    func removeReplyComposingView() {
         self.quotedMessage = nil
         self.replyComposingView?.removeFromSuperview()
         self.replyComposingView = nil
@@ -44,20 +44,20 @@ extension ConversationInputBarViewController: ReplyComposingViewDelegate {
             self.delegate?.conversationInputBarViewControllerDidComposeDraft(message: modifiedDraft)
         }
     }
-    
+
     func composingViewDidCancel(composingView: ReplyComposingView) {
         removeReplyComposingView()
     }
-    
+
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage) {
         self.delegate?.conversationInputBarViewControllerWants(toShow: message)
     }
-    
-    @objc var isReplyingToMessage: Bool {
+
+    var isReplyingToMessage: Bool {
         return quotedMessage != nil
     }
-    
-    @objc var isEditingMessage: Bool {
+
+    var isEditingMessage: Bool {
         return editingMessage != nil
     }
 }

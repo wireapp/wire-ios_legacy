@@ -22,15 +22,13 @@ extension ConversationInputBarViewController {
     func setupViews() {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
-        createTypingIndicatorView()
-
-        createInputBar()
+        setupInputBar()
 
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
         inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.leftAccessoryView.addSubview(markdownButton)
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
-        inputBar.addSubview(typingIndicatorView!)
+        inputBar.addSubview(typingIndicatorView)
 
         createConstraints()
     }
@@ -46,8 +44,8 @@ extension ConversationInputBarViewController {
                 locationButton,
                 videoButton]
     }
-    
-    private func createInputBar() { ///TODO: init
+
+    private func setupInputBar() {
         audioButton.accessibilityIdentifier = "audioButton"
         videoButton.accessibilityIdentifier = "videoButton"
         photoButton.accessibilityIdentifier = "photoButton"
@@ -59,7 +57,7 @@ extension ConversationInputBarViewController {
         mentionButton.accessibilityIdentifier = "mentionButton"
         markdownButton.accessibilityIdentifier = "markdownButton"
 
-        inputBarButtons.forEach(){
+        inputBarButtons.forEach() {
             $0.hitAreaPadding = .zero
         }
 
@@ -72,18 +70,7 @@ extension ConversationInputBarViewController {
         inputBar.editingView.delegate = self
     }
 
-    ///TODO: init
-    private func createTypingIndicatorView() {
-        let typingIndicatorView = TypingIndicatorView()
-        typingIndicatorView.accessibilityIdentifier = "typingIndicator"
-        typingIndicatorView.typingUsers = conversation.typingUsers
-        typingIndicatorView.setHidden(true, animated: false)
-        self.typingIndicatorView = typingIndicatorView
-    }
-
     private func createConstraints() {
-        guard let typingIndicatorView = typingIndicatorView else { return }
-
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         markdownButton.translatesAutoresizingMaskIntoConstraints = false
         hourglassButton.translatesAutoresizingMaskIntoConstraints = false

@@ -32,72 +32,70 @@ PopoverPresenter {
     // MARK: PopoverPresenter    
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
-    
+
     let conversation: ZMConversation
     weak var delegate: ConversationInputBarViewControllerDelegate?
-    
+
     private(set) var inputController: UIViewController? {
         willSet {
             inputController?.view.removeFromSuperview()
         }
-        
+
         didSet {
             deallocateUnusedInputControllers()
-            
+
             defer {
                 inputBar.textView.reloadInputViews()
             }
-            
+
             guard let inputController = inputController else {
                 inputBar.textView.inputView = nil
                 return
             }
-            
+
             let inputViewSize = UIView.lastKeyboardSize
-            
+
             let inputViewFrame: CGRect = CGRect(origin: .zero, size: inputViewSize)
             let inputView = UIInputView(frame: inputViewFrame, inputViewStyle: .keyboard)
             inputView.allowsSelfSizing = true
-            
+
             inputView.autoresizingMask = .flexibleWidth
             inputController.view.frame = inputView.frame
             inputController.view.autoresizingMask = .flexibleWidth
             if let view = inputController.view {
                 inputView.addSubview(view)
             }
-            
+
             inputBar.textView.inputView = inputView
         }
     }
-    
+
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
     var textfieldObserverToken: Any?
     let audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
-    
+
     // MARK: buttons
     let photoButton: IconButton = {
         let button = IconButton()
-        button.setIconColor(UIColor.accent(), for: UIControl.State.selected)        
+        button.setIconColor(UIColor.accent(), for: UIControl.State.selected)
         return button
     }()
-    
+
     let ephemeralIndicatorButton: IconButton = {
         let button = IconButton()
         button.layer.borderWidth = 0.5
-        
+
         button.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
         button.adjustsTitleWhenHighlighted = true
         button.adjustsBorderColorWhenHighlighted = true
-        
-        
-        
+
         button.setTitleColor(UIColor.lightGraphite, for: .disabled)
         button.setTitleColor(UIColor.accent(), for: .normal)
-        
+
         return button
     }()
-    
+
     let markdownButton: IconButton = {
         let button = IconButton(style: .circular)
         return button
@@ -106,10 +104,10 @@ PopoverPresenter {
     let audioButton: IconButton = {
         let button = IconButton()
         button.setIconColor(UIColor.accent(), for: UIControl.State.selected)
-        
+
         return button
     }()
-    
+
     let uploadFileButton: IconButton = IconButton()
     let sketchButton: IconButton = IconButton()
     let pingButton: IconButton = IconButton()
@@ -118,38 +116,45 @@ PopoverPresenter {
     let sendButton: IconButton = {
         let button = IconButton.sendButton()
         button.hitAreaPadding = CGSize(width: 30, height: 30)
-        
+
         return button
     }()
     let hourglassButton: IconButton = {
         let hourglassButton = IconButton(style: .default)
-        
+
         hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
-        
+
         hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-        
+
         return hourglassButton
     }()
-    
+
     let videoButton: IconButton = IconButton()
-    
+
     // MARK: subviews
     lazy var inputBar: InputBar = {
         return InputBar(buttons: inputBarButtons)
     }()
+
+    lazy var typingIndicatorView: TypingIndicatorView = {
+        let view = TypingIndicatorView()
+        view.accessibilityIdentifier = "typingIndicator"
+        view.typingUsers = conversation.typingUsers
+        view.setHidden(true, animated: false)
+        return view
+    }()
     
-    var typingIndicatorView: TypingIndicatorView?
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
-    
+
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
-    
+
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
-    
+
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
@@ -161,26 +166,24 @@ PopoverPresenter {
     var wasRecordingBeforeCall = false
     let sendButtonState: ConversationInputBarButtonState = ConversationInputBarButtonState()
     var inRotation = false
-    
+
     private var singleTapGestureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer()
     private var authorImageView: UserImageView?
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
     private var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
-    
-    
-    
+
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
             guard oldValue != mode else {
                 return
             }
-            
+
             let singleTapGestureRecognizerEnabled: Bool
             let selectedButton: IconButton?
             let newInputController: UIViewController?
-            
+
             func config(viewController: UIViewController?,
                         setupClosure: Completion) {
                 if inputController == nil ||
@@ -188,11 +191,11 @@ PopoverPresenter {
                     if viewController == nil {
                         setupClosure()
                     }
-                    
+
                     inputController = viewController
                 }
             }
-            
+
             switch mode {
             case .textInput:
                 inputController = nil
@@ -221,62 +224,62 @@ PopoverPresenter {
                 singleTapGestureRecognizerEnabled = true
                 selectedButton = hourglassButton
             }
-            
+
             singleTapGestureRecognizer.isEnabled = singleTapGestureRecognizerEnabled
-            selectInputControllerButton(selectedButton)            
-            
+            selectInputControllerButton(selectedButton)
+
             updateRightAccessoryView()
         }
     }
-    
+
     // MARK: - Input views handling
-    
+
     /// init with a ZMConversation objcet
     /// - Parameter conversation: provide nil only for tests
     /// - Returns: a ConversationInputBarViewController
     init(conversation: ZMConversation) {
         self.conversation = conversation
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         typingObserverToken = conversation.addTypingObserver(self)
-        
+
         setupNotificationCenter()
         setupInputLanguageObserver()
         setupViews()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
-    
+
     // MARK: - view life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupCallStateObserver()
         setupAppLockedObserver()
-        
+
         createSingleTapGestureRecognizer()
-        
+
         if conversation.hasDraftMessage,
             let draftMessage = conversation.draftMessage {
             inputBar.textView.setDraftMessage(draftMessage)
         }
-        
+
         configureAudioButton(audioButton)
         configureMarkdownButton()
         configureMentionButton()
         configureEphemeralKeyboardButton(hourglassButton)
         configureEphemeralKeyboardButton(ephemeralIndicatorButton)
-        
+
         sendButton.addTarget(self, action: #selector(sendButtonPressed(_:)), for: .touchUpInside)
         photoButton.addTarget(self, action: #selector(cameraButtonPressed(_:)), for: .touchUpInside)
         videoButton.addTarget(self, action: #selector(videoButtonPressed(_:)), for: .touchUpInside)
@@ -285,32 +288,32 @@ PopoverPresenter {
         pingButton.addTarget(self, action: #selector(pingButtonPressed(_:)), for: .touchUpInside)
         gifButton.addTarget(self, action: #selector(giphyButtonPressed(_:)), for: .touchUpInside)
         locationButton.addTarget(self, action: #selector(locationButtonPressed(_:)), for: .touchUpInside)
-        
+
         if conversationObserverToken == nil {
             conversationObserverToken = ConversationChangeInfo.add(observer:self, for: conversation)
         }
-        
+
         if let connectedUser = conversation.connectedUser,
             let userSession = ZMUserSession.shared() {
             userObserverToken = UserChangeInfo.add(observer:self, for: connectedUser, in: userSession)
         }
-        
+
         updateAccessoryViews()
         updateInputBarVisibility()
         updateTypingIndicator()
         updateWritingState(animated: false)
         updateButtonIcons()
         updateAvailabilityPlaceholder()
-        
+
         setInputLanguage()
         setupStyle()
-        
+
         if #available(iOS 11.0, *) {
             let interaction = UIDropInteraction(delegate: self)
             inputBar.textView.addInteraction(interaction)
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateRightAccessoryView()
@@ -318,46 +321,46 @@ PopoverPresenter {
         inputBar.updateEphemeralState()
         updateMentionList()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         inputBar.textView.endEditing(true)
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         endEditingMessageIfNeeded()
         NSObject.cancelPreviousPerformRequests(withTarget: self)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         ephemeralIndicatorButton.layer.cornerRadius = ephemeralIndicatorButton.bounds.width / 2
     }
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator?) {
-        
+
         guard let coordinator = coordinator else { return }
-        
+
         super.viewWillTransition(to: size, with: coordinator)
         self.inRotation = true
-        
+
         coordinator.animate(alongsideTransition: nil) { _ in
             self.inRotation = false
             self.updatePopoverSourceRect()
         }
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        
+
         guard traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass else { return }
-        
+
         guard !inRotation else { return }
-        
+
         updatePopoverSourceRect()
     }
-    
+
     // MARK: - setup
     private func setupStyle() {
         ephemeralIndicatorButton.borderWidth = 0
@@ -365,10 +368,10 @@ PopoverPresenter {
         hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
         hourglassButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
         hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .selected)
-        
+
         hourglassButton.setBackgroundImageColor(.clear, for: .selected)
     }
-    
+
     private func createSingleTapGestureRecognizer() {
         singleTapGestureRecognizer.addTarget(self, action: #selector(onSingleTap(_:)))
         singleTapGestureRecognizer.isEnabled = false
@@ -376,27 +379,27 @@ PopoverPresenter {
         singleTapGestureRecognizer.cancelsTouchesInView = true
         view.addGestureRecognizer(singleTapGestureRecognizer)
     }
-    
+
     func updateRightAccessoryView() {
         updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
-        
+
         let trimmed = inputBar.textView.text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        
+
         sendButtonState.update(textLength: trimmed.count, editing: nil != editingMessage, markingDown: inputBar.isMarkingDown, destructionTimeout: conversation.messageDestructionTimeoutValue, conversationType: conversation.conversationType, mode: mode, syncedMessageDestructionTimeout: conversation.hasSyncedMessageDestructionTimeout)
-        
+
         sendButton.isHidden = sendButtonState.sendButtonHidden
         hourglassButton.isHidden = sendButtonState.hourglassButtonHidden
         ephemeralIndicatorButton.isHidden = sendButtonState.ephemeralIndicatorButtonHidden
         ephemeralIndicatorButton.isEnabled = sendButtonState.ephemeralIndicatorButtonEnabled
-        
+
         ephemeralIndicatorButton.setBackgroundImage(conversation.timeoutImage, for: .normal)
         ephemeralIndicatorButton.setBackgroundImage(conversation.disabledTimeoutImage, for: .disabled)
     }
-    
+
     func updateMentionList() {
         triggerMentionsIfNeeded(from: inputBar.textView, with: nil)
     }
-    
+
     func clearInputBar() {
         inputBar.textView.text = ""
         inputBar.markdownView.resetIcons()
@@ -407,21 +410,21 @@ PopoverPresenter {
         replyComposingView = nil
         quotedMessage = nil
     }
-    
+
     func updateNewButtonTitleLabel() {
         photoButton.titleLabel?.isHidden = inputBar.textView.isFirstResponder
     }
-    
+
     func updateLeftAccessoryView() {
         authorImageView?.alpha = inputBar.textView.isFirstResponder ? 1 : 0
     }
-    
+
     @objc
     func updateAccessoryViews() {
         updateLeftAccessoryView()
         updateRightAccessoryView()
     }
-    
+
     @objc
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
@@ -429,71 +432,71 @@ PopoverPresenter {
             let connectedUser = conversation.connectedUser else {
                 return
         }
-        
+
         inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
     }
-    
+
     @objc
     func updateInputBarVisibility() {
         view.isHidden = conversation.isReadOnly
     }
-    
+
     // MARK: - Save draft message
     func draftMessage(from textView: MarkdownTextView) -> DraftMessage {
         let (text, mentions) = textView.preparedText
-        
+
         return DraftMessage(text: text, mentions: mentions, quote: quotedMessage as? ZMMessage)
     }
-    
+
     private func didEnterBackground() {
         if !inputBar.textView.text.isEmpty {
             conversation.setIsTyping(false)
         }
-        
+
         let draft = draftMessage(from: inputBar.textView)
         delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
-    
+
     @objc
     func updateButtonIcons() {
         audioButton.setIcon(.microphone, size: .tiny, for: .normal)
-        
+
         videoButton.setIcon(.videoMessage, size: .tiny, for: .normal)
-        
+
         photoButton.setIcon(.cameraLens, size: .tiny, for: .normal)
-        
+
         uploadFileButton.setIcon(.paperclip, size: .tiny, for: .normal)
-        
+
         sketchButton.setIcon(.brush, size: .tiny, for: .normal)
-        
+
         pingButton.setIcon(.ping, size: .tiny, for: .normal)
-        
+
         locationButton.setIcon(.locationPin, size: .tiny, for: .normal)
-        
+
         gifButton.setIcon(.gif, size: .tiny, for: .normal)
-        
+
         mentionButton.setIcon(.mention, size: .tiny, for: .normal)
-        
+
         sendButton.setIcon(.send, size: .tiny, for: .normal)
     }
-    
+
     func selectInputControllerButton(_ button: IconButton?) {
         for otherButton in [photoButton, audioButton, hourglassButton] {
             otherButton.isSelected = button == otherButton
         }
     }
-    
+
     func clearTextInputAssistentItemIfNeeded() {
         let item = inputBar.textView.inputAssistantItem
         item.leadingBarButtonGroups = []
         item.trailingBarButtonGroups = []
     }
-    
+
     func postImage(_ image: MediaAsset) {
         guard let data = image.imageData else { return }
         sendController.sendMessage(withImageData: data)
     }
-    
+
     func deallocateUnusedInputControllers() {
         if cameraKeyboardViewController != inputController {
             cameraKeyboardViewController = nil
@@ -505,74 +508,74 @@ PopoverPresenter {
             ephemeralKeyboardViewController = nil
         }
     }
-    
+
     // MARK: - PingButton
-    
+
     @objc
     func pingButtonPressed(_ button: UIButton?) {
         appendKnock()
     }
-    
+
     private func appendKnock() {
         notificationFeedbackGenerator.prepare()
         ZMUserSession.shared()?.enqueue({
-            
+
             if self.conversation.appendKnock() != nil {
                 Analytics.shared().tagMediaActionCompleted(.ping, inConversation: self.conversation)
-                
+
                 AVSMediaManager.sharedInstance().playKnockSound()
                 self.notificationFeedbackGenerator.notificationOccurred(.success)
             }
         })
-        
+
         pingButton.isEnabled = false
         delay(0.5) {
             self.pingButton.isEnabled = true
         }
     }
-    
+
     // MARK: - SendButton
-    
+
     @objc
     func sendButtonPressed(_ sender: Any?) {
         inputBar.textView.autocorrectLastWord()
         sendText()
     }
-    
+
     // MARK: - Giphy
-    
+
     @objc
     func giphyButtonPressed(_ sender: Any?) {
         guard !AppDelegate.isOffline else { return }
-        
+
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
         ZClientViewController.shared?.present(giphySearchViewController.wrapInsideNavigationController(), animated: true)
     }
-    
+
     // MARK: - Animations
     func bounceCameraIcon() {
         let scaleTransform = CGAffineTransform(scaleX: 1.3, y: 1.3)
-        
+
         let scaleUp = {
             self.photoButton.transform = scaleTransform
         }
-        
+
         let scaleDown = {
             self.photoButton.transform = CGAffineTransform.identity
         }
-        
+
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
             UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
         }
     }
-    
+
     // MARK: - Haptic Feedback
     func playInputHapticFeedback() {
         impactFeedbackGenerator.prepare()
         impactFeedbackGenerator.impactOccurred()
     }
-    
+
     // MARK: - Input views handling
     @objc
     func onSingleTap(_ recognier: UITapGestureRecognizer?) {
@@ -580,30 +583,30 @@ PopoverPresenter {
             mode = .textInput
         }
     }
-    
+
     // MARK: - notification center
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
             guard let weakSelf = self else { return }
-            
+
             let inRotation = weakSelf.inRotation
             let isRecording = weakSelf.audioRecordKeyboardViewController?.isRecording ?? false
-            
+
             if !inRotation && !isRecording {
                 weakSelf.mode = .textInput
             }
         }
-        
+
         NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
             self?.didEnterBackground()
         }
     }
-    
+
     // MARK: - Keyboard Shortcuts
     override var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
 }
 
 // MARK: - GiphySearchViewControllerDelegate
@@ -613,13 +616,13 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
         clearInputBar()
         dismiss(animated: true) {
             let messageText: String
-            
+
             if (searchTerm == "") {
                 messageText = String(format: "giphy.conversation.random_message".localized, searchTerm)
             } else {
                 messageText = String(format: "giphy.conversation.message".localized, searchTerm)
             }
-            
+
             self.sendController.sendTextMessage(messageText, mentions: [], withImageData: imageData)
         }
     }
@@ -628,7 +631,7 @@ extension ConversationInputBarViewController: GiphySearchViewControllerDelegate 
 // MARK: - UIImagePickerControllerDelegate
 
 extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
-    
+
     ///TODO: check this is still necessary on iOS 13?
     private func statusBarBlinksRedFix() {
         // Workaround http://stackoverflow.com/questions/26651355/
@@ -637,19 +640,20 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         } catch {
         }
     }
-    
+
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
-        
+
         let mediaType = info[UIImagePickerController.InfoKey.mediaType] as? String
-        
+
         if mediaType == kUTTypeMovie as String {
             processVideo(info: info, picker: picker)
         } else if mediaType == kUTTypeImage as String {
             let image: UIImage? = (info[UIImagePickerController.InfoKey.editedImage] as? UIImage) ?? info[UIImagePickerController.InfoKey.originalImage] as? UIImage
-            
-            if let image = image, let jpegData = image.jpegData(compressionQuality: 0.9) {
+
+            if let image = image,
+               let jpegData = image.jpegData(compressionQuality: 0.9) {
                 if picker.sourceType == UIImagePickerController.SourceType.camera {
                     UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
                     // In case of picking from the camera, the iOS controller is showing it's own confirmation screen.
@@ -661,18 +665,18 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
                         self.showConfirmationForImage(jpegData, isFromCamera: false, uti: mediaType)
                     }
                 }
-                
+
             }
         } else {
             parent?.dismiss(animated: true)
         }
     }
-    
+
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         statusBarBlinksRedFix()
-        
+
         parent?.dismiss(animated: true) {
-            
+
             if self.shouldRefocusKeyboardAfterImagePickerDismiss {
                 self.shouldRefocusKeyboardAfterImagePickerDismiss = false
                 self.mode = .camera
@@ -680,17 +684,17 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
             }
         }
     }
-    
+
     // MARK: - Sketch
-    
+
     @objc
     func sketchButtonPressed(_ sender: Any?) {
         inputBar.textView.resignFirstResponder()
-        
+
         let viewController = CanvasViewController()
         viewController.delegate = self
         viewController.title = conversation.displayName.uppercased()
-        
+
         parent?.present(viewController.wrapInNavigationController(), animated: true)
     }
 }
@@ -708,14 +712,14 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
                                                             self?.dismiss(animated: false)
             }
         )
-        
+
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        
+
         confirmImageViewController.previewTitle = conversation.displayName.uppercasedWithCurrentLocale
-        
+
         present(confirmImageViewController, animated: false)
     }
-    
+
     func textView(_ textView: UITextView, firstResponderChanged resigned: Bool) {
         updateAccessoryViews()
         updateNewButtonTitleLabel()
@@ -730,7 +734,7 @@ extension ConversationInputBarViewController: ZMConversationObserver {
             change.connectionStateChanged {
             updateInputBarVisibility()
         }
-        
+
         if change.destructionTimeoutChanged {
             updateAccessoryViews()
             updateInputBar()
@@ -754,15 +758,15 @@ extension ConversationInputBarViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return singleTapGestureRecognizer == gestureRecognizer || singleTapGestureRecognizer == otherGestureRecognizer
     }
-    
+
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if singleTapGestureRecognizer == gestureRecognizer {
             return true
         }
-        
+
         return gestureRecognizer.view?.bounds.contains(touch.location(in: gestureRecognizer.view)) ?? false
     }
-    
+
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return otherGestureRecognizer is UIPanGestureRecognizer
     }

@@ -18,7 +18,6 @@
 
 import Foundation
 
-
 private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false
 
