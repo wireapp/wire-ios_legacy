@@ -24,7 +24,7 @@ extension ConversationInputBarViewController {
         guard ZMUser.selfUser().hasTeam,
             conversation.conversationType == .oneOnOne,
             let connectedUser = conversation.connectedUser else {
-            return
+                return
         }
 
         inputBar.availabilityPlaceholder = AvailabilityStringBuilder.string(for: connectedUser, with: .placeholder, color: inputBar.placeholderColor)
@@ -120,6 +120,50 @@ extension ConversationInputBarViewController {
         if ephemeralKeyboardViewController != inputController {
             ephemeralKeyboardViewController = nil
         }
+    }
+
+    // MARK: - PingButton
+
+    @objc
+    func pingButtonPressed(_ button: UIButton?) {
+        appendKnock()
+    }
+
+    private func appendKnock() {
+        notificationFeedbackGenerator.prepare()
+        ZMUserSession.shared()?.enqueue({
+
+            if self.conversation.appendKnock() != nil {
+                Analytics.shared().tagMediaActionCompleted(.ping, inConversation: self.conversation)
+
+                AVSMediaManager.sharedInstance().playKnockSound()
+                self.notificationFeedbackGenerator.notificationOccurred(.success)
+            }
+        })
+
+        pingButton.isEnabled = false
+        delay(0.5) {
+            self.pingButton.isEnabled = true
+        }
+    }
+
+    // MARK: - SendButton
+
+    @objc
+    func sendButtonPressed(_ sender: Any?) {
+        inputBar.textView.autocorrectLastWord()
+        sendText()
+    }
+
+    // MARK: - Giphy
+
+    @objc
+    func giphyButtonPressed(_ sender: Any?) {
+        guard !AppDelegate.isOffline else { return }
+
+        let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
+        giphySearchViewController.delegate = self
+        ZClientViewController.shared?.present(giphySearchViewController.wrapInsideNavigationController(), animated: true)
     }
 
 }
@@ -219,12 +263,12 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
     func textView(_ textView: UITextView, hasImageToPaste image: MediaAsset) {
         let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: image),
                                                          onConfirm: {[weak self] editedImage in
-                                                                        self?.dismiss(animated: false)
-                                                                        self?.postImage(editedImage ?? image)
-                                                                        },
+                                                            self?.dismiss(animated: false)
+                                                            self?.postImage(editedImage ?? image)
+            },
                                                          onCancel: { [weak self] in
-                                                                        self?.dismiss(animated: false)
-                                                                    }
+                                                            self?.dismiss(animated: false)
+            }
         )
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
@@ -245,7 +289,7 @@ extension ConversationInputBarViewController: InformalTextViewDelegate {
 extension ConversationInputBarViewController: ZMConversationObserver {
     public func conversationDidChange(_ change: ConversationChangeInfo) {
         if change.participantsChanged ||
-           change.connectionStateChanged {
+            change.connectionStateChanged {
             updateInputBarVisibility()
         }
 
