@@ -226,11 +226,11 @@ extension ConversationInputBarViewController {
     @objc //TODO: no objc
     func setupNotificationCenter() {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
-            let isRecording = self?.audioRecordKeyboardViewController?.isRecording
-
-            if false == self?.inRotation &&
-               (false == isRecording || nil == isRecording) {
-                self?.mode = .textInput
+            guard let weakSelf = self else { return }
+            
+            if false == weakSelf.inRotation &&
+               false == (weakSelf.audioRecordKeyboardViewController?.isRecording ?? false) {
+                weakSelf.mode = .textInput
             }
         }
 
