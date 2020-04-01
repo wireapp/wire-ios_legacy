@@ -54,8 +54,7 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
 
         self.sendButtonState = [[ConversationInputBarButtonState alloc] init];
 
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+        [self setupNotificationCenter];
 
         [self setupInputLanguageObserver];
 
@@ -164,16 +163,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
     [self.view addGestureRecognizer:self.singleTapGestureRecognizer];
 }
 
-- (void)updateNewButtonTitleLabel
-{
-    self.photoButton.titleLabel.hidden = self.inputBar.textView.isFirstResponder;
-}
-
-- (void)updateLeftAccessoryView
-{
-    self.authorImageView.alpha = self.inputBar.textView.isFirstResponder ? 1 : 0;
-}
-
 - (void)updateRightAccessoryView
 {
     [self updateEphemeralIndicatorButtonTitle:self.ephemeralIndicatorButton];
@@ -198,75 +187,13 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
                                              forState:UIControlStateDisabled];
 }
 
-- (void)updateAccessoryViews
-{
-    [self updateLeftAccessoryView];
-    [self updateRightAccessoryView];
-}
-
-- (void)clearInputBar
-{
-    self.inputBar.textView.text = @"";
-    [self.inputBar.markdownView resetIcons];
-    [self.inputBar.textView resetMarkdown];
-    [self updateRightAccessoryView];
-    [self.conversation setIsTyping:NO];
-    [self.replyComposingView removeFromSuperview];
-    self.replyComposingView = nil;
-    self.quotedMessage = nil;
-}
-
-
 - (void)updateMentionList
 {
     [self triggerMentionsIfNeededFrom: self.inputBar.textView with:nil];
 }
 
-#pragma mark - Keyboard Shortcuts
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (void)commandReturnPressed
-{
-    [self sendText];
-}
-
-- (void)shiftReturnPressed
-{
-    [self.inputBar.textView replaceRange:self.inputBar.textView.selectedTextRange withText:@"\n"];
-}
-
-- (void)upArrowPressed
-{
-    if ([self.delegate respondsToSelector:@selector(conversationInputBarViewControllerEditLastMessage)]) {
-        [self.delegate conversationInputBarViewControllerEditLastMessage];
-    }
-}
-
-- (void)escapePressed
-{
-    [self endEditingMessageIfNeeded];
-}
-
-#pragma mark - Haptic Feedback
-
-- (void)playInputHapticFeedback
-{
-    [self.impactFeedbackGenerator prepare];
-    [self.impactFeedbackGenerator impactOccurred];
-}
 
 #pragma mark - Input views handling
-
-- (void)onSingleTap:(UITapGestureRecognizer *)recognier
-{
-    if (recognier.state == UIGestureRecognizerStateRecognized) {
-        self.mode = ConversationInputBarViewControllerModeTextInput;
-    }
-}
 
 - (void)setMode:(ConversationInputBarViewControllerMode)mode
 {
@@ -349,31 +276,6 @@ static NSString* ZMLogTag ZM_UNUSED = @"UI";
         item.leadingBarButtonGroups = @[];
         item.trailingBarButtonGroups = @[];
     }
-}
-
-- (void)keyboardDidHide:(NSNotification *)notification {
-    if (!self.inRotation && !self.audioRecordKeyboardViewController.isRecording) {
-        self.mode = ConversationInputBarViewControllerModeTextInput;
-    }
-}
-
-#pragma mark - Animations
-
-- (void)bounceCameraIcon;
-{
-    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.3, 1.3);
-    
-    dispatch_block_t scaleUp = ^{
-        self.photoButton.transform = scaleTransform;
-    };
-    
-    dispatch_block_t scaleDown = ^{
-        self.photoButton.transform = CGAffineTransformIdentity;
-    };
-
-    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:scaleUp completion:^(__unused BOOL finished) {
-        [UIView animateWithDuration:0.3 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:scaleDown completion:nil];
-    }];
 }
 
 @end

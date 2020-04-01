@@ -61,9 +61,6 @@ typedef NS_ENUM(NSUInteger, ConversationInputBarViewControllerMode) {
 @property (nonatomic, nonnull) id<AVAudioSessionType> audioSession;
 
 - (instancetype)initWithConversation:(ZMConversation *)conversation;
-- (void)bounceCameraIcon;
-
-- (void)playInputHapticFeedback;
 
 @end
 

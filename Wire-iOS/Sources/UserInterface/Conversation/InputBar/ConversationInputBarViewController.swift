@@ -19,6 +19,32 @@ import Foundation
 import MobileCoreServices
 
 extension ConversationInputBarViewController {
+
+    func clearInputBar() {
+        inputBar.textView.text = ""
+        inputBar.markdownView.resetIcons()
+        inputBar.textView.resetMarkdown()
+        updateRightAccessoryView()
+        conversation.setIsTyping(false)
+        replyComposingView?.removeFromSuperview()
+        replyComposingView = nil
+        quotedMessage = nil
+    }
+
+    func updateNewButtonTitleLabel() {
+        photoButton.titleLabel?.isHidden = inputBar.textView.isFirstResponder
+    }
+
+    func updateLeftAccessoryView() {
+        authorImageView?.alpha = inputBar.textView.isFirstResponder ? 1 : 0
+    }
+
+    @objc
+    func updateAccessoryViews() {
+        updateLeftAccessoryView()
+        updateRightAccessoryView()
+    }
+
     @objc
     func updateAvailabilityPlaceholder() {
         guard ZMUser.selfUser().hasTeam,
@@ -42,8 +68,7 @@ extension ConversationInputBarViewController {
         return DraftMessage(text: text, mentions: mentions, quote: quotedMessage as? ZMMessage)
     }
 
-    @objc
-    func didEnterBackground(_ notification: Notification?) {
+    private func didEnterBackground() {
         if !inputBar.textView.text.isEmpty {
             conversation.setIsTyping(false)
         }
@@ -164,6 +189,61 @@ extension ConversationInputBarViewController {
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)
         giphySearchViewController.delegate = self
         ZClientViewController.shared?.present(giphySearchViewController.wrapInsideNavigationController(), animated: true)
+    }
+
+    // MARK: - Animations
+    func bounceCameraIcon() {
+        let scaleTransform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+
+        let scaleUp = {
+                self.photoButton.transform = scaleTransform
+            }
+
+        let scaleDown = {
+                self.photoButton.transform = CGAffineTransform.identity
+            }
+
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn, animations: scaleUp) { finished in
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.6, options: .curveEaseOut, animations: scaleDown)
+        }
+    }
+
+    // MARK: - Haptic Feedback
+    func playInputHapticFeedback() {
+        impactFeedbackGenerator?.prepare()
+        impactFeedbackGenerator?.impactOccurred()
+    }
+
+    // MARK: - Input views handling
+    @objc
+    func onSingleTap(_ recognier: UITapGestureRecognizer?) {
+        if recognier?.state == .recognized {
+            mode = .textInput
+        }
+    }
+
+    // MARK: - notification center
+    @objc //TODO: no objc
+    func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardDidHideNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let weakSelf = self else { return }
+            
+            let inRotation = weakSelf.inRotation
+            let isRecording = weakSelf.audioRecordKeyboardViewController?.isRecording ?? false
+            
+            if !inRotation && !isRecording {
+                weakSelf.mode = .textInput
+            }
+        }
+
+        NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] _ in
+            self?.didEnterBackground()
+        }
+    }
+
+    // MARK: - Keyboard Shortcuts
+    override open var canBecomeFirstResponder: Bool {
+        return true
     }
 
 }
