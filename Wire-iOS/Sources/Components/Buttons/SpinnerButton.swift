@@ -17,6 +17,12 @@
 
 import Foundation
 
+extension UIColor {
+    enum AlarmButton {
+        static let alarmRed = UIColor(rgb: 0xfb0807)
+    }
+}
+
 /// A button with spinner at the trailing side. Title text is non truncated.
 final class SpinnerButton: Button {
 
@@ -25,7 +31,7 @@ final class SpinnerButton: Button {
 
         // the spinner covers the text with alpha BG
         spinner.backgroundColor = UIColor.from(scheme: .contentBackground).withAlphaComponent(CGFloat.SpinnerButton.spinnerBackgroundAlpha)
-        spinner.color = .accent()
+        spinner.color = UIColor.AlarmButton.alarmRed
         spinner.iconSize = CGFloat.SpinnerButton.iconSize
 
         addSubview(spinner)
@@ -75,8 +81,8 @@ final class SpinnerButton: Button {
 
     ///custom full style with accent color for disabled state.
     override func updateFullStyle() {
-        setBackgroundImageColor(.accent(), for: .disabled)
-        setBackgroundImageColor(.accent(), for: .normal)
+        setBackgroundImageColor(UIColor.AlarmButton.alarmRed, for: .disabled)
+        setBackgroundImageColor(UIColor.AlarmButton.alarmRed, for: .normal)
 
         setTitleColor(.white, for: .normal)
         setTitleColor(.white, for: .highlighted)
@@ -92,12 +98,20 @@ final class SpinnerButton: Button {
         setBackgroundImageColor(.clear, for: .normal)
 
         layer.borderWidth = 1
-        setTitleColor(.buttonEmptyText(variant: variant), for: .normal)
-        setTitleColor(.buttonEmptyText(variant: variant), for: .highlighted)
-        setTitleColor(.buttonEmptyText(variant: variant), for: .disabled)
-        setBorderColor(.accent(), for: .normal)
-        setBorderColor(.accentDarken, for: .highlighted)
-        setBorderColor(.accent(), for: .disabled)
+            
+        let states: [UIControl.State] = [.normal, .highlighted, .disabled]
+        states.forEach() {
+            let color: UIColor
+            switch variant {
+            case .dark:
+                color = .white
+            case .light:
+                color = UIColor.AlarmButton.alarmRed
+            }
+
+            setTitleColor(color, for: $0)
+            setBorderColor(UIColor.AlarmButton.alarmRed, for: $0)
+        }
     }
 
     // MARK: - factory method
