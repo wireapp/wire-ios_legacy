@@ -81,7 +81,6 @@ extension ConversationInputBarViewController {
         }
     }
 
-    @objc
     func processVideo(info: [UIImagePickerController.InfoKey: Any],
                       picker: UIImagePickerController) {
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
