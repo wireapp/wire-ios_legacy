@@ -56,7 +56,7 @@
 "peoplepicker.header.conversations" = "Groups";
 "peoplepicker.header.team_conversations" = "%@ Groups";
 "peoplepicker.header.send_invitation" = "Invite";
-"peoplepicker.header.contacts" = "Contacts";
+"peoplepicker.header.contacts" = "Recents";
 "peoplepicker.header.contacts_personal" = "Personal Contacts";
 "peoplepicker.header.directory" = "Connect";
 
