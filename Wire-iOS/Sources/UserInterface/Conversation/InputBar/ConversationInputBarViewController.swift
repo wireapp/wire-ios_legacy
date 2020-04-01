@@ -41,27 +41,23 @@ PopoverPresenter {
     var mentionsHandler: MentionsHandler?
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
     var textfieldObserverToken: Any?
-    weak var audioSession: AVAudioSessionType!
+    weak var audioSession: AVAudioSessionType! ///TODO: ??
     
     // MARK: buttons
-    private(set) var photoButton: IconButton = IconButton()
-    private(set) var ephemeralIndicatorButton: IconButton = IconButton()
-    private(set) var markdownButton: IconButton = {
+    let photoButton: IconButton = IconButton()
+    let ephemeralIndicatorButton: IconButton = IconButton()
+    let markdownButton: IconButton = {
         let button = IconButton(style: .circular)
         button.accessibilityIdentifier = "markdownButton"
         return button
     }()
-    private(set) var mentionButton: IconButton = IconButton()
-
+    let mentionButton: IconButton = IconButton()
     let audioButton: IconButton = IconButton()
     let uploadFileButton: IconButton = IconButton()
     let sketchButton: IconButton = IconButton()
     let pingButton: IconButton = IconButton()
     let locationButton: IconButton = IconButton()
-    //    private var ephemeralIndicatorButton: IconButton!
-    //    private var markdownButton: IconButton!
     let gifButton: IconButton = IconButton()
-    //    private var mentionButton: IconButton!
     let sendButton: IconButton = {
             let button = IconButton.sendButton()
             button.hitAreaPadding = CGSize(width: 30, height: 30)
@@ -81,7 +77,6 @@ PopoverPresenter {
     let videoButton: IconButton = IconButton()
     
     // MARK: subviews
-    //    private var inputBar: InputBar!
     var typingIndicatorView: TypingIndicatorView?
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
@@ -125,7 +120,8 @@ PopoverPresenter {
                 selectInputControllerButton(nil)
             case .audioRecord:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != audioRecordKeyboardViewController {
+                if inputController == nil ||
+                   inputController != audioRecordKeyboardViewController {
                     if audioRecordKeyboardViewController == nil {
                         audioRecordKeyboardViewController = AudioRecordKeyboardViewController()
                         audioRecordKeyboardViewController?.delegate = self
@@ -137,14 +133,17 @@ PopoverPresenter {
                 selectInputControllerButton(audioButton)
             case .camera:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != cameraKeyboardViewController {                    
+                if inputController == nil ||
+                   inputController != cameraKeyboardViewController {
+                    createCameraKeyboardViewController()
                     asssignInputController(cameraKeyboardViewController)
                 }
                 singleTapGestureRecognizer.isEnabled = true
                 selectInputControllerButton(photoButton)
             case .timeoutConfguration:
                 clearTextInputAssistentItemIfNeeded()
-                if inputController == nil || inputController != ephemeralKeyboardViewController {                    
+                if inputController == nil || inputController != ephemeralKeyboardViewController {
+                    createEphemeralKeyboardViewController()
                     asssignInputController(ephemeralKeyboardViewController)
                 }
                 singleTapGestureRecognizer.isEnabled = true
@@ -152,7 +151,6 @@ PopoverPresenter {
             }
             
             updateRightAccessoryView()
-
         }
     }
     
