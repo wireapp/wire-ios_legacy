@@ -74,7 +74,7 @@ PopoverPresenter {
     weak var mentionsView: (Dismissable & UserList & KeyboardCollapseObserver)?
     
     var textfieldObserverToken: Any?
-    let audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
+    lazy var audioSession: AVAudioSessionType = AVAudioSession.sharedInstance()
 
     // MARK: buttons
     let photoButton: IconButton = {
@@ -157,13 +157,15 @@ PopoverPresenter {
         return view
     }()
     
+    //MARK: custom keyboards
     var audioRecordViewController: AudioRecordViewController?
     var audioRecordViewContainer: UIView?
-
     var audioRecordKeyboardViewController: AudioRecordKeyboardViewController?
+    
     var cameraKeyboardViewController: CameraKeyboardViewController?
     var ephemeralKeyboardViewController: EphemeralKeyboardViewController?
 
+    //MARK: text input
     lazy var sendController: ConversationInputBarSendController = {
         return ConversationInputBarSendController(conversation: conversation)
     }()
@@ -171,7 +173,8 @@ PopoverPresenter {
     var editingMessage: ZMConversationMessage?
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
-    var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    
+    lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
     var shouldRefocusKeyboardAfterImagePickerDismiss = false
     // Counter keeping track of calls being made when the audio keyboard ewas visible before.
     var callCountWhileCameraKeyboardWasVisible = 0
@@ -184,7 +187,7 @@ PopoverPresenter {
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
-    private var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
