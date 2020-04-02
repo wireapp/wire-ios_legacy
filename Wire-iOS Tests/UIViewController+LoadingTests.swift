@@ -48,20 +48,18 @@ final class LoadingViewControllerTests: XCTestCase {
         // then
         verifyInAllDeviceSizes(matching: sut)
     }
-/*
+
     func testThatItDismissesLoadingIndicator() {
-        // Given
-        
-        // when
-        sut.showSpinner = true
+        // given & when
+        let dimissSpinner = sut.presentSpinner()
 
-        sut.showSpinner = false
-
-        // then
-        verify(matching: sut)
+        dimissSpinner() {
+            // then
+            self.verify(matching: self.sut)
+        }
     }
 
-    func testThatItShowsLoadingIndicatorWithSubtitle() {
+    /*func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
         
         // when

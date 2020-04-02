@@ -58,13 +58,17 @@ extension UIViewController {
         return loadingSpinnerView
     }
     
-    func presentSpinner() -> Completion {
+    func presentSpinner() -> ((Completion?) -> ()) {
         // Starts animating when it appears, stops when it disappears
         let spinnerViewControler = createSpinner()
         
         addToSelf(spinnerViewControler)
         
-        return { spinnerViewControler.removeFromParent() }
+        return { completeion in
+            spinnerViewControler.view.removeFromSuperview()
+            spinnerViewControler.removeFromParent()
+            completeion?()
+        }
     }
     
     private func createSpinner() -> UIViewController {
