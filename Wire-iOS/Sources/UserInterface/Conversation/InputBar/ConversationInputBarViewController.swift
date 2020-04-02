@@ -27,8 +27,8 @@ enum ConversationInputBarViewControllerMode {
 }
 
 final class ConversationInputBarViewController: UIViewController,
-    UIPopoverPresentationControllerDelegate,
-PopoverPresenter {
+                                            UIPopoverPresentationControllerDelegate,
+                                                PopoverPresenter {
     // MARK: PopoverPresenter    
     var presentedPopover: UIPopoverPresentationController?
     var popoverPointToView: UIView?
@@ -174,7 +174,10 @@ PopoverPresenter {
     var quotedMessage: ZMConversationMessage?
     var replyComposingView: ReplyComposingView?
     
+    //MARK: feedback
     lazy var impactFeedbackGenerator: UIImpactFeedbackGenerator = UIImpactFeedbackGenerator(style: .light)
+    private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
+
     var shouldRefocusKeyboardAfterImagePickerDismiss = false
     // Counter keeping track of calls being made when the audio keyboard ewas visible before.
     var callCountWhileCameraKeyboardWasVisible = 0
@@ -187,7 +190,6 @@ PopoverPresenter {
     private var conversationObserverToken: Any?
     private var userObserverToken: Any?
     private var typingObserverToken: Any?
-    private lazy var notificationFeedbackGenerator: UINotificationFeedbackGenerator = UINotificationFeedbackGenerator()
 
     var mode: ConversationInputBarViewControllerMode = .textInput {
         didSet {
