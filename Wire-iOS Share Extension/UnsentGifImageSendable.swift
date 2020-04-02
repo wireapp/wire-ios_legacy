@@ -36,16 +36,18 @@ final class UnsentGifImageSendable: UnsentSendableBase, UnsentSendable {
         precondition(needsPreparation, "Ensure this objects needs preparation, c.f. `needsPreparation`")
         needsPreparation = false
         
-        self.attachment.loadItem(forTypeIdentifier: kUTTypeGIF as String, options: nil, completionHandler: { [weak self] (data, error) in
+        attachment.loadItem(forTypeIdentifier: kUTTypeGIF as String) { [weak self] (data, error) in
             
             error?.log(message: "Unable to load image from attachment")
             
-            if let data = data as? Data {
+            if let data = data as? Data { ///TODO: data is URL
                 self?.gifImageData = data
+            } else {
+                error?.log(message: "Invalid Gif data")
             }
             
             completion()
-        })
+        }
     }
     
     func send(completion: @escaping (Sendable?) -> Void) {
