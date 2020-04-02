@@ -42,12 +42,6 @@ final class LoadingSpinnerView: UIView {
     }
 }
 
-protocol LoadingSpinner: class {
-    var loadingSpinnerView: LoadingSpinnerView { get }
-    var showSpinner: Bool { get set }
-    var spinnerSubtitle: String? { get set }
-}
-
 extension UIViewController {
     func createLoadingSpinnerView() -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
@@ -88,20 +82,6 @@ extension UIViewController {
         return viewController
     }
     
-//    var showSpinner: Bool {
-//        get {
-//            return false
-//        }
-//
-//        set {
-//            if newValue {
-//                createSpinner()
-//            } else {
-//                ///TODO: dismiss/hide
-//            }
-//        }
-//    }
-    
     private func createConstraints(container: UIView) {
         container.translatesAutoresizingMaskIntoConstraints = false
         
@@ -111,38 +91,6 @@ extension UIViewController {
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             ])
-    }
-
-}
-
-extension LoadingSpinner where Self: UIViewController {
-    
-    var spinnerSubtitle: String? {
-        get {
-            return loadingSpinnerView.spinnerSubtitleView.subtitle
-        }
-        
-        set {
-            loadingSpinnerView.spinnerSubtitleView.subtitle = newValue
-        }
-    }
-
-    var showSpinner: Bool {
-        get {
-            return !loadingSpinnerView.isHidden
-        }
-        
-        set(shouldShow) {
-            loadingSpinnerView.isHidden = !shouldShow
-            view.isUserInteractionEnabled = !shouldShow
-            
-            if shouldShow {
-                UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
-                loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
-            } else {
-                loadingSpinnerView.spinnerSubtitleView.spinner.stopAnimation()
-            }
-        }
     }
 
 }
