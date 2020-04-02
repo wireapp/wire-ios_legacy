@@ -33,6 +33,12 @@ protocol ConversationMessageSectionControllerDelegate: class {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
 }
 
+extension ZMConversationMessage {
+    var isComposite: Bool {
+        return (self as? ConversationCompositeMessage)?.isComposite == true
+    }
+}
+
 /**
  * An object that provides an interface to build list sections for a single message.
  *
@@ -121,7 +127,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
-        } else if (message as? ConversationCompositeMessage)?.isComposite == true {
+        } else if message.isComposite {
             contentCellDescriptions = addCompositeMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)

@@ -22,6 +22,12 @@ final class CompositeMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
+    override func setUp() {
+        super.setUp()
+        // make sure the button's color is alarm red, not accent color
+        coreDataFixture.accentColor = .strongBlue
+    }
+
     func testThatItRendersErrorMessage() {
         // given
         let items: [CompositeMessageItem] = [createItem(title: "Johann Sebastian Bach", state:.selected),

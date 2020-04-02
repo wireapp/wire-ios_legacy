@@ -50,4 +50,26 @@ extension ConversationInputBarViewController {
         mentionsView?.selectNextUser()
     }
 
+    @objc
+    func commandReturnPressed() {
+        sendText()
+    }
+
+    @objc
+    func shiftReturnPressed() {
+        guard let selectedTextRange = inputBar.textView.selectedTextRange else { return }
+
+        inputBar.textView.replace(selectedTextRange, withText: "\n")
+    }
+
+    @objc
+    func upArrowPressed() {
+        delegate?.conversationInputBarViewControllerEditLastMessage()
+    }
+
+    @objc
+    func escapePressed() {
+        endEditingMessageIfNeeded()
+    }
+
 }

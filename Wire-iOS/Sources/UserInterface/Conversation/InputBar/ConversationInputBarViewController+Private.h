@@ -78,7 +78,7 @@
 
 @property (nonatomic) UIGestureRecognizer *singleTapGestureRecognizer;
 
-@property (nonatomic) UserImageView *authorImageView;
+@property (nonatomic, nullable) UserImageView *authorImageView;
 
 @property (nonatomic) ZMConversation *conversation;
 
@@ -92,13 +92,6 @@
 @property (nonatomic) UINotificationFeedbackGenerator *notificationFeedbackGenerator;
 
 - (void)updateRightAccessoryView;
-- (void)updateAccessoryViews;
-- (void)updateNewButtonTitleLabel;
-- (void)clearInputBar;
 
-- (void)shiftReturnPressed;
-- (void)commandReturnPressed;
-- (void)upArrowPressed;
-- (void)escapePressed;
 
 @end
