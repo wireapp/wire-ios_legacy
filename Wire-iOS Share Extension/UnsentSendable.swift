@@ -138,8 +138,9 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
             error?.log(message: "Unable to load image from attachment")
             
             //Tries to load the content from local URL...
-            if let url = url,
-                let imageSource = CGImageSourceCreateWithURL(url as! CFURL, nil) {
+            
+            if let cfUrl = (url as? URL) as CFURL?,
+               let imageSource = CGImageSourceCreateWithURL(cfUrl, nil) {
                 let options: [NSString : Any] = [
                     kCGImageSourceThumbnailMaxPixelSize: longestDimension,
                     kCGImageSourceCreateThumbnailFromImageAlways: true,
