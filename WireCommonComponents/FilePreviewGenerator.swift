@@ -34,7 +34,7 @@ extension URL {
 }
 
 extension NSURL {
-    @objc public func UTI() -> String {
+    public var UTI: String {
         return (self as URL).UTI()
     }
 }

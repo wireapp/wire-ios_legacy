@@ -100,7 +100,6 @@ public extension UIColor {
         }
     }
 
-    @objc(initWithColorForZMAccentColor:)
     convenience init(fromZMAccentColor accentColor: ZMAccentColor) {
         let safeAccentColor = AccentColor(ZMAccentColor: accentColor) ?? .strongBlue
         self.init(for: safeAccentColor)
