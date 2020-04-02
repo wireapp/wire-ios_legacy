@@ -59,16 +59,14 @@ final class LoadingViewControllerTests: XCTestCase {
         }
     }
 
-    /*func testThatItShowsLoadingIndicatorWithSubtitle() {
+    func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
         
         // when
-        ///TODO:
-//        sut.spinnerSubtitle = "RESTORING…"
-        sut.showSpinner = true
-        
+        let _ = sut.presentSpinner(title: "RESTORING…")
+
         // then
         verifyInAllDeviceSizes(matching: sut)
-    }*/
+    }
     
 }

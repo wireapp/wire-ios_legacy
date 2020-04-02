@@ -58,10 +58,9 @@ extension UIViewController {
         return loadingSpinnerView
     }
     
-    func presentSpinner() -> ((Completion?) -> ()) {
+    func presentSpinner(title: String? = nil) -> ((Completion?) -> ()) {
         // Starts animating when it appears, stops when it disappears
-        let spinnerViewControler = createSpinner()
-        
+        let spinnerViewControler = createSpinner(title: title)
         addToSelf(spinnerViewControler)
         
         return { completeion in
@@ -71,9 +70,10 @@ extension UIViewController {
         }
     }
     
-    private func createSpinner() -> UIViewController {
+    private func createSpinner(title: String? = nil) -> UIViewController {
         let loadingSpinnerView = createLoadingSpinnerView()
-        
+        loadingSpinnerView.spinnerSubtitleView.subtitle = title
+
         let viewController = UIViewController()
         viewController.view.backgroundColor = .clear
         viewController.view.addSubview(loadingSpinnerView)
