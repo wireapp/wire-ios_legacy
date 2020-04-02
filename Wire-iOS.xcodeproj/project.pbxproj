@@ -8478,6 +8478,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
@@ -8488,6 +8489,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */;
 			buildSettings = {
+				CLANG_LINK_OBJC_RUNTIME = NO;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
