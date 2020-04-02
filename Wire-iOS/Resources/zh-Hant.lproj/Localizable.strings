@@ -194,7 +194,7 @@
 
 "folder.creation.name.title" = "新建資料夾";
 "folder.creation.name.button.create" = "建立";
-"folder.creation.name.header" = "Move the conversation \"%@\" to a new folder.";
+"folder.creation.name.header" = "移動對話「%@」 到一個新文件夾。";
 "folder.creation.name.footer" = "最多64個字元";
 "folder.creation.name.placeholder" = "資料夾名稱";
 
@@ -802,7 +802,7 @@
 
 // Delete group
 "conversation.delete_request_dialog.title" = "要刪除群組對話嗎?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
+"conversation.delete_request_dialog.message" = "這將刪除本群組和所有設備上的所有參與者的所有內容。您將無法以任何方式恢復，並將通知所有參與者。";
 "conversation.delete_request_error_dialog.title" = "試圖刪除群組%@時出錯。請再試。";
 "conversation.delete_request_error_dialog.button_delete_group" = "刪除群組";
 
@@ -832,7 +832,7 @@
 "profile.read_receipts_disabled_memo.header" = "您已停用讀取回條";
 "profile.read_receipts_memo.body" = "如果雙方都打開讀取回條，則可以查看何時讀取信息。您可以在帳戶設置中更改此選項。";
 
-"profile.group_admin_status_memo.body" = "When this is on, the admin can add or remove people and services, update group settings, and change a participant's role.";
+"profile.group_admin_status_memo.body" = "開啓該選項後，管理員可以添加或移除用戶或服務，更新群組設定，變更參與者角色。";
 
 "profile.extended_metadata.header" = "資訊";
 
@@ -1138,12 +1138,12 @@
 "self.settings.privacy_security.lock_app.description" = "解鎖Wire";
 "self.settings.privacy_security.lock_password.description.unlock" = "用您的密碼解鎖。";
 "self.settings.privacy_security.lock_password.description.wrong_password" = "密碼錯誤，請再試一次。";
-"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Wrong password. If you recently changed your password, connect to the internet and try again.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "密碼錯誤，如果您最近更改過密碼，連接到網路並重試。";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "請使用Face ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "請使用Touch ID或密碼解鎖Wire";
 "self.settings.privacy_security.lock_cancelled.description_passcode" = "用密碼解鎖Wire";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "要解鎖Wire，請在設置中選擇打開密碼";
 "self.settings.privacy_security.lock_cancelled.action" = "解鎖";
 
 "self.settings.privacy_security.disable_link_previews.title" = "製作連結預覽";
@@ -1157,9 +1157,9 @@
 "self.settings.advanced.title" = "進階";
 "self.settings.advanced.troubleshooting.title" = "疑難排解";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "錯誤回報";
-"self.settings.advanced.debugging_tools.title" = "Debugging Tools";
-"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Find first unread conversation";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.debugging_tools.title" = "除錯工具";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "查找第一個未讀對話";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "此信息有助於Wire診斷通話問題，並改善整個應用體驗。";
 "self.settings.advanced.reset_push_token.title" = "重置推送通知的 Token";
 "self.settings.advanced.reset_push_token.subtitle" = "如果您有推送通知的問題，Wire客服可能會請您重設此token。";
 "self.settings.advanced.reset_push_token_alert.title" = "推送token 已被重設";
@@ -1229,16 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire。加入您的帳戶。";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "歡迎來到%@";
+"landing.create_account.title" = "建立帳戶";
 "landing.create_account.subtitle" = "與朋友和家人私密聊天";
 "landing.create_team.title" = "專業版";
 "landing.create_team.subtitle" = "保密企業、機構和專業組織的協作";
 "landing.login.hints" = "已有帳號？";
 "landing.login.button.title" = "登入";
-"landing.login.email.button.title" = "Log in with email";
-"landing.login.enterprise.button.title" = "Enterprise log in";
-"landing.login.sso.button.title" = "Log in with SSO";
+"landing.login.email.button.title" = "使用電子信箱地址登入";
+"landing.login.enterprise.button.title" = "企業登錄";
+"landing.login.sso.button.title" = "使用單一登入(SSO)登入\n";
 
 "landing.custom_backend.title" = "連接到「%@」";
 "landing.custom_backend.more_info.button.title" = "顯示更多";
@@ -1374,25 +1374,25 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "此備份是由較新的或過時版本的Wire創建的，無法在此版本還原。";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
-"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.title" = "企業登錄";
+"login.sso.alert.message.sso_and_email" = "請輸入你的 Email或單一登入（SSO）：";
+"login.sso.alert.message.sso_only" = "請輸入你的單一登入（SSO）：";
 "login.sso.alert.action" = "登入";
-"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "電郵或單一登入（SSO）碼";
+"login.sso.alert.text_field.placeholder.sso_only" = "單一登入(SSO)存取碼";
 
-"login.sso.start_error_title" = "Cannot Start Enterprise Login";
-"login.sso.link_error_message" = "This link is not valid. Please contact your administrator to resolve the issue.";
+"login.sso.start_error_title" = "無法啓動企業登錄";
+"login.sso.link_error_message" = "這個公司登錄連結無效。請與管理員聯繫以解決此問題。";
 
 "login.sso.error.offline.alert.message" = "請檢查您的網路連線，然後重試。";
 "login.sso.error.alert.message" = "請與工作組管理員聯繫(錯誤 %@)。";
 
 "login.sso.error.alert.invalid_code.message" = "請核對您的公司單一登錄(SSO)存取碼，然後重試。";
 "login.sso.error.alert.invalid_status.message" = "請稍後重試 (錯誤：%@)。";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
-"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
-"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.invalid_format.message.sso_only" = "請輸入有效的單一登入（SSO）登錄碼";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "請輸入有效的電子郵件信箱或單一登入（SSO）登錄碼";
+"login.sso.error.alert.domain_not_registered.message" = "該郵箱無法用於企業登錄，請輸入單一登入（SSO）登錄碼來繼續操作。";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "此電子郵件已鏈接到不同的服務器，但應用程序只能一次連接到一個服務器。 請註銷此設備上的所有Wire賬號並嘗試重新登錄。";
 "login.sso.error.alert.unknown.message" = "請稍後再重試。";
 
 
@@ -1475,8 +1475,8 @@
 "signin_logout.subheadline" = "您太久沒使用Wire。請重新登入。";
 "signin_logout.email.subheadline" = "您太久沒使用Wire。輸入您的電子郵件地址和密碼以繼續。";
 "signin_logout.phone.subheadline" = "您太久沒使用Wire。輸入您的電話號碼以繼續。";
-"signin_logout.sso.subheadline" = "Your session expired. Log in with your enterprise account to continue.";
-"signin_logout.sso.buton" = "Enterprise log in";
+"signin_logout.sso.subheadline" = "您太久沒使用Wire。使用您的企業帳戶登錄以繼續。";
+"signin_logout.sso.buton" = "企業登錄";
 
 "signin.email.missing_password.subtitle" = "請輸入您的電郵地址及密碼以繼續。";
 "signin.phone.missing_password.subtitle" = "輸入您的電話號碼以繼續。";
@@ -1582,7 +1582,7 @@
 
 //Jailbroken alert
 "jailbrokendevice.alert.title" = "發現這部裝置已越獄";
-"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+"jailbrokendevice.alert.message" = "出於安全原因，Wire不能在此設備上使用，現有的所有Wire數據已被消除。";
 
 // Third Party
 "giphy.conversation.message" = "%@ · 來自giphy.com";
@@ -1640,13 +1640,13 @@
 "availability.busy" = "忙碌";
 
 "availability.reminder.away.title" = "您設置為離開";
-"availability.reminder.away.message" = "You will appear as Away to other people. You will not receive notifications about any incoming calls or messages.";
+"availability.reminder.away.message" = "您將對其他人顯示為離開狀態。您將不會收到任何電話或消息的通知。";
 "availability.reminder.busy.title" = "您設置為忙碌";
-"availability.reminder.busy.message" = "You will appear as Busy to other people. You will only receive notifications for mentions, replies, and calls in conversations that are not muted.";
+"availability.reminder.busy.message" = "您將對其他人顯示為忙碌。 在未靜音的對話中，您只會收到有關提及，回復和來電的通知。";
 "availability.reminder.available.title" = "您設置為在線";
-"availability.reminder.available.message" = "You will appear as Available to other people. You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.available.message" = "您將顯示為對其他人在線。 根據每個對話中的「通知」設置，您將收到有關來電和消息的通知。";
 "availability.reminder.none.title" = "目前沒有設定狀態";
-"availability.reminder.none.message" = "You will receive notifications for incoming calls and for messages according to the Notifications setting in each conversation.";
+"availability.reminder.none.message" = "根據每個對話中的「通知」設置，您將收到有關來電和消息的通知。";
 "availability.reminder.action.dont_remind_me" = "不再顯示這個訊息";
 "availability.reminder.action.ok" = "確認";
 
@@ -1670,10 +1670,10 @@
 "url_action.connect_to_bot.message" = "你想要連接到Bot嗎？";
 
 "url_action.switch_backend.title" = "連線到伺服器";
-"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+"url_action.switch_backend.message" = "此配置會將應用程序連接到第三方服務器：\n%@";
 
 "url_action.switch_backend.error.logged_in.title" = "無法切換伺服器";
-"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+"url_action.switch_backend.error.logged_in" = "您已經登錄。要切換到該服務器，請登出所有帳戶，然後重試。";
 
 "url_action.switch_backend.error.invalid_backend.title" = "伺服器沒有回應";
 "url_action.switch_backend.error.invalid_backend" = "請檢查您的網路連接，然後再試一次。";
@@ -1744,4 +1744,11 @@
 
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "你的登入階段已過期。";
-"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+"account_deleted_session_expired_alert.message" = "應用程序長時間未與服務器通信，或您的會話已被遠端拒絕。";
+
+// Button cell state
+"button_message_cell.state.unselected" = "未選取";
+"button_message_cell.state.selected" = "已選擇";
+"button_message_cell.state.confirmed" = "已確認";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";

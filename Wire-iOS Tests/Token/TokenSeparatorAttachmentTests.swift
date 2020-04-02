@@ -23,7 +23,7 @@ final class TokenSeparatorAttachmentTests: XCTestCase {
     var sut: TokenSeparatorAttachment!
 
     override func setUp() {
-        let token = Token(title: "", representedObject: MockUser())
+        let token: Token<NSObjectProtocol> = Token(title: "", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.dotColor = .black
 

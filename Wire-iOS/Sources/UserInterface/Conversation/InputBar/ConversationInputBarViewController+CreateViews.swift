@@ -19,70 +19,47 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-    @objc
     func setupViews() {
-        createSendButton()
-        createEphemeralIndicatorButton()
-        createMarkdownButton()
+        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
 
-        createHourglassButton()
-        createTypingIndicatorView()
-
-        createInputBar()
+        setupInputBar()
 
         inputBar.rightAccessoryStackView.addArrangedSubview(sendButton)
         inputBar.rightAccessoryStackView.insertArrangedSubview(ephemeralIndicatorButton, at: 0)
         inputBar.leftAccessoryView.addSubview(markdownButton)
         inputBar.rightAccessoryStackView.addArrangedSubview(hourglassButton)
-        inputBar.addSubview(typingIndicatorView!)
+        inputBar.addSubview(typingIndicatorView)
 
         createConstraints()
     }
 
-    private func createInputBar() {
-        audioButton = IconButton()
+    var inputBarButtons: [IconButton] {
+        return [photoButton,
+                mentionButton,
+                sketchButton,
+                gifButton,
+                audioButton,
+                pingButton,
+                uploadFileButton,
+                locationButton,
+                videoButton]
+    }
+
+    private func setupInputBar() {
         audioButton.accessibilityIdentifier = "audioButton"
-        audioButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
-
-        videoButton = IconButton()
         videoButton.accessibilityIdentifier = "videoButton"
-
-        photoButton = IconButton()
         photoButton.accessibilityIdentifier = "photoButton"
-        photoButton.setIconColor(UIColor.accent(), for: UIControl.State.selected)
-
-        uploadFileButton = IconButton()
         uploadFileButton.accessibilityIdentifier = "uploadFileButton"
-
-        sketchButton = IconButton()
         sketchButton.accessibilityIdentifier = "sketchButton"
-
-        pingButton = IconButton()
         pingButton.accessibilityIdentifier = "pingButton"
-
-        locationButton = IconButton()
         locationButton.accessibilityIdentifier = "locationButton"
-
-        gifButton = IconButton()
         gifButton.accessibilityIdentifier = "gifButton"
-
-        mentionButton = IconButton()
         mentionButton.accessibilityIdentifier = "mentionButton"
+        markdownButton.accessibilityIdentifier = "markdownButton"
 
-        let buttons: [IconButton] = [
-            photoButton,
-            mentionButton,
-            sketchButton,
-            gifButton,
-            audioButton,
-            pingButton,
-            uploadFileButton,
-            locationButton,
-            videoButton]
-
-        buttons.forEach(){ $0.hitAreaPadding = CGSize.zero }
-
-        inputBar = InputBar(buttons: buttons)
+        inputBarButtons.forEach() {
+            $0.hitAreaPadding = .zero
+        }
 
         inputBar.textView.delegate = self
         inputBar.textView.informalTextViewDelegate = self
@@ -93,46 +70,7 @@ extension ConversationInputBarViewController {
         inputBar.editingView.delegate = self
     }
 
-    private func createEphemeralIndicatorButton() {
-        ephemeralIndicatorButton = IconButton()
-        ephemeralIndicatorButton.layer.borderWidth = 0.5
-
-        ephemeralIndicatorButton.accessibilityIdentifier = "ephemeralTimeIndicatorButton"
-        ephemeralIndicatorButton.adjustsTitleWhenHighlighted = true
-        ephemeralIndicatorButton.adjustsBorderColorWhenHighlighted = true
-
-
-
-        ephemeralIndicatorButton.setTitleColor(UIColor.lightGraphite, for: .disabled)
-        ephemeralIndicatorButton.setTitleColor(UIColor.accent(), for: .normal)
-
-        updateEphemeralIndicatorButtonTitle(ephemeralIndicatorButton)
-    }
-
-    private func createMarkdownButton() {
-        markdownButton = IconButton(style: .circular)
-        markdownButton.accessibilityIdentifier = "markdownButton"
-    }
-
-    private func createHourglassButton() {
-        hourglassButton = IconButton(style: .default)
-
-        hourglassButton.setIcon(.hourglass, size: .tiny, for: UIControl.State.normal)
-
-        hourglassButton.accessibilityIdentifier = "ephemeralTimeSelectionButton"
-    }
-
-    private func createTypingIndicatorView() {
-        let typingIndicatorView = TypingIndicatorView()
-        typingIndicatorView.accessibilityIdentifier = "typingIndicator"
-        typingIndicatorView.typingUsers = conversation.typingUsers
-        typingIndicatorView.setHidden(true, animated: false)
-        self.typingIndicatorView = typingIndicatorView
-    }
-
     private func createConstraints() {
-        guard let typingIndicatorView = typingIndicatorView else { return }
-
         inputBar.translatesAutoresizingMaskIntoConstraints = false
         markdownButton.translatesAutoresizingMaskIntoConstraints = false
         hourglassButton.translatesAutoresizingMaskIntoConstraints = false

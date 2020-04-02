@@ -44,13 +44,11 @@ final class ProgressSpinner: UIView {
 
     var isAnimating = false {
         didSet {
-            guard oldValue != isAnimating else { return }
-            
-            if isAnimating {
-                startAnimationInternal()
-            } else {
-                stopAnimationInternal()
+            guard oldValue != isAnimating else {
+                return                
             }
+            
+            isAnimating ? startAnimationInternal() : stopAnimationInternal()
         }
     }
     

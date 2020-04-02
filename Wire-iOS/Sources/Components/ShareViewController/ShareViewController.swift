@@ -32,8 +32,7 @@ protocol Shareable {
     func previewView() -> UIView?
 }
 
-final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate,
-    TokenFieldDelegate {
+final class ShareViewController<D: ShareDestination & NSObjectProtocol, S: Shareable>: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerTransitioningDelegate {
     let destinations: [D]
     let shareable: S
     private(set) var selectedDestinations: Set<D> = Set() {
@@ -181,7 +180,7 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let destination = self.filteredDestinations[indexPath.row]
         
-        self.tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
+        tokenField.addToken(forTitle: destination.displayName, representedObject: destination)
         
         self.selectedDestinations.insert(destination)
         
@@ -228,23 +227,26 @@ final class ShareViewController<D: ShareDestination, S: Shareable>: UIViewContro
         })
     }
 
-    @objc func keyboardFrameDidChange(notification: Notification) {
+    @objc
+    private func keyboardFrameDidChange(notification: Notification) {
         updatePopoverFrame()
     }
+}
 
-    // MARK: - TokenFieldDelegate
-        
-    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token]) {
-        self.selectedDestinations = Set(tokens.map { $0.representedObject as! D })
-        self.destinationsTableView.reloadData()
+// MARK: - TokenFieldDelegate
+
+extension ShareViewController: TokenFieldDelegate {
+    func tokenField(_ tokenField: TokenField, changedTokensTo tokens: [Token<NSObjectProtocol>]) {
+        selectedDestinations = Set(tokens.map { $0.representedObject.value as! D })
+        destinationsTableView.reloadData()
     }
     
     func tokenField(_ tokenField: TokenField, changedFilterTextTo text: String) {
-        self.filterString = text
+        filterString = text
     }
     
     func tokenFieldDidConfirmSelection(_ controller: TokenField) {
         //no-op
     }
-}
 
+}

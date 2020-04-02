@@ -17,7 +17,7 @@
 // 
 
 final class TokenTextAttachment: NSTextAttachment, TokenContainer {
-    let token: Token
+    let token: Token<NSObjectProtocol>
 
     private unowned let tokenField: TokenField
 
@@ -27,7 +27,7 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
         }
     }
 
-    init(token: Token, tokenField: TokenField) {
+    init(token: Token<NSObjectProtocol>, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
 
@@ -46,14 +46,14 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var imageForCurrentToken: UIImage? {
-        let imageHeight: CGFloat = ceil(tokenField.font?.lineHeight ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.fontLineHeight)
         let title = token.title.applying(transform: tokenField.tokenTextTransform)
         // Width cannot be smaller than height
         let tokenMaxWidth: CGFloat = max(ceil(token.maxTitleWidth - tokenField.tokenOffset - imageHeight), imageHeight)
         let shortTitle = shortenedText(forText: title, withAttributes: titleAttributes, toFitMaxWidth: tokenMaxWidth)
         let attributedName = NSAttributedString(string: shortTitle, attributes: titleAttributes)
         let imageSize = CGSize(width: attributedName.size().width, height: imageHeight)
-        let delta: CGFloat = ceil(((tokenField.font?.capHeight ?? 0) - imageHeight) * 0.5)
+        let delta: CGFloat = ceil((tokenField.font.capHeight - imageHeight) * 0.5)
 
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageHeight)
 
@@ -112,13 +112,12 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var titleAttributes: [NSAttributedString.Key: Any] {
-        guard let titleColor = titleColor,
-            let tokenTitleFont = tokenField.tokenTitleFont else {
-                return [:]
+        guard let titleColor = titleColor else {
+            return [:]
         }
 
         return [
-            NSAttributedString.Key.font: tokenTitleFont,
+            NSAttributedString.Key.font: tokenField.tokenTitleFont,
             NSAttributedString.Key.foregroundColor: titleColor
         ]
     }
@@ -136,7 +135,10 @@ final class TokenTextAttachment: NSTextAttachment, TokenContainer {
 
     // Search for longest substring, which render width is less than maxWidth
 
-    func searchForShortenedText(forText text: String, withAttributes attributes: [NSAttributedString.Key: Any]?, toFitMaxWidth maxWidth: CGFloat, in range: NSRange) -> String {
+    func searchForShortenedText(forText text: String,
+                                withAttributes attributes: [NSAttributedString.Key: Any]?,
+                                toFitMaxWidth maxWidth: CGFloat,
+                                in range: NSRange) -> String {
         // In other words, search for such number l, that
         // [title substringToIndex:l].width <= maxWidth,
         // and [title substringToIndex:l+1].width > maxWidth;

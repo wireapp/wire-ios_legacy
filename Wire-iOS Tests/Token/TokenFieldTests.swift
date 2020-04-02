@@ -33,12 +33,34 @@ final class TokenFieldTests: XCTestCase {
         sut = nil
     }
 
-    func testThatPlaceHolderIsShownAfterAllTokensAreRemoved() {
-        // given
+    private func createTokens() {
         sut.addToken(forTitle: "Token 1", representedObject: MockUser())
         sut.addToken(forTitle: "Token 2", representedObject: MockUser())
         sut.addToken(forTitle: "Token 3", representedObject: MockUser())
         sut.addToken(forTitle: "Token 4", representedObject: MockUser())
+    }
+
+    func testThatClearFilterText() {
+        // given
+        createTokens()
+
+        XCTAssertEqual(sut.textView.text.count, 8)
+
+        sut.textView.insertText("dummy")
+
+        XCTAssertEqual(sut.textView.text.count, 13)
+        // when
+
+        // then
+        sut.clearFilterText()
+
+        // 8 tokens left, and the text is cleared
+        XCTAssertEqual(sut.textView.text.count, 8)
+    }
+
+    func testThatPlaceHolderIsShownAfterAllTokensAreRemoved() {
+        // given
+        createTokens()
 
         // when
         sut.removeAllTokens()
@@ -49,9 +71,9 @@ final class TokenFieldTests: XCTestCase {
         verify(matching: sut)
     }
 
-    func testThatTokensCanBeRemoved() {
+    func testThatTokenCanBeRemoved() {
         // given
-        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        let token1: Token<NSObjectProtocol> = Token(title: "Token 1", representedObject: MockUser())
 
         sut.addToken(token1)
         sut.addToken(forTitle: "Token 2", representedObject: MockUser())
@@ -70,14 +92,11 @@ final class TokenFieldTests: XCTestCase {
 
     func testForFilterUnwantedAttachments() {
         // given
-        sut.addToken(forTitle: "Token 1", representedObject: MockUser())
-        sut.addToken(forTitle: "Token 2", representedObject: MockUser())
-        sut.addToken(forTitle: "Token 3", representedObject: MockUser())
-        sut.addToken(forTitle: "Token 4", representedObject: MockUser())
+        createTokens()
 
         // remove last 2 token(text and seperator) in text view
         var rangesToRemove: [NSRange] = []
-        sut.textView.attributedText.enumerateAttachment() { textAttachment, range, _ in
+        sut.textView.attributedText.enumerateAttachment { textAttachment, range, _ in
             if textAttachment is TokenContainer {
                 rangesToRemove.append(range)
             }
@@ -107,7 +126,7 @@ final class TokenFieldTests: XCTestCase {
 
     func testThatColorIsChnagedAfterUpdateTokenAttachments() {
         // given
-        let token1 = Token(title: "Token 1", representedObject: MockUser())
+        let token1: Token<NSObjectProtocol> = Token(title: "Token 1", representedObject: MockUser())
 
         sut.addToken(token1)
 

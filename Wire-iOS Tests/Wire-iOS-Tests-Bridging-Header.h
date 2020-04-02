@@ -18,13 +18,11 @@
 
 
 #import "WireBridgingHeader.h"
-#import "Settings.h"
 
 @import WireSyncEngine;
 
 #import "ZMSnapshotTestCase+Internal.h"
 #import "MockUser.h"
-#import "SplitViewController.h"
 #import <avs/AVSAudioEffect.h>
 
 #import "MockConversation.h"

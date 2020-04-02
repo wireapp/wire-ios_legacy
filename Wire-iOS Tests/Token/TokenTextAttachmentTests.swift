@@ -23,7 +23,7 @@ final class TokenTextAttachmentTests: XCTestCase {
     var sut: TokenTextAttachment!
 
     override func setUp() {
-        let token = Token(title: "Max Mustermann", representedObject: MockUser())
+        let token: Token<NSObjectProtocol> = Token(title: "Max Mustermann", representedObject: MockUser())
         let tokenField = TokenField()
         tokenField.tokenTitleColor = .black
 

@@ -17,13 +17,13 @@
 
 final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
 
-    let token: Token
+    let token: Token<NSObjectProtocol>
 
     private unowned let tokenField: TokenField
     private let dotSize: CGFloat = 4
     private let dotSpacing: CGFloat = 8
 
-    init(token: Token, tokenField: TokenField) {
+    init(token: Token<NSObjectProtocol>, tokenField: TokenField) {
         self.token = token
         self.tokenField = tokenField
 
@@ -42,9 +42,9 @@ final class TokenSeparatorAttachment: NSTextAttachment, TokenContainer {
     }
 
     private var imageForCurrentToken: UIImage? {
-        let imageHeight: CGFloat = ceil(tokenField.font?.pointSize ?? 0)
+        let imageHeight: CGFloat = ceil(tokenField.font.pointSize)
         let imageSize = CGSize(width: dotSize + dotSpacing * 2, height: imageHeight)
-        let lineHeight = tokenField.font?.lineHeight ?? 0
+        let lineHeight = tokenField.fontLineHeight
         let delta: CGFloat = ceil((lineHeight - imageHeight) * 0.5 - tokenField.tokenTitleVerticalAdjustment)
 
         bounds = CGRect(x: 0, y: delta, width: imageSize.width, height: imageSize.height)

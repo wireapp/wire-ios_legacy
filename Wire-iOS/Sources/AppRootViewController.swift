@@ -146,7 +146,7 @@ final class AppRootViewController: UIViewController {
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
-        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
+        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -168,7 +168,7 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.switchingDelegate = self
             self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
@@ -214,12 +214,6 @@ final class AppRootViewController: UIViewController {
 
         resetAuthenticationCoordinatorIfNeeded(for: appState)
 
-        // When transitioning states, invalidate the SelfUser. If we transition to the authenticated
-        // state, it will be revalidated.
-        if AppDelegate.shared.shouldConfigureSelfUserProvider {
-            SelfUser.provider = nil
-        }
-
         switch appState {
         case .blacklisted(jailbroken: let jailbroken):
             viewController = BlockerViewController(context: jailbroken ? .jailbroken : .blacklist)
@@ -250,10 +244,6 @@ final class AppRootViewController: UIViewController {
             viewController = navigationController
 
         case .authenticated(completedRegistration: let completedRegistration):
-            if AppDelegate.shared.shouldConfigureSelfUserProvider {
-                SelfUser.provider = ZMUserSession.shared()
-            }
-
             UIColor.setAccentOverride(.undefined)
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
@@ -347,19 +337,24 @@ final class AppRootViewController: UIViewController {
     func applicationWillTransition(to appState: AppState) {
 
         if case .authenticated = appState {
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+            
             callWindow.callController.transitionToLoggedInSession()
         }
 
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
-
-        colorScheme.variant = Settings.shared.colorScheme.colorSchemeVariant
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
             ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
+            SelfUser.provider = nil
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
@@ -469,7 +464,7 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard !Settings.shared.chatHeadsDisabled else {
+        guard false == Settings.shared[.chatHeadsDisabled] else {
             return false
         }
         

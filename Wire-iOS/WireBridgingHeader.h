@@ -22,27 +22,6 @@
 @import WireCommonComponents;
 
 #import <CommonCrypto/CommonCrypto.h>
-#import "Settings.h"
-
-// UI
-#import "TokenField.h"
-#import "TokenField+Internal.h"
-
-// View Controllers
-
-#import "ConversationInputBarViewController.h"
-#import "ConversationInputBarViewController+Private.h"
-#import "ConversationInputBarViewController+Files.h"
-
-#import "SplitViewController.h"
-#import "SplitViewController+internal.h"
-
-#import "FullscreenImageViewController.h"
-#import "FullscreenImageViewController+PullToDismiss.h"
-#import "FullscreenImageViewController+internal.h"
-
-// Helper objects
-#import "MediaAsset.h"
 
 // Utils
 

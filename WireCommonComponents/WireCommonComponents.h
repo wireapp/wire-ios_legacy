@@ -26,5 +26,4 @@ FOUNDATION_EXPORT const unsigned char WireCommonComponentsVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <WireCommonComponents/PublicHeader.h>
 
-#import <WireCommonComponents/NetworkStatus.h>
 #import <AppCenter/AppCenter.h>

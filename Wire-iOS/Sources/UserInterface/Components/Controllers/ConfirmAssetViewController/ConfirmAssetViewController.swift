@@ -93,7 +93,7 @@ final class ConfirmAssetViewController: UIViewController {
         switch asset {
             case .image(let mediaAsset):
                 createPreviewPanel(image: mediaAsset)
-        case .video(let url):
+            case .video(let url):
                 createVideoPanel(videoURL: url)
         }
 
@@ -110,11 +110,11 @@ final class ConfirmAssetViewController: UIViewController {
     }
 
     // MARK: - View Creation
-    func createContentLayoutGuide() {
+    private func createContentLayoutGuide() {
         view.addLayoutGuide(contentLayoutGuide)
     }
 
-    func createTopPanel() {
+    private func createTopPanel() {
         view.addSubview(topPanel)
 
         titleLabel.text = previewTitle
@@ -212,7 +212,7 @@ final class ConfirmAssetViewController: UIViewController {
         imagePreviewView.isUserInteractionEnabled = true
         view.addSubview(imagePreviewView)
 
-        imagePreviewView.setMediaAsset(image)
+        imagePreviewView.mediaAsset = image
 
         if showEditingOptions && imageToolbarFitsInsideImage {
             let imageToolbarViewInsideImage = ImageToolbarView(withConfiguraton: .preview)
