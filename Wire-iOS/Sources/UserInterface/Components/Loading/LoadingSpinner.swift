@@ -58,34 +58,45 @@ extension UIViewController {
         return loadingSpinnerView
     }
     
-    var showSpinner: Bool {
-        get {
-            return false
-        }
+    func presentSpinner() -> Completion {
+        // Starts animating when it appears, stops when it disappears
+        let spinnerViewControler = createSpinner()
         
-        set {
-            if newValue {
-                let loadingSpinnerView = createLoadingSpinnerView()
-                
-                let viewController = UIViewController()
-                viewController.view.backgroundColor = .clear
-                viewController.view.addSubview(loadingSpinnerView)
-
-//                viewController.view = loadingSpinnerView
-                loadingSpinnerView.isHidden = false
-                
-                viewController.createConstraints(container: loadingSpinnerView)
-
-                addToSelf(viewController)
-//                loadingSpinnerView.layoutIfNeeded()
-//                viewController.view.layoutIfNeeded()
-                UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
-                loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
-            } else {
-                ///TODO: dismiss/hide
-            }
-        }
+        addToSelf(spinnerViewControler)
+        
+        return { spinnerViewControler.removeFromParent() }
     }
+    
+    private func createSpinner() -> UIViewController {
+        let loadingSpinnerView = createLoadingSpinnerView()
+        
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .clear
+        viewController.view.addSubview(loadingSpinnerView)
+        
+        loadingSpinnerView.isHidden = false
+        
+        viewController.createConstraints(container: loadingSpinnerView)
+        
+        UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
+        loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
+        
+        return viewController
+    }
+    
+//    var showSpinner: Bool {
+//        get {
+//            return false
+//        }
+//
+//        set {
+//            if newValue {
+//                createSpinner()
+//            } else {
+//                ///TODO: dismiss/hide
+//            }
+//        }
+//    }
     
     private func createConstraints(container: UIView) {
         container.translatesAutoresizingMaskIntoConstraints = false
