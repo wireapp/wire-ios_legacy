@@ -30,14 +30,4 @@ extension NSItemProvider {
             completion(url as? URL) ///TODO: test
         })
     }
-
-    ///TODO?
-    /// Extracts data from the item provider
-    func fetchData(completion: @escaping(Data?)->()) {
-        loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], completionHandler: { (data, error) in
-            error?.log(message: "Unable to fetch URL for type Data")
-            completion(data as? Data)
-        })
-    }
-
 }
