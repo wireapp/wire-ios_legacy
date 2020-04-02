@@ -93,6 +93,7 @@ extension ConversationContentViewController {
                 }
             }
         case .digitallySign:
+            dataSource.selectedMessage = message
             digitalSignatureToken = message.fileMessageData?.signPDFDocument(observer: self)
         case .edit:
             dataSource.editingMessage = message
@@ -124,7 +125,6 @@ extension ConversationContentViewController {
                 // Select if necessary to prevent message from collapsing
                 if !(selectedMessage == message) && !Message.hasReactions(message) {
                     willSelectRow(at: indexPath, tableView: tableView)
-
                     tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
                 }
             }
@@ -142,7 +142,6 @@ extension ConversationContentViewController {
             })
         case .reply:
             delegate?.conversationContentViewController(self, didTriggerReplyingTo: message)
-
         case .openQuote:
             if let quote = message.textMessageData?.quote {
                 scroll(to: quote) { cell in
@@ -171,22 +170,48 @@ extension ConversationContentViewController: SignatureObserver {
         
     }
     
-    func signatureInvalid(_ error: Error) {
-        
+    func didFailSignature() {
+        showLoadingView = false
+        presentDigitalSignatureErrorAlert()
     }
     
+    // MARK: - Helpers
     private func presentDigitalSignatureVerification(with url: URL) {
-        let digitalSignatureVerification = DigitalSignatureVerificationViewController(url: url) { result in
-            switch result { // TO DO: complete logic in other PR
-                case .success?:
-                    break
-                case let .failure(error)?:
-                    break
-                case .none:
-                    break
+        let digitalSignatureVerification = DigitalSignatureVerificationViewController(url: url) { [weak self] result in
+            switch result {
+                case .success:
+                    self?.dataSource.selectedMessage?
+                        .fileMessageData?.retrivePDFSignature()
+                case let .failure(error):
+                    self?.dismissDigitalSignatureVerification(completion: { [weak self] in
+                        self?.presentDigitalSignatureErrorAlert(error)
+                    })
             }
         }
         let navigationController = UINavigationController(rootViewController: digitalSignatureVerification)
         present(navigationController, animated: true)
+    }
+    
+    private func presentDigitalSignatureErrorAlert(_ error: Error? = nil) {
+        let message = "digital_signature.alert.error".localized
+            + " "
+            + "general.failure.try_again".localized
+        let alertController = UIAlertController(title: "",
+                                                message: message,
+                                                preferredStyle: .alert)
+        
+        let closeAction = UIAlertAction(title: "general.close".localized,
+                                   style: .default) { [weak self] _ in
+            self?.dismissDigitalSignatureVerification()
+        }
+        
+        alertController.addAction(closeAction)
+        present(alertController, animated: true)
+    }
+    
+    private func dismissDigitalSignatureVerification(completion: (() -> Void)? = nil) {
+        self.dismiss(animated: true, completion: {
+            completion?()
+        })
     }
 }
