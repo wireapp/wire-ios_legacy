@@ -148,7 +148,7 @@ final class SendController {
         timeoutWorkItem = nil
     }
     
-    @objc func timeout() {
+    private func timeout() {
         self.cancel { [weak self] in
             self?.cancelTimeout()
             self?.timedOut = true

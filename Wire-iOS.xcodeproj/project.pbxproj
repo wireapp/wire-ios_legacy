@@ -1441,7 +1441,6 @@
 		F1F5E57E216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F5E57D216CC94A006BF3D5 /* ConversationStatusLineTests+Muting.swift */; };
 		F1FDF2C421ADA3A600E037A1 /* OtherImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1FDF2C321ADA3A600E037A1 /* OtherImages.xcassets */; };
 		F1FDF2C621ADA3FA00E037A1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1FDF2C521ADA3F000E037A1 /* Images.xcassets */; };
-		F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = F1FEA14C21DCEB1700790A54 /* WireCommonComponents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F1FEA15121DCEB1700790A54 /* WireCommonComponents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; };
 		F1FEA15221DCEB1700790A54 /* WireCommonComponents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F93D58431D7D9184003AE972 /* Analytics+ConversationEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */; };
@@ -3072,7 +3071,6 @@
 		F1FDF2C321ADA3A600E037A1 /* OtherImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OtherImages.xcassets; sourceTree = "<group>"; };
 		F1FDF2C521ADA3F000E037A1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F1FEA14A21DCEB1700790A54 /* WireCommonComponents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WireCommonComponents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F1FEA14C21DCEB1700790A54 /* WireCommonComponents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WireCommonComponents.h; sourceTree = "<group>"; };
 		F1FEA14D21DCEB1700790A54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F93D58421D7D9184003AE972 /* Analytics+ConversationEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Analytics+ConversationEvents.swift"; sourceTree = "<group>"; };
 		F93D58441D7DA865003AE972 /* ZMConversation+Analytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ZMConversation+Analytics.swift"; sourceTree = "<group>"; };
@@ -6468,7 +6466,6 @@
 				87AC33AD217F4FE400069C79 /* BackendEnvironment+Shared.swift */,
 				F10D5A6921A83793008BBD29 /* Bundle+Backend.swift */,
 				A9CF5F57242B98B300920877 /* NetworkStatus.swift */,
-				F1FEA14C21DCEB1700790A54 /* WireCommonComponents.h */,
 				A92E731D2407F587007C1FFE /* String+Localized.swift */,
 				BF4A15D11D4900930051E8BA /* AutomationHelper.swift */,
 				63495DB323EB2D7B002A7C59 /* AutomationHelper+BackendEnvironment.swift */,
@@ -6501,7 +6498,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1FEA14E21DCEB1700790A54 /* WireCommonComponents.h in Headers */,
 				7C88BB8F235DE3F50075BCC5 /* (null) in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
