@@ -38,7 +38,7 @@ protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
-class ConversationOptionsViewModel {
+final class ConversationOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false

@@ -84,7 +84,8 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
 
     // MARK: – ConversationOptionsViewModelDelegate
     
-    func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
+    func viewModel(_ viewModel: ConversationOptionsViewModel,
+                   didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
         (navigationController as? LoadingSpinner)?.showSpinner = state.isLoading
         title = state.title

@@ -57,8 +57,6 @@ extension UIViewController {
         
         return loadingSpinnerView
     }
-
-//    lazy var loadingSpinnerView: LoadingSpinnerView = createLoadingSpinnerView()
     
     var showSpinner: Bool {
         get {
