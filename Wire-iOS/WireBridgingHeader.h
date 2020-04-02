@@ -23,13 +23,6 @@
 
 #import <CommonCrypto/CommonCrypto.h>
 
-// View Controllers
-
-#import "ConversationInputBarViewController.h"
-#import "ConversationInputBarViewController+Private.h"
-
-// Helper objects
-
 // Utils
 
 #import "UIViewController+LoadingView.h"

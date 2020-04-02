@@ -19,11 +19,6 @@
 import Foundation
 
 extension ConversationInputBarViewController {
-    func createSendButton() {
-        sendButton = IconButton.sendButton()
-        sendButton.hitAreaPadding = CGSize(width: 30, height: 30)
-    }
-
     func sendText() {
         let (text, mentions) = inputBar.textView.preparedText
         let quote = quotedMessage

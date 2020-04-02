@@ -20,7 +20,7 @@ import Foundation
 
 extension ConversationInputBarViewController {
 
-    override open var keyCommands: [UIKeyCommand]? {
+    override var keyCommands: [UIKeyCommand]? {
         var commands: [UIKeyCommand] = []
 
         commands.append(UIKeyCommand(input: "\r", modifierFlags: .command, action: #selector(commandReturnPressed), discoverabilityTitle: "conversation.input_bar.shortcut.send".localized))
