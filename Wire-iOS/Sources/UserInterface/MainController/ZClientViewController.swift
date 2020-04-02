@@ -262,15 +262,15 @@ final class ZClientViewController: UIViewController {
     }
     
     @discardableResult
-    private func pushContentViewController(_ viewController: UIViewController?,
-                                           focusOnView focus: Bool,
-                                           animated: Bool,
-                                           completion: Completion?) -> Bool {
+    private func pushContentViewController(_ viewController: UIViewController? = nil,
+                                           focusOnView focus: Bool = false,
+                                           animated: Bool = false,
+                                           completion: Completion? = nil) -> Bool {
         conversationRootViewController = viewController
-        wireSplitViewController.setRight(conversationRootViewController, animated: animated, completion: completion)
+        wireSplitViewController.setRightViewController(conversationRootViewController, animated: animated, completion: completion)
         
         if focus {
-            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated, completion: nil)
+            wireSplitViewController.setLeftViewControllerRevealed(false, animated: animated)
         }
         
         return true
@@ -282,7 +282,7 @@ final class ZClientViewController: UIViewController {
     
     func loadPlaceholderConversationController(animated: Bool, completion: @escaping Completion) {
         currentConversation = nil
-        pushContentViewController(nil, focusOnView: false, animated: animated, completion: completion)
+        pushContentViewController(animated: animated, completion: completion)
     }
     
     /// Load and optionally show a conversation, but don't change the list selection.  This is the place to put
@@ -322,7 +322,7 @@ final class ZClientViewController: UIViewController {
         currentConversation = nil
         
         let inbox = ConnectRequestsViewController()
-        pushContentViewController(inbox, focusOnView: focus, animated: animated, completion: nil)
+        pushContentViewController(inbox, focusOnView: focus, animated: animated)
     }
     
     /// Open the user clients detail screen
@@ -393,7 +393,7 @@ final class ZClientViewController: UIViewController {
         let currentConversationViewController = ConversationRootViewController(conversation: currentConversation, message: nil, clientViewController: self)
         
         // Need to reload conversation to apply color scheme changes
-        pushContentViewController(currentConversationViewController, focusOnView: false, animated: false, completion: nil)
+        pushContentViewController(currentConversationViewController)
     }
     
     @objc

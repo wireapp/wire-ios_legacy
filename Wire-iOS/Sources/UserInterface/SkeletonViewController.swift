@@ -301,7 +301,7 @@ final class SkeletonViewController: UIViewController {
         listViewController.view = listView
         customSplitViewController.leftViewController = listViewController
         customSplitViewController.view.layoutIfNeeded()
-        customSplitViewController .setLeftViewControllerRevealed(true, animated: false, completion: nil)
+        customSplitViewController.setLeftViewControllerRevealed(true, animated: false)
     }
     
     func createConstraints() {
