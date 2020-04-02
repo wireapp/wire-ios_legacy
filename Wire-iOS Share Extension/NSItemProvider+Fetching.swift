@@ -27,7 +27,7 @@ extension NSItemProvider {
     func fetchURL(completion: @escaping (URL?)->()) {
         loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            completion(url as? URL) ///TODO: test
+            completion(url as? URL)
         })
     }
 }
