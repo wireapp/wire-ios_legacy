@@ -16,30 +16,28 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-#import "NSItemProvider+Helper.h"
+/*
+typealias ItemProviderDataCompletionHandler = (Data?, Error?) -> Void
+typealias ItemProviderImageCompletionHandler = (UIImage?, Error?) -> Void
+typealias ItemProviderURLCompletionHandler = (URL?, Error?) -> Void
 
-@import MobileCoreServices;
-@import UIKit;
 
-@implementation NSItemProvider (Helper)
+extension NSItemProvider {
+    func loadItem(forTypeIdentifier typeIdentifier: String?,
+                  options: [AnyHashable : Any]?, dataCompletionHandler: @escaping ItemProviderDataCompletionHandler) {
+        loadItem(forTypeIdentifier: typeIdentifier ?? "", options: options, completionHandler: { item, error in
+            dataCompletionHandler(item, error)
+        })
+    }
 
-- (void)loadItemForTypeIdentifier:(NSString *)typeIdentifier options:(NSDictionary *)options dataCompletionHandler:(ItemProviderDataCompletionHandler)dataCompletionHandler
-{
-    [self loadItemForTypeIdentifier:typeIdentifier options:options completionHandler:^(NSData * _Nullable item, NSError * _Null_unspecified error) {
-        dataCompletionHandler(item, error);
-    }];
+    func loadItem(forTypeIdentifier typeIdentifier: String?, options: [AnyHashable : Any]?, imageCompletionHandler: @escaping ItemProviderImageCompletionHandler) {
+        loadItem(forTypeIdentifier: typeIdentifier ?? "", options: options, completionHandler: { item, error in
+            imageCompletionHandler(item, error)
+        })
+    }
+
+    func loadItem(forTypeIdentifier typeIdentifier: String?, options: [AnyHashable : Any]?, urlCompletionHandler URLCompletionHandler: @escaping ItemProviderURLCompletionHandler) {
+        loadItem(forTypeIdentifier: typeIdentifier ?? "", options: nil, completionHandler: URLCompletionHandler)
+    }
 }
-
-- (void)loadItemForTypeIdentifier:(NSString *)typeIdentifier options:(NSDictionary *)options imageCompletionHandler:(ItemProviderImageCompletionHandler)imageCompletionHandler
-{
-    [self loadItemForTypeIdentifier:typeIdentifier options:options completionHandler:^(UIImage *  _Nullable item, NSError * _Null_unspecified error) {
-        imageCompletionHandler(item, error);
-    }];
-}
-
-- (void)loadItemForTypeIdentifier:(NSString *)typeIdentifier options:(NSDictionary *)options URLCompletionHandler:(ItemProviderURLCompletionHandler)URLCompletionHandler
-{
-    [self loadItemForTypeIdentifier:typeIdentifier options:nil completionHandler:URLCompletionHandler];
-}
-
-@end
+*/

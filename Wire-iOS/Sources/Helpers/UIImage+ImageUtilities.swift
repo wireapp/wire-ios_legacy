@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIImage {
     func imageScaled(with scaleFactor: CGFloat) -> UIImage? {

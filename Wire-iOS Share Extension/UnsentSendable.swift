@@ -134,11 +134,11 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
         // for us ('free' of charge) by using the image URL & ImageIO library.
         //
         
-        self.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, urlCompletionHandler: { [weak self] (url, error) in
+        attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options) { [weak self] (url, error) in
             error?.log(message: "Unable to load image from attachment")
             
             //Tries to load the content from local URL...
-            if let url = url, let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil) {
+            if let url = url, let imageSource = CGImageSourceCreateWithURL(url as! CFURL, nil) {
                 let options: [NSString : Any] = [
                     kCGImageSourceThumbnailMaxPixelSize: longestDimension,
                     kCGImageSourceCreateThumbnailFromImageAlways: true,
@@ -155,11 +155,11 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
                 
                 // if it fails, it will attach the content directly
                 
-                self?.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, imageCompletionHandler: { [weak self] (image, error) in
+                self?.attachment.loadItem(forTypeIdentifier: kUTTypeImage as String, options: options, completionHandler: { [weak self] (image, error) in
                     
                     error?.log(message: "Unable to load image from attachment")
                     
-                    if let image = image {
+                    if let image = image as? UIImage {
                         self?.imageData = image.jpegData(compressionQuality: 0.9)
                     }
                     
@@ -167,7 +167,7 @@ final class UnsentImageSendable: UnsentSendableBase, UnsentSendable {
                 })
             }
             
-        })
+        }
         
     }
 
@@ -237,8 +237,8 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     }
 
     private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {
-        self.attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:], dataCompletionHandler: { [weak self] (data, error) in
-            guard let data = data, let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
+        self.attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:]) { [weak self] (data, error) in
+            guard let data = data as? Data, let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
                 return completion()
             }
@@ -263,7 +263,7 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     completion()
                 }
             }
-        })
+        }
     }
     
     /// Process data to the right format to be sent

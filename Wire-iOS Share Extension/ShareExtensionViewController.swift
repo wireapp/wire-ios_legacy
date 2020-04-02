@@ -218,9 +218,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
 
-        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, urlCompletionHandler: { (url, error) in
+        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            guard let url = url, url.isFileURL else { return }
+            guard let url = url as? URL, url.isFileURL else { return }
 
             let filename = url.lastPathComponent
             let separator = self.textView.text.isEmpty ? "" : "\n"

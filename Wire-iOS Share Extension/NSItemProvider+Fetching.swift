@@ -25,17 +25,18 @@ extension NSItemProvider {
 
     /// Extracts the URL from the item provider
     func fetchURL(completion: @escaping (URL?)->()) {
-        self.loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, urlCompletionHandler: { (url, error) in
+        loadItem(forTypeIdentifier: kUTTypeURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            completion(url)
+            completion(url as? URL) ///TODO: test
         })
     }
 
+    ///TODO?
     /// Extracts data from the item provider
     func fetchData(completion: @escaping(Data?)->()) {
-        self.loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], dataCompletionHandler: { (data, error) in
+        loadItem(forTypeIdentifier: kUTTypeData as String, options: [:], completionHandler: { (data, error) in
             error?.log(message: "Unable to fetch URL for type Data")
-            completion(data)
+            completion(data as? Data)
         })
     }
 
