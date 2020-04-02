@@ -26,7 +26,7 @@ class DigitalSignatureVerificationViewController: UIViewController {
     
     // MARK: - Error states
     private enum VerificationError: Error {
-        case unknown
+        case postCodeRetry
         case authenticationFailed
         case internalServerError
     }
@@ -91,11 +91,13 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url else {
+        guard
+            let url = navigationAction.request.url,
+            let response = parseVerificationURL(url)
+        else {
             decisionHandler(.allow)
             return
         }
-        let response = parse(url)
         
         switch response {
         case .success:
@@ -107,15 +109,15 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
         }
     }
     
-    func parse(_ url: URL) -> VoidResult {
+    func parseVerificationURL(_ url: URL) -> VoidResult? {
         let urlComponents = URLComponents(string: url.absoluteString)
         let postCode = urlComponents?.queryItems?
             .first(where: { $0.name == "postCode" })
         guard let  postCodeValue = postCode?.value else {
-            return .failure(VerificationError.unknown)
+            return nil
         }
         switch postCodeValue {
-            case "sas-success":
+        case "sas-success":
             return .success
         case "sas-error-authentication-failed":
              return .failure(VerificationError.authenticationFailed)

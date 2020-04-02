@@ -172,7 +172,8 @@ extension ConversationContentViewController: SignatureObserver {
     
     func didFailSignature() {
         showLoadingView = false
-        presentDigitalSignatureErrorAlert()
+        dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert()
+        })
     }
     
     // MARK: - Helpers
@@ -181,10 +182,9 @@ extension ConversationContentViewController: SignatureObserver {
             switch result {
                 case .success:
                     self?.dataSource.selectedMessage?
-                        .fileMessageData?.retrivePDFSignature()
-                case let .failure(error):
-                    self?.dismissDigitalSignatureVerification(completion: { [weak self] in
-                        self?.presentDigitalSignatureErrorAlert(error)
+                        .fileMessageData?.retrievePDFSignature()
+                case .failure:
+                    self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert()
                     })
             }
         }
@@ -192,25 +192,21 @@ extension ConversationContentViewController: SignatureObserver {
         present(navigationController, animated: true)
     }
     
-    private func presentDigitalSignatureErrorAlert(_ error: Error? = nil) {
-        let message = "digital_signature.alert.error".localized
-            + " "
-            + "general.failure.try_again".localized
+    private func presentDigitalSignatureErrorAlert() {
+        let message = "\("digital_signature.alert.error".localized) \("general.failure.try_again".localized)"
         let alertController = UIAlertController(title: "",
                                                 message: message,
                                                 preferredStyle: .alert)
         
         let closeAction = UIAlertAction(title: "general.close".localized,
-                                   style: .default) { [weak self] _ in
-            self?.dismissDigitalSignatureVerification()
-        }
+                                        style: .default)
         
         alertController.addAction(closeAction)
         present(alertController, animated: true)
     }
     
     private func dismissDigitalSignatureVerification(completion: (() -> Void)? = nil) {
-        self.dismiss(animated: true, completion: {
+        dismiss(animated: true, completion: {
             completion?()
         })
     }

@@ -38,7 +38,7 @@ class DigitalSignatureVerificationViewControllerTest: XCTestCase {
         let successURL = URL(string: "https://ais-sas.swisscom.com/sas/web/success?lang=en&postCode=sas-success")!
 
         // when
-        let response = sut.parse(successURL)
+        let response = sut.parseVerificationURL(successURL)
 
         // then
         guard case .success? = response else {
@@ -52,7 +52,7 @@ class DigitalSignatureVerificationViewControllerTest: XCTestCase {
          let failedURL = URL(string: "https://ais-sas.swisscom.com/sas/web/error?lang=en&errorCode=authenticationFailed.numberOfRetryAttemptsExceeded&postCode=sas-error-authentication-failed")!
         
         // when
-        let response = sut.parse(failedURL)
+        let response = sut.parseVerificationURL(failedURL)
         
         // then
         guard case .failure? = response else {
