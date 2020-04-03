@@ -132,7 +132,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
         
         GuestRoomEvent.created.track()
-        let _ = presentSpinner()
+        showSpinner = true
+        
         userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 

@@ -20,12 +20,16 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
+final class MockLoadingViewController: SpinnerViewController {
+    var dismissSpinner: SpinnerCompletion?
+}
+
 final class LoadingViewControllerTests: XCTestCase {
-    var sut: UIViewController!
+    var sut: MockLoadingViewController!
     
     override func setUp() {
         super.setUp()
-        sut = UIViewController()
+        sut = MockLoadingViewController()
         sut.view.backgroundColor = .white
     }
     
@@ -38,7 +42,7 @@ final class LoadingViewControllerTests: XCTestCase {
         // Given
         
         // when
-        let _ = sut.presentSpinner() 
+        sut.showSpinner = true
         
         // then
         verifyInAllDeviceSizes(matching: sut)
@@ -46,12 +50,11 @@ final class LoadingViewControllerTests: XCTestCase {
 
     func testThatItDismissesLoadingIndicator() {
         // given & when
-        let dimissSpinner = sut.presentSpinner()
+        sut.showSpinner = true
+        sut.showSpinner = false
 
-        dimissSpinner() {
-            // then
-            self.verify(matching: self.sut)
-        }
+        // then
+        verify(matching: sut)
     }
 
     func testThatItShowsLoadingIndicatorWithSubtitle() {
