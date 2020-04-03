@@ -166,8 +166,9 @@ extension ConversationContentViewController: SignatureObserver {
         presentDigitalSignatureVerification(with: url)
     }
     
-    func signatureAvailable(_ signature: Data) {
-        
+    func didReceiveDigitalSignature(_ cmsData: Data) {
+        // TO DO: validate signature
+        dismissDigitalSignatureVerification()
     }
     
     func didFailSignature() {
