@@ -18,11 +18,11 @@
 
 import Foundation
 
+typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
+
 protocol SpinnerCapable: class {
     var dismissSpinner: Completion? { get set }
 }
-
-typealias SpinnerViewController = UIViewController & SpinnerCapable
 
 extension SpinnerCapable where Self: UIViewController {
     func showSpinner(title: String) {

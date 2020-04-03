@@ -24,14 +24,17 @@ enum ClientRemovalUIError: Error {
 
 final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     var userClientToDelete: UserClient
-    private weak var controller: SpinnerViewController?
+    private weak var controller: SpinnerCapableViewController?
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var requestPasswordController: RequestPasswordController?
     private var passwordIsNecessaryForDelete: Bool = false
     private var observerToken: Any?
     
-    init(userClientToDelete: UserClient, controller: SpinnerViewController, credentials: ZMEmailCredentials?, completion: ((Error?)->())? = nil) {
+    init(userClientToDelete: UserClient,
+         controller: SpinnerCapableViewController,
+         credentials: ZMEmailCredentials?,
+         completion: ((Error?)->())? = nil) {
         self.userClientToDelete = userClientToDelete
         self.controller = controller
         self.credentials = credentials
