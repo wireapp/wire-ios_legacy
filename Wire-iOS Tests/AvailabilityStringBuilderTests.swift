@@ -47,35 +47,8 @@ final class AvailabilityStringBuilderTests: XCTestCase {
         super.tearDown()
     }
     
-    func testThatTheresNoAvailabilityInformationIfLimitIsReachedAndOtherUserIsTeammate() {
+    func testThatTheresAvailabilityInformationOtherUserIsNotTeammate() {
         // given
-        for _ in 1...(Team.membersOptimalLimit - 2) { // Saving two users for later
-            team1.members.insert(Member.insertNewObject(in: fixture.uiMOC))
-        }
-        let member = Member.insertNewObject(in: fixture.uiMOC)
-        member.user = otherUser
-        member.team = team1
-        
-        let selfMember = Member.insertNewObject(in: fixture.uiMOC)
-        selfMember.user = selfUser
-        selfMember.team = team1
-        
-        // when
-        let listString = AvailabilityStringBuilder.string(for: otherUser, with: .list)
-        let participantsString = AvailabilityStringBuilder.string(for: otherUser, with: .participants)
-        let placeholderString = AvailabilityStringBuilder.string(for: otherUser, with: .placeholder)
-        
-        // then
-        XCTAssertTrue(listString!.allAttachments.isEmpty)
-        XCTAssertTrue(participantsString!.allAttachments.isEmpty)
-        XCTAssertNil(placeholderString)
-    }
-    
-    func testThatTheresAvailabilityInformationIfLimitIsReachedAndOtherUserIsntTeammate() {
-        // given
-        for _ in 1...(Team.membersOptimalLimit - 1) { // Saving one users for later
-            team1.members.insert(Member.insertNewObject(in: fixture.uiMOC))
-        }
         let member = Member.insertNewObject(in: fixture.uiMOC)
         member.user = otherUser
         member.team = team2
@@ -96,11 +69,7 @@ final class AvailabilityStringBuilderTests: XCTestCase {
         XCTAssertNotNil(placeholderString)
     }
     
-    func testThatTheresAvailabilityInformationIfLimitIsntReached() {
-        // given
-        for _ in 1...(Team.membersOptimalLimit - 3) { // Saving two users for later + going under limit
-            team1.members.insert(Member.insertNewObject(in: fixture.uiMOC))
-        }
+    func testThatTheresAvailabilityInformationIfOtherUserIsTeamMember() {
         let member = Member.insertNewObject(in: fixture.uiMOC)
         member.user = otherUser
         member.team = team1
@@ -123,10 +92,6 @@ final class AvailabilityStringBuilderTests: XCTestCase {
     
     func testThatTheresAvailabilityInformationIfSelfUser() {
         // given
-        for _ in 1...(Team.membersOptimalLimit - 1) { // Saving one user for later
-            team1.members.insert(Member.insertNewObject(in: fixture.uiMOC))
-        }
-        
         let selfMember = Member.insertNewObject(in: fixture.uiMOC)
         selfMember.user = selfUser
         selfMember.team = team1
