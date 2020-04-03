@@ -25,7 +25,7 @@ final class LoadingViewControllerTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        sut = MockLoadingSpinnerViewController()
+        sut = UIViewController()
         sut.view.backgroundColor = .white
     }
     
