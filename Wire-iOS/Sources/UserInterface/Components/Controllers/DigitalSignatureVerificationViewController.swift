@@ -22,10 +22,11 @@ import WebKit
 
 class DigitalSignatureVerificationViewController: UIViewController {
 
-    typealias DigitalSignatureCompletion = ((_ result: VoidResult?) -> Void)
+    typealias DigitalSignatureCompletion = ((_ result: VoidResult) -> Void)
     
     // MARK: - Error states
     private enum VerificationError: Error {
+        case postCodeRetry
         case authenticationFailed
         case internalServerError
     }
@@ -49,7 +50,6 @@ class DigitalSignatureVerificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setupWebView()
         loadURL()
     }
@@ -65,7 +65,10 @@ class DigitalSignatureVerificationViewController: UIViewController {
     }
     
     private func updateButtonMode() {
-        let buttonItem = UIBarButtonItem(title: "general.done".localized, style: .done, target: self, action: #selector(DigitalSignatureVerificationViewController.onClose))
+        let buttonItem = UIBarButtonItem(title: "general.done".localized,
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(onClose))
         buttonItem.accessibilityIdentifier = "DoneButton"
         buttonItem.accessibilityLabel = "general.done".localized
         buttonItem.tintColor = UIColor.black
@@ -85,12 +88,15 @@ class DigitalSignatureVerificationViewController: UIViewController {
 
 // MARK: - WKNavigationDelegate
 extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard 
+    func webView(_ webView: WKWebView,
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard
             let url = navigationAction.request.url,
-            let response = parse(url) else {
-                decisionHandler(.allow)
-                return
+            let response = parseVerificationURL(url)
+        else {
+            decisionHandler(.allow)
+            return
         }
         
         switch response {
@@ -103,14 +109,15 @@ extension DigitalSignatureVerificationViewController: WKNavigationDelegate {
         }
     }
     
-    func parse(_ url: URL) -> VoidResult? {
+    func parseVerificationURL(_ url: URL) -> VoidResult? {
         let urlComponents = URLComponents(string: url.absoluteString)
-        let postCode = urlComponents?.queryItems?.first(where: { $0.name == "postCode" })
+        let postCode = urlComponents?.queryItems?
+            .first(where: { $0.name == "postCode" })
         guard let  postCodeValue = postCode?.value else {
             return nil
         }
         switch postCodeValue {
-            case "sas-success":
+        case "sas-success":
             return .success
         case "sas-error-authentication-failed":
              return .failure(VerificationError.authenticationFailed)

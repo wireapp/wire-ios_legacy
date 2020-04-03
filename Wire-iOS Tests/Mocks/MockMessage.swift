@@ -150,6 +150,10 @@ final class MockPassFileMessageData: NSObject, ZMFileMessageData {
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
     }
+    
+    func retrievePDFSignature() {
+        // no-op
+    }
 }
 
 final class MockFileMessageData: NSObject, ZMFileMessageData {
@@ -205,6 +209,10 @@ final class MockFileMessageData: NSObject, ZMFileMessageData {
     
     func signPDFDocument(observer: SignatureObserver) -> Any? {
         return nil
+    }
+    
+    func retrievePDFSignature() {
+        // no-op
     }
 }
 
