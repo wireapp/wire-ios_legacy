@@ -48,13 +48,10 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         self.variant = variant
         
-        let allParticipants = conversation.sortedOtherParticipants
-        
         viewModel = GroupParticipantsDetailViewModel(
-            participants: allParticipants,
             selectedParticipants: selectedParticipants,
-            conversation: conversation
-        )
+            conversation: conversation)
+        
         collectionViewController = SectionCollectionViewController()
         
         super.init(nibName: nil, bundle: nil)
@@ -77,8 +74,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
         
         if firstLayout {
             firstLayout = false
-            ///TODO: Katarina this need to be restored?
-//            scrollToFirstHighlightedUser()
+            scrollToFirstHighlightedUser()
         }
     }
     
@@ -136,8 +132,7 @@ final class GroupParticipantsDetailViewController: UIViewController {
     }
     
     private func scrollToFirstHighlightedUser() {
-        if let idx = viewModel.indexOfFirstSelectedParticipant {
-            let indexPath = IndexPath(row: idx, section: 0)
+        if let indexPath = viewModel.indexPathOfFirstSelectedParticipant {
             collectionView.scrollToItem(at: indexPath, at: .top, animated: false)
         }
     }
@@ -184,7 +179,7 @@ private final class SelectedUserCell: UserCell {
 
 extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDelegate {
     
-    func presentDetails(for user: ZMUser) {
+    func presentDetails(for user: UserType) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
             conversation: viewModel.conversation,
@@ -225,11 +220,11 @@ extension GroupParticipantsDetailViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
             //no-op
     }
 }

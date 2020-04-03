@@ -29,7 +29,7 @@ final class MessagePresenterTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        mediaPlaybackManager = MediaPlaybackManager()
+        mediaPlaybackManager = MediaPlaybackManager(name: nil)
         sut = MessagePresenter(mediaPlaybackManager: mediaPlaybackManager)
         UIView.setAnimationsEnabled(false)
 

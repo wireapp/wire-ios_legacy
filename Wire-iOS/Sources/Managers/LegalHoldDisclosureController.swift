@@ -94,7 +94,7 @@ import UIKit
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if let session = self.userSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: session)
+            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, in: session)
         }
     }
 

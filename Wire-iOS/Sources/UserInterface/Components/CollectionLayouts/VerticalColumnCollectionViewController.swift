@@ -61,7 +61,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
      * - parameter columnCount: The number of columns to show depending on the current size class.
      */
 
-    public init(interItemSpacing: CGFloat, interColumnSpacing: CGFloat, columnCount: AdaptiveColumnCount) {
+    init(interItemSpacing: CGFloat, interColumnSpacing: CGFloat, columnCount: AdaptiveColumnCount) {
         layout = VerticalColumnCollectionViewLayout()
         layout.interItemSpacing = interItemSpacing
         layout.interColumnSpacing = interColumnSpacing
@@ -69,18 +69,17 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
         self.columnCount = columnCount
         super.init(collectionViewLayout: layout)
         layout.delegate = self
+
+        if #available(iOS 11.0, *) {
+            collectionView?.contentInsetAdjustmentBehavior = .never
+        }
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - View lifecycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateLayout()
-    }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
@@ -90,7 +89,7 @@ class VerticalColumnCollectionViewController: UICollectionViewController, Vertic
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateLayout()
+        updateLayout()
     }
 
     // MARK: - Size Changes

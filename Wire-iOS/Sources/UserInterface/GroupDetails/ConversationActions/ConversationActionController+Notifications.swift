@@ -85,7 +85,7 @@ extension ConversationActionController {
 
     func handleNotificationResult(_ result: NotificationResult, for conversation: ZMConversation) {
         if let mutedMessageTypes = result.mutedMessageTypes {
-            ZMUserSession.shared()?.performChanges {
+            ZMUserSession.shared()?.perform {
                 conversation.mutedMessageTypes = mutedMessageTypes
             }
         }

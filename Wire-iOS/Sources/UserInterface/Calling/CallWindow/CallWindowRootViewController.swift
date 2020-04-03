@@ -36,16 +36,24 @@ final class CallWindowRootViewController: UIViewController {
         return callController?.activeCallViewController != nil
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return callController?.activeCallViewController?.prefersStatusBarHidden ?? false
+    private var child: UIViewController? {
+        return callController?.activeCallViewController ?? topmostViewController()
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return callController?.activeCallViewController?.preferredStatusBarStyle ?? .default
+
+    override var childForStatusBarStyle: UIViewController? {
+        return child
     }
-    
+
+    override var childForStatusBarHidden: UIViewController? {
+        return child
+    }
+
     override var shouldAutorotate: Bool {
-        return topmostViewController()?.shouldAutorotate ?? true
+        if isHorizontalSizeClassRegular {
+            return topmostViewController()?.shouldAutorotate ?? true
+        }
+        
+        return false
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

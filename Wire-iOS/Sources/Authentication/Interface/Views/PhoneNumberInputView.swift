@@ -35,7 +35,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     weak var delegate: PhoneNumberInputViewDelegate?
 
     /// The currently selected country.
-    private(set) var country = Country.default
+    private(set) var country = Country.defaultCountry
 
     /// The validation error for the current input.
     private(set) var validationError: TextFieldValidator.ValidationError? = .tooShort(kind: .phoneNumber)
@@ -118,7 +118,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
         textField.textFieldValidationDelegate = self
         inputStack.addArrangedSubview(textField)
 
-        selectCountry(.default)
+        selectCountry(.defaultCountry)
     }
 
     private func configureConstraints() {
@@ -267,7 +267,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
             return shouldInsert(phoneNumber: updatedString)
         }
 
-        var number = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: updatedString)
+        var number = PhoneNumber(countryCode: country.e164, numberWithoutCode: updatedString)
 
         switch number.validate() {
         case .containsInvalidCharacters, .tooLong:
@@ -334,7 +334,7 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
 
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?) {
         self.validationError = error
-        let phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: input)
+        let phoneNumber = PhoneNumber(countryCode: country.e164, numberWithoutCode: input)
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
     }
 
@@ -350,9 +350,9 @@ class PhoneNumberInputView: UIView, UITextFieldDelegate, TextFieldValidationDele
     }
 
     func submitValue() {
-        var phoneNumber = PhoneNumber(countryCode: country.e164.uintValue, numberWithoutCode: textField.input)
+        var phoneNumber = PhoneNumber(countryCode: country.e164, numberWithoutCode: textField.input)
         let validationResult = phoneNumber.validate()
-        
+
         delegate?.phoneNumberInputView(self, didValidatePhoneNumber: phoneNumber, withResult: validationError)
 
         if validationError == nil && validationResult == .valid {

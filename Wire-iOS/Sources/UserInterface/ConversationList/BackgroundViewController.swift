@@ -22,7 +22,7 @@ import Cartography
 import WireSyncEngine
 
 
-final public class BackgroundViewController: UIViewController {
+final class BackgroundViewController: UIViewController {
     
     var dispatchGroup: DispatchGroup = DispatchGroup()
     
@@ -50,7 +50,7 @@ final public class BackgroundViewController: UIViewController {
         super.init(nibName: .none, bundle: .none)
         
         if let userSession = userSession {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self,
@@ -63,7 +63,7 @@ final public class BackgroundViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
         self.configureViews()
@@ -73,17 +73,16 @@ final public class BackgroundViewController: UIViewController {
         self.updateForColorScheme()
     }
     
-    public override var prefersStatusBarHidden: Bool {
-        return false
+    private var child: UIViewController? {
+        return children.first
     }
-
-    public override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let child = children.first {
-            return child.preferredStatusBarStyle
-        }
-        else {
-            return .lightContent
-        }
+    
+    override var childForStatusBarStyle: UIViewController? {
+        return child
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return child
     }
     
     private func configureViews() {
@@ -180,14 +179,10 @@ final public class BackgroundViewController: UIViewController {
         }
     }
     
-    static let ciContext: CIContext = {
-        return CIContext()
-    }()
-    
     static let backgroundScaleFactor: CGFloat = 1.4
     
     static func blurredAppBackground(with imageData: Data) -> UIImage? {
-        return UIImage(from: imageData, withMaxSize: 40)?.desaturatedImage(with: BackgroundViewController.ciContext, saturation: 2)
+        return UIImage(from: imageData, withMaxSize: 40)?.desaturatedImage(with: CIContext.shared, saturation: 2)
     }
         
     fileprivate func setBackground(color: UIColor) {

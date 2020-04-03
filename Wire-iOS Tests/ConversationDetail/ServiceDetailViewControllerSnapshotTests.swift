@@ -23,15 +23,15 @@ import XCTest
 final class ServiceDetailViewControllerSnapshotTests: CoreDataSnapshotTestCase {
     
     var sut: ServiceDetailViewController!
-    var serviceUser: ZMUser!
+    var serviceUser: MockServiceUserType!
     var groupConversation: ZMConversation!
-    var mockSelfUser: SwiftMockUser!
+    var mockSelfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
-        serviceUser = createServiceUser()
+        serviceUser = .createServiceUser(name: "ServiceUser")
         groupConversation = createGroupConversation()
-        mockSelfUser = SwiftMockUser()
+        mockSelfUser = .createSelfUser(name: "Bob")
     }
     
     override func tearDown() {

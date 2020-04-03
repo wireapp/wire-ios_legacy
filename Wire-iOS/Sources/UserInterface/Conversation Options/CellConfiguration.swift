@@ -24,12 +24,6 @@ protocol CellConfigurationConfigurable: Reusable {
 
 enum CellConfiguration {
     typealias Action = (UIView?) -> Void
-    case toggle(title: String,
-                subtitle: String,
-                identifier: String,
-                titleIdentifier: String,
-                get: () -> Bool,
-                set: (Bool) -> Void)
     case linkHeader
     case leadingButton(title: String, identifier: String, action: Action)
     case loading
@@ -38,18 +32,19 @@ enum CellConfiguration {
                     icon: StyleKitIcon,
                     color: UIColor?,
                     action: Action)
+    
+    ///For toggle without icon, leave icon and color nil
     case iconToggle(title: String,
         subtitle: String,
         identifier: String,
         titleIdentifier: String,
-        icon: StyleKitIcon,
+        icon: StyleKitIcon?,
         color: UIColor?,
         get: () -> Bool,
         set: (Bool) -> Void)
 
     var cellType: CellConfigurationConfigurable.Type {
         switch self {
-        case .toggle: return ToggleSubtitleCell.self
         case .iconToggle: return IconToggleSubtitleCell.self
         case .linkHeader: return LinkHeaderCell.self
         case .leadingButton: return ActionCell.self
@@ -61,8 +56,7 @@ enum CellConfiguration {
     
     var action: Action? {
         switch self {
-        case .toggle,
-             .iconToggle,
+        case .iconToggle,
              .linkHeader,
              .loading,
              .text: return nil
@@ -75,7 +69,7 @@ enum CellConfiguration {
     
     static var allCellTypes: [UITableViewCell.Type] {
         return [
-            ToggleSubtitleCell.self,
+            IconToggleSubtitleCell.self,
             LinkHeaderCell.self,
             ActionCell.self,
             LoadingIndicatorCell.self,

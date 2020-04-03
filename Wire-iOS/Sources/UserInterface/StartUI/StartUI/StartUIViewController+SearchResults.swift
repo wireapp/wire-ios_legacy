@@ -37,11 +37,16 @@ extension StartUIViewController {
                     self.searchHeaderViewController.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
-        }, arrowDirection: .left)
+        })
     }
 }
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
+
+    private func unboxedUser(from user: UserType) -> ZMUser? {
+      return (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
+    }
+
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
@@ -49,7 +54,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = user.zmUser {
+        } else if let unboxed = unboxedUser(from: user) {
             delegate?.startUI(self, didSelect: [unboxed])
         }
     }
@@ -58,7 +63,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
     
-        guard let unboxedUser = user.zmUser, unboxedUser.isConnected, !unboxedUser.isBlocked else {
+        guard let unboxedUser = unboxedUser(from: user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
             return
         }
         
@@ -112,7 +117,6 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         if self.traitCollection.horizontalSizeClass == .compact {
             let avoiding = KeyboardAvoidingViewController(viewController: controller)
             self.navigationController?.pushViewController(avoiding, animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
             }
         }
         else {
@@ -129,7 +133,7 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         GuestRoomEvent.created.track()
         showLoadingView = true
-        userSession.performChanges { [weak self] in
+        userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 
             if let conversation = ZMConversation.insertGroupConversation(session: userSession,
@@ -146,7 +150,6 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
     func dismiss(controller: ConversationCreationController, completion: (() -> Void)? = nil) {
         if traitCollection.horizontalSizeClass == .compact {
             navigationController?.popToRootViewController(animated: true) {
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                 completion?()
             }
         } else {
@@ -156,13 +159,17 @@ extension StartUIViewController: ConversationCreationControllerDelegate {
     
     func conversationCreationController(_ controller: ConversationCreationController,
                                         didSelectName name: String,
-                                        participants: Set<ZMUser>,
+                                        participants: UserSet,
                                         allowGuests: Bool,
                                         enableReceipts: Bool) {
         dismiss(controller: controller) { [weak self] in
             guard let weakSelf = self else { return }
 
-            weakSelf.delegate?.startUI(weakSelf, createConversationWith: participants, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+            weakSelf.delegate?.startUI(weakSelf,
+                                       createConversationWith: participants,
+                                       name: name,
+                                       allowGuests: allowGuests,
+                                       enableReceipts: enableReceipts)
         }
     }
     

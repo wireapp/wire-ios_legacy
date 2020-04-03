@@ -63,10 +63,6 @@ final class FolderCreationController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,18 +73,13 @@ final class FolderCreationController: UIViewController {
         setupViews()
         
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.wr_currentFirst() {
+        if let _ = UIResponder.currentFirst {
             nameSection.becomeFirstResponder()
         }
     }
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         return colorSchemeVariant == .light ? .default : .lightContent
-    }
-    
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override public func viewDidAppear(_ animated: Bool) {
@@ -149,7 +140,7 @@ final class FolderCreationController: UIViewController {
             nameSection.resignFirstResponder()
             folderName = trimmed
             
-            if let folder = ZMUserSession.shared()?.conversationDirectory?.createFolder(folderName) {
+            if let folder = ZMUserSession.shared()?.conversationDirectory.createFolder(folderName) {
                 self.delegate?.folderController(self, didCreateFolder: folder)
             }
         }

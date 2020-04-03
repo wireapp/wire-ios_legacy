@@ -22,7 +22,7 @@ extension Analytics {
     @objc public func guestAttributes(in conversation: ZMConversation) -> [String : Any] {
         return [
             "is_allow_guests" : conversation.allowGuests,
-            "user_type" : ZMUser.selfUser().isGuest(in: conversation) ? "guest" : "user"
+            "user_type" : SelfUser.current.isGuest(in: conversation) ? "guest" : "user"
         ]
     }
 }
@@ -35,7 +35,7 @@ protocol Event {
 extension Analytics {
     
     func tag(_ event: Event) {
-        tagEvent(event.name, attributes: event.attributes ?? [:])
+        tagEvent(event.name, attributes: event.attributes as? [String : NSObject] ?? [:])
     }
     
 }

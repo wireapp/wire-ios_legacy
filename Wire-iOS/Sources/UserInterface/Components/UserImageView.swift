@@ -141,13 +141,11 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Returns the placeholder background color for the user.
     private func containerBackgroundColor(for user: UserType) -> UIColor? {
-        let isWireless = user.zmUser?.isWirelessUser == true
-
         switch self.avatar {
         case .image?, nil:
             return user.isServiceUser ? .white : .clear
         case .text?:
-            if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
+            if user.isConnected || user.isSelfUser || user.isTeamMember || user.isWirelessUser {
                 return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)
@@ -175,7 +173,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
             self.container.backgroundColor = self.containerBackgroundColor(for: user)
         }
 
-        if animated {
+        if animated && !ProcessInfo.processInfo.isRunningTests {
             UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: updateBlock, completion: nil)
         } else {
             updateBlock()
@@ -184,8 +182,12 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     /// Updates the image for the user.
     fileprivate func updateUserImage() {
-        guard let user = user as? ProfileImageFetchableUser,
-              let userSession = userSession else { return }
+        guard
+            let user = user,
+            let userSession = userSession
+        else {
+            return
+        }
 
         var desaturate = false
         if shouldDesaturate {
@@ -193,9 +195,9 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         }
 
         user.fetchProfileImage(session: userSession,
-                               cache: defaultUserImageCache,
+                               imageCache: UIImage.defaultUserImageCache,
                                sizeLimit: size.rawValue,
-                               desaturate: desaturate,
+                               isDesaturated: desaturate,
                                completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }
@@ -233,7 +235,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         setAvatar(defaultAvatar, user: user, animated: false)
 
         if let userSession = userSession as? ZMUserSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 
         updateForServiceUserIfNeeded(user)

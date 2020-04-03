@@ -20,10 +20,6 @@ import UIKit
 
 class GiphyNavigationController: UINavigationController {
 
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.variant == .dark ? .lightContent : .default
     }

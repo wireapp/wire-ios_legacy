@@ -297,23 +297,17 @@ class PopUpIconButtonView: UIView {
         
         switch expandDirection {
         case .left:
-            var selection = 0
-            
-            for (index, icon) in button.itemIcons.enumerated() {
-                if point.x < rectForItem(icon)!.maxX {
-                    selection = index
-                }
-            }
+            let selection = button.itemIcons.enumerated()
+                .filter { index, icon in point.x < rectForItem(icon)!.maxX }
+                .map { index, icon in index }
+                .last ?? 0
             selectedIndex = selection
             
         case .right:
-            var selection = 0
-            
-            for (index, icon) in button.itemIcons.enumerated() {
-                if point.x > rectForItem(icon)!.origin.x {
-                    selection = index
-                }
-            }
+            let selection = button.itemIcons.enumerated()
+                .filter { index, icon in point.x > rectForItem(icon)!.origin.x }
+                .map { index, icon in index }
+                .last ?? 0
             selectedIndex = selection
         }
         

@@ -34,12 +34,14 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     var participantsDidChange: (() -> Void)? = nil
     
     fileprivate var token: NSObjectProtocol?
-
-    var indexOfFirstSelectedParticipant: Int? {
-        guard let first = selectedParticipants.first as? ZMUser else { return nil }
-        return internalParticipants.firstIndex {
-            ($0 as? ZMUser)?.remoteIdentifier == first.remoteIdentifier
-        }
+    
+    var indexPathOfFirstSelectedParticipant: IndexPath? {
+        guard let user = selectedParticipants.first as? ZMUser else { return nil }
+        guard let row = (internalParticipants.firstIndex {
+            ($0 as? ZMUser)?.remoteIdentifier == user.remoteIdentifier
+        }) else { return nil }
+        let section = user.isGroupAdmin(in: conversation) ? 0 : 1
+        return IndexPath(row: row, section: section)
     }
     
     var participants = [UserType]() {
@@ -51,8 +53,9 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     var admins = [UserType]()
     var members = [UserType]()
 
-    init(participants: [UserType], selectedParticipants: [UserType], conversation: ZMConversation) {
-        internalParticipants = participants
+    init(selectedParticipants: [UserType],
+         conversation: ZMConversation) {
+        internalParticipants = conversation.sortedOtherParticipants
         self.conversation = conversation
         self.selectedParticipants = selectedParticipants.sorted { $0.name < $1.name }
         
@@ -72,18 +75,19 @@ final class GroupParticipantsDetailViewModel: NSObject, SearchHeaderViewControll
     }
     
     private func computeParticipantGroups()  {
-        admins = participants.filter({$0.isAdminGroup(conversation: conversation)})
-        members = participants.filter({!$0.isAdminGroup(conversation: conversation)})
+        admins = participants.filter({$0.isGroupAdmin(in: conversation)})
+        members = participants.filter({!$0.isGroupAdmin(in: conversation)})
     }
     
     private func filterPredicate(for query: String) -> NSPredicate {
+        let trimmedQuery = query.trim()
         var predicates = [
-            NSPredicate(format: "name contains[cd] %@", query),
-            NSPredicate(format: "handle contains[cd] %@", query)
+            NSPredicate(format: "name contains[cd] %@", trimmedQuery),
+            NSPredicate(format: "handle contains[cd] %@", trimmedQuery)
         ]
 
         if query.hasPrefix("@") {
-            predicates.append(.init(format: "handle contains[cd] %@", String(query.dropFirst())))
+            predicates.append(.init(format: "handle contains[cd] %@", String(trimmedQuery.dropFirst())))
         }
         
         return NSCompoundPredicate(orPredicateWithSubpredicates: predicates)

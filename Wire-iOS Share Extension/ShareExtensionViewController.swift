@@ -70,8 +70,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         return imageView
     }()
 
-    var netObserver = ShareExtensionNetworkObserver()
-
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
@@ -118,7 +116,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -221,9 +218,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
 
-        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, urlCompletionHandler: { (url, error) in
+        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            guard let url = url, url.isFileURL else { return }
+            guard let url = url as? URL, url.isFileURL else { return }
 
             let filename = url.lastPathComponent
             let separator = self.textView.text.isEmpty ? "" : "\n"
@@ -525,7 +522,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let users = change.users
         let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
     
-        let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
+        let allUsers = (users.compactMap(\.name) as NSArray).componentsJoined(by: ", ") as NSString
         return String.localizedStringWithFormat(template.localized, allUsers)
     }
 

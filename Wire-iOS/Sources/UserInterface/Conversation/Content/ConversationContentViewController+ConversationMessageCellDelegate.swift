@@ -49,9 +49,8 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     func perform(action: MessageAction,
                         for message: ZMConversationMessage!,
                         view: UIView) {
-        guard let dataSource = dataSource else { return }
         let actionView = view.targetView(for: message, dataSource: dataSource)
-        
+
         ///Do not dismiss Modal for forward since share VC is present in a popover
         let shouldDismissModal = action != .delete && action != .copy &&
             !(action == .forward && isIPadRegular())
@@ -71,7 +70,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
-        delegate?.didTap?(onUserAvatar: user, view: sourceView, frame: frame)
+        delegate?.didTap(onUserAvatar: user, view: sourceView, frame: frame)
     }
 
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
@@ -86,8 +85,12 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         delegate?.conversationContentViewController(self, presentGuestOptionsFrom: sourceView)
     }
 
-    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView) {
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView) {
         delegate?.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
+    }
+
+    func conversationMessageShouldUpdate() {
+        dataSource.loadMessages(forceRecalculate: true)
     }
 
 }

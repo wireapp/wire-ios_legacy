@@ -85,14 +85,14 @@ extension AddParticipantsViewController.Context {
     }
 }
 
-final public class AddParticipantsViewController: UIViewController {
+final class AddParticipantsViewController: UIViewController {
     
-    public enum CreateAction {
-        case updatedUsers(Set<ZMUser>)
+    enum CreateAction {
+        case updatedUsers(UserSet)
         case create
     }
     
-    public enum Context {
+    enum Context {
         case add(ZMConversation)
         case create(ConversationCreationValues)
     }
@@ -124,20 +124,20 @@ final public class AddParticipantsViewController: UIViewController {
         userSelection.remove(observer: self)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    convenience public init(conversation: ZMConversation) {
+    convenience init(conversation: ZMConversation) {
         self.init(context: .add(conversation))
     }
     
-    public override func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
 
@@ -167,7 +167,7 @@ final public class AddParticipantsViewController: UIViewController {
         confirmButton.backgroundColor = UIColor.accent()
         confirmButton.contentHorizontalAlignment = .center
         confirmButton.setTitleImageSpacing(16, horizontalMargin: 24)
-        confirmButton.roundCorners = true
+        confirmButton.hasRoundCorners = true
         
         
 
@@ -179,7 +179,7 @@ final public class AddParticipantsViewController: UIViewController {
                                                                   isAddingParticipants: true,
                                                                   shouldIncludeGuests: viewModel.context.includeGuests)
 
-        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: ZMUser.selfUser().canManageTeam)
+        emptyResultView = EmptySearchResultsView(variant: self.variant, isSelfUserAdmin: SelfUser.current.canManageTeam)
         super.init(nibName: nil, bundle: nil)
         
         emptyResultView.delegate = self
@@ -330,19 +330,21 @@ final public class AddParticipantsViewController: UIViewController {
             return
         }
         
-        let firstResponder = UIResponder.wr_currentFirst()
+        let firstResponder = UIResponder.currentFirst
         let inputAccessoryHeight = firstResponder?.inputAccessoryView?.bounds.size.height ?? 0
         
-        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { (keyboardFrameInView) in
+        UIView.animate(withKeyboardNotification: notification, in: self.view, animations: { [weak self] (keyboardFrameInView) in
+            guard let weakSelf = self else { return }
+
             let keyboardHeight = keyboardFrameInView.size.height - inputAccessoryHeight
             let margin: CGFloat = {
-                guard UIScreen.hasNotch, keyboardHeight > 0 else { return self.bottomMargin }
-                return -self.bottomMargin
+                guard UIScreen.hasNotch, keyboardHeight > 0 else { return weakSelf.bottomMargin }
+                return -weakSelf.bottomMargin
             }()
             
-            self.bottomConstraint?.constant = -(keyboardHeight + margin)
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+            weakSelf.bottomConstraint?.constant = -(keyboardHeight + margin)
+            weakSelf.view.layoutIfNeeded()
+        })
     }
     
     fileprivate func performSearch() {
@@ -367,21 +369,21 @@ final public class AddParticipantsViewController: UIViewController {
     fileprivate func addSelectedParticipants(to conversation: ZMConversation) {
         let selectedUsers = self.userSelection.users
         
-        conversation.addOrShowError(participants: selectedUsers)
+        conversation.addOrShowError(participants: Array(selectedUsers))
     }
 }
 
 extension AddParticipantsViewController : UserSelectionObserver {
     
-    public func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+    func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
+    func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         updateSelectionValues()
     }
     
-    public func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
+    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         updateSelectionValues()
     }
     
@@ -389,7 +391,7 @@ extension AddParticipantsViewController : UserSelectionObserver {
 
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
-    public func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
+    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
             self.dismiss(animated: true) {
                 self.addSelectedParticipants(to: conversation)
@@ -398,7 +400,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
         }
     }
     
-    public func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
+    func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
         self.performSearch()
     }
     
@@ -406,34 +408,34 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
 
 extension AddParticipantsViewController : UIPopoverPresentationControllerDelegate {
 
-    public func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
     
-    public func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return UIModalPresentationStyle.overFullScreen
     }
     
 }
 
 extension AddParticipantsViewController: SearchResultsViewControllerDelegate {
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnConversation conversation: ZMConversation) {
         // no-op
     }
     
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction) {
         // no-op
     }
 
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnSeviceUser user: ServiceUser) {
         guard case let .add(conversation) = viewModel.context else { return }
         let detail = ServiceDetailViewController(
             serviceUser: user,

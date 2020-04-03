@@ -20,8 +20,9 @@ import Foundation
 import WireCommonComponents
 import WireShareEngine
 import Cartography
+import SystemConfiguration
 
-class SendingProgressViewController : UIViewController {
+final class SendingProgressViewController : UIViewController {
 
     enum ProgressMode {
         case preparing, sending
@@ -74,9 +75,10 @@ class SendingProgressViewController : UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(onCancelTapped))
         
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(SendingProgressViewController.networkStatusDidChange(_:)),
-                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               name: Notification.Name.NetworkStatus,
                                                object: nil)
         
         circularShadow.lineWidth = 2
@@ -111,7 +113,7 @@ class SendingProgressViewController : UIViewController {
 
         updateProgressMode()
         
-        let reachability = NetworkStatus.shared().reachability()
+        let reachability = NetworkStatus.shared.reachability
         setReachability(from: reachability)
     }
     
@@ -119,17 +121,19 @@ class SendingProgressViewController : UIViewController {
         cancelHandler?()
     }
     
-    @objc func networkStatusDidChange(_ notification: Notification) {
+    @objc
+    private func networkStatusDidChange(_ notification: Notification) {
         if let status = notification.object as? NetworkStatus {
-            setReachability(from: status.reachability())
+            setReachability(from: status.reachability)
         }
     }
     
-    func setReachability(from reachability: ServerReachability) {
-        
+    func setReachability(from reachability: ServerReachability) {        
         switch reachability {
-            case .OK: connectionStatusLabel.isHidden = true; break;
-            case .unreachable: connectionStatusLabel.isHidden = false; break;
+            case .ok:
+                connectionStatusLabel.isHidden = true
+            case .unreachable:
+                connectionStatusLabel.isHidden = false
         }
     }
 

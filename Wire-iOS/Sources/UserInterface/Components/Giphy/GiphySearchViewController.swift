@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import Ziphy
+import FLAnimatedImage
 
 @objc protocol GiphySearchViewControllerDelegate: NSObjectProtocol {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
@@ -67,6 +68,10 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         cleanUpPendingTask()
         cleanUpPendingTimer()
     }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
 
     fileprivate func cleanUpPendingTask() {
         pendingSearchtask?.cancel()
@@ -82,34 +87,33 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        extendedLayoutIncludesOpaqueBars = true
-
-        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
-        noResultsLabel.isHidden = true
-        view.addSubview(noResultsLabel)
-
-        collectionView?.showsVerticalScrollIndicator = false
-        collectionView?.accessibilityIdentifier = "giphyCollectionView"
-        collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
-
+        setupNoResultLabel()
+        setupCollectionView()
         setupNavigationItem()
         createConstraints()
         applyStyle()
     }
 
-    private func createConstraints() {
-        constrain(view, noResultsLabel) { container, noResultsLabel in
-            noResultsLabel.center == container.center
-        }
+    private func setupNoResultLabel() {
+        extendedLayoutIncludesOpaqueBars = true
+        
+        noResultsLabel.text = "giphy.error.no_result".localized(uppercased: true)
+        noResultsLabel.isHidden = true
+        view.addSubview(noResultsLabel)
     }
-
-    private func applyStyle() {
-        collectionView?.backgroundColor = UIColor.from(scheme: .background)
-        noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
-        noResultsLabel.font = UIFont.smallLightFont
+    
+    private func setupCollectionView() {
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.accessibilityIdentifier = "giphyCollectionView"
+        collectionView?.register(GiphyCollectionViewCell.self, forCellWithReuseIdentifier: GiphyCollectionViewCell.CellIdentifier)
+        let offset = navigationController?.navigationBar.frame.maxY ?? 0
+        edgesForExtendedLayout = []
+        collectionView.contentInset = UIEdgeInsets(top: offset,
+                                                   left: 0,
+                                                   bottom: 0,
+                                                   right: 0)
     }
-
+    
     private func setupNavigationItem() {
         searchBar.text = searchTerm
         searchBar.delegate = self
@@ -127,14 +131,26 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
         self.navigationItem.titleView = searchBar
     }
 
+    private func createConstraints() {
+        constrain(view, noResultsLabel) { container, noResultsLabel in
+            noResultsLabel.center == container.center
+        }
+    }
+    
+    private func applyStyle() {
+        collectionView?.backgroundColor = UIColor.from(scheme: .background)
+        noResultsLabel.textColor = UIColor.from(scheme: .textPlaceholder)
+        noResultsLabel.font = UIFont.smallLightFont
+    }
+    
     // MARK: - Presentation
 
-    @objc func wrapInsideNavigationController() -> UINavigationController {
+    func wrapInsideNavigationController() -> UINavigationController {
         let navigationController = GiphyNavigationController(rootViewController: self)
 
-        var backButtonImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black)
-        backButtonImage = backButtonImage.withInsets(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)
-        backButtonImage = backButtonImage.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
+        let backButtonImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black)
+            .with(insets: UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0), backgroundColor: .clear)?
+            .withAlignmentRectInsets(UIEdgeInsets(top: 0, left: 0, bottom: -4, right: 0))
         navigationController.navigationBar.backIndicatorImage = backButtonImage
         navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
 

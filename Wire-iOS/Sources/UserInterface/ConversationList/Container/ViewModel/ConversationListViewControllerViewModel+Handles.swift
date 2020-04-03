@@ -69,7 +69,7 @@ extension ConversationListViewController.ViewModel: UserNameTakeOverViewControll
         perform(action)
 
         // show data usage dialog after user name take over screen
-        ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
+        ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
     }
 }
 
@@ -105,8 +105,8 @@ extension ConversationListViewController.ViewModel {
 
         viewController?.showUsernameTakeover(suggestedHandle: handle, name: name)
 
-        if ZClientViewController.shared()?.traitCollection.userInterfaceIdiom == .pad {
-            ZClientViewController.shared()?.loadPlaceholderConversationController(animated: false)
+        if ZClientViewController.shared?.traitCollection.userInterfaceIdiom == .pad {
+            ZClientViewController.shared?.loadPlaceholderConversationController(animated: false)
         }
     }
 

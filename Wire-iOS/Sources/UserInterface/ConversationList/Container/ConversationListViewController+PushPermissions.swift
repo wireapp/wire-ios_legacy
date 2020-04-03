@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 extension ConversationListViewController: PermissionDeniedViewControllerDelegate {
     public func continueWithoutPermission(_ viewController: PermissionDeniedViewController) {
@@ -49,7 +50,7 @@ extension ConversationListViewController {
     func showPermissionDeniedViewController() {
         observeApplicationDidBecomeActive()
 
-        let permissions = PermissionDeniedViewController.push()
+        let permissions = PermissionDeniedViewController.pushDeniedViewController()
 
         permissions.delegate = self
 

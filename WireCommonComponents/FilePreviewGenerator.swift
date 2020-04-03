@@ -22,6 +22,7 @@ import MobileCoreServices
 import ImageIO
 import AVFoundation
 import CoreGraphics
+import UIKit
 
 extension URL {
     public func UTI() -> String {

@@ -196,7 +196,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
     }
     
     private func updateTitleLabel() {
-        guard let user = self.user else {
+        guard let user = user else {
             return
         }
         
@@ -232,12 +232,7 @@ class UserCell: SeparatorCollectionViewCell, SectionListCellType {
             guestIconView.isHidden = !ZMUser.selfUser().isTeamMember || user.isTeamMember || user.isServiceUser || hideIconView
         }
 
-        if let user = user as? ZMUser {
-            verifiedIconView.isHidden = !user.trusted() || user.clients.isEmpty
-        } else {
-            verifiedIconView.isHidden = true
-        }
-
+        verifiedIconView.isHidden = !user.isVerified
         externalUserIconView.isHidden = !user.isExternalPartner
 
         if let subtitle = subtitle, !subtitle.string.isEmpty, !hidesSubtitle {
@@ -278,15 +273,13 @@ extension UserCell {
 extension UserType {
     
     func nameIncludingAvailability(color: UIColor) -> NSAttributedString? {
-        if ZMUser.selfUser().isTeamMember, let user = self as? ZMUser {
-            return AvailabilityStringBuilder.string(for: user, with: .list, color: color)
-        } else {
-            if let name = name {
-                return NSAttributedString(string: name)
-            } else {
-                return nil
-            }
+        if ZMUser.selfUser().isTeamMember {
+            return AvailabilityStringBuilder.string(for: self, with: .list, color: color)
+        } else if let name = name{
+            return name && color
         }
+
+        return nil
     }
     
 }

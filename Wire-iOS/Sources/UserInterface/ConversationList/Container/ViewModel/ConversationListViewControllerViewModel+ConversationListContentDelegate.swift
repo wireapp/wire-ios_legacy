@@ -24,7 +24,7 @@ extension ConversationListViewController.ViewModel: ConversationListContentDeleg
     }
 
     func conversationList(_ controller: ConversationListContentController?, willSelectIndexPathAfterSelectionDeleted conv: IndexPath?) {
-        ZClientViewController.shared()?.transitionToList(animated: true, completion: nil)
+        ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
     }
 
     func conversationListDidScroll(_ controller: ConversationListContentController?) {

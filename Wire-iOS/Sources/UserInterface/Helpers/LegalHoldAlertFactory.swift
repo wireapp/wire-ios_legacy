@@ -105,7 +105,7 @@ enum LegalHoldAlertFactory {
 extension SelfLegalHoldSubject {
 
     fileprivate func acceptLegalHoldChangeAlert() {
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             self.acknowledgeLegalHoldStatus()
         }
     }

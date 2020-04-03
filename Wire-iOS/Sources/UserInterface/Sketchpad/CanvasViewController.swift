@@ -102,16 +102,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         createConstraints()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateStatusBar(onlyFullScreen: false)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar(onlyFullScreen: false)
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return ColorScheme.default.statusBarStyle
     }
@@ -184,7 +174,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         colorPickerController.willMove(toParent: self)
         view.addSubview(colorPickerController.view)
         addChild(colorPickerController)
-        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0)
+        colorPickerController.selectedColorIndex = colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0
     }
     
     func createConstraints() {

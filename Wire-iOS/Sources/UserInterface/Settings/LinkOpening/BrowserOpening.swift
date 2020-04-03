@@ -24,6 +24,10 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
 
     case safari, chrome, firefox, snowhaze, brave
 
+    typealias ApplicationOptionEnum = BrowserOpeningOption
+    static var settingKey: SettingKey = .browserOpeningRawValue
+    static var defaultPreference: ApplicationOptionEnum = .safari
+
     static var allOptions: [BrowserOpeningOption] {
         return [.safari, .chrome, .firefox, .snowhaze, .brave]
     }
@@ -47,18 +51,13 @@ enum BrowserOpeningOption: Int, LinkOpeningOption {
         case .brave: return UIApplication.shared.braveInstalled
         }
     }
-
-    static func storedPreference() -> BrowserOpeningOption {
-        return BrowserOpeningOption(rawValue: Settings.shared().browserLinkOpeningOptionRawValue) ?? .safari
-    }
-
 }
 
 extension URL {
 
     func openAsLink() -> Bool {
         log.debug("Trying to open \"\(self)\" in thrid party browser")
-        let saved = BrowserOpeningOption.storedPreference()
+        let saved = BrowserOpeningOption.storedPreference
         log.debug("Saved option to open a regular link: \(saved.displayString)")
         let app = UIApplication.shared
 

@@ -21,10 +21,10 @@ import Foundation
 extension ZClientViewController: ProfileViewControllerDelegate {
     
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
-        select(conversation, focusOnView: true, animated: true)
+        select(conversation: conversation, focusOnView: true, animated: true)
     }
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         //no-op. Profile viewer does not have function to create a group conversation.
     }
 

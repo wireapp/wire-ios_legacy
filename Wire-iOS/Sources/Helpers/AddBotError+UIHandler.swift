@@ -34,9 +34,9 @@ extension AddBotError {
     }
     
     func displayAddBotError(in viewController: UIViewController) {
-        let alert = UIAlertController(title: self.localizedTitle,
-                                      message: self.localizedMessage,
-                                      cancelButtonTitle: "general.confirm".localized)
-        viewController.present(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: localizedTitle,
+                                      message: localizedMessage,
+                                      alertAction: .confirm())
+        viewController.present(alert, animated: true)
     }
 }

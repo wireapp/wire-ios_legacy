@@ -22,7 +22,7 @@ enum ClientRemovalUIError: Error {
     case noPasswordProvided
 }
 
-final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
+final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     var userClientToDelete: UserClient
     private weak var controller: UIViewController?
     let completion: ((Error?)->())?
@@ -39,7 +39,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         
         super.init()
         
-        observerToken = ZMUserSession.shared()?.add(self)
+        observerToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
         
         requestPasswordController = RequestPasswordController(context: .removeDevice, callback: {[weak self] (password) in
             guard let password = password, !password.isEmpty else {
@@ -55,7 +55,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
 
     func startRemoval() {
         controller?.showLoadingView = true
-        ZMUserSession.shared()?.delete(userClientToDelete, with: credentials)
+        ZMUserSession.shared()?.deleteClient(userClientToDelete, credentials: credentials)
     }
     
     private func endRemoval(result: Error?) {
@@ -66,7 +66,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         // NO-OP
     }
     
-    func failedToFetchClientsWithError(_ error: Error) {
+    func failedToFetchClients(_ error: Error) {
         // NO-OP
     }
     
@@ -75,7 +75,7 @@ final class ClientRemovalObserver: NSObject, ZMClientUpdateObserver {
         endRemoval(result: nil)
     }
     
-    func failedToDeleteClientsWithError(_ error: Error) {
+    func failedToDeleteClients(_ error: Error) {
         controller?.showLoadingView = false
 
         if !passwordIsNecessaryForDelete {

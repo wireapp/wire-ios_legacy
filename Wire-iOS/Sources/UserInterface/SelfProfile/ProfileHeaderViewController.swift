@@ -94,6 +94,9 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         label.font = FontSpec(.large, .light).font!
         label.accessibilityTraits.insert(.header)
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         
         return label
     }()
@@ -117,9 +120,9 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
+    init(user: UserType, viewer: UserType = SelfUser.current, conversation: ZMConversation? = nil, options: Options) {
         self.user = user
-        isAdminRole = conversation.map(self.user.isAdminGroup) ?? false
+        isAdminRole = conversation.map(self.user.isGroupAdmin) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.options = options
@@ -138,12 +141,16 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.isAccessibilityElement = true
         imageView.accessibilityElementsHidden = false
         imageView.accessibilityIdentifier = "user image"
+        imageView.setImageConstraint(resistance: 249, hugging: 750)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-                
+        
         if let session = session {
-            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: session))
+            tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
         
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
@@ -219,18 +226,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         
-        leadingSpaceConstraint.priority = .defaultLow
-        topSpaceConstraint.priority = .defaultLow
-        trailingSpaceConstraint.priority = .defaultLow
-        bottomSpaceConstraint.priority = .defaultLow
-        
+        let widthImageConstraint = imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 164)
         NSLayoutConstraint.activate([
-            // imageView
-            imageView.widthAnchor.constraint(equalToConstant: 164),
-            imageView.heightAnchor.constraint(equalToConstant: 164),
-            
             // stackView
-            leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
+            widthImageConstraint, leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
             ])
     }
     
@@ -260,7 +259,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         let groupRoleIndicatorHidden: Bool
         switch conversation?.conversationType {
         case .group?:
-            groupRoleIndicatorHidden = !(conversation.map(user.isAdminGroup) ?? false)
+            groupRoleIndicatorHidden = !(conversation.map(user.isGroupAdmin) ?? false)
         default:
             groupRoleIndicatorHidden = true
         }

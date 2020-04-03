@@ -18,11 +18,29 @@
 
 import Foundation
 
+extension Float {
+    enum ConversationButtonMessageCell {
+        static let verticalInset: Float = 8
+    }
+}
+
 extension CGFloat {
+    
+    enum SpinnerButton {
+        static let contentInset: CGFloat = 16
+        static let iconSize: CGFloat = StyleKitIcon.Size.tiny.rawValue
+        static let spinnerBackgroundAlpha: CGFloat = 0.93
+    }
+
+    enum IconCell {
+        static let IconWidth: CGFloat = 64
+        static let IconSpacing: CGFloat = 16
+    }
+
     enum StartUI {
         static public let CellHeight: CGFloat = 56
     }
-    
+
     enum SplitView {
         static public let LeftViewWidth: CGFloat = 336
 
@@ -42,7 +60,7 @@ extension CGFloat {
 
         static let barHeight: CGFloat = 44
     }
-    
+
     enum ConversationListSectionHeader {
         static let height: CGFloat = 51
     }
@@ -59,4 +77,3 @@ extension CGFloat {
         static let imageInset: CGFloat = 2
     }
 }
-

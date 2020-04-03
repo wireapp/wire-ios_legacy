@@ -21,11 +21,11 @@ import XCTest
 
 final class LegalHoldAlertFactoryTests: ZMSnapshotTestCase {
 
-    var user: MockUser!
+    var user: MockUserType!
 
     override func setUp() {
         super.setUp()
-        user = MockUser.createSelfUser(name: "Bob the Builder", inTeam: UUID())
+        user = MockUserType.createSelfUser(name: "Bob the Builder", inTeam: UUID())
     }
     
     override func tearDown() {

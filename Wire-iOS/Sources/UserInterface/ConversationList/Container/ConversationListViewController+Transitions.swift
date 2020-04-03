@@ -23,14 +23,10 @@ import Foundation
 extension ConversationListViewController: UIViewControllerTransitioningDelegate {
 
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
 
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
 }

@@ -26,22 +26,32 @@ protocol ConversationCreationValuesConfigurable: class {
 }
 
 final public class ConversationCreationValues {
-    private var unfilteredParticipants: Set<ZMUser>
+
+    private var unfilteredParticipants: UserSet
     
     var allowGuests: Bool
     var enableReceipts: Bool
     var name: String
-    var participants: Set<ZMUser> {
+    var participants: UserSet {
         get {
-            let selfUser = ZMUser.selfUser()
-            return allowGuests ? unfilteredParticipants : unfilteredParticipants.filter({ $0.team == selfUser?.team})
+            if allowGuests {
+                return unfilteredParticipants
+            } else {
+                let selfUser = ZMUser.selfUser()
+                let filteredParticipants = unfilteredParticipants.filter {
+                    guard let selfUser = selfUser else { return false }
+                    return $0.isOnSameTeam(otherUser: selfUser)
+                }
+
+                return UserSet(filteredParticipants)
+            }
         }
         set {
             unfilteredParticipants = newValue
         }
     }
     
-    init (name: String = "", participants: Set<ZMUser> = [], allowGuests: Bool = true, enableReceipts: Bool = true) {
+    init (name: String = "", participants: UserSet = UserSet(), allowGuests: Bool = true, enableReceipts: Bool = true) {
         self.name = name
         self.unfilteredParticipants = participants
         self.allowGuests = allowGuests
@@ -51,13 +61,11 @@ final public class ConversationCreationValues {
 
 protocol ConversationCreationControllerDelegate: class {
 
-    func conversationCreationController(
-        _ controller: ConversationCreationController,
-        didSelectName name: String,
-        participants: Set<ZMUser>,
-        allowGuests: Bool,
-        enableReceipts: Bool
-    )
+    func conversationCreationController(_ controller: ConversationCreationController,
+                                        didSelectName name: String,
+                                        participants: UserSet,
+                                        allowGuests: Bool,
+                                        enableReceipts: Bool)
     
 }
 
@@ -119,9 +127,9 @@ final class ConversationCreationController: UIViewController {
     fileprivate let source: LinearGroupCreationFlowEvent.Source
 
     weak var delegate: ConversationCreationControllerDelegate?
-    private var preSelectedParticipants: Set<ZMUser>?
+    private var preSelectedParticipants: UserSet?
     
-    @objc public convenience init(preSelectedParticipants: Set<ZMUser>) {
+    public convenience init(preSelectedParticipants: UserSet) {
         self.init(source: .conversationDetails)
         self.preSelectedParticipants = preSelectedParticipants
     }
@@ -150,7 +158,7 @@ final class ConversationCreationController: UIViewController {
         setupViews()
         
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.wr_currentFirst() {
+        if let _ = UIResponder.currentFirst {
             nameSection.becomeFirstResponder()
         }
     }
@@ -159,11 +167,6 @@ final class ConversationCreationController: UIViewController {
         return colorSchemeVariant == .light ? .default : .lightContent
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         nameSection.becomeFirstResponder()

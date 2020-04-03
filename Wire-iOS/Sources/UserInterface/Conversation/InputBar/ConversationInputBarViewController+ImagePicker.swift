@@ -62,10 +62,11 @@ extension ConversationInputBarViewController {
             }
 
             if sourceType == .camera {
-                switch Settings.shared().preferredCamera {
-                case .back:
+                let settingsCamera: SettingsCamera? = Settings.shared[.preferredCamera]
+                switch settingsCamera {
+                case .back?:
                     pickerController.cameraDevice = .rear
-                case .front:
+                case .front?, .none:
                     pickerController.cameraDevice = .front
                 }
             }
@@ -80,7 +81,6 @@ extension ConversationInputBarViewController {
         }
     }
 
-    @objc
     func processVideo(info: [UIImagePickerController.InfoKey: Any],
                       picker: UIImagePickerController) {
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
@@ -112,15 +112,16 @@ extension ConversationInputBarViewController {
         }
 
         picker.showLoadingView = true
-        AVAsset.wr_convertVideo(at: videoTempURL, toUploadFormatWithCompletion: { resultURL, asset, error in
-            if error == nil && resultURL != nil {
+        AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
+            if error == nil,
+               let resultURL = resultURL {
                 self.uploadFile(at: resultURL)
             }
 
             self.parent?.dismiss(animated: true) {
                 picker.showLoadingView = false
             }
-        })
+        }
     }
 
 }

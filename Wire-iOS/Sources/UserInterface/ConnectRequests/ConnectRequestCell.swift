@@ -18,7 +18,6 @@
 
 import UIKit
 
-@objcMembers
 final class ConnectRequestCell: UITableViewCell {
 
     var acceptBlock: (() -> Void)?

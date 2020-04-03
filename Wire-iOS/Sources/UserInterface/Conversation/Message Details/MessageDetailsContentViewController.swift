@@ -273,7 +273,7 @@ extension MessageDetailsContentViewController: UICollectionViewDataSource, UICol
         let user = cells[indexPath.item].user
         let cell = collectionView.cellForItem(at: indexPath) as! UserCell
 
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), conversation: conversation)
+        let profileViewController = ProfileViewController(user: user, viewer: SelfUser.current, conversation: conversation)
         profileViewController.delegate = self
         profileViewController.viewControllerDismisser = self
 
@@ -297,11 +297,11 @@ extension MessageDetailsContentViewController: ViewControllerDismisser {
 extension MessageDetailsContentViewController: ProfileViewControllerDelegate {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
 
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         //no-op
     }
 }

@@ -146,7 +146,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             return
         }
 
-        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
@@ -220,7 +220,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!
+            UserChangeInfo.add(observer: self, for: selfUser, in: sharedSession)!
         ]
     }
 
@@ -242,7 +242,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 unauthenticatedSession.continueAfterBackupImportStep()
 
             case .executeFeedbackAction(let action):
-                currentViewController?.executeErrorFeedbackAction?(action)
+                currentViewController?.executeErrorFeedbackAction(action)
 
             case .presentAlert(let alertModel):
                 presentAlert(for: alertModel)
@@ -291,7 +291,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 advanceTeamCreation(value: newValue)
 
             case .displayInlineError(let error):
-                currentViewController?.displayError?(error)
+                currentViewController?.displayError(error)
 
             case .assignRandomProfileImage:
                 assignRandomProfileImage()
@@ -314,6 +314,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
 
+            case .startSSOFlow:
+                startAutomaticSSOFlow()
+                
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
 
@@ -438,7 +441,7 @@ extension AuthenticationCoordinator {
 
     /// Presents an error alert.
     private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
-        presenter?.showAlert(forError: alertModel.error) { _ in
+        presenter?.showAlert(for: alertModel.error) { _ in
             self.executeActions(alertModel.completionActions)
         }
     }
@@ -597,7 +600,7 @@ extension AuthenticationCoordinator {
         URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
-                    userSession.profileUpdate.updateImage(imageData: data)
+                    userSession.userProfileImage?.updateImage(imageData: data)
                 }
             }
         }.resume()
@@ -703,7 +706,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-    // MARK: - Backup
 
     // MARK: - Company Login
 
@@ -720,17 +722,22 @@ extension AuthenticationCoordinator {
     /// Manually start the company login flow.
     private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
         if let linkCode = linkCode {
-            companyLoginController?.attemptLoginWithCode(linkCode)
+            companyLoginController?.attemptLoginWithSSOCode(linkCode)
         } else {
-            companyLoginController?.displayLoginCodePrompt()
+            companyLoginController?.displayCompanyLoginPrompt()
         }
     }
+    
+    /// Automatically start the SSO flow if possible
+    private func startAutomaticSSOFlow() {
+        companyLoginController?.startAutomaticSSOFlow()
+    }
 
-    /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
-    func detectLoginCodeIfPossible() {
+    /// Call this method when the corrdinated view controller appears, to detect the sso code and display it if needed.
+    func detectSSOCodeIfPossible() {
         if canStartCompanyLogin {
             companyLoginController?.isAutoDetectionEnabled = true
-            companyLoginController?.detectLoginCode()
+            companyLoginController?.detectSSOCode()
         } else {
             companyLoginController?.isAutoDetectionEnabled = false
         }

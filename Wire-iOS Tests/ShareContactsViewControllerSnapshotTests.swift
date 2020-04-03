@@ -18,13 +18,15 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class ShareContactsViewControllerSnapshotTests: XCTestCase {
 
     var sut: ShareContactsViewController!
 
     override func setUp() {
         super.setUp()
+        XCTestCase.accentColor = .vividRed
         sut = ShareContactsViewController()
     }
 
@@ -34,6 +36,11 @@ final class ShareContactsViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState() {
-        verify(view: sut.view)
+        verify(matching: sut)
+    }
+
+    func testForContactsPermissionDenied() {
+        sut.displayContactsAccessDeniedMessage(animated: false)
+        verify(matching: sut)
     }
 }

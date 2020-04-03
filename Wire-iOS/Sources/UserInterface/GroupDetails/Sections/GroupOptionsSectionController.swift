@@ -32,7 +32,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
 
         case notifications = 0, guests, timeout
         
-        func accessible(in conversation: ZMConversation, by user: ZMUser) -> Bool {
+        func accessible(in conversation: ZMConversation, by user: UserType) -> Bool {
             switch self {
             case .notifications: return user.canModifyNotificationSettings(in: conversation)
             case .guests:        return user.canModifyAccessControlSettings(in: conversation)
@@ -65,7 +65,7 @@ final class GroupOptionsSectionController: GroupDetailsSectionController {
         self.delegate = delegate
         self.conversation = conversation
         self.syncCompleted = syncCompleted
-        self.options = Option.allCases.filter({ $0.accessible(in: conversation, by: ZMUser.selfUser()) })
+        self.options = Option.allCases.filter({ $0.accessible(in: conversation, by: SelfUser.current) })
     }
 
     // MARK: - Collection View

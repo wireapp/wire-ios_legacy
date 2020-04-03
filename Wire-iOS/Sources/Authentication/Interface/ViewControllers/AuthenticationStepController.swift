@@ -354,6 +354,13 @@ class AuthenticationStepController: AuthenticationStepViewController {
 // MARK: - Event Handling
 
 extension AuthenticationStepController {
+    
+    // MARK: - AuthenticationCoordinatedViewController
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
+
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         switch feedbackAction {
         case .clearInputFields:
@@ -428,5 +435,4 @@ extension AuthenticationStepController {
             secondaryViewsStackView.addArrangedSubview(view)
         }
     }
-
 }

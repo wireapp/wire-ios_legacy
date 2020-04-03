@@ -29,7 +29,7 @@ enum ProfileViewControllerTabBarIndex : Int {
 
 protocol ProfileViewControllerDelegate: class {
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation)
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>)
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet)
 }
 
 protocol BackButtonTitleDelegate: class {
@@ -183,14 +183,8 @@ final class ProfileViewController: UIViewController {
         updateShowVerifiedShield()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
         UIAccessibility.post(notification: UIAccessibility.Notification.screenChanged, argument: navigationItem.titleView)
     }
     
@@ -301,20 +295,26 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         performAction(action, targetView: footerView.leftButton)
     }
     
-    func footerView(_ footerView: ProfileFooterView, shouldPresentMenuWithActions actions: [ProfileAction]) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    func footerView(_ footerView: ProfileFooterView,
+                    shouldPresentMenuWithActions actions: [ProfileAction]) {
+        let actionSheet = UIAlertController(title: nil,
+                                            message: nil,
+                                            preferredStyle: .actionSheet)
         
-        for action in actions {
-            let sheetAction = UIAlertAction(title: action.buttonText, style: .default) { _ in
-                self.performAction(action, targetView: footerView)
-            }
-            
-            actionSheet.addAction(sheetAction)
-        }
-        
+        actions.map { buildProfileAction($0, footerView: footerView) }
+            .forEach(actionSheet.addAction)
         actionSheet.addAction(.cancel())
         presentAlert(actionSheet, targetView: footerView)
     }
+    
+    private func buildProfileAction(_ action: ProfileAction,
+                                    footerView: ProfileFooterView) -> UIAlertAction {
+        return UIAlertAction(title: action.buttonText,
+                             style: .default) { _ in
+                                self.performAction(action, targetView: footerView)
+        }
+    }
+
     
     private func performAction(_ action: ProfileAction,
                        targetView: UIView) {
@@ -329,8 +329,10 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
             viewModel.archiveConversation()
         case .deleteContents:
             presentDeleteConfirmationPrompt(from: targetView)
-        case .block:
-            presentBlockRequest(from: targetView)
+        case let .block(isBlocked):
+            isBlocked
+                ? handleBlockAndUnblock()
+                : presentBlockActionSheet(from: targetView)
         case .openOneToOne:
             viewModel.openOneToOneConversation()
         case .removeFromGroup:
@@ -355,7 +357,7 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         
         dismiss(animated: true){ [weak self] in
             self?.viewModel.transitionToListAndEnqueue(leftViewControllerRevealed: leftViewControllerRevealed) {
-                ZClientViewController.shared()?.conversationListViewController.topBarViewController.presentSettings()
+                ZClientViewController.shared?.conversationListViewController.topBarViewController.presentSettings()
             }
         }
     }
@@ -381,37 +383,26 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
     @objc
     private func presentLegalHoldDetails() {
         guard let user = viewModel.fullUser else { return }
-        
         LegalHoldDetailsViewController.present(in: self, user: user)
     }
     
     
     // MARK: Block
     
-    private func presentBlockRequest(from targetView: UIView) {
-        
+    private func presentBlockActionSheet(from targetView: UIView) {
         let controller = UIAlertController(title: viewModel.blockTitle, message: nil, preferredStyle: .actionSheet)
-        viewModel.allBockResult.map { $0.action(handleBlockResult) }.forEach(controller.addAction)
+        viewModel.allBlockResult.map { $0.action(handleBlockActions) }.forEach(controller.addAction)
         presentAlert(controller, targetView: targetView)
     }
     
-    private func handleBlockResult(_ result: BlockResult) {
+    private func handleBlockActions(_ result: BlockResult) {
         guard case .block = result else { return }
-        
-        let updateClosure = {
-            self.viewModel.toggleBlocked()
-            self.updateFooterViews()
-        }
-        
-        switch viewModel.context {
-        case .search:
-            /// stay on this VC and let user to decise what to do next
-            updateClosure()
-        default:
-            viewModel.transitionToListAndEnqueue {
-                updateClosure()
-            }
-        }
+        handleBlockAndUnblock()
+    }
+    
+    private func handleBlockAndUnblock() {
+        viewModel.handleBlockAndUnblock()
+        updateFooterViews()
     }
     
     // MARK: Notifications
@@ -444,13 +435,13 @@ extension ProfileViewController: ProfileFooterViewDelegate, IncomingRequestFoote
         }
         
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: otherUser.displayName),
+            title: "profile.remove_dialog_message".localized(args: otherUser.name ?? ""),
             message: nil,
             preferredStyle: .actionSheet
         )
         
         let removeAction = UIAlertAction(title: "profile.remove_dialog_button_remove_confirm".localized, style: .destructive) { _ in
-            self.viewModel.conversation?.removeOrShowError(participnant: otherUser) { result in
+            self.viewModel.conversation?.removeOrShowError(participant: otherUser) { result in
                 switch result {
                 case .success:
                     self.returnToPreviousScreen()
@@ -473,22 +464,22 @@ extension ProfileViewController: ProfileViewControllerDelegate {
         delegate?.profileViewController(controller, wantsToNavigateTo: conversation)
     }
         
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         // no-op
     }
 
 }
 
 extension ProfileViewController: ConversationCreationControllerDelegate {
-    func conversationCreationController(
-        _ controller: ConversationCreationController,
-        didSelectName name: String,
-        participants: Set<ZMUser>,
-        allowGuests: Bool,
-        enableReceipts: Bool
-        ) {
+    func conversationCreationController(_ controller: ConversationCreationController,
+                                        didSelectName name: String,
+                                        participants: UserSet,
+                                        allowGuests: Bool,
+                                        enableReceipts: Bool) {
         controller.dismiss(animated: true) { [weak self] in
-            self?.delegate?.profileViewController(self, wantsToCreateConversationWithName: name, users: participants)
+            self?.delegate?.profileViewController(self,
+                                                  wantsToCreateConversationWithName: name,
+                                                  users: participants)
         }
     }
 }
@@ -501,7 +492,7 @@ extension ProfileViewController: TabBarControllerDelegate {
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
     func updateShowVerifiedShield() {
-        profileTitleView.showVerifiedShield = viewModel.showVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
+        profileTitleView.showVerifiedShield = viewModel.shouldShowVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
     }
 
     func setupNavigationItems() {

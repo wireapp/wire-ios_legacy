@@ -127,7 +127,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
             fatal("Received invalid input. Expecting String, received \(type(of: value))")
         }
 
-        if case .unreachable = NetworkStatus.shared().reachability() {
+        if case .unreachable = NetworkStatus.shared.reachability {
             return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized(uppercased: true)
         }
         
@@ -192,5 +192,15 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
     private func updateMainViewWidthConstraint() {
         compactWidthConstraint?.isActive = traitCollection.horizontalSizeClass == .compact
         regularWidthConstraint?.isActive = traitCollection.horizontalSizeClass != .compact
+    }
+
+    // MARK: - AuthenticationCoordinatedViewController
+    
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
     }
 }

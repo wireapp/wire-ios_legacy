@@ -28,12 +28,12 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     func testForChangingExistingEmail() {
         // GIVEN
-        let mockUser = MockUser.createSelfUser(name: "User", inTeam: nil)
+        let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = "user@example.com"
 
         // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
         verify(view: viewController.view)
@@ -41,12 +41,12 @@ class ChangeEmailViewControllerTests: ZMSnapshotTestCase {
 
     func testForAddingEmail() {
         // GIVEN
-        let mockUser = MockUser.createSelfUser(name: "User", inTeam: nil)
+        let mockUser = MockUserType.createSelfUser(name: "User")
         mockUser.emailAddress = nil
 
         // WHEN
         let sut = ChangeEmailViewController(user: mockUser)
-        let viewController = sut.wrapInNavigationController(SettingsStyleNavigationController.self)
+        let viewController = sut.wrapInNavigationController(navigationControllerClass: SettingsStyleNavigationController.self)
 
         // THEN
         verify(view: viewController.view)

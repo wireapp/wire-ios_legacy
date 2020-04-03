@@ -46,7 +46,7 @@ extension MockConversation {
         let otherUser = MockUser.mockUsers().first!
         let mockConversation = MockConversation()
         mockConversation.conversationType = .oneOnOne
-        mockConversation.displayName = otherUser.displayName
+        mockConversation.displayName = otherUser.name
         mockConversation.connectedUser = otherUser
         mockConversation.sortedActiveParticipants = [selfUser, otherUser]
         mockConversation.isConversationEligibleForVideoCalls = true
@@ -59,7 +59,7 @@ extension MockConversation {
         let otherUser = MockUser.mockUsers().first!
         let mockConversation = MockConversation()
         mockConversation.conversationType = .group
-        mockConversation.displayName = otherUser.displayName
+        mockConversation.displayName = otherUser.name
         mockConversation.sortedActiveParticipants = [selfUser, otherUser]
         mockConversation.isConversationEligibleForVideoCalls = true
 

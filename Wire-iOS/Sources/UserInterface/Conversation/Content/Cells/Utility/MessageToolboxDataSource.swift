@@ -142,13 +142,11 @@ class MessageToolboxDataSource {
 
         // If there is only one liker, always display the name, even if the width doesn't fit
         if likers.count == 1 {
-            return likers[0].displayName(in: conversation) && attributes
+            return (likers[0].name ?? "") && attributes
         }
 
         // Create the list of likers
-        let likersNames = likers.map { user in
-            return user.displayName(in: message.conversation)
-        }.joined(separator: ", ")
+        let likersNames = likers.compactMap(\.name).joined(separator: ", ")
 
         let likersNamesAttributedString = likersNames && attributes
 

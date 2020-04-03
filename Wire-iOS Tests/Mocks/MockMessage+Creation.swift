@@ -53,7 +53,7 @@ final class MockMessageFactory: NSObject {
 
     class func imageMessage(with image: UIImage?) -> MockMessage? {
         let imageData = MockImageMessageData()
-        if let image = image, let data = image.data() {
+        if let image = image, let data = image.imageData {
             imageData.mockImageData = data
             imageData.mockOriginalSize = image.size
             imageData.isDownloaded = true
@@ -119,6 +119,11 @@ final class MockMessageFactory: NSObject {
         let message = MockMessageFactory.messageTemplate()
 
         message.backingLocationMessageData = MockLocationMessageData()
+        return message
+    }
+
+    class var compositeMessage: MockMessage {
+        let message = MockMessageFactory.messageTemplate()
         return message
     }
 

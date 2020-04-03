@@ -20,14 +20,10 @@
 
 import XCTest
 
-class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase {
+final class ConversationVideoMessageCellTests: ConversationCellSnapshotTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-    
     override func tearDown() {
-        defaultImageCache.cache.removeAllObjects()
+        MediaAssetCache.defaultImageCache.cache.removeAllObjects()
         super.tearDown()
     }
 

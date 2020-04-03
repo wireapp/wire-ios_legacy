@@ -23,7 +23,7 @@ import WireSyncEngine
 protocol MessageToolboxViewDelegate: class {
     func messageToolboxDidRequestOpeningDetails(_ messageToolboxView: MessageToolboxView, preferredDisplayMode: MessageDetailsDisplayMode)
     func messageToolboxViewDidSelectResend(_ messageToolboxView: MessageToolboxView)
-    func messageToolboxViewDidSelectDelete(_ messageToolboxView: MessageToolboxView)
+    func messageToolboxViewDidSelectDelete(_ sender: UIView?)
     func messageToolboxViewDidRequestLike(_ messageToolboxView: MessageToolboxView)
 }
 
@@ -123,6 +123,7 @@ final class MessageToolboxView: UIView {
         label.lineBreakMode = .byTruncatingMiddle
         label.numberOfLines = 1
         label.accessibilityIdentifier = "EphemeralCountdown"
+        label.isAccessibilityElement = true
         label.setContentHuggingPriority(.required, for: .horizontal)
         label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
@@ -385,8 +386,8 @@ final class MessageToolboxView: UIView {
     }
 
     @objc
-    private func deleteMessage() {
-        delegate?.messageToolboxViewDidSelectDelete(self)
+    private func deleteMessage(sender: UIView?) {
+        delegate?.messageToolboxViewDidSelectDelete(sender)
     }
 
     func update(for change: MessageChangeInfo) {

@@ -28,7 +28,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     var actionController: ConversationActionController?
     fileprivate var renameGroupSectionController: RenameGroupSectionController?
     private var syncObserver: InitialSyncObserver!
-    private var conversationRole: Role?
 
     var didCompleteInitialSync = false {
         didSet {
@@ -48,7 +47,6 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
     public init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
-        conversationRole = ZMUser.selfUser().role(in: conversation)
         
         super.init(nibName: nil, bundle: nil)
         token = ConversationChangeInfo.add(observer: self, for: conversation)
@@ -128,8 +126,8 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         let (participants, serviceUsers) = (conversation.sortedOtherParticipants, conversation.sortedServiceUsers)
         if !participants.isEmpty {
             
-            let admins = participants.filter({$0.isAdminGroup(conversation: conversation)})
-            let members = participants.filter({!$0.isAdminGroup(conversation: conversation)})
+            let admins = participants.filter({$0.isGroupAdmin(in: conversation)})
+            let members = participants.filter({!$0.isGroupAdmin(in: conversation)})
             
             if admins.count <= Int.ConversationParticipants.maxNumberWithoutTruncation || admins.isEmpty {
                 if admins.count >= Int.ConversationParticipants.maxNumberOfDisplayed && (participants.count > Int.ConversationParticipants.maxNumberWithoutTruncation) { // Dispay the ShowAll button after the first section
@@ -170,17 +168,12 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
             sections.append(optionsSectionController)
         }
         
-        if let selfUser = ZMUser.selfUser(),
-            conversation.teamRemoteIdentifier != nil,
-            selfUser.canModifyReceiptMode(in: conversation)
-        {
+        if conversation.teamRemoteIdentifier != nil && SelfUser.current.canModifyReadReceiptSettings(in: conversation) {
             let receiptOptionsSectionController = ReceiptOptionsSectionController(conversation: conversation,
                                                                                   syncCompleted: didCompleteInitialSync,
                                                                                   collectionView: self.collectionViewController.collectionView!,
                                                                                   presentingViewController: self)
             sections.append(receiptOptionsSectionController)
-           
-            
         }
         
         // MARK: services sections
@@ -262,18 +255,18 @@ extension GroupDetailsViewController: ViewControllerDismisser {
 extension GroupDetailsViewController: ProfileViewControllerDelegate {    
     func profileViewController(_ controller: ProfileViewController?, wantsToNavigateTo conversation: ZMConversation) {
         dismiss(animated: true) {
-            ZClientViewController.shared()?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
+            ZClientViewController.shared?.load(conversation, scrollTo: nil, focusOnView: true, animated: true)
         }
     }
     
-    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: Set<ZMUser>) {
+    func profileViewController(_ controller: ProfileViewController?, wantsToCreateConversationWithName name: String?, users: UserSet) {
         //no-op
     }
 }
 
 extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, GroupOptionsSectionControllerDelegate {
 
-    func presentDetails(for user: ZMUser) {
+    func presentDetails(for user: UserType) {
         let viewController = UserDetailViewControllerFactory.createUserDetailViewController(
             user: user,
             conversation: conversation,
@@ -306,14 +299,4 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
         navigationController?.pushViewController(menu, animated: animated)
     }
     
-}
-
-extension Array where Element: UserType {
-    func addSelfUserAndSorted() -> [UserType] {
-        var arr: [UserType] = self
-        if let selfUser = ZMUser.selfUser() {
-            arr.append(selfUser)
-        }
-        return arr.sorted { $0.displayName < $1.displayName } as! Array<Element>
-    }
 }

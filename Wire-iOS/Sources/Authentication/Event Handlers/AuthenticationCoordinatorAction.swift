@@ -51,6 +51,7 @@ enum AuthenticationCoordinatorAction {
     case setUserName(String)
     case setUserPassword(String)
     case startCompanyLogin(code: UUID?)
+    case startSSOFlow
     case startBackupFlow
     case signOut(warn: Bool)
     case addEmailAndPassword(ZMEmailCredentials)

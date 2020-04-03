@@ -62,11 +62,11 @@ extension ZMConversationMessage {
     }
 
     var sortedLikers: [ZMUser] {
-        return likers().sorted { $0.displayName < $1.displayName }
+        return likers().sorted { $0.name < $1.name }
     }
 
     var sortedReadReceipts: [ReadReceipt] {
-        return readReceipts.sorted { $0.user.displayName < $1.user.displayName }
+        return readReceipts.sorted { $0.user.name < $1.user.name }
     }
 
 }

@@ -20,7 +20,8 @@ import Foundation
 
 extension Bundle {
     public var applicationGroupIdentifier: String? {
-        return infoDictionary?["ApplicationGroupIdentifier"] as? String
+        guard let groupId = infoDictionary?["WireGroupId"] as? String else { return nil }
+        return "group.\(groupId)"
     }
     
     public var hostBundleIdentifier: String? {

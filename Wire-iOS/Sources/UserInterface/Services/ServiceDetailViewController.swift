@@ -188,27 +188,34 @@ final class ServiceDetailViewController: UIViewController {
             let serviceUser = self.service.serviceUser
             switch type {
             case let .addService(conversation):
-                conversation.add(serviceUser: serviceUser, in: userSession) { error in
-                    if let error = error {
-                        completion?(.failure(error: error))
-                    } else {
+                conversation.add(serviceUser: serviceUser, in: userSession) { result in
+                    
+                    switch result {
+                    case .success:
                         Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         completion?(.success(conversation: conversation))
+                    case .failure(let error):
+                        completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
                     }
                 }
             case let .removeService(conversation):
-                guard let user = serviceUser as? ZMUser else { return }
-                self.presentRemoveDialogue(for: user, from: conversation, dismisser: self.viewControllerDismisser)
+                self.presentRemoveDialogue(for: serviceUser, from: conversation, dismisser: self.viewControllerDismisser)
             case .openConversation:
                 if let existingConversation = ZMConversation.existingConversation(in: userSession.managedObjectContext, service: serviceUser, team: ZMUser.selfUser().team) {
                     completion?(.success(conversation: existingConversation))
                 } else {
-                    userSession.startConversation(with: serviceUser) { result in
+                    serviceUser.createConversation(in: userSession, completionHandler: { (result) in
                         if case let .success(conversation) = result {
                             Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         }
-                        completion?(result)
-                    }
+                        
+                        switch result {
+                        case .success(let conversation):
+                            completion?(.success(conversation: conversation))
+                        case .failure(let error):
+                            completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
+                        }
+                    })
                 }
             }
         }

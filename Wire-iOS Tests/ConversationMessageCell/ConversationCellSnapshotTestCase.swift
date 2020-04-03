@@ -18,31 +18,25 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
 /**
  * A base test class for section-based messages. Use the section property to build
  * your layout and call `verifySectionSnapshots` to record and verify the snapshot.
  */
-class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
-
-    fileprivate var defaultContext: ConversationMessageContext!
-
-    override func setUp() {
-        super.setUp()
-        
-        ColorScheme.default.variant = .light
-        NSAttributedString.invalidateParagraphStyle()
-        NSAttributedString.invalidateMarkdownStyle()
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
-        defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
-                                                    isTimeIntervalSinceLastMessageSignificant: false,
-                                                    isFirstMessageOfTheDay: false,
-                                                    isFirstUnreadMessage: false,
-                                                    isLastMessage: false,
-                                                    searchQueries: [],
-                                                    previousMessageIsKnock: false,
-                                                    spacing: 0)
-        
+class ConversationCellSnapshotTestCase: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+    
+    fileprivate static let defaultContext = ConversationMessageContext(isSameSenderAsPrevious: false,
+                                                                       isTimeIntervalSinceLastMessageSignificant: false,
+                                                                       isFirstMessageOfTheDay: false,
+                                                                       isFirstUnreadMessage: false,
+                                                                       isLastMessage: false,
+                                                                       searchQueries: [],
+                                                                       previousMessageIsKnock: false,
+                                                                       spacing: 0)
+    
+    override class func setUp() {
         resetDayFormatter()
         
         [Message.shortDateFormatter, Message.shortTimeFormatter].forEach {
@@ -50,20 +44,24 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
             $0.timeZone = TimeZone(abbreviation: "CET")
         }
     }
-
-    override func tearDown() {
+    
+    override class func tearDown() {
         ColorScheme.default.variant = .light
-        defaultContext = nil
+    }
+    
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+        
+        ColorScheme.default.variant = .light
+        
+    }
+    
+    override func tearDown() {
+        coreDataFixture = nil
         super.tearDown()
     }
     
-    func enableDarkMode() {
-        ColorScheme.default.variant = .dark
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
-        NSAttributedString.invalidateParagraphStyle()
-        NSAttributedString.invalidateMarkdownStyle()
-    }
-
     /**
      * Performs a snapshot test for a message
      */
@@ -71,37 +69,92 @@ class ConversationCellSnapshotTestCase: CoreDataSnapshotTestCase {
                 context: ConversationMessageContext? = nil,
                 waitForImagesToLoad: Bool = false,
                 waitForTextViewToLoad: Bool = false,
-                tolerance: CGFloat = 0,
-                colorSchemes: Set<ColorSchemeVariant> = [],
+                allColorSchemes: Bool = false,
+                allWidths: Bool = true,
+                snapshotBackgroundColor: UIColor? = nil,
                 file: StaticString = #file,
+                testName: String = #function,
                 line: UInt = #line) {
-
-        verifyInAllPhoneWidths(initialization:{
-            let context = (context ?? defaultContext)!
+        
+        let context = (context ?? ConversationCellSnapshotTestCase.defaultContext)!
+        
+        let createViewClosure: () -> UIView = {
             let section = ConversationMessageSectionController(message: message, context: context)
             let views = section.cellDescriptions.map({ $0.makeView() })
             let stackView = UIStackView(arrangedSubviews: views)
             stackView.axis = .vertical
             stackView.translatesAutoresizingMaskIntoConstraints = false
-
+            stackView.backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+            
             if waitForImagesToLoad {
-                XCTAssertTrue(waitForGroupsToBeEmpty([defaultImageCache.dispatchGroup]))
+                XCTAssert(self.waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
             }
-
+            
             if waitForTextViewToLoad {
                 // We need to run the run loop for UITextView to highlight detected links
                 let delay = Date().addingTimeInterval(1)
                 RunLoop.main.run(until: delay)
             }
-
+            
             return stackView
-        },
-           tolerance: tolerance,
-           colorSchemes: colorSchemes,
-           file: file,
-           line: line)
-    }
+        }
+        
+        if allColorSchemes {
+            ColorScheme.default.variant = .dark
+            verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   named: "dark",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
 
+            ColorScheme.default.variant = .light
+            verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   named: "light",
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)            
+        } else {
+            verify(matching: createViewClosure(),
+                   snapshotBackgroundColor: snapshotBackgroundColor,
+                   allWidths: allWidths,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+    
+    private func verify(matching value: UIView,
+                        snapshotBackgroundColor: UIColor?,
+                        named name: String? = nil,
+                        allColorSchemes: Bool = false,
+                        allWidths: Bool = true,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
+        let backgroundColor = snapshotBackgroundColor ?? (ColorScheme.default.variant == .light ? .white : .black)
+        
+        if allWidths {
+            verifyInAllPhoneWidths(matching:value,
+                                   snapshotBackgroundColor: backgroundColor,
+                                   named: name,
+                                   file: file,
+                                   testName: testName,
+                                   line: line)
+        } else {
+            verifyInWidths(matching:value,
+                           widths: [smallestWidth],
+                           snapshotBackgroundColor: backgroundColor,
+                           named: name,
+                           file: file,
+                           testName: testName,
+                           line: line)
+        }
+    }
+    
 }
 
 func XCTAssertArrayEqual(_ descriptions: [Any], _ expectedDescriptions: [Any], file: StaticString = #file, line: UInt = #line) {

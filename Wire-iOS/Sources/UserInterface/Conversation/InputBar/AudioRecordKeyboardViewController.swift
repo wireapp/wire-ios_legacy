@@ -83,8 +83,8 @@ private let zmLog = ZMSLog(tag: "UI")
         configureAudioRecorder()
         createConstraints()
         
-        if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
+        if Bundle.developerModeEnabled && Settings.shared.maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
     
@@ -114,7 +114,9 @@ private let zmLog = ZMSLog(tag: "UI")
         self.audioPreviewView.gradientColor = backgroundColor
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
-            self.audioPreviewView.color = color
+            if let color = color {
+                self.audioPreviewView.color = color
+            }
         }
         
         self.timeLabel.font = FontSpec(.small, .light).font!
@@ -319,7 +321,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
-            self.audioPreviewView.updateWithLevel(CGFloat(level))
+            self.audioPreviewView.updateWithLevel(level)
         }
     }
     
@@ -410,7 +412,7 @@ private let zmLog = ZMSLog(tag: "UI")
         self.recorder.startRecording { success in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
         }
     }
     
@@ -432,7 +434,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
-        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
+        AVAsset.convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
             if success {
                 audioPath.deleteFileAtPath()
                 self.delegate?.audioRecordViewControllerWantsToSendAudio(

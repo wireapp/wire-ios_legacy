@@ -23,8 +23,14 @@ final class AddParticipantsViewControllerSnapshotTests: CoreDataSnapshotTestCase
     
     var sut: AddParticipantsViewController!
 
+    override func setUp() {
+        super.setUp()
+        SelfUser.provider = selfUserProvider
+    }
+
     override func tearDown() {
         sut = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
 

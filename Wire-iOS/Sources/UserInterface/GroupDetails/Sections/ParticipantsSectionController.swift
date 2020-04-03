@@ -163,7 +163,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
         super.init()
         
         if let userSession = ZMUserSession.shared() {
-            token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
+            token = UserChangeInfo.add(userObserver: self, in: userSession)
         }
     }
     
@@ -219,8 +219,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch viewModel.rows[indexPath.row] {
-        case .user(let bareUser):
-            guard let user = bareUser as? ZMUser else { return }
+        case .user(let user):
             delegate?.presentDetails(for: user)
         case .showAll:
             delegate?.presentFullParticipantsList(for: viewModel.participants, in: conversation)

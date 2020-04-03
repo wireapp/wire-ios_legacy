@@ -28,7 +28,8 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         super.setUp()
         
         let account = Account.mockAccount(imageData: Data())
-        sut = ConversationListViewController.ViewModel(account: account, selfUser: MockUser.mockSelf())
+        let selfUser = MockUserType.createSelfUser(name: "Bob")
+        sut = ConversationListViewController.ViewModel(account: account, selfUser: selfUser)
         
         mockViewController = MockConversationListContainer(viewModel: sut)
         

@@ -32,7 +32,7 @@ struct CallInfo {
     let video: Bool
 }
 
-@objcMembers class AnalyticsCallingTracker : NSObject {
+final class AnalyticsCallingTracker : NSObject {
     
     private static let conversationIdKey = "conversationId"
     
@@ -69,7 +69,7 @@ struct CallInfo {
 
 extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         
         let conversationId = conversation.remoteIdentifier!
         
@@ -116,9 +116,9 @@ extension AnalyticsCallingTracker: WireCallCenterCallStateObserver {
     }
     
     func presentIOErrorAlertIfAllowed() {
-        guard DeveloperMenuState.developerMenuEnabled() else { return }
+        guard Bundle.developerModeEnabled else { return }
         
-        let alert = UIAlertController(title: "Calling Error", message: "AVS I/O error", cancelButtonTitle: "OK")
+        let alert = UIAlertController(title: "Calling Error", message: "AVS I/O error", alertAction: .ok(style: .cancel))
         alert.presentTopmost()
 
     }

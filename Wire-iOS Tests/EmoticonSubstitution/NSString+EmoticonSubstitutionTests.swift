@@ -21,7 +21,7 @@ import XCTest
 
 
 extension String {
-    func resolvingEmoticonShortcuts(configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) -> String {
+    func resolvingEmoticonShortcuts(configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) -> String {
         let mutableString = NSMutableString(string: self)
 
         mutableString.resolveEmoticonShortcuts(in: NSRange(location: 0, length: count), configuration: configuration)
@@ -30,7 +30,7 @@ extension String {
     }
 
     mutating func resolveEmoticonShortcuts(in range: NSRange,
-                                           configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
+                                           configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) {
         let mutableString = NSMutableString(string: self)
 
         mutableString.resolveEmoticonShortcuts(in: range, configuration: configuration)

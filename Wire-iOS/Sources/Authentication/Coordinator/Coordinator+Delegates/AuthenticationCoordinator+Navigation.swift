@@ -35,7 +35,7 @@ extension AuthenticationCoordinator: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         defer {
-            detectLoginCodeIfPossible()
+            detectSSOCodeIfPossible()
         }
 
         // Detect if we are popping the durrent view controller

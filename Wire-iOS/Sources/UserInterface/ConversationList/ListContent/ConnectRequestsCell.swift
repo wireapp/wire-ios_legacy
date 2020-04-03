@@ -16,7 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc protocol SectionListCellType {
+@objc
+protocol SectionListCellType {
     var sectionName: String? { get set }
     var cellIdentifier: String? { get set }
 }

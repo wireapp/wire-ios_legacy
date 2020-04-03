@@ -37,7 +37,7 @@ fileprivate extension VoiceChannel {
         
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return initiator.map { .avatar($0) } ?? .none
+            return (initiator as? ZMUser).map { .avatar($0) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
@@ -197,7 +197,7 @@ fileprivate struct VoiceChannelSnapshot {
     init(_ voiceChannel: VoiceChannel) {
         callerName = {
             guard voiceChannel.conversation?.conversationType != .oneOnOne else { return nil }
-            return voiceChannel.initiator?.displayName ?? ""
+            return voiceChannel.initiator?.name ?? ""
         }()
         state = voiceChannel.state
         callStartDate = voiceChannel.callStartDate ?? .init()
@@ -246,7 +246,7 @@ fileprivate extension VoiceChannel {
 
     var firstDegradedUser: ZMUser? {
         return conversation?.localParticipants.first(where: {
-            $0.untrusted()            
+            !$0.isTrusted
         })
     }
 

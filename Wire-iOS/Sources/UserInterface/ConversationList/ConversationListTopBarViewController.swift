@@ -18,7 +18,7 @@
 
 import UIKit
 
-typealias SelfUserType = UserType & SelfLegalHoldSubject
+public typealias SelfUserType = UserType & SelfLegalHoldSubject
 
 final class ConversationListTopBarViewController: UIViewController {
     
@@ -44,7 +44,7 @@ final class ConversationListTopBarViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         if let sharedSession = ZMUserSession.shared() {
-            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: sharedSession)
+            observerToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: sharedSession)
         }
         
         if #available(iOS 11.0, *) {
@@ -91,6 +91,7 @@ final class ConversationListTopBarViewController: UIViewController {
             titleLabel.font = FontSpec(.normal, .semibold).font
             titleLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
             titleLabel.accessibilityTraits = .header
+            titleLabel.accessibilityValue = selfUser.name
             titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
             titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
             titleLabel.setContentHuggingPriority(.required, for: .horizontal)
@@ -199,7 +200,7 @@ final class ConversationListTopBarViewController: UIViewController {
             return
         }
 
-        ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
+        ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .userAction)
     }
 
     @objc
@@ -232,26 +233,19 @@ final class ConversationListTopBarViewController: UIViewController {
 extension ConversationListTopBarViewController: UIViewControllerTransitioningDelegate {
     
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let transition = SwizzleTransition()
-        transition.direction = .vertical
-        return transition
+        return SwizzleTransition(direction: .vertical)
     }
 }
 
 extension ConversationListTopBarViewController: ZMUserObserver {
     
     func userDidChange(_ changeInfo: UserChangeInfo) {
-        if changeInfo.nameChanged {
+        if changeInfo.nameChanged || changeInfo.teamsChanged {
             updateTitleView()
-        }
-
-        if changeInfo.teamsChanged {
             updateAccountView()
         }
         
@@ -364,7 +358,6 @@ final class TopBar: UIView {
     
     private var leftSeparatorInsetConstraint: NSLayoutConstraint!
     private var rightSeparatorInsetConstraint: NSLayoutConstraint!
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

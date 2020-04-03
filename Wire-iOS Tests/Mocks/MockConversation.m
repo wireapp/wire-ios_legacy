@@ -49,6 +49,11 @@
     return self;
 }
 
+- (void)verifyLegalHoldSubjects
+{
+  //no-op
+}
+
 - (BOOL)isKindOfClass:(Class)aClass
 {
     if ([aClass isSubclassOfClass:[ZMConversation class]]) {

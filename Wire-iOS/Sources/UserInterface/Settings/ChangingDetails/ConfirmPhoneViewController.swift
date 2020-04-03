@@ -64,7 +64,7 @@ final class ConfirmPhoneViewController: SettingsBaseTableViewController {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
         if let userSession = ZMUserSession.shared() {
-            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
         }
         startTimer()
     }
@@ -192,7 +192,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
-            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, currentPhoneNumber == newNumber {
+            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, PhoneNumber(fullNumber: currentPhoneNumber) == PhoneNumber(fullNumber:newNumber) {
                 navigationController?.showLoadingView = false
                 delegate?.didConfirmPhone(inController: self)
             }
@@ -203,7 +203,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
         navigationController?.showLoadingView = false
-        showAlert(forError: error)
+        showAlert(for: error)
         clearCodeInput()
     }
 }

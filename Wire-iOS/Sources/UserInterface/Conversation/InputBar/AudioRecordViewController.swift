@@ -79,8 +79,8 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
 
         updateRecordingState(recordingState)
 
-        if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
+        if Bundle.developerModeEnabled && Settings.shared.maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
     
@@ -94,7 +94,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             let feedbackGenerator = UINotificationFeedbackGenerator()
             feedbackGenerator.prepare()
             feedbackGenerator.notificationOccurred(.success)
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
             
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
         }
@@ -134,7 +134,9 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
     
     private func configureViews() {
         accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
-            self.audioPreviewView.color = color
+            if let color = color {
+                self.audioPreviewView.color = color
+            }
         }
         
         topContainerView.backgroundColor = UIColor.from(scheme: .background)
@@ -273,7 +275,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
         
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
-            self.audioPreviewView.updateWithLevel(CGFloat(level))
+            self.audioPreviewView.updateWithLevel(level)
         }
     }
     
@@ -385,7 +387,7 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
             let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
             convertedPath.deleteFileAtPath()
             
-            AVAsset.wr_convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
+            AVAsset.convertAudioToUploadFormat(effectPath, outPath: convertedPath) { success in
                 effectPath.deleteFileAtPath()
                 
                 if success {

@@ -29,11 +29,13 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
         groupConversation = createGroupConversation()
         groupConversation.userDefinedName = "iOS Team"
+        SelfUser.provider = selfUserProvider
     }
     
     override func tearDown() {
         sut = nil
         groupConversation = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
     
@@ -126,10 +128,11 @@ final class GroupDetailsViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         }
     }
 
-    func verifyConversationActionController() {
+    func verifyConversationActionController(file: StaticString = #file,
+                                            line: UInt = #line) {
         sut = GroupDetailsViewController(conversation: groupConversation)
         sut.footerView(GroupDetailsFooterView(), shouldPerformAction: .more)
-        verifyAlertController((sut?.actionController?.alertController)!)
+        verifyAlertController((sut?.actionController?.alertController)!, file: file, line: line)
     }
 
     func testForActionMenu() {

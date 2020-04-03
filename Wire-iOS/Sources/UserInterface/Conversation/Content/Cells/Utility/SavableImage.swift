@@ -114,7 +114,7 @@ final class SavableImage: NSObject {
         }
     }
 
-    // Has to be called from inside a `photoLibrary.performChanges` block
+    // Has to be called from inside a `photoLibrary.perform` block
     private func saveImage(using source: Source) {
         switch source {
         case .gif(let url):
@@ -130,10 +130,9 @@ final class SavableImage: NSObject {
         let alert = UIAlertController(
             title: "library.alert.permission_warning.title".localized,
             message: (error as NSError).localizedDescription,
-            cancelButtonTitle: "general.ok".localized
-        )
+            alertAction: .ok(style: .cancel))
 
-        AppDelegate.shared().notificationsWindow?.rootViewController?.present(alert, animated: true)
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true)
     }
 
 }

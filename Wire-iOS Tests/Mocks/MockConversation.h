@@ -41,5 +41,5 @@
 @property (nonatomic) ZMConversationLegalHoldStatus legalHoldStatus;
 
 - (ZMConversation *)convertToRegularConversation;
-
+- (void)verifyLegalHoldSubjects;
 @end

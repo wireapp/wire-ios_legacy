@@ -108,7 +108,7 @@ extension ConversationLegalHoldSystemMessageCell {
         
         if url == ConversationLegalHoldSystemMessageCell.legalHoldURL,
             let conversation = conversation,
-            let clientViewController = ZClientViewController.shared() {
+            let clientViewController = ZClientViewController.shared {
 
             LegalHoldDetailsViewController.present(in: clientViewController, conversation: conversation)
             

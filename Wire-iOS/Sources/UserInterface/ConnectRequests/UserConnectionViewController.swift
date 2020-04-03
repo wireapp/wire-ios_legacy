@@ -45,21 +45,20 @@ final class IncomingConnectionViewController: UIViewController {
     }
 
     override func loadView() {
-        self.connectionView = IncomingConnectionView(user: user)
-        self.connectionView.onAccept = { [weak self] user in
+        connectionView = IncomingConnectionView(user: user)
+        connectionView.onAccept = { [weak self] user in
             guard let `self` = self else { return }
-            self.userSession?.performChanges {
+            self.userSession?.perform {
                 self.user.accept()
             }
             self.onAction?(.accept)
         }
-        self.connectionView.onIgnore = { [weak self] user in
+        connectionView.onIgnore = { [weak self] user in
             guard let `self` = self else { return }
-            self.userSession?.performChanges {
+            self.userSession?.perform {
                 self.user.ignore()
+                self.onAction?(.ignore)
             }
-
-            self.onAction?(.ignore)
         }
 
         view = connectionView
@@ -67,7 +66,6 @@ final class IncomingConnectionViewController: UIViewController {
     
 }
 
-@objcMembers
 final class UserConnectionViewController: UIViewController {
 
     fileprivate var userConnectionView: UserConnectionView!

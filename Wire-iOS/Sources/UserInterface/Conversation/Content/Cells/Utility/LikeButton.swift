@@ -65,11 +65,11 @@ final class LikeButton: IconButton {
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform.identity
                 })
                 
-                UIView.wr_animate(easing: .easeOutQuart, duration: 0.35, animations: {
+                UIView.animate(easing: .easeOutQuart, duration: 0.35, animations: {
                         animationImageView.alpha = 1
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()
@@ -80,11 +80,11 @@ final class LikeButton: IconButton {
             }
             else {
                 
-                UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 })
                 
-                UIView.wr_animate(easing: .easeInQuart, duration: 0.35, animations: {
+                UIView.animate(easing: .easeInQuart, duration: 0.35, animations: {
                     animationImageView.alpha = 0.0
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()

@@ -37,6 +37,3 @@ PRODUCT_BUNDLE_IDENTIFIER = $(WIRE_BUNDLE_ID).$(SHARE_EXTENSION_BUNDLE_SUFFIX)
 // Signing
 CODE_SIGN_ENTITLEMENTS = Wire-iOS Share Extension/Wire-iOS Share Extension.entitlements
 PROVISIONING_PROFILE_SPECIFIER = $(PROVISIONING_PROFILE_SPECIFIER_SHARE_EXT)
-
-// Swift Compiler - General
-SWIFT_OBJC_BRIDGING_HEADER = Wire-iOS Share Extension/Wire-iOS Share Extension-Bridging-Header.h

@@ -84,7 +84,7 @@
 "peoplepicker.no_search_results" = "Нет подходящих результатов. Попробуйте ввести другое имя.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Отправить приглашение";
-"peoplepicker.no_matching_results.action.share_contacts" = "Пригласить друзей";
+"peoplepicker.no_matching_results.action.share_contacts" = "Обмен контактами";
 
 "peoplepicker.no_matching_results_provide_valid_email" = "Пожалуйста, введите правильный email";
 "peoplepicker.no_matching_results_after_address_book_upload_title" = "Ничего не найдено.";
@@ -94,7 +94,7 @@
 /* This sentence ends with button title, contained in peoplepicker.no_matching_results_after_address_book_upload_button */
 "peoplepicker.no_matching_results_after_address_book_upload_message" = "Введите полный адрес электронной почты или";
 /*  */
-"peoplepicker.no_matching_results_after_address_book_upload_button" = "пригласить друзей";
+"peoplepicker.no_matching_results_after_address_book_upload_button" = "обмен контактами";
 
 "peoplepicker.share_contacts.no_results.title" = "Ищите людей по имени или по email";
 
@@ -594,6 +594,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Подключиться к %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Привет %@,\nдавай общаться в Wire!\n%@";
 
 "connection_request_pending_title" = "Запрос на добавление";
@@ -640,10 +642,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire необходим доступ к микрофону.";
-"voice.alert.microphone_warning.explanation" = "Включите его в настройках Wire.";
 
 "voice.alert.camera_warning.title" = "Wire необходим доступ к камере.";
-"voice.alert.camera_warning.explanation" = "Перейдите в Настройки и разрешите Wire доступ к камере.";
 
 "voice.top_overlay.tap_to_return" = "Нажмите, чтобы вернуться к вызову";
 "voice.top_overlay.accessibility_title" = "Текущий вызов";
@@ -832,7 +832,7 @@
 "profile.read_receipts_disabled_memo.header" = "У ВАС ОТКЛЮЧЕНЫ ОТЧЕТЫ О ПРОЧТЕНИИ";
 "profile.read_receipts_memo.body" = "Если обе стороны включат отчеты о прочтении, вы сможете видеть когда были прочитаны ваши сообщения.\n\nЭтот параметр можно изменить в настройках вашего аккаунта.";
 
-"profile.group_admin_status_memo.body" = "Если эта опция включена, администратор может добавлять или удалять пользователей и сервисы, обновлять настройки групп и изменять роль участников.";
+"profile.group_admin_status_memo.body" = "Администратор может добавлять или удалять людей и сервисы, обновлять настройки групп, а также изменять роли участников.";
 
 "profile.extended_metadata.header" = "Информация";
 
@@ -840,7 +840,7 @@
 "profile.details.title" = "Детали";
 "profile.details.guest" = "Гость";
 "profile.details.group_admin" = "Администратор группы";
-"profile.details.partner" = "external";
+"profile.details.partner" = "внешний";
 
 "profile_view.accessibility.handle" = "Имя пользователя";
 "profile_view.accessibility.name" = "Отображаемое имя";
@@ -1001,7 +1001,7 @@
 "self.settings.account_details.delete_account.title" = "Удалить аккаунт";
 
 "self.settings.account_details.delete_account.alert.title" = "Удалить аккаунт";
-"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам сообщение по электронной почте или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
+"self.settings.account_details.delete_account.alert.message" = "Мы отправим вам сообщение по email или SMS. Перейдите по ссылке, чтобы окончательно удалить свой аккаунт.";
 
 "self.settings.account_details.log_out.alert.title" = "Выйти";
 "self.settings.account_details.log_out.alert.message" = "История сообщений будет удалена с этого устройства.";
@@ -1079,7 +1079,7 @@
 "self.settings.callkit.description" = "Показывать звонки Wire на экране блокировки и в истории звонков iOS. Если вы используете iCloud, история вызовов будет передана Apple.";
 
 "self.settings.vbr.title" = "Кодирование с переменным битрейтом";
-"self.settings.vbr.description" = "Это позволяет аудиозвонкам использовать меньше трафика и работать лучше при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
+"self.settings.vbr.description" = "Это значительно снижает потребление данных при аудиозвонках и улучшает работу при медленном соединении. Выключите, чтобы использовать кодирование с постоянным битрейтом.";
 
 "self.settings.sound_menu.sounds.wire_call" = "Звонок Wire";
 "self.settings.sound_menu.sounds.wire_message" = "Сообщение Wire";
@@ -1136,6 +1136,9 @@
 "self.settings.privacy_security.lock_app.subtitle.none" = "Для разблокировки введите свой код доступа.";
 
 "self.settings.privacy_security.lock_app.description" = "Разблокировать Wire";
+"self.settings.privacy_security.lock_password.description.unlock" = "Разблокировать с помощью пароля.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Неверный пароль. Пожалуйста, попробуйте еще раз.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Неверный пароль. Если вы недавно сменили пароль, подключитесь к интернету и попробуйте еще раз.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Разблокировать Wire с помощью Face ID или кода доступа";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Разблокировать Wire с помощью Touch ID или кода доступа";
@@ -1154,6 +1157,8 @@
 "self.settings.advanced.title" = "Дополнительные настройки";
 "self.settings.advanced.troubleshooting.title" = "Устранение неполадок";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Отладочный отчет";
+"self.settings.advanced.debugging_tools.title" = "Средства отладки";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Найти первую непрочитанную беседу";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Эта информация помогает поддержке Wire диагностировать проблемы с вызовами и улучшать опыт использования приложения.";
 "self.settings.advanced.reset_push_token.title" = "Обновить токен push-уведомлений";
 "self.settings.advanced.reset_push_token.subtitle" = "При возникновении проблем с push-уведомлениями, служба поддержки Wire может попросить вас обновить токен.";
@@ -1194,7 +1199,7 @@
 "self.settings.history_backup.password.title" = "Установить пароль";
 "self.settings.history_backup.password.cancel" = "Отмена";
 "self.settings.history_backup.password.next" = "Вперед";
-"self.settings.history_backup.password.placeholder" = "Не менее 8 символов";
+"self.settings.history_backup.password.placeholder" = "Пароль";
 "self.settings.history_backup.password.description" = "Резервная копия будет сжата и зашифрована с помощью пароля.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1224,12 +1229,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Добавьте свой аккаунт.";
-"landing.create_account.title" = "Personal";
+"landing.welcome_message" = "Добро пожаловать в %@";
+"landing.create_account.title" = "Создать аккаунт";
 "landing.create_account.subtitle" = "Приватный чат с группами друзей\U00A0и\U00A0семьей";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Безопасная совместная работа для предприятий, учреждений и профессиональных\U00A0организаций";
 "landing.login.hints" = "Уже зарегистрированы?";
 "landing.login.button.title" = "Войти";
+"landing.login.email.button.title" = "Войти с помощью email";
+"landing.login.enterprise.button.title" = "Вход для организаций";
+"landing.login.sso.button.title" = "Войти при помощи SSO";
 
 "landing.custom_backend.title" = "Подключен к \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Развернуть";
@@ -1365,21 +1374,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Эта резервная копия была создана в более новой или устаревшей версии Wire и не может быть восстановлена.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Вход для компаний";
-"login.sso.alert.message" = "Введите код доступа SSO вашей компании.";
+"login.sso.alert.title" = "Вход для организаций";
+"login.sso.alert.message.sso_and_email" = "Пожалуйста, введите ваш email или код SSO:";
+"login.sso.alert.message.sso_only" = "Пожалуйста, введите ваш код SSO:";
 "login.sso.alert.action" = "Войти";
-"login.sso.alert.text_field.placeholder" = "Код доступа SSO";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email или код доступа SSO";
+"login.sso.alert.text_field.placeholder.sso_only" = "Код доступа SSO";
 
-"login.sso.start_error_title" = "Не удается авторизоваться при входе для компании";
-"login.sso.link_error_message" = "Ссылка входа для компаний, на которую вы нажали, недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
+"login.sso.start_error_title" = "Не удается запустить корпоративную авторизацию";
+"login.sso.link_error_message" = "Эта ссылка недействительна. Пожалуйста, свяжитесь с вашим администратором, чтобы решить проблему.";
 
-"login.sso.error.alert.title" = "Что-то пошло не так";
-"login.sso.error.alert.invalid_code.title" = "Неверный код.";
-"login.sso.error.alert.invalid_code.message" = "Проверьте код доступа SSO вашей компании и повторите попытку.";
 "login.sso.error.offline.alert.message" = "Пожалуйста, проверьте подключение к интернету и повторите попытку.";
 "login.sso.error.alert.message" = "Пожалуйста, свяжитесь с администратором вашей команды (ошибка %@).";
-"login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
+
+"login.sso.error.alert.invalid_code.message" = "Проверьте код доступа SSO вашей компании и повторите попытку.";
 "login.sso.error.alert.invalid_status.message" = "Пожалуйста, повторите попытку позже (ошибка %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Пожалуйста, введите действительный код доступа SSO";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Пожалуйста, введите действительный email или код доступа SSO";
+"login.sso.error.alert.domain_not_registered.message" = "Этот email не может быть использован при авторизации организации. Пожалуйста, введите код SSO для продолжения.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Этот email связан с другим сервером, при этом приложение одновременно может быть подключено только к одному серверу. Пожалуйста, выйдите из всех учетных записей Wire на этом устройстве и попробуйте войти снова.";
+"login.sso.error.alert.unknown.message" = "Пожалуйста, повторите попытку позже.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Восстановление…";
@@ -1416,7 +1431,7 @@
 
 "registration.share_contacts.hero.title" = "Найти друзей в Wire";
 "registration.share_contacts.hero.paragraph" = "Поделитесь своими контактами, чтобы мы могли соединить вас с другими людьми. Мы анонимизируем всю информацию и не делимся ею с кем-либо еще.";
-"registration.share_contacts.find_friends_button.title" = "Пригласить друзей";
+"registration.share_contacts.find_friends_button.title" = "Обмен контактами";
 "registration.share_contacts.skip_button.title" = "Не сейчас";
 
 "registration.address_book_access_denied.hero.title" = "У Wire нет доступа к вашим контактам.";
@@ -1461,7 +1476,7 @@
 "signin_logout.email.subheadline" = "Ваш сеанс истек. Введите адрес электронной почты и пароль, чтобы продолжить.";
 "signin_logout.phone.subheadline" = "Ваш сеанс истек. Введите номер телефона, чтобы продолжить.";
 "signin_logout.sso.subheadline" = "Ваш сеанс истек. Войдите, используя свой корпоративный аккаунт.";
-"signin_logout.sso.buton" = "Вход для компаний";
+"signin_logout.sso.buton" = "Вход для организаций";
 
 "signin.email.missing_password.subtitle" = "Для продолжения введите адрес электронной почты и пароль.";
 "signin.phone.missing_password.subtitle" = "Для продолжения введите номер телефона.";
@@ -1478,7 +1493,7 @@
 "registration.add_phone_number.skip_button.title" = "Не сейчас";
 
 "registration.add_email_password.hero.title" = "Добавьте ваш email и пароль";
-"registration.add_email_password.hero.paragraph" = "Это позволит использовать Wire на нескольких устройствах.";
+"registration.add_email_password.hero.paragraph" = "Это позволяет использовать Wire на нескольких устройствах.";
 
 "registration.email_invitation.title" = "Приглашение";
 "registration.email_invitation.hero.title" = "Привет, %@";
@@ -1623,9 +1638,6 @@
 "availability.available" = "Доступен";
 "availability.away" = "Отошел";
 "availability.busy" = "Занят";
-"availability.available.placeholder" = "%@ доступен";
-"availability.away.placeholder" = "%@ отошел";
-"availability.busy.placeholder" = "%@ занят";
 
 "availability.reminder.away.title" = "Вы установили 'Отошел'";
 "availability.reminder.away.message" = "Для других пользователей будет отображаться статус 'Отошел'. Вы не будете получать уведомления о любых входящих звонках или сообщениях.";
@@ -1689,11 +1701,11 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
-"message_details.empty_likes" = "Это сообщение никому еще не понравилось.";
+"message_details.empty_likes" = "Это сообщение никому пока не понравилось.";
 "message_details.empty_read_receipts" = "Сообщение еще никем не прочитано.";
 "message_details.read_receipts_disabled" = "Отчетов о прочтении не существовало, когда это сообщение было отправлено.";
 "message_details.combined_title" = "Сведения о сообщении";
-"message_details.likes_title" = "Нравится";
+"message_details.likes_title" = "Понравилось";
 "message_details.receipts_title" = "Прочитано";
 "message_details.tabs.seen" = "Прочитано (%d)";
 "message_details.tabs.likes" = "Понравилось (%d)";
@@ -1721,7 +1733,7 @@
 // Legal hold - alert
 "legalhold_request.button.accessibility" = "В ожидании принятия.";
 "legalhold_request.alert.title" = "Запрошена правовая защита";
-"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nЭто включает удаленные, отредактированные и синхронизированные сообщения во всех беседах.";
+"legalhold_request.alert.detail" = "Все будущие сообщения будут записываться устройством с отпечатком:\n\n%@\n\nСюда входят удаленные, отредактированные и синхронизированные сообщения во всех беседах.";
 "legalhold_request.alert.detail.enter_password" = "Введите пароль для подтверждения.";
 "legalhold_request.alert.error_wrong_password" = "Неверный пароль";
 
@@ -1733,3 +1745,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Ваша сессия истекла";
 "account_deleted_session_expired_alert.message" = "Приложение не связывалось с сервером в течение длительного периода времени, или ваша сессия была аннулирована удаленно.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "не выбрано";
+"button_message_cell.state.selected" = "выбрано";
+"button_message_cell.state.confirmed" = "подтверждено";
+
+"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";

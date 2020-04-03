@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 @testable import Wire
 import FBSnapshotTestCase
 
@@ -31,7 +30,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = self.layoutMargins
 
-        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         self.layoutSubviews()
 
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
@@ -170,15 +169,6 @@ class ZMSnapshotTestCase: FBSnapshotTestCase {
 
 // MARK: - Helpers
 extension ZMSnapshotTestCase {
-    func containerView(with view: UIView) -> UIView {
-        let container = UIView(frame: view.bounds)
-        container.backgroundColor = snapshotBackgroundColor
-        container.addSubview(view)
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.fitInSuperview()
-        return container
-    }
 
     private func snapshotVerify(view: UIView,
                                 identifier: String? = nil,
@@ -255,7 +245,7 @@ extension ZMSnapshotTestCase {
                 file: StaticString = #file,
                 line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
         if assertEmptyFrame(container, file: file, line: line) {
             return
         }
@@ -287,14 +277,9 @@ extension ZMSnapshotTestCase {
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
 
-        container.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: width)
-            ])
-
-        container.layoutIfNeeded()
+        container.addWidthConstraint(width: width)
 
         if assertEmptyFrame(container, file: file, line: line) {
             return
@@ -415,7 +400,7 @@ extension ZMSnapshotTestCase {
     /// This method only makes sense for views that will be on presented fullscreen.
     func verifyMultipleSize(view: UIView,
                             extraLayoutPass: Bool,
-                            inSizes sizes: [String:CGSize],
+                            inSizes sizes: [String: CGSize],
                             configuration: ConfigurationWithDeviceType?,
                             file: StaticString = #file,
                             line: UInt = #line) {
@@ -435,7 +420,6 @@ extension ZMSnapshotTestCase {
                    line: line)
         }
     }
-
 
     func verifyInAllIPhoneSizes(view: UIView,
                                 extraLayoutPass: Bool = false,
@@ -463,52 +447,21 @@ extension ZMSnapshotTestCase {
 
 }
 
-// MARK: - UIAlertController
-extension XCTestCase {
-    func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        // Given
-        let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
-
-        let container = UIViewController()
-        container.loadViewIfNeeded()
-
-        window.rootViewController = container
-        window.makeKeyAndVisible()
-
-        controller.loadViewIfNeeded()
-        controller.view.layoutIfNeeded()
-
-        // When
-        let presentationExpectation = expectation(description: "It should be presented")
-        container.present(controller, animated: false) {
-            presentationExpectation.fulfill()
-        }
-
-        // Then
-        waitForExpectations(timeout: 2, handler: nil)
-    }
-
-    func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        let dismissalExpectation = expectation(description: "It should be dismissed")
-        controller.dismiss(animated: false) {
-            dismissalExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 2, handler: nil)
-    }
-
-}
-
 extension ZMSnapshotTestCase {
-    
-    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+
+    func verifyAlertController(_ controller: UIAlertController,
+                               file: StaticString = #file,
+                               line: UInt = #line) {
+        /// ZClient VC changes alert tint color with init. Reset the tint color here
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = controller.view.tintColor
+
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
         dismissViewController(controller, file: file, line: line)
     }
 }
 
-//MARK: - test with different color schemes
+// MARK: - test with different color schemes
 
 extension ZMSnapshotTestCase {
     /// Performs multiple assertions with the given view using the screen widths of
@@ -582,7 +535,6 @@ extension ZMSnapshotTestCase {
                             colorSchemes: Set<ColorSchemeVariant> = [],
                             file: StaticString = #file,
                             line: UInt = #line) {
-
 
         let testClosure: (UIView, String?) -> Void = {view, identifier in
 

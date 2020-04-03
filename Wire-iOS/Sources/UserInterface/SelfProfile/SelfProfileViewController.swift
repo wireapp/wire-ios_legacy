@@ -64,11 +64,11 @@ final class SelfProfileViewController: UIViewController {
         self.selfUser = selfUser
 
         // Create the settings hierarchy
-        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: ZMUser.selfUser())
+        let settingsPropertyFactory = SettingsPropertyFactory(userSession: SessionManager.shared?.activeUserSession, selfUser: selfUser)
 		let settingsCellDescriptorFactory = SettingsCellDescriptorFactory(settingsPropertyFactory: settingsPropertyFactory, userRightInterfaceType: userRightInterfaceType)
 		let rootGroup = settingsCellDescriptorFactory.rootGroup()
         settingsController = rootGroup.generateViewController()! as! SettingsTableViewController
-        profileHeaderViewController = ProfileHeaderViewController(user: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
+        profileHeaderViewController = ProfileHeaderViewController(user: selfUser, viewer: selfUser, options: selfUser.isTeamMember ? [.allowEditingAvailability] : [.hideAvailability])
 
 		self.userRightInterfaceType = userRightInterfaceType
 		self.settingsCellDescriptorFactory = settingsCellDescriptorFactory

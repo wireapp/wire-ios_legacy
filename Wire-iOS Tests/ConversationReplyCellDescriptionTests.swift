@@ -31,7 +31,7 @@ class ConversationReplyCellDescriptionTests: CoreDataSnapshotTestCase {
         let cellDescription = ConversationReplyCellDescription(quotedMessage: message)
 
         // THEN
-        XCTAssertEqual(cellDescription.configuration.senderName, otherUser.displayName(in: otherUserConversation))
+        XCTAssertEqual(cellDescription.configuration.senderName, otherUser.name)
     }
 
     func testThatItDisplaysCorrectNameForSelfReply() {

@@ -102,7 +102,7 @@ final class BadgeUserImageView: UserImageView {
 
     /// Updates the badge icon.
     private func updateBadgeIcon() {
-        guard let user = self.user?.zmUser else {
+        guard let user = self.user else {
             badgeIcon = .none
             return
         }
@@ -152,7 +152,7 @@ final class BadgeUserImageView: UserImageView {
                 hideBadge()
                 changeImage()
                 UIView.animate(withDuration: 0.65, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15.0, options: [], animations: showBadge, completion: nil)
-                UIView.wr_animate(easing: .easeOutQuart, duration: 0.15, animations: showShadow)
+                UIView.animate(easing: .easeOutQuart, duration: 0.15, animations: showShadow)
             } else {
                 changeImage()
                 showShadow()

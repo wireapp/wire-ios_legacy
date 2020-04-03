@@ -19,7 +19,6 @@
 import Foundation
 
 extension StartUIViewController {
-    @objc
     func createConstraints() {
         [searchHeaderViewController.view, groupSelector, searchResultsViewController.view].forEach{ $0?.translatesAutoresizingMaskIntoConstraints = false }
 
@@ -41,7 +40,6 @@ extension StartUIViewController {
         searchResultsViewController.view.fitInSuperview(exclude: [.top])
     }
 
-    @objc
     var showsGroupSelector: Bool {
         return SearchGroup.all.count > 1 && ZMUser.selfUser().canSeeServices
     }

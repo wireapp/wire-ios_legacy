@@ -24,7 +24,7 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForSquareImage() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_square.jpg")
-        guard let data = image.data() else { return XCTFail() }
+        guard let data = image.imageData else { return XCTFail() }
         
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
@@ -38,7 +38,7 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForVerticalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_vertical_pano.jpg")
-        guard let data = image.data() else { return XCTFail() }
+        guard let data = image.imageData else { return XCTFail() }
         
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }
@@ -51,7 +51,7 @@ final class ThumbnailCreationTests: ZMSnapshotTestCase {
     func testThatItCreatesThumbnailForHorizontalPanorama() {
         // Given
         let image = self.image(inTestBundleNamed: "unsplash_pano.jpg")
-        guard let data = image.data() else { return XCTFail() }
+        guard let data = image.imageData else { return XCTFail() }
         
         // When
         guard let thumbnail = UIImage(from: data, withShorterSideLength: 100 * UIScreen.main.scale) else { return XCTFail() }

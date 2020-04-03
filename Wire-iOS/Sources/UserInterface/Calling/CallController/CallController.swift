@@ -34,9 +34,9 @@ final class CallController: NSObject {
             if let conversation = topOverlayCall {
                 let callTopOverlayController = CallTopOverlayController(conversation: conversation)
                 callTopOverlayController.delegate = self
-                ZClientViewController.shared()?.setTopOverlay(to: callTopOverlayController)
+                ZClientViewController.shared?.setTopOverlay(to: callTopOverlayController)
             } else {
-                ZClientViewController.shared()?.setTopOverlay(to: nil)
+                ZClientViewController.shared?.setTopOverlay(to: nil)
             }
         }
     }
@@ -54,7 +54,7 @@ final class CallController: NSObject {
 
 extension CallController: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateState()
     }
     
@@ -112,7 +112,7 @@ extension CallController: WireCallCenterCallStateObserver {
         
         // NOTE: We resign first reponder for the input bar since it will attempt to restore
         // first responder when the call overlay is interactively dismissed but canceled.
-        UIResponder.wr_currentFirst()?.resignFirstResponder()
+        UIResponder.currentFirst?.resignFirstResponder()
         
         let modalVC = ModalPresentationViewController(viewController: viewController)
         targetViewController?.present(modalVC, animated: animated)
@@ -139,9 +139,7 @@ extension CallController: ViewControllerDismisser {
         guard let callViewController = viewController as? CallViewController, let conversation = callViewController.conversation else { return }
         
         minimizedCall = conversation
-        activeCallViewController = nil
-        
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
+        activeCallViewController = nil        
     }
     
 }

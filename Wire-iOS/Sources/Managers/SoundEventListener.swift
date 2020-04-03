@@ -140,7 +140,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
 
 extension SoundEventListener : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         
         guard let mediaManager = AVSMediaManager.sharedInstance(),
               let userSession = userSession,
@@ -198,11 +198,12 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
 
 extension SoundEventListener {
     
-    @objc func applicationWillEnterForeground() {
+    @objc
+    func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
-        if AppDelegate.shared().launchType == ApplicationLaunchPush {
+        if AppDelegate.shared.launchType == .push {
             soundEventWatchDog.ignoreTime = SoundEventListener.SoundEventListenerIgnoreTimeForPushStart
         } else {
             soundEventWatchDog.ignoreTime = 0.0

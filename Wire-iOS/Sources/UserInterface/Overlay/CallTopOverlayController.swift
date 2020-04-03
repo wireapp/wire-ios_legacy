@@ -82,7 +82,6 @@ final class CallTopOverlayController: UIViewController {
     deinit {
         stopCallDurationTimer()
         AVSMediaManagerClientChangeNotification.remove(self)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     init(conversation: ZMConversation) {
@@ -103,17 +102,13 @@ final class CallTopOverlayController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
+     
     override func loadView() {
         view = TapableAccessibleView(onAccessibilityActivate: { [weak self] in
             self?.openCall(nil)
         })
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(openCall(_:)))
@@ -216,7 +211,7 @@ final class CallTopOverlayController: UIViewController {
             let duration = callDurationFormatter.string(from: callDuration) ?? ""
             return "voice.top_overlay.tap_to_return".localized + "・" + duration
         default:
-            let initiator = self.conversation.voiceChannel?.initiator?.displayName ?? ""
+            let initiator = self.conversation.voiceChannel?.initiator?.name ?? ""
             let conversation = self.conversation.displayName
             return state.description(callee: initiator, conversation: conversation, isGroup: self.conversation.conversationType == .group)
         }
@@ -227,13 +222,14 @@ final class CallTopOverlayController: UIViewController {
         callDurationTimer = nil
     }
     
-    @objc dynamic func openCall(_ sender: UITapGestureRecognizer?) {
+    @objc
+    private func openCall(_ sender: UITapGestureRecognizer?) {
         delegate?.voiceChannelTopOverlayWantsToRestoreCall(self)
     }
 }
 
 extension CallTopOverlayController: WireCallCenterCallStateObserver {
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         updateCallDurationTimer(for: callState)
     }
 }

@@ -16,6 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 import WireDataModel
 @testable import Wire
@@ -26,7 +27,7 @@ extension MockMessage {
     }
 }
 
-class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
+final class CollectionsViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
     
     var emptyCollection: AssetCollectionWrapper!
     var imageMessage: ZMConversationMessage!
@@ -47,8 +48,12 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
     var deletedFileMessage: ZMConversationMessage!
     var deletedLinkMessage: ZMConversationMessage!
 
+    var coreDataFixture: CoreDataFixture!
+    
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
 
         MockUser.mockSelf()?.name = "Tarja Turunen"
         MockUser.mockSelf()?.accentColorValue = .strongBlue
@@ -96,42 +101,44 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
         deletedAudioMessage = nil
         deletedFileMessage = nil
         deletedLinkMessage = nil
+
+        coreDataFixture = nil
         super.tearDown()
     }
     
     func testThatNoElementStateIsShownWhenCollectionIsEmpty() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: true)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
     
     func testThatLoadingIsShownWhenFetching() {
         let controller = CollectionsViewController(collection: emptyCollection, fetchingDone: false)
         controller.view.layer.speed = 0 // Disable animations so that the spinner would always be in the same phase
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
     
     func testFilesSectionWhenNotFull() {
         let assetCollection = MockCollection(fileMessages: [fileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testFilesSectionWhenFull() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, fileMessage, fileMessage, fileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testLinksSectionWhenNotFull() {
         let assetCollection = MockCollection(linkMessages: [linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testLinksSectionWhenFull() {
         let assetCollection = MockCollection(linkMessages: [linkMessage, linkMessage, linkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view, extraLayoutPass: true)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     // MARK: - Expiration
@@ -141,25 +148,25 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
             MockCollection.onlyImagesCategory: [expiredImageMessage],
             MockCollection.onlyVideosCategory: [videoMessage, expiredVideoMessage]])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testFilesSectionWhenExpired() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, expiredFileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testAudioSectionWhenExpired() {
         let assetCollection = MockCollection(fileMessages: [audioMessage, expiredAudioMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     func testLinksSectionWhenExpired() {
         let assetCollection = MockCollection(linkMessages: [expiredLinkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
     // MARK: - Expiration: Deletion
@@ -169,25 +176,25 @@ class CollectionsViewControllerTests: CoreDataSnapshotTestCase {
             MockCollection.onlyImagesCategory: [deletedImageMessage],
             MockCollection.onlyVideosCategory: [videoMessage, deletedVideoMessage]])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
     
     func testFilesSectionWhenDeleted() {
         let assetCollection = MockCollection(fileMessages: [fileMessage, deletedFileMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
     
     func testAudioSectionWhenDeleted() {
         let assetCollection = MockCollection(fileMessages: [audioMessage, deletedAudioMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
     
     func testLinksSectionWhenDeleted() {
         let assetCollection = MockCollection(linkMessages: [deletedLinkMessage, linkMessage])
         let controller = createController(showingCollection: assetCollection)
-        verifyInAllIPhoneSizes(view: controller.view)
+        verifyAllIPhoneSizes(matching: controller)
     }
 
 }

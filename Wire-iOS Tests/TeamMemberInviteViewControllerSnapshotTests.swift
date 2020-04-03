@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class TeamMemberInviteViewControllerSnapshotTests: XCTestCase {
     
     var sut: TeamMemberInviteViewController!
     
@@ -34,6 +35,6 @@ final class TeamMemberInviteViewControllerSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 }
