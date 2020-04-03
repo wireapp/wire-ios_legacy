@@ -19,7 +19,8 @@
 
 import Foundation
 
-final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?

@@ -250,10 +250,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         viewModel.setAllowGuests(true)
         
         // Then
-        // wait for spinner closure done
-        delay(0.1) {
-            self.verify(matching: navigationController)
-        }
+        verify(matching: navigationController)
     }
     
     func testThatItRendersLoading_DarkTheme() {
@@ -267,10 +264,7 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         viewModel.setAllowGuests(true)
         
         // Then
-        // wait for spinner closure done
-        delay(0.1) {
-            self.verify(matching: navigationController)
-        }
+        verify(matching: navigationController)
     }
     
     func testThatItRendersRemoveGuestsConfirmationAlert() {
