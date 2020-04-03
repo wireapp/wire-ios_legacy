@@ -90,11 +90,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
                    didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
         
-        if state.isLoading {
-            dismissSpinner = navigationController?.presentSpinner()
-        } else {
-            dismissSpinner?(nil)
-        }
+        showSpinner = state.isLoading
         title = state.title
     }
 
