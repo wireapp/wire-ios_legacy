@@ -134,7 +134,7 @@ platform :ios do
         )
     end
 
-    desc "Submit for review"
+    desc "Submit for review with release note. Usage: Create release_note.txt in fastlane/metadata/en-US & de-DE folders. Then call $fastlane submit_review app_version:X.XX"
     lane :submit_review do |options|
         deliver(
             app_version: options[:app_version],
