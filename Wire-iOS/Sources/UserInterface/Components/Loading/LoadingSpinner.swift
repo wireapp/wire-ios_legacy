@@ -37,61 +37,48 @@ final class LoadingSpinnerView: UIView {
         
         NSLayoutConstraint.activate([
             spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            ])
+            spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
     }
 }
 
 typealias SpinnerCompletion = ((Completion?) -> ())
 
 extension UIViewController {
-    func createLoadingSpinnerView() -> LoadingSpinnerView {
+    
+    func presentSpinner(title: String? = nil) -> SpinnerCompletion {
+        // Starts animating when it appears, stops when it disappears
+        let spinnerView = createSpinner(title: title)
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(spinnerView)
+
+        NSLayoutConstraint.activate([
+            spinnerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            spinnerView.topAnchor.constraint(equalTo: view.topAnchor),
+            spinnerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            spinnerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+
+        UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
+        spinnerView.spinnerSubtitleView.spinner.startAnimation()
+
+        return { completeion in
+            spinnerView.removeFromSuperview()
+            completeion?()
+        }
+    }
+    
+    fileprivate func createLoadingSpinnerView() -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
-        loadingSpinnerView.isHidden = true
         loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         
         
         return loadingSpinnerView
     }
-    
-    func presentSpinner(title: String? = nil) -> SpinnerCompletion {
-        // Starts animating when it appears, stops when it disappears
-        let spinnerViewControler = createSpinner(title: title)
-        addToSelf(spinnerViewControler)
-        
-        return { completeion in
-            spinnerViewControler.view.removeFromSuperview()
-            spinnerViewControler.removeFromParent()
-            completeion?()
-        }
-    }
-    
-    private func createSpinner(title: String? = nil) -> UIViewController {
+
+    fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
         let loadingSpinnerView = createLoadingSpinnerView()
         loadingSpinnerView.spinnerSubtitleView.subtitle = title
-
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .clear
-        viewController.view.addSubview(loadingSpinnerView)
         
-        loadingSpinnerView.isHidden = false
-        
-        viewController.createConstraints(container: loadingSpinnerView)
-        
-        UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
-        loadingSpinnerView.spinnerSubtitleView.spinner.startAnimation()
-        
-        return viewController
+        return loadingSpinnerView
     }
     
-    private func createConstraints(container: UIView) {
-        container.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            container.topAnchor.constraint(equalTo: view.topAnchor),
-            container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
-    }
-
 }

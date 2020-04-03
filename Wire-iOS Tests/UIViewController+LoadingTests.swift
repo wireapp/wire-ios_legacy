@@ -20,13 +20,8 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class MockLoadingSpinnerViewController: UIViewController {
-//    lazy var loadingSpinnerView: LoadingSpinnerView = createLoadingSpinnerView()
-}
-
-
 final class LoadingViewControllerTests: XCTestCase {
-    var sut: (UIViewController)!
+    var sut: UIViewController!
     
     override func setUp() {
         super.setUp()
