@@ -28,7 +28,7 @@ final class SpinnerSubtitleView: UIStackView {
 
     @objc
     let spinner = ProgressSpinner()
-    
+
     private let label = UILabel()
 
     init() {
@@ -36,11 +36,11 @@ final class SpinnerSubtitleView: UIStackView {
         setupViews()
         updateSubtitle(nil)
     }
-    
+
     required public init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupViews() {
         axis = .vertical
         alignment = .center

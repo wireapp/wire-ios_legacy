@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -34,13 +33,13 @@ extension SpinnerCapable where Self: UIViewController {
             if newValue {
                 //do not show doubled spinner
                 guard !isSpinnerVisible else { return }
-                
+
                 dismissSpinner = presentSpinner()
             } else {
                 dismissSpinner?()
             }
         }
-        
+
         get {
             return dismissSpinner != nil
         }
@@ -65,35 +64,35 @@ extension SpinnerCapable where Self: UIViewController {
             spinnerView.removeFromSuperview()
         }
     }
-    
+
     fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
         loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
 
         loadingSpinnerView.spinnerSubtitleView.subtitle = title
-        
+
         return loadingSpinnerView
     }
-    
+
 }
 
 fileprivate final class LoadingSpinnerView: UIView {
     let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
-    
+
     init() {
         super.init(frame: .zero)
         addSubview(spinnerSubtitleView)
         createConstraints()
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func createConstraints() {
         spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
             spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])

@@ -26,13 +26,13 @@ final class MockLoadingViewController: SpinnerCapableViewController {
 
 final class LoadingViewControllerTests: XCTestCase {
     var sut: MockLoadingViewController!
-    
+
     override func setUp() {
         super.setUp()
         sut = MockLoadingViewController()
         sut.view.backgroundColor = .white
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -40,10 +40,10 @@ final class LoadingViewControllerTests: XCTestCase {
 
     func testThatItShowsLoadingIndicator() {
         // Given
-        
+
         // when
         sut.isSpinnerVisible = true
-        
+
         // then
         verifyInAllDeviceSizes(matching: sut)
     }
@@ -59,12 +59,12 @@ final class LoadingViewControllerTests: XCTestCase {
 
     func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
-        
+
         // when
         sut.showSpinner(title: "RESTORING…")
 
         // then
         verifyInAllDeviceSizes(matching: sut)
     }
-    
+
 }
