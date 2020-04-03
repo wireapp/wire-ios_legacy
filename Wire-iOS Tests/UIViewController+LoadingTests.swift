@@ -21,7 +21,7 @@ import XCTest
 import SnapshotTesting
 
 final class MockLoadingViewController: SpinnerViewController {
-    var dismissSpinner: SpinnerCompletion?
+    var dismissSpinner: Completion?
 }
 
 final class LoadingViewControllerTests: XCTestCase {
