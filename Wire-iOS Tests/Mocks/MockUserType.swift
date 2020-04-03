@@ -154,8 +154,6 @@ class MockUserType: NSObject, UserType, Decodable {
 
     var isUnderLegalHold: Bool = false
 
-    var shouldHideAvailability: Bool = false
-
     var needsRichProfileUpdate: Bool = false
 
     // MARK: - Capabilities

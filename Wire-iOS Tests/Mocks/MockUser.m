@@ -141,7 +141,6 @@ static id<UserType> mockSelfUser = nil;
 @synthesize richProfile;
 @synthesize canCreateService;
 @synthesize oneToOneConversation;
-@synthesize shouldHideAvailability;
 @synthesize refreshDataCount;
 @synthesize refreshRichProfileCount;
 @synthesize refreshMembershipCount;
