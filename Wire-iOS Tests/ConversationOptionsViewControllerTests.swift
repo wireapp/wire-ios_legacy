@@ -246,8 +246,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .light)
         let navigationController = sut.wrapInNavigationController()
         
-        sut.loadViewIfNeeded()
-        navigationController.view.layer.speed = 0
+//        sut.loadViewIfNeeded()
+//        navigationController.view.layer.speed = 0
         
         // When
         viewModel.setAllowGuests(true)
@@ -266,8 +266,8 @@ final class ConversationOptionsViewControllerTests: XCTestCase {
         let sut = ConversationOptionsViewController(viewModel: viewModel, variant: .dark)
         let navigationController = sut.wrapInNavigationController()
         
-        sut.loadViewIfNeeded()
-        navigationController.view.layer.speed = 0
+//        sut.loadViewIfNeeded()
+//        navigationController.view.layer.speed = 0
         
         // When
         viewModel.setAllowGuests(true)

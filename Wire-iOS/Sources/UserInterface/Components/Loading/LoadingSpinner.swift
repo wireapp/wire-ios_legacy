@@ -42,6 +42,8 @@ final class LoadingSpinnerView: UIView {
     }
 }
 
+typealias SpinnerCompletion = ((Completion?) -> ())
+
 extension UIViewController {
     func createLoadingSpinnerView() -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
@@ -52,7 +54,7 @@ extension UIViewController {
         return loadingSpinnerView
     }
     
-    func presentSpinner(title: String? = nil) -> ((Completion?) -> ()) {
+    func presentSpinner(title: String? = nil) -> SpinnerCompletion {
         // Starts animating when it appears, stops when it disappears
         let spinnerViewControler = createSpinner(title: title)
         addToSelf(spinnerViewControler)
@@ -89,8 +91,7 @@ extension UIViewController {
             container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             container.topAnchor.constraint(equalTo: view.topAnchor),
             container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            container.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            ])
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
     }
 
 }

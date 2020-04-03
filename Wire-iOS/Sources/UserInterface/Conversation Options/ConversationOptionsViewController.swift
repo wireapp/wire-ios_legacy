@@ -24,6 +24,8 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
     
+    private var dismissSpinner: SpinnerCompletion?
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
@@ -88,8 +90,10 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
                    didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
         
-        if state.isLoading { ///TODO: dismiss
-            let _ = navigationController?.presentSpinner()
+        if state.isLoading {
+            dismissSpinner = navigationController?.presentSpinner()
+        } else {
+            dismissSpinner?(nil)
         }
         title = state.title
     }
