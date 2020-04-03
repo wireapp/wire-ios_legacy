@@ -20,7 +20,7 @@ import XCTest
 @testable import Wire
 import SnapshotTesting
 
-final class MockLoadingViewController: SpinnerViewController {
+final class MockLoadingViewController: SpinnerCapableViewController {
     var dismissSpinner: Completion?
 }
 
@@ -42,7 +42,7 @@ final class LoadingViewControllerTests: XCTestCase {
         // Given
         
         // when
-        sut.showSpinner = true
+        sut.isSpinnerVisible = true
         
         // then
         verifyInAllDeviceSizes(matching: sut)
@@ -50,8 +50,8 @@ final class LoadingViewControllerTests: XCTestCase {
 
     func testThatItDismissesLoadingIndicator() {
         // given & when
-        sut.showSpinner = true
-        sut.showSpinner = false
+        sut.isSpinnerVisible = true
+        sut.isSpinnerVisible = false
 
         // then
         verify(matching: sut)

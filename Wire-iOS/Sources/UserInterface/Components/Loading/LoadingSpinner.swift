@@ -29,11 +29,11 @@ extension SpinnerCapable where Self: UIViewController {
         dismissSpinner = presentSpinner(title: title)
     }
 
-    var showSpinner: Bool {
+    var isSpinnerVisible: Bool {
         set {
             if newValue {
                 //do not show doubled spinner
-                guard !showSpinner else { return }
+                guard !isSpinnerVisible else { return }
                 
                 dismissSpinner = presentSpinner()
             } else {
