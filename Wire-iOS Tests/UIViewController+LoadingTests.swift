@@ -61,7 +61,7 @@ final class LoadingViewControllerTests: XCTestCase {
         // Given
         
         // when
-        let _ = sut.presentSpinner(title: "RESTORING…")
+        sut.showSpinner(title: "RESTORING…")
 
         // then
         verifyInAllDeviceSizes(matching: sut)

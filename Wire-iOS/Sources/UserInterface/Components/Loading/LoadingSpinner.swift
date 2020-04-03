@@ -19,16 +19,25 @@
 import Foundation
 
 protocol SpinnerCapable: class {
-    var dismissSpinner: SpinnerCompletion? { get set }
+    var dismissSpinner: Completion? { get set }
 }
 
+typealias SpinnerViewController = UIViewController & SpinnerCapable
+
 extension SpinnerCapable where Self: UIViewController {
+    func showSpinner(title: String) {
+        dismissSpinner = presentSpinner(title: title)
+    }
+
     var showSpinner: Bool {
         set {
             if newValue {
+                //do not show doubled spinner
+                guard !showSpinner else { return }
+                
                 dismissSpinner = presentSpinner()
             } else {
-                dismissSpinner?(nil)
+                dismissSpinner?()
             }
         }
         
@@ -36,14 +45,8 @@ extension SpinnerCapable where Self: UIViewController {
             return dismissSpinner != nil
         }
     }
-}
 
-typealias SpinnerViewController = UIViewController & SpinnerCapable
-typealias SpinnerCompletion = ((Completion?) -> Void)
-
-extension UIViewController {
-    
-    func presentSpinner(title: String? = nil) -> SpinnerCompletion {
+    private func presentSpinner(title: String? = nil) -> Completion {
         // Starts animating when it appears, stops when it disappears
         let spinnerView = createSpinner(title: title)
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
@@ -58,9 +61,8 @@ extension UIViewController {
         UIAccessibility.post(notification: .announcement, argument: "general.loading".localized)
         spinnerView.spinnerSubtitleView.spinner.startAnimation()
 
-        return { completeion in
+        return {
             spinnerView.removeFromSuperview()
-            completeion?()
         }
     }
     

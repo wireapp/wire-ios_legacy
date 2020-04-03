@@ -24,7 +24,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
     
-    var dismissSpinner: SpinnerCompletion?
+    var dismissSpinner: Completion?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
