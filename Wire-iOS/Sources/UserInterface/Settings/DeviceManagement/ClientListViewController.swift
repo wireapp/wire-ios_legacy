@@ -27,7 +27,10 @@ final class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
                                 ClientUpdateObserver,
-                                ClientColorVariantProtocol {
+                                ClientColorVariantProtocol,
+                                SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     var removalObserver: ClientRemovalObserver?
 
     var clientsTableView: UITableView?

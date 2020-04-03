@@ -18,11 +18,28 @@
 
 import Foundation
 
-protocol SpinnerCapable {    
-    var dismissSpinner: SpinnerCompletion? { get }
+protocol SpinnerCapable: class {
+    var dismissSpinner: SpinnerCompletion? { get set }
 }
 
-typealias SpinnerCompletion = ((Completion?) -> ())
+extension SpinnerCapable where Self: UIViewController {
+    var showSpinner: Bool {
+        set {
+            if newValue {
+                dismissSpinner = presentSpinner()
+            } else {
+                dismissSpinner?(nil)
+            }
+        }
+        
+        get {
+            return dismissSpinner != nil
+        }
+    }
+}
+
+typealias SpinnerViewController = UIViewController & SpinnerCapable
+typealias SpinnerCompletion = ((Completion?) -> Void)
 
 extension UIViewController {
     

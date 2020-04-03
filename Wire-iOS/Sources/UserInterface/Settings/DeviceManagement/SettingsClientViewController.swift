@@ -34,8 +34,10 @@ final class SettingsClientViewController: UIViewController,
                                     UITableViewDelegate,
                                     UITableViewDataSource,
                                     UserClientObserver,
-                                    ClientColorVariantProtocol {
-    
+                                    ClientColorVariantProtocol,
+                                    SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
     fileprivate static let resetCellReuseIdentifier: String = "ResetCellReuseIdentifier"
     fileprivate static let verifiedCellReuseIdentifier: String = "VerifiedCellReuseIdentifier"
