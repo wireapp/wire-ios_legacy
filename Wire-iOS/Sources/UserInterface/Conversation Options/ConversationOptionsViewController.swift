@@ -18,13 +18,13 @@
 
 import UIKit
 
-final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
+final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationOptionsViewModelDelegate {
 
     private let tableView = UITableView()
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
     
-    private var dismissSpinner: SpinnerCompletion?
+    var dismissSpinner: SpinnerCompletion?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations

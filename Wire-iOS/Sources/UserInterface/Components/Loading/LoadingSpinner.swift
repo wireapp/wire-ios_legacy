@@ -18,27 +18,8 @@
 
 import Foundation
 
-final class LoadingSpinnerView: UIView {
-    let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
-    
-    init() {
-        super.init(frame: .zero)
-        addSubview(spinnerSubtitleView)
-        createConstraints()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func createConstraints() {
-        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
-    }
+protocol SpinnerCapable {    
+    var dismissSpinner: SpinnerCompletion? { get }
 }
 
 typealias SpinnerCompletion = ((Completion?) -> ())
@@ -66,19 +47,36 @@ extension UIViewController {
         }
     }
     
-    fileprivate func createLoadingSpinnerView() -> LoadingSpinnerView {
+    fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
         loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-        
-        
-        return loadingSpinnerView
-    }
 
-    fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
-        let loadingSpinnerView = createLoadingSpinnerView()
         loadingSpinnerView.spinnerSubtitleView.subtitle = title
         
         return loadingSpinnerView
     }
     
+}
+
+fileprivate final class LoadingSpinnerView: UIView {
+    let spinnerSubtitleView: SpinnerSubtitleView = SpinnerSubtitleView()
+    
+    init() {
+        super.init(frame: .zero)
+        addSubview(spinnerSubtitleView)
+        createConstraints()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func createConstraints() {
+        spinnerSubtitleView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            spinnerSubtitleView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
+    }
 }
