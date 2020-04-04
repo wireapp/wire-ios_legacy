@@ -45,6 +45,7 @@ final class LoadingViewControllerTests: XCTestCase {
         sut.isSpinnerVisible = true
 
         // then
+        XCTAssert(sut.isSpinnerVisible)
         verifyInAllDeviceSizes(matching: sut)
     }
 
@@ -54,6 +55,7 @@ final class LoadingViewControllerTests: XCTestCase {
         sut.isSpinnerVisible = false
 
         // then
+        XCTAssertFalse(sut.isSpinnerVisible)
         verify(matching: sut)
     }
 

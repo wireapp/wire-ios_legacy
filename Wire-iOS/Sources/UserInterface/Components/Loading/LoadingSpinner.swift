@@ -37,6 +37,7 @@ extension SpinnerCapable where Self: UIViewController {
                 dismissSpinner = presentSpinner()
             } else {
                 dismissSpinner?()
+                dismissSpinner = nil
             }
         }
 
