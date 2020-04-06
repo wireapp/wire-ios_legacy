@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import WireSyncEngine
+import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 

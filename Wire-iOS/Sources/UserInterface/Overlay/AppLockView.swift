@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class AppLockView: UIView {
     public var onReauthRequested: (()->())?
