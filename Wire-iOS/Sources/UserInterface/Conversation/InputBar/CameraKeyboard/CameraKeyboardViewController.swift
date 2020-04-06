@@ -36,7 +36,8 @@ protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-class CameraKeyboardViewController: UIViewController {
+final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
     
     fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero

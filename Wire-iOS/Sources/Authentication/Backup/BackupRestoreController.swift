@@ -27,15 +27,15 @@ protocol BackupRestoreControllerDelegate: class {
  * An object that coordinates restoring a backup.
  */
 
-class BackupRestoreController: NSObject {
+final class BackupRestoreController: NSObject {
     static let WireBackupUTI = "com.wire.backup-ios"
 
-    let target: UIViewController
+    let target: SpinnerCapableViewController
     weak var delegate: BackupRestoreControllerDelegate?
 
     // MARK: - Initialization
 
-    init(target: UIViewController) {
+    init(target: SpinnerCapableViewController) {
         self.target = target
         super.init()
     }

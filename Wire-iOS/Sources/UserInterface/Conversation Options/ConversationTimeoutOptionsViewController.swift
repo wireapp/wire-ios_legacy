@@ -42,7 +42,8 @@ extension ZMConversation {
     }
 }
 
-final class ConversationTimeoutOptionsViewController: UIViewController {
+final class ConversationTimeoutOptionsViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     fileprivate let conversation: ZMConversation
     fileprivate var items: [Item] = []

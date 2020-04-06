@@ -35,7 +35,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let log = ZMSLog(tag: "Authentication")
 
     /// The navigation controller that presents the authentication interface.
-    weak var presenter: UINavigationController?
+    weak var presenter: (UINavigationController & SpinnerCapable)?
 
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -108,7 +108,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController & SpinnerCapable, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.stateController = AuthenticationStateController()

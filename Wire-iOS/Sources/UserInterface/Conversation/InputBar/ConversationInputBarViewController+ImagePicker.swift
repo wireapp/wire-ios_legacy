@@ -111,7 +111,8 @@ extension ConversationInputBarViewController {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }
 
-        picker.showLoadingView = true
+        ///TODO: picker can add spinner?
+//        picker.showLoadingView = true
         AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
             if error == nil,
                let resultURL = resultURL {

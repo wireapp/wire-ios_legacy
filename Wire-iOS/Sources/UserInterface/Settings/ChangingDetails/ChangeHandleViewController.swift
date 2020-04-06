@@ -41,7 +41,7 @@ protocol ChangeHandleTableViewCellDelegate: class {
 }
 
 
-@objcMembers final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
+final class ChangeHandleTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     weak var delegate: ChangeHandleTableViewCellDelegate?
     let prefixLabel: UILabel = {
@@ -185,7 +185,8 @@ struct HandleChangeState {
 }
 
 
-final class ChangeHandleViewController: SettingsBaseTableViewController {
+final class ChangeHandleViewController: SettingsBaseTableViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     public var footerFont: UIFont = .smallFont
     var state: HandleChangeState

@@ -18,7 +18,8 @@
 
 import Foundation
 
-final class SearchUserViewConroller: UIViewController {
+final class SearchUserViewConroller: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     private var searchDirectory: SearchDirectory!
     private weak var profileViewControllerDelegate: ProfileViewControllerDelegate?

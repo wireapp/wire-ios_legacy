@@ -43,7 +43,9 @@ final class ClientListViewController: UIViewController,
             setColor(for: variant)
         }
     }
-
+    
+    //TODO:
+/*
     override public var showLoadingView: Bool {
         set {
             if let navigationController = self.navigationController {
@@ -64,7 +66,7 @@ final class ClientListViewController: UIViewController,
                 return super.showLoadingView
             }
         }
-    }
+    }*/
 
     var editingList: Bool = false {
         didSet {

@@ -25,15 +25,15 @@ protocol SpinnerCapable: class {
 }
 
 extension SpinnerCapable where Self: UIViewController {
-    func showSpinner(title: String) {
+    func showLoadingView(title: String) {
         dismissSpinner = presentSpinner(title: title)
     }
 
-    var isSpinnerVisible: Bool {
+    var showLoadingView: Bool {
         set {
             if newValue {
                 // do not show double spinners
-                guard !isSpinnerVisible else { return }
+                guard !showLoadingView else { return }
 
                 dismissSpinner = presentSpinner()
             } else {

@@ -177,11 +177,11 @@ final class SelfProfileViewController: UIViewController {
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = true
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.showLoadingView = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = false
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.showLoadingView = false
     }
 
 }

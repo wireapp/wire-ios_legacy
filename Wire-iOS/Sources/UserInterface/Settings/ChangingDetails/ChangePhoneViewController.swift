@@ -184,6 +184,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 guard let `self` = self else { return }
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
+                ///TODO: check
                 self.navigationController?.showLoadingView = true
                 })            
             present(alert, animated: true)
@@ -191,6 +192,20 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
+}
+
+extension UINavigationController {
+    var showLoadingView: Bool? {
+        get {
+            return (self as? SpinnerCapableViewController)?.showLoadingView
+        }
+        
+        set {
+            if let newValue = newValue {
+            (self as? SpinnerCapableViewController)?.showLoadingView = newValue
+            }
+        }
+    }
 }
 
 // MARK: - RegistrationTextFieldDelegate

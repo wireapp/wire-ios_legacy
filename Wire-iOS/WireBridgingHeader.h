@@ -22,7 +22,3 @@
 @import WireCommonComponents;
 
 #import <CommonCrypto/CommonCrypto.h>
-
-// Utils
-
-#import "UIViewController+LoadingView.h"
