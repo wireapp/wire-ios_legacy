@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
+import WireDataModel
 
 final class UserClientCell: SeparatorCollectionViewCell {
     

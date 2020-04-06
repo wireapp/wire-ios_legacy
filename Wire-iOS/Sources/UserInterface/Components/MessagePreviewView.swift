@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension ZMConversationMessage {
     func replyPreview() -> UIView? {
