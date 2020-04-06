@@ -35,14 +35,14 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
 
     }
     
-    func logout(password: String? = nil) {
+    private func logout(password: String? = nil) {
         guard let selfUser = ZMUser.selfUser() else { return }
     
         if selfUser.usesCompanyLogin || password != nil {
-            weak var topMostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
-            (topMostViewController as? SpinnerCapableViewController)?.showLoadingView = true
+            weak var topMostViewController: SpinnerCapableViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false) as? SpinnerCapableViewController
+            topMostViewController?.showLoadingView = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
-                (topMostViewController as? SpinnerCapableViewController)?.showLoadingView = false
+                topMostViewController?.showLoadingView = false
                 
                 if case .failure(let error) = result {
                     topMostViewController?.showAlert(for: error)
