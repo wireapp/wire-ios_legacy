@@ -18,6 +18,9 @@
 
 import Foundation
 import DifferenceKit
+import WireSystem
+import WireDataModel
+import WireSyncEngine
 
 final class ConversationListViewModel: NSObject {
     

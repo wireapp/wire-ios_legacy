@@ -56,7 +56,7 @@ final class LabelIndicator: UIView, Themeable {
     private let containerView = UIView()
     private let context: LabelIndicatorContext
 
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard oldValue != colorSchemeVariant else { return }
             applyColorSchemeOnSubviews(colorSchemeVariant)
