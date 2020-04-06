@@ -166,9 +166,12 @@ extension ConversationContentViewController: SignatureObserver {
         presentDigitalSignatureVerification(with: url)
     }
     
-    func didReceiveDigitalSignature(_ cmsData: Data) {
-        // TO DO: validate signature
-        dismissDigitalSignatureVerification()
+    func didReceiveDigitalSignature(_ cmsFileMetadata: ZMFileMetadata) {
+        dismissDigitalSignatureVerification(completion: { [weak self] in
+            ZMUserSession.shared()?.perform({
+                self?.conversation.append(file: cmsFileMetadata)
+            })
+        })
     }
     
     func didFailSignature() {
