@@ -184,7 +184,6 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 guard let `self` = self else { return }
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
-                ///TODO: check
                 self.navigationController?.showLoadingView = true
                 })            
             present(alert, animated: true)
