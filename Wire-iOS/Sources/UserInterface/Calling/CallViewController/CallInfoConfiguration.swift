@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import avs
 
 fileprivate extension VoiceChannel {
     var degradationState: CallDegradationState {
