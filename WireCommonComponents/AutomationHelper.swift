@@ -34,7 +34,7 @@ final public class AutomationEmailCredentials: NSObject {
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
-@objcMembers public final class AutomationHelper: NSObject {
+public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
