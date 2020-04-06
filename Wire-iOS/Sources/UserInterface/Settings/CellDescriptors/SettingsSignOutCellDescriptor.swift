@@ -18,7 +18,7 @@
 
 import Foundation
 
-class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
+final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
     
     var requestPasswordController: RequestPasswordController?
     
@@ -40,7 +40,6 @@ class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
     
         if selfUser.usesCompanyLogin || password != nil {
             weak var topMostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
-            //TODO
             (topMostViewController as? SpinnerCapableViewController)?.showLoadingView = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
                 (topMostViewController as? SpinnerCapableViewController)?.showLoadingView = false
