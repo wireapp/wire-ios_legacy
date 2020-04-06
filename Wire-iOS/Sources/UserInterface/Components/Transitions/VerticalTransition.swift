@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol VerticalTransitionDataSource: NSObject {
     func viewsToHideDuringVerticalTransition(transition: VerticalTransition) -> [UIView]

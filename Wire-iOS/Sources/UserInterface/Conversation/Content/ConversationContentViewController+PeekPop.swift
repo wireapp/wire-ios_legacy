@@ -18,6 +18,7 @@
 
 import Foundation
 import SafariServices
+import UIKit
 
 private var lastPreviewURL: URL?
 

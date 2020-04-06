@@ -18,8 +18,8 @@
 
 
 import Foundation
+import UIKit
 
-@objc protocol ViewControllerDismisser: class {
-    @objc(dismissViewController:completion:)
+protocol ViewControllerDismisser: class {
     func dismiss(viewController: UIViewController, completion: (()->())?)
 }

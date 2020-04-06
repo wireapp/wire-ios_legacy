@@ -17,6 +17,8 @@
 
 import Foundation
 import FLAnimatedImage
+import UIKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 

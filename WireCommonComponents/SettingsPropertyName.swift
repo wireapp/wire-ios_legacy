@@ -31,7 +31,7 @@ import Foundation
  - DisableLinkPreviews:    Disable link previews for links you send
  - Disable(.*):            Disable some app features (debug)
  */
-enum SettingsPropertyName: String, CustomStringConvertible {
+public enum SettingsPropertyName: String, CustomStringConvertible {
     
     // User defaults
     case chatHeadsDisabled = "ChatHeadsDisabled"

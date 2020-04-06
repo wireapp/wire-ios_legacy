@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
 fileprivate enum Item {
     case supportedValue(MessageDestructionTimeoutValue)

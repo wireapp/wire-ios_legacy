@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 protocol CallTopOverlayControllerDelegate: class {
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)

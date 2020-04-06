@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var connectionRequests: [ZMConversation] = []

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  * The view controller to use to ask the user to enter their credentials.

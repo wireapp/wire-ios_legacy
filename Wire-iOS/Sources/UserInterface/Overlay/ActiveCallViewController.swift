@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 

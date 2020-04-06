@@ -18,6 +18,8 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
 extension ZMConversation {
     var canAddGuest: Bool {

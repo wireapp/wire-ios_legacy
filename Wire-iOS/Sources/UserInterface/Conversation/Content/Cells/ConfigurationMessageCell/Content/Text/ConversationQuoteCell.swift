@@ -18,8 +18,9 @@
 
 import UIKit
 import Down
+import WireDataModel
 
-class ConversationReplyContentView: UIView {
+final class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4
 
     struct Configuration {
@@ -184,7 +185,7 @@ class ConversationReplyCell: UIView, ConversationMessageCell {
 
 }
 
-class ConversationReplyCellDescription: ConversationMessageCellDescription {
+final class ConversationReplyCellDescription: ConversationMessageCellDescription {
     typealias View = ConversationReplyCell
     let configuration: View.Configuration
 

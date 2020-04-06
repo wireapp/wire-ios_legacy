@@ -17,10 +17,11 @@
 //
 
 import WireCommonComponents
+import UIKit
 
 extension UIBarButtonItem {
 
-    @objc convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
+    convenience init(icon: StyleKitIcon, style: UIBarButtonItem.Style = .plain, target: Any?, action: Selector?) {
         self.init(
             image: icon.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground)),
             style: style,

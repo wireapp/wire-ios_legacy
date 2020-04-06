@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ShareDestination: Hashable {
     var displayName: String { get }

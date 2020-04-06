@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ClientListViewControllerDelegate: class {
     func finishedDeleting(_ clientListViewController: ClientListViewController)

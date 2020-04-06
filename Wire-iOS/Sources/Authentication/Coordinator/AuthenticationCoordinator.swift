@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
 
 /**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration

@@ -21,7 +21,7 @@ import MapKit
 import Cartography
 
 /// Displays the preview of a location message.
-class LocationPreviewController: TintColorCorrectedViewController {
+final class LocationPreviewController: TintColorCorrectedViewController {
 
     let message: ZMConversationMessage
     private var actionController: ConversationMessageActionController!

@@ -19,6 +19,7 @@
 import Foundation
 import SafariServices
 import AuthenticationServices
+import UIKit
 
 protocol CompanyLoginFlowHandlerDelegate: class {
     /// Called when the user cancels the company login flow.
