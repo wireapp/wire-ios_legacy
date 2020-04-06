@@ -18,6 +18,8 @@
 
 
 import Foundation
+import UIKit
+import WireDataModel
 
 //TODO: merge to UserClientType or stay in UI project? It is depends on localized string resource
 @objc protocol UserClientTypeAttributedString {

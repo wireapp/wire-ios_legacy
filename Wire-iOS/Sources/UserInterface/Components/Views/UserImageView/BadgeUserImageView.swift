@@ -19,12 +19,12 @@
 /**
  * A user image view that can display a badge on top for different connection states.
  */
+import UIKit
 
-@objc
 final class BadgeUserImageView: UserImageView {
 
     /// The color of the badge.
-    @objc var badgeColor: UIColor = .white {
+    var badgeColor: UIColor = .white {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
@@ -169,7 +169,7 @@ final class BadgeUserImageView: UserImageView {
 
 extension BadgeUserImageView {
 
-    @objc var wr_badgeIconSize: CGFloat {
+    var wr_badgeIconSize: CGFloat {
         get {
             return badgeIconSize.rawValue
         }
