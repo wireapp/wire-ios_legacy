@@ -19,7 +19,9 @@
 
 import Foundation
 
-final class ClearBackgroundNavigationController: UINavigationController {
+final class ClearBackgroundNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate lazy var pushTransition = NavigationTransition(operation: .push)
     fileprivate lazy var popTransition = NavigationTransition(operation: .pop)
     
