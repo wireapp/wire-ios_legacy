@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireUtilities
 
 protocol ConversationOptionsViewModelConfiguration: class {
     var title: String { get }

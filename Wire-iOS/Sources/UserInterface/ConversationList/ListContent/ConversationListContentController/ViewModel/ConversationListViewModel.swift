@@ -21,6 +21,7 @@ import DifferenceKit
 import WireSystem
 import WireDataModel
 import WireSyncEngine
+import WireRequestStrategy
 
 final class ConversationListViewModel: NSObject {
     

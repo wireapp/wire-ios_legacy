@@ -17,8 +17,9 @@
 // 
 
 import Foundation
+import UIKit
 
-@objc class PlaceholderConversationView: UIView {
+final class PlaceholderConversationView: UIView {
     
     var shieldImageView: UIImageView!
 

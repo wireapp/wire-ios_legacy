@@ -284,7 +284,7 @@ extension GroupDetailsViewController: GroupDetailsSectionControllerDelegate, Gro
     
     @objc(presentGuestOptionsAnimated:)
     func presentGuestOptions(animated: Bool) {
-        let menu = ConversationOptionsViewController(conversation: conversation, userSession: .shared()!)
+        let menu = ConversationOptionsViewController(conversation: conversation, userSession: ZMUserSession.shared()!)
         navigationController?.pushViewController(menu, animated: animated)
     }
 

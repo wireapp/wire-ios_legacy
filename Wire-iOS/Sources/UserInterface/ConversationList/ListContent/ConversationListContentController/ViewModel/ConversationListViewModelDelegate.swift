@@ -18,7 +18,7 @@
 
 import Foundation
 import DifferenceKit
-
+import WireDataModel
 
 /// a item which can be presented in the conversaton list
 protocol ConversationListItem {}

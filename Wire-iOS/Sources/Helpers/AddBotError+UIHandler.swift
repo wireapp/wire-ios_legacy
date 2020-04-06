@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 extension AddBotError {
     

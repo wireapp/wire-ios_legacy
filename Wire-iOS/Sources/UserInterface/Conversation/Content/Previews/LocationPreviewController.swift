@@ -19,6 +19,7 @@
 import UIKit
 import MapKit
 import Cartography
+import WireDataModel
 
 /// Displays the preview of a location message.
 final class LocationPreviewController: TintColorCorrectedViewController {

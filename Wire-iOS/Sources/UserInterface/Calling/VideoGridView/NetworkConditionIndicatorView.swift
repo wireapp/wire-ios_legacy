@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
 

@@ -20,6 +20,7 @@ import Foundation
 import FLAnimatedImage
 import WireDataModel
 import WireLinkPreview
+import UIKit
 
 extension ZMConversationMessage {
 

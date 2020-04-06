@@ -18,7 +18,7 @@
 
 
 import Foundation
-
+import WireDataModel
 
 class MulticastDelegate<T: Any>: NSObject {
     private let delegates = NSHashTable<AnyObject>(options: .weakMemory, capacity: 0)

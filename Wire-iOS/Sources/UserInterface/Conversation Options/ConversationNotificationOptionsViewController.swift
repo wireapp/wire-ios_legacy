@@ -18,6 +18,8 @@
 
 import Foundation
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
 final class ConversationNotificationOptionsViewController: UIViewController {
     

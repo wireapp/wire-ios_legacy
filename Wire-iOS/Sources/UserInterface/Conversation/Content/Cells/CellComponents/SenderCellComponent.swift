@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 private enum TextKind {
     case userName(accent: UIColor)

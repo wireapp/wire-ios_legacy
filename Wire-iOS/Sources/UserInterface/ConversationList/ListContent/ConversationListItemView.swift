@@ -16,6 +16,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension Notification.Name {
     static let conversationListItemDidScroll = Notification.Name("ConversationListItemDidScroll")

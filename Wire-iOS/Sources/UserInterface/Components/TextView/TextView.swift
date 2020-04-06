@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSystem
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "TextView")
 
