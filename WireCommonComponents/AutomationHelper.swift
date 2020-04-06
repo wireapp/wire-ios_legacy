@@ -34,7 +34,7 @@ final public class AutomationEmailCredentials: NSObject {
 /// This class is used to retrieve specific arguments passed on the 
 /// command line when running automation tests. 
 /// These values typically do not need to be stored in `Settings`.
-@objcMembers public final class AutomationHelper: NSObject {
+public final class AutomationHelper: NSObject {
     
     static public let sharedHelper = AutomationHelper()
     
@@ -222,7 +222,7 @@ extension AutomationHelper {
     
     /// Takes all files in the folder pointed at by `debugDataToInstall` and installs them
     /// in the shared folder, erasing any other file in that folder.
-    @objc public func installDebugDataIfNeeded() {
+   public func installDebugDataIfNeeded() {
         
         guard let packageURL = self.debugDataToInstall,
             let appGroupIdentifier = Bundle.main.applicationGroupIdentifier else { return }
