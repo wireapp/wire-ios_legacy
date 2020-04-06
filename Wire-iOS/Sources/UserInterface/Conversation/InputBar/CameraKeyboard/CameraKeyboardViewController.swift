@@ -36,7 +36,7 @@ protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
     
     fileprivate var permissions: PhotoPermissionsController!
@@ -414,6 +414,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
+    ///TODO: a protocol for this for testing
     @objc var shouldBlockCallingRelatedActions: Bool {
         return ZMUserSession.shared()?.isCallOngoing ?? false
     }
