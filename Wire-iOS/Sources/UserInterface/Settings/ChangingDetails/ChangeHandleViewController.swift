@@ -185,10 +185,9 @@ struct HandleChangeState {
 }
 
 
-final class ChangeHandleViewController: SettingsBaseTableViewController, SpinnerCapable {
-    var dismissSpinner: SpinnerCompletion?
+final class ChangeHandleViewController: SettingsBaseTableViewController {
 
-    public var footerFont: UIFont = .smallFont
+    var footerFont: UIFont = .smallFont
     var state: HandleChangeState
     private var footerLabel = UILabel()
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile

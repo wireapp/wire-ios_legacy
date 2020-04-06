@@ -87,7 +87,6 @@ enum LegalHoldAlertFactory {
         }
 
         let request = user.makeLegalHoldInputRequest(for: legalHoldRequest, cancellationHandler: cancellationHandler) { password in
-            //TODO
             (UIApplication.shared.topmostViewController() as? SpinnerCapableViewController)?.showLoadingView = true
             suggestedStateChangeHandler?(.acceptingRequest)
 

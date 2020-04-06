@@ -20,7 +20,8 @@
 import UIKit
 import Cartography
 
-class SettingsBaseTableViewController: UIViewController {
+class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     var tableView: UITableView
     let topSeparator = OverflowSeparatorView()

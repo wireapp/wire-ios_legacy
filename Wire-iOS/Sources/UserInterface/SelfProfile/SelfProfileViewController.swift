@@ -177,6 +177,7 @@ final class SelfProfileViewController: UIViewController {
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
+        // topViewController is SettingsTableViewController
         (navigationController?.topViewController as? SpinnerCapableViewController)?.showLoadingView = true
     }
 
