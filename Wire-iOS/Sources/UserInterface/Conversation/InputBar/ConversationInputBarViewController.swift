@@ -644,7 +644,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         }
     }
 
-    public func imagePickerController(_ picker: UIImagePickerController,
+    func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 
