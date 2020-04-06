@@ -69,7 +69,6 @@ extension SpinnerCapable where Self: UIViewController {
     fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
         loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-
         loadingSpinnerView.spinnerSubtitleView.subtitle = title
 
         return loadingSpinnerView
