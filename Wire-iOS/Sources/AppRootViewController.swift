@@ -233,7 +233,7 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
                 break
             }
 
-            let navigationController = AuthenticationNavigationController()
+            let navigationController = SpinnerCapableNavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
@@ -616,15 +616,6 @@ public extension SessionManager {
 
 }
 
-final class AuthenticationNavigationController: UINavigationController, SpinnerCapable {
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
-    
-    init() {
-        super.init(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
