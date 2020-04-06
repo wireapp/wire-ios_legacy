@@ -17,7 +17,7 @@
 //
 
 import WireDataModel
-
+import UIKit
 
 private extension ZMConversationMessage {
 

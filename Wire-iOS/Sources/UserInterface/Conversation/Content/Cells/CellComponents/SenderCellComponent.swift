@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 private enum TextKind {
     case userName(accent: UIColor)

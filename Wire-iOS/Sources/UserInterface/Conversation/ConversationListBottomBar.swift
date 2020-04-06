@@ -177,7 +177,7 @@ final class ConversationListBottomBarController: UIViewController {
 
 // MARK: - Helper
 
-public extension UIView {
+extension UIView {
     
     func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {

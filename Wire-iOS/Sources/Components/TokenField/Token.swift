@@ -16,6 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import Foundation
+import UIKit
+
 final class Token<T: NSObjectProtocol>: Hashable {
 
     let representedObject: HashBox<T>

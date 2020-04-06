@@ -20,8 +20,9 @@
 
 import Foundation
 import Cartography
+import UIKit
 
-@objcMembers public final class AudioButtonOverlay: UIView {
+final class AudioButtonOverlay: UIView {
     
     enum AudioButtonOverlayButtonType {
         case play, send, stop

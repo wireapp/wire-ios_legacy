@@ -18,6 +18,8 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)

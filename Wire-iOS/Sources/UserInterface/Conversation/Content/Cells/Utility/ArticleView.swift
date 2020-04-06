@@ -19,13 +19,13 @@
 
 import UIKit
 import WireLinkPreview
+import WireCommonComponents
+import WireDataModel
 
-
-@objc protocol ArticleViewDelegate: class {
+protocol ArticleViewDelegate: class {
     func articleViewWantsToOpenURL(_ articleView: ArticleView, url: URL)
 }
 
-@objcMembers
 final class ArticleView: UIView {
 
     /// MARK - Styling

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  Marks a class which supports different color schemes.

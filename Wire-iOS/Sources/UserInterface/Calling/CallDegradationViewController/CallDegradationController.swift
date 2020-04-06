@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum CallDegradationState: Equatable {
     

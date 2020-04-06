@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
 
 fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 

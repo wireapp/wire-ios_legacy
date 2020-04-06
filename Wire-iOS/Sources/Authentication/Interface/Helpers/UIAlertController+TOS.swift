@@ -18,6 +18,7 @@
 
 import Foundation
 import SafariServices
+import UIKit
 
 extension UIAlertController {
     static func requestTOSApproval(over controller: UIViewController, forTeamAccount: Bool, completion: @escaping (_ approved: Bool)->()) {

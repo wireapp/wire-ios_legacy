@@ -20,14 +20,19 @@
 
 import Foundation
 import MobileCoreServices
+import UIKit
+import WireSystem
+import avs
+import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objc protocol AudioRecordBaseViewController: NSObjectProtocol {
-    weak var delegate: AudioRecordViewControllerDelegate? { get set }
+protocol AudioRecordBaseViewController: class {
+    var delegate: AudioRecordViewControllerDelegate? { get set }
 }
 
-@objc protocol AudioRecordViewControllerDelegate: class {
+protocol AudioRecordViewControllerDelegate: class {
     func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController)
     func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType)

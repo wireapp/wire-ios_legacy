@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 final class ProfileHeaderViewController: UIViewController, Themeable {
     
@@ -71,7 +73,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
     
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)

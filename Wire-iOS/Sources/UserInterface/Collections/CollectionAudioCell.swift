@@ -18,6 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireSystem
+import WireDataModel
 
 final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()

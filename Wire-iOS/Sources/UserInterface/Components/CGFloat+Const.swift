@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Float {
     enum ConversationButtonMessageCell {

@@ -20,6 +20,8 @@
  * A user image view that can display a badge on top for different connection states.
  */
 import UIKit
+import WireCommonComponents
+import WireSyncEngine
 
 final class BadgeUserImageView: UserImageView {
 

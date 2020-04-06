@@ -18,6 +18,7 @@
 import Foundation
 import MobileCoreServices
 import Photos
+import UIKit
 
 enum ConversationInputBarViewControllerMode {
     case textInput

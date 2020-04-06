@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class RenameGroupSectionController: NSObject, CollectionViewSectionController {
+final class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     fileprivate var validName: String? = nil
     fileprivate var conversation: ZMConversation

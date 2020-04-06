@@ -17,6 +17,7 @@
 //
 
 import CoreGraphics
+import UIKit
 
 enum AspectRatio {
     case portrait

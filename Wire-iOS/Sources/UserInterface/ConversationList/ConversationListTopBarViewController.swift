@@ -17,8 +17,9 @@
 //
 
 import UIKit
+import WireDataModel
 
-public typealias SelfUserType = UserType & SelfLegalHoldSubject
+typealias SelfUserType = UserType & SelfLegalHoldSubject
 
 final class ConversationListTopBarViewController: UIViewController {
     

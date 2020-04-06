@@ -28,7 +28,6 @@ extension UIFont {
 }
 
 // Objective-C compatiblity layer for the Swift only FontSpec
-@objc
 extension UIFont {
     
     // MARK: - Small

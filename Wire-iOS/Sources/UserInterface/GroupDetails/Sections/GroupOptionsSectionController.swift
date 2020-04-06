@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol GroupOptionsSectionControllerDelegate: class {
     func presentTimeoutOptions(animated: Bool)

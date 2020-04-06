@@ -17,12 +17,13 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 /**
  * Handles the initial sync event.
  */
 
-class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandler {
+final class AuthenticationInitialSyncEventHandler: NSObject, AuthenticationEventHandler {
 
     weak var statusProvider: AuthenticationStatusProvider?
 

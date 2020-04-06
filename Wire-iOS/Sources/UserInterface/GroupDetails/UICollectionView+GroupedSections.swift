@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate extension UICollectionViewFlowLayout {
     convenience init(forGroupedSections: ()) {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIView {
     func rotate(to angleInDegrees: CGFloat) {

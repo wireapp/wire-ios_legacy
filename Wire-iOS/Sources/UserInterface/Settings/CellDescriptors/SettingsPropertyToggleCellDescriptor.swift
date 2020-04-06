@@ -18,13 +18,15 @@
 
 
 import Foundation
+import UIKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 
 /**
  * @abstract Generates the cell that displays toggle control
  */
-class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
+final class SettingsPropertyToggleCellDescriptor: SettingsPropertyCellDescriptorType {
     static let cellType: SettingsTableCell.Type = SettingsToggleCell.self
     let inverse: Bool
     var title: String {

@@ -21,7 +21,7 @@ import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
-
+import avs
 
 protocol TrackingInterface {
     var disableCrashAndAnalyticsSharing : Bool { get set }
