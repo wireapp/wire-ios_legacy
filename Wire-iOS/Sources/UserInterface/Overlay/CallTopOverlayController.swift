@@ -19,6 +19,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 protocol CallTopOverlayControllerDelegate: class {
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)

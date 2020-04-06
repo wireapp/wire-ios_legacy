@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 fileprivate extension TimeInterval {
     var hours: Double {

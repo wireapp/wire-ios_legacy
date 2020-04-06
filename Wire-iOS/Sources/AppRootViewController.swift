@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import SafariServices
+import WireDataModel
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 

@@ -16,6 +16,8 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
 
 protocol ConversationContentViewControllerDelegate: class {
 

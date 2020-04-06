@@ -18,6 +18,7 @@
 
 import UIKit
 import AVFoundation
+import WireDataModel
 
 final class CallViewController: UIViewController {
     

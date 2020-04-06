@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 /**
  * A title view subclass that displays the availability of the user.

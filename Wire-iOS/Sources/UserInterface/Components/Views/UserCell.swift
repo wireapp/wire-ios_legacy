@@ -18,6 +18,7 @@
 
 import UIKit
 import WireCommonComponents
+import WireDataModel
 
 extension UIImageView {
     func setUpIconImageView(accessibilityIdentifier: String? = nil) {

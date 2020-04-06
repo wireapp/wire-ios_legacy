@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 final class SearchUserViewConroller: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 ///TODO: move to DM
 fileprivate extension ZMConversation {

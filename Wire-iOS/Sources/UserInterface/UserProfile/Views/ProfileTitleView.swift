@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import WireCommonComponents
+import WireDataModel
 
 final class ProfileTitleView: UIView {
 

@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
 
 final class UserImageViewContainer: UIView {
     private let userImageView: UserImageView

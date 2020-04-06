@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 typealias ContactsCellActionButtonHandler = (UserType, ContactsCell.Action) -> Void
 

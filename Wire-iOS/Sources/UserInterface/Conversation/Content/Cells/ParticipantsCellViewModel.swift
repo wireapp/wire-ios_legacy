@@ -18,6 +18,7 @@
 
 import WireCommonComponents
 import UIKit
+import WireDataModel
 
 enum ConversationActionType {
 

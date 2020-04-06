@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 extension ZClientViewController: ShowContentDelegate {
     private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {

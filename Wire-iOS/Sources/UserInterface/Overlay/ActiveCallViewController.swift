@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSystem
+import WireDataModel
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 

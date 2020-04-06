@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import WireDataModel
 
 // MARK: Audio Button
 

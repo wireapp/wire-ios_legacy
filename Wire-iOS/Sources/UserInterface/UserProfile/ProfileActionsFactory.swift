@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import WireDataModel
 
 /**
  * The actions that can be performed from the profile details or devices.

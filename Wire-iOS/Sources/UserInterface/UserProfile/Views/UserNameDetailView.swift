@@ -19,7 +19,7 @@
 
 import UIKit
 import Cartography
-
+ import WireDataModel
 
 fileprivate let smallLightFont = FontSpec(.small, .light).font!
 fileprivate let smallBoldFont = FontSpec(.small, .medium).font!

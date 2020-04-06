@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 enum CancelConnectionRequestResult {
     case cancelRequest, cancel
