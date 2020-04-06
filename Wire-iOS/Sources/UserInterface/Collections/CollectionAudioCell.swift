@@ -21,6 +21,7 @@ import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
+import WireCommonComponents
 
 final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()

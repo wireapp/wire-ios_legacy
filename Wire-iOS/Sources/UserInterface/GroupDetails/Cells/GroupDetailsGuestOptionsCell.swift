@@ -17,9 +17,9 @@
 //
 
 import UIKit
+import WireCommonComponents
 
-
-class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
+final class GroupDetailsGuestOptionsCell: GroupDetailsDisclosureOptionsCell {
 
     var isOn = false {
         didSet {

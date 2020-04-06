@@ -21,6 +21,7 @@
 import Foundation
 import Cartography
 import UIKit
+import WireCommonComponents
 
 final class AudioButtonOverlay: UIView {
     

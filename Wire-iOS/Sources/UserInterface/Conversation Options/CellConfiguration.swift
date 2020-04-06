@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 protocol CellConfigurationConfigurable: Reusable {
     func configure(with configuration: CellConfiguration, variant: ColorSchemeVariant)

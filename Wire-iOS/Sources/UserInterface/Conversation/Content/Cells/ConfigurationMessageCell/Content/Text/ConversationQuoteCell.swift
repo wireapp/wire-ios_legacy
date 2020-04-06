@@ -19,6 +19,7 @@
 import UIKit
 import Down
 import WireDataModel
+import WireCommonComponents
 
 final class ConversationReplyContentView: UIView {
     let numberOfLinesLimit: Int = 4

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 extension UIAlertAction {
     static func cancel(_ completion: Completion? = nil) -> UIAlertAction {

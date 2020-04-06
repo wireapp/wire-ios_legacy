@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 extension UIImageView {
     func setUpIconImageView(accessibilityIdentifier: String? = nil) {

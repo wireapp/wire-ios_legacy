@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
 
 extension NSTextAttachment {
     static func textAttachment(for icon: StyleKitIcon, with color: UIColor, iconSize: StyleKitIcon.Size = 10, verticalCorrection: CGFloat = 0) -> NSTextAttachment {

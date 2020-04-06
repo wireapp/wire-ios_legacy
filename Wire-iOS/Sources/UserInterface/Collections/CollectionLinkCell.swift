@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none

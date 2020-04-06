@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireCommonComponents
 
 fileprivate extension InviteResult {
     var iconType: StyleKitIcon {

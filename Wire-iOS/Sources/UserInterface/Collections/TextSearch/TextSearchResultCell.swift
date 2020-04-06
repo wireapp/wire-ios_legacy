@@ -18,6 +18,8 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
 class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()

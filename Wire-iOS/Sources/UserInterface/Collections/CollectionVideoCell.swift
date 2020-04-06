@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()

@@ -21,6 +21,7 @@ import Foundation
 import Cartography
 import WireCommonComponents
 import UIKit
+import avs
 
 @objc protocol AudioEffectsPickerDelegate: NSObjectProtocol {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
