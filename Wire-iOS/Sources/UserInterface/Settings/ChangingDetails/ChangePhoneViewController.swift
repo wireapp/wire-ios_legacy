@@ -193,20 +193,6 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
 
 }
 
-extension UINavigationController {
-    var showLoadingView: Bool? {
-        get {
-            return (self as? SpinnerCapableViewController)?.showLoadingView
-        }
-        
-        set {
-            if let newValue = newValue {
-            (self as? SpinnerCapableViewController)?.showLoadingView = newValue
-            }
-        }
-    }
-}
-
 // MARK: - RegistrationTextFieldDelegate
 
 extension ChangePhoneViewController: PhoneNumberInputViewDelegate {

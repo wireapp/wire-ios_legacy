@@ -99,3 +99,17 @@ fileprivate final class LoadingSpinnerView: UIView {
             spinnerSubtitleView.centerYAnchor.constraint(equalTo: centerYAnchor)])
     }
 }
+
+extension UINavigationController {
+    var showLoadingView: Bool? {
+        get {
+            return (self as? SpinnerCapableViewController)?.showLoadingView
+        }
+
+        set {
+            if let newValue = newValue {
+                (self as? SpinnerCapableViewController)?.showLoadingView = newValue
+            }
+        }
+    }
+}
