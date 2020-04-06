@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)

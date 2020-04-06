@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 

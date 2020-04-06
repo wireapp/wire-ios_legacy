@@ -19,6 +19,7 @@
 import Foundation
 import AVKit
 import PassKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "MessagePresenter")
 

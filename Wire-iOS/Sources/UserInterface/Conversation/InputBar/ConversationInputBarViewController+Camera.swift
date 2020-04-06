@@ -20,6 +20,8 @@ import Foundation
 import MobileCoreServices
 import Photos
 import FLAnimatedImage
+import UIKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 

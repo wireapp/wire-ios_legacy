@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 final class ZClientViewController: UIViewController {
     private(set) var conversationRootViewController: UIViewController?

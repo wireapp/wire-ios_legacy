@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum ConversationListState {
     case conversationList

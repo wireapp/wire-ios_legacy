@@ -22,6 +22,8 @@ import Photos
 import Cartography
 
 import AVFoundation
+import UIKit
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 

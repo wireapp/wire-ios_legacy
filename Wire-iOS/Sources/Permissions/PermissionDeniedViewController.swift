@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PermissionDeniedViewControllerDelegate: class {
     func continueWithoutPermission(_ viewController: PermissionDeniedViewController)

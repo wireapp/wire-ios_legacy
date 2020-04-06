@@ -19,7 +19,8 @@
 
 import Foundation
 import Cartography
-
+import UIKit
+import WireDataModel
 
 final class ProfileClientViewController: UIViewController {
 

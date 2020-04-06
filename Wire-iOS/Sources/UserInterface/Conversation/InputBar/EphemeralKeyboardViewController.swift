@@ -20,6 +20,7 @@
 import UIKit
 import WireCommonComponents
 import Cartography
+import WireDataModel
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)

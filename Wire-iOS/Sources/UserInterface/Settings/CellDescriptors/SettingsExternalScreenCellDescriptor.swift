@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 enum PresentationStyle: Int {
     case modal
@@ -30,7 +31,7 @@ enum AccessoryViewMode: Int {
     case alwaysHide
 }
 
-class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
+final class SettingsExternalScreenCellDescriptor: SettingsExternalScreenCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
     let title: String

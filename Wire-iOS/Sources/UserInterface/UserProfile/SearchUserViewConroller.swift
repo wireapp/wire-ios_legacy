@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SearchUserViewConroller: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?

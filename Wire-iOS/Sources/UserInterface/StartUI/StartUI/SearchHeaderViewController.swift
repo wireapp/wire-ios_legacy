@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 @objc
 protocol SearchHeaderViewControllerDelegate: class {

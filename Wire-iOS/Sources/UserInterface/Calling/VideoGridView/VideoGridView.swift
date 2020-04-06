@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 struct Stream: Equatable {
     let userId: UUID

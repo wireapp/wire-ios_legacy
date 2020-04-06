@@ -19,6 +19,7 @@
 import Foundation
 import Photos
 import MobileCoreServices
+import UIKit
 
 final class ProfileSelfPictureViewController: UIViewController {
     var selfUserImageView: UIImageView = UIImageView()

@@ -58,7 +58,7 @@ public extension URL {
 
 extension NSURL {
 
-    @objc func openInApp(aboveViewController viewController: UIViewController) {
+    func openInApp(aboveViewController viewController: UIViewController) {
         (self as URL).openInApp(above: viewController)
     }
 
