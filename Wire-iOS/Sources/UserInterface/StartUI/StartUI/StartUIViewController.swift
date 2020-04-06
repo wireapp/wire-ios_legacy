@@ -21,7 +21,7 @@ import Foundation
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 
 final class StartUIViewController: UIViewController, SpinnerCapable {
-    var dismissSpinner: Completion?
+    var dismissSpinner: SpinnerCompletion?
     
     static let InitiallyShowsKeyboardConversationThreshold = 10
     

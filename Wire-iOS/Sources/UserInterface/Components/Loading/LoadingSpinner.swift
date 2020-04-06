@@ -18,9 +18,10 @@
 import Foundation
 
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
+typealias SpinnerCompletion = Completion
 
 protocol SpinnerCapable: class {
-    var dismissSpinner: Completion? { get set }
+    var dismissSpinner: SpinnerCompletion? { get set }
 }
 
 extension SpinnerCapable where Self: UIViewController {

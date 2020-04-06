@@ -30,7 +30,7 @@ final class ClientListViewController: UIViewController,
                                 ClientColorVariantProtocol,
                                 SpinnerCapable {
     //MARK: SpinnerCapable
-    var dismissSpinner: Completion?
+    var dismissSpinner: SpinnerCompletion?
 
     var removalObserver: ClientRemovalObserver?
 

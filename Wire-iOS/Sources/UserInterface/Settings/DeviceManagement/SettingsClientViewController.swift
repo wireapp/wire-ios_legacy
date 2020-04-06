@@ -37,7 +37,7 @@ final class SettingsClientViewController: UIViewController,
                                           ClientColorVariantProtocol,
                                           SpinnerCapable {
     //MARK: SpinnerCapable
-    var dismissSpinner: Completion?
+    var dismissSpinner: SpinnerCompletion?
 
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
     fileprivate static let resetCellReuseIdentifier: String = "ResetCellReuseIdentifier"
