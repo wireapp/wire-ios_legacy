@@ -32,7 +32,7 @@ extension SpinnerCapable where Self: UIViewController {
     var isSpinnerVisible: Bool {
         set {
             if newValue {
-                //do not show doubled spinner
+                // do not show double spinners
                 guard !isSpinnerVisible else { return }
 
                 dismissSpinner = presentSpinner()
@@ -70,7 +70,6 @@ extension SpinnerCapable where Self: UIViewController {
     fileprivate func createSpinner(title: String? = nil) -> LoadingSpinnerView {
         let loadingSpinnerView = LoadingSpinnerView()
         loadingSpinnerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
-
         loadingSpinnerView.spinnerSubtitleView.subtitle = title
 
         return loadingSpinnerView
