@@ -23,7 +23,7 @@ import LocalAuthentication
 private let zmLog = ZMSLog(tag: "UI")
 private let UserDefaultsDomainStateKey = "DomainStateKey"
 
-public final class AppLock {
+public class AppLock {
     // Returns true if user enabled the app lock feature.
     
     public static var rules = AppLockRules.fromBundle()
