@@ -18,7 +18,6 @@
 
 
 import Foundation
-import UIKit
 
 final class ClearBackgroundNavigationController: UINavigationController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?

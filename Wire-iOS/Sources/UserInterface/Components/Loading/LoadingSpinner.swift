@@ -16,7 +16,6 @@
 //
 
 import Foundation
-import UIKit
 
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion
@@ -30,11 +29,11 @@ extension SpinnerCapable where Self: UIViewController {
         dismissSpinner = presentSpinner(title: title)
     }
 
-    var showLoadingView: Bool {
+    var isLoadingViewVisible: Bool {
         set {
             if newValue {
                 // do not show double spinners
-                guard !showLoadingView else { return }
+                guard !isLoadingViewVisible else { return }
 
                 dismissSpinner = presentSpinner()
             } else {
@@ -102,14 +101,14 @@ fileprivate final class LoadingSpinnerView: UIView {
 }
 
 extension UINavigationController {
-    var showLoadingView: Bool? {
+    var isLoadingViewVisible: Bool? {
         get {
-            return (self as? SpinnerCapableViewController)?.showLoadingView
+            return (self as? SpinnerCapableViewController)?.isLoadingViewVisible
         }
 
         set {
             if let newValue = newValue {
-                (self as? SpinnerCapableViewController)?.showLoadingView = newValue
+                (self as? SpinnerCapableViewController)?.isLoadingViewVisible = newValue
             }
         }
     }

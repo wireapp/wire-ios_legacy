@@ -17,8 +17,6 @@
 //
 
 import UIKit
-import WireDataModel
-import WireSyncEngine
 
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationOptionsViewModelDelegate {
 
@@ -92,7 +90,7 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
                    didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
         
-        (navigationController as? SpinnerCapableViewController)?.showLoadingView = state.isLoading
+        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
         title = state.title
     }
 

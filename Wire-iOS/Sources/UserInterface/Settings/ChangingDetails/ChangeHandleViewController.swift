@@ -251,7 +251,7 @@ final class ChangeHandleViewController: SettingsBaseTableViewController {
     @objc func saveButtonTapped(sender: UIBarButtonItem) {
         guard let handleToSet = state.newHandle else { return }
         userProfile?.requestSettingHandle(handle: handleToSet)
-        showLoadingView = true
+        isLoadingViewVisible = true
     }
 
     fileprivate var attributedFooterTitle: NSAttributedString? {
@@ -352,7 +352,7 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
     }
 
     func didSetHandle() {
-        showLoadingView = false
+        isLoadingViewVisible = false
         state.availability = .taken
         guard popOnSuccess else { return }
         _ = navigationController?.popViewController(animated: true)
@@ -360,13 +360,13 @@ extension ChangeHandleViewController: UserProfileUpdateObserver {
 
     func didFailToSetHandle() {
         presentFailureAlert()
-        showLoadingView = false
+        isLoadingViewVisible = false
     }
 
     func didFailToSetHandleBecauseExisting() {
         state.availability = .taken
         updateUI()
-        showLoadingView = false
+        isLoadingViewVisible = false
     }
 
     private func presentFailureAlert() {
