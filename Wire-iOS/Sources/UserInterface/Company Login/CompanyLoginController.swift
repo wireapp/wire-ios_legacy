@@ -18,6 +18,8 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
+import WireTransport
 
 protocol CompanyLoginControllerDelegate: class {
 

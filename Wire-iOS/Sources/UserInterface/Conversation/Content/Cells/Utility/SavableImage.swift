@@ -18,6 +18,7 @@
 
 
 import Photos
+import WireSystem
 
 protocol PhotoLibraryProtocol {
     func performChanges(_ changeBlock: @escaping () -> Swift.Void, completionHandler: ((Bool, Error?) -> Swift.Void)?)

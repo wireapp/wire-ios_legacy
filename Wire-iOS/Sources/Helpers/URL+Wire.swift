@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSystem
+import WireTransport
 
 private let zmLog = ZMSLog(tag: "URL")
 

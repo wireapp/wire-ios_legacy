@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import WireSystem
 
 enum SettingsLastScreen: Int {
     case none = 0

@@ -21,6 +21,7 @@ import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
+import WireSystem
 
 extension AppDelegate {
 

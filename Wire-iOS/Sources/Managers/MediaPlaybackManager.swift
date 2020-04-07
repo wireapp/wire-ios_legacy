@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "MediaPlaybackManager")
 

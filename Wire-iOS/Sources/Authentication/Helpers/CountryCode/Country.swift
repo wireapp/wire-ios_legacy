@@ -17,6 +17,7 @@
 
 import Foundation
 import CoreTelephony
+import WireTransport
 
 extension String {
     static func phoneNumber(withE164 e164: UInt, number: String) -> String {
@@ -24,7 +25,6 @@ extension String {
     }
 }
 
-@objc
 final class Country: NSObject {
     let iso: String
 
