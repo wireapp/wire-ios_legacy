@@ -20,13 +20,14 @@ import Foundation
 import UIKit
 import WireSyncEngine
 import Cartography
+import WireCommonComponents
 
 protocol ColorPickerControllerDelegate {
     func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)
     func colorPickerWantsToDismiss(_ colotPicker: ColorPickerController)
 }
 
-final class ColorPickerController: UIViewController {
+class ColorPickerController: UIViewController {
     let overlayView = UIView()
     let contentView = UIView()
     let tableView = UITableView()

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension String {
     fileprivate var withoutSpace: String {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /**
  * Handles the case that the user tries to register an account with a phone/e-mail that is already registered.

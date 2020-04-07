@@ -19,6 +19,7 @@
 import Foundation
 import WireSyncEngine
 import UIKit
+import WireDataModel
 
 enum SearchGroup: Int {
     case people

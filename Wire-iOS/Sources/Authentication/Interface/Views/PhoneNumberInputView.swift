@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 /// An object that receives notification about the phone number input view.
 protocol PhoneNumberInputViewDelegate: class {

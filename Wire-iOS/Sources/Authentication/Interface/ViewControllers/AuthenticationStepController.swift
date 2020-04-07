@@ -273,7 +273,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     // MARK: - Back Button
 
     private func updateBackButton() {
-        guard navigationController?.viewControllers.count > 1 else {
+        guard navigationController?.viewControllers.count ?? 0 > 1 else {
             return
         }
 

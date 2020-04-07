@@ -17,6 +17,7 @@
 // 
 
 import WireDataModel
+import WireSyncEngine
 
 let conversationMediaCompleteActionEventName = "contributed"
 
