@@ -48,7 +48,6 @@ final class ProfileViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    ///TODO: avatar view??
     func testForContextProfileViewer() {
         selfUser.teamRole = .member
         mockUser.emailAddress = nil
