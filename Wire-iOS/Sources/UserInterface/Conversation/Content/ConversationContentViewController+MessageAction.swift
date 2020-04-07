@@ -173,8 +173,10 @@ extension ConversationContentViewController: SignatureObserver {
     
     func didFailSignature() {
         showLoadingView = false
-        dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert()
-        })
+        isDigitalSignatureVerificationShown
+            ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert()
+            })
+            : presentDigitalSignatureErrorAlert()
     }
     
     // MARK: - Helpers
@@ -190,7 +192,9 @@ extension ConversationContentViewController: SignatureObserver {
             }
         }
         let navigationController = UINavigationController(rootViewController: digitalSignatureVerification)
-        present(navigationController, animated: true)
+        present(navigationController, animated: true, completion: { [weak self] in
+            self?.isDigitalSignatureVerificationShown =  true
+        })
     }
     
     private func presentDigitalSignatureErrorAlert() {
@@ -207,7 +211,8 @@ extension ConversationContentViewController: SignatureObserver {
     }
     
     private func dismissDigitalSignatureVerification(completion: (() -> Void)? = nil) {
-        dismiss(animated: true, completion: {
+        dismiss(animated: true, completion: { [weak self] in
+            self?.isDigitalSignatureVerificationShown =  false
             completion?()
         })
     }

@@ -55,6 +55,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     let session: ZMUserSessionInterface
     var connectionViewController: UserConnectionViewController?
     var digitalSignatureToken: Any?
+    var isDigitalSignatureVerificationShown: Bool = false
     
     private var mediaPlaybackManager: MediaPlaybackManager?
     private var cachedRowHeights: [IndexPath: CGFloat] = [:]
