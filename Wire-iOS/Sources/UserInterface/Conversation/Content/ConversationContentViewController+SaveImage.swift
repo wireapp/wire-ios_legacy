@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension ConversationContentViewController {
     func saveImage(from message: ZMConversationMessage, view: UIView?) {

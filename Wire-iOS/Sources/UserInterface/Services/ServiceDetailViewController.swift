@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import WireSyncEngine
+import UIKit
 
 extension ZMConversation {
     var botCanBeAdded: Bool {

@@ -20,9 +20,9 @@ import Foundation
 import UIKit
 import WireUtilities
 
-enum ColorSchemeVariant: UInt {
-    case light, dark  
-}
+@objc enum ColorSchemeVariant: UInt {
+    case light, dark
+};
 
 extension UIColor {
     static var graphite: UIColor = UIColor(rgb: (51, 55, 58))
@@ -233,6 +233,7 @@ extension UIColor {
 final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable : Any]?
     
+    @objc
     var variant: ColorSchemeVariant = .light
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
@@ -265,6 +266,7 @@ final class ColorScheme: NSObject {
         return color(named: named, variant: variant)
     }
     
+    @objc(colorWithName:variant:)
     func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         let colorPair = named.colorPair(accentColor: accentColor)
         switch variant {
@@ -275,6 +277,7 @@ final class ColorScheme: NSObject {
         }
     }
     
+    @objc(nameAccentForColor:variant:)
     func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
     }
@@ -294,10 +297,12 @@ fileprivate extension ColorPair {
 
 extension UIColor {
     
+    @objc(wr_colorFromColorScheme:)
     static func from(scheme: ColorSchemeColor) -> UIColor {
         return ColorScheme.default.color(named: scheme)
     }
     
+    @objc(wr_colorFromColorScheme:variant:)
     static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }

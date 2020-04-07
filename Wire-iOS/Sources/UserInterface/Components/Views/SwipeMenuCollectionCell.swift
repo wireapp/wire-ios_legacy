@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 class SwipeMenuCollectionCell: UICollectionViewCell {
     static let MaxVisualDrawerOffsetRevealDistance: CGFloat = 21

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 class CustomMessageView: UIView {
     public var isSelected: Bool = false

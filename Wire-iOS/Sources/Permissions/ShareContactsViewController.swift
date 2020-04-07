@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol ShareContactsViewControllerDelegate: class {
     func shareDidSkip(_ viewController: UIViewController)
