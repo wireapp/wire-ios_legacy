@@ -20,6 +20,7 @@ import Foundation
 import WireSyncEngine
 import Cartography
 import WireCommonComponents
+import UIKit
 
 extension ZMConversation: ShareDestination {
 

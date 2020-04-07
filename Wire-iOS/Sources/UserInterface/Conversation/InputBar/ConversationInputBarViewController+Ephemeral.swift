@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
 
 extension ConversationInputBarViewController {
 

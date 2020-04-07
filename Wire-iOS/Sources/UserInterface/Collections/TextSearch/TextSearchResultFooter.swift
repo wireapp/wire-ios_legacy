@@ -19,7 +19,7 @@
 
 import Foundation
 import Cartography
-
+import WireSystem
 
 public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {

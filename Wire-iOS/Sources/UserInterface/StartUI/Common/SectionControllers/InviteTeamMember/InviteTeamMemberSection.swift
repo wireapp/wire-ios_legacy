@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol InviteTeamMemberSectionDelegate: class {
     func inviteSectionDidRequestTeamManagement()

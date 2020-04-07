@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 protocol SearchServicesSectionDelegate: SearchSectionControllerDelegate {
     func addServicesSectionDidRequestOpenServicesAdmin()

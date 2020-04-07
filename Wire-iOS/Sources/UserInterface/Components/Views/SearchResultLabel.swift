@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSystem
 
 final public class SearchResultLabel: UILabel, Copyable {
 

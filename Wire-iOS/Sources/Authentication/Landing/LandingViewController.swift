@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSystem
 
 @objc protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()

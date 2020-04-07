@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum FontTextStyle: String {
     case largeTitle  = "largeTitle"

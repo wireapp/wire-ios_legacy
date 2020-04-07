@@ -18,6 +18,8 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
+import WireSystem
 
 /**
  * The view controller to use to ask the user to enter their credentials.
