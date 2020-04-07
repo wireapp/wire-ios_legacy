@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 extension ConversationContentViewController {
     func saveImage(from message: ZMConversationMessage, view: UIView?) {

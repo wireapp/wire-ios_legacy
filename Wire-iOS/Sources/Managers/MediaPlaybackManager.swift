@@ -17,6 +17,7 @@
 
 import Foundation
 import WireSystem
+import avs
 
 private let zmLog = ZMSLog(tag: "MediaPlaybackManager")
 

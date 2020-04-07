@@ -21,6 +21,7 @@ import UIKit
 import SafariServices
 import WireDataModel
 import WireSyncEngine
+import avs
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 

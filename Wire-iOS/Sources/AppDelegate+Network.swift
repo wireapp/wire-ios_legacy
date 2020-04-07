@@ -18,6 +18,7 @@
 
 import Foundation
 import WireCommonComponents
+import WireSyncEngine
 
 extension AppDelegate {
 

@@ -21,6 +21,7 @@ import Photos
 import UIKit
 import WireDataModel
 import WireSyncEngine
+import avs
 
 enum ConversationInputBarViewControllerMode {
     case textInput

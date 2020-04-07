@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 /**
  * The first page of the user settings.

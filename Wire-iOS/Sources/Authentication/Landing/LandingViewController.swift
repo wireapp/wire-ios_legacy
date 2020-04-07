@@ -19,6 +19,7 @@
 import UIKit
 import WireSystem
 import WireTransport
+import WireSyncEngine
 
 @objc protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()

@@ -18,6 +18,8 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
+import avs
 
 final class ConversationListCell: SwipeMenuCollectionCell,
                                   SectionListCellType {

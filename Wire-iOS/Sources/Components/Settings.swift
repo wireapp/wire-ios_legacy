@@ -17,6 +17,8 @@
 
 import Foundation
 import WireSystem
+import WireSyncEngine
+import avs
 
 enum SettingsLastScreen: Int {
     case none = 0

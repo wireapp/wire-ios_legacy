@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import WireSyncEngine
+import avs
 
 extension ZMConversationMessage {
     var isSentBySelfUser: Bool {

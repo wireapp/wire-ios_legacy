@@ -20,6 +20,7 @@ import Foundation
 import WireCommonComponents
 import UIKit
 import WireTransport
+import WireSyncEngine
 
 protocol CompanyLoginControllerDelegate: class {
 

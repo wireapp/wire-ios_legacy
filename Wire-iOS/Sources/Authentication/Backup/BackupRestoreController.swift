@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 protocol BackupRestoreControllerDelegate: class {
     func backupResoreControllerDidFinishRestoring(_ controller: BackupRestoreController)
