@@ -113,16 +113,15 @@ final class EphemeralTimeoutFormatter {
         let now = Date()
         let date = Date(timeIntervalSinceNow: interval)
 
-        ///TODO: unwrap
-        if date < Calendar.current.date(byAdding: .minute, value: 1, to: now)! {
+        if let dateFromNow = Calendar.current.date(byAdding: .minute, value: 1, to: now), date < dateFromNow {
             return secondsFormatter.string(from: interval)
-        } else if date < Calendar.current.date(byAdding: .hour, value: 1, to: now)! {
+        } else if let dateFromNow = Calendar.current.date(byAdding: .hour, value: 1, to: now), date < dateFromNow {
             return minuteFormatter.string(from: interval)
-        } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now)! {
+        } else if let dateFromNow = Calendar.current.date(byAdding: .day, value: 1, to: now), date < dateFromNow {
             return hourFormatter.string(from: interval)
-        } else {
-           return dayFormatter.string(from: interval)
         }
+
+        return dayFormatter.string(from: interval)
     }
     
 }
