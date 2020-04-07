@@ -113,6 +113,7 @@ final class EphemeralTimeoutFormatter {
         let now = Date()
         let date = Date(timeIntervalSinceNow: interval)
 
+        ///TODO: unwrap
         if date < Calendar.current.date(byAdding: .minute, value: 1, to: now)! {
             return secondsFormatter.string(from: interval)
         } else if date < Calendar.current.date(byAdding: .hour, value: 1, to: now)! {
