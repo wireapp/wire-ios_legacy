@@ -233,10 +233,10 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         for action in actions {
             switch action {
             case .showLoadingView:
-                presenter?.showLoadingView = true
+                presenter?.isLoadingViewVisible = true
 
             case .hideLoadingView:
-                presenter?.showLoadingView = false
+                presenter?.isLoadingViewVisible = false
 
             case .completeBackupStep:
                 unauthenticatedSession.continueAfterBackupImportStep()
@@ -430,7 +430,7 @@ extension AuthenticationCoordinator {
         let browser = BrowserViewController(url: url)
         browser.onDismiss = {
             if let alertModel = self.pendingAlert {
-                self.presenter?.showLoadingView = false
+                self.presenter?.isLoadingViewVisible = false
                 self.presentAlert(for: alertModel)
                 self.pendingAlert = nil
             }
@@ -507,14 +507,14 @@ extension AuthenticationCoordinator {
 
     /// Sends the registration activation code.
     private func sendActivationCode(_ credentials: UnverifiedCredentials, _ user: UnregisteredUser, isResend: Bool) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .sendActivationCode(credentials, user: user, isResend: isResend))
         registrationStatus.sendActivationCode(to: credentials)
     }
 
     /// Asks the registration status to activate the credentials with the code provided by the user.
     private func activateCredentials(credentials: UnverifiedCredentials, user: UnregisteredUser, code: String) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
@@ -613,12 +613,12 @@ extension AuthenticationCoordinator {
         switch request {
         case .email(let address, let password):
             let credentials = ZMEmailCredentials(email: address, password: password)
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             stateController.transition(to: .authenticateEmailCredentials(credentials))
             unauthenticatedSession.login(with: credentials)
 
         case .phoneNumber(let phoneNumber):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
             stateController.transition(to: nextStep)
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
@@ -627,7 +627,7 @@ extension AuthenticationCoordinator {
 
     /// Sends the login verification code to the phone number.
     private func sendLoginCode(phoneNumber: String, isResend: Bool) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
@@ -635,7 +635,7 @@ extension AuthenticationCoordinator {
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
@@ -686,7 +686,7 @@ extension AuthenticationCoordinator {
         }
 
         stateController.transition(to: .registerEmailCredentials(credentials, isResend: false))
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
 
         let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
 
@@ -781,25 +781,25 @@ extension AuthenticationCoordinator {
 
             UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: true) { approved in
                 if approved {
-                    presenter.showLoadingView = true
+                    presenter.isLoadingViewVisible = true
                     self.registrationStatus.sendActivationCode(to: .email(emailAddress))
                 } else {
-                    presenter.showLoadingView = false
+                    presenter.isLoadingViewVisible = false
                     self.stateController.unwindState()
                 }
             }
 
         case let .verifyActivationCode(_, emailAddress, activationCode):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             registrationStatus.checkActivationCode(credentials: .email(emailAddress), code: activationCode)
 
         case .provideMarketingConsent:
-            presenter?.showLoadingView = false
+            presenter?.isLoadingViewVisible = false
             let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
             registrationStatus.create(team: unregisteredTeam)
 
@@ -819,7 +819,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         let nextTeamState: TeamCreationState = .sendEmailCode(teamName: teamName, email: emailAddress, isResend: true)
         stateController.transition(to: .teamCreation(nextTeamState))
 

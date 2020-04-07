@@ -58,7 +58,7 @@ final class SearchUserViewConroller: UIViewController, SpinnerCapable {
         cancelItem.accessibilityLabel = "general.cancel".localized
         navigationItem.rightBarButtonItem = cancelItem
 
-        showLoadingView = true
+        isLoadingViewVisible = true
 
         if let task = searchDirectory?.lookup(userId: userId) {
             task.onResult({ [weak self] in

@@ -40,9 +40,9 @@ final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor 
     
         if selfUser.usesCompanyLogin || password != nil {
             weak var topMostViewController: SpinnerCapableViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false) as? SpinnerCapableViewController
-            topMostViewController?.showLoadingView = true
+            topMostViewController?.isLoadingViewVisible = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
-                topMostViewController?.showLoadingView = false
+                topMostViewController?.isLoadingViewVisible = false
                 
                 if case .failure(let error) = result {
                     topMostViewController?.showAlert(for: error)

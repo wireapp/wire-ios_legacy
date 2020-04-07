@@ -42,20 +42,20 @@ final class LoadingViewControllerTests: XCTestCase {
         // Given
 
         // when
-        sut.showLoadingView = true
+        sut.isLoadingViewVisible = true
 
         // then
-        XCTAssert(sut.showLoadingView)
+        XCTAssert(sut.isLoadingViewVisible)
         verifyInAllDeviceSizes(matching: sut)
     }
 
     func testThatItDismissesLoadingIndicator() {
         // given & when
-        sut.showLoadingView = true
-        sut.showLoadingView = false
+        sut.isLoadingViewVisible = true
+        sut.isLoadingViewVisible = false
 
         // then
-        XCTAssertFalse(sut.showLoadingView)
+        XCTAssertFalse(sut.isLoadingViewVisible)
         verify(matching: sut)
     }
 

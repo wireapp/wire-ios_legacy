@@ -178,11 +178,11 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
         // topViewController is SettingsTableViewController
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.showLoadingView = true
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        (navigationController?.topViewController as? SpinnerCapableViewController)?.showLoadingView = false
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
 }

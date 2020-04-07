@@ -57,7 +57,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
 
     func startRemoval() {
-        controller?.showLoadingView = true
+        controller?.isLoadingViewVisible = true
         ZMUserSession.shared()?.deleteClient(userClientToDelete, credentials: credentials)
     }
     
@@ -74,13 +74,13 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]) {
-        controller?.showLoadingView = false
+        controller?.isLoadingViewVisible = false
 
         endRemoval(result: nil)
     }
     
     func failedToDeleteClients(_ error: Error) {
-        controller?.showLoadingView = false
+        controller?.isLoadingViewVisible = false
 
         if !passwordIsNecessaryForDelete {
             guard let requestPasswordController = requestPasswordController else { return }

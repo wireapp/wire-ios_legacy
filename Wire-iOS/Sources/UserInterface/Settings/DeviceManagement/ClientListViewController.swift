@@ -128,7 +128,7 @@ final class ClientListViewController: UIViewController,
         
         if clientsList == nil {
             if clients.isEmpty {
-                (navigationController as? SpinnerCapableViewController ?? self).showLoadingView = true
+                (navigationController as? SpinnerCapableViewController ?? self).isLoadingViewVisible = true
             }
             ZMUserSession.shared()?.fetchAllClients()
         }
@@ -175,7 +175,7 @@ final class ClientListViewController: UIViewController,
     }
     
     private func dismissLoadingView() {
-        (navigationController as? SpinnerCapableViewController ?? self).showLoadingView = false
+        (navigationController as? SpinnerCapableViewController ?? self).isLoadingViewVisible = false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

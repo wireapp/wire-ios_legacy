@@ -50,7 +50,7 @@ enum LegalHoldAlertFactory {
 
     static func makeLegalHoldActivationAlert(for legalHoldRequest: LegalHoldRequest, user: SelfUserType, suggestedStateChangeHandler: SuggestedStateChangeHandler?) -> UIAlertController {
         func handleLegalHoldActivationResult(_ error: LegalHoldActivationError?) {
-            (UIApplication.shared.topmostViewController() as? SpinnerCapableViewController)?.showLoadingView = false
+            (UIApplication.shared.topmostViewController() as? SpinnerCapableViewController)?.isLoadingViewVisible = false
 
             switch error {
             case .invalidPassword?:
@@ -87,7 +87,7 @@ enum LegalHoldAlertFactory {
         }
 
         let request = user.makeLegalHoldInputRequest(for: legalHoldRequest, cancellationHandler: cancellationHandler) { password in
-            (UIApplication.shared.topmostViewController() as? SpinnerCapableViewController)?.showLoadingView = true
+            (UIApplication.shared.topmostViewController() as? SpinnerCapableViewController)?.isLoadingViewVisible = true
             suggestedStateChangeHandler?(.acceptingRequest)
 
             ZMUserSession.shared()?.accept(legalHoldRequest: legalHoldRequest, password: password) { error in
