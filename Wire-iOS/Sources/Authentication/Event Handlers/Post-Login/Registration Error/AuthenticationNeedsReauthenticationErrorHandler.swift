@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /**
  * Handles client registration errors related to the expiration of the auth token, which requires
