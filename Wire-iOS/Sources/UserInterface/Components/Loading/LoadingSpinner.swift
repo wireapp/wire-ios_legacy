@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 typealias SpinnerCapableViewController = UIViewController & SpinnerCapable
 typealias SpinnerCompletion = Completion
