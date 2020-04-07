@@ -101,7 +101,7 @@ fileprivate final class LoadingSpinnerView: UIView {
 }
 
 extension UINavigationController {
-    var showLoadingView: Bool? {
+    var isLoadingViewVisible: Bool? {
         get {
             return (self as? SpinnerCapableViewController)?.isLoadingViewVisible
         }

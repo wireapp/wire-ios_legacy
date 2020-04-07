@@ -231,10 +231,10 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
     public func videoEditorController(_ editor: UIVideoEditorController, didSaveEditedVideoToPath editedVideoPath: String) {
         editor.dismiss(animated: true, completion: .none)
 
-        editor.showLoadingView = true
+        editor.isLoadingViewVisible = true
 
         self.convertVideoAtPath(editedVideoPath) { (success, resultPath, duration) in
-            editor.showLoadingView = false
+            editor.isLoadingViewVisible = false
 
             guard let path = resultPath, success else {
                 return
