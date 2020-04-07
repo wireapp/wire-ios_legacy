@@ -23,6 +23,7 @@ import AppCenterCrashes
 import AppCenterDistribute
 import avs
 import WireSyncEngine
+import WireCommonComponents
 
 protocol TrackingInterface {
     var disableCrashAndAnalyticsSharing : Bool { get set }

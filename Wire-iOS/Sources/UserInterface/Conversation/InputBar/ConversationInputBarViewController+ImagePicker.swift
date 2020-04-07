@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import AVFoundation
 
 private let zmLog = ZMSLog(tag: "ConversationInputBarViewController - Image Picker")
 

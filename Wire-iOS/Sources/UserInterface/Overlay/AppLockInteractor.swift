@@ -18,6 +18,8 @@
 
 import Foundation
 import UIKit
+import WireCommonComponents
+import WireSyncEngine
 
 protocol AppLockInteractorInput: class {
     var isAuthenticationNeeded: Bool { get }

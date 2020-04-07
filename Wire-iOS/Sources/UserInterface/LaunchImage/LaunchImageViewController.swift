@@ -19,7 +19,7 @@
 import UIKit
 
 /// Replicates the launch screen to prevent the black screen being visible, cause of later UI initialization
-final class LaunchImageViewController: UIViewController {
+class LaunchImageViewController: UIViewController {
 
     private var shouldShowLoadingScreenOnViewDidLoad = false
 

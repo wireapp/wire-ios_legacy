@@ -20,6 +20,7 @@ import UIKit
 import Cartography
 import WireUtilities
 import WireCommonComponents
+import WireDataModel
 
 final class ListSkeletonCellNameItemView: UIView {
     

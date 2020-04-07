@@ -23,7 +23,7 @@ import AppCenterCrashes
 import AppCenterDistribute
 import WireCommonComponents
 import avs
-
+import WireSyncEngine
 
 final class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
