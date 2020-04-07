@@ -26,7 +26,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     // MARK: - Seen
-    
+    ///TODO: status bar?
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()

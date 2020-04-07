@@ -166,9 +166,10 @@ final class TabBarController: UIViewController, UIPageViewControllerDelegate, UI
         let toViewController = viewControllers[index]
         let fromViewController = pageViewController.viewControllers?.first
 
-        guard toViewController != fromViewController,
-         let toIndex = viewControllers.firstIndex(of: toViewController),
-             let fromIndex = fromViewController.flatMap(viewControllers.firstIndex) else { return }
+        guard toViewController != fromViewController else { return }
+        
+        let toIndex = viewControllers.firstIndex(of: toViewController) ?? 0
+        let fromIndex = fromViewController.flatMap(viewControllers.firstIndex) ?? 0
         
         let forward = toIndex > fromIndex
         let direction = forward ? UIPageViewController.NavigationDirection.forward : .reverse
