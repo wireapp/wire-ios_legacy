@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import UIKit
+import WireDataModel
 
 final class ConversationPreviewViewController: TintColorCorrectedViewController {
 

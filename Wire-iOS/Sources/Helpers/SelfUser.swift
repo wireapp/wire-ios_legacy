@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /// A helper class that provides a reference to the current self user.
 

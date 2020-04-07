@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {

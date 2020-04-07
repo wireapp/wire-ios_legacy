@@ -19,6 +19,8 @@
 
 import Foundation
 import Contacts
+import WireSyncEngine
+import UIKit
 
 protocol AddressBookHelperProtocol: class {
     var isAddressBookAccessGranted : Bool { get }

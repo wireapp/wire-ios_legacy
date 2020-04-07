@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 // Describes the icon to be shown for the conversation in the list.
 enum ConversationStatusIcon: Equatable {

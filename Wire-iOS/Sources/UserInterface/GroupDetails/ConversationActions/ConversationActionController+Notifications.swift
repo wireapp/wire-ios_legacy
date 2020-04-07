@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum NotificationResult: CaseIterable {
     case everything, mentionsAndReplies, nothing, cancel

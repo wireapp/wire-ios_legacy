@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /// The way the details are displayed.
 @objc public enum MessageDetailsDisplayMode: Int {

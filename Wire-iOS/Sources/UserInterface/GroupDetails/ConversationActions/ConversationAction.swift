@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ZMConversation {
     enum Action: Equatable {

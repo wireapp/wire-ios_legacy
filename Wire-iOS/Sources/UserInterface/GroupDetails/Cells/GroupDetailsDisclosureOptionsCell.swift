@@ -18,6 +18,7 @@
 
 import UIKit
 import WireCommonComponents
+import WireDataModel
 
 protocol ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation)

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum LeaveResult: AlertResultConfiguration {
     case leave(delete: Bool), cancel

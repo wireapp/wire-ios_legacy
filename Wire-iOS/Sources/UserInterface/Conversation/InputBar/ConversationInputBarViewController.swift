@@ -19,6 +19,7 @@ import Foundation
 import MobileCoreServices
 import Photos
 import UIKit
+import WireDataModel
 
 enum ConversationInputBarViewControllerMode {
     case textInput
