@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 final class ConnectRequestsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var connectionRequests: [ZMConversation] = []

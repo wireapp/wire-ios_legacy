@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 protocol CallInfoViewControllerDelegate: class {
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction)

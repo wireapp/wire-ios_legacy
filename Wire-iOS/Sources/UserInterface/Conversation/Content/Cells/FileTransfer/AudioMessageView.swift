@@ -21,6 +21,7 @@ import Cartography
 import UIKit
 import WireSystem
 import WireDataModel
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 

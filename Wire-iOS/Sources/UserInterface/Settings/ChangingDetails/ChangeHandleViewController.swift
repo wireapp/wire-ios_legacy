@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import UIKit
+import WireSyncEngine
 
 fileprivate extension UIView {
 

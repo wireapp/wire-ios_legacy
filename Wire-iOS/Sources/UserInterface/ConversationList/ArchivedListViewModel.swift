@@ -19,6 +19,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 protocol ArchivedListViewModelDelegate: class {
     func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping ()->())

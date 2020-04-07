@@ -20,6 +20,7 @@
 import Foundation
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 final class ZClientViewController: UIViewController {
     private(set) var conversationRootViewController: UIViewController?

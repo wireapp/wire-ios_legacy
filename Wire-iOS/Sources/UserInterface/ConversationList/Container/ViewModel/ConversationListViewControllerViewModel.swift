@@ -19,6 +19,7 @@
 import Foundation
 import UserNotifications
 import WireDataModel
+import WireSyncEngine
 
 typealias Completion = () -> ()
 typealias ResultHandler = (_ succeeded: Bool) -> Void

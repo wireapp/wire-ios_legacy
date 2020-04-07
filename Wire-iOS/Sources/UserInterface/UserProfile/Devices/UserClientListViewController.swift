@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireSyncEngine
 
 final class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     

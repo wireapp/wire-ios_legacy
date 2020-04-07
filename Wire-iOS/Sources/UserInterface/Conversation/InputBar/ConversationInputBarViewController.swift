@@ -20,6 +20,7 @@ import MobileCoreServices
 import Photos
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 enum ConversationInputBarViewControllerMode {
     case textInput

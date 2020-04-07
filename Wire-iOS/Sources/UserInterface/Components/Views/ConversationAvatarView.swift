@@ -17,6 +17,7 @@
 //
 
 import WireDataModel
+import WireSyncEngine
 
 
 /// Source of random values.

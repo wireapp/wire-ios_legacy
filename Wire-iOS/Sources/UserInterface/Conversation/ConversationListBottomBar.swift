@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 enum ConversationListButtonType {
     case archive, startUI, list, folder

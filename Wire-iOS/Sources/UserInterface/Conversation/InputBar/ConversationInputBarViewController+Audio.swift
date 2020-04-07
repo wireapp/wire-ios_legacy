@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 // MARK: Audio Button
 

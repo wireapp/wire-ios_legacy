@@ -20,6 +20,7 @@ import Foundation
 import Photos
 import MobileCoreServices
 import UIKit
+import WireSyncEngine
 
 final class ProfileSelfPictureViewController: UIViewController {
     var selfUserImageView: UIImageView = UIImageView()

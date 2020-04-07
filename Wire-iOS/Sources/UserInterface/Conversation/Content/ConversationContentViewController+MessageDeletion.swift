@@ -18,6 +18,7 @@
 
 import WireDataModel
 import UIKit
+import WireSyncEngine
 
 private extension ZMConversationMessage {
 

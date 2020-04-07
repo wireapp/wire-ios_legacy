@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 enum NotificationResult: CaseIterable {
     case everything, mentionsAndReplies, nothing, cancel

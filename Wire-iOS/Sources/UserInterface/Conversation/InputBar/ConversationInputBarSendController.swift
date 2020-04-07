@@ -18,6 +18,7 @@
 
 import WireDataModel
 import UIKit
+import WireSyncEngine
 
 final class ConversationInputBarSendController: NSObject {
     let conversation: ZMConversation

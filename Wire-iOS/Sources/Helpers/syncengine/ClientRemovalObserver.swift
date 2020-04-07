@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 enum ClientRemovalUIError: Error {
     case noPasswordProvided

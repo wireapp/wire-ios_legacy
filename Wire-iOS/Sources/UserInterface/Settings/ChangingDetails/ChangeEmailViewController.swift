@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 enum ChangeEmailFlowType {
     case changeExistingEmail

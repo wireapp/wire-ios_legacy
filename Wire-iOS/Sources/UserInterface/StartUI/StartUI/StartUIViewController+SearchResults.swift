@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
+import WireSystem
 
 final class StartUIView : UIView { }
 

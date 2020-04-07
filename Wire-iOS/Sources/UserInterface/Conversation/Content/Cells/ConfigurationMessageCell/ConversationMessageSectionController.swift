@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 struct ConversationMessageContext: Equatable {
     let isSameSenderAsPrevious: Bool

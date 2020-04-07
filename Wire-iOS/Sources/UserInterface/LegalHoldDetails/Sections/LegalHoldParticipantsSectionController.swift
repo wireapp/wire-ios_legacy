@@ -18,7 +18,7 @@
 
 import Foundation
 import WireDataModel
-
+import WireSyncEngine
 
 private struct LegalHoldParticipantsSectionViewModel {
 

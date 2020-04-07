@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import UIKit
+import WireSyncEngine
 
 final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController

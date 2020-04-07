@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
 final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationOptionsViewModelDelegate {
 

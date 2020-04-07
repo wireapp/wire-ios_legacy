@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
     

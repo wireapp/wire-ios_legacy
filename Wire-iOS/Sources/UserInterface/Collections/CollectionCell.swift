@@ -20,6 +20,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)

@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?

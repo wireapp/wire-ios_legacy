@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 typealias AccentColorChangeHandlerBlock = (UIColor?, Any?) -> Void
 

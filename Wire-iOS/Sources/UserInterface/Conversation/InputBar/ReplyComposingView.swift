@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 protocol ReplyComposingViewDelegate: NSObjectProtocol {
     func composingViewDidCancel(composingView: ReplyComposingView)

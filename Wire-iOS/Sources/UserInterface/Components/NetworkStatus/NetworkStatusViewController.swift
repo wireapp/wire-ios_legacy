@@ -19,6 +19,7 @@
 import Foundation
 import Cartography
 import UIKit
+import WireSyncEngine
 
 typealias NetworkStatusBarDelegate = NetworkStatusViewControllerDelegate & NetworkStatusViewDelegate
 

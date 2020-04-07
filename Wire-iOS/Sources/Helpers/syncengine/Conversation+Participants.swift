@@ -19,6 +19,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 extension ZMConversation {
     private enum NetworkError: Error {

@@ -19,6 +19,7 @@
 import Foundation
 import WireDataModel
 import UIKit
+import WireSyncEngine
 
 final class UserImageViewContainer: UIView {
     private let userImageView: UserImageView

@@ -17,6 +17,7 @@
 // 
 
 import UIKit
+import WireSyncEngine
 
 extension UIViewController {
 
