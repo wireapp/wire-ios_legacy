@@ -22,6 +22,7 @@ import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
 import WireSystem
+import UIKit
 
 extension AppDelegate {
 
