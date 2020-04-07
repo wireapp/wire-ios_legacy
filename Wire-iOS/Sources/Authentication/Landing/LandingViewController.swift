@@ -454,6 +454,7 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - Button tapped target
     
+    @objc
     func showCustomBackendLink(_ sender: AnyObject!) {
         let backendTitle = BackendEnvironment.shared.title
         let jsonURL = customBackendSubtitleLabel.text?.lowercased() ?? ""
