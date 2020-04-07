@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 
 // MARK: - For Swift with suffix optional parameter support

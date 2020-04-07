@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 final class ConversationImageMessageCell: UIView, ConversationMessageCell {
     

@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 private extension UIImage {
 

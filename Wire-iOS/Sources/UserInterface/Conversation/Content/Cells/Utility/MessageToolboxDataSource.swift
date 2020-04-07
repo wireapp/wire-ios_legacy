@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 /// The different contents that can be displayed inside the message toolbox.
 enum MessageToolboxContent: Equatable {

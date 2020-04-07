@@ -20,6 +20,7 @@
 import Foundation
 import Cartography
 import WireCommonComponents
+import UIKit
 
 struct CallCellViewModel {
 

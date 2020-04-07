@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol MessageActionResponder: class {
     /// perform an action for the message

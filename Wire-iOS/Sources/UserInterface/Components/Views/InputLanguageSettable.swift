@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol InputLanguageSettable {
     var language: String? {get set}

@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-@objcMembers public final class AdditionalMenuItem: NSObject {
+final class AdditionalMenuItem: NSObject {
 
     public let item: UIMenuItem
     

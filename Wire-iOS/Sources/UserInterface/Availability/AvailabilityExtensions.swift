@@ -18,7 +18,6 @@
 
 import Foundation
 import WireCommonComponents
-import WireUtilities
 
 enum AvailabilityLabelStyle: Int {
     case list, participants, placeholder

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 final class Analytics: NSObject {
     

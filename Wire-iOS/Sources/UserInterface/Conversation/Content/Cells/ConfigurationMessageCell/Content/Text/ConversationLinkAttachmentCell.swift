@@ -18,6 +18,7 @@
 
 import UIKit
 import WireCommonComponents
+import WireDataModel
 
 final class ConversationLinkAttachmentCell: UIView, ConversationMessageCell, HighlightableView {
 
