@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension CIContext {
     static var shared: CIContext = CIContext(options: nil)

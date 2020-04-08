@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 /**
  * @abstract Generates the cell that displays one button

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 enum InviteSource {
     case manualInput, addressBook

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
  * Handles reauthentication errors sent at the start of the flow.

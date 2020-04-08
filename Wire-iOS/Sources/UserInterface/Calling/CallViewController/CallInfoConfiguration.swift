@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import avs
+import WireSyncEngine
 
 fileprivate extension VoiceChannel {
     var degradationState: CallDegradationState {

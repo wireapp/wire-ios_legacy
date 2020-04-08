@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
+import WireTransport
 
 /**
  * The view controller to use to ask the user to enter their credentials.

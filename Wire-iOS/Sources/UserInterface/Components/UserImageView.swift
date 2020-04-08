@@ -22,14 +22,13 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-@objc
 class UserImageView: AvatarImageView, ZMUserObserver {
 
     /**
      * The different sizes for the avatar image.
      */
 
-    @objc(UserImageViewSize) public enum Size: Int {
+    enum Size: Int {
         case tiny = 16
         case badge = 24
         case small = 32
@@ -40,7 +39,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Interface Properties
 
     /// The size of the avatar.
-    @objc public var size: Size {
+    var size: Size {
         didSet {
             updateUserImage()
         }

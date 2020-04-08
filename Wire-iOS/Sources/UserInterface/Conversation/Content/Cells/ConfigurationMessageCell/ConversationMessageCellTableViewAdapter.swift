@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
 
 protocol ConversationMessageCellMenuPresenter: class {
     func showMenu()

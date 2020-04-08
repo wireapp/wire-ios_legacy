@@ -18,6 +18,7 @@
 
 import Foundation
 import MobileCoreServices
+import WireSyncEngine
 
 extension ConversationInputBarViewController: UIDocumentPickerDelegate {
 

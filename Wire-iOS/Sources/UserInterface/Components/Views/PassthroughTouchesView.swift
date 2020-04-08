@@ -14,7 +14,10 @@
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
-// 
+//
+
+import UIKit
+
 
 /// A derative of UIView whose main body is completely invisible to touches so they are passed through to whatever is below, yet its subviews and subsubviews in designated classes still process the touches.
 final class PassthroughTouchesView: UIView {

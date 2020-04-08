@@ -20,8 +20,11 @@
 import Foundation
 import Photos
 import Cartography
-
 import AVFoundation
+import UIKit
+import WireSystem
+import WireDataModel
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -36,7 +39,8 @@ protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-class CameraKeyboardViewController: UIViewController {
+class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
     
     fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero
@@ -247,12 +251,12 @@ class CameraKeyboardViewController: UIViewController {
                 } else {
                     options.isSynchronous = true
                     DispatchQueue.main.async(execute: {
-                        self.showLoadingView = true
+                        self.isLoadingViewVisible = true
                     })
 
                     self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
-                            self.showLoadingView = false
+                            self.isLoadingViewVisible = false
                         })
 
                         if let image = image {
@@ -276,12 +280,12 @@ class CameraKeyboardViewController: UIViewController {
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
                     DispatchQueue.main.async(execute: {
-                        self.showLoadingView = true
+                        self.isLoadingViewVisible = true
                     })
 
                     self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
                         DispatchQueue.main.async(execute: {
-                            self.showLoadingView = false
+                            self.isLoadingViewVisible = false
                         })
                         guard let data = data else {
                             zmLog.error("Failure: cannot fetch image")
@@ -305,13 +309,13 @@ class CameraKeyboardViewController: UIViewController {
         options.isNetworkAccessAllowed = true
         options.version = .current
 
-        self.showLoadingView = true
+        self.isLoadingViewVisible = true
 
         imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVURLAsset.defaultVideoQuality) { exportSession, info in
             
             guard let exportSession = exportSession else {
                 DispatchQueue.main.async(execute: {
-                    self.showLoadingView = false
+                    self.isLoadingViewVisible = false
                 })
                 return
             }
@@ -320,7 +324,7 @@ class CameraKeyboardViewController: UIViewController {
             
             exportSession.exportVideo(exportURL: exportURL) { url, error in
                 DispatchQueue.main.async(execute: {
-                    self.showLoadingView = false
+                    self.isLoadingViewVisible = false
                     self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
                 })
             }
@@ -413,6 +417,7 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
         }
     }
     
+    ///TODO: a protocol for this for testing
     @objc var shouldBlockCallingRelatedActions: Bool {
         return ZMUserSession.shared()?.isCallOngoing ?? false
     }

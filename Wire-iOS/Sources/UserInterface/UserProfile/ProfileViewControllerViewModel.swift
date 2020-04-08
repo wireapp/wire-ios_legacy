@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSystem
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "ProfileViewControllerViewModel")
 

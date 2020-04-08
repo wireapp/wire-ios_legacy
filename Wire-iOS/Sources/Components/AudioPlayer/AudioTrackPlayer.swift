@@ -18,6 +18,7 @@
 
 import Foundation
 import MediaPlayer
+import WireSyncEngine
 
 /// These enums represent the state of the current media in the player.
 

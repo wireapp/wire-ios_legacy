@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
  * Handle e-mail login errors that occur for unknown errors.

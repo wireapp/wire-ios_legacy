@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 /**
  * Handles client registration errors related to the expiration of the auth token, which requires

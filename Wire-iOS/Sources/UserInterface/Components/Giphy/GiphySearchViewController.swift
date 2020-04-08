@@ -20,6 +20,8 @@ import UIKit
 import Cartography
 import Ziphy
 import FLAnimatedImage
+import WireCommonComponents
+import WireDataModel
 
 @objc protocol GiphySearchViewControllerDelegate: NSObjectProtocol {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)

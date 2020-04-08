@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+
 extension UITextView {
     
     @objc(rangeOfLinkToURL:)

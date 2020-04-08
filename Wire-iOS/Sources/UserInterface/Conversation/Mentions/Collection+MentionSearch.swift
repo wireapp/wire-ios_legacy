@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension Collection where Iterator.Element: UserType {
 

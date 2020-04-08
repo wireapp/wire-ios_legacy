@@ -19,7 +19,10 @@
 
 import Foundation
 import LocalAuthentication
-
+import UIKit
+import avs
+import WireSyncEngine
+import WireCommonComponents
 
 extension SettingsCellDescriptorFactory {
 

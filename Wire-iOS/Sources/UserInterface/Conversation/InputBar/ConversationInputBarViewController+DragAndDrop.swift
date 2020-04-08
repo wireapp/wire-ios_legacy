@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSystem
+import UIKit
 
 private let zmLog = ZMSLog(tag: "Drag and drop images")
 

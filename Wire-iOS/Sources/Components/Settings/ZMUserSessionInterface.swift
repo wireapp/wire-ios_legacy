@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 @objc
 protocol ZMUserSessionInterface: NSObjectProtocol {

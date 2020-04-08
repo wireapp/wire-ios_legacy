@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 class IconLabelButton: ButtonWithLargerHitArea {
     private static let width: CGFloat = 64

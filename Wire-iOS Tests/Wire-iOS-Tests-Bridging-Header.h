@@ -17,8 +17,6 @@
 // 
 
 
-#import "WireBridgingHeader.h"
-
 @import WireSyncEngine;
 
 #import "ZMSnapshotTestCase+Internal.h"

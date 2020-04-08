@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSystem
 
 /**
  * The dimension to use when calculating relative radii.

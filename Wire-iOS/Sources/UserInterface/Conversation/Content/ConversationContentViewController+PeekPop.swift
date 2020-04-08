@@ -18,6 +18,8 @@
 
 import Foundation
 import SafariServices
+import UIKit
+import WireDataModel
 
 private var lastPreviewURL: URL?
 

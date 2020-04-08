@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension Notification.Name {
     static let SplitLayoutObservableDidChangeToLayoutSize = Notification.Name("SplitLayoutObservableDidChangeToLayoutSizeNotification")

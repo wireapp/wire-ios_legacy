@@ -18,6 +18,9 @@
 
 
 import Foundation
+import WireCommonComponents
+import WireSystem
+import avs
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -36,7 +39,7 @@ extension String {
 
 extension AVSAudioEffectType: CustomStringConvertible {
 
-    public var icon: StyleKitIcon {
+    var icon: StyleKitIcon {
         get {
             switch self {
             case .none:

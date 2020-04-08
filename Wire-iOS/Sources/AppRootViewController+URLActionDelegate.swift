@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 extension Notification.Name {
     static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
@@ -64,9 +66,9 @@ extension AppRootViewController: URLActionDelegate {
                                           message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
                                           preferredStyle: .alert)
             let agreeAction = UIAlertAction(title: "general.ok".localized, style: .default) { _ in
-                self.showLoadingView = true
+                self.isLoadingViewVisible = true
                 self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                    self.showLoadingView = false
+                    self.isLoadingViewVisible = false
                     switch result {
                     case let .success(environment):
                         BackendEnvironment.shared = environment

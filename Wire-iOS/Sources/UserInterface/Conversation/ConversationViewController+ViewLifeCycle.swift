@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ConversationViewController {
     override func viewDidAppear(_ animated: Bool) {

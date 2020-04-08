@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireSyncEngine
 
-class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
+final class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
     
     var requestPasswordController: RequestPasswordController?
     
@@ -35,14 +36,14 @@ class SettingsSignOutCellDescriptor: SettingsExternalScreenCellDescriptor {
 
     }
     
-    func logout(password: String? = nil) {
+    private func logout(password: String? = nil) {
         guard let selfUser = ZMUser.selfUser() else { return }
     
         if selfUser.usesCompanyLogin || password != nil {
-            weak var topMostViewController = UIApplication.shared.topmostViewController(onlyFullScreen: false)
-            topMostViewController?.showLoadingView = true
+            weak var topMostViewController: SpinnerCapableViewController? = UIApplication.shared.topmostViewController(onlyFullScreen: false) as? SpinnerCapableViewController
+            topMostViewController?.isLoadingViewVisible = true
             ZMUserSession.shared()?.logout(credentials: ZMEmailCredentials(email: "", password: password ?? ""), { (result) in
-                topMostViewController?.showLoadingView = false
+                topMostViewController?.isLoadingViewVisible = false
                 
                 if case .failure(let error) = result {
                     topMostViewController?.showAlert(for: error)

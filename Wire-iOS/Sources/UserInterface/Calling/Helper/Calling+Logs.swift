@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSystem
+
 struct Log {
     static let calling = ZMSLog(tag: "calling")
     static let haptics = ZMSLog(tag: "haptics")

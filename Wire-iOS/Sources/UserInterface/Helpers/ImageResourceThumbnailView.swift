@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 class ImageResourceThumbnailView: RoundedView {
 

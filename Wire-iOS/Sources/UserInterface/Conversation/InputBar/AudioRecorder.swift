@@ -19,6 +19,8 @@
 
 import Foundation
 import MediaPlayer
+import WireSyncEngine
+import avs
 
 private let zmLog = ZMSLog(tag: "UI")
 

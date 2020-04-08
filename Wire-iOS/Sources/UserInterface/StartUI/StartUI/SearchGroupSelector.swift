@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 final class SearchGroupSelector: UIView, TabBarDelegate {
     var onGroupSelected: ((SearchGroup)->())? = nil

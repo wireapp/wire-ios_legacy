@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import AVFoundation
+import WireDataModel
 
 /// For playing videos in conversation
 /// Controls and observe the state of a AVPlayer instance for integration with the AVSMediaManager

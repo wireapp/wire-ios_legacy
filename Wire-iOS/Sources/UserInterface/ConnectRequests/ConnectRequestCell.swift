@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 final class ConnectRequestCell: UITableViewCell {
 

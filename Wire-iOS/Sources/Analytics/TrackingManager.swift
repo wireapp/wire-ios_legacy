@@ -22,9 +22,10 @@ import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
 import WireCommonComponents
+import avs
+import WireSyncEngine
 
-
-@objc public class TrackingManager: NSObject, TrackingInterface {
+final class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {

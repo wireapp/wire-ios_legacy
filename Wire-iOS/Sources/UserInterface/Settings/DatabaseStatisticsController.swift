@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 final class DatabaseStatisticsController: UIViewController {
 

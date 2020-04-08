@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class GroupConversationsSectionController: SearchSectionController {
+final class GroupConversationsSectionController: SearchSectionController {
     
     var groupConversations: [ZMConversation] = []
     var title: String = ""

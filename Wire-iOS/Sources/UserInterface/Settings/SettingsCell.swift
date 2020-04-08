@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireCommonComponents
 
 enum SettingsCellPreview {
     case none

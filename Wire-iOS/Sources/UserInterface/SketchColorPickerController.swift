@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
 
 protocol SketchColorPickerControllerDelegate: class {
     func sketchColorPickerController(_ controller: SketchColorPickerController, changedSelectedColor color: UIColor)

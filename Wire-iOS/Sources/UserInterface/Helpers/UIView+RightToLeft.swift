@@ -26,7 +26,7 @@ fileprivate extension CGAffineTransform {
 
 }
 
-public extension UIView {
+extension UIView {
 
     func applyRTLTransformIfNeeded() {
         transform = isRightToLeft ? .verticallyMirrored : .identity

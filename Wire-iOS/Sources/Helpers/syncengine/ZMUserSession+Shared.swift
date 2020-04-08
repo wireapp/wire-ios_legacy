@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 private let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
 private let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes

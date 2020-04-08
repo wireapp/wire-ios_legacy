@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 private let disableEphemeralSending = false
 private let disableEphemeralSendingInGroups = false

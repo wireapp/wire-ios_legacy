@@ -18,7 +18,8 @@
 
 
 import Foundation
-
+import UIKit
+import WireCommonComponents
 
 protocol EmojiSectionViewControllerDelegate: class {
     func sectionViewController(_ viewController: EmojiSectionViewController, didSelect: EmojiSectionType, scrolling: Bool)

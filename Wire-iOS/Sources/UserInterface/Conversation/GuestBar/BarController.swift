@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 protocol Bar {
     var weight: Float { get }

@@ -69,7 +69,7 @@ final class ClientListViewControllerTests: ZMSnapshotTestCase {
                                        showTemporary: true,
                                        variant: variant)
 
-        sut.showLoadingView = false
+        sut.isLoadingViewVisible = false
     }
 
     func testThatObserverIsNonRetained(){

@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSyncEngine
+
 @objc
 protocol SectionListCellType {
     var sectionName: String? { get set }

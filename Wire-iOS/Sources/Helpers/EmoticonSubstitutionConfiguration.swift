@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import WireSystem
+
 private let zmLog = ZMSLog(tag: "EmoticonSubstitutionConfiguration")
 
 final class EmoticonSubstitutionConfiguration {

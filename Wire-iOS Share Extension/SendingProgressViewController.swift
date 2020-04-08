@@ -21,6 +21,8 @@ import WireCommonComponents
 import WireShareEngine
 import Cartography
 import SystemConfiguration
+import WireSystem
+import UIKit
 
 final class SendingProgressViewController : UIViewController {
 

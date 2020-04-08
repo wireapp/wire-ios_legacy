@@ -18,10 +18,15 @@
 
 
 import Foundation
+import UIKit
+import WireSystem
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     
     enum State {
         case ready, recording, effects

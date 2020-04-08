@@ -18,6 +18,8 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
 extension ZMConversation {
     var canAddGuest: Bool {
@@ -391,7 +393,7 @@ extension AddParticipantsViewController : UserSelectionObserver {
 
 extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     
-    func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
+    @objc func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController) {
         if case .add(let conversation) = viewModel.context {
             self.dismiss(animated: true) {
                 self.addSelectedParticipants(to: conversation)

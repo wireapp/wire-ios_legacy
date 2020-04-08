@@ -17,7 +17,8 @@
 //
 
 import Foundation
-
+import UIKit
+import WireDataModel
 
 extension UIAlertController {
 

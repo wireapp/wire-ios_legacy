@@ -18,6 +18,7 @@
 
 import UIKit
 import MapKit
+import WireDataModel
 
 final class ConversationLocationMessageCell: UIView, ConversationMessageCell {
 

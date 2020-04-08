@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireSyncEngine
 
 
 private let endEditingNotificationName = "ConversationInputBarViewControllerShouldEndEditingNotification"

@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireDataModel
 
 private let latitudeKey = "LastLocationLatitudeKey"
 private let longitudeKey = "LastLocationLongitudeKey"

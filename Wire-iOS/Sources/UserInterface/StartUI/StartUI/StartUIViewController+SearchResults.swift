@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
+import WireSystem
 
 final class StartUIView : UIView { }
 
@@ -132,7 +135,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
         
         GuestRoomEvent.created.track()
-        showLoadingView = true
+        isLoadingViewVisible = true
+        
         userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 

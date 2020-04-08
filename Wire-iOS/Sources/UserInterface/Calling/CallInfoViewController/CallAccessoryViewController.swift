@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CallAccessoryViewControllerDelegate: class {
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController)

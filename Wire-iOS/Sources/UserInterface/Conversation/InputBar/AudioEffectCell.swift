@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import avs
 
 public struct AudioEffectCellBorders : OptionSet {
     public let rawValue: Int

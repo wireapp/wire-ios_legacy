@@ -18,7 +18,8 @@
 
 
 import Foundation
-
+import WireSyncEngine
+import UIKit
 extension UIApplicationShortcutItem {
     static let markAllAsReadType = "com.wire.shortcut.markAllAsRead"
     static let markAllAsRead = UIApplicationShortcutItem(type: markAllAsReadType,

@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-class AccessoryTextFieldCell: UITableViewCell {
+final class AccessoryTextFieldCell: UITableViewCell {
 
     let textField: AccessoryTextField = {
         let textField = AccessoryTextField()

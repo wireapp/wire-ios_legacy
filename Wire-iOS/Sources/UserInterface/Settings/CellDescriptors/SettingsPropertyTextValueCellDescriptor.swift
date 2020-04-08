@@ -19,6 +19,7 @@
 
 import Foundation
 import WireUtilities
+import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 

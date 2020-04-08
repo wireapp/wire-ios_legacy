@@ -17,12 +17,13 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CallParticipantsViewControllerDelegate: class {
     func callParticipantsViewControllerDidSelectShowMore(viewController: CallParticipantsViewController)
 }
 
-class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+final class CallParticipantsViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     
     private let cellHeight: CGFloat = 56
     private var topConstraint: NSLayoutConstraint?

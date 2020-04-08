@@ -17,6 +17,9 @@
 //
 
 import UIKit
+import WireSystem
+import WireTransport
+import WireSyncEngine
 
 @objc protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
@@ -451,7 +454,8 @@ final class LandingViewController: AuthenticationStepViewController {
 
     // MARK: - Button tapped target
     
-    @objc public func showCustomBackendLink(_ sender: AnyObject!) {
+    @objc
+    func showCustomBackendLink(_ sender: AnyObject!) {
         let backendTitle = BackendEnvironment.shared.title
         let jsonURL = customBackendSubtitleLabel.text?.lowercased() ?? ""
         let alert = UIAlertController(title: "landing.custom_backend.more_info.alert.title".localized(args: backendTitle), message: "\(jsonURL)", preferredStyle: .alert)

@@ -17,6 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
+import WireCommonComponents
+import WireSyncEngine
 
 enum ApplicationLaunchType {
     case unknown

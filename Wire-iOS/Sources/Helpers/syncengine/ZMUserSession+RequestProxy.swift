@@ -17,6 +17,8 @@
 // 
 
 import Ziphy
+import WireDataModel
+import WireSyncEngine
 
 extension ZMUserSession: ZiphyURLRequester {
     public func performZiphyRequest(_ request: URLRequest, completionHandler: @escaping ((Data?, URLResponse?, Error?) -> Void)) -> ZiphyRequestIdentifier {

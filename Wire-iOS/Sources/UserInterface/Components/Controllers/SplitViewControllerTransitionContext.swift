@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SplitViewControllerTransitionContext: NSObject, UIViewControllerContextTransitioning {
 

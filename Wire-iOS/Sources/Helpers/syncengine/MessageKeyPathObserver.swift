@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /// Observes a single key path in `MessageChangeInfo` and calls a change handler when the key path changes.
 ///

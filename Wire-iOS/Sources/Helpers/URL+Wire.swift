@@ -17,10 +17,12 @@
 //
 
 import Foundation
+import WireSystem
+import WireTransport
 
 private let zmLog = ZMSLog(tag: "URL")
 
-@objc enum TeamSource: Int {
+enum TeamSource: Int {
     case onboarding, settings
     
     var parameterValue: String {

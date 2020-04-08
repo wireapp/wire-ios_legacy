@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireUtilities
 
 @objc enum ColorSchemeVariant: UInt {
     case light, dark

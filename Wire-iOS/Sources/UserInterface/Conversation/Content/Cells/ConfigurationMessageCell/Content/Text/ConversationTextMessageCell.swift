@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
 
 final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 

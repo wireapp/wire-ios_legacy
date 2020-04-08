@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireUtilities
 
 /**
  * A box for authentication event handlers that have the same context type.

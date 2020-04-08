@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIViewController {
     /// add a child view controller to self and add its view as view paramenter's subview

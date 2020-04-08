@@ -17,7 +17,8 @@
 //
 
 import Foundation
-
+import UIKit
+import AVFoundation
 
 /// A protocol for allow tests to mock recordPermission
 @objc protocol AVAudioSessionType: NSObjectProtocol {

@@ -16,6 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import UIKit
+import WireSyncEngine
+
 extension UIViewController {
 
     func showAlert(for error: LocalizedError, handler: AlertActionHandler? = nil) {

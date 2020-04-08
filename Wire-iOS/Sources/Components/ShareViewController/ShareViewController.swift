@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 protocol ShareDestination: Hashable {
     var displayName: String { get }
