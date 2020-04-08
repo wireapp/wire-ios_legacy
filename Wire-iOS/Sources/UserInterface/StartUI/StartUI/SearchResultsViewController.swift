@@ -329,11 +329,21 @@ class SearchResultsViewController : UIViewController {
     func updateSections(withSearchResult searchResult: SearchResult) {
 
         var contacts = searchResult.contacts
-        var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
-
+        var teamContacts = searchResult.teamMembers
+        
         if let filteredParticpants = filterConversation?.localParticipants {
-            contacts = contacts.filter({ !filteredParticpants.contains($0) })
-            teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
+            contacts = contacts.filter({
+                guard let user = $0.user else {
+                    return true
+                }
+                return !filteredParticpants.contains(user)
+            })
+            teamContacts = teamContacts.filter({
+                guard let user = $0.user else {
+                    return true
+                }
+                return !filteredParticpants.contains(user)
+            })
         }
 
         contactsSection.contacts = contacts
