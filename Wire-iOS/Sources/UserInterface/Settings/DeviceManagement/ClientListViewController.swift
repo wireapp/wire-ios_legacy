@@ -175,7 +175,8 @@ final class ClientListViewController: UIViewController,
     }
     
     private func dismissLoadingView() {
-        (navigationController as? SpinnerCapableViewController ?? self).isLoadingViewVisible = false
+        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = false        
+        isLoadingViewVisible = false
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
