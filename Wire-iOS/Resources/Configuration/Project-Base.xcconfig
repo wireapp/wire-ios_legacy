@@ -17,8 +17,8 @@
 // 
 
 #include "../../../Configuration/Base.xcconfig"
-#include "Warnings.xcconfig"
-#include "Version.xcconfig"
+#include "./Warnings.xcconfig"
+#include "./Version.xcconfig"
 
 // Architectures
 //
