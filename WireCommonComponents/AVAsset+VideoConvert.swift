@@ -100,7 +100,7 @@ extension AVURLAsset {
     }
 
     public func convert(filename: String,
-                        quality: String = AVAssetExportPresetHighestQuality,
+                        quality: String = defaultVideoQuality,
                         completion: @escaping ConvertVideoCompletion) {
         let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
