@@ -109,7 +109,7 @@ extension ConversationInputBarViewController {
     ///
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
-        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
+        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
@@ -179,7 +179,7 @@ extension ConversationInputBarViewController {
     }
 
     private func showAlertForFileTooBig() {
-        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
+        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(maxUploadFileSize), countStyle: .binary)
         let errorMessage = String(format: "content.file.too_big".localized, maxSizeString)

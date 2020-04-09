@@ -17,13 +17,10 @@
 // 
 
 
-import Foundation
 import Photos
 import Cartography
 import AVFoundation
 import UIKit
-import WireSystem
-import WireDataModel
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -39,7 +36,7 @@ protocol CameraKeyboardViewControllerDelegate: class {
 }
 
 
-class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
     
     fileprivate var permissions: PhotoPermissionsController!

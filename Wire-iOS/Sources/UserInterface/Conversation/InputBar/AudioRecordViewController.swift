@@ -72,8 +72,8 @@ final class AudioRecordViewController: UIViewController, AudioRecordBaseViewCont
     }
     
     init(audioRecorder: AudioRecorderType? = nil) {
-        let maxAudioLength = ZMUserSession.shared()?.maxAudioLength()
-        let maxUploadSize = ZMUserSession.shared()?.maxUploadFileSize()
+        let maxAudioLength = ZMUserSession.shared()?.maxAudioLength
+        let maxUploadSize = ZMUserSession.shared()?.maxUploadFileSize
         self.recorder = audioRecorder ?? AudioRecorder(format: .wav, maxRecordingDuration: maxAudioLength, maxFileSize: maxUploadSize)
         
         super.init(nibName: nil, bundle: nil)
