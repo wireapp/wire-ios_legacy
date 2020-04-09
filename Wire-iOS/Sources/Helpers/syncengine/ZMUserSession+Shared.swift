@@ -16,20 +16,19 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireSyncEngine
 
-private let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
-private let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes
-
-private let MaxAudioLength: TimeInterval = 25 * 60.0 // 25 minutes
-private let MaxTeamAudioLength: TimeInterval = 100 * 60.0 // 100 minutes
-
-private let MaxVideoLength: TimeInterval = 4.0 * 60.0 // 4 minutes
-private let MaxTeamVideoLength: TimeInterval = 16.0 * 60.0 // 16 minutes
 
 extension ZMUserSession {
-    @objc(sharedSession)
+    private static let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
+    private static let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes
+    
+    private static let MaxAudioLength: TimeInterval = 25 * 60.0 // 25 minutes
+    private static let MaxTeamAudioLength: TimeInterval = 100 * 60.0 // 100 minutes
+    
+    private static let MaxVideoLength: TimeInterval = 4.0 * 60.0 // 4 minutes
+    private static let MaxTeamVideoLength: TimeInterval = 16.0 * 60.0 // 16 minutes
+
     static func shared() -> ZMUserSession? {
         return SessionManager.shared?.activeUserSession
     }
@@ -38,15 +37,15 @@ extension ZMUserSession {
         return ZMUser.selfUser(inUserSession: self).hasTeam
     }
     
-    func maxUploadFileSize() -> UInt64 {
-        return selfUserHasTeam ? MaxTeamFileSize : MaxFileSize
+    var maxUploadFileSize: UInt64 {
+        return selfUserHasTeam ? ZMUserSession.MaxTeamFileSize : ZMUserSession.MaxFileSize
     }
     
-    func maxAudioLength() -> TimeInterval {
-        return selfUserHasTeam ? MaxTeamAudioLength : MaxAudioLength
+    var maxAudioLength: TimeInterval {
+        return selfUserHasTeam ? ZMUserSession.MaxTeamAudioLength : ZMUserSession.MaxAudioLength
     }
     
-    func maxVideoLength() -> TimeInterval {
-        return selfUserHasTeam ? MaxTeamVideoLength : MaxVideoLength
+    var maxVideoLength: TimeInterval {
+        return selfUserHasTeam ? ZMUserSession.MaxTeamVideoLength : ZMUserSession.MaxVideoLength
     }
 }
