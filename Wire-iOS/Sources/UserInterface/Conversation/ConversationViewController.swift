@@ -175,8 +175,6 @@ final class ConversationViewController: UIViewController {
                     self?.conversation.connectedUser?.cancelConnectionRequest()
                 case .archive:
                     self?.conversation.isArchived = true
-                default:
-                    break
                 }
             })
             

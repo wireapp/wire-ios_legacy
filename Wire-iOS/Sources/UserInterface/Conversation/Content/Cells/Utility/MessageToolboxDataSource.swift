@@ -140,7 +140,6 @@ class MessageToolboxDataSource {
     /// Creates a label that display the likers of the message.
     private func makeReactionsLabel(with likers: [ZMUser], widthConstraint: CGFloat) -> NSAttributedString {
         let likers = message.likers()
-        let conversation = message.conversation
 
         // If there is only one liker, always display the name, even if the width doesn't fit
         if likers.count == 1 {

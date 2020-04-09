@@ -386,7 +386,7 @@ extension AuthenticationCoordinator {
     /// Unwinds the state.
     private func unwindState(popController: Bool) {
         if popController {
-            presenter?.popViewController(animated: true)
+            _ = presenter?.popViewController(animated: true)
         } else {
             stateController.unwindState()
         }

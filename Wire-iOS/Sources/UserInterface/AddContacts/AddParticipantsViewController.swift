@@ -136,7 +136,7 @@ final class AddParticipantsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

@@ -247,7 +247,8 @@ extension ConversationInputBarViewController: UIVideoEditorControllerDelegate {
         }
     }
 
-    func videoEditorController(_ editor: UIVideoEditorController, didFailWithError error: NSError) {
+    func videoEditorController(_ editor: UIVideoEditorController,
+                               didFailWithError error: Error) {
         editor.dismiss(animated: true, completion: .none)
         zmLog.error("Video editor failed with error: \(error)")
     }

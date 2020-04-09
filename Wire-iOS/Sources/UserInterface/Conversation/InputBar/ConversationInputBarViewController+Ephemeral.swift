@@ -22,6 +22,7 @@ import UIKit
 
 extension ConversationInputBarViewController {
 
+    @discardableResult
     func createEphemeralKeyboardViewController() -> EphemeralKeyboardViewController {
         let ephemeralKeyboardViewController = EphemeralKeyboardViewController(conversation: conversation)
         ephemeralKeyboardViewController.delegate = self
