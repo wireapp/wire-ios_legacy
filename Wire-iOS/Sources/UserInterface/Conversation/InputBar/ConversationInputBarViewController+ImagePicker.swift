@@ -51,7 +51,7 @@ extension ConversationInputBarViewController {
             pickerController.delegate = self
             pickerController.allowsEditing = allowsEditing
             pickerController.mediaTypes = mediaTypes
-            pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength()
+            pickerController.videoMaximumDuration = ZMUserSession.shared()!.maxVideoLength
 
             if let popover = pickerController.popoverPresentationController,
                 let imageView = pointToView {
