@@ -126,7 +126,7 @@ extension ConversationInputBarViewController {
             return
         }
 
-        guard (fileSize ?? UInt64.max) <= maxUploadFileSize else {//TODO: file size still  beyond limit after setting file size 66MB
+        guard (fileSize ?? UInt64.max) <= maxUploadFileSize else {
             // file exceeds maximum allowed upload size
             parent?.dismiss(animated: false)
 

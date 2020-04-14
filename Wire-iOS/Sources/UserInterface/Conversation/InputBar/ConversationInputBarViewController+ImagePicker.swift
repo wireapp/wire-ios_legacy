@@ -42,7 +42,6 @@ extension ConversationInputBarViewController {
             // Don't crash on Simulator
         }
 
-        ///TODO: camera keyboard, trim?
         let presentController = {() -> Void in
 
             let context = ImagePickerPopoverPresentationContext(presentViewController: rootViewController,
@@ -89,7 +88,6 @@ extension ConversationInputBarViewController {
 
     func processVideo(info: [UIImagePickerController.InfoKey: Any],
                       picker: UIImagePickerController) {
-        ///TODO: we can use PHAsset key?
         guard let videoURL = info[UIImagePickerController.InfoKey.mediaURL] as? URL else {
             parent?.dismiss(animated: true)
             zmLog.error("Video not provided form \(picker): info \(info)")
@@ -117,7 +115,7 @@ extension ConversationInputBarViewController {
         if picker.sourceType == UIImagePickerController.SourceType.camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path) {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }
-        ///TODO: use this for the camera keyboard
+
         AVURLAsset.convertVideoToUploadFormat(at: videoTempURL, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { resultURL, asset, error in
             if error == nil,
                let resultURL = resultURL {

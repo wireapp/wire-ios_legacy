@@ -58,7 +58,6 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         return cameraKeyboardViewController
     }
 
-    ///TODO: same process as select video
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo videoURL: URL, duration: TimeInterval) {
         // Video can be longer than allowed to be uploaded. Then we need to add user the possibility to trim it.
         if duration > ZMUserSession.shared()!.maxVideoLength {
@@ -92,7 +91,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 self.present(videoEditor, animated: true) {
                     }
             }
-        } else { ///TODO: no need ConfirmAssetViewController?
+        } else {
             let context = ConfirmAssetViewController.Context(asset: .video(url: videoURL),
                                                              onConfirm: { [unowned self] (editedImage: UIImage?) in
                                                                             self.dismiss(animated: true)

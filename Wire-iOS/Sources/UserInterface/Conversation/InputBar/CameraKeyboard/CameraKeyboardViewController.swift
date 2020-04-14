@@ -300,59 +300,32 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         }
     }
     
-    ///TODO: same process as pick from file
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
-//        let options = PHVideoRequestOptions()
-//        options.deliveryMode = .mediumQualityFormat ///TODO: mediumQualityFormat/720p?
-//        options.isNetworkAccessAllowed = true
-//        options.version = .current
-        
-        print("width = \(asset.pixelWidth)") //2160
+        isLoadingViewVisible = true
 
-        self.isLoadingViewVisible = true
-
-        asset.getURL(){ url in
+        asset.getVideoURL(){ url in
             DispatchQueue.main.async(execute: {
                 self.isLoadingViewVisible = false
             })
             
-            if let url = url {
+            guard let url = url else { return }
                 
-                DispatchQueue.main.async(execute: {
-                    self.isLoadingViewVisible = true
-                })
+            DispatchQueue.main.async(execute: {
+                self.isLoadingViewVisible = true
+            })
 
-                AVURLAsset.convertVideoToUploadFormat(at: url, fileLengthLimit: Int64(ZMUserSession.MaxFileSize)) { resultURL, asset, error in
+            AVURLAsset.convertVideoToUploadFormat(at: url, fileLengthLimit: Int64(ZMUserSession.shared()!.maxUploadFileSize)) { resultURL, asset, error in
                 if error == nil,
                     let resultURL = resultURL {
                     DispatchQueue.main.async(execute: {
                         self.isLoadingViewVisible = false
-                    })
 
-                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset!.duration))
+                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset!.duration))
+                    })
                 }
-            }
             }
         }
         
-//        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVURLAsset.defaultVideoQuality) { exportSession, info in
-//
-//            guard let exportSession = exportSession else {
-//                DispatchQueue.main.async(execute: {
-//                    self.isLoadingViewVisible = false
-//                })
-//                return
-//            }
-//
-//            let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video-export.mp4")
-//            ///TODO: no need to export video??
-//            exportSession.exportVideo(exportURL: exportURL) { url, error in
-//                DispatchQueue.main.async(execute: {
-//                    self.isLoadingViewVisible = false
-//                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
-//                })
-//            }
-//        }
     }
     
     fileprivate func setupPhotoKeyboardAppearance() {
@@ -382,19 +355,15 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
 
 extension PHAsset {
     
-    func getURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
-        if self.mediaType == .image {
-            let options: PHContentEditingInputRequestOptions = PHContentEditingInputRequestOptions()
-            options.canHandleAdjustmentData = {(adjustmeta: PHAdjustmentData) -> Bool in
-                return true
-            }
-            self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
-                completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
-            })
-        } else if self.mediaType == .video {
+    func getVideoURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
+        guard mediaType == .video else {
+            completionHandler(nil)
+            return
+        }
+        
             let options: PHVideoRequestOptions = PHVideoRequestOptions()
             options.version = .current
-            options.deliveryMode = .mediumQualityFormat
+            options.deliveryMode = .highQualityFormat
             options.isNetworkAccessAllowed = true
             
             PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
@@ -405,7 +374,7 @@ extension PHAsset {
                     completionHandler(nil)
                 }
             })
-        }
+        
     }
 }
 

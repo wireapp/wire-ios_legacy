@@ -80,7 +80,7 @@ extension AVURLAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
-                                                  fileLengthLimit: Int64,
+                                                  fileLengthLimit: Int64? = nil,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
@@ -114,7 +114,7 @@ extension AVURLAsset {
 
     public func convert(filename: String,
                         quality: String = defaultVideoQuality,
-                        fileLengthLimit: Int64,
+                        fileLengthLimit: Int64? = nil,
                         completion: @escaping ConvertVideoCompletion) {
         let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
@@ -126,10 +126,11 @@ extension AVURLAsset {
             }
         }
         
-        ///TODO: size
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
         
-        exportSession.fileLengthLimit = fileLengthLimit
+        if let fileLengthLimit = fileLengthLimit {
+            exportSession.fileLengthLimit = fileLengthLimit
+        }
         
         exportSession.exportVideo(exportURL: outputURL) { url, error in
             DispatchQueue.main.async(execute: {
