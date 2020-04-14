@@ -20,7 +20,7 @@ import WireSyncEngine
 
 
 extension ZMUserSession {
-    private static let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
+    static let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
     private static let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes
     
     private static let MaxAudioLength: TimeInterval = 25 * 60.0 // 25 minutes

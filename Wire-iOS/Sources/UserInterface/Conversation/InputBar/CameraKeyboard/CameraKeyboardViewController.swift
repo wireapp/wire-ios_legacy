@@ -302,31 +302,57 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
     ///TODO: same process as pick from file
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
-        let options = PHVideoRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.isNetworkAccessAllowed = true
-        options.version = .current
+//        let options = PHVideoRequestOptions()
+//        options.deliveryMode = .mediumQualityFormat ///TODO: mediumQualityFormat/720p?
+//        options.isNetworkAccessAllowed = true
+//        options.version = .current
+        
+        print("width = \(asset.pixelWidth)") //2160
 
         self.isLoadingViewVisible = true
 
-        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVURLAsset.defaultVideoQuality) { exportSession, info in
+        asset.getURL(){ url in
+            DispatchQueue.main.async(execute: {
+                self.isLoadingViewVisible = false
+            })
             
-            guard let exportSession = exportSession else {
-                DispatchQueue.main.async(execute: {
-                    self.isLoadingViewVisible = false
-                })
-                return
-            }
+            if let url = url {
                 
-            let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video-export.mp4")
-            ///TODO: no need to export video??
-            exportSession.exportVideo(exportURL: exportURL) { url, error in
                 DispatchQueue.main.async(execute: {
-                    self.isLoadingViewVisible = false
-                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
+                    self.isLoadingViewVisible = true
                 })
+
+                AVURLAsset.convertVideoToUploadFormat(at: url, fileLengthLimit: Int64(ZMUserSession.MaxFileSize)) { resultURL, asset, error in
+                if error == nil,
+                    let resultURL = resultURL {
+                    DispatchQueue.main.async(execute: {
+                        self.isLoadingViewVisible = false
+                    })
+
+                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset!.duration))
+                }
+            }
             }
         }
+        
+//        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVURLAsset.defaultVideoQuality) { exportSession, info in
+//
+//            guard let exportSession = exportSession else {
+//                DispatchQueue.main.async(execute: {
+//                    self.isLoadingViewVisible = false
+//                })
+//                return
+//            }
+//
+//            let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video-export.mp4")
+//            ///TODO: no need to export video??
+//            exportSession.exportVideo(exportURL: exportURL) { url, error in
+//                DispatchQueue.main.async(execute: {
+//                    self.isLoadingViewVisible = false
+//                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
+//                })
+//            }
+//        }
     }
     
     fileprivate func setupPhotoKeyboardAppearance() {
@@ -354,6 +380,34 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
 }
 
+extension PHAsset {
+    
+    func getURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
+        if self.mediaType == .image {
+            let options: PHContentEditingInputRequestOptions = PHContentEditingInputRequestOptions()
+            options.canHandleAdjustmentData = {(adjustmeta: PHAdjustmentData) -> Bool in
+                return true
+            }
+            self.requestContentEditingInput(with: options, completionHandler: {(contentEditingInput: PHContentEditingInput?, info: [AnyHashable : Any]) -> Void in
+                completionHandler(contentEditingInput!.fullSizeImageURL as URL?)
+            })
+        } else if self.mediaType == .video {
+            let options: PHVideoRequestOptions = PHVideoRequestOptions()
+            options.version = .current
+            options.deliveryMode = .mediumQualityFormat
+            options.isNetworkAccessAllowed = true
+            
+            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+                if let urlAsset = asset as? AVURLAsset {
+                    let localVideoUrl: URL = urlAsset.url as URL
+                    completionHandler(localVideoUrl)
+                } else {
+                    completionHandler(nil)
+                }
+            })
+        }
+    }
+}
 
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {

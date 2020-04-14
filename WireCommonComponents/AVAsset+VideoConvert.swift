@@ -80,12 +80,13 @@ extension AVURLAsset {
     public static func convertVideoToUploadFormat(at url: URL,
                                                   quality: String = AVURLAsset.defaultVideoQuality,
                                                   deleteSourceFile: Bool = true,
+                                                  fileLengthLimit: Int64,
                                                   completion: @escaping ConvertVideoCompletion ) {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
         
         asset.convert(filename: filename,
-                      quality: quality) { URL, asset, error in
+                      quality: quality, fileLengthLimit: fileLengthLimit) { URL, asset, error in
             
             completion(URL, asset, error)
             
@@ -101,6 +102,7 @@ extension AVURLAsset {
 
     public func convert(filename: String,
                         quality: String = defaultVideoQuality,
+                        fileLengthLimit: Int64,
                         completion: @escaping ConvertVideoCompletion) {
         let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
@@ -112,7 +114,10 @@ extension AVURLAsset {
             }
         }
         
+        ///TODO: size
         guard let exportSession = AVAssetExportSession(asset: self, presetName: quality) else { return }
+        
+        exportSession.fileLengthLimit = fileLengthLimit
         
         exportSession.exportVideo(exportURL: outputURL) { url, error in
             DispatchQueue.main.async(execute: {
@@ -123,7 +128,8 @@ extension AVURLAsset {
 }
 
 extension AVAssetExportSession {
-    public func exportVideo(exportURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+    public func exportVideo(exportURL: URL,
+                            completion: @escaping (URL?, Error?) -> Void) {
         if FileManager.default.fileExists(atPath: exportURL.path) {
             do {
                 try FileManager.default.removeItem(at: exportURL)
