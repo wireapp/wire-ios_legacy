@@ -353,31 +353,6 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     
 }
 
-extension PHAsset {
-    
-    func getVideoURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
-        guard mediaType == .video else {
-            completionHandler(nil)
-            return
-        }
-        
-            let options: PHVideoRequestOptions = PHVideoRequestOptions()
-            options.version = .current
-            options.deliveryMode = .highQualityFormat
-            options.isNetworkAccessAllowed = true
-            
-            PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
-                if let urlAsset = asset as? AVURLAsset {
-                    let localVideoUrl: URL = urlAsset.url as URL
-                    completionHandler(localVideoUrl)
-                } else {
-                    completionHandler(nil)
-                }
-            })
-        
-    }
-}
-
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         defer { setupPhotoKeyboardAppearance() }
@@ -539,3 +514,26 @@ extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
     }
 }
 
+extension PHAsset {
+    
+    func getVideoURL(completionHandler : @escaping ((_ responseURL : URL?) -> Void)){
+        guard mediaType == .video else {
+            completionHandler(nil)
+            return
+        }
+        
+        let options: PHVideoRequestOptions = PHVideoRequestOptions()
+        options.version = .current
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+        
+        PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable : Any]?) -> Void in
+            if let urlAsset = asset as? AVURLAsset {
+                let localVideoUrl: URL = urlAsset.url as URL
+                completionHandler(localVideoUrl)
+            } else {
+                completionHandler(nil)
+            }
+        })
+    }
+}
