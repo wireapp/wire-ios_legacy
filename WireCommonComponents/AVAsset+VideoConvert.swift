@@ -85,8 +85,20 @@ extension AVURLAsset {
         let filename = url.deletingPathExtension().lastPathComponent + ".mp4"
         let asset: AVURLAsset = AVURLAsset(url: url, options: nil)
         
+        guard let track = AVAsset(url: url as URL).tracks(withMediaType: AVMediaType.video).first else { return }
+        let size = track.naturalSize
+
+        
+        let cappedQuality: String
+        
+        if size.width > 1920 || size.height > 1920 {
+            cappedQuality = AVAssetExportPreset1920x1080
+        } else {
+            cappedQuality = quality
+        }
+        
         asset.convert(filename: filename,
-                      quality: quality, fileLengthLimit: fileLengthLimit) { URL, asset, error in
+                      quality: cappedQuality, fileLengthLimit: fileLengthLimit) { URL, asset, error in
             
             completion(URL, asset, error)
             
