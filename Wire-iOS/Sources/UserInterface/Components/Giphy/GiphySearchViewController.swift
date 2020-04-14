@@ -44,7 +44,6 @@ final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
     // MARK: - Initialization
 
-    @objc(initWithSearchTerm:conversation:)
     convenience init(searchTerm: String, conversation: ZMConversation) {
         let searchResultsController = ZiphySearchResultsController(client: .default, pageSize: 50, maxImageSize: 3)
         self.init(searchTerm: searchTerm, conversation: conversation, searchResultsController: searchResultsController)

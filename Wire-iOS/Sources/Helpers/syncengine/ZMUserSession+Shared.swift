@@ -29,7 +29,6 @@ private let MaxVideoLength: TimeInterval = 4.0 * 60.0 // 4 minutes
 private let MaxTeamVideoLength: TimeInterval = 16.0 * 60.0 // 16 minutes
 
 extension ZMUserSession {
-    @objc(sharedSession)
     static func shared() -> ZMUserSession? {
         return SessionManager.shared?.activeUserSession
     }

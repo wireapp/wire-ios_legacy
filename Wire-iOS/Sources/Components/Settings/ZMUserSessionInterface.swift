@@ -19,17 +19,13 @@
 import Foundation
 import WireSyncEngine
 
-@objc
 protocol ZMUserSessionInterface: NSObjectProtocol {
     
-    @objc(performChanges:)
     func perform(_ changes: @escaping () -> ())
     
-    @objc(enqueueChanges:)
     func enqueue(_ changes: @escaping () -> ())
     
-    @objc(enqueueChanges:completionHandler:)
-    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)!)
+    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?)
 
     var isNotificationContentHidden : Bool { get set }
 }

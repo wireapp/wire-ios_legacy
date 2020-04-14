@@ -196,7 +196,6 @@ extension GroupParticipantsDetailViewController: GroupDetailsSectionControllerDe
         presentParticipantsDetails(with: users, selectedUsers: [], animated: true)
     }
     
-    @objc(presentParticipantsDetailsWithUsers:selectedUsers:animated:)
     func presentParticipantsDetails(with users: [UserType], selectedUsers: [UserType], animated: Bool) {
         let detailsViewController = GroupParticipantsDetailViewController(
             selectedParticipants: selectedUsers,

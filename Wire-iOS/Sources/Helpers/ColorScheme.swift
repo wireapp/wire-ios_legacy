@@ -258,15 +258,12 @@ final class ColorScheme: NSObject {
         self.variant = variant
     }
     
-    @objc(defaultColorScheme)
     static let `default`: ColorScheme = ColorScheme()
 
-    @objc(colorWithName:)
     func color(named: ColorSchemeColor) -> UIColor {
         return color(named: named, variant: variant)
     }
     
-    @objc(colorWithName:variant:)
     func color(named: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         let colorPair = named.colorPair(accentColor: accentColor)
         switch variant {
@@ -277,7 +274,6 @@ final class ColorScheme: NSObject {
         }
     }
     
-    @objc(nameAccentForColor:variant:)
     func nameAccent(for color: ZMAccentColor, variant: ColorSchemeVariant) -> UIColor {
         return UIColor.nameColor(for: color, variant: variant)
     }
@@ -297,12 +293,10 @@ fileprivate extension ColorPair {
 
 extension UIColor {
     
-    @objc(wr_colorFromColorScheme:)
     static func from(scheme: ColorSchemeColor) -> UIColor {
         return ColorScheme.default.color(named: scheme)
     }
     
-    @objc(wr_colorFromColorScheme:variant:)
     static func from(scheme: ColorSchemeColor, variant: ColorSchemeVariant) -> UIColor {
         return ColorScheme.default.color(named: scheme, variant: variant)
     }

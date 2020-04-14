@@ -239,7 +239,6 @@ final class ZClientViewController: UIViewController {
     }
     
     // MARK: - Singleton
-    @objc(sharedZClientViewController)
     static var shared: ZClientViewController? {
         return AppDelegate.shared.rootViewController.children.first(where: {$0 is ZClientViewController}) as? ZClientViewController
     }

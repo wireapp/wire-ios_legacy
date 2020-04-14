@@ -171,13 +171,13 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
-    @objc(backButtonTapped:)
-    public func backButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func backButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.popViewController(animated: true)
     }
 
-    @objc(dismissButtonTapped:)
-    public func dismissButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func dismissButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.dismiss(animated: true, completion: { [weak self] in
             self?.completion?(nil)
         })
