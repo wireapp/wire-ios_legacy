@@ -186,12 +186,14 @@ extension ConversationContentViewController: SignatureObserver {
     private func presentDigitalSignatureVerification(with url: URL) {
         let digitalSignatureVerification = DigitalSignatureVerificationViewController(url: url) { [weak self] result in
             switch result {
-                case .success:
+            case .success:
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
                     self?.dataSource.selectedMessage?
                         .fileMessageData?.retrievePDFSignature()
-                case .failure:
-                    self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert()
-                    })
+                }
+            case .failure:
+                self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert()
+                })
             }
         }
         let navigationController = UINavigationController(rootViewController: digitalSignatureVerification)
