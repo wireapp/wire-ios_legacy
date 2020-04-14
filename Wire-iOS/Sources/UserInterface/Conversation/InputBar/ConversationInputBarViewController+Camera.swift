@@ -92,7 +92,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                 self.present(videoEditor, animated: true) {
                     }
             }
-        } else {
+        } else { ///TODO: no need ConfirmAssetViewController?
             let context = ConfirmAssetViewController.Context(asset: .video(url: videoURL),
                                                              onConfirm: { [unowned self] (editedImage: UIImage?) in
                                                                             self.dismiss(animated: true)

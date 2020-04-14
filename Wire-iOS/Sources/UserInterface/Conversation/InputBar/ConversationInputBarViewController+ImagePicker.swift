@@ -42,6 +42,7 @@ extension ConversationInputBarViewController {
             // Don't crash on Simulator
         }
 
+        ///TODO: camera keyboard, trim?
         let presentController = {() -> Void in
 
             let context = ImagePickerPopoverPresentationContext(presentViewController: rootViewController,
@@ -112,7 +113,7 @@ extension ConversationInputBarViewController {
         if picker.sourceType == UIImagePickerController.SourceType.camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path) {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }
-
+        ///TODO: use this for the camera keyboard
         AVURLAsset.convertVideoToUploadFormat(at: videoTempURL) { resultURL, asset, error in
             if error == nil,
                let resultURL = resultURL {

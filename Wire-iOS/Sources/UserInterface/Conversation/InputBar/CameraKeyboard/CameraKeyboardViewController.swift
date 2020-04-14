@@ -300,6 +300,7 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
         }
     }
     
+    ///TODO: same process as pick from file
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
         let options = PHVideoRequestOptions()
         options.deliveryMode = .highQualityFormat
@@ -318,7 +319,7 @@ final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             }
                 
             let exportURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("video-export.mp4")
-            
+            ///TODO: no need to export video??
             exportSession.exportVideo(exportURL: exportURL) { url, error in
                 DispatchQueue.main.async(execute: {
                     self.isLoadingViewVisible = false
