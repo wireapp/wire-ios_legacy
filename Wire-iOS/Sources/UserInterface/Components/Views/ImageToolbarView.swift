@@ -25,7 +25,7 @@ import Cartography
     case preview
 }
 
-@objcMembers class ImageToolbarView: UIView {
+final class ImageToolbarView: UIView {
     
     let buttonContainer = UIView()
     let sketchButton = IconButton()

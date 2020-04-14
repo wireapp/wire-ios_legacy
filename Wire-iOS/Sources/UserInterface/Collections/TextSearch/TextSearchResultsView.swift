@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers final public class TextSearchResultsView: UIView {
+final public class TextSearchResultsView: UIView {
     var tableView = UITableView()
     var noResultsView = NoResultsView()
     

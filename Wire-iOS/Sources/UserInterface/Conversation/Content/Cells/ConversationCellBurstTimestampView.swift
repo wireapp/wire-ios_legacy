@@ -19,7 +19,7 @@
 
 import Cartography
 
-@objcMembers final public class ConversationCellBurstTimestampView: UIView {
+final public class ConversationCellBurstTimestampView: UIView {
     
     public let unreadDot = UIView()
     public let label: UILabel = UILabel()

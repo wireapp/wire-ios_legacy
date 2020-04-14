@@ -21,7 +21,7 @@ import UIKit
 import Foundation
 import Cartography
 
-@objcMembers public class ThreeDotsLoadingView: UIView {
+final public class ThreeDotsLoadingView: UIView {
     
     @objc let loadingAnimationKey = "loading"
     @objc let dotRadius = 2
