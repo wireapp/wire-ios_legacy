@@ -18,34 +18,33 @@
 
 import WireSyncEngine
 
-
 extension ZMUserSession {
     static let MaxVideoWidth: UInt64 = 1920 // FullHD
     static let MaxFileSize: UInt64 = 25 * 1024 * 1024 // 25 megabytes
     private static let MaxTeamFileSize: UInt64 = 100 * 1024 * 1024 // 100 megabytes
-    
+
     private static let MaxAudioLength: TimeInterval = 25 * 60.0 // 25 minutes
     private static let MaxTeamAudioLength: TimeInterval = 100 * 60.0 // 100 minutes
-    
+
     private static let MaxVideoLength: TimeInterval = 4.0 * 60.0 // 4 minutes
     private static let MaxTeamVideoLength: TimeInterval = 16.0 * 60.0 // 16 minutes
 
     static func shared() -> ZMUserSession? {
         return SessionManager.shared?.activeUserSession
     }
-    
+
     private var selfUserHasTeam: Bool {
         return ZMUser.selfUser(inUserSession: self).hasTeam
     }
-    
+
     var maxUploadFileSize: UInt64 {
         return selfUserHasTeam ? ZMUserSession.MaxTeamFileSize : ZMUserSession.MaxFileSize
     }
-    
+
     var maxAudioLength: TimeInterval {
         return selfUserHasTeam ? ZMUserSession.MaxTeamAudioLength : ZMUserSession.MaxAudioLength
     }
-    
+
     var maxVideoLength: TimeInterval {
         return selfUserHasTeam ? ZMUserSession.MaxTeamVideoLength : ZMUserSession.MaxVideoLength
     }

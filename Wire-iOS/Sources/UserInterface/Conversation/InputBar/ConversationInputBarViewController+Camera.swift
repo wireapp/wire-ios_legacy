@@ -54,7 +54,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         cameraKeyboardViewController.delegate = self
 
         self.cameraKeyboardViewController = cameraKeyboardViewController
-        
+
         return cameraKeyboardViewController
     }
 
