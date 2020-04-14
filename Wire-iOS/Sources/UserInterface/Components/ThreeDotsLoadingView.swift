@@ -126,7 +126,7 @@ final class ThreeDotsLoadingView: UIView {
 }
 
 extension ThreeDotsLoadingView {
-    func applicationDidBecomeActive(_ notification : Notification) {
+    @objc func applicationDidBecomeActive(_ notification : Notification) {
         updateLoadingAnimation()
     }
 }
