@@ -80,7 +80,7 @@ private final class MockImageManager: ImageManagerProtocol {
 }
 
 fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardViewController {
-    @objc override var shouldBlockCallingRelatedActions: Bool {
+    override var shouldBlockCallingRelatedActions: Bool {
         return true
     }
 }

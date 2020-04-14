@@ -34,7 +34,7 @@ protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
 
-final class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+class CameraKeyboardViewController: UIViewController, SpinnerCapable {
     var dismissSpinner: SpinnerCompletion?
 
     fileprivate var permissions: PhotoPermissionsController!
