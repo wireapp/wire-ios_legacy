@@ -53,7 +53,6 @@ extension ConversationViewController {
     // MARK: - Alert
 
     /// Presents an alert in response to a change in privacy (legal hold and/or client verification).
-    @objc(presentPrivacyWarningAlertForChange:)
     func presentPrivacyWarningAlert(for changeInfo: ConversationChangeInfo) {
         let title: String
         let message = "meta.degraded.dialog_message".localized

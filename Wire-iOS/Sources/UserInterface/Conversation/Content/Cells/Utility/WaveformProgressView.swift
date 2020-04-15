@@ -20,7 +20,7 @@
 import UIKit
 import Cartography
 
-@objcMembers private class WaveformBarsView: UIView {
+final private class WaveformBarsView: UIView {
     
     var samples : [Float] = [] {
         didSet {

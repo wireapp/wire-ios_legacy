@@ -18,29 +18,29 @@
 
 import UIKit
 
-@objcMembers class RoundedView: UIView, RoundedViewProtocol {
+class RoundedView: UIView, RoundedViewProtocol {
 
-    public final override class var layerClass: AnyClass {
+    final override class var layerClass: AnyClass {
         return ContinuousMaskLayer.self
     }
 
-    @objc public func toggleCircle() {
+    func toggleCircle() {
         shape = .circle
     }
 
-    @objc public func toggleRectangle() {
+    func toggleRectangle() {
         shape = .rectangle
     }
 
-    @objc public func setRelativeCornerRadius(multiplier: CGFloat, dimension: MaskDimension) {
+    func setRelativeCornerRadius(multiplier: CGFloat, dimension: MaskDimension) {
         shape = .relative(multiplier: multiplier, dimension: dimension)
     }
 
-    @objc public func setCornerRadius(_ cornerRadius: CGFloat) {
+    func setCornerRadius(_ cornerRadius: CGFloat) {
         shape = .rounded(radius: cornerRadius)
     }
 
-    @objc public func setRoundedCorners(_ corners: UIRectCorner) {
+    func setRoundedCorners(_ corners: UIRectCorner) {
         roundedCorners = corners
     }
 

@@ -351,7 +351,6 @@ extension ConversationMessageCellDescription where View.Configuration : Equatabl
         configureBlock(cell, animated)
     }
 
-    @objc(registerInTableView:)
     func register(in tableView: UITableView) {
         registrationBlock(tableView)
     }

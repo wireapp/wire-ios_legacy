@@ -104,7 +104,7 @@ extension UIAlertController {
     }
 }
 
-@objcMembers public final class EphemeralKeyboardViewController: UIViewController {
+final class EphemeralKeyboardViewController: UIViewController {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 

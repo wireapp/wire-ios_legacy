@@ -73,12 +73,11 @@ final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBase
     
     // MARK: - Life Cycle
     
-    @objc convenience init() {
+    convenience init() {
         self.init(audioRecorder: AudioRecorder(
             format: .wav,
-            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
-            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()
-        ))
+            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength ,
+            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize))
     }
     
     init(audioRecorder: AudioRecorderType) {

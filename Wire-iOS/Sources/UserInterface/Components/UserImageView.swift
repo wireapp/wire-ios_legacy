@@ -46,10 +46,10 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     }
 
     /// Whether the image should be desaturated, e.g. for unconnected users.
-    @objc public var shouldDesaturate: Bool = true
+    var shouldDesaturate: Bool = true
 
     /// Whether the badge indicator is enabled.
-    public var indicatorEnabled: Bool = false {
+    var indicatorEnabled: Bool = false {
         didSet {
             badgeIndicator.isHidden = !indicatorEnabled
         }
@@ -60,14 +60,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    @objc var userSession: ZMUserSessionInterface? {
+    var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    @objc public var user: UserType? {
+    var user: UserType? {
         didSet {
             updateUser()
         }
@@ -77,14 +77,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     // MARK: - Initialization
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         self.size = .small
         super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
-    public init(size: Size = .small) {
+    init(size: Size = .small) {
         self.size = size
         super.init(frame: .zero)
         configureSubviews()
@@ -95,7 +95,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         userObserverToken = nil
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
