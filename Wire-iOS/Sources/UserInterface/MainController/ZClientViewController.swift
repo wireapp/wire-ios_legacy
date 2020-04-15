@@ -76,19 +76,12 @@ final class ZClientViewController: UIViewController {
             "media": "external "
             ])
         
-        
-        setupAddressBookHelper()
-        
         if let appGroupIdentifier = Bundle.main.appGroupIdentifier,
             let remoteIdentifier = ZMUser.selfUser().remoteIdentifier {
             let sharedContainerURL = FileManager.sharedContainerDirectory(for: appGroupIdentifier)
             
             let accountContainerURL = sharedContainerURL.appendingPathComponent("AccountData", isDirectory: true).appendingPathComponent(remoteIdentifier.uuidString, isDirectory: true)
             analyticsEventPersistence = ShareExtensionAnalyticsPersistence(accountContainer: accountContainerURL)
-        }
-        
-        if let userSession = ZMUserSession.shared() {
-            networkAvailabilityObserverToken = ZMNetworkAvailabilityChangeNotification.addNetworkAvailabilityObserver(self, userSession: userSession)
         }
         
         NotificationCenter.default.post(name: NSNotification.Name.ZMUserSessionDidBecomeAvailable, object: nil)
@@ -483,24 +476,9 @@ final class ZClientViewController: UIViewController {
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = ColorScheme.default.color(named: .textForeground, variant: .light)
     }
-    
-    // MARK: - Adressbook Upload
-    
-    private func uploadAddressBookIfNeeded() {
-        // We should not even try to access address book when in a team
-        guard ZMUser.selfUser().hasTeam == false else { return }
-        
-        let addressBookDidBecomeGranted = AddressBookHelper.sharedHelper.accessStatusDidChangeToGranted
-        AddressBookHelper.sharedHelper.startRemoteSearch(!addressBookDidBecomeGranted)
-        AddressBookHelper.sharedHelper.persistCurrentAccessStatus()
-    }
 
     // MARK: - Setup methods
     
-    private func setupAddressBookHelper() {
-        AddressBookHelper.sharedHelper.configuration = AutomationHelper.sharedHelper
-    }
-
     func transitionToList(animated: Bool, completion: Completion?) {
         transitionToList(animated: animated,
                          leftViewControllerRevealed: true,
@@ -716,7 +694,6 @@ final class ZClientViewController: UIViewController {
     // MARK: - Application State
     @objc
     private func applicationWillEnterForeground(_ notification: Notification?) {
-        uploadAddressBookIfNeeded()
         trackShareExtensionEventsIfNeeded()
     }
     
@@ -730,14 +707,4 @@ final class ZClientViewController: UIViewController {
         }
     }
 
-}
-
-//MARK: - ZMNetworkAvailabilityObserver
-
-extension ZClientViewController: ZMNetworkAvailabilityObserver {
-    public func didChangeAvailability(newState: ZMNetworkState) {
-        if newState == .online && UIApplication.shared.applicationState == .active {
-            uploadAddressBookIfNeeded()
-        }
-    }
 }

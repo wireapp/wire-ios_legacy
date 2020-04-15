@@ -97,11 +97,6 @@ final class StartUIViewController: UIViewController, SpinnerCapable {
         view = StartUIView(frame: CGRect.zero)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        handleUploadAddressBookLogicIfNeeded()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
