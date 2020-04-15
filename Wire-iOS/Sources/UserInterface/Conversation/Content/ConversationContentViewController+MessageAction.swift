@@ -94,7 +94,11 @@ extension ConversationContentViewController {
             }
         case .digitallySign:
             dataSource.selectedMessage = message
-            digitalSignatureToken = message.fileMessageData?.signPDFDocument(observer: self)
+            guard let token = message.fileMessageData?.signPDFDocument(observer: self) else {
+                didFailSignature()
+                return
+            }
+            digitalSignatureToken = token
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
