@@ -37,33 +37,40 @@ extension ConversationInputBarViewController {
 
     @objc
     func ephemeralKeyboardButtonTapped(_ sender: IconButton) {
-        updateEphemeralKeyboardVisibility()
+        toggleEphemeralKeyboardVisibility()
     }
 
-    fileprivate func updateEphemeralKeyboardVisibility() {
+    fileprivate func toggleEphemeralKeyboardVisibility() {
+        let isEphemeralControllerPresented = ephemeralKeyboardViewController != nil
+        let isEphemeralKeyboardPresented = mode == .timeoutConfguration
 
-        let showPopover = traitCollection.horizontalSizeClass == .regular
-        let noPopoverPresented = presentedViewController == nil
-        let regularNotPresenting = showPopover && noPopoverPresented
-        let compactNotPresenting = mode != .timeoutConfguration && !showPopover
-
-        // presenting
-        if compactNotPresenting || regularNotPresenting {
-            if showPopover {
-                presentEphemeralControllerAsPopover()
-            } else {
-                // we only want to change the mode when we present a custom keyboard
-                mode = .timeoutConfguration
-                inputBar.textView.becomeFirstResponder()
-            }
-        // dismissing
+        if !isEphemeralControllerPresented || !isEphemeralKeyboardPresented {
+            presentEphemeralController()
         } else {
-            if noPopoverPresented {
-                mode = .textInput
-            } else {
-                ephemeralKeyboardViewController?.dismiss(animated: true, completion: nil)
-                ephemeralKeyboardViewController = nil
-            }
+            dismissEphemeralController()
+        }
+    }
+    
+    private func presentEphemeralController() {
+        let shouldShowPopover = traitCollection.horizontalSizeClass == .regular
+        
+        if shouldShowPopover {
+            presentEphemeralControllerAsPopover()
+        } else {
+            // we only want to change the mode when we present a custom keyboard
+            mode = .timeoutConfguration
+            inputBar.textView.becomeFirstResponder()
+        }
+    }
+    
+    private func dismissEphemeralController() {
+        let isPopoverPresented = ephemeralKeyboardViewController?.modalPresentationStyle == .popover
+        
+        if isPopoverPresented {
+            ephemeralKeyboardViewController?.dismiss(animated: true, completion: nil)
+            ephemeralKeyboardViewController = nil
+        } else {
+            mode = .textInput
         }
     }
 
@@ -103,7 +110,7 @@ extension ConversationInputBarViewController {
 extension ConversationInputBarViewController: EphemeralKeyboardViewControllerDelegate {
 
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController) {
-        updateEphemeralKeyboardVisibility()
+        toggleEphemeralKeyboardVisibility()
     }
 
     func ephemeralKeyboard(_ keyboard: EphemeralKeyboardViewController, didSelectMessageTimeout timeout: TimeInterval) {
@@ -134,5 +141,9 @@ extension ConversationInputBarViewController {
 
     func updateInputBar() {
         inputBar.changeEphemeralState(to: ephemeralState)
+        
+        if conversation.hasSyncedMessageDestructionTimeout {
+            dismissEphemeralController()
+        }
     }
 }
