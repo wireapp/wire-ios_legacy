@@ -51,7 +51,6 @@ extension UIImageView {
      * - parameter onError: The code to execute when the image could not be found.
      */
 
-    @objc(displayImageAtURL:onSuccess:onError:)
     func displayImage(at url: URL, onSuccess: ((UIImage) -> Void)?, onError: ((Error?) -> Void)?) {
         displayImage(at: url, cache: .shared, onSuccess: onSuccess, onError: onError)
     }
@@ -63,7 +62,6 @@ extension UIImageView {
      * - parameter url: The URL of the image to display.
      */
 
-    @objc(displayImageAtURL:)
     func displayImage(at url: URL) {
         displayImage(at: url, onSuccess: nil, onError: nil)
     }

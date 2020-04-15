@@ -20,7 +20,6 @@ import Foundation
 @testable import Wire
 import WireLinkPreview
 
-@objcMembers
 final class MockMessageFactory: NSObject {
 
     /// Create a template MockMessage with conversation, serverTimestamp, sender and activeParticipants set.
