@@ -313,13 +313,15 @@ class CameraKeyboardViewController: UIViewController, SpinnerCapable {
             })
 
             AVURLAsset.convertVideoToUploadFormat(at: url, fileLengthLimit: Int64(fileLengthLimit)) { resultURL, asset, error in
+                DispatchQueue.main.async(execute: {
+                    self.isLoadingViewVisible = false
+                })
+                
                 guard error == nil,
                     let resultURL = resultURL,
                     let asset = asset else { return }
                 
                 DispatchQueue.main.async(execute: {
-                    self.isLoadingViewVisible = false
-
                     self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset.duration))
                 })
             }
