@@ -32,19 +32,8 @@ extension SettingsCellDescriptorFactory {
         let shareButtonTitleDisabled = "self.settings.privacy_contacts_menu.settings_button.title".localized
         let shareContactsDisabledSettingsButton = SettingsButtonCellDescriptor(title: shareButtonTitleDisabled, isDestructive: false, selectAction: { (descriptor: SettingsCellDescriptorType) -> () in
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
-        }) { (descriptor: SettingsCellDescriptorType) -> (Bool) in
-            if AddressBookHelper.sharedHelper.addressBookSearchPerformedAtLeastOnce {
-                if AddressBookHelper.sharedHelper.isAddressBookAccessDisabled || AddressBookHelper.sharedHelper.isAddressBookAccessUnknown {
-                    return true
-                }
-                else {
-                    return false
-                }
-            }
-            else {
-                return true
-            }
-        }
+        })
+
         let headerText = "self.settings.privacy_contacts_section.title".localized
         let shareFooterDisabledText = "self.settings.privacy_contacts_menu.description_disabled.title".localized
 

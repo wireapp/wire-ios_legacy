@@ -34,27 +34,6 @@ extension StartUIViewController {
         navigationController?.pushViewController(shareContactsViewController, animated: true)
     }
 
-    func handleUploadAddressBookLogicIfNeeded() {
-        guard !addressBookUploadLogicHandled else { return }
-
-        addressBookUploadLogicHandled = true
-
-        // We should not even try to access address book when in a team
-        guard !ZMUser.selfUser().hasTeam else { return }
-
-        if addressBookHelper.isAddressBookAccessGranted {
-            // Re-check if we need to start AB search
-            addressBookHelper.startRemoteSearch(true)
-        } else if addressBookHelper.isAddressBookAccessUnknown {
-            self.addressBookHelper.requestPermissions({ success in
-                if success {
-                    DispatchQueue.main.async(execute: {
-                        self.addressBookHelper.startRemoteSearch(true)
-                    })
-                }
-            })
-        }
-    }
 }
 
 extension StartUIViewController: ShareContactsViewControllerDelegate {
