@@ -17,16 +17,16 @@
 //
 
 import UIKit
+import WireDataModel
 
 final class ConversationMessageActionController: NSObject {
 
-    @objc(ConversationMessageActionControllerContext)
     enum Context: Int {
         case content, collection
     }
 
-    @objc let message: ZMConversationMessage
-    @objc let context: Context
+    let message: ZMConversationMessage
+    let context: Context
     weak var responder: MessageActionResponder?
     weak var view: UIView!
 

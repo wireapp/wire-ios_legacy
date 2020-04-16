@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /**
  * Handles the change of user data during registration.

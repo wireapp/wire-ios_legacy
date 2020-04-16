@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol UserRightInterface {
     static func selfUserIsPermitted(to permission: UserRight.Permission) -> Bool

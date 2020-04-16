@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSyncEngine
+
 struct VideoConfiguration: VideoGridConfiguration {
     let floatingVideoStream: VideoStream?
     let videoStreams: [VideoStream]

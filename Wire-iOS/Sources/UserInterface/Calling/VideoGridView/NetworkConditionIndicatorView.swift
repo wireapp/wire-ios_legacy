@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 final class NetworkConditionIndicatorView: UIView, RoundedViewProtocol {
 

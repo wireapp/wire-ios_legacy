@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import avs
 
 protocol AVSIdentifierProvider {
     var stream: Stream { get }

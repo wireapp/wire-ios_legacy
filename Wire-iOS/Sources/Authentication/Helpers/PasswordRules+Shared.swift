@@ -19,6 +19,7 @@
 import Foundation
 import WireUtilities
 import FormatterKit
+import WireUtilities
 
 extension PasswordRuleSet {
 

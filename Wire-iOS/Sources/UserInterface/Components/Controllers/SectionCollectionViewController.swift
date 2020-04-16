@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
 
 protocol CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     

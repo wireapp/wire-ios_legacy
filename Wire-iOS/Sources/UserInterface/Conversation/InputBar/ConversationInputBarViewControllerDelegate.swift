@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 @objc
 protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ConversationContentViewController: CanvasViewControllerDelegate {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {

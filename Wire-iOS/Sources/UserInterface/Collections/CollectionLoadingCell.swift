@@ -18,8 +18,10 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
-@objcMembers final public class CollectionLoadingCell: UICollectionViewCell {
+final class CollectionLoadingCell: UICollectionViewCell {
     let loadingView = UIActivityIndicatorView(style: .gray)
     
     public override init(frame: CGRect) {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  * Loads the list of licenses embedded inside the app.
@@ -24,7 +25,7 @@ import Foundation
  * This object is not thread safe and should only be used from the main thread.
  */
 
-@objc class LicensesLoader: NSObject {
+final class LicensesLoader: NSObject {
 
     /// The shared loader.
     static let shared = LicensesLoader()

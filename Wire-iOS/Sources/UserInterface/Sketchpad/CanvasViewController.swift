@@ -19,17 +19,17 @@
 import UIKit
 import WireCanvas
 import Cartography
+import WireCommonComponents
 
 @objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 
-@objc public enum CanvasViewControllerEditMode : UInt {
+enum CanvasViewControllerEditMode : UInt {
     case draw
     case emoji
 }
 
-@objcMembers
 final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?

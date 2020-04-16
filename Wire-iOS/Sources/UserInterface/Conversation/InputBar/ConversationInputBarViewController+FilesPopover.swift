@@ -16,8 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import MobileCoreServices
+import WireSyncEngine
 
 extension ConversationInputBarViewController: UIDocumentPickerDelegate {
 
@@ -71,7 +71,7 @@ extension ConversationInputBarViewController {
                                            style: .default,
                                            handler: plistHandler))
 
-        let size = UInt(ZMUserSession.shared()?.maxUploadFileSize() ?? 0) + 1
+        let size = UInt(ZMUserSession.shared()?.maxUploadFileSize ?? 0) + 1
         let humanReadableSize = size / 1024 / 1024
         controller.addAction(uploadTestAlertAction(size: size, title: "Big file (size = \(humanReadableSize) MB)", fileName: "BigFile.bin"))
 

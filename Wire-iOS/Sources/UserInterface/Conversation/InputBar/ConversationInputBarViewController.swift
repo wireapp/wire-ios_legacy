@@ -18,6 +18,11 @@
 import Foundation
 import MobileCoreServices
 import Photos
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import avs
+import AVFoundation
 
 enum ConversationInputBarViewControllerMode {
     case textInput
@@ -644,7 +649,7 @@ extension ConversationInputBarViewController: UIImagePickerControllerDelegate {
         }
     }
 
-    public func imagePickerController(_ picker: UIImagePickerController,
+    func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         statusBarBlinksRedFix()
 

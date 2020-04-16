@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 @objc protocol UserSearchResultsViewControllerDelegate {
     func didSelect(user: UserType)

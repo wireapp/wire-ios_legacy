@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireCommonComponents
 
 final class LightNavigationBar : DefaultNavigationBar {
     override var colorSchemeVariant: ColorSchemeVariant {

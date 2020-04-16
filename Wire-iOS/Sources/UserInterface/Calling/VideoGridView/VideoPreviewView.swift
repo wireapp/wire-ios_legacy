@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import avs
 
 final class VideoPreviewView: UIView, AVSIdentifierProvider {
 

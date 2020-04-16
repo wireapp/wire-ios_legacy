@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
 
-@objc
 protocol SearchHeaderViewControllerDelegate: class {
     func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String)
     func searchHeaderViewControllerDidConfirmAction(_ searchHeaderViewController: SearchHeaderViewController)

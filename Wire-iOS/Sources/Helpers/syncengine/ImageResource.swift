@@ -18,6 +18,10 @@
 
 import Foundation
 import FLAnimatedImage
+import WireDataModel
+import WireLinkPreview
+import UIKit
+import WireSyncEngine
 
 extension ZMConversationMessage {
 

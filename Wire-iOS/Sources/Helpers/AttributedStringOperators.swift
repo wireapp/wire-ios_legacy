@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireDataModel
 
 // MARK: - Operators
 

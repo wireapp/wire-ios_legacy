@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIResponder {
     private static weak var currentFirstResponder: UIResponder?

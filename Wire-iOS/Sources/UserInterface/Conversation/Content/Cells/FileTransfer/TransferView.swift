@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol TransferViewDelegate: class {
     func transferView(_ view: TransferView, didSelect: MessageAction)

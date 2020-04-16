@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIUserInterfaceSizeClass {
     func toggle(compactConstraints: [NSLayoutConstraint],

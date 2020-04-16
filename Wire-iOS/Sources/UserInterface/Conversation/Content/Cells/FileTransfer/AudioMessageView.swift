@@ -18,6 +18,12 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireSystem
+import WireDataModel
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 

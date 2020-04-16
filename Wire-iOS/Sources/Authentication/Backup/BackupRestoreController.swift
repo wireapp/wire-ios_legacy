@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireSyncEngine
 
 protocol BackupRestoreControllerDelegate: class {
     func backupResoreControllerDidFinishRestoring(_ controller: BackupRestoreController)
@@ -27,15 +28,15 @@ protocol BackupRestoreControllerDelegate: class {
  * An object that coordinates restoring a backup.
  */
 
-class BackupRestoreController: NSObject {
+final class BackupRestoreController: NSObject {
     static let WireBackupUTI = "com.wire.backup-ios"
 
-    let target: UIViewController
+    let target: SpinnerCapableViewController
     weak var delegate: BackupRestoreControllerDelegate?
 
     // MARK: - Initialization
 
-    init(target: UIViewController) {
+    init(target: SpinnerCapableViewController) {
         self.target = target
         super.init()
     }
@@ -73,13 +74,13 @@ class BackupRestoreController: NSObject {
 
     fileprivate func performRestore(using password: String, from url: URL) {
         guard let sessionManager = SessionManager.shared else { return }
-        target.showLoadingView = true
+        target.isLoadingViewVisible = true
 
         sessionManager.restoreFromBackup(at: url, password: password) { [weak self] result in
             guard let `self` = self else { return }
             switch result {
             case .failure(SessionManager.BackupError.decryptionError):
-                self.target.showLoadingView = false
+                self.target.isLoadingViewVisible = false
                 self.showWrongPasswordAlert { _ in
                     self.restore(with: url)
                 }
@@ -87,7 +88,7 @@ class BackupRestoreController: NSObject {
             case .failure(let error):
                 BackupEvent.importFailed.track()
                 self.showRestoreError(error)
-                self.target.showLoadingView = false
+                self.target.isLoadingViewVisible = false
 
             case .success:
                 BackupEvent.importSucceeded.track()

@@ -17,6 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
+import WireCommonComponents
+import WireSyncEngine
 
 enum ApplicationLaunchType {
     case unknown
@@ -67,12 +71,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private static var sharedAppDelegate: AppDelegate!
 
-    @objc(sharedAppDelegate)
     static var shared: AppDelegate {
         return sharedAppDelegate!
     }
 
-    @objc
     var mediaPlaybackManager: MediaPlaybackManager? {
         return (rootViewController.visibleViewController as? ZClientViewController)?.mediaPlaybackManager
     }

@@ -17,13 +17,16 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
+import WireSystem
 
 final class StartUIView : UIView { }
 
 extension StartUIViewController {
     private func presentProfileViewController(for bareUser: UserType,
                                               at indexPath: IndexPath?) {
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
 
         guard let indexPath = indexPath,
             let cell = searchResultsViewController.searchResultsView?.collectionView.cellForItem(at: indexPath) else { return }
@@ -34,7 +37,7 @@ extension StartUIViewController {
                 let indexPaths = self.searchResultsViewController.searchResultsView?.collectionView.indexPathsForVisibleItems {
                 self.searchResultsViewController.searchResultsView?.collectionView.reloadItems(at: indexPaths)
             } else if self.profilePresenter.keyboardPersistedAfterOpeningProfile {
-                    self.searchHeaderViewController.tokenField.becomeFirstResponder()
+                    _ = self.searchHeaderViewController.tokenField.becomeFirstResponder()
                     self.profilePresenter.keyboardPersistedAfterOpeningProfile = false
             }
         })
@@ -132,7 +135,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         }
         
         GuestRoomEvent.created.track()
-        showLoadingView = true
+        isLoadingViewVisible = true
+        
         userSession.perform { [weak self] in
             guard let weakSelf = self else { return }
 

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIViewController {
     /// add a child view controller to self and add its view as view paramenter's subview
@@ -24,7 +25,6 @@ extension UIViewController {
     /// - Parameters:
     ///   - viewController: the view controller to add
     ///   - view: the viewController parameter's view will be added to this view
-    @objc(addViewController:toView:)
     func add(_ viewController: UIViewController?, to view: UIView) {
         guard let viewController = viewController else { return }
 

@@ -18,6 +18,7 @@
 
 import UIKit
 import WireCryptobox
+import WireDataModel
 
 extension UserType where Self: SelfLegalHoldSubject {
 

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIViewController {
     func presentInviteActivityViewController(with sourceView: UIView) {

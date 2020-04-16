@@ -17,9 +17,10 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension Message {
-    @objc static func dayFormatter(date: Date) -> DateFormatter {
+    static func dayFormatter(date: Date) -> DateFormatter {
         return date.olderThanOneWeekdateFormatter
     }
 }

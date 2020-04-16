@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SimpleTextFieldDelegate: class {
     func textField(_ textField: SimpleTextField, valueChanged value: SimpleTextField.Value)

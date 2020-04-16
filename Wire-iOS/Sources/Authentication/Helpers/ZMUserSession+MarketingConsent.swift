@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ZMUserSession {
     func submitMarketingConsent(with marketingConsent: Bool) {

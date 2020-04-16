@@ -18,6 +18,7 @@
 
 import Foundation
 import CoreTelephony
+import WireSyncEngine
 
 enum NetworkQualityType: Int, Comparable {
     case unknown = 0

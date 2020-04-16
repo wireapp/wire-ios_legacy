@@ -20,16 +20,12 @@ import XCTest
 @testable import Wire
 
 final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
-    var addressBookSearchPerformedAtLeastOnce: Bool = true
-    
+
     var isAddressBookAccessDisabled: Bool = false
     
     var accessStatusDidChangeToGranted: Bool = true
-    
-    var addressBookSearchWasPostponed: Bool = false
-    
-    var configuration: AddressBookHelperConfiguration!
-    
+
+
     static var sharedHelper: AddressBookHelperProtocol = MockAddressBookHelper()
     
     func persistCurrentAccessStatus() {
@@ -42,10 +38,6 @@ final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
 
     var isAddressBookAccessUnknown: Bool {
         return true
-    }
-
-    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
-        //no-op
     }
 
     func requestPermissions(_ callback: ((Bool) -> ())?) {

@@ -100,7 +100,9 @@ extension SessionManager: BackupSource {
     }
 }
 
-final class BackupViewController: UIViewController {
+final class BackupViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate let tableView = UITableView(frame: .zero)
     fileprivate var cells: [UITableViewCell.Type] = []
     let backupSource: BackupSource
@@ -151,8 +153,8 @@ final class BackupViewController: UIViewController {
         tableView.fitInSuperview()
     }
     
-    var loadingHostController: UIViewController {
-        return navigationController ?? self
+    var loadingHostController: SpinnerCapableViewController {
+        return (navigationController as? SpinnerCapableViewController) ?? self
     }
 }
 
@@ -185,10 +187,10 @@ fileprivate extension BackupViewController {
     func backupActiveAccount(indexPath: IndexPath) {
         requestBackupPassword { [weak self] result in
             guard let `self` = self, let password = result else { return }
-            self.loadingHostController.showLoadingView = true
+            self.loadingHostController.isLoadingViewVisible = true
 
             self.backupSource.backupActiveAccount(password: password) { backupResult in
-                self.loadingHostController.showLoadingView = false
+                self.loadingHostController.isLoadingViewVisible = false
                 
                 switch backupResult {
                 case .failure(let error):

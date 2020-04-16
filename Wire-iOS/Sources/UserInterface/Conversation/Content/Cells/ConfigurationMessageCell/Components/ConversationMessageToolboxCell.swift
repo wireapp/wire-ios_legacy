@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 final class ConversationMessageToolboxCell: UIView, ConversationMessageCell, MessageToolboxViewDelegate {
 

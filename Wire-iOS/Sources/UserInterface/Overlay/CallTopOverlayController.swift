@@ -18,6 +18,10 @@
 
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import avs
 
 protocol CallTopOverlayControllerDelegate: class {
     func voiceChannelTopOverlayWantsToRestoreCall(_ controller: CallTopOverlayController)

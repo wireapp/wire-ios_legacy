@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSystem
+import UIKit
 
 /**
  * An object that tracks performance issues in the application for debugging purposes.

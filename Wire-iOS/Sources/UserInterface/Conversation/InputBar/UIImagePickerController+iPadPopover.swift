@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct ImagePickerPopoverPresentationContext {
     let presentViewController: UIViewController

@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 final class DotView: UIView {
     

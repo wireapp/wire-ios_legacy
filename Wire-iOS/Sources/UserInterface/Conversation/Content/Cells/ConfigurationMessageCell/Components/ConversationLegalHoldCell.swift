@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import WireDataModel
+import WireCommonComponents
 
-class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
+final class ConversationLegalHoldSystemMessageCell: ConversationIconBasedCell, ConversationMessageCell {
     
     static let legalHoldURL: URL = URL(string: "action://learn-more-legal-hold")!
     var conversation: ZMConversation?

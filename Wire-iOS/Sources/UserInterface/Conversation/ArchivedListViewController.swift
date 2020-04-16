@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 // MARK: ArchivedListViewControllerDelegate
 

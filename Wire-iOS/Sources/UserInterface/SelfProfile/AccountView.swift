@@ -18,6 +18,8 @@
 
 import UIKit
 import Cartography
+import WireDataModel
+import WireSyncEngine
 
 class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {

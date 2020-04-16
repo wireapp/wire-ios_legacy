@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class DynamicsProxy: NSObject, UIDynamicItem {
     var bounds = CGRect.zero

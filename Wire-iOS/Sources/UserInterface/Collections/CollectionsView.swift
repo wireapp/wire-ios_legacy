@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 final class CollectionsView: UIView {
     var collectionViewLayout: CollectionViewLeftAlignedFlowLayout!

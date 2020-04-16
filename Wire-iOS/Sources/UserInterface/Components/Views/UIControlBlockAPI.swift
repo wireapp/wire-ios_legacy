@@ -18,7 +18,7 @@
 
 
 import Foundation
-
+import UIKit
 
 protocol Interactable {
     func addTarget(_ target: Any?, action: Selector, for controlEvents: UIControl.Event)

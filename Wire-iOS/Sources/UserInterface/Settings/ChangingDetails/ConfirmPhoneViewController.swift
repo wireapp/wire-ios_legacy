@@ -193,7 +193,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
             if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, PhoneNumber(fullNumber: currentPhoneNumber) == PhoneNumber(fullNumber:newNumber) {
-                navigationController?.showLoadingView = false
+                navigationController?.isLoadingViewVisible = false
                 delegate?.didConfirmPhone(inController: self)
             }
         }
@@ -202,7 +202,7 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         showAlert(for: error)
         clearCodeInput()
     }
@@ -221,7 +221,7 @@ extension ConfirmPhoneViewController: CharacterInputFieldDelegate {
     func didFillInput(inputField: CharacterInputField, text: String) {
         let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: text)
         userProfile?.requestPhoneNumberChange(credentials: credentials)
-        navigationController?.showLoadingView = true
+        navigationController?.isLoadingViewVisible = true
     }
 
 }

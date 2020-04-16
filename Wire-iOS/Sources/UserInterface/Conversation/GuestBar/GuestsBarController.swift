@@ -18,8 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
 
-class GuestsBarController: UIViewController {
+final class GuestsBarController: UIViewController {
 
     enum State: Equatable {
         case visible(labelKey: String, identifier: String)

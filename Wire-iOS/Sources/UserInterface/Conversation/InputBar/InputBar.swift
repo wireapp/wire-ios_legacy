@@ -20,6 +20,7 @@
 import UIKit
 import Cartography
 import Down
+import WireDataModel
 
 extension Settings {
     var returnKeyType: UIReturnKeyType {

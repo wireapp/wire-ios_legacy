@@ -20,6 +20,7 @@ import Foundation
 
 import UIKit
 import Cartography
+import WireDataModel
 
 protocol ConversationCreationValuesConfigurable: class {
     func configure(with values: ConversationCreationValues)

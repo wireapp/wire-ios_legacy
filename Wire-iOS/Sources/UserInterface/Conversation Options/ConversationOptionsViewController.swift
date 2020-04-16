@@ -17,12 +17,16 @@
 //
 
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
-final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ConversationOptionsViewModelDelegate {
+final class ConversationOptionsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SpinnerCapable, ConversationOptionsViewModelDelegate {
 
     private let tableView = UITableView()
     private var viewModel: ConversationOptionsViewModel
     private let variant: ColorSchemeVariant
+    
+    var dismissSpinner: SpinnerCompletion?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
@@ -84,9 +88,11 @@ final class ConversationOptionsViewController: UIViewController, UITableViewDele
 
     // MARK: – ConversationOptionsViewModelDelegate
     
-    func viewModel(_ viewModel: ConversationOptionsViewModel, didUpdateState state: ConversationOptionsViewModel.State) {
+    func viewModel(_ viewModel: ConversationOptionsViewModel,
+                   didUpdateState state: ConversationOptionsViewModel.State) {
         tableView.reloadData()
-        navigationController?.showLoadingView = state.isLoading
+        
+        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = state.isLoading
         title = state.title
     }
 

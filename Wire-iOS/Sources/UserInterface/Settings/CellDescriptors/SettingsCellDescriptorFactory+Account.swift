@@ -18,7 +18,10 @@
 
 
 import Foundation
-
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import WireCommonComponents
 
 extension ZMUser {
     var hasValidEmail: Bool {

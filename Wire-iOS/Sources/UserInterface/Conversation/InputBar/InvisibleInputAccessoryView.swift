@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Because the system manages the input accessory view lifecycle and positioning, we have to monitor what
 // is being done to us and report back

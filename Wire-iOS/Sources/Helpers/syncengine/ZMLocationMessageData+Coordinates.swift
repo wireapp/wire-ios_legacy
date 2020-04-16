@@ -20,6 +20,7 @@
 import Foundation
 import MapKit
 import Contacts
+import WireDataModel
 
 extension Message {
     class func openInMaps(_ messageData: LocationMessageData) {

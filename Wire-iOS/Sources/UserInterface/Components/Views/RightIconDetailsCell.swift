@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RightIconDetailsCell: DetailsCollectionViewCell {
     private let accessoryIconView = UIImageView()

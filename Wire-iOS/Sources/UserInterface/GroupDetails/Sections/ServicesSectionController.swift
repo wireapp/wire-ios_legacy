@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class ServicesSectionController: GroupDetailsSectionController {
+final class ServicesSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let serviceUsers: [UserType]

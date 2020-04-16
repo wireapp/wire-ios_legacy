@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension CGSize {
     func minZoom(imageSize: CGSize?) -> CGFloat {

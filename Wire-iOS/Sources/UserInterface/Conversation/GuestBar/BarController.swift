@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 protocol Bar {
     var weight: Float { get }
@@ -33,8 +34,7 @@ final class BarController: UIViewController {
         return bars.last
     }
     
-    @objc(presentBar:)
-    public func present(bar: UIViewController) {
+    func present(bar: UIViewController) {
         if bars.contains(bar) {
             return
         }
@@ -53,8 +53,7 @@ final class BarController: UIViewController {
         bar.didMove(toParent: self)
     }
     
-    @objc(dismissBar:)
-    public func dismiss(bar: UIViewController) {
+    func dismiss(bar: UIViewController) {
         guard let index = bars.firstIndex(of: bar) else {
             return
         }

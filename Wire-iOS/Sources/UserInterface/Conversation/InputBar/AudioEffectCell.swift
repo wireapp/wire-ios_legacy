@@ -19,25 +19,26 @@
 
 import Foundation
 import Cartography
+import avs
 
-public struct AudioEffectCellBorders : OptionSet {
-    public let rawValue: Int
+struct AudioEffectCellBorders : OptionSet {
+    let rawValue: Int
     
-    public init(rawValue: Int) {
+    init(rawValue: Int) {
         self.rawValue = rawValue
     }
     
-    public static let None   = AudioEffectCellBorders(rawValue: 0)
-    public static let Right  = AudioEffectCellBorders(rawValue: 1 << 0)
-    public static let Bottom = AudioEffectCellBorders(rawValue: 1 << 1)
+    static let None   = AudioEffectCellBorders(rawValue: 0)
+    static let Right  = AudioEffectCellBorders(rawValue: 1 << 0)
+    static let Bottom = AudioEffectCellBorders(rawValue: 1 << 1)
 }
 
-@objcMembers public final class AudioEffectCell: UICollectionViewCell {
+final class AudioEffectCell: UICollectionViewCell {
     fileprivate let iconView = IconButton()
     fileprivate let borderRightView = UIView()
     fileprivate let borderBottomView = UIView()
     
-    public var borders: AudioEffectCellBorders = [.None] {
+    var borders: AudioEffectCellBorders = [.None] {
         didSet {
             self.updateBorders()
         }
@@ -77,11 +78,11 @@ public struct AudioEffectCellBorders : OptionSet {
         self.updateForSelectedState()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var isSelected: Bool {
+    override var isSelected: Bool {
         didSet {
             self.updateForSelectedState()
         }
@@ -97,14 +98,14 @@ public struct AudioEffectCellBorders : OptionSet {
         self.iconView.setIconColor(color, for: .normal)
     }
     
-    public var effect: AVSAudioEffectType = .none {
+    var effect: AVSAudioEffectType = .none {
         didSet {
             self.iconView.setIcon(effect.icon, size: .small, for: .normal)
             self.accessibilityLabel = effect.description
         }
     }
     
-    public override func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         self.effect = .none
         self.borders = .None

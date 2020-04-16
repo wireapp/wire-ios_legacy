@@ -17,7 +17,9 @@
 //
 
 import Foundation
-
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 extension ZClientViewController: ShowContentDelegate {
     private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {

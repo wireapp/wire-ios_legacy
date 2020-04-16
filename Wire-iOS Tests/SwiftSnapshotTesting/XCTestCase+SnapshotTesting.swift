@@ -19,6 +19,7 @@
 import XCTest
 import SnapshotTesting
 @testable import Wire
+import UIKit
 
 extension ViewImageConfig: Hashable {
     public static func == (lhs: ViewImageConfig, rhs: ViewImageConfig) -> Bool {

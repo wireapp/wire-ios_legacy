@@ -17,10 +17,14 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import avs
+import WireSyncEngine
 
 fileprivate let zmLog = ZMSLog(tag: "calling")
 
-class ProximityMonitorManager : NSObject {
+final class ProximityMonitorManager : NSObject {
     
     typealias RaisedToEarHandler = (_ raisedToEar: Bool) -> Void
 

@@ -24,9 +24,9 @@ import AVFoundation
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers public final class FileMetaDataGenerator: NSObject {
+public final class FileMetaDataGenerator: NSObject {
 
-    @objc static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
+    static public func metadataForFileAtURL(_ url: URL, UTI uti: String, name: String, completion: @escaping (ZMFileMetadata) -> ()) {
         SharedPreviewGenerator.generator.generatePreview(url, UTI: uti) { (preview) in
             let thumbnail = preview != nil ? preview!.jpegData(compressionQuality: 0.9) : nil
             
@@ -50,7 +50,7 @@ private let zmLog = ZMSLog(tag: "UI")
 }
 
 extension AVURLAsset {
-    @objc static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
+    static func wr_isAudioVisualUTI(_ UTI: String) -> Bool {
         return audiovisualTypes().reduce(false) { (conformsBefore, compatibleUTI) -> Bool in
             conformsBefore || UTTypeConformsTo(UTI as CFString, compatibleUTI as CFString)
         }

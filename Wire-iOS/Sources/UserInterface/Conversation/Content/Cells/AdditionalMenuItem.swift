@@ -17,13 +17,13 @@
 //
 
 import Foundation
+import UIKit
 
-@objcMembers public final class AdditionalMenuItem: NSObject {
+final class AdditionalMenuItem: NSObject {
 
     public let item: UIMenuItem
     
-    @objc(availableInEphemeralConversations)
-    public let isAvailableInEphemeralConversations: Bool
+    let isAvailableInEphemeralConversations: Bool
     
     public init(item: UIMenuItem, allowedInEphemeralConversations: Bool) {
         self.item = item

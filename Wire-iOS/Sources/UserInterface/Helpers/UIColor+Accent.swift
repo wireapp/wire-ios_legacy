@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 private var ZM_UNUSED = "UI"
 private var overridenAccentColor: ZMAccentColor = .undefined
@@ -76,7 +78,6 @@ extension UIColor {
         }
     }
 
-    @objc (accentColor)
     class func accent() -> UIColor {
         return UIColor(fromZMAccentColor: indexedAccentColor())
     }

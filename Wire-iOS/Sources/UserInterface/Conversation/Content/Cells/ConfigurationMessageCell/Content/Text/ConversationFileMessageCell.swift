@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 class ConversationFileMessageCell: RoundedView, ConversationMessageCell {
 
