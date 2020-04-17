@@ -171,11 +171,8 @@ extension ConversationContentViewController {
                                                 message: alertMessage,
                                                 preferredStyle: .alert)
         let downloadAction = UIAlertAction(title: "content.message.download".localized,
-                                           style: .default) { [weak self] _ in
+                                           style: .default) { _ in
                 message.fileMessageData?.requestFileDownload()
-                                            
-                self?.fileAvailabilityObserver = MessageKeyPathObserver(message: message,
-                                                                        keypath: \.fileAvailabilityChanged)
         }
         
         alertController.addAction(downloadAction)
