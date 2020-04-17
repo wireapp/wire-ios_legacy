@@ -22,10 +22,7 @@ extension ZMConversationMessage {
 
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
-        guard
-            isFileDownloaded(),
-            SelfUser.current.phoneNumber != nil
-        else {
+        guard SelfUser.current.phoneNumber != nil else {
             return false
         }
         return isPDF
