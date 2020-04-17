@@ -94,11 +94,9 @@ extension ConversationContentViewController {
             }
         case .digitallySign:
             dataSource.selectedMessage = message
-            guard let token = message.fileMessageData?.signPDFDocument(observer: self) else {
-                didFailSignature()
-                return
-            }
-            digitalSignatureToken = token
+            message.isFileDownloaded()
+                ? signPDFDocument(for: message, observer: self)
+                : presentDownloadNecessaryAlert(for: message)
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
@@ -156,6 +154,29 @@ extension ConversationContentViewController {
             let detailsViewController = MessageDetailsViewController(message: message)
             parent?.present(detailsViewController, animated: true)
         }
+    }
+    
+    private func signPDFDocument(for message: ZMConversationMessage,
+                                 observer: SignatureObserver) {
+        guard let token = message.fileMessageData?.signPDFDocument(observer: observer) else {
+            didFailSignature()
+            return
+        }
+        digitalSignatureToken = token
+    }
+    
+    private func presentDownloadNecessaryAlert(for message: ZMConversationMessage) {
+        let alertMessage = "digital_signature.alert.download_necessary".localized
+        let alertController = UIAlertController(title: "",
+                                                message: alertMessage,
+                                                preferredStyle: .alert)
+        let downloadAction = UIAlertAction(title: "content.message.download".localized,
+                                           style: .default) { _ in
+                message.fileMessageData?.requestFileDownload()
+        }
+        
+        alertController.addAction(downloadAction)
+        present(alertController, animated: true)
     }
 }
 
