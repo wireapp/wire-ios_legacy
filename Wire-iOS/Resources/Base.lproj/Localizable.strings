@@ -426,6 +426,7 @@
 
 // Digital signature
 "digital_signature.alert.error" = "Unfortunately, your digital signature failed.";
+"digital_signature.alert.download_necessary" = "Please download the document before sign in";
 
 // New conversation participants added / removed / started system message
 

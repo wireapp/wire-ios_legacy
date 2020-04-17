@@ -96,7 +96,7 @@ extension ConversationContentViewController {
             dataSource.selectedMessage = message
             message.isFileDownloaded()
                 ? signPDFDocument(for: message, observer: self)
-                : downloadAndSignPDFDocument(for: message, observer: self)
+                : presentDownloadNecessaryAlert(for: message)
         case .edit:
             dataSource.editingMessage = message
             delegate?.conversationContentViewController(self, didTriggerEditing: message)
@@ -156,19 +156,6 @@ extension ConversationContentViewController {
         }
     }
     
-    private func downloadAndSignPDFDocument(for message: ZMConversationMessage,
-                                            observer: SignatureObserver) {
-        message.fileMessageData?.requestFileDownload()
-        
-        fileAvailabilityObserver = MessageKeyPathObserver(message: message,
-                                                          keypath: \.fileAvailabilityChanged) { [weak self] (message) in
-            guard message.isFileDownloaded() else {
-                return
-            }
-            self?.signPDFDocument(for: message, observer: observer)
-        }
-    }
-    
     private func signPDFDocument(for message: ZMConversationMessage,
                                  observer: SignatureObserver) {
         guard let token = message.fileMessageData?.signPDFDocument(observer: observer) else {
@@ -176,6 +163,24 @@ extension ConversationContentViewController {
             return
         }
         digitalSignatureToken = token
+    }
+    
+    private func presentDownloadNecessaryAlert(for message: ZMConversationMessage) {
+        let alertMessage = "digital_signature.alert.download_necessary".localized
+        let alertController = UIAlertController(title: "",
+                                                message: alertMessage,
+                                                preferredStyle: .alert)
+        let downloadAction = UIAlertAction(title: "content.message.download".localized,
+                                           style: .default) { [weak self] _ in
+                message.fileMessageData?.requestFileDownload()
+                                            
+                self?.fileAvailabilityObserver = MessageKeyPathObserver(message: message,
+                                                                        keypath: \.fileAvailabilityChanged)
+        }
+        
+        
+        alertController.addAction(downloadAction)
+        present(alertController, animated: true)
     }
 }
 
