@@ -178,7 +178,6 @@ extension ConversationContentViewController {
                                                                         keypath: \.fileAvailabilityChanged)
         }
         
-        
         alertController.addAction(downloadAction)
         present(alertController, animated: true)
     }
