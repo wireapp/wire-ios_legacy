@@ -159,7 +159,7 @@ extension ConversationContentViewController {
     private func signPDFDocument(for message: ZMConversationMessage,
                                  observer: SignatureObserver) {
         guard let token = message.fileMessageData?.signPDFDocument(observer: observer) else {
-            didFailSignature()
+            didFailSignature(errorType: .noConsentURL)
             return
         }
         digitalSignatureToken = token
@@ -170,7 +170,7 @@ extension ConversationContentViewController {
         let alertController = UIAlertController(title: "",
                                                 message: alertMessage,
                                                 preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "general.cancel".localized,
+        let cancelAction = UIAlertAction(title: "general.close".localized,
                                          style: .default)
         alertController.addAction(cancelAction)
         present(alertController, animated: true)
@@ -196,12 +196,12 @@ extension ConversationContentViewController: SignatureObserver {
         })
     }
     
-    func didFailSignature() {
+    func didFailSignature(errorType: SignatureStatus.ErrorYpe) {
         showLoadingView = false
         isDigitalSignatureVerificationShown
-            ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert()
+            ? dismissDigitalSignatureVerification(completion: { [weak self] in                  self?.presentDigitalSignatureErrorAlert(errorType: errorType)
             })
-            : presentDigitalSignatureErrorAlert()
+            : presentDigitalSignatureErrorAlert(errorType: errorType)
     }
     
     // MARK: - Helpers
@@ -214,7 +214,7 @@ extension ConversationContentViewController: SignatureObserver {
                         .fileMessageData?.retrievePDFSignature()
                 }
             case .failure:
-                self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert()
+                self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert(errorType: .retrieveFailed)
                 })
             }
         }
@@ -224,8 +224,15 @@ extension ConversationContentViewController: SignatureObserver {
         })
     }
     
-    private func presentDigitalSignatureErrorAlert() {
-        let message = "\("digital_signature.alert.error".localized) \("general.failure.try_again".localized)"
+    private func presentDigitalSignatureErrorAlert(errorType: SignatureStatus.ErrorYpe) {
+        var message: String?
+        switch errorType {
+        case .noConsentURL:
+            message = "digital_signature.alert.error.no_consent_url".localized
+        case .retrieveFailed:
+            message = "digital_signature.alert.error.no_signature".localized
+        }
+        
         let alertController = UIAlertController(title: "",
                                                 message: message,
                                                 preferredStyle: .alert)
