@@ -138,6 +138,7 @@ final class ConversationContentViewController: UIViewController, PopoverPresente
     private func applicationDidBecomeActive(_ notification: Notification) {
         dataSource.resetSectionControllers()
         tableView.reloadData()
+        dataSource.loadMessages()
     }
     
     override func viewDidAppear(_ animated: Bool) {
