@@ -170,12 +170,9 @@ extension ConversationContentViewController {
         let alertController = UIAlertController(title: "",
                                                 message: alertMessage,
                                                 preferredStyle: .alert)
-        let downloadAction = UIAlertAction(title: "content.message.download".localized,
-                                           style: .default) { _ in
-                message.fileMessageData?.requestFileDownload()
-        }
-        
-        alertController.addAction(downloadAction)
+        let cancelAction = UIAlertAction(title: "general.cancel".localized,
+                                         style: .default)
+        alertController.addAction(cancelAction)
         present(alertController, animated: true)
     }
 }
