@@ -64,6 +64,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
+        calculateSections()
     }
     
     public var actionControllers: [String: ConversationMessageActionController] = [:]
@@ -106,6 +107,7 @@ final class ConversationTableViewDataSource: NSObject {
     ///
     /// - Parameter forceRecalculate: true if force recreate cell with context check
     /// - Returns: arraySection of cell desctiptions
+    @discardableResult
     func calculateSections(forceRecalculate: Bool = false) -> [ArraySection<String, AnyConversationMessageCellDescription>] {
         return messages.enumerated().map { tuple in
             let sectionIdentifier = tuple.element.objectIdentifier
