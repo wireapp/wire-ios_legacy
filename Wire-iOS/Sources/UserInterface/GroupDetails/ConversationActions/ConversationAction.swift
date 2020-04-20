@@ -79,7 +79,7 @@ extension ZMConversation {
         var actions = availableStandardActions()
         actions.append(.clearContent)
 
-        if localParticipants.contains(ZMUser.selfUser()) {
+        if localParticipants.contains(ZMUser.selfUser() as! ZMUser) {
             actions.append(.leave)
         }
 

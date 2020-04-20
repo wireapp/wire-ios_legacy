@@ -17,9 +17,10 @@
 //
 
 import Foundation
+import WireDataModel
 import WireSyncEngine
 
-typealias EditableUser = ZMUser & ZMEditableUser
+typealias EditableUser = UserType & ZMEditableUser & SelfLegalHoldSubject & ValidatorType
 
 protocol SelfUserProviderUI {
     static var selfUser: EditableUser { get }
@@ -40,4 +41,91 @@ extension ZMUser {
             return ZMUser.selfUser(inUserSession: session)
         }
     }
+}
+
+
+//TODO: move to DM
+extension UserType {
+    var remoteIdentifier: UUID? {
+        return (self as? ZMUser)?.remoteIdentifier
+    }
+    
+    var hasTeam: Bool! {
+        return (self as? ZMUser)?.hasTeam
+    }
+
+    var team: Team? {
+        return (self as? ZMUser)?.team
+    }
+    
+    var clients: [UserClient]! {
+        return (self as? ZMUser)?.clients
+    }
+
+    var clientsRequiringUserAttention: [UserClient]! {
+        return (self as? ZMUser)?.clientsRequiringUserAttention
+    }
+
+    
+    func filename(suffix: String? = nil) -> String! {
+        return (self as? ZMUser)?.filename(suffix: suffix)
+    }
+    
+    func fetchMarketingConsent(in userSession: ZMUserSession,
+                                      completion: @escaping ((Result<Bool>) -> Void)) {
+        (self as? ZMUser)?.fetchMarketingConsent(in: userSession, completion: completion)
+    }
+
+    var needsToNotifyAvailabilityBehaviourChange: NotificationMethod! {
+        get {
+            return (self as? ZMUser)?.needsToNotifyAvailabilityBehaviourChange
+        }
+        set {
+            (self as? ZMUser)?.needsToNotifyAvailabilityBehaviourChange = newValue
+        }
+    }
+    
+    func setMarketingConsent(to value: Bool,
+                                    in userSession: ZMUserSession,
+                                    completion: @escaping ((VoidResult) -> Void)) {
+        (self as? ZMUser)?.setMarketingConsent(to: value, in: userSession, completion: completion)
+    }
+
+    var previewImageData: Data? {
+        return (self as? ZMUser)?.previewImageData
+    }
+
+    var imageSmallProfileData: Data! {
+        return (self as? ZMUser)?.imageSmallProfileData
+    }
+    
+    var imageMediumData: Data? {
+        return (self as? ZMUser)?.imageMediumData
+    }
+    
+        
+    var hasValidEmail: Bool! {
+        return (self as? ZMUser)?.hasValidEmail
+    }
+
+    var canSeeServices: Bool! {
+        return (self as? ZMUser)?.canSeeServices
+    }
+
+    
+    var readReceiptsEnabledChangedRemotely: Bool! {
+        get {
+        return (self as? ZMUser)?.readReceiptsEnabledChangedRemotely
+        }
+        
+        set {
+            (self as? ZMUser)?.readReceiptsEnabledChangedRemotely = newValue
+        }
+    }
+    
+    func selfClient() -> UserClient? {
+        return (self as? ZMUser)?.selfClient()
+    }
+    
+    
 }
