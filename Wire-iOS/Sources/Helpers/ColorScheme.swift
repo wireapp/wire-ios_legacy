@@ -68,7 +68,7 @@ extension UIColor {
 }
 
 
-@objc public enum ColorSchemeColor: Int {
+enum ColorSchemeColor: Int {
     case textForeground
     case textBackground
     case textDimmed

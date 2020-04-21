@@ -59,8 +59,8 @@ final class ConversationTableViewDataSource: NSObject {
     public var registeredCells: [AnyClass] = []
     public var sectionControllers: [String: ConversationMessageSectionController] = [:]
 
-    @objc public private(set) var hasOlderMessagesToLoad = false
-    @objc public private(set) var hasNewerMessagesToLoad = false
+    private(set) var hasOlderMessagesToLoad = false
+    private(set) var hasNewerMessagesToLoad = false
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
@@ -72,21 +72,21 @@ final class ConversationTableViewDataSource: NSObject {
     public let conversation: ZMConversation
     public let tableView: UpsideDownTableView
     
-    @objc public var firstUnreadMessage: ZMConversationMessage?
-    @objc public var selectedMessage: ZMConversationMessage? = nil
-    @objc public var editingMessage: ZMConversationMessage? = nil
+    var firstUnreadMessage: ZMConversationMessage?
+    var selectedMessage: ZMConversationMessage? = nil
+    var editingMessage: ZMConversationMessage? = nil
     
     weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
     weak var messageActionResponder: MessageActionResponder? = nil
     
-    @objc public var searchQueries: [String] = [] {
+    var searchQueries: [String] = [] {
         didSet {
             currentSections = calculateSections()
             tableView.reloadData()
         }
     }
     
-    @objc public var messages: [ZMConversationMessage] {
+    var messages: [ZMConversationMessage] {
         // NOTE: We limit the number of messages to the `lastFetchedObjectCount` since the
         // NSFetchResultsController will add objects to `fetchObjects` if they are modified after
         // the initial fetch, which results in unwanted table view updates. This is normally what

@@ -68,7 +68,7 @@ extension EmptySearchResultsViewAction {
         }
     }
     
-    @objc public func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
+    func updateStatus(searchingForServices: Bool, hasFilter: Bool) {
         switch (searchingForServices, hasFilter) {
         case (true, false):
             self.state = .noServicesEnabled
@@ -89,7 +89,7 @@ extension EmptySearchResultsViewAction {
     
     @objc weak var delegate: EmptySearchResultsViewDelegate?
     
-    @objc public init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
+    init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
         self.variant = variant
         self.isSelfUserAdmin = isSelfUserAdmin
         stackView = UIStackView()

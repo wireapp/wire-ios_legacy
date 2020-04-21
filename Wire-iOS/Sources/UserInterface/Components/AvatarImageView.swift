@@ -71,19 +71,19 @@ class AvatarImageView: UIControl {
     }
 
     /// The background color for the image.
-    @objc public var imageBackgroundColor: UIColor? {
+    var imageBackgroundColor: UIColor? {
         get { return container.backgroundColor }
         set { container.backgroundColor = newValue }
     }
 
     /// The font to use of the initials label.
-    @objc public var initialsFont: UIFont {
+    var initialsFont: UIFont {
         get { return initialsLabel.font }
         set { initialsLabel.font = newValue }
     }
 
     /// The color to use for the initials label.
-    @objc public var initialsColor: UIColor {
+    var initialsColor: UIColor {
         get { return initialsLabel.textColor }
         set { initialsLabel.textColor = newValue }
     }
@@ -97,7 +97,7 @@ class AvatarImageView: UIControl {
     }
 
     /// The view that contains the avatar.
-    @objc public let container = RoundedView()
+    let container = RoundedView()
 
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()

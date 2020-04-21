@@ -21,7 +21,7 @@ import FBSnapshotTestCase
 import UIKit
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
-    @objc public func wrapInTableView() -> UITableView {
+    func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
 
         tableView.delegate = self
