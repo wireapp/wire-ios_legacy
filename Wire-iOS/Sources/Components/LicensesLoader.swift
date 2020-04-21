@@ -71,7 +71,7 @@ final class LicensesLoader: NSObject {
 
     // MARK: - Testing
 
-    var cacheEmpty: Bool {
+    @objc var cacheEmpty: Bool {
         return cache == nil
     }
 
