@@ -40,11 +40,11 @@ extension EmptySearchResultsViewAction {
     }
 }
 
-@objc protocol EmptySearchResultsViewDelegate: class {
+protocol EmptySearchResultsViewDelegate: class {
     func execute(action: EmptySearchResultsViewAction, from: EmptySearchResultsView)
 }
 
-@objc final class EmptySearchResultsView: UIView {
+final class EmptySearchResultsView: UIView {
     
     private var state: EmptySearchResultsViewState = .noUsersOrServices {
         didSet {
@@ -87,7 +87,7 @@ extension EmptySearchResultsViewAction {
     private let statusLabel  = UILabel()
     private let actionButton: InviteButton
     
-    @objc weak var delegate: EmptySearchResultsViewDelegate?
+    weak var delegate: EmptySearchResultsViewDelegate?
     
     init(variant: ColorSchemeVariant, isSelfUserAdmin: Bool) {
         self.variant = variant

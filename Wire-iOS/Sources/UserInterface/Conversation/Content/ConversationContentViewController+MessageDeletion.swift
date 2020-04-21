@@ -40,12 +40,12 @@ private extension ZMConversationMessage {
 
 }
 
-@objc protocol SelectableView: NSObjectProtocol {
+protocol SelectableView {
     var selectionView: UIView! { get }
     var selectionRect: CGRect { get }
 }
 
-@objc protocol HighlightableView: NSObjectProtocol {
+protocol HighlightableView {
     var highlightContainer: UIView { get }
 }
 

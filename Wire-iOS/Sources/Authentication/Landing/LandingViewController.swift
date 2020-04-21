@@ -21,7 +21,7 @@ import WireSystem
 import WireTransport
 import WireSyncEngine
 
-@objc protocol LandingViewControllerDelegate {
+protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()

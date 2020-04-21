@@ -23,13 +23,13 @@ import FLAnimatedImage
 import WireCommonComponents
 import WireDataModel
 
-@objc protocol GiphySearchViewControllerDelegate: NSObjectProtocol {
+protocol GiphySearchViewControllerDelegate: class {
     func giphySearchViewController(_ giphySearchViewController: GiphySearchViewController, didSelectImageData imageData: Data, searchTerm: String)
 }
 
 final class GiphySearchViewController: VerticalColumnCollectionViewController {
 
-    @objc weak var delegate: GiphySearchViewControllerDelegate?
+    weak var delegate: GiphySearchViewControllerDelegate?
 
     let searchResultsController: ZiphySearchResultsController
     let searchBar: UISearchBar = UISearchBar()
