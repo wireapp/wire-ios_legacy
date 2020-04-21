@@ -24,16 +24,15 @@ import UIKit
  * An object that tracks performance issues in the application for debugging purposes.
  */
 
-@objc class PerformanceDebugger: NSObject {
+final class PerformanceDebugger {
 
     /// The shared debugger.
-    @objc static let shared = PerformanceDebugger()
+    static let shared = PerformanceDebugger()
 
     private let log = ZMSLog(tag: "Performance")
     private var displayLink: CADisplayLink!
 
-    override init() {
-        super.init()
+    init() {
         displayLink = CADisplayLink(target: self, selector: #selector(handleDisplayLink))
     }
 
@@ -42,7 +41,7 @@ import UIKit
     }
 
     /// Starts tracking performance issues.
-    @objc func start() {
+    func start() {
         guard Bundle.developerModeEnabled else {
             return
         }
@@ -51,7 +50,8 @@ import UIKit
         NotificationCenter.default.addObserver(self, selector: #selector(handleMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
 
-    @objc private func handleDisplayLink() {
+    @objc
+    private func handleDisplayLink() {
         let elapsedTime = displayLink.duration * 100
 
         if elapsedTime > 16.7 {
@@ -59,7 +59,8 @@ import UIKit
         }
     }
 
-    @objc private func handleMemoryWarning() {
+    @objc
+    private func handleMemoryWarning() {
         log.warn("Application did receive memory warning.")
     }
 
