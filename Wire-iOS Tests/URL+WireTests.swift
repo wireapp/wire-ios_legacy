@@ -36,6 +36,7 @@ class URL_WireTests: XCTestCase {
         super.tearDown()
     }
     
+    /*
     func testThatWebsiteURLsAreLoadedCorrectly() {
         let websiteURL = URL(string: "https://wire.com")!
         XCTAssertEqual(be.websiteURL, websiteURL)
@@ -72,4 +73,5 @@ class URL_WireTests: XCTestCase {
         XCTAssertEqual(be.teamsURL, teamsURL)
         XCTAssertEqual(URL.wr_manageTeam, teamsURL.appendingPathComponent("login?pk_campaign=client&pk_kwd=ios"))
     }
+    */
 }
