@@ -24,7 +24,7 @@ import WireShareEngine
 private let cellReuseIdentifier = "ConversationCell"
 
 
-class ConversationSelectionViewController : UITableViewController {
+final class ConversationSelectionViewController : UITableViewController {
     
     fileprivate var allConversations : [Conversation]
     fileprivate var visibleConversations : [Conversation]
@@ -89,9 +89,12 @@ class ConversationSelectionViewController : UITableViewController {
 extension ConversationSelectionViewController : UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
-            let predicate = NSPredicate(format: "name CONTAINS[cd] %@", searchText)
             visibleConversations = allConversations.filter { conversation in
-                predicate.evaluate(with: conversation)
+                if let _ = conversation.name.range(of: searchText, options: .diacriticInsensitive) {
+                    return true
+                } else {
+                    return false
+                }
             }
         } else {
             visibleConversations = allConversations
