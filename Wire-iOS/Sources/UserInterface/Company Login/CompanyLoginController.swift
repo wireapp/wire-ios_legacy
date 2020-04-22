@@ -37,10 +37,6 @@ protocol CompanyLoginControllerDelegate: class {
 
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
-
-    /// Called when the company login controller updated to a different backend environment.
-    /// It will need the delegate to present the landing screen
-    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController)
 }
 
 ///
@@ -302,7 +298,7 @@ extension CompanyLoginController {
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            self.delegate?.controllerDidUpdateBackendEnvironment(self)
+            self.startAutomaticSSOFlow()
         }
     }
 }
