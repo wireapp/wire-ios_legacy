@@ -259,7 +259,16 @@ final class SearchResultsViewController : UIViewController {
     }
 
     func searchForLocalUsers(withQuery query: String) {
-        performSearch(query: query, options: [.contacts, .teamMembers]) ///TODO: partner case?
+        let options: SearchOptions
+        
+        switch ZMUser.selfUser().teamRole {
+        case .none, .partner:
+            options = [.contacts]
+        default:
+            options = [.contacts, .teamMembers]
+        }
+        
+        performSearch(query: query, options: options)
     }
 
     func searchForServices(withQuery query: String) {
