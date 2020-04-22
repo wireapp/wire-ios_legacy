@@ -108,7 +108,6 @@ final class InputBar: UIView {
     private let inputBarVerticalInset: CGFloat = 34
     static let rightIconSize: CGFloat = 32
 
-    @objc
     let textView = MarkdownTextView(with: DownStyle.compact)
     let leftAccessoryView  = UIView()
     let rightAccessoryStackView: UIStackView = {
@@ -134,7 +133,6 @@ final class InputBar: UIView {
     let buttonsView: InputBarButtonsView
     let editingView = InputBarEditView()
     
-    @objc
     let markdownView = MarkdownBarView()
     
     var editingBackgroundColor = UIColor.brightYellow
@@ -144,7 +142,6 @@ final class InputBar: UIView {
         return .accent()
     }
     
-    @objc
     var placeholderColor: UIColor = .from(scheme: .textPlaceholder)
     var textColor: UIColor? = .from(scheme: .textForeground)
 
@@ -163,7 +160,6 @@ final class InputBar: UIView {
         return inputBarState.isEditing
     }
     
-    @objc
     var isMarkingDown: Bool {
         return inputBarState.isMarkingDown
     }
@@ -179,14 +175,12 @@ final class InputBar: UIView {
         inputBarState.changeEphemeralState(to: newState)
     }
 
-    @objc
     var invisibleInputAccessoryView : InvisibleInputAccessoryView? = nil  {
         didSet {
             textView.inputAccessoryView = invisibleInputAccessoryView
         }
     }
     
-    @objc
     var availabilityPlaceholder : NSAttributedString? {
         didSet {
             updatePlaceholder()
@@ -348,7 +342,6 @@ final class InputBar: UIView {
         buttonsView.showRow(0, animated: true)
     }
     
-    @objc
     func updateReturnKey() {
         textView.returnKeyType = isMarkingDown ? .default : Settings.shared.returnKeyType
         textView.reloadInputViews()
@@ -443,7 +436,6 @@ final class InputBar: UIView {
         }
     }
 
-    @objc
     func updateEphemeralState() {
         guard inputBarState.isWriting else { return }
         updateColors()

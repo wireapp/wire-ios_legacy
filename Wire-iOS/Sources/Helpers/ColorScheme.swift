@@ -233,7 +233,6 @@ enum ColorSchemeColor: Int {
 final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable : Any]?
     
-    @objc
     var variant: ColorSchemeVariant = .light
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red
