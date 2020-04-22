@@ -98,5 +98,4 @@ final class LicensesLoaderTests: XCTestCase {
     private func sendMemoryWarning() {
         NotificationCenter.default.post(name: UIApplication.didReceiveMemoryWarningNotification, object: memoryManager)
     }
-
 }
