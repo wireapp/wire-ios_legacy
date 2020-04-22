@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 struct ModalPresentationConfiguration {
     let alpha: CGFloat

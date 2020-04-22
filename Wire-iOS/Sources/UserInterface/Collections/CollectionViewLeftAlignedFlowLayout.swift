@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 // NB: This class assumes that the elements in one section are of the same size.
 final class CollectionViewLeftAlignedFlowLayout: UICollectionViewFlowLayout {

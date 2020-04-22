@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 let UIWindowLevelNotification: UIWindow.Level = UIWindow.Level.statusBar - 1
 let UIWindowLevelCallOverlay: UIWindow.Level = UIWindowLevelNotification - 1

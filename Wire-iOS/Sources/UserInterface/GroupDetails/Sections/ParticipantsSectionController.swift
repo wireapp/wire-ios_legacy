@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 protocol ParticipantsCellConfigurable: Reusable {
     func configure(with rowType: ParticipantsRowType, conversation: ZMConversation, showSeparator: Bool)

@@ -123,7 +123,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
         if let newNumber = state.updatedNumber?.fullNumber {
             userProfile?.requestPhoneVerificationCode(phoneNumber: newNumber)
             updateSaveButtonState(enabled: false)
-            navigationController?.showLoadingView = true
+            navigationController?.isLoadingViewVisible = true
         }
     }
 
@@ -184,7 +184,7 @@ final class ChangePhoneViewController: SettingsBaseTableViewController {
                 guard let `self` = self else { return }
                 self.userProfile?.requestPhoneNumberRemoval()
                 self.updateSaveButtonState(enabled: false)
-                self.navigationController?.showLoadingView = true
+                self.navigationController?.isLoadingViewVisible = true
                 })            
             present(alert, animated: true)
         }
@@ -230,7 +230,7 @@ extension ChangePhoneViewController: CountryCodeTableViewControllerDelegate {
 
 extension ChangePhoneViewController: UserProfileUpdateObserver {
     func phoneNumberVerificationCodeRequestDidSucceed() {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
         if let newNumber = state.updatedNumber?.fullNumber {
             let confirmController = ConfirmPhoneViewController(newNumber: newNumber, delegate: self)
@@ -239,25 +239,25 @@ extension ChangePhoneViewController: UserProfileUpdateObserver {
     }
 
     func phoneNumberVerificationCodeRequestDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
         showAlert(for: error)
     }
 
     func emailUpdateDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
         showAlert(for: error)
     }
 
     func phoneNumberRemovalDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
         showAlert(for: error)
     }
 
     func didRemovePhoneNumber() {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         _ = navigationController?.popToPrevious(of: self)
     }
 
@@ -271,7 +271,7 @@ extension ChangePhoneViewController: ConfirmPhoneDelegate {
     }
 
     func didConfirmPhone(inController controller: ConfirmPhoneViewController) {
-        self.navigationController?.showLoadingView = false
+        self.navigationController?.isLoadingViewVisible = false
         _ = navigationController?.popToPrevious(of: self)
     }
 }

@@ -25,7 +25,7 @@ extension CGFloat {
 }
 
 extension UIScreen {
-    @objc public static var hairline: CGFloat {
+    public static var hairline: CGFloat {
         return CGFloat.hairline
     }
 }

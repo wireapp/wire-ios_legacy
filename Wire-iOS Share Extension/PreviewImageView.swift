@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 /**
  * The aspect ratio of the video view.

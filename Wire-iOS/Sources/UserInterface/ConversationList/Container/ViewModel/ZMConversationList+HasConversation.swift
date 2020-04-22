@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ZMConversationList {
     static var hasConversations: Bool {

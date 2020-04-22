@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class ProfilePresenter: NSObject, ViewControllerDismisser {
+final class ProfilePresenter: NSObject, ViewControllerDismisser {
 
     var profileOpenedFromPeoplePicker = false
     var keyboardPersistedAfterOpeningProfile = false

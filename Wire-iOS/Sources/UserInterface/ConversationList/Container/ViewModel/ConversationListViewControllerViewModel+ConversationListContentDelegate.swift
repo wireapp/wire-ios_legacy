@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ConversationListViewController.ViewModel: ConversationListContentDelegate {
     func conversationList(_ controller: ConversationListContentController?, didSelect conversation: ZMConversation?, focusOnView focus: Bool) {

@@ -16,6 +16,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension Notification.Name {
     static let conversationListItemDidScroll = Notification.Name("ConversationListItemDidScroll")
@@ -240,7 +242,8 @@ final class ConversationListItemView: UIView {
         // Configure the title and status
         let title: NSAttributedString?
         
-        if SelfUser.current.isTeamMember, let connectedUser = conversation.connectedUser {
+        if SelfUser.current.isTeamMember,
+           let connectedUser = conversation.connectedUser {
             title = AvailabilityStringBuilder.string(for: connectedUser, with: .list)
             
             if connectedUser.availability != .none {

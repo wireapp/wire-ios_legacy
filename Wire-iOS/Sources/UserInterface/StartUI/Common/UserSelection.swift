@@ -18,9 +18,10 @@
 
 import Foundation
 import WireUtilities
+import WireDataModel
 
 @objc
-protocol UserSelectionObserver {
+protocol UserSelectionObserver: class {
 
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType)
     func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType)

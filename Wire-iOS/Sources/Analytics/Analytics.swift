@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 final class Analytics: NSObject {
     
@@ -58,11 +59,11 @@ final class Analytics: NSObject {
 }
 
 extension Analytics: AnalyticsType {
-    @objc(setPersistedAttributes:forEvent:) func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
+    func setPersistedAttributes(_ attributes: [String : NSObject]?, for event: String) {
         //no-op
     }
     
-    @objc(persistedAttributesForEvent:) func persistedAttributes(for event: String) -> [String : NSObject]? {
+    func persistedAttributes(for event: String) -> [String : NSObject]? {
         //no-op
         return nil
     }

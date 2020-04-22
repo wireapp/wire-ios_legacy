@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
+import WireSyncEngine
 
 extension Notification.Name {
     static let appUnlocked = Notification.Name("AppUnlocked")

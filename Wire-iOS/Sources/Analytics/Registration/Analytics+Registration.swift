@@ -20,7 +20,6 @@
 import Foundation
 
 extension Analytics {
-    @objc(tagRegistrationSuccededWithContext:)
     func tagRegistrationSucceded(context: String) {
         self.tagEvent("registration.succeeded", attributes: ["context": context])
     }

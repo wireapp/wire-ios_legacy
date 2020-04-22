@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate extension NSLayoutConstraint.Axis{
     var flipped: NSLayoutConstraint.Axis {

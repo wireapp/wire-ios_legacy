@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 protocol GroupDetailsUserDetailPresenter: class {
     func presentDetails(for user: UserType)

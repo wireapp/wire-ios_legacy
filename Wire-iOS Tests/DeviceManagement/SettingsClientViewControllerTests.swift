@@ -43,7 +43,7 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     func prepareSut(variant: ColorSchemeVariant?) {
         sut = SettingsClientViewController(userClient: client, variant: variant)
 
-        sut.showLoadingView = false
+        sut.isLoadingViewVisible = false
     }
 
 

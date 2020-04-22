@@ -20,6 +20,7 @@ import WireDataModel
 import Cartography
 import MapKit
 import CoreLocation
+import UIKit
 
 protocol LocationSelectionViewControllerDelegate: class {
     func locationSelectionViewController(_ viewController: LocationSelectionViewController, didSelectLocationWithData locationData: LocationData)

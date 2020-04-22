@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 extension Float {
     func clamp(_ lower: Float, upper: Float) -> Float {

@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 final class ConversationListOnboardingHint: UIView {
     

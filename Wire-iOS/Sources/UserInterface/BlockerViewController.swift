@@ -17,13 +17,14 @@
 //
 
 import Foundation
+import UIKit
 
 enum BlockerViewControllerContext {
     case blacklist
     case jailbroken
 }
 
-class BlockerViewController : LaunchImageViewController {
+final class BlockerViewController : LaunchImageViewController {
     
     private var context: BlockerViewControllerContext = .blacklist
     

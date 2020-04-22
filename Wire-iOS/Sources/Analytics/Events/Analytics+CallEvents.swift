@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 enum CallEvent {
     case initiated, received, answered, established, ended(reason: String)

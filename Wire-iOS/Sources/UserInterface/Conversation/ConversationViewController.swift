@@ -18,6 +18,9 @@
 
 import Foundation
 import WireDataModel
+import UIKit
+import WireSyncEngine
+import WireCommonComponents
 
 final class ConversationViewController: UIViewController {
     unowned let zClientViewController: ZClientViewController
@@ -172,8 +175,6 @@ final class ConversationViewController: UIViewController {
                     self?.conversation.connectedUser?.cancelConnectionRequest()
                 case .archive:
                     self?.conversation.isArchived = true
-                default:
-                    break
                 }
             })
             

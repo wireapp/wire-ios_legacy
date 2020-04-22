@@ -18,9 +18,9 @@
 
 import Foundation
 import Down
-
 import WireLinkPreview
 import WireUtilities
+import WireDataModel
 
 
 extension NSAttributedString {

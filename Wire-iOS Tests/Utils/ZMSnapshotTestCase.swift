@@ -18,6 +18,7 @@
 
 @testable import Wire
 import FBSnapshotTestCase
+import UIKit
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     @objc public func wrapInTableView() -> UITableView {

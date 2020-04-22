@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 
 private let log = ZMSLog(tag: "Mentions")

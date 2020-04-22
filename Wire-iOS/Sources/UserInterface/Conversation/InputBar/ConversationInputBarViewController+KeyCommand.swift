@@ -17,10 +17,11 @@
 //
 
 import Foundation
+import UIKit
 
 extension ConversationInputBarViewController {
 
-    override open var keyCommands: [UIKeyCommand]? {
+    override var keyCommands: [UIKeyCommand]? {
         var commands: [UIKeyCommand] = []
 
         commands.append(UIKeyCommand(input: "\r", modifierFlags: .command, action: #selector(commandReturnPressed), discoverabilityTitle: "conversation.input_bar.shortcut.send".localized))
@@ -48,6 +49,28 @@ extension ConversationInputBarViewController {
 
     @objc func downArrowPressedForMention() {
         mentionsView?.selectNextUser()
+    }
+
+    @objc
+    func commandReturnPressed() {
+        sendText()
+    }
+
+    @objc
+    func shiftReturnPressed() {
+        guard let selectedTextRange = inputBar.textView.selectedTextRange else { return }
+
+        inputBar.textView.replace(selectedTextRange, withText: "\n")
+    }
+
+    @objc
+    func upArrowPressed() {
+        delegate?.conversationInputBarViewControllerEditLastMessage()
+    }
+
+    @objc
+    func escapePressed() {
+        endEditingMessageIfNeeded()
     }
 
 }

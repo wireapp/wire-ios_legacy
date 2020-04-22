@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-@objcMembers public class MenuConfigurationProperties: NSObject {
+final class MenuConfigurationProperties: NSObject {
     var targetRect = CGRect.zero
     var targetView: UIView!
 }

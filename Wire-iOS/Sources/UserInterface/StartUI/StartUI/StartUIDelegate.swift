@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 protocol StartUIDelegate: class {
     func startUI(_ startUI: StartUIViewController, didSelect users: UserSet)

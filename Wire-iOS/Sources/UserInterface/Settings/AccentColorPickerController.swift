@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 import WireSyncEngine
 import Cartography
+import WireCommonComponents
 
 protocol ColorPickerControllerDelegate {
     func colorPicker(_ colorPicker: ColorPickerController, didSelectColor color: UIColor)

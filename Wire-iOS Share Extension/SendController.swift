@@ -82,12 +82,13 @@ final class SendController {
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(SendController.networkStatusDidChange(_:)),
-                                               name: ShareExtensionNetworkObserver.statusChangeNotificationName,
+                                               name:  Notification.Name.NetworkStatus,
                                                object: nil)
     }
     
-    @objc func networkStatusDidChange(_ notification: Notification) {
-        if let status = notification.object as? NetworkStatus, status.reachability() == .OK {
+    @objc
+    private func networkStatusDidChange(_ notification: Notification) {
+        if let status = notification.object as? NetworkStatus, status.reachability == .ok {
             self.tryToTimeout()
         }
     }
@@ -147,7 +148,7 @@ final class SendController {
         timeoutWorkItem = nil
     }
     
-    @objc func timeout() {
+    private func timeout() {
         self.cancel { [weak self] in
             self?.cancelTimeout()
             self?.timedOut = true

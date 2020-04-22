@@ -17,17 +17,16 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 extension ConversationInputBarViewController: ZMTypingChangeObserver {
 
-    public func typingDidChange(conversation: ZMConversation, typingUsers: [UserType]) {
+    func typingDidChange(conversation: ZMConversation, typingUsers: [UserType]) {
         updateTypingIndicator()
     }
 
-    @objc
     func updateTypingIndicator() {
-        guard let typingIndicatorView = typingIndicatorView else { return }
-
         let otherTypingUsers = conversation.typingUsers.filter { !$0.isSelfUser }
         let shouldHide = otherTypingUsers.isEmpty
 

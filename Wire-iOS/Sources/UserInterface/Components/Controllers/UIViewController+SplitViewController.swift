@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,15 +17,20 @@
 //
 
 import Foundation
+import UIKit
 
-extension ConversationInputBarViewController {
-    @objc func setupStyle() {
-        ephemeralIndicatorButton.borderWidth = 0.0
-        ephemeralIndicatorButton.titleLabel?.font = UIFont.smallSemiboldFont
-        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .normal)
-        hourglassButton.setIconColor(.from(scheme: .iconHighlighted), for: .highlighted)
-        hourglassButton.setIconColor(.from(scheme: .iconNormal), for: .selected)
+extension UIViewController {
+    var wr_splitViewController: SplitViewController? {
+        var possibleSplit: UIViewController? = self
 
-        hourglassButton.setBackgroundImageColor(.clear, for: .selected)
+        repeat {
+            if let splitViewController = possibleSplit as? SplitViewController {
+                return splitViewController
+            }
+
+            possibleSplit = possibleSplit?.parent
+        } while possibleSplit != nil
+
+        return nil
     }
 }

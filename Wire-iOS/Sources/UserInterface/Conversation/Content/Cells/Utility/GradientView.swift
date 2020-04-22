@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 final class GradientView: UIView {
     override public class var layerClass : AnyClass {

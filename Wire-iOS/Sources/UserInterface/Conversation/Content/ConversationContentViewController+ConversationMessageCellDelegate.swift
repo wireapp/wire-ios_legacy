@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension UIView {
     func targetView(for message: ZMConversationMessage!, dataSource: ConversationTableViewDataSource) -> UIView {

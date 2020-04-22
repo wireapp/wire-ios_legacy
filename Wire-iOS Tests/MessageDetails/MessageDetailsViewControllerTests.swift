@@ -26,7 +26,6 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     // MARK: - Seen
-    
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
@@ -303,11 +302,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     // MARK: - Helpers
     
-    private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil) {
+    private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil,
+                          file: StaticString = #file,
+                          line: UInt = #line) {
         detailsViewController.reloadData()
         detailsViewController.loadViewIfNeeded()
         configuration?(detailsViewController)
-        self.verify(view: detailsViewController.view)
+        self.verify(view: detailsViewController.view, file: file, line: line)
     }
     
 }

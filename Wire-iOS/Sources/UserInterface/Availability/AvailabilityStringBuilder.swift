@@ -16,7 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objcMembers public class AvailabilityStringBuilder: NSObject {
+import WireDataModel
+
+final class AvailabilityStringBuilder: NSObject {
 
     static func string(for user: UserType, with style: AvailabilityLabelStyle, color: UIColor? = nil) -> NSAttributedString? {
         

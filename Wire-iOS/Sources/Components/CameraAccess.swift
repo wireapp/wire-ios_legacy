@@ -17,8 +17,9 @@
 //
 
 import UIKit
+import WireSyncEngine
 
-@objc enum CameraAccessFeature: Int {
+enum CameraAccessFeature: Int {
     case recordVideo
     case recordAudioMessage
     case takePhoto

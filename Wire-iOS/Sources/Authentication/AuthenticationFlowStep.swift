@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 /**
  * The type of credentials to ask when the user is creating or

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 class RoundedBadge: UIButton {
     let containedView: UIView

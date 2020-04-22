@@ -18,6 +18,7 @@
 
 import Foundation
 import WireUtilities
+import UIKit
 
 protocol SimpleTextFieldValidatorDelegate: class {
     func textFieldValueChanged(_ value: String?)

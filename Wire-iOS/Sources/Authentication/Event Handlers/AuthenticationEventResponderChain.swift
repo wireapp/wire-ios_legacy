@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSystem
+import WireDataModel
 
 /**
  * Provides information to the event responder chain and executes actions.

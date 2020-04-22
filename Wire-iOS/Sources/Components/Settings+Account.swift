@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 extension Account {
     func userDefaultsKey() -> String {

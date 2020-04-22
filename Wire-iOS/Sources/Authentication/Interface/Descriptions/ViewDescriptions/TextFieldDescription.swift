@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class TextFieldDescription: NSObject, ValueSubmission {
     let placeholder: String

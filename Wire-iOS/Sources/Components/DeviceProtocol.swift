@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DeviceMockable {
     var device: DeviceProtocol { get set }

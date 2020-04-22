@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 protocol InviteTeamMemberSectionDelegate: class {
     func inviteSectionDidRequestTeamManagement()

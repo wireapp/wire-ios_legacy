@@ -196,6 +196,7 @@ class AvatarImageView: UIControl {
             initialsLabel.text = text
             imageView.isHidden = true
             initialsLabel.isHidden = false
+            print("imageView = \(imageView)")
 
         case .none:
             imageView.image = nil

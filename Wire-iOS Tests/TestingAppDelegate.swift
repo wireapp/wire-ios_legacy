@@ -21,7 +21,6 @@ import Foundation
 
 /// The App Delegate to use for the test target.
 
-@objc(TestingAppDelegate)
 final class TestingAppDelegate: AppDelegate {
 
     // We don't want the self user to be automatically configured as it is in production code.

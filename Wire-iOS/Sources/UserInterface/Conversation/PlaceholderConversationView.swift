@@ -17,8 +17,10 @@
 // 
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
-@objc class PlaceholderConversationView: UIView {
+final class PlaceholderConversationView: UIView {
     
     var shieldImageView: UIImageView!
 

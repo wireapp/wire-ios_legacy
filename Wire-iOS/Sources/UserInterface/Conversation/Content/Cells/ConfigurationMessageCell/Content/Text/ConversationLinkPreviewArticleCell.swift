@@ -17,8 +17,9 @@
 //
 
 import UIKit
+import WireDataModel
 
-class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
+final class ConversationLinkPreviewArticleCell: UIView, ConversationMessageCell {
 
     struct Configuration {
         let textMessageData: ZMTextMessageData

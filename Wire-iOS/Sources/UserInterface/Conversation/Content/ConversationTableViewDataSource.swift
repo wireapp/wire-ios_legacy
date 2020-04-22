@@ -64,6 +64,7 @@ final class ConversationTableViewDataSource: NSObject {
     
     @objc func resetSectionControllers() {
         sectionControllers = [:]
+        calculateSections()
     }
     
     public var actionControllers: [String: ConversationMessageActionController] = [:]
@@ -106,6 +107,7 @@ final class ConversationTableViewDataSource: NSObject {
     ///
     /// - Parameter forceRecalculate: true if force recreate cell with context check
     /// - Returns: arraySection of cell desctiptions
+    @discardableResult
     func calculateSections(forceRecalculate: Bool = false) -> [ArraySection<String, AnyConversationMessageCellDescription>] {
         return messages.enumerated().map { tuple in
             let sectionIdentifier = tuple.element.objectIdentifier
@@ -286,8 +288,7 @@ final class ConversationTableViewDataSource: NSObject {
         }
     }
 
-    @objc(topIndexPathForMessage:)
-    public func topIndexPath(for message: ZMConversationMessage) -> IndexPath? {
+    func topIndexPath(for message: ZMConversationMessage) -> IndexPath? {
         guard let section = index(of: message) else {
             return nil
         }
@@ -299,7 +300,7 @@ final class ConversationTableViewDataSource: NSObject {
         return IndexPath(row: numberOfMessageComponents - 1, section: section)
     }
     
-    @objc(tableViewDidScroll:) public func didScroll(tableView: UITableView) {
+    func didScroll(tableView: UITableView) {
         let scrolledToTop = (tableView.contentOffset.y + tableView.bounds.height) - tableView.contentSize.height > 0
 
         if scrolledToTop && hasOlderMessagesToLoad {
@@ -400,7 +401,6 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
         reloadSections(newSections: calculateSections(updating: sectionController))
     }
     
-    @objc(highlightMessage:)
     func highlight(message: ZMConversationMessage) {
         guard let section = index(of: message) else {
             return
@@ -410,7 +410,7 @@ extension ConversationTableViewDataSource: UITableViewDataSource {
         sectionController.highlight(in: tableView, sectionIndex: section)
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard currentSections.indices.contains(section) else { return 0 }
         
         return currentSections[section].elements.count

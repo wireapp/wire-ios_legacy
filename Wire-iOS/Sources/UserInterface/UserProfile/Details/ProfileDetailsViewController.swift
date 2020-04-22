@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 /**
  * A view controller that displays the details for a user.

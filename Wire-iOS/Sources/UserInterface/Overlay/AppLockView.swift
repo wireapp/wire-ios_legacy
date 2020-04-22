@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
 
 final class AppLockView: UIView {
     public var onReauthRequested: (()->())?

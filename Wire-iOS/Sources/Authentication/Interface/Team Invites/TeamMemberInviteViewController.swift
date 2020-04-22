@@ -18,6 +18,7 @@
 
 import UIKit
 import WireCommonComponents
+import WireSyncEngine
 
 protocol TeamMemberInviteViewControllerDelegate: class {
     func teamInviteViewControllerDidFinish(_ controller: TeamMemberInviteViewController)
@@ -127,7 +128,7 @@ final class TeamMemberInviteViewController: AuthenticationStepViewController {
             fatal("Received invalid input. Expecting String, received \(type(of: value))")
         }
 
-        if case .unreachable = NetworkStatus.shared().reachability() {
+        if case .unreachable = NetworkStatus.shared.reachability {
             return footerTextFieldView.errorMessage = "team.invite.error.no_internet".localized(uppercased: true)
         }
         

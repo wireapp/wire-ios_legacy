@@ -17,6 +17,8 @@
 
 import Foundation
 import ZipArchive
+import WireSyncEngine
+import WireCommonComponents
 
 extension ConversationInputBarViewController: UINavigationControllerDelegate {}
 
@@ -107,7 +109,7 @@ extension ConversationInputBarViewController {
     ///
     /// - Parameter url: the URL of the file
     func uploadFile(at url: URL) {
-        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
+        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let completion: Completion = { [weak self] in
             self?.removeItem(atPath: url.path)
@@ -140,10 +142,10 @@ extension ConversationInputBarViewController {
                                                    name: url.lastPathComponent) { [weak self] metadata in
             guard let weakSelf = self else { return }
 
-            weakSelf.impactFeedbackGenerator?.prepare()
+            weakSelf.impactFeedbackGenerator.prepare()
             ZMUserSession.shared()?.perform({
 
-                weakSelf.impactFeedbackGenerator?.impactOccurred()
+                weakSelf.impactFeedbackGenerator.impactOccurred()
 
                 var conversationMediaAction: ConversationMediaAction = .fileTransfer
 
@@ -177,7 +179,7 @@ extension ConversationInputBarViewController {
     }
 
     private func showAlertForFileTooBig() {
-        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize() else { return }
+        guard let maxUploadFileSize = ZMUserSession.shared()?.maxUploadFileSize else { return }
 
         let maxSizeString = ByteCountFormatter.string(fromByteCount: Int64(maxUploadFileSize), countStyle: .binary)
         let errorMessage = String(format: "content.file.too_big".localized, maxSizeString)

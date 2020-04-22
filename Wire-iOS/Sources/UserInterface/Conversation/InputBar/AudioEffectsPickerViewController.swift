@@ -20,12 +20,16 @@
 import Foundation
 import Cartography
 import WireCommonComponents
+import UIKit
+import avs
+import WireSystem
+import WireDataModel
 
 @objc protocol AudioEffectsPickerDelegate: NSObjectProtocol {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
-@objcMembers public final class AudioEffectsPickerViewController: UIViewController {
+final class AudioEffectsPickerViewController: UIViewController {
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval

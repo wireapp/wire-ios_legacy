@@ -16,6 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import WireDataModel
+import UIKit
+import WireSyncEngine
 
 final class ConversationInputBarSendController: NSObject {
     let conversation: ZMConversation

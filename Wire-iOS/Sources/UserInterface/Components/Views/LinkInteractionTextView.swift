@@ -18,6 +18,7 @@
 
 
 import UIKit
+import WireDataModel
 
 protocol TextViewInteractionDelegate: class {
     func textView(_ textView: LinkInteractionTextView, open url: URL) -> Bool

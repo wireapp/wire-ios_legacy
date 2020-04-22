@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 struct ConversationMessageContext: Equatable {
     let isSameSenderAsPrevious: Bool
@@ -31,6 +32,12 @@ struct ConversationMessageContext: Equatable {
 
 protocol ConversationMessageSectionControllerDelegate: class {
     func messageSectionController(_ controller: ConversationMessageSectionController, didRequestRefreshForMessage message: ZMConversationMessage)
+}
+
+extension ZMConversationMessage {
+    var isComposite: Bool {
+        return (self as? ConversationCompositeMessage)?.isComposite == true
+    }
 }
 
 /**
@@ -121,7 +128,7 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
         if message.isKnock {
             contentCellDescriptions = addPingMessageCells()
-        } else if (message as? ConversationCompositeMessage)?.isComposite == true {
+        } else if message.isComposite {
             contentCellDescriptions = addCompositeMessageCells
         } else if message.isText {
             contentCellDescriptions = ConversationTextMessageCellDescription.cells(for: message, searchQueries: context.searchQueries)

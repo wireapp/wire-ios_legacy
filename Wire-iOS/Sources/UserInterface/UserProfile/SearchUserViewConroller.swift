@@ -17,8 +17,12 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-final class SearchUserViewConroller: UIViewController {
+final class SearchUserViewConroller: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     private var searchDirectory: SearchDirectory!
     private weak var profileViewControllerDelegate: ProfileViewControllerDelegate?
@@ -57,7 +61,7 @@ final class SearchUserViewConroller: UIViewController {
         cancelItem.accessibilityLabel = "general.cancel".localized
         navigationItem.rightBarButtonItem = cancelItem
 
-        showLoadingView = true
+        isLoadingViewVisible = true
 
         if let task = searchDirectory?.lookup(userId: userId) {
             task.onResult({ [weak self] in
