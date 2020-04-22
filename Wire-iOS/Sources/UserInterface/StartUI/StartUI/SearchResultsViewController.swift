@@ -63,18 +63,18 @@ protocol SearchResultsViewControllerDelegate: class {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
 }
 
-public enum SearchResultsViewControllerAction : Int {
+enum SearchResultsViewControllerAction : Int {
     case createGroup
     case createGuestRoom
 }
 
-public enum SearchResultsViewControllerMode : Int {
+enum SearchResultsViewControllerMode : Int {
     case search
     case selection
     case list
 }
 
-public enum SearchResultsViewControllerSection : Int {
+enum SearchResultsViewControllerSection : Int {
     case unknown
     case topPeople
     case contacts
@@ -125,7 +125,7 @@ extension UIViewController {
     }
 }
 
-class SearchResultsViewController : UIViewController {
+final class SearchResultsViewController : UIViewController {
 
     var searchResultsView: SearchResultsView?
     var searchDirectory: SearchDirectory!
@@ -259,11 +259,11 @@ class SearchResultsViewController : UIViewController {
     }
 
     func searchForLocalUsers(withQuery query: String) {
-        self.performSearch(query: query, options: [.contacts, .teamMembers])
+        performSearch(query: query, options: [.contacts, .teamMembers]) ///TODO: partner case?
     }
 
     func searchForServices(withQuery query: String) {
-        self.performSearch(query: query, options: [.services])
+        performSearch(query: query, options: [.services])
     }
 
     func searchContactList() {

@@ -134,7 +134,7 @@ final class AddParticipantsViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        searchHeaderViewController.tokenField.resignFirstResponder()
+        _ = searchHeaderViewController.tokenField.resignFirstResponder()
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -401,7 +401,7 @@ extension AddParticipantsViewController : SearchHeaderViewControllerDelegate {
     }
     
     func searchHeaderViewController(_ searchHeaderViewController: SearchHeaderViewController, updatedSearchQuery query: String) {
-        self.performSearch()
+        performSearch()
     }
     
 }
