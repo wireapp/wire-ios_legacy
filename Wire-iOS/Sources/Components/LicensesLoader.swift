@@ -33,7 +33,7 @@ final class LicensesLoader {
     private let sourceName = "Licenses.generated"
     private let sourceExtension = "plist"
 
-    private(set) var cache: [SettingsLicenseItem]? = nil
+    private(set) var cache: [SettingsLicenseItem]?
     private var memoryWarningToken: Any?
 
     // MARK: - Initialization

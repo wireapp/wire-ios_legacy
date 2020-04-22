@@ -88,7 +88,7 @@ final class LicensesLoaderTests: XCTestCase {
         let deletedCacheExpectation = expectation(for: predicate, evaluatedWith: loader) {
             return self.loader.cache == nil
         }
-        
+
         sendMemoryWarning()
         wait(for: [deletedCacheExpectation], timeout: 10)
 
