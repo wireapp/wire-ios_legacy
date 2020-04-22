@@ -23,10 +23,8 @@ extension ZMConversationMessage {
     /// Whether the message can be digitally signed in.
     var canBeDigitallySigned: Bool {
         guard
-            SelfUser.current.phoneNumber != nil
-            // TO DO: uncomment before QA test in production.
-            // Development BE doean't support Team Membership.
-//            SelfUser.current.isTeamMember
+            SelfUser.current.phoneNumber != nil,
+            SelfUser.current.isTeamMember
         else {
             return false
         }
