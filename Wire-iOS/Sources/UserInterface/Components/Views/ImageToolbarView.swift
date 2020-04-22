@@ -19,7 +19,7 @@
 import UIKit
 import Cartography
 
-@objc enum ImageToolbarConfiguration : UInt {
+enum ImageToolbarConfiguration {
     case cell
     case compactCell
     case preview

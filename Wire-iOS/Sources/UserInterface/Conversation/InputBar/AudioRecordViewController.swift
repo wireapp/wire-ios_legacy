@@ -39,7 +39,7 @@ protocol AudioRecordViewControllerDelegate: class {
 }
 
 
-@objc enum AudioRecordState: UInt {
+enum AudioRecordState {
     case recording, finishedRecording
 }
 

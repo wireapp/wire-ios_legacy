@@ -27,7 +27,7 @@ fileprivate enum EmptySearchResultsViewState {
     case noServicesEnabled
 }
 
-@objc enum EmptySearchResultsViewAction: Int {
+enum EmptySearchResultsViewAction {
     case openManageServices
 }
 
