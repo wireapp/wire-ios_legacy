@@ -2,16 +2,16 @@ opt_out_usage
 default_platform(:ios)
 
 platform :ios do
-    xcode_version = options[:xcode_version]
-
-    if xcode_version.nil? 
-        xcode_version = "10.2.1"
-    end
-
-    xcversion(version: xcode_version)
-
     desc "Fetch dependencies"
     lane :prepare do |options|
+        xcode_version = options[:xcode_version]
+
+        if xcode_version.nil? 
+            xcode_version = "10.2.1"
+        end
+
+        xcversion(version: xcode_version)
+
         build_type = options[:build_type]
         # Delete configurations in case we switch to different branch or repo
         sh "rm -rf ../Configuration"
@@ -46,7 +46,16 @@ platform :ios do
 
 
     desc "Build for testing"
-    lane :build do
+    lane :build do |options|
+        xcode_version = options[:xcode_version]
+
+        if xcode_version.nil? 
+            xcode_version = "10.2.1"
+        end
+
+        xcversion(version: xcode_version)
+
+
         run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
@@ -62,7 +71,15 @@ platform :ios do
     end
 
     desc "Test without building"
-    lane :test do
+    lane :test do |options|
+        xcode_version = options[:xcode_version]
+
+        if xcode_version.nil? 
+            xcode_version = "10.2.1"
+        end
+
+        xcversion(version: xcode_version)
+
         run_tests(
             scheme: "Wire-iOS",
             configuration: "Debug",
@@ -79,6 +96,14 @@ platform :ios do
 
     desc "Build for release to AppStore or App Center/S3"
     lane :build_for_release do |options|
+        xcode_version = options[:xcode_version]
+
+        if xcode_version.nil? 
+            xcode_version = "10.2.1"
+        end
+
+        xcversion(version: xcode_version)
+
         build = Build.new(options: options)
 
         if build.for_simulator
