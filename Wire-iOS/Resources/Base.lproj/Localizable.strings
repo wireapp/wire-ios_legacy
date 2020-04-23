@@ -1511,8 +1511,8 @@
 "error.name_and_email" = "Please enter your full name and a valid email address";
 "error.full_name" = "Please enter your full name";
 "error.email" = "Please enter a valid email address";
-"error.input.too_long" = "Input too long";
-"error.input.too_short" = "Input too short";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Please enter a valid email address";
 "error.phone.invalid" = "Please enter a valid phone number";
 
