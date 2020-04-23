@@ -6,11 +6,9 @@ platform :ios do
     lane :prepare do |options|
         xcode_version = options[:xcode_version]
 
-        if xcode_version.nil? 
-            xcode_version = "10.2.1"
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
         end
-
-        xcversion(version: xcode_version)
 
         build_type = options[:build_type]
         # Delete configurations in case we switch to different branch or repo
@@ -49,12 +47,9 @@ platform :ios do
     lane :build do |options|
         xcode_version = options[:xcode_version]
 
-        if xcode_version.nil? 
-            xcode_version = "10.2.1"
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
         end
-
-        xcversion(version: xcode_version)
-
 
         run_tests(
             scheme: "Wire-iOS",
@@ -74,11 +69,9 @@ platform :ios do
     lane :test do |options|
         xcode_version = options[:xcode_version]
 
-        if xcode_version.nil? 
-            xcode_version = "10.2.1"
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
         end
-
-        xcversion(version: xcode_version)
 
         run_tests(
             scheme: "Wire-iOS",
@@ -98,11 +91,9 @@ platform :ios do
     lane :build_for_release do |options|
         xcode_version = options[:xcode_version]
 
-        if xcode_version.nil? 
-            xcode_version = "10.2.1"
+        if !xcode_version.nil? 
+            xcversion(version: xcode_version)
         end
-
-        xcversion(version: xcode_version)
 
         build = Build.new(options: options)
 
