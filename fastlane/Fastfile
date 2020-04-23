@@ -2,6 +2,13 @@ opt_out_usage
 default_platform(:ios)
 
 platform :ios do
+    xcode_version = options[:xcode_version]
+
+    if xcode_version.nil? 
+        xcode_version = "10.2.1"
+    end
+
+    xcversion(version: xcode_version)
 
     desc "Fetch dependencies"
     lane :prepare do |options|
@@ -44,6 +51,7 @@ platform :ios do
             scheme: "Wire-iOS",
             configuration: "Debug",
             build_for_testing: true,
+            devices: "iPhone 8",
             sdk:"iphonesimulator",
             code_coverage: true,
             derived_data_path: "DerivedData",
