@@ -30,7 +30,7 @@ protocol InformalTextViewDelegate: class {
 
 // Inspired by https://github.com/samsoffes/sstoolkit/blob/master/SSToolkit/SSTextView.m
 // and by http://derpturkey.com/placeholder-in-uitextview/
-final class TextView: UITextView {
+class TextView: UITextView {
 
     weak var informalTextViewDelegate: InformalTextViewDelegate?
 

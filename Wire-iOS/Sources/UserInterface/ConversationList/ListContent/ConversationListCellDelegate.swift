@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol ConversationListCellDelegate {
+protocol ConversationListCellDelegate: class {
     func conversationListCellOverscrolled(_ cell: ConversationListCell)
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell)
 

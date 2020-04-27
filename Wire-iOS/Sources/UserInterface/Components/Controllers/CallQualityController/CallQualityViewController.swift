@@ -32,7 +32,7 @@ final class CallQualityViewController : UIViewController, UIGestureRecognizerDel
 
     weak var delegate: CallQualityViewControllerDelegate?
 
-    let contentView = RoundedView()
+    var contentView = RoundedView() ///TODO:
     let dimmingView = UIView()
     let closeButton = IconButton()
     let titleLabel = UILabel()

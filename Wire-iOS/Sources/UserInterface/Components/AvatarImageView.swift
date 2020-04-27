@@ -97,7 +97,7 @@ class AvatarImageView: UIControl {
     }
 
     /// The view that contains the avatar.
-    let container = RoundedView()
+    var container = RoundedView()
 
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()
