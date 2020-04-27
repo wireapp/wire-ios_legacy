@@ -47,18 +47,22 @@ extension StartUIViewController {
 extension StartUIViewController: SearchResultsViewControllerDelegate {
 
     private func unboxedUser(from user: UserType) -> ZMUser? {
-      return (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
+        if let searchUser = user as? ZMSearchUser {
+            return searchUser.user ?? user.materialize(in: ZMUserSession.shared()!.managedObjectContext)
+        }
+        
+        return (user as? ZMUser)
     }
 
-    public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
+    func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
                                             section: SearchResultsViewControllerSection) {
         
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = unboxedUser(from: user) {
-            delegate?.startUI(self, didSelect: [unboxed])
+        } else if let unboxed = unboxedUser(from: user) { ///TODO: ZMSearchUser
+            delegate?.startUI(self, didSelect: [unboxed]) ///TODO:
         }
     }
     
