@@ -16,9 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireDataModel
-import WireSystem
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "ProfileViewControllerViewModel")
@@ -68,7 +65,7 @@ final class ProfileViewControllerViewModel: NSObject {
     }
     
     var fullUser: ZMUser? {
-        return (bareUser as? ZMUser) ?? (bareUser as? ZMSearchUser)?.user
+        return bareUser as? ZMUser
     }
 
     var hasLegalHoldItem: Bool {
