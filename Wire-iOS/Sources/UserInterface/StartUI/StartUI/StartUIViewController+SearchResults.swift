@@ -61,8 +61,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = unboxedUser(from: user) { ///TODO: ZMSearchUser
-            delegate?.startUI(self, didSelect: [unboxed]) ///TODO:
+        } else if let unboxed = unboxedUser(from: user) {
+            delegate?.startUI(self, didSelect: [unboxed])
         }
     }
     
