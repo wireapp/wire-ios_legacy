@@ -79,10 +79,9 @@ final class SelfProfileViewController: UIViewController {
         settingsPropertyFactory.delegate = self
 
         if selfUser.isTeamMember {
-            selfUser.refreshTeamData()
-
-            // Trigger the refresh immediately.
-            SessionManager.shared?.activeUserSession?.managedObjectContext.saveOrRollback()
+            ZMUserSession.shared()?.enqueue {
+                selfUser.refreshTeamData()
+            }
         }
     }
 
