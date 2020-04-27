@@ -20,6 +20,7 @@ import Foundation
 import WireUtilities
 import WireDataModel
 
+@objc
 protocol UserSelectionObserver: class {
 
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType)
@@ -28,7 +29,7 @@ protocol UserSelectionObserver: class {
     
 }
 
-final class UserSelection: NSObject {
+class UserSelection: NSObject {
     
     private(set) var users = UserSet()
     private var observers: [UnownedObject<UserSelectionObserver>] = []
