@@ -80,6 +80,9 @@ final class SelfProfileViewController: UIViewController {
 
         if selfUser.isTeamMember {
             selfUser.refreshTeamData()
+
+            // Trigger the refresh immediately.
+            SessionManager.shared?.activeUserSession?.managedObjectContext.saveOrRollback()
         }
     }
 
