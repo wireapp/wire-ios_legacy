@@ -21,6 +21,8 @@ import AppCenter
 import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
+import WireSystem
+import UIKit
 
 extension AppDelegate {
 
@@ -56,7 +58,7 @@ extension AppDelegate {
 
         if appCenterTrackingEnabled &&
             MSCrashes.hasCrashedInLastSession() &&
-            MSCrashes.timeIntervalCrashInLastSessionOccurred < 5 {
+            MSCrashes.timeIntervalCrashInLastSessionOccurred ?? 0 < TimeInterval(5) {
             zmLog.error("AppCenterIntegration: START Waiting for the crash log upload...")
             self.appCenterInitCompletion = completion
             self.perform(#selector(crashReportUploadDone), with: nil, afterDelay: 5)

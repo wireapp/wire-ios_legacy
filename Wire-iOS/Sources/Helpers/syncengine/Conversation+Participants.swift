@@ -18,13 +18,15 @@
 
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 extension ZMConversation {
     private enum NetworkError: Error {
         case offline
     }
     
-    @objc static let maxVideoCallParticipants: Int = 4
+    static let maxVideoCallParticipants: Int = 4
     
     @objc static let maxParticipants: Int = 500
     

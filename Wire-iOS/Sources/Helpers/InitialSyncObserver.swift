@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import WireSyncEngine
+
 /// Block based convenience wrapper around `ZMInitialSyncCompletionObserver`.
 /// The passed in handler closure will be called immediately in case the
 /// initial sync has already been completed when creating an instance and

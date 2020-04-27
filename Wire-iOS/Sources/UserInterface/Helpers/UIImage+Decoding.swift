@@ -17,11 +17,12 @@
 //
 
 import Foundation
+import UIKit
 
 extension UIImage {
     
     /// Decode UIIMage. This will prevent it from happening later in the rendering path.
-    public var decoded: UIImage? {
+    var decoded: UIImage? {
         guard let rawImage = cgImage else {
             return  nil
         }

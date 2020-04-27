@@ -19,6 +19,7 @@
 import XCTest
 import SnapshotTesting
 @testable import Wire
+import UIKit
 
 extension ViewImageConfig: Hashable {
     public static func == (lhs: ViewImageConfig, rhs: ViewImageConfig) -> Bool {
@@ -84,10 +85,10 @@ extension XCTestCase {
     func verifyInWidths(matching value: UIView,
                         widths: Set<CGFloat>,
                         snapshotBackgroundColor: UIColor,
-                                named name: String? = nil,
-                                file: StaticString = #file,
-                                testName: String = #function,
-                                line: UInt = #line) {
+                        named name: String? = nil,
+                        file: StaticString = #file,
+                        testName: String = #function,
+                        line: UInt = #line) {
         let container = containerView(with: value,
                                       snapshotBackgroundColor: snapshotBackgroundColor)
         let widthConstraint = container.addWidthConstraint(width: 300)

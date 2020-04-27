@@ -18,6 +18,8 @@
 
 import UIKit
 import Cartography
+import WireDataModel
+import WireSyncEngine
 
 class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {
@@ -223,7 +225,7 @@ class BaseAccountView: UIView {
         }
     }
     
-    @objc public func didTap(_ sender: UITapGestureRecognizer!) {
+    @objc func didTap(_ sender: UITapGestureRecognizer!) {
         self.onTap?(self.account)
     }
 }

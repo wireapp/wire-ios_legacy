@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 extension ZMConversation {
 
@@ -49,7 +51,6 @@ extension ZMConversation {
     }
 
     ///TODO: move to DM
-    @objc
     var firstActiveParticipantOtherThanSelf: ZMUser? {
         guard let selfUser = ZMUser.selfUser() else { return localParticipants.first }
         

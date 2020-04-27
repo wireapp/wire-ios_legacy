@@ -16,6 +16,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "ConversationContentViewController")
 

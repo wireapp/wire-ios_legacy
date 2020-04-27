@@ -64,7 +64,6 @@ extension UIImage {
      * programmer error and will cause an assertion failure.
      */
 
-    @objc(imageByDownscalingToSize:)
     public func downscaling(to targetSize: CGSize) -> UIImage {
         assert(targetSize.width < size.width)
         assert(targetSize.height < size.height)

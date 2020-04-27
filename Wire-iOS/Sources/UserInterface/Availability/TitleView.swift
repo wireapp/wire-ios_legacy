@@ -19,14 +19,14 @@
 
 import UIKit
 import Cartography
-
+import WireCommonComponents
 
 class TitleView: UIView {
     
     internal var titleColor, titleColorSelected: UIColor?
     internal var titleFont: UIFont?
     internal let titleButton = UIButton()
-    @objc public var tapHandler: ((UIButton) -> Void)? = nil
+    var tapHandler: ((UIButton) -> Void)? = nil
     
     public init(color: UIColor? = nil, selectedColor: UIColor? = nil, font: UIFont? = nil) {
         super.init(frame: CGRect.zero)

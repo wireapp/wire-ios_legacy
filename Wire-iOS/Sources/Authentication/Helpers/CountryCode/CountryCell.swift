@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class CountryCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireSyncEngine
 
 /**
  * The first page of the user settings.
@@ -181,11 +182,12 @@ final class SelfProfileViewController: UIViewController {
 extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
 
     func asyncMethodDidStart(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = true
+        // topViewController is SettingsTableViewController
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = true
     }
 
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory) {
-        self.navigationController?.topViewController?.showLoadingView = false
+        (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
 }

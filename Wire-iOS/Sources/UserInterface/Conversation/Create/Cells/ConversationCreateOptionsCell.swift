@@ -17,8 +17,9 @@
 //
 
 import WireCommonComponents
+import UIKit
 
-class ConversationCreateOptionsCell: RightIconDetailsCell {
+final class ConversationCreateOptionsCell: RightIconDetailsCell {
     
     var expanded = false {
         didSet { applyColorScheme(colorSchemeVariant) }

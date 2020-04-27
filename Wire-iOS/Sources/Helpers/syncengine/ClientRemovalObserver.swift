@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 enum ClientRemovalUIError: Error {
     case noPasswordProvided
@@ -24,14 +25,17 @@ enum ClientRemovalUIError: Error {
 
 final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     var userClientToDelete: UserClient
-    private weak var controller: UIViewController?
+    private weak var controller: SpinnerCapableViewController?
     let completion: ((Error?)->())?
     var credentials: ZMEmailCredentials?
     private var requestPasswordController: RequestPasswordController?
     private var passwordIsNecessaryForDelete: Bool = false
     private var observerToken: Any?
     
-    init(userClientToDelete: UserClient, controller: UIViewController, credentials: ZMEmailCredentials?, completion: ((Error?)->())? = nil) {
+    init(userClientToDelete: UserClient,
+         controller: SpinnerCapableViewController,
+         credentials: ZMEmailCredentials?,
+         completion: ((Error?)->())? = nil) {
         self.userClientToDelete = userClientToDelete
         self.controller = controller
         self.credentials = credentials
@@ -54,7 +58,7 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
 
     func startRemoval() {
-        controller?.showLoadingView = true
+        controller?.isLoadingViewVisible = true
         ZMUserSession.shared()?.deleteClient(userClientToDelete, credentials: credentials)
     }
     
@@ -71,12 +75,13 @@ final class ClientRemovalObserver: NSObject, ClientUpdateObserver {
     }
     
     func finishedDeleting(_ remainingClients: [UserClient]) {
-        controller?.showLoadingView = false
+        controller?.isLoadingViewVisible = false
+
         endRemoval(result: nil)
     }
     
     func failedToDeleteClients(_ error: Error) {
-        controller?.showLoadingView = false
+        controller?.isLoadingViewVisible = false
 
         if !passwordIsNecessaryForDelete {
             guard let requestPasswordController = requestPasswordController else { return }

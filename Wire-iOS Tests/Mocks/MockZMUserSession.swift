@@ -29,9 +29,9 @@ final class MockZMUserSession: NSObject, UserSessionSwiftInterface {
         changes()
     }
 
-    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)!) {
+    func enqueue(_ changes: @escaping () -> Void, completionHandler: (() -> Void)?) {
         changes()
-        completionHandler()
+        completionHandler?()
     }
     
     var mockConversationDirectory = MockConversationDirectory()

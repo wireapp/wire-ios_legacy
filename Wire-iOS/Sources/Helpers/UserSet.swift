@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 /// A set of instances conforming to `UserType`.
 

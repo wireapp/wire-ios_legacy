@@ -16,6 +16,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ConversationContentViewController {
     func updateTableViewHeaderView() {

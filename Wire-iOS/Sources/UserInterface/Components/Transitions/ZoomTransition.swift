@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
+
 final class ZoomTransition: NSObject, UIViewControllerAnimatedTransitioning {
     private var interactionPoint = CGPoint.zero
     private var reversed = false

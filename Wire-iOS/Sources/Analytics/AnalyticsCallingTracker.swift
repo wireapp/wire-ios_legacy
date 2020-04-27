@@ -18,6 +18,8 @@
 
 import Foundation
 import WireUtilities
+import WireDataModel
+import WireSyncEngine
 
 extension Notification.Name {
     static let UserToggledVideoInCall = Notification.Name("UserToggledVideoInCall")

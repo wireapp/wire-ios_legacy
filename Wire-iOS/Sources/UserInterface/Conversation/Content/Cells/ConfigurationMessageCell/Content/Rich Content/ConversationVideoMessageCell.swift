@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 final class ConversationVideoMessageCell: RoundedView, ConversationMessageCell {
     

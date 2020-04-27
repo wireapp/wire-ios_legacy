@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
     

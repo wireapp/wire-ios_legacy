@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 private typealias Attributes = [NSAttributedString.Key : AnyObject]
 

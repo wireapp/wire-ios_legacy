@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import avs
 
 protocol CameraCellDelegate: class {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)

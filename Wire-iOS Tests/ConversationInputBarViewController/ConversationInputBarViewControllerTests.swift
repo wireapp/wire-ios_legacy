@@ -45,10 +45,8 @@ extension ConversationInputBarViewControllerTests {
     func testTypingIndicationIsShown(){
         // GIVEN & WHEN
         /// directly working with sut.typingIndicatorView to prevent triggering aniamtion
-        if let typingIndicatorView = sut.typingIndicatorView {
-            typingIndicatorView.typingUsers = [otherUser]
-            typingIndicatorView.setHidden(false, animated: false)
-        }
+        sut.typingIndicatorView.typingUsers = [otherUser]
+        sut.typingIndicatorView.setHidden(false, animated: false)
 
         // THEN
         verifyInAllPhoneWidths(view: sut.view)

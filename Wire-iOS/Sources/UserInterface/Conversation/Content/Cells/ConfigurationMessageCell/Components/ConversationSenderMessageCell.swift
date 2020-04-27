@@ -17,6 +17,8 @@
 //
 
 import UIKit
+import WireCommonComponents
+import WireDataModel
 
 class ConversationSenderMessageCell: UIView, ConversationMessageCell {
 

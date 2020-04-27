@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireSyncEngine
 
 /**
  * An object that receives notifications from a profile details content controller.

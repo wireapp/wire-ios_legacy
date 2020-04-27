@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSystem
 
 enum SettingsColorScheme {
     case light

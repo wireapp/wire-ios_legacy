@@ -17,7 +17,7 @@
 //
 
 import Foundation
-
+import WireDataModel
 
 class ContactsSectionController : SearchSectionController {
     

@@ -18,6 +18,9 @@
 
 import Foundation
 import Cartography
+import WireDataModel
+import UIKit
+import WireCommonComponents
 
 final class FileTransferView: UIView, TransferView {
     var fileMessage: ZMConversationMessage?

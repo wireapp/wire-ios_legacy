@@ -17,10 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
 
-@objc
 protocol ConversationListContentDelegate: NSObjectProtocol {
-    @objc(conversationList:didSelectConversation:focusOnView:)
     func conversationList(_ controller: ConversationListContentController?, didSelect conversation: ZMConversation?, focusOnView focus: Bool)
     /// This is called after a delete when there is an item to select
     func conversationList(_ controller: ConversationListContentController?, willSelectIndexPathAfterSelectionDeleted conv: IndexPath?)

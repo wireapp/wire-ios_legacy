@@ -18,6 +18,8 @@
 
 
 import Foundation
+import UIKit
+import WireDataModel
 
 protocol SearchServicesSectionDelegate: SearchSectionControllerDelegate {
     func addServicesSectionDidRequestOpenServicesAdmin()

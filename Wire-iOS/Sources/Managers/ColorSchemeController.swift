@@ -17,13 +17,14 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension Notification.Name {
     static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name("ColorSchemeControllerDidApplyColorSchemeChange")
 }
 
-@objc extension NSNotification {
-    public static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name.colorSchemeControllerDidApplyColorSchemeChange
+extension NSNotification {
+    static let colorSchemeControllerDidApplyColorSchemeChange = Notification.Name.colorSchemeControllerDidApplyColorSchemeChange
 }
 
 class ColorSchemeController: NSObject {

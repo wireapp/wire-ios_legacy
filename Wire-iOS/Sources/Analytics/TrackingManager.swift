@@ -22,9 +22,10 @@ import AppCenterAnalytics
 import AppCenterCrashes
 import AppCenterDistribute
 import WireCommonComponents
+import avs
+import WireSyncEngine
 
-
-@objc public class TrackingManager: NSObject, TrackingInterface {
+final class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {
@@ -35,9 +36,9 @@ import WireCommonComponents
         })
     }
     
-    @objc public static let shared = TrackingManager()
+    static let shared = TrackingManager()
 
-    @objc public var disableCrashAndAnalyticsSharing: Bool {
+    var disableCrashAndAnalyticsSharing: Bool {
         set {
             Analytics.shared().isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)

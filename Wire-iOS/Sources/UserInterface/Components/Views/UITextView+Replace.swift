@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension UITextView {
     func replace(_ range: NSRange, withAttributedText replacement: NSAttributedString) {

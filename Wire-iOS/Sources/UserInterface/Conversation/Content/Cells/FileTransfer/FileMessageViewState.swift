@@ -18,6 +18,8 @@
 
 
 import Foundation
+import WireCommonComponents
+import WireDataModel
 
 
 enum ProgressViewType {

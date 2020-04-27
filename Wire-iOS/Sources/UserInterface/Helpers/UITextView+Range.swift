@@ -17,9 +17,10 @@
 //
 
 import Foundation
+import UIKit
+
 extension UITextView {
     
-    @objc(rangeOfLinkToURL:)
     func rangeOfLink(to url: NSURL) -> UITextRange? {
         var foundRange: NSRange = NSRange(location: NSNotFound, length: 0)
         

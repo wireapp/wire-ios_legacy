@@ -17,7 +17,8 @@
 //
 
 import UIKit
-
+import WireCommonComponents
+import WireDataModel
 
 final class GroupDetailsReceiptOptionsCell: IconToggleCell {
 

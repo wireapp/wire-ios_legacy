@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 // Describes the icon to be shown for the conversation in the list.
 enum ConversationStatusIcon: Equatable {
@@ -336,6 +338,45 @@ final class CallingMatcher: ConversationStatusMatcher {
         }
         
         return nil
+    }
+    
+    var combinesWith: [ConversationStatusMatcher] = []
+}
+
+final class SecurityAlertMatcher: ConversationStatusMatcher {
+    func isMatching(with status: ConversationStatus) -> Bool {
+        return status.messagesRequiringAttention.contains(where: { $0.isComposite })
+    }
+    
+    func description(with status: ConversationStatus, conversation: ZMConversation) -> NSAttributedString? {
+
+        guard let message = status.messagesRequiringAttention.reversed().first(where: {
+            $0.isComposite
+        }) else {
+            return nil
+        }
+
+        let textItem = (message as? ConversationCompositeMessage)?.compositeMessageData?.items.first(where: {
+            if case .text(_) = $0 {
+                return true
+            }
+            return false
+        })
+
+        let text: String
+        if let textItem = textItem,
+           case let .text(data) = textItem,
+           let messageText = data.messageText {
+            text = messageText
+        } else {
+            text = "conversation.status.poll.default".localized
+        }
+
+        return text && Swift.type(of: self).regularStyle
+    }
+    
+    func icon(with status: ConversationStatus, conversation: ZMConversation) -> ConversationStatusIcon? {
+        return nil ///TODO: icon for poll message
     }
     
     var combinesWith: [ConversationStatusMatcher] = []
@@ -693,6 +734,7 @@ final class UnsernameMatcher: ConversationStatusMatcher {
 /*
  Matchers priorities (highest first):
  
+ (SecurityAlert)
  (SelfUserLeftMatcher)
  (Blocked)
  (Calling)
@@ -708,11 +750,20 @@ private var allMatchers: [ConversationStatusMatcher] = {
     let silencedMatcher = SilencedMatcher()
     let newMessageMatcher = NewMessagesMatcher()
     let groupActivityMatcher = GroupActivityMatcher()
-    
+
     let failedSendMatcher = FailedSendMatcher()
     failedSendMatcher.combinesWith = [silencedMatcher, newMessageMatcher, groupActivityMatcher]
-    
-    return [SelfUserLeftMatcher(), BlockedMatcher(), CallingMatcher(), silencedMatcher, TypingMatcher(), newMessageMatcher, failedSendMatcher, groupActivityMatcher, StartConversationMatcher(), UnsernameMatcher()]
+
+    return [SecurityAlertMatcher(),
+            SelfUserLeftMatcher(),
+            BlockedMatcher(),
+            CallingMatcher(),
+            silencedMatcher,
+            TypingMatcher(),
+            newMessageMatcher,
+            failedSendMatcher,
+            groupActivityMatcher,
+            StartConversationMatcher(), UnsernameMatcher()]
 }()
 
 extension ConversationStatus {
@@ -739,7 +790,7 @@ extension ConversationStatus {
     }
     
     func description(for conversation: ZMConversation) -> NSAttributedString {
-        let allMatchers = self.appliedMatchersForDescription(for: conversation)
+        let allMatchers = appliedMatchersForDescription(for: conversation)
         guard allMatchers.count > 0 else {
             return "" && [:]
         }
@@ -794,4 +845,3 @@ extension ZMConversation {
         )
     }
 }
-

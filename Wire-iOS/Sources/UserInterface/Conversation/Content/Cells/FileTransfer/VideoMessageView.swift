@@ -18,6 +18,9 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
 final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
@@ -212,7 +215,8 @@ final class VideoMessageView: UIView, TransferView {
     
     // MARK: - Actions
     
-    @objc public func onActionButtonPressed(_ sender: UIButton) {
+    @objc
+    func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {

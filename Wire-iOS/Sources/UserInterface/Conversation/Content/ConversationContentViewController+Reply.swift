@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ConversationContentViewController {
     func createReplyComposingView(for message: ZMConversationMessage) -> ReplyComposingView {

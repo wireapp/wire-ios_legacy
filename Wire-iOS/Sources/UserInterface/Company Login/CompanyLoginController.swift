@@ -18,6 +18,9 @@
 
 import Foundation
 import WireCommonComponents
+import UIKit
+import WireTransport
+import WireSyncEngine
 
 protocol CompanyLoginControllerDelegate: class {
 
@@ -34,10 +37,6 @@ protocol CompanyLoginControllerDelegate: class {
 
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
-
-    /// Called when the company login controller updated to a different backend environment.
-    /// It will need the delegate to present the landing screen
-    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController)
 }
 
 ///
@@ -51,20 +50,9 @@ protocol CompanyLoginControllerDelegate: class {
 final class CompanyLoginController: NSObject, CompanyLoginRequesterDelegate, CompanyLoginFlowHandlerDelegate {
 
     weak var delegate: CompanyLoginControllerDelegate?
-    private var cancelSSOPressed = false {
-        didSet {
-            if cancelSSOPressed {
-                stopPollingTimer()
-            } else {
-                startPollingTimer()
-            }
-        }
-    }
     
     var isAutoDetectionEnabled = true {
         didSet {
-            guard !cancelSSOPressed else { return }
-            
             isAutoDetectionEnabled ? startPollingTimer() : stopPollingTimer()
         }
     }
@@ -174,20 +162,14 @@ extension CompanyLoginController {
             prefilledInput: prefilledInput,
             ssoOnly: ssoOnly,
             error: error,
-            completion: { [weak self] input, success in
-                input.apply(inputHandler)
+            completion: { [weak self] input in
                 self?.ssoAlert = nil
-                
-                // stop polling loop when cancel is pressed
-                if !success {
-                    self?.cancelSSOPressed = true
-                }
+                input.apply(inputHandler)
             }
         )
         
         ssoAlert = alertController
         delegate?.controller(self, presentAlert: alertController)
-        cancelSSOPressed = false
     }
 
     // MARK: - Input Handling
@@ -267,13 +249,14 @@ extension CompanyLoginController {
 extension CompanyLoginController {
     
     /// Fetches SSO code and starts flow automatically if code is returned on completion
-    /// Otherwise, falls back on prompting user for SSO code
-    func startAutomaticSSOFlow() {
+    /// - Parameter promptOnError: Prompt the user for SSO code if there is an error fetching code
+    func startAutomaticSSOFlow(promptOnError: Bool = true) {
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
             guard let ssoCode = result.value?.ssoCode else {
+                guard promptOnError else { return }
                 return self.displayCompanyLoginPrompt(ssoOnly: true)
             }
             self.attemptLoginWithSSOCode(ssoCode)
@@ -316,7 +299,7 @@ extension CompanyLoginController {
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            self.delegate?.controllerDidUpdateBackendEnvironment(self)
+            self.startAutomaticSSOFlow(promptOnError: false)
         }
     }
 }
@@ -332,11 +315,10 @@ extension CompanyLoginController {
     /// We then check if the clipboard contains a valid SSO login code.
     /// This method will check the `isAutoDetectionEnabled` flag in order to decide if it should run.
     private func internalDetectSSOCode(onlyNew: Bool) {
-        guard isAutoDetectionEnabled, !cancelSSOPressed else { return }
+        guard isAutoDetectionEnabled else { return }
         detector.detectCopiedRequestCode { [isAutoDetectionEnabled, presentCompanyLoginAlert] result in
             // This might have changed in the meantime.
             guard isAutoDetectionEnabled else { return }
-            
             guard let result = result, !onlyNew || result.isNew else { return }
             presentCompanyLoginAlert(result.code, nil, true)
         }

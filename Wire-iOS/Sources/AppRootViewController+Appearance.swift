@@ -17,11 +17,11 @@
 //
 
 import Foundation
+import UIKit
 
 extension AppRootViewController {
     
-    @objc
-    public static func configureAppearance() {
+    static func configureAppearance() {
         let navigationBarTitleBaselineOffset: CGFloat = 2.5
         
         let attributes: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: 11, weight: .semibold), .baselineOffset: navigationBarTitleBaselineOffset]

@@ -19,9 +19,10 @@
 import Foundation
 import WireSyncEngine
 import AVFoundation
+import WireSyncEngine
 
 extension SessionManager {
-    @objc static var shared : SessionManager? {
+    static var shared : SessionManager? {
         return AppDelegate.shared.sessionManager
     }
     

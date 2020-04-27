@@ -17,6 +17,9 @@
 //
 
 import UIKit
+import WireCommonComponents
+import WireDataModel
+import WireSyncEngine
 
 // MARK: - Cells
 

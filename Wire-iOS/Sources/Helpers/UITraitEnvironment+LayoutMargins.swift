@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct HorizontalMargins {
     var left: CGFloat

@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 protocol CallQualityViewControllerDelegate: class {
     func callQualityControllerDidFinishWithoutScore(_ controller: CallQualityViewController)

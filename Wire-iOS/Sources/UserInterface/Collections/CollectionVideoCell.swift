@@ -18,11 +18,14 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
 final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadView()
     }

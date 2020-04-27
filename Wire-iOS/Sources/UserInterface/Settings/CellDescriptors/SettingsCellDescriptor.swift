@@ -18,6 +18,8 @@
 
 
 import Foundation
+import WireCommonComponents
+import UIKit
 
 
 /**
@@ -146,7 +148,7 @@ class SettingsSectionDescriptor: SettingsSectionDescriptorType {
 }
 
 
-class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
+final class SettingsGroupCellDescriptor: SettingsInternalGroupCellDescriptorType, SettingsControllerGeneratorType {
     static let cellType: SettingsTableCell.Type = SettingsGroupCell.self
     var visible: Bool = true
     let title: String

@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireCommonComponents
 
 enum SettingsCellPreview {
     case none
@@ -299,21 +300,21 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 }
 
-@objcMembers class SettingsGroupCell: SettingsTableCell {
+final class SettingsGroupCell: SettingsTableCell {
     override func setup() {
         super.setup()
         accessoryType = .disclosureIndicator
     }
 }
 
-@objcMembers class SettingsButtonCell: SettingsTableCell {
+final class SettingsButtonCell: SettingsTableCell {
     override func setup() {
         super.setup()
         cellNameLabel.textColor = UIColor.accent()
     }
 }
 
-@objcMembers class SettingsToggleCell: SettingsTableCell {
+final class SettingsToggleCell: SettingsTableCell {
     var switchView: UISwitch!
     
     override func setup() {
@@ -331,12 +332,13 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         self.switchView = switchView
     }
     
-    @objc func onSwitchChanged(_ sender: UIResponder) {
+    @objc
+    func onSwitchChanged(_ sender: UIResponder) {
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }
 
-@objcMembers class SettingsValueCell: SettingsTableCell {
+final class SettingsValueCell: SettingsTableCell {
     override var descriptor: SettingsCellDescriptorType?{
         willSet {
             if let propertyDescriptor = descriptor as? SettingsPropertyCellDescriptorType {
@@ -361,7 +363,7 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
     }
 }
 
-@objcMembers class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
+final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
     var textInput: UITextField!
 
     override func setup() {
@@ -409,7 +411,8 @@ class SettingsTableCell: UITableViewCell, SettingsCellType {
         accessibilityElements = currentElements
     }
     
-    @objc public func onCellSelected(_ sender: AnyObject!) {
+    @objc
+    func onCellSelected(_ sender: AnyObject!) {
         if !textInput.isFirstResponder {
             textInput.becomeFirstResponder()
         }

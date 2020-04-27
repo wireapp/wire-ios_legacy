@@ -20,6 +20,8 @@
 import Foundation
 import Cartography
 import UIKit
+import WireCommonComponents
+import WireSystem
 
 protocol TextSearchInputViewDelegate: class {
     func searchView(_ searchView: TextSearchInputView, didChangeQueryTo: String)

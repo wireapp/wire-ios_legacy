@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
 
-public enum LinearGroupCreationFlowEvent {
+enum LinearGroupCreationFlowEvent {
 
     static let openedGroupCreationName = "conversation.opened_group_creation"
     static let openedSelectParticipantsName = "conversation.opened_select_participants"

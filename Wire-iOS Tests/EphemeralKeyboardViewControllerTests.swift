@@ -18,8 +18,9 @@
 
 import XCTest
 @testable import Wire
+import UIKit
 
-class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
+final class EphemeralKeyboardViewControllerTests: CoreDataSnapshotTestCase {
 
     var sut: EphemeralKeyboardViewController!
     var conversation: ZMConversation!

@@ -18,6 +18,8 @@
 
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 enum PresentationStyle: Int {
     case modal

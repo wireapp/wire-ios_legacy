@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-@objcMembers public class KeyboardHeight: NSObject {
+final class KeyboardHeight: NSObject {
 
     /// The height of the system keyboard with the prediction row
     public static var current: CGFloat {

@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 /**
  * The description of a cell for message details.

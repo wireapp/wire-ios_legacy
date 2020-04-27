@@ -20,12 +20,13 @@ import Foundation
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 protocol FolderCreationValuesConfigurable: class {
     func configure(with name: String)
 }
 
-@objc protocol FolderCreationControllerDelegate: class {
+protocol FolderCreationControllerDelegate: class {
     
     func folderController(
         _ controller: FolderCreationController,
@@ -50,7 +51,6 @@ final class FolderCreationController: UIViewController {
     
     fileprivate var navBarBackgroundView = UIView()
     
-    @objc
     weak var delegate: FolderCreationControllerDelegate?
     
     public init(conversation: ZMConversation, directory: ConversationDirectoryType) {

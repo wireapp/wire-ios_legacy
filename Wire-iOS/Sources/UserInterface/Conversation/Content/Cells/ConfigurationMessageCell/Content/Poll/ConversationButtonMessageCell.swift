@@ -16,6 +16,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 extension ButtonMessageState {
     var localizedName: String {
@@ -45,7 +46,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
     private let errorLabel: UILabel = {
         let label = UILabel()
         label.font = .smallLightFont
-        label.textColor = .accent()
+        label.textColor = UIColor.AlarmButton.alarmRed
 
         return label
     }()
@@ -54,6 +55,8 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
 
     private var config: Configuration? {
         didSet {
+            buttonAction = config?.buttonAction
+
             guard config != oldValue else {
                 return
             }
@@ -66,8 +69,7 @@ final class ConversationButtonMessageCell: UIView, ConversationMessageCell {
         guard let config = config else {
             return
         }
-
-        buttonAction = config.buttonAction
+        
         button.setTitle(config.text, for: .normal)
 
         switch config.state {

@@ -21,7 +21,7 @@ import UIKit
 import Cartography
 
 
-@objcMembers final class ArchivedNavigationBar: UIView {
+final class ArchivedNavigationBar: UIView {
     
     let separatorView: UIView = {
         let view = UIView()

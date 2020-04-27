@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
  * A protocol for session managers that provides a mechanism to observe user

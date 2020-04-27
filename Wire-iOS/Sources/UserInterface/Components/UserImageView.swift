@@ -22,14 +22,13 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-@objc
 class UserImageView: AvatarImageView, ZMUserObserver {
 
     /**
      * The different sizes for the avatar image.
      */
 
-    @objc(UserImageViewSize) public enum Size: Int {
+    enum Size: Int {
         case tiny = 16
         case badge = 24
         case small = 32
@@ -40,17 +39,17 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Interface Properties
 
     /// The size of the avatar.
-    @objc public var size: Size {
+    var size: Size {
         didSet {
             updateUserImage()
         }
     }
 
     /// Whether the image should be desaturated, e.g. for unconnected users.
-    @objc public var shouldDesaturate: Bool = true
+    var shouldDesaturate: Bool = true
 
     /// Whether the badge indicator is enabled.
-    public var indicatorEnabled: Bool = false {
+    var indicatorEnabled: Bool = false {
         didSet {
             badgeIndicator.isHidden = !indicatorEnabled
         }
@@ -61,14 +60,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    @objc var userSession: ZMUserSessionInterface? {
+    var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    @objc public var user: UserType? {
+    var user: UserType? {
         didSet {
             updateUser()
         }
@@ -78,14 +77,14 @@ class UserImageView: AvatarImageView, ZMUserObserver {
 
     // MARK: - Initialization
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         self.size = .small
         super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
-    public init(size: Size = .small) {
+    init(size: Size = .small) {
         self.size = size
         super.init(frame: .zero)
         configureSubviews()
@@ -96,7 +95,7 @@ class UserImageView: AvatarImageView, ZMUserObserver {
         userObserverToken = nil
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

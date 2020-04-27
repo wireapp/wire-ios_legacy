@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension ConversationListItemView {
     static let minHeight: CGFloat = 64
