@@ -289,10 +289,8 @@ final class ProfileDetailsContentController: NSObject,
             $0.name == (self.isAdminState ? ZMConversation.defaultAdminRoleName : ZMConversation.defaultMemberRoleName)
         }
         
-        guard
-            let role = newParticipantRole,
-            let session = ZMUserSession.shared(),
-            let user = (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
+        guard let role = newParticipantRole,
+              let session = ZMUserSession.shared()
             else { return }
         
         conversation?.updateRole(of: user, to: role, session: session) { (result) in
