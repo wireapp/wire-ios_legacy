@@ -19,7 +19,7 @@
 import Foundation
 import WireSyncEngine
 
-protocol ZMUserSessionInterface: NSObjectProtocol {
+protocol ZMUserSessionInterface {
     
     func perform(_ changes: @escaping () -> ())
     

@@ -18,7 +18,6 @@
 
 import WireSyncEngine
 
-@objc
 protocol SectionListCellType {
     var sectionName: String? { get set }
     var cellIdentifier: String? { get set }

@@ -18,7 +18,7 @@
 
 import Foundation
 
-protocol AudioTrack: NSObjectProtocol {
+protocol AudioTrack {
     var title: String? { get }
     var author: String? { get }
     var duration: TimeInterval { get }

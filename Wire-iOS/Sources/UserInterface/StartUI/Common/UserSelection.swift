@@ -20,7 +20,6 @@ import Foundation
 import WireUtilities
 import WireDataModel
 
-@objc
 protocol UserSelectionObserver: class {
 
     func userSelection(_ userSelection: UserSelection, didAddUser user: UserType)
