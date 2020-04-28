@@ -214,9 +214,8 @@ final class ConversationListViewModel: NSObject {
         func hash(into hasher: inout Hasher) {
             hasher.combine(isFavorite)
             
-            if let hashable = item as? AnyHashable {
-                hasher.combine(hashable)
-            }
+            let hashableItem: NSObject = item            
+            hasher.combine(hashableItem)
         }
 
         static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
