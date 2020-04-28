@@ -214,7 +214,6 @@ final class ConversationListViewModel: NSObject {
         func hash(into hasher: inout Hasher) {
             hasher.combine(isFavorite)
             
-            ///TODO: no cast
             if let hashable = item as? AnyHashable {
                 hasher.combine(hashable)
             }

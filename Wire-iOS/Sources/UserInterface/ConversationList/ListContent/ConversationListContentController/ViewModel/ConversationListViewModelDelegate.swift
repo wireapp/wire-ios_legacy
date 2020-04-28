@@ -16,13 +16,11 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import DifferenceKit
 import WireDataModel
 
 /// a item which can be presented in the conversaton list
-///TODO: mark ZMConversation also hashable
-protocol ConversationListItem: NSObjectProtocol {}
+protocol ConversationListItem: NSObject {}
 
 extension ZMConversation: ConversationListItem {}
 
