@@ -20,19 +20,19 @@ import UIKit
 import Cartography
 import WireDataModel
 
-@objc protocol UserSearchResultsViewControllerDelegate {
+protocol UserSearchResultsViewControllerDelegate: class {
     func didSelect(user: UserType)
 }
 
-@objc protocol Dismissable {
+protocol Dismissable: class {
     func dismiss()
 }
 
-@objc protocol KeyboardCollapseObserver {
+protocol KeyboardCollapseObserver: class {
     var isKeyboardCollapsed: Bool { get }
 }
 
-@objc protocol UserList {
+protocol UserList: class {
     var users: [UserType] { get set }
     var selectedUser: UserType? { get }
 
@@ -40,7 +40,7 @@ import WireDataModel
     func selectNextUser()
 }
 
-class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
+final class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserver {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     private var searchResults: [UserType] = [] {
@@ -80,7 +80,7 @@ class UserSearchResultsViewController: UIViewController, KeyboardCollapseObserve
         }
     }
     
-    @objc weak var delegate: UserSearchResultsViewControllerDelegate?
+    weak var delegate: UserSearchResultsViewControllerDelegate?
 
     private var keyboardObserver: KeyboardBlockObserver?
 

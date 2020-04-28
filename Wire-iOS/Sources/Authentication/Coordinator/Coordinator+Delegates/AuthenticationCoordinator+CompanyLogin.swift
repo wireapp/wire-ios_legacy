@@ -41,8 +41,4 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController) {
         cancelCompanyLogin()
     }
-
-    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController) {
-        stateController.transition(to: .landingScreen, mode: .reset)
-    }
 }

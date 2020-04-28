@@ -33,7 +33,7 @@ import Foundation
 let template = """
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -59,7 +59,6 @@ import UIKit
 * The list of icons that can be rendered from the style kit.
 */
 
-@objc(WRStyleKitIcon)
 public enum StyleKitIcon: Int {
 
     /// Represents the data necessary to render the icons.

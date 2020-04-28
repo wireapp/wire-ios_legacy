@@ -94,7 +94,7 @@ extension UIFont {
         }
     }
     
-    @objc public var classySystemFontName: String {
+    var classySystemFontName: String {
         get {
             let weightSpecifier = { () -> String in 
                 guard #available(iOSApplicationExtension 8.2, *),
@@ -233,7 +233,7 @@ final class FontScheme {
         return mapping
     }
     
-    @objc public convenience init(contentSizeCategory: UIContentSizeCategory) {
+    convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
     

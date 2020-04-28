@@ -37,10 +37,6 @@ protocol CompanyLoginControllerDelegate: class {
 
     /// Called when the company login controller cancels the company login flow.
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController)
-
-    /// Called when the company login controller updated to a different backend environment.
-    /// It will need the delegate to present the landing screen
-    func controllerDidUpdateBackendEnvironment(_ controller: CompanyLoginController)
 }
 
 ///
@@ -253,13 +249,14 @@ extension CompanyLoginController {
 extension CompanyLoginController {
     
     /// Fetches SSO code and starts flow automatically if code is returned on completion
-    /// Otherwise, falls back on prompting user for SSO code
-    func startAutomaticSSOFlow() {
+    /// - Parameter promptOnError: Prompt the user for SSO code if there is an error fetching code
+    func startAutomaticSSOFlow(promptOnError: Bool = true) {
         delegate?.controller(self, showLoadingView: true)
         SessionManager.shared?.activeUnauthenticatedSession.fetchSSOSettings { [weak self] result in
             guard let `self` = self else { return }
             self.delegate?.controller(self, showLoadingView: false)
             guard let ssoCode = result.value?.ssoCode else {
+                guard promptOnError else { return }
                 return self.displayCompanyLoginPrompt(ssoOnly: true)
             }
             self.attemptLoginWithSSOCode(ssoCode)
@@ -302,7 +299,7 @@ extension CompanyLoginController {
                 return
             }
             BackendEnvironment.shared = backendEnvironment
-            self.delegate?.controllerDidUpdateBackendEnvironment(self)
+            self.startAutomaticSSOFlow(promptOnError: false)
         }
     }
 }

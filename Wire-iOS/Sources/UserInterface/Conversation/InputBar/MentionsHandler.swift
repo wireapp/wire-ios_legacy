@@ -25,7 +25,7 @@ extension String {
     }
 }
 
-@objc public class MentionsHandler: NSObject {
+final class MentionsHandler: NSObject {
 
     fileprivate var mentionRegex: NSRegularExpression = {
         try! NSRegularExpression(pattern: "([\\s]|^)(@(\\S*))", options: [.anchorsMatchLines])

@@ -36,9 +36,9 @@ final class TrackingManager: NSObject, TrackingInterface {
         })
     }
     
-    @objc public static let shared = TrackingManager()
+    static let shared = TrackingManager()
 
-    @objc public var disableCrashAndAnalyticsSharing: Bool {
+    var disableCrashAndAnalyticsSharing: Bool {
         set {
             Analytics.shared().isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)

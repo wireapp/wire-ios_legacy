@@ -299,13 +299,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     }
     
     private func updateAvailabilityVisibility() {
-        let isHidden: Bool
-        if user.shouldHideAvailability {
-            isHidden = true
-        } else {
-            isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
-        }
-        
+        let isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
         availabilityTitleViewController.view?.isHidden = isHidden
     }
     

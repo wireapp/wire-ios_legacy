@@ -54,6 +54,8 @@ final class AppRootViewController: UIViewController, SpinnerCapable {
 
     var authenticationCoordinator: AuthenticationCoordinator?
 
+    private let teamMetadataRefresher = TeamMetadataRefresher()
+
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?
@@ -516,6 +518,7 @@ extension AppRootViewController {
 
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
+        teamMetadataRefresher.triggerRefreshIfNeeded()
     }
 }
 

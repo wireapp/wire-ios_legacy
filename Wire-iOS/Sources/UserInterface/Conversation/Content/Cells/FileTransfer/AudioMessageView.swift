@@ -390,7 +390,7 @@ final class AudioMessageView: UIView, TransferView {
 
     // MARK: - Actions
 
-    @objc dynamic private func onActionButtonPressed(_ sender: UIButton) {
+    @objc private func onActionButtonPressed(_ sender: UIButton) {
         isPausedForIncomingCall = false
 
         guard let fileMessage = self.fileMessage, let fileMessageData = fileMessage.fileMessageData else { return }

@@ -21,7 +21,7 @@ import WireSystem
 import WireTransport
 import WireSyncEngine
 
-@objc protocol LandingViewControllerDelegate {
+protocol LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateAccount()
     func landingViewControllerDidChooseCreateTeam()
     func landingViewControllerDidChooseLogin()
@@ -464,30 +464,30 @@ final class LandingViewController: AuthenticationStepViewController {
         present(alert, animated: true, completion: nil)
     }
 
-    @objc public func createAccountButtonTapped(_ sender: AnyObject!) {
+    @objc func createAccountButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedUserRegistration(context: "email")
         delegate?.landingViewControllerDidChooseCreateAccount()
     }
 
-    @objc public func createTeamButtonTapped(_ sender: AnyObject!) {
+    @objc func createTeamButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedTeamCreation(context: "email")
         delegate?.landingViewControllerDidChooseCreateTeam()
     }
 
-    @objc public func loginButtonTapped(_ sender: AnyObject!) {
+    @objc func loginButtonTapped(_ sender: AnyObject!) {
         Analytics.shared().tagOpenedLogin(context: "email")
         delegate?.landingViewControllerDidChooseLogin()
     }
     
-    @objc public func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
+    @objc func enterpriseLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseEnterpriseLogin()
     }
     
-    @objc public func ssoLoginButtonTapped(_ sender: AnyObject!) {
+    @objc func ssoLoginButtonTapped(_ sender: AnyObject!) {
         delegate?.landingViewControllerDidChooseSSOLogin()
     }
     
-    @objc public func cancelButtonTapped() {
+    @objc func cancelButtonTapped() {
         guard let account = SessionManager.shared?.firstAuthenticatedAccount else { return }
         SessionManager.shared!.select(account)
     }

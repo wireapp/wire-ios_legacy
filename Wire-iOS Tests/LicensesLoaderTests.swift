@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class LicensesLoaderTests: XCTestCase {
+final class LicensesLoaderTests: XCTestCase {
 
     var memoryManager: NSObject!
     var loader: LicensesLoader!
@@ -81,15 +81,19 @@ class LicensesLoaderTests: XCTestCase {
         XCTAssertFalse(loader.cacheEmpty)
 
         // WHEN
-        let deletedCacheExpectation = expectation(for: NSPredicate(format: "cacheEmpty == YES"), evaluatedWith: loader) {
+        let predicate = NSPredicate(block: { any, _ in
+            return self.loader.cacheEmpty
+        })
+
+        let deletedCacheExpectation = expectation(for: predicate, evaluatedWith: loader) {
             return self.loader.cache == nil
         }
 
         sendMemoryWarning()
-        wait(for: [deletedCacheExpectation], timeout: 10)
+        wait(for: [deletedCacheExpectation], timeout: 30)
 
         // THEN
-        XCTAssertTrue(loader.cacheEmpty)
+        XCTAssert(loader.cacheEmpty)
         XCTAssertNil(loader.cache)
     }
 
@@ -98,5 +102,4 @@ class LicensesLoaderTests: XCTestCase {
     private func sendMemoryWarning() {
         NotificationCenter.default.post(name: UIApplication.didReceiveMemoryWarningNotification, object: memoryManager)
     }
-
 }

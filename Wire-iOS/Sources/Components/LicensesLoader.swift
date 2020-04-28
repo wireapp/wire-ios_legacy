@@ -25,7 +25,7 @@ import UIKit
  * This object is not thread safe and should only be used from the main thread.
  */
 
-final class LicensesLoader: NSObject {
+final class LicensesLoader {
 
     /// The shared loader.
     static let shared = LicensesLoader()
@@ -33,13 +33,12 @@ final class LicensesLoader: NSObject {
     private let sourceName = "Licenses.generated"
     private let sourceExtension = "plist"
 
-    private(set) var cache: [SettingsLicenseItem]? = nil
+    private(set) var cache: [SettingsLicenseItem]?
     private var memoryWarningToken: Any?
 
     // MARK: - Initialization
 
     init(memoryManager: Any? = nil) {
-        super.init()
         memoryWarningToken = NotificationCenter.default.addObserver(forName: UIApplication.didReceiveMemoryWarningNotification, object: memoryManager, queue: .main) { [weak self] _ in
             self?.cache = nil
         }
@@ -71,7 +70,7 @@ final class LicensesLoader: NSObject {
 
     // MARK: - Testing
 
-    @objc var cacheEmpty: Bool {
+    var cacheEmpty: Bool {
         return cache == nil
     }
 

@@ -23,7 +23,7 @@ import WireSystem
  * The dimension to use when calculating relative radii.
  */
 
-@objc public enum MaskDimension: Int {
+enum MaskDimension: Int {
     case width, height
 }
 
@@ -31,7 +31,7 @@ import WireSystem
  * The shape of a layer mask.
  */
 
-public enum MaskShape {
+enum MaskShape {
     case circle
     case rectangle
     case relative(multiplier: CGFloat, dimension: MaskDimension)
@@ -42,9 +42,9 @@ public enum MaskShape {
  * A layer whose corners are rounded with a continuous mask (“squircle“).
  */
 
-public class ContinuousMaskLayer: CALayer {
+final class ContinuousMaskLayer: CALayer {
 
-    public override var cornerRadius: CGFloat {
+    override var cornerRadius: CGFloat {
         get {
             return 0
         }
@@ -59,7 +59,7 @@ public class ContinuousMaskLayer: CALayer {
         }
     }
 
-    @objc public var roundedCorners: UIRectCorner = .allCorners {
+    var roundedCorners: UIRectCorner = .allCorners {
         didSet {
             refreshMask()
         }

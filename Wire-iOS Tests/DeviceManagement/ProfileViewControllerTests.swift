@@ -177,4 +177,30 @@ final class ProfileViewControllerTests: XCTestCase {
 
         verify(matching: navWrapperController)
     }
+
+    func testItRequestsDataRefeshForTeamMembers() {
+        // Given
+        mockUser.isTeamMember = true
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // Then
+        XCTAssertEqual(mockUser.refreshDataCount, 1)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 1)
+    }
+
+    func testItDoesNotRequestsDataRefeshForNonTeamMembers() {
+        // Given
+        mockUser.isTeamMember = false
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // Then
+        XCTAssertEqual(mockUser.refreshDataCount, 0)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 0)
+    }
 }

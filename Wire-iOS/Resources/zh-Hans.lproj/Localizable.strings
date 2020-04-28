@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "活动中";
 "conversation.voiceover.value.disabled" = "已禁用";
 
+"conversation.status.secutity_alert.default" = "新安全提醒";
+
 "conversation.status.typing" = "正在输入...";
 "conversation.status.typing.group" = "%@︰正在输入...";
 "conversation.status.silenced" = "静音";
@@ -1200,7 +1202,7 @@
 "self.settings.history_backup.password.cancel" = "取消";
 "self.settings.history_backup.password.next" = "继续";
 "self.settings.history_backup.password.placeholder" = "密码";
-"self.settings.history_backup.password.description" = "The backup will be compressed and encrypted with the password you set here.";
+"self.settings.history_backup.password.description" = "备份将被压缩并使用您在此设置的密码加密。";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // System status
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "企业登录";
-"login.sso.alert.message.sso_and_email" = "请输入您的邮箱或验证码：";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "请输入您的验证码：";
 "login.sso.alert.action" = "登录";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "邮箱或SSO访问码";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "请输入您的全名和一个有效的电子邮箱和密码。";
 "error.full_name" = "请输入您的全名";
 "error.email" = "请输入有效的电邮箱地址";
-"error.input.too_long" = "输入过长";
-"error.input.too_short" = "输入过短";
+"error.input.too_long" = "请输入一个较短的用户名";
+"error.input.too_short" = "请输入更长的用户名";
 "error.email.invalid" = "请输入有效的电邮箱地址";
 "error.phone.invalid" = "请输入有效的手机号码";
 
@@ -1525,9 +1527,9 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ZMUserSessionErrorCode mapping. Used during registration and profile edit
 "error.user.unkown_error" = "出了点问题，请再试一次";
-"error.user.needs_credentials" = "请检查您提供的资料然后重试。";
+"error.user.needs_credentials" = "用户名或密码错误，请重试。";
 "error.user.invalid_credentials" = "请检查您提供的资料然后重试。";
-"error.user.account_pending_activation" = "您的账号未被启用，请验证您的信息。";
+"error.user.account_pending_activation" = "您的账号尚未激活。";
 "error.user.network_error" = "您的网络好像有些问题，请稍候再试。";
 "error.user.email_is_taken" = "您提供的电子邮箱已经被占用，请尝试其他的电子邮箱。";
 "error.user.phone_is_taken" = "该手机号码已被注册，请尝试其他号码。";
@@ -1702,8 +1704,8 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Message Details
 "message_details.empty_likes" = "没有人喜欢这个消息。";
-"message_details.empty_read_receipts" = "No one has read this message yet.";
-"message_details.read_receipts_disabled" = "Read receipts were not on when this message was sent.";
+"message_details.empty_read_receipts" = "还没有人阅读过此消息。";
+"message_details.read_receipts_disabled" = "当邮件发送时，读取收据未开启。";
 "message_details.combined_title" = "消息详情";
 "message_details.likes_title" = "喜欢";
 "message_details.receipts_title" = "已读";
@@ -1718,7 +1720,7 @@
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
 "registration.password.rules.no_requirements" = "使用 %@。";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.with_requirements" = "使用 %@, 与 %@。";
 
 // Legal Hold Deactivation
 "legal_hold.deactivated.title" = "证据保全已停用";
@@ -1747,8 +1749,8 @@
 "account_deleted_session_expired_alert.message" = "应用程序长期未与服务器通信，或您的会话已被拒绝。";
 
 // Button cell state
-"button_message_cell.state.unselected" = "取消选择";
+"button_message_cell.state.unselected" = "未选择";
 "button_message_cell.state.selected" = "已选";
 "button_message_cell.state.confirmed" = "已确认";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "您的答案无法发送，请重试。";

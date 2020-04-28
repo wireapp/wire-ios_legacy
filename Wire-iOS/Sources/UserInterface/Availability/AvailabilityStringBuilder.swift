@@ -43,7 +43,7 @@ final class AvailabilityStringBuilder: NSObject {
                 color = UIColor.from(scheme: .textForeground)
             }
             case .placeholder: do {
-                guard availability != .none && !user.shouldHideAvailability else { //Should use the default placeholder string
+                guard availability != .none else { //Should use the default placeholder string
                     return nil
                 }
                 title = "availability.\(availability.canonicalName)".localized.localizedUppercase
@@ -51,7 +51,7 @@ final class AvailabilityStringBuilder: NSObject {
         }
         
         guard let textColor = color else { return nil }
-        let icon = user.shouldHideAvailability ? nil : AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
+        let icon = AvailabilityStringBuilder.icon(for: availability, with: textColor, and: fontSize)
         let attributedText = IconStringsBuilder.iconString(with: icon, title: title, interactive: false, color: textColor)
         return attributedText
     }

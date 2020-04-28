@@ -358,9 +358,7 @@
 		5EBBE97121878D09008BC1B7 /* ConversationMessageToolboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */; };
 		5EBBE9732187A844008BC1B7 /* MessageToolboxViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */; };
 		5EBBE9782188B85B008BC1B7 /* ZMMessage+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */; };
-		5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */; };
 		5EBC343C20EE49D700AFB6DF /* DecodeImageOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */; };
-		5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */; };
 		5EBC344220EE5EBF00AFB6DF /* DecodeImageOperationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */; };
 		5EBC344420EE5FEF00AFB6DF /* identicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EBC344320EE5FEF00AFB6DF /* identicon.png */; };
 		5EBF47C421B2F8710021CFFC /* MessageDetailsActionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF47C321B2F8710021CFFC /* MessageDetailsActionTests.swift */; };
@@ -368,7 +366,6 @@
 		5EBF4A2B21B958F30021CFFC /* MessageToolboxDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A2A21B958F30021CFFC /* MessageToolboxDataSource.swift */; };
 		5EBF4A3B21BE984E0021CFFC /* TransformTextViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */; };
 		5EC0870D20EF530D000366B7 /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870C20EF530D000366B7 /* MockURLSession.swift */; };
-		5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */; };
 		5EC2C58921353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */; };
 		5EC7C87A219038F6004662AC /* ImageResourceThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */; };
 		5EC7C87C21907D94004662AC /* ConversationReplyCellDescriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */; };
@@ -999,6 +996,9 @@
 		EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */; };
 		EE2538852166151C00932606 /* ConversationActionController+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */; };
 		EE2FC1D81F56F89800A9A418 /* ConversationImagesViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */; };
+		EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */; };
+		EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */; };
+		EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */; };
 		EE373FAB23FBF44B008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */; };
 		EE4332491F1A67E500096D90 /* PopUpIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE4332481F1A67E500096D90 /* PopUpIconButton.swift */; };
 		EE43324B1F1A785800096D90 /* PopUpIconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */; };
@@ -1881,9 +1881,7 @@
 		5EBBE97021878D09008BC1B7 /* ConversationMessageToolboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationMessageToolboxCell.swift; sourceTree = "<group>"; };
 		5EBBE9722187A844008BC1B7 /* MessageToolboxViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageToolboxViewTests.swift; sourceTree = "<group>"; };
 		5EBBE9772188B85A008BC1B7 /* ZMMessage+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ZMMessage+Actions.swift"; sourceTree = "<group>"; };
-		5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadCache.swift; sourceTree = "<group>"; };
 		5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperation.swift; sourceTree = "<group>"; };
-		5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageDownloadCache.swift"; sourceTree = "<group>"; };
 		5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageOperationTests.swift; sourceTree = "<group>"; };
 		5EBC344320EE5FEF00AFB6DF /* identicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = identicon.png; sourceTree = "<group>"; };
 		5EBF47C321B2F8710021CFFC /* MessageDetailsActionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDetailsActionTests.swift; sourceTree = "<group>"; };
@@ -1893,7 +1891,6 @@
 		5EBF4A3221BE71930021CFFC /* TransformLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformLabel.swift; sourceTree = "<group>"; };
 		5EBF4A3A21BE984E0021CFFC /* TransformTextViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformTextViewTests.swift; sourceTree = "<group>"; };
 		5EC0870C20EF530D000366B7 /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
-		5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadCacheTests.swift; sourceTree = "<group>"; };
 		5EC2C58821353FA100C6CE35 /* AuthenticationCoordinator+Teams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthenticationCoordinator+Teams.swift"; sourceTree = "<group>"; };
 		5EC7C879219038F6004662AC /* ImageResourceThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResourceThumbnailView.swift; sourceTree = "<group>"; };
 		5EC7C87B21907D94004662AC /* ConversationReplyCellDescriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationReplyCellDescriptionTests.swift; sourceTree = "<group>"; };
@@ -2655,6 +2652,9 @@
 		EE1AFBFD2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+Permission.swift"; sourceTree = "<group>"; };
 		EE2538842166151C00932606 /* ConversationActionController+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConversationActionController+Notifications.swift"; sourceTree = "<group>"; };
 		EE2FC1D71F56F89800A9A418 /* ConversationImagesViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationImagesViewControllerTests.swift; sourceTree = "<group>"; };
+		EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMetadataRefresher.swift; sourceTree = "<group>"; };
+		EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Units.swift"; sourceTree = "<group>"; };
+		EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TeamMetadataRefresherTests.swift; path = "Wire-iOS Tests/TeamMetadataRefresherTests.swift"; sourceTree = SOURCE_ROOT; };
 		EE373FA923FBF438008C1E52 /* ConversationInputBarViewControllerDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationInputBarViewControllerDelegateTests.swift; sourceTree = "<group>"; };
 		EE4332481F1A67E500096D90 /* PopUpIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButton.swift; sourceTree = "<group>"; };
 		EE43324A1F1A785800096D90 /* PopUpIconButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpIconButtonView.swift; sourceTree = "<group>"; };
@@ -3884,9 +3884,7 @@
 		5EBC343820EE448B00AFB6DF /* ImageCache */ = {
 			isa = PBXGroup;
 			children = (
-				5EBC343620EE434700AFB6DF /* ImageDownloadCache.swift */,
 				5EBC343B20EE49D700AFB6DF /* DecodeImageOperation.swift */,
-				5EBC343D20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift */,
 				5EF5CDA420EF739200CC98B0 /* DataTaskSession.swift */,
 			);
 			path = ImageCache;
@@ -3897,7 +3895,6 @@
 			children = (
 				5EBC344320EE5FEF00AFB6DF /* identicon.png */,
 				5EBC344020EE5EAC00AFB6DF /* DecodeImageOperationTests.swift */,
-				5EC0870F20EF5C89000366B7 /* ImageDownloadCacheTests.swift */,
 			);
 			path = ImageCache;
 			sourceTree = "<group>";
@@ -5046,6 +5043,8 @@
 				EEB8CD042410FFCC006FDE0B /* UserSet.swift */,
 				870534001DD6265100A7F822 /* AttributedStringOperators.swift */,
 				546B17632417A3D70091F4B3 /* CIContext+Shared.swift */,
+				EE34D6E0243373B100F5BD1C /* TimeInterval+Units.swift */,
+				EE34D6D824336A6600F5BD1C /* TeamMetadataRefresher.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -5519,6 +5518,7 @@
 				EE118BFF2031D17000BC68D6 /* MarkdownTextViewTests.swift */,
 				EE75B773203C6F5300855099 /* MarkdownTextStorageTests.swift */,
 				1651F9BA1D352C5300A9FAE8 /* ArticleViewTests.swift */,
+				EE34D6E22433767500F5BD1C /* TeamMetadataRefresherTests.swift */,
 				BFAD3A1B1CD1078500F0FBED /* Resources */,
 				5EA73D8D20D9038F0001D106 /* CheckmarkCellTests.swift */,
 				160D40F82410EC41002924A0 /* LoggingTest.swift */,
@@ -7564,6 +7564,7 @@
 				EF3BD6A0225CD4FE00ABB9B6 /* ShareContactsViewController.swift in Sources */,
 				5E936E8F20B590530060E6AA /* UIDevice+Platform.swift in Sources */,
 				EF1A461A21AD60510009B6B9 /* ReceiptOptionsSectionController.swift in Sources */,
+				EE34D6E1243373B100F5BD1C /* TimeInterval+Units.swift in Sources */,
 				5E423CD92295674900A5DB3A /* ConversationViewController+PrivacyAlert.swift in Sources */,
 				EEB8A2D01F628D1100958881 /* Settings+Account.swift in Sources */,
 				5E0EB1FB2100D80B00B5DC2B /* CompanyLoginFlowOpener.swift in Sources */,
@@ -7594,6 +7595,7 @@
 				D5DBAAAC20064DD700E9F65B /* TeamMemberInviteHeaderView.swift in Sources */,
 				EFDB3135217F5E0300D2A7CE /* ConversationListCell.swift in Sources */,
 				EEDEA26823ED609C000EF7E3 /* ContactsViewController+Invite.swift in Sources */,
+				EE34D6D924336A6600F5BD1C /* TeamMetadataRefresher.swift in Sources */,
 				A923F1C924290325003F361F /* SplitViewControllerTransitionContext.swift in Sources */,
 				EE1AFBFE2124330B003D1AE1 /* UNUserNotificationCenter+Permission.swift in Sources */,
 				A949418723E08AF6001B0373 /* Settings.swift in Sources */,
@@ -7638,7 +7640,6 @@
 				5E35F7452180779D00D3F4FE /* ConversationPingCell.swift in Sources */,
 				06C412AC238FCAA80018866F /* Int+Const.swift in Sources */,
 				D5DBAAAE20064DFC00E9F65B /* TeamInviteTextFieldFooterView.swift in Sources */,
-				5EBC343720EE434700AFB6DF /* ImageDownloadCache.swift in Sources */,
 				874A02561D1D329B00D0D74A /* AudioEffectCell.swift in Sources */,
 				55A42A701FC872600056752F /* CallQualityController+Budget.swift in Sources */,
 				87E56EDA1E4E10CA0097D489 /* TextSearchViewController.swift in Sources */,
@@ -7926,7 +7927,6 @@
 				A965F89E23DB3359005209E1 /* ConversationInputBarViewController.swift in Sources */,
 				87E8D0BB2182179F00BD26AC /* ConversationInputBarViewController+Reply.swift in Sources */,
 				BF0555BD1E6D785C00D3E9D4 /* CallCellViewModel.swift in Sources */,
-				5EBC343E20EE576600AFB6DF /* UIImage+ImageDownloadCache.swift in Sources */,
 				A9D19B16238441B500F6E14A /* ConversationViewController+ProfileViewControllerDelegate.swift in Sources */,
 				D525426B2093637D001C04C1 /* IconButton+Factory.swift in Sources */,
 				EF68E71B20BD5B5A003F3594 /* IPadPopoverConstants.swift in Sources */,
@@ -7973,7 +7973,6 @@
 				7CB1B0C5200E13A600BD7CE9 /* MockPhotoPermissionsController.swift in Sources */,
 				EEBE8C5E1F68171F009D78C9 /* NSData_ImageTypeTests.swift in Sources */,
 				BFFE943C1E7839D10025AD75 /* ConversationRenamedCellTests.swift in Sources */,
-				5EC0871020EF5C89000366B7 /* ImageDownloadCacheTests.swift in Sources */,
 				5E97C30420F4CFFF00C806B4 /* MockZiphyClient.swift in Sources */,
 				EEEED9B223F6EA53008C94CA /* MockUserType+ZMEditableUser.swift in Sources */,
 				BF16FC4C1DAFCA0000FF4325 /* EphemeralKeyboardViewControllerTests.swift in Sources */,
@@ -8226,6 +8225,7 @@
 				162AE748219B26AF00581D98 /* ConversationSystemMessageTests.swift in Sources */,
 				EF1CB6F522B39CC0004CB458 /* CoreDataFixture.swift in Sources */,
 				EF01D28022B136A9009754B2 /* Data+FingerprintStringTests.swift in Sources */,
+				EE34D6E32433767500F5BD1C /* TeamMetadataRefresherTests.swift in Sources */,
 				EF91A0561FF3A05A00FE2F53 /* GiphySearchViewControllerTests.swift in Sources */,
 				EF2D6D38228C1FB300D8DBF4 /* MockPhotoLibrary.swift in Sources */,
 				EF15A7B620BC34F700A045C7 /* XCTestCase+ImageFromBundle.swift in Sources */,

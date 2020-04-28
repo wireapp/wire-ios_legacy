@@ -68,7 +68,7 @@ extension UIColor {
 }
 
 
-@objc public enum ColorSchemeColor: Int {
+enum ColorSchemeColor: Int {
     case textForeground
     case textBackground
     case textDimmed
@@ -233,7 +233,6 @@ extension UIColor {
 final class ColorScheme: NSObject {
     private(set) var colors: [AnyHashable : Any]?
     
-    @objc
     var variant: ColorSchemeVariant = .light
     private(set) var defaultColorScheme: ColorScheme?
     var accentColor: UIColor = .red

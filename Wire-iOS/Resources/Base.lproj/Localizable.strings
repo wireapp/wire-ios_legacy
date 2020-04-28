@@ -1377,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Log in";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
@@ -1511,8 +1511,8 @@
 "error.name_and_email" = "Please enter your full name and a valid email address";
 "error.full_name" = "Please enter your full name";
 "error.email" = "Please enter a valid email address";
-"error.input.too_long" = "Input too long";
-"error.input.too_short" = "Input too short";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Please enter a valid email address";
 "error.phone.invalid" = "Please enter a valid phone number";
 

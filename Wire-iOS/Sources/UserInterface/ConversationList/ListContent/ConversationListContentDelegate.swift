@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireDataModel
 
-protocol ConversationListContentDelegate: NSObjectProtocol {
+protocol ConversationListContentDelegate: class {
     func conversationList(_ controller: ConversationListContentController?, didSelect conversation: ZMConversation?, focusOnView focus: Bool)
     /// This is called after a delete when there is an item to select
     func conversationList(_ controller: ConversationListContentController?, willSelectIndexPathAfterSelectionDeleted conv: IndexPath?)

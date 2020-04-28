@@ -142,7 +142,7 @@
 "conversation_list.data_usage_permission_alert.title" = "Помогите нам сделать Wire лучше";
 "conversation_list.data_usage_permission_alert.message" = "Я согласен с тем, что Wire может создавать и анализировать анонимные отчеты об использовании и ошибках для улучшения приложения Wire. Я могу отозвать данное согласие в любое время.";
 "conversation_list.data_usage_permission_alert.disagree" = "Нет";
-"conversation_list.data_usage_permission_alert.agree" = "Принимаю";
+"conversation_list.data_usage_permission_alert.agree" = "Принять";
 
 // Profile Header View
 "conversation.connection_view.in_address_book" = "в контактах";
@@ -228,6 +228,8 @@
 "conversation.voiceover.legalhold" = "правовая защита";
 "conversation.voiceover.value.active" = "активно";
 "conversation.voiceover.value.disabled" = "отключено";
+
+"conversation.status.secutity_alert.default" = "Новое оповещение безопасности";
 
 "conversation.status.typing" = "Печатает сообщение…";
 "conversation.status.typing.group" = "%@: печатает сообщение…";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Вход для организаций";
-"login.sso.alert.message.sso_and_email" = "Пожалуйста, введите ваш email или код SSO:";
+"login.sso.alert.message.sso_and_email" = "Пожалуйста, введите ваш адрес email или код SSO. Если ваша электронная почта соответствует корпоративной установке Wire, то приложение подключится к этому серверу.";
 "login.sso.alert.message.sso_only" = "Пожалуйста, введите ваш код SSO:";
 "login.sso.alert.action" = "Войти";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email или код доступа SSO";
@@ -1417,7 +1419,7 @@
 "registration.terms_of_use.title" = "Добро пожаловать в Wire.";
 "registration.terms_of_use.terms" = "Продолжая, вы соглашаетесь с Условиями использования Wire.";
 "registration.terms_of_use.terms.link" = "Условия использования";
-"registration.terms_of_use.agree" = "Принимаю";
+"registration.terms_of_use.agree" = "Принять";
 
 "registration.terms_of_use.terms.title" = "Условия использования";
 "registration.terms_of_use.terms.message" = "Для продолжения, пожалуйста, примите условия использования.";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Пожалуйста, введите ваше полное имя и действующий адрес электронной почты";
 "error.full_name" = "Пожалуйста, введите свое полное имя";
 "error.email" = "Пожалуйста, введите действительный адрес электронной почты";
-"error.input.too_long" = "Слишком много символов";
-"error.input.too_short" = "Слишком мало символов";
+"error.input.too_long" = "Пожалуйста, введите более короткое имя пользователя";
+"error.input.too_short" = "Пожалуйста, введите более длинное имя пользователя";
 "error.email.invalid" = "Пожалуйста, введите действительный адрес электронной почты";
 "error.phone.invalid" = "Пожалуйста, введите действительный номер телефона";
 
@@ -1751,4 +1753,4 @@
 "button_message_cell.state.selected" = "выбрано";
 "button_message_cell.state.confirmed" = "подтверждено";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "Ваш ответ не может быть отправлен, пожалуйста, повторите попытку.";

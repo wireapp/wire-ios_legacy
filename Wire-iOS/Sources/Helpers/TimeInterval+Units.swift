@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,14 +17,12 @@
 //
 
 import Foundation
-import WireDataModel
 
-protocol StartUIDelegate: class {
-    func startUI(_ startUI: StartUIViewController, didSelect user: UserType)
-    func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation)
-    func startUI(_ startUI: StartUIViewController,
-                 createConversationWith users: UserSet,
-                 name: String,
-                 allowGuests: Bool,
-                 enableReceipts: Bool)
+extension TimeInterval {
+
+    static let oneDay: TimeInterval = 24 * oneHour
+    static let oneHour: TimeInterval = 60 * oneMinute
+    static let oneMinute: TimeInterval = 60 * oneSecond
+    static let oneSecond: TimeInterval = 1
+
 }

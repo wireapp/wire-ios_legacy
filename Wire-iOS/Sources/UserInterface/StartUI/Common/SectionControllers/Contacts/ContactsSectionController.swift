@@ -21,7 +21,7 @@ import WireDataModel
 
 class ContactsSectionController : SearchSectionController {
     
-    var contacts: [ZMUser] = []
+    var contacts: [UserType] = []
     var selection: UserSelection? = nil {
         didSet {
             selection?.add(observer: self)

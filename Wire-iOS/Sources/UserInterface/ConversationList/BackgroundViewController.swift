@@ -44,7 +44,7 @@ final class BackgroundViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    @objc public init(user: UserType, userSession: ZMUserSession?) {
+    init(user: UserType, userSession: ZMUserSession?) {
         self.user = user
         self.userSession = userSession
         super.init(nibName: .none, bundle: .none)
@@ -189,7 +189,8 @@ final class BackgroundViewController: UIViewController {
         self.imageView.backgroundColor = color
     }
 
-    @objc public func colorSchemeChanged(_ object: AnyObject!) {
+    @objc
+    func colorSchemeChanged(_ object: AnyObject!) {
         self.updateForColorScheme()
     }
 }

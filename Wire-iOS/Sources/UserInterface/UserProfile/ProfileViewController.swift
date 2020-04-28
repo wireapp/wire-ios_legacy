@@ -99,6 +99,13 @@ final class ProfileViewController: UIViewController {
     required init(viewModel: ProfileViewControllerViewModel) {
         self.viewModel = viewModel
         super.init(nibName:nil, bundle:nil)
+
+        let user = viewModel.bareUser
+
+        if user.isTeamMember {
+            user.refreshData()
+            user.refreshMembership()
+        }
     }
     
     
