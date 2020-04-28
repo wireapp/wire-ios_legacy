@@ -28,7 +28,7 @@ struct AudioEffectCellBorders : OptionSet {
         self.rawValue = rawValue
     }
     
-    static let None   = AudioEffectCellBorders(rawValue: 0)
+    static let None   = AudioEffectCellBorders([])
     static let Right  = AudioEffectCellBorders(rawValue: 1 << 0)
     static let Bottom = AudioEffectCellBorders(rawValue: 1 << 1)
 }

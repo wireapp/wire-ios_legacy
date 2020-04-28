@@ -215,7 +215,7 @@ final class ConversationListViewModel: NSObject {
             hasher.combine(isFavorite)
             
             if let hashable = item as? AnyHashable {
-                hasher.combine(hashable)
+                hasher.combine(item)
             }
         }
 
