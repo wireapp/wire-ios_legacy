@@ -64,6 +64,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
     private let backgroundViewController: BackgroundViewController
     private let stackView = UIStackView(axis: .vertical)
+    private let errorViewController = CallQualityIndicatorViewController()
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
@@ -75,7 +76,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     init(configuration: CallInfoViewControllerInput) {
-        self.configuration = configuration        
+        self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
         backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
@@ -104,6 +105,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     private func setupViews() {
         addToSelf(backgroundViewController)
 
+        addToSelf(errorViewController)
+        errorViewController.view.translatesAutoresizingMaskIntoConstraints = false
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         stackView.alignment = .center
@@ -117,8 +121,11 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
     private func createConstraints() {
         NSLayoutConstraint.activate([
+            errorViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            errorViewController.view.topAnchor.constraint(equalTo: safeTopAnchor, constant: 8),
+            errorViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.topAnchor.constraint(equalTo: safeTopAnchor),
+            stackView.topAnchor.constraint(equalTo: errorViewController.view.bottomAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuideOrFallback.bottomAnchor, constant: -40),
             actionsView.widthAnchor.constraint(equalToConstant: 288),
