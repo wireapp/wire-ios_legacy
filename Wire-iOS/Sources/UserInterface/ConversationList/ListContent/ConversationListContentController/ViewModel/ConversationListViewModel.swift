@@ -220,15 +220,8 @@ final class ConversationListViewModel: NSObject {
         }
 
         static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
-            if lhs.isFavorite != rhs.isFavorite { return false }
-            
-            ///TODO: no cast
-            if let lhsItem = lhs.item as? AnyHashable,
-               let rhsItem = rhs.item as? AnyHashable {
-                return lhsItem == rhsItem
-            } else {
-                return false
-            }
+            return lhs.isFavorite == rhs.isFavorite &&
+                   lhs.item == rhs.item
         }
     }
 
