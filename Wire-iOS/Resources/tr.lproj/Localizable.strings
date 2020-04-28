@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "etkin";
 "conversation.voiceover.value.disabled" = "devre dışı";
 
+"conversation.status.secutity_alert.default" = "New security alert";
+
 "conversation.status.typing" = "Bir mesaj yazıyor…";
 "conversation.status.typing.group" = "%@: bir mesaj yazıyor…";
 "conversation.status.silenced" = "Susturuldu";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Giriş yapın";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Lütfen tam adınız ile geçerli bir e-posta adresi giriniz";
 "error.full_name" = "Lütfen tam adınızı girin";
 "error.email" = "Lütfen geçerli bir e-posta adresi girin";
-"error.input.too_long" = "Giriş çok uzun";
-"error.input.too_short" = "Giriş çok kısa";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Lütfen geçerli bir e-posta adresi girin";
 "error.phone.invalid" = "Lütfen geçerli bir telefon numarası girin";
 

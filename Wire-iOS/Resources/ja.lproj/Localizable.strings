@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "アクティブ";
 "conversation.voiceover.value.disabled" = "無効";
 
+"conversation.status.secutity_alert.default" = "新規セキュリティアラート";
+
 "conversation.status.typing" = "メッセージを入力中";
 "conversation.status.typing.group" = "%@: メッセージの入力中";
 "conversation.status.silenced" = "ミュート";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "組織アカウントログイン";
-"login.sso.alert.message.sso_and_email" = "メールアドレスまたはシングルサインオンコードを入力してください";
+"login.sso.alert.message.sso_and_email" = "メールアドレスまたはシングルサインオンコードを入力してください。組織で運用されている Wire にメールアドレスが適合する場合は、このアプリからサーバーへ接続できます。";
 "login.sso.alert.message.sso_only" = "シングルサインオンコードを入力してください";
 "login.sso.alert.action" = "ログイン";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "メールアドレスまたはシングルサインオンアクセスコード";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "名前と有効なメールアドレスを入力してください。";
 "error.full_name" = "氏名を入力してください";
 "error.email" = "有効なメール アドレスを入力してください";
-"error.input.too_long" = "入力が長すぎます";
-"error.input.too_short" = "入力が短すぎます";
+"error.input.too_long" = "もっと短いユーザー名を入力してください";
+"error.input.too_short" = "もっと長いユーザー名を入力してください";
 "error.email.invalid" = "有効なメール アドレスを入力してください";
 "error.phone.invalid" = "有効な電話番号を入力してください";
 
@@ -1747,8 +1749,8 @@
 "account_deleted_session_expired_alert.message" = "アプリケーションがサーバーと長時間通信しなかったか、セッションが遠隔から無効化されました。";
 
 // Button cell state
-"button_message_cell.state.unselected" = "unselected";
-"button_message_cell.state.selected" = "selected";
-"button_message_cell.state.confirmed" = "confirmed";
+"button_message_cell.state.unselected" = "未選択";
+"button_message_cell.state.selected" = "選択済み";
+"button_message_cell.state.confirmed" = "確認済み";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "応答は送信できませんでした。もう一度送信してください。";
