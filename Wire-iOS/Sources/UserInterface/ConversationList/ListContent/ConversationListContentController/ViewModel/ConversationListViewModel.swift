@@ -214,14 +214,16 @@ final class ConversationListViewModel: NSObject {
         func hash(into hasher: inout Hasher) {
             hasher.combine(isFavorite)
             
+            ///TODO: no cast
             if let hashable = item as? AnyHashable {
-                hasher.combine(item)
+                hasher.combine(hashable)
             }
         }
 
         static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
             if lhs.isFavorite != rhs.isFavorite { return false }
             
+            ///TODO: no cast
             if let lhsItem = lhs.item as? AnyHashable,
                let rhsItem = rhs.item as? AnyHashable {
                 return lhsItem == rhsItem
