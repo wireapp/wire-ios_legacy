@@ -39,4 +39,13 @@ extension NetworkQuality {
             return false
         }
     }
+    
+    var hasProblem: Bool {
+        switch self {
+        case .problem:
+            return true
+        case .normal, .medium, .poor:
+            return false
+        }
+    }
 }

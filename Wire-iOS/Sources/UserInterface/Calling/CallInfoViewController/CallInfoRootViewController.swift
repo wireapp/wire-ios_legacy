@@ -27,7 +27,7 @@ protocol CallInfoRootViewControllerDelegate: class {
 final class CallInfoRootViewController: UIViewController, UINavigationControllerDelegate, CallInfoViewControllerDelegate, CallDegradationControllerDelegate {
     
     enum Context {
-        case overview, participants
+        case overview, participants, moreInfoCallQuality
     }
 
     weak var delegate: CallInfoRootViewControllerDelegate?
@@ -102,11 +102,17 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         contentNavigationController.pushViewController(participantsList, animated: true)
     }
     
+    private func presentMoreInfoCallQuality() {
+        context = .moreInfoCallQuality
+        // TO DO: present or push MoreInfoCallQuality screen
+    }
+    
     // MARK: - Delegates
     
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction) {
         switch (action, configuration.degradationState) {
         case (.showParticipantsList, _): presentParticipantsList()
+        case (.showMoreInfoCallQuality, _): presentMoreInfoCallQuality()
         case (.acceptCall, .incoming): delegate?.infoRootViewController(self, perform: .acceptDegradedCall)
         default: delegate?.infoRootViewController(self, perform: action)
         }

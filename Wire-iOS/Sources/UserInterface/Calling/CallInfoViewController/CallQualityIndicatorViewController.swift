@@ -19,10 +19,25 @@
 import Foundation
 import UIKit
 
+protocol CallQualityIndicatorViewControllerDelegate: class {
+    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController, didTapDismissButton: UIButton)
+    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController, didTapMoreInfoButton: UIButton)
+}
+
 class CallQualityIndicatorViewController: UIViewController {
 
-    // MARK: - Properties
-
+    // MARK: - Public Properties
+    weak var delegate: CallQualityIndicatorViewControllerDelegate?
+    
+    var isHidden: Bool = false {
+        didSet{
+            view.isHidden = isHidden
+        }
+    }
+    
+    var hasBeenShown = false
+    
+    // MARK: - Private Properties
     private let padding = UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 8)
     private let spacing: CGFloat = 16
 
@@ -41,7 +56,6 @@ class CallQualityIndicatorViewController: UIViewController {
         let button = IconButton(style: .default)
         button.setIcon(.cross, size: .tiny, for: .normal)
         button.setIconColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(didTapDismissButton), for: .touchUpInside)
         return button
     }()
 
@@ -51,7 +65,6 @@ class CallQualityIndicatorViewController: UIViewController {
         button.textTransform = .none
         button.setTitleColor(.white, for: .normal)
         button.setBorderColor(UIColor(white: 1, alpha: 0.2), for: .normal)
-        button.addTarget(self, action: #selector(didTapMoreInfoButton), for: .touchUpInside)
         return button
     }()
 
@@ -60,12 +73,23 @@ class CallQualityIndicatorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        setUpButtonActions()
         setUpConstraints()
     }
-
+    
     // MARK: - Helpers
 
+    private func setUpButtonActions() {
+        dismissButton.addTarget(self,
+                                action: #selector(didTapDismissButton),
+                                for: .touchUpInside)
+        moreInfoButton.addTarget(self,
+                                 action: #selector(didTapMoreInfoButton),
+                                 for: .touchUpInside)
+    }
+    
     private func setUpViews() {
+        
         view.backgroundColor = UIColor(rgb: (196, 75, 70))
         view.layer.cornerRadius = 5
         view.clipsToBounds = true
@@ -105,11 +129,12 @@ class CallQualityIndicatorViewController: UIViewController {
 
     @objc
     private func didTapDismissButton() {
-
+        delegate?.callQualityIndicatorViewController(self, didTapDismissButton: dismissButton)
     }
 
-    @objc private func didTapMoreInfoButton() {
-
+    @objc
+    private func didTapMoreInfoButton() {
+        delegate?.callQualityIndicatorViewController(self, didTapMoreInfoButton: moreInfoButton)
     }
 
 }
