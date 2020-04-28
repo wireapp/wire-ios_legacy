@@ -22,12 +22,12 @@ import WireDataModel
 
 /// a item which can be presented in the conversaton list
 ///TODO: mark ZMConversation also hashable
-protocol ConversationListItem/*: Hashable*/ {}
+protocol ConversationListItem: NSObjectProtocol {}
 
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-struct ConversationListConnectRequestsItem: ConversationListItem, Hashable {}
+final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
