@@ -19,25 +19,27 @@
 import Foundation
 import UIKit
 
-protocol CallQualityIndicatorViewControllerDelegate: class {
-    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController, didTapDismissButton: UIButton)
-    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController, didTapMoreInfoButton: UIButton)
+protocol CallQualityIndicatorDelegate: class {
+    func callQualityIndicator(_ callQualityIndicator: CallQualityIndicatorViewController,
+                              didTapDismissButton: UIButton)
+    func callQualityIndicator(_ callQualityIndicator: CallQualityIndicatorViewController,
+                              didTapMoreInfoButton: UIButton)
 }
 
 class CallQualityIndicatorViewController: UIViewController {
 
     // MARK: - Public Properties
-    weak var delegate: CallQualityIndicatorViewControllerDelegate?
     
+    weak var delegate: CallQualityIndicatorDelegate?
+    var hasBeenShown = false
     var isHidden: Bool = false {
         didSet{
             view.isHidden = isHidden
         }
     }
     
-    var hasBeenShown = false
-    
     // MARK: - Private Properties
+    
     private let padding = UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 8)
     private let spacing: CGFloat = 16
 
@@ -45,7 +47,7 @@ class CallQualityIndicatorViewController: UIViewController {
 
     private let messageLabel: UILabel = {
         let label = UILabel()
-        label.text = "Your calling relay is not reachable. This may affect your call experience.".uppercased()
+        label.text = "call.quality.indicator.message".localized.uppercased()
         label.font = FontSpec(.small, .medium).font!
         label.textColor = .white
         label.numberOfLines = 0
@@ -61,7 +63,8 @@ class CallQualityIndicatorViewController: UIViewController {
 
     private let moreInfoButton: Button = {
         let button = Button(style: .empty)
-        button.setTitle("More info", for: .normal)
+        button.setTitle("call.quality.indicator.more_info.button.text".localized,
+                        for: .normal)
         button.textTransform = .none
         button.setTitleColor(.white, for: .normal)
         button.setBorderColor(UIColor(white: 1, alpha: 0.2), for: .normal)
@@ -89,52 +92,68 @@ class CallQualityIndicatorViewController: UIViewController {
     }
     
     private func setUpViews() {
-        
         view.backgroundColor = UIColor(rgb: (196, 75, 70))
         view.layer.cornerRadius = 5
         view.clipsToBounds = true
 
         for subview in [messageLabel, dismissButton, moreInfoButton] {
             view.addSubview(subview)
-        }
-    }
-
-    private func setUpConstraints() {
-        for subview in [messageLabel, dismissButton, moreInfoButton] {
             subview.translatesAutoresizingMaskIntoConstraints = false
         }
-
-        NSLayoutConstraint.activate([
-            dismissButton.topAnchor.constraint(equalTo: view.topAnchor, constant: padding.top),
-            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding.trailing)
-        ])
-
-        NSLayoutConstraint.activate([
-            moreInfoButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding.trailing),
-            moreInfoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding.bottom)
-        ])
-
-        messageLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        messageLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-
-        NSLayoutConstraint.activate([
-            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding.leading),
-            messageLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: padding.top),
-            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: dismissButton.leadingAnchor, constant: -spacing),
-            messageLabel.bottomAnchor.constraint(lessThanOrEqualTo: moreInfoButton.topAnchor, constant: -spacing)
-        ])
     }
 
+    // MARK: - Constraints Helpers
+    
+    private func setUpConstraints() {
+        setUpDismissButtonConstraints()
+        setUpMoreInfoButtonConstraints()
+        setUpMessageLabelConstraints()
+    }
+
+    private func setUpDismissButtonConstraints() {
+        NSLayoutConstraint.activate([
+            dismissButton.topAnchor.constraint(equalTo: view.topAnchor,
+                                               constant: padding.top),
+            dismissButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: -padding.trailing)
+        ])
+    }
+    
+    private func setUpMoreInfoButtonConstraints() {
+        NSLayoutConstraint.activate([
+            moreInfoButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                     constant: -padding.trailing),
+            moreInfoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                   constant: -padding.bottom)
+        ])
+    }
+    
+    private func setUpMessageLabelConstraints() {
+        messageLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        messageLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
+        
+        NSLayoutConstraint.activate([
+            messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                  constant: padding.leading),
+            messageLabel.topAnchor.constraint(equalTo: view.topAnchor,
+                                              constant: padding.top),
+            messageLabel.trailingAnchor.constraint(lessThanOrEqualTo: dismissButton.leadingAnchor,
+                                                   constant: -spacing),
+            messageLabel.bottomAnchor.constraint(lessThanOrEqualTo: moreInfoButton.topAnchor,
+                                                 constant: -spacing)
+        ])
+    }
+    
     // MARK: - Actions
 
     @objc
     private func didTapDismissButton() {
-        delegate?.callQualityIndicatorViewController(self, didTapDismissButton: dismissButton)
+        delegate?.callQualityIndicator(self, didTapDismissButton: dismissButton)
     }
 
     @objc
     private func didTapMoreInfoButton() {
-        delegate?.callQualityIndicatorViewController(self, didTapMoreInfoButton: moreInfoButton)
+        delegate?.callQualityIndicator(self, didTapMoreInfoButton: moreInfoButton)
     }
 
 }

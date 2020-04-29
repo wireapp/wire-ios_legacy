@@ -191,15 +191,15 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 }
 
-extension CallInfoViewController: CallQualityIndicatorViewControllerDelegate {
-    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
+extension CallInfoViewController: CallQualityIndicatorDelegate {
+    func callQualityIndicator(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
                                             didTapDismissButton: UIButton) {
         errorViewController.hasBeenShown = true
         errorViewController.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    func callQualityIndicatorViewController(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
+    func callQualityIndicator(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
                                             didTapMoreInfoButton: UIButton) {
         delegate?.infoViewController(self, perform: .showMoreInfoCallQuality)
     }
