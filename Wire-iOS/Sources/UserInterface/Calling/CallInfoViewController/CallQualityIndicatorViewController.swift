@@ -62,12 +62,15 @@ class CallQualityIndicatorViewController: UIViewController {
     }()
 
     private let moreInfoButton: Button = {
-        let button = Button(style: .empty)
-        button.setTitle("call.quality.indicator.more_info.button.text".localized,
+        let button = Button(style: .empty,
+                            titleLabelFont: .smallMediumFont)
+        button.setTitle("call.quality.indicator.more_info.button.text".localized.uppercased(),
                         for: .normal)
         button.textTransform = .none
+        button.backgroundColor = UIColor(white: 1, alpha: 0.24)
+        button.setBorderColor(UIColor(rgb: (230, 6, 6)), for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.setBorderColor(UIColor(white: 1, alpha: 0.2), for: .normal)
+        button.layer.cornerRadius = 13
         return button
     }()
 
@@ -92,8 +95,8 @@ class CallQualityIndicatorViewController: UIViewController {
     }
     
     private func setUpViews() {
-        view.backgroundColor = UIColor(rgb: (196, 75, 70))
-        view.layer.cornerRadius = 5
+        view.backgroundColor = UIColor(rgb: (230, 6, 6))
+        view.layer.cornerRadius = 4
         view.clipsToBounds = true
 
         for subview in [messageLabel, dismissButton, moreInfoButton] {
@@ -121,6 +124,8 @@ class CallQualityIndicatorViewController: UIViewController {
     
     private func setUpMoreInfoButtonConstraints() {
         NSLayoutConstraint.activate([
+            moreInfoButton.heightAnchor.constraint(equalToConstant: 28.0),
+            moreInfoButton.widthAnchor.constraint(equalToConstant: 111.0),
             moreInfoButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                                      constant: -padding.trailing),
             moreInfoButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
