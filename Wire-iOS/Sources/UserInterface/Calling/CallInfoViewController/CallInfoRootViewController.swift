@@ -105,7 +105,7 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     
     private func presentMoreInfoCallQuality() {
         context = .moreInfoCallQuality
-        let browserViewController = CallBroswerViewController(url: URL.wr_FAQs.appendingLocaleParameter)
+        let browserViewController = CallBrowserViewController(url: URL.wr_FAQs.appendingLocaleParameter)
         let navigationController = UINavigationController(rootViewController: browserViewController)
         present(navigationController, animated: true)
     }
