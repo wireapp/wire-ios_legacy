@@ -39,8 +39,6 @@ final class SelfProfileViewController: UIViewController {
     private let profileContainerView = UIView()
     private let profileHeaderViewController: ProfileHeaderViewController
 
-    private var teamObserver: NSObjectProtocol?
-
     // MARK: - Configuration
 
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
@@ -120,11 +118,7 @@ final class SelfProfileViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
-        createConstraints()
-        
-        if let team = ZMUser.selfUser()?.team {
-            teamObserver = TeamChangeInfo.add(observer: self, for: team)
-        }
+        createConstraints()        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -201,12 +195,4 @@ extension SelfProfileViewController: SettingsPropertyFactoryDelegate {
         (navigationController?.topViewController as? SpinnerCapableViewController)?.isLoadingViewVisible = false
     }
 
-}
-
-extension SelfProfileViewController: TeamObserver {
-    func teamDidChange(_ changeInfo: TeamChangeInfo) {
-        if changeInfo.nameChanged {
-            profileHeaderViewController.updateTeamLabel()
-        }
-    }
 }
