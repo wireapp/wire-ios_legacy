@@ -22,19 +22,13 @@ import WebKit
 
 class CallBrowserViewController: UIViewController {
     
-    // MARK: - Error states
-    private enum VerificationError: Error {
-        case postCodeRetry
-        case authenticationFailed
-        case internalServerError
-    }
-    
     // MARK: - Private Property
     
     private var webView = WKWebView(frame: .zero)
     private var url: URL?
     
     // MARK: - Init
+    
     init(url: URL) {
         self.url = url
         super.init(nibName: nil, bundle: nil)
@@ -44,6 +38,8 @@ class CallBrowserViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupWebView()
@@ -51,6 +47,7 @@ class CallBrowserViewController: UIViewController {
     }
     
     // MARK: - Private Method
+    
     private func setupWebView() {
         webView.translatesAutoresizingMaskIntoConstraints = false
         webView.navigationDelegate = self
@@ -77,7 +74,8 @@ class CallBrowserViewController: UIViewController {
         webView.load(request)
     }
     
-    @objc private func onClose() {
+    @objc
+    private func onClose() {
         dismiss(animated: true, completion: nil)
     }
 }
