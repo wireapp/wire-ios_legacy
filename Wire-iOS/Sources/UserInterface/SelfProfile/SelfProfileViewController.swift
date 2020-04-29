@@ -118,7 +118,7 @@ final class SelfProfileViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
         configureAccountTitle()
-        createConstraints()        
+        createConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
