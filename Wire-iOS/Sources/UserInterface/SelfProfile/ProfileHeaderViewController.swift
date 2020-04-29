@@ -288,7 +288,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         }
     }
     
-    private func updateTeamLabel() {
+    func updateTeamLabel() {
         if let teamName = user.teamName, !options.contains(.hideTeamName) {
             teamNameLabel.text = teamName.localizedUppercase
             teamNameLabel.accessibilityValue = teamNameLabel.text
