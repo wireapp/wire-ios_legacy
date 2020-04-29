@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import SafariServices
 
 protocol CallInfoRootViewControllerDelegate: class {
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
@@ -104,8 +105,57 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
     
     private func presentMoreInfoCallQuality() {
         context = .moreInfoCallQuality
-        // TO DO: present or push MoreInfoCallQuality screen
+        
+//        if #available(iOS 11.0, *) {
+//            let vc = SFSafariViewController(url: URL.wr_FAQs.appendingLocaleParameter,
+//                                            configuration: SFSafariViewController.Configuration())
+//            present(vc, animated: true)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        
+//        let browserViewController = BrowserViewController(url: URL.wr_FAQs.appendingLocaleParameter)
+//        browserViewController.completion = {
+//            self.delegate?.userDidCancelCompanyLoginFlow()
+//        }
+//        contentNavigationController.setNavigationBarHidden(false, animated: false)
+//        contentNavigationController.pushViewController(browserViewController, animated: true)
+//        contentNavigationController.present(browserViewController, animated: true)
+        
+        
+//        if UIApplication.shared.canOpenURL(URL.wr_FAQs.appendingLocaleParameter) {
+//           UIApplication.shared.open(URL.wr_FAQs.appendingLocaleParameter)
+//        }
+        
+//        let viewController = UIViewController()
+//        viewController.view.frame = UIScreen.main.bounds
+//        viewController.view.backgroundColor = .red
+//        contentNavigationController.pushViewController(viewController, animated: true)
+        
+        let browserViewController = CallBroswerViewController(url: URL.wr_FAQs.appendingLocaleParameter)
+        let navigationController = UINavigationController(rootViewController: browserViewController)
+        present(navigationController, animated: true)
     }
+    
+//    private func presentDigitalSignatureVerification(with url: URL) {
+//        let digitalSignatureVerification = DigitalSignatureVerificationViewController(url: url) { [weak self] result in
+//            switch result {
+//            case .success:
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [weak self] in
+//                    self?.dataSource.selectedMessage?
+//                        .fileMessageData?.retrievePDFSignature()
+//                }
+//            case .failure:
+//                self?.dismissDigitalSignatureVerification(completion: {                        self?.presentDigitalSignatureErrorAlert(errorType: .retrieveFailed)
+//                })
+//            }
+//        }
+//        let navigationController = UINavigationController(rootViewController: digitalSignatureVerification)
+//        present(navigationController, animated: true, completion: { [weak self] in
+//            self?.isDigitalSignatureVerificationShown =  true
+//        })
+//    }
+    
     
     // MARK: - Delegates
     

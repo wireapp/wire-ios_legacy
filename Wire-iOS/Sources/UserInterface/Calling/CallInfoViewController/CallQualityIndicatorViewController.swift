@@ -129,9 +129,6 @@ class CallQualityIndicatorViewController: UIViewController {
     }
     
     private func setUpMessageLabelConstraints() {
-        messageLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        messageLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
-        
         NSLayoutConstraint.activate([
             messageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                   constant: padding.leading),

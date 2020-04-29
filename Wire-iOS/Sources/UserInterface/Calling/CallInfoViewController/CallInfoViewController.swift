@@ -160,8 +160,11 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         backgroundViewController.view.isHidden = configuration.videoPlaceholderState == .hidden
 
         if configuration.networkQuality.isNormal {
-            navigationItem.titleView = nil
-            errorViewController.view.isHidden = true
+//            navigationItem.titleView = nil
+//            errorViewController.view.isHidden = true
+            guard errorViewController.hasBeenShown == false else { return }
+            errorViewController.isHidden = false
+            navigationController?.setNavigationBarHidden(true, animated: true)
         } else if configuration.networkQuality.hasProblem {
             guard errorViewController.hasBeenShown == false else { return }
             errorViewController.isHidden = false
