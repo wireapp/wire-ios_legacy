@@ -30,5 +30,4 @@ enum CallAction {
     case flipCamera
     case minimizeOverlay
     case showParticipantsList
-    case showMoreInfoCallQuality
 }

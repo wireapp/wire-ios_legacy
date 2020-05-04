@@ -18,7 +18,6 @@
 
 import Foundation
 import UIKit
-import SafariServices
 
 protocol CallInfoRootViewControllerDelegate: class {
     func infoRootViewController(_ viewController: CallInfoRootViewController, perform action: CallAction)
@@ -28,7 +27,7 @@ protocol CallInfoRootViewControllerDelegate: class {
 final class CallInfoRootViewController: UIViewController, UINavigationControllerDelegate, CallInfoViewControllerDelegate, CallDegradationControllerDelegate {
     
     enum Context {
-        case overview, participants, moreInfoCallQuality
+        case overview, participants
     }
 
     weak var delegate: CallInfoRootViewControllerDelegate?
@@ -103,19 +102,11 @@ final class CallInfoRootViewController: UIViewController, UINavigationController
         contentNavigationController.pushViewController(participantsList, animated: true)
     }
     
-    private func presentMoreInfoCallQuality() {
-        context = .moreInfoCallQuality
-        let browserViewController = CallBrowserViewController(url: URL.wr_FAQs.appendingLocaleParameter)
-        let navigationController = UINavigationController(rootViewController: browserViewController)
-        present(navigationController, animated: true)
-    }
-    
     // MARK: - Delegates
     
     func infoViewController(_ viewController: CallInfoViewController, perform action: CallAction) {
         switch (action, configuration.degradationState) {
         case (.showParticipantsList, _): presentParticipantsList()
-        case (.showMoreInfoCallQuality, _): presentMoreInfoCallQuality()
         case (.acceptCall, .incoming): delegate?.infoRootViewController(self, perform: .acceptDegradedCall)
         default: delegate?.infoRootViewController(self, perform: action)
         }
