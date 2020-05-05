@@ -166,10 +166,6 @@ extension URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
     
-    static var wr_FAQs: URL {
-        return wr_support.appendingPathComponent("hc")
-    }
-
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }

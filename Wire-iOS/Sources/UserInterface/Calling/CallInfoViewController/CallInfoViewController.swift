@@ -64,7 +64,6 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
     private let backgroundViewController: BackgroundViewController
     private let stackView = UIStackView(axis: .vertical)
-    private let errorViewController: CallQualityIndicatorViewController
     private let statusViewController: CallStatusViewController
     private let accessoryViewController: CallAccessoryViewController
     private let actionsView = CallActionsView()
@@ -77,14 +76,12 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
     init(configuration: CallInfoViewControllerInput) {
         self.configuration = configuration
-        errorViewController = CallQualityIndicatorViewController()
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
         backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
         super.init(nibName: nil, bundle: nil)
         accessoryViewController.delegate = self
         actionsView.delegate = self
-        errorViewController.delegate = self
     }
     
     @available(*, unavailable)
@@ -116,16 +113,10 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         addChild(statusViewController)
         [statusViewController.view, accessoryViewController.view, actionsView].forEach(stackView.addArrangedSubview)
         statusViewController.didMove(toParent: self)
-        
-        addToSelf(errorViewController)
-        errorViewController.view.translatesAutoresizingMaskIntoConstraints = false
     }
 
     private func createConstraints() {
         NSLayoutConstraint.activate([
-            errorViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
-            errorViewController.view.topAnchor.constraint(equalTo: safeTopAnchor, constant: 4),
-            errorViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.topAnchor.constraint(equalTo: safeTopAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -161,18 +152,12 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
         if configuration.networkQuality.isNormal {
             navigationItem.titleView = nil
-            errorViewController.view.isHidden = true
-        } else if configuration.networkQuality.hasProblem {
-            guard errorViewController.hasBeenShown == false else { return }
-            errorViewController.isHidden = false
-            navigationController?.setNavigationBarHidden(true, animated: true)
         } else {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.attributedText = configuration.networkQuality.attributedString(color: UIColor.nameColor(for: .brightOrange, variant: .light))
             label.font = FontSpec(.small, .semibold).font
             navigationItem.titleView = label
-            errorViewController.isHidden = true
         }
     }
     
@@ -188,19 +173,5 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController) {
         delegate?.infoViewController(self, perform: .showParticipantsList)
-    }
-}
-
-extension CallInfoViewController: CallQualityIndicatorDelegate {
-    func callQualityIndicator(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
-                                            didTapDismissButton: UIButton) {
-        errorViewController.hasBeenShown = true
-        errorViewController.isHidden = true
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    func callQualityIndicator(_ callQualityIndicatorViewController: CallQualityIndicatorViewController,
-                                            didTapMoreInfoButton: UIButton) {
-        delegate?.infoViewController(self, perform: .showMoreInfoCallQuality)
     }
 }

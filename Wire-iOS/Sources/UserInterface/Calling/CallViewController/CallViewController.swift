@@ -392,7 +392,6 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         case .alertVideoUnavailable: alertVideoUnavailable()
         case .flipCamera: toggleCameraAnimated()
         case .showParticipantsList: return // Handled in `CallInfoRootViewController`, we don't want to update.
-        case .showMoreInfoCallQuality: return // Handled in `CallInfoRootViewController`, we don't want to update.
         }
         
         updateConfiguration()
@@ -404,7 +403,6 @@ extension CallViewController: CallInfoRootViewControllerDelegate {
         switch context {
         case .overview: startOverlayTimer()
         case .participants: stopOverlayTimer()
-        case .moreInfoCallQuality: stopOverlayTimer()
         }
     }
 
