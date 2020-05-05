@@ -316,8 +316,9 @@ final class FullscreenImageViewController: UIViewController {
 
             let mediaAsset: MediaAsset
 
-            if imageIsAnimatedGIF == true {
-                mediaAsset = FLAnimatedImage(animatedGIFData: imageData)
+            if imageIsAnimatedGIF == true,
+               let gifImageData = imageData {
+                mediaAsset = FLAnimatedImage(animatedGIFData: gifImageData)
             } else if let image = imageData.map(UIImage.init) as? UIImage {
                 mediaAsset = image
             } else {
