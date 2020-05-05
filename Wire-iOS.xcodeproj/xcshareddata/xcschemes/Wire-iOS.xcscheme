@@ -107,13 +107,7 @@
                   Identifier = "ConversationContentViewControllerTests">
                </Test>
                <Test
-                  Identifier = "ConversationInputBarViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ConversationLinkAttachmentMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationListViewControllerViewModelSnapshotTests">
                </Test>
                <Test
                   Identifier = "ConversationTextMessageTests">

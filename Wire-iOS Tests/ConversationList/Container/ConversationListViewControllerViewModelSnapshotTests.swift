@@ -19,13 +19,17 @@
 import XCTest
 @testable import Wire
 
-final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapshotTestCase {
+final class ConversationListViewControllerViewModelSnapshotTests: XCTestCase {
     var sut: ConversationListViewController.ViewModel!
     var mockView: UIView!
     fileprivate var mockViewController: MockConversationListContainer!
-    
+
+    var coreDataFixture: CoreDataFixture!
+
     override func setUp() {
         super.setUp()
+        
+        coreDataFixture = CoreDataFixture()
         
         let account = Account.mockAccount(imageData: Data())
         let selfUser = MockUserType.createSelfUser(name: "Bob")
@@ -40,30 +44,31 @@ final class ConversationListViewControllerViewModelSnapshotTests: CoreDataSnapsh
         sut = nil
         mockView = nil
         mockViewController = nil
-        
+        coreDataFixture = nil
+
         super.tearDown()
     }
     
     //MARK: - Action menu
     func testForActionMenu() {
-        teamTest {
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
+        coreDataFixture.teamTest {
+            sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
+            verify(matching:(sut?.actionsController?.alertController)!)
         }
     }
 
     func testForActionMenu_archive() {
-        teamTest {
-            otherUserConversation.isArchived = true
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
+        coreDataFixture.teamTest {
+            coreDataFixture.otherUserConversation.isArchived = true
+            sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
+            verify(matching:(sut?.actionsController?.alertController)!)
         }
     }
 
     func testForActionMenu_NoTeam() {
-        nonTeamTest {
-            sut.showActionMenu(for: otherUserConversation, from: mockViewController.view)
-            verifyAlertController((sut?.actionsController?.alertController)!)
+        coreDataFixture.nonTeamTest {
+            sut.showActionMenu(for: coreDataFixture.otherUserConversation, from: mockViewController.view)
+            verify(matching:(sut?.actionsController?.alertController)!)
         }
     }
 }
