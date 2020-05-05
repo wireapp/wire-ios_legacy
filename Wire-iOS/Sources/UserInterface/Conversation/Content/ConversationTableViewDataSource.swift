@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireDataModel
-import WireUtilities
 import DifferenceKit
 
 extension Int: Differentiable { }
@@ -53,7 +51,7 @@ extension ZMConversationMessage {
 final class ConversationTableViewDataSource: NSObject {
     static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
     
-    private var fetchController: NSFetchedResultsController<ZMMessage>!
+    private var fetchController: NSFetchedResultsController<ZMMessage>?
     private var lastFetchedObjectCount: Int = 0
     
     var registeredCells: [AnyClass] = []
@@ -92,10 +90,10 @@ final class ConversationTableViewDataSource: NSObject {
         // the initial fetch, which results in unwanted table view updates. This is normally what
         // we want when new message arrive but not when fetchOffset > 0.
         
-        if fetchController.fetchRequest.fetchOffset > 0 {
-            return Array(fetchController.fetchedObjects?.suffix(lastFetchedObjectCount) ?? [])
+        if fetchController?.fetchRequest.fetchOffset > 0 {
+            return Array(fetchController?.fetchedObjects?.suffix(lastFetchedObjectCount) ?? [])
         } else {
-            return fetchController.fetchedObjects ?? []
+            return fetchController?.fetchedObjects ?? []
         }
     }
     
@@ -243,10 +241,10 @@ final class ConversationTableViewDataSource: NSObject {
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
         
-        self.fetchController.delegate = self
-        try! fetchController.performFetch()
+        fetchController?.delegate = self
+        try! fetchController?.performFetch()
         
-        lastFetchedObjectCount = fetchController.fetchedObjects?.count ?? 0
+        lastFetchedObjectCount = fetchController?.fetchedObjects?.count ?? 0
         hasOlderMessagesToLoad = messages.count == fetchRequest.fetchLimit
         hasNewerMessagesToLoad = offset > 0
         firstUnreadMessage = conversation.firstUnreadMessage
@@ -255,8 +253,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     private func loadOlderMessages() {
-        let currentOffset = self.fetchController.fetchRequest.fetchOffset
-        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+        guard let currentOffset = fetchController?.fetchRequest.fetchOffset,
+              let currentLimit = fetchController?.fetchRequest.fetchLimit else { return }
         
         let newLimit = currentLimit + ConversationTableViewDataSource.defaultBatchSize
         
@@ -264,8 +262,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     func loadNewerMessages() {
-        let currentOffset = self.fetchController.fetchRequest.fetchOffset
-        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+        guard let currentOffset = fetchController?.fetchRequest.fetchOffset,
+            let currentLimit = fetchController?.fetchRequest.fetchLimit else { return }
 
         let newOffset = max(0, currentOffset - ConversationTableViewDataSource.defaultBatchSize)
         
@@ -280,7 +278,7 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     func index(of message: ZMConversationMessage) -> Int? {
-        if let indexPath = fetchController.indexPath(forObject: message as! ZMMessage) {
+        if let indexPath = fetchController?.indexPath(forObject: message as! ZMMessage) {
             return indexPath.row
         }
         else {
