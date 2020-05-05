@@ -682,6 +682,9 @@
 "call.alert.ongoing.start.button" = "Call anyway";
 "call.alert.ongoing.join.button" = "Join anyway";
 
+"call.quality.indicator.message" = "Your calling relay is not reachable. This may affect your call experience.";
+"call.quality.indicator.more_info.button.text" = "More info";
+
 // Call Actions (accessibility)
 
 "call.announcement.incoming" = "Incoming call from %@";

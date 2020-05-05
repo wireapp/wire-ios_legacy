@@ -75,7 +75,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     }
 
     init(configuration: CallInfoViewControllerInput) {
-        self.configuration = configuration        
+        self.configuration = configuration
         statusViewController = CallStatusViewController(configuration: configuration)
         accessoryViewController = CallAccessoryViewController(configuration: configuration)
         backgroundViewController = BackgroundViewController(user: ZMUser.selfUser(), userSession: ZMUserSession.shared())
@@ -174,5 +174,4 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController) {
         delegate?.infoViewController(self, perform: .showParticipantsList)
     }
-
 }

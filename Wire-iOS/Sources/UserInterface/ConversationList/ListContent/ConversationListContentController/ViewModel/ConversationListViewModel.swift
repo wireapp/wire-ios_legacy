@@ -214,20 +214,13 @@ final class ConversationListViewModel: NSObject {
         func hash(into hasher: inout Hasher) {
             hasher.combine(isFavorite)
             
-            if let hashable = item as? AnyHashable {
-                hasher.combine(hashable)
-            }
+            let hashableItem: NSObject = item            
+            hasher.combine(hashableItem)
         }
 
         static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
-            if lhs.isFavorite != rhs.isFavorite { return false }
-            
-            if let lhsItem = lhs.item as? AnyHashable,
-               let rhsItem = rhs.item as? AnyHashable {
-                return lhsItem == rhsItem
-            } else {
-                return false
-            }
+            return lhs.isFavorite == rhs.isFavorite &&
+                   lhs.item == rhs.item
         }
     }
 

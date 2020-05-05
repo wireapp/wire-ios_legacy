@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 final class ProfileHeaderViewController: UIViewController, Themeable {
@@ -115,6 +113,7 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
     let externalIndicator = LabelIndicator(context: .external)
 
     private var tokens: [Any?] = []
+    private var teamObserver: NSObjectProtocol?
     
     /**
      * Creates a profile view for the specified user and options.
@@ -218,6 +217,10 @@ final class ProfileHeaderViewController: UIViewController, Themeable {
         applyOptions()
         
         availabilityTitleViewController.didMove(toParent: self)
+        
+        if let team = (user as? ZMUser)?.team {
+            teamObserver = TeamChangeInfo.add(observer: self, for: team)
+        }
     }
     
     private func configureConstraints() {
@@ -331,6 +334,14 @@ extension ProfileHeaderViewController: ZMUserObserver {
         
         if changeInfo.availabilityChanged {
             updateAvailabilityVisibility()
+        }
+    }
+}
+
+extension ProfileHeaderViewController: TeamObserver {
+    func teamDidChange(_ changeInfo: TeamChangeInfo) {
+        if changeInfo.nameChanged {
+            updateTeamLabel()
         }
     }
 }
