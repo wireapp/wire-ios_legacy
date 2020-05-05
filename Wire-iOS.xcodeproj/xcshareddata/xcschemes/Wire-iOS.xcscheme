@@ -50,9 +50,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AppLockViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "AppLockViewSnapshotTests">
                </Test>
                <Test
@@ -144,12 +141,6 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests()">
                </Test>
                <Test
                   Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
