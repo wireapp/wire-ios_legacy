@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "active";
 "conversation.voiceover.value.disabled" = "disabled";
 
+"conversation.status.secutity_alert.default" = "New security alert";
+
 "conversation.status.typing" = "Kirjutab…";
 "conversation.status.typing.group" = "%@: kirjutab…";
 "conversation.status.silenced" = "Vaigistatud";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Please enter your SSO code:";
 "login.sso.alert.action" = "Logi sisse";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Palun sisesta oma täisnimi ja korrektne e-posti aadress";
 "error.full_name" = "Palun sisesta oma täisnimi";
 "error.email" = "Palun sisesta korrektne e-posti aadress";
-"error.input.too_long" = "Sisestus liiga pikk";
-"error.input.too_short" = "Sisestus liiga lühike";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Palun sisesta korrektne e-posti aadress";
 "error.phone.invalid" = "Sisesta kehtiv telefoninumber";
 

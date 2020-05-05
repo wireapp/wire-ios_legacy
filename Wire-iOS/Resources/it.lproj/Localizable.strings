@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "attivo";
 "conversation.voiceover.value.disabled" = "disattivato";
 
+"conversation.status.secutity_alert.default" = "Nuovo avviso di sicurezza";
+
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
 "conversation.status.silenced" = "Silenzioso";
@@ -1229,16 +1231,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Aggiungi il tuo account.";
-"landing.welcome_message" = "Welcome to %@";
-"landing.create_account.title" = "Create an Account";
+"landing.welcome_message" = "Benvenuto in %@";
+"landing.create_account.title" = "Crea account";
 "landing.create_account.subtitle" = "Messaggia privatamente con gruppi di amici e familiari";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Collaborazione sicura per business, istituzioni e organizzazioni professionali";
 "landing.login.hints" = "Hai già un account?";
 "landing.login.button.title" = "Log in";
-"landing.login.email.button.title" = "Log in with email";
-"landing.login.enterprise.button.title" = "Enterprise log in";
-"landing.login.sso.button.title" = "Log in with SSO";
+"landing.login.email.button.title" = "Login con email";
+"landing.login.enterprise.button.title" = "Accesso aziendale";
+"landing.login.sso.button.title" = "Accedi con SSO";
 
 "landing.custom_backend.title" = "Connesso a \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Visualizza di più";
@@ -1374,12 +1376,12 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Questo backup è stato creato con una versione più recente o obsoleta di Wire e non può essere ripristinato.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Enterprise Login";
-"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code:";
-"login.sso.alert.message.sso_only" = "Please enter your SSO code:";
+"login.sso.alert.title" = "Accesso aziendale";
+"login.sso.alert.message.sso_and_email" = "Inserisci il tuo codice email o SSO. Se la tua email corrisponde a un'installazione aziendale di Wire, questa app si connetterà a quel server.";
+"login.sso.alert.message.sso_only" = "Inserisci il tuo codice SSO:";
 "login.sso.alert.action" = "Log in";
-"login.sso.alert.text_field.placeholder.sso_and_email" = "email or SSO access code";
-"login.sso.alert.text_field.placeholder.sso_only" = "SSO access code";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email o codice di accesso SSO";
+"login.sso.alert.text_field.placeholder.sso_only" = "Codice d'accesso SSO";
 
 "login.sso.start_error_title" = "Impossibile avviare il Login Aziendale";
 "login.sso.link_error_message" = "Questo link non è valido. Contatta l'amministratore per risolvere il problema.";
@@ -1389,10 +1391,10 @@
 
 "login.sso.error.alert.invalid_code.message" = "Verifica il tuo codice di accesso SSO aziendale e riprova.";
 "login.sso.error.alert.invalid_status.message" = "Riprova più tardi (errore %@).";
-"login.sso.error.alert.invalid_format.message.sso_only" = "Please enter a valid SSO access code";
-"login.sso.error.alert.invalid_format.message.sso_and_email" = "Please enter a valid email or SSO access code";
-"login.sso.error.alert.domain_not_registered.message" = "This email cannot be used for enterprise login. Please enter the SSO code to proceed.";
-"login.sso.error.alert.domain_associated_with_wrong_server.message" = "This email is linked to a different server, but the app can only be connected to one server at a time. Please log out of all Wire accounts on this device and try to login again.";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Inserisci un codice di accesso SSO valido";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Inserisci un codice email o accesso SSO valido";
+"login.sso.error.alert.domain_not_registered.message" = "Questa email non può essere utilizzata per l'accesso aziendale. Inserisci il codice SSO per procedere.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Questa email è collegata ad un server diverso, ma l'app può essere connessa solo ad un server alla volta. Per favore esci da tutti gli account Wire su questo dispositivo e prova ad accedere nuovamente.";
 "login.sso.error.alert.unknown.message" = "Si prega di riprovare più tardi.";
 
 
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Inserisci il tuo nome e cognome e un indirizzo email valido";
 "error.full_name" = "Si prega di inserire il nome intero";
 "error.email" = "Inserisci un indirizzo email valido";
-"error.input.too_long" = "Input troppo lungo";
-"error.input.too_short" = "Input troppo corto";
+"error.input.too_long" = "Inserisci un nome utente più corto";
+"error.input.too_short" = "Inserisci un nome utente più lungo";
 "error.email.invalid" = "Inserisci un indirizzo email valido";
 "error.phone.invalid" = "Inserisci un numero di telefono valido";
 
@@ -1751,4 +1753,4 @@
 "button_message_cell.state.selected" = "selezionato";
 "button_message_cell.state.confirmed" = "confermato";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "La tua risposta non può essere inviata, riprova.";
