@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
+final class AppLockViewSnapshotTests: XCTestCase {
     
     var sut: AppLockView!
     
@@ -36,40 +36,28 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
         sut = AppLockView(authenticationType: .touchID)
         sut.showReauth = true
 
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testForReauthUI_FaceID() {
         sut = AppLockView(authenticationType: .faceID)
         sut.showReauth = true
 
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testForReauthUI_Password() {
         sut = AppLockView(authenticationType: .passcode)
         sut.showReauth = true
 
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
     
     func testForReauthUI_Unvailable() {
         sut = AppLockView(authenticationType: .unavailable)
         sut.showReauth = true
         
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut)
     }
 
 }

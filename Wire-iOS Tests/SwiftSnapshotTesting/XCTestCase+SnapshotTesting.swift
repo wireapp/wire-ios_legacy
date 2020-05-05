@@ -82,6 +82,35 @@ extension XCTestCase {
         }
     }
 
+    func verifyInAllDeviceSizes(matching value: UIView,
+                              file: StaticString = #file,
+                              testName: String = #function,
+                              line: UInt = #line) {
+
+        let allDevices = XCTestCase.phoneConfigNames.merging(XCTestCase.padConfigNames) { (current, _) in current }
+
+        for(config, name) in allDevices {
+            if let deviceMockable = value as? DeviceMockable {
+                (deviceMockable.device as? MockDevice)?.userInterfaceIdiom = config.traits.userInterfaceIdiom
+            }
+
+//            let failure = verifySnapshot(matching: value,
+//                                         as: .image(on: config),
+//                                         named: name,
+//                                         snapshotDirectory: snapshotDirectory(file: file),
+//                                         file: file,
+//                                         testName: testName,
+//                                         line: line)
+
+            verify(matching: value,
+                   as: .image(on: config),
+                   named: name,
+                   file: file,
+                   testName: testName,
+                   line: line)
+        }
+    }
+
     func verifyInWidths(matching value: UIView,
                         widths: Set<CGFloat>,
                         snapshotBackgroundColor: UIColor,
@@ -270,6 +299,14 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
     /// Compare UIAlertController.view to prevert the view is resized to fix the default UIViewController.view's size
     public static var image: Snapshotting<UIAlertController, UIImage> {
         return Snapshotting<UIView, UIImage>.image(precision: 1, size: nil).pullback { $0.view }
+    }
+}
+
+extension Snapshotting where Value == UIView, Format == UIImage {
+
+    /// A snapshot strategy for comparing UIView views based on pixel equality.
+    public static var image: Snapshotting<UIView, UIImage> {
+        return Snapshotting<UIView, UIImage>.image(precision: 1, size: nil).pullback { $0 }
     }
 }
 

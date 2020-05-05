@@ -50,9 +50,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AppLockViewSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ArticleViewTests">
                </Test>
                <Test
@@ -114,12 +111,6 @@
                </Test>
                <Test
                   Identifier = "ConversationTextMessageTests">
-               </Test>
-               <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu()">
-               </Test>
-               <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu_NonTeam()">
                </Test>
                <Test
                   Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Disabled_Blurred()">
