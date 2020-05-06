@@ -137,6 +137,12 @@
                   Identifier = "ShareViewControllerTests">
                </Test>
                <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()">
+               </Test>
+               <Test
                   Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
                </Test>
             </SkippedTests>
