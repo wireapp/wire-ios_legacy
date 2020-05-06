@@ -165,7 +165,7 @@ extension URL {
     static var wr_askSupport: URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
-
+    
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }

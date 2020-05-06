@@ -23,8 +23,7 @@ protocol TabBarDelegate : class {
     func tabBar(_ tabBar: TabBar, didSelectItemAt index: Int)
 }
 
-@objc
-class TabBar: UIView {
+final class TabBar: UIView {
     fileprivate let stackView = UIStackView()
 
     // MARK: - Properties

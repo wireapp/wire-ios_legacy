@@ -204,7 +204,6 @@ final class ConversationInputBarViewController: UIViewController,
 
             let singleTapGestureRecognizerEnabled: Bool
             let selectedButton: IconButton?
-            let newInputController: UIViewController?
 
             func config(viewController: UIViewController?,
                         setupClosure: () -> UIViewController) {

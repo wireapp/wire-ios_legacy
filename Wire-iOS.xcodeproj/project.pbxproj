@@ -6590,7 +6590,7 @@
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastSwiftMigration = 0710;
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Zeta Project Germany GmbH";
 				TargetAttributes = {
 					168A16A81D9597C2005CFA6C = {
@@ -6808,7 +6808,7 @@
 		};
 		5E39FC762260D5DB00C682B8 /* [CodeGen] Update StyleKit Icons */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -6825,7 +6825,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_stylekit package\nswift run --package-path Scripts/update_stylekit/\n";
+			shellScript = "# Run the update_stylekit package\nunset SDKROOT\nswift run --package-path Scripts/update_stylekit/\n";
 		};
 		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -6843,7 +6843,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Run the update_licenses package\nswift run --package-path Scripts/update_licenses/\n";
+			shellScript = "# Run the update_licenses package\nunset SDKROOT\nswift run --package-path Scripts/update_licenses/\n";
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8468,6 +8468,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24239219B2C9B00F7035C /* Share-Extension-Debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Debug;
 		};
@@ -8475,6 +8477,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F1B24238219B2C9B00F7035C /* Share-Extension-Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Release;
 		};
@@ -8524,6 +8528,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F156509721DCED3000210504 /* CommonComponents-Debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Debug;
 		};
@@ -8531,6 +8537,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F156509621DCED3000210504 /* CommonComponents-Release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 			};
 			name = Release;
 		};

@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-protocol CharacterInputFieldDelegate: NSObjectProtocol {
+protocol CharacterInputFieldDelegate: class {
     func shouldAcceptChanges(_ inputField: CharacterInputField) -> Bool
     func didChangeText(_ inputField: CharacterInputField, to: String)
     func didFillInput(inputField: CharacterInputField, text: String)

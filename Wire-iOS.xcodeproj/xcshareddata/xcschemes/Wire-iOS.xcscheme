@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1030"
+   LastUpgradeVersion = "1140"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -26,9 +26,18 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      shouldUseLaunchSchemeArgsEnv = "YES"
       disableMainThreadChecker = "YES"
-      codeCoverageEnabled = "YES"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      codeCoverageEnabled = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "8F42C537199244A700288E4D"
+            BuildableName = "Wire.app"
+            BlueprintName = "Wire-iOS"
+            ReferencedContainer = "container:Wire-iOS.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -41,22 +50,101 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "StartedConversationCellTests">
+                  Identifier = "AppLockViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "AppLockViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "ArticleViewTests">
+               </Test>
+               <Test
+                  Identifier = "AuthenticationInterfaceBuilderTests">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithoutImage()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
+               </Test>
+               <Test
+                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromUserImage()">
+               </Test>
+               <Test
+                  Identifier = "CallInfoRootViewControllerTests/testGroupAudioEstablished_LargeGroup()">
+               </Test>
+               <Test
+                  Identifier = "CallInfoRootViewControllerTests/testGroupVideoDeniedVideoPermissions()">
+               </Test>
+               <Test
+                  Identifier = "CallInfoRootViewControllerTests/testGroupVideoUndeterminedVideoPermissions()">
+               </Test>
+               <Test
+                  Identifier = "CameraKeyboardViewControllerTests/testCameraScrolledHorizontallyAwayPercent_LibraryAccessGranted()">
+               </Test>
+               <Test
+                  Identifier = "CameraKeyboardViewControllerTests/testCameraScrolledHorizontallySomePercent_LibraryAccessGranted()">
+               </Test>
+               <Test
+                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeCompact_LibraryAccessGranted()">
+               </Test>
+               <Test
+                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeRegularLandscape_LibraryAccessGranted()">
+               </Test>
+               <Test
+                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeRegularPortrait_LibraryAccessGranted()">
+               </Test>
+               <Test
+                  Identifier = "ConversationContentViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationLinkAttachmentMessageCellTests">
+               </Test>
+               <Test
+                  Identifier = "ConversationTextMessageTests">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu()">
+               </Test>
+               <Test
+                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu_NonTeam()">
+               </Test>
+               <Test
+                  Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Disabled_Blurred()">
+               </Test>
+               <Test
+                  Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Enabled_Blurred()">
+               </Test>
+               <Test
+                  Identifier = "LandingViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "LaunchImageViewControllerSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "MediaPreviewViewSnapshotTests">
+               </Test>
+               <Test
+                  Identifier = "NSData_ImageTypeTests">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
                </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8F42C537199244A700288E4D"
-            BuildableName = "Wire.app"
-            BlueprintName = "Wire-iOS"
-            ReferencedContainer = "container:Wire-iOS.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -186,8 +274,6 @@
             isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

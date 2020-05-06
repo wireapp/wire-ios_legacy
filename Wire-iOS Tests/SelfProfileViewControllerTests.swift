@@ -52,7 +52,7 @@ final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
 
     private func createSut(userName: String, teamMember: Bool = true) {
         selfUser = MockUserType.createSelfUser(name: userName, inTeam: teamMember ? UUID() : nil)
-        sut = SelfProfileViewController(selfUser: selfUser, userRightInterfaceType: MockUserRight.self)
+        sut = SelfProfileViewController(selfUser: selfUser, userRightInterfaceType: MockUserRight.self, userSession: MockZMUserSession())
         sut.view.backgroundColor = .black
     }
 }

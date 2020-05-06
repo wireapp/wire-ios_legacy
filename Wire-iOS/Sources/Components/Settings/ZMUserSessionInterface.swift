@@ -16,10 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireSyncEngine
 
-protocol ZMUserSessionInterface: NSObjectProtocol {
+protocol ZMUserSessionInterface: class {
     
     func perform(_ changes: @escaping () -> ())
     

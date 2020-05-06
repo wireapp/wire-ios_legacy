@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
 import WireDataModel
 
@@ -124,7 +123,7 @@ final class ProfileViewController: UIViewController {
         usernameDetailsView.configure(with: userNameDetailViewModel)
         view.addSubview(usernameDetailsView)
         
-        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
+        updateTitleView()
         
         profileTitleView.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 11, *) {
@@ -498,6 +497,10 @@ extension ProfileViewController: TabBarControllerDelegate {
 }
 
 extension ProfileViewController: ProfileViewControllerViewModelDelegate {
+    func updateTitleView() {
+        profileTitleView.configure(with: viewModel.bareUser, variant: ColorScheme.default.variant)
+    }
+    
     func updateShowVerifiedShield() {
         profileTitleView.showVerifiedShield = viewModel.shouldShowVerifiedShield && tabsController?.selectedIndex != ProfileViewControllerTabBarIndex.devices.rawValue
     }

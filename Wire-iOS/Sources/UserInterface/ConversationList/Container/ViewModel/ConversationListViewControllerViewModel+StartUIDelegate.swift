@@ -24,12 +24,8 @@ import WireSyncEngine
 fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
-    func startUI(_ startUI: StartUIViewController, didSelect users: UserSet) {
-        guard users.count > 0 else {
-            return
-        }
-        
-        withConversationForUsers(users, callback: { conversation in
+    func startUI(_ startUI: StartUIViewController, didSelect user: UserType) {
+        oneToOneConversationWithUser(user, callback: { conversation in
             guard let conversation = conversation else { return }
             
             ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
@@ -57,42 +53,24 @@ extension ConversationListViewController.ViewModel: StartUIDelegate {
     
     
     
-    /// Create a new conversation or open existing 1-to-1 conversation with a set of user(s)
+    /// Create a new conversation or open existing 1-to-1 conversation
     ///
     /// - Parameters:
-    ///   - users: the user set to create a new conversation
+    ///   - user: the user which we want to have a 1-to-1 conversation with
     ///   - onConversationCreated: a ConversationCreatedBlock which has the conversation created
-    private func withConversationForUsers(_ users: UserSet?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
+    private func oneToOneConversationWithUser(_ user: UserType, callback onConversationCreated: @escaping ConversationCreatedBlock) {
         
-        guard let users = users,
-            let userSession = ZMUserSession.shared() else { return }
+        guard let userSession = ZMUserSession.shared() else { return }
         
         viewController?.setState(.conversationList, animated:true) {
-            if users.count == 1,
-                let user = users.first {
-                var oneToOneConversation: ZMConversation? = nil
-                userSession.enqueue({
-                    oneToOneConversation = user.oneToOneConversation
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(oneToOneConversation)
-                    }
-                })
-            } else if users.count > 1 {
-                var conversation: ZMConversation? = nil
-                
-                userSession.enqueue({
-                    let team = ZMUser.selfUser().team
-                    
-                    conversation = ZMConversation.insertGroupConversation(session: userSession,
-                                                                          participants: Array(users),
-                                                                          team: team)
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(conversation)
-                    }
-                })
-            }
+            var oneToOneConversation: ZMConversation? = nil
+            userSession.enqueue({
+                oneToOneConversation = user.oneToOneConversation
+            }, completionHandler: {
+                delay(0.3) {
+                    onConversationCreated(oneToOneConversation)
+                }
+            })
         }
     }
     

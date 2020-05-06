@@ -16,11 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireSyncEngine
 import UIKit
 
-protocol ReplyComposingViewDelegate: NSObjectProtocol {
+protocol ReplyComposingViewDelegate: class {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }

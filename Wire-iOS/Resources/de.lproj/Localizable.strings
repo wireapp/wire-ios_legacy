@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "aktiv";
 "conversation.voiceover.value.disabled" = "deaktiviert";
 
+"conversation.status.secutity_alert.default" = "Neue Sicherheitswarnung";
+
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
 "conversation.status.silenced" = "Lautlos";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Anmeldung für Unternehmen";
-"login.sso.alert.message.sso_and_email" = "Bitte E-Mail-Adresse oder SSO-Code eingeben:";
+"login.sso.alert.message.sso_and_email" = "Bitte geben Sie Ihre E-Mail-Adresse oder den SSO-Code ein. Wenn Ihre E-Mail mit einer Installation von Wire übereinstimmt, verbindet sich die App mit dem Server.";
 "login.sso.alert.message.sso_only" = "Bitte den SSO-Code eingeben:";
 "login.sso.alert.action" = "Einloggen";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "E-Mail-Adresse oder SSO-Code";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Bitte gib deinen Namen und eine gültige E-Mail-Adresse ein";
 "error.full_name" = "Bitte gib deinen vollständigen Namen ein";
 "error.email" = "Bitte gib eine gültige E-Mail-Adresse ein";
-"error.input.too_long" = "Eingabe zu lang";
-"error.input.too_short" = "Eingabe zu kurz";
+"error.input.too_long" = "Bitte verwenden Sie einen kürzeren Benutzernamen";
+"error.input.too_short" = "Bitte verwenden Sie einen längeren Benutzernamen";
 "error.email.invalid" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "error.phone.invalid" = "Bitte gib eine gültige \nTelefonnummer ein";
 

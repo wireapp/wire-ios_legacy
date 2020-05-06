@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireDataModel
-import WireUtilities
 import DifferenceKit
 
 extension Int: Differentiable { }
@@ -51,51 +49,51 @@ extension ZMConversationMessage {
 }
 
 final class ConversationTableViewDataSource: NSObject {
-    public static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
+    static let defaultBatchSize = 30 // Magic number: amount of messages per screen (upper bound).
     
-    private var fetchController: NSFetchedResultsController<ZMMessage>!
+    private var fetchController: NSFetchedResultsController<ZMMessage>?
     private var lastFetchedObjectCount: Int = 0
     
-    public var registeredCells: [AnyClass] = []
-    public var sectionControllers: [String: ConversationMessageSectionController] = [:]
+    var registeredCells: [AnyClass] = []
+    var sectionControllers: [String: ConversationMessageSectionController] = [:]
 
-    @objc public private(set) var hasOlderMessagesToLoad = false
-    @objc public private(set) var hasNewerMessagesToLoad = false
+    private(set) var hasOlderMessagesToLoad = false
+    private(set) var hasNewerMessagesToLoad = false
     
-    @objc func resetSectionControllers() {
+    func resetSectionControllers() {
         sectionControllers = [:]
         calculateSections()
     }
     
-    public var actionControllers: [String: ConversationMessageActionController] = [:]
+    var actionControllers: [String: ConversationMessageActionController] = [:]
     
-    public let conversation: ZMConversation
-    public let tableView: UpsideDownTableView
+    let conversation: ZMConversation
+    let tableView: UpsideDownTableView
     
-    @objc public var firstUnreadMessage: ZMConversationMessage?
-    @objc public var selectedMessage: ZMConversationMessage? = nil
-    @objc public var editingMessage: ZMConversationMessage? = nil
+    var firstUnreadMessage: ZMConversationMessage?
+    var selectedMessage: ZMConversationMessage? = nil
+    var editingMessage: ZMConversationMessage? = nil
     
     weak var conversationCellDelegate: ConversationMessageCellDelegate? = nil
     weak var messageActionResponder: MessageActionResponder? = nil
     
-    @objc public var searchQueries: [String] = [] {
+    var searchQueries: [String] = [] {
         didSet {
             currentSections = calculateSections()
             tableView.reloadData()
         }
     }
     
-    @objc public var messages: [ZMConversationMessage] {
+    var messages: [ZMConversationMessage] {
         // NOTE: We limit the number of messages to the `lastFetchedObjectCount` since the
         // NSFetchResultsController will add objects to `fetchObjects` if they are modified after
         // the initial fetch, which results in unwanted table view updates. This is normally what
         // we want when new message arrive but not when fetchOffset > 0.
         
-        if fetchController.fetchRequest.fetchOffset > 0 {
-            return Array(fetchController.fetchedObjects?.suffix(lastFetchedObjectCount) ?? [])
+        if fetchController?.fetchRequest.fetchOffset > 0 {
+            return Array(fetchController?.fetchedObjects?.suffix(lastFetchedObjectCount) ?? [])
         } else {
-            return fetchController.fetchedObjects ?? []
+            return fetchController?.fetchedObjects ?? []
         }
     }
     
@@ -193,7 +191,7 @@ final class ConversationTableViewDataSource: NSObject {
         return sectionController
     }
     
-    @objc func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController {
+    func sectionController(at sectionIndex: Int, in tableView: UITableView) -> ConversationMessageSectionController {
         let message = messages[sectionIndex]
         
         return sectionController(for: message, at: sectionIndex)
@@ -243,10 +241,10 @@ final class ConversationTableViewDataSource: NSObject {
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
         
-        self.fetchController.delegate = self
-        try! fetchController.performFetch()
+        fetchController?.delegate = self
+        try! fetchController?.performFetch()
         
-        lastFetchedObjectCount = fetchController.fetchedObjects?.count ?? 0
+        lastFetchedObjectCount = fetchController?.fetchedObjects?.count ?? 0
         hasOlderMessagesToLoad = messages.count == fetchRequest.fetchLimit
         hasNewerMessagesToLoad = offset > 0
         firstUnreadMessage = conversation.firstUnreadMessage
@@ -255,8 +253,8 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     private func loadOlderMessages() {
-        let currentOffset = self.fetchController.fetchRequest.fetchOffset
-        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+        guard let currentOffset = fetchController?.fetchRequest.fetchOffset,
+              let currentLimit = fetchController?.fetchRequest.fetchLimit else { return }
         
         let newLimit = currentLimit + ConversationTableViewDataSource.defaultBatchSize
         
@@ -264,23 +262,23 @@ final class ConversationTableViewDataSource: NSObject {
     }
     
     func loadNewerMessages() {
-        let currentOffset = self.fetchController.fetchRequest.fetchOffset
-        let currentLimit = self.fetchController.fetchRequest.fetchLimit
+        guard let currentOffset = fetchController?.fetchRequest.fetchOffset,
+            let currentLimit = fetchController?.fetchRequest.fetchLimit else { return }
 
         let newOffset = max(0, currentOffset - ConversationTableViewDataSource.defaultBatchSize)
         
         loadMessages(offset: newOffset, limit: currentLimit)
     }
     
-    @objc func indexOfMessage(_ message: ZMConversationMessage) -> Int {
+    func indexOfMessage(_ message: ZMConversationMessage) -> Int {
         guard let index = index(of: message) else {
             return NSNotFound
         }
         return index
     }
     
-    public func index(of message: ZMConversationMessage) -> Int? {
-        if let indexPath = fetchController.indexPath(forObject: message as! ZMMessage) {
+    func index(of message: ZMConversationMessage) -> Int? {
+        if let indexPath = fetchController?.indexPath(forObject: message as! ZMMessage) {
             return indexPath.row
         }
         else {
@@ -383,18 +381,16 @@ extension ConversationTableViewDataSource: NSFetchedResultsControllerDelegate {
 
 extension ConversationTableViewDataSource: UITableViewDataSource {
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return currentSections.count
     }
     
-    @objc
     func select(indexPath: IndexPath) {
         let sectionController = self.sectionController(at: indexPath.section, in: tableView)
         sectionController.didSelect()
         reloadSections(newSections: calculateSections(updating: sectionController))
     }
     
-    @objc
     func deselect(indexPath: IndexPath) {
         let sectionController = self.sectionController(at: indexPath.section, in: tableView)
         sectionController.didDeselect()
@@ -477,7 +473,7 @@ extension ConversationTableViewDataSource {
         return true
     }
     
-    public func context(for message: ZMConversationMessage,
+    func context(for message: ZMConversationMessage,
                         at index: Int,
                         firstUnreadMessage: ZMConversationMessage?,
                         searchQueries: [String]) -> ConversationMessageContext {

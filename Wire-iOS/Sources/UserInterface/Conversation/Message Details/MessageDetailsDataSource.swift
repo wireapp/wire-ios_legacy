@@ -21,7 +21,7 @@ import WireDataModel
 import WireSyncEngine
 
 /// The way the details are displayed.
-@objc public enum MessageDetailsDisplayMode: Int {
+enum MessageDetailsDisplayMode: Int {
     case reactions, receipts, combined
 }
 

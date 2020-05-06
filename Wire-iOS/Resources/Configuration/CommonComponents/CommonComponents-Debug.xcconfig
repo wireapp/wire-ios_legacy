@@ -17,5 +17,5 @@
 // 
 
 #include "../Project-Debug.xcconfig"
-#include "CommonComponents-Base.xcconfig"
+#include "./CommonComponents-Base.xcconfig"
 

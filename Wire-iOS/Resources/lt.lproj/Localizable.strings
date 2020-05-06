@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "aktyvus";
 "conversation.voiceover.value.disabled" = "išjungtas";
 
+"conversation.status.secutity_alert.default" = "New security alert";
+
 "conversation.status.typing" = "Rašo žinutę…";
 "conversation.status.typing.group" = "%@: rašo žinutę…";
 "conversation.status.silenced" = "Išjungtas garsas";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "Įmonės prisijungimas";
-"login.sso.alert.message.sso_and_email" = "Įrašykite savo el. pašto adresą ir SSO kodą:";
+"login.sso.alert.message.sso_and_email" = "Please enter your email or SSO code. If your email matches an enterprise installation of Wire, this app will connect to that server.";
 "login.sso.alert.message.sso_only" = "Įrašykite SSO kodą:";
 "login.sso.alert.action" = "Prisijungti";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "el. paštas arba SSO prieigos kodas";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "Įrašykite savo vardą ir pavardę ir naudojamą el. pašto adresą";
 "error.full_name" = "Įrašykite savo vardą ir pavardę";
 "error.email" = "Iveskite teisingą el. pašto adresą";
-"error.input.too_long" = "Įvestis per ilga";
-"error.input.too_short" = "Įvestis per trumpa";
+"error.input.too_long" = "Please enter a shorter username";
+"error.input.too_short" = "Please enter a longer username";
 "error.email.invalid" = "Iveskite teisingą el. pašto adresą";
 "error.phone.invalid" = "Prašome įvesti teisingą telefono numerį";
 

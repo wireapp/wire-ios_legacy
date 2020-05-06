@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import WireDataModel
 
-@objc
-protocol ConversationInputBarViewControllerDelegate: NSObjectProtocol {
+protocol ConversationInputBarViewControllerDelegate: class {
     func conversationInputBarViewControllerDidComposeText(text: String, mentions: [Mention], replyingTo message: ZMConversationMessage?)    
     func conversationInputBarViewControllerShouldBeginEditing(_ controller: ConversationInputBarViewController) -> Bool
     func conversationInputBarViewControllerShouldEndEditing(_ controller: ConversationInputBarViewController) -> Bool

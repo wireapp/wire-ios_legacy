@@ -229,6 +229,8 @@
 "conversation.voiceover.value.active" = "啟動";
 "conversation.voiceover.value.disabled" = "已停用";
 
+"conversation.status.secutity_alert.default" = "新安全提醒";
+
 "conversation.status.typing" = "輸入訊息中...";
 "conversation.status.typing.group" = "%@：輸入訊息中…";
 "conversation.status.silenced" = "訊息通知已關閉";
@@ -1375,7 +1377,7 @@
 
 // SSO – Company Login
 "login.sso.alert.title" = "企業登錄";
-"login.sso.alert.message.sso_and_email" = "請輸入你的 Email或單一登入（SSO）：";
+"login.sso.alert.message.sso_and_email" = "請輸入您的電子郵件或SSO代碼。 如果您的電子郵件與Wire的企業安裝相匹配，則此應用將連接到該服務器。";
 "login.sso.alert.message.sso_only" = "請輸入你的單一登入（SSO）：";
 "login.sso.alert.action" = "登入";
 "login.sso.alert.text_field.placeholder.sso_and_email" = "電郵或單一登入（SSO）碼";
@@ -1509,8 +1511,8 @@
 "error.name_and_email" = "請輸入您的全名和一個有效的電子郵件地址和密碼。";
 "error.full_name" = "請輸入您的全名";
 "error.email" = "請輸入有效的電子郵件信箱。";
-"error.input.too_long" = "輸入過長";
-"error.input.too_short" = "輸入太短";
+"error.input.too_long" = "請輸入短一點的使用者名稱";
+"error.input.too_short" = "請輸入長一點的使用者名稱";
 "error.email.invalid" = "請輸入有效的電子郵件信箱";
 "error.phone.invalid" = "請輸入有效的手機號碼";
 
@@ -1751,4 +1753,4 @@
 "button_message_cell.state.selected" = "已選擇";
 "button_message_cell.state.confirmed" = "已確認";
 
-"button_message_cell.generic_error" = "Your answer can't be sent, please retry.";
+"button_message_cell.generic_error" = "無法發送您的答案，請重試。";

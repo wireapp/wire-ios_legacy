@@ -146,7 +146,7 @@ final class AppLockView: UIView {
         ])
     }
     
-    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
         toggleConstraints()
@@ -162,7 +162,7 @@ final class AppLockView: UIView {
         fatal("init(coder) is not implemented")
     }
     
-    @objc public func onReauthenticatePressed(_ sender: AnyObject!) {
+    @objc func onReauthenticatePressed(_ sender: AnyObject!) {
         self.onReauthRequested?()
     }
 }

@@ -251,6 +251,10 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
         if note.legalHoldStatusChanged {
             viewModelDelegate?.setupNavigationItems()
         }
+
+        if note.nameChanged {
+            viewModelDelegate?.updateTitleView()
+        }
     }
 }
 
@@ -264,5 +268,6 @@ protocol ProfileViewControllerViewModelDelegate: class {
     func updateShowVerifiedShield()
     func setupNavigationItems()
     func updateFooterViews()
+    func updateTitleView()
     func returnToPreviousScreen()
 }

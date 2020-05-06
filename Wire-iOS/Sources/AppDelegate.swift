@@ -207,9 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         zmLog.info("application:continueUserActivity:restorationHandler: \(userActivity)")
         
-        guard let restorationHandler = restorationHandler as? (([AnyObject]?) -> Void) else { return false }
-        
-        return (SessionManager.shared?.continueUserActivity(userActivity, restorationHandler: restorationHandler)) ?? false
+        return (SessionManager.shared?.continueUserActivity(userActivity)) ?? false
     }
     
     // MARK : - BackgroundUpdates

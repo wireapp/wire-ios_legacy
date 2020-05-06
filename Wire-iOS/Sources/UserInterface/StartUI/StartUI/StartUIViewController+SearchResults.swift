@@ -46,10 +46,6 @@ extension StartUIViewController {
 
 extension StartUIViewController: SearchResultsViewControllerDelegate {
 
-    private func unboxedUser(from user: UserType) -> ZMUser? {
-      return (user as? ZMUser) ?? (user as? ZMSearchUser)?.user
-    }
-
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,
                                             didTapOnUser user: UserType,
                                             indexPath: IndexPath,
@@ -57,8 +53,8 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
         
         if !user.isConnected && !user.isTeamMember {
             presentProfileViewController(for: user, at: indexPath)
-        } else if let unboxed = unboxedUser(from: user) {
-            delegate?.startUI(self, didSelect: [unboxed])
+        } else {
+            delegate?.startUI(self, didSelect: user)
         }
     }
     
@@ -66,11 +62,11 @@ extension StartUIViewController: SearchResultsViewControllerDelegate {
                                             didDoubleTapOnUser user: UserType,
                                             indexPath: IndexPath) {
     
-        guard let unboxedUser = unboxedUser(from: user), unboxedUser.isConnected, !unboxedUser.isBlocked else {
+        guard user.isConnected, !user.isBlocked else {
             return
         }
         
-        delegate?.startUI(self, didSelect: [unboxedUser])
+        delegate?.startUI(self, didSelect: user)
     }
     
     public func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController,

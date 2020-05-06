@@ -25,14 +25,14 @@ private let zmLog = ZMSLog(tag: "Analytics")
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
 final class AnalyticsProviderFactory: NSObject {
-    @objc public static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
-    @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
+    static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
+    static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
 
-    @objc public var useConsoleAnalytics: Bool = false
+    var useConsoleAnalytics: Bool = false
 
     private let userDefaults: UserDefaults
 
-    @objc public init(userDefaults: UserDefaults) {
+    init(userDefaults: UserDefaults) {
         self.userDefaults = userDefaults
     }
   

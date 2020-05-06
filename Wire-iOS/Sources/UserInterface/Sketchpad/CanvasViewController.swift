@@ -21,7 +21,7 @@ import WireCanvas
 import Cartography
 import WireCommonComponents
 
-@objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
+protocol CanvasViewControllerDelegate : class {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 

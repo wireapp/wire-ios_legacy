@@ -332,7 +332,8 @@ final class SettingsToggleCell: SettingsTableCell {
         self.switchView = switchView
     }
     
-    @objc func onSwitchChanged(_ sender: UIResponder) {
+    @objc
+    func onSwitchChanged(_ sender: UIResponder) {
         descriptor?.select(SettingsPropertyValue(switchView.isOn))
     }
 }
@@ -410,7 +411,8 @@ final class SettingsTextCell: SettingsTableCell, UITextFieldDelegate {
         accessibilityElements = currentElements
     }
     
-    @objc public func onCellSelected(_ sender: AnyObject!) {
+    @objc
+    func onCellSelected(_ sender: AnyObject!) {
         if !textInput.isFirstResponder {
             textInput.becomeFirstResponder()
         }

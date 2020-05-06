@@ -16,17 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import DifferenceKit
 import WireDataModel
 
 /// a item which can be presented in the conversaton list
-protocol ConversationListItem {}
+protocol ConversationListItem: NSObject {}
 
 extension ZMConversation: ConversationListItem {}
 
 // Placeholder for conversation requests item
-struct ConversationListConnectRequestsItem: ConversationListItem, Hashable {}
+final class ConversationListConnectRequestsItem: NSObject, ConversationListItem {}
 
 protocol ConversationListViewModelDelegate: class {
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?)
