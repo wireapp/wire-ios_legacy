@@ -110,12 +110,6 @@
                   Identifier = "ConversationTextMessageTests">
                </Test>
                <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu()">
-               </Test>
-               <Test
-                  Identifier = "GroupDetailsViewControllerSnapshotTests/testForActionMenu_NonTeam()">
-               </Test>
-               <Test
                   Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Disabled_Blurred()">
                </Test>
                <Test
@@ -135,6 +129,12 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()">
                </Test>
                <Test
                   Identifier = "UIAlertControllerCompanyLoginSnapshotTests">

@@ -300,6 +300,8 @@ protocol CoreDataFixtureTestHelper {
     func teamTest(_ block: () -> Void)
     
     func mockUserClient() -> UserClient!
+
+  func createGroupConversationOnlyAdmin() -> ZMConversation
 }
 
 // MARK: - default implementation for migrating CoreDataSnapshotTestCase to XCTestCase
@@ -350,5 +352,9 @@ extension CoreDataFixtureTestHelper {
     
     func mockUserClient() -> UserClient! {
         return coreDataFixture.mockUserClient()
+    }
+    
+  func createGroupConversationOnlyAdmin() -> ZMConversation {
+        return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
     }
 }
