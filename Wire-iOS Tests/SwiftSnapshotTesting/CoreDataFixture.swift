@@ -161,7 +161,7 @@ final class CoreDataFixture {
 
         MockUser.setMockSelf(selfUser)
         selfUserProvider = SelfProvider(selfUser: selfUser)
-        
+
         SelfUser.provider = selfUserProvider
     }
 
@@ -298,7 +298,7 @@ protocol CoreDataFixtureTestHelper {
     func createUser(name: String) -> ZMUser
 
     func teamTest(_ block: () -> Void)
-    
+
     func mockUserClient() -> UserClient!
 
   func createGroupConversationOnlyAdmin() -> ZMConversation
@@ -349,11 +349,11 @@ extension CoreDataFixtureTestHelper {
     var team: Team? {
         return coreDataFixture.team
     }
-    
+
     func mockUserClient() -> UserClient! {
         return coreDataFixture.mockUserClient()
     }
-    
+
   func createGroupConversationOnlyAdmin() -> ZMConversation {
         return ZMConversation.createGroupConversationOnlyAdmin(moc: uiMOC, selfUser: selfUser)
     }

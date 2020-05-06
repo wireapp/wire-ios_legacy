@@ -35,7 +35,7 @@ final class SettingsClientViewControllerTests: XCTestCase, CoreDataFixtureTestHe
 
         client = mockUserClient()
     }
-    
+
     override func tearDown() {
         sut = nil
         client = nil
@@ -51,26 +51,25 @@ final class SettingsClientViewControllerTests: XCTestCase, CoreDataFixtureTestHe
         sut.isLoadingViewVisible = false
     }
 
-
-    func testForTransparentBackground(){
+    func testForTransparentBackground() {
         prepareSut(variant: nil)
 
         verify(matching: sut)
     }
 
-    func testForLightTheme(){
+    func testForLightTheme() {
         prepareSut(variant: .light)
 
         verify(matching: sut)
     }
 
-    func testForDarkTheme(){
+    func testForDarkTheme() {
         prepareSut(variant: .dark)
 
         verify(matching: sut)
     }
 
-    func testForLightThemeWrappedInNavigationController(){
+    func testForLightThemeWrappedInNavigationController() {
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
 

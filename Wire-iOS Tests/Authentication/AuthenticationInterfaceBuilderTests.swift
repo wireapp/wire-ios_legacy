@@ -27,9 +27,9 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
 
     override func setUp() {
         super.setUp()
-        
+
         coreDataFixture = CoreDataFixture()
-        
+
         featureProvider = MockAuthenticationFeatureProvider()
         builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
     }
@@ -37,9 +37,9 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
     override func tearDown() {
         builder = nil
         featureProvider = nil
-        
+
         coreDataFixture = nil
-        
+
         super.tearDown()
     }
 
@@ -169,7 +169,7 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: nil, hasPassword: true, usesCompanyLogin: false)
         runSnapshotTest(for: .reauthenticate(credentials: credentials, numberOfAccounts: 1, isSignedOut: false))
     }
-    
+
     func testReauthenticate_EmailAndPhone_TokenExpired() {
         let credentials = LoginCredentials(emailAddress: "test@example.com", phoneNumber: "+33123456789", hasPassword: true, usesCompanyLogin: false)
 

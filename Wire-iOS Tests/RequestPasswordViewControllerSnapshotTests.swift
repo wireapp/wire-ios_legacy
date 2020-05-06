@@ -32,7 +32,6 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         fingerprint = coreDataFixture.mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
     }
 
-
     override func tearDown() {
         fingerprint = nil
         sut = nil
@@ -42,7 +41,7 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         super.tearDown()
     }
 
-    func testForRemoveDeviceContextPasswordEntered(){
+    func testForRemoveDeviceContextPasswordEntered() {
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
         sut.passwordTextField?.text = "12345678"
         sut.passwordTextFieldChanged(sut.passwordTextField!)
@@ -50,7 +49,7 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         verify(matching:sut.alertController)
     }
 
-    func testForRemoveDeviceContext(){
+    func testForRemoveDeviceContext() {
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
 
         verify(matching:sut.alertController)

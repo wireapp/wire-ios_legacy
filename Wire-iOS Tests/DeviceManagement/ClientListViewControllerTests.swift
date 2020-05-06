@@ -77,7 +77,7 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         sut.isLoadingViewVisible = false
     }
 
-    func testThatObserverIsNonRetained(){
+    func testThatObserverIsNonRetained() {
         prepareSut(variant: nil)
 
         let emailCredentials = ZMEmailCredentials(email: "foo@bar.com", password: "12345678")
@@ -90,25 +90,25 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         XCTAssertNil(clientRemovalObserver)
     }
 
-    func testForTransparentBackground(){
+    func testForTransparentBackground() {
         prepareSut(variant: nil)
 
         verify(matching: sut)
     }
 
-    func testForLightTheme(){
+    func testForLightTheme() {
         prepareSut(variant: .light)
 
         verify(matching: sut)
     }
 
-    func testForDarkTheme(){
+    func testForDarkTheme() {
         prepareSut(variant: .dark)
 
         verify(matching: sut)
     }
 
-    func testForLightThemeWrappedInNavigationController(){
+    func testForLightThemeWrappedInNavigationController() {
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()
@@ -116,14 +116,14 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         verify(matching: navWrapperController)
     }
 
-    func testForOneDeviceWithNoEditButton(){
+    func testForOneDeviceWithNoEditButton() {
         prepareSut(variant: .light, numberOfClients: 0)
         let navWrapperController = sut.wrapInNavigationController()
 
         verify(matching: navWrapperController)
     }
 
-    func testForOneDeviceWithBackButtonAndNoEditButton(){
+    func testForOneDeviceWithBackButtonAndNoEditButton() {
         prepareSut(variant: .light, numberOfClients: 0)
         let mockRootViewController = UIViewController()
         let navWrapperController = mockRootViewController.wrapInNavigationController()
@@ -132,7 +132,7 @@ final class ClientListViewControllerTests: XCTestCase, CoreDataFixtureTestHelper
         verify(matching: navWrapperController)
     }
 
-    func testForEditMode(){
+    func testForEditMode() {
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
         navWrapperController.navigationBar.tintColor = UIColor.accent()

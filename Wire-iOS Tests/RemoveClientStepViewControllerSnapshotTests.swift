@@ -23,7 +23,7 @@ final class RemoveClientStepViewControllerSnapshotTests: XCTestCase, CoreDataFix
     var coreDataFixture: CoreDataFixture!
 
     var sut: RemoveClientStepViewController!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -36,12 +36,12 @@ final class RemoveClientStepViewControllerSnapshotTests: XCTestCase, CoreDataFix
                                                        mockUserClient()],
                                              credentials: ZMCredentials())
     }
-    
+
     override func tearDown() {
         sut = nil
-        
+
         coreDataFixture = nil
-        
+
         super.tearDown()
     }
 
