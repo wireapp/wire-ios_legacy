@@ -19,13 +19,17 @@
 import XCTest
 @testable import Wire
 
-class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
+final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var featureProvider: MockAuthenticationFeatureProvider!
     var builder: AuthenticationInterfaceBuilder!
 
     override func setUp() {
         super.setUp()
+        
+        coreDataFixture = CoreDataFixture()
+        
         featureProvider = MockAuthenticationFeatureProvider()
         builder = AuthenticationInterfaceBuilder(featureProvider: featureProvider)
     }
@@ -33,6 +37,9 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
     override func tearDown() {
         builder = nil
         featureProvider = nil
+        
+        coreDataFixture = nil
+        
         super.tearDown()
     }
 
@@ -197,7 +204,7 @@ class AuthenticationInterfaceBuilderTests: ZMSnapshotTestCase {
             let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
             navigationController.viewControllers = [viewController]
 
-            verify(view: navigationController.view, file: file, line: line)
+            verify(matching: navigationController, file: file, line: line)
         } else {
             XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }

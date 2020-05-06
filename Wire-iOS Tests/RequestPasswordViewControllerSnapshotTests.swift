@@ -19,13 +19,16 @@
 import XCTest
 @testable import Wire
 
-final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
+final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
 
     var sut: RequestPasswordController!
     var fingerprint: Data!
 
     override func setUp() {
         super.setUp()
+        coreDataFixture = CoreDataFixture()
+
         fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
     }
 
@@ -33,6 +36,8 @@ final class RequestPasswordControllerSnapshotTests: ZMSnapshotTestCase {
     override func tearDown() {
         fingerprint = nil
         sut = nil
+
+        coreDataFixture = nil
 
         super.tearDown()
     }

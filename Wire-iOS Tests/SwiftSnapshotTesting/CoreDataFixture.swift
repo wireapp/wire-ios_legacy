@@ -298,6 +298,8 @@ protocol CoreDataFixtureTestHelper {
     func createUser(name: String) -> ZMUser
 
     func teamTest(_ block: () -> Void)
+    
+    func mockUserClient() -> UserClient!
 }
 
 // MARK: - default implementation for migrating CoreDataSnapshotTestCase to XCTestCase
@@ -344,5 +346,9 @@ extension CoreDataFixtureTestHelper {
 
     var team: Team? {
         return coreDataFixture.team
+    }
+    
+    func mockUserClient() -> UserClient! {
+        return coreDataFixture.mockUserClient()
     }
 }

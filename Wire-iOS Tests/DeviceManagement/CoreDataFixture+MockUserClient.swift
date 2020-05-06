@@ -16,9 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import XCTest
+@testable import Wire
 
-extension ZMSnapshotTestCase {
+extension CoreDataFixture {
     func mockUserClient(fingerprintString: String = "102030405060708090102030405060708090102030405060708090") -> UserClient! {
         let client = UserClient.insertNewObject(in: uiMOC)
         client.remoteIdentifier = "102030405060708090"
