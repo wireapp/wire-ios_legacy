@@ -134,6 +134,9 @@
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersWithGuests()">
                </Test>
                <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()">
+               </Test>
+               <Test
                   Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
                </Test>
             </SkippedTests>

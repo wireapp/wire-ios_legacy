@@ -46,16 +46,11 @@ final class RemoveClientStepViewControllerSnapshotTests: XCTestCase, CoreDataFix
     }
 
     func testForWrappedInNavigationController() {
-        // GIVEN
+        // GIVEN & WHEN
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
         navigationController.viewControllers = [UIViewController(), sut]
 
-        // WHEN
-        presentViewController(navigationController)
-
+        // THEN
         verifyInAllDeviceSizes(matching: navigationController)
-
-        // CLEANUP
-        dismissViewController(navigationController)
     }
 }
