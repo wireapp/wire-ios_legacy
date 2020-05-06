@@ -16,12 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-import Foundation
 import MobileCoreServices
 import Photos
 import FLAnimatedImage
 import UIKit
-import WireSystem
 import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
@@ -190,7 +188,7 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
         confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
 
-        present(confirmImageViewController, animated: true)
+        UIApplication.shared.topmostViewController()?.present(confirmImageViewController, animated: true)
     }
 
     private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool) -> Void) {
