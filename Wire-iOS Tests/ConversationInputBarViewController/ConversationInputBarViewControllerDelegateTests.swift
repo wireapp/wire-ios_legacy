@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class ConversationInputBarViewControllerDelegateTests: XCTestCase {
+final class ConversationInputBarViewControllerDelegateTests: XCTestCase {
 
     var coreDataFixture: CoreDataFixture!
 

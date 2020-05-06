@@ -20,14 +20,14 @@ import WireTesting
 import XCTest
 
 
+struct SelfProvider: SelfUserProvider {
+    let selfUser: UserType & ZMEditableUser
+}
+
 /// This class provides a `NSManagedObjectContext` in order to test views with real data instead
 /// of mock objects.
 class CoreDataSnapshotTestCase: ZMSnapshotTestCase {
 
-    private struct SelfProvider: SelfUserProvider {
-
-        let selfUser: UserType & ZMEditableUser
-    }
 
     var selfUserInTeam: Bool = false
     var selfUser: ZMUser!

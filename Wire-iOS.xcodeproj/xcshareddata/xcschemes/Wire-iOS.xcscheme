@@ -107,13 +107,7 @@
                   Identifier = "ConversationContentViewControllerTests">
                </Test>
                <Test
-                  Identifier = "ConversationInputBarViewControllerTests">
-               </Test>
-               <Test
                   Identifier = "ConversationLinkAttachmentMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationListViewControllerViewModelSnapshotTests">
                </Test>
                <Test
                   Identifier = "ConversationTextMessageTests">
@@ -138,12 +132,6 @@
                </Test>
                <Test
                   Identifier = "ShareViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests">
-               </Test>
-               <Test
-                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCell_SelfIsCollaborator_AllowGuests()">
                </Test>
                <Test
                   Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
