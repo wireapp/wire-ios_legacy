@@ -195,7 +195,10 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
 
     // MARK: - Helpers
 
-    private func runSnapshotTest(for step: AuthenticationFlowStep, file: StaticString = #file, line: UInt = #line) {
+    private func runSnapshotTest(for step: AuthenticationFlowStep,
+                                 file: StaticString = #file,
+                                 testName: String = #function,
+                                 line: UInt = #line) {
         if let viewController = builder.makeViewController(for: step) {
             if !step.needsInterface {
                 return XCTFail("An interface was generated but we didn't expect one.", file: file, line: line)
@@ -204,7 +207,10 @@ final class AuthenticationInterfaceBuilderTests: XCTestCase, CoreDataFixtureTest
             let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
             navigationController.viewControllers = [viewController]
 
-            verify(matching: navigationController, file: file, line: line)
+            verify(matching: navigationController,
+                   file: file,
+                   testName: testName,
+                   line: line)
         } else {
             XCTAssertFalse(step.needsInterface, "Missing interface.", file: file, line: line)
         }
