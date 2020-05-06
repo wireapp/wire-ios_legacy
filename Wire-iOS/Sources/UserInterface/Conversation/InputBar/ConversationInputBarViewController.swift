@@ -15,11 +15,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import MobileCoreServices
 import Photos
 import UIKit
-import WireDataModel
 import WireSyncEngine
 import avs
 import AVFoundation
@@ -552,7 +550,7 @@ final class ConversationInputBarViewController: UIViewController,
     // MARK: - Giphy
 
     @objc
-    func giphyButtonPressed(_ sender: Any?) {
+    private func giphyButtonPressed(_ sender: Any?) {
         guard !AppDelegate.isOffline else { return }
 
         let giphySearchViewController = GiphySearchViewController(searchTerm: "", conversation: conversation)

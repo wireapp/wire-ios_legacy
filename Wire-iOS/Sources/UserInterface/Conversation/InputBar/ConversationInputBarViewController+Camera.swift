@@ -185,10 +185,9 @@ extension ConversationInputBarViewController: CameraKeyboardViewControllerDelega
                                                                     })
 
         let confirmImageViewController = ConfirmAssetViewController(context: context)
-        confirmImageViewController.transitioningDelegate = FastTransitioningDelegate.sharedDelegate
         confirmImageViewController.previewTitle = self.conversation.displayName.localizedUppercase
 
-        UIApplication.shared.topmostViewController()?.present(confirmImageViewController, animated: true)
+        ZClientViewController.shared?.present(confirmImageViewController, animated: true)
     }
 
     private func executeWithCameraRollPermission(_ closure: @escaping (_ success: Bool) -> Void) {
