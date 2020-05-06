@@ -51,6 +51,6 @@ final class RemoveClientStepViewControllerSnapshotTests: XCTestCase, CoreDataFix
         navigationController.viewControllers = [UIViewController(), sut]
 
         // THEN
-        verifyInAllDeviceSizes(matching: navigationController)
+        verify(matching: navigationController)
     }
 }
