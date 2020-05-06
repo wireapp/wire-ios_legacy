@@ -56,9 +56,6 @@
                   Identifier = "AppLockViewSnapshotTests">
                </Test>
                <Test
-                  Identifier = "ArticleViewTests">
-               </Test>
-               <Test
                   Identifier = "AuthenticationInterfaceBuilderTests">
                </Test>
                <Test
