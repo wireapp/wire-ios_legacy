@@ -29,7 +29,7 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         super.setUp()
         coreDataFixture = CoreDataFixture()
 
-        fingerprint = mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
+        fingerprint = coreDataFixture.mockUserClient(fingerprintString: "102030405060708090a0b0c0d0e0f0708090102030405060708090").fingerprint!
     }
 
 
@@ -47,12 +47,12 @@ final class RequestPasswordControllerSnapshotTests: XCTestCase, CoreDataFixtureT
         sut.passwordTextField?.text = "12345678"
         sut.passwordTextFieldChanged(sut.passwordTextField!)
 
-        verifyAlertController(sut.alertController)
+        verify(matching:sut.alertController)
     }
 
     func testForRemoveDeviceContext(){
         sut = RequestPasswordController(context: .removeDevice, callback: {_ in })
 
-        verifyAlertController(sut.alertController)
+        verify(matching:sut.alertController)
     }
 }

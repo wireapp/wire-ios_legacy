@@ -19,13 +19,15 @@
 import XCTest
 @testable import Wire
 
-final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
-    
+final class SettingsClientViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: SettingsClientViewController!
     var client: UserClient!
 
     override func setUp() {
         super.setUp()
+        coreDataFixture = CoreDataFixture()
 
         let otherYearFormatter =  WRDateFormatter.otherYearFormatter
 
@@ -37,6 +39,9 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     override func tearDown() {
         sut = nil
         client = nil
+
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
@@ -50,25 +55,25 @@ final class SettingsClientViewControllerTests: ZMSnapshotTestCase {
     func testForTransparentBackground(){
         prepareSut(variant: nil)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLightTheme(){
         prepareSut(variant: .light)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForDarkTheme(){
         prepareSut(variant: .dark)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForLightThemeWrappedInNavigationController(){
         prepareSut(variant: .light)
         let navWrapperController = sut.wrapInNavigationController()
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
 }
