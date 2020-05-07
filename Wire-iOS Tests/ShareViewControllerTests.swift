@@ -25,7 +25,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
     var groupConversation: ZMConversation!
     var sut: ShareViewController<ZMConversation, ZMMessage>!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -33,7 +33,7 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
         groupConversation = createGroupConversation()
     }
-    
+
     override func tearDown() {
         groupConversation = nil
         sut = nil
@@ -43,17 +43,11 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
 
         super.tearDown()
     }
-//
-//    override var needsCaches: Bool {
-//        return true
-//    }
 
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
-
-//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -66,18 +60,18 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         groupConversation.append(text: "This is a text message.")
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_MultiLineTextMessage() {
         groupConversation.append(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempor nulla nec justo tincidunt iaculis. Suspendisse et viverra lacus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam pretium suscipit purus, sed eleifend erat ullamcorper non. Sed non enim diam. Fusce pulvinar turpis sit amet pretium finibus. Donec ipsum massa, aliquam eget sollicitudin vel, fringilla eget arcu. Donec faucibus porttitor nisi ut fermentum. Donec sit amet massa sodales, facilisis neque et, condimentum leo. Maecenas quis vulputate libero, id suscipit magna.")
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_LocationMessage() {
         let location = LocationData.locationData(withLatitude: 43.94, longitude: 12.46, name: "Stranger Place", zoomLevel: 0)
         groupConversation.append(location: location)
         makeTestForShareViewController()
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_FileMessage() {
         let file = ZMFileMetadata(fileURL: urlForResource(inTestBundleNamed: "huge.pdf"))
         groupConversation.append(file: file)
@@ -91,12 +85,12 @@ final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
         createSut()
 
         _ = sut.view // make sure view is loaded
-        
+
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        
+
         verifyInAllDeviceSizes(matching: sut)
     }
-    
+
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
         activateDarkColorScheme()
         groupConversation.append(text: "This is a text message.")

@@ -39,14 +39,14 @@ final class AddParticipantsViewControllerSnapshotTests: XCTestCase, CoreDataFixt
         super.tearDown()
     }
 
-    func testForEveryOneIsHere(){
+    func testForEveryOneIsHere() {
         let newValues = ConversationCreationValues(name: "", participants: [], allowGuests: true)
 
         sut = AddParticipantsViewController(context: .create(newValues), variant: .light)
         verify(matching: sut)
     }
 
-    func testForAddParticipantsButtonIsShown(){
+    func testForAddParticipantsButtonIsShown() {
         let conversation = createGroupConversation()
 
         sut = AddParticipantsViewController(context: .add(conversation), variant: .light)

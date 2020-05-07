@@ -19,14 +19,14 @@
 import XCTest
 @testable import Wire
 
-final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
-    
+final class AppLockViewSnapshotTests: XCTestCase {
+
     var sut: AppLockView!
-    
+
     override func setUp() {
         super.setUp()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
@@ -61,11 +61,11 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
             self.sut.toggleConstraints()
         }
     }
-    
+
     func testForReauthUI_Unvailable() {
         sut = AppLockView(authenticationType: .unavailable)
         sut.showReauth = true
-        
+
         verifyInAllDeviceSizes(view: sut) { _, isPad in
             self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
             self.sut.toggleConstraints()
