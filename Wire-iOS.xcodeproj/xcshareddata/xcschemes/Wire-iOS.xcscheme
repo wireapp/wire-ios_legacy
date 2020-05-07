@@ -50,9 +50,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "AppLockViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "AppLockViewSnapshotTests">
                </Test>
                <Test
