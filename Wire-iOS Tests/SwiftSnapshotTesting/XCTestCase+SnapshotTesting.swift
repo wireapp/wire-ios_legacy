@@ -269,11 +269,7 @@ extension Snapshotting where Value == UIAlertController, Format == UIImage {
     /// A snapshot strategy for comparing UIAlertController views based on pixel equality.
     /// Compare UIAlertController.view to prevert the view is resized to fix the default UIViewController.view's size
     public static var image: Snapshotting<UIAlertController, UIImage> {
-        return Snapshotting<UIView, UIImage>.image(precision: 1, size: nil).pullback {
-            //Fix for iOS 13.4.1 simulator transparent alert snapshot issue
-            $0.view.backgroundColor = UIColor(white: 249/255, alpha: 1)
-            return $0.view
-        }
+        return Snapshotting<UIView, UIImage>.image(precision: 1, size: nil).pullback { $0.view }
     }
 }
 
