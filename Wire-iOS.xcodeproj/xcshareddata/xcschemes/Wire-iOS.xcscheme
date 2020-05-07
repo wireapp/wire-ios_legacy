@@ -50,6 +50,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "AppLockViewControllerSnapshotTests">
+               </Test>
+               <Test
                   Identifier = "AppLockViewSnapshotTests">
                </Test>
                <Test
@@ -122,7 +125,19 @@
                   Identifier = "NSData_ImageTypeTests">
                </Test>
                <Test
-                  Identifier = "ShareViewControllerTests">
+                  Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_File_DarkMode()">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Image_DarkMode()">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Photos()">
+               </Test>
+               <Test
+                  Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()">
@@ -132,9 +147,6 @@
                </Test>
                <Test
                   Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()">
-               </Test>
-               <Test
-                  Identifier = "UIAlertControllerCompanyLoginSnapshotTests">
                </Test>
             </SkippedTests>
          </TestableReference>
