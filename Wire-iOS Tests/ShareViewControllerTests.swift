@@ -20,33 +20,40 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-final class ShareViewControllerTests: CoreDataSnapshotTestCase {
-    
+final class ShareViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var groupConversation: ZMConversation!
     var sut: ShareViewController<ZMConversation, ZMMessage>!
     
     override func setUp() {
         super.setUp()
-        self.groupConversation = self.createGroupConversation()
+
+        coreDataFixture = CoreDataFixture()
+
+        groupConversation = createGroupConversation()
     }
     
     override func tearDown() {
-        self.groupConversation = nil
+        groupConversation = nil
         sut = nil
         disableDarkColorScheme()
+
+        coreDataFixture = nil
+
         super.tearDown()
     }
-    
-    override var needsCaches: Bool {
-        return true
-    }
+//
+//    override var needsCaches: Bool {
+//        return true
+//    }
 
     func activateDarkColorScheme() {
         ColorScheme.default.variant = .dark
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
 
-        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
+//        snapshotBackgroundColor = UIColor.from(scheme: .contentBackground)
     }
 
     func disableDarkColorScheme() {
@@ -87,7 +94,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
         
-        self.verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
     
     func testThatItRendersCorrectlyShareViewController_DarkMode() {
@@ -106,7 +113,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         _ = sut.view // make sure view is loaded
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        self.verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testThatItRendersCorrectlyShareViewController_Video_DarkMode() {
@@ -121,7 +128,7 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
         _ = sut.view // make sure view is loaded
 
         XCTAssertTrue(waitForGroupsToBeEmpty([MediaAssetCache.defaultImageCache.dispatchGroup]))
-        self.verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
 
     func testThatItRendersCorrectlyShareViewController_File_DarkMode() {
@@ -156,10 +163,11 @@ final class ShareViewControllerTests: CoreDataSnapshotTestCase {
 
     /// create a SUT with a group conversation and a one-to-one conversation and verify snapshot
     private func makeTestForShareViewController(file: StaticString = #file,
+                                                testName: String = #function,
                                         line: UInt = #line) {
         createSut()
 
-        verifyInAllDeviceSizes(view: sut.view, file:file, line:line)
+        verifyInAllDeviceSizes(matching: sut, file:file, testName: testName, line:line)
     }
 
 }
