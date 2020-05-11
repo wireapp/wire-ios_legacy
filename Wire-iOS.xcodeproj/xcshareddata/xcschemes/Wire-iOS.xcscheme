@@ -50,24 +50,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItShowsUserWithoutImage()">
-               </Test>
-               <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromAccentColor()">
-               </Test>
-               <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromUserImage()">
-               </Test>
-               <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved()">
-               </Test>
-               <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromAccentColor()">
-               </Test>
-               <Test
-                  Identifier = "BackgroundViewControllerTests/testThatItUpdatesForUserImageUpdate_fromUserImage()">
-               </Test>
-               <Test
                   Identifier = "CallInfoRootViewControllerTests/testGroupAudioEstablished_LargeGroup()">
                </Test>
                <Test
