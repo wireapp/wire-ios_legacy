@@ -184,7 +184,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished)
         
         // then
-        verifyInAllDeviceSizes(matching: sut)
+        verify(matching: sut)
     }
     
     // MARK: - Group Video
@@ -254,7 +254,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingUndeterminedPermissions)
 
         //then
-        verifyAllIPhoneSizes(matching: sut)
+        verify(matching: sut)
     }
 
     func testGroupVideoDeniedVideoPermissions() {
@@ -265,7 +265,7 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoIncomingDeniedPermissions)
 
         //then
-        verifyAllIPhoneSizes(matching: sut)
+        verify(matching: sut)
     }
     
 }
