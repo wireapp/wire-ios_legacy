@@ -64,6 +64,15 @@
                <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_Video_DarkMode()">
                </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndNameAllTeamUsersFromSmallTeamWithManyGuests()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithParticipantsAndWithoutName_AllowGuests()">
+               </Test>
+               <Test
+                  Identifier = "StartedConversationCellTests/testThatItRendersNewConversationCellWithoutParticipants_AllowGuests()">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>
