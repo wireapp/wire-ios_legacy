@@ -116,9 +116,6 @@
                   Identifier = "LaunchImageViewControllerSnapshotTests">
                </Test>
                <Test
-                  Identifier = "MediaPreviewViewSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test

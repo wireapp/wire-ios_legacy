@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-final class MediaPreviewViewSnapshotTests: ZMSnapshotTestCase {
+final class MediaPreviewViewSnapshotTests: XCTestCase {
 
     var sut: MediaPreviewView!
 
@@ -40,6 +40,6 @@ final class MediaPreviewViewSnapshotTests: ZMSnapshotTestCase {
     }
 
     func testForInitState(){
-        verify(view: sut)
+        verify(matching: sut)
     }
 }
