@@ -26,8 +26,7 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
     /// Disabled since the MKMApView makes the test flaky
     func testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
-        // Add waitForTextViewToLoad to wait for MapView rendering would fix the issue. (Tested with iOS 12 simulator)
-        verify(message: makeMessage(), waitForTextViewToLoad: true)
+        verify(message: makeMessage())
     }
 
     /// Disabled since the MKMApView makes the test flaky
