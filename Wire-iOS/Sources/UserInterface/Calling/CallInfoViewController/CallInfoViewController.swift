@@ -83,24 +83,24 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
         accessoryViewController.delegate = self
         actionsView.delegate = self
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         createConstraints()
         updateNavigationItem()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateState()
     }
-    
+
     private func setupViews() {
         addToSelf(backgroundViewController)
 
@@ -129,7 +129,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
 
         backgroundViewController.view.fitInSuperview()
     }
-    
+
     private func updateNavigationItem() {
         let minimizeItem = UIBarButtonItem(
             icon: .downArrow,
@@ -160,9 +160,9 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
             navigationItem.titleView = label
         }
     }
-    
+
     // MARK: - Actions + Delegates
-    
+
     @objc
     private func minimizeCallOverlay(_ sender: UIBarButtonItem) {
         delegate?.infoViewController(self, perform: .minimizeOverlay)
@@ -171,7 +171,7 @@ final class CallInfoViewController: UIViewController, CallActionsViewDelegate, C
     func callActionsView(_ callActionsView: CallActionsView, perform action: CallAction) {
         delegate?.infoViewController(self, perform: action)
     }
-    
+
     func callAccessoryViewControllerDidSelectShowMore(viewController: CallAccessoryViewController) {
         delegate?.infoViewController(self, perform: .showParticipantsList)
     }
