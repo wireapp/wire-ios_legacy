@@ -19,7 +19,6 @@
 import Foundation
 import UIKit
 import WireCommonComponents
-import Cartography
 
 protocol PreBackendSwitchViewControllerDelegate {
     func preBackendSwitchViewControllerDidComplete(_ url: URL)
