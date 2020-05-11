@@ -46,7 +46,7 @@ final class BackgroundViewControllerTests: XCTestCase {
     }
 
     
-    func DISABLE_testThatItShowsUserWithImage() {
+    func testThatItShowsUserWithImage() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
@@ -59,7 +59,6 @@ final class BackgroundViewControllerTests: XCTestCase {
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup], timeout: 10))
         
         // WHEN & THEN
-        ///TODO: this tests sometime fails, the image is not loaded without above hack
         verify(matching: sut)
     }
     
