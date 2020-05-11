@@ -111,7 +111,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
         CrashReporter.setupAppCenterIfNeeded()
-        navigationController?.view.backgroundColor = .white
         updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
@@ -133,7 +132,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black).downscaling(to: iconSize))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: UIColor.Wire.primaryLabel).downscaling(to: iconSize))
     }
 
     private var authenticatedAccounts: [Account] {
@@ -324,10 +323,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.Wire.secondaryLabel)
 
                 case .remoteURL(let url):
-                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.Wire.secondaryLabel)
                     self.fetchWebsitePreview(for: url)
                 }
 

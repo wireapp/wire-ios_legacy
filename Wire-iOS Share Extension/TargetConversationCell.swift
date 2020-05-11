@@ -43,7 +43,7 @@ final class TargetConversationCell: UITableViewCell {
         shouldGroupAccessibilityChildren = true
         contentView.addSubview(stateAccessoryView)
 
-        conversationNameLabel.textColor = .black
+        conversationNameLabel.textColor = UIColor.Wire.primaryLabel
         conversationNameLabel.font = .preferredFont(forTextStyle: .body)
         contentView.addSubview(conversationNameLabel)
     }

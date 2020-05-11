@@ -59,7 +59,6 @@ final class ConversationSelectionViewController : UITableViewController {
         super.viewDidLoad()
         searchController.searchResultsUpdater = self
         let searchBar = searchController.searchBar
-        searchBar.backgroundColor = .white
         tableView.tableHeaderView = searchBar
     }
     
