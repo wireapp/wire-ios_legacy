@@ -19,13 +19,12 @@
 import XCTest
 @testable import Wire
 
-final class IconLabelButtonTests: ZMSnapshotTestCase {
+final class IconLabelButtonTests: XCTestCase {
     
     fileprivate var button: IconLabelButton!
     
     override func setUp() {
         super.setUp()
-        snapshotBackgroundColor = .darkGray
         button = IconLabelButton.video()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setNeedsLayout()
@@ -42,7 +41,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: false)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Unselected_Disabled() {
@@ -51,7 +50,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: false)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Selected_Enabled() {
@@ -60,7 +59,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: false)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Selected_Disabled() {
@@ -70,7 +69,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: false)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Unselected_Enabled_Blurred() {
@@ -78,7 +77,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: true)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Unselected_Disabled_Blurred() {
@@ -87,7 +86,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: true)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Selected_Enabled_Blurred() {
@@ -96,7 +95,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: true)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Dark_Selected_Disabled_Blurred() {
@@ -106,47 +105,43 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .dark(blurred: true)
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Light_Unselected_Enabled() {
         // Given
-        snapshotBackgroundColor = .white
 
         // When
         button.appearance = .light
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Light_Unselected_Disabled() {
         // Given
-        snapshotBackgroundColor = .white
         
         // When
         button.isEnabled = false
         button.appearance = .light
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Light_Selected_Enabled() {
         // Given
-        snapshotBackgroundColor = .white
         
         // When
         button.isSelected = true
         button.appearance = .light
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
     func testIconLabelButton_Light_Selected_Disabled() {
         // Given
-        snapshotBackgroundColor = .white
         
         // When
         button.isSelected = true
@@ -154,7 +149,7 @@ final class IconLabelButtonTests: ZMSnapshotTestCase {
         button.appearance = .light
         
         // Then
-        verify(view: button)
+        verify(matching: button)
     }
     
 }
