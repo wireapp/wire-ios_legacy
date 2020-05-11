@@ -49,9 +49,8 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         return view
     }()
     
-    // Replace by the loading view once ready
     let progressContainerView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        let view = UIView()
         view.layer.cornerRadius = 40
         view.backgroundColor = UIColor(red: 50/255, green: 54/255, blue: 57/255, alpha: 1)
         view.layer.shadowOffset = .zero
