@@ -16,11 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import Cartography
 import WireSyncEngine
 import UIKit
-import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -64,7 +62,7 @@ final class AppLockViewController: UIViewController {
         
         self.appLockPresenter = AppLockPresenter(userInterface: self)
         
-        self.lockView = AppLockView()
+        lockView = AppLockView()
         self.lockView.onReauthRequested = { [weak self] in
             guard let `self` = self else { return }
             self.appLockPresenter?.requireAuthentication()

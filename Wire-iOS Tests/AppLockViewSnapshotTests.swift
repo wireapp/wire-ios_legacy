@@ -19,7 +19,16 @@
 import XCTest
 @testable import Wire
 
-final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
+extension UIView {
+    var wrapInVicwController: UIViewController {
+        let viewController = UIViewController()
+        viewController.view = self
+
+        return viewController
+    }
+}
+
+final class AppLockViewSnapshotTests: XCTestCase {
     
     var sut: AppLockView!
     
@@ -35,41 +44,29 @@ final class AppLockViewSnapshotTests: ZMSnapshotTestCase {
     func testForReauthUI_TouchID() {
         sut = AppLockView(authenticationType: .touchID)
         sut.showReauth = true
-
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        
+        verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
     func testForReauthUI_FaceID() {
         sut = AppLockView(authenticationType: .faceID)
         sut.showReauth = true
 
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
     func testForReauthUI_Password() {
         sut = AppLockView(authenticationType: .passcode)
         sut.showReauth = true
 
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
     
     func testForReauthUI_Unvailable() {
         sut = AppLockView(authenticationType: .unavailable)
         sut.showReauth = true
         
-        verifyInAllDeviceSizes(view: sut) { _, isPad in
-            self.sut.userInterfaceSizeClass = { _ in return isPad ? .regular: .compact}
-            self.sut.toggleConstraints()
-        }
+        verifyInAllDeviceSizes(matching: sut.wrapInVicwController)
     }
 
 }
