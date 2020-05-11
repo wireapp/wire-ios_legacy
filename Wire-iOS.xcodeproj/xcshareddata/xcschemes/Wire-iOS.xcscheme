@@ -110,9 +110,6 @@
                   Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Enabled_Blurred()">
                </Test>
                <Test
-                  Identifier = "LandingViewControllerSnapshotTests">
-               </Test>
-               <Test
                   Identifier = "ShareViewControllerTests/testThatItRendersCorrectlyShareViewController_FileMessage()">
                </Test>
                <Test
