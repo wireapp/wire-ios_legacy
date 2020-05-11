@@ -85,7 +85,7 @@ fileprivate final class CallingMockCameraKeyboardViewController: CameraKeyboardV
     }
 }
 
-final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
+final class CameraKeyboardViewControllerTests: XCTestCase {
     var sut: CameraKeyboardViewController!
     var splitView: SplitLayoutObservableMock!
     var delegateMock: CameraKeyboardViewControllerDelegateMock!
@@ -149,7 +149,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
                                                       imageManagerType: MockImageManager.self,
                                                       permissions: permissions)
 
-        verify(view: prepareForSnapshot())
+        verify(matching: prepareForSnapshot())
     }
     
     func testThatFirstSectionContainsCameraCellOnly() {
@@ -205,7 +205,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(matching: self.prepareForSnapshot())
     }
     
     func testInitialStateLayoutSizeCompact() {
@@ -235,7 +235,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(view: self.prepareForSnapshot(CGSize(width: 768, height: 264)))
+        self.verify(matching: self.prepareForSnapshot(CGSize(width: 768, height: 264)))
     }
     
     func testInitialStateLayoutSizeRegularPortrait() {
@@ -265,7 +265,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // when
         setupSut(permissions: permissions)
         // then
-        self.verify(view: self.prepareForSnapshot(CGSize(width: 1024, height: 352)))
+        self.verify(matching: self.prepareForSnapshot(CGSize(width: 1024, height: 352)))
     }
     
     func testInitialStateLayoutSizeRegularLandscape() {
@@ -296,7 +296,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 300, y: 0, width: 160, height: 10), animated: false)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(matching: self.prepareForSnapshot())
     }
     
     func testCameraScrolledHorizontallySomePercent() {
@@ -326,7 +326,7 @@ final class CameraKeyboardViewControllerTests: CoreDataSnapshotTestCase {
         // when
         self.sut.collectionView.scrollRectToVisible(CGRect(x: 320, y: 0, width: 160, height: 10), animated: false)
         // then
-        self.verify(view: self.prepareForSnapshot())
+        self.verify(matching: self.prepareForSnapshot())
     }
     
     func testCameraScrolledHorizontallyAwayPercent() {
