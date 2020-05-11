@@ -23,8 +23,8 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
-    /// Disabled since the MKMApView makes the test flaky
-    func testThatItRendersLocationCellWithAddressCorrect() {
+    /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
+    func disabled_testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
         verify(message: makeMessage())
     }
