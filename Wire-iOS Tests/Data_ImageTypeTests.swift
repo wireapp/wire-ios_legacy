@@ -22,31 +22,27 @@ import XCTest
 ///TODO: test failed with XCode11, may be due to image is not copied?
 ///TODO: move to utilities
 
-final class NSData_ImageTypeTests: XCTestCase {
+final class Data_ImageTypeTests: XCTestCase {
         
     func testThatItIdentifiesJPEG() {
         
         // given
-        guard let jpeg = #imageLiteral(resourceName: "wire-logo-shield").jpegData(compressionQuality: 1.0) else {
+        guard let sut = #imageLiteral(resourceName: "wire-logo-shield").jpegData(compressionQuality: 1.0) else {
             XCTFail()
             return
         }
         
-        let sut = NSData(data: jpeg)
-        
         // then
-        XCTAssertTrue(sut.isJPEG)
+        XCTAssert(sut.isJPEG)
     }
     
     func testThatItDoesNotIdentifyJPEG() {
         
         // given
-        guard let png = #imageLiteral(resourceName: "wire-logo-shield").pngData() else {
+        guard let sut = #imageLiteral(resourceName: "wire-logo-shield").pngData() else {
             XCTFail()
             return
         }
-        
-        let sut = NSData(data: png)
         
         // then
         XCTAssertFalse(sut.isJPEG)
