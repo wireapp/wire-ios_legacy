@@ -95,15 +95,6 @@
                   Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeRegularPortrait_LibraryAccessGranted()">
                </Test>
                <Test
-                  Identifier = "ConversationContentViewControllerTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationLinkAttachmentMessageCellTests">
-               </Test>
-               <Test
-                  Identifier = "ConversationTextMessageTests">
-               </Test>
-               <Test
                   Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Disabled_Blurred()">
                </Test>
                <Test
