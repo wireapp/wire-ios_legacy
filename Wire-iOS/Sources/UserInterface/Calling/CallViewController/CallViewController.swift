@@ -18,7 +18,6 @@
 
 import UIKit
 import AVFoundation
-import WireDataModel
 import WireSyncEngine
 import avs
 
@@ -169,13 +168,15 @@ final class CallViewController: UIViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    @objc private func resumeVideoIfNeeded() {
+    @objc
+    private func resumeVideoIfNeeded() {
         guard voiceChannel.videoState.isPaused else { return }
         voiceChannel.videoState = .started
         updateConfiguration()
     }
 
-    @objc private func pauseVideoIfNeeded() {
+    @objc
+    private func pauseVideoIfNeeded() {
         guard voiceChannel.videoState.isSending else { return }
         voiceChannel.videoState = .paused
         updateConfiguration()
@@ -188,12 +189,14 @@ final class CallViewController: UIViewController {
     private func createConstraints() {
         [videoGridViewController, callInfoRootViewController].forEach{ $0.view.fitInSuperview() }
     }
-    
+
     fileprivate func minimizeOverlay() {
+        weak var window = view.window
         weak var rootViewController = view.window?.rootViewController
         dismiss(animated: true, completion: {
             self.dismisser?.dismiss(viewController: self, completion: nil)
             rootViewController?.setNeedsStatusBarAppearanceUpdate()
+            window?.isHidden = true
         })
     }
 

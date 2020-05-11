@@ -16,9 +16,7 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import UIKit
-import WireDataModel
 import WireSyncEngine
 
 final class CallController: NSObject {
@@ -94,14 +92,14 @@ extension CallController: WireCallCenterCallStateObserver {
             return
         }
     
-        activeCallViewController.dismiss(animated: animated, completion: completion)
+        activeCallViewController.dismiss(animated: animated, completion: completion) ///TODO: hide window?
     }
     
     fileprivate func minimizeCall(in conversation: ZMConversation) {
         activeCallViewController?.dismiss(animated: true)
     }
     
-    fileprivate  func presentCall(in conversation: ZMConversation, animated: Bool = true) {
+    fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
         guard activeCallViewController == nil else { return }
         guard let voiceChannel = conversation.voiceChannel else { return }
         
@@ -138,8 +136,9 @@ extension CallController: WireCallCenterCallStateObserver {
 
 extension CallController: ViewControllerDismisser {
     
-    func dismiss(viewController: UIViewController, completion: (() -> ())?) {
-        guard let callViewController = viewController as? CallViewController, let conversation = callViewController.conversation else { return }
+    func dismiss(viewController: UIViewController, completion: Completion? = nil) {
+        guard let callViewController = viewController as? CallViewController,
+            let conversation = callViewController.conversation else { return }
         
         minimizedCall = conversation
         activeCallViewController = nil        
