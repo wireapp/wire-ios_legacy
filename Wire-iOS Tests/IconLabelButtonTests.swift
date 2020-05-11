@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class IconLabelButtonTests: XCTestCase {
-    
+
     fileprivate var button: IconLabelButton!
-    
+
     override func setUp() {
         super.setUp()
         button = IconLabelButton.video()
@@ -30,7 +30,7 @@ final class IconLabelButtonTests: XCTestCase {
         button.setNeedsLayout()
         button.layoutIfNeeded()
     }
-    
+
     override func tearDown() {
         button = nil
         super.tearDown()
@@ -39,117 +39,117 @@ final class IconLabelButtonTests: XCTestCase {
     func testIconLabelButton_Dark_Unselected_Enabled() {
         // When
         button.appearance = .dark(blurred: false)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Disabled() {
         // When
         button.isEnabled = false
         button.appearance = .dark(blurred: false)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Enabled() {
         // When
         button.isSelected = true
         button.appearance = .dark(blurred: false)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Disabled() {
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .dark(blurred: false)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Enabled_Blurred() {
         // When
         button.appearance = .dark(blurred: true)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Unselected_Disabled_Blurred() {
         // When
         button.isEnabled = false
         button.appearance = .dark(blurred: true)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Enabled_Blurred() {
         // When
         button.isSelected = true
         button.appearance = .dark(blurred: true)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Dark_Selected_Disabled_Blurred() {
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .dark(blurred: true)
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Unselected_Enabled() {
         // Given
 
         // When
         button.appearance = .light
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Unselected_Disabled() {
         // Given
-        
+
         // When
         button.isEnabled = false
         button.appearance = .light
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Selected_Enabled() {
         // Given
-        
+
         // When
         button.isSelected = true
         button.appearance = .light
-        
+
         // Then
         verify(matching: button)
     }
-    
+
     func testIconLabelButton_Light_Selected_Disabled() {
         // Given
-        
+
         // When
         button.isSelected = true
         button.isEnabled = false
         button.appearance = .light
-        
+
         // Then
         verify(matching: button)
     }
-    
+
 }

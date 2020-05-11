@@ -20,19 +20,19 @@ import XCTest
 @testable import Wire
 
 final class BackgroundViewControllerTests: XCTestCase {
-    
+
     var selfUser: MockUserType!
-    
+
     override func setUp() {
         super.setUp()
         accentColor = .violet
         selfUser = MockUserType.createSelfUser(name: "")
         selfUser.accentColorValue = .violet
     }
-    
+
     override func tearDown() {
         selfUser = nil
-        
+
         super.tearDown()
     }
 
@@ -40,12 +40,11 @@ final class BackgroundViewControllerTests: XCTestCase {
         // GIVEN
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
-        
+
         // WHEN & THEN
         verify(matching: sut)
     }
 
-    
     func testThatItShowsUserWithImage() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
@@ -57,11 +56,11 @@ final class BackgroundViewControllerTests: XCTestCase {
         selfUser.accentColorValue = selfUser.accentColorValue
 
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup], timeout: 10))
-        
+
         // WHEN & THEN
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesForUserAccentColorUpdate_fromAccentColor() {
         // GIVEN
         let sut = BackgroundViewController(user: selfUser, userSession: .none)
@@ -69,11 +68,11 @@ final class BackgroundViewControllerTests: XCTestCase {
         // WHEN
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(imageMediumDataChanged: false, accentColorValueChanged: true)
-        
+
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImageRemoved() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
@@ -86,7 +85,7 @@ final class BackgroundViewControllerTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesForUserAccentColorUpdate_fromUserImage() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()
@@ -96,11 +95,11 @@ final class BackgroundViewControllerTests: XCTestCase {
         selfUser.accentColorValue = .brightOrange
         sut.updateFor(imageMediumDataChanged: true, accentColorValueChanged: true)
         XCTAssertTrue(waitForGroupsToBeEmpty([sut.dispatchGroup]))
-        
+
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesForUserImageUpdate_fromAccentColor() {
         // GIVEN
         selfUser.completeImageData = nil
@@ -113,7 +112,7 @@ final class BackgroundViewControllerTests: XCTestCase {
         // THEN
         verify(matching: sut)
     }
-    
+
     func testThatItUpdatesForUserImageUpdate_fromUserImage() {
         // GIVEN
         selfUser.completeImageData = image(inTestBundleNamed: "unsplash_matterhorn.jpg").pngData()

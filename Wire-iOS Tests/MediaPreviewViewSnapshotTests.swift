@@ -39,7 +39,7 @@ final class MediaPreviewViewSnapshotTests: XCTestCase {
         super.tearDown()
     }
 
-    func testForInitState(){
+    func testForInitState() {
         verify(matching: sut)
     }
 }

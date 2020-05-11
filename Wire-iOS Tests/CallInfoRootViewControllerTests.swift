@@ -37,59 +37,59 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     }
 
     // MARK: - OneToOne Audio
-    
+
     func testOneToOneOutgoingAudioRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneOutgoingAudioRinging)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testOneToOneAudioConnecting() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioConnecting)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testOneToOneAudioEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testOneToOneAudioEstablishedCBR() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablishedCBR)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     @available(iOS 11.0, *)
     func testOneToOneAudioEstablishedPhoneX() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneAudioEstablished)
-        
+
         // then
         _ = verifySnapshot(matching: sut, as: .image(on: SnapshotTesting.ViewImageConfig.iPhoneX))
     }
@@ -105,108 +105,107 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         verifyAllIPhoneSizes(matching: sut)
     }
 
-    
     // MARK: - OneToOne Video
-    
+
     func testOneToOneIncomingVideoRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingVideoRinging)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testOneToOneVideoConnecting() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneVideoConnecting)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testOneToOneVideoEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.oneToOneVideoEstablished)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     // MARK: - Group Audio
-    
+
     func testGroupOutgoingAudioRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupOutgoingAudioRinging)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testGroupAudioConnecting() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupAudioConnecting)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testGroupAudioEstablished_SmallGroup() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .small)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testGroupAudioEstablished_LargeGroup() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser, groupSize: .large)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupAudioEstablished)
-        
+
         // then
         verify(matching: sut)
     }
-    
+
     // MARK: - Group Video
-    
+
     func testGroupIncomingVideoRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupIncomingVideoRinging)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testGroupOutgoingVideoRinging() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupOutgoingVideoRinging)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
@@ -214,10 +213,10 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
     func testGroupVideoEstablished() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablished)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
@@ -232,14 +231,14 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
-    
+
     func testGroupVideoEstablishedCBR() {
         // given
         let fixture = CallInfoTestFixture(otherUser: otherUser)
-        
+
         // when
         let sut = CallInfoRootViewController(configuration: fixture.groupVideoEstablishedCBR)
-        
+
         // then
         verifyAllIPhoneSizes(matching: sut)
     }
@@ -267,5 +266,5 @@ final class CallInfoRootViewControllerTests: XCTestCase, CoreDataFixtureTestHelp
         //then
         verify(matching: sut)
     }
-    
+
 }
