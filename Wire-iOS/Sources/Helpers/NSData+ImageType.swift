@@ -19,12 +19,6 @@
 ///TODO: move to utilities
 import Foundation
 
-extension NSData {
-    @objc var isJPEG: Bool {
-        return (self as Data).isJPEG
-    }
-}
-
 extension Data {
     var isJPEG: Bool {
         let array = self.withUnsafeBytes { (unsafeRawBufferPointer: UnsafeRawBufferPointer) in
