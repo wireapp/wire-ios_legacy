@@ -146,6 +146,10 @@ class AuthenticationInterfaceBuilder {
         case .teamCreation(let state):
             return makeTeamCreationStepViewController(for: state)
 
+        case .switchBackend(let url):
+            let viewController = PreBackendSwitchViewController()
+            viewController.backendURL = url
+            return viewController
         default:
             return nil
         }
