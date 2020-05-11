@@ -50,30 +50,6 @@
             </BuildableReference>
             <SkippedTests>
                <Test
-                  Identifier = "CallInfoRootViewControllerTests/testGroupAudioEstablished_LargeGroup()">
-               </Test>
-               <Test
-                  Identifier = "CallInfoRootViewControllerTests/testGroupVideoDeniedVideoPermissions()">
-               </Test>
-               <Test
-                  Identifier = "CallInfoRootViewControllerTests/testGroupVideoUndeterminedVideoPermissions()">
-               </Test>
-               <Test
-                  Identifier = "CameraKeyboardViewControllerTests/testCameraScrolledHorizontallyAwayPercent_LibraryAccessGranted()">
-               </Test>
-               <Test
-                  Identifier = "CameraKeyboardViewControllerTests/testCameraScrolledHorizontallySomePercent_LibraryAccessGranted()">
-               </Test>
-               <Test
-                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeCompact_LibraryAccessGranted()">
-               </Test>
-               <Test
-                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeRegularLandscape_LibraryAccessGranted()">
-               </Test>
-               <Test
-                  Identifier = "CameraKeyboardViewControllerTests/testInitialStateLayoutSizeRegularPortrait_LibraryAccessGranted()">
-               </Test>
-               <Test
                   Identifier = "IconLabelButtonTests/testIconLabelButton_Dark_Unselected_Disabled_Blurred()">
                </Test>
                <Test
