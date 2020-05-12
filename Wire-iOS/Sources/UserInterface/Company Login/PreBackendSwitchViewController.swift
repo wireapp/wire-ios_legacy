@@ -56,17 +56,23 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         view.layer.shadowRadius = 5
         view.layer.shadowOpacity = 0.29
         view.layer.shadowColor = UIColor.black.cgColor
+        view.accessibilityIdentifier = "ProgressView"
         return view
     }()
     
-    let wireLogo = UIImageView(image: UIImage(named: "wire-logo-letter"))
-    
+    let wireLogo: UIImageView = {
+        let logo = UIImageView(image: UIImage(named: "wire-logo-letter"))
+        logo.accessibilityIdentifier = "ProgressView.Logo"
+        return logo
+    }()
+
     let progressView: TimedCircularProgressView = {
         let progress = TimedCircularProgressView()
         progress.lineWidth = 4
         progress.lineCap = .round
         progress.tintColor = PreBackendSwitchViewController.informationBlue
         progress.duration = 5
+        progress.accessibilityIdentifier = "ProgressView.Timer"
         return progress
     }()
     
@@ -75,6 +81,8 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         label.font = FontSpec(.large, .semibold).font!
         label.textAlignment = .center
         label.text = "login.sso.backend_switch.title".localized
+        label.accessibilityValue = label.text
+        label.textColor = .black
         return label
     }()
     
@@ -83,6 +91,8 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         label.font = FontSpec(.normal, .regular).font!
         label.textAlignment = .center
         label.text = "login.sso.backend_switch.subtitle".localized
+        label.accessibilityValue = label.text
+        label.textColor = .black
         return label
     }()
     
@@ -91,6 +101,7 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         label.font = FontSpec(.normal, .semibold).font!
         label.textAlignment = .center
         label.numberOfLines = 0
+        label.textColor = .black
         return label
     }()
     
@@ -123,6 +134,7 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         createConstraints()
         
         backendUrlLabel.text = backendURL?.absoluteString
+        backendUrlLabel.accessibilityValue = backendUrlLabel.text
     }
     
     override func viewDidAppear(_ animated: Bool) {
