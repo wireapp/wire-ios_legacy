@@ -17,9 +17,7 @@
 //
 
 
-import Foundation
 import Cartography
-import WireDataModel
 import UIKit
 import WireSyncEngine
 
