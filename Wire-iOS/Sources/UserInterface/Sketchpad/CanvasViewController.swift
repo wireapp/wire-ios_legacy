@@ -33,7 +33,28 @@ enum CanvasViewControllerEditMode : UInt {
 final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
-    var canvas = Canvas()
+    
+    private var navigationGestureRecognizers: [UIGestureRecognizer]? {
+        return navigationController?.presentationController?.presentedView?.gestureRecognizers
+    }
+    
+    lazy var canvas: Canvas = {
+        let canvas = Canvas()
+                
+        canvas.touchWillBegin = { [weak self] in
+            self?.navigationGestureRecognizers?.forEach {
+                        $0.isEnabled = false
+                    }
+        }
+
+        canvas.touchWillEnd = { [weak self] in
+            self?.navigationGestureRecognizers?.forEach {
+                        $0.isEnabled = true
+                    }
+        }
+
+        return canvas
+    }()
     var toolbar : SketchToolbar!
     let drawButton = IconButton()
     let emojiButton = IconButton()
