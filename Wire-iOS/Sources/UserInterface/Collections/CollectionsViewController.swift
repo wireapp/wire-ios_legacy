@@ -26,10 +26,10 @@ protocol CollectionsViewControllerDelegate: class {
 }
 
 final class CollectionsViewController: UIViewController {
-    public var onDismiss: ((CollectionsViewController)->())?
-    public let sections: CollectionsSectionSet
+    var onDismiss: ((CollectionsViewController)->())?
+    let sections: CollectionsSectionSet
     weak var delegate: CollectionsViewControllerDelegate?
-    public var isShowingSearchResults: Bool {
+    var isShowingSearchResults: Bool {
         guard let textSearchController = self.textSearchController,
               let resultsView = textSearchController.resultsView else {
             return false
@@ -37,9 +37,9 @@ final class CollectionsViewController: UIViewController {
         return !resultsView.isHidden
     }
 
-    public var shouldTrackOnNextOpen = false
+    var shouldTrackOnNextOpen = false
     
-    public var currentTextSearchQuery: [String] {
+    var currentTextSearchQuery: [String] {
         guard let textSearchController = self.textSearchController else {
             return []
         }
@@ -118,11 +118,11 @@ final class CollectionsViewController: UIViewController {
         self.collection.assetCollectionDelegate.remove(self)
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func refetchCollection() {
+    func refetchCollection() {
         self.collection.assetCollectionDelegate.remove(self)
         self.imageMessages = []
         self.videoMessages = []
@@ -133,16 +133,16 @@ final class CollectionsViewController: UIViewController {
         self.contentView.collectionView.reloadData()
     }
     
-    override public func loadView() {
-        self.view = CollectionsView()
+    override func loadView() {
+        view = CollectionsView()
     }
     
-    override public func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.textSearchController = TextSearchViewController(conversation: self.collection.conversation)
+        self.textSearchController = TextSearchViewController(conversation: collection.conversation)
         self.textSearchController.delegate = self
-        self.contentView.constrainViews(searchViewController: self.textSearchController)
+        self.contentView.constrainViews(searchViewController: textSearchController)
         
         self.messagePresenter.targetViewController = self
         self.messagePresenter.modalTargetController = self
@@ -154,16 +154,19 @@ final class CollectionsViewController: UIViewController {
         self.updateNoElementsState()
     }
     
-    override public func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupNavigationItem()
-        self.flushLayout()
+        setupNavigationItem()
+        flushLayout()
         
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+
+        ///Prevent content overlaps navi bar
+        navigationController?.navigationBar.isTranslucent = false
     }
     
-    override public func viewWillDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.textSearchController.teardown()
     }
@@ -173,11 +176,11 @@ final class CollectionsViewController: UIViewController {
 
 
     /// Notice: for iPad with iOS9 in landscape mode, horizontalSizeClass is .unspecified (.regular in iOS11).
-    override public var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return wr_supportedInterfaceOrientations
     }
     
-    override public var shouldAutorotate: Bool {
+    override var shouldAutorotate: Bool {
         switch (self.traitCollection.horizontalSizeClass) {
         case .compact:
             return false
@@ -186,7 +189,7 @@ final class CollectionsViewController: UIViewController {
         }
     }
 
-    override public var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
+    override var preferredInterfaceOrientationForPresentation : UIInterfaceOrientation {
         return .portrait
     }
 
@@ -223,7 +226,7 @@ final class CollectionsViewController: UIViewController {
         }
     }
     
-    override public func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if self.lastLayoutSize != self.view.bounds.size {
             self.lastLayoutSize = self.view.bounds.size
@@ -235,12 +238,12 @@ final class CollectionsViewController: UIViewController {
         }
     }
 
-    public override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
     }
 
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         guard let _ = self.view.window else {
             return
         }
@@ -252,11 +255,11 @@ final class CollectionsViewController: UIViewController {
         }
     }
     
-    override public var prefersStatusBarHidden: Bool {
+    override var prefersStatusBarHidden: Bool {
         return false
     }
     
-    public override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle : UIStatusBarStyle {
         return ColorScheme.default.variant == .dark ? .lightContent : .default
     }
     
@@ -297,17 +300,19 @@ final class CollectionsViewController: UIViewController {
         }
     }
 
-    @objc func closeButtonPressed(_ button: UIButton) {
+    @objc
+    fileprivate func closeButtonPressed(_ button: UIButton) {
         self.onDismiss?(self)
     }
     
-    @objc func backButtonPressed(_ button: UIButton) {
+    @objc
+    fileprivate func backButtonPressed(_ button: UIButton) {
         _ = self.navigationController?.popViewController(animated: true)
     }
 }
 
 extension CollectionsViewController: AssetCollectionDelegate {
-    public func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
+    func assetCollectionDidFetch(collection: ZMCollection, messages: [CategoryMatch : [ZMConversationMessage]], hasMore: Bool) {
         
         for messageCategory in messages {
             let conversationMessages = messageCategory.value
@@ -335,7 +340,7 @@ extension CollectionsViewController: AssetCollectionDelegate {
         }
     }
     
-    public func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
+    func assetCollectionDidFinishFetching(collection: ZMCollection, result: AssetFetchResult) {
         self.fetchingDone = true
     }
 }
@@ -479,11 +484,11 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - Data Source
     
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return CollectionsSectionSet.visible.count
     }
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let section = CollectionsSectionSet(index: UInt(section)) else {
             fatal("Unknown section")
         }
@@ -491,12 +496,12 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return self.numberOfElements(for: section)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let (width, height) = self.sizeForCell(at: indexPath)
         return CGSize(width: width ?? 0, height: height ?? 0)
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
@@ -545,7 +550,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return resultCell
     }
 
-    public func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section")
         }
@@ -575,7 +580,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - Layout
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let section = CollectionsSectionSet(index: UInt(section)) else {
             fatal("Unknown section")
         }
@@ -586,11 +591,11 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
         return self.elements(for: section).count > 0 ? CGSize(width: collectionView.bounds.size.width, height: 48) : .zero
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return .zero
     }
 
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         guard let section = CollectionsSectionSet(index: UInt(section)) else {
             fatal("Unknown section")
         }
@@ -599,7 +604,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - Delegate
     
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
             fatal("Unknown section for indexPath = \(indexPath)")
         }
@@ -616,7 +621,7 @@ extension CollectionsViewController: UICollectionViewDelegate, UICollectionViewD
 }
 
 extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
-    public func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             guard let section = CollectionsSectionSet(index: UInt(indexPath.section)) else {
                 fatal("Unknown section")
@@ -651,7 +656,7 @@ extension CollectionsViewController: CollectionCellMessageChangeDelegate {
 // MARK: - Gestures
 
 extension CollectionsViewController: UIGestureRecognizerDelegate {
-    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if self.navigationController?.interactivePopGestureRecognizer == gestureRecognizer {
             return self.navigationController?.viewControllers.count > 1
         }
@@ -663,7 +668,7 @@ extension CollectionsViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Actions
 extension CollectionsViewController: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         perform(action, for: message, source: view as? CollectionCell)
     }
 }

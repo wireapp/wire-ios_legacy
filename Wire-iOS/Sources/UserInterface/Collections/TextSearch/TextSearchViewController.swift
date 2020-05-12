@@ -18,7 +18,6 @@
 
 import Foundation
 import WireSyncEngine
-import WireDataModel
 import Cartography
 
 final class TextSearchViewController: NSObject {
@@ -71,7 +70,8 @@ final class TextSearchViewController: NSObject {
         self.perform(searchSelector, with: .none, afterDelay: 0.2)
     }
     
-    @objc fileprivate func search() {
+    @objc
+    fileprivate func search() {
         let searchSelector = #selector(TextSearchViewController.search)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: searchSelector, object: .none)
         textSearchQuery?.cancel()
@@ -105,7 +105,8 @@ final class TextSearchViewController: NSObject {
         resultsView.tableView.reloadData()
     }
 
-    @objc fileprivate func showLoadingSpinner() {
+    @objc
+    fileprivate func showLoadingSpinner() {
         searchBar.isLoading = true
     }
 

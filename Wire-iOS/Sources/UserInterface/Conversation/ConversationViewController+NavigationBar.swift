@@ -180,6 +180,7 @@ extension ConversationViewController {
 
         collectionController?.shouldTrackOnNextOpen = true
 
+        
         let navigationController = KeyboardAvoidingViewController(viewController: self.collectionController!).wrapInNavigationController()
 
         ZClientViewController.shared?.present(navigationController, animated: true)

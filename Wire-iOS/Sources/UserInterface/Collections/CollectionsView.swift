@@ -100,12 +100,12 @@ final class CollectionsView: UIView {
     }
     
     func constrainViews(searchViewController: TextSearchViewController) {
-        self.addSubview(searchViewController.resultsView)
-        self.addSubview(searchViewController.searchBar)
+        addSubview(searchViewController.resultsView)
+        addSubview(searchViewController.searchBar)
         
         constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { selfView, searchBar, collectionView, noResultsView in
             
-            searchBar.top == selfView.top
+            searchBar.top == selfView.top ///TODO: safe top
             searchBar.leading == selfView.leading
             searchBar.trailing == selfView.trailing
             searchBar.height == 56
