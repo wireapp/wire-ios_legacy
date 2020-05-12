@@ -105,7 +105,7 @@ final class CollectionsView: UIView {
         
         constrain(self, searchViewController.searchBar, self.collectionView, self.noResultsView) { selfView, searchBar, collectionView, noResultsView in
             
-            searchBar.top == selfView.top ///TODO: safe top
+            searchBar.top == selfView.top
             searchBar.leading == selfView.leading
             searchBar.trailing == selfView.trailing
             searchBar.height == 56
