@@ -474,7 +474,16 @@ final class ZClientViewController: UIViewController {
         GroupConversationCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).colorSchemeVariant = .dark
         OpenServicesAdminCell.appearance(whenContainedInInstancesOf: [StartUIView.self]).contentBackgroundColor = .clear
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = ColorScheme.default.color(named: .textForeground, variant: .light)
+        
+        
+        let labelColor: UIColor
+        if #available(iOS 13.0, *) {
+            labelColor = .label
+        } else {
+            labelColor = ColorScheme.default.color(named: .textForeground, variant: .light)
+        }
+
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = labelColor
     }
 
     // MARK: - Setup methods
