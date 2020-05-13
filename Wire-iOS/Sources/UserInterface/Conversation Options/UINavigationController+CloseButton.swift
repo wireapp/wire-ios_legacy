@@ -30,6 +30,9 @@ extension UINavigationController {
     
     @objc
     private func closeTapped() {
-        dismiss(animated: true) /// TODO: delegate
+        weak var presentingVC = presentingViewController
+        dismiss(animated: true) {
+            presentingVC?.setNeedsStatusBarAppearanceUpdate()
+        }
     }
 }

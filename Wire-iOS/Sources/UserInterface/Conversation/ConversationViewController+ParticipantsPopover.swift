@@ -45,9 +45,7 @@ extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
     }
 
     func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
-        if #available(iOS 13, *) {
-            endEditing()
-        }
+        setNeedsStatusBarAppearanceUpdate()
     }
 }
 
