@@ -18,8 +18,11 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-internal class TextSearchResultCell: UITableViewCell {
+class TextSearchResultCell: UITableViewCell {
     fileprivate let messageTextLabel = SearchResultLabel()
     fileprivate let footerView = TextSearchResultFooter()
     fileprivate let userImageViewContainer = UIView()

@@ -19,49 +19,48 @@
 
 import Foundation
 import Contacts
+import WireSyncEngine
+import UIKit
 
-@objc protocol AddressBookHelperProtocol: NSObjectProtocol {
+protocol AddressBookHelperProtocol: class {
     var isAddressBookAccessGranted : Bool { get }
     var isAddressBookAccessUnknown : Bool { get }
-
-
-    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
-    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool)
-
+    var isAddressBookAccessDisabled : Bool { get }
+    var accessStatusDidChangeToGranted: Bool { get }
+    
+    static var sharedHelper : AddressBookHelperProtocol { get }
+    
     func requestPermissions(_ callback: ((Bool)->())?)
+    func persistCurrentAccessStatus()
 }
 
 /// Allows access to address book for search
-@objcMembers open class AddressBookHelper : NSObject, AddressBookHelperProtocol {
-    
-    /// Time to wait between searches
-    let searchTimeInterval : TimeInterval = 60 * 60 * 24 // 24h
-    
-    /// Singleton
-    public static let sharedHelper : AddressBookHelper = AddressBookHelper()
-    
-    /// Configuration override (used for testing)
-    open var configuration : AddressBookHelperConfiguration!
-}
+final class AddressBookHelper : AddressBookHelperProtocol {
 
-// MARK: - Permissions
-extension AddressBookHelper {
+    /// Singleton
+    static var sharedHelper : AddressBookHelperProtocol = AddressBookHelper()
+
+    // MARK: - Constants
+
+    private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
+
+    // MARK: - Permissions
     
-    public var isAddressBookAccessUnknown : Bool {
+    var isAddressBookAccessUnknown : Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .notDetermined
     }
     
-    public var isAddressBookAccessGranted : Bool {
+    var isAddressBookAccessGranted : Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .authorized
     }
     
-    public var isAddressBookAccessDisabled : Bool {
+    var isAddressBookAccessDisabled : Bool {
         return CNContactStore.authorizationStatus(for: .contacts) == .denied
     }
     
     /// Request access to the user. Will asynchronously invoke the callback passing as argument
     /// whether access was granted.
-    public func requestPermissions(_ callback: ((Bool)->())?) {
+    func requestPermissions(_ callback: ((Bool)->())?) {
         CNContactStore().requestAccess(for: .contacts, completionHandler: { [weak self] authorized, _ in
             DispatchQueue.main.async {                
                 self?.persistCurrentAccessStatus()
@@ -69,48 +68,10 @@ extension AddressBookHelper {
             }
         })
     }
-    
-    /// Whether enough time has passed since last search to request a new search
-    fileprivate var enoughTimeHasPassedForSearch : Bool {
-        guard let lastSearchDate = UserDefaults.standard.object(forKey: addressBookLastSearchDate) as? Date else {
-            return true
-        }
-        // Date check
-        let timeSinceLastSearch = Date().timeIntervalSince(lastSearchDate)
-        let customTimeLimit : TimeInterval
-        if let timeLimitInConfiguration = self.configuration?.addressBookRemoteSearchTimeInterval, timeLimitInConfiguration > 0 {
-            customTimeLimit = timeLimitInConfiguration
-        } else {
-            customTimeLimit = self.searchTimeInterval
-        }
-        return timeSinceLastSearch > customTimeLimit
-    }
-    
-    /// Whether the address book search was performed at least once
-    public var addressBookSearchPerformedAtLeastOnce : Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: addressBookSearchPerfomedAtLeastOnceKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: addressBookSearchPerfomedAtLeastOnceKey)
-        }
-    }
-    
-    /// Whether the user skipped address book search
-    public var addressBookSearchWasPostponed : Bool {
-        get {
-            return UserDefaults.standard.bool(forKey: addressBookSearchWasPostponedKey)
-        }
-        set {
-            UserDefaults.standard.set(newValue, forKey: addressBookSearchWasPostponedKey)
-        }
-    }
-}
 
-// MARK: – Access Status Change Detection
-extension AddressBookHelper {
+    // MARK: – Access Status Change Detection
 
-    @objc public func persistCurrentAccessStatus() {
+    func persistCurrentAccessStatus() {
         let status = CNContactStore.authorizationStatus(for: .contacts).rawValue as Int
         UserDefaults.standard.set(NSNumber(value: status), forKey: addressBookLastAccessStatusKey)
     }
@@ -120,48 +81,9 @@ extension AddressBookHelper {
         return CNAuthorizationStatus(rawValue: value.intValue)
     }
 
-    @objc public var accessStatusDidChangeToGranted: Bool {
+    var accessStatusDidChangeToGranted: Bool {
         guard let lastStatus = lastAccessStatus else { return false }
         return CNContactStore.authorizationStatus(for: .contacts) != lastStatus && isAddressBookAccessGranted
     }
 
 }
-
-// MARK: - Upload
-extension AddressBookHelper {
-    
-    /// Starts an address book search, if enough time has passed since last search
-    @objc(startRemoteSearchWithCheckingIfEnoughTimeSinceLast:)
-    public func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
-        assert(!ZMUser.selfUser().hasTeam, "Trying to upload contacts for account with team is a forbidden operation")
-
-        guard self.isAddressBookAccessGranted && !self.addressBookSearchWasPostponed && (!onlyIfEnoughTimeSinceLast || self.enoughTimeHasPassedForSearch) else {
-            return
-        }
-        self.addressBookSearchWasPostponed = false;
-        self.addressBookSearchPerformedAtLeastOnce = true;
-        
-        if !UIDevice.isSimulator || (self.configuration?.shouldPerformAddressBookRemoteSearchEvenOnSimulator ?? false) {
-            ZMUserSession.shared()?.uploadAddressBookIfAllowed()
-        }
-        UserDefaults.standard.set(Date(), forKey: addressBookLastSearchDate)
-    }
-}
-
-// MARK: - Constants
-
-private let addressBookLastSearchDate = "UserDefaultsKeyAddressBookExportDate"
-private let addressBookSearchPerfomedAtLeastOnceKey = "AddressBookWasUploaded"
-private let addressBookSearchWasPostponedKey = "AddressBookUploadWasPostponed"
-private let addressBookLastAccessStatusKey = "AddressBookLastAccessStatus"
-
-// MARK: - Testing
-@objc public protocol AddressBookHelperConfiguration : NSObjectProtocol {
-
-    /// Whether the remote search using address book should be performed also on simulator
-    var shouldPerformAddressBookRemoteSearchEvenOnSimulator : Bool { get }
-    
-    /// Overriding interval between remote search
-    var addressBookRemoteSearchTimeInterval : TimeInterval { get }
-}
-

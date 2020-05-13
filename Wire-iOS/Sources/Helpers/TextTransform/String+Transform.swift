@@ -21,29 +21,15 @@ import Foundation
 extension String {
 
     /// Creates a new string by applying the given transform.
-    public func applying(transform: TextTransform) -> String {
+    ///
+    /// - Parameter transform: TextTransform to apply
+    /// - Returns: the transformed string
+    func applying(transform: TextTransform) -> String {
         switch transform {
         case .none: return self
-        case .capitalize: return self.localizedCapitalized
-        case .lower: return self.localizedLowercase
-        case .upper: return self.localizedUppercase
-        }
-    }
-}
-
-extension NSString {
-
-    /**
-     * Creates a new string by applying the given transform.
-     */
-
-    @objc(stringByApplyingTextTransform:)
-    public func applying(transform: TextTransform) -> NSString {
-        switch transform {
-        case .none: return self
-        case .capitalize: return self.localizedCapitalized as NSString
-        case .lower: return self.localizedLowercase as NSString
-        case .upper: return self.localizedUppercase as NSString
+        case .capitalize: return localizedCapitalized
+        case .lower: return localizedLowercase
+        case .upper: return localizedUppercase
         }
     }
 }
@@ -54,12 +40,19 @@ extension NSAttributedString {
      * Creates a new string by applying the given transform.
      */
 
-    @objc(stringByApplyingTextTransform:)
-    public func applying(transform: TextTransform) -> NSAttributedString {
+    func applying(transform: TextTransform) -> NSAttributedString {
         let newString = self.string.applying(transform: transform)
 
         let mutableCopy = self.mutableCopy() as! NSMutableAttributedString
         mutableCopy.replaceCharacters(in: NSRange(location: 0, length: self.length), with: newString)
         return mutableCopy
+    }
+}
+
+
+extension String {
+    
+    func trim() -> String {
+        return self.trimmingCharacters(in: .whitespaces)
     }
 }

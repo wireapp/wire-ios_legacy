@@ -42,12 +42,10 @@ class TintColorCorrectedViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         overrider.override()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         overrider.restore()
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 }

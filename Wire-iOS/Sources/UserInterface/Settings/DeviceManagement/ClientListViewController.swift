@@ -26,8 +26,12 @@ private let zmLog = ZMSLog(tag: "UI")
 final class ClientListViewController: UIViewController,
                                 UITableViewDelegate,
                                 UITableViewDataSource,
-                                ZMClientUpdateObserver,
-                                ClientColorVariantProtocol {
+                                ClientUpdateObserver,
+                                ClientColorVariantProtocol,
+                                SpinnerCapable {
+    //MARK: SpinnerCapable
+    var dismissSpinner: SpinnerCompletion?
+
     var removalObserver: ClientRemovalObserver?
 
     var clientsTableView: UITableView?
@@ -39,29 +43,7 @@ final class ClientListViewController: UIViewController,
             setColor(for: variant)
         }
     }
-
-    override public var showLoadingView: Bool {
-        set {
-            if let navigationController = self.navigationController {
-                navigationController.showLoadingView = newValue
-
-                // dismiss the loading view that toggled before navigationController is created
-                if !newValue && super.showLoadingView {
-                    super.showLoadingView = newValue
-                }
-            } else {
-                super.showLoadingView = newValue
-            }
-        }
-        get{
-            if let navigationController = self.navigationController {
-                return navigationController.showLoadingView
-            } else {
-                return super.showLoadingView
-            }
-        }
-    }
-
+    
     var editingList: Bool = false {
         didSet {
             guard clients.count > 0 else {
@@ -116,7 +98,7 @@ final class ClientListViewController: UIViewController,
     }
 
     required init(clientsList: [UserClient]?,
-                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient(),
+                  selfClient: UserClient? = ZMUserSession.shared()?.selfUserClient,
                   credentials: ZMEmailCredentials? = .none,
                   detailedView: Bool = false,
                   showTemporary: Bool = true,
@@ -139,14 +121,14 @@ final class ClientListViewController: UIViewController,
         title = "registration.devices.title".localized(uppercased: true)
 
         self.initalizeProperties(clientsList ?? Array(ZMUser.selfUser().clients.filter { !$0.isSelfClient() } ))
-        self.clientsObserverToken = ZMUserSession.shared()?.add(self)
+        self.clientsObserverToken = ZMUserSession.shared()?.addClientUpdateObserver(self)
         if let user = ZMUser.selfUser(), let session = ZMUserSession.shared() {
-            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: session)
+            self.userObserverToken = UserChangeInfo.add(observer: self, for: user, in: session)
         }
         
         if clientsList == nil {
             if clients.isEmpty {
-                self.showLoadingView = true
+                (navigationController as? SpinnerCapableViewController ?? self).isLoadingViewVisible = true
             }
             ZMUserSession.shared()?.fetchAllClients()
         }
@@ -186,10 +168,19 @@ final class ClientListViewController: UIViewController,
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        showLoadingView = false
+        dismissLoadingView()
 
         ///prevent more then one removalObserver in self and SettingsClientViewController
         removalObserver = nil
+    }
+    
+    private func dismissLoadingView() {
+        (navigationController as? SpinnerCapableViewController)?.isLoadingViewVisible = false        
+        isLoadingViewVisible = false
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 
     func openDetailsOfClient(_ client: UserClient) {
@@ -240,7 +231,7 @@ final class ClientListViewController: UIViewController,
         self.editingList = true
     }
     
-    @objc func endEditing(_ sender: AnyObject!) {
+    @objc private func endEditing(_ sender: AnyObject!) {
         self.editingList = false
     }
     
@@ -262,17 +253,17 @@ final class ClientListViewController: UIViewController,
         delegate?.finishedDeleting(self)
     }
     
-    // MARK: - ZMClientRegistrationObserver
-
+    // MARK: - ClientRegistrationObserver
+    
     func finishedFetching(_ userClients: [UserClient]) {
-        self.showLoadingView = false
+        dismissLoadingView()
         
         self.clients = userClients.filter { !$0.isSelfClient() }
     }
     
-    func failedToFetchClientsWithError(_ error: Error) {
-        self.showLoadingView = false
-        
+    func failedToFetchClients(_ error: Error) {
+        dismissLoadingView()
+
         zmLog.error("Clients request failed: \(error.localizedDescription)")
         
         presentAlertWithOKButton(message: "error.user.unkown_error".localized)
@@ -284,7 +275,7 @@ final class ClientListViewController: UIViewController,
         editingList = false
     }
     
-    func failedToDeleteClientsWithError(_ error: Error) {
+    func failedToDeleteClients(_ error: Error) {
 
     }
     

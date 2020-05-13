@@ -19,13 +19,13 @@
 
 import UIKit
 import Cartography
-
+ import WireDataModel
 
 fileprivate let smallLightFont = FontSpec(.small, .light).font!
 fileprivate let smallBoldFont = FontSpec(.small, .medium).font!
 fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 
-@objcMembers public class AddressBookCorrelationFormatter: NSObject {
+final class AddressBookCorrelationFormatter: NSObject {
 
     let lightFont, boldFont: UIFont
     let color: UIColor
@@ -58,7 +58,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objcMembers final class UserNameDetailViewModel: NSObject {
+final class UserNameDetailViewModel: NSObject {
 
     let title: NSAttributedString
 
@@ -115,7 +115,7 @@ fileprivate let normalBoldFont = FontSpec(.normal, .medium).font!
 }
 
 
-@objcMembers final class UserNameDetailView: UIView {
+final class UserNameDetailView: UIView {
 
     let subtitleLabel = UILabel()
     let correlationLabel = UILabel()

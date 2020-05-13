@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2019 Wire Swiss GmbH
 //
@@ -17,6 +16,7 @@
 //
 
 import Foundation
+import UIKit
 
 private extension UIImage {
 
@@ -31,8 +31,7 @@ private extension UIImage {
 /// Shows a confirmation dialog after picking an image in UIImagePickerController. If the user accepts
 /// the image the imagePickedBlock is called.
 final class ImagePickerConfirmationController: NSObject {
-    var previewTitle: String? = nil
-    @objc
+    var previewTitle: String?
     var imagePickedBlock: ((_ imageData: Data?) -> Void)?
 
     /// We need to store this reference to close the @c SketchViewController
@@ -42,7 +41,7 @@ final class ImagePickerConfirmationController: NSObject {
 
 extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         presentingPickerController = picker
 
         guard let imageFromInfo = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage else {
@@ -56,23 +55,21 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
         case .photoLibrary,
              .savedPhotosAlbum:
 
-            let confirmImageViewController = ConfirmAssetViewController()
-            confirmImageViewController.modalPresentationStyle = .fullScreen
-            confirmImageViewController.image = image
-            confirmImageViewController.previewTitle = previewTitle
+            let onConfirm: ConfirmAssetViewController.Confirm = { [weak self] editedImage in
+                self?.imagePickedBlock?((editedImage ?? image).pngData())
+            }
 
-
-            confirmImageViewController.onCancel = {
+            let onCancel: Completion = {
                 picker.dismiss(animated: true)
             }
 
-            confirmImageViewController.onConfirm = { [weak self] editedImage in
-                if let editedImage = editedImage {
-                    self?.imagePickedBlock?(editedImage.pngData())
-                } else {
-                    self?.imagePickedBlock?(image.pngData())
-                }
-            }
+            let context = ConfirmAssetViewController.Context(asset: .image(mediaAsset: image),
+                                                             onConfirm: onConfirm,
+                                                             onCancel: onCancel)
+
+            let confirmImageViewController = ConfirmAssetViewController(context: context)
+            confirmImageViewController.modalPresentationStyle = .fullScreen
+            confirmImageViewController.previewTitle = previewTitle
 
             picker.present(confirmImageViewController, animated: true)
             picker.setNeedsStatusBarAppearanceUpdate()
@@ -88,5 +85,5 @@ extension ImagePickerConfirmationController: UIImagePickerControllerDelegate {
 }
 
 extension ImagePickerConfirmationController: UINavigationControllerDelegate {
-    
+
 }

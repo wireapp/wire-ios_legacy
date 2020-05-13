@@ -17,76 +17,78 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
+import WireSyncEngine
 
 fileprivate typealias ConversationCreatedBlock = (ZMConversation?) -> Void
 
 extension ConversationListViewController.ViewModel: StartUIDelegate {
-    func startUI(_ startUI: StartUIViewController, didSelect users: Set<ZMUser>) {
-        guard users.count > 0 else {
-            return
-        }
-        
-        withConversationForUsers(users, callback: { conversation in
+    func startUI(_ startUI: StartUIViewController, didSelect user: UserType) {
+        oneToOneConversationWithUser(user, callback: { conversation in
             guard let conversation = conversation else { return }
             
-            ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+            ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
         })
-    }
-    
-    func startUI(_ startUI: StartUIViewController, createConversationWith users: Set<ZMUser>, name: String, allowGuests: Bool, enableReceipts: Bool) {
-        let createConversationClosure = {
-            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
-        }
-        (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
 
     func startUI(_ startUI: StartUIViewController, didSelect conversation: ZMConversation) {
-        ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+        startUI.dismissIfNeeded(animated: true) {
+            ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
+        }
+    }
+
+    func startUI(_ startUI: StartUIViewController,
+                 createConversationWith users: UserSet,
+                 name: String,
+                 allowGuests: Bool,
+                 enableReceipts: Bool) {
+
+        let createConversationClosure = {
+            self.createConversation(withUsers: users, name: name, allowGuests: allowGuests, enableReceipts: enableReceipts)
+        }
+
+        (viewController as? UIViewController)?.dismissIfNeeded(completion: createConversationClosure)
     }
     
-    private func withConversationForUsers(_ users: Set<ZMUser>?, callback onConversationCreated: @escaping ConversationCreatedBlock) {
+    
+    
+    /// Create a new conversation or open existing 1-to-1 conversation
+    ///
+    /// - Parameters:
+    ///   - user: the user which we want to have a 1-to-1 conversation with
+    ///   - onConversationCreated: a ConversationCreatedBlock which has the conversation created
+    private func oneToOneConversationWithUser(_ user: UserType, callback onConversationCreated: @escaping ConversationCreatedBlock) {
         
-        guard let users = users,
-            let userSession = ZMUserSession.shared() else { return }
+        guard let userSession = ZMUserSession.shared() else { return }
         
         viewController?.setState(.conversationList, animated:true) {
-            if users.count == 1,
-                let user = users.first {
-                var oneToOneConversation: ZMConversation? = nil
-                userSession.enqueueChanges({
-                    oneToOneConversation = user.oneToOneConversation
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(oneToOneConversation)
-                    }
-                })
-            } else if users.count > 1 {
-                var conversation: ZMConversation? = nil
-                
-                userSession.enqueueChanges({
-                    let team = ZMUser.selfUser().team
-                    
-                    conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), in: team)
-                }, completionHandler: {
-                    delay(0.3) {
-                        onConversationCreated(conversation)
-                    }
-                })
-            }
+            var oneToOneConversation: ZMConversation? = nil
+            userSession.enqueue({
+                oneToOneConversation = user.oneToOneConversation
+            }, completionHandler: {
+                delay(0.3) {
+                    onConversationCreated(oneToOneConversation)
+                }
+            })
         }
     }
     
-    private func createConversation(withUsers users: Set<ZMUser>?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
-        guard let users = users,
-            let userSession = ZMUserSession.shared() else { return }
+    private func createConversation(withUsers users: UserSet?, name: String?, allowGuests: Bool, enableReceipts: Bool) {
+        guard let users = users, let userSession = ZMUserSession.shared() else { return }
         
         var conversation: ZMConversation! = nil
         
-        userSession.enqueueChanges({
-            conversation = ZMConversation.insertGroupConversation(intoUserSession: userSession, withParticipants: Array(users), name: name, in: ZMUser.selfUser().team, allowGuests: allowGuests, readReceipts: enableReceipts)
+        userSession.enqueue({
+            conversation = ZMConversation.insertGroupConversation(session: userSession,
+                                                                  participants: Array(users),
+                                                                  name: name,
+                                                                  team: ZMUser.selfUser().team,
+                                                                  allowGuests: allowGuests,
+                                                                  readReceipts: enableReceipts)
         }, completionHandler:{
             delay(0.3) {
-                ZClientViewController.shared()?.select(conversation, focusOnView: true, animated: true)
+                ZClientViewController.shared?.select(conversation: conversation, focusOnView: true, animated: true)
             }
         })
     }

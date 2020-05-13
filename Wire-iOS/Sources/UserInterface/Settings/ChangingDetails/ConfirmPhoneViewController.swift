@@ -34,7 +34,7 @@ protocol ConfirmPhoneDelegate: class {
     func didConfirmPhone(inController controller: ConfirmPhoneViewController)
 }
 
-@objcMembers final class ConfirmPhoneViewController: SettingsBaseTableViewController {
+final class ConfirmPhoneViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     fileprivate var observer: NSObjectProtocol?
     fileprivate var observerToken: Any?
@@ -64,7 +64,7 @@ protocol ConfirmPhoneDelegate: class {
         super.viewDidAppear(animated)
         observerToken = userProfile?.add(observer: self)
         if let userSession = ZMUserSession.shared() {
-            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
         }
         startTimer()
     }
@@ -192,8 +192,8 @@ extension ConfirmPhoneViewController: ZMUserObserver {
         if note.user.isSelfUser {
             // we need to check if the notification really happened because
             // the phone got changed to what we expected
-            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, currentPhoneNumber == newNumber {
-                navigationController?.showLoadingView = false
+            if let currentPhoneNumber = ZMUser.selfUser().phoneNumber, PhoneNumber(fullNumber: currentPhoneNumber) == PhoneNumber(fullNumber:newNumber) {
+                navigationController?.isLoadingViewVisible = false
                 delegate?.didConfirmPhone(inController: self)
             }
         }
@@ -202,8 +202,8 @@ extension ConfirmPhoneViewController: ZMUserObserver {
 
 extension ConfirmPhoneViewController: UserProfileUpdateObserver {
     func phoneNumberChangeDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
-        showAlert(forError: error)
+        navigationController?.isLoadingViewVisible = false
+        showAlert(for: error)
         clearCodeInput()
     }
 }
@@ -221,7 +221,7 @@ extension ConfirmPhoneViewController: CharacterInputFieldDelegate {
     func didFillInput(inputField: CharacterInputField, text: String) {
         let credentials = ZMPhoneCredentials(phoneNumber: newNumber, verificationCode: text)
         userProfile?.requestPhoneNumberChange(credentials: credentials)
-        navigationController?.showLoadingView = true
+        navigationController?.isLoadingViewVisible = true
     }
 
 }

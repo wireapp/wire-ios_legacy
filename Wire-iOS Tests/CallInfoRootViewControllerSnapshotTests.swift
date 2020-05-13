@@ -20,7 +20,7 @@ import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class CallInfoRootViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
+final class CallInfoViewControllerSnapshotTests: XCTestCase, CoreDataFixtureTestHelper {
     var coreDataFixture: CoreDataFixture!
 
     override func setUp() {
@@ -40,7 +40,7 @@ final class CallInfoRootViewControllerSnapshotTests: XCTestCase, CoreDataFixture
         let fixture = CallInfoTestFixture(otherUser: otherUser)
 
         // when
-        let sut = CallInfoRootViewController(configuration: fixture.oneToOneIncomingAudioRinging)
+        let sut = CallInfoViewController(configuration: fixture.oneToOneIncomingAudioRinging)
 
         // then
         verifyAllIPhoneSizes(matching: sut)

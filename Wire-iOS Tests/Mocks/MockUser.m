@@ -35,6 +35,7 @@ static id<UserType> mockSelfUser = nil;
         _canCreateConversation = YES;
         _canAddUserToConversation = YES;
         _canRemoveUserFromConversation = YES;
+        _canModifyOtherMemberInConversation = NO;
     }
     return self;
 }
@@ -137,6 +138,13 @@ static id<UserType> mockSelfUser = nil;
 @synthesize readReceiptsEnabled;
 @synthesize activeConversations;
 @synthesize isUnderLegalHold;
+@synthesize richProfile;
+@synthesize canCreateService;
+@synthesize oneToOneConversation;
+@synthesize refreshDataCount;
+@synthesize refreshRichProfileCount;
+@synthesize refreshMembershipCount;
+@synthesize refreshTeamDataCount;
 
 #pragma mark - ZMBareUserConnection
 
@@ -194,7 +202,22 @@ static id<UserType> mockSelfUser = nil;
 
 - (void)refreshData
 {
-    // no-op
+    refreshDataCount += 1;
+}
+
+- (void)refreshMembership
+{
+    refreshMembershipCount += 1;
+}
+
+- (void)refreshRichProfile
+{
+    refreshRichProfileCount += 1;
+}
+
+- (void)refreshTeamData
+{
+    refreshTeamDataCount += 1;
 }
 
 - (void)connectWithMessage:(NSString * _Nonnull)message {
@@ -333,13 +356,43 @@ static id<UserType> mockSelfUser = nil;
     return self.canAddUserToConversation;
 }
 
+
 - (BOOL)canRemoveUserFromConversation:(ZMConversation * _Nonnull)conversation
 {
     return self.canRemoveUserFromConversation;
 }
 
-@synthesize richProfile;
+- (BOOL)canAddServiceToConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canAddServiceToConversation;
+}
 
-@synthesize needsRichProfileUpdate;
+- (BOOL)canRemoveServiceFromConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canRemoveUserFromConversation;
+}
+
+- (BOOL)canModifyOtherMemberInConversation:(ZMConversation * _Nonnull)conversation
+{
+    return self.canModifyOtherMemberInConversation;
+}
+
+
+- (BOOL)canCreateConversationWithType:(ZMConversationType)type {
+    return self.canCreateConversation;
+}
+
+
+- (BOOL)canDeleteConversation:(ZMConversation * _Nonnull)conversation {
+    return self.canDeleteConversation;
+}
+
+
+- (BOOL)canLeave:(ZMConversation * _Nonnull)conversation {
+    return self.canLeaveConversation;
+}
+
+- (BOOL)isGroupAdminInConversation:(ZMConversation *)conversation
+{
+    return self.isGroupAdminInConversation;
+}
 
 @end

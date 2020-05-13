@@ -21,7 +21,7 @@ import Cartography
 import WireDataModel
 import FLAnimatedImage
 
-@objcMembers public class ImageMessageView: UIView {
+final public class ImageMessageView: UIView {
     
     private let imageView = FLAnimatedImageView()
     private let userImageView = UserImageView(size: .tiny)
@@ -45,13 +45,13 @@ import FLAnimatedImage
             if let user = self.user {
                 
                 self.userNameLabel.textColor = UIColor.nameColor(for: user.accentColorValue, variant: .light)
-                self.userNameLabel.text = user.displayName
+                self.userNameLabel.text = user.name
                 self.userImageView.user = user
             }
         }
     }
     
-    @objc public var message: ZMConversationMessage? {
+    var message: ZMConversationMessage? {
         didSet {
             if let message = self.message {
                 self.user = message.sender
@@ -61,7 +61,7 @@ import FLAnimatedImage
         }
     }
     
-    @objc public func updateForImage() {
+    func updateForImage() {
         if let message = self.message,
             let imageMessageData = message.imageMessageData,
             let imageData = imageMessageData.imageData,

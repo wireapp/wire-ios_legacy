@@ -17,8 +17,11 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-class ReceiptOptionsSectionController: GroupDetailsSectionController {
+final class ReceiptOptionsSectionController: GroupDetailsSectionController {
 
     
     private let emptySectionHeaderHeight: CGFloat = 24
@@ -34,7 +37,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
     private weak var presentingViewController: UIViewController?
     
     override var isHidden: Bool {
-        return !(ZMUser.selfUser()?.canModifyReadReceiptSettings(in: conversation) ?? false)
+        return !SelfUser.current.canModifyReadReceiptSettings(in: conversation)
     }
 
     init(conversation: ZMConversation,
@@ -45,7 +48,7 @@ class ReceiptOptionsSectionController: GroupDetailsSectionController {
         self.syncCompleted = syncCompleted
         self.presentingViewController = presentingViewController
 
-        collectionView.register(SectionFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "SectionFooter")
+        SectionFooter.register(collectionView: collectionView)
     }
 
     // MARK: - Collection View

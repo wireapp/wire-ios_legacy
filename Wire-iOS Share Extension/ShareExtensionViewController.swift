@@ -70,8 +70,6 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         return imageView
     }()
 
-    var netObserver = ShareExtensionNetworkObserver()
-
     fileprivate var postContent: PostContent?
     fileprivate var sharingSession: SharingSession? = nil
     fileprivate var extensionActivity: ExtensionActivity? = nil
@@ -112,13 +110,11 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         super.viewDidLoad()
         currentAccount = accountManager?.selectedAccount
         ExtensionBackupExcluder.exclude()
-        CrashReporter.setupHockeyIfNeeded()
-        navigationController?.view.backgroundColor = .white
+        CrashReporter.setupAppCenterIfNeeded()
         updateAccount(currentAccount)
         let activity = ExtensionActivity(attachments: extensionContext?.attachments.sorted)
         sharingSession?.analyticsEventPersistence.add(activity.openedEvent())
         extensionActivity = activity
-        NetworkStatus.add(netObserver)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -136,7 +132,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         guard let item = navigationController?.navigationBar.items?.first else { return }
         item.rightBarButtonItem?.action = #selector(appendPostTapped)
         item.rightBarButtonItem?.title = "share_extension.send_button.title".localized
-        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: .black).downscaling(to: iconSize))
+        item.titleView = UIImageView(image: WireStyleKit.imageOfLogo(color: UIColor.Wire.primaryLabel).downscaling(to: iconSize))
     }
 
     private var authenticatedAccounts: [Account] {
@@ -221,9 +217,9 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
             return
         }
 
-        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, urlCompletionHandler: { (url, error) in
+        urlItems.first?.loadItem(forTypeIdentifier: kUTTypeFileURL as String, options: nil, completionHandler: { (url, error) in
             error?.log(message: "Unable to fetch URL for type URL")
-            guard let url = url, url.isFileURL else { return }
+            guard let url = url as? URL, url.isFileURL else { return }
 
             let filename = url.lastPathComponent
             let separator = self.textView.text.isEmpty ? "" : "\n"
@@ -237,10 +233,13 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
     }
 
     /// Invoked when the user wants to post.
-    @objc func appendPostTapped() {
+    @objc
+    private func appendPostTapped() {
+        guard let sharingSession = sharingSession else { return }
+
         navigationController?.navigationBar.items?.first?.rightBarButtonItem?.isEnabled = false
         
-        postContent?.send(text: contentText, sharingSession: sharingSession!) { [weak self] progress in
+        postContent?.send(text: contentText, sharingSession: sharingSession) { [weak self] progress in
             guard let `self` = self, let postContent = self.postContent else { return }
 
             switch progress {
@@ -324,10 +323,10 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
                     self.preview?.image = image
                     self.preview?.displayMode = displayMode
                 case .placeholder(let iconType):
-                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(iconType, size: .medium, color: UIColor.Wire.secondaryLabel)
 
                 case .remoteURL(let url):
-                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.black.withAlphaComponent(0.7))
+                    self.preview?.setIcon(.browser, size: .medium, color: UIColor.Wire.secondaryLabel)
                     self.fetchWebsitePreview(for: url)
                 }
 
@@ -522,7 +521,7 @@ final class ShareExtensionViewController: SLComposeServiceViewController {
         let users = change.users
         let template = users.count > 1 ? "meta.degraded.degradation_reason_message.plural" : "meta.degraded.degradation_reason_message.singular"
     
-        let allUsers = (users.map(\.displayName) as NSArray).componentsJoined(by: ", ") as NSString
+        let allUsers = (users.compactMap(\.name) as NSArray).componentsJoined(by: ", ") as NSString
         return String.localizedStringWithFormat(template.localized, allUsers)
     }
 

@@ -26,7 +26,6 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     }
     
     // MARK: - Seen
-    
     func testThatItShowsReceipts_ShortList_11() {
         // GIVEN
         let conversation = self.createTeamGroupConversation()
@@ -40,7 +39,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 5).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -66,7 +65,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 5).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -92,7 +91,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 20).map(self.createUser)
         let receipts = users.map(MockReadReceipt.init)
         
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         message.readReceipts = receipts
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -117,7 +116,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
         let users = usernames.prefix(upTo: 6).map(self.createUser)
         users.forEach { $0.setHandle($0.name) }
         
-        conversation.internalAddParticipants(users)
+        conversation.add(participants:users)
         message.readReceipts =  users.map(MockReadReceipt.init)
         message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
         
@@ -289,7 +288,7 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
             let users = usernames.prefix(upTo: 5).map(self.createUser)
             let receipts = users.map(MockReadReceipt.init)
             
-            conversation.internalAddParticipants(users)
+            conversation.add(participants:users)
             message.readReceipts = receipts
             message.backingUsersReaction = [MessageReaction.like.unicodeValue: Array(users.prefix(upTo: 4))]
             
@@ -303,11 +302,13 @@ class MessageDetailsViewControllerTests: CoreDataSnapshotTestCase {
     
     // MARK: - Helpers
     
-    private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil) {
+    private func snapshot(_ detailsViewController: MessageDetailsViewController, configuration: ((MessageDetailsViewController) -> Void)? = nil,
+                          file: StaticString = #file,
+                          line: UInt = #line) {
         detailsViewController.reloadData()
         detailsViewController.loadViewIfNeeded()
         configuration?(detailsViewController)
-        self.verify(view: detailsViewController.view)
+        self.verify(view: detailsViewController.view, file: file, line: line)
     }
     
 }

@@ -19,13 +19,14 @@
 
 import Foundation
 import Cartography
+import avs
 
-public protocol CameraCellDelegate: class {
+protocol CameraCellDelegate: class {
     func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell)
     func cameraCell(_ cameraCell: CameraCell, didPickImageData: Data)
 }
 
-open class CameraCell: UICollectionViewCell {
+final class CameraCell: UICollectionViewCell {
     let cameraController: CameraController?
     
     let expandButton = IconButton()
@@ -39,7 +40,7 @@ open class CameraCell: UICollectionViewCell {
     }
 
     override init(frame: CGRect) {
-        self.cameraController = CameraController(camera: Settings.shared().preferredCamera)
+        cameraController = CameraController(camera: Settings.shared[.preferredCamera] ?? .front)
 
         super.init(frame: frame)
         
@@ -111,13 +112,13 @@ open class CameraCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override open func didMoveToWindow() {
+    override func didMoveToWindow() {
         super.didMoveToWindow()
         if self.window == .none { cameraController?.stopRunning() }
         else { cameraController?.startRunning() }
     }
     
-    override open func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         cameraController?.previewLayer.frame = self.contentView.bounds
         self.updateVideoOrientation()
@@ -148,7 +149,7 @@ open class CameraCell: UICollectionViewCell {
     
     @objc func changeCameraPressed(_ sender: AnyObject) {
         cameraController?.switchCamera { currentCamera in
-            Settings.shared().preferredCamera = currentCamera
+            Settings.shared[.preferredCamera] = currentCamera
         }
     }
 }

@@ -16,41 +16,57 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
 import XCTest
 @testable import Wire
+import SnapshotTesting
 
-final class LoadingViewControllerTests: ZMSnapshotTestCase {
-    
+final class MockLoadingViewController: SpinnerCapableViewController {
+    var dismissSpinner: SpinnerCompletion?
+}
+
+final class LoadingViewControllerTests: XCTestCase {
+    var sut: MockLoadingViewController!
+
+    override func setUp() {
+        super.setUp()
+        sut = MockLoadingViewController()
+        sut.view.backgroundColor = .white
+    }
+
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+
     func testThatItShowsLoadingIndicator() {
         // Given
-        let sut = UIViewController()
-        sut.view.backgroundColor = .white
-        sut.view.layer.speed = 0
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
-        sut.beginAppearanceTransition(true, animated: false)
-        
+
         // when
-        sut.showLoadingView = true
-        
+        sut.isLoadingViewVisible = true
+
         // then
-        verifyInAllDeviceSizes(view: sut.view)
+        XCTAssert(sut.isLoadingViewVisible)
+        verifyInAllDeviceSizes(matching: sut)
     }
-    
+
+    func testThatItDismissesLoadingIndicator() {
+        // given & when
+        sut.isLoadingViewVisible = true
+        sut.isLoadingViewVisible = false
+
+        // then
+        XCTAssertFalse(sut.isLoadingViewVisible)
+        verify(matching: sut)
+    }
+
     func testThatItShowsLoadingIndicatorWithSubtitle() {
         // Given
-        let sut = UIViewController()
-        sut.view.backgroundColor = .white
-        sut.view.layer.speed = 0
-        sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 667)
-        sut.beginAppearanceTransition(true, animated: false)
-        
+
         // when
-        sut.spinnerView.subtitle = "RESTORING…"
-        sut.showLoadingView = true
-        
+        sut.showLoadingView(title: "RESTORING…")
+
         // then
-        verifyInAllDeviceSizes(view: sut.view)
+        verifyInAllDeviceSizes(matching: sut)
     }
-    
+
 }

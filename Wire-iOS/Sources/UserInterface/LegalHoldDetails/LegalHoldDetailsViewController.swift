@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 final class LegalHoldDetailsViewController: UIViewController {
     
@@ -75,7 +76,6 @@ final class LegalHoldDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         navigationItem.rightBarButtonItem = navigationController?.closeItem()
-        updateStatusBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -117,7 +117,7 @@ final class LegalHoldDetailsViewController: UIViewController {
 extension LegalHoldDetailsViewController: LegalHoldParticipantsSectionControllerDelegate {
     
     func legalHoldParticipantsSectionWantsToPresentUserProfile(for user: UserType) {
-        let profileViewController = ProfileViewController(user: user, viewer: ZMUser.selfUser(), context: .deviceList)
+        let profileViewController = ProfileViewController(user: user, viewer: SelfUser.current, context: .deviceList)
         show(profileViewController, sender: nil)
     }
     

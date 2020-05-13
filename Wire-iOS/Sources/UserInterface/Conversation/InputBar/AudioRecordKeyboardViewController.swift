@@ -18,10 +18,15 @@
 
 
 import Foundation
+import UIKit
+import WireSystem
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "UI")
 
-@objcMembers final public class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
+final class AudioRecordKeyboardViewController: UIViewController, AudioRecordBaseViewController {
     
     enum State {
         case ready, recording, effects
@@ -42,8 +47,8 @@ private let zmLog = ZMSLog(tag: "UI")
         }
     }
     
-    public let recorder: AudioRecorderType
-    public weak var delegate: AudioRecordViewControllerDelegate?
+    let recorder: AudioRecorderType
+    weak var delegate: AudioRecordViewControllerDelegate?
     
     let recordButton = IconButton()
     let stopRecordButton = IconButton()
@@ -68,12 +73,11 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Life Cycle
     
-    @objc convenience init() {
+    convenience init() {
         self.init(audioRecorder: AudioRecorder(
             format: .wav,
-            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength() ,
-            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize()
-        ))
+            maxRecordingDuration: ZMUserSession.shared()?.maxAudioLength ,
+            maxFileSize: ZMUserSession.shared()?.maxUploadFileSize))
     }
     
     init(audioRecorder: AudioRecorderType) {
@@ -83,8 +87,8 @@ private let zmLog = ZMSLog(tag: "UI")
         configureAudioRecorder()
         createConstraints()
         
-        if DeveloperMenuState.developerMenuEnabled() && Settings.shared().maxRecordingDurationDebug != 0 {
-            self.recorder.maxRecordingDuration = Settings.shared().maxRecordingDurationDebug
+        if Bundle.developerModeEnabled && Settings.shared.maxRecordingDurationDebug != 0 {
+            self.recorder.maxRecordingDuration = Settings.shared.maxRecordingDurationDebug
         }
     }
     
@@ -114,7 +118,9 @@ private let zmLog = ZMSLog(tag: "UI")
         self.audioPreviewView.gradientColor = backgroundColor
         
         self.accentColorChangeHandler = AccentColorChangeHandler.addObserver(self) { [unowned self] color, _ in
-            self.audioPreviewView.color = color
+            if let color = color {
+                self.audioPreviewView.color = color
+            }
         }
         
         self.timeLabel.font = FontSpec(.small, .light).font!
@@ -319,7 +325,7 @@ private let zmLog = ZMSLog(tag: "UI")
         
         recorder.recordLevelCallBack = { [weak self] level in
             guard let `self` = self else { return }
-            self.audioPreviewView.updateWithLevel(CGFloat(level))
+            self.audioPreviewView.updateWithLevel(level)
         }
     }
     
@@ -406,11 +412,11 @@ private let zmLog = ZMSLog(tag: "UI")
     
     // MARK: - Button Actions
     
-    @objc internal func recordButtonPressed(_ sender: AnyObject!) {
+    @objc func recordButtonPressed(_ sender: AnyObject!) {
         self.recorder.startRecording { success in
             self.state = .recording
             self.delegate?.audioRecordViewControllerDidStartRecording(self)
-            AppDelegate.shared().mediaPlaybackManager?.audioTrackPlayer.stop()
+            AppDelegate.shared.mediaPlaybackManager?.audioTrackPlayer.stop()
         }
     }
     
@@ -432,7 +438,7 @@ private let zmLog = ZMSLog(tag: "UI")
         let convertedPath = (NSTemporaryDirectory() as NSString).appendingPathComponent(filename)
         convertedPath.deleteFileAtPath()
         
-        AVAsset.wr_convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
+        AVAsset.convertAudioToUploadFormat(audioPath, outPath: convertedPath) { success in
             if success {
                 audioPath.deleteFileAtPath()
                 self.delegate?.audioRecordViewControllerWantsToSendAudio(

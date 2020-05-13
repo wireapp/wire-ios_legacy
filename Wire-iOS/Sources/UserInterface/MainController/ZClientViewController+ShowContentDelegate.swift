@@ -17,7 +17,9 @@
 //
 
 import Foundation
-
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 extension ZClientViewController: ShowContentDelegate {
     private func wrapInNavigationControllerAndPresent(viewController: UIViewController) {
@@ -48,7 +50,7 @@ extension ZClientViewController: ShowContentDelegate {
         case .connection:
             selectIncomingContactRequestsAndFocus(onView: true)
         case .group, .oneOnOne:
-            select(conversation,
+            select(conversation: conversation,
                    scrollTo: message,
                    focusOnView: true,
                    animated: true,

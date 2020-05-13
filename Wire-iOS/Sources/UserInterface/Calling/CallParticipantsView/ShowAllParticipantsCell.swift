@@ -17,13 +17,18 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class ShowAllParticipantsCell: UICollectionViewCell {
+class ShowAllParticipantsCell: UICollectionViewCell, SectionListCellType {
     
     let participantIconView = UIImageView()
     let titleLabel = UILabel()
     let accessoryIconView = UIImageView()
     var contentStackView : UIStackView!
+    
+    var sectionName: String?
+    var cellIdentifier: String?
     
     override var isHighlighted: Bool {
         didSet {
@@ -51,7 +56,6 @@ class ShowAllParticipantsCell: UICollectionViewCell {
     }
     
     fileprivate func setup() {
-        accessibilityIdentifier = "cell.call.show_all_participants"
         participantIconView.translatesAutoresizingMaskIntoConstraints = false
         participantIconView.contentMode = .scaleAspectFit
         participantIconView.setContentHuggingPriority(UILayoutPriority.required, for: .horizontal)
@@ -113,6 +117,7 @@ extension ShowAllParticipantsCell: ParticipantsCellConfigurable {
         guard case let .showAll(count) = rowType else { preconditionFailure() }
         titleLabel.text = "call.participants.show_all".localized(args: String(count))
         backgroundColor = .from(scheme: .barBackground)
-
+        cellIdentifier = "cell.call.show_all_participants"
+        accessibilityIdentifier = identifier
     }
 }

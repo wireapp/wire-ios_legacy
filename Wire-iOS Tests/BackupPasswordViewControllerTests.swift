@@ -32,13 +32,14 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
     func testThatItCallsTheCallback() {
         // GIVEN
         
+        let validPassword = "Password123!"
         let expectation = self.expectation(description: "Callback called")
         let sut = BackupPasswordViewController { (_, password) in
-            XCTAssertEqual(password!.value, "new password")
+            XCTAssertEqual(password!.value, validPassword)
             expectation.fulfill()
         }
         // WHEN
-        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "new password"))
+        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: validPassword))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
         // THEN
         self.waitForExpectations(timeout: 0.5) { error in
@@ -52,7 +53,7 @@ class BackupPasswordViewControllerTests: ZMSnapshotTestCase {
             XCTFail()
         }
         // WHEN
-        XCTAssertTrue(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "              "))
+        XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0) , replacementString: "              "))
         XCTAssertFalse(sut.textField(UITextField(), shouldChangeCharactersIn: NSMakeRange(0, 0), replacementString: "\n"))
     }
 }

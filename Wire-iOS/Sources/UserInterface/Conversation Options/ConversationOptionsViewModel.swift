@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireUtilities
 
 protocol ConversationOptionsViewModelConfiguration: class {
     var title: String { get }
@@ -38,7 +39,7 @@ protocol ConversationOptionsViewModelDelegate: class {
     func viewModel(_ viewModel: ConversationOptionsViewModel, wantsToShareMessage message: String, sourceView: UIView?)
 }
 
-class ConversationOptionsViewModel {
+final class ConversationOptionsViewModel {
     struct State {
         var rows = [CellConfiguration]()
         var isLoading = false
@@ -95,7 +96,7 @@ class ConversationOptionsViewModel {
         state.rows = computeVisibleRows()
     }
     
-    private func computeVisibleRows() -> [CellConfiguration] {
+    private func computeVisibleRows() -> [CellConfiguration] {///TODO: copy?
         var rows: [CellConfiguration] = [.allowGuestsToogle(
                 get: { [unowned self] in return self.configuration.allowGuests },
                 set: { [unowned self] in self.setAllowGuests($0) }

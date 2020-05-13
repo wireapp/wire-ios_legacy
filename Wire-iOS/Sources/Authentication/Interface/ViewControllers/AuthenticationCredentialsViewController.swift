@@ -17,12 +17,15 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
+import WireTransport
 
 /**
  * The view controller to use to ask the user to enter their credentials.
  */
 
-class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
+final class AuthenticationCredentialsViewController: AuthenticationStepController, CountryCodeTableViewControllerDelegate, EmailPasswordTextFieldDelegate, PhoneNumberInputViewDelegate, TabBarDelegate, TextFieldValidationDelegate, UITextFieldDelegate {
 
     /// Types of flow provided by the view controller.
     enum FlowType {
@@ -141,9 +144,15 @@ class AuthenticationCredentialsViewController: AuthenticationStepController, Cou
         return contentStack
     }
 
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     func configure(with featureProvider: AuthenticationFeatureProvider) {
         if case .reauthentication? = flowType {
             tabBar.isHidden = prefilledCredentials != nil
+        } else if case .custom = BackendEnvironment.shared.environmentType.value {
+            tabBar.isHidden = true
         } else {
             tabBar.isHidden = featureProvider.allowOnlyEmailLogin
         }

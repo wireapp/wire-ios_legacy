@@ -18,7 +18,10 @@
 
 
 import Foundation
-
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import WireCommonComponents
 
 extension ZMUser {
     var hasValidEmail: Bool {
@@ -297,7 +300,7 @@ extension SettingsCellDescriptorFactory {
             let actionCancel = UIAlertAction(title: "general.cancel".localized, style: .cancel, handler: nil)
             alert.addAction(actionCancel)
             let actionDelete = UIAlertAction(title: "general.ok".localized, style: .destructive) { _ in
-                ZMUserSession.shared()?.enqueueChanges {
+                ZMUserSession.shared()?.enqueue {
                     ZMUserSession.shared()?.initiateUserDeletion()
                 }
             }

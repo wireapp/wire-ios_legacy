@@ -49,7 +49,7 @@ public struct AdaptiveColumnCount {
  * You must implement the `collectionView(_:, sizeOfItemAt:)` method in your subclasses.
  */
 
-open class VerticalColumnCollectionViewController: UICollectionViewController, VerticalColumnCollectionViewLayoutDelegate {
+class VerticalColumnCollectionViewController: UICollectionViewController, VerticalColumnCollectionViewLayoutDelegate {
 
     fileprivate let layout: VerticalColumnCollectionViewLayout
     fileprivate let columnCount: AdaptiveColumnCount
@@ -61,7 +61,7 @@ open class VerticalColumnCollectionViewController: UICollectionViewController, V
      * - parameter columnCount: The number of columns to show depending on the current size class.
      */
 
-    public init(interItemSpacing: CGFloat, interColumnSpacing: CGFloat, columnCount: AdaptiveColumnCount) {
+    init(interItemSpacing: CGFloat, interColumnSpacing: CGFloat, columnCount: AdaptiveColumnCount) {
         layout = VerticalColumnCollectionViewLayout()
         layout.interItemSpacing = interItemSpacing
         layout.interColumnSpacing = interColumnSpacing
@@ -69,28 +69,27 @@ open class VerticalColumnCollectionViewController: UICollectionViewController, V
         self.columnCount = columnCount
         super.init(collectionViewLayout: layout)
         layout.delegate = self
+
+        if #available(iOS 11.0, *) {
+            collectionView?.contentInsetAdjustmentBehavior = .never
+        }
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     // MARK: - View lifecycle
 
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-        updateLayout()
-    }
-
-    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         coordinator.animate(alongsideTransition: { (context) in
             self.updateLayout(for: size)
         })
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.updateLayout()
+        updateLayout()
     }
 
     // MARK: - Size Changes
@@ -102,7 +101,7 @@ open class VerticalColumnCollectionViewController: UICollectionViewController, V
      * is regular. You can override this method for testing purposes.
      */
 
-    open var isRegularLayout: Bool {
+    var isRegularLayout: Bool {
         return view.traitCollection.horizontalSizeClass == .regular
     }
 
@@ -115,7 +114,7 @@ open class VerticalColumnCollectionViewController: UICollectionViewController, V
      * size of the view changes.
      */
 
-    open func updateLayout(for size: CGSize? = nil) {
+    func updateLayout(for size: CGSize? = nil) {
         layout.numberOfColumns = numberOfColumns(inContainer: size?.width ?? view.bounds.width)
         collectionView?.collectionViewLayout.invalidateLayout()
         navigationItem.titleView?.setNeedsLayout()
@@ -130,7 +129,7 @@ open class VerticalColumnCollectionViewController: UICollectionViewController, V
 
     // MARK: - Sizing
 
-    open func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, sizeOfItemAt indexPath: IndexPath) -> CGSize {
         fatalError("Subclasses of 'VerticalColumnCollectionViewController' must implement this method.")
     }
 

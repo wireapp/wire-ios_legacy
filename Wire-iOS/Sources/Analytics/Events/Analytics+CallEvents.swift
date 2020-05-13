@@ -18,6 +18,7 @@
 
 import Foundation
 import UIKit
+import WireDataModel
 
 enum CallEvent {
     case initiated, received, answered, established, ended(reason: String)
@@ -40,7 +41,7 @@ extension CallEvent {
 extension Analytics {
 
     func tagCallQualityReview(_ feedback: CallQualitySurveyReview) {
-        var attributes: [AnyHashable: Any] = [:]
+        var attributes: [String : NSObject] = [:]
         attributes["label"] = feedback.label
         attributes["score"] = feedback.score
         attributes["ignore-reason"] = feedback.ignoreReason
@@ -76,9 +77,9 @@ extension Analytics {
     private func attributesForUser(in conversation: ZMConversation) -> [String : Any] {
         var userType: String
         
-        if ZMUser.selfUser().isWirelessUser {
+        if SelfUser.current.isWirelessUser {
             userType = "temporary_guest"
-        } else if ZMUser.selfUser().isGuest(in: conversation) {
+        } else if SelfUser.current.isGuest(in: conversation) {
             userType = "guest"
         } else {
             userType = "user"
@@ -100,7 +101,7 @@ extension Analytics {
     }
     
     private func attributesForParticipants(in conversation: ZMConversation) -> [String : Any] {
-        return ["conversation_participants": conversation.activeParticipants.count]
+        return ["conversation_participants": conversation.localParticipants.count]
     }
     
     private func attributesForCallParticipants(with callInfo: CallInfo) -> [String : Any] {

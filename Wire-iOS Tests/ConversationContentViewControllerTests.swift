@@ -19,8 +19,9 @@
 import XCTest
 @testable import Wire
 
-final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
-    
+final class ConversationContentViewControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
+
     var sut: ConversationContentViewController!
     var mockConversation: ZMConversation!
     var mockZMUserSession: MockZMUserSession!
@@ -28,6 +29,8 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
+
+        coreDataFixture = CoreDataFixture()
 
         mockConversation = createTeamGroupConversation()
 
@@ -37,29 +40,33 @@ final class ConversationContentViewControllerTests: CoreDataSnapshotTestCase {
         mockMessage.deliveryState = .read
         mockMessage.needsReadConfirmation = true
 
-
         mockZMUserSession = MockZMUserSession()
-        
 
         sut = ConversationContentViewController(conversation: mockConversation, mediaPlaybackManager: nil, session: mockZMUserSession)
 
         ///Call the setup codes in viewDidLoad
         sut.loadViewIfNeeded()
     }
-    
+
     override func tearDown() {
         sut = nil
         mockConversation = nil
         mockZMUserSession = nil
         mockMessage = nil
 
+        coreDataFixture = nil
+
         super.tearDown()
     }
 
-    func testThatDeletionDialogIsCreated(){
+    func testThatDeletionDialogIsCreated() {
         // Notice: view arguemnt is used for iPad idiom. We should think about test it with iPad simulator that the alert shows in a popover which points to the view.
         let view = UIView()
 
-        verifyAlertController(sut.deletionDialogPresenter.deleteAlert(message: mockMessage, sourceView: view))
+        // create deletionDialogPresenter
+        let message = MockMessageFactory.textMessage(withText: "test")!
+        sut.messageAction(actionId: .delete, for: message, view: view)
+
+        verify(matching: sut.deletionDialogPresenter!.deleteAlert(message: mockMessage, sourceView: view))
     }
 }

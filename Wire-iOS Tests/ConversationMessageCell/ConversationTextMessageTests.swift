@@ -20,11 +20,7 @@ import XCTest
 import WireLinkPreview
 @testable import Wire
 
-class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
-
-    override func setUp() {
-        super.setUp()
-    }
+final class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
 
     func testPlainText() {
         // GIVEN
@@ -32,7 +28,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.sender = otherUser
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testLinkPreview() {
@@ -57,7 +53,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.backingLinkPreview = article
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testTextWithQuote() {
@@ -71,7 +67,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testTextWithLinkPreviewAndQuote() {
@@ -88,7 +84,7 @@ class ConversationTextMessageTests: ConversationCellSnapshotTestCase {
         message.backingTextMessageData.quote = (quote as Any as! ZMMessage)
         
         // THEN
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
     
     func testMediaPreviewAttachment() {

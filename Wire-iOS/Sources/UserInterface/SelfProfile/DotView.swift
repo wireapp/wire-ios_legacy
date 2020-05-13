@@ -18,6 +18,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 final class DotView: UIView {
     
@@ -59,7 +60,7 @@ final class DotView: UIView {
         }
         
         if let userSession = ZMUserSession.shared(), let user = user {
-            userObserver = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            userObserver = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
         
         self.createClientObservers()
@@ -74,7 +75,7 @@ final class DotView: UIView {
         clientsObserverTokens = user.clients.map { UserClientChangeInfo.add(observer: self, for: $0) }
     }
     
-    internal func updateIndicator() {
+    func updateIndicator() {
         showIndicator = hasUnreadMessages ||
                         user?.clientsRequiringUserAttention.count > 0 ||
                         user?.readReceiptsEnabledChangedRemotely == true

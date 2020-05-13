@@ -17,8 +17,10 @@
 // 
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
-@objc class PlaceholderConversationView: UIView {
+final class PlaceholderConversationView: UIView {
     
     var shieldImageView: UIImageView!
 
@@ -47,7 +49,7 @@ import Foundation
     }
 
     private func configureObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateForColorSchemeVariant), name: NSNotification.Name.SettingsColorSchemeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateForColorSchemeVariant), name: .SettingsColorSchemeChanged, object: nil)
     }
 
     private func configureConstraints() {

@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 struct ModalPresentationConfiguration {
     let alpha: CGFloat
@@ -39,11 +40,11 @@ final private class ModalPresentationTransition: NSObject, UIViewControllerAnima
         super.init()
     }
     
-    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return configuration.duration
     }
     
-    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let toVC = transitionContext.viewController(forKey: .to) as? ModalPresentationViewController else { preconditionFailure("No ModalPresentationViewController") }
         
         transitionContext.containerView.addSubview(toVC.view)
@@ -79,11 +80,11 @@ final private class ModalDismissalTransition: NSObject, UIViewControllerAnimated
         super.init()
     }
     
-    public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return configuration.duration
     }
     
-    public func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromVC = transitionContext.viewController(forKey: .from) as? ModalPresentationViewController else { preconditionFailure("No ModalPresentationViewController") }
         guard let toVC = transitionContext.viewController(forKey: .to) else { preconditionFailure("No view controller to present") }
         
@@ -152,19 +153,32 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
     private let interactionController = ModalInteractionController()
     private let configuration: ModalPresentationConfiguration
     
-    public init(viewController: UIViewController, configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3)) {
+    init(viewController: UIViewController, configuration: ModalPresentationConfiguration = .init(alpha: 0.3, duration: 0.3)) {
         self.viewController = viewController
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
         setupViews(with: viewController)
         createConstraints()
+        modalPresentationCapturesStatusBarAppearance = true
     }
     
     @available(*, unavailable)
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var childForStatusBarStyle: UIViewController? {
+        return viewController
+    }
+    
+    override var childForStatusBarHidden: UIViewController? {
+        return viewController
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
+    }
+
     private func setupViews(with viewController: UIViewController) {
         transitioningDelegate = self
         interactionController.setupWith(viewController: self)
@@ -188,15 +202,15 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         dismiss(animated: true, completion: nil)
     }
     
-    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return ModalPresentationTransition(configuration: configuration)
     }
     
-    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return ModalDismissalTransition(configuration: configuration)
     }
     
-    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactionController.interactionInProgress ? interactionController : nil
     }
     

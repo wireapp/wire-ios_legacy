@@ -17,12 +17,14 @@
 //
 
 import UIKit
+import WireSyncEngine
+import WireDataModel
 
 /**
  * An object that coordinates disclosing the legal hold state to the user.
  */
 
-@objc class LegalHoldDisclosureController: NSObject, ZMUserObserver {
+final class LegalHoldDisclosureController: NSObject, ZMUserObserver {
 
     enum DisclosureState: Equatable {
         /// No legal hold status is being disclosed.
@@ -94,7 +96,7 @@ import UIKit
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterForeground), name: UIApplication.didBecomeActiveNotification, object: nil)
 
         if let session = self.userSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, userSession: session)
+            userObserverToken = UserChangeInfo.add(observer: self, for: selfUser, in: session)
         }
     }
 

@@ -17,9 +17,10 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import Wire
 
-final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
+final class LandingViewControllerSnapshotTests: XCTestCase {
     
     var sut: LandingViewController!
     
@@ -36,6 +37,6 @@ final class LandingViewControllerSnapshotTests: ZMSnapshotTestCase {
     func testForInitState() {
         let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
         navigationController.viewControllers = [sut]
-        verify(view: navigationController.view)
+        verifyAllIPhoneSizes(matching: navigationController)
     }
 }

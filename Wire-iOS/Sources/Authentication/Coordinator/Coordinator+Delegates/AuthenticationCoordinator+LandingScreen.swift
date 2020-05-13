@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 extension AuthenticationCoordinator: LandingViewControllerDelegate {
 
@@ -38,5 +40,12 @@ extension AuthenticationCoordinator: LandingViewControllerDelegate {
     func landingViewControllerDidChooseCreateTeam() {
         stateController.transition(to: .teamCreation(.setTeamName))
     }
+    
+    func landingViewControllerDidChooseEnterpriseLogin() {
+        executeActions([.startCompanyLogin(code: nil)])
+    }
 
+    func landingViewControllerDidChooseSSOLogin() {
+        executeActions([.startSSOFlow])
+    }
 }

@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
+import UIKit
 
 extension ZMConversation {
     var botCanBeAdded: Bool {
@@ -63,11 +66,12 @@ final class ServiceDetailViewController: UIViewController {
 
     public let completion: Completion?
     public let variant: ServiceDetailVariant
-    public weak var viewControllerDismisser: ViewControllerDismisser?
+    weak var viewControllerDismisser: ViewControllerDismisser?
 
     private let detailView: ServiceDetailView
     private let actionButton: Button
     private let actionType: ActionType
+    private let selfUser: UserType
 
     /// init method with ServiceUser, destination conversation and customized UI.
     ///
@@ -76,24 +80,29 @@ final class ServiceDetailViewController: UIViewController {
     ///   - destinationConversation: the destination conversation of the serviceUser
     ///   - actionType: Enum ActionType to choose the actiion add or remove the service user
     ///   - variant: color variant
+    ///   - selfUser: self user, for inject mock user for testing
+    ///   - completion: completion handler
     init(serviceUser: ServiceUser,
          actionType: ActionType,
          variant: ServiceDetailVariant,
+         selfUser: UserType = ZMUser.selfUser(),
          completion: Completion? = nil) {
         self.service = Service(serviceUser: serviceUser)
         self.completion = completion
+        self.selfUser = selfUser
+        
         detailView = ServiceDetailView(service: service, variant: variant.colorScheme)
 
         switch actionType {
         case let .addService(conversation):
             actionButton = Button.createAddServiceButton()
-            actionButton.isHidden = !ZMUser.selfUser().canAddService(to: conversation)
+            actionButton.isHidden = !selfUser.canAddService(to: conversation)
         case let .removeService(conversation):
             actionButton = Button.createDestructiveServiceButton()
-            actionButton.isHidden = !ZMUser.selfUser().canRemoveService(from: conversation)
+            actionButton.isHidden = !selfUser.canRemoveService(from: conversation)
         case .openConversation:
             actionButton = Button.openServiceConversationButton()
-            actionButton.isHidden = !ZMUser.selfUser().canCreateService
+            actionButton.isHidden = !selfUser.canCreateService
         }
 
         self.variant = variant
@@ -162,13 +171,13 @@ final class ServiceDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem?.accessibilityIdentifier = "close"
     }
 
-    @objc(backButtonTapped:)
-    public func backButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func backButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.popViewController(animated: true)
     }
 
-    @objc(dismissButtonTapped:)
-    public func dismissButtonTapped(_ sender: AnyObject!) {
+    @objc
+    func dismissButtonTapped(_ sender: AnyObject!) {
         self.navigationController?.dismiss(animated: true, completion: { [weak self] in
             self?.completion?(nil)
         })
@@ -182,27 +191,34 @@ final class ServiceDetailViewController: UIViewController {
             let serviceUser = self.service.serviceUser
             switch type {
             case let .addService(conversation):
-                conversation.add(serviceUser: serviceUser, in: userSession) { error in
-                    if let error = error {
-                        completion?(.failure(error: error))
-                    } else {
+                conversation.add(serviceUser: serviceUser, in: userSession) { result in
+                    
+                    switch result {
+                    case .success:
                         Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         completion?(.success(conversation: conversation))
+                    case .failure(let error):
+                        completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
                     }
                 }
             case let .removeService(conversation):
-                guard let user = serviceUser as? ZMUser else { return }
-                self.presentRemoveDialogue(for: user, from: conversation, dismisser: self.viewControllerDismisser)
+                self.presentRemoveDialogue(for: serviceUser, from: conversation, dismisser: self.viewControllerDismisser)
             case .openConversation:
                 if let existingConversation = ZMConversation.existingConversation(in: userSession.managedObjectContext, service: serviceUser, team: ZMUser.selfUser().team) {
                     completion?(.success(conversation: existingConversation))
                 } else {
-                    userSession.startConversation(with: serviceUser) { result in
+                    serviceUser.createConversation(in: userSession, completionHandler: { (result) in
                         if case let .success(conversation) = result {
                             Analytics.shared().tag(ServiceAddedEvent(service: serviceUser, conversation: conversation, context: .startUI))
                         }
-                        completion?(result)
-                    }
+                        
+                        switch result {
+                        case .success(let conversation):
+                            completion?(.success(conversation: conversation))
+                        case .failure(let error):
+                            completion?(.failure(error: (error as? AddBotError) ?? AddBotError.general))
+                        }
+                    })
                 }
             }
         }

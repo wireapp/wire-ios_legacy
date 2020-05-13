@@ -18,17 +18,18 @@
 
 
 import Foundation
+import UIKit
 
 extension ConversationInputBarViewController {
     
-    @objc func configureMarkdownButton() {
+    func configureMarkdownButton() {
         
         markdownButton.addTarget(self, action: #selector(markdownButtonTapped), for: .touchUpInside)
         markdownButton.setIcon(.markdownToggle, size: .tiny, for: .normal)
         markdownButton.setIconColor(UIColor.from(scheme: .iconNormal), for: .normal)
     }
     
-    @objc public func updateMarkdownButton() {
+    func updateMarkdownButton() {
         let color: UIColor
         markdownButton.isHidden = inputBar.isEditing
 
@@ -42,7 +43,8 @@ extension ConversationInputBarViewController {
         markdownButton.isEnabled = !inputBar.isEditing
     }
     
-    @objc func markdownButtonTapped(_ sender: IconButton) {
+    @objc
+    private func markdownButtonTapped(_ sender: IconButton) {
 
         if !inputBar.isMarkingDown {
             inputBar.textView.becomeFirstResponder()

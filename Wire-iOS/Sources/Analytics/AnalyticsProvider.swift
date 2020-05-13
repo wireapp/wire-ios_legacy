@@ -18,7 +18,7 @@
 
 import Foundation
 
-@objc protocol AnalyticsProvider: NSObjectProtocol {
+protocol AnalyticsProvider: class {
     var isOptedOut: Bool { get set }
 
     /// Record an event with optional attributes.

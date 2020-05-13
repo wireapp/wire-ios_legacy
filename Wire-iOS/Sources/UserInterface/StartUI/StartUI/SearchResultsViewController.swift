@@ -18,8 +18,10 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
+import WireDataModel
 
-@objc enum SearchGroup: Int {
+enum SearchGroup: Int {
     case people
     case services
 }
@@ -54,8 +56,7 @@ extension SearchGroup {
     }
 }
 
-@objc
-public protocol SearchResultsViewControllerDelegate {
+protocol SearchResultsViewControllerDelegate: class {
     
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didTapOnUser user: UserType, indexPath: IndexPath, section: SearchResultsViewControllerSection)
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, didDoubleTapOnUser user: UserType, indexPath: IndexPath)
@@ -64,20 +65,17 @@ public protocol SearchResultsViewControllerDelegate {
     func searchResultsViewController(_ searchResultsViewController: SearchResultsViewController, wantsToPerformAction action: SearchResultsViewControllerAction)
 }
 
-@objc
 public enum SearchResultsViewControllerAction : Int {
     case createGroup
     case createGuestRoom
 }
 
-@objc
 public enum SearchResultsViewControllerMode : Int {
     case search
     case selection
     case list
 }
 
-@objc
 public enum SearchResultsViewControllerSection : Int {
     case unknown
     case topPeople
@@ -129,7 +127,7 @@ extension UIViewController {
     }
 }
 
-@objcMembers public class SearchResultsViewController : UIViewController {
+class SearchResultsViewController : UIViewController {
 
     var searchResultsView: SearchResultsView?
     var searchDirectory: SearchDirectory!
@@ -153,12 +151,12 @@ extension UIViewController {
         }
     }
 
-    public var filterConversation: ZMConversation? = nil
-    public let shouldIncludeGuests: Bool
+    var filterConversation: ZMConversation? = nil
+    let shouldIncludeGuests: Bool
 
-    public weak var delegate: SearchResultsViewControllerDelegate? = nil
+    weak var delegate: SearchResultsViewControllerDelegate? = nil
 
-    public var mode: SearchResultsViewControllerMode = .search {
+    var mode: SearchResultsViewControllerMode = .search {
         didSet {
             updateVisibleSections()
         }
@@ -168,8 +166,7 @@ extension UIViewController {
         searchDirectory?.tearDown()
     }
 
-    @objc
-    public init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
+    init(userSelection: UserSelection, isAddingParticipants: Bool = false, shouldIncludeGuests: Bool) {
         self.userSelection = userSelection
         self.isAddingParticipants = isAddingParticipants
         self.mode = .list
@@ -181,7 +178,7 @@ extension UIViewController {
         sectionController = SectionCollectionViewController()
         contactsSection = ContactsSectionController()
         contactsSection.selection = userSelection
-        contactsSection.title = team != nil ? "peoplepicker.header.contacts_personal".localized : "peoplepicker.header.contacts".localized
+        contactsSection.title = "peoplepicker.header.contacts_personal".localized
         contactsSection.allowsSelection = isAddingParticipants
         teamMemberAndContactsSection = ContactsSectionController()
         teamMemberAndContactsSection.allowsSelection = isAddingParticipants
@@ -210,23 +207,23 @@ extension UIViewController {
         inviteTeamMemberSection.delegate = self
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    public override func loadView() {
+    override func loadView() {
         searchResultsView  = SearchResultsView()
         searchResultsView?.parentViewController = self
         view = searchResultsView
     }
 
-    override public func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         sectionController.collectionView?.reloadData()
         sectionController.collectionView?.collectionViewLayout.invalidateLayout()
     }
 
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
 
         sectionController.collectionView = searchResultsView?.collectionView
@@ -237,7 +234,7 @@ extension UIViewController {
     }
 
     @objc
-    public func cancelPreviousSearch() {
+    func cancelPreviousSearch() {
         pendingSearchTask?.cancel()
         pendingSearchTask = nil
     }
@@ -250,7 +247,7 @@ extension UIViewController {
         var options = options
         options.updateForSelfUserTeamRole(selfUser: ZMUser.selfUser())
 
-        let request = SearchRequest(query: query, searchOptions: options, team: ZMUser.selfUser().team)
+        let request = SearchRequest(query: query.trim(), searchOptions: options, team: ZMUser.selfUser().team)
         if let task = searchDirectory?.perform(request) {
             task.onResult({ [weak self] in self?.handleSearchResult(result: $0, isCompleted: $1)})
             task.start()
@@ -259,22 +256,18 @@ extension UIViewController {
         }
     }
 
-    @objc
-    public func searchForUsers(withQuery query: String) {
+    func searchForUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.conversations, .contacts, .teamMembers, .directory])
     }
 
-    @objc
-    public func searchForLocalUsers(withQuery query: String) {
+    func searchForLocalUsers(withQuery query: String) {
         self.performSearch(query: query, options: [.contacts, .teamMembers])
     }
 
-    @objc
-    public func searchForServices(withQuery query: String) {
+    func searchForServices(withQuery query: String) {
         self.performSearch(query: query, options: [.services])
     }
 
-    @objc
     func searchContactList() {
         searchForLocalUsers(withQuery: "")
     }
@@ -338,11 +331,21 @@ extension UIViewController {
     func updateSections(withSearchResult searchResult: SearchResult) {
 
         var contacts = searchResult.contacts
-        var teamContacts = searchResult.teamMembers.compactMap({ $0.user })
-
-        if let filteredParticpants = filterConversation?.activeParticipants {
-            contacts = contacts.filter({ !filteredParticpants.contains($0) })
-            teamContacts = teamContacts.filter({ !filteredParticpants.contains($0) })
+        var teamContacts = searchResult.teamMembers
+        
+        if let filteredParticpants = filterConversation?.localParticipants {
+            contacts = contacts.filter({
+                guard let user = $0.user else {
+                    return true
+                }
+                return !filteredParticpants.contains(user)
+            })
+            teamContacts = teamContacts.filter({
+                guard let user = $0.user else {
+                    return true
+                }
+                return !filteredParticpants.contains(user)
+            })
         }
 
         contactsSection.contacts = contacts

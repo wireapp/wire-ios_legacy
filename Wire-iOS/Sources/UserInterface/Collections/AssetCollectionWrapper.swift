@@ -18,9 +18,9 @@
 
 
 import Foundation
+import WireDataModel
 
-
-open class MulticastDelegate<T: Any>: NSObject {
+class MulticastDelegate<T: Any>: NSObject {
     private let delegates = NSHashTable<AnyObject>(options: .weakMemory, capacity: 0)
     
     func add(_ delegate: T) {
@@ -71,7 +71,9 @@ final class AssetCollectionWrapper: NSObject {
     convenience init(conversation: ZMConversation, matchingCategories: [CategoryMatch]) {
         let assetCollection: ZMCollection
         let delegate = AssetCollectionMulticastDelegate()
-        if Settings.shared().enableBatchCollections {
+        
+        let enableBatchCollections: Bool? = Settings.shared[.enableBatchCollections]
+        if enableBatchCollections == true {
             assetCollection = AssetCollectionBatched(conversation: conversation, matchingCategories: matchingCategories, delegate: delegate)
         }
         else {

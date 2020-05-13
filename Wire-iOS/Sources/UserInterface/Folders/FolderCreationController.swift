@@ -20,12 +20,13 @@ import Foundation
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 protocol FolderCreationValuesConfigurable: class {
     func configure(with name: String)
 }
 
-@objc protocol FolderCreationControllerDelegate: class {
+protocol FolderCreationControllerDelegate: class {
     
     func folderController(
         _ controller: FolderCreationController,
@@ -50,7 +51,6 @@ final class FolderCreationController: UIViewController {
     
     fileprivate var navBarBackgroundView = UIView()
     
-    @objc
     weak var delegate: FolderCreationControllerDelegate?
     
     public init(conversation: ZMConversation, directory: ConversationDirectoryType) {
@@ -63,10 +63,6 @@ final class FolderCreationController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     override public func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,18 +73,13 @@ final class FolderCreationController: UIViewController {
         setupViews()
         
         // try to overtake the first responder from the other view
-        if let _ = UIResponder.wr_currentFirst() {
+        if let _ = UIResponder.currentFirst {
             nameSection.becomeFirstResponder()
         }
     }
     
     override public var preferredStatusBarStyle: UIStatusBarStyle {
         return colorSchemeVariant == .light ? .default : .lightContent
-    }
-    
-    override public func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     override public func viewDidAppear(_ animated: Bool) {

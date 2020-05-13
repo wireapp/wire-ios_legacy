@@ -19,11 +19,15 @@
 import Foundation
 import UIKit
 import SafariServices
+import WireDataModel
+import WireSyncEngine
+import avs
+import WireCommonComponents
 
 var defaultFontScheme: FontScheme = FontScheme(contentSizeCategory: UIApplication.shared.preferredContentSizeCategory)
 
-@objcMembers
-final class AppRootViewController: UIViewController {
+final class AppRootViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     public let mainWindow: UIWindow
     public let callWindow: CallWindow
@@ -36,15 +40,21 @@ final class AppRootViewController: UIViewController {
     fileprivate var sessionManagerDestroyedSessionObserverToken: Any?
     fileprivate var soundEventListeners = [UUID : SoundEventListener]()
 
-    public fileprivate(set) var visibleViewController: UIViewController?
+    public fileprivate(set) var visibleViewController: UIViewController? {
+        didSet {
+            visibleViewController?.setNeedsStatusBarAppearanceUpdate()
+        }
+    }
+    
     fileprivate let appStateController: AppStateController
     fileprivate let fileBackupExcluder: FileBackupExcluder
-    fileprivate let avsLogObserver: AVSLogObserver
     fileprivate var authenticatedBlocks : [() -> Void] = []
     fileprivate let transitionQueue: DispatchQueue = DispatchQueue(label: "transitionQueue")
     fileprivate let mediaManagerLoader = MediaManagerLoader()
 
     var authenticationCoordinator: AuthenticationCoordinator?
+
+    private let teamMetadataRefresher = TeamMetadataRefresher()
 
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
@@ -61,24 +71,27 @@ final class AppRootViewController: UIViewController {
 
     fileprivate var performWhenShowContentDelegateIsAvailable: ((ShowContentDelegate)->())?
 
-    func updateOverlayWindowFrame() {
-        self.overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+    func updateOverlayWindowFrame(size: CGSize? = nil) {
+        if let size = size {
+            overlayWindow.frame.size = size
+        } else {
+            overlayWindow.frame = UIApplication.shared.keyWindow?.frame ?? UIScreen.main.bounds
+        }
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         mainWindow.frame.size = size
-
         coordinator.animate(alongsideTransition: nil, completion: { _ in
-            self.updateOverlayWindowFrame()
+            self.updateOverlayWindowFrame(size: size)
         })
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         appStateController = AppStateController()
         fileBackupExcluder = FileBackupExcluder()
-        avsLogObserver = AVSLogObserver()
+        SessionManager.startAVSLogging()
 
         mainWindow = UIWindow(frame: UIScreen.main.bounds)
         mainWindow.accessibilityIdentifier = "ZClientMainWindow"
@@ -99,6 +112,8 @@ final class AppRootViewController: UIViewController {
         callWindow.makeKeyAndVisible()
         overlayWindow.makeKeyAndVisible()
         mainWindow.makeKey()
+        callWindow.isHidden = true
+        overlayWindow.isHidden = true
 
         type(of: self).configureAppearance()
         configureMediaManager()
@@ -122,7 +137,7 @@ final class AppRootViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -138,7 +153,7 @@ final class AppRootViewController: UIViewController {
         let url = Bundle.main.url(forResource: "session_manager", withExtension: "json")!
         let configuration = SessionManagerConfiguration.load(from: url)!
         let jailbreakDetector = JailbreakDetector()
-        configuration.blacklistDownloadInterval = Settings.shared().blacklistDownloadInterval
+        configuration.blacklistDownloadInterval = Settings.shared.blacklistDownloadInterval
 
         SessionManager.clearPreviousBackups()
 
@@ -147,6 +162,7 @@ final class AppRootViewController: UIViewController {
             mediaManager: mediaManager!,
             analytics: analytics,
             delegate: appStateController,
+            showContentDelegate: self,
             application: UIApplication.shared,
             environment: BackendEnvironment.shared,
             configuration: configuration,
@@ -157,14 +173,13 @@ final class AppRootViewController: UIViewController {
             self.sessionManager?.foregroundNotificationResponder = self
             self.sessionManager?.showContentDelegate = self
             self.sessionManager?.switchingDelegate = self
+            self.sessionManager?.urlActionDelegate = self
             sessionManager.updateCallNotificationStyleFromSettings()
-            sessionManager.useConstantBitRateAudio = Settings.shared().callingConstantBitRate
+            sessionManager.useConstantBitRateAudio = Settings.shared[.callingConstantBitRate] ?? false
             sessionManager.start(launchOptions: launchOptions)
 
             self.quickActionsManager = QuickActionsManager(sessionManager: sessionManager,
                                                            application: UIApplication.shared)
-                
-            sessionManager.urlHandler.delegate = self
         }
     }
 
@@ -224,7 +239,7 @@ final class AppRootViewController: UIViewController {
                 break
             }
 
-            let navigationController = UINavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
+            let navigationController = SpinnerCapableNavigationController(navigationBarClass: AuthenticationNavigationBar.self, toolbarClass: nil)
 
             authenticationCoordinator = AuthenticationCoordinator(presenter: navigationController,
                                                                   sessionManager: SessionManager.shared!,
@@ -240,18 +255,21 @@ final class AppRootViewController: UIViewController {
             mainWindow.tintColor = UIColor.accent()
             executeAuthenticatedBlocks()
 
-            let clientViewController = ZClientViewController()
-            clientViewController.isComingFromRegistration = completedRegistration
+            if let selectedAccount = SessionManager.shared?.accountManager.selectedAccount {
+                let clientViewController = ZClientViewController(account: selectedAccount,
+                                                                 selfUser: ZMUser.selfUser())
+                clientViewController.isComingFromRegistration = completedRegistration
 
-            /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
-            clientViewController.needToShowDataUsagePermissionDialog = false
-            if case .unauthenticated(_) = appStateController.lastAppState {
-                clientViewController.needToShowDataUsagePermissionDialog = true
+                /// show the dialog only when lastAppState is .unauthenticated, i.e. the user login to a new device
+                clientViewController.needToShowDataUsagePermissionDialog = false
+                if case .unauthenticated(_) = appStateController.lastAppState {
+                    clientViewController.needToShowDataUsagePermissionDialog = true
+                }
+
+                Analytics.shared().setTeam(ZMUser.selfUser().team)
+
+                viewController = clientViewController
             }
-
-            Analytics.shared().setTeam(ZMUser.selfUser().team)
-
-            viewController = clientViewController
         case .headless:
             viewController = LaunchImageViewController()
         case .loading(account: let toAccount, from: let fromAccount):
@@ -307,7 +325,6 @@ final class AppRootViewController: UIViewController {
                     viewController.didMove(toParent: self)
                     previousViewController.removeFromParent()
                     self.visibleViewController = viewController
-                    UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
                     completionHandler?()
             })
         } else {
@@ -319,7 +336,6 @@ final class AppRootViewController: UIViewController {
                 view.addSubview(viewController.view)
                 viewController.didMove(toParent: self)
                 visibleViewController = viewController
-                UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(false)
             }
             completionHandler?()
         }
@@ -328,18 +344,24 @@ final class AppRootViewController: UIViewController {
     func applicationWillTransition(to appState: AppState) {
 
         if case .authenticated = appState {
+            if AppDelegate.shared.shouldConfigureSelfUserProvider {
+                SelfUser.provider = ZMUserSession.shared()
+            }
+            
             callWindow.callController.transitionToLoggedInSession()
         }
 
         let colorScheme = ColorScheme.default
         colorScheme.accentColor = .accent()
-        colorScheme.variant = ColorSchemeVariant(rawValue: Settings.shared().colorScheme.rawValue) ?? .light
+        colorScheme.variant = Settings.shared.colorSchemeVariant
     }
     
     func applicationDidTransition(to appState: AppState) {
         if case .authenticated = appState {
             callWindow.callController.presentCallCurrentlyInProgress()
-            ZClientViewController.shared()?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+            ZClientViewController.shared?.legalHoldDisclosureController?.discloseCurrentState(cause: .appOpen)
+        } else if AppDelegate.shared.shouldConfigureSelfUserProvider {
+            SelfUser.provider = nil
         }
         
         if case .unauthenticated(let error) = appState, error?.userSessionErrorCode == .accountDeleted,
@@ -379,11 +401,7 @@ final class AppRootViewController: UIViewController {
         enqueueTransition(to: self.appStateController.appState)
     }
 
-}
-
-// MARK: - Status Bar / Supported Orientations
-
-extension AppRootViewController {
+    // MARK: - Status Bar / Supported Orientations
 
     override var shouldAutorotate: Bool {
         return true
@@ -393,14 +411,13 @@ extension AppRootViewController {
         return wr_supportedInterfaceOrientations
     }
 
-    override var prefersStatusBarHidden: Bool {
-        return visibleViewController?.prefersStatusBarHidden ?? false
+    override var childForStatusBarStyle: UIViewController? {
+        return visibleViewController
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return visibleViewController?.preferredStatusBarStyle ?? .default
+    override var childForStatusBarHidden: UIViewController? {
+        return visibleViewController
     }
-
 }
 
 extension AppRootViewController: AppStateControllerDelegate {
@@ -439,7 +456,7 @@ extension AppRootViewController: ShowContentDelegate {
         }
     }
     
-    internal func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
+    func whenShowContentDelegateIsAvailable(do closure: @escaping (ShowContentDelegate) -> ()) {
         if let delegate = showContentDelegate {
             closure(delegate)
         }
@@ -454,7 +471,7 @@ extension AppRootViewController: ShowContentDelegate {
 extension AppRootViewController: ForegroundNotificationResponder {
     func shouldPresentNotification(with userInfo: NotificationUserInfo) -> Bool {
         // user wants to see fg notifications
-        guard !(Settings.shared()?.chatHeadsDisabled ?? false) else {
+        guard false == Settings.shared[.chatHeadsDisabled] else {
             return false
         }
         
@@ -464,7 +481,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
             selfUserID == sessionManager?.accountManager.selectedAccount?.userIdentifier
             else { return true }
         
-        guard let clientVC = ZClientViewController.shared() else {
+        guard let clientVC = ZClientViewController.shared else {
             return true
         }
 
@@ -479,7 +496,7 @@ extension AppRootViewController: ForegroundNotificationResponder {
         // conversation view is visible for another conversation
         guard
             let convID = userInfo.conversationID,
-            convID != clientVC.currentConversation.remoteIdentifier
+            convID != clientVC.currentConversation?.remoteIdentifier
             else { return false }
         
         return true
@@ -501,6 +518,7 @@ extension AppRootViewController {
 
     @objc fileprivate func applicationDidBecomeActive() {
         updateOverlayWindowFrame()
+        teamMetadataRefresher.triggerRefreshIfNeeded()
     }
 }
 
@@ -579,7 +597,6 @@ extension AppRootViewController: PopoverPresenter { }
 
 public extension SessionManager {
 
-    @objc(firstAuthenticatedAccountExcludingCredentials:)
     func firstAuthenticatedAccount(excludingCredentials credentials: LoginCredentials?) -> Account? {
         if let selectedAccount = accountManager.selectedAccount {
             if BackendEnvironment.shared.isAuthenticated(selectedAccount) && selectedAccount.loginCredentials != credentials {
@@ -596,200 +613,16 @@ public extension SessionManager {
         return nil
     }
 
-    @objc var firstAuthenticatedAccount: Account? {
+    var firstAuthenticatedAccount: Account? {
         return firstAuthenticatedAccount(excludingCredentials: nil)
     }
 
-    @objc static var numberOfAccounts: Int {
+    static var numberOfAccounts: Int {
         return SessionManager.shared?.accountManager.accounts.count ?? 0
     }
 
 }
 
-extension AppRootViewController: SessionManagerURLHandlerDelegate {
-
-    func sessionManagerShouldExecuteURLAction(_ action: URLAction, callback: @escaping (Bool) -> Void) {
-        switch action {
-        case .openUserProfile(let id):
-            /// For self user, open the profile viewer without searching
-            if let selfUser = ZMUser.selfUser(),
-                id == selfUser.remoteIdentifier {
-                sessionManager?.showUserProfile(user: selfUser)
-            } else {
-                sessionManager?.showConnectionRequest(userId: id)
-            }
-        case .openConversation(_, let conversation):
-            if let conversation = conversation,
-               let userSession = ZMUserSession.shared() {
-                sessionManager?.showConversation(conversation, at: nil, in: userSession)
-            }
-        case .warnInvalidDeepLink(let error):
-            switch error {
-            case .invalidUserLink:
-                presentInvalidUserProfileLinkAlert()
-            case .invalidConversationLink:
-                presentAlertWithOKButton(title: "url_action.invalid_conversation.title".localized,
-                                         message: "url_action.invalid_conversation.message".localized)
-            case .notLoggedIn:
-                presentAlertWithOKButton(title: "url_action.authorization_required.title".localized,
-                                         message: "url_action.authorization_required.message".localized)
-            case .malformedLink:
-                presentAlertWithOKButton(title: "url_action.invalid_link.title".localized,
-                                         message: "url_action.invalid_link.message".localized)
-            }
-        case .connectBot:
-            guard let _ = ZMUser.selfUser().team else {
-                callback(false)
-                return
-            }
-            
-            let alert = UIAlertController(title: "url_action.title".localized,
-                                          message: "url_action.connect_to_bot.message".localized,
-                                          preferredStyle: .alert)
-            
-            let agreeAction = UIAlertAction(title: "url_action.confirm".localized,
-                                            style: .default) { _ in
-                                                callback(true)
-            }
-            
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized,
-                                             style: .cancel) { _ in
-                                                callback(false)
-            }
-            
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
-
-        case .companyLoginFailure(let error):
-            defer {
-                authenticationCoordinator?.cancelCompanyLogin()
-                notifyCompanyLoginCompletion()
-            }
-            
-            guard case .unauthenticated = appStateController.appState else {
-                callback(false)
-                return
-            }
-
-            let message = "login.sso.error.alert.message".localized(args: error.displayCode)
-
-            let alert = UIAlertController(title: "general.failure".localized,
-                                          message: message,
-                                          preferredStyle: .alert)
-
-            alert.addAction(.ok(handler: { _ in
-                callback(false)
-            }))
-
-            let presentAlert = {
-                self.present(alert, animated: true)
-            }
-
-            if let topmostViewController = UIApplication.shared.topmostViewController() as? SFSafariViewController {
-                topmostViewController.dismiss(animated: true, completion: presentAlert)
-            } else {
-                presentAlert()
-            }
-
-        case .companyLoginSuccess:
-            defer {
-                notifyCompanyLoginCompletion()
-            }
-
-            guard case .unauthenticated = appStateController.appState else {
-                callback(false)
-                return
-            }
-
-            callback(true)
-
-        case .startCompanyLogin:
-            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
-            executeCompanyLoginLinkAction(context.actionForValidLink(), callback: callback)
-
-        case .warnInvalidCompanyLogin(let error):
-            let context = DefaultCompanyControllerLinkResponseContext(sessionManager: SessionManager.shared!, appState: appStateController.appState, authenticationCoordinator: authenticationCoordinator)
-            executeCompanyLoginLinkAction(context.actionForInvalidRequest(error: error), callback: callback)
-            
-        case .accessBackend(configurationURL: let configurationURL):
-            
-            if let error = sessionManager?.canSwitchBackend() {
-                self.showBackendSwitchError(error)
-                return
-            }
-            
-            let alert = UIAlertController(title: "url_action.switch_backend.title".localized,
-                                          message: "url_action.switch_backend.message".localized(args: configurationURL.absoluteString),
-                                          preferredStyle: .alert)
-            let agreeAction = UIAlertAction(title: "general.ok".localized,
-                                            style: .default) { _ in
-                                                self.showLoadingView = true
-                                                self.sessionManager?.switchBackend(configuration: configurationURL) { result in
-                                                    self.showLoadingView = false
-                                                    switch result {
-                                                    case let .success(environment):
-                                                        BackendEnvironment.shared = environment
-                                                    case let .failure(error):
-                                                        if let error = error as? SessionManager.SwitchBackendError {
-                                                            self.showBackendSwitchError(error)
-                                                        }
-                                                    }
-                                                }
-            }
-            alert.addAction(agreeAction)
-            
-            let cancelAction = UIAlertAction(title: "general.cancel".localized, style: .cancel)
-            alert.addAction(cancelAction)
-            
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    private func showBackendSwitchError(_ error: SessionManager.SwitchBackendError) {
-        let alert: UIAlertController
-        switch error {
-        case .loggedInAccounts:
-            alert = UIAlertController(title: "url_action.switch_backend.error.logged_in.title".localized,
-                                          message: "url_action.switch_backend.error.logged_in".localized,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-        case .invalidBackend:
-            alert = UIAlertController(title: "url_action.switch_backend.error.invalid_backend.title".localized,
-                                          message: "url_action.switch_backend.error.invalid_backend".localized,
-                                          preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "general.ok".localized, style: .default, handler: nil))
-        }
-        self.present(alert, animated: true, completion: nil)
-    }
-
-    private func executeCompanyLoginLinkAction(_ action: CompanyLoginLinkResponseAction, callback: @escaping (Bool) -> Void) {
-        switch action {
-        case .allowStartingFlow:
-            callback(true)
-
-        case .preventStartingFlow:
-            callback(false)
-
-        case .showDismissableAlert(let title, let message, let allowStartingFlow):
-            if let controller = UIApplication.shared.topmostViewController(onlyFullScreen: false) {
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert )
-                let okAction = UIAlertAction(title: "general.ok".localized, style: .cancel) { _ in callback(allowStartingFlow) }
-                alert.addAction(okAction)
-                controller.present(alert, animated: true)
-            } else {
-                callback(allowStartingFlow)
-            }
-        }
-    }
-
-    private func notifyCompanyLoginCompletion() {
-        NotificationCenter.default.post(name: .companyLoginDidFinish, object: self)
-    }
-}
-
-extension Notification.Name {
-    static let companyLoginDidFinish = Notification.Name("Wire.CompanyLoginDidFinish")
+final class SpinnerCapableNavigationController: UINavigationController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 }

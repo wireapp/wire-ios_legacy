@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension UIView {
     func targetView(for message: ZMConversationMessage!, dataSource: ConversationTableViewDataSource) -> UIView {
@@ -46,12 +48,11 @@ extension UIView {
 extension ConversationContentViewController: ConversationMessageCellDelegate {
     // MARK: - MessageActionResponder
 
-    public func perform(action: MessageAction,
+    func perform(action: MessageAction,
                         for message: ZMConversationMessage!,
                         view: UIView) {
-        guard let dataSource = dataSource else { return }
         let actionView = view.targetView(for: message, dataSource: dataSource)
-        
+
         ///Do not dismiss Modal for forward since share VC is present in a popover
         let shouldDismissModal = action != .delete && action != .copy &&
             !(action == .forward && isIPadRegular())
@@ -71,7 +72,7 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
     }
 
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect) {
-        delegate?.didTap?(onUserAvatar: user, view: sourceView, frame: frame)
+        delegate?.didTap(onUserAvatar: user, view: sourceView, frame: frame)
     }
 
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool {
@@ -86,8 +87,12 @@ extension ConversationContentViewController: ConversationMessageCellDelegate {
         delegate?.conversationContentViewController(self, presentGuestOptionsFrom: sourceView)
     }
 
-    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView) {
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView) {
         delegate?.conversationContentViewController(self, presentParticipantsDetailsWithSelectedUsers: selectedUsers, from: sourceView)
+    }
+
+    func conversationMessageShouldUpdate() {
+        dataSource.loadMessages(forceRecalculate: true)
     }
 
 }

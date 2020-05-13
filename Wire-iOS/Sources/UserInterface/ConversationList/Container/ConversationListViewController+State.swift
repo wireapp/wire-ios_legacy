@@ -40,7 +40,7 @@ extension ConversationListViewController {
             }
         case .peoplePicker:
             let startUIViewController = createPeoplePickerController()
-            let navigationWrapper = startUIViewController.wrapInNavigationController(ClearBackgroundNavigationController.self)
+            let navigationWrapper = startUIViewController.wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
 
             show(navigationWrapper, animated: true) {
                 startUIViewController.showKeyboardIfNeeded()
@@ -51,7 +51,6 @@ extension ConversationListViewController {
         }
     }
 
-    @objc(selectInboxAndFocusOnView:)
     func selectInboxAndFocusOnView(focus: Bool) {
         setState(.conversationList, animated:false)
         listContentController.selectInboxAndFocus(onView: focus)

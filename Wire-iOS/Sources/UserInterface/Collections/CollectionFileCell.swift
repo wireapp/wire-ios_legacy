@@ -19,9 +19,12 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireSystem
+import WireDataModel
+import WireCommonComponents
 
-
-final public class CollectionFileCell: CollectionCell {
+final class CollectionFileCell: CollectionCell {
     private let fileTransferView = FileTransferView()
     private let headerView = CollectionCellHeader()
     
@@ -74,7 +77,7 @@ final public class CollectionFileCell: CollectionCell {
 }
 
 extension CollectionFileCell: TransferViewDelegate {
-    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+    func transferView(_ view: TransferView, didSelect action: MessageAction) {
         self.delegate?.collectionCell(self, performAction: action)
     }
 }

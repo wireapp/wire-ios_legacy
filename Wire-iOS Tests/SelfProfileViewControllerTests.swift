@@ -22,33 +22,37 @@ import XCTest
 final class SelfProfileViewControllerTests: ZMSnapshotTestCase {
     
     var sut: SelfProfileViewController!
-
-    override func setUp() {
-        super.setUp()
-    }
+    var selfUser: MockUserType!
 
     override func tearDown() {
         sut = nil
+        selfUser = nil
         super.tearDown()
     }
   
-    func testTestForAUserWithNoTeam() {
+    func testForAUserWithNoTeam() {
         createSut(userName: "Tarja Turunen", teamMember: false)
-
         verify(view: sut.view)
     }
 
-    func testTestForAUserWithALongName() {
+    func testForAUserWithALongName() {
         createSut(userName: "Johannes Chrysostomus Wolfgangus Theophilus Mozart")
-
         verify(view: sut.view)
+    }
+
+    func testItRequestsToRefreshTeamMetadataIfSelfUserIsTeamMember() {
+        createSut(userName: "Tarja Turunen", teamMember: true)
+        XCTAssertEqual(selfUser.refreshTeamDataCount, 1)
+    }
+
+    func testItDoesNotRequestToRefreshTeamMetadataIfSelfUserIsNotTeamMember() {
+        createSut(userName: "Tarja Turunen", teamMember: false)
+        XCTAssertEqual(selfUser.refreshTeamDataCount, 0)
     }
 
     private func createSut(userName: String, teamMember: Bool = true) {
-        MockUser.mockSelf()?.name = userName
-        MockUser.mockSelf()?.isTeamMember = teamMember
-        
-        sut = SelfProfileViewController(selfUser: MockUser.selfUser, userRightInterfaceType: MockUserRight.self)
+        selfUser = MockUserType.createSelfUser(name: userName, inTeam: teamMember ? UUID() : nil)
+        sut = SelfProfileViewController(selfUser: selfUser, userRightInterfaceType: MockUserRight.self, userSession: MockZMUserSession())
         sut.view.backgroundColor = .black
     }
 }

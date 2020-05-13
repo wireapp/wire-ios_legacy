@@ -19,8 +19,10 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
-class SettingsBaseTableViewController: UIViewController {
+class SettingsBaseTableViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
     var tableView: UITableView
     let topSeparator = OverflowSeparatorView()
@@ -166,7 +168,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         }
 
         if let userSession = ZMUserSession.shared() {
-            self.selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+            self.selfUserObserver = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)

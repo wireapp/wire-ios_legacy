@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
+import avs
 
 extension ZMConversationMessage {
     var isSentBySelfUser: Bool {
@@ -72,9 +75,9 @@ class SoundEventListener : NSObject {
         soundEventWatchDog.isMuted = UIApplication.shared.applicationState == .background
     }
     
-    func playSoundIfAllowed(_ name : String) {
-        guard !name.isEmpty, soundEventWatchDog.outputAllowed else { return }
-        AVSMediaManager.sharedInstance()?.playSound(name)
+    func playSoundIfAllowed(_ mediaManagerSound : MediaManagerSound) {
+        guard soundEventWatchDog.outputAllowed else { return }
+        AVSMediaManager.sharedInstance()?.play(sound: mediaManagerSound)
     }
     
     func provideHapticFeedback(for message: ZMConversationMessage) {
@@ -114,9 +117,9 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
             let isFirstUnreadMessage = message.isEqual(message.conversation?.firstUnreadMessage)
 
             if isFirstUnreadMessage {
-                playSoundIfAllowed(MediaManagerSoundFirstMessageReceivedSound)
+                playSoundIfAllowed(.firstMessageReceivedSound)
             } else {
-                playSoundIfAllowed(MediaManagerSoundMessageReceivedSound)
+                playSoundIfAllowed(.messageReceivedSound)
             }
         }
     }
@@ -132,7 +135,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
                 continue
             }
             
-            playSoundIfAllowed(MediaManagerSoundIncomingKnockSound)
+            playSoundIfAllowed(.incomingKnockSound)
         }
     }
     
@@ -140,7 +143,7 @@ extension SoundEventListener : ZMNewUnreadMessagesObserver, ZMNewUnreadKnocksObs
 
 extension SoundEventListener : WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         
         guard let mediaManager = AVSMediaManager.sharedInstance(),
               let userSession = userSession,
@@ -162,19 +165,19 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
             })
             
             if otherNonIdleCalls.count > 0 {
-                playSoundIfAllowed(MediaManagerSoundRingingFromThemInCallSound)
+                playSoundIfAllowed(.ringingFromThemInCallSound)
             } else if sessionManager.callNotificationStyle != .callKit {
-                playSoundIfAllowed(MediaManagerSoundRingingFromThemSound)
+                playSoundIfAllowed(.ringingFromThemSound)
             }
         case .incoming(video: _, shouldRing: false, degraded: _):
-            mediaManager.stopSound(MediaManagerSoundRingingFromThemInCallSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromThemSound)
+            mediaManager.stop(sound: .ringingFromThemInCallSound)
+            mediaManager.stop(sound: .ringingFromThemSound)
         case .terminating(reason: let reason):
             switch reason {
             case .normal, .canceled:
                 break
             default:
-                playSoundIfAllowed(MediaManagerSoundCallDropped)
+                playSoundIfAllowed(.callDropped)
             }
         default:
             break
@@ -188,8 +191,8 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
                 return
             }
             
-            mediaManager.stopSound(MediaManagerSoundRingingFromThemInCallSound)
-            mediaManager.stopSound(MediaManagerSoundRingingFromThemSound)
+            mediaManager.stop(sound: .ringingFromThemInCallSound)
+            mediaManager.stop(sound: .ringingFromThemSound)
         }
         
     }
@@ -198,11 +201,12 @@ extension SoundEventListener : WireCallCenterCallStateObserver {
 
 extension SoundEventListener {
     
-    @objc func applicationWillEnterForeground() {
+    @objc
+    func applicationWillEnterForeground() {
         soundEventWatchDog.startIgnoreDate = Date()
         soundEventWatchDog.isMuted = userSession?.networkState == .onlineSynchronizing
         
-        if AppDelegate.shared().launchType == ApplicationLaunchPush {
+        if AppDelegate.shared.launchType == .push {
             soundEventWatchDog.ignoreTime = SoundEventListener.SoundEventListenerIgnoreTimeForPushStart
         } else {
             soundEventWatchDog.ignoreTime = 0.0

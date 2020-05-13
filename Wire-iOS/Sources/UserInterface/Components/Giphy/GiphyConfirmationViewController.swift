@@ -18,6 +18,9 @@
 
 import UIKit
 import Cartography
+import Ziphy
+import FLAnimatedImage
+import WireCommonComponents
 
 protocol GiphyConfirmationViewControllerDelegate {
     
@@ -25,7 +28,7 @@ protocol GiphyConfirmationViewControllerDelegate {
     
 }
 
-class GiphyConfirmationViewController: UIViewController {
+final class GiphyConfirmationViewController: UIViewController {
     
     var imagePreview = FLAnimatedImageView()
     var acceptButton = Button(style: .full)
@@ -43,7 +46,7 @@ class GiphyConfirmationViewController: UIViewController {
     ///   - ziph: provide nil for testing only
     ///   - previewImage: image for preview
     ///   - searchResultController: provide nil for testing only
-    public init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
+    init(withZiph ziph: Ziph?, previewImage: FLAnimatedImage?, searchResultController: ZiphySearchResultsController?) {
         self.ziph = ziph
         self.searchResultController = searchResultController
         
@@ -62,6 +65,10 @@ class GiphyConfirmationViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
     }
 
     override func viewDidLoad() {

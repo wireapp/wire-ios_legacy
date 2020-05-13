@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 extension SelfProfileViewController {
     
@@ -40,17 +43,17 @@ extension SelfProfileViewController {
             self.openControllerForCellWithIdentifier(SettingsCellDescriptorFactory.settingsDevicesCellIdentifier)
         }
         
-        newLoginAlertController?.addAction(actionManageDevices)
+        newLoginAlertController.addAction(actionManageDevices)
         
         let actionTrustDevices = UIAlertAction(title:"self.new_device_alert.trust_devices".localized, style:.default) { [weak self] _ in
             self?.presentUserSettingChangeControllerIfNeeded()
         }
         
-        newLoginAlertController?.addAction(actionTrustDevices)
+        newLoginAlertController.addAction(actionTrustDevices)
         
-        self.present(newLoginAlertController!, animated: true, completion: .none)
+        present(newLoginAlertController, animated: true, completion: .none)
         
-        ZMUserSession.shared()?.enqueueChanges {
+        ZMUserSession.shared()?.enqueue {
             clients.forEach {
                 $0.needsToNotifyUser = false
             }
@@ -91,4 +94,35 @@ extension SelfProfileViewController {
         return resultViewController
     }
     
+}
+
+extension UIAlertController {
+    convenience init(forNewSelfClients clients: Set<UserClient>) {
+        var deviceNamesAndDates: [String] = []
+        
+        for userClient in clients {
+            let deviceName: String
+            
+            if let model = userClient.model,
+                model.isEmpty == false {
+                deviceName = model
+            } else {
+                deviceName = userClient.type.rawValue
+            }
+            
+            let formatKey = "registration.devices.activated".localized
+            let formattedDate = userClient.activationDate?.formattedDate
+            let deviceDate = String(format: formatKey, formattedDate ?? "")
+            
+            deviceNamesAndDates.append("\(deviceName)\n\(deviceDate)")
+        }
+        
+        let title = "self.new_device_alert.title".localized
+        
+        let messageFormat = clients.count > 1 ? "self.new_device_alert.message_plural".localized : "self.new_device_alert.message".localized
+        
+        let message = String(format: messageFormat, deviceNamesAndDates.joined(separator: "\n\n"))
+        
+        self.init(title: title, message: message, preferredStyle: .alert)
+    }
 }

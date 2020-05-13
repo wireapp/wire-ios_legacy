@@ -16,16 +16,15 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
-import Foundation
 import Photos
 import Cartography
-
 import AVFoundation
+import UIKit
+import WireSyncEngine
 
 private let zmLog = ZMSLog(tag: "UI")
 
-public protocol CameraKeyboardViewControllerDelegate: class {
+protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController, didSelectVideo: URL, duration: TimeInterval)
     func cameraKeyboardViewController(_ controller: CameraKeyboardViewController,
                                       didSelectImageData: Data,
@@ -35,9 +34,9 @@ public protocol CameraKeyboardViewControllerDelegate: class {
     func cameraKeyboardViewControllerWantsToOpenCameraRoll(_ controller: CameraKeyboardViewController)
 }
 
+class CameraKeyboardViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
 
-open class CameraKeyboardViewController: UIViewController {
-    
     fileprivate var permissions: PhotoPermissionsController!
     fileprivate var lastLayoutSize = CGSize.zero
     fileprivate let collectionViewLayout = UICollectionViewFlowLayout()
@@ -50,8 +49,7 @@ open class CameraKeyboardViewController: UIViewController {
                 UIView.animate(withDuration: 0.35, animations: {
                     self.goBackButton.alpha = self.goBackButtonRevealed ? 1 : 0
                 })
-            }
-            else {
+            } else {
                 self.goBackButton.alpha = 0
             }
         }
@@ -59,21 +57,21 @@ open class CameraKeyboardViewController: UIViewController {
     fileprivate enum CameraKeyboardSection: UInt {
         case camera = 0, photos = 1
     }
-    
+
     let assetLibrary: AssetLibrary
     let imageManagerType: ImageManagerProtocol.Type
 
     var collectionView: UICollectionView!
     let goBackButton = IconButton()
     let cameraRollButton = IconButton()
-    
-    public let splitLayoutObservable: SplitLayoutObservable
-    open weak var delegate: CameraKeyboardViewControllerDelegate?
+
+    let splitLayoutObservable: SplitLayoutObservable
+    weak var delegate: CameraKeyboardViewControllerDelegate?
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
     init(splitLayoutObservable: SplitLayoutObservable,
          assetLibrary: AssetLibrary = AssetLibrary(),
          imageManagerType: ImageManagerProtocol.Type = PHImageManager.self,
@@ -86,17 +84,17 @@ open class CameraKeyboardViewController: UIViewController {
         self.assetLibrary.delegate = self
         NotificationCenter.default.addObserver(self, selector: #selector(splitLayoutChanged(_:)), name: NSNotification.Name.SplitLayoutObservableDidChangeToLayoutSize, object: self.splitLayoutObservable)
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
+
         if let userSession = ZMUserSession.shared() {
             self.callStateObserverToken = WireCallCenterV3.addCallStateObserver(observer: self, userSession: userSession)
         }
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    open override func viewDidLayoutSubviews() {
+
+    override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if !self.lastLayoutSize.equalTo(self.view.bounds.size) {
             self.lastLayoutSize = self.view.bounds.size
@@ -104,14 +102,14 @@ open class CameraKeyboardViewController: UIViewController {
             self.collectionView.reloadData()
         }
     }
-    
-    @objc open func applicationDidBecomeActive(_ notification: Notification!) {
+
+    @objc func applicationDidBecomeActive(_ notification: Notification!) {
         self.assetLibrary.refetchAssets()
     }
-    
-    override open func viewDidLoad() {
+
+    override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupViews()
         createConstraints()
     }
@@ -154,33 +152,31 @@ open class CameraKeyboardViewController: UIViewController {
             cameraRollButton.centerY == goBackButton.centerY
         }
     }
-    
-    open override func viewWillAppear(_ animated: Bool) {
+
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
-        DeviceOrientationObserver.sharedInstance().startMonitoringDeviceOrientation()
         if self.viewWasHidden {
             self.assetLibrary.refetchAssets()
         }
     }
-    
-    open override func viewDidAppear(_ animated: Bool) {
+
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         // For right-to-left layout first cell is at the far right corner.
         // We need to scroll to it when initially showing controller and it seems there is no other way...
         DispatchQueue.main.async {
             self.scrollToCamera(animated: false)
         }
     }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
+
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.viewWasHidden = true
-        DeviceOrientationObserver.sharedInstance().stopMonitoringDeviceOrientation()
     }
-    
+
     fileprivate func createCollectionView() {
         self.collectionViewLayout.scrollDirection = .horizontal
         self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewLayout)
@@ -196,20 +192,20 @@ open class CameraKeyboardViewController: UIViewController {
         self.collectionView.backgroundColor = UIColor.clear
         self.collectionView.bounces = false
     }
-    
+
     func scrollToCamera(animated: Bool) {
         let endOfListX = UIApplication.isLeftToRightLayout ? 0 : self.collectionView.contentSize.width - 10
         self.collectionView.scrollRectToVisible(CGRect(x: endOfListX, y: 0, width: 10, height: 10), animated: animated)
     }
-    
+
     @objc func goBackPressed(_ sender: AnyObject) {
         scrollToCamera(animated: true)
     }
-    
+
     @objc func openCameraRollPressed(_ sender: AnyObject) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenCameraRoll(self)
     }
-    
+
     @objc func splitLayoutChanged(_ notification: Notification!) {
         self.collectionViewLayout.invalidateLayout()
         self.collectionView.reloadData()
@@ -249,12 +245,12 @@ open class CameraKeyboardViewController: UIViewController {
                 } else {
                     options.isSynchronous = true
                     DispatchQueue.main.async(execute: {
-                        self.showLoadingView = true
+                        self.isLoadingViewVisible = true
                     })
 
                     self.imageManagerType.defaultInstance.requestImage(for: asset, targetSize: CGSize(width:limit, height:limit), contentMode: .aspectFit, options: options, resultHandler: { image, info in
                         DispatchQueue.main.async(execute: {
-                            self.showLoadingView = false
+                            self.isLoadingViewVisible = false
                         })
 
                         if let image = image {
@@ -278,12 +274,12 @@ open class CameraKeyboardViewController: UIViewController {
                 guard let data = data else {
                     options.isNetworkAccessAllowed = true
                     DispatchQueue.main.async(execute: {
-                        self.showLoadingView = true
+                        self.isLoadingViewVisible = true
                     })
 
                     self.imageManagerType.defaultInstance.requestImageData(for: asset, options: options, resultHandler: { data, uti, orientation, info in
                         DispatchQueue.main.async(execute: {
-                            self.showLoadingView = false
+                            self.isLoadingViewVisible = false
                         })
                         guard let data = data else {
                             zmLog.error("Failure: cannot fetch image")
@@ -300,52 +296,41 @@ open class CameraKeyboardViewController: UIViewController {
             })
         }
     }
-    
+
     fileprivate func forwardSelectedVideoAsset(_ asset: PHAsset) {
-        let options = PHVideoRequestOptions()
-        options.deliveryMode = .highQualityFormat
-        options.isNetworkAccessAllowed = true
-        options.version = .current
-
-        self.showLoadingView = true
-
-        imageManagerType.defaultInstance.requestExportSession(forVideo: asset, options: options, exportPreset: AVAssetExportPresetMediumQuality) { exportSession, info in
-            
-            DispatchQueue.main.async(execute: {
-            
-                guard let exportSession = exportSession else {
-                    self.showLoadingView = false
-                    return
-                }
-                
-                let exportURL = URL(fileURLWithPath: (NSTemporaryDirectory() as NSString).appendingPathComponent("video-export.mp4"))
-                
-                if FileManager.default.fileExists(atPath: exportURL.path) {
-                    do {
-                        try FileManager.default.removeItem(at: exportURL)
-                    }
-                    catch let error {
-                        zmLog.error("Cannot remove \(exportURL): \(error)")
-                    }
-                }
-                
-                exportSession.outputURL = exportURL
-                exportSession.outputFileType = AVFileType.mov
-                exportSession.shouldOptimizeForNetworkUse = true
-                exportSession.outputFileType = AVFileType.mp4
-
-                exportSession.exportAsynchronously {
-                    DispatchQueue.main.async(execute: {
-                        self.showLoadingView = false
-                        self.delegate?.cameraKeyboardViewController(self, didSelectVideo: exportSession.outputURL!, duration: CMTimeGetSeconds(exportSession.asset.duration))
-                    })
-                }
-            })
-        }
-    }
-    
-    fileprivate func setupPhotoKeyboardAppearance() {
+        isLoadingViewVisible = true
+        guard let fileLengthLimit: UInt64 = ZMUserSession.shared()?.maxUploadFileSize else { return }
         
+        asset.getVideoURL() { url in
+            DispatchQueue.main.async(execute: {
+                self.isLoadingViewVisible = false
+            })
+
+            guard let url = url else { return }
+
+            DispatchQueue.main.async(execute: {
+                self.isLoadingViewVisible = true
+            })
+
+            AVURLAsset.convertVideoToUploadFormat(at: url, fileLengthLimit: Int64(fileLengthLimit)) { resultURL, asset, error in
+                DispatchQueue.main.async(execute: {
+                    self.isLoadingViewVisible = false
+                })
+                
+                guard error == nil,
+                    let resultURL = resultURL,
+                    let asset = asset else { return }
+                
+                DispatchQueue.main.async(execute: {
+                    self.delegate?.cameraKeyboardViewController(self, didSelectVideo: resultURL, duration: CMTimeGetSeconds(asset.duration))
+                })
+            }
+        }
+
+    }
+
+    fileprivate func setupPhotoKeyboardAppearance() {
+
         if permissions.areCameraAndPhotoLibraryAuthorized {
             self.view.backgroundColor = .white
             self.collectionView.delaysContentTouches = true
@@ -353,7 +338,7 @@ open class CameraKeyboardViewController: UIViewController {
             self.view.backgroundColor = .graphite
             self.collectionView.delaysContentTouches = false
         }
-        
+
         if permissions.isPhotoLibraryAuthorized {
             self.collectionViewLayout.minimumLineSpacing = 1
             self.collectionViewLayout.minimumInteritemSpacing = 0.5
@@ -366,22 +351,21 @@ open class CameraKeyboardViewController: UIViewController {
             self.cameraRollButton.isHidden = true
         }
     }
-    
+
 }
 
-
 extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
-    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         defer { setupPhotoKeyboardAppearance() }
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return 1
         }
         return 2
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return 1 }
-        
+
         switch CameraKeyboardSection(rawValue: UInt(section))! {
         case .camera:
             return 1
@@ -389,34 +373,34 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             return permissions.isPhotoLibraryAuthorized ? Int(assetLibrary.count) : 1
         }
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
         guard permissions.areCameraOrPhotoLibraryAuthorized else {
             return deniedAuthorizationCell(for: .cameraAndPhotos, collectionView: collectionView, indexPath: indexPath)
         }
-        
+
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
-            
+
             guard permissions.isCameraAuthorized else {
                 return deniedAuthorizationCell(for: .camera, collectionView: collectionView, indexPath: indexPath)
             }
-            
+
             if shouldBlockCallingRelatedActions {
                 return deniedAuthorizationCell(for: .ongoingCall, collectionView: collectionView, indexPath: indexPath)
             }
-            
+
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraCell.reuseIdentifier, for: indexPath) as! CameraCell
             cell.delegate = self
             return cell
-            
+
         case .photos:
-            
+
             guard permissions.isPhotoLibraryAuthorized else {
                 return deniedAuthorizationCell(for: .photos, collectionView: collectionView, indexPath: indexPath)
             }
-            
+
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AssetCell.reuseIdentifier, for: indexPath) as! AssetCell
 
             cell.manager = imageManagerType.defaultInstance
@@ -425,37 +409,37 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
                 cell.asset = asset
             }
 
-
             return cell
         }
     }
-    
+
+    ///TODO: a protocol for this for testing
     @objc var shouldBlockCallingRelatedActions: Bool {
         return ZMUserSession.shared()?.isCallOngoing ?? false
     }
-    
+
     private func deniedAuthorizationCell(for type: DeniedAuthorizationType, collectionView: UICollectionView, indexPath: IndexPath) -> CameraKeyboardPermissionsCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CameraKeyboardPermissionsCell.reuseIdentifier,
                                                       for: indexPath) as! CameraKeyboardPermissionsCell
         cell.configure(deniedAuthorization: type)
         return cell
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return collectionView.frame.size }
-        
+
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera: return cameraCellSize
         case .photos:
             guard permissions.isPhotoLibraryAuthorized else {
                 return CGSize(width: self.view.bounds.size.width - cameraCellSize.width, height: self.view.bounds.size.height)
             }
-            
+
             let photoSize = self.view.bounds.size.height / 2 - 0.5
             return CGSize(width: photoSize, height: photoSize)
         }
     }
-    
+
     private var cameraCellSize: CGSize {
         switch self.splitLayoutObservable.layoutSize {
         case .compact:
@@ -464,41 +448,41 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
             return CGSize(width: self.splitLayoutObservable.leftViewControllerWidth, height: self.view.bounds.size.height)
         }
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         guard permissions.areCameraOrPhotoLibraryAuthorized else { return }
-        
+
         switch CameraKeyboardSection(rawValue: UInt((indexPath as NSIndexPath).section))! {
         case .camera:
             break
         case .photos:
             guard permissions.isPhotoLibraryAuthorized else { return }
-            
+
             let asset = try! assetLibrary.asset(atIndex: UInt((indexPath as NSIndexPath).row))
-            
+
             switch asset.mediaType {
             case .video:
                 self.forwardSelectedVideoAsset(asset)
-            
+
             case .image:
                 self.forwardSelectedPhotoAsset(asset)
-                
+
             default:
                 // not supported
-                break;
+                break
             }
         }
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if cell is CameraCell || cell is CameraKeyboardPermissionsCell {
             self.goBackButtonRevealed = true
         }
     }
-    
-    public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if cell is CameraCell || cell is CameraKeyboardPermissionsCell  {
+
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if cell is CameraCell || cell is CameraKeyboardPermissionsCell {
             self.goBackButtonRevealed = false
 
             (cell as? CameraCell)?.updateVideoOrientation()
@@ -506,27 +490,49 @@ extension CameraKeyboardViewController: UICollectionViewDelegateFlowLayout, UICo
     }
 }
 
-
 extension CameraKeyboardViewController: CameraCellDelegate {
-    public func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell) {
+    func cameraCellWantsToOpenFullCamera(_ cameraCell: CameraCell) {
         self.delegate?.cameraKeyboardViewControllerWantsToOpenFullScreenCamera(self)
     }
-    
-    public func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
+
+    func cameraCell(_ cameraCell: CameraCell, didPickImageData imageData: Data) {
         self.delegate?.cameraKeyboardViewController(self, didSelectImageData: imageData, isFromCamera: true, uti: nil)
     }
 }
 
 extension CameraKeyboardViewController: AssetLibraryDelegate {
-    public func assetLibraryDidChange(_ library: AssetLibrary) {
+    func assetLibraryDidChange(_ library: AssetLibrary) {
         self.collectionView.reloadData()
     }
 }
 
 extension CameraKeyboardViewController: WireCallCenterCallStateObserver {
-    public func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?)  {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         /// TODO fix undesired camera keyboard openings here
         self.collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
     }
 }
 
+extension PHAsset {
+
+    func getVideoURL(completionHandler : @escaping ((_ responseURL: URL?) -> Void)) {
+        guard mediaType == .video else {
+            completionHandler(nil)
+            return
+        }
+
+        let options: PHVideoRequestOptions = PHVideoRequestOptions()
+        options.version = .current
+        options.deliveryMode = .highQualityFormat
+        options.isNetworkAccessAllowed = true
+
+        PHImageManager.default().requestAVAsset(forVideo: self, options: options, resultHandler: {(asset: AVAsset?, audioMix: AVAudioMix?, info: [AnyHashable: Any]?) -> Void in
+            if let urlAsset = asset as? AVURLAsset {
+                let localVideoUrl: URL = urlAsset.url as URL
+                completionHandler(localVideoUrl)
+            } else {
+                completionHandler(nil)
+            }
+        })
+    }
+}

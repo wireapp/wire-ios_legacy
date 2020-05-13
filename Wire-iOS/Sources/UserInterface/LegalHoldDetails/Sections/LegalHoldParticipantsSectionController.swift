@@ -17,7 +17,8 @@
 //
 
 import Foundation
-
+import WireDataModel
+import WireSyncEngine
 
 private struct LegalHoldParticipantsSectionViewModel {
 
@@ -48,7 +49,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
     private let conversation: ZMConversation
     private var token: AnyObject?
     
-    public weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
+    weak var delegate: LegalHoldParticipantsSectionControllerDelegate?
     
     init(conversation: ZMConversation) {
         viewModel = .init(participants: conversation.sortedActiveParticipants.filter(\.isUnderLegalHold))
@@ -56,7 +57,7 @@ class LegalHoldParticipantsSectionController: GroupDetailsSectionController {
         super.init()
         
         if let userSession = ZMUserSession.shared() {
-            token = UserChangeInfo.add(userObserver: self, for: nil, userSession: userSession)
+            token = UserChangeInfo.add(userObserver: self, in: userSession)
         }
     }
     

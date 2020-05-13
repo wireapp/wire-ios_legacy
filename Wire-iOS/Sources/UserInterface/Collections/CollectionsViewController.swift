@@ -20,15 +20,17 @@
 import Foundation
 import Cartography
 import WireDataModel
+import UIKit
+import WireSyncEngine
 
-public protocol CollectionsViewControllerDelegate: class {
+protocol CollectionsViewControllerDelegate: class {
     func collectionsViewController(_ viewController: CollectionsViewController, performAction: MessageAction, onMessage: ZMConversationMessage)
 }
 
-@objcMembers final public class CollectionsViewController: UIViewController {
+final class CollectionsViewController: UIViewController {
     public var onDismiss: ((CollectionsViewController)->())?
     public let sections: CollectionsSectionSet
-    public weak var delegate: CollectionsViewControllerDelegate?
+    weak var delegate: CollectionsViewControllerDelegate?
     public var isShowingSearchResults: Bool {
         guard let textSearchController = self.textSearchController,
               let resultsView = textSearchController.resultsView else {
@@ -238,8 +240,6 @@ public protocol CollectionsViewControllerDelegate: class {
     public override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         trackOpeningIfNeeded()
-
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(true)
     }
 
     override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -634,7 +634,7 @@ extension CollectionsViewController: UICollectionViewDataSourcePrefetching {
 // MARK: - Message Change
 
 extension CollectionsViewController: CollectionCellMessageChangeDelegate {
-    public func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
+    func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo) {
 
         // Open the file when it is downloaded
         guard let message = self.selectedMessage,
@@ -730,17 +730,17 @@ extension CollectionsViewController: CollectionCellDelegate {
             }
 
         case .download:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 message.fileMessageData?.requestFileDownload()
             }
 
         case .cancel:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 message.fileMessageData?.cancelTransfer()
             }
 
         case .like:
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 Message.setLikedMessage(message, liked: !message.liked)
             }
 

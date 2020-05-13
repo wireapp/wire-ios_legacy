@@ -18,6 +18,8 @@
 
 import UIKit
 import Cartography
+import WireDataModel
+import WireSyncEngine
 
 protocol AccountSelectorViewDelegate: class {
     
@@ -25,7 +27,7 @@ protocol AccountSelectorViewDelegate: class {
     
 }
 
-internal class LineView: UIView {
+class LineView: UIView {
     public let views: [UIView]
     init(views: [UIView]) {
         self.views = views
@@ -75,7 +77,7 @@ internal class LineView: UIView {
 }
 
 final class AccountSelectorView: UIView {
-    public weak var delegate: AccountSelectorViewDelegate? = nil
+    weak var delegate: AccountSelectorViewDelegate? = nil
     
     private var selfUserObserverToken: NSObjectProtocol!
     private var applicationDidBecomeActiveToken: NSObjectProtocol!

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ZClientViewController {
     
@@ -27,7 +28,7 @@ extension ZClientViewController {
                 
         present(UIAlertController.availabilityExplanation(availability), animated: true)
         
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             notify.remove(.alert)
             ZMUser.selfUser()?.needsToNotifyAvailabilityBehaviourChange = notify
         }

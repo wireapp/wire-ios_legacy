@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireDataModel
 
 
 extension ZMConversationMessage {
@@ -27,7 +28,7 @@ extension ZMConversationMessage {
             return false
         }
 
-        let participatesInConversation = conversation.activeParticipants.contains(ZMUser.selfUser())
+        let participatesInConversation = conversation.localParticipants.contains(ZMUser.selfUser())
         let sentOrDelivered = deliveryState.isOne(of: .sent, .delivered, .read)
         let likableType = isNormal && !isKnock
         return participatesInConversation && sentOrDelivered && likableType && !isObfuscated && !isEphemeral
@@ -62,34 +63,34 @@ extension ZMConversationMessage {
     }
 
     var sortedLikers: [ZMUser] {
-        return likers().sorted { $0.displayName < $1.displayName }
+        return likers().sorted { $0.name < $1.name }
     }
 
     var sortedReadReceipts: [ReadReceipt] {
-        return readReceipts.sorted { $0.user.displayName < $1.user.displayName }
+        return readReceipts.sorted { $0.user.name < $1.user.name }
     }
 
 }
 
 extension Message {
 
-    @objc static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
+    static func setLikedMessage(_ message: ZMConversationMessage, liked: Bool) {
         return message.liked = liked
     }
 
-    @objc static func isLikedMessage(_ message: ZMConversationMessage) -> Bool {
+    static func isLikedMessage(_ message: ZMConversationMessage) -> Bool {
         return message.liked
     }
 
-    @objc static func hasReactions(_ message: ZMConversationMessage) -> Bool {
+    static func hasReactions(_ message: ZMConversationMessage) -> Bool {
         return message.hasReactions()
     }
 
-    @objc static func hasLikers(_ message: ZMConversationMessage) -> Bool {
+    static func hasLikers(_ message: ZMConversationMessage) -> Bool {
         return !message.likers().isEmpty
     }
 
-    @objc class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
+    class func messageCanBeLiked(_ message: ZMConversationMessage) -> Bool {
         return message.canBeLiked
     }
     

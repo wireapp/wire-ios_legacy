@@ -20,16 +20,20 @@
 import Foundation
 import Cartography
 import WireCommonComponents
+import UIKit
+import avs
+import WireSystem
+import WireDataModel
 
-@objc public protocol AudioEffectsPickerDelegate: NSObjectProtocol {
+protocol AudioEffectsPickerDelegate: class {
     func audioEffectsPickerDidPickEffect(_ picker: AudioEffectsPickerViewController, effect: AVSAudioEffectType, resultFilePath: String)
 }
 
-@objcMembers public final class AudioEffectsPickerViewController: UIViewController {
+final class AudioEffectsPickerViewController: UIViewController {
     
     public let recordingPath: String
     fileprivate let duration: TimeInterval
-    public weak var delegate: AudioEffectsPickerDelegate?
+    weak var delegate: AudioEffectsPickerDelegate?
     
     fileprivate var audioPlayerController: AudioPlayerController? {
         didSet {
@@ -40,20 +44,20 @@ import WireCommonComponents
         }
     }
     
-    internal enum State {
+    enum State {
         case none
         case tip
         case time
         case playing
     }
     
-    internal var state: State = .none
+    var state: State = .none
     
     fileprivate let effects: [AVSAudioEffectType] = AVSAudioEffectType.displayedEffects
-    internal var normalizedLoudness: [Float] = []
+    var normalizedLoudness: [Float] = []
     fileprivate var lastLayoutSize = CGSize.zero
     
-    internal var selectedAudioEffect: AVSAudioEffectType = .none {
+    var selectedAudioEffect: AVSAudioEffectType = .none {
         didSet {
             if self.selectedAudioEffect == .reverse {
                 self.progressView.samples = self.normalizedLoudness.reversed()
@@ -119,7 +123,7 @@ import WireCommonComponents
     fileprivate let collectionViewLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     fileprivate var collectionView: UICollectionView!
     fileprivate let statusBoxView = UIView()
-    internal let progressView = WaveformProgressView()
+    let progressView = WaveformProgressView()
     fileprivate let subtitleLabel = UILabel()
     
     override public func viewDidLoad() {
@@ -216,7 +220,7 @@ import WireCommonComponents
         }
     }
     
-    internal func setState(_ state: State, animated: Bool) {
+    func setState(_ state: State, animated: Bool) {
         if self.state == state {
             return
         }
@@ -342,7 +346,7 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
     
     let player : AVAudioPlayer
     weak var delegate : AudioPlayerControllerDelegate?
-    weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared().mediaPlaybackManager
+    weak var mediaManager: MediaPlayerDelegate? = AppDelegate.shared.mediaPlaybackManager
     
     init(contentOf URL: URL) throws {
         player = try AVAudioPlayer(contentsOf: URL)
@@ -361,12 +365,8 @@ private class AudioPlayerController : NSObject, MediaPlayer, AVAudioPlayerDelega
         player.delegate = nil
     }
 
-    var state: MediaPlayerState {
-        if player.isPlaying {
-            return MediaPlayerState.playing
-        } else {
-            return MediaPlayerState.completed
-        }
+    var state: MediaPlayerState? {
+        return player.isPlaying ? .playing : .completed
     }
     
     var title: String? {

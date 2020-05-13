@@ -17,15 +17,16 @@
 //
 
 import Foundation
+import UIKit
 
 extension ColorScheme {
 
-    @objc var statusBarStyle: UIStatusBarStyle {
+    var statusBarStyle: UIStatusBarStyle {
         return variant == .light ? .default : .lightContent
     }
 
-    @objc var indicatorStyle: UIScrollView.IndicatorStyle {
-        return variant == .light ? .default : .white
+    func isCurrentAccentColor(_ accentColor: UIColor) -> Bool {
+        return self.accentColor == accentColor
     }
-
+    
 }

@@ -18,8 +18,11 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
-final public class CollectionLinkCell: CollectionCell {
+final class CollectionLinkCell: CollectionCell {
     private var articleView: ArticleView? = .none
     private var headerView = CollectionCellHeader()
     

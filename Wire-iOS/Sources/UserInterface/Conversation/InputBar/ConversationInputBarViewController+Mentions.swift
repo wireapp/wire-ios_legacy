@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
 
 extension ConversationInputBarViewController {
     var isInMentionsFlow: Bool {
@@ -52,11 +54,12 @@ extension ConversationInputBarViewController {
         dismissMentionsIfNeeded()
     }
     
-    @objc func configureMentionButton() {
+    func configureMentionButton() {
         mentionButton.addTarget(self, action: #selector(ConversationInputBarViewController.mentionButtonTapped(sender:)), for: .touchUpInside)
     }
 
-    @objc func mentionButtonTapped(sender: Any) {
+    @objc
+    private func mentionButtonTapped(sender: Any) {
         guard !isInMentionsFlow else { return }
 
         let textView = inputBar.textView
@@ -76,7 +79,7 @@ extension ConversationInputBarViewController: UserSearchResultsViewControllerDel
 
 extension ConversationInputBarViewController {
     
-    @objc func dismissMentionsIfNeeded() {
+    func dismissMentionsIfNeeded() {
         mentionsHandler = nil
         mentionsView?.dismiss()
     }
@@ -88,13 +91,13 @@ extension ConversationInputBarViewController {
 
         if let handler = mentionsHandler, let searchString = handler.searchString(in: textView.text) {
             let participants = conversation.sortedActiveParticipants
-            mentionsView?.users = ZMUser.searchForMentions(in: participants, with: searchString)
+            mentionsView?.users = participants.searchForMentions(withQuery: searchString)
         } else {
             dismissMentionsIfNeeded()
         }
     }
 
-    @objc func registerForTextFieldSelectionChange() {
+    func registerForTextFieldSelectionChange() {
         textfieldObserverToken = inputBar.textView.observe(\MarkdownTextView.selectedTextRange, options: [.new]) { [weak self] (textView: MarkdownTextView, change: NSKeyValueObservedChange<UITextRange?>) -> Void in
             let newValue = change.newValue ?? nil
             self?.triggerMentionsIfNeeded(from: textView, with: newValue)

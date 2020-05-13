@@ -100,7 +100,9 @@ extension SessionManager: BackupSource {
     }
 }
 
-final class BackupViewController: UIViewController {
+final class BackupViewController: UIViewController, SpinnerCapable {
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate let tableView = UITableView(frame: .zero)
     fileprivate var cells: [UITableViewCell.Type] = []
     let backupSource: BackupSource
@@ -121,22 +123,8 @@ final class BackupViewController: UIViewController {
         setupLayout()
     }
     
-    override var prefersStatusBarHidden: Bool {
-        return false
-    }
-    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
     
     private func setupViews() {
@@ -165,8 +153,8 @@ final class BackupViewController: UIViewController {
         tableView.fitInSuperview()
     }
     
-    var loadingHostController: UIViewController {
-        return navigationController ?? self
+    var loadingHostController: SpinnerCapableViewController {
+        return (navigationController as? SpinnerCapableViewController) ?? self
     }
 }
 
@@ -199,10 +187,10 @@ fileprivate extension BackupViewController {
     func backupActiveAccount(indexPath: IndexPath) {
         requestBackupPassword { [weak self] result in
             guard let `self` = self, let password = result else { return }
-            self.loadingHostController.showLoadingView = true
+            self.loadingHostController.isLoadingViewVisible = true
 
             self.backupSource.backupActiveAccount(password: password) { backupResult in
-                self.loadingHostController.showLoadingView = false
+                self.loadingHostController.isLoadingViewVisible = false
                 
                 switch backupResult {
                 case .failure(let error):
@@ -219,8 +207,7 @@ fileprivate extension BackupViewController {
         let alert = UIAlertController(
             title: "self.settings.history_backup.error.title".localized,
             message: error.localizedDescription,
-            cancelButtonTitle: "general.ok".localized
-        )
+            alertAction: .ok(style: .cancel))
         present(alert, animated: true)
     }
     

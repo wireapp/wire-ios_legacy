@@ -17,18 +17,19 @@
 //
 
 import Foundation
-
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 extension ZMConversation {
     
     var isCallingSupported : Bool {
-        return activeParticipants.count > 1
+        return localParticipants.count > 1
     }
     
     var firstCallingParticipantOtherThanSelf : ZMUser? {
-        return voiceChannel?.participants.first(where: { (user) -> Bool in
-            return !ZMUser.selfUser().isEqual(user)
-        }) as? ZMUser
+        let participant = voiceChannel?.participants.first { !$0.user.isSelfUser }
+        return participant?.user
     }
     
     func startAudioCall() {
@@ -96,20 +97,23 @@ extension ZMConversation {
             }))
             
             
-            ZClientViewController.shared()?.present(badConnectionController, animated: true)
+            ZClientViewController.shared?.present(badConnectionController, animated: true)
         } else {
             handler(false)
         }
     }
     
     func warnAboutNoInternetConnection() -> Bool {
-        if AppDelegate.isOffline {
-            let internetConnectionAlert = UIAlertController(title: "voice.network_error.title".localized, message: "voice.network_error.body".localized, cancelButtonTitle: "general.ok".localized)
-            AppDelegate.shared().notificationsWindow?.rootViewController?.present(internetConnectionAlert, animated: true)
-            return true
-        } else {
+        guard AppDelegate.isOffline else {
             return false
         }
+        
+        let internetConnectionAlert = UIAlertController.alertWithOKButton(title: "voice.network_error.title".localized,
+                                                                          message: "voice.network_error.body".localized)
+        
+        AppDelegate.shared.window?.rootViewController?.present(internetConnectionAlert, animated: true)
+        
+        return true
     }
 
     func confirmJoiningCallIfNeeded(alertPresenter: UIViewController, forceAlertModal: Bool = false, completion: @escaping () -> Void) {

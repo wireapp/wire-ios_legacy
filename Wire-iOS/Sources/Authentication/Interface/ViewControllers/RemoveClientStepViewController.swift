@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 final class RemoveClientStepViewController: UIViewController, AuthenticationCoordinatedViewController {
 
@@ -117,6 +120,15 @@ final class RemoveClientStepViewController: UIViewController, AuthenticationCoor
         toggleConstraints()
     }
 
+    // MARK: - AuthenticationCoordinatedViewController
+
+    func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
+        //no-op
+    }
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
 }
 
 

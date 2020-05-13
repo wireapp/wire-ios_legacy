@@ -18,6 +18,7 @@
 
 
 import MapKit
+import WireDataModel
 
 extension CLLocationCoordinate2D {
     
@@ -93,12 +94,12 @@ extension MKMapView {
     }
     
     func storeLocation() {
-        let location = locationData(name: nil)
-        Settings.shared().lastUserLocation = location
+        let location: LocationData = locationData(name: nil)
+        Settings.shared[.lastUserLocation] = location
     }
     
     func restoreLocation(animated: Bool) {
-        guard let location = Settings.shared().lastUserLocation else { return }
+        guard let location: LocationData = Settings.shared[.lastUserLocation] else { return }
         setCenterCoordinate(location.coordinate, zoomLevel: Int(location.zoomLevel), animated: animated)
     }
     

@@ -20,16 +20,24 @@ import XCTest
 @testable import Wire
 
 final class MockAddressBookHelper: NSObject, AddressBookHelperProtocol {
+
+    var isAddressBookAccessDisabled: Bool = false
+    
+    var accessStatusDidChangeToGranted: Bool = true
+
+
+    static var sharedHelper: AddressBookHelperProtocol = MockAddressBookHelper()
+    
+    func persistCurrentAccessStatus() {
+        
+    }
+    
     var isAddressBookAccessGranted: Bool {
         return false
     }
 
     var isAddressBookAccessUnknown: Bool {
         return true
-    }
-
-    func startRemoteSearch(_ onlyIfEnoughTimeSinceLast: Bool) {
-        //no-op
     }
 
     func requestPermissions(_ callback: ((Bool) -> ())?) {
@@ -45,18 +53,19 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
 
     override func setUp() {
         super.setUp()
-
         mockAddressBookHelper = MockAddressBookHelper()
+        SelfUser.provider = selfUserProvider
     }
 
     override func tearDown() {
         sut = nil
         mockAddressBookHelper = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
 
     func setupSut() {
-        sut = StartUIViewController(addressBookHelper: mockAddressBookHelper)
+        sut = StartUIViewController(addressBookHelperType: MockAddressBookHelper.self)
         sut.view.backgroundColor = .black
     }
 
@@ -64,7 +73,7 @@ final class StartUIViewControllerSnapshotTests: CoreDataSnapshotTestCase {
         nonTeamTest {
             setupSut()
 
-            let navigationController = UIViewController().wrapInNavigationController(ClearBackgroundNavigationController.self)
+            let navigationController = UIViewController().wrapInNavigationController(navigationControllerClass: ClearBackgroundNavigationController.self)
 
             navigationController.pushViewController(sut, animated: false)
 

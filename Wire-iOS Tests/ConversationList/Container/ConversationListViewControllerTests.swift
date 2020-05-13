@@ -32,10 +32,9 @@ final class ConversationListViewControllerTests: XCTestCase {
         super.setUp()
 
         MockConversationList.hasArchivedConversations = false
-        let mockSelf = MockUser.mockSelf()!
-        mockSelf.name = "Johannes Chrysostomus Wolfgangus Theophilus Mozart"
+        let selfUser = MockUserType.createSelfUser(name: "Johannes Chrysostomus Wolfgangus Theophilus Mozart", inTeam: UUID())
         let account = Account.mockAccount(imageData: mockImageData)
-        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: mockSelf, conversationListType: MockConversationList.self)
+        let viewModel = ConversationListViewController.ViewModel(account: account, selfUser: selfUser, conversationListType: MockConversationList.self)
         sut = ConversationListViewController(viewModel: viewModel)
         viewModel.viewController = sut
 

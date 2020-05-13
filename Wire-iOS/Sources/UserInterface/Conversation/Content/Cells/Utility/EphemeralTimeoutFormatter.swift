@@ -16,8 +16,9 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
 
-class EphemeralTimeoutFormatter {
+final class EphemeralTimeoutFormatter {
 
 
     /// A formatter to produce a string with day in full style and hour/minute in positional style
@@ -44,7 +45,7 @@ class EphemeralTimeoutFormatter {
         ///
         /// - Parameter timeInterval: timeInterval to convert
         /// - Returns: formatted string
-        open func string(from interval: TimeInterval) -> String? {
+        func string(from interval: TimeInterval) -> String? {
 
             guard let dayString = dayFormatter.string(from: interval),
                 let hourString = hourFormatter.string(from: interval) else {
@@ -112,15 +113,15 @@ class EphemeralTimeoutFormatter {
         let now = Date()
         let date = Date(timeIntervalSinceNow: interval)
 
-        if date < Calendar.current.date(byAdding: .minute, value: 1, to: now) {
+        if let dateFromNow = Calendar.current.date(byAdding: .minute, value: 1, to: now), date < dateFromNow {
             return secondsFormatter.string(from: interval)
-        } else if date < Calendar.current.date(byAdding: .hour, value: 1, to: now) {
+        } else if let dateFromNow = Calendar.current.date(byAdding: .hour, value: 1, to: now), date < dateFromNow {
             return minuteFormatter.string(from: interval)
-        } else if date < Calendar.current.date(byAdding: .day, value: 1, to: now) {
+        } else if let dateFromNow = Calendar.current.date(byAdding: .day, value: 1, to: now), date < dateFromNow {
             return hourFormatter.string(from: interval)
-        } else {
-           return dayFormatter.string(from: interval)
         }
+
+        return dayFormatter.string(from: interval)
     }
     
 }

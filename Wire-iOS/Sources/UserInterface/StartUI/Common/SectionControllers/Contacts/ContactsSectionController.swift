@@ -17,11 +17,11 @@
 //
 
 import Foundation
-
+import WireDataModel
 
 class ContactsSectionController : SearchSectionController {
     
-    var contacts: [ZMUser] = []
+    var contacts: [UserType] = []
     var selection: UserSelection? = nil {
         didSet {
             selection?.add(observer: self)
@@ -100,15 +100,15 @@ class ContactsSectionController : SearchSectionController {
 
 extension ContactsSectionController: UserSelectionObserver {
     
-    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [ZMUser]) {
+    func userSelection(_ userSelection: UserSelection, wasReplacedBy users: [UserType]) {
         collectionView?.reloadData()
     }
     
-    func userSelection(_ userSelection: UserSelection, didAddUser user: ZMUser) {
+    func userSelection(_ userSelection: UserSelection, didAddUser user: UserType) {
         collectionView?.reloadData()
     }
     
-    func userSelection(_ userSelection: UserSelection, didRemoveUser user: ZMUser) {
+    func userSelection(_ userSelection: UserSelection, didRemoveUser user: UserType) {
         collectionView?.reloadData()
     }
     

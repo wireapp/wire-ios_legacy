@@ -17,7 +17,8 @@
 //
 
 import WireDataModel
-
+import UIKit
+import WireSyncEngine
 
 private extension ZMConversationMessage {
 
@@ -39,12 +40,12 @@ private extension ZMConversationMessage {
 
 }
 
-@objc public protocol SelectableView: NSObjectProtocol {
+protocol SelectableView {
     var selectionView: UIView! { get }
     var selectionRect: CGRect { get }
 }
 
-@objc public protocol HighlightableView: NSObjectProtocol {
+protocol HighlightableView {
     var highlightContainer: UIView { get }
 }
 
@@ -71,7 +72,7 @@ final class DeletionDialogPresenter: NSObject {
             // Tracking needs to be called before performing the action, since the content of the message is cleared
             if case .delete(let type) = action {
                 
-                ZMUserSession.shared()?.enqueueChanges({
+                ZMUserSession.shared()?.enqueue({
                     switch type {
                     case .local:
                         ZMMessage.hideMessage(message)

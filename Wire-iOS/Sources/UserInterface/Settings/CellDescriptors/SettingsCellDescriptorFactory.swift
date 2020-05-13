@@ -19,6 +19,10 @@
 
 import Foundation
 import SafariServices
+import AppCenterCrashes
+import WireDataModel
+import WireSyncEngine
+import avs
 
 class SettingsCellDescriptorFactory {
     static let settingsDevicesCellIdentifier: String = "devices"
@@ -75,8 +79,7 @@ class SettingsCellDescriptorFactory {
                     let alert = UIAlertController(
                         title: "self.settings.add_account.error.title".localized,
                         message: "self.settings.add_account.error.message".localized,
-                        cancelButtonTitle: "general.ok".localized
-                    )
+                        alertAction: .ok(style: .cancel))
                     controller.present(alert, animated: true, completion: nil)
                 }
             }
@@ -97,7 +100,7 @@ class SettingsCellDescriptorFactory {
     func settingsGroup() -> SettingsControllerGeneratorType & SettingsInternalGroupCellDescriptorType {
         var topLevelElements = [self.accountGroup(), self.devicesCell(), self.optionsGroup(), self.advancedGroup(), self.helpSection(), self.aboutSection()]
         
-        if DeveloperMenuState.developerMenuEnabled() {
+        if Bundle.developerModeEnabled {
             topLevelElements.append(self.developerGroup())
         }
         
@@ -131,11 +134,11 @@ class SettingsCellDescriptorFactory {
                 
                 switch settingsProperty.propertyName {
                 case .callSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundRingingFromThemSound)
+                    previewPlayer.playPreview(.ringingFromThemSound)
                 case .pingSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundIncomingKnockSound)
+                    previewPlayer.playPreview(.incomingKnockSound)
                 case .messageSoundName:
-                    previewPlayer.playPreview(MediaManagerSoundMessageReceivedSound)
+                    previewPlayer.playPreview(.messageReceivedSound)
                 default:
                     break
                 }
@@ -207,7 +210,7 @@ class SettingsCellDescriptorFactory {
 
         let versionSection = SettingsSectionDescriptor(cellDescriptors: [versionCell])
 
-        items.append(contentsOf: [troubleshootingSection, pushSection, versionSection])
+        items.append(contentsOf: [troubleshootingSection, debuggingToolsSection(), pushSection, versionSection])
         
         return SettingsGroupCellDescriptor(
             items: items,
@@ -260,8 +263,22 @@ class SettingsCellDescriptorFactory {
             developerCellDescriptors.append(resetSurveyMuteButton)
 
         }
+        
+        let generateCrashButton = SettingsButtonCellDescriptor(title: "Generate test crash", isDestructive: false, selectAction: SettingsCellDescriptorFactory.generateTestCrash)
+        developerCellDescriptors.append(generateCrashButton)
+        
+        let triggerSlowSyncButton = SettingsButtonCellDescriptor(title: "Trigger slow sync", isDestructive: false, selectAction: SettingsCellDescriptorFactory.triggerSlowSync)
+        developerCellDescriptors.append(triggerSlowSyncButton)
 
         return SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:developerCellDescriptors)], title: title, icon: .robot)
+    }
+    
+    func debuggingToolsSection() -> SettingsSectionDescriptor {
+        let title = "self.settings.advanced.debugging_tools.title".localized
+        
+        let findUnreadConversationButton = SettingsButtonCellDescriptor(title: "self.settings.advanced.debugging_tools.first_unread_conversation.title".localized, isDestructive: false, selectAction: SettingsCellDescriptorFactory.findUnreadConversationContributingToBadgeCount)
+        let debuggingToolsGroup = SettingsGroupCellDescriptor(items: [SettingsSectionDescriptor(cellDescriptors:[findUnreadConversationButton,])], title: title)
+        return SettingsSectionDescriptor(cellDescriptors: [debuggingToolsGroup], header: .none, footer: .none)
     }
     
     func requestNumber(_ callback: @escaping (Int)->()) {
@@ -319,7 +336,7 @@ class SettingsCellDescriptorFactory {
         let conversation = ZMConversationList.conversations(inUserSession: userSession).firstObject! as! ZMConversation
         let conversationId = conversation.objectID
         
-        let syncContext = userSession.syncManagedObjectContext!
+        let syncContext = userSession.syncManagedObjectContext
         syncContext.performGroupedBlock {
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
             let messages: [ZMClientMessage] = (0...count).map { i in
@@ -444,9 +461,9 @@ class SettingsCellDescriptorFactory {
 
         let uiMOC = userSession.managedObjectContext
         let fetchRequest = NSFetchRequest<ZMConversation>(entityName: ZMConversation.entityName())
-        let allConversations = uiMOC?.fetchOrAssert(request: fetchRequest)
+        let allConversations = uiMOC.fetchOrAssert(request: fetchRequest)
         
-        if let convo = allConversations?.first(where: { predicate.evaluate(with: $0) }) {
+        if let convo = allConversations.first(where: { predicate.evaluate(with: $0) }) {
             alert.message = ["Found an unread conversation:",
                        "\(convo.displayName)",
                         "<\(convo.remoteIdentifier?.uuidString ?? "n/a")>"
@@ -478,7 +495,7 @@ class SettingsCellDescriptorFactory {
             userSession.syncManagedObjectContext.saveOrRollback()
         }
         
-        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", cancelButtonTitle: "OK")
+        let alertController = UIAlertController(title: "Updated", message: "Badge count  has been re-calculated", alertAction: .ok(style: .cancel))
         controller.show(alertController, sender: nil)
     }
     
@@ -522,9 +539,19 @@ class SettingsCellDescriptorFactory {
         _ = builder.setOtrKey("broken_key".data(using: .utf8))
         let genericMessage = ZMGenericMessage.message(content: builder.build())
         
-        userSession.enqueueChanges {
+        userSession.enqueue {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
         }
+    }
+    
+    private static func triggerSlowSync(_ type: SettingsCellDescriptorType) {
+        ZMUserSession.shared()?.syncManagedObjectContext.performGroupedBlock {
+            ZMUserSession.shared()?.requestSlowSync()
+        }
+    }
+    
+    private static func generateTestCrash(_ type: SettingsCellDescriptorType) {
+        MSCrashes.generateTestCrash()
     }
     
     private static func reloadUserInterface(_ type: SettingsCellDescriptorType) {
@@ -542,7 +569,7 @@ class SettingsCellDescriptorFactory {
 
         let alert = UIAlertController(title: "Success",
                                       message: "The call quality survey will be displayed after the next call.",
-                                      cancelButtonTitle: "OK")
+                                      alertAction: .ok(style: .cancel))
 
         controller.present(alert, animated: true)
     }

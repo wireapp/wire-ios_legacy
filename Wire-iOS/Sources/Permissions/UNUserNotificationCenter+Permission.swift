@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 @objc extension UNUserNotificationCenter {
 

@@ -52,7 +52,7 @@ extension UIImage {
      * - returns: The image to use in the specified configuration.
      */
 
-    @objc public static func imageForIcon(_ icon: StyleKitIcon, size: CGFloat, color: UIColor) -> UIImage {
+    public static func imageForIcon(_ icon: StyleKitIcon, size: CGFloat, color: UIColor) -> UIImage {
         return icon.makeImage(size: .custom(size), color: color)
     }
 
@@ -64,7 +64,6 @@ extension UIImage {
      * programmer error and will cause an assertion failure.
      */
 
-    @objc(imageByDownscalingToSize:)
     public func downscaling(to targetSize: CGSize) -> UIImage {
         assert(targetSize.width < size.width)
         assert(targetSize.height < size.height)

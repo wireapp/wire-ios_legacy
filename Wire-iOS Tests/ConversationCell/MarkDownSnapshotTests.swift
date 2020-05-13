@@ -31,7 +31,7 @@ The wretch often disguises himself, but you will know him at once by his rough v
         let message = otherUserConversation.append(text: messageText, mentions: [mention], fetchLinkPreview: false)!
 
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
     ///compare with above tests, the line spacing should be the same for both case.
@@ -45,7 +45,7 @@ The wretch often disguises himself, but you will know him at once by his rough v
         let message = otherUserConversation.append(text: messageText, mentions: [], fetchLinkPreview: false)!
 
 
-        verify(message: message, waitForTextViewToLoad: true)
+        verify(message: message)
     }
 
 }

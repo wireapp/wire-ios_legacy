@@ -18,6 +18,7 @@
 
 
 import Foundation
+import WireCommonComponents
 
 private let settingsChangeEvent = "settings.changed_value"
 private let settingsChangeEventPropertyName = "property"
@@ -25,7 +26,7 @@ private let settingsChangeEventPropertyValue = "new_value"
 
 extension Analytics {
     
-    internal func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
+    func tagSettingsChanged(for propertyName: SettingsPropertyName, to value: SettingsPropertyValue) {
         guard let value = value.value(),
                 propertyName != SettingsPropertyName.disableCrashAndAnalyticsSharing else {
             return

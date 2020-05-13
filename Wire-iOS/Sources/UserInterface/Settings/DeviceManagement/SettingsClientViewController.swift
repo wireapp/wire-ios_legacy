@@ -20,6 +20,8 @@
 import Foundation
 import UIKit
 import Cartography
+import WireSyncEngine
+import WireSystem
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -30,12 +32,15 @@ enum ClientSection: Int {
     case removeDevice = 3
 }
 
-class SettingsClientViewController: UIViewController,
-                                    UITableViewDelegate,
-                                    UITableViewDataSource,
-                                    UserClientObserver,
-                                    ClientColorVariantProtocol {
-    
+final class SettingsClientViewController: UIViewController,
+                                          UITableViewDelegate,
+                                          UITableViewDataSource,
+                                          UserClientObserver,
+                                          ClientColorVariantProtocol,
+                                          SpinnerCapable {
+    //MARK: SpinnerCapable
+    var dismissSpinner: SpinnerCompletion?
+
     fileprivate static let deleteCellReuseIdentifier: String = "DeleteCellReuseIdentifier"
     fileprivate static let resetCellReuseIdentifier: String = "ResetCellReuseIdentifier"
     fileprivate static let verifiedCellReuseIdentifier: String = "VerifiedCellReuseIdentifier"
@@ -80,7 +85,7 @@ class SettingsClientViewController: UIViewController,
 
         self.userClientToken = UserClientChangeInfo.add(observer: self, for: userClient)
         if userClient.fingerprint == .none {
-            ZMUserSession.shared()?.enqueueChanges({ () -> Void in
+            ZMUserSession.shared()?.enqueue({ () -> Void in
                 userClient.fetchFingerprintOrPrekeys()
             })
         }
@@ -92,6 +97,10 @@ class SettingsClientViewController: UIViewController,
         return [.portrait]
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -121,7 +130,7 @@ class SettingsClientViewController: UIViewController,
             self.navigationItem.rightBarButtonItem == nil {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingsClientViewController.onDonePressed(_:)));
             if fromConversation {
-                let barColor = Settings.shared().colorScheme == .light ? UIColor.white : UIColor.clear
+                let barColor = Settings.shared.colorSchemeVariant == .light ? UIColor.white : UIColor.clear
                 navController.navigationBar.barTintColor = barColor
             }
         }
@@ -165,9 +174,9 @@ class SettingsClientViewController: UIViewController,
     }
     
     @objc func onVerifiedChanged(_ sender: UISwitch!) {
-        let selfClient = ZMUserSession.shared()!.selfUserClient()
+        let selfClient = ZMUserSession.shared()!.selfUserClient
         
-        ZMUserSession.shared()?.enqueueChanges({
+        ZMUserSession.shared()?.enqueue({
             if (sender.isOn) {
                 selfClient?.trustClient(self.userClient)
             } else {
@@ -186,7 +195,7 @@ class SettingsClientViewController: UIViewController,
     
     func numberOfSections(in tableView: UITableView) -> Int {
         
-        if let userClient = ZMUserSession.shared()?.selfUserClient(), self.userClient == userClient {
+        if let userClient = ZMUserSession.shared()?.selfUserClient, self.userClient == userClient {
             return 2
         } else {
             return userClient.type == .legalHold ? 3 : 4
@@ -200,7 +209,7 @@ class SettingsClientViewController: UIViewController,
         case .info:
             return 1
         case .fingerprintAndVerify:
-            if self.userClient == ZMUserSession.shared()?.selfUserClient()  {
+            if self.userClient == ZMUserSession.shared()?.selfUserClient  {
                 return 1
             }
             else {

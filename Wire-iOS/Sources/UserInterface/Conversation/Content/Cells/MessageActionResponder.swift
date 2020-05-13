@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
 
-@objc public protocol MessageActionResponder: NSObjectProtocol {
+protocol MessageActionResponder: class {
     /// perform an action for the message
     ///
     /// - Parameters:

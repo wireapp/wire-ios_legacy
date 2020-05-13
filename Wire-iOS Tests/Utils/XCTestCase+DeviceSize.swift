@@ -50,6 +50,12 @@ extension XCTestCase {
             return size.value.width
         }))
     }
+    
+    var smallestWidth: CGFloat {
+        return XCTestCase.phoneScreenSizes.map( { size in
+            return size.value.width
+        }).sorted().first!
+    }
 
     func tabletWidths() -> Set<CGFloat> {
         return Set(XCTestCase.tabletScreenSizes.map( { size in

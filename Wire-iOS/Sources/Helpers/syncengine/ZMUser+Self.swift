@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2019 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,10 +17,12 @@
 //
 
 import Foundation
+import WireSyncEngine
 
+#if targetEnvironment(simulator)
 typealias EditableUser = ZMUser & ZMEditableUser
 
-protocol SelfUserProvider {
+protocol SelfUserProviderUI {
     static var selfUser: EditableUser { get }
 }
 
@@ -29,9 +31,9 @@ extension ZMUser {
     /// Return self's User object
     ///
     /// - Returns: a ZMUser<ZMEditableUser> object for app target, or a MockUser object for test.
-    @objc static func selfUser() -> EditableUser! {
+    static func selfUser() -> EditableUser! {
 
-        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProvider.Type {
+        if let mockUserClass = NSClassFromString("MockUser") as? SelfUserProviderUI.Type {
             return mockUserClass.selfUser
         } else {
             guard let session = ZMUserSession.shared() else { return nil }
@@ -40,3 +42,16 @@ extension ZMUser {
         }
     }
 }
+#else
+extension ZMUser {
+
+    /// Return self's User object
+    ///
+    /// - Returns: a ZMUser object for app target
+    static func selfUser() -> ZMUser! {
+        guard let session = ZMUserSession.shared() else { return nil }
+
+        return ZMUser.selfUser(inUserSession: session)
+    }
+}
+#endif

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct HorizontalMargins {
     var left: CGFloat
@@ -45,9 +46,6 @@ extension UITraitEnvironment {
     }
 
     func conversationHorizontalMargins(windowWidth: CGFloat? = UIApplication.shared.keyWindow?.frame.width) -> HorizontalMargins {
-        guard traitCollection.horizontalSizeClass == .regular else {
-            return HorizontalMargins(userInterfaceSizeClass: .compact)
-        }
 
         let userInterfaceSizeClass: UIUserInterfaceSizeClass
 

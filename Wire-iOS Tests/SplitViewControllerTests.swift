@@ -61,7 +61,7 @@ final class MockSplitViewControllerDelegate: NSObject, SplitViewControllerDelega
 }
 
 final class SplitViewControllerTests: XCTestCase {
-    
+
     var sut: SplitViewController!
     var mockParentViewController: UIViewController!
     var mockSplitViewControllerDelegate: MockSplitViewControllerDelegate!
@@ -78,7 +78,7 @@ final class SplitViewControllerTests: XCTestCase {
         mockParentViewController = UIViewController()
         mockParentViewController.addToSelf(sut)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockParentViewController = nil
@@ -89,7 +89,7 @@ final class SplitViewControllerTests: XCTestCase {
         super.tearDown()
     }
 
-    func testThatSwitchFromRegularModeToCompactModeChildViewsUpdatesTheirSize(){
+    func testThatSwitchFromRegularModeToCompactModeChildViewsUpdatesTheirSize() {
         // GIVEN
 
         // simulate iPad Pro 12.9 inch landscape mode
@@ -120,7 +120,10 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.width, compactWidth)
     }
 
-    fileprivate func setupLeftView(isLeftViewControllerRevealed: Bool, animated: Bool = true, file: StaticString = #file, line: UInt = #line) {
+    fileprivate func setupLeftView(isLeftViewControllerRevealed: Bool,
+                                   animated: Bool = true,
+                                   file: StaticString = #file,
+                                   line: UInt = #line) {
         sut.leftViewController = UIViewController()
         sut.rightViewController = UIViewController()
 
@@ -128,12 +131,12 @@ final class SplitViewControllerTests: XCTestCase {
         mockParentViewController.setOverrideTraitCollection(compactTraitCollection, forChild: sut)
 
         sut.isLeftViewControllerRevealed = isLeftViewControllerRevealed
-        sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated, completion: nil)
+        sut.setLeftViewControllerRevealed(isLeftViewControllerRevealed, animated: animated)
 
-        XCTAssertEqual(sut.rightView.frame.origin.x, isLeftViewControllerRevealed ? sut.leftView.frame.size.width : 0)
+        XCTAssertEqual(sut.rightView.frame.origin.x, isLeftViewControllerRevealed ? sut.leftView.frame.size.width : 0, file: file, line: line)
     }
 
-    func testThatPanRightViewToLessThanHalfWouldBounceBack(){
+    func testThatPanRightViewToLessThanHalfWouldBounceBack() {
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: false)
 
@@ -157,7 +160,7 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.origin.x, 0)
     }
 
-    func testThatPanRightViewToMoreThanHalfWouldRevealLeftView(){
+    func testThatPanRightViewToMoreThanHalfWouldRevealLeftView() {
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: false)
 
@@ -181,12 +184,13 @@ final class SplitViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.rightView.frame.origin.x, sut.view.frame.size.width, "rightView should stop at the right edge of the sut.view!")
     }
 
-    func testThatSetLeftViewControllerUnrevealedWithoutAnimationHidesLeftView(){
+    ///TODO
+    func testThatSetLeftViewControllerUnrevealedWithoutAnimationHidesLeftView() {
         // GIVEN
         setupLeftView(isLeftViewControllerRevealed: true, animated: false)
 
         // WHEN
-        sut.setLeftViewControllerRevealed(false, animated: false, completion: nil)
+        sut.setLeftViewControllerRevealed(false, animated: false)
 
         // THEN
         XCTAssert(sut.leftView.isHidden)

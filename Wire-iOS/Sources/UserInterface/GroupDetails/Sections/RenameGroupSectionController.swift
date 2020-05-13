@@ -17,8 +17,11 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-class RenameGroupSectionController: NSObject, CollectionViewSectionController {
+final class RenameGroupSectionController: NSObject, CollectionViewSectionController {
     
     fileprivate var validName: String? = nil
     fileprivate var conversation: ZMConversation
@@ -116,7 +119,7 @@ extension RenameGroupSectionController: SimpleTextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: SimpleTextField) {
         if let newName = validName {
-            ZMUserSession.shared()?.enqueueChanges {
+            ZMUserSession.shared()?.enqueue {
                 self.conversation.userDefinedName = newName
             }
         } else {

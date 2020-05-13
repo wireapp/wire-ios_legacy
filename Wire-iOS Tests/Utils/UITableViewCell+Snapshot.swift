@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum PhoneWidth: CGFloat {
     case iPhone4 = 320

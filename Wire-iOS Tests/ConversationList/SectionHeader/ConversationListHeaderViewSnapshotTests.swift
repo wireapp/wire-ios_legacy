@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-
 import SnapshotTesting
 import XCTest
 @testable import Wire
@@ -33,7 +31,7 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
 
         sut.title = "THISISAVERYVERYVERYVERYVERYVERYVERYVERYLONGFOLDERNAME"
 
-        sut.backgroundColor = .black
+        sut.backgroundColor = .gray
     }
     
     override func tearDown() {
@@ -48,6 +46,16 @@ final class ConversationListHeaderViewSnapshotTests: XCTestCase {
     func testForCollapsed() {
         sut.collapsed = true
         
+        verify(matching: sut)
+    }
+    
+    func testForBadgeNumberHitLimit() {
+        sut.folderBadge = 999
+        verify(matching: sut)
+    }
+    
+    func testForBadgeNumberEquals10() {
+        sut.folderBadge = 10
         verify(matching: sut)
     }
 }

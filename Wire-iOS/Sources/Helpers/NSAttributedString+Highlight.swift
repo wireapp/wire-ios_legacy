@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension String {
     func nsRange(from range: Range<String.Index>) -> NSRange {

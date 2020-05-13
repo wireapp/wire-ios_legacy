@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol IncomingRequestFooterViewDelegate: class {
 
@@ -137,7 +138,8 @@ class IncomingRequestFooterView: UIView, Themeable {
         delegate?.footerView(self, didRespondToRequestWithAction: .accept)
     }
 
-    @objc private func ignoreButtonTapped() {
+    @objc
+    private func ignoreButtonTapped() {
         delegate?.footerView(self, didRespondToRequestWithAction: .ignore)
     }
 

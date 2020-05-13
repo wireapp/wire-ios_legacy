@@ -16,9 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import WireSyncEngine
+import UIKit
 
-protocol ReplyComposingViewDelegate: NSObjectProtocol {
+protocol ReplyComposingViewDelegate: class {
     func composingViewDidCancel(composingView: ReplyComposingView)
     func composingViewWantsToShowMessage(composingView: ReplyComposingView, message: ZMConversationMessage)
 }
@@ -26,7 +27,7 @@ protocol ReplyComposingViewDelegate: NSObjectProtocol {
 fileprivate extension ZMConversationMessage {
     var accessibilityDescription: String {
         let contentDescriptionText: String
-        let senderDescriptionText = self.sender?.displayName(in: self.conversation) ?? ""
+        let senderDescriptionText = self.sender?.name ?? ""
         
         if let textData = textMessageData {
             contentDescriptionText = textData.messageText ?? ""
@@ -56,7 +57,7 @@ fileprivate extension ZMConversationMessage {
 
 final class ReplyComposingView: UIView {
     let message: ZMConversationMessage
-    internal let closeButton = IconButton()
+    let closeButton = IconButton()
     private let leftSideView = UIView(frame: .zero)
     private var messagePreviewContainer: ReplyRoundCornersView!
     private var previewView: UIView!

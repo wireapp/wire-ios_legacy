@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 extension ConversationViewController {
 
@@ -52,7 +53,6 @@ extension ConversationViewController {
     // MARK: - Alert
 
     /// Presents an alert in response to a change in privacy (legal hold and/or client verification).
-    @objc(presentPrivacyWarningAlertForChange:)
     func presentPrivacyWarningAlert(for changeInfo: ConversationChangeInfo) {
         let title: String
         let message = "meta.degraded.dialog_message".localized
@@ -69,7 +69,7 @@ extension ConversationViewController {
             actions += [.sendAnyway, .cancel]
         } else if conversation.securityLevel == .secureWithIgnored {
             let users = changeInfo.usersThatCausedConversationToDegrade
-            let names = changeInfo.usersThatCausedConversationToDegrade.map { $0.displayName }.joined(separator: ", ")
+            let names = changeInfo.usersThatCausedConversationToDegrade.compactMap(\.name).joined(separator: ", ")
             let keySuffix = users.count <= 1 ? "singular" : "plural"
             title = "meta.degraded.degradation_reason_message.\(keySuffix)".localized(args: names)
             
@@ -113,7 +113,7 @@ extension ConversationViewController {
         guard let selfUser = ZMUser.selfUser() else { return }
 
         if selfUser.hasUntrustedClients {
-            ZClientViewController.shared()?.openClientListScreen(for: selfUser)
+            ZClientViewController.shared?.openClientListScreen(for: selfUser)
         } else if let connectedUser = conversation.connectedUser, conversation.conversationType == .oneOnOne {
             let profileViewController = ProfileViewController(user: connectedUser, viewer: selfUser, conversation: conversation, context: .deviceList)
             profileViewController.delegate = self
@@ -122,8 +122,7 @@ extension ConversationViewController {
             navigationController.modalPresentationStyle = .formSheet
             present(navigationController, animated: true)
         } else if conversation.conversationType == .group {
-            let participants = conversation.sortedOtherParticipants
-            let participantsViewController = GroupParticipantsDetailViewController(participants: participants, selectedParticipants: [], conversation: conversation)
+            let participantsViewController = GroupParticipantsDetailViewController(selectedParticipants: [], conversation: conversation)
             let navigationController = participantsViewController.wrapInNavigationController()
             navigationController.modalPresentationStyle = .formSheet
             present(navigationController, animated: true)

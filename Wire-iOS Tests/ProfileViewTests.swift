@@ -21,10 +21,6 @@ import XCTest
 
 final class ProfileViewTests: ZMSnapshotTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
     func test_DefaultOptions() {
         verifyProfile(options: [])
     }
@@ -64,7 +60,7 @@ final class ProfileViewTests: ZMSnapshotTestCase {
     // MARK; - Helpers
     
     func verifyProfile(options: ProfileHeaderViewController.Options, availability: Availability = .available, file: StaticString = #file, line: UInt = #line) {
-        let selfUser = MockUser.createSelfUser(name: "selfUser", inTeam: UUID())
+        let selfUser = MockUserType.createSelfUser(name: "selfUser", inTeam: UUID())
         selfUser.teamName = "Stunning"
         selfUser.handle = "browncow"
         selfUser.availability = availability

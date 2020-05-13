@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireCommonComponents
+import WireSyncEngine
 
 /**
  * Handles the notification informing the user that backups are ready to be imported.

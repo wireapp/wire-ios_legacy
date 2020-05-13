@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: SplitViewController reveal
 
@@ -100,10 +101,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
 
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         guard mode != .audioRecord else { return true }
-        guard delegate?.responds(to:  #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldBeginEditing(_:))) == true else { return true }
-
         triggerMentionsIfNeeded(from: textView)
-        return delegate?.conversationInputBarViewControllerShouldBeginEditing?(self) ?? true
+        return delegate?.conversationInputBarViewControllerShouldBeginEditing(self) ?? true
     }
 
     public func textViewDidBeginEditing(_ textView: UITextView) {
@@ -113,9 +112,7 @@ extension ConversationInputBarViewController: UITextViewDelegate {
     }
 
     public func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
-        guard delegate?.responds(to: #selector(ConversationInputBarViewControllerDelegate.conversationInputBarViewControllerShouldEndEditing(_:))) == true else { return true }
-
-        return delegate?.conversationInputBarViewControllerShouldEndEditing?(self) ?? true
+        return delegate?.conversationInputBarViewControllerShouldEndEditing(self) ?? true
     }
 
     public func textViewDidEndEditing(_ textView: UITextView) {
@@ -124,15 +121,8 @@ extension ConversationInputBarViewController: UITextViewDelegate {
         }
         
         guard let textView = textView as? MarkdownTextView else { preconditionFailure("Invalid textView class") }
-
-        ZMUserSession.shared()?.enqueueChanges {
-            let (text, mentions) = textView.preparedText
-            self.conversation.draftMessage = DraftMessage(
-                text: text,
-                mentions: mentions,
-                quote: self.quotedMessage as? ZMMessage
-            )
-        }
+        let draft = draftMessage(from: textView)
+        delegate?.conversationInputBarViewControllerDidComposeDraft(message: draft)
     }
 }
 

@@ -17,38 +17,34 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
+import WireDataModel
 
 extension StartUIViewController {
 
-    /// init method for injecting mock addressBookHelper
-    ///
-    /// - Parameter addressBookHelper: an object conforms AddressBookHelperProtocol 
-    convenience init(addressBookHelper: AddressBookHelperProtocol) {
-        self.init()
-
-        self.addressBookHelper = addressBookHelper
+    var needsAddressBookPermission: Bool {
+        let shouldSkip = AutomationHelper.sharedHelper.skipFirstLoginAlerts || ZMUser.selfUser().hasTeam
+        return !AddressBookHelper.sharedHelper.isAddressBookAccessGranted && !shouldSkip
     }
 
-    @objc
-    func handleUploadAddressBookLogicIfNeeded() {
-        guard !addressBookUploadLogicHandled else { return }
+    func presentShareContactsViewController() {
+        let shareContactsViewController = ShareContactsViewController()
+        shareContactsViewController.delegate = self
+        navigationController?.pushViewController(shareContactsViewController, animated: true)
+    }
 
-        addressBookUploadLogicHandled = true
+}
 
-        // We should not even try to access address book when in a team
-        guard !ZMUser.selfUser().hasTeam else { return }
+extension StartUIViewController: ShareContactsViewControllerDelegate {
 
-        if addressBookHelper.isAddressBookAccessGranted {
-            // Re-check if we need to start AB search
-            addressBookHelper.startRemoteSearch(true)
-        } else if addressBookHelper.isAddressBookAccessUnknown {
-            self.addressBookHelper.requestPermissions({ success in
-                if success {
-                    DispatchQueue.main.async(execute: {
-                        self.addressBookHelper.startRemoteSearch(true)
-                    })
-                }
-            })
+    func shareDidFinish(_ viewController: UIViewController) {
+        viewController.dismiss(animated: true)
+    }
+
+    func shareDidSkip(_ viewController: UIViewController) {
+        dismiss(animated: true) {
+            UIApplication.shared.topmostViewController()?.presentInviteActivityViewController(with: self.quickActionsBar)
         }
     }
 }

@@ -18,46 +18,135 @@
 
 import Foundation
 import DifferenceKit
+import UIKit
+import WireDataModel
 
-extension ConversationListContentController {
-    override open func loadView() {
+private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
+private let CellReuseIdConversation = "CellId"
+
+final class ConversationListContentController: UICollectionViewController {
+    weak var contentDelegate: ConversationListContentDelegate?
+    let listViewModel: ConversationListViewModel = ConversationListViewModel()
+    private weak var mediaPlaybackManager: MediaPlaybackManager?
+    private var focusOnNextSelection = false
+    private var animateNextSelection = false
+    private weak var scrollToMessageOnNextSelection: ZMConversationMessage?
+    private var selectConversationCompletion: Completion?
+    private let layoutCell = ConversationListCell()
+    var startCallController: ConversationCallController?
+    private let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+    private var token: NSObjectProtocol?
+    
+    init() {
+        let flowLayout = BoundsAwareFlowLayout()
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.sectionInset = .zero
+
+        super.init(collectionViewLayout: flowLayout)
+
+        registerSectionHeader()
+    }
+
+    @available(*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func loadView() {
         super.loadView()
 
-        layoutCell = ConversationListCell()
-
-        listViewModel = ConversationListViewModel()
         listViewModel.delegate = self
 
         setupViews()
 
-        if UIApplication.shared.keyWindow?.traitCollection.forceTouchCapability == .available {
+        if traitCollection.forceTouchCapability == .available {
             registerForPreviewing(with: self, sourceView: collectionView)
         }
     }
 
-    @objc
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // viewWillAppear: can get called also when dismissing the controller above this one.
+        // The self user might not be there anymore in some cases, e.g. when logging out
+        guard SelfUser.provider != nil else { return }
+
+        updateVisibleCells()
+
+        scrollToCurrentSelection(animated: false)
+
+    
+        token = NotificationCenter.default.addObserver(forName: .activeMediaPlayerChanged, object: nil, queue: .main) { [weak self] _ in
+            self?.activeMediaPlayerChanged()
+        }
+
+        mediaPlaybackManager = AppDelegate.shared.mediaPlaybackManager
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+       
+        if let token = token {
+            NotificationCenter.default.removeObserver(token)
+            self.token = nil
+        }
+    }
+    
+    private func activeMediaPlayerChanged() {
+        DispatchQueue.main.async(execute: {
+            for cell in self.collectionView.visibleCells {
+                (cell as? ConversationListCell)?.updateAppearance()
+            }
+        })
+    }
+
     func reload() {
         collectionView.reloadData()
         ensureCurrentSelection()
 
         // we MUST call layoutIfNeeded here because otherwise bad things happen when we close the archive, reload the conv
         // and then unarchive all at the same time
-        view.setNeedsLayout()
+        view.layoutIfNeeded()
+    }
+
+    func updateVisibleCells() {
+        for cell in collectionView.visibleCells {
+            (cell as? ConversationListCell)?.updateAppearance()
+        }
+    }
+
+    private func setupViews() {
+        collectionView.register(ConnectRequestsCell.self, forCellWithReuseIdentifier: CellReuseIdConnectionRequests)
+        collectionView.register(ConversationListCell.self, forCellWithReuseIdentifier: CellReuseIdConversation)
+
+        collectionView.backgroundColor = UIColor.clear
+        collectionView.alwaysBounceVertical = true
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
+        collectionView.contentInset = .zero
+        collectionView.delaysContentTouches = false
+        collectionView.accessibilityIdentifier = "conversation list"
+        clearsSelectionOnViewWillAppear = false
     }
 
     // MARK: - section header
 
-    open override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
 
         switch kind {
         case UICollectionView.elementKindSectionHeader:
+            let section = indexPath.section
+            
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier, for: indexPath) as? ConversationListHeaderView {
-                header.title = listViewModel.sectionHeaderTitle(sectionIndex: indexPath.section)?.uppercased()
+                header.title = listViewModel.sectionHeaderTitle(sectionIndex: section)?.uppercased()
+                
+                header.folderBadge = listViewModel.folderBadge(at: section)
 
-                header.collapsed = listViewModel.collapsed(at: indexPath.section)
+                header.collapsed = listViewModel.collapsed(at: section)
 
                 header.tapHandler = {[weak self] collapsed in
-                    self?.listViewModel.setCollapsed(sectionIndex: indexPath.section, collapsed: collapsed)
+                    self?.listViewModel.setCollapsed(sectionIndex: section, collapsed: collapsed)
                 }
                 
                 return header
@@ -69,8 +158,8 @@ extension ConversationListContentController {
         }
     }
 
-    @objc
-    func registerSectionHeader() {
+
+    private func registerSectionHeader() {
         collectionView?.register(ConversationListHeaderView.self, forSupplementaryViewOfKind:
             UICollectionView.elementKindSectionHeader, withReuseIdentifier: ConversationListHeaderView.reuseIdentifier)
 
@@ -93,7 +182,6 @@ extension ConversationListContentController {
         }
     }
 
-    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         guard let selectedItem = listViewModel.selectedItem,
             let selectedIndexPath = listViewModel.indexPath(for: selectedItem),
@@ -108,6 +196,7 @@ extension ConversationListContentController {
         }
     }
 
+    @discardableResult
     func selectInboxAndFocus(onView focus: Bool) -> Bool {
         // If there is anything in the inbox, select it
         if listViewModel.numberOfItems(inSection: 0) > 0 {
@@ -140,8 +229,17 @@ extension ConversationListContentController {
     }
     
     // MARK: - UICollectionViewDelegate
-    
-    override open func collectionView(_ collectionView: UICollectionView,
+
+    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        selectionFeedbackGenerator.prepare()
+        return true
+    }
+
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        contentDelegate?.conversationListDidScroll(self)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
         selectionFeedbackGenerator.selectionChanged()
         
@@ -154,7 +252,16 @@ extension ConversationListContentController {
     
     // MARK: - UICollectionViewDataSource
 
-    override open func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return listViewModel.sectionCount
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return listViewModel.numberOfItems(inSection: section)
+    }
+
+
+    override func collectionView(_ cv: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = listViewModel.item(for: indexPath)
         let cell: UICollectionViewCell
 
@@ -174,7 +281,8 @@ extension ConversationListContentController {
         }
 
         (cell as? SectionListCellType)?.sectionName = listViewModel.sectionCanonicalName(of: indexPath.section)
-
+        (cell as? SectionListCellType)?.cellIdentifier = "conversation_list_cell"
+        
         cell.autoresizingMask = .flexibleWidth
 
         return cell
@@ -198,6 +306,14 @@ extension ConversationListContentController: UICollectionViewDelegateFlowLayout 
 
 extension ConversationListContentController: ConversationListViewModelDelegate {
 
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int) {
+        guard let header = collectionView.supplementaryView(forElementKind: UICollectionView.elementKindSectionHeader, at: IndexPath(item: 0, section: section)) as? ConversationListHeaderView else {
+            return
+        }
+
+        header.folderBadge = listViewModel.folderBadge(at: section)
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didSelectItem item: ConversationListItem?) {
         defer {
             scrollToMessageOnNextSelection = nil
@@ -212,8 +328,8 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
                     self.collectionView.deselectItem(at: obj, animated: false)
                 }
             })
-            ZClientViewController.shared()?.loadPlaceholderConversationController(animated: true)
-            ZClientViewController.shared()?.transitionToList(animated: true, completion: nil)
+            ZClientViewController.shared?.loadPlaceholderConversationController(animated: true)
+            ZClientViewController.shared?.transitionToList(animated: true, completion: nil)
 
             return
         }
@@ -221,12 +337,12 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
         if let conversation = item as? ZMConversation {
 
             // Actually load the new view controller and optionally focus on it
-            ZClientViewController.shared()?.load(conversation, scrollTo: scrollToMessageOnNextSelection, focusOnView: focusOnNextSelection, animated: animateNextSelection, completion: selectConversationCompletion)
+            ZClientViewController.shared?.load(conversation, scrollTo: scrollToMessageOnNextSelection, focusOnView: focusOnNextSelection, animated: animateNextSelection, completion: selectConversationCompletion)
             selectConversationCompletion = nil
 
             contentDelegate?.conversationList(self, didSelect: conversation, focusOnView: !focusOnNextSelection)
         } else if (item is ConversationListConnectRequestsItem) {
-            ZClientViewController.shared()?.loadIncomingContactRequestsAndFocus(onView: focusOnNextSelection, animated: true)
+            ZClientViewController.shared?.loadIncomingContactRequestsAndFocus(onView: focusOnNextSelection, animated: true)
         } else {
             assert(false, "Invalid item in conversation list view model!!")
         }
@@ -241,9 +357,6 @@ extension ConversationListContentController: ConversationListViewModelDelegate {
     }
 
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
-        // do not reload if section is not visible
-        guard collectionView.indexPathsForVisibleItems.map({$0.section}).contains(section) else { return }
-
         let reloadClosure = {
             self.collectionView.reloadSections(IndexSet(integer: section))
             self.ensureCurrentSelection()
@@ -293,4 +406,25 @@ extension ConversationListContentController: UIViewControllerPreviewingDelegate 
         return ConversationPreviewViewController(conversation: conversation, presentingViewController: self)
     }
 
+}
+
+extension ConversationListContentController: ConversationListCellDelegate {
+    func indexPath(for cell: ConversationListCell) -> IndexPath? {
+        return collectionView.indexPath(for: cell)
+    }
+
+    func conversationListCellOverscrolled(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else {
+            return
+        }
+
+        contentDelegate?.conversationListContentController(self, wantsActionMenuFor: conversation, fromSourceView: cell)
+    }
+
+    func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
+        guard let conversation = cell.conversation else { return }
+
+        startCallController = ConversationCallController(conversation: conversation, target: self)
+        startCallController?.joinCall()
+    }
 }

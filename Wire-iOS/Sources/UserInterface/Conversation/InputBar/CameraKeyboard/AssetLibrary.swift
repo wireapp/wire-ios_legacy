@@ -20,17 +20,17 @@
 import Foundation
 import Photos
 
-public protocol AssetLibraryDelegate: class {
+protocol AssetLibraryDelegate: class {
     func assetLibraryDidChange(_ library: AssetLibrary)
 }
 
-open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
-    open weak var delegate: AssetLibraryDelegate?
+class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
+    weak var delegate: AssetLibraryDelegate?
     fileprivate var fetchingAssets = false
     public let synchronous: Bool
     let photoLibrary: PhotoLibraryProtocol
 
-    open var count: UInt {
+    var count: UInt {
         guard let fetch = self.fetch else {
             return 0
         }
@@ -41,7 +41,7 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         case outOfRange, notLoadedError
     }
     
-    open func asset(atIndex index: UInt) throws -> PHAsset {
+    func asset(atIndex index: UInt) throws -> PHAsset {
         guard let fetch = self.fetch else {
             throw AssetError.notLoadedError
         }
@@ -52,7 +52,7 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         return fetch.object(at: Int(index))
     }
     
-    open func refetchAssets(synchronous: Bool = false) {
+    func refetchAssets(synchronous: Bool = false) {
         guard !self.fetchingAssets else {
             return
         }
@@ -74,7 +74,7 @@ open class AssetLibrary: NSObject, PHPhotoLibraryChangeObserver {
         }
     }
 
-    open func photoLibraryDidChange(_ changeInstance: PHChange) {
+    public func photoLibraryDidChange(_ changeInstance: PHChange) {
 
         guard let fetch = self.fetch else {
             return

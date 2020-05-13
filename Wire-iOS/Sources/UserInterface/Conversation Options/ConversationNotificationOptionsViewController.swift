@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 final class ConversationNotificationOptionsViewController: UIViewController {
     
@@ -26,7 +29,7 @@ final class ConversationNotificationOptionsViewController: UIViewController {
     private let userSession: ZMUserSession
     private var observerToken: Any! = nil
     
-    public weak var dismisser: ViewControllerDismisser?
+    weak var dismisser: ViewControllerDismisser?
     
     private let collectionViewLayout = UICollectionViewFlowLayout()
     
@@ -142,7 +145,7 @@ extension ConversationNotificationOptionsViewController: UICollectionViewDelegat
     
     private func updateMutedMessageTypes(_ types: MutedMessageTypes) {
         
-        userSession.performChanges {
+        userSession.perform {
             self.conversation.mutedMessageTypes = types
         }
     }

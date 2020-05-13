@@ -19,8 +19,19 @@
 import XCTest
 @testable import Wire
 
-class ConversationMessageActionControllerTests: CoreDataSnapshotTestCase {
+final class ConversationMessageActionControllerTests: XCTestCase, CoreDataFixtureTestHelper {
+    var coreDataFixture: CoreDataFixture!
     
+    override func setUp() {
+        super.setUp()
+        coreDataFixture = CoreDataFixture()
+    }
+    
+    override func tearDown() {
+        coreDataFixture = nil
+        super.tearDown()
+    }
+
     // MARK: - Single Tap Action
     
     func testThatImageIsPresentedOnSingleTapWhenDownloaded() {

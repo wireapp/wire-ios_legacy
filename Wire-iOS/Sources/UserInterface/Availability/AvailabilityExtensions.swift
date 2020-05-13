@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import WireCommonComponents
+import WireDataModel
 
-@objc public enum AvailabilityLabelStyle: Int {
+enum AvailabilityLabelStyle: Int {
     case list, participants, placeholder
 }
 

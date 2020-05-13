@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireSyncEngine
+import UIKit
 
 final class ConversationTextMessageCell: UIView, ConversationMessageCell, TextViewInteractionDelegate {
 
@@ -157,12 +159,6 @@ class ConversationTextMessageCellDescription: ConversationMessageCellDescription
         cell.cellView.menuPresenter = cell
         return cell
     }
-    
-    func isConfigurationEqual(with other: Any) -> Bool {
-        guard let otherDescription = other as? ConversationTextMessageCellDescription else { return false }
-        
-        return configuration == otherDescription.configuration
-    }
 }
 
 // MARK: - Factory
@@ -173,12 +169,19 @@ extension ConversationTextMessageCellDescription {
         guard let textMessageData = message.textMessageData else {
             preconditionFailure("Invalid text message")
         }
+        
+        return cells(textMessageData: textMessageData, message: message, searchQueries: searchQueries)
+    }
+    
+    static func cells(textMessageData: ZMTextMessageData,
+                      message: ZMConversationMessage,
+                      searchQueries: [String]) -> [AnyConversationMessageCellDescription] {
 
         var cells: [AnyConversationMessageCellDescription] = []
 
         // Refetch the link attachments if needed
-        if Settings.shared()?.disableLinkPreviews != true {
-            ZMUserSession.shared()?.enqueueChanges {
+        if !Settings.disableLinkPreviews {
+            ZMUserSession.shared()?.enqueue {
                 message.refetchLinkAttachmentsIfNeeded()
             }
         }
@@ -195,7 +198,7 @@ extension ConversationTextMessageCellDescription {
 
         // Quote
         if textMessageData.hasQuote {
-            let quotedMessage = message.textMessageData?.quote
+            let quotedMessage = textMessageData.quote
             let quoteCell = ConversationReplyCellDescription(quotedMessage: quotedMessage)
             cells.append(AnyConversationMessageCellDescription(quoteCell))
         }

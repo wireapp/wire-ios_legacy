@@ -17,9 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
-
-class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+final class UserClientListViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     fileprivate let headerView: ParticipantDeviceHeaderView
     fileprivate let collectionView = UICollectionView(forGroupedSections: ())
@@ -38,12 +39,12 @@ class UserClientListViewController: UIViewController, UICollectionViewDelegateFl
     init(user: ZMUser) {
         self.user = user
         self.clients = UserClientListViewController.clientsSortedByRelevance(for: user)
-        self.headerView = ParticipantDeviceHeaderView(userName: user.displayName)
+        self.headerView = ParticipantDeviceHeaderView(userName: user.name ?? "")
         
         super.init(nibName: nil, bundle: nil)
         
         if let userSession = ZMUserSession.shared() {
-            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: userSession))
+            tokens.append(UserChangeInfo.add(observer: self, for: user, in: userSession))
         }
 
         self.headerView.delegate = self

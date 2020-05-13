@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireSyncEngine
 
 enum ConversationListButtonType {
     case archive, startUI, list, folder
@@ -136,7 +137,7 @@ final class ConversationListBottomBarController: UIViewController {
     private func addObservers() {
         guard let userSession = ZMUserSession.shared() else { return }
         
-        userObserverToken = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+        userObserverToken = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
     }
     
     fileprivate func updateColorScheme() {
@@ -177,7 +178,7 @@ final class ConversationListBottomBarController: UIViewController {
 
 // MARK: - Helper
 
-public extension UIView {
+extension UIView {
     
     func fadeAndHide(_ hide: Bool, duration: TimeInterval = 0.2, options: UIView.AnimationOptions = UIView.AnimationOptions()) {
         if !hide {

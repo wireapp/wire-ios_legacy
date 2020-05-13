@@ -18,12 +18,14 @@
 
 import UIKit
 import Cartography
+import WireDataModel
+import WireSyncEngine
 
-open class LayerHostView<LayerType: CALayer>: UIView {
+class LayerHostView<LayerType: CALayer>: UIView {
     var hostedLayer: LayerType {
         return self.layer as! LayerType
     }
-    override open class var layerClass : AnyClass {
+    override class var layerClass : AnyClass {
         return LayerType.self
     }
 }
@@ -57,7 +59,7 @@ final class ShapeView: LayerHostView<CAShapeLayer> {
     }
 }
 
-public protocol AccountViewType {
+protocol AccountViewType {
     var collapsed: Bool { get set }
     var hasUnreadMessages: Bool { get }
     var onTap: ((Account?) -> ())? { get set }
@@ -161,7 +163,7 @@ class BaseAccountView: UIView {
         }
 
         if let userSession = SessionManager.shared?.activeUserSession {
-            selfUserObserver = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(inUserSession: userSession), userSession: userSession)
+            selfUserObserver = UserChangeInfo.add(observer: self, for: userSession.selfUser, in: userSession)
         }
 
         selectionView.hostedLayer.strokeColor = UIColor.accent().cgColor
@@ -223,7 +225,7 @@ class BaseAccountView: UIView {
         }
     }
     
-    @objc public func didTap(_ sender: UITapGestureRecognizer!) {
+    @objc func didTap(_ sender: UITapGestureRecognizer!) {
         self.onTap?(self.account)
     }
 }
@@ -247,7 +249,7 @@ extension BaseAccountView: ZMUserObserver {
 }
 
 final class PersonalAccountView: AccountView {
-    internal let userImageView: AvatarImageView = {
+    let userImageView: AvatarImageView = {
         let avatarImageView = AvatarImageView(frame: .zero)
         avatarImageView.container.backgroundColor = .from(scheme: .background, variant: .light)
 

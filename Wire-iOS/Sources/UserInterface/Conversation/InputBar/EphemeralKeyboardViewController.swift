@@ -20,6 +20,7 @@
 import UIKit
 import WireCommonComponents
 import Cartography
+import WireDataModel
 
 protocol EphemeralKeyboardViewControllerDelegate: class {
     func ephemeralKeyboardWantsToBeDismissed(_ keyboard: EphemeralKeyboardViewController)
@@ -103,7 +104,7 @@ extension UIAlertController {
     }
 }
 
-@objcMembers public final class EphemeralKeyboardViewController: UIViewController {
+final class EphemeralKeyboardViewController: UIViewController {
 
     weak var delegate: EphemeralKeyboardViewControllerDelegate?
 
@@ -123,7 +124,7 @@ extension UIAlertController {
     /// - Parameter conversation: nil for testing only
     public init(conversation: ZMConversation!) {
         self.conversation = conversation
-        if DeveloperMenuState.developerMenuEnabled() {
+        if Bundle.developerModeEnabled {
             timeouts = MessageDestructionTimeoutValue.all + [nil]
         }
         else {

@@ -16,14 +16,16 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
-class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
+final class GroupDetailsNotificationOptionsCell: GroupDetailsDisclosureOptionsCell {
     
     override func setUp() {
         super.setUp()
         accessibilityIdentifier = "cell.groupdetails.notificationsoptions"
-        title = "Notifications"
+        title = "group_details.notification_options_cell.title".localized
     }
     
     func configure(with conversation: ZMConversation) {

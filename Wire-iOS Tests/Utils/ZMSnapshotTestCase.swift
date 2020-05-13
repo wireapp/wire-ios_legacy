@@ -16,12 +16,12 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-
 @testable import Wire
 import FBSnapshotTestCase
+import UIKit
 
 extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
-    @objc public func wrapInTableView() -> UITableView {
+    func wrapInTableView() -> UITableView {
         let tableView = UITableView(frame: self.bounds, style: .plain)
 
         tableView.delegate = self
@@ -31,7 +31,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.layoutMargins = self.layoutMargins
 
-        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0) , withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
+        let size = self.systemLayoutSizeFitting(CGSize(width: bounds.width, height: 0.0), withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         self.layoutSubviews()
 
         self.bounds = CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height)
@@ -66,7 +66,7 @@ extension UITableViewCell: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-open class ZMSnapshotTestCase: FBSnapshotTestCase {
+class ZMSnapshotTestCase: FBSnapshotTestCase {
 
     typealias ConfigurationWithDeviceType = (_ view: UIView, _ isPad: Bool) -> Void
     typealias Configuration = (_ view: UIView) -> Void
@@ -90,8 +90,8 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
         super.setUp()
 
         XCTAssertEqual(UIScreen.main.scale, 2, "Snapshot tests need to be run on a device with a 2x scale")
-        if UIDevice.current.systemVersion.compare("10", options: .numeric, range: nil, locale: .current) == .orderedAscending {
-            XCTFail("Snapshot tests need to be run on a device running at least iOS 10")
+        if UIDevice.current.systemVersion.compare("13", options: .numeric, range: nil, locale: .current) == .orderedAscending {
+            XCTFail("Snapshot tests need to be run on a device running at least iOS 13")
         }
         AppRootViewController.configureAppearance()
         UIView.setAnimationsEnabled(false)
@@ -170,27 +170,21 @@ open class ZMSnapshotTestCase: FBSnapshotTestCase {
 
 // MARK: - Helpers
 extension ZMSnapshotTestCase {
-    func containerView(with view: UIView) -> UIView {
-        let container = UIView(frame: view.bounds)
-        container.backgroundColor = snapshotBackgroundColor
-        container.addSubview(view)
-
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.fitInSuperview()
-        return container
-    }
 
     private func snapshotVerify(view: UIView,
                                 identifier: String? = nil,
                                 suffix: NSOrderedSet? = FBSnapshotTestCaseDefaultSuffixes(),
-                                tolerance: CGFloat = 0,
+                                tolerance: CGFloat = tolerance,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
-        if let errorDescription = snapshotVerifyViewOrLayer(view,
+        let errorDescription = snapshotVerifyViewOrLayer(view,
                                                             identifier: identifier,
-                                                            suffixes: suffix,
-                                                            tolerance: tolerance, defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR)) {
+                                                            suffixes: suffix!,
+                                                            overallTolerance: tolerance,
+                                                            defaultReferenceDirectory: (FB_REFERENCE_IMAGE_DIR),
+                                                            defaultImageDiffDirectory: (IMAGE_DIFF_DIR))
 
+        if errorDescription.count > 0 {
             XCTFail("\(errorDescription)", file:file, line:line)
         } else {
             XCTAssert(true)
@@ -249,13 +243,13 @@ extension ZMSnapshotTestCase {
     /// Performs an assertion with the given view and the recorded snapshot.
     func verify(view: UIView,
                 extraLayoutPass: Bool = false,
-                tolerance: CGFloat = 0,
+                tolerance: CGFloat = tolerance,
                 identifier: String? = nil,
                 deviceName: String? = nil,
                 file: StaticString = #file,
                 line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
         if assertEmptyFrame(container, file: file, line: line) {
             return
         }
@@ -277,24 +271,20 @@ extension ZMSnapshotTestCase {
         assertAmbigousLayout(container, file: file, line: line)
     }
 
+    static let tolerance: CGFloat = 0.3
     /// Performs an assertion with the given view and the recorded snapshot with the custom width
     func verifyView(view: UIView,
                     extraLayoutPass: Bool = false,
                     width: CGFloat,
-                    tolerance: CGFloat = 0,
+                    tolerance: CGFloat = tolerance,
                     identifier: String? = nil,
                     configuration: ((UIView) -> Swift.Void)? = nil,
                     file: StaticString = #file,
                     line: UInt = #line
         ) {
-        let container = containerView(with: view)
+        let container = containerView(with: view, snapshotBackgroundColor: snapshotBackgroundColor)
 
-        container.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            container.widthAnchor.constraint(equalToConstant: width)
-            ])
-
-        container.layoutIfNeeded()
+        container.addWidthConstraint(width: width)
 
         if assertEmptyFrame(container, file: file, line: line) {
             return
@@ -319,7 +309,7 @@ extension ZMSnapshotTestCase {
 
     func verifyInAllPhoneWidths(view: UIView,
                                 extraLayoutPass: Bool = false,
-                                tolerance: CGFloat = 0,
+                                tolerance: CGFloat = tolerance,
                                 configuration: ((UIView) -> Swift.Void)? = nil,
                                 file: StaticString = #file,
                                 line: UInt = #line) {
@@ -380,7 +370,7 @@ extension ZMSnapshotTestCase {
     // MARK: - verify the snapshots in both dark and light scheme
 
     func verifyInAllColorSchemes(view: UIView,
-                                 tolerance: CGFloat = 0,
+                                 tolerance: CGFloat = tolerance,
                                  file: StaticString = #file,
                                  line: UInt = #line) {
         if var themeable = view as? Themeable {
@@ -415,7 +405,7 @@ extension ZMSnapshotTestCase {
     /// This method only makes sense for views that will be on presented fullscreen.
     func verifyMultipleSize(view: UIView,
                             extraLayoutPass: Bool,
-                            inSizes sizes: [String:CGSize],
+                            inSizes sizes: [String: CGSize],
                             configuration: ConfigurationWithDeviceType?,
                             file: StaticString = #file,
                             line: UInt = #line) {
@@ -435,7 +425,6 @@ extension ZMSnapshotTestCase {
                    line: line)
         }
     }
-
 
     func verifyInAllIPhoneSizes(view: UIView,
                                 extraLayoutPass: Bool = false,
@@ -463,52 +452,21 @@ extension ZMSnapshotTestCase {
 
 }
 
-// MARK: - UIAlertController
-extension XCTestCase {
-    func presentViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        // Given
-        let window = UIWindow(frame: CGRect(origin: .zero, size: XCTestCase.DeviceSizeIPhone6))
-
-        let container = UIViewController()
-        container.loadViewIfNeeded()
-
-        window.rootViewController = container
-        window.makeKeyAndVisible()
-
-        controller.loadViewIfNeeded()
-        controller.view.layoutIfNeeded()
-
-        // When
-        let presentationExpectation = expectation(description: "It should be presented")
-        container.present(controller, animated: false) {
-            presentationExpectation.fulfill()
-        }
-
-        // Then
-        waitForExpectations(timeout: 2, handler: nil)
-    }
-
-    func dismissViewController(_ controller: UIViewController, file: StaticString = #file, line: UInt = #line) {
-        let dismissalExpectation = expectation(description: "It should be dismissed")
-        controller.dismiss(animated: false) {
-            dismissalExpectation.fulfill()
-        }
-
-        waitForExpectations(timeout: 2, handler: nil)
-    }
-
-}
-
 extension ZMSnapshotTestCase {
-    
-    func verifyAlertController(_ controller: UIAlertController, file: StaticString = #file, line: UInt = #line) {
+
+    func verifyAlertController(_ controller: UIAlertController,
+                               file: StaticString = #file,
+                               line: UInt = #line) {
+        /// ZClient VC changes alert tint color with init. Reset the tint color here
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = controller.view.tintColor
+
         presentViewController(controller, file: file, line: line)
         verify(view: controller.view, file: file, line: line)
         dismissViewController(controller, file: file, line: line)
     }
 }
 
-//MARK: - test with different color schemes
+// MARK: - test with different color schemes
 
 extension ZMSnapshotTestCase {
     /// Performs multiple assertions with the given view using the screen widths of
@@ -582,7 +540,6 @@ extension ZMSnapshotTestCase {
                             colorSchemes: Set<ColorSchemeVariant> = [],
                             file: StaticString = #file,
                             line: UInt = #line) {
-
 
         let testClosure: (UIView, String?) -> Void = {view, identifier in
 

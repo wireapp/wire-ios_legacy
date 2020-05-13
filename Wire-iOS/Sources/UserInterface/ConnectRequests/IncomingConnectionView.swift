@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import WireSyncEngine
 
 public final class IncomingConnectionView: UIView {
 
@@ -87,7 +88,7 @@ public final class IncomingConnectionView: UIView {
         let viewModel = UserNameDetailViewModel(
             user: user,
             fallbackName: "",
-            addressBookName: user.zmUser?.addressBookEntry?.cachedName
+            addressBookName: user.addressBookEntry?.cachedName
         )
         
         usernameLabel.attributedText = viewModel.title
@@ -133,11 +134,13 @@ public final class IncomingConnectionView: UIView {
 
     // MARK: - Actions
 
-    @objc func onAcceptButton(sender: AnyObject!) {
-        self.onAccept?(self.user)
+    @objc
+    private func onAcceptButton(sender: AnyObject!) {
+        onAccept?(self.user)
     }
 
-    @objc func onIgnoreButton(sender: AnyObject!) {
-        self.onIgnore?(self.user)
+    @objc
+    private func onIgnoreButton(sender: AnyObject!) {
+        onIgnore?(user)
     }
 }

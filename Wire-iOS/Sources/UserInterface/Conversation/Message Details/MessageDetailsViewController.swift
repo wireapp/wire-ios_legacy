@@ -17,13 +17,13 @@
 //
 
 import UIKit
+import WireDataModel
 
 
 /**
  * A view controller wrapping the message details.
  */
 
-@objc
 final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate {
 
     /**
@@ -85,7 +85,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
      * - parameter message: The message to display the details of.
      */
 
-    @objc convenience init(message: ZMConversationMessage) {
+    convenience init(message: ZMConversationMessage) {
         self.init(message: message, preferredDisplayMode: .receipts)
     }
 
@@ -97,7 +97,7 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
      * if the data source says it is unavailable for the message.
      */
 
-    @objc init(message: ZMConversationMessage, preferredDisplayMode: MessageDetailsDisplayMode) {
+    init(message: ZMConversationMessage, preferredDisplayMode: MessageDetailsDisplayMode) {
         self.message = message
         self.dataSource = MessageDetailsDataSource(message: message)
 
@@ -132,6 +132,10 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
         fatalError("init(coder:) has not been implemented")
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+    
     // MARK: - Configuration
 
     override func viewDidLoad() {
@@ -220,6 +224,10 @@ final class MessageDetailsViewController: UIViewController, ModalTopBarDelegate 
 
     override var shouldAutorotate: Bool {
         return false
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return wr_supportedInterfaceOrientations
     }
 }
 

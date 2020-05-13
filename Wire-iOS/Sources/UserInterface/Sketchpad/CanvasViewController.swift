@@ -19,17 +19,17 @@
 import UIKit
 import WireCanvas
 import Cartography
+import WireCommonComponents
 
-@objc protocol CanvasViewControllerDelegate : NSObjectProtocol {
+protocol CanvasViewControllerDelegate : class {
     func canvasViewController(_ canvasViewController : CanvasViewController,  didExportImage image: UIImage)
 }
 
-@objc public enum CanvasViewControllerEditMode : UInt {
+enum CanvasViewControllerEditMode : UInt {
     case draw
     case emoji
 }
 
-@objcMembers
 final class CanvasViewController: UIViewController, UINavigationControllerDelegate {
     
     weak var delegate : CanvasViewControllerDelegate?
@@ -100,16 +100,6 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         configureButtons()
         updateButtonSelection()
         createConstraints()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateStatusBar(onlyFullScreen: false)
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        updateStatusBar(onlyFullScreen: false)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -184,7 +174,7 @@ final class CanvasViewController: UIViewController, UINavigationControllerDelega
         colorPickerController.willMove(toParent: self)
         view.addSubview(colorPickerController.view)
         addChild(colorPickerController)
-        colorPickerController.selectedColorIndex = UInt(colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0)
+        colorPickerController.selectedColorIndex = colorPickerController.sketchColors.firstIndex(of: UIColor.accent()) ?? 0
     }
     
     func createConstraints() {

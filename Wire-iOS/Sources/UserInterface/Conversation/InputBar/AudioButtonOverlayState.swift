@@ -18,6 +18,7 @@
 
 
 import Foundation
+import UIKit
 
 enum AudioButtonOverlayState {
     case hidden, expanded(CGFloat), `default`
@@ -86,7 +87,7 @@ extension AudioButtonOverlayState {
     
     func colorWithColors(_ color: UIColor, highlightedColor: UIColor) -> UIColor {
         if case .expanded(let amount) = self {
-            return color.mix(highlightedColor, amount: Double(amount))
+            return color.mix(highlightedColor, amount: amount)
         }
         return color
     }

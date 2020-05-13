@@ -62,12 +62,6 @@ final class SettingsTechnicalReportViewController: UITableViewController, MFMail
         tableView.isScrollEnabled = false
         tableView.separatorColor = UIColor(white: 1, alpha: 0.1)
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        updateStatusBar()
-    }
     
     func sendReport(sourceView: UIView? = nil) {
         let mailRecipient = "calling-ios@wire.com"

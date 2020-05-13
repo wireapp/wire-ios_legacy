@@ -20,9 +20,9 @@ import XCTest
 @testable import Wire
 
 final class MockVideoGridConfiguration: VideoGridConfiguration {
-    var floatingVideoStream: ParticipantVideoState?
+    var floatingVideoStream: VideoStream?
 
-    var videoStreams: [ParticipantVideoState] = []
+    var videoStreams: [VideoStream] = []
 
     var isMuted: Bool = false
 

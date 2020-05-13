@@ -17,9 +17,14 @@
 //
 
 import Foundation
+import UIKit
 
 extension UITextView {
     func replace(_ range: NSRange, withAttributedText replacement: NSAttributedString) {
+        guard
+            range.lowerBound >= attributedText.wholeRange.lowerBound,
+            range.upperBound <= attributedText.wholeRange.upperBound
+            else { return }
         let updatedString = NSMutableAttributedString(attributedString: attributedText)
         updatedString.replaceCharacters(in: range, with: replacement)
 

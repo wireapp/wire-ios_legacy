@@ -18,20 +18,24 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import avs
 
 struct Stream: Equatable {
     let userId: UUID
     let clientId: String?
 }
 
-struct ParticipantVideoState: Equatable {
+struct VideoStream: Equatable {
     let stream: Stream
     let isPaused: Bool
 }
 
 protocol VideoGridConfiguration {
-    var floatingVideoStream: ParticipantVideoState? { get }
-    var videoStreams: [ParticipantVideoState] { get }
+    var floatingVideoStream: VideoStream? { get }
+    var videoStreams: [VideoStream] { get }
     var isMuted: Bool { get }
     var networkQuality: NetworkQuality { get }
 }
@@ -58,7 +62,7 @@ extension ZMEditableUser {
               let userId = selfUser.remoteIdentifier,
               let clientId = selfUser.selfClient()?.remoteIdentifier
         else {
-            fatal("Could create self user stream which should always exist")
+            fatal("Could not create self user stream which should always exist")
         }
         
         return Stream(userId: userId, clientId: clientId)
@@ -224,7 +228,7 @@ final class VideoGridViewController: UIViewController {
         Log.calling.debug("\nUpdated video configuration to:\n\(videoConfigurationDescription())")
     }
 
-    private func updateFloatingVideo(with state: ParticipantVideoState?) {
+    private func updateFloatingVideo(with state: VideoStream?) {
         // No stream, remove floating video if there is any
         guard let state = state else {
             Log.calling.debug("Removing self video from floating preview")
@@ -276,7 +280,7 @@ final class VideoGridViewController: UIViewController {
         """
     }
 
-    private func updateVideoGrid(with videoStreams: [ParticipantVideoState]) {
+    private func updateVideoGrid(with videoStreams: [VideoStream]) {
         let streams = videoStreams.map { $0.stream }
         let removed = gridVideoStreams.filter { !streams.contains($0) }
         let added = streams.filter { !gridVideoStreams.contains($0) }
@@ -287,7 +291,7 @@ final class VideoGridViewController: UIViewController {
         updatePausedStates(with: videoStreams)
     }
 
-    private func updatePausedStates(with videoStreams: [ParticipantVideoState]) {
+    private func updatePausedStates(with videoStreams: [VideoStream]) {
         videoStreams.forEach {
             (streamView(for: $0.stream) as? VideoPreviewView)?.isPaused = $0.isPaused
         }

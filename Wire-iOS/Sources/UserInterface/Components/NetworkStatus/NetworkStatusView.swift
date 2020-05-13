@@ -18,6 +18,7 @@
 
 import Foundation
 import Cartography
+import UIKit
 
 enum NetworkStatusViewState {
     case online
@@ -72,7 +73,7 @@ class NetworkStatusView: UIView {
         }
     }()
 
-    public weak var delegate: NetworkStatusViewDelegate?
+    weak var delegate: NetworkStatusViewDelegate?
 
     var offlineViewTopMargin: NSLayoutConstraint?
     var offlineViewBottomMargin: NSLayoutConstraint?

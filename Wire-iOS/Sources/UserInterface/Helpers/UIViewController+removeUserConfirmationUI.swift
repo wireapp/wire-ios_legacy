@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import avs
 
 extension UIViewController {
 
@@ -27,9 +30,8 @@ extension UIViewController {
     ///   - participant: user to remove
     ///   - conversation: the current converation contains that user
     ///   - viewControllerDismiser: a ViewControllerDismisser to call when this UIViewController is dismissed
-    @objc(presentRemoveDialogueForParticipant:fromConversation:dismisser:)
     func presentRemoveDialogue(
-        for participant: ZMUser,
+        for participant: UserType,
         from conversation: ZMConversation,
         dismisser: ViewControllerDismisser? = nil
         ) {
@@ -37,7 +39,7 @@ extension UIViewController {
         let controller = UIAlertController.remove(participant) { [weak self] remove in
             guard let `self` = self, remove else { return }
             
-            conversation.removeOrShowError(participnant: participant) { result in
+            conversation.removeOrShowError(participant: participant) { result in
                 switch result {
                 case .success:
                     dismisser?.dismiss(viewController: self, completion: nil)
@@ -48,6 +50,6 @@ extension UIViewController {
         }
         
         present(controller, animated: true)
-        MediaManagerPlayAlert()
+        AVSMediaManager.sharedInstance().mediaManagerPlayAlert()
     }
 }

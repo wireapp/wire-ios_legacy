@@ -18,16 +18,17 @@
 
 import UIKit
 import WireUtilities
+import WireDataModel
 
 
-@objc protocol ConversationMessageCellDelegate: MessageActionResponder {
+protocol ConversationMessageCellDelegate: MessageActionResponder {
     
     func conversationMessageShouldBecomeFirstResponderWhenShowingMenuForCell(_ cell: UIView) -> Bool
     func conversationMessageWantsToOpenUserDetails(_ cell: UIView, user: UserType, sourceView: UIView, frame: CGRect)
     func conversationMessageWantsToOpenMessageDetails(_ cell: UIView, messageDetailsViewController: MessageDetailsViewController)
     func conversationMessageWantsToOpenGuestOptionsFromView(_ cell: UIView, sourceView: UIView)
-    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [ZMUser], sourceView: UIView)
-    
+    func conversationMessageWantsToOpenParticipantsDetails(_ cell: UIView, selectedUsers: [UserType], sourceView: UIView)
+    func conversationMessageShouldUpdate()
 }
 
 /**
@@ -200,24 +201,42 @@ extension ConversationMessageCellDescription {
     func configureCell(_ cell: UITableViewCell, animated: Bool = false) {
         guard let adapterCell = cell as? ConversationMessageCellTableViewAdapter<Self> else { return }
         
-        adapterCell.cellView.configure(with: self.configuration, animated: animated)
+        adapterCell.cellView.configure(with: configuration, animated: animated)
         
         if cell.isVisible {
             _ = message?.startSelfDestructionIfNeeded()
         }
     }
     
+    
+    /// Default implementation of isConfigurationEqual. If the configure is Equatable, see below Conditionally Conforming for View.Configuration : Equatable
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type
     func isConfigurationEqual(with other: Any) -> Bool {
         return type(of: self) == type(of: other)
     }
     
 }
 
+extension ConversationMessageCellDescription where View.Configuration : Equatable {
+    
+    /// Default implementation of isConfigurationEqual
+    ///
+    /// - Parameter other: other object to compare
+    /// - Returns: true if both self and other having same type, and configures are equal
+    func isConfigurationEqual(with other: Any) -> Bool {
+        guard let otherConfig = (other as? Self)?.configuration else { return false }
+        
+        return configuration == otherConfig
+    }
+}
+
 /**
  * A type erased box containing a conversation message cell description.
  */
 
-@objc class AnyConversationMessageCellDescription: NSObject {
+class AnyConversationMessageCellDescription: NSObject {
     private let cellGenerator: (UITableView, IndexPath) -> UITableViewCell
     private let viewGenerator: () -> UIView
     private let registrationBlock: (UITableView) -> Void
@@ -284,7 +303,7 @@ extension ConversationMessageCellDescription {
         return baseTypeGetter()
     }
 
-    @objc var delegate: ConversationMessageCellDelegate? {
+    var delegate: ConversationMessageCellDelegate? {
         get { return _delegate.getter() }
         set { _delegate.setter(newValue) }
     }
@@ -332,7 +351,6 @@ extension ConversationMessageCellDescription {
         configureBlock(cell, animated)
     }
 
-    @objc(registerInTableView:)
     func register(in tableView: UITableView) {
         registrationBlock(tableView)
     }

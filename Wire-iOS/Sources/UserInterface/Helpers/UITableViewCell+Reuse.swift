@@ -22,13 +22,13 @@ import UIKit
 // MARK: Cell Registration
 
 extension NSObject {
-    @objc static var zm_reuseIdentifier: String {
+    static var zm_reuseIdentifier: String {
         return NSStringFromClass(self) + "_ReuseIdentifier"
     }
 }
 
 extension UITableViewCell {
-    @objc static func register(in tableView: UITableView) {
+    static func register(in tableView: UITableView) {
         tableView.register(self, forCellReuseIdentifier: zm_reuseIdentifier)
     }
 }
@@ -36,6 +36,12 @@ extension UITableViewCell {
 extension UICollectionViewCell {
     static func register(in collectionView: UICollectionView) {
         collectionView.register(self, forCellWithReuseIdentifier: zm_reuseIdentifier)
+    }
+}
+
+extension UITableViewHeaderFooterView {
+    static func register(in tableView: UITableView) {
+        tableView.register(self, forHeaderFooterViewReuseIdentifier: zm_reuseIdentifier)
     }
 }
 
@@ -50,5 +56,9 @@ extension UICollectionView {
 extension UITableView {
     func dequeueReusableCell<T: UITableViewCell>(ofType cellType: T.Type, for indexPath: IndexPath) -> T {
         return dequeueReusableCell(withIdentifier: T.zm_reuseIdentifier, for: indexPath) as! T
+    }
+
+    func dequeueReusableHeaderFooter<T: UITableViewHeaderFooterView>(ofType headerFooterType: T.Type) -> T {
+        return dequeueReusableHeaderFooterView(withIdentifier: T.zm_reuseIdentifier) as! T
     }
 }

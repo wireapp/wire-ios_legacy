@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum LeaveResult: AlertResultConfiguration {
     case leave(delete: Bool), cancel
@@ -60,7 +61,7 @@ extension ConversationActionController {
                 conversation.clearMessageHistory()
             }
             
-            conversation.removeOrShowError(participnant: .selfUser())
+            conversation.removeOrShowError(participant: SelfUser.current)
         }
     }
     

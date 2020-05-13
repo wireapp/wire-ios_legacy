@@ -19,7 +19,9 @@
 
 import Foundation
 import Cartography
-
+import WireCommonComponents
+import UIKit
+import WireDataModel
 
 struct CallCellViewModel {
 
@@ -55,11 +57,11 @@ struct CallCellViewModel {
                 detailKey.append(".groups")
             }
             
-            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : sender.displayName
+            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : (sender.name ?? "")
             called = key(with: detailKey).localized(pov: sender.pov, args: childs + 1, senderString) && labelFont
         } else {
             let detailKey = "called"
-            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : sender.displayName
+            senderString = sender.isSelfUser ? selfKey(with: detailKey).localized : (sender.name ?? "")
             called = key(with: detailKey).localized(pov: sender.pov, args: senderString) && labelFont
         }
         

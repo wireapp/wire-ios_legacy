@@ -18,6 +18,8 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
+import WireCommonComponents
 
 protocol CallQualityControllerDelegate: class {
     func dismissCurrentSurveyIfNeeded()
@@ -29,7 +31,7 @@ protocol CallQualityControllerDelegate: class {
  * Observes call state to prompt the user for call quality feedback when appropriate.
  */
 
-class CallQualityController: NSObject {
+final class CallQualityController: NSObject {
     
     weak var delegate: CallQualityControllerDelegate? = nil
 
@@ -62,7 +64,7 @@ class CallQualityController: NSObject {
      */
 
     var canPresentCallQualitySurvey: Bool {
-        return DeveloperMenuState.developerMenuEnabled() && !AutomationHelper.sharedHelper.disableCallQualitySurvey
+        return Bundle.developerModeEnabled && !AutomationHelper.sharedHelper.disableCallQualitySurvey
     }
 
     // MARK: - Events
@@ -138,7 +140,7 @@ class CallQualityController: NSObject {
 
 extension CallQualityController: WireCallCenterCallStateObserver {
     
-    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: ZMUser, timestamp: Date?, previousCallState: CallState?) {
+    func callCenterDidChange(callState: CallState, conversation: ZMConversation, caller: UserType, timestamp: Date?, previousCallState: CallState?) {
         guard canPresentCallQualitySurvey else { return }
         let eventDate = Date()
 

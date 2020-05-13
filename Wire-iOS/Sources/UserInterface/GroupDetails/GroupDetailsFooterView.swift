@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 protocol GroupDetailsFooterViewDelegate: class {
     func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action)
@@ -31,7 +32,7 @@ final class GroupDetailsFooterView: ConversationDetailFooterView {
     }
     
     func update(for conversation: ZMConversation) {
-        leftButton.isHidden = !(ZMUser.selfUser()?.canAddUser(to: conversation) ?? false)
+        leftButton.isHidden = !SelfUser.current.canAddUser(to: conversation)
         leftButton.isEnabled = conversation.freeParticipantSlots > 0
     }
     

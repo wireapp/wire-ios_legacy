@@ -28,7 +28,7 @@ public enum DeniedAuthorizationType {
     case ongoingCall
 }
 
-open class CameraKeyboardPermissionsCell: UICollectionViewCell {
+class CameraKeyboardPermissionsCell: UICollectionViewCell {
 
     let settingsButton = Button()
     let cameraIcon = IconButton()

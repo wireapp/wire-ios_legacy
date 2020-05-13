@@ -63,7 +63,6 @@ final class FolderPickerViewController: UIViewController {
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.shared.wr_updateStatusBarForCurrentControllerAnimated(animated)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

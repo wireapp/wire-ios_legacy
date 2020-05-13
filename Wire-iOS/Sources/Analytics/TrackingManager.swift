@@ -17,11 +17,15 @@
 //
 
 import Foundation
-import HockeySDK
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
+import AppCenterDistribute
 import WireCommonComponents
+import avs
+import WireSyncEngine
 
-
-@objc public class TrackingManager: NSObject, TrackingInterface {
+final class TrackingManager: NSObject, TrackingInterface {
     private let flowManagerObserver: NSObjectProtocol
     
     private override init() {
@@ -32,13 +36,13 @@ import WireCommonComponents
         })
     }
     
-    @objc public static let shared = TrackingManager()
+    static let shared = TrackingManager()
 
-    @objc public var disableCrashAndAnalyticsSharing: Bool {
+    var disableCrashAndAnalyticsSharing: Bool {
         set {
             Analytics.shared().isOptedOut = newValue
             AVSFlowManager.getInstance()?.setEnableMetrics(!newValue)
-            updateHockeyStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
+            updateAppCenterStateIfNeeded(oldState: disableCrashAndAnalyticsSharing, newValue)
             ExtensionSettings.shared.disableCrashAndAnalyticsSharing = newValue
         }
         
@@ -47,16 +51,13 @@ import WireCommonComponents
         }
     }
 
-    private func updateHockeyStateIfNeeded(oldState: Bool, _ newState: Bool) {
+    private func updateAppCenterStateIfNeeded(oldState: Bool, _ newState: Bool) {
         switch (oldState, newState) {
         case (true, false):
-            BITHockeyManager.shared().setTrackingEnabled(true)
-            BITHockeyManager.shared().start()
-            BITHockeyManager.shared().authenticator.authenticateInstallation()
-
+            MSAppCenter.setEnabled(true)
+            MSAppCenter.start()
         case (false, true):
-            BITHockeyManager.shared().setTrackingEnabled(false)
-
+            MSAppCenter.setEnabled(false)
         default:
             return
         }

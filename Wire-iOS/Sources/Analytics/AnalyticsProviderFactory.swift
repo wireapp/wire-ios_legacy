@@ -17,20 +17,22 @@
 //
 
 import Foundation
+import WireSystem
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "Analytics")
 
 fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
 
-@objcMembers class AnalyticsProviderFactory: NSObject {
-    @objc public static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
-    @objc public static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
+final class AnalyticsProviderFactory: NSObject {
+    static let shared = AnalyticsProviderFactory(userDefaults: .shared()!)
+    static let ZMConsoleAnalyticsArgumentKey = "-ConsoleAnalytics"
 
-    @objc public var useConsoleAnalytics: Bool = false
+    var useConsoleAnalytics: Bool = false
 
     private let userDefaults: UserDefaults
 
-    @objc public init(userDefaults: UserDefaults) {
+    init(userDefaults: UserDefaults) {
         self.userDefaults = userDefaults
     }
   
@@ -39,7 +41,7 @@ fileprivate let ZMEnableConsoleLog = "ZMEnableAnalyticsLog"
             zmLog.info("Creating analyticsProvider: AnalyticsConsoleProvider")
             return AnalyticsConsoleProvider()
         }
-        else if UseAnalytics.boolValue || AutomationHelper.sharedHelper.useAnalytics {
+        else if AutomationHelper.sharedHelper.useAnalytics {
             // Create & return valid provider, when available.
             return nil
         }

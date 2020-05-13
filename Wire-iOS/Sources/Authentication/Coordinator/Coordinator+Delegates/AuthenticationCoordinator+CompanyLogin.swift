@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
 
@@ -30,15 +31,14 @@ extension AuthenticationCoordinator: CompanyLoginControllerDelegate {
     }
 
     func controller(_ controller: CompanyLoginController, showLoadingView: Bool) {
-        presenter?.showLoadingView = showLoadingView
+        presenter?.isLoadingViewVisible = showLoadingView
     }
 
     func controllerDidStartCompanyLoginFlow(_ controller: CompanyLoginController) {
         stateController.transition(to: .companyLogin)
     }
-
+    
     func controllerDidCancelCompanyLoginFlow(_ controller: CompanyLoginController) {
         cancelCompanyLogin()
     }
-
 }

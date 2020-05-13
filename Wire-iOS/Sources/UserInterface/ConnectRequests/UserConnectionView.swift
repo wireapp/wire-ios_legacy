@@ -19,8 +19,11 @@
 
 import Foundation
 import Cartography
+import WireDataModel
+import UIKit
+import WireSyncEngine
 
-public final class UserConnectionView: UIView, Copyable {
+final class UserConnectionView: UIView, Copyable {
     
     public convenience init(instance: UserConnectionView) {
         self.init(user: instance.user)
@@ -105,7 +108,7 @@ public final class UserConnectionView: UIView, Copyable {
     private var correlationLabelText: NSAttributedString? {
         return type(of: self).correlationFormatter.correlationText(
             for: user,
-            addressBookName: user.zmUser?.addressBookEntry?.cachedName
+            addressBookName: (user as? ZMUser)?.addressBookEntry?.cachedName
         )
     }
     

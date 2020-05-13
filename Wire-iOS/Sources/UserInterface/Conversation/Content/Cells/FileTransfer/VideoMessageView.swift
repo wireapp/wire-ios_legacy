@@ -18,8 +18,11 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
-@objcMembers final class VideoMessageView: UIView, TransferView {
+final class VideoMessageView: UIView, TransferView {
     public var fileMessage: ZMConversationMessage?
     weak public var delegate: TransferViewDelegate?
     
@@ -176,7 +179,7 @@ import Cartography
     }
     
     private func updatePreviewImage(_ image: MediaAsset) {
-        previewImageView.setMediaAsset(image) 
+        previewImageView.mediaAsset = image
         timeLabel.textColor = UIColor.from(scheme: .textForeground, variant: .dark)
         updateVisibleViews()
     }
@@ -212,7 +215,8 @@ import Cartography
     
     // MARK: - Actions
     
-    @objc public func onActionButtonPressed(_ sender: UIButton) {
+    @objc
+    func onActionButtonPressed(_ sender: UIButton) {
         guard let fileMessageData = self.fileMessage?.fileMessageData else { return }
         
         switch(fileMessageData.transferState) {

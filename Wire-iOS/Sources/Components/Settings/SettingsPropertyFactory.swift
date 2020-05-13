@@ -17,8 +17,13 @@
 //
 
 
-import HockeySDK.BITHockeyManager
-
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
+import AppCenterDistribute
+import avs
+import WireSyncEngine
+import WireCommonComponents
 
 protocol TrackingInterface {
     var disableCrashAndAnalyticsSharing : Bool { get set }
@@ -51,7 +56,7 @@ protocol SettingsPropertyFactoryDelegate: class {
     func asyncMethodDidComplete(_ settingsPropertyFactory: SettingsPropertyFactory)
 }
 
-class SettingsPropertyFactory {
+final class SettingsPropertyFactory {
     let userDefaults: UserDefaults
     var tracking: TrackingInterface?
     var mediaManager: AVSMediaManagerInterface?
@@ -60,20 +65,19 @@ class SettingsPropertyFactory {
     var marketingConsent: SettingsPropertyValue = .none
     weak var delegate: SettingsPropertyFactoryDelegate?
     
-    static let userDefaultsPropertiesToKeys: [SettingsPropertyName: String] = [
-        SettingsPropertyName.disableMarkdown                : UserDefaultDisableMarkdown,
-        SettingsPropertyName.chatHeadsDisabled              : UserDefaultChatHeadsDisabled,
-        SettingsPropertyName.messageSoundName               : UserDefaultMessageSoundName,
-        SettingsPropertyName.callSoundName                  : UserDefaultCallSoundName,
-        SettingsPropertyName.pingSoundName                  : UserDefaultPingSoundName,
-        SettingsPropertyName.disableSendButton              : UserDefaultSendButtonDisabled,
-        SettingsPropertyName.mapsOpeningOption              : UserDefaultMapsOpeningRawValue,
-        SettingsPropertyName.browserOpeningOption           : UserDefaultBrowserOpeningRawValue,
-        SettingsPropertyName.tweetOpeningOption             : UserDefaultTwitterOpeningRawValue,
-        SettingsPropertyName.callingProtocolStrategy        : UserDefaultCallingProtocolStrategy,
-        SettingsPropertyName.enableBatchCollections         : UserDefaultEnableBatchCollections,
-        SettingsPropertyName.callingConstantBitRate         : UserDefaultCallingConstantBitRate,
-        SettingsPropertyName.disableLinkPreviews            : UserDefaultDisableLinkPreviews
+    static let userDefaultsPropertiesToKeys: [SettingsPropertyName: SettingKey] = [
+        SettingsPropertyName.disableMarkdown                : .disableMarkdown,
+        SettingsPropertyName.chatHeadsDisabled              : .chatHeadsDisabled,
+        SettingsPropertyName.messageSoundName               : .messageSoundName,
+        SettingsPropertyName.callSoundName                  : .callSoundName,
+        SettingsPropertyName.pingSoundName                  : .pingSoundName,
+        SettingsPropertyName.disableSendButton              : .sendButtonDisabled,
+        SettingsPropertyName.mapsOpeningOption              : .mapsOpeningRawValue,
+        SettingsPropertyName.browserOpeningOption           : .browserOpeningRawValue,
+        SettingsPropertyName.tweetOpeningOption             : .twitterOpeningRawValue,
+        SettingsPropertyName.callingProtocolStrategy        : .callingProtocolStrategy,
+        SettingsPropertyName.enableBatchCollections         : .enableBatchCollections,
+        SettingsPropertyName.callingConstantBitRate         : .callingConstantBitRate,
     ]
     
     convenience init(userSession: ZMUserSessionInterface?, selfUser: SettingsSelfUser?) {
@@ -120,7 +124,7 @@ class SettingsPropertyFactory {
 
                     var inOutString: String? = stringValue as String
                     _ = try type(of: selfUser).validate(name: &inOutString)
-                    self.userSession?.enqueueChanges {
+                    self.userSession?.enqueue {
                         selfUser.name = stringValue
                     }
                 default:
@@ -157,7 +161,7 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userSession?.enqueueChanges({
+                    self.userSession?.enqueue({
                         self.selfUser?.accentColorValue = ZMAccentColor(rawValue: number.int16Value)!
                     })
                 default:
@@ -168,12 +172,12 @@ class SettingsPropertyFactory {
             return SettingsBlockProperty(propertyName: propertyName, getAction: getAction, setAction: setAction)
         case .darkMode:
             let getAction : GetAction = { [unowned self] (property: SettingsBlockProperty) -> SettingsPropertyValue in
-                return SettingsPropertyValue(self.userDefaults.string(forKey: UserDefaultColorScheme) == "dark")
+                return SettingsPropertyValue(self.userDefaults.string(forKey: SettingKey.colorScheme.rawValue) == "dark")
             }
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch(value) {
                 case .number(let number):
-                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: UserDefaultColorScheme)
+                    self.userDefaults.set(number.boolValue ? "dark" : "light", forKey: SettingKey.colorScheme.rawValue)
                 default:
                     throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                 }
@@ -237,7 +241,7 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                 case .number(let number):
-                    self.userSession?.performChanges {
+                    self.userSession?.perform {
                         if let userSession = self.userSession as? ZMUserSession {
                             self.delegate?.asyncMethodDidStart(self)
                             (self.selfUser as? ZMUser)?.setMarketingConsent(to: number.boolValue, in: userSession, completion: { [weak self] _ in
@@ -268,7 +272,7 @@ class SettingsPropertyFactory {
             let setAction : SetAction = { [unowned self] (property: SettingsBlockProperty, value: SettingsPropertyValue) throws -> () in
                 switch value {
                     case .number(let number):
-                        self.userSession?.performChanges {
+                        self.userSession?.perform {
                             self.userSession?.isNotificationContentHidden = number.boolValue
                         }
                     
@@ -282,11 +286,13 @@ class SettingsPropertyFactory {
         case .disableSendButton:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableSendButton) },
+                getAction: { _ in
+                    let disableSendButton: Bool? = Settings.shared[.sendButtonDisabled]
+                    return SettingsPropertyValue(disableSendButton ?? false) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared().disableSendButton = number.boolValue
+                        Settings.shared[.sendButtonDisabled] = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -308,21 +314,23 @@ class SettingsPropertyFactory {
         case .callingConstantBitRate:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().callingConstantBitRate) },
+                getAction: { _ in
+                    let callingConstantBitRate: Bool = Settings.shared[.callingConstantBitRate] ?? false
+                    return SettingsPropertyValue(callingConstantBitRate) },
                 setAction: { _, value in
                     if case .number(let enabled) = value {
-                        Settings.shared().callingConstantBitRate = enabled.boolValue
+                        Settings.shared[.callingConstantBitRate] = enabled.boolValue
                     }
             })
             
         case .disableLinkPreviews:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableLinkPreviews) },
+                getAction: { _ in return SettingsPropertyValue(Settings.disableLinkPreviews) },
                 setAction: { _, value in
                     switch value {
                     case .number(value: let number):
-                        Settings.shared().disableLinkPreviews = number.boolValue
+                        Settings.disableLinkPreviews = number.boolValue
                     default:
                         throw SettingsPropertyError.WrongValue("Incorrect type \(value) for key \(propertyName)")
                     }
@@ -330,10 +338,12 @@ class SettingsPropertyFactory {
         case .disableCallKit:
             return SettingsBlockProperty(
                 propertyName: propertyName,
-                getAction: { _ in return SettingsPropertyValue(Settings.shared().disableCallKit) },
+                getAction: { _ in
+                    let disableCallKit: Bool = Settings.shared[.disableCallKit] ?? false
+                    return SettingsPropertyValue(disableCallKit) },
                 setAction: { _, value in
                     if case .number(let disabled) = value {
-                        Settings.shared().disableCallKit = disabled.boolValue
+                        Settings.shared[.disableCallKit] = disabled.boolValue
                     }
             })
         case .readReceiptsEnabled:
@@ -346,7 +356,7 @@ class SettingsPropertyFactory {
                 setAction: { _, value in
                     if case .number(let enabled) = value,
                         let userSession = self.userSession as? ZMUserSession {
-                            userSession.performChanges {
+                            userSession.perform {
                                 self.selfUser?.readReceiptsEnabled = enabled.boolValue
                             }
                         }
@@ -354,7 +364,7 @@ class SettingsPropertyFactory {
             
         default:
             if let userDefaultsKey = type(of: self).userDefaultsPropertiesToKeys[propertyName] {
-                return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey, userDefaults: self.userDefaults)
+                return SettingsUserDefaultsProperty(propertyName: propertyName, userDefaultsKey: userDefaultsKey.rawValue, userDefaults: userDefaults)
             }
         }
         

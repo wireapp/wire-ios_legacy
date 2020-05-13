@@ -17,13 +17,14 @@
 //
 
 import Foundation
+import UIKit
 
-public protocol Reusable {
+protocol Reusable {
     static var reuseIdentifier: String { get }
     var reuseIdentifier: String? { get }
 }
 
-public extension Reusable {
+extension Reusable {
     static var reuseIdentifier: String {
         guard let `class` = self as? AnyClass else { return "\(self)" }
         return NSStringFromClass(`class`)

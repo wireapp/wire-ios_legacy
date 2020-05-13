@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 enum ConversationListState {
     case conversationList
@@ -157,7 +159,7 @@ final class ConversationListViewController: UIViewController {
         super.viewDidAppear(animated)
 
         if !isIPadRegular() {
-            Settings.shared().lastViewedScreen = SettingsLastScreen.list
+            Settings.shared[.lastViewedScreen] = SettingsLastScreen.list
         }
 
         state = .conversationList
@@ -169,21 +171,12 @@ final class ConversationListViewController: UIViewController {
 
         if !viewDidAppearCalled {
             viewDidAppearCalled = true
-            ZClientViewController.shared()?.showDataUsagePermissionDialogIfNeeded()
-            ZClientViewController.shared()?.showAvailabilityBehaviourChangeAlertIfNeeded()
+            ZClientViewController.shared?.showDataUsagePermissionDialogIfNeeded()
+            ZClientViewController.shared?.showAvailabilityBehaviourChangeAlertIfNeeded()
         }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        if let presentedViewController = presentedViewController,
-            presentedViewController is UIAlertController {
-            return presentedViewController.preferredStatusBarStyle
-        }
-
         return .lightContent
     }
 
@@ -336,7 +329,6 @@ final class ConversationListViewController: UIViewController {
     /// Scroll to the current selection
     ///
     /// - Parameter animated: perform animation or not
-    @objc(scrollToCurrentSelectionAnimated:)
     func scrollToCurrentSelection(animated: Bool) {
         listContentController.scrollToCurrentSelection(animated: animated)
     }
@@ -361,7 +353,6 @@ final class ConversationListViewController: UIViewController {
         }
     }
 
-    @objc
     func hideArchivedConversations() {
         setState(.conversationList, animated:true)
     }

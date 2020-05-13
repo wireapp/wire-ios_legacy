@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import avs
+import WireSyncEngine
 
 fileprivate extension VoiceChannel {
     var degradationState: CallDegradationState {
@@ -37,7 +39,7 @@ fileprivate extension VoiceChannel {
         
         switch state {
         case .incoming(video: false, shouldRing: true, degraded: _):
-            return initiator.map { .avatar($0) } ?? .none
+            return (initiator as? ZMUser).map { .avatar($0) } ?? .none
         case .incoming(video: true, shouldRing: true, degraded: _):
             return .none
         case .answered, .establishedDataChannel, .outgoing:
@@ -197,7 +199,7 @@ fileprivate struct VoiceChannelSnapshot {
     init(_ voiceChannel: VoiceChannel) {
         callerName = {
             guard voiceChannel.conversation?.conversationType != .oneOnOne else { return nil }
-            return voiceChannel.initiator?.displayName ?? ""
+            return voiceChannel.initiator?.name ?? ""
         }()
         state = voiceChannel.state
         callStartDate = voiceChannel.callStartDate ?? .init()
@@ -224,7 +226,7 @@ fileprivate extension VoiceChannel {
     
     var canUpgradeToVideo: Bool {
         guard let conversation = conversation, conversation.conversationType != .oneOnOne else { return true }
-        guard conversation.activeParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
+        guard conversation.localParticipants.count <= ZMConversation.maxVideoCallParticipants else { return false }
         return ZMUser.selfUser().isTeamMember || isAnyParticipantSendingVideo
     }
     
@@ -240,12 +242,14 @@ fileprivate extension VoiceChannel {
 
     func sortedConnectedParticipants(using timestamps: CallParticipantTimestamps) -> [CallParticipant] {
         return connectedParticipants.sorted { lhs, rhs in
-            timestamps[lhs.user] > timestamps[rhs.user]
+            timestamps[lhs] > timestamps[rhs]
         }
     }
 
     var firstDegradedUser: ZMUser? {
-        return conversation?.activeParticipants.first(where: { $0.untrusted() })
+        return conversation?.localParticipants.first(where: {
+            !$0.isTrusted
+        })
     }
 
     private var isIncomingVideoCall: Bool {

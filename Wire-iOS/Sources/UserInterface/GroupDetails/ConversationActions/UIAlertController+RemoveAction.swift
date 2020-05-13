@@ -17,15 +17,18 @@
 //
 
 import Foundation
-
+import UIKit
+import WireDataModel
 
 extension UIAlertController {
-    static func remove(_ user: ZMUser, completion: @escaping (Bool) -> Void) -> UIAlertController {
+
+    static func remove(_ user: UserType, completion: @escaping (Bool) -> Void) -> UIAlertController {
         let controller = UIAlertController(
-            title: "profile.remove_dialog_message".localized(args: user.displayName),
+            title: "profile.remove_dialog_message".localized(args: user.name ?? ""),
             message: nil,
             preferredStyle: .actionSheet
         )
+
         controller.addAction(ZMConversation.Action.remove.alertAction { completion(true) })
         controller.addAction(.cancel { completion(false) })
         return controller

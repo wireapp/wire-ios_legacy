@@ -30,7 +30,6 @@
 @property (nonatomic) ZMUser *connectedUser;
 @property (nonatomic) ZMConversationType conversationType;
 @property (nonatomic) NSArray *sortedActiveParticipants;
-@property (nonatomic) NSSet *activeParticipants;
 @property (nonatomic) ZMConversationSecurityLevel securityLevel;
 @property (nonatomic) ZMConnectionStatus relatedConnectionState;
 @property (nonatomic) BOOL canStartVideoCall;
@@ -42,5 +41,5 @@
 @property (nonatomic) ZMConversationLegalHoldStatus legalHoldStatus;
 
 - (ZMConversation *)convertToRegularConversation;
-
+- (void)verifyLegalHoldSubjects;
 @end

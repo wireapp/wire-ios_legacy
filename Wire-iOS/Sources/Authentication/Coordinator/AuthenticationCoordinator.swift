@@ -18,6 +18,7 @@
 
 import Foundation
 import WireSyncEngine
+import UIKit
 
 /**
  * Manages the flow of authentication for the user. Decides which steps to take for login, registration
@@ -35,7 +36,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     let log = ZMSLog(tag: "Authentication")
 
     /// The navigation controller that presents the authentication interface.
-    weak var presenter: UINavigationController?
+    weak var presenter: (UINavigationController & SpinnerCapable)?
 
     /// The object receiving updates from the authentication state and providing state.
     weak var delegate: AuthenticationCoordinatorDelegate?
@@ -108,7 +109,7 @@ class AuthenticationCoordinator: NSObject, AuthenticationEventResponderChainDele
     // MARK: - Initialization
 
     /// Creates a new authentication coordinator with the required supporting objects.
-    init(presenter: UINavigationController, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
+    init(presenter: UINavigationController & SpinnerCapable, sessionManager: ObservableSessionManager, featureProvider: AuthenticationFeatureProvider) {
         self.presenter = presenter
         self.sessionManager = sessionManager
         self.stateController = AuthenticationStateController()
@@ -146,7 +147,7 @@ extension AuthenticationCoordinator: AuthenticationStateControllerDelegate {
             return
         }
 
-        guard let stepViewController = interfaceBuilder.makeViewController(for: newState) else {
+        guard var stepViewController = interfaceBuilder.makeViewController(for: newState) else {
             fatalError("Step \(newState) requires user interface, but the interface builder does not support it.")
         }
 
@@ -220,7 +221,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
 
         postLoginObservers = [
             userProfile.add(observer: self),
-            UserChangeInfo.add(observer: self, for: selfUser, userSession: sharedSession)!
+            UserChangeInfo.add(observer: self, for: selfUser, in: sharedSession)!
         ]
     }
 
@@ -233,16 +234,16 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
         for action in actions {
             switch action {
             case .showLoadingView:
-                presenter?.showLoadingView = true
+                presenter?.isLoadingViewVisible = true
 
             case .hideLoadingView:
-                presenter?.showLoadingView = false
+                presenter?.isLoadingViewVisible = false
 
             case .completeBackupStep:
                 unauthenticatedSession.continueAfterBackupImportStep()
 
             case .executeFeedbackAction(let action):
-                currentViewController?.executeErrorFeedbackAction?(action)
+                currentViewController?.executeErrorFeedbackAction(action)
 
             case .presentAlert(let alertModel):
                 presentAlert(for: alertModel)
@@ -291,7 +292,7 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
                 advanceTeamCreation(value: newValue)
 
             case .displayInlineError(let error):
-                currentViewController?.displayError?(error)
+                currentViewController?.displayError(error)
 
             case .assignRandomProfileImage:
                 assignRandomProfileImage()
@@ -314,6 +315,9 @@ extension AuthenticationCoordinator: AuthenticationActioner, SessionManagerCreat
             case .startCompanyLogin(let code):
                 startCompanyLoginFlowIfPossible(linkCode: code)
 
+            case .startSSOFlow:
+                startAutomaticSSOFlow()
+                
             case .startLoginFlow(let request):
                 startLoginFlow(request: request)
 
@@ -382,7 +386,7 @@ extension AuthenticationCoordinator {
     /// Unwinds the state.
     private func unwindState(popController: Bool) {
         if popController {
-            presenter?.popViewController(animated: true)
+            _ = presenter?.popViewController(animated: true)
         } else {
             stateController.unwindState()
         }
@@ -427,7 +431,7 @@ extension AuthenticationCoordinator {
         let browser = BrowserViewController(url: url)
         browser.onDismiss = {
             if let alertModel = self.pendingAlert {
-                self.presenter?.showLoadingView = false
+                self.presenter?.isLoadingViewVisible = false
                 self.presentAlert(for: alertModel)
                 self.pendingAlert = nil
             }
@@ -438,7 +442,7 @@ extension AuthenticationCoordinator {
 
     /// Presents an error alert.
     private func presentErrorAlert(for alertModel: AuthenticationCoordinatorErrorAlert) {
-        presenter?.showAlert(forError: alertModel.error) { _ in
+        presenter?.showAlert(for: alertModel.error) { _ in
             self.executeActions(alertModel.completionActions)
         }
     }
@@ -504,14 +508,14 @@ extension AuthenticationCoordinator {
 
     /// Sends the registration activation code.
     private func sendActivationCode(_ credentials: UnverifiedCredentials, _ user: UnregisteredUser, isResend: Bool) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .sendActivationCode(credentials, user: user, isResend: isResend))
         registrationStatus.sendActivationCode(to: credentials)
     }
 
     /// Asks the registration status to activate the credentials with the code provided by the user.
     private func activateCredentials(credentials: UnverifiedCredentials, user: UnregisteredUser, code: String) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .activateCredentials(credentials, user: user, code: code))
         registrationStatus.checkActivationCode(credentials: credentials, code: code)
     }
@@ -597,7 +601,7 @@ extension AuthenticationCoordinator {
         URLSession.shared.dataTask(with: .wr_randomProfilePictureSource) { (data, _, error) in
             if let data = data, error == nil {
                 DispatchQueue.main.async {
-                    userSession.profileUpdate.updateImage(imageData: data)
+                    userSession.userProfileImage?.updateImage(imageData: data)
                 }
             }
         }.resume()
@@ -610,12 +614,12 @@ extension AuthenticationCoordinator {
         switch request {
         case .email(let address, let password):
             let credentials = ZMEmailCredentials(email: address, password: password)
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             stateController.transition(to: .authenticateEmailCredentials(credentials))
             unauthenticatedSession.login(with: credentials)
 
         case .phoneNumber(let phoneNumber):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: false)
             stateController.transition(to: nextStep)
             unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
@@ -624,7 +628,7 @@ extension AuthenticationCoordinator {
 
     /// Sends the login verification code to the phone number.
     private func sendLoginCode(phoneNumber: String, isResend: Bool) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         let nextStep = AuthenticationFlowStep.sendLoginCode(phoneNumber: phoneNumber, isResend: isResend)
         stateController.transition(to: nextStep)
         unauthenticatedSession.requestPhoneVerificationCodeForLogin(phoneNumber: phoneNumber)
@@ -632,7 +636,7 @@ extension AuthenticationCoordinator {
 
     /// Requests a phone login for the specified credentials.
     private func requestPhoneLogin(with credentials: ZMPhoneCredentials) {
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         stateController.transition(to: .authenticatePhoneCredentials(credentials))
         unauthenticatedSession.login(with: credentials)
     }
@@ -683,7 +687,7 @@ extension AuthenticationCoordinator {
         }
 
         stateController.transition(to: .registerEmailCredentials(credentials, isResend: false))
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
 
         let result = setCredentialsWithProfile(profile, credentials: credentials) && sessionManager.update(credentials: credentials) == true
 
@@ -703,7 +707,6 @@ extension AuthenticationCoordinator {
         }
     }
 
-    // MARK: - Backup
 
     // MARK: - Company Login
 
@@ -720,17 +723,22 @@ extension AuthenticationCoordinator {
     /// Manually start the company login flow.
     private func startCompanyLoginFlowIfPossible(linkCode: UUID?) {
         if let linkCode = linkCode {
-            companyLoginController?.attemptLoginWithCode(linkCode)
+            companyLoginController?.attemptLoginWithSSOCode(linkCode)
         } else {
-            companyLoginController?.displayLoginCodePrompt()
+            companyLoginController?.displayCompanyLoginPrompt()
         }
     }
+    
+    /// Automatically start the SSO flow if possible
+    private func startAutomaticSSOFlow() {
+        companyLoginController?.startAutomaticSSOFlow()
+    }
 
-    /// Call this method when the corrdinated view controller appears, to detect the login code and display it if needed.
-    func detectLoginCodeIfPossible() {
+    /// Call this method when the corrdinated view controller appears, to detect the sso code and display it if needed.
+    func detectSSOCodeIfPossible() {
         if canStartCompanyLogin {
             companyLoginController?.isAutoDetectionEnabled = true
-            companyLoginController?.detectLoginCode()
+            companyLoginController?.detectSSOCode()
         } else {
             companyLoginController?.isAutoDetectionEnabled = false
         }
@@ -774,25 +782,25 @@ extension AuthenticationCoordinator {
 
             UIAlertController.requestTOSApproval(over: presenter, forTeamAccount: true) { approved in
                 if approved {
-                    presenter.showLoadingView = true
+                    presenter.isLoadingViewVisible = true
                     self.registrationStatus.sendActivationCode(to: .email(emailAddress))
                 } else {
-                    presenter.showLoadingView = false
+                    presenter.isLoadingViewVisible = false
                     self.stateController.unwindState()
                 }
             }
 
         case let .verifyActivationCode(_, emailAddress, activationCode):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             registrationStatus.checkActivationCode(credentials: .email(emailAddress), code: activationCode)
 
         case .provideMarketingConsent:
-            presenter?.showLoadingView = false
+            presenter?.isLoadingViewVisible = false
             let marketingConsentAlertModel = AuthenticationCoordinatorAlert.makeMarketingConsentAlert()
             presentAlert(for: marketingConsentAlertModel)
 
         case let .createTeam(teamName, email, activationCode, _, fullName, password):
-            presenter?.showLoadingView = true
+            presenter?.isLoadingViewVisible = true
             let unregisteredTeam = UnregisteredTeam(teamName: teamName, email: email, emailCode: activationCode, fullName: fullName, password: password, accentColor: UIColor.indexedAccentColor())
             registrationStatus.create(team: unregisteredTeam)
 
@@ -812,7 +820,7 @@ extension AuthenticationCoordinator {
             return
         }
 
-        presenter?.showLoadingView = true
+        presenter?.isLoadingViewVisible = true
         let nextTeamState: TeamCreationState = .sendEmailCode(teamName: teamName, email: emailAddress, isResend: true)
         stateController.transition(to: .teamCreation(nextTeamState))
 

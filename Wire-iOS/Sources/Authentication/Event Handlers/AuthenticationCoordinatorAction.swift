@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSyncEngine
 
 /**
  * Valid response actions for authentication events.
@@ -51,6 +53,7 @@ enum AuthenticationCoordinatorAction {
     case setUserName(String)
     case setUserPassword(String)
     case startCompanyLogin(code: UUID?)
+    case startSSOFlow
     case startBackupFlow
     case signOut(warn: Bool)
     case addEmailAndPassword(ZMEmailCredentials)

@@ -32,10 +32,13 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
         accentColor = .strongBlue
         ///The cell must higher than 64, otherwise it breaks the constraints.
         sut = ConversationListCell(frame: CGRect(x: 0, y: 0, width: 375, height: ConversationListItemView.minHeight))
+
+        SelfUser.provider = selfUserProvider
     }
     
     override func tearDown() {
         sut = nil
+        SelfUser.provider = nil
         super.tearDown()
     }
     
@@ -200,8 +203,8 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     
     func testThatItRendersConversationWithTypingOtherUser() {
         // when
-        otherUserConversation.managedObjectContext?.typingUsers.update([otherUser], in: otherUserConversation)
-        
+        otherUserConversation.setTypingUsers([otherUser])
+
         // then
         verify(otherUserConversation)
     }
@@ -217,7 +220,7 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversation() {
         // when
         let conversation = createGroupConversation()
-        conversation.internalAddParticipants([createUser(name: "Ana")])
+        conversation.add(participants:[createUser(name: "Ana")])
 
         // then
         verify(conversation)
@@ -226,7 +229,7 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
     func testThatItRendersGroupConversationThatWasLeft() {
         // when
         let conversation = createGroupConversation()
-        conversation.internalRemoveParticipants([selfUser], sender: otherUser)
+        conversation.removeParticipantsAndUpdateConversationState(users: [selfUser], initiatingUser: otherUser)
         
         // then
         verify(conversation)
@@ -258,6 +261,18 @@ final class ConversationListCellTests: CoreDataSnapshotTestCase {
         verify(conversation: conversation, icon: icon)
     }
 
+    func testThatItRendersGroupConversationWithTextMessages() {
+        // when
+        let conversation = createGroupConversation()
+        let message = conversation.append(text: "Hey there!")
+        (message as! ZMClientMessage).sender = otherUser
+        
+        conversation.setPrimitiveValue(1, forKey: ZMConversationInternalEstimatedUnreadCountKey)
+        
+        // then
+        verify(conversation)
+    }
+    
     func testThatItRendersOneOnOneConversationWithIncomingCall() {
         let conversation = otherUserConversation
         let icon = CallingMatcher.icon(for: .incoming(video: false, shouldRing: true, degraded: false), conversation: conversation)

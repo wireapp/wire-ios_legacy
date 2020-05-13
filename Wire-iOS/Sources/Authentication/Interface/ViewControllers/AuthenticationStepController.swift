@@ -273,7 +273,7 @@ class AuthenticationStepController: AuthenticationStepViewController {
     // MARK: - Back Button
 
     private func updateBackButton() {
-        guard navigationController?.viewControllers.count > 1 else {
+        guard navigationController?.viewControllers.count ?? 0 > 1 else {
             return
         }
 
@@ -354,6 +354,13 @@ class AuthenticationStepController: AuthenticationStepViewController {
 // MARK: - Event Handling
 
 extension AuthenticationStepController {
+    
+    // MARK: - AuthenticationCoordinatedViewController
+    
+    func displayError(_ error: Error) {
+        //no-op
+    }
+
     func executeErrorFeedbackAction(_ feedbackAction: AuthenticationErrorFeedbackAction) {
         switch feedbackAction {
         case .clearInputFields:
@@ -428,5 +435,4 @@ extension AuthenticationStepController {
             secondaryViewsStackView.addArrangedSubview(view)
         }
     }
-
 }

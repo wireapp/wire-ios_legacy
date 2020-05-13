@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
+import UIKit
+import WireSyncEngine
 
 class DirectorySectionController: SearchSectionController {
     
@@ -38,7 +41,7 @@ class DirectorySectionController: SearchSectionController {
         
         collectionView?.register(UserCell.self, forCellWithReuseIdentifier: UserCell.zm_reuseIdentifier)
         
-        self.token = UserChangeInfo.add(searchUserObserver: self, for: nil, userSession: ZMUserSession.shared()!)
+        self.token = UserChangeInfo.add(searchUserObserver: self, in: ZMUserSession.shared()!)
         
         self.collectionView = collectionView
     }
@@ -51,7 +54,7 @@ class DirectorySectionController: SearchSectionController {
         let user = suggestions[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserCell.zm_reuseIdentifier, for: indexPath) as! UserCell
         
-        cell.configure(with: user)
+        cell.configure(with: user, hideIconView: true)
         cell.showSeparator = (suggestions.count - 1) != indexPath.row
         cell.guestIconView.isHidden = true
         cell.accessoryIconView.isHidden = true
@@ -68,8 +71,10 @@ class DirectorySectionController: SearchSectionController {
         let indexPath = IndexPath(row: button.tag, section: 0)
         let user = suggestions[indexPath.row]
         
-        ZMUserSession.shared()?.enqueueChanges {
-            let messageText = "missive.connection_request.default_message".localized(args: user.displayName, ZMUser.selfUser().name ?? "")
+        ZMUserSession.shared()?.enqueue {
+            let username = user.name ?? ""
+            let selfUsername = SelfUser.current.name ?? ""
+            let messageText = "missive.connection_request.default_message".localized(args: username, selfUsername)
             user.connect(message: messageText)
         }
     }

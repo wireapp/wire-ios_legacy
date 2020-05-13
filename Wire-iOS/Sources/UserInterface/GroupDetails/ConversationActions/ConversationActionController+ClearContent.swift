@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum ClearContentResult {
     case delete(leave: Bool), cancel
@@ -68,7 +69,7 @@ extension ConversationActionController {
         transitionToListAndEnqueue {
             conversation.clearMessageHistory()
             if leave {
-                conversation.removeOrShowError(participnant: .selfUser())
+                conversation.removeOrShowError(participant: SelfUser.current)
             }
         }
     }

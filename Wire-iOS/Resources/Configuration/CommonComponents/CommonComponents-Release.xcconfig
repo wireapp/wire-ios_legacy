@@ -17,4 +17,4 @@
 // 
 
 #include "../Project-Release.xcconfig"
-#include "CommonComponents-Base.xcconfig"
+#include "./CommonComponents-Base.xcconfig"

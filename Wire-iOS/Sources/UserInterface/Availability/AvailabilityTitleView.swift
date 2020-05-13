@@ -17,12 +17,14 @@
 //
 
 import UIKit
+import WireDataModel
+import WireSyncEngine
 
 /**
  * A title view subclass that displays the availability of the user.
  */
 
-class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
+final class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
     
     /// The available options for this view.
     struct Options: OptionSet {
@@ -75,7 +77,7 @@ class AvailabilityTitleView: TitleView, Themeable, ZMUserObserver {
         super.init()
         
         if let sharedSession = ZMUserSession.shared() {
-            self.observerToken = UserChangeInfo.add(observer: self, for: user, userSession: sharedSession)
+            self.observerToken = UserChangeInfo.add(observer: self, for: user, in: sharedSession)
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive),

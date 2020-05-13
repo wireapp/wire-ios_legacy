@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireDataModel
+import WireSyncEngine
 
 enum NotificationResult: CaseIterable {
     case everything, mentionsAndReplies, nothing, cancel
@@ -85,7 +87,7 @@ extension ConversationActionController {
 
     func handleNotificationResult(_ result: NotificationResult, for conversation: ZMConversation) {
         if let mutedMessageTypes = result.mutedMessageTypes {
-            ZMUserSession.shared()?.performChanges {
+            ZMUserSession.shared()?.perform {
                 conversation.mutedMessageTypes = mutedMessageTypes
             }
         }

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum FontTextStyle: String {
     case largeTitle  = "largeTitle"
@@ -93,7 +94,7 @@ extension UIFont {
         }
     }
     
-    @objc public var classySystemFontName: String {
+    var classySystemFontName: String {
         get {
             let weightSpecifier = { () -> String in 
                 guard #available(iOSApplicationExtension 8.2, *),
@@ -130,7 +131,7 @@ public struct FontSpec: Hashable {
 }
 
 extension FontSpec {
-    public var fontWithoutDynamicType: UIFont? {
+    var fontWithoutDynamicType: UIFont? {
         return FontScheme(contentSizeCategory: .medium).font(for: self)
     }
 }
@@ -232,7 +233,7 @@ final class FontScheme {
         return mapping
     }
     
-    @objc public convenience init(contentSizeCategory: UIContentSizeCategory) {
+    convenience init(contentSizeCategory: UIContentSizeCategory) {
         self.init(fontMapping: type(of: self).defaultFontMapping(with: contentSizeCategory))
     }
     

@@ -19,6 +19,7 @@
 
 import UIKit
 import Cartography
+import WireDataModel
 
 // MARK: ArchivedListViewControllerDelegate
 
@@ -154,7 +155,7 @@ extension ArchivedListViewController: UICollectionViewDataSource, UICollectionVi
 // MARK: - ArchivedListViewModelDelegate
 
 extension ArchivedListViewController: ArchivedListViewModelDelegate {
-    internal func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
+    func archivedListViewModel(_ model: ArchivedListViewModel, didUpdateArchivedConversationsWithChange change: ConversationListChangeInfo, applyChangesClosure: @escaping () -> ()) {
         applyChangesClosure()
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
@@ -170,6 +171,9 @@ extension ArchivedListViewController: ArchivedListViewModelDelegate {
 // MARK: - ConversationListCellDelegate
 
 extension ArchivedListViewController: ConversationListCellDelegate {
+    func indexPath(for cell: ConversationListCell) -> IndexPath? {
+        return collectionView.indexPath(for: cell)
+    }
 
     func conversationListCellJoinCallButtonTapped(_ cell: ConversationListCell) {
         guard let conversation = cell.conversation else { return }

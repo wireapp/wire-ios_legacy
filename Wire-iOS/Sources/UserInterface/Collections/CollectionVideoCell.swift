@@ -18,11 +18,14 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireCommonComponents
 
-final public class CollectionVideoCell: CollectionCell {
+final class CollectionVideoCell: CollectionCell {
     private let videoMessageView = VideoMessageView()
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.loadView()
     }
@@ -61,7 +64,7 @@ final public class CollectionVideoCell: CollectionCell {
 }
 
 extension CollectionVideoCell: TransferViewDelegate {
-    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+    func transferView(_ view: TransferView, didSelect action: MessageAction) {
         self.delegate?.collectionCell(self, performAction: action)
     }
 }

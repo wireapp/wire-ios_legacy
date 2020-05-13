@@ -31,4 +31,4 @@ else
     echo "No postprocess script found in ${POSTPROCESS_SCRIPT}, skipping..."
 fi
 
-echo "✅  Done"
+echo "✅  Postprocess Done"

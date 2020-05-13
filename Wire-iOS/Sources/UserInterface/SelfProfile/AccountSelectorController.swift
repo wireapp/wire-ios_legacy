@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import Cartography
+import WireSyncEngine
 
 final class AccountSelectorController: UIViewController {
     private var accountsView = AccountSelectorView()
@@ -49,7 +50,7 @@ final class AccountSelectorController: UIViewController {
     
     private var showAccounts: Bool = false
     
-    internal func updateShowAccountsIfNeeded() {
+    func updateShowAccountsIfNeeded() {
         let showAccounts = SessionManager.shared?.accountManager.accounts.count > 1
         guard showAccounts != self.showAccounts else { return }
         setShowAccounts(to: showAccounts)
@@ -67,11 +68,11 @@ extension AccountSelectorController: AccountSelectorViewDelegate {
     func accountSelectorDidSelect(account: Account) {
         guard account != SessionManager.shared?.accountManager.selectedAccount else { return }
         
-        if ZClientViewController.shared()?.conversationListViewController.presentedViewController != nil {
-            AppDelegate.shared().rootViewController.confirmSwitchingAccount { (confirmed) in
+        if ZClientViewController.shared?.conversationListViewController.presentedViewController != nil {
+            AppDelegate.shared.rootViewController.confirmSwitchingAccount { (confirmed) in
                 if confirmed {
-                    ZClientViewController.shared()?.conversationListViewController.dismiss(animated: true, completion: {
-                        AppDelegate.shared().mediaPlaybackManager?.stop()
+                    ZClientViewController.shared?.conversationListViewController.dismiss(animated: true, completion: {
+                        AppDelegate.shared.mediaPlaybackManager?.stop()
                         SessionManager.shared?.select(account)
                     })
                 }

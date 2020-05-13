@@ -19,9 +19,11 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-
-@objcMembers class ProfileClientViewController: UIViewController {
+final class ProfileClientViewController: UIViewController {
 
     let userClient: UserClient
     let contentView = UIView()
@@ -42,7 +44,7 @@ import Cartography
     var fromConversation: Bool = false
 
     /// Used for debugging purposes, disabled in public builds
-    var deleteDeviceButton: ButtonWithLargerHitArea?
+    var debugMenuButton: ButtonWithLargerHitArea?
 
     var showBackButton: Bool = true {
         didSet {
@@ -67,7 +69,7 @@ import Cartography
         
         self.userClientToken = UserClientChangeInfo.add(observer:self, for:client)
         if userClient.fingerprint == .none {
-            ZMUserSession.shared()?.enqueueChanges({ () -> Void in
+            ZMUserSession.shared()?.enqueue({ () -> Void in
                 self.userClient.fetchFingerprintOrPrekeys()
             })
         }
@@ -86,6 +88,10 @@ import Cartography
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return ColorScheme.default.statusBarStyle
+    }
+
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait]
     }
@@ -105,7 +111,7 @@ import Cartography
         self.setupVerifiedToggle()
         self.setupVerifiedToggleLabel()
         self.setupResetButton()
-        self.setupDeleteButton()
+        self.setupDebugMenuButton()
         self.createConstraints()
         self.updateFingerprintLabel()
     }
@@ -147,7 +153,7 @@ import Cartography
         let descriptionTextFont = FontSpec(.normal, .light).font!
 
         if let user = self.userClient.user {
-            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.displayName) &&
+            descriptionTextView.attributedText = (String(format: "profile.devices.detail.verify_message".localized, user.name ?? "") &&
                 descriptionTextFont &&
                 UIColor.from(scheme: .textForeground)) +
                 "\n" +
@@ -242,15 +248,15 @@ import Cartography
         self.contentView.addSubview(resetButton)
     }
     
-    private func setupDeleteButton() {
-        guard DeveloperMenuState.developerMenuEnabled() else { return }
-        let deleteButton = ButtonWithLargerHitArea()
-        deleteButton.setTitleColor(UIColor.accent(), for: .normal)
-        deleteButton.titleLabel?.font = FontSpec(.small, .light).font!
-        deleteButton.setTitle("DELETE (⚠️ will cause decryption errors later ⚠️)", for: [])
-        deleteButton.addTarget(self, action: #selector(ProfileClientViewController.onDeleteDeviceTapped(_:)), for: .touchUpInside)
-        self.contentView.addSubview(deleteButton)
-        self.deleteDeviceButton = deleteButton
+    private func setupDebugMenuButton() {
+        guard Bundle.developerModeEnabled else { return }
+        let debugButton = ButtonWithLargerHitArea()
+        debugButton.setTitleColor(UIColor.accent(), for: .normal)
+        debugButton.titleLabel?.font = FontSpec(.small, .light).font!
+        debugButton.setTitle("DEBUG MENU", for: [])
+        debugButton.addTarget(self, action: #selector(ProfileClientViewController.onShowDebugActions(_:)), for: .touchUpInside)
+        self.contentView.addSubview(debugButton)
+        self.debugMenuButton = debugButton
     }
     
     private func createConstraints() {
@@ -305,11 +311,11 @@ import Cartography
             spinner.bottom <= verifiedToggle.bottom - 32
         }
 
-        if let deleteDeviceButton = self.deleteDeviceButton {
-            constrain(contentView, descriptionTextView, deleteDeviceButton) { contentView, reviewInvitationTextView, deleteDeviceButton in
-                deleteDeviceButton.right == contentView.right
-                deleteDeviceButton.left == contentView.left
-                deleteDeviceButton.top == reviewInvitationTextView.bottom + 10
+        if let debugMenuButton = self.debugMenuButton {
+            constrain(contentView, descriptionTextView, debugMenuButton) { contentView, reviewInvitationTextView, debugMenuButton in
+                debugMenuButton.right == contentView.right
+                debugMenuButton.left == contentView.left
+                debugMenuButton.top == reviewInvitationTextView.bottom + 10
             }
         }
     }
@@ -321,7 +327,7 @@ import Cartography
     }
 
     @objc private func onShowMyDeviceTapped(_ sender: AnyObject) {
-        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient(),
+        let selfClientController = SettingsClientViewController(userClient: ZMUserSession.shared()!.selfUserClient!,
                                                                 fromConversation:self.fromConversation,
                                                                 variant: ColorScheme.default.variant)
 
@@ -332,9 +338,9 @@ import Cartography
     }
 
     @objc private func onTrustChanged(_ sender: AnyObject) {
-        ZMUserSession.shared()?.enqueueChanges({ [weak self] in
+        ZMUserSession.shared()?.enqueue({ [weak self] in
             guard let `self` = self else { return }
-            let selfClient = ZMUserSession.shared()!.selfUserClient()
+            let selfClient = ZMUserSession.shared()!.selfUserClient
             if(self.verifiedToggle.isOn) {
                 selfClient?.trustClient(self.userClient)
             } else {
@@ -346,17 +352,48 @@ import Cartography
     }
 
     @objc private func onResetTapped(_ sender: AnyObject) {
-        ZMUserSession.shared()?.performChanges {
+        ZMUserSession.shared()?.perform {
             self.userClient.resetSession()
         }
         self.resetSessionPending = true
     }
     
-    @objc private func onDeleteDeviceTapped(_ sender: AnyObject) {
+    @objc private func onShowDebugActions(_ sender: AnyObject) {
+        let actionSheet = UIAlertController(title: "Debug actions",
+                                            message: "⚠️ will cause decryption errors ⚠️",
+                                            preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Delete Session", style: .default, handler: { [weak self] (_) in
+            self?.onDeleteDeviceTapped()
+        }))
+        
+        actionSheet.addAction(UIAlertAction(title: "Corrupt Session", style: .default, handler: { [weak self] (_) in
+            self?.onCorruptSessionTapped()
+        }))
+        
+        actionSheet.addAction(.cancel())
+        
+        present(actionSheet, animated: true)
+    }
+    
+    @objc private func onDeleteDeviceTapped() {
         let sync = self.userClient.managedObjectContext!.zm_sync!
         sync.performGroupedBlockAndWait {
             let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
             client.deleteClientAndEndSession()
+            sync.saveOrRollback()
+        }
+        self.presentingViewController?.dismiss(animated: true, completion: .none)
+    }
+    
+    @objc private func onCorruptSessionTapped() {
+        let sync = self.userClient.managedObjectContext!.zm_sync!
+        let selfClientID = ZMUser.selfUser()?.selfClient()?.objectID
+        sync.performGroupedBlockAndWait {
+            let client = try! sync.existingObject(with: self.userClient.objectID) as! UserClient
+            let selfClient = try! sync.existingObject(with: selfClientID!) as! UserClient
+            
+            _ = selfClient.establishSessionWithClient(client, usingPreKey: "pQABAQACoQBYIBi1nXQxPf9hpIp1K1tBOj/tlBuERZHfTMOYEW38Ny7PA6EAoQBYIAZbZQ9KtsLVc9VpHkPjYy2+Bmz95fyR0MGKNUqtUUi1BPY=")
             sync.saveOrRollback()
         }
         self.presentingViewController?.dismiss(animated: true, completion: .none)

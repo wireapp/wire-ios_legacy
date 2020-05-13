@@ -16,6 +16,8 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
+import UIKit
+
 final class StartUIInviteActionBar: UIView {
 
     var backgroundView: UIVisualEffectView?
@@ -77,10 +79,12 @@ final class StartUIInviteActionBar: UIView {
 
         let diff: CGFloat = beginOrigin - endOrigin
 
-        UIView.animate(withKeyboardNotification: notification, in: self, animations: { keyboardFrameInView in
-            self.bottomEdgeConstraint.constant = -self.padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
-            self.layoutIfNeeded()
-        }, completion: nil)
+        UIView.animate(withKeyboardNotification: notification, in: self, animations: { [weak self] keyboardFrameInView in
+            guard let weakSelf = self else { return }
+
+            weakSelf.bottomEdgeConstraint.constant = -weakSelf.padding - (diff > 0 ? 0 : UIScreen.safeArea.bottom)
+            weakSelf.layoutIfNeeded()
+        })
     }
 
 }

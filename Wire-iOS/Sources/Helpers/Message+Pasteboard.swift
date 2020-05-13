@@ -17,6 +17,9 @@
 //
 
 import Foundation
+import FLAnimatedImage
+import UIKit
+import WireDataModel
 
 extension ZMConversationMessage {
 

@@ -19,11 +19,14 @@
 /**
  * A user image view that can display a badge on top for different connection states.
  */
+import UIKit
+import WireCommonComponents
+import WireSyncEngine
 
-@objc class BadgeUserImageView: UserImageView {
+final class BadgeUserImageView: UserImageView {
 
     /// The color of the badge.
-    @objc var badgeColor: UIColor = .white {
+    var badgeColor: UIColor = .white {
         didSet {
             updateIconView(with: badgeIcon, animated: false)
         }
@@ -101,7 +104,7 @@
 
     /// Updates the badge icon.
     private func updateBadgeIcon() {
-        guard let user = self.user?.zmUser else {
+        guard let user = self.user else {
             badgeIcon = .none
             return
         }
@@ -151,7 +154,7 @@
                 hideBadge()
                 changeImage()
                 UIView.animate(withDuration: 0.65, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 15.0, options: [], animations: showBadge, completion: nil)
-                UIView.wr_animate(easing: .easeOutQuart, duration: 0.15, animations: showShadow)
+                UIView.animate(easing: .easeOutQuart, duration: 0.15, animations: showShadow)
             } else {
                 changeImage()
                 showShadow()
@@ -168,7 +171,7 @@
 
 extension BadgeUserImageView {
 
-    @objc var wr_badgeIconSize: CGFloat {
+    var wr_badgeIconSize: CGFloat {
         get {
             return badgeIconSize.rawValue
         }
@@ -177,11 +180,11 @@ extension BadgeUserImageView {
         }
     }
 
-    @objc func setBadgeIcon(_ newValue: StyleKitIcon) {
+    func setBadgeIcon(_ newValue: StyleKitIcon) {
         badgeIcon = newValue
     }
 
-    @objc func removeBadgeIcon() {
+    func removeBadgeIcon() {
         badgeIcon = nil
     }
 

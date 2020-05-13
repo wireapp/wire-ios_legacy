@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 /**
  * Handles the case where the app is opened from an SSO link.

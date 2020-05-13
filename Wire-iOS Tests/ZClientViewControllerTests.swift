@@ -25,10 +25,8 @@ final class ZClientViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
 
-        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData),
-                                    selfUser: MockUser.selfUser
-        )
-        
+        let mockSelfUser = MockUserType.createSelfUser(name: "Bob")
+        sut = ZClientViewController(account: Account.mockAccount(imageData: mockImageData), selfUser: mockSelfUser)
     }
 
     override func tearDown() {

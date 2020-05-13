@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum ConversationType: Int {
     case oneToOne
@@ -49,10 +50,11 @@ extension ZMConversation {
         return ConversationType.type(self)?.analyticsTypeString
     }
         
+    ///TODO: move to DM
     /// Whether the conversation is a 1-on-1 conversation with a service user
     var isOneOnOneServiceUserConversation: Bool {
-        guard self.activeParticipants.count == 2,
-             let otherUser = self.firstActiveParticipantOtherThanSelf() else {
+        guard self.localParticipants.count == 2,
+             let otherUser = firstActiveParticipantOtherThanSelf else {
             return false
         }
         
@@ -60,21 +62,26 @@ extension ZMConversation {
                 otherUser.providerIdentifier != nil
     }
     
+    ///TODO: move to DM
     /// Whether the conversation includes at least 1 service user.
     var includesServiceUser: Bool {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return false }
+        let participants = Array(localParticipants)
         return participants.any { $0.isServiceUser }
     }
     
+    static let userNameSorter: (UserType, UserType) -> Bool = { user0, user1 in
+        user0.name < user1.name
+    }
+    
+    ///TODO: move to DM
     var sortedServiceUsers: [UserType] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
-        return participants.filter { $0.isServiceUser }.sorted { $0.displayName < $1.displayName }
+        return localParticipants.filter { $0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
+    ///TODO: move to DM
     @objc
     var sortedOtherParticipants: [UserType] {
-        guard let participants = lastServerSyncedActiveParticipants.array as? [UserType] else { return [] }
-        return participants.filter { !$0.isServiceUser }.sorted { $0.displayName < $1.displayName }
+        return localParticipants.filter { !$0.isServiceUser }.sorted(by: ZMConversation.userNameSorter)
     }
 
 }

@@ -17,10 +17,12 @@
 //
 
 import Foundation
+import WireSystem
+import WireTransport
 
 private let zmLog = ZMSLog(tag: "URL")
 
-@objc enum TeamSource: Int {
+enum TeamSource: Int {
     case onboarding, settings
     
     var parameterValue: String {
@@ -163,7 +165,7 @@ extension URL {
     static var wr_askSupport: URL {
         return wr_support.appendingPathComponent("hc/requests/new")
     }
-
+    
     static var wr_reportAbuse: URL {
         return BackendEnvironment.websiteLink(path: "support/misuse")
     }

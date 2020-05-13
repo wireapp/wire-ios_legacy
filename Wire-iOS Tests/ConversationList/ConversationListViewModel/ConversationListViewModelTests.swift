@@ -22,6 +22,10 @@ import DifferenceKit
 
 
 final class MockConversationListViewModelDelegate: NSObject, ConversationListViewModelDelegate {
+    func listViewModel(_ model: ConversationListViewModel?, didUpdateSection section: Int) {
+        //no-op
+    }
+
     func listViewModel(_ model: ConversationListViewModel?, didUpdateSectionForReload section: Int, animated: Bool) {
         //no-op
     }

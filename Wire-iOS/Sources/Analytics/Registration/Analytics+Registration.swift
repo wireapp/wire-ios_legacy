@@ -20,7 +20,6 @@
 import Foundation
 
 extension Analytics {
-    @objc(tagRegistrationSuccededWithContext:)
     func tagRegistrationSucceded(context: String) {
         self.tagEvent("registration.succeeded", attributes: ["context": context])
     }
@@ -47,7 +46,7 @@ extension Analytics {
     }
     
     func tagTeamFinishedInviteStep(with result: InviteResult) {
-        let attributes: [AnyHashable: Any]
+        let attributes: [String : Any]
         
         switch(result) {
         case .none:
@@ -58,6 +57,6 @@ extension Analytics {
                           "invites:": invitesCount]
         }
         
-        self.tagEvent("team.finished_invite_step", attributes: attributes)
+        tagEvent("team.finished_invite_step", attributes: attributes)
     }
 }

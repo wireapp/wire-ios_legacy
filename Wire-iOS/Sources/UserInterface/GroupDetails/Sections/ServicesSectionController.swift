@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
-class ServicesSectionController: GroupDetailsSectionController {
+final class ServicesSectionController: GroupDetailsSectionController {
     
     private weak var delegate: GroupDetailsSectionControllerDelegate?
     private let serviceUsers: [UserType]
@@ -60,8 +62,7 @@ class ServicesSectionController: GroupDetailsSectionController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let user = serviceUsers[indexPath.row] as? ZMUser else { return }
-        delegate?.presentDetails(for: user)
+        delegate?.presentDetails(for: serviceUsers[indexPath.row])
     }
     
 }

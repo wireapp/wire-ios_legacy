@@ -23,7 +23,7 @@ import WireUtilities
 
 private let zmLog = ZMSLog(tag: "UI")
 
-class ExtensionBackupExcluder {
+final class ExtensionBackupExcluder: BackupExcluder {
 
     private static let filesToExclude: [FileInDirectory] = [
         (.libraryDirectory, "Cookies/Cookies.binarycookies"),
@@ -32,13 +32,9 @@ class ExtensionBackupExcluder {
 
     static func exclude() {
         do {
-            try filesToExclude.forEach { (directory, path) in
-                let url = URL.wr_directory(for: directory).appendingPathComponent(path)
-                if FileManager.default.fileExists(atPath: url.path) {
-                    try url.wr_excludeFromBackup()
-                }
-            }
-        } catch {
+            try ExtensionBackupExcluder.exclude(filesToExclude: filesToExclude)
+        }
+        catch (let error) {
             zmLog.error("Cannot exclude file from the backup: \(self): \(error)")
         }
     }

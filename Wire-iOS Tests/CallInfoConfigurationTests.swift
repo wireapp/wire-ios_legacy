@@ -99,7 +99,8 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
-        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.untrusted = true
+        ((mockConversation.sortedActiveParticipants.first as Any) as? MockUser)?.isTrusted = true
+        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.isTrusted = false
         mockVoiceChannel.mockCallState = .incoming(video: false, shouldRing: true, degraded: true)
         mockVoiceChannel.mockInitiator = otherUser
         
@@ -116,7 +117,8 @@ class CallInfoConfigurationTests: XCTestCase {
         let mockVoiceChannel = MockVoiceChannel(conversation: mockConversation)
         let fixture = CallInfoTestFixture(otherUser: mockConversation.connectedUser!)
         
-        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.untrusted = true
+        ((mockConversation.sortedActiveParticipants.first as Any) as? MockUser)?.isTrusted = true
+        ((mockConversation.sortedActiveParticipants.last as Any) as? MockUser)?.isTrusted = false
         mockVoiceChannel.mockCallState = .outgoing(degraded: true)
         mockVoiceChannel.mockInitiator = selfUser
         

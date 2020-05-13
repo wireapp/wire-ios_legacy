@@ -19,13 +19,13 @@
 
 import Cartography
 
-@objc public protocol ModalTopBarDelegate: class {
+protocol ModalTopBarDelegate: class {
     func modelTopBarWantsToBeDismissed(_ topBar: ModalTopBar)
 }
 
-@objcMembers final public class ModalTopBar: UIView {
+final class ModalTopBar: UIView {
 
-    public let dismissButton = IconButton()
+    let dismissButton = IconButton()
 
     public let titleLabel: UILabel = {
         let label = UILabel()

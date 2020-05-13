@@ -18,6 +18,9 @@
 
 import UIKit
 import Cartography
+import WireCommonComponents
+import WireDataModel
+import WireSyncEngine
 
 fileprivate extension InviteResult {
     var iconType: StyleKitIcon {

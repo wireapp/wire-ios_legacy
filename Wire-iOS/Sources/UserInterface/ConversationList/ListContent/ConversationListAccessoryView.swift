@@ -17,8 +17,9 @@
 //
 
 import UIKit
+import WireCommonComponents
 
-@objcMembers final class ConversationListAccessoryView: UIView {
+final class ConversationListAccessoryView: UIView {
     var icon: ConversationStatusIcon? = nil {
         didSet {
             if icon != oldValue {
@@ -31,7 +32,7 @@ import UIKit
         }
     }
     
-    let mediaPlaybackManager: MediaPlaybackManager
+    let mediaPlaybackManager: MediaPlaybackManager?
     
     let badgeView = RoundedBadge(view: UIView())
     let transparentIconView = UIImageView()
@@ -43,7 +44,7 @@ import UIKit
     let defaultViewWidth: CGFloat = 28
     let activeCallWidth: CGFloat = 20
     
-    @objc init(mediaPlaybackManager: MediaPlaybackManager) {
+    init(mediaPlaybackManager: MediaPlaybackManager?) {
         self.mediaPlaybackManager = mediaPlaybackManager
         super.init(frame: .zero)
         
@@ -129,7 +130,7 @@ import UIKit
             accessibilityValue = "conversation_list.voiceover.status.missed_call".localized
             return iconView
         case .playingMedia:
-            if let mediaPlayer = self.mediaPlaybackManager.activeMediaPlayer, mediaPlayer.state == .playing {
+            if let mediaPlayer = self.mediaPlaybackManager?.activeMediaPlayer, mediaPlayer.state == .playing {
                 iconView.setIcon(.pause, size: iconSize, color: .white)
                 accessibilityValue = "conversation_list.voiceover.status.pause_media".localized
             }
@@ -178,9 +179,9 @@ import UIKit
         }
     }
     
-    public func updateForIcon() {
+    func updateForIcon() {
         self.badgeView.containedView.subviews.forEach { $0.removeFromSuperview() }
-        self.badgeView.backgroundColor = UIColor(white: 0, alpha: 0.16)
+        self.badgeView.backgroundColor = .blackAlpha16
 
         self.badgeView.isHidden = false
         self.transparentIconView.isHidden = true

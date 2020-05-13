@@ -18,6 +18,8 @@
 
 
 import UIKit
+import WireCommonComponents
+import WireDataModel
 
 final class ConversationTitleView: TitleView {
     var conversation: ZMConversation

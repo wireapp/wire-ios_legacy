@@ -18,6 +18,7 @@
 
 import Foundation
 import avs
+import WireSyncEngine
 
 
 // The AVS library consists of several components, those are:
@@ -58,7 +59,7 @@ extension MediaManagerState {
     }
 }
 
-@objcMembers final class MediaManagerLoader: NSObject {
+final class MediaManagerLoader: NSObject {
     
     private var flowManagerObserver: AnyObject?
     private var state: MediaManagerState = .initial {
@@ -71,7 +72,7 @@ extension MediaManagerState {
         }
     }
     
-    internal func send(message: LoadingMessage) {
+    func send(message: LoadingMessage) {
         self.state.send(message: message)
     }
     

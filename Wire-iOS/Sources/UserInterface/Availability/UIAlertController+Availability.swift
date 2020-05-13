@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 extension UIAlertController {
     
@@ -27,7 +29,7 @@ extension UIAlertController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "availability.reminder.action.dont_remind_me".localized, style: .default, handler: { (_) in
-            Settings.shared()?.dontRemindUserWhenChanging(availability)
+            Settings.shared.dontRemindUserWhenChanging(availability)
         }))
         alert.addAction(UIAlertAction(title: "availability.reminder.action.ok".localized, style: .default, handler: { (_) in }))
         
@@ -43,7 +45,7 @@ extension UIAlertController {
             }))
         }
         
-        alert.popoverPresentationController?.permittedArrowDirections = [ .up ]
+        alert.popoverPresentationController?.permittedArrowDirections = [ .up, .down ]
         alert.addAction(UIAlertAction(title: "availability.message.cancel".localized, style: .cancel, handler: nil))
         
         return alert

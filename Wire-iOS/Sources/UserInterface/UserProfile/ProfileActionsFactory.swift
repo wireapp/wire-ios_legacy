@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import WireCommonComponents
+import WireDataModel
 
 /**
  * The actions that can be performed from the profile details or devices.
@@ -39,11 +41,15 @@ enum ProfileAction: Equatable {
     var buttonText: String {
         switch self {
         case .createGroup: return "profile.create_conversation_button_title".localized
-        case .mute(let isMuted): return isMuted ? "meta.menu.silence.unmute".localized : "meta.menu.silence.mute".localized
+        case .mute(let isMuted): return isMuted
+            ? "meta.menu.silence.unmute".localized
+            : "meta.menu.silence.mute".localized
         case .manageNotifications: return "meta.menu.configure_notifications".localized
         case .archive: return "meta.menu.archive".localized
         case .deleteContents: return "meta.menu.clear_content".localized
-        case .block(let isBlocked): return isBlocked ? "profile.unblock_button_title".localized : "profile.block_button_title".localized
+        case .block(let isBlocked): return isBlocked
+            ? "profile.unblock_button_title_action".localized
+            : "profile.block_button_title".localized
         case .openOneToOne: return "profile.open_conversation_button_title".localized
         case .removeFromGroup: return "profile.remove_dialog_button_remove".localized
         case .connect: return "profile.connection_request_dialog.button_connect".localized
@@ -80,7 +86,7 @@ enum ProfileAction: Equatable {
  * of a conversation.
  */
 
-final class ProfileActionsFactory: NSObject {
+final class ProfileActionsFactory {
 
     // MARK: - Environmemt
 
@@ -115,10 +121,9 @@ final class ProfileActionsFactory: NSObject {
 
     // MARK: - Calculating the Actions
 
-    /**
-     * Calculates the list of actions to display to the user.
-     */
-
+    /// Calculates the list of actions to display to the user.
+    ///
+    /// - Returns: array of availble actions
     func makeActionsList() -> [ProfileAction] {
         // Do nothing if the user was deleted
         if user.isAccountDeleted {
@@ -142,24 +147,21 @@ final class ProfileActionsFactory: NSObject {
             conversation = selfConversation
         } else if context == .profileViewer {
             conversation = nil
-        } else {
-            if !user.isConnected {
-                if user.isPendingApprovalByOtherUser {
-                    return [.cancelConnectionRequest]
-                } else if !user.isPendingApprovalBySelfUser {
-                    return [.connect]
-                }
+        } else if !user.isConnected {
+            if user.isPendingApprovalByOtherUser {
+                return [.cancelConnectionRequest]
+            } else if !user.isPendingApprovalBySelfUser {
+                return [.connect]
             }
-
-            return []
         }
+
 
         var actions: [ProfileAction] = []
 
         switch (context, conversation?.conversationType) {
         case (_, .oneOnOne?):
 
-            if viewer.canCreateConversation {
+            if viewer.canCreateConversation(type: .group) {
                 actions.append(.createGroup)
             }
 
@@ -175,13 +177,14 @@ final class ProfileActionsFactory: NSObject {
             }
 
         case (.profileViewer, .none),
+             (.search, .none),
              (_, .group?):
             // Do nothing if the viewer is a wireless user because they can't have 1:1's
             if viewer.isWirelessUser {
                 break
             }
 
-            let isOnSameTeam = viewer.canAccessCompanyInformation(of: user)
+            let isOnSameTeam = viewer.isOnSameTeam(otherUser: user)
 
             // Show connection request actions for unconnected users from different teams.
             if user.isPendingApprovalByOtherUser {

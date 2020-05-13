@@ -17,13 +17,14 @@
 //
 
 import Foundation
+import WireSyncEngine
 
 extension ConversationContentViewController: CanvasViewControllerDelegate {
     func canvasViewController(_ canvasViewController: CanvasViewController, didExportImage image: UIImage) {
         parent?.dismiss(animated: true) {
             if let imageData = image.pngData() {
 
-                ZMUserSession.shared()?.enqueueChanges({
+                ZMUserSession.shared()?.enqueue({
                     self.conversation.append(imageFromData: imageData)
                 }, completionHandler: {
                     Analytics.shared().tagMediaActionCompleted(.photo, inConversation: self.conversation)

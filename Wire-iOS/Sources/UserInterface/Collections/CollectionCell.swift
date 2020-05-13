@@ -18,6 +18,10 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireDataModel
+import WireSyncEngine
+import WireCommonComponents
 
 protocol CollectionCellDelegate: class {
     func collectionCell(_ cell: CollectionCell, performAction: MessageAction)
@@ -27,7 +31,7 @@ protocol CollectionCellMessageChangeDelegate: class {
     func messageDidChange(_ cell: CollectionCell, changeInfo: MessageChangeInfo)
 }
 
-open class CollectionCell: UICollectionViewCell {
+class CollectionCell: UICollectionViewCell {
 
     var actionController: ConversationMessageActionController?
     var messageObserverToken: NSObjectProtocol? = .none
@@ -63,7 +67,7 @@ open class CollectionCell: UICollectionViewCell {
     public var desiredWidth: CGFloat? = .none
     public var desiredHeight: CGFloat? = .none
 
-    override open var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         get {
             let width = self.desiredWidth ?? UIView.noIntrinsicMetric
             let height = self.desiredHeight ?? UIView.noIntrinsicMetric
@@ -78,7 +82,7 @@ open class CollectionCell: UICollectionViewCell {
         cachedSize = .none
     }
     
-    override open func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
         if let cachedSize = self.cachedSize {
             var newFrame = layoutAttributes.frame
             newFrame.size.width = cachedSize.width
@@ -133,7 +137,7 @@ open class CollectionCell: UICollectionViewCell {
         obfuscationView.fitInSuperview()
     }
 
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         self.cachedSize = .none
         self.message = .none
@@ -200,15 +204,15 @@ open class CollectionCell: UICollectionViewCell {
         menuController.setMenuVisible(true, animated: true)
     }
     
-    override open var canBecomeFirstResponder: Bool {
+    override var canBecomeFirstResponder: Bool {
         return true
     }
     
-    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+    override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         return actionController?.canPerformAction(action) == true
     }
 
-    open override func forwardingTarget(for aSelector: Selector!) -> Any? {
+    override func forwardingTarget(for aSelector: Selector!) -> Any? {
         return actionController
     }
     
@@ -236,7 +240,7 @@ extension CollectionCell: ZMMessageObserver {
 }
 
 extension CollectionCell: MessageActionResponder {
-    public func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
+    func perform(action: MessageAction, for message: ZMConversationMessage!, view: UIView) {
         delegate?.collectionCell(self, performAction: action)
     }
 }

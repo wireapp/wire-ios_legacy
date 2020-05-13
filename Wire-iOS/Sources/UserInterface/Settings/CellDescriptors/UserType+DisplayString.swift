@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension UserType {
     var handleDisplayString: String? {

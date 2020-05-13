@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
 protocol TextFieldValidationDelegate: class {
 
@@ -28,7 +30,7 @@ protocol TextFieldValidationDelegate: class {
     func validationUpdated(sender: UITextField, error: TextFieldValidator.ValidationError?)
 }
 
-class AccessoryTextField: UITextField, TextContainer, Themeable {
+final class AccessoryTextField: UITextField, TextContainer, Themeable {
     enum Kind: Equatable {
         case email
         case name(isTeam: Bool)
@@ -38,7 +40,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
     }
 
     let textFieldValidator: TextFieldValidator
-    public weak var textFieldValidationDelegate: TextFieldValidationDelegate?
+    weak var textFieldValidationDelegate: TextFieldValidationDelegate?
 
     // MARK: - UI constants
 
@@ -222,7 +224,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         updateButtonIcon()
         let animationKey = "rotation_animation"
         if isLoading {
-            let animation = CABasicAnimation.rotateAnimation(withRotationSpeed: 1.4, beginTime: 0, delegate: nil)
+            let animation = CABasicAnimation(rotationSpeed: 1.4, beginTime: 0)
             confirmButton.layer.add(animation, forKey: animationKey)
         } else {
             confirmButton.layer.removeAnimation(forKey: animationKey)
@@ -264,7 +266,6 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         self.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
 
         accessoryStack.translatesAutoresizingMaskIntoConstraints = false
-        accessoryContainer.translatesAutoresizingMaskIntoConstraints = false
         accessoryContainer.addSubview(accessoryStack)
 
         NSLayoutConstraint.activate([
@@ -290,7 +291,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         return textRect.inset(by: textInsets.directionAwareInsets)
     }
 
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
         let editingRect: CGRect = super.editingRect(forBounds: bounds)
         return editingRect.inset(by: textInsets.directionAwareInsets)
     }
@@ -346,7 +347,7 @@ class AccessoryTextField: UITextField, TextContainer, Themeable {
         return placeholder && attribute
     }
 
-    override open var placeholder: String? {
+    override var placeholder: String? {
         set {
             if let newValue = newValue {
                 attributedPlaceholder = attributedPlaceholderString(placeholder: newValue)

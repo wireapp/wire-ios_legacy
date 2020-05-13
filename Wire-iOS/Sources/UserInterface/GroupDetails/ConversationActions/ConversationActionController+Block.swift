@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 enum BlockResult {
     case block(isBlocked: Bool), cancel
@@ -48,7 +49,7 @@ enum BlockResult {
             return nil
         }
 
-        return "profile.block_dialog.message".localized(args: user.displayName)
+        return "profile.block_dialog.message".localized(args: user.name ?? "")
     }
     
     static func all(isBlocked: Bool) -> [BlockResult] {

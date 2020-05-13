@@ -42,7 +42,7 @@ final class WaveFormView: UIView {
         }
     }
     
-    var color: UIColor? {
+    var color: UIColor = .white {
         didSet { visualizationView.waveColor = color }
     }
     
@@ -57,7 +57,7 @@ final class WaveFormView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateWithLevel(_ level: CGFloat) {
+    func updateWithLevel(_ level: Float) {
         visualizationView.update(withLevel: level)
     }
     

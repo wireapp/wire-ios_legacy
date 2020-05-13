@@ -24,7 +24,7 @@ import Foundation
 // messages, but only empty cells. You won't get any data until the user gives
 // his permission via the iOS standard dialog.
 
-public protocol PhotoPermissionsController {
+protocol PhotoPermissionsController {
     var isCameraAuthorized: Bool { get }
     var isPhotoLibraryAuthorized: Bool { get }
     var areCameraOrPhotoLibraryAuthorized: Bool { get }

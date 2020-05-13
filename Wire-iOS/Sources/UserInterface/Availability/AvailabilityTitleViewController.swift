@@ -17,8 +17,11 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
-class AvailabilityTitleViewController: UIViewController {
+final class AvailabilityTitleViewController: UIViewController {
     
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     private let options: AvailabilityTitleView.Options
@@ -53,10 +56,10 @@ class AvailabilityTitleViewController: UIViewController {
         let alertViewController = UIAlertController.availabilityPicker { [weak self] (availability) in
             self?.didSelectAvailability(availability)
         }
-        alertViewController.popoverPresentationController?.sourceView = view
-        alertViewController.popoverPresentationController?.sourceRect = view.frame
         
-        self.present(alertViewController, animated: true)
+        alertViewController.configPopover(pointToView: view)
+        
+        present(alertViewController, animated: true)
     }
     
     private func didSelectAvailability(_ availability: Availability) {
@@ -66,12 +69,12 @@ class AvailabilityTitleViewController: UIViewController {
         }
         
         if let session = ZMUserSession.shared() {
-            session.performChanges(changes)
+            session.perform(changes)
         } else {
             changes()
         }
         
-        if Settings.shared()?.shouldRemindUserWhenChanging(availability) == true {
+        if Settings.shared.shouldRemindUserWhenChanging(availability) {
             present(UIAlertController.availabilityExplanation(availability), animated: true)
         }
     }

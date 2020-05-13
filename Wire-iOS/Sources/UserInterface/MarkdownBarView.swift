@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import Down
+import WireCommonComponents
 
 protocol MarkdownBarViewDelegate: class {
     func markdownBarView(_ view: MarkdownBarView, didSelectMarkdown markdown: Markdown, with sender: IconButton)
@@ -26,7 +27,7 @@ protocol MarkdownBarViewDelegate: class {
 }
 
 
-public final class MarkdownBarView: UIView {
+final class MarkdownBarView: UIView {
     
     weak var delegate: MarkdownBarViewDelegate?
     
@@ -34,31 +35,31 @@ public final class MarkdownBarView: UIView {
     private let accentColor: UIColor = UIColor.accent()
     private let normalColor = UIColor.from(scheme: .iconNormal)
     
-    public let headerButton         = PopUpIconButton()
-    public let boldButton           = IconButton()
-    public let italicButton         = IconButton()
-    public let numberListButton     = IconButton()
-    public let bulletListButton     = IconButton()
-    public let codeButton           = IconButton()
+    let headerButton         = PopUpIconButton()
+    let boldButton           = IconButton()
+    let italicButton         = IconButton()
+    let numberListButton     = IconButton()
+    let bulletListButton     = IconButton()
+    let codeButton           = IconButton()
     
-    public let buttons: [IconButton]
-    public var activeModes = [Markdown]()
+    let buttons: [IconButton]
+    var activeModes = [Markdown]()
 
     private var buttonMargin: CGFloat {
         return conversationHorizontalMargins.left / 2 - StyleKitIcon.Size.tiny.rawValue / 2
     }
     
-    required public init() {
+    required init() {
         buttons = [headerButton, boldButton, italicButton, numberListButton, bulletListButton, codeButton]
         super.init(frame: CGRect.zero)
         setupViews()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override public var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: UIView.noIntrinsicMetric, height: 56)
     }
     
@@ -127,7 +128,7 @@ public final class MarkdownBarView: UIView {
         }
     }
     
-    public func updateIcons(for markdown: Markdown) {
+    func updateIcons(for markdown: Markdown) {
         // change header icon if necessary
         if let headerIcon = markdown.headerValue?.headerIcon {
             headerButton.setIcon(headerIcon, size: .tiny, for: .normal)
@@ -140,7 +141,7 @@ public final class MarkdownBarView: UIView {
         }
     }
     
-    @objc public func resetIcons() {
+    @objc func resetIcons() {
         buttons.forEach { $0.setIconColor(normalColor, for: .normal) }
     }
 }

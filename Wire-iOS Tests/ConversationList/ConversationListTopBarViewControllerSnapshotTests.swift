@@ -24,12 +24,12 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     
     var sut: ConversationListTopBarViewController!
     var mockAccount: Account!
-    var mockSelfUser: MockUser!
+    var mockSelfUser: MockUserType!
 
     override func setUp() {
         super.setUp()
         mockAccount = Account.mockAccount(imageData: mockImageData)
-        mockSelfUser = MockUser.createSelfUser(name: "James Hetfield", inTeam: nil)
+        mockSelfUser = MockUserType.createSelfUser(name: "James Hetfield")
     }
     
     override func tearDown() {
@@ -41,8 +41,7 @@ final class ConversationListTopBarViewControllerSnapshotTests: XCTestCase {
     }
 
     func setupSut() {
-        sut = ConversationListTopBarViewController(account: mockAccount,
-                                                   selfUser: mockSelfUser)
+        sut = ConversationListTopBarViewController(account: mockAccount, selfUser: mockSelfUser)
         sut.view.frame = CGRect(x: 0, y: 0, width: 375, height: 48)
         sut.view.backgroundColor = .black
     }

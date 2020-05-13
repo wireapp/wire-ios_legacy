@@ -21,7 +21,7 @@ No license is granted to the Wire trademark and its associated logos, all of whi
 
 # Wire iOS
 
-The Wire mobile app has an architectural layer that we call *sync engine* . It is the client-side layer that processes all the data that is displayed in the mobile app. It handles network communication and authentication with the backend, push notifications, local caching of data, client-side business logic, signaling with the audio-video libraries, encryption and decryption (using encryption libraries from a lower level) and other bits and pieces.
+The Wire mobile app has an architectural layer that we call *sync engine*. It is the client-side layer that processes all the data that is displayed in the mobile app. It handles network communication and authentication with the backend, push notifications, local caching of data, client-side business logic, signaling with the audio-video libraries, encryption and decryption (using encryption libraries from a lower level) and other bits and pieces.
 
 The user interface layer of the mobile app is built on top of the *sync engine*, which provides the data to display to the UI.
 The sync engine itself is built on top of a few third-party frameworks, and uses Wire components that are shared between platforms for cryptography (Proteus/Cryptobox) and audio-video signaling (AVS).
@@ -43,9 +43,9 @@ These differences are:
 ### Prerequisites
 In order to build Wire for iOS locally, it is necessary to install the following tools on the local machine:
 
-- OS X 10.13.2 or newer
-- Xcode 10.1 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
-- Carthage 0.29.0 or newer (https://github.com/Carthage/Carthage)
+- OS X 10.15 or newer
+- Xcode 11.4 (https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
+- Carthage 0.34.0 or newer (https://github.com/Carthage/Carthage)
 
 The setup script will automatically check for you that you satisfy these requirements
 

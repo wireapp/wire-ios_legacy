@@ -17,10 +17,12 @@
 //
 
 import Foundation
-private let zmLog = ZMSLog(tag: "Alert")
+import UIKit
+
+typealias AlertActionHandler = (UIAlertAction) -> Void
 
 extension UIAlertController {
-        
+
     /// Create an alert with a OK button
     ///
     /// - Parameters:
@@ -30,7 +32,7 @@ extension UIAlertController {
     /// - Returns: the alert presented
     static func alertWithOKButton(title: String? = nil,
                                   message: String,
-                                  okActionHandler: ((UIAlertAction) -> Void)? = nil) -> UIAlertController {
+                                  okActionHandler: AlertActionHandler? = nil) -> UIAlertController {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -41,10 +43,19 @@ extension UIAlertController {
         return alert
     }
 
+    convenience init(title: String? = nil,
+                     message: String,
+                     alertAction: UIAlertAction) {
+        self.init(title: title,
+                  message: message,
+                  preferredStyle: .alert)
+        addAction(alertAction)
+    }
+
 }
 
 extension UIViewController {
-    
+
     /// Present an alert with a OK button
     ///
     /// - Parameters:
@@ -76,5 +87,5 @@ extension UIViewController {
                                         message: "url_action.invalid_user.message".localized,
                                         okActionHandler: okActionHandler)
     }
-    
+
 }

@@ -19,7 +19,9 @@
 
 import Foundation
 import Cartography
-
+import WireSystem
+import WireDataModel
+import UIKit
 
 public final class TextSearchResultFooter: UIView {
     public var message: ZMConversationMessage? {
@@ -29,7 +31,7 @@ public final class TextSearchResultFooter: UIView {
             }
             
             self.nameLabel.textColor = sender.nameAccentColor
-            self.nameLabel.text = sender.displayName
+            self.nameLabel.text = sender.name
             self.nameLabel.accessibilityValue = self.nameLabel.text
             
             self.dateLabel.text = serverTimestamp.formattedDate

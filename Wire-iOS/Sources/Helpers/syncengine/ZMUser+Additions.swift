@@ -20,14 +20,7 @@ import WireDataModel
 
 
 extension ZMUser {
-    var pov: PointOfView {
-        return self.isSelfUser ? .secondPerson : .thirdPerson
-    }
-        
-    var hasUntrustedClients: Bool {
-        return nil != self.clients.first { !$0.verified }
-    }
-    
+
     var canSeeServices: Bool {
         #if ADD_SERVICE_DISABLED
         return false
@@ -49,7 +42,4 @@ extension ZMUser {
         }
     }
 
-    var isPendingApproval: Bool {
-        return isPendingApprovalBySelfUser || isPendingApprovalByOtherUser
-    }
 }

@@ -26,7 +26,7 @@ import Foundation
  - DarkMode:               Dark mode for conversation
  - PriofileName:           User name
  - SoundAlerts:            Sound alerts level
- - DisableCrashAndAnalyticsSharing: Opt-Out analytics and Hockey
+ - DisableCrashAndAnalyticsSharing: Opt-Out analytics and App Center
  - DisableSendButton:      Opt-Out of new send button
  - DisableLinkPreviews:    Disable link previews for links you send
  - Disable(.*):            Disable some app features (debug)

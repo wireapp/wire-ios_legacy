@@ -17,14 +17,15 @@
 //
 
 import UIKit
+import WireCommonComponents
 
-@objcMembers class LightNavigationBar : DefaultNavigationBar {
+final class LightNavigationBar : DefaultNavigationBar {
     override var colorSchemeVariant: ColorSchemeVariant {
         return .light
     }
 }
 
-@objcMembers class DefaultNavigationBar : UINavigationBar {
+class DefaultNavigationBar : UINavigationBar {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,8 +47,8 @@ import UIKit
         configureBackground()
 
         let backIndicatorInsets = UIEdgeInsets(top: 0, left: 4, bottom: 2.5, right: 0)
-        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).withInsets(backIndicatorInsets, backgroundColor: .clear)
-        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black).withInsets(backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: UIColor.from(scheme: .textForeground, variant: colorSchemeVariant)).with(insets:backIndicatorInsets, backgroundColor: .clear)
+        backIndicatorTransitionMaskImage = StyleKitIcon.backArrow.makeImage(size: .tiny, color: .black).with(insets:backIndicatorInsets, backgroundColor: .clear)
     }
 
     func configureBackground() {
@@ -67,16 +68,6 @@ import UIKit
 
 extension UIViewController {
 
-    @objc
-    func wrapInNavigationController(_ navigationControllerClass: UINavigationController.Type) -> UINavigationController {
-        return wrapInNavigationController(navigationControllerClass: navigationControllerClass, navigationBarClass: DefaultNavigationBar.self)
-    }
-
-    @objc
-    func wrapInNavigationController() -> UINavigationController {
-        return wrapInNavigationController(navigationControllerClass: RotationAwareNavigationController.self, navigationBarClass: DefaultNavigationBar.self)
-    }
-    
     func wrapInNavigationController(navigationControllerClass: UINavigationController.Type = RotationAwareNavigationController.self,
                                     navigationBarClass: AnyClass? = DefaultNavigationBar.self) -> UINavigationController {
         let navigationController = navigationControllerClass.init(navigationBarClass: navigationBarClass, toolbarClass: nil)

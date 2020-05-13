@@ -21,7 +21,7 @@ import XCTest
 
 extension MockUser: ProfileImageFetchable {
     public func fetchProfileImage(session: ZMUserSessionInterface,
-                                  cache: ImageCache<UIImage> = defaultUserImageCache,
+                                  cache: ImageCache<UIImage> = UIImage.defaultUserImageCache,
                                   sizeLimit: Int? = nil,
                                   desaturate: Bool = false,
                                   completion: @escaping (_ image: UIImage?, _ cacheHit: Bool) -> Void ) -> Void {

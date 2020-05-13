@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 enum CallDegradationState: Equatable {
     
@@ -33,7 +35,7 @@ protocol CallDegradationControllerDelegate: class {
     
 }
 
-class CallDegradationController: UIViewController {
+final class CallDegradationController: UIViewController {
 
     weak var delegate: CallDegradationControllerDelegate? = nil
     weak var targetViewController: UIViewController? = nil
@@ -75,9 +77,9 @@ class CallDegradationController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewIsReady = true
-        presentAlertIfNeeded()  
+        presentAlertIfNeeded()
     }
-    
+
     private func presentAlertIfNeeded() {
         guard
             viewIsReady,
@@ -100,7 +102,7 @@ fileprivate extension UIAlertController {
             if degradedUser.isSelfUser {
                 message = "call.degraded.alert.message.self".localized
             } else {
-                message = "call.degraded.alert.message.user".localized(args: degradedUser.displayName)
+                message = "call.degraded.alert.message.user".localized(args: degradedUser.name ?? "")
             }
         } else {
             message = "call.degraded.alert.message.unknown".localized

@@ -16,16 +16,17 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import SnapshotTesting
 import XCTest
 @testable import Wire
 
-final class ProfileViewControllerTests: ZMSnapshotTestCase {
+final class ProfileViewControllerTests: XCTestCase {
 
     var sut: ProfileViewController!
     var mockUser: MockUser!
     var selfUser: MockUser!
     var teamIdentifier: UUID!
-    
+
     override func setUp() {
         super.setUp()
         teamIdentifier = UUID()
@@ -37,7 +38,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         mockUser.handle = "catherinejackson"
         mockUser.feature(withUserClients: 6)
     }
-    
+
     override func tearDown() {
         sut = nil
         mockUser = nil
@@ -54,7 +55,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
 
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForContextProfileViewerForSelfUser() {
@@ -64,12 +65,24 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
 
-        verify(view: sut.view)
+        verify(matching: sut)
+    }
+
+    func testForUserName() {
+        selfUser.teamRole = .member
+        selfUser.emailAddress = nil
+        selfUser.availability = .busy
+        selfUser.isTrusted = true
+        sut = ProfileViewController(user: selfUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+        sut.updateShowVerifiedShield()
+        let navWrapperController = sut.wrapInNavigationController()
+        verify(matching: navWrapperController)
     }
 
     func testForContextOneToOneConversation() {
-        selfUser.teamRole = .member
-        selfUser.canCreateConversation = true
+        let selfUser = MockUserType.createSelfUser(name: "Bob", inTeam: UUID())
         mockUser.emailAddress = nil
 
         let conversation = MockConversation.oneOnOneConversation()
@@ -78,7 +91,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         sut = ProfileViewController(user: mockUser, viewer: selfUser,
                                     conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForContextOneToOneConversationForPartnerRole() {
@@ -92,14 +105,13 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         sut = ProfileViewController(user: mockUser, viewer: selfUser,
                                     conversation: conversation.convertToRegularConversation(), context: .oneToOneConversation)
 
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForDeviceListContext() {
         sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
-        self.verify(view: sut.view)
+        verify(matching: sut)
     }
-
 
     func testForIncomingRequest() {
         // GIVEN
@@ -107,7 +119,7 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
         mockUser.canBeConnected = true
         mockUser.isPendingApprovalBySelfUser = true
         mockUser.emailAddress = nil
-        mockUser.teamIdentifier = nil;
+        mockUser.teamIdentifier = nil
 
         let conversation = MockConversation.groupConversation()
         conversation.activeParticipants = [selfUser, mockUser]
@@ -117,16 +129,16 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     conversation: conversation.convertToRegularConversation(), context: .groupConversation)
 
         // THEN
-        verify(view: sut.view)
+        verify(matching: sut)
     }
 
     func testForWrapInNavigationController() {
         sut = ProfileViewController(user: mockUser, viewer: selfUser, context: .deviceList)
         let navWrapperController = sut.wrapInNavigationController()
 
-        self.verify(view: navWrapperController.view)
+        verify(matching: navWrapperController)
     }
-    
+
     func testForContextProfileViewerUnderLegalHold() {
         selfUser.teamRole = .member
         mockUser.emailAddress = nil
@@ -135,26 +147,25 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
-        verify(view: navWrapperController.view)
+
+        verify(matching: navWrapperController)
     }
-    
+
     func testForContextProfileViewerUnderLegalHold_WithSelfUserOutsideTeam() {
         let selfUserOutsideTeam = MockUser.createSelfUser(name: "John Johnson", inTeam: nil)
         selfUserOutsideTeam.handle = "johnjohnson"
         selfUserOutsideTeam.feature(withUserClients: 6)
-        
+
         mockUser.emailAddress = nil
         mockUser.isUnderLegalHold = true
         sut = ProfileViewController(user: mockUser,
                                     viewer: selfUserOutsideTeam,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
-        verify(view: navWrapperController.view)
+
+        verify(matching: navWrapperController)
     }
-    
-    
+
     func testForContextProfileViewerForSelfUserUnderLegalHold() {
         selfUser.teamRole = .member
         selfUser.emailAddress = nil
@@ -163,8 +174,33 @@ final class ProfileViewControllerTests: ZMSnapshotTestCase {
                                     viewer: selfUser,
                                     context: .profileViewer)
         let navWrapperController = sut.wrapInNavigationController()
-        
-        verify(view: navWrapperController.view)
+
+        verify(matching: navWrapperController)
     }
 
+    func testItRequestsDataRefeshForTeamMembers() {
+        // Given
+        mockUser.isTeamMember = true
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // Then
+        XCTAssertEqual(mockUser.refreshDataCount, 1)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 1)
+    }
+
+    func testItDoesNotRequestsDataRefeshForNonTeamMembers() {
+        // Given
+        mockUser.isTeamMember = false
+
+        sut = ProfileViewController(user: mockUser,
+                                    viewer: selfUser,
+                                    context: .profileViewer)
+
+        // Then
+        XCTAssertEqual(mockUser.refreshDataCount, 0)
+        XCTAssertEqual(mockUser.refreshMembershipCount, 0)
+    }
 }

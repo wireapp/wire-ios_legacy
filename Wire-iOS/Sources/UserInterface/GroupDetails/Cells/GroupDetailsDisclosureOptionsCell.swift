@@ -16,10 +16,13 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
+import UIKit
+import WireCommonComponents
+import WireDataModel
+
 protocol ConversationOptionsConfigurable {
     func configure(with conversation: ZMConversation)
 }
-
 
 // a ConversationOptionsCell that with a disclosure indicator on the right
 typealias GroupDetailsDisclosureOptionsCell = ConversationOptionsConfigurable & DisclosureCell

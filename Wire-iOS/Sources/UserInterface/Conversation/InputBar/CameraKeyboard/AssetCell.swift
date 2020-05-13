@@ -21,7 +21,7 @@ import Foundation
 import Photos
 import Cartography
 
-open class AssetCell: UICollectionViewCell {
+final class AssetCell: UICollectionViewCell {
     
     let imageView = UIImageView()
     let durationView = UILabel()
@@ -54,7 +54,7 @@ open class AssetCell: UICollectionViewCell {
         }
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -109,7 +109,7 @@ open class AssetCell: UICollectionViewCell {
         }
     }
     
-    override open func prepareForReuse() {
+    override func prepareForReuse() {
         super.prepareForReuse()
         
         self.asset = .none

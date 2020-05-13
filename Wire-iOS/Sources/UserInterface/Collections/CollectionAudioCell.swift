@@ -18,8 +18,12 @@
 
 import Foundation
 import Cartography
+import UIKit
+import WireSystem
+import WireDataModel
+import WireCommonComponents
 
-final public class CollectionAudioCell: CollectionCell {
+final class CollectionAudioCell: CollectionCell {
     private let audioMessageView = AudioMessageView()
     private let headerView = CollectionCellHeader()
 
@@ -73,7 +77,7 @@ final public class CollectionAudioCell: CollectionCell {
 }
 
 extension CollectionAudioCell: TransferViewDelegate {
-    public func transferView(_ view: TransferView, didSelect action: MessageAction) {
+    func transferView(_ view: TransferView, didSelect action: MessageAction) {
         self.delegate?.collectionCell(self, performAction: action)
     }
 }

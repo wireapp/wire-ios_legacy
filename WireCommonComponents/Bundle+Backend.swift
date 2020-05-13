@@ -20,16 +20,7 @@ import Foundation
 
 extension Bundle {
     public static var backendBundle: Bundle {
-        let mainBundle: Bundle
-        if UIApplication.runningInExtension {
-            let extensionBundleURL = Bundle.main.bundleURL
-            let mainAppBundleURL = extensionBundleURL.deletingLastPathComponent().deletingLastPathComponent()
-            guard let bundle = Bundle(url: mainAppBundleURL) else { fatalError("Failed to find main app bundle") }
-            mainBundle = bundle
-        } else {
-            mainBundle = .main
-        }
-        guard let backendBundlePath = mainBundle.path(forResource: "Backend", ofType: "bundle") else { fatalError("Could not find backend.bundle") }
+        guard let backendBundlePath = Bundle.appMainBundle.path(forResource: "Backend", ofType: "bundle") else { fatalError("Could not find backend.bundle") }
         guard let bundle = Bundle(path: backendBundlePath) else { fatalError("Could not load backend.bundle") }
         return bundle
     }

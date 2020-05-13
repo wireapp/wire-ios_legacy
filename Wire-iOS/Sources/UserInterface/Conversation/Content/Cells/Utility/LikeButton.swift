@@ -19,7 +19,7 @@
 import Foundation
 import Cartography
 
-@objcMembers open class LikeButton: IconButton {
+final class LikeButton: IconButton {
     static var normalColor: UIColor {
         return UIColor.from(scheme: .textDimmed)
     }
@@ -28,7 +28,7 @@ import Cartography
         return UIColor(for: .vividRed)
     }
 
-    open func setSelected(_ selected: Bool, animated: Bool) {
+    func setSelected(_ selected: Bool, animated: Bool) {
         // Do not animate changes if the state does not change
         guard selected != self.isSelected else {
             return
@@ -65,11 +65,11 @@ import Cartography
                 animationImageView.alpha = 0.0
                 animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 
-                UIView.wr_animate(easing: .easeOutExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeOutExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform.identity
                 })
                 
-                UIView.wr_animate(easing: .easeOutQuart, duration: 0.35, animations: {
+                UIView.animate(easing: .easeOutQuart, duration: 0.35, animations: {
                         animationImageView.alpha = 1
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()
@@ -80,11 +80,11 @@ import Cartography
             }
             else {
                 
-                UIView.wr_animate(easing: .easeInExpo, duration: 0.35, animations: {
+                UIView.animate(easing: .easeInExpo, duration: 0.35, animations: {
                     animationImageView.transform = CGAffineTransform(scaleX: 6.3, y: 6.3)
                 })
                 
-                UIView.wr_animate(easing: .easeInQuart, duration: 0.35, animations: {
+                UIView.animate(easing: .easeInQuart, duration: 0.35, animations: {
                     animationImageView.alpha = 0.0
                     }, completion: { _ in
                         animationImageView.removeFromSuperview()

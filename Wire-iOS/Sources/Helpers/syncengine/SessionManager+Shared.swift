@@ -19,14 +19,15 @@
 import Foundation
 import WireSyncEngine
 import AVFoundation
+import WireSyncEngine
 
 extension SessionManager {
-    @objc static var shared : SessionManager? {
-        return AppDelegate.shared().sessionManager
+    static var shared : SessionManager? {
+        return AppDelegate.shared.sessionManager
     }
     
-    @objc public func updateCallNotificationStyleFromSettings() {
-        let isCallKitEnabled = !Settings.shared().disableCallKit
+    func updateCallNotificationStyleFromSettings() {
+        let isCallKitEnabled: Bool = !(Settings.shared[.disableCallKit] ?? false)
         let hasAudioPermissions = AVCaptureDevice.authorizationStatus(for: AVMediaType.audio) == AVAuthorizationStatus.authorized
         let isCallKitSupported = !UIDevice.isSimulator
         

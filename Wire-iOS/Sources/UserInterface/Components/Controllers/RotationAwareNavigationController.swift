@@ -18,9 +18,13 @@
 
 
 import Foundation
+import UIKit
 
-final class RotationAwareNavigationController: UINavigationController, PopoverPresenter {
-    
+final class RotationAwareNavigationController: UINavigationController, PopoverPresenter, SpinnerCapable {
+
+    //MARK: SpinnerCapable
+    var dismissSpinner: SpinnerCompletion?
+
     // PopoverPresenter
     weak var presentedPopover: UIPopoverPresentationController?
     weak var popoverPointToView: UIView?    
@@ -49,24 +53,6 @@ final class RotationAwareNavigationController: UINavigationController, PopoverPr
         }
         else {
             return super.preferredInterfaceOrientationForPresentation
-        }
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        if let topController = self.viewControllers.last {
-            return topController.prefersStatusBarHidden
-        }
-        else {
-            return super.prefersStatusBarHidden
-        }
-    }
-    
-    public override var preferredStatusBarStyle : UIStatusBarStyle {
-        if let topController = self.viewControllers.last {
-            return topController.preferredStatusBarStyle
-        }
-        else {
-            return super.preferredStatusBarStyle
         }
     }
     

@@ -19,6 +19,8 @@
 
 import Foundation
 import MediaPlayer
+import WireSyncEngine
+import avs
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -64,7 +66,7 @@ public enum RecordingError: Error {
     case toMaxDuration, toMaxSize
 }
 
-public protocol AudioRecorderType: class {
+protocol AudioRecorderType: class {
     var format: AudioRecorderFormat { get }
     var state: AudioRecorderState { get set }
     var fileURL: URL? { get }

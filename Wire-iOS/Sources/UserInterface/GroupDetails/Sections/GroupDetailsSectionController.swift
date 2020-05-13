@@ -17,9 +17,11 @@
 //
 
 import Foundation
+import UIKit
+import WireDataModel
 
 protocol GroupDetailsUserDetailPresenter: class {
-    func presentDetails(for user: ZMUser)
+    func presentDetails(for user: UserType)
 }
 
 protocol GroupDetailsSectionControllerDelegate: GroupDetailsUserDetailPresenter {
@@ -32,8 +34,8 @@ class GroupDetailsSectionController: NSObject, CollectionViewSectionController {
         return false
     }
 
-    var sectionTitle: String {
-        return ""
+    var sectionTitle: String? {
+        return nil
     }
 
     var sectionAccessibilityIdentifier: String {

@@ -19,7 +19,7 @@
 import XCTest
 @testable import Wire
 
-class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
+final class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
 
     var cell: GroupDetailsTimeoutOptionsCell!
     var conversation: ZMConversation!
@@ -27,7 +27,7 @@ class GroupDetailsTimeoutOptionsCellTests: CoreDataSnapshotTestCase {
     override func setUp() {
         super.setUp()
         cell = GroupDetailsTimeoutOptionsCell(frame: CGRect(x: 0, y: 0, width: 350, height: 56))
-        conversation = self.createGroupConversation()
+        conversation = createGroupConversation()
     }
 
     override func tearDown() {

@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireDataModel
 
 extension ZMConversation {
     enum Action: Equatable {
@@ -78,7 +79,7 @@ extension ZMConversation {
         var actions = availableStandardActions()
         actions.append(.clearContent)
 
-        if activeParticipants.contains(ZMUser.selfUser()) {
+        if localParticipants.contains(ZMUser.selfUser()) {
             actions.append(.leave)
         }
 
@@ -121,7 +122,7 @@ extension ZMConversation {
     }
     
     private func markAsReadAction() -> Action? {
-        guard DeveloperMenuState.developerMenuEnabled() else { return nil }
+        guard Bundle.developerModeEnabled else { return nil }
         if unreadMessages.count > 0 {
             return .markRead
         } else if unreadMessages.count == 0 && canMarkAsUnread() {

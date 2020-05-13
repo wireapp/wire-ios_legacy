@@ -17,9 +17,10 @@
 //
 
 import Foundation
+import UIKit
 
-@objc extension UIApplication {
-    @objc static var runningInExtension: Bool {
+extension UIApplication {
+    static var runningInExtension: Bool {
         return Bundle.main.bundlePath.hasSuffix(".appex")
     }
 }

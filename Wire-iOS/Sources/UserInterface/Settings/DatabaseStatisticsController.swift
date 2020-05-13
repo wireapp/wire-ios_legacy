@@ -20,13 +20,14 @@ import Foundation
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
-@objcMembers open class DatabaseStatisticsController: UIViewController {
+final class DatabaseStatisticsController: UIViewController {
 
     let stackView = UIStackView()
     let spinner = UIActivityIndicatorView()
 
-    override open func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -78,7 +79,7 @@ import WireDataModel
         }
     }
 
-    override open func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         let session = ZMUserSession.shared()

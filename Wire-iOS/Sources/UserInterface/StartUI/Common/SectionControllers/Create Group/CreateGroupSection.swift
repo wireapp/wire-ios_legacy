@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import UIKit
 
-class CreateGroupSection: NSObject, CollectionViewSectionController {
+final class CreateGroupSection: NSObject, CollectionViewSectionController {
     
     enum Row {
         case createGroup
@@ -26,13 +27,13 @@ class CreateGroupSection: NSObject, CollectionViewSectionController {
     }
     
     private var data: [Row] {
-        return ZMUser.selfUser().isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
+        return SelfUser.current.isTeamMember ? [Row.createGroup, Row.createGuestRoom] : [Row.createGroup]
     }
     
     weak var delegate: SearchSectionControllerDelegate?
 
     var isHidden: Bool {
-        return !ZMUser.selfUser().canCreateConversation
+        return !SelfUser.current.canCreateConversation(type: .group)
     }
     
     func prepareForUse(in collectionView: UICollectionView?) {

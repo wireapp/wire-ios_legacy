@@ -19,6 +19,7 @@
 
 import Foundation
 import Cartography
+import WireCommonComponents
 
 private struct InputBarRowConstants {
     let titleTopMargin: CGFloat = 10
@@ -35,7 +36,7 @@ private struct InputBarRowConstants {
 }
 
 
-public final class InputBarButtonsView: UIView {
+final class InputBarButtonsView: UIView {
     
     typealias RowIndex = UInt
     
@@ -46,8 +47,8 @@ public final class InputBarButtonsView: UIView {
     fileprivate var buttonRowHeight: NSLayoutConstraint!
     fileprivate var lastLayoutWidth: CGFloat = 0
     
-    public let expandRowButton = IconButton()
-    public var buttons: [UIButton] {
+    let expandRowButton = IconButton()
+    var buttons: [UIButton] {
         didSet {
             buttonInnerContainer.subviews.forEach({ $0.removeFromSuperview() })
             layoutAndConstrainButtonRows()
@@ -57,14 +58,14 @@ public final class InputBarButtonsView: UIView {
     fileprivate let buttonOuterContainer = UIView()
     fileprivate let constants = InputBarRowConstants()
     
-    required public init(buttons: [UIButton]) {
+    required init(buttons: [UIButton]) {
         self.buttons = buttons
         super.init(frame: CGRect.zero)
         configureViews()
         createConstraints()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -107,7 +108,7 @@ public final class InputBarButtonsView: UIView {
         }
     }
     
-    override public func layoutSubviews() {
+    override func layoutSubviews() {
         super.layoutSubviews()
         guard bounds.size.width != lastLayoutWidth else { return }
         layoutAndConstrainButtonRows()
@@ -118,7 +119,7 @@ public final class InputBarButtonsView: UIView {
         guard rowIndex != currentRow else { return }
         currentRow = rowIndex
         buttonRowTopInset.constant = CGFloat(rowIndex) * constants.buttonsBarHeight
-        UIView.wr_animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
+        UIView.animate(easing: .easeInOutExpo, duration: animated ? 0.35 : 0, animations: layoutIfNeeded)
     }
     
     // MARK: - Button Layout

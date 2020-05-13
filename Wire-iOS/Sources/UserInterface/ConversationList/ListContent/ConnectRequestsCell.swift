@@ -16,26 +16,34 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-@objc protocol SectionListCellType {
+import WireSyncEngine
+
+protocol SectionListCellType: class {
     var sectionName: String? { get set }
+    var cellIdentifier: String? { get set }
 }
 
 extension SectionListCellType {
     var identifier: String {
         let prefix: String
-
+        
         if let sectionName = sectionName {
             prefix = "\(sectionName) - "
         } else {
             prefix = ""
         }
-
-        return prefix + "conversation_list_cell"
+        
+        if let cellIdentifier = cellIdentifier {
+            return prefix + cellIdentifier
+        } else {
+            return prefix
+        }
     }
 }
 
 final class ConnectRequestsCell : UICollectionViewCell, SectionListCellType {
     var sectionName: String?
+    var cellIdentifier: String?
 
     let itemView = ConversationListItemView()
 

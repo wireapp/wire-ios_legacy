@@ -18,8 +18,9 @@
 
 
 import Foundation
+import UIKit
 
-@objcMembers open class CircularProgressView: UIView {
+public final class CircularProgressView: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -51,23 +52,23 @@ import Foundation
         self.shapeLayer.strokeColor = self.tintColor.cgColor
     }
     
-    override open func didMoveToWindow() {
+    override public func didMoveToWindow() {
         updateSpinningAnimation()
     }
     
-    override open var tintColor: UIColor! {
+    override public var tintColor: UIColor! {
         didSet {
-            self.shapeLayer.strokeColor = self.tintColor.cgColor
+            shapeLayer.strokeColor = tintColor.cgColor
         }
     }
     
-    @objc open var lineWidth : Float = 2 {
+    public var lineWidth : Float = 2 {
         didSet {
             setNeedsLayout()
         }
     }
     
-    @objc open var deterministic : Bool = true {
+    public var deterministic : Bool = true {
         didSet {
             updateSpinningAnimation()
         }
@@ -77,11 +78,11 @@ import Foundation
         self.shapeLayer.path = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.bounds.width/2).cgPath
     }
     
-    override open class var layerClass : AnyClass {
+    override public class var layerClass : AnyClass {
         return CAShapeLayer.self
     }
     
-    @objc open var shapeLayer: CAShapeLayer {
+    var shapeLayer: CAShapeLayer {
         get {
             if let shapeLayer = self.layer as? CAShapeLayer {
                 return shapeLayer
@@ -90,9 +91,9 @@ import Foundation
         }
     }
     
-    @objc open fileprivate(set) var progress : Float = 0.0
+    fileprivate(set) var progress : Float = 0.0
         
-    @objc open func setProgress(_ progress: Float, animated: Bool) {
+    public func setProgress(_ progress: Float, animated: Bool) {
         self.progress = progress
         
         if (animated) {
@@ -114,14 +115,14 @@ import Foundation
         CATransaction.setDisableActions(false)
     }
     
-    open override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
-        self.setupShapeLayer()
+        setupShapeLayer()
     }
     
     /// pragma mark - Spinning animation
     
-    @objc let SpinningAnimationKey = "com.wire.animations.spin"
+    let SpinningAnimationKey = "com.wire.animations.spin"
     
     fileprivate func updateSpinningAnimation() {
         if !deterministic {

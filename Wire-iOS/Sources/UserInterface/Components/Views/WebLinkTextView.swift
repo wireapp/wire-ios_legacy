@@ -21,7 +21,7 @@ import UIKit
 
 // This subclass is used for the legal text in the Welcome screen and the reset password text in the login screen
 // Purpose of this class is to reduce the amount of duplicate code to set the default properties of this NSTextView. On the Mac client we are using something similar to also stop the user from being able to select the text (selection property needs to be enabled to make the NSLinkAttribute work on the string). We may want to add this in the future here as well
-@objc final class WebLinkTextView: UITextView {
+final class WebLinkTextView: UITextView {
 
     init() {
         super.init(frame: .zero, textContainer: nil)
@@ -38,8 +38,15 @@ import UIKit
     }
 
     private func setup() {
-        isSelectable = true
-        isEditable = false
+        
+        // WORKAROUND: isEditable needs to true on iOS 13 for links to be visible as an accessiblity element
+        // and set to false in iOS 12 or earlier for links to be tappable.
+        if #available(iOS 13.0, *) {
+            isEditable = true
+        } else {
+            isEditable = false
+        }
+        
         isScrollEnabled = false
         bounces = false
         backgroundColor = UIColor.clear
@@ -60,7 +67,7 @@ import UIKit
     }
 
     override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
-        //Prevent long press to show the magnifying glass
+        // Prevent long press to show the magnifying glass
         if gestureRecognizer is UILongPressGestureRecognizer {
             gestureRecognizer.isEnabled = false
         }

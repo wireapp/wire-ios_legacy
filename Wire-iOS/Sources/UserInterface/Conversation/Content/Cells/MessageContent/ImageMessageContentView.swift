@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class ImageContentView: UIView {
     
@@ -25,7 +26,7 @@ final class ImageContentView: UIView {
     var imageWidthConstraint: NSLayoutConstraint
 
     var mediaAsset: MediaAsset? {
-        return imageView.mediaAsset()
+        return imageView.mediaAsset
     }
 
     init() {

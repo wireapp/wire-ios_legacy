@@ -17,12 +17,13 @@
 //
 
 import Foundation
+import WireDataModel
 
-public protocol TransferViewDelegate: class {
+protocol TransferViewDelegate: class {
     func transferView(_ view: TransferView, didSelect: MessageAction)
 }
 
-public protocol TransferView {
+protocol TransferView {
     var delegate: TransferViewDelegate? { get set }
     var fileMessage: ZMConversationMessage? { get set }
     func configure(for: ZMConversationMessage, isInitial: Bool)

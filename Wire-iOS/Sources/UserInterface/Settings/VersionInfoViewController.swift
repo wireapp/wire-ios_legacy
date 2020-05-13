@@ -45,18 +45,6 @@ final class VersionInfoViewController: UIViewController {
         setupVersionInfo()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        updateStatusBar()
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-
-        updateStatusBar()
-    }
-
     private func setupCloseButton() {
         closeButton = IconButton()
         view.addSubview(closeButton)
@@ -105,10 +93,6 @@ final class VersionInfoViewController: UIViewController {
     @objc
     private func closeButtonTapped(_ close: Any?) {
         dismiss(animated: true)
-    }
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
     }
 }
 

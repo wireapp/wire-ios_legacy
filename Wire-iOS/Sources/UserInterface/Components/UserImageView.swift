@@ -22,13 +22,13 @@ import WireSyncEngine
  * A view that displays the avatar for a remote user.
  */
 
-@objc open class UserImageView: AvatarImageView, ZMUserObserver {
+class UserImageView: AvatarImageView, ZMUserObserver {
 
     /**
      * The different sizes for the avatar image.
      */
 
-    @objc(UserImageViewSize) public enum Size: Int {
+    enum Size: Int {
         case tiny = 16
         case badge = 24
         case small = 32
@@ -39,17 +39,17 @@ import WireSyncEngine
     // MARK: - Interface Properties
 
     /// The size of the avatar.
-    @objc public var size: Size {
+    var size: Size {
         didSet {
             updateUserImage()
         }
     }
 
     /// Whether the image should be desaturated, e.g. for unconnected users.
-    @objc public var shouldDesaturate: Bool = true
+    var shouldDesaturate: Bool = true
 
     /// Whether the badge indicator is enabled.
-    public var indicatorEnabled: Bool = false {
+    var indicatorEnabled: Bool = false {
         didSet {
             badgeIndicator.isHidden = !indicatorEnabled
         }
@@ -60,14 +60,14 @@ import WireSyncEngine
     // MARK: - Remote User
 
     /// The user session to use to download images.
-    @objc var userSession: ZMUserSessionInterface? {
+    var userSession: ZMUserSessionInterface? {
         didSet {
             updateUser()
         }
     }
 
     /// The user to display the avatar of.
-    @objc public var user: UserType? {
+    var user: UserType? {
         didSet {
             updateUser()
         }
@@ -77,14 +77,14 @@ import WireSyncEngine
 
     // MARK: - Initialization
 
-    public override init(frame: CGRect) {
+    override init(frame: CGRect) {
         self.size = .small
         super.init(frame: .zero)
         configureSubviews()
         configureConstraints()
     }
 
-    public init(size: Size = .small) {
+    init(size: Size = .small) {
         self.size = size
         super.init(frame: .zero)
         configureSubviews()
@@ -95,11 +95,11 @@ import WireSyncEngine
         userObserverToken = nil
     }
 
-    public required init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    open override var intrinsicContentSize: CGSize {
+    override var intrinsicContentSize: CGSize {
         return CGSize(width: size.rawValue, height: size.rawValue)
     }
 
@@ -140,13 +140,11 @@ import WireSyncEngine
 
     /// Returns the placeholder background color for the user.
     private func containerBackgroundColor(for user: UserType) -> UIColor? {
-        let isWireless = user.zmUser?.isWirelessUser == true
-
         switch self.avatar {
         case .image?, nil:
             return user.isServiceUser ? .white : .clear
         case .text?:
-            if user.isConnected || user.isSelfUser || user.isTeamMember || isWireless {
+            if user.isConnected || user.isSelfUser || user.isTeamMember || user.isWirelessUser {
                 return user.accentColor
             } else {
                 return UIColor(white: 0.8, alpha: 1)
@@ -174,7 +172,7 @@ import WireSyncEngine
             self.container.backgroundColor = self.containerBackgroundColor(for: user)
         }
 
-        if animated {
+        if animated && !ProcessInfo.processInfo.isRunningTests {
             UIView.transition(with: self, duration: 0.15, options: .transitionCrossDissolve, animations: updateBlock, completion: nil)
         } else {
             updateBlock()
@@ -183,8 +181,12 @@ import WireSyncEngine
 
     /// Updates the image for the user.
     fileprivate func updateUserImage() {
-        guard let user = user as? ProfileImageFetchableUser,
-              let userSession = userSession else { return }
+        guard
+            let user = user,
+            let userSession = userSession
+        else {
+            return
+        }
 
         var desaturate = false
         if shouldDesaturate {
@@ -192,9 +194,9 @@ import WireSyncEngine
         }
 
         user.fetchProfileImage(session: userSession,
-                               cache: defaultUserImageCache,
+                               imageCache: UIImage.defaultUserImageCache,
                                sizeLimit: size.rawValue,
-                               desaturate: desaturate,
+                               isDesaturated: desaturate,
                                completion: { [weak self] (image, cacheHit) in
             // Don't set image if nil or if user has changed during fetch
             guard let image = image, user.isEqual(self?.user) else { return }
@@ -204,7 +206,7 @@ import WireSyncEngine
 
     // MARK: - Updates
 
-    open func userDidChange(_ changeInfo: UserChangeInfo) {
+    func userDidChange(_ changeInfo: UserChangeInfo) {
         // Check for potential image changes
         if size == .big{
             if changeInfo.imageMediumDataChanged || changeInfo.connectionStateChanged {
@@ -223,7 +225,7 @@ import WireSyncEngine
     }
 
     /// Called when the user or user session changes.
-    open func updateUser() {
+    func updateUser() {
         guard let user = self.user, let initials = user.initials else {
             return
         }
@@ -232,7 +234,7 @@ import WireSyncEngine
         setAvatar(defaultAvatar, user: user, animated: false)
 
         if let userSession = userSession as? ZMUserSession {
-            userObserverToken = UserChangeInfo.add(observer: self, for: user, userSession: userSession)
+            userObserverToken = UserChangeInfo.add(observer: self, for: user, in: userSession)
         }
 
         updateForServiceUserIfNeeded(user)

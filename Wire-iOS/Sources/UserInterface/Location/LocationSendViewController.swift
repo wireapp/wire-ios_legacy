@@ -18,14 +18,15 @@
 
 
 import Cartography
+import UIKit
 
-@objc public protocol LocationSendViewControllerDelegate: class {
+protocol LocationSendViewControllerDelegate: class {
     func locationSendViewControllerSendButtonTapped(_ viewController: LocationSendViewController)
 }
 
-@objcMembers public final class LocationSendViewController: UIViewController {
+final class LocationSendViewController: UIViewController {
     
-    public let sendButton = Button(style: .full)
+    let sendButton = Button(style: .full)
     public let addressLabel: UILabel = {
         let label = UILabel()
         label.font = .normalFont

@@ -20,30 +20,27 @@ import Foundation
 
 extension NSMutableString {
 
-
     /// resolve emoticon shortcuts with given EmoticonSubstitutionConfiguration
     ///
     /// - Parameters:
     ///   - range: the range to resolve
     ///   - configuration: a EmoticonSubstitutionConfiguration object for injection
     func resolveEmoticonShortcuts(in range: NSRange,
-                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance()) {
-        guard let shortcuts = configuration.shortcuts as? [NSString] else { return }
+                                  configuration: EmoticonSubstitutionConfiguration = EmoticonSubstitutionConfiguration.sharedInstance) {
+        let shortcuts = configuration.shortcuts
 
         var mutableRange = range
 
         for shortcut in shortcuts {
-            let emoticon = NSString(string: configuration.emoticon(forShortcut: shortcut as String))
+            guard let emoticon = configuration.substitutionRules[shortcut] else { continue }
 
-            let howManyTimesReplaced = (self as NSMutableString).replaceOccurrences(of: shortcut as String,
-                                                                                    with: emoticon as String,
-                                                                                    options: .literal,
-                                                                                    range: mutableRange)
-
-
+            let howManyTimesReplaced = replaceOccurrences(of: shortcut,
+                                                          with: emoticon,
+                                                          options: .literal,
+                                                          range: mutableRange)
 
             if howManyTimesReplaced > 0 {
-                let length = max(mutableRange.length - (shortcut.length - emoticon.length) * howManyTimesReplaced, 0)
+                let length = max(mutableRange.length - ((shortcut as NSString).length - (emoticon as NSString).length) * howManyTimesReplaced, 0)
                 mutableRange = NSRange(location: mutableRange.location,
                                        length: length)
             }

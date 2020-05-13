@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Nessun risultato.";
 "peoplepicker.no_matching_results_message" = "Metti un indirizzo email completo.";
+"peoplepicker.no_search_results" = "Nessun risultato corrispondente. Provare ad inserire un nome diverso.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Manda un invito";
 "peoplepicker.no_matching_results.action.share_contacts" = "Condividi contatti";
@@ -161,7 +162,7 @@
 "conversation_list.voiceover.bottom_bar.recent_button.label" = "recente";
 "conversation_list.voiceover.bottom_bar.recent_button.hint" = "elenco di conversazioni recenti";
 "conversation_list.voiceover.bottom_bar.folder_button.label" = "cartelle";
-"conversation_list.voiceover.bottom_bar.folder_button.hint" = "list of conversations organized in folders";
+"conversation_list.voiceover.bottom_bar.folder_button.hint" = "lista di conversazioni organizzate in cartelle";
 "conversation_list.voiceover.bottom_bar.archived_button.label" = "archivio";
 "conversation_list.voiceover.bottom_bar.archived_button.hint" = "elenco di conversazioni archiviate";
 "conversation_list.voiceover.bottom_bar.contacts_button.label" = "contatti";
@@ -227,6 +228,8 @@
 "conversation.voiceover.legalhold" = "legale";
 "conversation.voiceover.value.active" = "attivo";
 "conversation.voiceover.value.disabled" = "disattivato";
+
+"conversation.status.secutity_alert.default" = "Nuovo avviso di sicurezza";
 
 "conversation.status.typing" = "Scrivendo un messaggio…";
 "conversation.status.typing.group" = "%@: scrivendo un messaggio…";
@@ -469,7 +472,7 @@
 "content.system.call.missed-call-you" = "Chiamata senza risposta";
 
 "content.system.call.missed-call.groups" = "Chiamata persa da %@";
-"content.system.call.missed-call.groups-you" = "Missed call from %2$@";
+"content.system.call.missed-call.groups-you" = "Chiamata persa da %2$@";
 "content.system.call.missed-call.groups.you" = "Tu";
 
 "content.system.renamed_conv.title" = "%@ ha rinominato la conversazione";
@@ -499,8 +502,8 @@
 
 // legal hold
 
-"content.system.message_legal_hold.enabled" = "This conversation is under legal hold";
-"content.system.message_legal_hold.disabled" = "Legal hold deactivated for this conversation";
+"content.system.message_legal_hold.enabled" = "Questa conversazione è sotto sospensione legale";
+"content.system.message_legal_hold.disabled" = "La sospensione legale ha disattivato questa conversazione";
 
 "content.system.message_legal_hold.learn_more" = "Ulteriori informazioni";
 
@@ -593,6 +596,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Connettiti a %@"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Ciao %@,\nConnettiamoci su Wire.\n%@";
 
 "connection_request_pending_title" = "Richiesta di connessione";
@@ -630,8 +635,8 @@
 "voice.cancel_button.title" = "Annulla";
 "voice.call_button.title" = "Chiama";
 "voice.end_call_button.title" = "Termina chiamata";
-"voice.call_error.unsupported_version.title" = "Please update Wire";
-"voice.call_error.unsupported_version.message" = "You received a call that isn't supported by this version of Wire.\nGet the latest version in the App Store.";
+"voice.call_error.unsupported_version.title" = "Si prega di aggiornare Wire";
+"voice.call_error.unsupported_version.message" = "Hai ricevuto una chiamata che non è supportata da questa versione di Wire.\nScarica l'ultima versione dall'App Store.";
 "voice.call_error.unsupported_version.dismiss" = "Più tardi";
 
 "voice.alert.call_in_progress.title" = "Chiamata in corso";
@@ -639,10 +644,8 @@
 "voice.alert.call_in_progress.confirm" = "OK";
 
 "voice.alert.microphone_warning.title" = "Wire ha bisogno di accedere al microfono.";
-"voice.alert.microphone_warning.explanation" = "Abilitalo nelle impostazioni di Wire.";
 
 "voice.alert.camera_warning.title" = "Wire ha bisogno di accedere alla fotocamera.";
-"voice.alert.camera_warning.explanation" = "Vai nelle impostazioni e consenti a Wire di accedere alla fotocamera.";
 
 "voice.top_overlay.tap_to_return" = "Tocca per tornare alla chiamata";
 "voice.top_overlay.accessibility_title" = "Chiamata in corso";
@@ -712,6 +715,10 @@
 "participants.section.settings" = "Opzioni";
 "participants.footer.add_title" = "Aggiungi partecipanti";
 "participants.section.name.footer" = "Fino a %1$d persone possono partecipare ad una conversazione di gruppo. Le videochiamate funzionano con altre %2$d persone oltre a te.";
+"participants.section.admins.footer" = "Non ci sono amministratori.";
+"participants.section.members.footer" = "Non ci sono membri.";
+
+"profile.profile.group_admin_options.title" = "Amministratore del gruppo";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Altre azioni";
@@ -762,10 +769,10 @@
 "meta.degraded.degradation_reason_message.someone" = "Qualcuno ha iniziato ad usare un nuovo dispositivo.";
 "meta.degraded.dialog_message" = "Vuoi comunque mandare il messaggio?";
 "meta.degraded.verify_devices_button" = "Verifica dispositivi…";
-"meta.degraded.send_anyway_button" = "Send Anyway";
+"meta.degraded.send_anyway_button" = "Invia comunque";
 "meta.degraded.cancel_sending_button" = "Annulla";
-"meta.legalhold.info_button" = "What Is Legal Hold?";
-"meta.legalhold.send_alert_title" = "The conversation is now subject to legal hold.";
+"meta.legalhold.info_button" = "Cos'è la sospensione legale?";
+"meta.legalhold.send_alert_title" = "Questa conversazione è ora sotto sospensione legale.";
 
 // Remove from conversation dialogue
 "profile.remove_dialog_title" = "Rimuovere?";
@@ -796,10 +803,10 @@
 "profile.connection_request_dialog.button_connect" = "Connetti";
 
 // Delete group
-"conversation.delete_request_dialog.title" = "Delete group conversation?";
-"conversation.delete_request_dialog.message" = "This will delete the group and all content for all participants on all devices. There is no option to restore the content. All participants will be notified.";
-"conversation.delete_request_error_dialog.title" = "An error occured while trying to delete the group %@. Please try again.";
-"conversation.delete_request_error_dialog.button_delete_group" = "Delete Group";
+"conversation.delete_request_dialog.title" = "Eliminare la conversazione di gruppo?";
+"conversation.delete_request_dialog.message" = "Questo cancellerà il gruppo e tutti i contenuti per tutti i partecipanti su tutti i dispositivi. Non c'è l'opzione per ripristinare il contenuto. Tutti i partecipanti saranno avvisati.";
+"conversation.delete_request_error_dialog.title" = "Si è verificato un errore durante l'eliminazione del gruppo %@. Riprova.";
+"conversation.delete_request_error_dialog.button_delete_group" = "Elimina Gruppo";
 
 // Cancel connection request
 "profile.cancel_connection_request_dialog.title" = "Annullare la richiesta?";
@@ -812,8 +819,8 @@
 "profile.unblock_button_title" = "Sblocca…";
 
 // Favorite button
-"profile.favorite_button_title" = "Add to Favorites";
-"profile.unfavorite_button_title" = "Remove from Favorites";
+"profile.favorite_button_title" = "Aggiungi ai preferiti";
+"profile.unfavorite_button_title" = "Rimuovi dai preferiti";
 
 "profile.block_button_title_action" = "Blocca";
 "profile.unblock_button_title_action" = "Sblocca";
@@ -827,11 +834,15 @@
 "profile.read_receipts_disabled_memo.header" = "HAI DISABILITATO LE CONFERME DI LETTURA";
 "profile.read_receipts_memo.body" = "Se entrambe le parti attivano le conferme di lettura, è possibile vedere quando vengono letti i messaggi.\nPuoi cambiare questa opzione nelle impostazioni del tuo account.";
 
+"profile.group_admin_status_memo.body" = "Quando è attivo, l'amministratore può aggiungere o rimuovere persone e servizi, aggiornare le impostazioni di gruppo e modificare il ruolo di un partecipante.";
+
 "profile.extended_metadata.header" = "Informazioni";
 
 // User Details
 "profile.details.title" = "Dettagli";
 "profile.details.guest" = "Ospite";
+"profile.details.group_admin" = "Amministratore del gruppo";
+"profile.details.partner" = "esterno";
 
 "profile_view.accessibility.handle" = "Username";
 "profile_view.accessibility.name" = "Nome visualizzato";
@@ -851,15 +862,15 @@
 "device.verified" = "Verificato";
 "device.not_verified" = "Non verificato";
 
-"device.class.legalhold" = "Legal Hold";
+"device.class.legalhold" = "Sospensione legale";
 "device.class.desktop" = "Desktop";
 "device.class.tablet" = "Tablet";
 "device.class.phone" = "Telefono";
 "device.class.unknown" = "Sconosciuto";
 
-"device.type.permanent" = "Permanent";
-"device.type.temporary" = "Temporary";
-"device.type.legalhold" = "Legal Hold";
+"device.type.permanent" = "Permanente";
+"device.type.temporary" = "Temporaneo";
+"device.type.legalhold" = "Sospensione legale";
 "device.type.unknown" = "Sconosciuto";
 
 // Bot
@@ -875,13 +886,17 @@
 "group_details.receipt_options_cell.title" = "Conferme di lettura";
 "group_details.receipt_options_cell.description" = "Quando è attivo, le persone potranno vedere quando i loro messaggi vengono letti in questa conversazione.";
 
+"group_details.conversation_admins_header.title" = "Amministratori del gruppo";
+"group_details.conversation_members_header.title" = "Membri del gruppo";
+
+
 // Legal hold details
 
-"legalhold.participants.section.title" = "Legal hold subjects";
-"legalhold.header.title" = "Legal Hold";
-"legalhold.header.other_description" = "Legal Hold has been activated for at least one person in this conversation.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.";
-"legalhold.header.self_description" = "Legal Hold has been activated for your account.\nAll messages will be preserved for future access, including deleted, edited, and timed messages.\nYour conversation partners will be aware of the recording.";
-"legalhold.accessibility" = "Legal hold details";
+"legalhold.participants.section.title" = "Oggetti sospensione legale";
+"legalhold.header.title" = "Sospensione legale";
+"legalhold.header.other_description" = "La sospensione legale è stata attivata per almeno una persona in questa conversazione.\nTutti i messaggi saranno preservati per eventuali accessi futuri, inclusi messaggi eliminati, modificati e ad invio programmato.";
+"legalhold.header.self_description" = "La sospensione legale è stata attivata per il tuo account.\nTutti i messaggi saranno preservati per eventuali accessi futuri, inclusi messaggi eliminati, modificati e ad invio programmato.\nI partecipanti alla conversazione saranno informati di questo cambiamento.";
+"legalhold.accessibility" = "Dettagli della sospensione legale";
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -904,8 +919,8 @@
 "self.add_phone_number" = "Aggiungi un numero di telefono";
 "self.add_email_password" = "Aggiungi indirizzo email e password";
 
-"self.accessibility.profile_photo_image" = "Profile picture";
-"self.accessibility.profile_photo_edit_button" = "Change profile picture";
+"self.accessibility.profile_photo_image" = "Immagine del profilo";
+"self.accessibility.profile_photo_edit_button" = "Cambia la foto del profilo";
 
 // About screen
 "about.tos.title" = "Termini di utilizzo";
@@ -1076,7 +1091,7 @@
 "self.settings.popular_demand.title" = "A grande richiesta";
 "self.settings.popular_demand.send_button.title" = "Pulsante Invia";
 "self.settings.popular_demand.send_button.footer" = "Disattiva per inviare tramite il tasto invio.";
-"self.settings.popular_demand.dark_mode.footer" = "Switch between dark and light theme.";
+"self.settings.popular_demand.dark_mode.footer" = "Alterna tema scuro e chiaro.";
 
 // Open in
 "self.settings.external_apps.header" = "Apri con";
@@ -1117,17 +1132,20 @@
 "self.settings.privacy_contacts_menu.description_disabled.title" = "Questo ti aiuta a connetterti con gli altri. Rendiamo tutte le informazioni dai contatti anonime e non sono cedute a nessun altro. Consenti l'accesso tramite Impostazioni > Privacy > Contatti.";
 
 "self.settings.privacy_security.lock_app" = "Blocca con codice";
-"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Lock Wire after %@ in the background.";
+"self.settings.privacy_security.lock_app.subtitle.lock_description" = "Blocca Wire dopo %@ che non viene utilizzato.";
 "self.settings.privacy_security.lock_app.subtitle.touch_id" = "Sblocca con Touch ID o inserisci il tuo codice di accesso.";
 "self.settings.privacy_security.lock_app.subtitle.face_id" = "Sblocca con Face ID o inserisci il tuo codice di accesso.";
 "self.settings.privacy_security.lock_app.subtitle.none" = "Sblocca inserendo il tuo codice di accesso.";
 
 "self.settings.privacy_security.lock_app.description" = "Sblocca Wire";
+"self.settings.privacy_security.lock_password.description.unlock" = "Sblocca con la tua password.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Password errata. Riprova.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Password errata. Se hai cambiato di recente la password, connettiti ad internet e riprova.";
 
-"self.settings.privacy_security.lock_cancelled.description_face_id" = "Unlock Wire with Face ID or Passcode";
+"self.settings.privacy_security.lock_cancelled.description_face_id" = "Sblocca Wire con Face ID o codice d'accesso";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Sblocca Wire con Touch ID o Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode" = "Unlock Wire with Passcode";
-"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "To unlock Wire, turn on Passcode in your device settings";
+"self.settings.privacy_security.lock_cancelled.description_passcode" = "Sblocca Wire con codice d'accesso";
+"self.settings.privacy_security.lock_cancelled.description_passcode_unavailable" = "Per sbloccare Wire, attiva il codice d'accesso nelle impostazioni del dispositivo";
 "self.settings.privacy_security.lock_cancelled.action" = "Sblocca";
 
 "self.settings.privacy_security.disable_link_previews.title" = "Crea anteprime dei link";
@@ -1140,8 +1158,10 @@
 
 "self.settings.advanced.title" = "Avanzate";
 "self.settings.advanced.troubleshooting.title" = "Risoluzione dei problemi";
-"self.settings.advanced.troubleshooting.submit_debug.title" = "Debug Report";
-"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "This information helps Wire Support diagnose calling problems and improve the overall app experience.";
+"self.settings.advanced.troubleshooting.submit_debug.title" = "Report di debug";
+"self.settings.advanced.debugging_tools.title" = "Strumenti di debug";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Trova la prima conversazione non letta";
+"self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Questa informazione aiuta il team di supporto di Wire a identificare problemi delle chiamate e migliorare l'esperienza di utilizzo dell'applicazione.";
 "self.settings.advanced.reset_push_token.title" = "Reimpostazione delle notifiche Push Token";
 "self.settings.advanced.reset_push_token.subtitle" = "Se si verificano problemi con le notifiche push, il supporto di Wire può chiedere di reimpostare questo token.";
 "self.settings.advanced.reset_push_token_alert.title" = "Push Token è stata resettata";
@@ -1154,7 +1174,7 @@
 // Technical Report
 "self.settings.technical_report_section.title" = "Relazione tecnica";
 "self.settings.technical_report.send_report" = "Invia una relazione a Wire";
-"self.settings.technical_report.mail.subject" = "Wire Debug Report";
+"self.settings.technical_report.mail.subject" = "Report di debug di Wire";
 "self.settings.technical_report.include_log" = "Includere file di registro dettagliato";
 "self.settings.technical_report.privacy_warning" = "Log dettagliati potrebbero contenere dati personali";
 "self.settings.technical_report.no_mail_alert" = "Nessun client di posta rilevato. Fai tap su \"OK\" ed invia i log manualmente a: ";
@@ -1181,7 +1201,7 @@
 "self.settings.history_backup.password.title" = "Imposta password";
 "self.settings.history_backup.password.cancel" = "Annulla";
 "self.settings.history_backup.password.next" = "Avanti";
-"self.settings.history_backup.password.placeholder" = "Almeno 8 caratteri";
+"self.settings.history_backup.password.placeholder" = "Password";
 "self.settings.history_backup.password.description" = "Il backup verrà compresso e crittografato con la password impostata qui.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1211,16 +1231,20 @@
 // Landing screen
 
 "landing.header" = "Wire. Aggiungi il tuo account.";
-"landing.create_account.title" = "Personale";
-"landing.create_account.subtitle" = "Chat privately with groups of friends\U00A0and\U00A0family";
+"landing.welcome_message" = "Benvenuto in %@";
+"landing.create_account.title" = "Crea account";
+"landing.create_account.subtitle" = "Messaggia privatamente con gruppi di amici e familiari";
 "landing.create_team.title" = "Pro";
-"landing.create_team.subtitle" = "Secure collaboration for businesses, institutions and professional\U00A0organizations";
+"landing.create_team.subtitle" = "Collaborazione sicura per business, istituzioni e organizzazioni professionali";
 "landing.login.hints" = "Hai già un account?";
 "landing.login.button.title" = "Log in";
+"landing.login.email.button.title" = "Login con email";
+"landing.login.enterprise.button.title" = "Accesso aziendale";
+"landing.login.sso.button.title" = "Accedi con SSO";
 
-"landing.custom_backend.title" = "Connected to \"%@\"";
+"landing.custom_backend.title" = "Connesso a \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Visualizza di più";
-"landing.custom_backend.more_info.alert.title" = " You are connected to a third-party server: %@";
+"landing.custom_backend.more_info.alert.title" = " Sei connesso ad un server di terze parti: %@";
 
 // Create team
 
@@ -1327,7 +1351,7 @@
 "registration.alert.account_exists.title" = "Account Esistente";
 "registration.alert.account_exists.message_phone" = "Il numero di telefono che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro numero di telefono oppure prova ad entrare, nel caso l'account sia tuo.";
 "registration.alert.account_exists.message_email" = "L'indirizzo email che hai usato per registrarti è già collegato ad un account.\n\nUtilizza un altro indirizzo email oppure prova ad entrare, nel caso l'account sia tuo.";
-"registration.alert.change_email_action" = "Register with Another Email";
+"registration.alert.change_email_action" = "Registrati con un'altra email";
 "registration.alert.change_phone_action" = "Registrati con un'altro numero";
 "registration.alert.change_signin_action" = "Log in";
 
@@ -1352,21 +1376,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Questo backup è stato creato con una versione più recente o obsoleta di Wire e non può essere ripristinato.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Login aziendale";
-"login.sso.alert.message" = "Inserisci il codice d'accesso SSO dell'azienda.";
+"login.sso.alert.title" = "Accesso aziendale";
+"login.sso.alert.message.sso_and_email" = "Inserisci il tuo codice email o SSO. Se la tua email corrisponde a un'installazione aziendale di Wire, questa app si connetterà a quel server.";
+"login.sso.alert.message.sso_only" = "Inserisci il tuo codice SSO:";
 "login.sso.alert.action" = "Log in";
-"login.sso.alert.text_field.placeholder" = "Codice d'accesso SSO";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "email o codice di accesso SSO";
+"login.sso.alert.text_field.placeholder.sso_only" = "Codice d'accesso SSO";
 
-"login.sso.start_error_title" = "Impossibile avviare il login aziendale";
-"login.sso.link_error_message" = "Il link di login aziendale che hai cliccato non è valido. Contatta l'amministratore per risolvere il problema.";
+"login.sso.start_error_title" = "Impossibile avviare il Login Aziendale";
+"login.sso.link_error_message" = "Questo link non è valido. Contatta l'amministratore per risolvere il problema.";
 
-"login.sso.error.alert.title" = "Qualcosa è andato storto";
-"login.sso.error.alert.invalid_code.title" = "Codice non valido.";
-"login.sso.error.alert.invalid_code.message" = "Verifica il tuo codice di accesso SSO aziendale e riprova.";
 "login.sso.error.offline.alert.message" = "Verifica la tua connessione internet e riprova.";
 "login.sso.error.alert.message" = "Contattare l'amministratore del sistema per maggiori dettagli (errore %@).";
-"login.sso.error.alert.unknown.message" = "Si prega di riprovare più tardi.";
+
+"login.sso.error.alert.invalid_code.message" = "Verifica il tuo codice di accesso SSO aziendale e riprova.";
 "login.sso.error.alert.invalid_status.message" = "Riprova più tardi (errore %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Inserisci un codice di accesso SSO valido";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Inserisci un codice email o accesso SSO valido";
+"login.sso.error.alert.domain_not_registered.message" = "Questa email non può essere utilizzata per l'accesso aziendale. Inserisci il codice SSO per procedere.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Questa email è collegata ad un server diverso, ma l'app può essere connessa solo ad un server alla volta. Per favore esci da tutti gli account Wire su questo dispositivo e prova ad accedere nuovamente.";
+"login.sso.error.alert.unknown.message" = "Si prega di riprovare più tardi.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Ripristino in corso…";
@@ -1448,7 +1478,7 @@
 "signin_logout.email.subheadline" = "La sessione è scaduta. Inserisci indirizzo email e password per continuare.";
 "signin_logout.phone.subheadline" = "La sessione è scaduta. Inserisci il numero di telefono per continuare.";
 "signin_logout.sso.subheadline" = "La sessione è scaduta. Accedi con il tuo account aziendale per continuare.";
-"signin_logout.sso.buton" = "Login aziendale";
+"signin_logout.sso.buton" = "Accesso aziendale";
 
 "signin.email.missing_password.subtitle" = "Inserisci il tuo indirizzo email e la password per continuare.";
 "signin.phone.missing_password.subtitle" = "Inserisci il tuo numero di telefono per continuare.";
@@ -1481,8 +1511,8 @@
 "error.name_and_email" = "Inserisci il tuo nome e cognome e un indirizzo email valido";
 "error.full_name" = "Si prega di inserire il nome intero";
 "error.email" = "Inserisci un indirizzo email valido";
-"error.input.too_long" = "Input troppo lungo";
-"error.input.too_short" = "Input troppo corto";
+"error.input.too_long" = "Inserisci un nome utente più corto";
+"error.input.too_short" = "Inserisci un nome utente più lungo";
 "error.email.invalid" = "Inserisci un indirizzo email valido";
 "error.phone.invalid" = "Inserisci un numero di telefono valido";
 
@@ -1553,8 +1583,8 @@
 "force.update.ok_button" = "Vai all'App Store";
 
 //Jailbroken alert
-"jailbrokendevice.alert.title" = "Jailbreak detected";
-"jailbrokendevice.alert.message" = "For security reasons, Wire can't be used on this device. Any existing Wire data has been erased.";
+"jailbrokendevice.alert.title" = "Jailbreak rilevato";
+"jailbrokendevice.alert.message" = "Per motivi di sicurezza, Wire non può essere utilizzato su questo dispositivo. Qualsiasi dato afferente Wire sarà cancellato.";
 
 // Third Party
 "giphy.conversation.message" = "%@ · via giphy.com";
@@ -1603,16 +1633,13 @@
 
 "availability.message.cancel" = "Annulla";
 "availability.message.set_status" = "Imposta uno stato";
-"availability.accessibility_label.change_status" = "Change Status";
-"availability.accessibility_label.status" = "Status";
+"availability.accessibility_label.change_status" = "Cambia stato";
+"availability.accessibility_label.status" = "Stato";
 
 "availability.none" = "Nessuno";
 "availability.available" = "Disponibile";
 "availability.away" = "Assente";
 "availability.busy" = "Occupato";
-"availability.available.placeholder" = "%@ è disponibile";
-"availability.away.placeholder" = "%@ è assente";
-"availability.busy.placeholder" = "%@ è occupato";
 
 "availability.reminder.away.title" = "Sei impostato su Lontano";
 "availability.reminder.away.message" = "Apparirai come Lontano ad altre persone. Non riceverai notifiche su eventuali chiamate o messaggi in arrivo.";
@@ -1645,10 +1672,10 @@
 "url_action.connect_to_bot.message" = "Vorresti connetterti al bot?";
 
 "url_action.switch_backend.title" = "Connetti al server";
-"url_action.switch_backend.message" = "This configuration will connect the app to a third-party server:\n%@";
+"url_action.switch_backend.message" = "Questa configurazione connetterà l'applicazione ad un server di terze parti:\n%@";
 
-"url_action.switch_backend.error.logged_in.title" = "Can’t switch servers";
-"url_action.switch_backend.error.logged_in" = "You are already logged in. To switch to this server, log out of all accounts and try again.";
+"url_action.switch_backend.error.logged_in.title" = "Impossibile cambiare server";
+"url_action.switch_backend.error.logged_in" = "Sei già loggato. Per connettersi a questo server, scollegati da tutti gli account e prova di nuovo.";
 
 "url_action.switch_backend.error.invalid_backend.title" = "Il server non risponde";
 "url_action.switch_backend.error.invalid_backend" = "Controlla la connessione internet, verifica il link e riprova.";
@@ -1661,8 +1688,8 @@
 "url_action.invalid_conversation.title" = "Wire non può aprire questa conversazione.";
 "url_action.invalid_conversation.message" = "Non hai i permessi per questo account o la persona potrebbe non essere su Wire.";
 
-"url_action.authorization_required.title" = "Authorization required.";
-"url_action.authorization_required.message" = "You need to log in to view this content.";
+"url_action.authorization_required.title" = "Richiesta autorizzazione.";
+"url_action.authorization_required.message" = "Devi effettuare il login per visualizzare questo contenuto.";
 
 "url_action.invalid_link.title" = "Link non valido.";
 "url_action.invalid_link.message" = "Il link che hai aperto non è valido.";
@@ -1692,31 +1719,38 @@
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Password Rules
-"registration.password.rules.no_requirements" = "Use %@.";
-"registration.password.rules.with_requirements" = "Use %@, with %@.";
+"registration.password.rules.no_requirements" = "Usa %@.";
+"registration.password.rules.with_requirements" = "Usa %@, con %@.";
 
 // Legal Hold Deactivation
-"legal_hold.deactivated.title" = "Legal Hold Deactivated";
-"legal_hold.deactivated.message" = "Future messages will not be recorded.";
+"legal_hold.deactivated.title" = "Sospensione legale disattivata";
+"legal_hold.deactivated.message" = "I messaggi futuri non verranno registrati.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Share Extension
-"share_extension.voiceover.conversation_under_legal_hold" = "Under legal hold.";
-"share_extension.voiceover.conversation_secure" = "All clients verified.";
-"share_extension.voiceover.conversation_secure_with_ignored" = "Not all clients verified.";
+"share_extension.voiceover.conversation_under_legal_hold" = "Sotto sospensione legale.";
+"share_extension.voiceover.conversation_secure" = "Tutti i client verificati.";
+"share_extension.voiceover.conversation_secure_with_ignored" = "Non tutti i client verificati.";
 
 // Legal hold - alert
-"legalhold_request.button.accessibility" = "Pending approval.";
-"legalhold_request.alert.title" = "Legal Hold Requested";
-"legalhold_request.alert.detail" = "All future messages will be recorded by the device with fingerprint:\n\n%@\n\nThis includes deleted, edited, and timed messages in all conversations.";
-"legalhold_request.alert.detail.enter_password" = "Enter your password to confirm.";
+"legalhold_request.button.accessibility" = "In attesa di approvazione.";
+"legalhold_request.alert.title" = "Sospensione legale richiesta";
+"legalhold_request.alert.detail" = "Tutti i futuri messaggi verranno registrati dal dispositivo con l'impronta digitale:\n\n%@\n\nQuesto include messaggi eliminati, modificati e ad invio programmato in tutte le conversazioni.";
+"legalhold_request.alert.detail.enter_password" = "Inserisci la password per confermare.";
 "legalhold_request.alert.error_wrong_password" = "Password errata";
 
 // Legal hold activated
-"legalhold_active.alert.title" = "Legal Hold is Active";
+"legalhold_active.alert.title" = "La sospensione legale è attiva";
 "legalhold_active.alert.learn_more" = "Ulteriori informazioni";
-"legalhold_active.alert.message" = "Legal Hold has been activated for your account. All messages will be preserved for future access, including deleted, edited, and timed messages.\n\nYour conversation partners will be aware of the recording.";
+"legalhold_active.alert.message" = "La sospensione legale è stata attivata per il tuo account. Tutti i messaggi saranno mantenuti per eventuali accessi futuri, includendo messaggi eliminati, modificati e ad invio programmato.\n\nI mittenti dei tuoi messaggi saranno informati della modifica.";
 
 // Account deleted alert
-"account_deleted_session_expired_alert.title" = "Your session expired";
-"account_deleted_session_expired_alert.message" = "The application did not communicate with the server for a long period of time, or your session has been remotely invalidated.";
+"account_deleted_session_expired_alert.title" = "La sessione è scaduta";
+"account_deleted_session_expired_alert.message" = "L'applicazione non ha comunicato con il server per un lungo periodo di tempo, o la tua sessione è stata remotamente invalidata.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "non selezionato";
+"button_message_cell.state.selected" = "selezionato";
+"button_message_cell.state.confirmed" = "confermato";
+
+"button_message_cell.generic_error" = "La tua risposta non può essere inviata, riprova.";

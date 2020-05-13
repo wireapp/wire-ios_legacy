@@ -17,8 +17,9 @@
 //
 
 import Foundation
+import WireDataModel
 
-public enum LinearGroupCreationFlowEvent {
+enum LinearGroupCreationFlowEvent {
 
     static let openedGroupCreationName = "conversation.opened_group_creation"
     static let openedSelectParticipantsName = "conversation.opened_select_participants"
@@ -90,7 +91,7 @@ extension Analytics {
         tag(LinearGroupCreationFlowEvent.groupCreationSucceeded(source: source, isEmpty: isEmpty, allowGuests: allowGuests))
     }
 
-    public func tagAddParticipants(source: LinearGroupCreationFlowEvent.Source, _ users: Set<ZMUser>, allowGuests: Bool, in conversation: ZMConversation?) {
+    public func tagAddParticipants(source: LinearGroupCreationFlowEvent.Source, _ users: UserSet, allowGuests: Bool, in conversation: ZMConversation?) {
         let guestsCount: Int
         if ZMUser.selfUser().hasTeam {
             guestsCount = users.filter { !$0.isTeamMember }.count

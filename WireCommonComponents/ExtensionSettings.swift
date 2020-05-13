@@ -49,13 +49,13 @@ private enum ExtensionSettingsKey: String {
 
 }
 
-@objc public class ExtensionSettings: NSObject {
+public class ExtensionSettings: NSObject {
 
-    @objc public static let shared = ExtensionSettings(defaults: .shared()!)
+    public static let shared = ExtensionSettings(defaults: .shared()!)
 
     private let defaults: UserDefaults
 
-    @objc public init(defaults: UserDefaults) {
+    public init(defaults: UserDefaults) {
         self.defaults = defaults
         super.init()
         setupDefaultValues()
@@ -65,7 +65,7 @@ private enum ExtensionSettingsKey: String {
         defaults.register(defaults: ExtensionSettingsKey.defaultValueDictionary)
     }
 
-    @objc public func reset() {
+    public func reset() {
         ExtensionSettingsKey.all.forEach {
             defaults.removeObject(forKey: $0.rawValue)
         }
@@ -74,7 +74,7 @@ private enum ExtensionSettingsKey: String {
         defaults.synchronize()
     }
 
-    @objc public var disableCrashAndAnalyticsSharing: Bool {
+    public var disableCrashAndAnalyticsSharing: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableCrashAndAnalyticsSharing.rawValue)
         }
@@ -83,7 +83,7 @@ private enum ExtensionSettingsKey: String {
         }
     }
     
-    @objc public var disableLinkPreviews: Bool {
+    public var disableLinkPreviews: Bool {
         get {
             return defaults.bool(forKey: ExtensionSettingsKey.disableLinkPreviews.rawValue)
         }

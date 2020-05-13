@@ -19,6 +19,7 @@
 
 import Foundation
 import WireUtilities
+import UIKit
 
 private let zmLog = ZMSLog(tag: "UI")
 
@@ -71,9 +72,13 @@ class SettingsPropertyTextValueCellDescriptor: SettingsPropertyCellDescriptorTyp
                 // specific error message for name string is too short
                 if error.domain == ZMObjectValidationErrorDomain &&
                     error.code == ZMManagedObjectValidationErrorCode.tooShort.rawValue {
-                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(forMessage: "name.guidance.tooshort".localized)
+                    
+                    let alert = UIAlertController.alertWithOKButton(message: "name.guidance.tooshort".localized)
+                    
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.present(alert, animated: true)
+
                 } else {
-                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(forError: error)
+                    UIApplication.shared.topmostViewController(onlyFullScreen: false)?.showAlert(for: error)
                 }
 
             }

@@ -18,7 +18,8 @@
 
 
 import Foundation
-
+import WireSyncEngine
+import UIKit
 extension UIApplicationShortcutItem {
     static let markAllAsReadType = "com.wire.shortcut.markAllAsRead"
     static let markAllAsRead = UIApplicationShortcutItem(type: markAllAsReadType,
@@ -41,7 +42,7 @@ public final class QuickActionsManager: NSObject {
     
     
     func updateQuickActions() {
-        guard DeveloperMenuState.developerMenuEnabled() else {
+        guard Bundle.developerModeEnabled else {
             application.shortcutItems = []
             return
         }

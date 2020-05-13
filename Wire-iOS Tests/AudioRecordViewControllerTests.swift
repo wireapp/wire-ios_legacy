@@ -19,18 +19,17 @@
 import XCTest
 @testable import Wire
 
-@objc
 final private class MockAudioRecordViewControllerDelegate: NSObject, AudioRecordViewControllerDelegate {
 
     var cancelCallCount: UInt = 0
 
-    @objc func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
+    func audioRecordViewControllerDidCancel(_ audioRecordViewController: AudioRecordBaseViewController) {
         cancelCallCount = cancelCallCount + 1
     }
 
-    @objc func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}
+    func audioRecordViewControllerDidStartRecording(_ audioRecordViewController: AudioRecordBaseViewController) {}
 
-    @objc func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {}
+    func audioRecordViewControllerWantsToSendAudio(_ audioRecordViewController: AudioRecordBaseViewController, recordingURL: URL, duration: TimeInterval, filter: AVSAudioEffectType) {}
 }
 
 final class AudioRecordViewControllerTests: ZMSnapshotTestCase {

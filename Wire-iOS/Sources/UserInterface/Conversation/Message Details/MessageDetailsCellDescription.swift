@@ -17,6 +17,7 @@
 //
 
 import UIKit
+import WireDataModel
 
 /**
  * The description of a cell for message details.
@@ -24,8 +25,9 @@ import UIKit
  */
 
 class MessageDetailsCellDescription: NSObject {
+
     /// The user to display.
-    let user: ZMUser
+    let user: UserType
 
     /// The subtitle string to display under the user name.
     let subtitle: String?
@@ -42,7 +44,7 @@ class MessageDetailsCellDescription: NSObject {
     // MARK: - Initialization
 
     /// Creates a new cell description.
-    init(user: ZMUser, subtitle: String?, accessibleSubtitleLabel: String?, accessibleSubtitleValue: String?) {
+    init(user: UserType, subtitle: String?, accessibleSubtitleLabel: String?, accessibleSubtitleValue: String?) {
         self.user = user
         self.subtitle = subtitle
         self.attributedSubtitle = subtitle.map { $0 && UserCell.boldFont }
@@ -56,7 +58,7 @@ class MessageDetailsCellDescription: NSObject {
 
 extension MessageDetailsCellDescription {
 
-    static func makeReactionCells(_ users: [ZMUser]) -> [MessageDetailsCellDescription] {
+    static func makeReactionCells(_ users: [UserType]) -> [MessageDetailsCellDescription] {
         return users.map {
             let handle = $0.handle.map { "@" + $0 }
             return MessageDetailsCellDescription(user: $0, subtitle: handle,

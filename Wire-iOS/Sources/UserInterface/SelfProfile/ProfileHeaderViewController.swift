@@ -16,9 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
+import UIKit
+import WireSyncEngine
 
-class ProfileHeaderViewController: UIViewController, Themeable {
+final class ProfileHeaderViewController: UIViewController, Themeable {
     
     /**
      * The options to customize the appearance and behavior of the view.
@@ -64,7 +65,14 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     /// The user who is viewing this view
     let viewer: UserType
 
-    @objc dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
+    /// The current group admin status.
+    var isAdminRole: Bool {
+        didSet {
+            groupRoleIndicator.isHidden = !self.isAdminRole
+        }
+    }
+    
+    dynamic var colorSchemeVariant: ColorSchemeVariant = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)
@@ -87,6 +95,9 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         label.font = FontSpec(.large, .light).font!
         label.accessibilityTraits.insert(.header)
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 3
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         
         return label
     }()
@@ -96,10 +107,13 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     let availabilityTitleViewController: AvailabilityTitleViewController
     
     let guestIndicatorStack = UIStackView()
-    let guestIndicator = GuestLabelIndicator()
+    let guestIndicator = LabelIndicator(context: .guest)
     let remainingTimeLabel = UILabel()
-    
+    let groupRoleIndicator = LabelIndicator(context: .groupRole)
+    let externalIndicator = LabelIndicator(context: .external)
+
     private var tokens: [Any?] = []
+    private var teamObserver: NSObjectProtocol?
     
     /**
      * Creates a profile view for the specified user and options.
@@ -108,8 +122,9 @@ class ProfileHeaderViewController: UIViewController, Themeable {
      * - note: You can change the options later through the `options` property.
      */
     
-    init(user: UserType, viewer: UserType = ZMUser.selfUser(), conversation: ZMConversation? = nil, options: Options) {
+    init(user: UserType, viewer: UserType = SelfUser.current, conversation: ZMConversation? = nil, options: Options) {
         self.user = user
+        isAdminRole = conversation.map(self.user.isGroupAdmin) ?? false
         self.viewer = viewer
         self.conversation = conversation
         self.options = options
@@ -128,12 +143,16 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         imageView.isAccessibilityElement = true
         imageView.accessibilityElementsHidden = false
         imageView.accessibilityIdentifier = "user image"
+        imageView.setImageConstraint(resistance: 249, hugging: 750)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+
         imageView.initialsFont = UIFont.systemFont(ofSize: 55, weight: .semibold).monospaced()
         imageView.userSession = session
         imageView.user = user
-                
+        
         if let session = session {
-            tokens.append(UserChangeInfo.add(observer: self, for: user, userSession: session))
+            tokens.append(UserChangeInfo.add(observer: self, for: user, in: session))
         }
         
         handleLabel.accessibilityLabel = "profile_view.accessibility.handle".localized
@@ -168,12 +187,20 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         guestIndicatorStack.alignment = .center
         
         updateGuestIndicator()
+        updateExternalIndicator()
+        updateGroupRoleIndicator()
         updateHandleLabel()
         updateTeamLabel()
         
         addChild(availabilityTitleViewController)
         
-        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack, teamNameLabel, imageView, availabilityTitleViewController.view, guestIndicatorStack])
+        stackView = CustomSpacingStackView(customSpacedArrangedSubviews: [nameHandleStack,
+                                                                          teamNameLabel,
+                                                                          imageView,
+                                                                          availabilityTitleViewController.view,
+                                                                          guestIndicatorStack,
+                                                                          externalIndicator,
+                                                                          groupRoleIndicator])
         
         stackView.alignment = .center
         stackView.axis = .vertical
@@ -181,6 +208,8 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         stackView.wr_addCustomSpacing(32, after: nameHandleStack)
         stackView.wr_addCustomSpacing(32, after: teamNameLabel)
         stackView.wr_addCustomSpacing(24, after: imageView)
+        stackView.wr_addCustomSpacing(20, after: guestIndicatorStack)
+        stackView.wr_addCustomSpacing(20, after: externalIndicator)
         
         view.addSubview(stackView)
         applyColorScheme(colorSchemeVariant)
@@ -188,6 +217,10 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         applyOptions()
         
         availabilityTitleViewController.didMove(toParent: self)
+        
+        if let team = (user as? ZMUser)?.team {
+            teamObserver = TeamChangeInfo.add(observer: self, for: team)
+        }
     }
     
     private func configureConstraints() {
@@ -199,18 +232,10 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         let trailingSpaceConstraint = stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40)
         let bottomSpaceConstraint = stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         
-        leadingSpaceConstraint.priority = .defaultLow
-        topSpaceConstraint.priority = .defaultLow
-        trailingSpaceConstraint.priority = .defaultLow
-        bottomSpaceConstraint.priority = .defaultLow
-        
+        let widthImageConstraint = imageView.widthAnchor.constraint(lessThanOrEqualToConstant: 164)
         NSLayoutConstraint.activate([
-            // imageView
-            imageView.widthAnchor.constraint(equalToConstant: 164),
-            imageView.heightAnchor.constraint(equalToConstant: 164),
-            
             // stackView
-            leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
+            widthImageConstraint, leadingSpaceConstraint, topSpaceConstraint, trailingSpaceConstraint, bottomSpaceConstraint
             ])
     }
     
@@ -224,12 +249,28 @@ class ProfileHeaderViewController: UIViewController, Themeable {
         remainingTimeLabel.textColor = ColorScheme.default.color(named: .textForeground, variant: variant)
     }
     
-    func updateGuestIndicator() {
+    private func updateGuestIndicator() {
         if let conversation = conversation {
             guestIndicatorStack.isHidden = !user.isGuest(in: conversation)
         } else {
             guestIndicatorStack.isHidden = !viewer.isTeamMember || viewer.canAccessCompanyInformation(of: user)
         }
+    }
+    
+    private func updateExternalIndicator() {
+        externalIndicator.isHidden = !user.isExternalPartner
+    }
+
+    private func updateGroupRoleIndicator() {
+        let groupRoleIndicatorHidden: Bool
+        switch conversation?.conversationType {
+        case .group?:
+            groupRoleIndicatorHidden = !(conversation.map(user.isGroupAdmin) ?? false)
+        default:
+            groupRoleIndicatorHidden = true
+        }
+        groupRoleIndicator.isHidden = groupRoleIndicatorHidden
+
     }
     
     private func applyOptions() {
@@ -261,7 +302,8 @@ class ProfileHeaderViewController: UIViewController, Themeable {
     }
     
     private func updateAvailabilityVisibility() {
-        availabilityTitleViewController.view?.isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
+        let isHidden = options.contains(.hideAvailability) || !options.contains(.allowEditingAvailability) && user.availability == .none
+        availabilityTitleViewController.view?.isHidden = isHidden
     }
     
     private func updateImageButton() {
@@ -292,6 +334,14 @@ extension ProfileHeaderViewController: ZMUserObserver {
         
         if changeInfo.availabilityChanged {
             updateAvailabilityVisibility()
+        }
+    }
+}
+
+extension ProfileHeaderViewController: TeamObserver {
+    func teamDidChange(_ changeInfo: TeamChangeInfo) {
+        if changeInfo.nameChanged {
+            updateTeamLabel()
         }
     }
 }

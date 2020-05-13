@@ -17,6 +17,8 @@
 //
 
 import Foundation
+import UIKit
+import WireSystem
 
 protocol CollectionViewSectionController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -63,18 +65,26 @@ final class SectionCollectionViewController: NSObject {
 extension SectionCollectionViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
+        guard visibleSections.indices.contains(indexPath.section) else { return true }
+        
         return visibleSections[indexPath.section].collectionView?(collectionView, shouldHighlightItemAt: indexPath) ?? true
     }
     
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard visibleSections.indices.contains(indexPath.section) else { return true }
+
         return visibleSections[indexPath.section].collectionView?(collectionView, shouldSelectItemAt: indexPath) ?? true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+
         visibleSections[indexPath.section].collectionView?(collectionView, didSelectItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+
         visibleSections[indexPath.section].collectionView?(collectionView, didDeselectItemAt: indexPath)
     }
     
@@ -87,18 +97,30 @@ extension SectionCollectionViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard visibleSections.indices.contains(indexPath.section) else { return }
+        
         visibleSections[indexPath.section].collectionView?(collectionView, willDisplay: cell, forItemAt: indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        guard visibleSections.indices.contains(section) else { return 0 }
+
         return visibleSections[section].collectionView(collectionView, numberOfItemsInSection: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard visibleSections.indices.contains(indexPath.section) else {
+            fatal("Unknown section, indexPath: \(indexPath)")
+        }
+
         return visibleSections[indexPath.section].collectionView(collectionView, cellForItemAt:indexPath)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard visibleSections.indices.contains(indexPath.section) else {
+            fatal("Unknown section, indexPath: \(indexPath)")
+        }
+
         return visibleSections[indexPath.section].collectionView!(collectionView, viewForSupplementaryElementOfKind:kind, at:indexPath)
     }
     

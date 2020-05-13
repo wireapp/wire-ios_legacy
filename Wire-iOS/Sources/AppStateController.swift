@@ -48,7 +48,7 @@ final class AppStateController : NSObject {
     private(set) var appState : AppState = .headless
     private(set) var lastAppState : AppState = .headless
     private var authenticationObserverToken : ZMAuthenticationStatusObserver?
-    public weak var delegate : AppStateControllerDelegate? = nil
+    weak var delegate : AppStateControllerDelegate? = nil
     
     fileprivate var isBlacklisted = false
     fileprivate var isJailbroken = false
@@ -122,12 +122,20 @@ final class AppStateController : NSObject {
             zmLog.debug("transitioning to app state: \(newAppState)")
             lastAppState = appState
             appState = newAppState
+            
             delegate?.appStateController(transitionedTo: appState) {
                 completion?()
             }
+            notifyTransition()
         } else {
             completion?()
         }
+    }
+    
+    private func notifyTransition() {
+        NotificationCenter.default.post(name: AppStateController.appStateDidTransition,
+                                        object: nil,
+                                        userInfo: [AppStateController.appStateKey: appState])
     }
 
 }
@@ -221,7 +229,8 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
     }
 
     var authenticatedUserNeedsEmailCredentials: Bool {
-        return ZMUser.selfUser()?.emailAddress?.isEmpty == true
+        guard let emailAddress = selfUser?.emailAddress else { return false }
+        return emailAddress.isEmpty
     }
 
     var sharedUserSession: ZMUserSession? {
@@ -232,8 +241,8 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         return sharedUserSession?.userProfile as? UserProfileUpdateStatus
     }
 
-    var selfUser: ZMUser? {
-        return ZMUser.selfUser()
+    var selfUser: UserType? {
+        return ZMUserSession.shared()?.selfUser
     }
 
     var numberOfAccounts: Int {
@@ -245,4 +254,9 @@ extension AppStateController : AuthenticationCoordinatorDelegate {
         updateAppState()
     }
     
+}
+
+extension AppStateController {
+    static let appStateDidTransition = Notification.Name(rawValue: "AppStateDidTransitionNotification")
+    static let appStateKey = "AppState"
 }

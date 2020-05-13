@@ -17,8 +17,10 @@
 //
 
 import Foundation
+import UIKit
+import WireCommonComponents
 
-class ImageResourceThumbnailView: RoundedView {
+final class ImageResourceThumbnailView: RoundedView {
 
     private let imageView = ImageContentView()
     private let coverView = UIView()

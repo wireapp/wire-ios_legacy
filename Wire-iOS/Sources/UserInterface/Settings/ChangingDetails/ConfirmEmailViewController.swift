@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import WireDataModel
+import WireSyncEngine
 
 protocol ConfirmEmailDelegate: class {
     func resendVerification(inController controller: ConfirmEmailViewController)
@@ -52,7 +53,7 @@ extension UITableView {
     }
 }
 
-@objcMembers final class ConfirmEmailViewController: SettingsBaseTableViewController {
+final class ConfirmEmailViewController: SettingsBaseTableViewController {
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     weak var delegate: ConfirmEmailDelegate?
 
@@ -74,7 +75,7 @@ extension UITableView {
         super.viewDidAppear(animated)
 
         if let userSession = ZMUserSession.shared() {
-            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), userSession: userSession)
+            observer = UserChangeInfo.add(observer: self, for: ZMUser.selfUser(), in: userSession)
         }
     }
     
@@ -83,7 +84,7 @@ extension UITableView {
         observer = nil
     }
 
-    internal func setupViews() {
+    func setupViews() {
         SettingsButtonCell.register(in: tableView)
         
         title = "self.settings.account_section.email.change.verify.title".localized(uppercased: true)

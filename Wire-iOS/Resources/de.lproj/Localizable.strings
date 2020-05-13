@@ -81,6 +81,7 @@
 
 "peoplepicker.no_matching_results_title" = "Keine Ergebnisse";
 "peoplepicker.no_matching_results_message" = "Bitte gib eine vollständige \nE-Mail-Adresse ein";
+"peoplepicker.no_search_results" = "Keine passenden Ergebnisse. Bitte einen anderen Namen eingeben.";
 
 "peoplepicker.no_matching_results.action.send_invite" = "Einladung versenden";
 "peoplepicker.no_matching_results.action.share_contacts" = "Kontakte teilen";
@@ -227,6 +228,8 @@
 "conversation.voiceover.legalhold" = "gesetzliche Aufbewahrung";
 "conversation.voiceover.value.active" = "aktiv";
 "conversation.voiceover.value.disabled" = "deaktiviert";
+
+"conversation.status.secutity_alert.default" = "Neue Sicherheitswarnung";
 
 "conversation.status.typing" = "Schreibt eine Nachricht…";
 "conversation.status.typing.group" = "%@: schreibt eine Nachricht…";
@@ -593,6 +596,8 @@
 
 // Connecting (NEW IMPLEMENTATION, REVIEW LATER)
 "connection_request.title" = "Füge %@ als Kontakt hinzu"; // check UPPERCASE implementation in code
+
+// Default connect message to be shown
 "missive.connection_request.default_message" = "Hallo %@,\nbitte füge mich als Kontakt hinzu.\n%@";
 
 "connection_request_pending_title" = "Kontaktanfrage";
@@ -639,10 +644,8 @@
 "voice.alert.call_in_progress.confirm" = "Verstanden";
 
 "voice.alert.microphone_warning.title" = "Wire benötigt Zugriff auf dein Mikrofon.";
-"voice.alert.microphone_warning.explanation" = "Aktiviere es in den Wire-Einstellungen.";
 
 "voice.alert.camera_warning.title" = "Wire benötigt Zugriff auf die Kamera.";
-"voice.alert.camera_warning.explanation" = "Gehe zu den Einstellungen und erlaube Wire Zugriff auf die Kamera.";
 
 "voice.top_overlay.tap_to_return" = "Zum Anruf zurückkehren";
 "voice.top_overlay.accessibility_title" = "Aktiver Anruf";
@@ -712,6 +715,10 @@
 "participants.section.settings" = "Optionen";
 "participants.footer.add_title" = "Teilnehmer hinzufügen";
 "participants.section.name.footer" = "Bis zu %1$d Personen können an einer Unterhaltung teilnehmen. Videoanrufe funktionieren mit bis zu %2$d anderen Personen und dir.";
+"participants.section.admins.footer" = "Es gibt keine Admins.";
+"participants.section.members.footer" = "Es gibt keine Mitglieder.";
+
+"profile.profile.group_admin_options.title" = "Gruppen-Admin";
 
 // Meta Menu
 "meta.menu.accessibility_more_options_button" = "Weitere Aktionen";
@@ -827,11 +834,15 @@
 "profile.read_receipts_disabled_memo.header" = "LESEBESTÄTIGUNGEN AUS";
 "profile.read_receipts_memo.body" = "Wenn beide Seiten Lesebestätigungen aktivieren, können alle sehen, wenn Nachrichten gelesen werden.\nDiese Option kann in den Kontoeinstellungen geändert werden.";
 
+"profile.group_admin_status_memo.body" = "Wenn diese Option aktiviert ist, kann der Admin Personen und Dienste hinzufügen oder entfernen, Einstellungen aktualisieren und die Rolle eines Teilnehmers ändern.";
+
 "profile.extended_metadata.header" = "Informationen";
 
 // User Details
 "profile.details.title" = "Details";
 "profile.details.guest" = "Gast";
+"profile.details.group_admin" = "Gruppen-Admin";
+"profile.details.partner" = "extern";
 
 "profile_view.accessibility.handle" = "Benutzername";
 "profile_view.accessibility.name" = "Angezeigter Name";
@@ -874,6 +885,10 @@
 "group_details.notification_options_cell.description" = "Immer benachrichtigen (einschließlich Audio- und Videoanrufe) oder nur bei Erwähnungen oder wenn jemand auf eine deiner Nachrichten antwortet.";
 "group_details.receipt_options_cell.title" = "Lesebestätigungen";
 "group_details.receipt_options_cell.description" = "Wenn diese Option aktiviert ist, können Sender sehen, wenn ihre Nachrichten gelesen werden.";
+
+"group_details.conversation_admins_header.title" = "Gruppen-Admins";
+"group_details.conversation_members_header.title" = "Gruppen-Mitglieder";
+
 
 // Legal hold details
 
@@ -1123,6 +1138,9 @@
 "self.settings.privacy_security.lock_app.subtitle.none" = "Entsperre mit deinem Passwort.";
 
 "self.settings.privacy_security.lock_app.description" = "Wire entsperren";
+"self.settings.privacy_security.lock_password.description.unlock" = "Mit Passwort entsperren.";
+"self.settings.privacy_security.lock_password.description.wrong_password" = "Falsches Passwort. Bitte erneut versuchen.";
+"self.settings.privacy_security.lock_password.description.wrong_offline_password" = "Falsches Passwort. Falls das Passwort kürzlich geändert wurde, bitte eine Verbindung zum Internet herstellen und erneut versuchen.";
 
 "self.settings.privacy_security.lock_cancelled.description_face_id" = "Wire mit Face ID oder Passwort entsperren";
 "self.settings.privacy_security.lock_cancelled.description_touch_id" = "Wire mit Touch ID oder Passwort entsperren";
@@ -1141,6 +1159,8 @@
 "self.settings.advanced.title" = "Erweitert";
 "self.settings.advanced.troubleshooting.title" = "Fehlerbehebung";
 "self.settings.advanced.troubleshooting.submit_debug.title" = "Fehlerbericht";
+"self.settings.advanced.debugging_tools.title" = "Tools zur Fehlerbehebung";
+"self.settings.advanced.debugging_tools.first_unread_conversation.title" = "Erste ungelesene Unterhaltung finden";
 "self.settings.advanced.troubleshooting.submit_debug.subtitle" = "Die Informationen helfen dem Support bei der Diagnose von Anrufproblemen und die App zu verbessern.";
 "self.settings.advanced.reset_push_token.title" = "Push-Token zurücksetzen";
 "self.settings.advanced.reset_push_token.subtitle" = "Der Wire Kundenservice kann dich bitten, diesen Token zurückzusetzen, wenn du Probleme mit Push-Benachrichtigungen hast.";
@@ -1181,7 +1201,7 @@
 "self.settings.history_backup.password.title" = "Passwort festlegen";
 "self.settings.history_backup.password.cancel" = "Abbrechen";
 "self.settings.history_backup.password.next" = "Weiter";
-"self.settings.history_backup.password.placeholder" = "Mindestens 8 Zeichen";
+"self.settings.history_backup.password.placeholder" = "Passwort";
 "self.settings.history_backup.password.description" = "Die Backup-Datei wird mit dem hier festgelegten Passwort komprimiert und verschlüsselt.";
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1211,12 +1231,16 @@
 // Landing screen
 
 "landing.header" = "Wire. Konto hinzufügen.";
-"landing.create_account.title" = "Privat";
+"landing.welcome_message" = "Willkommen bei %@";
+"landing.create_account.title" = "Konto erstellen";
 "landing.create_account.subtitle" = "Privat mit Freunden und der Familie\U00A0chatten";
 "landing.create_team.title" = "Pro";
 "landing.create_team.subtitle" = "Sichere Zusammenarbeit für Unternehmen, Institutionen und Organisationen";
 "landing.login.hints" = "Hast du bereits ein Benutzerkonto?";
 "landing.login.button.title" = "Login";
+"landing.login.email.button.title" = "Mit E-Mail anmelden";
+"landing.login.enterprise.button.title" = "Anmeldung für Unternehmen";
+"landing.login.sso.button.title" = "Mit SSO anmelden";
 
 "landing.custom_backend.title" = "Verbunden mit \"%@\"";
 "landing.custom_backend.more_info.button.title" = "Mehr anzeigen";
@@ -1352,21 +1376,27 @@
 "registration.no_history.restore_backup_failed.wrong_version.message" = "Diese Backup-Datei wurde von einer anderen Version von Wire erstellt und kann deshalb nicht wiederhergestellt werden.";
 
 // SSO – Company Login
-"login.sso.alert.title" = "Login für Unternehmen";
-"login.sso.alert.message" = "SSO-Zugangscode des Unternehmens eingeben.";
+"login.sso.alert.title" = "Anmeldung für Unternehmen";
+"login.sso.alert.message.sso_and_email" = "Bitte geben Sie Ihre E-Mail-Adresse oder den SSO-Code ein. Wenn Ihre E-Mail mit einer Installation von Wire übereinstimmt, verbindet sich die App mit dem Server.";
+"login.sso.alert.message.sso_only" = "Bitte den SSO-Code eingeben:";
 "login.sso.alert.action" = "Einloggen";
-"login.sso.alert.text_field.placeholder" = "SSO Zugangscode";
+"login.sso.alert.text_field.placeholder.sso_and_email" = "E-Mail-Adresse oder SSO-Code";
+"login.sso.alert.text_field.placeholder.sso_only" = "SSO Zugangscode";
 
-"login.sso.start_error_title" = "Login kann nicht gestartet werden";
-"login.sso.link_error_message" = "Der angeklickte Link zum Login ist nicht gültig. Um das Problem zu lösen, bitte an den Administrator wenden.";
+"login.sso.start_error_title" = "Problem bei der Anmeldung für Unternehmen";
+"login.sso.link_error_message" = "Dieser Link ist nicht gültig. Bitte kontaktieren Sie Ihren Administrator, um das Problem zu beheben.";
 
-"login.sso.error.alert.title" = "Ein Fehler ist aufgetreten";
-"login.sso.error.alert.invalid_code.title" = "Ungültiger Code.";
-"login.sso.error.alert.invalid_code.message" = "Bitte den SSO-Zugangscode des Unternehmens überprüfen und erneut versuchen.";
 "login.sso.error.offline.alert.message" = "Bitte Internetverbindung überprüfen und nochmal versuchen.";
 "login.sso.error.alert.message" = "Bitte für Details an den Team-Administrator wenden (Fehler %@).";
-"login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
+
+"login.sso.error.alert.invalid_code.message" = "Bitte den SSO-Zugangscode des Unternehmens überprüfen und erneut versuchen.";
 "login.sso.error.alert.invalid_status.message" = "Bitte später nochmal versuchen (Fehler %@).";
+"login.sso.error.alert.invalid_format.message.sso_only" = "Bitte einen gültigen SSO-Code eingeben";
+"login.sso.error.alert.invalid_format.message.sso_and_email" = "Bitte eine gültige E-Mail-Adresse oder den SSO-Code eingeben";
+"login.sso.error.alert.domain_not_registered.message" = "Diese E-Mail-Adresse kann hier nicht verwendet werden. Bitte geben Sie den SSO-Code ein, um fortzufahren.";
+"login.sso.error.alert.domain_associated_with_wrong_server.message" = "Diese E-Mail ist mit einem anderen Server verknüpft. Die App kann aber jeweils nur mit einem Server verbunden sein. Bitte melden Sie sich von allen Wire-Konten auf diesem Gerät ab und versuchen es erneut.";
+"login.sso.error.alert.unknown.message" = "Bitte später nochmal versuchen.";
+
 
 // Restore In Progress Loading Titles
 "registration.no_history.restore_backup.restoring" = "Wiederherstellen…";
@@ -1447,8 +1477,8 @@
 "signin_logout.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte erneut einloggen.";
 "signin_logout.email.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte E-Mail-Adresse und Passwort eingeben.";
 "signin_logout.phone.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte Telefonnummer eingeben.";
-"signin_logout.sso.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte mit dem Konto des Unternehmens einloggen.";
-"signin_logout.sso.buton" = "Login für Unternehmen";
+"signin_logout.sso.subheadline" = "Die Session ist abgelaufen. Zum Fortfahren bitte mit dem Konto des Unternehmens anmelden.";
+"signin_logout.sso.buton" = "Anmeldung für Unternehmen";
 
 "signin.email.missing_password.subtitle" = "Um fortzufahren, bitte E-Mail-Adresse und Passwort eingeben.";
 "signin.phone.missing_password.subtitle" = "Um fortzufahren, bitte Telefonnummer eingeben.";
@@ -1481,8 +1511,8 @@
 "error.name_and_email" = "Bitte gib deinen Namen und eine gültige E-Mail-Adresse ein";
 "error.full_name" = "Bitte gib deinen vollständigen Namen ein";
 "error.email" = "Bitte gib eine gültige E-Mail-Adresse ein";
-"error.input.too_long" = "Eingabe zu lang";
-"error.input.too_short" = "Eingabe zu kurz";
+"error.input.too_long" = "Bitte verwenden Sie einen kürzeren Benutzernamen";
+"error.input.too_short" = "Bitte verwenden Sie einen längeren Benutzernamen";
 "error.email.invalid" = "Bitte gib eine gültige \nE-Mail-Adresse ein";
 "error.phone.invalid" = "Bitte gib eine gültige \nTelefonnummer ein";
 
@@ -1610,9 +1640,6 @@
 "availability.available" = "Verfügbar";
 "availability.away" = "Abwesend";
 "availability.busy" = "Beschäftigt";
-"availability.available.placeholder" = "%@ ist verfügbar";
-"availability.away.placeholder" = "%@ ist abwesend";
-"availability.busy.placeholder" = "%@ ist beschäftigt";
 
 "availability.reminder.away.title" = "Status: Abwesend";
 "availability.reminder.away.message" = "Andere sehen den Status als Abwesend. Benachrichtigungen über eingehende Anrufe oder Nachrichten werden nicht angezeigt.";
@@ -1720,3 +1747,10 @@
 // Account deleted alert
 "account_deleted_session_expired_alert.title" = "Session ist abgelaufen";
 "account_deleted_session_expired_alert.message" = "Die App hat über einen längeren Zeitraum nicht mit dem Server kommuniziert oder die Session wurde per Fernzugriff für ungültig erklärt.";
+
+// Button cell state
+"button_message_cell.state.unselected" = "nicht ausgewählt";
+"button_message_cell.state.selected" = "ausgewählt";
+"button_message_cell.state.confirmed" = "bestätigt";
+
+"button_message_cell.generic_error" = "Ihre Antwort wurde nicht gesendet, bitte erneut versuchen.";

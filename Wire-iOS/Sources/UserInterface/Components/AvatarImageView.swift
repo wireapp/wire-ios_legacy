@@ -22,7 +22,7 @@ import UIKit
  * A view that displays the avatar of a user, either as text initials or as an image.
  */
 
-open class AvatarImageView: UIControl {
+class AvatarImageView: UIControl {
 
     /**
      * The different, mutually-exclusive forms of avatars
@@ -71,24 +71,24 @@ open class AvatarImageView: UIControl {
     }
 
     /// The background color for the image.
-    @objc public var imageBackgroundColor: UIColor? {
+    var imageBackgroundColor: UIColor? {
         get { return container.backgroundColor }
         set { container.backgroundColor = newValue }
     }
 
     /// The font to use of the initials label.
-    @objc public var initialsFont: UIFont {
+    var initialsFont: UIFont {
         get { return initialsLabel.font }
         set { initialsLabel.font = newValue }
     }
 
     /// The color to use for the initials label.
-    @objc public var initialsColor: UIColor {
+    var initialsColor: UIColor {
         get { return initialsLabel.textColor }
         set { initialsLabel.textColor = newValue }
     }
 
-    open override var contentMode: UIView.ContentMode {
+    override var contentMode: UIView.ContentMode {
         didSet {
             if contentMode != oldValue {
                 imageView.contentMode = contentMode
@@ -97,7 +97,7 @@ open class AvatarImageView: UIControl {
     }
 
     /// The view that contains the avatar.
-    @objc public let container = RoundedView()
+    var container = RoundedView()
 
     private let imageView = UIImageView()
     private let initialsLabel = UILabel()
@@ -196,6 +196,7 @@ open class AvatarImageView: UIControl {
             initialsLabel.text = text
             imageView.isHidden = true
             initialsLabel.isHidden = false
+            print("imageView = \(imageView)")
 
         case .none:
             imageView.image = nil

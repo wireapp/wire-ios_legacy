@@ -18,6 +18,8 @@
 
 import UIKit
 import Cartography
+import WireDataModel
+import WireSyncEngine
 
 enum ChangeEmailFlowType {
     case changeExistingEmail
@@ -85,7 +87,7 @@ struct ChangeEmailState {
 
 }
 
-@objcMembers final class ChangeEmailViewController: SettingsBaseTableViewController {
+final class ChangeEmailViewController: SettingsBaseTableViewController {
 
     fileprivate weak var userProfile = ZMUserSession.shared()?.userProfile
     var state: ChangeEmailState
@@ -115,7 +117,7 @@ struct ChangeEmailState {
         observerToken = nil
     }
     
-    internal func setupViews() {
+    func setupViews() {
         title = "self.settings.account_section.email.change.title".localized(uppercased: true)
         view.backgroundColor = .clear
         tableView.isScrollEnabled = false
@@ -179,7 +181,7 @@ struct ChangeEmailState {
         do {
             try updateBlock()
             updateSaveButtonState(enabled: false)
-            navigationController?.showLoadingView = showLoadingView
+            navigationController?.isLoadingViewVisible = showLoadingView
         } catch { }
     }
     
@@ -217,13 +219,13 @@ struct ChangeEmailState {
 extension ChangeEmailViewController: UserProfileUpdateObserver {
     
     func emailUpdateDidFail(_ error: Error!) {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
-        showAlert(forError: error)
+        showAlert(for: error)
     }
     
     func didSendVerificationEmail() {
-        navigationController?.showLoadingView = false
+        navigationController?.isLoadingViewVisible = false
         updateSaveButtonState()
         if let newEmail = state.newEmail {
             let confirmController = ConfirmEmailViewController(newEmail: newEmail, delegate: self)

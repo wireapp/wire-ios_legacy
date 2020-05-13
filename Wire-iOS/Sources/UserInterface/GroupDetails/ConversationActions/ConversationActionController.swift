@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
+import UIKit
+import WireDataModel
+import WireSyncEngine
 
 final class ConversationActionController {
     
@@ -63,12 +66,12 @@ final class ConversationActionController {
     }
     
     func enqueue(_ block: @escaping () -> Void) {
-        ZMUserSession.shared()?.enqueueChanges(block)
+        ZMUserSession.shared()?.enqueue(block)
     }
     
     func transitionToListAndEnqueue(_ block: @escaping () -> Void) {
-        ZClientViewController.shared()?.transitionToList(animated: true) {
-            ZMUserSession.shared()?.enqueueChanges(block)
+        ZClientViewController.shared?.transitionToList(animated: true) {
+            ZMUserSession.shared()?.enqueue(block)
         }
     }
 

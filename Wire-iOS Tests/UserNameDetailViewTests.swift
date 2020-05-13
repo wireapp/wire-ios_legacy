@@ -42,19 +42,19 @@ class UserNameDetailViewTests: ZMSnapshotTestCase {
     }
 
     func testThatItRendersAddressBookName() {
-        let user = MockUser.mockUsers().first
+        let user = SwiftMockLoader.mockUsers().first
         let sut = createSutWithHeadStyle(user: user, addressBookName: "JameyBoy")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersAddressBookName_EqualName() {
-        let user = MockUser.mockUsers().first
+        let user = SwiftMockLoader.mockUsers().first
         let sut = createSutWithHeadStyle(user: user, addressBookName: user?.name, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
 
     func testThatItRendersUserName() {
-        let user = MockUser.mockUsers().first
+        let user = SwiftMockLoader.mockUsers().first
         let sut = createSutWithHeadStyle(user: user, fallbackName: "")
         verifyInAllPhoneWidths(view: sut)
     }
