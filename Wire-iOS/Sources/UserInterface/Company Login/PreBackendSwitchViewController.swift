@@ -112,7 +112,7 @@ class PreBackendSwitchViewController: AuthenticationStepViewController {
         return view
     }()
     
-    let informationIcon = UIImageView(image: UIImage(named: "info-icon-blue"))
+    let informationIcon = UIImageView(image: UIImage.imageForIcon(.about, size: 16, color: PreBackendSwitchViewController.informationBlue))
     
     let informationLabel: UILabel = {
         let label = UILabel()
