@@ -341,9 +341,12 @@ class SettingsCellDescriptorFactory {
             let syncConversation = try! syncContext.existingObject(with: conversationId) as! ZMConversation
             let messages: [ZMClientMessage] = (0...count).map { i in
                 let nonce = UUID()
-                let genericMessage = ZMGenericMessage.message(content: ZMText.text(with: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;"), nonce: nonce)
+                let genericMessage = GenericMessage(content: Text(content: "Debugging message \(i): Append many messages to the top conversation; Append many messages to the top conversation;"), nonce: nonce)
                 let clientMessage = ZMClientMessage(nonce: nonce, managedObjectContext: syncContext)
-                clientMessage.add(genericMessage.data())
+                do {
+                    clientMessage.add(try genericMessage.serializedData())
+                } catch {
+                }
                 clientMessage.sender = ZMUser.selfUser(in: syncContext)
                 
                 clientMessage.expire()
@@ -535,9 +538,11 @@ class SettingsCellDescriptorFactory {
                 return
         }
         
-        let builder = ZMExternalBuilder()
-        _ = builder.setOtrKey("broken_key".data(using: .utf8))
-        let genericMessage = ZMGenericMessage.message(content: builder.build())
+        var external = External()
+        if let otr = "broken_key".data(using: .utf8)  {
+             external.otrKey = otr
+        }
+        let genericMessage = GenericMessage(content: external)
         
         userSession.enqueue {
             conversation.appendClientMessage(with: genericMessage, expires: false, hidden: false)
