@@ -258,6 +258,10 @@ extension ProfileViewControllerViewModel: ZMUserObserver {
         if note.nameChanged {
             viewModelDelegate?.updateTitleView()
         }
+        
+        if note.user.isAccountDeleted {
+            viewModelDelegate?.updateFooterViews()
+        }
     }
 }
 
