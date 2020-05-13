@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 // 
 
-
 import XCTest
 @testable import Wire
 
@@ -24,13 +23,12 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
 
     typealias CellConfiguration = (MockMessage) -> Void
 
-    /// Disabled since the MKMApView makes the test flaky
-    func disable_testThatItRendersLocationCellWithAddressCorrect() {
+    /// Disabled since the MKMApView makes the test flaky (The map view is black when running on local machine)
+    func disabled_testThatItRendersLocationCellWithAddressCorrect() {
         // This is experimental as the MKMapView might break the snapshot tests,
-        // Add waitForTextViewToLoad to wait for MapView rendering would fix the issue. (Tested with iOS 12 simulator)
-        verify(message: makeMessage(), waitForTextViewToLoad: true)
+        verify(message: makeMessage())
     }
-    
+
     /// Disabled since the MKMApView makes the test flaky
     func disabled_testThatItRendersLocationCellWithoutAddressCorrect() {
         verify(message: makeMessage {
@@ -49,9 +47,9 @@ final class LocationMessageCellTests: ConversationCellSnapshotTestCase {
     func makeMessage(_ config: CellConfiguration? = nil) -> MockMessage {
         let locationMessage = MockMessageFactory.locationMessage()!
         locationMessage.backingLocationMessageData?.name = "Berlin, Germany"
-        
+
         config?(locationMessage)
         return locationMessage
     }
-    
+
 }

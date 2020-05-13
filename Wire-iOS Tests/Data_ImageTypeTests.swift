@@ -23,27 +23,27 @@ import XCTest
 ///TODO: move to utilities
 
 final class Data_ImageTypeTests: XCTestCase {
-        
+
     func testThatItIdentifiesJPEG() {
-        
+
         // given
         guard let sut = #imageLiteral(resourceName: "wire-logo-shield").jpegData(compressionQuality: 1.0) else {
             XCTFail()
             return
         }
-        
+
         // then
         XCTAssert(sut.isJPEG)
     }
-    
+
     func testThatItDoesNotIdentifyJPEG() {
-        
+
         // given
         guard let sut = #imageLiteral(resourceName: "wire-logo-shield").pngData() else {
             XCTFail()
             return
         }
-        
+
         // then
         XCTAssertFalse(sut.isJPEG)
     }
