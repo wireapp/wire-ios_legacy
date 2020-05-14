@@ -54,7 +54,7 @@ extension ZMConversationMessage {
 final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
 
     /// The view descriptor of the section.
-    @objc var cellDescriptions: [AnyConversationMessageCellDescription] = []
+    var cellDescriptions: [AnyConversationMessageCellDescription] = []
     
     /// The view descriptors in the order in which the tableview displays them.
     var tableViewCellDescriptions: [AnyConversationMessageCellDescription] {
@@ -64,17 +64,17 @@ final class ConversationMessageSectionController: NSObject, ZMMessageObserver {
     var context: ConversationMessageContext
     
     /// Whether we need to use inverted indices. This is `true` when the table view is upside down.
-    @objc var useInvertedIndices = false
+    var useInvertedIndices = false
 
     /// The object that controls actions for the cell.
-    @objc var actionController: ConversationMessageActionController? {
+    var actionController: ConversationMessageActionController? {
         didSet {
             updateDelegates()
         }
     }
 
     /// The message that is being presented.
-    @objc var message: ZMConversationMessage {
+    var message: ZMConversationMessage {
         didSet {
             updateDelegates()
         }

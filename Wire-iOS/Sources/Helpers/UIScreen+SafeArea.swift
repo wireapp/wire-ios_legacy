@@ -57,7 +57,7 @@ extension UIScreen {
         }
     }
     
-    @objc var isCompact: Bool {
+    var isCompact: Bool {
         return bounds.size.height <= 568
     }
 }
