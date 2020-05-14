@@ -191,7 +191,7 @@ final class ParticipantsSectionController: GroupDetailsSectionController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let configuration = viewModel.rows[indexPath.row]
-        var cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: configuration.cellType.reuseIdentifier, for: indexPath) as! ParticipantsCellConfigurable & UICollectionViewCell
         let showSeparator = (viewModel.rows.count - 1) != indexPath.row
         (cell as? SectionListCellType)?.sectionName = viewModel.accessibilityTitle
         (cell as? SectionListCellType)?.cellIdentifier = "participants.section.participants.cell"

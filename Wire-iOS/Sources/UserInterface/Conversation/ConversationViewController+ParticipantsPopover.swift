@@ -20,17 +20,33 @@ import UIKit
 
 extension ConversationViewController: UIPopoverPresentationControllerDelegate {
 
-    @objc (createAndPresentParticipantsPopoverControllerWithRect:fromView:contentViewController:)
     func createAndPresentParticipantsPopoverController(with rect: CGRect,
                                                        from view: UIView,
                                                        contentViewController controller: UIViewController) {
 
         endEditing()
-        controller.modalPresentationStyle = .formSheet
+
+        controller.presentationController?.delegate = self
         present(controller, animated: true)
     }
+}
 
+extension ConversationViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        if (controller.presentedViewController is AddParticipantsViewController) {
+            return .overFullScreen
+        }
+        
+        if #available(iOS 13, *) {
+            return .formSheet
+        } else {
+            return .fullScreen
+        }
+    }
 
+    func presentationControllerDidDismiss( _ presentationController: UIPresentationController) {
+        setNeedsStatusBarAppearanceUpdate()
+    }
 }
 
 extension ConversationViewController: ViewControllerDismisser {

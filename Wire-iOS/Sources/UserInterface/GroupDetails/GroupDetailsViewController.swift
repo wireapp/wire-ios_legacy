@@ -18,7 +18,6 @@
 
 import UIKit
 import Cartography
-import WireDataModel
 import WireSyncEngine
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
@@ -45,8 +44,7 @@ final class GroupDetailsViewController: UIViewController, ZMConversationObserver
         return ColorScheme.default.statusBarStyle
     }
 
-    @objc
-    public init(conversation: ZMConversation) {
+    init(conversation: ZMConversation) {
         self.conversation = conversation
         collectionViewController = SectionCollectionViewController()
         

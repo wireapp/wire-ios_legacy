@@ -231,7 +231,7 @@ class SettingsTableViewController: SettingsBaseTableViewController {
         let sectionDescriptor = sections[(indexPath as NSIndexPath).section]
         let property = sectionDescriptor.visibleCellDescriptors[(indexPath as NSIndexPath).row]
 
-        property.select(.none)
+        property.select(SettingsPropertyValue.none)
         tableView.deselectRow(at: indexPath, animated: false)
     }
 
