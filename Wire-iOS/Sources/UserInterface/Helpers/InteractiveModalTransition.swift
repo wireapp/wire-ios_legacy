@@ -131,7 +131,7 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
             interactionInProgress = true
 
             weak var window = presentationViewController.view.window
-            presentationViewController.dismiss(animated: true) { ///TODO:
+            presentationViewController.dismiss(animated: true) {
                 window?.isHidden = true
             }
         case .changed:
