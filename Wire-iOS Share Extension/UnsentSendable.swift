@@ -239,13 +239,13 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
     }
 
     private func prepareAsFile(name: String?, typeIdentifier: String, completion: @escaping () -> Void) {
-        self.attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:]) { [weak self] (data, error) in
-            guard let data = data as? Data, let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
+        attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:]) { [weak self] (data, error) in
+            guard let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
-                return completion()
+                return completion() ///TODO: data is URL
             }
 
-            self?.prepareForSending(withUTI: UTIString, name: name, data: data) { (url, error) in
+            let prepareColsure: (URL?, Error?) -> Void = { (url, error) in
                 guard let url = url, error == nil else {
                     error?.log(message: "Unable to prepare file attachment for sending")
                     return completion()
@@ -265,9 +265,49 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
                     completion()
                 }
             }
+            
+            if let data = data as? Data {
+
+            self?.prepareForSending(withUTI: UTIString, name: name, data: data, completion: prepareColsure)
+        } else if let dataURL = data as? URL { ///TODO: url handling
+            ///TODO: url to data
+                self?.prepareForSending(withUTI: UTIString, name: name, dataURL: dataURL, completion: prepareColsure)
+            } else {
+                ///TODO: return
+                completion()
+
+            }
         }
     }
-    
+
+    /// Process data to the right format to be sent
+    private func prepareForSending(withUTI UTI: String, name: String?, dataURL: URL, completion: @escaping (URL?, Error?) -> Void) {
+        guard let fileName = nameForFile(withUTI: UTI, name: name) else { return completion(nil, nil) }
+
+        do {
+            let tmp = try FileManager.createTmpDirectory()
+
+            let tempFileURL = tmp.appendingPathComponent(fileName)
+
+            do {
+                try FileManager.default.removeTmpIfNeededAndCopy(fileURL: dataURL, tmpURL: tempFileURL)
+            } catch let error {
+                error.log(message: "Cannot copy video from \(dataURL) to \(tempFileURL): \(error)")
+                return
+            }
+
+            if UTTypeConformsTo(UTI as CFString, kUTTypeMovie) {
+                AVURLAsset.convertVideoToUploadFormat(at: tempFileURL) { (url, _, error) in
+                    completion(url, error)
+                }
+            } else {
+                completion(tempFileURL, nil)
+            }
+        } catch {
+            return completion(nil, error)
+        }
+    }
+
     /// Process data to the right format to be sent
     private func prepareForSending(withUTI UTI: String, name: String?, data: Data, completion: @escaping (URL?, Error?) -> Void) {
         guard let fileName = nameForFile(withUTI: UTI, name: name) else { return completion(nil, nil) }
