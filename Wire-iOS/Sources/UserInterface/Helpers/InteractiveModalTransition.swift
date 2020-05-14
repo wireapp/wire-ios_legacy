@@ -16,7 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import Cartography
 import UIKit
 
@@ -121,7 +120,8 @@ final fileprivate class ModalInteractionController: UIPercentDrivenInteractiveTr
         viewController.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
     }
     
-    @objc private func didPan(_ sender: UIPanGestureRecognizer) {
+    @objc
+    private func didPan(_ sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: sender.view!.superview!)
         var progress = (translation.y / presentationViewController.viewController.view.bounds.height)
         progress = CGFloat(fminf(fmaxf(Float(progress), 0.0), 1.0))
@@ -129,7 +129,11 @@ final fileprivate class ModalInteractionController: UIPercentDrivenInteractiveTr
         switch sender.state {
         case .began:
             interactionInProgress = true
-            presentationViewController.dismiss(animated: true, completion: nil)
+            
+            weak var window = presentationViewController.view.window
+            presentationViewController.dismiss(animated: true) { ///TODO:
+                window?.isHidden = true
+            }
         case .changed:
             shouldCompleteTransition = progress > 0.2
             update(progress)
@@ -198,7 +202,8 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         }
     }
     
-    @objc private func didTapDimView(_ sender: UITapGestureRecognizer) {
+    @objc
+    private func didTapDimView(_ sender: UITapGestureRecognizer) {
         dismiss(animated: true, completion: nil)
     }
     
