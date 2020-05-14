@@ -239,10 +239,10 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
         attachment.loadItem(forTypeIdentifier: typeIdentifier, options: [:]) { [weak self] (data, error) in
             guard let UTIString = self?.attachment.registeredTypeIdentifiers.first, error == nil else {
                 error?.log(message: "Unable to load file from attachment")
-                return completion() ///TODO: data is URL
+                return completion()
             }
 
-            let prepareColsure: (URL?, Error?) -> Void = { (url, error) in
+            let prepareColsure: SendingCompletion = { (url, error) in
                 guard let url = url, error == nil else {
                     error?.log(message: "Unable to prepare file attachment for sending")
                     return completion()
@@ -264,10 +264,15 @@ class UnsentFileSendable: UnsentSendableBase, UnsentSendable {
             }
 
             if let data = data as? Data {
-
-                self?.prepareForSending(withUTI: UTIString, name: name, data: data, completion: prepareColsure)
+                self?.prepareForSending(withUTI: UTIString,
+                                        name: name,
+                                        data: data,
+                                        completion: prepareColsure)
             } else if let dataURL = data as? URL {
-                self?.prepareForSending(withUTI: UTIString, name: name, dataURL: dataURL, completion: prepareColsure)
+                self?.prepareForSending(withUTI: UTIString,
+                                        name: name,
+                                        dataURL: dataURL,
+                                        completion: prepareColsure)
             } else {
                 completion()
             }

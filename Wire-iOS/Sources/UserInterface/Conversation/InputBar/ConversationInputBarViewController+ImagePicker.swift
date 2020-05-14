@@ -97,14 +97,13 @@ extension ConversationInputBarViewController {
         let videoTempURL = URL(fileURLWithPath: NSTemporaryDirectory(),
             isDirectory: true).appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)
 
-
         do {
             try FileManager.default.removeTmpIfNeededAndCopy(fileURL: videoURL, tmpURL: videoTempURL)
         } catch let error {
             zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
             return
         }
-        
+
         if picker.sourceType == UIImagePickerController.SourceType.camera && UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoTempURL.path) {
             UISaveVideoAtPathToSavedPhotosAlbum(videoTempURL.path, self, #selector(video(_:didFinishSavingWithError:contextInfo:)), nil)
         }

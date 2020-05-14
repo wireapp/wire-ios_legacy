@@ -1,4 +1,3 @@
-
 // Wire
 // Copyright (C) 2020 Wire Swiss GmbH
 //
@@ -25,10 +24,10 @@ extension FileManager {
         if !fileManager.fileExists(atPath: tmp.absoluteString) {
             try fileManager.createDirectory(at: tmp, withIntermediateDirectories: true)
         }
-        
+
         return tmp
     }
-    
+
     public func removeTmpIfNeededAndCopy(fileURL: URL, tmpURL: URL) throws {
         if fileExists(atPath: tmpURL.path) {
                 try FileManager.default.removeItem(at: tmpURL)
@@ -38,4 +37,3 @@ extension FileManager {
 
     }
 }
-
