@@ -213,7 +213,8 @@ extension SoundEventListener {
         }
     }
     
-    @objc func applicationDidEnterBackground() {
+    @objc
+    func applicationDidEnterBackground() {
         soundEventWatchDog.isMuted = true
     }
 }
