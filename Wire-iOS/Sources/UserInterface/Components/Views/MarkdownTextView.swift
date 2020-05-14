@@ -616,7 +616,7 @@ extension MarkdownTextView: MarkdownBarViewDelegate {
 
 extension DownStyle {
     /// The style used within the conversation message cells.
-    @objc static var normal: DownStyle = {
+    static var normal: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
         style.baseFontColor = UIColor.from(scheme: .textForeground)
@@ -627,7 +627,7 @@ extension DownStyle {
     }()
     
     /// The style used within the input bar.
-    @objc static var compact: DownStyle = {
+    static var compact: DownStyle = {
         let style = DownStyle()
         style.baseFont = FontSpec(.normal, .light).font!
         style.baseFontColor = UIColor.from(scheme: .textForeground)
@@ -643,7 +643,7 @@ extension DownStyle {
     }()
     
     /// The style used for the reply compose preview.
-    @objc static var preview: DownStyle = {
+    static var preview: DownStyle = {
         let style = DownStyle()
         style.baseFont = UIFont.systemFont(ofSize: 14, contentSizeCategory: .medium, weight: .light)
         style.baseFontColor = UIColor.from(scheme: .textForeground)

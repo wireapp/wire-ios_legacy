@@ -66,11 +66,11 @@ extension UIColor {
         overridenAccentColor = overrideColor
     }
 
-    @objc static var accentDarken: UIColor {
+    static var accentDarken: UIColor {
         return accent().mix(.black, amount: 0.1).withAlphaComponent(0.32)
     }
 
-    @objc static var accentDimmedFlat: UIColor {
+    static var accentDimmedFlat: UIColor {
         if ColorScheme.default.variant == .light {
             return accent().withAlphaComponent(0.16).removeAlphaByBlending(with: .white)
         } else {

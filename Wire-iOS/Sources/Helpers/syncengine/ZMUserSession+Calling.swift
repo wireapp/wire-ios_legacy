@@ -16,8 +16,6 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
-import WireDataModel
 import WireSyncEngine
 
 extension ZMUserSession {
@@ -28,7 +26,7 @@ extension ZMUserSession {
         return !callCenter.activeCallConversations(in: self).isEmpty
     }
     
-    @objc var priorityCallConversation: ZMConversation? {
+    var priorityCallConversation: ZMConversation? {
         guard let callNotificationStyle = SessionManager.shared?.callNotificationStyle else { return nil }
         guard let callCenter = self.callCenter else { return nil }
         
@@ -50,7 +48,7 @@ extension ZMUserSession {
         return ongoingCallConversation
     }
     
-    @objc var ongoingCallConversation: ZMConversation? {
+    var ongoingCallConversation: ZMConversation? {
         guard let callCenter = self.callCenter else { return nil }
         
         return callCenter.nonIdleCallConversations(in: self).first { (conversation) -> Bool in
@@ -65,7 +63,7 @@ extension ZMUserSession {
         }
     }
     
-    @objc var ringingCallConversation: ZMConversation? {
+    var ringingCallConversation: ZMConversation? {
         guard let callCenter = self.callCenter else { return nil }
         
         return callCenter.nonIdleCallConversations(in: self).first { (conversation) -> Bool in
