@@ -22,7 +22,11 @@ import WireSyncEngine
 final class CallController: NSObject {
 
     weak var targetViewController: UIViewController?
-    private(set) weak var activeCallViewController: ActiveCallViewController?
+    private(set) weak var activeCallViewController: ActiveCallViewController? {
+        didSet {
+            
+        }
+    }
 
     fileprivate let callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (() -> Void)?
@@ -100,7 +104,9 @@ extension CallController: WireCallCenterCallStateObserver {
     }
 
     fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
-        guard activeCallViewController == nil else { return }
+        guard activeCallViewController == nil else {
+            return
+        }
         guard let voiceChannel = conversation.voiceChannel else { return }
 
         if minimizedCall == conversation {
@@ -123,14 +129,13 @@ extension CallController: WireCallCenterCallStateObserver {
         minimizedCall = nil
         topOverlayCall = nil
 
-        activeCallViewController?.dismiss(animated: true) {
-            if let postCallAction = self.scheduledPostCallAction {
+        activeCallViewController?.dismiss(animated: true) { [weak self] in
+            if let postCallAction = self?.scheduledPostCallAction {
                 postCallAction()
-                self.scheduledPostCallAction = nil
+                self?.scheduledPostCallAction = nil
             }
+            self?.activeCallViewController = nil
         }
-
-        activeCallViewController = nil
     }
 }
 
