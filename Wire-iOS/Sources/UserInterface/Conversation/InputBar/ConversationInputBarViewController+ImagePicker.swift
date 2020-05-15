@@ -97,16 +97,8 @@ extension ConversationInputBarViewController {
         let videoTempURL = URL(fileURLWithPath: NSTemporaryDirectory(),
             isDirectory: true).appendingPathComponent(String.filenameForSelfUser()).appendingPathExtension(videoURL.pathExtension)
 
-        if FileManager.default.fileExists(atPath: videoTempURL.path) {
-            do {
-                try FileManager.default.removeItem(at: videoTempURL)
-            } catch let deleteError {
-                zmLog.error("Cannot delete old tmp video at \(videoTempURL): \(deleteError)")
-            }
-        }
-
         do {
-            try FileManager.default.copyItem(at: videoURL, to: videoTempURL)
+            try FileManager.default.removeTmpIfNeededAndCopy(fileURL: videoURL, tmpURL: videoTempURL)
         } catch let error {
             zmLog.error("Cannot copy video from \(videoURL) to \(videoTempURL): \(error)")
             return

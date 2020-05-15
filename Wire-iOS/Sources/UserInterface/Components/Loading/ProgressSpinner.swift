@@ -36,7 +36,6 @@ final class ProgressSpinner: UIView {
         }
     }
     
-    @objc
     var hidesWhenStopped: Bool = false {
         didSet {
             isHidden = hidesWhenStopped && !isAnimationRunning

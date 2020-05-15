@@ -21,7 +21,7 @@ import UIKit
 extension UIApplication {
 
     /// Check whether that app is in left to right layout.
-    @objc static var isLeftToRightLayout: Bool {
+    static var isLeftToRightLayout: Bool {
         return UIApplication.shared.userInterfaceLayoutDirection == .leftToRight
     }
 

@@ -295,11 +295,11 @@ class AnyConversationMessageCellDescription: NSObject {
         _supportsActions = AnyConstantProperty(description, keyPath: \.supportsActions)
     }
     
-    @objc var instance: AnyObject {
+    var instance: AnyObject {
         return instanceGetter()
     }
 
-    @objc var baseType: AnyClass {
+    var baseType: AnyClass {
         return baseTypeGetter()
     }
 
@@ -308,26 +308,26 @@ class AnyConversationMessageCellDescription: NSObject {
         set { _delegate.setter(newValue) }
     }
 
-    @objc var message: ZMConversationMessage? {
+    var message: ZMConversationMessage? {
         get { return _message.getter() }
         set { _message.setter(newValue) }
     }
 
-    @objc var actionController: ConversationMessageActionController? {
+    var actionController: ConversationMessageActionController? {
         get { return _actionController.getter() }
         set { _actionController.setter(newValue) }
     }
     
-    @objc var topMargin: Float {
+    var topMargin: Float {
         get { return _topMargin.getter() }
         set { _topMargin.setter(newValue) }
     }
 
-    @objc var containsHighlightableContent: Bool {
+    var containsHighlightableContent: Bool {
         return _containsHighlightableContent.getter()
     }
     
-    @objc var showEphemeralTimer: Bool {
+    var showEphemeralTimer: Bool {
         get { return _showEphemeralTimer.getter() }
         set { _showEphemeralTimer.setter(newValue) }
     }

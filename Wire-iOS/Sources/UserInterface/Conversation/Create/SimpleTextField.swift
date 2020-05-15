@@ -38,7 +38,7 @@ extension Optional where Wrapped == String {
 
 final class SimpleTextField: UITextField, Themeable {
     
-    @objc var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
+    var colorSchemeVariant: ColorSchemeVariant  = ColorScheme.default.variant {
         didSet {
             guard colorSchemeVariant != oldValue else { return }
             applyColorScheme(colorSchemeVariant)

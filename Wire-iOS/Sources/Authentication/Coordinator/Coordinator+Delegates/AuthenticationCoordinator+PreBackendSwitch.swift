@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,16 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import UIKit
+import Foundation
 
-extension UIDevice {
-
-    static var isSimulator: Bool {
-        #if (arch(i386) || arch(x86_64))
-            return true
-        #else
-            return false
-        #endif
+extension AuthenticationCoordinator: PreBackendSwitchViewControllerDelegate {
+    func preBackendSwitchViewControllerDidComplete(_ url: URL) {
+        executeActions([.transition(.landingScreen, mode: .replace), .updateBackendEnvironment(url: url)])
     }
-
 }
