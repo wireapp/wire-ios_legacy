@@ -116,16 +116,8 @@ extension AVURLAsset {
                         quality: String = defaultVideoQuality,
                         fileLengthLimit: Int64? = nil,
                         completion: @escaping ConvertVideoCompletion) {
+        let outputURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(filename)
         
-        let outputURL: URL
-        do {
-            try outputURL = FileManager.createTmpDirectory(fileName: filename)
-        } catch let error {
-            zmLog.error("Cannot createTmpDirectory with filename: \(filename). error: \(error)")
-            
-            return
-        }
-
         if FileManager.default.fileExists(atPath: outputURL.path) {
             do {
                 try FileManager.default.removeItem(at: outputURL)
