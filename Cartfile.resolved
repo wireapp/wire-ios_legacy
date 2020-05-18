@@ -1,6 +1,6 @@
 github "wireapp/Cartography" "4.0.0-xcode_11_4_1"
 github "wireapp/DifferenceKit" "1.1.5_XCode11.4.1"
-github "wireapp/Down" "v2.2.1_XCode11.4.1"
+github "wireapp/Down" "v2.2.2_XCode11.4.1"
 github "wireapp/FLAnimatedImage" "1.0.12-wire"
 github "wireapp/FormatterKit" "1.8.1-swift3.0.2"
 github "wireapp/HTMLString" "4.1.0-beta.1-xcode_11_4_1"
