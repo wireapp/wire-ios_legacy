@@ -21,6 +21,7 @@ import Foundation
 import Cartography
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 fileprivate extension UIView {
 

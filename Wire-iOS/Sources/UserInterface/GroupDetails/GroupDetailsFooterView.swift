@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 protocol GroupDetailsFooterViewDelegate: class {
     func footerView(_ view: GroupDetailsFooterView, shouldPerformAction action: GroupDetailsFooterView.Action)

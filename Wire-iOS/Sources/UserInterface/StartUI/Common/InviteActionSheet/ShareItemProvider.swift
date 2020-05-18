@@ -17,6 +17,7 @@
 // 
 
 import UIKit
+import WireCommonComponents
 
 final class ShareItemProvider: UIActivityItemProvider {
     override func activityViewController(_ activityViewController: UIActivityViewController, subjectForActivityType activityType: UIActivity.ActivityType?) -> String {

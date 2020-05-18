@@ -18,9 +18,8 @@
 
 import Foundation
 import UIKit
-import WireSystem
-import WireDataModel
 import WireSyncEngine
+import WireCommonComponents
 
 private let zmLog = ZMSLog(tag: "StartUIViewController")
 

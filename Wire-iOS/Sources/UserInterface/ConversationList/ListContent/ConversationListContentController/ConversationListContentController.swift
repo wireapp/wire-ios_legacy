@@ -20,6 +20,7 @@ import Foundation
 import DifferenceKit
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 private let CellReuseIdConnectionRequests = "CellIdConnectionRequests"
 private let CellReuseIdConversation = "CellId"

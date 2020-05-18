@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireCommonComponents
 
 protocol GroupOptionsSectionControllerDelegate: class {
     func presentTimeoutOptions(animated: Bool)

@@ -18,6 +18,7 @@
 
 import Foundation
 import WireDataModel
+import WireCommonComponents
 
 extension Analytics {
     func guestAttributes(in conversation: ZMConversation) -> [String : Any] {

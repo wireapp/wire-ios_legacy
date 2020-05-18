@@ -18,6 +18,7 @@
 
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 /**
  * Displays the list of users for a specified message detail content type.

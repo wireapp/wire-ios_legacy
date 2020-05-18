@@ -19,6 +19,7 @@
 import UIKit
 import Cartography
 import WireSyncEngine
+import WireCommonComponents
 
 final class GroupDetailsViewController: UIViewController, ZMConversationObserver, GroupDetailsFooterViewDelegate {
     

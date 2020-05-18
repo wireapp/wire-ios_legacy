@@ -20,7 +20,7 @@ import Foundation
 import MessageUI
 import WireDataModel
 import UIKit
-import WireSystem
+import WireCommonComponents
 
 /// Presents debug alerts
 final class DebugAlert {

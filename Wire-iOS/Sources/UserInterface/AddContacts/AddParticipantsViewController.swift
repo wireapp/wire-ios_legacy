@@ -16,10 +16,10 @@
 // along with this program. If not, see http://www.gnu.org/licenses/.
 //
 
-import Foundation
 import Cartography
 import UIKit
 import WireDataModel
+import WireCommonComponents
 
 extension ZMConversation {
     var canAddGuest: Bool {

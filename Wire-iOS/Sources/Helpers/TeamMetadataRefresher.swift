@@ -17,6 +17,7 @@
 //
 
 import Foundation
+import WireCommonComponents
 
 /// A utility class to help trigger downloading team metadata for the self user.
 ///

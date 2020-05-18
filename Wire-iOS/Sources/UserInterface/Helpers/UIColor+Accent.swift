@@ -19,6 +19,7 @@
 import Foundation
 import UIKit
 import WireSyncEngine
+import WireCommonComponents
 
 private var ZM_UNUSED = "UI"
 private var overridenAccentColor: ZMAccentColor = .undefined
