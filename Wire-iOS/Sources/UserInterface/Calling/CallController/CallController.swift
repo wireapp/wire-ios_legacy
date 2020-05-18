@@ -28,7 +28,7 @@ final class CallController: NSObject {
         }
     }
 
-    fileprivate lazy var callQualityController = CallQualityController()
+    fileprivate let callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (() -> Void)?
     fileprivate var observerTokens: [Any] = []
     fileprivate var minimizedCall: ZMConversation?
@@ -122,7 +122,14 @@ extension CallController: WireCallCenterCallStateObserver {
         UIResponder.currentFirst?.resignFirstResponder()
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        targetViewController?.present(modalVC, animated: animated) ///TODO: dismiss call qa before present
+        
+        if targetViewController?.presentedViewController != nil {
+        delay(1) {
+            self.targetViewController?.present(modalVC, animated: animated) ///TODO: dismiss call qa before present
+        }
+        } else {
+            targetViewController?.present(modalVC, animated: animated)
+        }
     }
 
     fileprivate func dismissCall() {
