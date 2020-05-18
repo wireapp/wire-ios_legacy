@@ -23,7 +23,6 @@ final class CallController: NSObject {
 
     weak var targetViewController: UIViewController?
     private(set) weak var activeCallViewController: ActiveCallViewController?
-
     fileprivate let callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (() -> Void)?
     fileprivate var observerTokens: [Any] = []
@@ -100,7 +99,9 @@ extension CallController: WireCallCenterCallStateObserver {
     }
 
     fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
-        guard activeCallViewController == nil else { return }
+        guard activeCallViewController == nil else {
+            return
+        }
         guard let voiceChannel = conversation.voiceChannel else { return }
 
         if minimizedCall == conversation {
@@ -116,21 +117,29 @@ extension CallController: WireCallCenterCallStateObserver {
         UIResponder.currentFirst?.resignFirstResponder()
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        targetViewController?.present(modalVC, animated: animated)
+
+        let presentClosure: Completion = {
+            self.targetViewController?.present(modalVC, animated: animated)
+        }
+
+        if targetViewController?.presentedViewController != nil {
+            targetViewController?.presentedViewController?.dismiss(animated: true, completion: presentClosure)
+        } else {
+            presentClosure()
+        }
     }
 
     fileprivate func dismissCall() {
         minimizedCall = nil
         topOverlayCall = nil
 
-        activeCallViewController?.dismiss(animated: true) {
-            if let postCallAction = self.scheduledPostCallAction {
+        activeCallViewController?.dismiss(animated: true) { [weak self] in
+            if let postCallAction = self?.scheduledPostCallAction {
                 postCallAction()
-                self.scheduledPostCallAction = nil
+                self?.scheduledPostCallAction = nil
             }
+            self?.activeCallViewController = nil
         }
-
-        activeCallViewController = nil
     }
 }
 
@@ -158,7 +167,7 @@ extension CallController: CallQualityControllerDelegate {
 
     func dismissCurrentSurveyIfNeeded() {
         if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
-            survey.dismiss(animated: true, completion: nil)
+            survey.dismiss(animated: true)
         }
     }
 
