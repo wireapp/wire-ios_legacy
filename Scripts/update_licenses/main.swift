@@ -125,7 +125,7 @@ func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
     }
 
     guard let embeddedDependenciesPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_2") else {
-        fail("The third input file in Xcode must be the 'Cartfile/Checkouts' folder.")
+        fail("The third input file in Xcode must be the 'EmbeddedDependencies.plist' file.")
     }
 
     return (URL(fileURLWithPath: cartfilePath), URL(fileURLWithPath: checkoutsPath), URL(fileURLWithPath: embeddedDependenciesPath))
@@ -134,7 +134,7 @@ func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
 /// Returns the output file.
 func getOutput() -> URL {
     guard let plistPath = getEnvironmentValue(key: "SCRIPT_OUTPUT_FILE_0") else {
-        fail("The second input file in Xcode must be the 'Cartfile/Checkouts' folder.")
+        fail("The output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
     }
 
     return URL(fileURLWithPath: plistPath)

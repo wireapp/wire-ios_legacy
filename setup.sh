@@ -46,7 +46,7 @@ carthage bootstrap --platform ios
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh 
+./Scripts/download-avs.sh
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
@@ -55,6 +55,16 @@ echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
 ./Scripts/postprocess.sh
+echo ""
+
+echo "ℹ️  Update Licenses File..."
+export SCRIPT_INPUT_FILE_0=Cartfile.resolved
+export SCRIPT_INPUT_FILE_1=Carthage/Checkouts
+export SCRIPT_INPUT_FILE_2=EmbeddedDependencies.plist
+
+export SCRIPT_OUTPUT_FILE_0=Wire-iOS/Resources/Licenses.generated.plist
+
+swift run --package-path ./Scripts/update_licenses/
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
