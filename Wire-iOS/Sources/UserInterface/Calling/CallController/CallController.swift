@@ -123,12 +123,15 @@ extension CallController: WireCallCenterCallStateObserver {
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
         
-        if targetViewController?.presentedViewController != nil {
-        delay(1) {
-            self.targetViewController?.present(modalVC, animated: animated) ///TODO: dismiss call qa before present
+        let presentClosure: Completion = {
+            self.targetViewController?.present(modalVC, animated: animated)
         }
+        
+        if targetViewController?.presentedViewController != nil {
+            ///HACK: Since CallQualityController is dismissing at the same time, delay to wait for the animation done.
+            delay(1, closure: presentClosure)
         } else {
-            targetViewController?.present(modalVC, animated: animated)
+            presentClosure()
         }
     }
 
