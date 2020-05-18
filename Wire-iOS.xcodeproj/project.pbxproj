@@ -6533,7 +6533,6 @@
 			buildPhases = (
 				8F42C534199244A700288E4D /* Sources */,
 				8F42C535199244A700288E4D /* Frameworks */,
-				5EDD253F21400FD700C0E254 /* Update Licenses File */,
 				8F42C536199244A700288E4D /* Resources */,
 				160EABBA1D47BD7200F83CA7 /* Copy Extra Audio Notifications */,
 				DBB1CF591A88C15600912518 /* Copy Frameworks and DSYMs */,
@@ -6838,24 +6837,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the update_stylekit package\nunset SDKROOT\nswift run --package-path Scripts/update_stylekit/\n";
-		};
-		5EDD253F21400FD700C0E254 /* Update Licenses File */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(PROJECT_DIR)/Cartfile.resolved",
-				"$(PROJECT_DIR)/Carthage/Checkouts",
-				"$(PROJECT_DIR)/EmbeddedDependencies.plist",
-			);
-			name = "Update Licenses File";
-			outputPaths = (
-				"$(PROJECT_DIR)/Wire-iOS/Resources/Licenses.generated.plist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the update_licenses package\nunset SDKROOT\nswift run --package-path Scripts/update_licenses/\n";
 		};
 		873AA0501D05A74B0038343B /* Strip BitCode */ = {
 			isa = PBXShellScriptBuildPhase;
