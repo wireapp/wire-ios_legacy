@@ -99,7 +99,7 @@ extension CallController: WireCallCenterCallStateObserver {
     }
 
     fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
-        guard activeCallViewController == nil else { ///TODO: aVC is presented already?
+        guard activeCallViewController == nil else {
             return
         }
         guard let voiceChannel = conversation.voiceChannel else { return }
