@@ -91,7 +91,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
 
     func testThatItRendersMentions_SelfMention_LongText_Dark() {
-        ColorScheme.default.variant = .dark
+        setColorScheme(.dark)
         let messageText =
         """
 She was a liar. She had no diseases at all. I had seen her at Free and Clear, my blood parasites group Thursdays. Then at Hope, my bimonthly sickle cell circle. And again at Seize the Day, my tuberculosis Friday night. @Marla, the big tourist. Her lie reflected my lie, and suddenly, I felt nothing.
@@ -137,7 +137,7 @@ She was a liar. She had no diseases at all. I had seen her at Free and Clear, my
     }
 
     func testDarkModeSelf() {
-        ColorScheme.default.variant = .dark
+        setColorScheme(.dark)
 
         let messageText = "@current"
         let mention = Mention(range: NSRange(location: 0, length: 8), user: selfUser)

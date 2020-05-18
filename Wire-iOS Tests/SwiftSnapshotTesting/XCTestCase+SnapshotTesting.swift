@@ -302,8 +302,11 @@ extension XCTestCase {
 
     // MARK: - color scheme
     func resetColorScheme() {
-        ColorScheme.default.variant = .light
-
+        setColorScheme(.light)
+    }
+    
+    func setColorScheme(_ variant: ColorSchemeVariant) {
+        ColorScheme.default.variant = variant
         NSAttributedString.invalidateMarkdownStyle()
         NSAttributedString.invalidateParagraphStyle()
     }
