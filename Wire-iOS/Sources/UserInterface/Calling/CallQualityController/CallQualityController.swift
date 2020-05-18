@@ -149,9 +149,13 @@ extension CallQualityController: WireCallCenterCallStateObserver {
             handleCallStart(in: conversation)
         case .terminating(let terminationReason):
             handleCallCompletion(in: conversation, reason: terminationReason, eventDate: eventDate)
-        case .incoming(_, _, _):
-            /// when call incoming, dismiss CallQuality VC in CallController.presentCall
-            break
+        case .incoming(_, let shouldRing, _):
+            if shouldRing {
+                /// when call incoming, dismiss CallQuality VC in CallController.presentCall
+                break
+            } else {
+                delegate?.dismissCurrentSurveyIfNeeded()
+            }
         default:
             return
         }
