@@ -123,8 +123,7 @@ extension CallController: WireCallCenterCallStateObserver {
         }
 
         if targetViewController?.presentedViewController != nil {
-            ///HACK: Since CallQualityController is dismissing at the same time, delay to wait for the animation done.
-            delay(1, closure: presentClosure)
+            targetViewController?.presentedViewController?.dismiss(animated: true, completion: presentClosure)
         } else {
             presentClosure()
         }
