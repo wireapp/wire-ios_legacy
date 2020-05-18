@@ -17,7 +17,6 @@
 //
 
 import Foundation
-import WireSyncEngine
 import AVFoundation
 import WireSyncEngine
 
