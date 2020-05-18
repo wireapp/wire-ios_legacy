@@ -22,12 +22,7 @@ import WireSyncEngine
 final class CallController: NSObject {
 
     weak var targetViewController: UIViewController?
-    private(set) weak var activeCallViewController: ActiveCallViewController? {
-        didSet {
-            print("activeCallViewController = \(activeCallViewController)")
-        }
-    }
-
+    private(set) weak var activeCallViewController: ActiveCallViewController?
     fileprivate let callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (() -> Void)?
     fileprivate var observerTokens: [Any] = []
