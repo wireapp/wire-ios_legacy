@@ -24,11 +24,11 @@ final class CallController: NSObject {
     weak var targetViewController: UIViewController?
     private(set) weak var activeCallViewController: ActiveCallViewController? {
         didSet {
-            
+            print("activeCallViewController = \(activeCallViewController)")
         }
     }
 
-    fileprivate let callQualityController = CallQualityController()
+    fileprivate lazy var callQualityController = CallQualityController()
     fileprivate var scheduledPostCallAction: (() -> Void)?
     fileprivate var observerTokens: [Any] = []
     fileprivate var minimizedCall: ZMConversation?
@@ -104,7 +104,7 @@ extension CallController: WireCallCenterCallStateObserver {
     }
 
     fileprivate func presentCall(in conversation: ZMConversation, animated: Bool = true) {
-        guard activeCallViewController == nil else {
+        guard activeCallViewController == nil else { ///TODO: aVC is presented already?
             return
         }
         guard let voiceChannel = conversation.voiceChannel else { return }
@@ -122,7 +122,7 @@ extension CallController: WireCallCenterCallStateObserver {
         UIResponder.currentFirst?.resignFirstResponder()
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
-        targetViewController?.present(modalVC, animated: animated)
+        targetViewController?.present(modalVC, animated: animated) ///TODO: dismiss call qa before present
     }
 
     fileprivate func dismissCall() {
@@ -163,7 +163,7 @@ extension CallController: CallQualityControllerDelegate {
 
     func dismissCurrentSurveyIfNeeded() {
         if let survey = targetViewController?.presentedViewController as? CallQualityViewController {
-            survey.dismiss(animated: true, completion: nil)
+            survey.dismiss(animated: true)
         }
     }
 
