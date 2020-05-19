@@ -6580,7 +6580,6 @@
 				F1FEA14521DCEB1700790A54 /* Headers */,
 				F1FEA14621DCEB1700790A54 /* Sources */,
 				F1FEA14721DCEB1700790A54 /* Frameworks */,
-				F1FEA14821DCEB1700790A54 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -6766,13 +6765,6 @@
 				7C37E3441FDE89520077B2E3 /* unsplash_matterhorn.jpg in Resources */,
 				EF8DD917211E2BD200E970F1 /* sample.pkpass in Resources */,
 				EF6E3C80208A262B003F6752 /* not_animated.gif in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F1FEA14821DCEB1700790A54 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
