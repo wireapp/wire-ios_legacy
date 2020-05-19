@@ -150,7 +150,9 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
 }
 
 final class ModalPresentationViewController: UIViewController, UIViewControllerTransitioningDelegate {
-
+    
+    var dismissClosure: Completion?
+    
     fileprivate unowned let viewController: UIViewController
     fileprivate let dimView = UIView()
 
@@ -183,6 +185,14 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         return wr_supportedInterfaceOrientations
     }
 
+    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        super.dismiss(animated: flag) {
+            completion?()
+            self.dismissClosure?()
+        }
+    }
+
+    
     private func setupViews(with viewController: UIViewController) {
         transitioningDelegate = self
         interactionController.setupWith(viewController: self)

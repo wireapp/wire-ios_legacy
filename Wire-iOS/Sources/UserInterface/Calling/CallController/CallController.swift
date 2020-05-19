@@ -117,6 +117,10 @@ extension CallController: WireCallCenterCallStateObserver {
         UIResponder.currentFirst?.resignFirstResponder()
 
         let modalVC = ModalPresentationViewController(viewController: viewController)
+        
+        modalVC.dismissClosure = {
+            self.activeCallViewController = nil
+        }
 
         let presentClosure: Completion = {
             self.targetViewController?.present(modalVC, animated: animated)
