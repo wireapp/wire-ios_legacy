@@ -92,31 +92,27 @@ func success(_ message: String) -> Never {
     exit(0)
 }
 
-/// Gets an environment variable value with the given name.
-func getEnvironmentValue(key: String) -> String? {
-    guard let rawValue = getenv(key) else {
-        return nil
-    }
-
-    return String(cString: rawValue)
-}
-
 // MARK: - Arguments
 
 /// Returns the input files.
 func getStyleKitURL() -> URL {
-    guard let styleKit = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_0") else {
-        fail("The second input file in Xcode must be the 'WireStyleKit.swift' file.")
+    
+    guard CommandLine.arguments.count > 2 else {
+        fail("The first input file in Xcode must be the 'WireStyleKit.swift' file.")
     }
+
+    let styleKit = CommandLine.arguments[1]
 
     return URL(fileURLWithPath: styleKit)
 }
 
 /// Returns the output file.
 func getOutput() -> URL {
-    guard let swiftOutputPath = getEnvironmentValue(key: "SCRIPT_OUTPUT_FILE_0") else {
-        fail("The second input file in Xcode must be the 'StyleKitIcons.swift' file.")
+    guard CommandLine.arguments.count > 3 else {
+        fail("The output file in Xcode must be the 'StyleKitIcons.swift' file.")
     }
+
+    let swiftOutputPath = CommandLine.arguments[2]
 
     return URL(fileURLWithPath: swiftOutputPath)
 }
