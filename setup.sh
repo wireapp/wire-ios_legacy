@@ -46,7 +46,7 @@ carthage bootstrap --platform ios
 echo ""
 
 echo "ℹ️  Downloading AVS library..."
-./Scripts/download-avs.sh 
+./Scripts/download-avs.sh
 echo ""
 
 echo "ℹ️  Downloading additional assets..."
@@ -55,6 +55,14 @@ echo ""
 
 echo "ℹ️  Doing additional postprocessing..."
 ./Scripts/postprocess.sh
+echo ""
+
+echo "ℹ️  [CodeGen] Update StyleKit Icons..."
+swift run --package-path Scripts/updateStylekit
+echo ""
+
+echo "ℹ️  Update Licenses File..."
+swift run --package-path ./Scripts/updateLicenses
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
