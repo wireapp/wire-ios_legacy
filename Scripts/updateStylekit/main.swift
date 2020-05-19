@@ -96,11 +96,6 @@ func success(_ message: String) -> Never {
 
 /// Returns the input files.
 func getStyleKitURL() -> URL {
-    
-    guard CommandLine.arguments.count > 2 else {
-        fail("The first input file in Xcode must be the 'WireStyleKit.swift' file.")
-    }
-
     let styleKit = CommandLine.arguments[1]
 
     return URL(fileURLWithPath: styleKit)
@@ -108,10 +103,6 @@ func getStyleKitURL() -> URL {
 
 /// Returns the output file.
 func getOutput() -> URL {
-    guard CommandLine.arguments.count > 3 else {
-        fail("The output file in Xcode must be the 'StyleKitIcons.swift' file.")
-    }
-
     let swiftOutputPath = CommandLine.arguments[2]
 
     return URL(fileURLWithPath: swiftOutputPath)
@@ -150,6 +141,9 @@ func generateText(renderingInfo: [String: String]) -> (enumCases: String, render
 }
 
 // MARK: - Execution
+guard CommandLine.arguments.count >= 2 else {
+    fail("The first input file in Xcode must be the 'WireStyleKit.swift' file.\nThe output file in Xcode must be the 'StyleKitIcons.swift' file.")
+}
 
 let styleKit = getStyleKitURL()
 let outputURL = getOutput()

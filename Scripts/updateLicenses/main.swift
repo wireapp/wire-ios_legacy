@@ -1,6 +1,6 @@
 //
 // Wire
-// Copyright (C) 2018 Wire Swiss GmbH
+// Copyright (C) 2020 Wire Swiss GmbH
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -84,15 +84,6 @@ func success(_ message: String) -> Never {
     exit(0)
 }
 
-/// Gets an environment variable value with the given name.
-func getEnvironmentValue(key: String) -> String? {
-    guard let rawValue = getenv(key) else {
-        return nil
-    }
-
-    return String(cString: rawValue)
-}
-
 extension String {
 
     /// Removes the license columns in the string.
@@ -116,28 +107,20 @@ extension String {
 
 /// Returns the input files.
 func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
-    guard let cartfilePath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_0") else {
-        fail("The first input file in Xcode must be the 'Cartfile.resolved' file.")
+    guard CommandLine.arguments.count > 4 else {
+        fail("Must have 3 input parameters")
     }
 
-    guard let checkoutsPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_1") else {
-        fail("The second input file in Xcode must be the 'Cartfile/Checkouts' folder.")
-    }
-
-    guard let embeddedDependenciesPath = getEnvironmentValue(key: "SCRIPT_INPUT_FILE_2") else {
-        fail("The third input file in Xcode must be the 'EmbeddedDependencies.plist' file.")
-    }
-
-    return (URL(fileURLWithPath: cartfilePath), URL(fileURLWithPath: checkoutsPath), URL(fileURLWithPath: embeddedDependenciesPath))
+    return (URL(fileURLWithPath: CommandLine.arguments[1]), URL(fileURLWithPath: CommandLine.arguments[2]), URL(fileURLWithPath: CommandLine.arguments[3]))
 }
 
 /// Returns the output file.
 func getOutput() -> URL {
-    guard let plistPath = getEnvironmentValue(key: "SCRIPT_OUTPUT_FILE_0") else {
+    guard CommandLine.arguments.count >= 5 else {
         fail("The output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
     }
 
-    return URL(fileURLWithPath: plistPath)
+    return URL(fileURLWithPath: CommandLine.arguments[4])
 }
 
 /// Gets the license text in the given directory.
