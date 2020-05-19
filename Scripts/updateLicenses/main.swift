@@ -107,7 +107,7 @@ extension String {
 
 /// Returns the input files.
 func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
-    guard CommandLine.arguments.count > 4 else {
+    guard CommandLine.arguments.count >= 3 else {
         fail("Must have 3 input parameters")
     }
 
