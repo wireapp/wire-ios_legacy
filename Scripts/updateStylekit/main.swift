@@ -141,8 +141,8 @@ func generateText(renderingInfo: [String: String]) -> (enumCases: String, render
 }
 
 // MARK: - Execution
-guard CommandLine.arguments.count >= 2 else {
-    fail("The first input file in Xcode must be the 'WireStyleKit.swift' file.\nThe output file in Xcode must be the 'StyleKitIcons.swift' file.")
+guard CommandLine.arguments.count == 3 else {
+    fail("The first input file in Xcode must be the 'WireStyleKit.swift' file. The output file in Xcode must be the 'StyleKitIcons.swift' file.")
 }
 
 let styleKit = getStyleKitURL()

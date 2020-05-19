@@ -197,8 +197,8 @@ func generateFromCartfileResolved(_ content: String, checkoutsDir: URL) -> [Depe
 
 // MARK: - Execution
 
-guard CommandLine.arguments.count >= 4 else {
-    fail("Must have 3 input parameters and 1 output parameter.\nThe output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
+guard CommandLine.arguments.count == 5 else {
+    fail("Must have 3 input parameters and 1 output parameter. The output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
 }
 
 
