@@ -185,8 +185,10 @@ func generateFromCartfileResolved(_ content: String, checkoutsDir: URL) -> [Depe
 
 // MARK: - Execution
 
-let (cartfileURL, checkoutsURL, embeddedDependencies) = ("Cartfile.resolved", "Carthage/Checkouts", "EmbeddedDependencies.plist")
-let outputURL = "Wire-iOS/Resources/Licenses.generated.plist"
+let (cartfileURL, checkoutsURL, embeddedDependencies) = (URL(fileURLWithPath: "Cartfile.resolved"),
+                                                         URL(fileURLWithPath: "Carthage/Checkouts"),
+                                                         URL(fileURLWithPath: "EmbeddedDependencies.plist"))
+let outputURL = URL(fileURLWithPath:"Wire-iOS/Resources/Licenses.generated.plist")
 
 // 1) Decode the Cartfile
 
