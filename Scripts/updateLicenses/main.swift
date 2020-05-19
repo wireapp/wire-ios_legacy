@@ -116,7 +116,7 @@ func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
 
 /// Returns the output file.
 func getOutput() -> URL {
-    guard CommandLine.arguments.count >= 5 else {
+    guard CommandLine.arguments.count >= 4 else {
         fail("The output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
     }
 

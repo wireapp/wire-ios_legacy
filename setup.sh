@@ -64,7 +64,11 @@ swift run --package-path Scripts/updateStylekit update_stylekit \
 echo ""
 
 echo "ℹ️  Update Licenses File..."
-swift run --package-path ./Scripts/updateLicenses update_licenses Cartfile.resolved Carthage/Checkouts EmbeddedDependencies.plist Wire-iOS/Resources/Licenses.generated.plist
+swift run --package-path ./Scripts/updateLicenses update_licenses \
+    Cartfile.resolved \
+    Carthage/Checkouts \
+    EmbeddedDependencies.plist \
+    Wire-iOS/Resources/Licenses.generated.plist
 echo ""
 
 echo "✅  Wire project was set up, you can now open Wire-iOS.xcodeproj"
