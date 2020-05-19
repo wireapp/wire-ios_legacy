@@ -107,19 +107,11 @@ extension String {
 
 /// Returns the input files.
 func getInputs() -> (cartfile: URL, checkouts: URL, embeddedDependencies: URL) {
-    guard CommandLine.arguments.count >= 3 else {
-        fail("Must have 3 input parameters")
-    }
-
     return (URL(fileURLWithPath: CommandLine.arguments[1]), URL(fileURLWithPath: CommandLine.arguments[2]), URL(fileURLWithPath: CommandLine.arguments[3]))
 }
 
 /// Returns the output file.
 func getOutput() -> URL {
-    guard CommandLine.arguments.count >= 4 else {
-        fail("The output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
-    }
-
     return URL(fileURLWithPath: CommandLine.arguments[4])
 }
 
@@ -204,6 +196,11 @@ func generateFromCartfileResolved(_ content: String, checkoutsDir: URL) -> [Depe
 }
 
 // MARK: - Execution
+
+guard CommandLine.arguments.count >= 4 else {
+    fail("Must have 3 input parameters and 1 output parameter.\nThe output file in Xcode must be the 'Wire-iOS/Resources/Licenses.generated.plist' file.")
+}
+
 
 let (cartfileURL, checkoutsURL, embeddedDependencies) = getInputs()
 let outputURL = getOutput()
