@@ -115,6 +115,14 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
     private var shouldCompleteTransition = false
     private weak var presentationViewController: ModalPresentationViewController!
 
+    override func finish() {
+        super.finish()
+        
+        if shouldCompleteTransition {
+            (presentationViewController.view.window as? CallWindow)?.isHidden = true
+        }
+    }
+
     func setupWith(viewController: ModalPresentationViewController) {
         presentationViewController = viewController
         viewController.view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan)))
@@ -131,9 +139,7 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
             interactionInProgress = true
 
             weak var window = presentationViewController.view.window
-            presentationViewController.dismiss(animated: true) {
-                window?.isHidden = true
-            }
+            presentationViewController.dismiss(animated: true)
         case .changed:
             shouldCompleteTransition = progress > 0.2
             update(progress)
@@ -185,7 +191,8 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         return wr_supportedInterfaceOrientations
     }
 
-    override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    override func dismiss(animated flag: Bool,
+                          completion: Completion? = nil) {
         super.dismiss(animated: flag) {
             completion?()
             self.dismissClosure?()
