@@ -117,7 +117,7 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
 
     override func finish() {
         super.finish()
-        
+
         if shouldCompleteTransition {
             (presentationViewController.view.window as? CallWindow)?.isHidden = true
         }
@@ -156,9 +156,9 @@ final private class ModalInteractionController: UIPercentDrivenInteractiveTransi
 }
 
 final class ModalPresentationViewController: UIViewController, UIViewControllerTransitioningDelegate {
-    
+
     var dismissClosure: Completion?
-    
+
     fileprivate unowned let viewController: UIViewController
     fileprivate let dimView = UIView()
 
@@ -199,7 +199,6 @@ final class ModalPresentationViewController: UIViewController, UIViewControllerT
         }
     }
 
-    
     private func setupViews(with viewController: UIViewController) {
         transitioningDelegate = self
         interactionController.setupWith(viewController: self)
